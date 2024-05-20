@@ -1,0 +1,9 @@
+{
+  "welcome_back": "다시 오신 것을 환영합니다",
+  "please_enter_email_pass": "이메일과 비밀번호를 입력하세요.",
+  "email_address": "Email Address",
+  "password": "Password",
+  "forgot_password": "Forgot Password?",
+  "sign_in": "Sign In",
+  "error": "Error!"
+}
