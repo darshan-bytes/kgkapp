@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kgk/kgk.dart';
-import 'package:kgk/utils/utils.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -19,20 +18,50 @@ class SignInScreen extends StatelessWidget {
             return BlocBuilder<SignInBloc, SignInState>(
               buildWhen: (context, state) => state is ChangeValueState,
               builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(APPStrings.pleaseEnterEmailPass.tr),
-                    CupertinoSwitch(
-                      value: appBloc.switchValue,
-                      onChanged: (value) {
-                        Utils.showMessage("Testing message");
-                        appBloc.add(ChangeThemeEvent(!appBloc.switchValue ? 'dark' : 'light'));
-                        // signInBloc.add(ChangeSwitchValueEvent(switchValue: value));
-                      },
-                    ),
-                  ],
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SmartTextField(
+                        isRequired: true,
+                        obscured: true,
+                        lableText: APPStrings.email.tr,
+                        hintText: APPStrings.email.tr,
+                        onEditingComplete: () {
+                          FocusScope.of(context).nextFocus();
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      SmartCheckbox(
+                        value: appBloc.switchValue,
+                        onChanged: (value) {
+                          Utils.showMessage("Testing message");
+                          appBloc.add(ChangeThemeEvent(!appBloc.switchValue ? 'dark' : 'light'));
+                        },
+                        label: APPStrings.pleaseEnterEmailPass.tr,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(APPStrings.pleaseEnterEmailPass.tr),
+                      CupertinoSwitch(
+                        value: appBloc.switchValue,
+                        onChanged: (value) {
+                          Utils.showMessage("Testing message");
+                          appBloc.add(ChangeThemeEvent(!appBloc.switchValue ? 'dark' : 'light'));
+                          // signInBloc.add(ChangeSwitchValueEvent(switchValue: value));
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      PrimaryButton(
+                        isEnabled: false,
+                        onClick: () {
+                          Utils.showMessage("Testing message");
+                        },
+                        title: APPStrings.signIn.tr,
+                      ),
+                    ],
+                  ),
                 );
               },
             );
