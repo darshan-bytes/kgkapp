@@ -1,4 +1,4 @@
-package com.kgk.mobileapps.kgk
+package com.kgk.mobileapps
 
 import io.flutter.embedding.android.FlutterActivity
 

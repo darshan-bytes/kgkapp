@@ -70,10 +70,49 @@ class LightModeTheme extends AppTheme {
 
   @override
   PrimaryButtonStyle get primaryButtonStyle => PrimaryButtonStyle(
-      titleStyle: interMediumBoldTextStyle.copyWith(
-        fontWeight: FontWeight.w500,
-        color: colors.white,
-      ),
-      activeBackgroundColor: colors.primary,
-      disableBackgroundColor: colors.color303538);
+        titleStyle: interMediumBoldTextStyle.copyWith(
+          color: colors.white,
+          fontSize: 16,
+        ),
+        activeBackgroundColor: colors.primary,
+        disableBackgroundColor: colors.colorF7F9FA,
+        disableTitleStyle: interMediumBoldTextStyle.copyWith(
+          color: colors.color8C8C8C,
+          fontSize: 16,
+        ),
+      );
+
+  @override
+  TextFieldStyle get textFieldStyle => TextFieldStyle(
+        textStyle: interRegularTextStyle,
+        blackColor: colors.color303538,
+        labelStyle: interRegularTextStyle.copyWith(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: colors.color303538,
+        ),
+        errorStyle: interRegularTextStyle.copyWith(
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+          color: colors.colorF65D3C,
+        ),
+        textFillColor: colors.white,
+        disabledTextFieldBorderColor: colors.color303538,
+        enabledTextFieldBorderColor: colors.colorD3DAE0,
+        focusedTextFieldBorderColor: colors.primary,
+        errorBorderColor: colors.colorF65D3C,
+        hintStyle: interRegularTextStyle.copyWith(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: colors.color303538,
+        ),
+      );
+
+  @override
+  CheckboxStyle get checkboxStyle => CheckboxStyle(
+        activeColor: colors.primary,
+        checkColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        textStyle: interRegularTextStyle,
+      );
 }

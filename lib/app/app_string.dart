@@ -12,4 +12,6 @@ class APPStrings {
   static const String forgotPassword = 'forgot_password';
   static const String signIn = 'sign_in';
   static const String error = 'error';
+
+  static const String email = 'email';
 }

@@ -1,0 +1,53 @@
+import 'package:kgk/kgk.dart';
+
+class SmartText extends StatelessWidget {
+  final String? _text;
+  final TextStyle? _style;
+  final Color? color;
+  final FontWeight? fontWeight;
+  final EdgeInsets? optionalPadding;
+  final TextOverflow? overflow;
+  final TextAlign? textAlign;
+  final TextDecoration? decoration;
+  final int? maxLines;
+  final GestureTapCallback? onTap;
+
+  const SmartText(
+    String? text, {
+    super.key,
+    this.color,
+    TextStyle? style,
+    this.fontWeight,
+    this.optionalPadding,
+    this.overflow,
+    this.textAlign,
+    this.decoration,
+    this.maxLines,
+    this.onTap,
+  })  : _text = text,
+        _style = style;
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? style = _style ?? const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.black);
+    Widget child = Text(
+      _text ?? '',
+      style: ((color != null || fontWeight != null || decoration != null))
+          ? style.merge(TextStyle(color: color, fontWeight: fontWeight, decoration: decoration))
+          : style,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+    );
+    if (_text != null && _text.isNotEmpty && optionalPadding != null) {
+      child = Padding(padding: optionalPadding!, child: child);
+    }
+    if (onTap != null) {
+      child = GestureDetector(
+        onTap: onTap,
+        child: child,
+      );
+    }
+    return child;
+  }
+}

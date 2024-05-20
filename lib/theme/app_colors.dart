@@ -8,13 +8,18 @@ class AppThemes {
   AppColor appColor = const AppColor(
     primary: Color(0xFF083458),
     white: Color(0xFFFFFFFF),
+    colorF65D3C: Color(0xFFF65D3C),
     color303538: Color(0xFF303538),
+    colorD3DAE0: Color(0xFFD3DAE0),
+    colorF7F9FA: Color(0xFFF7F9FA),
+    color8C8C8C: Color(0xFF8C8C8C),
   );
 
   ThemeData light({MaterialColor? theme}) {
     return ThemeData(
         useMaterial3: true,
         primaryColor: appColor.primary,
+        scaffoldBackgroundColor: Colors.white,
         scrollbarTheme: ScrollbarThemeData(
           trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
         ),
@@ -50,12 +55,20 @@ class AppThemes {
 class AppColor {
   final Color primary;
   final Color white;
+  final Color colorF65D3C;
   final Color color303538;
+  final Color colorD3DAE0;
+  final Color colorF7F9FA;
+  final Color color8C8C8C;
 
   const AppColor({
     required this.primary,
     required this.white,
+    required this.colorF65D3C,
     required this.color303538,
+    required this.colorD3DAE0,
+    required this.colorF7F9FA,
+    required this.color8C8C8C,
   });
 }
 
