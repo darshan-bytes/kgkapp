@@ -53,6 +53,7 @@ export 'package:kgk/utils/utils.dart';
 //Widgets
 export 'package:kgk/widgets/button.dart';
 export 'package:kgk/widgets/checkbox.dart';
+export 'package:kgk/widgets/custom_appbar.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 

@@ -1,12 +1,12 @@
 import 'package:kgk/kgk.dart';
 
 class LightModeTheme extends AppTheme {
-  final AppColor initcolors;
+  final AppColor initColors;
 
-  LightModeTheme(this.initcolors);
+  LightModeTheme(this.initColors);
 
   @override
-  AppColor get colors => initcolors;
+  AppColor get colors => initColors;
 
   @override
   TextStyle get interRegularTextStyle => TextStyle(
@@ -114,5 +114,29 @@ class LightModeTheme extends AppTheme {
         checkColor: colors.white,
         borderColor: colors.colorD3DAE0,
         textStyle: interRegularTextStyle,
+      );
+
+  @override
+  SplashScreenStyle get splashScreenStyle => SplashScreenStyle(
+        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16),
+        titleStyle: interMediumBoldTextStyle,
+        activeBackgroundColor: colors.white,
+      );
+
+  @override
+  CustomAppBarStyle get appBarStyle => CustomAppBarStyle(
+        backgroundColor: colors.colorF7F9FA,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18),
+        borderColor: colors.colorD3DAE0,
+      );
+
+  @override
+  // TODO: implement signInScreenStyle
+  SignInScreenStyle get signInScreenStyle => SignInScreenStyle(
+        backgroundColor: colors.white,
+        titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        lableStyle: interRegularTextStyle,
+        forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
 }

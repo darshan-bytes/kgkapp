@@ -14,4 +14,9 @@ class APPStrings {
   static const String error = 'error';
 
   static const String email = 'email';
+
+  // splash screen
+  static const String login = 'Login';
+  static const String register = 'Register';
+  static const String skip = 'Skip';
 }

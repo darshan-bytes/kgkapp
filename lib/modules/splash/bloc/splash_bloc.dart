@@ -10,7 +10,5 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   void navigateToSignInScreen(LoadSplashEvent event, Emitter<SplashState> emit) async {
     await Future.delayed(const Duration(seconds: 3));
-    Navigator.of(event.context).pushNamed(AppRoutes.signInPage);
-    emit(SplashLoadedState());
   }
 }
