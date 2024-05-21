@@ -35,14 +35,29 @@ export 'package:kgk/data/network/client/connectivity_manager.dart';
 export 'package:kgk/data/network/model/error_model.dart';
 export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
-export 'package:kgk/modules/no_internet/bloc/no_internet_bloc.dart';
+
+//screen
+export 'package:kgk/modules/b2b/tab_bar/view/dashboard_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/view/smart_bottom_navigation_bar.dart';
 export 'package:kgk/modules/no_internet/view/no_internert_screen.dart';
-export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
+export 'package:kgk/modules/splash/view/splash_screen.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/home/view/home_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/view/categories_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/my_bag/view/my_bag_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/support/view/support_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/profile/view/profile_screen.dart';
+
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
-//screen
-export 'package:kgk/modules/splash/view/splash_screen.dart';
+export 'package:kgk/modules/b2b/tab_bar/bloc/dashboard_bloc.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/home/bloc/home_bloc.dart';
+export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
+export 'package:kgk/modules/no_internet/bloc/no_internet_bloc.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/my_bag/bloc/my_bag_bloc.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/profile/bloc/profile_bloc.dart';
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/support/bloc/support_bloc.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
@@ -53,6 +68,7 @@ export 'package:kgk/utils/utils.dart';
 //Widgets
 export 'package:kgk/widgets/button.dart';
 export 'package:kgk/widgets/checkbox.dart';
+export 'package:kgk/widgets/network_image_viewer.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 

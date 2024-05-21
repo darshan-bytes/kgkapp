@@ -54,9 +54,8 @@ class SignInScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       PrimaryButton(
-                        isEnabled: false,
                         onClick: () {
-                          Utils.showMessage("Testing message");
+                          Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.dashboardPage, (route) => false);
                         },
                         title: APPStrings.signIn.tr,
                       ),

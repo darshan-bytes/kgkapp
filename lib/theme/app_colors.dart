@@ -38,7 +38,7 @@ class AppThemes {
         useMaterial3: true,
         primaryColor: appColor.primary,
         scrollbarTheme: ScrollbarThemeData(
-          trackColor: MaterialStateProperty.all(Colors.blue), // Change the track color here
+          trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
         ),
         scaffoldBackgroundColor: Colors.grey,
         colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),

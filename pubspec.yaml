@@ -70,7 +70,32 @@ flutter:
   fonts:
     - family: EBGaramond
       fonts:
-        - asset: assets/fonts/EBGaramond-Regular.ttf
+        - asset: assets/fonts/EB_Garamond/EBGaramond-Regular.ttf
+
+    - family: EBGaramondMedium
+      fonts:
+        - asset: assets/fonts/EB_Garamond/EBGaramond-Medium.ttf
+
+    - family: EBGaramondSemiBold
+      fonts:
+        - asset: assets/fonts/EB_Garamond/EBGaramond-SemiBold.ttf
+
+    - family: EBGaramondBold
+      fonts:
+        - asset: assets/fonts/EB_Garamond/EBGaramond-Bold.ttf
+
     - family: InterRegular
       fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+
+    - family: InterMedium
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+
+    - family: InterSemiBold
+      fonts:
+        - asset: assets/fonts/Inter/Inter-SemiBold.ttf
+
+    - family: InterBold
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
