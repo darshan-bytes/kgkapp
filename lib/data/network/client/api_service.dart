@@ -24,13 +24,13 @@ class ApiService implements ApiProvider {
         if (response.statusCode == 200) {
           return Right(jsonDecode(response.body));
         } else {
-          return const Left('Failed to fetch data');
+          return Left(APPStrings.failedFetchData.tr);
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 
@@ -59,10 +59,10 @@ class ApiService implements ApiProvider {
           return const Left('Failed to post data');
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 
@@ -91,10 +91,10 @@ class ApiService implements ApiProvider {
           return const Left('Failed to post data');
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 
@@ -123,10 +123,10 @@ class ApiService implements ApiProvider {
           return const Left('Failed to post data');
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 
@@ -150,10 +150,10 @@ class ApiService implements ApiProvider {
           return const Left('Failed to post data');
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 
@@ -205,10 +205,10 @@ class ApiService implements ApiProvider {
           return Left('Failed to post data: ${response.reasonPhrase}');
         }
       } else {
-        return const Left('Check your internet connection and try again');
+        return Left(APPStrings.checkInternet.tr);
       }
-    } catch (e, s) {
-      return const Left('Something went wrong');
+    } catch (e) {
+      return Left(APPStrings.somethingWrong.tr);
     }
   }
 }

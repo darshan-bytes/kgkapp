@@ -46,6 +46,8 @@ export 'package:kgk/modules/b2b/tab_bar/tab_modules/profile/bloc/profile_bloc.da
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/profile/view/profile_screen.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/support/bloc/support_bloc.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/support/view/support_screen.dart';
+export 'package:kgk/enums/enums.dart';
+
 //screen
 export 'package:kgk/modules/b2b/tab_bar/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/tab_bar/view/smart_bottom_navigation_bar.dart';
@@ -67,7 +69,7 @@ export 'package:kgk/utils/utils.dart';
 export 'package:kgk/widgets/button.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/custom_appbar.dart';
-export 'package:kgk/widgets/network_image_viewer.dart';
+export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 
