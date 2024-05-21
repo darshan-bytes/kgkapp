@@ -1,10 +1,14 @@
 import 'package:kgk/kgk.dart';
 
 part 'dashboard_event.dart';
+
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+  ///[currentIndex] is used to keep track of the current index of the bottom navigation bar
   int currentIndex = 0;
+
+  ///[pages] is a list of widgets that will be displayed on the screen based on the current index
   final List<Widget> pages = [
     const HomeScreen(),
     const CategoriesScreen(),
@@ -13,6 +17,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     const ProfileScreen(),
   ];
 
+  ///[blocList] is a list of blocs that are used in the bottom navigation bar and used for performing
+  /// actions on the screen based on the current index
   final blocList = [
     BlocProvider.of<HomeBloc>(getNavigatorKeyContext),
     BlocProvider.of<CategoriesBloc>(getNavigatorKeyContext),
@@ -25,7 +31,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<DashboardChangeTabEvent>(_onDashboardChangeTabEvent);
   }
 
-  void _onDashboardChangeTabEvent(DashboardChangeTabEvent event, Emitter<DashboardState> emit) {
+  ///[_onDashboardChangeTabEvent] is a method that is called when the [DashboardChangeTabEvent] is dispatched
+  /// to the bloc and it changes  the current index of the bottom navigation bar and emits the
+  /// [DashboardChangeTabState] with the new index to the UI.
+  void _onDashboardChangeTabEvent(
+    DashboardChangeTabEvent event,
+    Emitter<DashboardState> emit,
+  ) {
     if (currentIndex != event.index) {
       currentIndex = event.index;
       emit(DashboardChangeTabState(event.index));

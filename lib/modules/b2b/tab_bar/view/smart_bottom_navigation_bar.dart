@@ -1,5 +1,7 @@
 import 'package:kgk/kgk.dart';
 
+/// `SmartBottomNavigationBar` is a stateless widget that builds a custom bottom navigation bar.
+/// It takes a boolean `isShowSplashEffect` as a parameter to control the splash effect.
 class SmartBottomNavigationBar extends StatelessWidget {
   final bool isShowSplashEffect;
 
@@ -55,6 +57,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
                 activeIcon: SvgPicture.asset(AppImages.icSupportActive),
                 label: APPStrings.support.tr,
               ),
+              //TODO: Replace the image URL with the actual image URL
               BottomNavigationBarItem(
                 icon: Container(
                     height: 24,
@@ -85,6 +88,8 @@ class SmartBottomNavigationBar extends StatelessWidget {
       ),
     );
 
+    /// If `isShowSplashEffect` is `true`, then the splash effect is shown. Otherwise, the splash effect is disabled.
+    /// By default, the splash effect is disabled. also the BottomNavigationBar has default splash effect.
     return isShowSplashEffect
         ? child
         : Theme(
