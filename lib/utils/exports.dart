@@ -35,6 +35,7 @@ export 'package:kgk/data/network/client/connectivity_manager.dart';
 export 'package:kgk/data/network/model/error_model.dart';
 export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
+export 'package:kgk/enums/enums.dart';
 
 //screen
 export 'package:kgk/modules/b2b/tab_bar/view/dashboard_screen.dart';
@@ -68,7 +69,7 @@ export 'package:kgk/utils/utils.dart';
 //Widgets
 export 'package:kgk/widgets/button.dart';
 export 'package:kgk/widgets/checkbox.dart';
-export 'package:kgk/widgets/network_image_viewer.dart';
+export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 

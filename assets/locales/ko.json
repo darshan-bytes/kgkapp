@@ -11,5 +11,8 @@
   "categories": "Categories",
   "my_bag": "My Bag",
   "support": "Support",
-  "profile": "Profile"
+  "profile": "Profile",
+  "something_wrong": "Something went wrong",
+  "check_internet": "Check your internet connection and try again",
+  "failed_fetch_data": "Failed to fetch data"
 }
