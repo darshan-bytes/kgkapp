@@ -1,5 +1,7 @@
 import 'package:kgk/kgk.dart';
 
+import 'modules/forgot_password/bloc/forgot_password_bloc.dart';
+
 class BlocGenerator {
   static List<BlocProvider> generateBlocList() {
     return [
@@ -11,6 +13,7 @@ class BlocGenerator {
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
+      BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
     ];
   }
 }

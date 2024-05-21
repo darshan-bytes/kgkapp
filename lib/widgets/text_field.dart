@@ -133,10 +133,10 @@ class SmartTextFieldState extends State<SmartTextField> {
                   fillColor: widget.color ?? style.textFillColor,
                   contentPadding: widget.contentPadding ?? const EdgeInsets.all(16),
                   disabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
                       borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor)),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 8)),
+                    borderRadius: BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4)),
                     borderSide: BorderSide(
                       color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor,
                     ),
@@ -145,11 +145,11 @@ class SmartTextFieldState extends State<SmartTextField> {
                       borderSide: BorderSide(
                         color: style.focusedTextFieldBorderColor,
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(8))),
+                      borderRadius: const BorderRadius.all(Radius.circular(4))),
                   errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(8))),
+                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(4))),
                   focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(8))),
+                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(4))),
                   hintText: widget.hintText,
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),

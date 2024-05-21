@@ -158,4 +158,8 @@ class LightModeTheme extends AppTheme {
         lableStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
+
+  @override
+  SmartRichTextStyle get smartRichTextStyle =>
+      SmartRichTextStyle(subTextStyle: interRegularTextStyle.copyWith(color: colors.color083458), textStyle: interRegularTextStyle);
 }

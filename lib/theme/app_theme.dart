@@ -37,6 +37,8 @@ abstract class AppTheme {
   CustomAppBarStyle get appBarStyle;
 
   SignInScreenStyle get signInScreenStyle;
+
+  SmartRichTextStyle get smartRichTextStyle;
 }
 
 class PrimaryButtonStyle {
@@ -147,4 +149,11 @@ class SignInScreenStyle {
     required this.titleTextStyle,
     required this.subTitleStyle,
   });
+}
+
+class SmartRichTextStyle {
+  final TextStyle textStyle;
+  final TextStyle subTextStyle;
+
+  SmartRichTextStyle({required this.subTextStyle, required this.textStyle});
 }
