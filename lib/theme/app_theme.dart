@@ -30,6 +30,8 @@ abstract class AppTheme {
 
   CheckboxStyle get checkboxStyle;
 
+  TabBarStyle get tabBarStyle;
+
   SplashScreenStyle get splashScreenStyle;
 
   CustomAppBarStyle get appBarStyle;
@@ -88,6 +90,22 @@ class CheckboxStyle {
     required this.checkColor,
     required this.borderColor,
     required this.textStyle,
+  });
+}
+
+class TabBarStyle {
+  final TextStyle labelStyle;
+  final TextStyle unselectedLabelStyle;
+  final Color indicatorColor;
+  final Color backgroundColor;
+  final Color borderColor;
+
+  TabBarStyle({
+    required this.labelStyle,
+    required this.unselectedLabelStyle,
+    required this.indicatorColor,
+    required this.backgroundColor,
+    required this.borderColor,
   });
 }
 

@@ -4,7 +4,6 @@ class SmartNetworkImage extends StatelessWidget {
   final String url;
   final double? height;
   final double? width;
-  final double borderRadius;
   final BoxFit? fit;
   final BorderRadiusGeometry? imageBorderRadius;
 
@@ -14,7 +13,6 @@ class SmartNetworkImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
     this.width,
-    this.borderRadius = 0,
     this.imageBorderRadius,
   });
 
@@ -23,7 +21,7 @@ class SmartNetworkImage extends StatelessWidget {
     if (url.isNullOrEmpty) {
       return Container(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(borderRadius: imageBorderRadius ?? BorderRadius.circular(borderRadius)),
+        decoration: BoxDecoration(borderRadius: imageBorderRadius),
         child: Image.asset(
           AppImages.icPlaceholder,
           height: height,
@@ -34,7 +32,7 @@ class SmartNetworkImage extends StatelessWidget {
     }
     return Container(
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(borderRadius: imageBorderRadius ?? BorderRadius.circular(borderRadius)),
+      decoration: BoxDecoration(borderRadius: imageBorderRadius),
       child: url.isSvgUrl
           ? SvgPicture.network(url, width: width, height: height)
           : CachedNetworkImage(
