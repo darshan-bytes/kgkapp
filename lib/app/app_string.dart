@@ -19,9 +19,15 @@ class APPStrings {
   static const String support = 'support';
   static const String profile = 'profile';
 
+  // splash screen
+  static const String login = 'login';
+  static const String register = 'register';
+  static const String skip = 'skip';
   //something_wrong
-// check_internet
-// failed_fetch_data
+
+  // check_internet
+
+  // failed_fetch_data
   static const String somethingWrong = 'something_wrong';
   static const String checkInternet = 'check_internet';
   static const String failedFetchData = 'failed_fetch_data';

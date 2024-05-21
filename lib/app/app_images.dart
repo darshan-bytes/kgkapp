@@ -16,4 +16,11 @@ class AppImages {
   static const String icShoppingBagActive = 'assets/images/ic_shopping_bag_active.svg';
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
+  static const String icSplashLogo = 'assets/images/ic_splash_logo.png';
+
+  // appbar icon assets
+  static const String icBack = 'assets/images/ic_back.svg';
+  static const String icHeart = 'assets/images/ic_heart.svg';
+  static const String icNotification = 'assets/images/ic_notification.svg';
+  static const String icSearch = 'assets/images/ic_search.svg';
 }

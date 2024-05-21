@@ -31,6 +31,12 @@ abstract class AppTheme {
   CheckboxStyle get checkboxStyle;
 
   TabBarStyle get tabBarStyle;
+
+  SplashScreenStyle get splashScreenStyle;
+
+  CustomAppBarStyle get appBarStyle;
+
+  SignInScreenStyle get signInScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -100,5 +106,45 @@ class TabBarStyle {
     required this.indicatorColor,
     required this.backgroundColor,
     required this.borderColor,
+  });
+}
+
+class SplashScreenStyle {
+  final TextStyle titleStyle;
+  final Color activeBackgroundColor;
+  final TextStyle skipTextStyle;
+
+  SplashScreenStyle({
+    required this.titleStyle,
+    required this.skipTextStyle,
+    required this.activeBackgroundColor,
+  });
+}
+
+class CustomAppBarStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final TextStyle titleStyle;
+
+  CustomAppBarStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.borderColor,
+  });
+}
+
+class SignInScreenStyle {
+  final Color backgroundColor;
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle lableStyle;
+  final TextStyle forgotPasswordStyle;
+
+  SignInScreenStyle({
+    required this.lableStyle,
+    required this.forgotPasswordStyle,
+    required this.backgroundColor,
+    required this.titleTextStyle,
+    required this.subTitleStyle,
   });
 }
