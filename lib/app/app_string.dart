@@ -20,7 +20,7 @@ class APPStrings {
   static const String profile = 'profile';
 
   // splash screen
-  static const String login = 'Login';
-  static const String register = 'Register';
-  static const String skip = 'Skip';
+  static const String login = 'login';
+  static const String register = 'register';
+  static const String skip = 'skip';
 }
