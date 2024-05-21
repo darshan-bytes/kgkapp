@@ -14,14 +14,17 @@ class ForgotPasswordScreen extends StatelessWidget {
         backgroundColor: style.backgroundColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+      floatingActionButton:
+          BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
         builder: (context, state) {
           if (state is ForgotPasswordInitial) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
               child: PrimaryButton(
                 onClick: () {
-                  context.read<ForgotPasswordBloc>().add(const ForgotPasswordSubmitEvent());
+                  context
+                      .read<ForgotPasswordBloc>()
+                      .add(const ForgotPasswordSubmitEvent());
                 },
                 title: APPStrings.submit.tr,
               ),
@@ -52,28 +55,29 @@ class ForgotPasswordScreen extends StatelessWidget {
                       style: style.titleTextStyle,
                     ),
                     const SizedBox(height: 24),
-                    SmartRichText(
-                      textSpans: [
-                        TextSpan(
-                          text: 'Email has been sent successfully to your email address ',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        TextSpan(
-                          text: 'someone@email.com',
-                          style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // Handle email tap
-                            },
-                        ),
-                        TextSpan(
-                          text: '. Please use that link to change your password.',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ],
-                      padding: EdgeInsets.all(16.0),
-                      textAlign: TextAlign.center,
-                    ),
+                    //  install the buildTools for this version, please download it with SDKManager as hint.
+                    // SmartRichText(
+                    //   textSpans: [
+                    //     TextSpan(
+                    //       text: 'Email has been sent successfully to your email address ',
+                    //       style: TextStyle(color: Colors.black),
+                    //     ),
+                    //     TextSpan(
+                    //       text: 'someone@email.com',
+                    //       style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                    //       recognizer: TapGestureRecognizer()
+                    //         ..onTap = () {
+                    //           // Handle email tap
+                    //         },
+                    //     ),
+                    //     TextSpan(
+                    //       text: '. Please use that link to change your password.',
+                    //       style: TextStyle(color: Colors.black),
+                    //     ),
+                    //   ],
+                    //   padding: EdgeInsets.all(16.0),
+                    //   textAlign: TextAlign.center,
+                    // ),
 
                     // SmartRichText(
                     //     text: APPStrings.emailHasBeenSendSuccessfully.tr.interpolate(['patel@kgk.com']),

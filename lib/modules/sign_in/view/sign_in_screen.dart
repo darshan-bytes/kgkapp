@@ -13,15 +13,7 @@ class SignInScreen extends StatelessWidget {
         backgroundColor: style.backgroundColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SmartRichText(
-        textSpans: [],
-        textAlign: TextAlign.center,
-        text: APPStrings.dontHaveAccount.tr,
-        subText: APPStrings.register.tr,
-        onTap: () {
-          // TODO: Register
-        },
-      ),
+      floatingActionButton: buildRichText(),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -81,7 +73,8 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
+  Widget _buildForgotPasswordText(
+      BuildContext context, SignInScreenStyle style) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.forgotPasswordPage);
@@ -141,6 +134,18 @@ class SignInScreen extends StatelessWidget {
           onTap: () {},
           child: SvgPicture.asset(AppImages.icZoho),
         ),
+      ],
+    );
+  }
+
+  Widget buildRichText() {
+    return SmartRichText(
+      spans: [
+        SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
+        SmartTextSpan(
+          text: APPStrings.register.tr,
+          onTap: () {},
+        )
       ],
     );
   }
