@@ -11,5 +11,8 @@
   "categories": "Categories",
   "my_bag": "My Bag",
   "support": "Support",
-  "profile": "Profile"
+  "profile": "Profile",
+  "login": "Login",
+  "register": "Register",
+  "skip": "Skip"
 }

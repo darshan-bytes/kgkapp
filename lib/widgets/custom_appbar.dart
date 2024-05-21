@@ -93,7 +93,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: SmartText(
               textAlign: isCenter ? TextAlign.center : TextAlign.start,
               title!,
-              style: style.titleStyle ?? titleStyle,
+              style: titleStyle ?? style.titleStyle,
               overflow: TextOverflow.ellipsis,
             ),
           ),
