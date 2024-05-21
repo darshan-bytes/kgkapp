@@ -25,9 +25,7 @@ extension StringExtensions on String {
     }
   }
 
-  String toUpperCaseCustom() {
-    return toUpperCase();
-  }
+  String get toUpperCaseCustom => toUpperCase();
 
   String get getInitials {
     if (trim().isEmpty) {
@@ -68,6 +66,18 @@ extension StringExtensions on String {
       return utf8.decode(bytes);
     } catch (e) {
       return this;
+    }
+  }
+
+  ImageType get imageType {
+    if (RegExp(r'^http').hasMatch(this)) {
+      return ImageType.network;
+    } else if (toLowerCase().endsWith('.svg')) {
+      return ImageType.svg;
+    } else if (startsWith('assets/') && endsWith('.png')) {
+      return ImageType.asset;
+    } else {
+      return ImageType.file;
     }
   }
 }

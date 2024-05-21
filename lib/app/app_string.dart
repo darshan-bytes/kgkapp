@@ -18,4 +18,11 @@ class APPStrings {
   static const String myBag = 'my_bag';
   static const String support = 'support';
   static const String profile = 'profile';
+
+  //something_wrong
+// check_internet
+// failed_fetch_data
+  static const String somethingWrong = 'something_wrong';
+  static const String checkInternet = 'check_internet';
+  static const String failedFetchData = 'failed_fetch_data';
 }
