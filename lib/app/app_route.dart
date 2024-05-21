@@ -2,16 +2,29 @@ import 'package:kgk/kgk.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
-  static const signInPage = '/sign_in_page';
+  static const signInPage = '/signInPage';
+  static const dashboardPage = '/tabBarPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
     switch (settings.name) {
       case initialRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+          settings: const RouteSettings(name: initialRoute),
+        );
 
       case signInPage:
-        return MaterialPageRoute(builder: (_) => const SignInScreen());
+        return MaterialPageRoute(
+          builder: (_) => const SignInScreen(),
+          settings: const RouteSettings(name: signInPage),
+        );
 
+      case dashboardPage:
+        return MaterialPageRoute(
+          builder: (_) => const DashboardScreen(),
+          settings: const RouteSettings(name: dashboardPage),
+        );
       default:
         return _errorRoute();
     }

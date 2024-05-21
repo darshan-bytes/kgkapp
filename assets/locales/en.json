@@ -6,5 +6,10 @@
   "forgot_password": "Forgot Password?",
   "sign_in": "Sign In",
   "error": "Error!",
-  "email": "Email"
+  "email": "Email",
+  "home": "Home",
+  "categories": "Categories",
+  "my_bag": "My Bag",
+  "support": "Support",
+  "profile": "Profile"
 }

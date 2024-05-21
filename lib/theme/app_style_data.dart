@@ -20,19 +20,23 @@ class LightModeTheme extends AppTheme {
   TextStyle get interMediumBoldTextStyle => TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
-        fontFamily: AppFonts.interRegular,
+        fontFamily: AppFonts.interMedium,
         color: colors.color303538,
       );
 
   @override
-  TextStyle get interSemiBoldTextStyle =>
-      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, fontFamily: AppFonts.interRegular, color: colors.color303538);
+  TextStyle get interSemiBoldTextStyle => TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.w600,
+        fontFamily: AppFonts.interSemiBold,
+        color: colors.color303538,
+      );
 
   @override
   TextStyle get interBoldTextStyle => TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w700,
-        fontFamily: AppFonts.interRegular,
+        fontFamily: AppFonts.interBold,
         color: colors.color303538,
       );
 
@@ -48,7 +52,7 @@ class LightModeTheme extends AppTheme {
   TextStyle get eBGaramondMediumTextStyle => TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
-        fontFamily: AppFonts.eBGaramond,
+        fontFamily: AppFonts.eBGaramondMedium,
         color: colors.color303538,
       );
 
@@ -56,7 +60,7 @@ class LightModeTheme extends AppTheme {
   TextStyle get eBGaramondSemiBoldTextStyle => TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w600,
-        fontFamily: AppFonts.eBGaramond,
+        fontFamily: AppFonts.eBGaramondSemiBold,
         color: colors.color303538,
       );
 
@@ -64,7 +68,7 @@ class LightModeTheme extends AppTheme {
   TextStyle get eBGaramondBoldTextStyle => TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w700,
-        fontFamily: AppFonts.eBGaramond,
+        fontFamily: AppFonts.eBGaramondBold,
         color: colors.color303538,
       );
 
@@ -114,5 +118,20 @@ class LightModeTheme extends AppTheme {
         checkColor: colors.white,
         borderColor: colors.colorD3DAE0,
         textStyle: interRegularTextStyle,
+      );
+
+  @override
+  TabBarStyle get tabBarStyle => TabBarStyle(
+        unselectedLabelStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 12,
+          color: colors.color8C8C8C,
+        ),
+        labelStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 12,
+          color: colors.color303538,
+        ),
+        indicatorColor: colors.primary,
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
       );
 }
