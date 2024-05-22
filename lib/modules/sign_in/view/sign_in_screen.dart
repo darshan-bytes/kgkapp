@@ -38,7 +38,7 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _buildForgotPasswordText(context, style),
               const SizedBox(height: 32),
-              _buildLoginButton(),
+              _buildLoginButton(context),
               const SizedBox(height: 32),
               _buildDivider(style),
               const SizedBox(height: 24),
@@ -90,9 +90,11 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(BuildContext context) {
     return PrimaryButton(
-      onClick: () {},
+      onClick: () {
+        Navigator.pushNamed(context, AppRoutes.dashboardPage);
+      },
       title: APPStrings.login.tr,
     );
   }

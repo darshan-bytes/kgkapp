@@ -4,6 +4,7 @@ class BlocGenerator {
   static List<BlocProvider> generateBlocList() {
     return [
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
+      BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
       BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),

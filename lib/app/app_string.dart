@@ -1,7 +1,7 @@
 /// This class is a Dart class that contains a bunch of static strings that are used throughout the app
 /// Here we have defined all the strings of keys
 class APPStrings {
-  static const String appName = 'app_name';
+  static const String appName = 'KGK';
   static const String languageEn = 'en';
   static const String languageKo = 'ko';
 
