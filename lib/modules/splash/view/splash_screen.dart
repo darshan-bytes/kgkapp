@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: SvgPicture.asset(AppImages.icSplashBg, fit: BoxFit.cover),
+              child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
             ),
             SafeArea(
               child: Padding(

@@ -24,5 +24,10 @@ class AppImages {
   static const String icNotification = 'assets/images/ic_notification.svg';
   static const String icSearch = 'assets/images/ic_search.svg';
 
+  // sign in screen assets
+  static const String icGoogle = 'assets/images/ic_google.svg';
+  static const String icFacebook = 'assets/images/ic_facebook.svg';
+  static const String icZoho = 'assets/images/ic_zoho.svg';
+
   static const String icAppicon = 'assets/images/ic_app_icon.svg';
 }

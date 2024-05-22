@@ -27,7 +27,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       await StorageManager().setLocale(APPStrings.languageEn);
     }
 
-    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale(StorageManager().getLocale() ?? APPStrings.languageEn);
+    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
     emit(const ChangeValueState());
   }
 }

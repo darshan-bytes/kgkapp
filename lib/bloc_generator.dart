@@ -12,6 +12,9 @@ class BlocGenerator {
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
+      BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
+      BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
+      BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
     ];
   }
 }

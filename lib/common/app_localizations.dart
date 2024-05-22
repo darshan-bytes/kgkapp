@@ -1,7 +1,5 @@
 import 'package:kgk/kgk.dart';
 
-import '../main.dart';
-
 /// It loads the JSON file for the current locale and provides a method to translate a key into the
 /// localized string
 class AppLocalizations {
@@ -46,9 +44,8 @@ class AppLocalizations {
   /// Static member to have a simple access to the delegate from the MaterialApp
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  Future<void> changeLocale(String lang) async {
-    MyApp.notifier.value = Locale(StorageManager().getLocale() ?? APPStrings.languageEn);
-    locale = MyApp.notifier.value;
+  Future<void> changeLocale() async {
+    locale = Locale(StorageManager().getLocale() ?? APPStrings.languageEn);
     await load();
   }
 }
