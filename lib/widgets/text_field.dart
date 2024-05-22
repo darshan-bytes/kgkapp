@@ -104,7 +104,7 @@ class SmartTextFieldState extends State<SmartTextField> {
               widget.lableText!,
               style: style.labelStyle.merge(widget.lableStyle),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
           ],
           SizedBox(
             height: widget.height,

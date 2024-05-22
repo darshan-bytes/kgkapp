@@ -1,0 +1,86 @@
+import 'package:kgk/kgk.dart';
+
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = AppTheme.of(context).signInScreenStyle;
+    return Scaffold(
+      appBar: CustomAppBar(
+        appBarHeight: 52,
+        isBorder: false,
+        backgroundColor: style.backgroundColor,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+        builder: (context, state) {
+          if (state is ResetPasswordInitial) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17),
+              child: PrimaryButton(
+                onClick: () {},
+                title: APPStrings.confirmAndLogIn.tr,
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      body: BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+        builder: (context, state) {
+          if (state is ForgotPasswordError) {
+            return Container();
+          } else {
+            return buildInitialView(context);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget buildInitialView(BuildContext context) {
+    final style = AppTheme.of(context).signInScreenStyle;
+    final TextEditingController newPasswordController = TextEditingController();
+    final TextEditingController confirmPasswordController = TextEditingController();
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 17),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SmartText(
+              APPStrings.resetPassword.tr,
+              style: style.titleTextStyle,
+            ),
+            SmartText(
+              APPStrings.resetPasswordDescription.tr,
+              style: style.subTitleStyle,
+            ),
+            const SizedBox(height: 32),
+            SmartTextField(
+              controller: newPasswordController,
+              lableText: APPStrings.newPassword.tr,
+              lableStyle: style.lableStyle,
+              obscured: true,
+              onEditingComplete: () {
+                FocusScope.of(context).nextFocus();
+              },
+            ),
+            const SizedBox(height: 16),
+            SmartTextField(
+              controller: confirmPasswordController,
+              lableText: APPStrings.confirmPassword.tr,
+              lableStyle: style.lableStyle,
+              obscured: true,
+              onEditingComplete: () {
+                FocusScope.of(context).nextFocus();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

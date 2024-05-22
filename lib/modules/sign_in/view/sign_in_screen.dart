@@ -73,8 +73,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildForgotPasswordText(
-      BuildContext context, SignInScreenStyle style) {
+  Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.forgotPasswordPage);

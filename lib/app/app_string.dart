@@ -43,4 +43,13 @@ class APPStrings {
   static const String submit = 'submit';
   static const String forgotPasswordDescription = 'forgot_password_description';
   static const String emailHasBeenSendSuccessfully = 'email_has_been_send_successfully_to_your_email_address';
+  static const String didNotReceivedEmail = 'did_not_received_email';
+  static const String resend = 'resend';
+
+  // reset password screen
+  static const String resetPassword = 'reset_password';
+  static const String newPassword = 'new_password';
+  static const String confirmPassword = 'confirm_password';
+  static const String resetPasswordDescription = 'reset_password_description';
+  static const String confirmAndLogIn = 'confirm_and_log_in';
 }

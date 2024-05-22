@@ -161,7 +161,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(subTextStyle: interRegularTextStyle.copyWith(color: colors.color083458), textStyle: interRegularTextStyle);
+      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
       
   // TODO: implement categoryTileStyle
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
@@ -169,4 +169,11 @@ class LightModeTheme extends AppTheme {
       dividerLineColor: colors.colorD3DAE0,
       lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
+      
+
+  @override
+  ForgotPasswordScreenStyle get forgotPasswordScreenStyle => ForgotPasswordScreenStyle(
+      richSubTextStyle: interSemiBoldTextStyle,
+      resendTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
+      didNotGetEmailTextStyle: interRegularTextStyle);
 }

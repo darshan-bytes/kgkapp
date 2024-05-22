@@ -24,5 +24,12 @@
   "dont_have_account": "Don’t have an account?",
   "submit": "Submit",
   "forgot_password_description": "Enter the email address you used when you joined and we’ll send you instructions to reset your password.",
-  "email_has_been_send_successfully_to_your_email_address": "Email has been send successfully to your email address {#}. Please use that link to change your password."
+  "email_has_been_send_successfully_to_your_email_address": "Email has been send successfully to your email address {#}. Please use that link to change your password.",
+  "did_not_received_email": "Didn’t received an email?",
+  "resend": "Resend",
+  "reset_password": "Reset password",
+  "new_password": "New Password",
+  "confirm_password": "Confirm Password",
+  "reset_password_description": "Your new password should be different from your previously used password.",
+  "confirm_and_log_in": "Confirm and Login"
 }

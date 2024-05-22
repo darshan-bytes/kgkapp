@@ -1,5 +1,5 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
+
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -7,6 +7,7 @@ class AppRoutes {
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
+  static const resetPasswordPage = '/resetPasswordPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -36,6 +37,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const ForgotPasswordScreen(),
           settings: const RouteSettings(name: forgotPasswordPage),
+        );
+
+      case resetPasswordPage:
+        return MaterialPageRoute(
+          builder: (_) => const ResetPasswordScreen(),
+          settings: const RouteSettings(name: resetPasswordPage),
         );
 
       default:
