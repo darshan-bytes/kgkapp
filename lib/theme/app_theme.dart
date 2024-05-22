@@ -37,6 +37,8 @@ abstract class AppTheme {
   CustomAppBarStyle get appBarStyle;
 
   SignInScreenStyle get signInScreenStyle;
+
+  CategoryTileStyle get categoryTileStyle;
 }
 
 class PrimaryButtonStyle {
@@ -146,5 +148,19 @@ class SignInScreenStyle {
     required this.backgroundColor,
     required this.titleTextStyle,
     required this.subTitleStyle,
+  });
+}
+
+class CategoryTileStyle {
+  final TextStyle lableStyle;
+  final TextStyle detailStyle;
+  final Color backgroundColor;
+  final Color dividerLineColor;
+
+  CategoryTileStyle({
+    required this.lableStyle,
+    required this.backgroundColor,
+    required this.detailStyle,
+    required this.dividerLineColor,
   });
 }

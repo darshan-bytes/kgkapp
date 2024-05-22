@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
                         Expanded(
                           child: PrimaryButton(
                             onClick: () {
-                              Navigator.pushNamed(context, AppRoutes.signInPage);
+                              Navigator.pushNamed(context, AppRoutes.dashboardPage);
                             },
                             activeBackgroundColor: style.activeBackgroundColor,
                             titleStyle: style.titleStyle,

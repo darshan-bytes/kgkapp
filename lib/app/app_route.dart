@@ -3,6 +3,7 @@ import 'package:kgk/kgk.dart';
 class AppRoutes {
   static const initialRoute = '/';
   static const signInPage = '/signInPage';
+  static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,6 +20,9 @@ class AppRoutes {
           builder: (_) => const SignInScreen(),
           settings: const RouteSettings(name: signInPage),
         );
+
+      case categoriesPage:
+        return MaterialPageRoute(builder: (_) => const CategoriesScreen(), settings: const RouteSettings(name: categoriesPage));
 
       case dashboardPage:
         return MaterialPageRoute(
