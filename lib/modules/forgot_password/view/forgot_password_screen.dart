@@ -53,6 +53,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     lableText: APPStrings.email.tr,
                     hintText: APPStrings.email.tr,
                     lableStyle: style.lableStyle,
+                    keyboardType: TextInputType.emailAddress,
                     onEditingComplete: () {
                       FocusScope.of(context).nextFocus();
                     },
