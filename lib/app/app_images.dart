@@ -36,4 +36,11 @@ class AppImages {
   static const String icCompany = 'assets/images/ic_company.svg';
   static const String icArrowDown = 'assets/images/ic_arrow_down.svg';
   static const String icMinus = 'assets/images/ic_minus.svg';
+  //product item
+  static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
+  static const String icAddEye = 'assets/images/ic_add_eye.svg';
+  static const String icCancel = 'assets/images/ic_cancle.svg';
+  static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
+  static const String icGram = 'assets/images/ic_gram.svg';
+  static const String icDiamond = 'assets/images/ic_diamond.svg';
 }
