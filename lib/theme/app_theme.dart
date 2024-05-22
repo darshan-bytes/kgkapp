@@ -51,6 +51,10 @@ abstract class AppTheme {
   SettingViewStyle get settingViewStyle;
 
   CollectionViewStyle get collectionViewStyle;
+
+  SignUpStyle get signUpStyle;
+
+  RadioButtonStyle get radioButtonStyle;
 }
 
 class PrimaryButtonStyle {
@@ -151,11 +155,11 @@ class SignInScreenStyle {
   final Color backgroundColor;
   final TextStyle titleTextStyle;
   final TextStyle subTitleStyle;
-  final TextStyle lableStyle;
+  final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
 
   SignInScreenStyle({
-    required this.lableStyle,
+    required this.labelStyle,
     required this.forgotPasswordStyle,
     required this.backgroundColor,
     required this.titleTextStyle,
@@ -182,13 +186,13 @@ class ForgotPasswordScreenStyle {
 }
 
 class CategoryTileStyle {
-  final TextStyle lableStyle;
+  final TextStyle labelStyle;
   final TextStyle detailStyle;
   final Color backgroundColor;
   final Color dividerLineColor;
 
   CategoryTileStyle({
-    required this.lableStyle,
+    required this.labelStyle,
     required this.backgroundColor,
     required this.detailStyle,
     required this.dividerLineColor,
@@ -248,4 +252,48 @@ class CollectionViewStyle {
       required this.headerTitleStyle,
       required this.headerSubTitleStyle,
       required this.collectionListTitleStyle});
+}
+
+class SignUpStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle selectAccountStyle;
+  final Color selectedAccountTypeColor;
+  final Color selectedAccountTypeBorderColor;
+  final Color selectedAccountTypeIconColor;
+  final TextStyle selectedAccountTypeTextStyle;
+  final Color unselectedAccountTypeColor;
+  final Color unselectedAccountTypeBorderColor;
+  final Color unselectedAccountTypeIconColor;
+  final TextStyle unselectedAccountTypeTextStyle;
+
+  SignUpStyle({
+    required this.selectAccountStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.backgroundColor,
+    required this.selectedAccountTypeColor,
+    required this.selectedAccountTypeBorderColor,
+    required this.selectedAccountTypeIconColor,
+    required this.selectedAccountTypeTextStyle,
+    required this.unselectedAccountTypeColor,
+    required this.unselectedAccountTypeBorderColor,
+    required this.unselectedAccountTypeIconColor,
+    required this.unselectedAccountTypeTextStyle,
+  });
+}
+
+class RadioButtonStyle {
+  final Color activeColor;
+  final Color checkColor;
+  final Color borderColor;
+  final TextStyle textStyle;
+
+  RadioButtonStyle({
+    required this.activeColor,
+    required this.checkColor,
+    required this.borderColor,
+    required this.textStyle,
+  });
 }

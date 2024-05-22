@@ -4,6 +4,7 @@ class AppRoutes {
   static const initialRoute = '/';
   static const getReadyPage = '/getReadyPage';
   static const signInPage = '/signInPage';
+  static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
@@ -33,6 +34,14 @@ class AppRoutes {
           settings: const RouteSettings(name: signInPage),
         );
 
+      case signUpPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SignUpBloc>(context).add(const SignUpResetEvent());
+            return const SignUpScreen();
+          },
+          settings: const RouteSettings(name: signUpPage),
+        );
       case categoriesPage:
         return MaterialPageRoute(
           builder: (_) => const CategoriesScreen(),

@@ -1,14 +1,10 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
+import 'package:kgk/kgk.dart';
 part 'collection_event.dart';
 
 part 'collection_state.dart';
 
 class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
   CollectionBloc() : super(CollectionInitial()) {
-    on<CollectionEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<CollectionEvent>((event, emit) {});
   }
 }

@@ -1,0 +1,68 @@
+part of 'signup_bloc.dart';
+
+sealed class SignUpEvent extends Equatable {
+  const SignUpEvent();
+}
+
+final class SignUpChangeAccountTypeEvent extends SignUpEvent {
+  final bool isIndividual;
+
+  const SignUpChangeAccountTypeEvent(this.isIndividual);
+
+  @override
+  List<Object> get props => [isIndividual];
+}
+
+final class SignUpChangeCountryCodeEvent extends SignUpEvent {
+  final int index;
+  final Country country;
+
+  const SignUpChangeCountryCodeEvent({
+    required this.index,
+    required this.country,
+  });
+
+  @override
+  List<Object> get props => [index, country];
+}
+
+final class SignUpChangeCountryEvent extends SignUpEvent {
+  final Country country;
+
+  const SignUpChangeCountryEvent(this.country);
+
+  @override
+  List<Object> get props => [country];
+}
+
+final class SignUpBusinessTypeChangedEvent extends SignUpEvent {
+  final BusinessType? businessType;
+
+  const SignUpBusinessTypeChangedEvent(this.businessType);
+
+  @override
+  List<Object> get props => businessType != null ? [businessType!] : [];
+}
+
+final class SignupAddContactEvent extends SignUpEvent {
+  const SignupAddContactEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SignUpRemoveContactEvent extends SignUpEvent {
+  final int index;
+
+  const SignUpRemoveContactEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+final class SignUpResetEvent extends SignUpEvent {
+  const SignUpResetEvent();
+
+  @override
+  List<Object> get props => [];
+}

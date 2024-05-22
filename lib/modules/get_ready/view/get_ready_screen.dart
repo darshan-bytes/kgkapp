@@ -42,8 +42,8 @@ class GetReadyScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: PrimaryButton(
-                          onClick: () {
+                        child: SmartButton(
+                          onTap: () {
                             Navigator.pushNamed(context, AppRoutes.signInPage);
                           },
                           activeBackgroundColor: style.activeBackgroundColor,
@@ -53,8 +53,10 @@ class GetReadyScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: PrimaryButton(
-                          onClick: () {},
+                        child: SmartButton(
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutes.signUpPage);
+                          },
                           activeBackgroundColor: style.activeBackgroundColor,
                           titleStyle: style.titleStyle,
                           title: APPStrings.register.tr,

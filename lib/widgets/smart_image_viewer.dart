@@ -6,6 +6,7 @@ class SmartImage extends StatelessWidget {
   final double? width;
   final BoxFit? fit;
   final BorderRadiusGeometry? imageBorderRadius;
+  final Color? color;
 
   const SmartImage({
     super.key,
@@ -14,6 +15,7 @@ class SmartImage extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.width,
     this.imageBorderRadius,
+    this.color,
   });
 
   @override
@@ -40,6 +42,7 @@ class SmartImage extends StatelessWidget {
             width: width,
             height: height,
             fit: fit ?? BoxFit.contain,
+            colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
           ),
         );
       case ImageType.asset:
