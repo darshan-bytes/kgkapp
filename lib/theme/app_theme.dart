@@ -49,6 +49,10 @@ abstract class AppTheme {
   AllNotificationViewStyle get allNotificationViewStyle;
 
   SettingViewStyle get settingViewStyle;
+
+  DiyProgressViewStyle get diyProgressViewStyle;
+
+  DiamondDetailScreenStyle get diamondDetailScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -232,5 +236,47 @@ class SettingViewStyle {
     required this.descStyle,
     required this.thumbColor,
     required this.dividerColor,
+  });
+}
+
+class DiyProgressViewStyle {
+  final TextStyle titleStyle;
+  final Color selectedBorderColor;
+  final Color unselectedBorderColor;
+
+  DiyProgressViewStyle({
+    required this.titleStyle,
+    required this.selectedBorderColor,
+    required this.unselectedBorderColor,
+  });
+}
+
+class DiamondDetailScreenStyle {
+  final TextStyle skuStyle;
+  final TextStyle diamondNameStyle;
+  final TextStyle reviewStyle;
+  final TextStyle priceStyle;
+  final TextStyle seeProductStyle;
+  final TextStyle orderSampleStyle;
+  final TextStyle diamondPurityStyle;
+  final TextStyle shippingStyle;
+  final TextStyle haveAQuestionStyle;
+  final TextStyle reachOutStyle;
+  final TextStyle phoneStyle;
+  final TextStyle emailStyle;
+
+  DiamondDetailScreenStyle({
+    required this.skuStyle,
+    required this.diamondNameStyle,
+    required this.reviewStyle,
+    required this.priceStyle,
+    required this.seeProductStyle,
+    required this.orderSampleStyle,
+    required this.diamondPurityStyle,
+    required this.shippingStyle,
+    required this.haveAQuestionStyle,
+    required this.reachOutStyle,
+    required this.phoneStyle,
+    required this.emailStyle,
   });
 }

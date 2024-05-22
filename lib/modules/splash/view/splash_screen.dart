@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
                         Expanded(
                           child: PrimaryButton(
                             onClick: () {
-                              Navigator.pushNamed(context, AppRoutes.dashboardPage);
+                              Navigator.pushNamed(context, AppRoutes.diamondDetailPage);
                             },
                             activeBackgroundColor: style.activeBackgroundColor,
                             titleStyle: style.titleStyle,

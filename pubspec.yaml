@@ -54,6 +54,12 @@ dependencies:
   # For Cached Network Image
   cached_network_image: ^3.3.1
 
+  # For Carousel image Slider
+  carousel_slider: ^4.2.1
+
+  # For Rating Bar
+  flutter_rating_bar: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

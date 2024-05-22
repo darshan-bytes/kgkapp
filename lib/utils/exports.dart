@@ -20,6 +20,7 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
+export 'package:carousel_slider/carousel_slider.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_fonts.dart';
 export 'package:kgk/app/app_images.dart';
@@ -89,6 +90,7 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:kgk/widgets/smart_switch.dart';
+export 'package:kgk/widgets/diy_progress_widget.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

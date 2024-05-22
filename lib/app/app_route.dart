@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -9,6 +10,7 @@ class AppRoutes {
   static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
+  static const diamondDetailPage = '/diamondDetailPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -55,6 +57,9 @@ class AppRoutes {
 
       case notificationPage:
         return MaterialPageRoute(builder: (_) => const NotificationScreen(), settings: const RouteSettings(name: notificationPage));
+
+      case diamondDetailPage:
+        return MaterialPageRoute(builder: (_) => const DiamondDetailScreen(), settings: const RouteSettings(name: diamondDetailPage));
 
       default:
         return _errorRoute();
