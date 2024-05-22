@@ -162,18 +162,42 @@ class LightModeTheme extends AppTheme {
   @override
   SmartRichTextStyle get smartRichTextStyle =>
       SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
-      
+
   // TODO: implement categoryTileStyle
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
       backgroundColor: colors.colorF7F9FA,
       dividerLineColor: colors.colorD3DAE0,
       lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
-      
+
 
   @override
   ForgotPasswordScreenStyle get forgotPasswordScreenStyle => ForgotPasswordScreenStyle(
       richSubTextStyle: interSemiBoldTextStyle,
       resendTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
       didNotGetEmailTextStyle: interRegularTextStyle);
+
+  @override
+  NotificationScreenStyle get notificationScreenStyle => NotificationScreenStyle(
+    tabTitleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+    selectedTabColor: colors.color303538,
+    unselectedTabColor: colors.color8C8C8C
+  );
+
+  @override
+  AllNotificationViewStyle get allNotificationViewStyle => AllNotificationViewStyle(
+      titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
+      descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color303538),
+      timeLabelStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      dotColor: colors.primary,
+      searchHintStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+  );
+
+  @override
+  SettingViewStyle get settingViewStyle => SettingViewStyle(
+    titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
+    descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color8C8C8C),
+    thumbColor: colors.white,
+    dividerColor: colors.colorD3DAE0
+  );
 }

@@ -31,5 +31,15 @@
   "new_password": "New Password",
   "confirm_password": "Confirm Password",
   "reset_password_description": "Your new password should be different from your previously used password.",
-  "confirm_and_log_in": "Confirm and Login"
+  "confirm_and_log_in": "Confirm and Login",
+  "notification": "Notifications",
+  "all_notification": "All Notifications",
+  "settings": "Settings",
+  "search_notification": "Search Notification",
+  "announcements": "Announcements",
+  "notify_me_for_every_announcement": "Notify me for every announcement",
+  "file_shared_by_salesman": "File shared by salesman",
+  "share_by_salesman_desc": "When a salesman shares presentation, moodboard, Digital catalogue from KGK.CC.",
+  "order_status_update": "Order status update",
+  "change_in_order_status": "Any change in the order status will be notified"
 }

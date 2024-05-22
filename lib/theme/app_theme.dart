@@ -39,10 +39,16 @@ abstract class AppTheme {
   SignInScreenStyle get signInScreenStyle;
 
   SmartRichTextStyle get smartRichTextStyle;
-  
+
   CategoryTileStyle get categoryTileStyle;
 
   ForgotPasswordScreenStyle get forgotPasswordScreenStyle;
+
+  NotificationScreenStyle get notificationScreenStyle;
+
+  AllNotificationViewStyle get allNotificationViewStyle;
+
+  SettingViewStyle get settingViewStyle;
 }
 
 class PrimaryButtonStyle {
@@ -185,4 +191,46 @@ class CategoryTileStyle {
     required this.detailStyle,
     required this.dividerLineColor,
   });
-} 
+}
+
+class NotificationScreenStyle {
+  final TextStyle tabTitleStyle;
+  final Color selectedTabColor;
+  final Color unselectedTabColor;
+
+  NotificationScreenStyle({
+    required this.tabTitleStyle,
+    required this.selectedTabColor,
+    required this.unselectedTabColor,
+  });
+}
+
+class AllNotificationViewStyle {
+  final TextStyle titleStyle;
+  final TextStyle descStyle;
+  final TextStyle timeLabelStyle;
+  final TextStyle searchHintStyle;
+  final Color dotColor;
+
+  AllNotificationViewStyle({
+    required this.titleStyle,
+    required this.descStyle,
+    required this.timeLabelStyle,
+    required this.searchHintStyle,
+    required this.dotColor,
+  });
+}
+
+class SettingViewStyle {
+  final TextStyle titleStyle;
+  final TextStyle descStyle;
+  final Color thumbColor;
+  final Color dividerColor;
+
+  SettingViewStyle({
+    required this.titleStyle,
+    required this.descStyle,
+    required this.thumbColor,
+    required this.dividerColor,
+  });
+}

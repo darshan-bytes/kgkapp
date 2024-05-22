@@ -61,6 +61,9 @@ export 'package:kgk/modules/reset_password/bloc/reset_password_bloc.dart';
 export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
 export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
+export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
+export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
+export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
@@ -85,6 +88,7 @@ export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
+export 'package:kgk/widgets/smart_switch.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';
