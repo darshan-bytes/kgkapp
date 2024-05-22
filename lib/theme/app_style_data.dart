@@ -158,4 +158,12 @@ class LightModeTheme extends AppTheme {
         lableStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
+
+  @override
+  // TODO: implement categoryTileStyle
+  CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
+      backgroundColor: colors.colorF7F9FA,
+      dividerLineColor: colors.colorD3DAE0,
+      lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
+      detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
 }
