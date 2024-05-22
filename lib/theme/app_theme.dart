@@ -38,7 +38,11 @@ abstract class AppTheme {
 
   SignInScreenStyle get signInScreenStyle;
 
+  SmartRichTextStyle get smartRichTextStyle;
+  
   CategoryTileStyle get categoryTileStyle;
+
+  ForgotPasswordScreenStyle get forgotPasswordScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -151,6 +155,24 @@ class SignInScreenStyle {
   });
 }
 
+class SmartRichTextStyle {
+  final TextStyle textStyle;
+
+  SmartRichTextStyle({required this.textStyle});
+}
+
+class ForgotPasswordScreenStyle {
+  final TextStyle richSubTextStyle;
+  final TextStyle resendTextStyle;
+  final TextStyle didNotGetEmailTextStyle;
+
+  ForgotPasswordScreenStyle({
+    required this.richSubTextStyle,
+    required this.resendTextStyle,
+    required this.didNotGetEmailTextStyle,
+  });
+}
+
 class CategoryTileStyle {
   final TextStyle lableStyle;
   final TextStyle detailStyle;
@@ -163,4 +185,4 @@ class CategoryTileStyle {
     required this.detailStyle,
     required this.dividerLineColor,
   });
-}
+} 

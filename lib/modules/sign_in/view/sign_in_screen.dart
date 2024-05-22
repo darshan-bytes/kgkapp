@@ -12,60 +12,142 @@ class SignInScreen extends StatelessWidget {
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: buildRichText(),
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SmartText(
-                  APPStrings.login.tr,
-                  style: style.titleTextStyle,
-                ),
-                // SmartText(),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 17),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SmartText(
+                APPStrings.login.tr,
+                style: style.titleTextStyle,
+              ),
+              SmartText(
+                APPStrings.enterYourAccountDetails.tr,
+                style: style.subTitleStyle,
+              ),
+              const SizedBox(height: 32),
+              _buildEmailField(style, context),
+              const SizedBox(height: 24),
+              _buildPasswordField(style, context),
+              const SizedBox(height: 16),
+              _buildForgotPasswordText(context, style),
+              const SizedBox(height: 32),
+              _buildLoginButton(),
+              const SizedBox(height: 32),
+              _buildDivider(style),
+              const SizedBox(height: 24),
+              _buildSocialMediaButtons(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                // SmartTextField(
-                //   isRequired: true,
-                //   obscured: true,
-                //   lableText: APPStrings.email.tr,
-                //   hintText: APPStrings.email.tr,
-                //   onEditingComplete: () {
-                //     FocusScope.of(context).nextFocus();
-                //   },
-                // ),
-                // const SizedBox(height: 16),
-                // SmartCheckbox(
-                //   value: appBloc.switchValue,
-                //   onChanged: (value) {
-                //     Utils.showMessage("Testing message");
-                //     appBloc.add(ChangeThemeEvent(!appBloc.switchValue ? 'dark' : 'light'));
-                //   },
-                //   label: APPStrings.pleaseEnterEmailPass.tr,
-                // ),
-                // const SizedBox(height: 16),
-                // Text(APPStrings.pleaseEnterEmailPass.tr),
-                // CupertinoSwitch(
-                //   value: appBloc.switchValue,
-                //   onChanged: (value) {
-                //     Utils.showMessage("Testing message");
-                //     appBloc.add(ChangeThemeEvent(!appBloc.switchValue ? 'dark' : 'light'));
-                //     // signInBloc.add(ChangeSwitchValueEvent(switchValue: value));
-                //   },
-                // ),
-                // const SizedBox(height: 16),
-                // PrimaryButton(
-                //   isEnabled: false,
-                //   onClick: () {
-                //     Utils.showMessage("Testing message");
-                //   },
-                //   title: APPStrings.signIn.tr,
-                // ),
-              ],
-            ),
-          )),
+  Widget _buildEmailField(SignInScreenStyle style, context) {
+    return SmartTextField(
+      lableText: APPStrings.email.tr,
+      hintText: APPStrings.email.tr,
+      lableStyle: style.lableStyle,
+      keyboardType: TextInputType.emailAddress,
+      onEditingComplete: () {
+        FocusScope.of(context).nextFocus();
+      },
+    );
+  }
+
+  Widget _buildPasswordField(SignInScreenStyle style, context) {
+    return SmartTextField(
+      obscured: true,
+      lableText: APPStrings.password.tr,
+      hintText: APPStrings.password.tr,
+      keyboardType: TextInputType.visiblePassword,
+      lableStyle: style.lableStyle,
+      onEditingComplete: () {
+        FocusScope.of(context).nextFocus();
+      },
+    );
+  }
+
+  Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.forgotPasswordPage);
+      },
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: SmartText(
+          APPStrings.forgotPassword.tr.interpolate(['?']),
+          style: style.forgotPasswordStyle,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return PrimaryButton(
+      onClick: () {},
+      title: APPStrings.login.tr,
+    );
+  }
+
+  Widget _buildDivider(SignInScreenStyle style) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        const Divider(),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          color: style.backgroundColor,
+          child: SmartText(
+            APPStrings.orLoginWith.tr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.lableStyle,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialMediaButtons() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {},
+          child: const SmartImage(path: AppImages.icFacebook,),
+        ),
+        const SizedBox(width: 40),
+        GestureDetector(
+          onTap: () {},
+          child: const SmartImage(path : AppImages.icGoogle),
+        ),
+        const SizedBox(width: 40),
+        GestureDetector(
+          onTap: () {},
+          child: const SmartImage(path:AppImages.icZoho),
+        ),
+      ],
+    );
+  }
+
+  Widget buildRichText() {
+    return SmartRichText(
+      spans: [
+        SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
+        SmartTextSpan(
+          text: APPStrings.register.tr,
+          onTap: () {},
+        )
+      ],
     );
   }
 }

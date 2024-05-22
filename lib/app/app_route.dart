@@ -5,6 +5,9 @@ class AppRoutes {
   static const signInPage = '/signInPage';
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
+  static const forgotPasswordPage = '/forgotPasswordPage';
+  static const resetPasswordPage = '/resetPasswordPage';
+  static const emailSentPage = '/emailSentPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -29,6 +32,25 @@ class AppRoutes {
           builder: (_) => const DashboardScreen(),
           settings: const RouteSettings(name: dashboardPage),
         );
+
+      case forgotPasswordPage:
+        return MaterialPageRoute(
+          builder: (_) => const ForgotPasswordScreen(),
+          settings: const RouteSettings(name: forgotPasswordPage),
+        );
+
+      case resetPasswordPage:
+        return MaterialPageRoute(
+          builder: (_) => const ResetPasswordScreen(),
+          settings: const RouteSettings(name: resetPasswordPage),
+        );
+
+      case emailSentPage:
+        return MaterialPageRoute(
+          builder: (_) => const ForgotEmailSentScreen(),
+          settings: const RouteSettings(name: emailSentPage),
+        );
+
       default:
         return _errorRoute();
     }
