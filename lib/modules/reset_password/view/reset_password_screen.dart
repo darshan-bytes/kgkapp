@@ -29,57 +29,49 @@ class ResetPasswordScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
         builder: (context, state) {
-          if (state is ForgotPasswordError) {
-            return Container();
-          } else {
-            return buildInitialView(context);
-          }
+          final style = AppTheme.of(context).signInScreenStyle;
+          final TextEditingController newPasswordController = TextEditingController();
+          final TextEditingController confirmPasswordController = TextEditingController();
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SmartText(
+                    APPStrings.resetPassword.tr,
+                    style: style.titleTextStyle,
+                  ),
+                  SmartText(
+                    APPStrings.resetPasswordDescription.tr,
+                    style: style.subTitleStyle,
+                  ),
+                  const SizedBox(height: 32),
+                  SmartTextField(
+                    controller: newPasswordController,
+                    lableText: APPStrings.newPassword.tr,
+                    lableStyle: style.lableStyle,
+                    obscured: true,
+                    onEditingComplete: () {
+                      FocusScope.of(context).nextFocus();
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  SmartTextField(
+                    controller: confirmPasswordController,
+                    lableText: APPStrings.confirmPassword.tr,
+                    lableStyle: style.lableStyle,
+                    obscured: true,
+                    onEditingComplete: () {
+                      FocusScope.of(context).nextFocus();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
         },
-      ),
-    );
-  }
-
-  Widget buildInitialView(BuildContext context) {
-    final style = AppTheme.of(context).signInScreenStyle;
-    final TextEditingController newPasswordController = TextEditingController();
-    final TextEditingController confirmPasswordController = TextEditingController();
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SmartText(
-              APPStrings.resetPassword.tr,
-              style: style.titleTextStyle,
-            ),
-            SmartText(
-              APPStrings.resetPasswordDescription.tr,
-              style: style.subTitleStyle,
-            ),
-            const SizedBox(height: 32),
-            SmartTextField(
-              controller: newPasswordController,
-              lableText: APPStrings.newPassword.tr,
-              lableStyle: style.lableStyle,
-              obscured: true,
-              onEditingComplete: () {
-                FocusScope.of(context).nextFocus();
-              },
-            ),
-            const SizedBox(height: 16),
-            SmartTextField(
-              controller: confirmPasswordController,
-              lableText: APPStrings.confirmPassword.tr,
-              lableStyle: style.lableStyle,
-              obscured: true,
-              onEditingComplete: () {
-                FocusScope.of(context).nextFocus();
-              },
-            ),
-          ],
-        ),
       ),
     );
   }

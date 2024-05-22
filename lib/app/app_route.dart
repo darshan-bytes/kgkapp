@@ -1,6 +1,5 @@
 import 'package:kgk/kgk.dart';
 
-
 class AppRoutes {
   static const initialRoute = '/';
   static const signInPage = '/signInPage';
@@ -8,6 +7,7 @@ class AppRoutes {
   static const dashboardPage = '/tabBarPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const resetPasswordPage = '/resetPasswordPage';
+  static const emailSentPage = '/emailSentPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -43,6 +43,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const ResetPasswordScreen(),
           settings: const RouteSettings(name: resetPasswordPage),
+        );
+
+      case emailSentPage:
+        return MaterialPageRoute(
+          builder: (_) => const EmailSentScreen(),
+          settings: const RouteSettings(name: emailSentPage),
         );
 
       default:

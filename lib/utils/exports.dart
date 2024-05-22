@@ -49,6 +49,8 @@ export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/bloc/profile_bloc.
 export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/view/profile_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/support/bloc/support_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/support/view/support_screen.dart';
+export 'package:kgk/modules/email_sent/view/email_sent_screen.dart';
+
 //screen
 export 'package:kgk/modules/forgot_password/bloc/forgot_password_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';

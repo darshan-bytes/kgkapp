@@ -1,4 +1,4 @@
-import '../../../kgk.dart';
+import 'package:kgk/kgk.dart';
 
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
@@ -8,7 +8,6 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     on<ForgotPasswordSubmitEvent>(_onSendEmail);
   }
 
-  // TODO: Send email
   Future<void> _onSendEmail(
     ForgotPasswordSubmitEvent event,
     Emitter<ForgotPasswordState> emit,
