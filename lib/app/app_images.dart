@@ -16,4 +16,6 @@ class AppImages {
   static const String icShoppingBagActive = 'assets/images/ic_shopping_bag_active.svg';
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
+
+  static const String icAppicon = 'assets/images/ic_app_icon.svg';
 }
