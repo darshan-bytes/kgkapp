@@ -5,6 +5,7 @@ class AppRoutes {
   static const signInPage = '/signInPage';
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
+  static const notificationPage = '/notificationPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -29,6 +30,10 @@ class AppRoutes {
           builder: (_) => const DashboardScreen(),
           settings: const RouteSettings(name: dashboardPage),
         );
+
+      case notificationPage:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen(), settings: const RouteSettings(name: notificationPage));
+
       default:
         return _errorRoute();
     }

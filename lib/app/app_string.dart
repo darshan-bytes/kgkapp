@@ -31,4 +31,20 @@ class APPStrings {
   static const String somethingWrong = 'something_wrong';
   static const String checkInternet = 'check_internet';
   static const String failedFetchData = 'failed_fetch_data';
+
+  // Notifications
+  static const String notification = 'notification';
+  static const String allNotification = 'all_notification';
+  static const String settings = 'settings';
+
+  //All Notification
+  static const String searchNotification = 'search_notification';
+
+  //Setting
+  static const String announcements = 'announcements';
+  static const String notifyMeForEveryAnnouncement = 'notify_me_for_every_announcement';
+  static const String fileSharedBySalesman = 'file_shared_by_salesman';
+  static const String shareBySalesmanDesc = 'share_by_salesman_desc';
+  static const String orderStatusUpdate = 'order_status_update';
+  static const String changeInOrderStatus = 'change_in_order_status';
 }

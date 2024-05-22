@@ -18,5 +18,15 @@
   "skip": "Skip",
   "something_wrong": "Something went wrong",
   "check_internet": "Check your internet connection and try again",
-  "failed_fetch_data": "Failed to fetch data"
+  "failed_fetch_data": "Failed to fetch data",
+  "notification": "Notifications",
+  "all_notification": "All Notifications",
+  "settings": "Settings",
+  "search_notification": "Search Notification",
+  "announcements": "Announcements",
+  "notify_me_for_every_announcement": "Notify me for every announcement",
+  "file_shared_by_salesman": "File shared by salesman",
+  "share_by_salesman_desc": "When a salesman shares presentation, moodboard, Digital catalogue from KGK.CC.",
+  "order_status_update": "Order status update",
+  "change_in_order_status": "Any change in the order status will be notified"
 }
