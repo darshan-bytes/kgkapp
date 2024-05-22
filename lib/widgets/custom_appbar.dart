@@ -68,11 +68,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Navigator.pop(context);
         }
       },
-      child: SizedBox(
+      child: const SizedBox(
         height: 24,
         width: 24,
         child: Center(
-          child: SvgPicture.asset(
+          child:   SmartImage(path:
             AppImages.icBack,
             height: 24,
             width: 24,
@@ -132,7 +132,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: size,
           width: size,
           child: Center(
-            child: SvgPicture.asset(
+            child: SmartImage(path:
               assetPath,
               height: size,
               width: size,

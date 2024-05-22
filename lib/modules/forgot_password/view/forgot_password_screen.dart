@@ -6,7 +6,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    final TextEditingController emailController = TextEditingController();
+    final forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
       appBar: CustomAppBar(
         appBarHeight: 52,
@@ -49,7 +49,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   SmartTextField(
-                    controller: emailController,
+                    controller: forgotPasswordBloc.emailController,
                     lableText: APPStrings.email.tr,
                     hintText: APPStrings.email.tr,
                     lableStyle: style.lableStyle,

@@ -63,6 +63,8 @@ export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
+export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
+
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
 //Theme

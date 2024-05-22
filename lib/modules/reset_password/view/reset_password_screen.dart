@@ -6,6 +6,7 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
+    final resetPasswordBloc = BlocProvider.of<ResetPasswordBloc>(context);
     return Scaffold(
       appBar: CustomAppBar(
         appBarHeight: 52,
@@ -30,8 +31,6 @@ class ResetPasswordScreen extends StatelessWidget {
       body: BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
         builder: (context, state) {
           final style = AppTheme.of(context).signInScreenStyle;
-          final TextEditingController newPasswordController = TextEditingController();
-          final TextEditingController confirmPasswordController = TextEditingController();
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -49,7 +48,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   SmartTextField(
-                    controller: newPasswordController,
+                    controller: resetPasswordBloc.newPasswordController,
                     lableText: APPStrings.newPassword.tr,
                     lableStyle: style.lableStyle,
                     obscured: true,
@@ -59,7 +58,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   SmartTextField(
-                    controller: confirmPasswordController,
+                    controller: resetPasswordBloc.confirmPasswordController,
                     lableText: APPStrings.confirmPassword.tr,
                     lableStyle: style.lableStyle,
                     obscured: true,

@@ -4,6 +4,8 @@ part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
+  final emailController = TextEditingController();
+
   ForgotPasswordBloc() : super(ForgotPasswordInitial()) {
     on<ForgotPasswordSubmitEvent>(_onSendEmail);
   }

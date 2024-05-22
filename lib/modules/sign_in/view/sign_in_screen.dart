@@ -121,17 +121,17 @@ class SignInScreen extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset(AppImages.icFacebook),
+          child: const SmartImage(path: AppImages.icFacebook,),
         ),
         const SizedBox(width: 40),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset(AppImages.icGoogle),
+          child: const SmartImage(path : AppImages.icGoogle),
         ),
         const SizedBox(width: 40),
         GestureDetector(
           onTap: () {},
-          child: SvgPicture.asset(AppImages.icZoho),
+          child: const SmartImage(path:AppImages.icZoho),
         ),
       ],
     );
