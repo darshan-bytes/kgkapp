@@ -11,7 +11,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   void navigateToGetReadyScreen(LoadSplashEvent event, Emitter<SplashState> emit) {
     BlocProvider.of<AppBloc>(event.context).add(const LanguageChangedEvent(''));
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushNamed(event.context, AppRoutes.getReady);
+      Navigator.pushNamed(event.context, AppRoutes.getReadyPage);
     });
   }
 }

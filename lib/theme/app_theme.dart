@@ -49,6 +49,8 @@ abstract class AppTheme {
   AllNotificationViewStyle get allNotificationViewStyle;
 
   SettingViewStyle get settingViewStyle;
+
+  CollectionViewStyle get collectionViewStyle;
 }
 
 class PrimaryButtonStyle {
@@ -233,4 +235,17 @@ class SettingViewStyle {
     required this.thumbColor,
     required this.dividerColor,
   });
+}
+
+class CollectionViewStyle {
+  final Color headerBgColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle headerSubTitleStyle;
+  final TextStyle collectionListTitleStyle;
+
+  CollectionViewStyle(
+      {required this.headerBgColor,
+      required this.headerTitleStyle,
+      required this.headerSubTitleStyle,
+      required this.collectionListTitleStyle});
 }

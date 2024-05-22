@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
-  static const getReady = '/getReady';
+  static const getReadyPage = '/getReadyPage';
   static const signInPage = '/signInPage';
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
@@ -10,6 +10,7 @@ class AppRoutes {
   static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
+  static const collectionPage = '/collectionPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -20,10 +21,10 @@ class AppRoutes {
           settings: const RouteSettings(name: initialRoute),
         );
 
-      case getReady:
+      case getReadyPage:
         return MaterialPageRoute(
           builder: (_) => const GetReadyScreen(),
-          settings: const RouteSettings(name: getReady),
+          settings: const RouteSettings(name: getReadyPage),
         );
 
       case signInPage:
@@ -33,7 +34,10 @@ class AppRoutes {
         );
 
       case categoriesPage:
-        return MaterialPageRoute(builder: (_) => const CategoriesScreen(), settings: const RouteSettings(name: categoriesPage));
+        return MaterialPageRoute(
+          builder: (_) => const CategoriesScreen(),
+          settings: const RouteSettings(name: categoriesPage),
+        );
 
       case dashboardPage:
         return MaterialPageRoute(
@@ -59,9 +63,17 @@ class AppRoutes {
           settings: const RouteSettings(name: emailSentPage),
         );
 
-
       case notificationPage:
-        return MaterialPageRoute(builder: (_) => const NotificationScreen(), settings: const RouteSettings(name: notificationPage));
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+          settings: const RouteSettings(name: notificationPage),
+        );
+
+      case collectionPage:
+        return MaterialPageRoute(
+          builder: (_) => const CollectionScreen(),
+          settings: const RouteSettings(name: collectionPage),
+        );
 
       default:
         return _errorRoute();

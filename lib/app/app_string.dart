@@ -62,4 +62,7 @@ class APPStrings {
   static const String shareBySalesmanDesc = 'share_by_salesman_desc';
   static const String orderStatusUpdate = 'order_status_update';
   static const String changeInOrderStatus = 'change_in_order_status';
+
+  // Collection
+  static const String collection = 'collection';
 }
