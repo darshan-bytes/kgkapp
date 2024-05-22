@@ -54,6 +54,10 @@ dependencies:
   # For Cached Network Image
   cached_network_image: ^3.3.1
 
+  # For Country Code Picker
+  #  country_code_picker: ^3.0.0
+  country_picker: ^2.0.26
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

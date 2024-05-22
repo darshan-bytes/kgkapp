@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:kgk/kgk.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,7 +10,7 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, AppRoutes.collectionPage);
           },
-          child: Text('Home')),
+          child: const Text('Home')),
     );
   }
 }

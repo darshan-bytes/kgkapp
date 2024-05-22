@@ -32,7 +32,7 @@ class CategoryTile extends StatelessWidget {
               children: [
                 SmartText(
                   category.name ?? '',
-                  style: categoryTileStyle.lableStyle,
+                  style: categoryTileStyle.labelStyle,
                 ),
                 const SizedBox(
                   width: 10,

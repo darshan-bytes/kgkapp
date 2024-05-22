@@ -150,12 +150,11 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  // TODO: implement signInScreenStyle
   SignInScreenStyle get signInScreenStyle => SignInScreenStyle(
         backgroundColor: colors.white,
         titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-        lableStyle: interRegularTextStyle,
+        labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
 
@@ -163,11 +162,11 @@ class LightModeTheme extends AppTheme {
   SmartRichTextStyle get smartRichTextStyle =>
       SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
 
-  // TODO: implement categoryTileStyle
+  @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
       backgroundColor: colors.colorF7F9FA,
       dividerLineColor: colors.colorD3DAE0,
-      lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
+      labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
 
   @override
@@ -204,5 +203,29 @@ class LightModeTheme extends AppTheme {
         headerTitleStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
         headerSubTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32, color: colors.color303538),
         collectionListTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, color: colors.color303538),
+      );
+
+  @override
+  SignUpStyle get signUpStyle => SignUpStyle(
+        backgroundColor: colors.white,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        selectAccountStyle: interRegularTextStyle.copyWith(fontSize: 12),
+        selectedAccountTypeColor: colors.primary,
+        selectedAccountTypeBorderColor: colors.primary,
+        selectedAccountTypeIconColor: colors.white,
+        selectedAccountTypeTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.white),
+        unselectedAccountTypeColor: colors.white,
+        unselectedAccountTypeBorderColor: colors.colorD3DAE0,
+        unselectedAccountTypeIconColor: colors.primary,
+        unselectedAccountTypeTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  RadioButtonStyle get radioButtonStyle => RadioButtonStyle(
+        activeColor: colors.primary,
+        checkColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        textStyle: interRegularTextStyle,
       );
 }

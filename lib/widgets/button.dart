@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
-class PrimaryButton extends StatelessWidget {
-  final VoidCallback onClick;
+class SmartButton extends StatelessWidget {
+  final VoidCallback onTap;
   final String title;
   final bool isLoading;
   final bool isEnabled;
@@ -15,9 +15,9 @@ class PrimaryButton extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
 
-  const PrimaryButton({
+  const SmartButton({
     super.key,
-    required this.onClick,
+    required this.onTap,
     required this.title,
     this.isLoading = false,
     this.isEnabled = true,
@@ -36,7 +36,7 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).primaryButtonStyle;
     return GestureDetector(
-      onTap: isEnabled && !isLoading ? onClick : null,
+      onTap: isEnabled && !isLoading ? onTap : null,
       child: Container(
         margin: margin,
         decoration: BoxDecoration(

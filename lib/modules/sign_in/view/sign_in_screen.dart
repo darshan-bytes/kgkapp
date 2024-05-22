@@ -13,7 +13,7 @@ class SignInScreen extends StatelessWidget {
         backgroundColor: style.backgroundColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: buildRichText(),
+      floatingActionButton: buildRichText(context),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -52,9 +52,9 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildEmailField(SignInScreenStyle style, context) {
     return SmartTextField(
-      lableText: APPStrings.email.tr,
+      labelText: APPStrings.email.tr,
       hintText: APPStrings.email.tr,
-      lableStyle: style.lableStyle,
+      lableStyle: style.labelStyle,
       keyboardType: TextInputType.emailAddress,
       onEditingComplete: () {
         FocusScope.of(context).nextFocus();
@@ -65,10 +65,10 @@ class SignInScreen extends StatelessWidget {
   Widget _buildPasswordField(SignInScreenStyle style, context) {
     return SmartTextField(
       obscured: true,
-      lableText: APPStrings.password.tr,
+      labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
       keyboardType: TextInputType.visiblePassword,
-      lableStyle: style.lableStyle,
+      lableStyle: style.labelStyle,
       onEditingComplete: () {
         FocusScope.of(context).nextFocus();
       },
@@ -91,8 +91,8 @@ class SignInScreen extends StatelessWidget {
   }
 
   Widget _buildLoginButton(BuildContext context) {
-    return PrimaryButton(
-      onClick: () {
+    return SmartButton(
+      onTap: () {
         Navigator.pushNamed(context, AppRoutes.dashboardPage);
       },
       title: APPStrings.login.tr,
@@ -111,7 +111,7 @@ class SignInScreen extends StatelessWidget {
             APPStrings.orLoginWith.tr,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: style.lableStyle,
+            style: style.labelStyle,
           ),
         ),
       ],
@@ -125,29 +125,33 @@ class SignInScreen extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {},
-          child: const SmartImage(path: AppImages.icFacebook,),
+          child: const SmartImage(
+            path: AppImages.icFacebook,
+          ),
         ),
         const SizedBox(width: 40),
         GestureDetector(
           onTap: () {},
-          child: const SmartImage(path : AppImages.icGoogle),
+          child: const SmartImage(path: AppImages.icGoogle),
         ),
         const SizedBox(width: 40),
         GestureDetector(
           onTap: () {},
-          child: const SmartImage(path:AppImages.icZoho),
+          child: const SmartImage(path: AppImages.icZoho),
         ),
       ],
     );
   }
 
-  Widget buildRichText() {
+  Widget buildRichText(BuildContext context) {
     return SmartRichText(
       spans: [
         SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
         SmartTextSpan(
           text: APPStrings.register.tr,
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.signUpPage);
+          },
         )
       ],
     );

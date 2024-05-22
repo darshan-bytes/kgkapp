@@ -6,7 +6,7 @@ class SmartTextField extends StatefulWidget {
   final String? hintText;
   final TextStyle? hintStyle;
   final EdgeInsets? padding;
-  final String? lableText;
+  final String? labelStyle;
   final TextStyle? lableStyle;
   final String? errorText;
   final bool obscured;
@@ -29,6 +29,7 @@ class SmartTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final FocusNode? focusNode;
+  final FocusNode? nextFocus;
   final bool? isEnabled;
   final bool? isRequired;
   final double? enabledBorderRadius;
@@ -56,7 +57,7 @@ class SmartTextField extends StatefulWidget {
     this.contentPadding,
     this.errorText,
     this.hintStyle,
-    String? lableText,
+    String? labelText,
     this.lableStyle,
     this.padding,
     this.maxLines,
@@ -67,6 +68,7 @@ class SmartTextField extends StatefulWidget {
     this.errorStyle,
     this.suffixIcon,
     this.focusNode,
+    this.nextFocus,
     this.isEnabled,
     this.isRequired,
     this.prefixIcon,
@@ -76,7 +78,7 @@ class SmartTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTapOutside,
     this.onEditingComplete,
-  }) : lableText = lableText != null ? '$lableText${isRequired == true ? ' *' : ''}' : null;
+  }) : labelStyle = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null;
 
   @override
   State<SmartTextField> createState() => SmartTextFieldState();
@@ -99,9 +101,9 @@ class SmartTextFieldState extends State<SmartTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.lableText != null) ...[
+          if (widget.labelStyle != null) ...[
             SmartText(
-              widget.lableText!,
+              widget.labelStyle!,
               style: style.labelStyle.merge(widget.lableStyle),
             ),
             const SizedBox(height: 8),
@@ -158,11 +160,11 @@ class SmartTextFieldState extends State<SmartTextField> {
                       (widget.obscured
                           ? IconButton(
                               icon: !_passwordVisible
-                                  ? const SmartImage(path:
-                                      AppImages.icEyeOpen,
+                                  ? const SmartImage(
+                                      path: AppImages.icEyeOpen,
                                     )
-                                  : const SmartImage(path:
-                                      AppImages.icEyeClose,
+                                  : const SmartImage(
+                                      path: AppImages.icEyeClose,
                                       width: 16,
                                       height: 16,
                                     ),
@@ -181,6 +183,9 @@ class SmartTextFieldState extends State<SmartTextField> {
                 }
               },
               onFieldSubmitted: (value) {
+                if (widget.nextFocus != null) {
+                  FocusScope.of(context).requestFocus(widget.nextFocus);
+                }
                 if (widget.onFieldSubmitted != null) {
                   widget.onFieldSubmitted!(value);
                 }

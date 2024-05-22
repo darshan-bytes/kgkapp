@@ -19,8 +19,8 @@ class ForgotPasswordScreen extends StatelessWidget {
           if (state is ForgotPasswordInitial) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: PrimaryButton(
-                onClick: () {
+              child: SmartButton(
+                onTap: () {
                   Navigator.pushNamed(context, AppRoutes.emailSentPage);
                 },
                 title: APPStrings.submit.tr,
@@ -50,9 +50,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                   const SizedBox(height: 32),
                   SmartTextField(
                     controller: forgotPasswordBloc.emailController,
-                    lableText: APPStrings.email.tr,
+                    labelText: APPStrings.email.tr,
                     hintText: APPStrings.email.tr,
-                    lableStyle: style.lableStyle,
+                    lableStyle: style.labelStyle,
                     keyboardType: TextInputType.emailAddress,
                     onEditingComplete: () {
                       FocusScope.of(context).nextFocus();

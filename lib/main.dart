@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
-                  AppLocalizations.delegate
+                  AppLocalizations.delegate,
+                  CountryLocalizations.delegate,
                 ],
               ),
               if (appState is ConnectivityState && !appState.isConnected)

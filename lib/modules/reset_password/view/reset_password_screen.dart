@@ -19,8 +19,8 @@ class ResetPasswordScreen extends StatelessWidget {
           if (state is ResetPasswordInitial) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: PrimaryButton(
-                onClick: () {},
+              child: SmartButton(
+                onTap: () {},
                 title: APPStrings.confirmAndLogIn.tr,
               ),
             );
@@ -49,8 +49,8 @@ class ResetPasswordScreen extends StatelessWidget {
                   const SizedBox(height: 32),
                   SmartTextField(
                     controller: resetPasswordBloc.newPasswordController,
-                    lableText: APPStrings.newPassword.tr,
-                    lableStyle: style.lableStyle,
+                    labelText: APPStrings.newPassword.tr,
+                    lableStyle: style.labelStyle,
                     obscured: true,
                     keyboardType: TextInputType.visiblePassword,
                     onEditingComplete: () {
@@ -60,8 +60,8 @@ class ResetPasswordScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   SmartTextField(
                     controller: resetPasswordBloc.confirmPasswordController,
-                    lableText: APPStrings.confirmPassword.tr,
-                    lableStyle: style.lableStyle,
+                    labelText: APPStrings.confirmPassword.tr,
+                    lableStyle: style.labelStyle,
                     keyboardType: TextInputType.visiblePassword,
                     obscured: true,
                     onEditingComplete: () {
