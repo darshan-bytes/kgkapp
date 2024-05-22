@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kgk/kgk.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -5,8 +6,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home'),
+    return Center(
+      child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.collectionPage);
+          },
+          child: Text('Home')),
     );
   }
 }
