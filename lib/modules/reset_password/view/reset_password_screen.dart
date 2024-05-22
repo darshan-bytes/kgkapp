@@ -52,6 +52,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     lableText: APPStrings.newPassword.tr,
                     lableStyle: style.lableStyle,
                     obscured: true,
+                    keyboardType: TextInputType.visiblePassword,
                     onEditingComplete: () {
                       FocusScope.of(context).nextFocus();
                     },
@@ -61,6 +62,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     controller: resetPasswordBloc.confirmPasswordController,
                     lableText: APPStrings.confirmPassword.tr,
                     lableStyle: style.lableStyle,
+                    keyboardType: TextInputType.visiblePassword,
                     obscured: true,
                     onEditingComplete: () {
                       FocusScope.of(context).nextFocus();

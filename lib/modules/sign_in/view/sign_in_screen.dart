@@ -67,6 +67,7 @@ class SignInScreen extends StatelessWidget {
       obscured: true,
       lableText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
+      keyboardType: TextInputType.visiblePassword,
       lableStyle: style.lableStyle,
       onEditingComplete: () {
         FocusScope.of(context).nextFocus();
