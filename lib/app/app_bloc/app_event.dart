@@ -26,3 +26,12 @@ class ConnectivityChangedEvent extends AppEvent {
   @override
   List<Object> get props => [connectivityResult];
 }
+
+class LanguageChangedEvent extends AppEvent {
+  final String languageCode;
+
+  const LanguageChangedEvent(this.languageCode);
+
+  @override
+  List<Object> get props => [languageCode];
+}

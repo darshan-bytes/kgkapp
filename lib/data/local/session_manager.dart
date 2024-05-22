@@ -12,7 +12,7 @@ class StorageManager {
 
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
-  final String _locale = 'auth_token';
+  final String _locale = 'locale';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
