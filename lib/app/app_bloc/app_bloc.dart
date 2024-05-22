@@ -5,15 +5,17 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AppThemes appThemes = AppThemes();
-  bool switchValue = false;
+  bool languageSwitch = false;
   final Connectivity _connectivity = Connectivity();
   late Stream<List<ConnectivityResult>> _connectivityStream;
   ThemeData? themeData;
+  Locale locale = const Locale(APPStrings.languageEn);
 
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
     on<ConnectivityChangedEvent>(_onConnectivityChangedEvent);
+    on<LanguageChangedEvent>(_onLanguageChangedEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -28,11 +30,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final String theme = StorageManager().getThemeData();
     debugPrint("theme $theme");
     if (theme == 'dark') {
-      switchValue = true;
+      languageSwitch = true;
       themeData = appThemes.dark();
       emit(ThemeDataState(appThemes.dark()));
     } else if (theme == 'light') {
-      switchValue = false;
+      languageSwitch = false;
       themeData = appThemes.light();
       emit(ThemeDataState(appThemes.light()));
     } else if (theme == 'system') {
@@ -60,18 +62,32 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> setThemeDataDark(Emitter<AppState> emit) async {
     themeData = appThemes.dark();
     await StorageManager().setThemeData('dark');
-    switchValue = true;
+    languageSwitch = true;
     emit(ThemeDataState(appThemes.dark()));
   }
 
   Future<void> setThemeDataLight(Emitter<AppState> emit) async {
     themeData = appThemes.light();
     await StorageManager().setThemeData('light');
-    switchValue = false;
+    languageSwitch = false;
     emit(ThemeDataState(appThemes.light()));
   }
 
   void _onConnectivityChangedEvent(ConnectivityChangedEvent event, Emitter<AppState> emit) {
     emit(ConnectivityState(event.connectivityResult));
+  }
+
+  Future<void> _onLanguageChangedEvent(LanguageChangedEvent event, Emitter<AppState> emit) async {
+    if (event.languageCode.isNotEmpty) {
+      await StorageManager().setLocale(event.languageCode);
+    }
+    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
+    locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
+    if (locale.languageCode == APPStrings.languageEn) {
+      languageSwitch = false;
+    } else {
+      languageSwitch = true;
+    }
+    emit(LanguageState(locale));
   }
 }

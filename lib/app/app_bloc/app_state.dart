@@ -18,11 +18,20 @@ final class ThemeDataState extends AppState {
   List<Object> get props => [themeData];
 }
 
-class ConnectivityState extends AppState {
+final class ConnectivityState extends AppState {
   final bool isConnected;
 
   const ConnectivityState(this.isConnected);
 
   @override
   List<Object> get props => [isConnected];
+}
+
+final class LanguageState extends AppState {
+  final Locale locale;
+
+  const LanguageState(this.locale);
+
+  @override
+  List<Object> get props => [locale];
 }
