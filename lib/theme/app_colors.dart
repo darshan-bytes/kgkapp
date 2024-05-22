@@ -14,6 +14,7 @@ class AppThemes {
     colorF7F9FA: Color(0xFFF7F9FA),
     color8C8C8C: Color(0xFF8C8C8C),
     color083458: Color(0xFF083458),
+    colorECF4F9: Color(0xFFECF4F9),
   );
 
   ThemeData light({MaterialColor? theme}) {
@@ -72,6 +73,7 @@ class AppColor {
     required this.colorF7F9FA,
     required this.color8C8C8C,
     required this.color083458,
+    required Color colorECF4F9,
   });
 }
 

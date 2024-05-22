@@ -38,6 +38,8 @@ export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
 export 'package:kgk/modules/b2b/tab_bar/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/bloc/categories_bloc.dart';
+//model
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/home/bloc/home_bloc.dart';
 export 'package:kgk/modules/b2b/tab_bar/tab_modules/home/view/home_screen.dart';
@@ -56,6 +58,7 @@ export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
+//screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
@@ -66,11 +69,15 @@ export 'package:kgk/utils/navigator_key.dart';
 export 'package:kgk/utils/utils.dart';
 //Widgets
 export 'package:kgk/widgets/button.dart';
+export 'package:kgk/widgets/categories_row.dart';
+export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/custom_appbar.dart';
+export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
+export 'package:kgk/widgets/triangle_clipper.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

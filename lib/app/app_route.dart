@@ -4,6 +4,7 @@ import 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
 class AppRoutes {
   static const initialRoute = '/';
   static const signInPage = '/signInPage';
+  static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
 
@@ -21,6 +22,9 @@ class AppRoutes {
           builder: (_) => const SignInScreen(),
           settings: const RouteSettings(name: signInPage),
         );
+
+      case categoriesPage:
+        return MaterialPageRoute(builder: (_) => const CategoriesScreen(), settings: const RouteSettings(name: categoriesPage));
 
       case dashboardPage:
         return MaterialPageRoute(

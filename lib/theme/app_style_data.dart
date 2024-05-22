@@ -162,4 +162,11 @@ class LightModeTheme extends AppTheme {
   @override
   SmartRichTextStyle get smartRichTextStyle =>
       SmartRichTextStyle(subTextStyle: interRegularTextStyle.copyWith(color: colors.color083458), textStyle: interRegularTextStyle);
+      
+  // TODO: implement categoryTileStyle
+  CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
+      backgroundColor: colors.colorF7F9FA,
+      dividerLineColor: colors.colorD3DAE0,
+      lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
+      detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
 }

@@ -39,6 +39,8 @@ abstract class AppTheme {
   SignInScreenStyle get signInScreenStyle;
 
   SmartRichTextStyle get smartRichTextStyle;
+  
+  CategoryTileStyle get categoryTileStyle;
 }
 
 class PrimaryButtonStyle {
@@ -157,3 +159,17 @@ class SmartRichTextStyle {
 
   SmartRichTextStyle({required this.subTextStyle, required this.textStyle});
 }
+
+class CategoryTileStyle {
+  final TextStyle lableStyle;
+  final TextStyle detailStyle;
+  final Color backgroundColor;
+  final Color dividerLineColor;
+
+  CategoryTileStyle({
+    required this.lableStyle,
+    required this.backgroundColor,
+    required this.detailStyle,
+    required this.dividerLineColor,
+  });
+} 

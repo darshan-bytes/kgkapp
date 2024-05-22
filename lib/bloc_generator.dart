@@ -7,6 +7,7 @@ class BlocGenerator {
     return [
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
+      BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
