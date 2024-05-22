@@ -47,7 +47,7 @@ class AppRoutes {
 
       case emailSentPage:
         return MaterialPageRoute(
-          builder: (_) => const EmailSentScreen(),
+          builder: (_) => const ForgotEmailSentScreen(),
           settings: const RouteSettings(name: emailSentPage),
         );
 

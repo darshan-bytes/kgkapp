@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
-class EmailSentScreen extends StatelessWidget {
-  const EmailSentScreen({super.key});
+class ForgotEmailSentScreen extends StatelessWidget {
+  const ForgotEmailSentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

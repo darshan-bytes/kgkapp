@@ -38,8 +38,6 @@ export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/bloc/categories_bloc.dart';
-//model
-export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/home/bloc/home_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/home/view/home_screen.dart';
@@ -49,24 +47,24 @@ export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/bloc/profile_bloc.
 export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/view/profile_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/support/bloc/support_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/support/view/support_screen.dart';
-export 'package:kgk/modules/email_sent/view/email_sent_screen.dart';
-
-//screen
-export 'package:kgk/modules/forgot_password/bloc/forgot_password_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/view/smart_bottom_navigation_bar.dart';
+//model
+export 'package:kgk/modules/b2b/tab_bar/tab_modules/categories/model/categories_model.dart';
+export 'package:kgk/modules/forgot_email_sent/view/forgot_email_sent_screen.dart';
+//screen
+export 'package:kgk/modules/forgot_password/bloc/forgot_password_bloc.dart';
+export 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
 export 'package:kgk/modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/no_internet/view/no_internert_screen.dart';
 export 'package:kgk/modules/reset_password/bloc/reset_password_bloc.dart';
+export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
 export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
-export 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
-export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
-
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
