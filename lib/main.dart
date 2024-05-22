@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MultiBlocProvider(
       providers: BlocGenerator.generateBlocList(),
       child: BlocBuilder<AppBloc, AppState>(
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
               MaterialApp(
                 onGenerateRoute: AppRoutes.generateRoute,
                 initialRoute: AppRoutes.initialRoute,
-                title: 'KGK Mobile app',
+                title: APPStrings.appName,
                 navigatorKey: NavigatorKey.navigatorKey,
                 supportedLocales: const [
                   Locale(APPStrings.languageEn, ''), // English
