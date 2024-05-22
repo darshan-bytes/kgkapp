@@ -138,10 +138,10 @@ class ProductListviewItem extends StatelessWidget {
               const SizedBox(height: 8),
             ],
             if (onAddToBagTap != null)
-              PrimaryButton(
+              SmartButton(
                 margin: productDetails.discountPercentage.isNullOrEmpty ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
                 titleStyle: style.buttonWithIconTextStyle,
-                onClick: onAddToBagTap!,
+                onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
               ),
           ],

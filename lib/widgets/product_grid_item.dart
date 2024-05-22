@@ -169,11 +169,11 @@ class ProductGridItem extends StatelessWidget {
               const SizedBox(height: 8),
             ],
             if (onAddToBagTap != null)
-              PrimaryButton(
+              SmartButton(
                 height: 32,
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 titleStyle: style.buttonTextStyle,
-                onClick: onAddToBagTap!,
+                onTap:onAddToBagTap! ,
                 title: APPStrings.addToBag.tr,
               ),
           ],
