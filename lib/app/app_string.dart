@@ -62,4 +62,26 @@ class APPStrings {
   static const String shareBySalesmanDesc = 'share_by_salesman_desc';
   static const String orderStatusUpdate = 'order_status_update';
   static const String changeInOrderStatus = 'change_in_order_status';
+
+  //Diamond Detail Screen
+  static const String selectDiamond = 'select_diamond';
+  static const String reviews = 'reviews';
+  static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
+  static const String orderSample = 'order_sample';
+  static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
+  static const String shippingAcrossAllCountries = 'shipping_across_all_countries';
+  static const String haveAQuestion = 'have_a_question';
+  static const String reachoutToOurExpert = 'reachout_to_our_expert';
+
+  //Ring Detail Screen
+  static const String selectSetting = 'select_setting';
+  static const String approxPrice = 'approx_price';
+  static const String buyingInBulk = 'buying_in_bulk';
+  static const String askForQuotation = 'ask_for_quotation';
+  static const String approxPriceNote = 'approx_price_note';
+  static const String settingDetails = 'setting_details';
+  static const String productType = 'product_type';
+  static const String brand = 'brand';
+  static const String meleeWeight = 'melee_weight';
+  static const String metal = 'metal';
 }

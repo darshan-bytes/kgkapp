@@ -1,4 +1,3 @@
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kgk/kgk.dart';
 
 class DiamondDetailScreen extends StatefulWidget {
@@ -39,6 +38,26 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
             const SizedBox(height: 40,),
             _productDetail()
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        child: BottomAppBar(
+          color: colors(context).white.withOpacity(0.08),
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colors(context).primary,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              )
+            ),
+            child: Text(
+              APPStrings.selectDiamond.tr,
+              style: style.selectDiamondStyle,
+            ),
+          ),
         ),
       ),
     );
@@ -119,7 +138,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
               ),
               const SizedBox(width: 8,),
               SmartText(
-                  '120 Reviews',
+                  APPStrings.reviews.interpolate([120]).tr,
                 style: style.reviewStyle,
               )
             ],
@@ -133,9 +152,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
           ),
           Row(
             children: [
-              SmartText('Want to see product physically?', style: style.seeProductStyle,),
+              SmartText(APPStrings.wantToSeeProductPhysically.tr, style: style.seeProductStyle,),
               const SizedBox(width: 8,),
-              SmartText('Order Sample', style: style.orderSampleStyle,),
+              SmartText(APPStrings.orderSample.tr, style: style.orderSampleStyle,),
             ],
           ),
           const SizedBox(height: 24,),
@@ -145,7 +164,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
             children: [
               const SmartImage(path: AppImages.icDiamond),
               const SizedBox(width: 16,),
-              SmartText('Diamond Purity You Can Trust!', style: style.diamondPurityStyle,)
+              SmartText(APPStrings.diamondPurityYouCanTrust.tr, style: style.diamondPurityStyle,)
             ],
           ),
           const SizedBox(height: 16,),
@@ -153,13 +172,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
             children: [
               const SmartImage(path: AppImages.icTruck),
               const SizedBox(width: 16,),
-              SmartText('Shipping across all countries', style: style.shippingStyle,)
+              SmartText(APPStrings.shippingAcrossAllCountries.tr, style: style.shippingStyle,)
             ],
           ),
           const SizedBox(height: 24,),
           _inquiryWidget(),
           const SizedBox(height: 24,),
           const Divider(height: 1,),
+          const SizedBox(height: 24,),
         ],
       ),
     );
@@ -172,7 +192,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
         border: Border.all(color: colors(context).colorD3DAE0, width: 1),
         borderRadius: BorderRadius.circular(8)
       ),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,31 +200,31 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SmartText('Have a question?', style: style.haveAQuestionStyle,),
-                SizedBox(height: 8,),
-                SmartText('Reach out to our expert by having call, sending email. Or visit our nearest store.', style: style.reachOutStyle,),
-                SizedBox(height: 12,),
+                SmartText(APPStrings.haveAQuestion.tr, style: style.haveAQuestionStyle,),
+                const SizedBox(height: 8,),
+                SmartText(APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle,),
+                const SizedBox(height: 12,),
                 Row(
                   children: [
-                    SmartImage(path: AppImages.icPhone),
-                    SizedBox(width: 8,),
+                    const SmartImage(path: AppImages.icPhone),
+                    const SizedBox(width: 8,),
                     SmartText('+91 - 1234567830', style: style.phoneStyle,)
                   ],
                 ),
-                SizedBox(height: 14,),
+                const SizedBox(height: 14,),
                 Row(
                   children: [
-                    SmartImage(path: AppImages.icMail),
-                    SizedBox(width: 8,),
+                    const SmartImage(path: AppImages.icMail),
+                    const SizedBox(width: 8,),
                     SmartText('enquiry.diaind@kgkmail.com', style: style.emailStyle,)
                   ],
                 ),
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 20, right: 4),
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 20, right: 4),
             child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16,),
           )
         ],

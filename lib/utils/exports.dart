@@ -21,6 +21,7 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
 export 'package:carousel_slider/carousel_slider.dart';
+export 'package:flutter_rating_bar/flutter_rating_bar.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_fonts.dart';
 export 'package:kgk/app/app_images.dart';
@@ -65,10 +66,12 @@ export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
+export 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
+export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
-
+export 'package:kgk/modules/b2b/ring_details/bloc/ring_detail_bloc.dart';
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
 //Theme

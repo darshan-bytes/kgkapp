@@ -53,6 +53,8 @@ abstract class AppTheme {
   DiyProgressViewStyle get diyProgressViewStyle;
 
   DiamondDetailScreenStyle get diamondDetailScreenStyle;
+
+  RingDetailScreenStyle get ringDetailScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -264,6 +266,7 @@ class DiamondDetailScreenStyle {
   final TextStyle reachOutStyle;
   final TextStyle phoneStyle;
   final TextStyle emailStyle;
+  final TextStyle selectDiamondStyle;
 
   DiamondDetailScreenStyle({
     required this.skuStyle,
@@ -278,5 +281,56 @@ class DiamondDetailScreenStyle {
     required this.reachOutStyle,
     required this.phoneStyle,
     required this.emailStyle,
+    required this.selectDiamondStyle,
+  });
+}
+
+class RingDetailScreenStyle {
+  final TextStyle ringTypeStyle;
+  final TextStyle ringCodeStyle;
+  final TextStyle ringNameStyle;
+  final TextStyle reviewStyle;
+  final TextStyle metalHeaderStyle;
+  final TextStyle metalNameStyle;
+  final TextStyle selectedMetalNameStyle;
+  final TextStyle approxPriceLabelStyle;
+  final TextStyle priceStyle;
+  final TextStyle buyInBulkStyle;
+  final TextStyle askQuestionStyle;
+  final TextStyle approxPriceNoteStyle;
+  final TextStyle diamondPurityStyle;
+  final TextStyle shippingStyle;
+  final TextStyle haveAQuestionStyle;
+  final TextStyle reachOutStyle;
+  final TextStyle phoneStyle;
+  final TextStyle emailStyle;
+  final TextStyle selectSettingStyle;
+  final TextStyle settingTypeStyle;
+  final TextStyle settingValueStyle;
+  final TextStyle settingHeaderStyle;
+
+  RingDetailScreenStyle({
+    required this.ringTypeStyle,
+    required this.ringCodeStyle,
+    required this.ringNameStyle,
+    required this.reviewStyle,
+    required this.metalHeaderStyle,
+    required this.metalNameStyle,
+    required this.selectedMetalNameStyle,
+    required this.approxPriceLabelStyle,
+    required this.priceStyle,
+    required this.buyInBulkStyle,
+    required this.askQuestionStyle,
+    required this.approxPriceNoteStyle,
+    required this.diamondPurityStyle,
+    required this.shippingStyle,
+    required this.haveAQuestionStyle,
+    required this.reachOutStyle,
+    required this.phoneStyle,
+    required this.emailStyle,
+    required this.selectSettingStyle,
+    required this.settingTypeStyle,
+    required this.settingValueStyle,
+    required this.settingHeaderStyle,
   });
 }
