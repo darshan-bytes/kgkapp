@@ -65,6 +65,8 @@ abstract class AppTheme {
   DiamondDetailScreenStyle get diamondDetailScreenStyle;
 
   RingDetailScreenStyle get ringDetailScreenStyle;
+
+  InquiryWidgetStyle get inquiryWidgetStyle;
 }
 
 class PrimaryButtonStyle {
@@ -375,10 +377,6 @@ class DiamondDetailScreenStyle {
   final TextStyle orderSampleStyle;
   final TextStyle diamondPurityStyle;
   final TextStyle shippingStyle;
-  final TextStyle haveAQuestionStyle;
-  final TextStyle reachOutStyle;
-  final TextStyle phoneStyle;
-  final TextStyle emailStyle;
   final TextStyle selectDiamondStyle;
 
   DiamondDetailScreenStyle({
@@ -390,10 +388,6 @@ class DiamondDetailScreenStyle {
     required this.orderSampleStyle,
     required this.diamondPurityStyle,
     required this.shippingStyle,
-    required this.haveAQuestionStyle,
-    required this.reachOutStyle,
-    required this.phoneStyle,
-    required this.emailStyle,
     required this.selectDiamondStyle,
   });
 }
@@ -413,10 +407,6 @@ class RingDetailScreenStyle {
   final TextStyle approxPriceNoteStyle;
   final TextStyle diamondPurityStyle;
   final TextStyle shippingStyle;
-  final TextStyle haveAQuestionStyle;
-  final TextStyle reachOutStyle;
-  final TextStyle phoneStyle;
-  final TextStyle emailStyle;
   final TextStyle selectSettingStyle;
   final TextStyle settingTypeStyle;
   final TextStyle settingValueStyle;
@@ -437,13 +427,23 @@ class RingDetailScreenStyle {
     required this.approxPriceNoteStyle,
     required this.diamondPurityStyle,
     required this.shippingStyle,
-    required this.haveAQuestionStyle,
-    required this.reachOutStyle,
-    required this.phoneStyle,
-    required this.emailStyle,
     required this.selectSettingStyle,
     required this.settingTypeStyle,
     required this.settingValueStyle,
     required this.settingHeaderStyle,
+  });
+}
+
+class InquiryWidgetStyle {
+  final TextStyle haveAQuestionStyle;
+  final TextStyle reachOutStyle;
+  final TextStyle phoneStyle;
+  final TextStyle emailStyle;
+
+  InquiryWidgetStyle({
+    required this.haveAQuestionStyle,
+    required this.reachOutStyle,
+    required this.phoneStyle,
+    required this.emailStyle,
   });
 }

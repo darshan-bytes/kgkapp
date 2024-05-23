@@ -1,28 +1,12 @@
 import 'package:kgk/kgk.dart';
 
-class DiamondDetailScreen extends StatefulWidget {
+class DiamondDetailScreen extends StatelessWidget {
   const DiamondDetailScreen({super.key});
-
-  @override
-  State<DiamondDetailScreen> createState() => _DiamondDetailScreenState();
-}
-
-class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
-
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
-
-  final List<String> imgList = [
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-  ];
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
+    final diamondBloc = context.read<DiamondDetailBloc>();
     return Scaffold(
       appBar: CustomAppBar(
         title: '1.01 Carat Round Diamond',
@@ -34,9 +18,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const DiyProgressWidget(selectedStep: 1,),
-            _imageSlider(),
+            _imageSlider(context, diamondBloc),
             const SizedBox(height: 40,),
-            _productDetail()
+            _productDetail(context, diamondBloc)
           ],
         ),
       ),
@@ -63,48 +47,51 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
     );
   }
 
-  Widget _imageSlider() {
-    return Column(
-      children: [
-        CarouselSlider(
-          items: imgList.map((e) {
-            return SmartImage(path: e, width: double.infinity,);
-          }).toList(),
-          carouselController: _controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              viewportFraction: 1.5,
-              aspectRatio: 1,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              }),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: imgList.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 10.0,
-                height: 10.0,
-                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
+  Widget _imageSlider(BuildContext context, DiamondDetailBloc diamondBloc) {
+    return BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
+      buildWhen: (_, current) => current is DiamondImagePageChangeState,
+      builder: (context, state) {
+        return Column(
+          children: [
+            CarouselSlider(
+              items: diamondBloc.imgList.map((e) {
+                return SmartImage(path: e, width: double.infinity,);
+              }).toList(),
+              carouselController: diamondBloc.controller,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1.5,
+                  aspectRatio: 1,
+                  onPageChanged: (index, reason) {
+                    diamondBloc.add(DiamondImagePageChangeEvent(index: index));
+                  }),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: diamondBloc.imgList.asMap().entries.map((entry) {
+                return GestureDetector(
+                  onTap: () => diamondBloc.controller.animateToPage(entry.key),
+                  child: Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black)
+                            .withOpacity(diamondBloc.current == entry.key ? 0.9 : 0.4)),
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _productDetail() {
+  Widget _productDetail(BuildContext context, DiamondDetailBloc diamondBloc) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 17,),
@@ -176,57 +163,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen> {
             ],
           ),
           const SizedBox(height: 24,),
-          _inquiryWidget(),
+          const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830',),
           const SizedBox(height: 24,),
           const Divider(height: 1,),
           const SizedBox(height: 24,),
-        ],
-      ),
-    );
-  }
-
-  Widget _inquiryWidget() {
-    final style = AppTheme.of(context).diamondDetailScreenStyle;
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: colors(context).colorD3DAE0, width: 1),
-        borderRadius: BorderRadius.circular(8)
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SmartText(APPStrings.haveAQuestion.tr, style: style.haveAQuestionStyle,),
-                const SizedBox(height: 8,),
-                SmartText(APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle,),
-                const SizedBox(height: 12,),
-                Row(
-                  children: [
-                    const SmartImage(path: AppImages.icPhone),
-                    const SizedBox(width: 8,),
-                    SmartText('+91 - 1234567830', style: style.phoneStyle,)
-                  ],
-                ),
-                const SizedBox(height: 14,),
-                Row(
-                  children: [
-                    const SmartImage(path: AppImages.icMail),
-                    const SizedBox(width: 8,),
-                    SmartText('enquiry.diaind@kgkmail.com', style: style.emailStyle,)
-                  ],
-                ),
-                const SizedBox(height: 16,),
-              ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 4),
-            child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16,),
-          )
         ],
       ),
     );

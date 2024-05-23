@@ -20,6 +20,7 @@ class BlocGenerator {
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
       BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
+      BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
     ];
   }
 }

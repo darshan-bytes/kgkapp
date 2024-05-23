@@ -13,3 +13,8 @@ final class RingSettingState extends RingDetailState {
   @override
   List<Object> get props => [];
 }
+
+final class RingImagePageChangeState extends RingDetailState {
+  @override
+  List<Object> get props => [];
+}

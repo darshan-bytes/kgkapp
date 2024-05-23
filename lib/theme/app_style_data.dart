@@ -275,10 +275,6 @@ class LightModeTheme extends AppTheme {
     orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
     diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
     shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     selectDiamondStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
   );
 
@@ -298,13 +294,17 @@ class LightModeTheme extends AppTheme {
     askQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
     shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     selectSettingStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
     settingTypeStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
     settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+  );
+
+  @override
+  InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
+    haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+    reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+    phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+    emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
   );
 }

@@ -12,3 +12,12 @@ class RingSettingEvent extends RingDetailEvent {
   @override
   List<Object> get props => [isSettingOpen];
 }
+
+class RingImagePageChangeEvent extends RingDetailEvent {
+  final int index;
+
+  const RingImagePageChangeEvent({required this.index});
+
+  @override
+  List<Object> get props => [index];
+}

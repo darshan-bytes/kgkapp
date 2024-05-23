@@ -79,18 +79,14 @@ export 'package:kgk/modules/reset_password/bloc/reset_password_bloc.dart';
 export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
 export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
-export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
-export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
-export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
 export 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
 export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
-
-export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
 export 'package:kgk/modules/b2b/ring_details/bloc/ring_detail_bloc.dart';
+export 'package:kgk/modules/b2b/diamond_details/bloc/diamond_detail_bloc.dart';
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
@@ -116,10 +112,10 @@ export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
-export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
 export 'package:kgk/widgets/diy_progress_widget.dart';
+export 'package:kgk/widgets/inquiry_widget.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

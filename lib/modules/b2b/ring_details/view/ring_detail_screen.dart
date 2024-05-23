@@ -1,44 +1,33 @@
 import 'package:kgk/kgk.dart';
 
-class RingDetailScreen extends StatefulWidget {
+class RingDetailScreen extends StatelessWidget {
   const RingDetailScreen({super.key});
-
-  @override
-  State<RingDetailScreen> createState() => _RingDetailScreenState();
-}
-
-class _RingDetailScreenState extends State<RingDetailScreen> {
-
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
-
-  final List<String> imgList = [
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-    AppImages.icEyeClose,
-  ];
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).ringDetailScreenStyle;
+    final ringBloc = context.read<RingDetailBloc>();
     return Scaffold(
       appBar: CustomAppBar(
         title: 'DIY',
         onFavorite: () { },
         onFilter: () { },
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const DiyProgressWidget(selectedStep: 2,),
-            _imageSlider(),
-            const SizedBox(height: 40,),
-            _productDetail()
-          ],
-        ),
+      body: BlocBuilder<RingDetailBloc, RingDetailState>(
+        buildWhen: (_, current) => current is RingImagePageChangeState,
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const DiyProgressWidget(selectedStep: 2,),
+                _imageSlider(context, ringBloc),
+                const SizedBox(height: 40,),
+                _productDetail(context, ringBloc)
+              ],
+            ),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
@@ -63,29 +52,27 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
     );
   }
 
-  Widget _imageSlider() {
+  Widget _imageSlider(BuildContext context, RingDetailBloc ringBloc) {
     return Column(
       children: [
         CarouselSlider(
-          items: imgList.map((e) {
+          items: ringBloc.imgList.map((e) {
             return SmartImage(path: e, width: double.infinity,);
           }).toList(),
-          carouselController: _controller,
+          carouselController: ringBloc.controller,
           options: CarouselOptions(
               autoPlay: true,
               viewportFraction: 1.5,
               aspectRatio: 1,
               onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
+                ringBloc.add(RingImagePageChangeEvent(index: index));
               }),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: imgList.asMap().entries.map((entry) {
+          children: ringBloc.imgList.asMap().entries.map((entry) {
             return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
+              onTap: () => ringBloc.controller.animateToPage(entry.key),
               child: Container(
                 width: 10.0,
                 height: 10.0,
@@ -95,7 +82,7 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
                     color: (Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
                         : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                        .withOpacity(ringBloc.current == entry.key ? 0.9 : 0.4)),
               ),
             );
           }).toList(),
@@ -104,7 +91,7 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
     );
   }
 
-  Widget _productDetail() {
+  Widget _productDetail(BuildContext context, RingDetailBloc ringBloc) {
     final style = AppTheme.of(context).ringDetailScreenStyle;
     final ringDetailBloc = context.read<RingDetailBloc>();
     return BlocBuilder<RingDetailBloc, RingDetailState>(
@@ -164,7 +151,7 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
               const SizedBox(height: 20,),
               const Divider(height: 1,),
               const SizedBox(height: 20,),
-              _metalSelectionWidget(),
+              _metalSelectionWidget(context, ringBloc),
               const SizedBox(height: 10,),
               const Divider(height: 1,),
               const SizedBox(height: 16,),
@@ -240,30 +227,30 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
               ),
               if (!ringDetailBloc.isSettingOpen) ... [
                 const SizedBox(height: 16,),
-                _settingWidget(APPStrings.productType.tr, 'Engagement Ring'),
+                _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
                 const SizedBox(height: 14,),
-                _settingWidget(APPStrings.brand, 'Flyerfit'),
+                _settingWidget(APPStrings.brand, 'Flyerfit', context),
                 const SizedBox(height: 14,),
-                _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts'),
+                _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
               ],
               const SizedBox(height: 28,),
               const Divider(height: 1,),
               const SizedBox(height: 28,),
-              _settingWidget('Shape', 'Round'),
+              _settingWidget('Shape', 'Round', context),
               const SizedBox(height: 12,),
-              _settingWidget('Quantity', '1'),
+              _settingWidget('Quantity', '1', context),
               const SizedBox(height: 12,),
-              _settingWidget('Total carat (min)', '1'),
+              _settingWidget('Total carat (min)', '1', context),
               const SizedBox(height: 12,),
-              _settingWidget('Color', 'F-G'),
+              _settingWidget('Color', 'F-G', context),
               const SizedBox(height: 12,),
-              _settingWidget('Clarity', 'VS2-SI1'),
+              _settingWidget('Clarity', 'VS2-SI1', context),
               const SizedBox(height: 12,),
-              _settingWidget('Setting', 'TypeThree Stone'),
+              _settingWidget('Setting', 'TypeThree Stone', context),
               const SizedBox(height: 28,),
               const Divider(height: 1,),
               const SizedBox(height: 28,),
-              _inquiryWidget(),
+              const InquiryWidget(email: 'enquiry.diaind@kgkmail.com', phone: '+91 - 1234567830',),
               const SizedBox(height: 24,),
             ],
           ),
@@ -272,54 +259,7 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
     );
   }
 
-  Widget _inquiryWidget() {
-    final style = AppTheme.of(context).ringDetailScreenStyle;
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: colors(context).colorD3DAE0, width: 1),
-          borderRadius: BorderRadius.circular(8)
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SmartText(APPStrings.haveAQuestion.tr, style: style.haveAQuestionStyle,),
-                const SizedBox(height: 8,),
-                SmartText(APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle,),
-                const SizedBox(height: 12,),
-                Row(
-                  children: [
-                    const SmartImage(path: AppImages.icPhone),
-                    const SizedBox(width: 8,),
-                    SmartText('+91 - 1234567830', style: style.phoneStyle,)
-                  ],
-                ),
-                const SizedBox(height: 14,),
-                Row(
-                  children: [
-                    const SmartImage(path: AppImages.icMail),
-                    const SizedBox(width: 8,),
-                    SmartText('enquiry.diaind@kgkmail.com', style: style.emailStyle,)
-                  ],
-                ),
-                const SizedBox(height: 16,),
-              ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 4),
-            child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16,),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _metalSelectionWidget() {
+  Widget _metalSelectionWidget(BuildContext context, RingDetailBloc ringBloc) {
     final style = AppTheme.of(context).ringDetailScreenStyle;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -383,7 +323,7 @@ class _RingDetailScreenState extends State<RingDetailScreen> {
     );
   }
 
-  Widget _settingWidget(String type, String value) {
+  Widget _settingWidget(String type, String value, BuildContext context) {
     final style = AppTheme.of(context).ringDetailScreenStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
