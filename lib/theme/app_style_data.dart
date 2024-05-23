@@ -160,7 +160,8 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
+  SmartRichTextStyle get smartRichTextStyle =>
+      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
 
   @override
   // TODO: implement categoryTileStyle
@@ -256,11 +257,6 @@ class LightModeTheme extends AppTheme {
         unSelectedBorderColor: colors.colorD3DAE0,
         labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
-    titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
-    descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color8C8C8C),
-    thumbColor: colors.white,
-    dividerColor: colors.colorD3DAE0
-  );
 
   @override
   DiyProgressViewStyle get diyProgressViewStyle => DiyProgressViewStyle(

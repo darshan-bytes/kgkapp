@@ -47,7 +47,6 @@ class AppImages {
 
   static const String icFullStar = 'assets/images/ic_full_star.svg';
   static const String icEmptyStar = 'assets/images/ic_empty_star.svg';
-  static const String icDiamond = 'assets/images/ic_diamond.svg';
   static const String icTruck = 'assets/images/ic_truck.svg';
   static const String icPhone = 'assets/images/ic_phone.svg';
   static const String icMail = 'assets/images/ic_mail.svg';
