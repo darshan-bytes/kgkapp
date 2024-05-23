@@ -124,13 +124,11 @@ class ProductGridItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              child: SmartText(
-                productDetails.name,
-                style: style.productNameStyle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+            SmartText(
+              productDetails.name,
+              style: style.productNameStyle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               const SizedBox(height: 8),

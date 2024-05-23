@@ -55,7 +55,7 @@ abstract class AppTheme {
   SignUpStyle get signUpStyle;
 
   RadioButtonStyle get radioButtonStyle;
-  
+
   ProductItemStyle get productItemStyle;
 }
 
@@ -159,6 +159,7 @@ class SignInScreenStyle {
   final TextStyle subTitleStyle;
   final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
+  final TextStyle registerTextStyle;
 
   SignInScreenStyle({
     required this.labelStyle,
@@ -166,6 +167,7 @@ class SignInScreenStyle {
     required this.backgroundColor,
     required this.titleTextStyle,
     required this.subTitleStyle,
+    required this.registerTextStyle,
   });
 }
 
@@ -296,9 +298,9 @@ class RadioButtonStyle {
     required this.activeColor,
     required this.checkColor,
     required this.borderColor,
-    required this.textStyle,});
+    required this.textStyle,
+  });
 }
-
 
 class ProductItemStyle {
   final Color backgroundColor;

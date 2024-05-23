@@ -156,11 +156,11 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
+  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
   // TODO: implement categoryTileStyle
