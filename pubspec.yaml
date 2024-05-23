@@ -57,6 +57,12 @@ dependencies:
   # For Country Code Picker
   country_picker: ^2.0.26
 
+  # For Carousel image Slider
+  carousel_slider: ^4.2.1
+
+  # For Rating Bar
+  flutter_rating_bar: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -19,7 +19,10 @@ class AllNotificationsView extends StatelessWidget {
               prefixIcon: Container(
                 alignment: Alignment.center,
                 width: 16,
-                child: SvgPicture.asset(AppImages.icSearch, height: 16, width: 16, fit: BoxFit.fitWidth,),
+                child: const SmartImage(
+                  path: AppImages.icSearch,
+                  height: 16, width: 16,
+                ),
               ),
             ),
           ),

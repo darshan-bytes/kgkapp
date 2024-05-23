@@ -13,6 +13,8 @@ class AppRoutes {
   static const notificationPage = '/notificationPage';
   static const collectionPage = '/collectionPage';
   static const productListGridPage = '/productListGridPage';
+  static const diamondDetailPage = '/diamondDetailPage';
+  static const ringDetailPage = '/ringDetailPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -90,6 +92,12 @@ class AppRoutes {
           builder: (_) => const ProductListGridScreen(),
           settings: const RouteSettings(name: productListGridPage),
         );
+
+      case diamondDetailPage:
+        return MaterialPageRoute(builder: (_) => const DiamondDetailScreen(), settings: const RouteSettings(name: diamondDetailPage));
+
+      case ringDetailPage:
+        return MaterialPageRoute(builder: (_) => const RingDetailScreen(), settings: const RouteSettings(name: ringDetailPage));
 
       default:
         return _errorRoute();

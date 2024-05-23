@@ -21,6 +21,8 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
+export 'package:carousel_slider/carousel_slider.dart';
+export 'package:flutter_rating_bar/flutter_rating_bar.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_fonts.dart';
 export 'package:kgk/app/app_images.dart';
@@ -85,11 +87,15 @@ export 'package:kgk/modules/b2b/product_list_grid/view/product_list_grid_screen.
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/sort_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/filter_screen.dart';
 
+export 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
+export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/bloc/sort_filter_bloc.dart';
 
+export 'package:kgk/modules/b2b/ring_details/bloc/ring_detail_bloc.dart';
+export 'package:kgk/modules/b2b/diamond_details/bloc/diamond_detail_bloc.dart';
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
@@ -118,6 +124,8 @@ export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/smart_pagaination.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
+export 'package:kgk/widgets/diy_progress_widget.dart';
+export 'package:kgk/widgets/inquiry_widget.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

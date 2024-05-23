@@ -65,6 +65,14 @@ abstract class AppTheme {
   SortStyle get sortStyle;
 
   FilterStyle get filterStyle;
+
+  DiyProgressViewStyle get diyProgressViewStyle;
+
+  DiamondDetailScreenStyle get diamondDetailScreenStyle;
+
+  RingDetailScreenStyle get ringDetailScreenStyle;
+
+  InquiryWidgetStyle get inquiryWidgetStyle;
 }
 
 class PrimaryButtonStyle {
@@ -403,5 +411,97 @@ class FilterStyle {
     required this.itemBorderColor,
     required this.closeButtonBackgroundColor,
     required this.closeButtonStyle,
+  });
+}
+
+class DiyProgressViewStyle {
+  final TextStyle titleStyle;
+  final Color selectedBorderColor;
+  final Color unselectedBorderColor;
+
+  DiyProgressViewStyle({
+    required this.titleStyle,
+    required this.selectedBorderColor,
+    required this.unselectedBorderColor,
+  });
+}
+
+class DiamondDetailScreenStyle {
+  final TextStyle skuStyle;
+  final TextStyle diamondNameStyle;
+  final TextStyle reviewStyle;
+  final TextStyle priceStyle;
+  final TextStyle seeProductStyle;
+  final TextStyle orderSampleStyle;
+  final TextStyle diamondPurityStyle;
+  final TextStyle shippingStyle;
+  final TextStyle selectDiamondStyle;
+
+  DiamondDetailScreenStyle({
+    required this.skuStyle,
+    required this.diamondNameStyle,
+    required this.reviewStyle,
+    required this.priceStyle,
+    required this.seeProductStyle,
+    required this.orderSampleStyle,
+    required this.diamondPurityStyle,
+    required this.shippingStyle,
+    required this.selectDiamondStyle,
+  });
+}
+
+class RingDetailScreenStyle {
+  final TextStyle ringTypeStyle;
+  final TextStyle ringCodeStyle;
+  final TextStyle ringNameStyle;
+  final TextStyle reviewStyle;
+  final TextStyle metalHeaderStyle;
+  final TextStyle metalNameStyle;
+  final TextStyle selectedMetalNameStyle;
+  final TextStyle approxPriceLabelStyle;
+  final TextStyle priceStyle;
+  final TextStyle buyInBulkStyle;
+  final TextStyle askQuestionStyle;
+  final TextStyle approxPriceNoteStyle;
+  final TextStyle diamondPurityStyle;
+  final TextStyle shippingStyle;
+  final TextStyle selectSettingStyle;
+  final TextStyle settingTypeStyle;
+  final TextStyle settingValueStyle;
+  final TextStyle settingHeaderStyle;
+
+  RingDetailScreenStyle({
+    required this.ringTypeStyle,
+    required this.ringCodeStyle,
+    required this.ringNameStyle,
+    required this.reviewStyle,
+    required this.metalHeaderStyle,
+    required this.metalNameStyle,
+    required this.selectedMetalNameStyle,
+    required this.approxPriceLabelStyle,
+    required this.priceStyle,
+    required this.buyInBulkStyle,
+    required this.askQuestionStyle,
+    required this.approxPriceNoteStyle,
+    required this.diamondPurityStyle,
+    required this.shippingStyle,
+    required this.selectSettingStyle,
+    required this.settingTypeStyle,
+    required this.settingValueStyle,
+    required this.settingHeaderStyle,
+  });
+}
+
+class InquiryWidgetStyle {
+  final TextStyle haveAQuestionStyle;
+  final TextStyle reachOutStyle;
+  final TextStyle phoneStyle;
+  final TextStyle emailStyle;
+
+  InquiryWidgetStyle({
+    required this.haveAQuestionStyle,
+    required this.reachOutStyle,
+    required this.phoneStyle,
+    required this.emailStyle,
   });
 }

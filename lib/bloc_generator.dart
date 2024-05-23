@@ -21,6 +21,8 @@ class BlocGenerator {
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
       BlocProvider<ProductListGridBloc>(create: (_) => ProductListGridBloc()),
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
+      BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
+      BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
     ];
   }
 }
