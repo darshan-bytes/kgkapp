@@ -59,6 +59,8 @@ abstract class AppTheme {
   ProductItemStyle get productItemStyle;
 
   SmartDropDownStyle get smartDropDownStyle;
+
+  CustomPageIndicatorStyle get customPageIndicatorStyle;
 }
 
 class PrimaryButtonStyle {
@@ -300,6 +302,18 @@ class RadioButtonStyle {
     required this.activeColor,
     required this.checkColor,
     required this.borderColor,
+    required this.textStyle,
+  });
+}
+
+class CustomPageIndicatorStyle {
+  final Color borderColor;
+  final Color textColor;
+  final TextStyle textStyle;
+
+  CustomPageIndicatorStyle({
+    required this.borderColor,
+    required this.textColor,
     required this.textStyle,
   });
 }

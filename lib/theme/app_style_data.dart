@@ -256,4 +256,11 @@ class LightModeTheme extends AppTheme {
         unSelectedBorderColor: colors.colorD3DAE0,
         labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
+
+  @override
+  CustomPageIndicatorStyle get customPageIndicatorStyle => CustomPageIndicatorStyle(
+        borderColor: colors.colorD3DAE0,
+        textColor: colors.primary,
+        textStyle: interRegularTextStyle.copyWith(fontSize: 16),
+      );
 }
