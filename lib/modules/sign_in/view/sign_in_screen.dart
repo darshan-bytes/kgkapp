@@ -84,9 +84,7 @@ class SignInScreen extends StatelessWidget {
       hintText: APPStrings.password.tr,
       keyboardType: TextInputType.visiblePassword,
       lableStyle: style.labelStyle,
-      onEditingComplete: () {
-        // FocusScope.of(context).nextFocus();
-      },
+      onEditingComplete: () {},
     );
   }
 
