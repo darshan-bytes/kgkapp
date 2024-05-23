@@ -7,6 +7,7 @@ class CategoryRow extends StatelessWidget {
   final void Function(int itemIndex) onCategorySelected;
 
   const CategoryRow({
+    super.key,
     required this.categories,
     required this.rowIndex,
     required this.selectedIndex,
@@ -32,15 +33,17 @@ class CategoryRow extends StatelessWidget {
               ),
             ),
           );
-        }).toList(),
+        }),
         // Add dummy containers if needed
-        ...List.generate(dummyCount, (index) => Expanded(child: DummyContainer())),
+        ...List.generate(dummyCount, (index) => const Expanded(child: DummyContainer())),
       ],
     );
   }
 }
 
 class DummyContainer extends StatelessWidget {
+  const DummyContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

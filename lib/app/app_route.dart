@@ -2,13 +2,16 @@ import 'package:kgk/kgk.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
+  static const getReadyPage = '/getReadyPage';
   static const signInPage = '/signInPage';
+  static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
   static const dashboardPage = '/tabBarPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
+  static const collectionPage = '/collectionPage';
   static const diamondDetailPage = '/diamondDetailPage';
   static const ringDetailPage = '/ringDetailPage';
 
@@ -21,14 +24,31 @@ class AppRoutes {
           settings: const RouteSettings(name: initialRoute),
         );
 
+      case getReadyPage:
+        return MaterialPageRoute(
+          builder: (_) => const GetReadyScreen(),
+          settings: const RouteSettings(name: getReadyPage),
+        );
+
       case signInPage:
         return MaterialPageRoute(
           builder: (_) => const SignInScreen(),
           settings: const RouteSettings(name: signInPage),
         );
 
+      case signUpPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SignUpBloc>(context).add(const SignUpResetEvent());
+            return const SignUpScreen();
+          },
+          settings: const RouteSettings(name: signUpPage),
+        );
       case categoriesPage:
-        return MaterialPageRoute(builder: (_) => const CategoriesScreen(), settings: const RouteSettings(name: categoriesPage));
+        return MaterialPageRoute(
+          builder: (_) => const CategoriesScreen(),
+          settings: const RouteSettings(name: categoriesPage),
+        );
 
       case dashboardPage:
         return MaterialPageRoute(
@@ -54,9 +74,17 @@ class AppRoutes {
           settings: const RouteSettings(name: emailSentPage),
         );
 
-
       case notificationPage:
-        return MaterialPageRoute(builder: (_) => const NotificationScreen(), settings: const RouteSettings(name: notificationPage));
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+          settings: const RouteSettings(name: notificationPage),
+        );
+
+      case collectionPage:
+        return MaterialPageRoute(
+          builder: (_) => const CollectionScreen(),
+          settings: const RouteSettings(name: collectionPage),
+        );
 
       case diamondDetailPage:
         return MaterialPageRoute(builder: (_) => const DiamondDetailScreen(), settings: const RouteSettings(name: diamondDetailPage));

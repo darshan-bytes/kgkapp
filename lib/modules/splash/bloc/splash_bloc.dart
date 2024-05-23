@@ -4,12 +4,14 @@ part 'splash_event.dart';
 part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
-  SplashBloc() : super(SplashInitialState()) {
-    on<LoadSplashEvent>(navigateToSignInScreen);
+  SplashBloc() : super(SplashInitial()) {
+    on<LoadSplashEvent>(navigateToGetReadyScreen);
   }
 
-  void navigateToSignInScreen(LoadSplashEvent event, Emitter<SplashState> emit) async {
+  void navigateToGetReadyScreen(LoadSplashEvent event, Emitter<SplashState> emit) {
     BlocProvider.of<AppBloc>(event.context).add(const LanguageChangedEvent(''));
-    await Future.delayed(const Duration(seconds: 3));
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushNamed(event.context, AppRoutes.getReadyPage);
+    });
   }
 }

@@ -5,8 +5,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home'),
+    return Center(
+      child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.collectionPage);
+          },
+          child: const Text('Home')),
     );
   }
 }

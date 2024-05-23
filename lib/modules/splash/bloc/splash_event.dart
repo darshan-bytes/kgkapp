@@ -10,5 +10,5 @@ class LoadSplashEvent extends SplashEvent {
   const LoadSplashEvent({required this.context});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [context];
 }

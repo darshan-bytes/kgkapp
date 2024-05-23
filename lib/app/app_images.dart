@@ -31,6 +31,20 @@ class AppImages {
 
   static const String icAppicon = 'assets/images/ic_app_icon.svg';
 
+  //Authentication
+  static const String icUser = 'assets/images/ic_user.svg';
+  static const String icCompany = 'assets/images/ic_company.svg';
+  static const String icArrowDown = 'assets/images/ic_arrow_down.svg';
+  static const String icMinus = 'assets/images/ic_minus.svg';
+  static const String icCheck = 'assets/images/ic_check.svg';
+  //product item
+  static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
+  static const String icAddEye = 'assets/images/ic_add_eye.svg';
+  static const String icCancel = 'assets/images/ic_cancle.svg';
+  static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
+  static const String icGram = 'assets/images/ic_gram.svg';
+  static const String icDiamond = 'assets/images/ic_diamond.svg';
+
   static const String icFullStar = 'assets/images/ic_full_star.svg';
   static const String icEmptyStar = 'assets/images/ic_empty_star.svg';
   static const String icDiamond = 'assets/images/ic_diamond.svg';

@@ -20,9 +20,9 @@ class CategoryTile extends StatelessWidget {
         children: [
           SmartImage(
             path: category.image ?? 'https://i.ibb.co/HgjT1rt/Image.png',
-            height: 134,
+            height: Responsive.isTablet(context) ? 200 : 134,
             width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
           Container(
             margin: const EdgeInsets.all(8.0),
@@ -32,7 +32,7 @@ class CategoryTile extends StatelessWidget {
               children: [
                 SmartText(
                   category.name ?? '',
-                  style: categoryTileStyle.lableStyle,
+                  style: categoryTileStyle.labelStyle,
                 ),
                 const SizedBox(
                   width: 10,

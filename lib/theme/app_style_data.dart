@@ -150,26 +150,25 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  // TODO: implement signInScreenStyle
   SignInScreenStyle get signInScreenStyle => SignInScreenStyle(
         backgroundColor: colors.white,
         titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-        lableStyle: interRegularTextStyle,
+        labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
+  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
+  @override
   // TODO: implement categoryTileStyle
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
       backgroundColor: colors.colorF7F9FA,
       dividerLineColor: colors.colorD3DAE0,
-      lableStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
+      labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16));
-
 
   @override
   ForgotPasswordScreenStyle get forgotPasswordScreenStyle => ForgotPasswordScreenStyle(
@@ -179,22 +178,84 @@ class LightModeTheme extends AppTheme {
 
   @override
   NotificationScreenStyle get notificationScreenStyle => NotificationScreenStyle(
-    tabTitleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
-    selectedTabColor: colors.color303538,
-    unselectedTabColor: colors.color8C8C8C
-  );
+      tabTitleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+      selectedTabColor: colors.color303538,
+      unselectedTabColor: colors.color8C8C8C);
 
   @override
   AllNotificationViewStyle get allNotificationViewStyle => AllNotificationViewStyle(
-      titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
-      descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color303538),
-      timeLabelStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-      dotColor: colors.primary,
-      searchHintStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-  );
+        titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
+        descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color303538),
+        timeLabelStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        dotColor: colors.primary,
+        searchHintStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      );
 
   @override
   SettingViewStyle get settingViewStyle => SettingViewStyle(
+      titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
+      descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color8C8C8C),
+      thumbColor: colors.white,
+      dividerColor: colors.colorD3DAE0);
+
+  @override
+  CollectionViewStyle get collectionViewStyle => CollectionViewStyle(
+        headerBgColor: colors.colorC5DEEB,
+        headerTitleStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+        headerSubTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32, color: colors.color303538),
+        collectionListTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, color: colors.color303538),
+      );
+
+  @override
+  SignUpStyle get signUpStyle => SignUpStyle(
+        backgroundColor: colors.white,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        selectAccountStyle: interRegularTextStyle.copyWith(fontSize: 12),
+        selectedAccountTypeColor: colors.primary,
+        selectedAccountTypeBorderColor: colors.primary,
+        selectedAccountTypeIconColor: colors.white,
+        selectedAccountTypeTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.white),
+        unselectedAccountTypeColor: colors.white,
+        unselectedAccountTypeBorderColor: colors.colorD3DAE0,
+        unselectedAccountTypeIconColor: colors.primary,
+        unselectedAccountTypeTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  RadioButtonStyle get radioButtonStyle => RadioButtonStyle(
+        activeColor: colors.primary,
+        checkColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        textStyle: interRegularTextStyle,
+      );
+
+  @override
+  ProductItemStyle get productItemStyle => ProductItemStyle(
+      backgroundColor: colors.white,
+      productNameStyle: interRegularTextStyle,
+      priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
+      discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+      productBackgroundColor: colors.colorFAFAFA,
+      checkedPriceStyle: interRegularTextStyle.copyWith(
+        fontSize: 12,
+        color: colors.color8C8C8C,
+        decoration: TextDecoration.lineThrough,
+      ),
+      borderColor: colors.colorD3DAE0,
+      buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
+      diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
+      buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16));
+
+  @override
+  SmartDropDownStyle get smartDropDownStyle => SmartDropDownStyle(
+        backgroundColor: colors.white,
+        titleTextStyle: interSemiBoldTextStyle,
+        borderColor: colors.colorD3DAE0,
+        selectedBorderColor: colors.primary,
+        unSelectedBorderColor: colors.colorD3DAE0,
+        labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
     titleStyle: interBoldTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: colors.color303538),
     descStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: colors.color8C8C8C),
     thumbColor: colors.white,

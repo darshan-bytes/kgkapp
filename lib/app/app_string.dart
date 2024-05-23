@@ -1,15 +1,13 @@
 /// This class is a Dart class that contains a bunch of static strings that are used throughout the app
 /// Here we have defined all the strings of keys
 class APPStrings {
-  static const String appName = 'app_name';
+  static const String appName = 'KGK';
   static const String languageEn = 'en';
   static const String languageKo = 'ko';
 
-  //text String
   static const String welcomeBack = 'welcome_back';
   static const String pleaseEnterEmailPass = 'please_enter_email_pass';
-  static const String emailAddress = 'email_address';
-  static const String password = 'password';
+  static const String forgotPassword = 'forgot_password';
   static const String signIn = 'sign_in';
   static const String error = 'error';
   static const String email = 'email';
@@ -23,13 +21,13 @@ class APPStrings {
   static const String login = 'login';
   static const String register = 'register';
   static const String skip = 'skip';
+
   static const String somethingWrong = 'something_wrong';
   static const String checkInternet = 'check_internet';
   static const String failedFetchData = 'failed_fetch_data';
 
   // Login Screen
   static const String enterYourAccountDetails = 'enter_your_account_details';
-  static const String forgotPassword = 'forgot_password';
   static const String orLoginWith = 'or_login_with';
   static const String dontHaveAccount = 'dont_have_account';
 
@@ -62,6 +60,31 @@ class APPStrings {
   static const String shareBySalesmanDesc = 'share_by_salesman_desc';
   static const String orderStatusUpdate = 'order_status_update';
   static const String changeInOrderStatus = 'change_in_order_status';
+
+  // Collection
+  static const String collection = 'collection';
+
+  //SignUp
+  static const String createAccount = 'create_account';
+  static const String enterAccountDetails = 'enter_account_details';
+  static const String selectAccountType = 'select_account_type';
+  static const String individual = 'individual';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
+  static const String contactNumber = 'contact_number';
+  static const String password = 'password';
+  static const String company = 'company';
+  static const String companyName = 'company_name';
+  static const String officeLocation = 'office_location';
+  static const String businessType = 'business_type';
+  static const String diamond = 'diamond';
+  static const String gemstone = 'gemstone';
+  static const String jewellery = 'jewellery';
+  static const String add = 'add';
+  static const String country = 'country';
+  //Product item
+  static const String addToBag = 'add_to_bag';
+  static const String select = 'select';
 
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';

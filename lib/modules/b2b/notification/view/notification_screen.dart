@@ -1,4 +1,3 @@
-
 import 'package:kgk/kgk.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -9,7 +8,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> with TickerProviderStateMixin {
-
   TabController? controller;
 
   @override
@@ -44,10 +42,7 @@ class _NotificationScreenState extends State<NotificationScreen> with TickerProv
           Expanded(
             child: TabBarView(
               controller: controller,
-              children: const [
-                AllNotificationsView(),
-                SettingsView()
-              ],
+              children: const [AllNotificationsView(), SettingsView()],
             ),
           )
         ],

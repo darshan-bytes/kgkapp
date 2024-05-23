@@ -13,53 +13,58 @@ class ForgotPasswordScreen extends StatelessWidget {
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
-        builder: (context, state) {
-          if (state is ForgotPasswordInitial) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: PrimaryButton(
-                onClick: () {
-                  Navigator.pushNamed(context, AppRoutes.emailSentPage);
-                },
-                title: APPStrings.submit.tr,
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
       body: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
         builder: (context, state) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SmartText(
-                    APPStrings.forgotPassword.tr.interpolate(['']),
-                    style: style.titleTextStyle,
+          return SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 17),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SmartText(
+                              APPStrings.forgotPassword.tr.interpolate(['']),
+                              style: style.titleTextStyle,
+                            ),
+                            SmartText(
+                              APPStrings.forgotPasswordDescription.tr,
+                              style: style.subTitleStyle,
+                            ),
+                            const SizedBox(height: 32),
+                            SmartTextField(
+                              controller: forgotPasswordBloc.emailController,
+                              labelText: APPStrings.email.tr,
+                              hintText: APPStrings.email.tr,
+                              lableStyle: style.labelStyle,
+                              keyboardType: TextInputType.emailAddress,
+                              onEditingComplete: () {
+                                FocusScope.of(context).nextFocus();
+                              },
+                            ),
+                            const Spacer(),
+                            if (state is ForgotPasswordInitial)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: SmartButton(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, AppRoutes.emailSentPage);
+                                  },
+                                  title: APPStrings.submit.tr,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  SmartText(
-                    APPStrings.forgotPasswordDescription.tr,
-                    style: style.subTitleStyle,
-                  ),
-                  const SizedBox(height: 32),
-                  SmartTextField(
-                    controller: forgotPasswordBloc.emailController,
-                    lableText: APPStrings.email.tr,
-                    hintText: APPStrings.email.tr,
-                    lableStyle: style.lableStyle,
-                    keyboardType: TextInputType.emailAddress,
-                    onEditingComplete: () {
-                      FocusScope.of(context).nextFocus();
-                    },
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           );
         },

@@ -50,6 +50,16 @@ abstract class AppTheme {
 
   SettingViewStyle get settingViewStyle;
 
+  CollectionViewStyle get collectionViewStyle;
+
+  SignUpStyle get signUpStyle;
+
+  RadioButtonStyle get radioButtonStyle;
+
+  ProductItemStyle get productItemStyle;
+
+  SmartDropDownStyle get smartDropDownStyle;
+
   DiyProgressViewStyle get diyProgressViewStyle;
 
   DiamondDetailScreenStyle get diamondDetailScreenStyle;
@@ -155,15 +165,17 @@ class SignInScreenStyle {
   final Color backgroundColor;
   final TextStyle titleTextStyle;
   final TextStyle subTitleStyle;
-  final TextStyle lableStyle;
+  final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
+  final TextStyle registerTextStyle;
 
   SignInScreenStyle({
-    required this.lableStyle,
+    required this.labelStyle,
     required this.forgotPasswordStyle,
     required this.backgroundColor,
     required this.titleTextStyle,
     required this.subTitleStyle,
+    required this.registerTextStyle,
   });
 }
 
@@ -186,13 +198,13 @@ class ForgotPasswordScreenStyle {
 }
 
 class CategoryTileStyle {
-  final TextStyle lableStyle;
+  final TextStyle labelStyle;
   final TextStyle detailStyle;
   final Color backgroundColor;
   final Color dividerLineColor;
 
   CategoryTileStyle({
-    required this.lableStyle,
+    required this.labelStyle,
     required this.backgroundColor,
     required this.detailStyle,
     required this.dividerLineColor,
@@ -238,6 +250,107 @@ class SettingViewStyle {
     required this.descStyle,
     required this.thumbColor,
     required this.dividerColor,
+  });
+}
+
+class CollectionViewStyle {
+  final Color headerBgColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle headerSubTitleStyle;
+  final TextStyle collectionListTitleStyle;
+
+  CollectionViewStyle(
+      {required this.headerBgColor,
+      required this.headerTitleStyle,
+      required this.headerSubTitleStyle,
+      required this.collectionListTitleStyle});
+}
+
+class SignUpStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle selectAccountStyle;
+  final Color selectedAccountTypeColor;
+  final Color selectedAccountTypeBorderColor;
+  final Color selectedAccountTypeIconColor;
+  final TextStyle selectedAccountTypeTextStyle;
+  final Color unselectedAccountTypeColor;
+  final Color unselectedAccountTypeBorderColor;
+  final Color unselectedAccountTypeIconColor;
+  final TextStyle unselectedAccountTypeTextStyle;
+
+  SignUpStyle({
+    required this.selectAccountStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.backgroundColor,
+    required this.selectedAccountTypeColor,
+    required this.selectedAccountTypeBorderColor,
+    required this.selectedAccountTypeIconColor,
+    required this.selectedAccountTypeTextStyle,
+    required this.unselectedAccountTypeColor,
+    required this.unselectedAccountTypeBorderColor,
+    required this.unselectedAccountTypeIconColor,
+    required this.unselectedAccountTypeTextStyle,
+  });
+}
+
+class RadioButtonStyle {
+  final Color activeColor;
+  final Color checkColor;
+  final Color borderColor;
+  final TextStyle textStyle;
+
+  RadioButtonStyle({
+    required this.activeColor,
+    required this.checkColor,
+    required this.borderColor,
+    required this.textStyle,
+  });
+}
+
+class ProductItemStyle {
+  final Color backgroundColor;
+  final Color productBackgroundColor;
+  final Color borderColor;
+  final TextStyle productNameStyle;
+  final TextStyle priceTextStyle;
+  final TextStyle discountTextStyle;
+  final TextStyle checkedPriceStyle;
+  final TextStyle buttonTextStyle;
+  final TextStyle buttonWithIconTextStyle;
+  final TextStyle diamondTextStyle;
+
+  ProductItemStyle({
+    required this.backgroundColor,
+    required this.productBackgroundColor,
+    required this.productNameStyle,
+    required this.priceTextStyle,
+    required this.discountTextStyle,
+    required this.checkedPriceStyle,
+    required this.borderColor,
+    required this.buttonTextStyle,
+    required this.buttonWithIconTextStyle,
+    required this.diamondTextStyle,
+  });
+}
+
+class SmartDropDownStyle {
+  final Color borderColor;
+  final Color backgroundColor;
+  final Color selectedBorderColor;
+  final Color unSelectedBorderColor;
+  final TextStyle titleTextStyle;
+  final TextStyle labelStyle;
+
+  SmartDropDownStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.selectedBorderColor,
+    required this.unSelectedBorderColor,
+    required this.titleTextStyle,
+    required this.labelStyle,
   });
 }
 
