@@ -23,6 +23,7 @@ class AppImages {
   static const String icHeart = 'assets/images/ic_heart.svg';
   static const String icNotification = 'assets/images/ic_notification.svg';
   static const String icSearch = 'assets/images/ic_search.svg';
+  static const String icCross = 'assets/images/ic_cross.svg';
 
   // sign in screen assets
   static const String icGoogle = 'assets/images/ic_google.svg';
