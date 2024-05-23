@@ -9,17 +9,18 @@ class BlocGenerator {
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
-      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
+      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
       BlocProvider<ProductListGridBloc>(create: (_) => ProductListGridBloc()),
+      BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
     ];
   }
 }

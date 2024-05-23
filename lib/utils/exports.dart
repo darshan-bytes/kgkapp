@@ -39,20 +39,22 @@ export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/extension_methods/list.dart';
 export 'package:kgk/interface/api_provider.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
 //model
-export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/model/categories_model.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
 export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/view/categories_screen.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/home/bloc/home_bloc.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/home/view/home_screen.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/my_bag/bloc/my_bag_bloc.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/my_bag/view/my_bag_screen.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/bloc/profile_bloc.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/profile/view/profile_screen.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/support/bloc/support_bloc.dart';
-export 'package:kgk/modules/b2b/dashboard/tab_modules/support/view/support_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/sort_data_model.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/filter_data_model.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/view/categories_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/home/bloc/home_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/home/view/home_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/my_bag/bloc/my_bag_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/my_bag/view/my_bag_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/bloc/profile_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/profile_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/bloc/support_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/view/support_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/view/smart_bottom_navigation_bar.dart';
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
@@ -80,10 +82,13 @@ export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
 export 'package:kgk/modules/b2b/product_list_grid/view/product_list_grid_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/sort_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/filter_screen.dart';
 
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/bloc/sort_filter_bloc.dart';
 
 //screen
 export 'package:kgk/modules/splash/view/splash_screen.dart';

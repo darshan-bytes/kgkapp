@@ -80,6 +80,56 @@ class SmartTextField extends StatefulWidget {
     this.onEditingComplete,
   }) : labelStyle = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null;
 
+  const SmartTextField.search({
+    super.key,
+    this.controller,
+    this.hintText,
+    this.obscured = false,
+    this.readOnly = false,
+    this.keyboardType,
+    this.textInputAction = TextInputAction.next,
+    this.textCapitalization = TextCapitalization.none,
+    this.autofillHints,
+    this.color,
+    this.onValueChanges,
+    this.onFieldSubmitted,
+    this.validator,
+    this.textInputFormatter,
+    this.contentPadding,
+    this.errorText,
+    this.hintStyle,
+    String? labelText,
+    this.lableStyle,
+    this.padding,
+    this.maxLines,
+    this.maxLength,
+    this.expand,
+    this.height = 48,
+    this.style,
+    this.errorStyle,
+    this.suffixIcon,
+    this.focusNode,
+    this.nextFocus,
+    this.isEnabled,
+    this.isRequired,
+    this.enabledBorderRadius,
+    this.enabledBorderColor,
+    this.disabledBorderColor,
+    this.autofocus = false,
+    this.onTapOutside,
+    this.onEditingComplete,
+  })  : labelStyle = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+        prefixIcon = const FittedBox(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: SmartImage(
+              path: AppImages.icSearch,
+              height: 16,
+              width: 16,
+            ),
+          ),
+        );
+
   @override
   State<SmartTextField> createState() => SmartTextFieldState();
 }

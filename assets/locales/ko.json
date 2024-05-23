@@ -62,5 +62,15 @@
   "next": "Next",
   "add_to_bag": "Add to Bag",
   "select": "Select",
-  "ring": "Ring"
+  "ring": "Ring",
+  "filters": "Filters",
+  "clear_all": "Clear All",
+  "close": "Close",
+  "apply": "Apply",
+  "sort_by": "Sort By",
+  "search_by_x": "Search by {#}",
+  "whats_new": "What’s New",
+  "discount": "Discount",
+  "price_high_to_low": "Price - High to Low",
+  "price_low_to_high": "Price - Low to High"
 }
