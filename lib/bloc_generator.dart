@@ -19,6 +19,7 @@ class BlocGenerator {
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
+      BlocProvider<ProductListGridBloc>(create: (_) => ProductListGridBloc()),
     ];
   }
 }

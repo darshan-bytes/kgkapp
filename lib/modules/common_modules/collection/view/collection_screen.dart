@@ -55,13 +55,18 @@ class CollectionScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.only(bottom: 14),
-                              child: SmartImage(
-                                path: index == 0 || index == 3
-                                    ? "https://i.ibb.co/CQCRPFy/Banner.png"
-                                    : "https://i.ibb.co/k4n8Qry/Banner.png",
-                                height: index == 0 || index == 3 ? 200 : 140,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.fill,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, AppRoutes.productListGridPage);
+                                },
+                                child: SmartImage(
+                                  path: index == 0 || index == 3
+                                      ? "https://i.ibb.co/CQCRPFy/Banner.png"
+                                      : "https://i.ibb.co/k4n8Qry/Banner.png",
+                                  height: index == 0 || index == 3 ? 200 : 140,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             );
                           }),

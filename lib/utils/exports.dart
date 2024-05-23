@@ -69,6 +69,7 @@ export 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
 // bloc
 export 'package:kgk/modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
+export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_grid_bloc.dart';
 //screen
 export 'package:kgk/modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/no_internet/bloc/no_internet_bloc.dart';
@@ -78,6 +79,7 @@ export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
 export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
 export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
+export 'package:kgk/modules/b2b/product_list_grid/view/product_list_grid_screen.dart';
 
 // bloc
 export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
@@ -109,6 +111,7 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:kgk/widgets/radiobutton.dart';
+export 'package:kgk/widgets/smart_pagaination.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
 
 export '../../../widgets/smart_rich_text.dart';

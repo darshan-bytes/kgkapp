@@ -75,7 +75,7 @@ class ProductGridItem extends StatelessWidget {
           right: 8,
           child: Row(
             children: [
-              if (onEyeTap != null)
+              if (onCancelTap != null)
                 buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
             ],
           ),
@@ -173,6 +173,7 @@ class ProductGridItem extends StatelessWidget {
                 titleStyle: style.buttonTextStyle,
                 onTap:onAddToBagTap! ,
                 title: APPStrings.addToBag.tr,
+                isShadow: true,
               ),
           ],
         ),

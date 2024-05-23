@@ -12,6 +12,7 @@ class AppRoutes {
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
   static const collectionPage = '/collectionPage';
+  static const productListGridPage = '/productListGridPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -82,6 +83,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const CollectionScreen(),
           settings: const RouteSettings(name: collectionPage),
+        );
+
+      case productListGridPage:
+        return MaterialPageRoute(
+          builder: (_) => const ProductListGridScreen(),
+          settings: const RouteSettings(name: productListGridPage),
         );
 
       default:

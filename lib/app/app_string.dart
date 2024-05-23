@@ -82,7 +82,12 @@ class APPStrings {
   static const String jewellery = 'jewellery';
   static const String add = 'add';
   static const String country = 'country';
+
+  //product list grid
+  static const String previous = 'previous';
+  static const String next = 'next';
   //Product item
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
+  static const String ring = 'ring';
 }
