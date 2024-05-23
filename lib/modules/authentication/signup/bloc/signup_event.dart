@@ -66,3 +66,12 @@ final class SignUpResetEvent extends SignUpEvent {
   @override
   List<Object> get props => [];
 }
+
+final class SignUpChangeOfficeLocationEvent extends SignUpEvent {
+  final OfficeLocation officeLocation;
+
+  const SignUpChangeOfficeLocationEvent(this.officeLocation);
+
+  @override
+  List<Object> get props => [officeLocation];
+}

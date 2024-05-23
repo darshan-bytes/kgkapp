@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'signup_event.dart';
-
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
@@ -47,7 +46,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     BusinessType(name: APPStrings.gemstone.tr, code: APPStrings.gemstone),
     BusinessType(name: APPStrings.jewellery.tr, code: APPStrings.jewellery),
   ];
+
   BusinessType? selectedBusinessType;
+  List<OfficeLocation> officeLocations = [
+    OfficeLocation(name: "India", code: "india"),
+    OfficeLocation(name: "United States", code: "us"),
+  ];
+
+  OfficeLocation? selectedOfficeLocation;
 
   SignUpBloc() : super(SignupInitial()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
@@ -58,6 +64,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignupAddContactEvent>(_onSignupAddContactEvent);
     on<SignUpRemoveContactEvent>(_onSignUpRemoveContactEvent);
     on<SignUpResetEvent>(_onSignUpResetEvent);
+    on<SignUpChangeOfficeLocationEvent>(_onSignUpChangeOfficeLocationEvent);
   }
 
   void _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) {
@@ -130,5 +137,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     selectedBusinessType = null;
     isIndividual = true;
     emit(SignUpReloadState());
+  }
+
+  void _onSignUpChangeOfficeLocationEvent(SignUpChangeOfficeLocationEvent event, Emitter<SignUpState> emit) {
+    emit(SignUpReloadState());
+    selectedOfficeLocation = event.officeLocation;
+    if (selectedOfficeLocation != null) {
+      emit(SignUpChangeOfficeLocationState(selectedOfficeLocation!));
+    }
   }
 }
