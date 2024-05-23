@@ -17,7 +17,7 @@ class ApiService implements ApiProvider {
         String? token = StorageManager().getAuthToken();
 
         final response = await http.get(Uri.parse(apiBaseUrl + url), headers: {
-          // HttpHeaders.authorizationHeader: 'Bearer $token',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
           HttpHeaders.contentTypeHeader: 'application/json',
         });
 

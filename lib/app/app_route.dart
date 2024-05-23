@@ -12,6 +12,7 @@ class AppRoutes {
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
   static const collectionPage = '/collectionPage';
+  static const productListGridPage = '/productListGridPage';
   static const diamondDetailPage = '/diamondDetailPage';
   static const ringDetailPage = '/ringDetailPage';
 
@@ -84,6 +85,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const CollectionScreen(),
           settings: const RouteSettings(name: collectionPage),
+        );
+
+      case productListGridPage:
+        return MaterialPageRoute(
+          builder: (_) => const ProductListGridScreen(),
+          settings: const RouteSettings(name: productListGridPage),
         );
 
       case diamondDetailPage:

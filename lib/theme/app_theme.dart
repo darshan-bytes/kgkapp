@@ -60,6 +60,12 @@ abstract class AppTheme {
 
   SmartDropDownStyle get smartDropDownStyle;
 
+  CustomPageIndicatorStyle get customPageIndicatorStyle;
+
+  SortStyle get sortStyle;
+
+  FilterStyle get filterStyle;
+
   DiyProgressViewStyle get diyProgressViewStyle;
 
   DiamondDetailScreenStyle get diamondDetailScreenStyle;
@@ -312,6 +318,18 @@ class RadioButtonStyle {
   });
 }
 
+class CustomPageIndicatorStyle {
+  final Color borderColor;
+  final Color textColor;
+  final TextStyle textStyle;
+
+  CustomPageIndicatorStyle({
+    required this.borderColor,
+    required this.textColor,
+    required this.textStyle,
+  });
+}
+
 class ProductItemStyle {
   final Color backgroundColor;
   final Color productBackgroundColor;
@@ -353,6 +371,46 @@ class SmartDropDownStyle {
     required this.unSelectedBorderColor,
     required this.titleTextStyle,
     required this.labelStyle,
+  });
+}
+
+class SortStyle {
+  final Color backgroundColor;
+  final Color selectedBorderColor;
+  final TextStyle titleStyle;
+  final TextStyle itemTitleStyle;
+
+  SortStyle({
+    required this.backgroundColor,
+    required this.selectedBorderColor,
+    required this.titleStyle,
+    required this.itemTitleStyle,
+  });
+}
+
+class FilterStyle {
+  final Color backgroundColor;
+  final Color subFilterBackgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle selectedTitleStyle;
+  final TextStyle itemTitleStyle;
+  final TextStyle selectedItemTitleStyle;
+  final Color selectedBackgroundColor;
+  final Color itemBorderColor;
+  final Color closeButtonBackgroundColor;
+  final TextStyle closeButtonStyle;
+
+  FilterStyle({
+    required this.backgroundColor,
+    required this.subFilterBackgroundColor,
+    required this.titleStyle,
+    required this.selectedTitleStyle,
+    required this.itemTitleStyle,
+    required this.selectedItemTitleStyle,
+    required this.selectedBackgroundColor,
+    required this.itemBorderColor,
+    required this.closeButtonBackgroundColor,
+    required this.closeButtonStyle,
   });
 }
 

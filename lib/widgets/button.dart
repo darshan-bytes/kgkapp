@@ -5,7 +5,9 @@ class SmartButton extends StatelessWidget {
   final String title;
   final bool isLoading;
   final bool isEnabled;
+  final bool isShadow;
   final double? height;
+  final double? width;
   final Color? activeBackgroundColor;
   final Color? disableBackgroudColor;
   final BorderRadiusGeometry? borderRadius;
@@ -21,7 +23,9 @@ class SmartButton extends StatelessWidget {
     required this.title,
     this.isLoading = false,
     this.isEnabled = true,
+    this.isShadow = false,
     this.height,
+    this.width,
     this.activeBackgroundColor,
     this.borderRadius,
     this.titleStyle,
@@ -40,6 +44,16 @@ class SmartButton extends StatelessWidget {
       child: Container(
         margin: margin,
         decoration: BoxDecoration(
+          boxShadow: isShadow
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: style.activeBackgroundColor.withOpacity(0.9),
+                    blurRadius: 10.0,
+                    spreadRadius: -8.0,
+                    offset: const Offset(0.0, 8.0),
+                  )
+                ]
+              : null,
           color: isEnabled
               ? (activeBackgroundColor ?? style.activeBackgroundColor)
               : (disableBackgroudColor ?? style.disableBackgroundColor), // Change the color when disabled
@@ -52,6 +66,7 @@ class SmartButton extends StatelessWidget {
               : null,
         ),
         height: height ?? 48,
+        width: width ?? double.infinity,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Center(
           child: Text(

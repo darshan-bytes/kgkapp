@@ -24,7 +24,7 @@ class GetReadyScreen extends StatelessWidget {
                     APPStrings.skip.tr,
                     style: style.skipTextStyle,
                     onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.dashboardPage);
+                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashboardPage, (route) => false);
                     },
                     textAlign: TextAlign.end,
                   ),

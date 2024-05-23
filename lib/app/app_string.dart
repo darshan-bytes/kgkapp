@@ -82,9 +82,26 @@ class APPStrings {
   static const String jewellery = 'jewellery';
   static const String add = 'add';
   static const String country = 'country';
+
+  //product list grid
+  static const String previous = 'previous';
+  static const String next = 'next';
   //Product item
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
+  static const String ring = 'ring';
+
+  //Sort Filter
+  static const String filters = 'filters';
+  static const String clearAll = 'clear_all';
+  static const String close = 'close';
+  static const String apply = 'apply';
+  static const String sortBy = 'sort_by';
+  static const String searchByX = 'search_by_x';
+  static const String whatsNew = 'whats_new';
+  static const String discount = 'discount';
+  static const String priceHighToLow = 'price_high_to_low';
+  static const String priceLowToHigh = 'price_low_to_high';
 
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';

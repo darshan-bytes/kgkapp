@@ -160,8 +160,7 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
+  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
   // TODO: implement categoryTileStyle
@@ -256,6 +255,35 @@ class LightModeTheme extends AppTheme {
         selectedBorderColor: colors.primary,
         unSelectedBorderColor: colors.colorD3DAE0,
         labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  CustomPageIndicatorStyle get customPageIndicatorStyle => CustomPageIndicatorStyle(
+        borderColor: colors.colorD3DAE0,
+        textColor: colors.primary,
+        textStyle: interRegularTextStyle.copyWith(fontSize: 16),
+      );
+
+  @override
+  SortStyle get sortStyle => SortStyle(
+        backgroundColor: colors.white,
+        selectedBorderColor: colors.primary,
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        itemTitleStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  FilterStyle get filterStyle => FilterStyle(
+        backgroundColor: colors.white,
+        subFilterBackgroundColor: colors.colorF7F9FA,
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        selectedTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        itemTitleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        selectedItemTitleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        selectedBackgroundColor: colors.white,
+        itemBorderColor: colors.colorD3DAE0,
+        closeButtonBackgroundColor: colors.white,
+        closeButtonStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.primary),
       );
 
   @override
