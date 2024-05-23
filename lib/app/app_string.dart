@@ -82,4 +82,6 @@ class APPStrings {
   static const String jewellery = 'jewellery';
   static const String add = 'add';
   static const String country = 'country';
+  //Product item
+  static const String addToBag = 'add_to_bag';
 }

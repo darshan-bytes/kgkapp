@@ -56,8 +56,11 @@ export 'package:kgk/modules/b2b/dashboard/view/smart_bottom_navigation_bar.dart'
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
+//model
 export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
 export 'package:kgk/modules/forgot_email_sent/view/forgot_email_sent_screen.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/model/product_details.dart';
+
 //screen
 export 'package:kgk/modules/forgot_password/bloc/forgot_password_bloc.dart';
 export 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
@@ -95,6 +98,8 @@ export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/custom_appbar.dart';
 export 'package:kgk/widgets/responsive.dart';
+export 'package:kgk/widgets/product_grid_item.dart';
+export 'package:kgk/widgets/product_horizontal_list_Item.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_switch.dart';

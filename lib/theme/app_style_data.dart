@@ -156,13 +156,14 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(textStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color111620));
+  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
+  // TODO: implement categoryTileStyle
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
       backgroundColor: colors.colorF7F9FA,
       dividerLineColor: colors.colorD3DAE0,
@@ -228,4 +229,21 @@ class LightModeTheme extends AppTheme {
         borderColor: colors.colorD3DAE0,
         textStyle: interRegularTextStyle,
       );
+
+  @override
+  ProductItemStyle get productItemStyle => ProductItemStyle(
+      backgroundColor: colors.white,
+      productNameStyle: interRegularTextStyle,
+      priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
+      discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+      productBackgroundColor: colors.colorFAFAFA,
+      checkedPriceStyle: interRegularTextStyle.copyWith(
+        fontSize: 12,
+        color: colors.color8C8C8C,
+        decoration: TextDecoration.lineThrough,
+      ),
+      borderColor: colors.colorD3DAE0,
+      buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
+      diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
+      buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16));
 }

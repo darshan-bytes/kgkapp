@@ -55,6 +55,8 @@ abstract class AppTheme {
   SignUpStyle get signUpStyle;
 
   RadioButtonStyle get radioButtonStyle;
+
+  ProductItemStyle get productItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -157,6 +159,7 @@ class SignInScreenStyle {
   final TextStyle subTitleStyle;
   final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
+  final TextStyle registerTextStyle;
 
   SignInScreenStyle({
     required this.labelStyle,
@@ -164,6 +167,7 @@ class SignInScreenStyle {
     required this.backgroundColor,
     required this.titleTextStyle,
     required this.subTitleStyle,
+    required this.registerTextStyle,
   });
 }
 
@@ -295,5 +299,31 @@ class RadioButtonStyle {
     required this.checkColor,
     required this.borderColor,
     required this.textStyle,
+  });
+}
+
+class ProductItemStyle {
+  final Color backgroundColor;
+  final Color productBackgroundColor;
+  final Color borderColor;
+  final TextStyle productNameStyle;
+  final TextStyle priceTextStyle;
+  final TextStyle discountTextStyle;
+  final TextStyle checkedPriceStyle;
+  final TextStyle buttonTextStyle;
+  final TextStyle buttonWithIconTextStyle;
+  final TextStyle diamondTextStyle;
+
+  ProductItemStyle({
+    required this.backgroundColor,
+    required this.productBackgroundColor,
+    required this.productNameStyle,
+    required this.priceTextStyle,
+    required this.discountTextStyle,
+    required this.checkedPriceStyle,
+    required this.borderColor,
+    required this.buttonTextStyle,
+    required this.buttonWithIconTextStyle,
+    required this.diamondTextStyle,
   });
 }
