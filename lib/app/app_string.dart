@@ -84,4 +84,5 @@ class APPStrings {
   static const String country = 'country';
   //Product item
   static const String addToBag = 'add_to_bag';
+  static const String select = 'select';
 }

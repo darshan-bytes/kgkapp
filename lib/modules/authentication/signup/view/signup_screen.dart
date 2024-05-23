@@ -332,15 +332,26 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildCompanyLocationField(SignUpBloc signUpBloc) {
-    //TODO: Change to DropDown
-    return SmartTextField(
-      labelText: APPStrings.officeLocation.tr,
-      hintText: APPStrings.officeLocation.tr,
-      controller: signUpBloc.officeLocationController,
-      focusNode: signUpBloc.officeLocationFocusNode,
-      nextFocus: signUpBloc.firstNameFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpChangeOfficeLocationState,
+      builder: (context, state) {
+        return SmartDropDown<OfficeLocation>(
+          hintText: APPStrings.officeLocation.tr,
+          labelText: APPStrings.officeLocation.tr,
+          items: signUpBloc.officeLocations.map((OfficeLocation officeLocation) {
+            return SmartDropDownItem<OfficeLocation>(
+              value: officeLocation,
+              title: officeLocation.name,
+            );
+          }).toList(),
+          onChanged: (businessType) {
+            if (businessType != null) {
+              signUpBloc.add(SignUpChangeOfficeLocationEvent(businessType));
+            }
+          },
+          selectedItem: signUpBloc.selectedOfficeLocation,
+        );
+      },
     );
   }
 

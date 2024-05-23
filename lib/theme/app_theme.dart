@@ -57,6 +57,8 @@ abstract class AppTheme {
   RadioButtonStyle get radioButtonStyle;
 
   ProductItemStyle get productItemStyle;
+
+  SmartDropDownStyle get smartDropDownStyle;
 }
 
 class PrimaryButtonStyle {
@@ -325,5 +327,23 @@ class ProductItemStyle {
     required this.buttonTextStyle,
     required this.buttonWithIconTextStyle,
     required this.diamondTextStyle,
+  });
+}
+
+class SmartDropDownStyle {
+  final Color borderColor;
+  final Color backgroundColor;
+  final Color selectedBorderColor;
+  final Color unSelectedBorderColor;
+  final TextStyle titleTextStyle;
+  final TextStyle labelStyle;
+
+  SmartDropDownStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.selectedBorderColor,
+    required this.unSelectedBorderColor,
+    required this.titleTextStyle,
+    required this.labelStyle,
   });
 }

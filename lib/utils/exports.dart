@@ -36,12 +36,14 @@ export 'package:kgk/data/network/client/connectivity_manager.dart';
 export 'package:kgk/data/network/model/error_model.dart';
 export 'package:kgk/enums/enums.dart';
 export 'package:kgk/extension_methods/string.dart';
+export 'package:kgk/extension_methods/list.dart';
 export 'package:kgk/interface/api_provider.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/bloc/categories_bloc.dart';
 //model
 export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
+export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/home/bloc/home_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/tab_modules/home/view/home_screen.dart';
@@ -107,6 +109,7 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:kgk/widgets/radiobutton.dart';
+export 'package:kgk/widgets/smart_dropdown.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

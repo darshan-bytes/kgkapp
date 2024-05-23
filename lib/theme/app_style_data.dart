@@ -246,4 +246,14 @@ class LightModeTheme extends AppTheme {
       buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
       diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
       buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16));
+
+  @override
+  SmartDropDownStyle get smartDropDownStyle => SmartDropDownStyle(
+        backgroundColor: colors.white,
+        titleTextStyle: interSemiBoldTextStyle,
+        borderColor: colors.colorD3DAE0,
+        selectedBorderColor: colors.primary,
+        unSelectedBorderColor: colors.colorD3DAE0,
+        labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
 }

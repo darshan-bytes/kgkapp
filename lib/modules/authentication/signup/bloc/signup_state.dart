@@ -65,3 +65,12 @@ final class SignUpReloadState extends SignUpState {
   @override
   List<Object> get props => [];
 }
+
+final class SignUpChangeOfficeLocationState extends SignUpState {
+  final OfficeLocation officeLocation;
+
+  const SignUpChangeOfficeLocationState(this.officeLocation);
+
+  @override
+  List<Object> get props => [officeLocation];
+}
