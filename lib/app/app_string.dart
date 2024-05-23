@@ -124,4 +124,13 @@ class APPStrings {
   static const String brand = 'brand';
   static const String meleeWeight = 'melee_weight';
   static const String metal = 'metal';
+  //Product item
+  static const String addToBag = 'add_to_bag';
+
+  // Diamond Listing
+  static const String filter = 'filter';
+  static const String sort = 'sort';
+  static const String diamondListingTitle = 'diamond_listing_title';
+  static const String naturalDiamond = "natural_diamond";
+  static const String looseDiamond = "loose_diamond";
 }

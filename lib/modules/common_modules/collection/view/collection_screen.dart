@@ -7,7 +7,7 @@ class CollectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final CollectionViewStyle style = AppTheme.of(context).collectionViewStyle;
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         title: APPStrings.collection.tr,
         onFavorite: () {},
         onFilter: () {},
@@ -53,12 +53,15 @@ class CollectionScreen extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 14),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, AppRoutes.productListGridPage);
-                                },
+                            return GestureDetector(
+                              onTap: () {
+                                // For divyraj
+                                Navigator.pushNamed(context, AppRoutes.productListGridPage);
+                                // For praj
+                                Navigator.pushNamed(context, AppRoutes.diamondListingPage);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 14),
                                 child: SmartImage(
                                   path: index == 0 || index == 3
                                       ? "https://i.ibb.co/CQCRPFy/Banner.png"

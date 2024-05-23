@@ -335,4 +335,30 @@ class LightModeTheme extends AppTheme {
     phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
   );
+  // TODO: implement selectionButtonStyle
+  SelectionButtonStyle get selectionButtonStyle => SelectionButtonStyle(
+      selectedButtonBorderColor: colors.primary,
+      selectedButtonColor: colors.primary,
+      selectedButtonIconColor: colors.white,
+      selectedButtonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white),
+      unselectedButtonBorderColor: colors.colorD3DAE0,
+      unselectedButtonColor: colors.white,
+      unselectedButtonIconColor: colors.primary,
+      unselectedButtonTextStyle: interMediumBoldTextStyle.copyWith(
+        color: colors.color303538,
+      ));
+
+  @override
+  // TODO: implement diamondListingStyle
+  DiamondListingStyle get diamondListingStyle => DiamondListingStyle(
+        gridIconColor: colors.primary,
+        listIconColor: colors.color8C8C8C,
+        filterProductCountTextStyle: interRegularTextStyle,
+        gridBackgroundColor: colors.colorC5DEEB,
+        gridBorderColor: colors.transparent,
+        listBackgroundColor: colors.white,
+        listBorderColor: colors.colorC5DEEB,
+        menuBackgroundColor: colors.white,
+        menuBorderColor: colors.colorC5DEEB,
+      );
 }

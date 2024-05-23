@@ -90,5 +90,10 @@
   "product_type": "Product type",
   "brand": "Brand",
   "melee_weight": "Melee weight",
-  "metal": "Metal"
+  "metal": "Metal",
+  "diamond_listing_title": "DIY",
+  "filter": "Filter",
+  "sort": "Sort",
+  "natural_diamond": "Natural Diamonds",
+  "loose_diamond": "Loose Diamonds"
 }

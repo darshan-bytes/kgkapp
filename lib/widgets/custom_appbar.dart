@@ -1,6 +1,6 @@
-import '../kgk.dart';
+import 'package:kgk/kgk.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? leading;
   final List<Widget>? actions;
@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? optionalEndSpacing;
   final EdgeInsets? padding;
 
-  CustomAppBar({
+  SmartAppBar({
     super.key,
     this.title,
     this.leading,
@@ -72,8 +72,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 24,
         width: 24,
         child: Center(
-          child:   SmartImage(path:
-            AppImages.icBack,
+          child: SmartImage(
+            path: AppImages.icBack,
             height: 24,
             width: 24,
           ),
@@ -132,8 +132,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: size,
           width: size,
           child: Center(
-            child: SmartImage(path:
-              assetPath,
+            child: SmartImage(
+              path: assetPath,
               height: size,
               width: size,
             ),

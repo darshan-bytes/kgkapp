@@ -9,7 +9,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
     final style = AppTheme.of(context).forgotPasswordScreenStyle;
     final List<String> parts = APPStrings.emailHasBeenSendSuccessfully.tr.split('{#}');
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         appBarHeight: 52,
         isBorder: false,
         backgroundColor: signInStyle.backgroundColor,

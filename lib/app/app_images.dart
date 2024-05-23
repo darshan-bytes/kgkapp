@@ -38,6 +38,7 @@ class AppImages {
   static const String icArrowDown = 'assets/images/ic_arrow_down.svg';
   static const String icMinus = 'assets/images/ic_minus.svg';
   static const String icCheck = 'assets/images/ic_check.svg';
+
   //product item
   static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
   static const String icAddEye = 'assets/images/ic_add_eye.svg';
@@ -52,4 +53,8 @@ class AppImages {
   static const String icPhone = 'assets/images/ic_phone.svg';
   static const String icMail = 'assets/images/ic_mail.svg';
   static const String icArrowRight = 'assets/images/ic_arrow_right.svg';
+  // diamond listing
+  static const String icGrid = 'assets/images/ic_grid.svg';
+  static const String icList = 'assets/images/ic_list.svg';
+  static const String icMenu = 'assets/images/ic_menu.svg';
 }
