@@ -4,15 +4,17 @@ import 'package:kgk/kgk.dart';
 class DiyProgressWidget extends StatelessWidget {
   const DiyProgressWidget({
     super.key,
-    required this.selectedStep
+    required this.selectedStep, 
+    this.padding,  
   });
 
   final int selectedStep;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17, vertical: 12),
+      padding:padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       child: Row(
         children: [
           _commonSelector(context, selectedStep == 1, 'Choose a Diamond', 1),

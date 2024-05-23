@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/widgets/filter_bottom_actionbar.dart';
 
 //AppStyle
 abstract class AppTheme {
@@ -76,6 +77,8 @@ abstract class AppTheme {
   SelectionButtonStyle get selectionButtonStyle;
 
   DiamondListingStyle get diamondListingStyle;
+
+  FilterBottomActionBarStyle get filterBottomActionBarStyle;
 }
 
 class PrimaryButtonStyle {
@@ -551,5 +554,15 @@ class DiamondListingStyle {
     required this.menuBorderColor,
     required this.gridIconColor,
     required this.listIconColor,
+  });
+}
+
+class FilterBottomActionBarStyle{
+  final Color borderColor;
+  final Color transparentColor;
+  final Color dividerColor;
+  const FilterBottomActionBarStyle({required this.borderColor, 
+  required this.transparentColor, 
+  required this.dividerColor
   });
 }

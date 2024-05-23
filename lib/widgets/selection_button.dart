@@ -17,6 +17,7 @@ class SelectionButton extends StatelessWidget {
   final TextStyle? selectedButtonTextStyle;
   final TextStyle? unselectedButtonTextStyle;
   final BorderRadiusGeometry? borderRadius;
+  final double? iconBetweenSpace;
 
   const SelectionButton({
     super.key,
@@ -36,6 +37,7 @@ class SelectionButton extends StatelessWidget {
     this.selectedButtonTextStyle,
     this.unselectedButtonTextStyle,
     this.borderRadius,
+    this.iconBetweenSpace
   });
 
   @override
@@ -67,13 +69,17 @@ class SelectionButton extends StatelessWidget {
                     ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
                     : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
               ),
-            if (image != null && title != null) const SizedBox(width: 8),
+            if (image != null && title != null)   SizedBox(width:iconBetweenSpace ?? 8),
             if (title != null)
-              SmartText(
-                title!,
-                style: isSelected
-                    ? (selectedButtonTextStyle ?? style.selectedButtonTextStyle)
-                    : (unselectedButtonTextStyle ?? style.unselectedButtonTextStyle),
+              Flexible(
+                child: SmartText(
+                  title!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: isSelected
+                      ? (selectedButtonTextStyle ?? style.selectedButtonTextStyle)
+                      : (unselectedButtonTextStyle ?? style.unselectedButtonTextStyle),
+                ),
               ),
           ],
         ),

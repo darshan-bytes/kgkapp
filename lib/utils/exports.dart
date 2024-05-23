@@ -114,7 +114,6 @@ export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/custom_appbar.dart';
 export 'package:kgk/widgets/product_grid_item.dart';
-export 'package:kgk/widgets/product_horizontal_list_Item.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/responsive.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
@@ -128,6 +127,8 @@ export 'package:kgk/widgets/smart_pagaination.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
 export 'package:kgk/widgets/diy_progress_widget.dart';
 export 'package:kgk/widgets/inquiry_widget.dart';
+export 'package:kgk/app/app_const.dart';
+export 'package:kgk/widgets/product_list_item.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

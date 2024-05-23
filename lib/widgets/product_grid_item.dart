@@ -13,6 +13,8 @@ class ProductGridItem extends StatelessWidget {
   final Function()? onCancelTap;
   final bool isFavourite;
   final BoxFit fit;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry margin;
 
   const ProductGridItem({
     super.key,
@@ -28,6 +30,8 @@ class ProductGridItem extends StatelessWidget {
     this.onAddToBagTap,
     this.onEyeTap,
     this.onCancelTap,
+    this.padding=  EdgeInsets.zero,
+    this.margin =  EdgeInsets.zero
   });
 
   @override
@@ -38,6 +42,8 @@ class ProductGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: padding,
+        margin: margin,
         width: productItemWidth,
         decoration: BoxDecoration(
           color: style.backgroundColor,
@@ -133,6 +139,7 @@ class ProductGridItem extends StatelessWidget {
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               const SizedBox(height: 8),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                     child: SmartText(
@@ -152,6 +159,8 @@ class ProductGridItem extends StatelessWidget {
                         style: style.checkedPriceStyle,
                       ),
                     ),
+                  ]else...[
+                    const SmartImage(path: AppImages.icStone, height: 16, width: 16)
                   ],
                 ],
               ),

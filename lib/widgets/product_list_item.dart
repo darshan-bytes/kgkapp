@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-class ProductListviewItem extends StatelessWidget {
+class ProductListItem extends StatelessWidget {
   final ProductDetails productDetails;
   final double boxHeight;
   final double boxWidth;
@@ -12,8 +12,10 @@ class ProductListviewItem extends StatelessWidget {
   final Function()? onEyeTap;
   final BoxFit fit;
   final bool isFavourite;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry margin;
 
-  const ProductListviewItem({
+  const ProductListItem({
     super.key,
     this.boxHeight = 144,
     this.boxWidth = 144,
@@ -26,6 +28,8 @@ class ProductListviewItem extends StatelessWidget {
     this.onAddToBagTap,
     this.onEyeTap,
     this.isFavourite = false,
+    this.padding = EdgeInsets.zero,
+    this.margin =  EdgeInsets.zero
   });
 
   @override
@@ -35,6 +39,8 @@ class ProductListviewItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: padding,
+        margin: margin,
         decoration: BoxDecoration(
           color: style.backgroundColor,
         ),
@@ -184,7 +190,7 @@ class ProductListviewItem extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SmartImage(path: AppImages.icDiamond, height: 16, width: 16),
+                const SmartImage(path: AppImages.icBlankDiamond, height: 16, width: 16),
                 const SizedBox(width: 4),
                 Flexible(
                   child: SmartText(

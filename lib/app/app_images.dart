@@ -46,6 +46,8 @@ class AppImages {
   static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
   static const String icGram = 'assets/images/ic_gram.svg';
   static const String icDiamond = 'assets/images/ic_diamond.svg';
+  static const String icBlankDiamond = 'assets/images/ic_blank_diamond.svg';
+  static const String icStone = 'assets/images/ic_stone.svg';
 
   static const String icFullStar = 'assets/images/ic_full_star.svg';
   static const String icEmptyStar = 'assets/images/ic_empty_star.svg';
@@ -57,4 +59,6 @@ class AppImages {
   static const String icGrid = 'assets/images/ic_grid.svg';
   static const String icList = 'assets/images/ic_list.svg';
   static const String icMenu = 'assets/images/ic_menu.svg';
+  static const String icFilter = 'assets/images/ic_filter.svg';
+  static const String icSort = 'assets/images/ic_sort.svg';
 }

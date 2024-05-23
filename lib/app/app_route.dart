@@ -102,7 +102,10 @@ class AppRoutes {
 
       case diamondListingPage:
         return MaterialPageRoute(
-          builder: (_) => const DiamondListingScreen(),
+          builder: (context) {
+            BlocProvider.of<DiamondListingBloc>(context).add(const GetDiamondProductListEvent());
+            return const DiamondListingScreen();
+          },
           settings: const RouteSettings(name: diamondListingPage),
         );
 

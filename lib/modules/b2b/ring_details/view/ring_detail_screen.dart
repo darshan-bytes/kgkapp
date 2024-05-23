@@ -8,7 +8,7 @@ class RingDetailScreen extends StatelessWidget {
     final style = AppTheme.of(context).ringDetailScreenStyle;
     final ringBloc = context.read<RingDetailBloc>();
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         title: 'DIY',
         onFavorite: () { },
         onFilter: () { },

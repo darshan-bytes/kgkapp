@@ -1,5 +1,5 @@
-import 'package:kgk/app/app_const.dart';
 import 'package:kgk/kgk.dart';
+import 'package:kgk/widgets/filter_bottom_actionbar.dart';
 
 class DiamondListingScreen extends StatelessWidget {
   const DiamondListingScreen({super.key});
@@ -7,7 +7,8 @@ class DiamondListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final DiamondListingBloc diamondListingBloc = BlocProvider.of<DiamondListingBloc>(context);
+    final DiamondListingBloc diamondListingBloc =
+        BlocProvider.of<DiamondListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(AppConst.appBarHeight),
@@ -21,6 +22,7 @@ class DiamondListingScreen extends StatelessWidget {
           },
         ),
       ),
+      bottomNavigationBar: FilterBottomActionBar(onFilterTap: (){}, onSortTap:(){}),
       body: SingleChildScrollView(
           child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
         buildWhen: (previous, current) => previous != current,
@@ -31,17 +33,25 @@ class DiamondListingScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 16),
-                Container(
-                  height: 64,
-                  color: Colors.grey,
-                  width: double.infinity,
-                ),
+                const DiyProgressWidget(
+                    padding: EdgeInsets.zero, selectedStep: 1),
                 const SizedBox(height: 24),
                 _buildSelectionDiamond(diamondListingBloc),
                 const SizedBox(height: 24),
                 _buildProductFilterCount(style, diamondListingBloc),
                 const SizedBox(height: 24),
                 _buildProductList(style, diamondListingBloc),
+                const SizedBox(height: 7),
+                SmartPagination(
+                  pageNumbers: diamondListingBloc.pageNumbers,
+                  currentPage: diamondListingBloc.selectedPageNumber,
+                  onPageChanged: (int index, String newValue) {
+                    debugPrint("Checking index $index and value $newValue");
+                    diamondListingBloc
+                        .add(ProductChangePageNumberEvent(newValue));
+                  },
+                ),
+                const SizedBox(height: 24),
               ],
             ),
           ));
@@ -57,7 +67,8 @@ class DiamondListingScreen extends StatelessWidget {
           child: SelectionButton(
             isSelected: diamondListingBloc.isIndividual,
             title: APPStrings.naturalDiamond.tr,
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(true));
             },
@@ -67,8 +78,8 @@ class DiamondListingScreen extends StatelessWidget {
           child: SelectionButton(
             isSelected: !diamondListingBloc.isIndividual,
             title: APPStrings.looseDiamond.tr,
-            image: AppImages.icCompany,
-            borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+            borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(false));
             },
@@ -78,13 +89,16 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
+  Widget _buildProductFilterCount(
+      DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
     return SizedBox(
       height: 48,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SmartText('Showing 1-24 of 100', style: style.filterProductCountTextStyle),
+          //TODO: Here count manage using pagination value so currently this string remains static
+          SmartText('Showing 1-24 of 100',
+              style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -99,7 +113,9 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4),
+                      bottomLeft: Radius.circular(4)),
                   onTap: () {
                     diamondListingBloc.add(const ChangeListingTypeEvent(true));
                   },
@@ -114,7 +130,9 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      bottomRight: Radius.circular(4)),
                   onTap: () {
                     diamondListingBloc.add(const ChangeListingTypeEvent(false));
                   },
@@ -137,43 +155,46 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
+  Widget _buildProductList(
+      DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
     return BlocBuilder<DiamondListingBloc, DiamondListingState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
+        if (state is LoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
         if (diamondListingBloc.productList.isEmpty) {
-          return const Center(child: SmartText('No product found'));
+          return const Center(child: SmartText(APPStrings.add));
         } else {
           if (diamondListingBloc.isGrid) {
-            // return LayoutBuilder(
-            //     builder: (context, constraints) => ConstrainedBox(
-            //           constraints: BoxConstraints(minHeight: constraints.minHeight),
-            //           child: IntrinsicHeight(
-            //             child: ProductGridItem(productDetails: diamondListingBloc.productList[0]),
-            //           ),
-            //         ));
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
-              itemBuilder: (context, index) {
-                return LayoutBuilder(
-                  builder: (context, constraints) => ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: constraints.maxHeight,
-                      ),
-                      child: IntrinsicHeight(child: ProductGridItem(productDetails: diamondListingBloc.productList[index]))),
-                );
-              },
-              itemCount: diamondListingBloc.productList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+            return Column(
+              children: [
+                Wrap(
+                  spacing: 12.0,
+                  runSpacing: 12.0,
+                  children: diamondListingBloc.productList
+                      .map((ProductDetails productDetails) {
+                    return ProductGridItem(
+                      productDetails: productDetails,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(
+                  height: 17,
+                )
+              ],
             );
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => ProductListviewItem(productDetails: diamondListingBloc.productList[index]),
+              itemBuilder: (context, index) => ProductListItem(
+                margin: const EdgeInsets.only(bottom: 17),
+                onEyeTap: () {},
+                onFavTap: () {},
+                onAddToBagTap: () {},
+                productDetails: diamondListingBloc.productList[index],
+              ),
               itemCount: diamondListingBloc.productList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

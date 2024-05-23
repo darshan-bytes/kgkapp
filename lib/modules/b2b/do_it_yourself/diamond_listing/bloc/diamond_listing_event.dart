@@ -7,6 +7,13 @@ abstract class DiamondListingEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class GetDiamondProductListEvent extends DiamondListingEvent{
+  const GetDiamondProductListEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class DiamondChangeTypeEvent extends DiamondListingEvent {
   final bool isIndividual;
 
@@ -23,4 +30,13 @@ class ChangeListingTypeEvent extends DiamondListingEvent {
 
   @override
   List<Object?> get props => [isGrid];
+}
+
+class ProductChangePageNumberEvent extends DiamondListingEvent {
+  final String pageNumber;
+
+  const ProductChangePageNumberEvent(this.pageNumber);
+
+  @override
+  List<Object> get props => [pageNumber];
 }

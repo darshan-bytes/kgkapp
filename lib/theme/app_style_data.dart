@@ -163,7 +163,6 @@ class LightModeTheme extends AppTheme {
   SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
-  // TODO: implement categoryTileStyle
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
       backgroundColor: colors.colorF7F9FA,
       dividerLineColor: colors.colorD3DAE0,
@@ -335,7 +334,8 @@ class LightModeTheme extends AppTheme {
     phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
   );
-  // TODO: implement selectionButtonStyle
+
+  @override
   SelectionButtonStyle get selectionButtonStyle => SelectionButtonStyle(
       selectedButtonBorderColor: colors.primary,
       selectedButtonColor: colors.primary,
@@ -349,7 +349,6 @@ class LightModeTheme extends AppTheme {
       ));
 
   @override
-  // TODO: implement diamondListingStyle
   DiamondListingStyle get diamondListingStyle => DiamondListingStyle(
         gridIconColor: colors.primary,
         listIconColor: colors.color8C8C8C,
@@ -361,4 +360,11 @@ class LightModeTheme extends AppTheme {
         menuBackgroundColor: colors.white,
         menuBorderColor: colors.colorC5DEEB,
       );
+      
+  @override
+  FilterBottomActionBarStyle get filterBottomActionBarStyle =>
+      FilterBottomActionBarStyle(
+          borderColor: colors.colorD3DAE0,
+          transparentColor: colors.transparent,
+          dividerColor: colors.colorD3DAE0);
 }

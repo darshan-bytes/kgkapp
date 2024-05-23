@@ -5,6 +5,15 @@ abstract class DiamondListingState extends Equatable {
 }
 
 final class DiamondListingInitial extends DiamondListingState {
+  const DiamondListingInitial();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class LoadingState extends DiamondListingState{
+  const LoadingState();
+
   @override
   List<Object> get props => [];
 }
@@ -26,3 +35,14 @@ class ChangeListingTypeState extends DiamondListingState {
   @override
   List<Object> get props => [isGrid];
 }
+
+final class ProductChangePageNumberState extends DiamondListingState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductReloadState extends DiamondListingState {
+  @override
+  List<Object> get props => [];
+}
+
