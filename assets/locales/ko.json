@@ -96,5 +96,14 @@
   "natural_diamond": "Natural Diamonds",
   "loose_diamond": "Loose Diamonds",
   "empty_products": "Empty Products",
-  "showing_list_length_x": "Showing {#} of {#}"
+  "showing_list_length_x": "Showing {#} of {#}",
+  "diy": "DIY",
+  "compare_product": "Compare Product",
+  "change": "Change",
+  "shape": "Shape",
+  "quantity": "Quantity",
+  "total_carat": "Total Carat",
+  "color": "Color",
+  "clarity": "Clarity",
+  "setting": "Setting"
 }

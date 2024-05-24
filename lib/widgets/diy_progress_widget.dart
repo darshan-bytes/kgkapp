@@ -16,15 +16,15 @@ class DiyProgressWidget extends StatelessWidget {
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       child: Row(
         children: [
-          _commonSelector(context, selectedStep == 1, 'Choose a Diamond', 1),
-          _commonSelector(context, selectedStep == 2, 'Choose a Setting', 2),
-          _commonSelector(context, selectedStep == 3, 'Complete Ring', 3),
+          _commonSelector(context, selectedStep == 1, 'Choose a', 1, 'Diamond'),
+          _commonSelector(context, selectedStep == 2, 'Choose a', 2, 'Setting'),
+          _commonSelector(context, selectedStep == 3, 'Complete', 3, 'Ring'),
         ],
       ),
     );
   }
 
-  Widget _commonSelector(BuildContext context, bool isSelected, String title, int index) {
+  Widget _commonSelector(BuildContext context, bool isSelected, String title, int index, String subTitle) {
     final style = AppTheme.of(context).diyProgressViewStyle;
     return Expanded(
       child: Container(
@@ -38,14 +38,16 @@ class DiyProgressWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            SmartText('$index'),
+            SmartText('$index', style: style.indexStyle),
             const SizedBox(
               width: 8,
             ),
             Expanded(
-                child: SmartText(
-              title,
-              style: style.titleStyle,
+                child: SmartRichText(
+              spans: [
+                SmartTextSpan(text: title, style: style.titleStyle),
+                SmartTextSpan(text: '\n$subTitle', style: style.subTitleStyle),
+              ],
             )),
           ],
         ),

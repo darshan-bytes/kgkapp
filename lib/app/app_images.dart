@@ -61,4 +61,6 @@ class AppImages {
   static const String icMenu = 'assets/images/ic_menu.svg';
   static const String icFilter = 'assets/images/ic_filter.svg';
   static const String icSort = 'assets/images/ic_sort.svg';
+  static const String icShare = 'assets/images/ic_share.svg';
+  static const String icRing = 'assets/images/ic_ring.svg';
 }

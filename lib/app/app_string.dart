@@ -129,8 +129,18 @@ class APPStrings {
   // Diamond Listing
   static const String filter = 'filter';
   static const String sort = 'sort';
-  static const String naturalDiamond = "natural_diamond";
-  static const String looseDiamond = "loose_diamond";
-  static const String emptyProducts = "empty_products";
-  static const String showingListLengthX = "showing_list_length_x";
+  static const String naturalDiamond = 'natural_diamond';
+  static const String looseDiamond = 'loose_diamond';
+  static const String emptyProducts = 'empty_products';
+  static const String showingListLengthX = 'showing_list_length_x';
+  static const String diy = 'diy';
+  static const String compareProduct = 'compare_product';
+  static const String change = 'change';
+
+  static const String shape = 'shape';
+  static const String quantity = 'quantity';
+  static const String totalCarat = 'total_carat';
+  static const String color = 'color';
+  static const String clarity = 'clarity';
+  static const String setting = 'setting';
 }

@@ -70,14 +70,21 @@ abstract class AppTheme {
 
   DiamondDetailScreenStyle get diamondDetailScreenStyle;
 
-  RingDetailScreenStyle get ringDetailScreenStyle;
+  SettingDetailScreenStyle get settingDetailScreenStyle;
 
   InquiryWidgetStyle get inquiryWidgetStyle;
+
   SelectionButtonStyle get selectionButtonStyle;
 
   DiamondListingStyle get diamondListingStyle;
 
   FilterBottomActionBarStyle get filterBottomActionBarStyle;
+
+  CompleteProductStyle get completeProductStyle;
+
+  SelectedSettingsStyle get selectedSettingsStyle;
+
+  ImageCarouselStyle get imageCarouselStyle;
 }
 
 class PrimaryButtonStyle {
@@ -85,12 +92,16 @@ class PrimaryButtonStyle {
   final Color disableBackgroundColor;
   final TextStyle titleStyle;
   final TextStyle disableTitleStyle;
+  final Color activeImageColor;
+  final Color disableImageColor;
 
   PrimaryButtonStyle({
     required this.activeBackgroundColor,
     required this.disableBackgroundColor,
     required this.titleStyle,
     required this.disableTitleStyle,
+    required this.activeImageColor,
+    required this.disableImageColor,
   });
 }
 
@@ -420,12 +431,16 @@ class FilterStyle {
 }
 
 class DiyProgressViewStyle {
+  final TextStyle indexStyle;
   final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
   final Color selectedBorderColor;
   final Color unselectedBorderColor;
 
   DiyProgressViewStyle({
+    required this.indexStyle,
     required this.titleStyle,
+    required this.subTitleStyle,
     required this.selectedBorderColor,
     required this.unselectedBorderColor,
   });
@@ -455,7 +470,7 @@ class DiamondDetailScreenStyle {
   });
 }
 
-class RingDetailScreenStyle {
+class SettingDetailScreenStyle {
   final TextStyle ringTypeStyle;
   final TextStyle ringCodeStyle;
   final TextStyle ringNameStyle;
@@ -475,7 +490,7 @@ class RingDetailScreenStyle {
   final TextStyle settingValueStyle;
   final TextStyle settingHeaderStyle;
 
-  RingDetailScreenStyle({
+  SettingDetailScreenStyle({
     required this.ringTypeStyle,
     required this.ringCodeStyle,
     required this.ringNameStyle,
@@ -510,6 +525,7 @@ class InquiryWidgetStyle {
     required this.emailStyle,
   });
 }
+
 class SelectionButtonStyle {
   final Color selectedButtonColor;
   final Color unselectedButtonColor;
@@ -556,12 +572,60 @@ class DiamondListingStyle {
   });
 }
 
-class FilterBottomActionBarStyle{
+class FilterBottomActionBarStyle {
   final Color borderColor;
   final Color transparentColor;
   final Color dividerColor;
-  const FilterBottomActionBarStyle({required this.borderColor, 
-  required this.transparentColor, 
-  required this.dividerColor
+
+  const FilterBottomActionBarStyle({
+    required this.borderColor,
+    required this.transparentColor,
+    required this.dividerColor,
+  });
+}
+
+class CompleteProductStyle {
+  final TextStyle productTypeStyle;
+  final TextStyle productCodeStyle;
+  final Color dotColor;
+  final TextStyle productNameStyle;
+  final Color ratingGlowColor;
+  final TextStyle priceStyle;
+  final TextStyle detailsHeaderStyle;
+  final TextStyle diamondPurityStyle;
+
+  CompleteProductStyle({
+    required this.productTypeStyle,
+    required this.productCodeStyle,
+    required this.dotColor,
+    required this.productNameStyle,
+    required this.ratingGlowColor,
+    required this.priceStyle,
+    required this.detailsHeaderStyle,
+    required this.diamondPurityStyle,
+  });
+}
+
+class SelectedSettingsStyle {
+  final Color iconColor;
+  final TextStyle titleStyle;
+  final TextStyle specialityStyle;
+  final TextStyle changeTextStyle;
+
+  SelectedSettingsStyle({
+    required this.iconColor,
+    required this.titleStyle,
+    required this.specialityStyle,
+    required this.changeTextStyle,
+  });
+}
+
+class ImageCarouselStyle {
+  final Color dotColor;
+  final Color selectedDotColor;
+
+  ImageCarouselStyle({
+    required this.dotColor,
+    required this.selectedDotColor,
   });
 }

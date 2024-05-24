@@ -21,10 +21,11 @@ class BlocGenerator {
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
       BlocProvider<ProductListGridBloc>(create: (_) => ProductListGridBloc()),
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
-      BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
+      BlocProvider<SettingDetailBloc>(create: (_) => SettingDetailBloc()),
       BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
       BlocProvider<DiamondListingBloc>(create: (_) => DiamondListingBloc()),
-      BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc())
+      BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc()),
+      BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
     ];
   }
 }
