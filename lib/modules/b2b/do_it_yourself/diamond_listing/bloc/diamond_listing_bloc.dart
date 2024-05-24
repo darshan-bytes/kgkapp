@@ -20,7 +20,7 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
     on<GetDiamondProductListEvent>(_onGetDiamondProductListEvent);
     on<DiamondChangeTypeEvent>(_onDiamondChangeTypeEvent);
     on<ChangeListingTypeEvent>(_onChangeListingTypeEvent);
-    on<ProductChangePageNumberEvent>(_onPageNumberChanged);
+    on<DiamondProductChangePageNumberEvent>(_onPageNumberChanged);
   }
 
   Future<void> _onGetDiamondProductListEvent(GetDiamondProductListEvent event, Emitter<DiamondListingState> emit) async {
@@ -48,9 +48,9 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
     emit(ChangeListingTypeState(event.isGrid));
   }
 
-  void _onPageNumberChanged(ProductChangePageNumberEvent event, Emitter<DiamondListingState> emit) {
-    emit(ProductReloadState());
+  void _onPageNumberChanged(DiamondProductChangePageNumberEvent event, Emitter<DiamondListingState> emit) {
+    emit(DiamondProductReloadState());
     selectedPageNumber = event.pageNumber;
-    emit(ProductChangePageNumberState());
+    emit(DiamondProductChangePageNumberState());
   }
 }

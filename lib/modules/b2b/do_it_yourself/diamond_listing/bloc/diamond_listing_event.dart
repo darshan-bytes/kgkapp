@@ -32,10 +32,10 @@ class ChangeListingTypeEvent extends DiamondListingEvent {
   List<Object?> get props => [isGrid];
 }
 
-class ProductChangePageNumberEvent extends DiamondListingEvent {
+class DiamondProductChangePageNumberEvent extends DiamondListingEvent {
   final String pageNumber;
 
-  const ProductChangePageNumberEvent(this.pageNumber);
+  const DiamondProductChangePageNumberEvent(this.pageNumber);
 
   @override
   List<Object> get props => [pageNumber];
