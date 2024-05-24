@@ -92,8 +92,8 @@ class AppRoutes {
       case productListGridPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ProductListGridBloc>(context).add(InitialProductListGridEvent(context));
-            return const ProductListGridScreen();
+            BlocProvider.of<ProductListBloc>(context).add(InitialProductListEvent(context));
+            return const ProductListScreen();
           },
           settings: settings,
         );
@@ -177,5 +177,9 @@ extension RoutesDataExtension on BuildContext {
   Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
       {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+  }
+
+  Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {
+    return Navigator.pop(this, arguments);
   }
 }

@@ -19,7 +19,7 @@ class BlocGenerator {
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
-      BlocProvider<ProductListGridBloc>(create: (_) => ProductListGridBloc()),
+      BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
       BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
       BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),

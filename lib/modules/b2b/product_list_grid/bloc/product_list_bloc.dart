@@ -1,11 +1,9 @@
 import 'package:kgk/kgk.dart';
 
-part 'product_list_grid_event.dart';
-part 'product_list_grid_state.dart';
+part 'product_list_event.dart';
+part 'product_list_state.dart';
 
-class ProductListGridBloc extends Bloc<ProductListGridEvent, ProductListGridState> {
-  late BuildContext context;
-
+class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   // For Product List view
   bool isGrid = true;
 
@@ -20,8 +18,8 @@ class ProductListGridBloc extends Bloc<ProductListGridEvent, ProductListGridStat
   // The selected number of pages, initialized to the first item
   String selectedPageNumber = '01';
 
-  ProductListGridBloc() : super(ProductListGridInitial()) {
-    on<InitialProductListGridEvent>(_onInitialProductListGridEvent);
+  ProductListBloc() : super(ProductListInitial()) {
+    on<InitialProductListEvent>(_onInitialProductListEvent);
     on<ChangePageNumberEvent>(onPageNumberChanged);
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
   }
@@ -41,7 +39,7 @@ class ProductListGridBloc extends Bloc<ProductListGridEvent, ProductListGridStat
     }
   }
 
-  Future<void> _onInitialProductListGridEvent(InitialProductListGridEvent event, Emitter<ProductListGridState> emit) async {
+  Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     emit(ReloadProductState());
     isGrid = true;
     getRouteData(event.context);
@@ -58,7 +56,7 @@ class ProductListGridBloc extends Bloc<ProductListGridEvent, ProductListGridStat
                 discountPercentage: "You have saved 10%",
                 offerPrice: '\$3,000.00',
               )));
-      emit(ProductListGridInitial());
+      emit(ProductListInitial());
     } else {
       productList.clear();
       List.generate(
@@ -70,20 +68,20 @@ class ProductListGridBloc extends Bloc<ProductListGridEvent, ProductListGridStat
                   imageUrl:
                       "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__",
                   name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-                  originalPrice: "₹ 3,000",
+                  originalPrice: "\$3,000",
                 ),
               ));
-      emit(ProductListGridInitial());
+      emit(ProductListInitial());
     }
   }
 
-  void onPageNumberChanged(ChangePageNumberEvent event, Emitter<ProductListGridState> emit) {
+  void onPageNumberChanged(ChangePageNumberEvent event, Emitter<ProductListState> emit) {
     emit(ReloadProductState());
     selectedPageNumber = event.pageNumber;
     emit(ChangePageNumberState());
   }
 
-  void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListGridState> emit) {
+  void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
     emit(ReloadProductState());
     isGrid = event.isGrid;
     emit(ProductChangeListingTypeState(event.isGrid));

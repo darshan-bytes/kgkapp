@@ -1,17 +1,16 @@
 import 'package:kgk/kgk.dart';
 
-class ProductListGridScreen extends StatelessWidget {
-  const ProductListGridScreen({super.key});
+class ProductListScreen extends StatelessWidget {
+  const ProductListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final DiamondListingStyle diamondListingStyle = AppTheme.of(context).diamondListingStyle;
-    final ProductListGridBloc bloc = BlocProvider.of<ProductListGridBloc>(context);
-    bloc.context = context;
+    final ProductListBloc bloc = BlocProvider.of<ProductListBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
-        child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+        child: BlocBuilder<ProductListBloc, ProductListState>(
           builder: (context, state) {
             return SmartAppBar(
               title: APPStrings.ring.tr,
@@ -23,37 +22,38 @@ class ProductListGridScreen extends StatelessWidget {
       ),
       bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
       body: SingleChildScrollView(
-          child: BlocBuilder<ProductListGridBloc, ProductListGridState>(
-        buildWhen: (previous, current) => current is ChangePageNumberState,
-        builder: (context, state) {
-          return SafeArea(
+          child: SafeArea(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17),
-            child: Column(
-              children: [
-                const SizedBox(height: 16),
-                _buildProductFilterCount(diamondListingStyle, bloc),
-                const SizedBox(height: 24),
-                _buildProductList(diamondListingStyle, bloc),
-                const SizedBox(height: 7),
-                SmartPagination(
+        padding: const EdgeInsets.symmetric(horizontal: 17),
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            _buildProductFilterCount(diamondListingStyle, bloc),
+            const SizedBox(height: 24),
+            _buildProductList(diamondListingStyle, bloc),
+            const SizedBox(height: 7),
+            BlocBuilder<ProductListBloc, ProductListState>(
+              buildWhen: (previous, current) => current is ChangePageNumberState,
+              builder: (context, state) {
+                return SmartPagination(
                   pageNumbers: bloc.pageNumbers,
                   currentPage: bloc.selectedPageNumber,
                   onPageChanged: (int index, String newValue) {
                     bloc.add(ChangePageNumberEvent(newValue));
                   },
-                ),
-                const SizedBox(height: 24),
-              ],
+                );
+              },
             ),
-          ));
-        },
-      )),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ))),
     );
   }
 
-  Widget _buildProductFilterCount(DiamondListingStyle style, ProductListGridBloc bloc) {
-    return BlocBuilder<ProductListGridBloc, ProductListGridState>(
+  Widget _buildProductFilterCount(DiamondListingStyle style, ProductListBloc bloc) {
+    return BlocBuilder<ProductListBloc, ProductListState>(
+      buildWhen: (previous, current) => current is ProductChangeListingTypeState,
       builder: (context, state) {
         return SizedBox(
           height: 48,
@@ -105,8 +105,8 @@ class ProductListGridScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, ProductListGridBloc bloc) {
-    return BlocBuilder<ProductListGridBloc, ProductListGridState>(
+  Widget _buildProductList(DiamondListingStyle style, ProductListBloc bloc) {
+    return BlocBuilder<ProductListBloc, ProductListState>(
       builder: (context, state) {
         if (bloc.productList.isEmpty) {
           return const Center(child: SmartText(APPStrings.add));
