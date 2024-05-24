@@ -132,4 +132,5 @@ class APPStrings {
   static const String naturalDiamond = "natural_diamond";
   static const String looseDiamond = "loose_diamond";
   static const String emptyProducts = "empty_products";
+  static const String showingListLengthX = "showing_list_length_x";
 }

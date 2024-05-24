@@ -2,6 +2,9 @@ part of 'diamond_listing_bloc.dart';
 
 abstract class DiamondListingState extends Equatable {
   const DiamondListingState();
+
+  @override
+  List<Object> get props => [];
 }
 
 final class DiamondListingInitial extends DiamondListingState {

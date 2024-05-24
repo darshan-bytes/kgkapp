@@ -29,7 +29,7 @@ class ProductListItem extends StatelessWidget {
     this.onEyeTap,
     this.isFavourite = false,
     this.padding = EdgeInsets.zero,
-    this.margin =  EdgeInsets.zero
+    this.margin = EdgeInsets.zero,
   });
 
   @override
