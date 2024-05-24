@@ -112,7 +112,7 @@ class SettingListingScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (settingListingBloc.productList.isEmpty) {
-          return const Center(child: SmartText(APPStrings.add));
+          return const Center(child: SmartText(APPStrings.emptyProducts));
         } else {
           if (settingListingBloc.isGrid) {
             return Column(
