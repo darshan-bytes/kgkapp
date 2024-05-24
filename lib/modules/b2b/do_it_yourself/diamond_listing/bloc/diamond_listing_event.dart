@@ -2,16 +2,13 @@ part of 'diamond_listing_bloc.dart';
 
 abstract class DiamondListingEvent extends Equatable {
   const DiamondListingEvent();
-
-  @override
-  List<Object?> get props => [];
 }
 
-class GetDiamondProductListEvent extends DiamondListingEvent{
+class GetDiamondProductListEvent extends DiamondListingEvent {
   const GetDiamondProductListEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class DiamondChangeTypeEvent extends DiamondListingEvent {
@@ -20,7 +17,7 @@ class DiamondChangeTypeEvent extends DiamondListingEvent {
   const DiamondChangeTypeEvent(this.isIndividual);
 
   @override
-  List<Object?> get props => [isIndividual];
+  List<Object> get props => [isIndividual];
 }
 
 class ChangeListingTypeEvent extends DiamondListingEvent {
@@ -29,7 +26,7 @@ class ChangeListingTypeEvent extends DiamondListingEvent {
   const ChangeListingTypeEvent(this.isGrid);
 
   @override
-  List<Object?> get props => [isGrid];
+  List<Object> get props => [isGrid];
 }
 
 class DiamondProductChangePageNumberEvent extends DiamondListingEvent {

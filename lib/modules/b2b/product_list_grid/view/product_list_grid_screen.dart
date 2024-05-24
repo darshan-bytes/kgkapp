@@ -59,7 +59,6 @@ class ProductListGridScreen extends StatelessWidget {
                       pageNumbers: bloc.pageNumbers,
                       currentPage: bloc.selectedPageNumber,
                       onPageChanged: (int index, String newValue) {
-                        debugPrint("Checking index $index and value $newValue");
                         bloc.add(ChangePageNumberEvent(newValue));
                       },
                     ),

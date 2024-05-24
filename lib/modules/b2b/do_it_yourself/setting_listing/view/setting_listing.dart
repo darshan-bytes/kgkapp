@@ -21,9 +21,7 @@ class SettingListingScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
-      body: SingleChildScrollView(
-          child: BlocBuilder<SettingListingBloc, SettingListingState>(
-        buildWhen: (previous, current) => previous != current,
+      body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -41,7 +39,6 @@ class SettingListingScreen extends StatelessWidget {
                   pageNumbers: settingListingBloc.pageNumbers,
                   currentPage: settingListingBloc.selectedPageNumber,
                   onPageChanged: (int index, String newValue) {
-                    debugPrint("Checking index $index and value $newValue");
                     settingListingBloc.add(SettingProductChangePageNumberEvent(newValue));
                   },
                 ),
@@ -61,7 +58,7 @@ class SettingListingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //TODO: Here count manage using pagination value so currently this string remains static
-          SmartText('Showing 1-24 of 100', style: style.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLength.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -106,7 +103,6 @@ class SettingListingScreen extends StatelessWidget {
 
   Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
-      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         if (state is LoadingState) {
           return const Center(child: CircularProgressIndicator());

@@ -95,5 +95,6 @@
   "sort": "Sort",
   "natural_diamond": "Natural Diamonds",
   "loose_diamond": "Loose Diamonds",
-  "empty_products": "Empty Products"
+  "empty_products": "Empty Products",
+  "showing_list_length": "Showing {#} of {#}"
 }

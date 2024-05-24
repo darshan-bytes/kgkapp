@@ -21,9 +21,7 @@ class DiamondListingScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
-      body: SingleChildScrollView(
-          child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
-        buildWhen: (previous, current) => previous != current,
+      body: SingleChildScrollView(child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -43,9 +41,7 @@ class DiamondListingScreen extends StatelessWidget {
                   pageNumbers: diamondListingBloc.pageNumbers,
                   currentPage: diamondListingBloc.selectedPageNumber,
                   onPageChanged: (int index, String newValue) {
-                    debugPrint("Checking index $index and value $newValue");
-                    diamondListingBloc
-                        .add(DiamondProductChangePageNumberEvent(newValue));
+                    diamondListingBloc.add(DiamondProductChangePageNumberEvent(newValue));
                   },
                 ),
                 const SizedBox(height: 24),
@@ -91,7 +87,7 @@ class DiamondListingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //TODO: Here count manage using pagination value so currently this string remains static
-          SmartText('Showing 1-24 of 100', style: style.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLength.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -146,7 +142,6 @@ class DiamondListingScreen extends StatelessWidget {
 
   Widget _buildProductList(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
     return BlocBuilder<DiamondListingBloc, DiamondListingState>(
-      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         if (state is LoadingState) {
           return const Center(child: CircularProgressIndicator());
