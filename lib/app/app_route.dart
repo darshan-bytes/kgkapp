@@ -16,6 +16,7 @@ class AppRoutes {
   static const diamondDetailPage = '/diamondDetailPage';
   static const ringDetailPage = '/ringDetailPage';
   static const diamondListingPage = '/diamondListingPage';
+  static const settingListingPage = '/settingListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -95,10 +96,16 @@ class AppRoutes {
         );
 
       case diamondDetailPage:
-        return MaterialPageRoute(builder: (_) => const DiamondDetailScreen(), settings: const RouteSettings(name: diamondDetailPage));
+        return MaterialPageRoute(
+          builder: (_) => const DiamondDetailScreen(),
+          settings: const RouteSettings(name: diamondDetailPage),
+        );
 
       case ringDetailPage:
-        return MaterialPageRoute(builder: (_) => const RingDetailScreen(), settings: const RouteSettings(name: ringDetailPage));
+        return MaterialPageRoute(
+          builder: (_) => const RingDetailScreen(),
+          settings: const RouteSettings(name: ringDetailPage),
+        );
 
       case diamondListingPage:
         return MaterialPageRoute(
@@ -107,6 +114,15 @@ class AppRoutes {
             return const DiamondListingScreen();
           },
           settings: const RouteSettings(name: diamondListingPage),
+        );
+
+      case settingListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SettingListingBloc>(context).add(const GetSettingProductListEvent());
+            return const SettingListingScreen();
+          },
+          settings: const RouteSettings(name: settingListingPage),
         );
 
       default:

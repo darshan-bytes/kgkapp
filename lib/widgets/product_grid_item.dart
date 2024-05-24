@@ -15,6 +15,7 @@ class ProductGridItem extends StatelessWidget {
   final BoxFit fit;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
+  final bool isStoneWithPrice;
 
   const ProductGridItem({
     super.key,
@@ -30,8 +31,9 @@ class ProductGridItem extends StatelessWidget {
     this.onAddToBagTap,
     this.onEyeTap,
     this.onCancelTap,
-    this.padding=  EdgeInsets.zero,
-    this.margin =  EdgeInsets.zero
+    this.padding = EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
+    this.isStoneWithPrice = false,
   });
 
   @override
@@ -159,8 +161,8 @@ class ProductGridItem extends StatelessWidget {
                         style: style.checkedPriceStyle,
                       ),
                     ),
-                  ]else...[
-                    const SmartImage(path: AppImages.icStone, height: 16, width: 16)
+                  ] else ...[
+                    if (isStoneWithPrice) const SmartImage(path: AppImages.icStone, height: 16, width: 16)
                   ],
                 ],
               ),
@@ -180,7 +182,7 @@ class ProductGridItem extends StatelessWidget {
                 height: 32,
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 titleStyle: style.buttonTextStyle,
-                onTap:onAddToBagTap! ,
+                onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
                 isShadow: true,
               ),

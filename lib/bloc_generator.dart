@@ -24,6 +24,7 @@ class BlocGenerator {
       BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
       BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
       BlocProvider<DiamondListingBloc>(create: (_) => DiamondListingBloc()),
+      BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc())
     ];
   }
 }

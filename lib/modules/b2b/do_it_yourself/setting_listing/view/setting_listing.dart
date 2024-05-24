@@ -1,19 +1,19 @@
 import 'package:kgk/kgk.dart';
 
-class DiamondListingScreen extends StatelessWidget {
-  const DiamondListingScreen({super.key});
+class SettingListingScreen extends StatelessWidget {
+  const SettingListingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final DiamondListingBloc diamondListingBloc = BlocProvider.of<DiamondListingBloc>(context);
+    final SettingListingBloc settingListingBloc = BlocProvider.of<SettingListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(AppConst.appBarHeight),
-        child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+        child: BlocBuilder<SettingListingBloc, SettingListingState>(
           builder: (context, state) {
             return SmartAppBar(
-              title: diamondListingBloc.diamondListingAppbarTitle,
+              title: settingListingBloc.settingListingAppbarTitle,
               onFilter: () {},
               onFavorite: () {},
             );
@@ -22,7 +22,7 @@ class DiamondListingScreen extends StatelessWidget {
       ),
       bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
       body: SingleChildScrollView(
-          child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+          child: BlocBuilder<SettingListingBloc, SettingListingState>(
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
           return SafeArea(
@@ -31,20 +31,18 @@ class DiamondListingScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 16),
-                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
+                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
                 const SizedBox(height: 24),
-                _buildSelectionDiamond(diamondListingBloc),
+                _buildProductFilterCount(style, settingListingBloc),
                 const SizedBox(height: 24),
-                _buildProductFilterCount(style, diamondListingBloc),
-                const SizedBox(height: 24),
-                _buildProductList(style, diamondListingBloc),
+                _buildProductList(style, settingListingBloc),
                 const SizedBox(height: 7),
                 SmartPagination(
-                  pageNumbers: diamondListingBloc.pageNumbers,
-                  currentPage: diamondListingBloc.selectedPageNumber,
+                  pageNumbers: settingListingBloc.pageNumbers,
+                  currentPage: settingListingBloc.selectedPageNumber,
                   onPageChanged: (int index, String newValue) {
                     debugPrint("Checking index $index and value $newValue");
-                    diamondListingBloc.add(ProductChangePageNumberEvent(newValue));
+                    settingListingBloc.add(SettingProductChangePageNumberEvent(newValue));
                   },
                 ),
                 const SizedBox(height: 24),
@@ -56,34 +54,7 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectionDiamond(DiamondListingBloc diamondListingBloc) {
-    return Row(
-      children: [
-        Expanded(
-          child: SelectionButton(
-            isSelected: diamondListingBloc.isIndividual,
-            title: APPStrings.naturalDiamond.tr,
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
-            onTap: () {
-              diamondListingBloc.add(const DiamondChangeTypeEvent(true));
-            },
-          ),
-        ),
-        Expanded(
-          child: SelectionButton(
-            isSelected: !diamondListingBloc.isIndividual,
-            title: APPStrings.looseDiamond.tr,
-            borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
-            onTap: () {
-              diamondListingBloc.add(const DiamondChangeTypeEvent(false));
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProductFilterCount(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return SizedBox(
       height: 48,
       child: Row(
@@ -97,7 +68,7 @@ class DiamondListingScreen extends StatelessWidget {
               children: [
                 SelectionButton(
                   width: 48,
-                  isSelected: diamondListingBloc.isGrid,
+                  isSelected: settingListingBloc.isGrid,
                   image: AppImages.icGrid,
                   selectedButtonColor: style.gridBackgroundColor,
                   selectedButtonBorderColor: style.gridBorderColor,
@@ -107,12 +78,12 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
                   onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(true));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent(true));
                   },
                 ),
                 SelectionButton(
                   width: 48,
-                  isSelected: !diamondListingBloc.isGrid,
+                  isSelected: !settingListingBloc.isGrid,
                   image: AppImages.icList,
                   selectedButtonColor: style.gridBackgroundColor,
                   selectedButtonBorderColor: style.gridBorderColor,
@@ -122,18 +93,8 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
                   onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(false));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent(false));
                   },
-                ),
-                const SizedBox(width: 16),
-                SelectionButton(
-                  width: 48,
-                  isSelected: true,
-                  selectedButtonColor: style.menuBackgroundColor,
-                  selectedButtonBorderColor: style.menuBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  image: AppImages.icMenu,
-                  onTap: () {},
                 ),
               ],
             ),
@@ -143,26 +104,25 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
-    return BlocBuilder<DiamondListingBloc, DiamondListingState>(
+  Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
+    return BlocBuilder<SettingListingBloc, SettingListingState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         if (state is LoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (diamondListingBloc.productList.isEmpty) {
+        if (settingListingBloc.productList.isEmpty) {
           return const Center(child: SmartText(APPStrings.add));
         } else {
-          if (diamondListingBloc.isGrid) {
+          if (settingListingBloc.isGrid) {
             return Column(
               children: [
                 Wrap(
                   spacing: 12.0,
                   runSpacing: 12.0,
-                  children: diamondListingBloc.productList.map((ProductDetails productDetails) {
+                  children: settingListingBloc.productList.map((ProductDetails productDetails) {
                     return ProductGridItem(
                       productDetails: productDetails,
-                      isStoneWithPrice: true,
                       onEyeTap: () {},
                       onFavTap: () {},
                     );
@@ -180,9 +140,9 @@ class DiamondListingScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
-                productDetails: diamondListingBloc.productList[index],
+                productDetails: settingListingBloc.productList[index],
               ),
-              itemCount: diamondListingBloc.productList.length,
+              itemCount: settingListingBloc.productList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
             );
