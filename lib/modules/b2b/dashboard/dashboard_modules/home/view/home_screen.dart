@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, AppRoutes.collectionPage);
+            context.pushNamed(AppRoutes.collectionPage);
           },
           child: const Text('View All Collection')),
     );

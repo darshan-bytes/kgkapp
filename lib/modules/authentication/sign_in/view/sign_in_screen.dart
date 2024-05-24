@@ -6,6 +6,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
+    final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
       appBar: SmartAppBar(
         appBarHeight: 52,
@@ -36,9 +37,9 @@ class SignInScreen extends StatelessWidget {
                                 style: style.subTitleStyle,
                               ),
                               const SizedBox(height: 32),
-                              _buildEmailField(style, context),
+                              _buildEmailField(style, context, bloc),
                               const SizedBox(height: 24),
-                              _buildPasswordField(style, context),
+                              _buildPasswordField(style, context, bloc),
                               const SizedBox(height: 16),
                               _buildForgotPasswordText(context, style),
                               const SizedBox(height: 32),
@@ -65,7 +66,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEmailField(SignInScreenStyle style, context) {
+  Widget _buildEmailField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
       labelText: APPStrings.email.tr,
       hintText: APPStrings.email.tr,
@@ -77,21 +78,24 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPasswordField(SignInScreenStyle style, context) {
+  Widget _buildPasswordField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
       obscured: true,
       labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
       keyboardType: TextInputType.visiblePassword,
       lableStyle: style.labelStyle,
-      onEditingComplete: () {},
+      textInputAction: TextInputAction.done,
+      onEditingComplete: () {
+        FocusScope.of(context).unfocus();
+      },
     );
   }
 
   Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.forgotPasswordPage);
+        context.pushNamed(AppRoutes.forgotPasswordPage);
       },
       child: Align(
         alignment: Alignment.centerRight,
@@ -106,7 +110,7 @@ class SignInScreen extends StatelessWidget {
   Widget _buildLoginButton(BuildContext context) {
     return SmartButton(
       onTap: () {
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashboardPage, (route) => false);
+        context.pushNamedAndRemoveUntil(AppRoutes.dashboardPage, (route) => false);
       },
       title: APPStrings.login.tr,
     );
@@ -165,7 +169,7 @@ class SignInScreen extends StatelessWidget {
         SmartTextSpan(
           text: APPStrings.register.tr,
           onTap: () {
-            Navigator.pushNamed(context, AppRoutes.signUpPage);
+            context.pushNamed( AppRoutes.signUpPage);
           },
           style: style.registerTextStyle,
         )

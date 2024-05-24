@@ -41,6 +41,16 @@ export 'package:kgk/enums/enums.dart';
 export 'package:kgk/extension_methods/list.dart';
 export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
+//model
+export 'package:kgk/modules/authentication/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
+export 'package:kgk/modules/authentication/forgot_email_sent/view/forgot_email_sent_screen.dart';
+//screen
+export 'package:kgk/modules/authentication/forgot_password/bloc/forgot_password_bloc.dart';
+export 'package:kgk/modules/authentication/forgot_password/view/forgot_password_screen.dart';
+export 'package:kgk/modules/authentication/reset_password/bloc/reset_password_bloc.dart';
+export 'package:kgk/modules/authentication/reset_password/view/reset_password_screen.dart';
+export 'package:kgk/modules/authentication/sign_in/bloc/sign_in_bloc.dart';
+export 'package:kgk/modules/authentication/sign_in/view/sign_in_screen.dart';
 export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
 export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
@@ -75,28 +85,18 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
-export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_grid_bloc.dart';
-export 'package:kgk/modules/b2b/product_list_grid/view/product_list_grid_screen.dart';
+export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_bloc.dart';
+export 'package:kgk/modules/b2b/product_list_grid/view/product_list_screen.dart';
 export 'package:kgk/modules/b2b/ring_details/bloc/ring_detail_bloc.dart';
 export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
-//model
-export 'package:kgk/modules/authentication/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
-export 'package:kgk/modules/authentication/forgot_email_sent/view/forgot_email_sent_screen.dart';
-//screen
-export 'package:kgk/modules/authentication/forgot_password/bloc/forgot_password_bloc.dart';
-export 'package:kgk/modules/authentication/forgot_password/view/forgot_password_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.dart';
-export 'package:kgk/modules/authentication/reset_password/bloc/reset_password_bloc.dart';
-export 'package:kgk/modules/authentication/reset_password/view/reset_password_screen.dart';
-export 'package:kgk/modules/authentication/sign_in/bloc/sign_in_bloc.dart';
-export 'package:kgk/modules/authentication/sign_in/view/sign_in_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
@@ -123,6 +123,7 @@ export 'package:kgk/widgets/responsive.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/selection_button.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
+export 'package:kgk/widgets/smart_grid_view.dart';
 export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_pagaination.dart';
 export 'package:kgk/widgets/smart_switch.dart';

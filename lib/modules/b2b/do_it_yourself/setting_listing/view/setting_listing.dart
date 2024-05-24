@@ -131,20 +131,17 @@ class SettingListingScreen extends StatelessWidget {
           if (settingListingBloc.isGrid) {
             return Column(
               children: [
-                Wrap(
-                  spacing: 12.0,
-                  runSpacing: 12.0,
-                  children: settingListingBloc.productList.map((ProductDetails productDetails) {
-                    return ProductGridItem(
-                      productDetails: productDetails,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.ringDetailPage);
-                      },
-                    );
-                  }).toList(),
-                ),
+                SmartGridView(
+                    items: settingListingBloc.productList.map((ProductDetails productDetails) {
+                  return ProductGridItem(
+                    productDetails: productDetails,
+                    onEyeTap: () {},
+                    onFavTap: () {},
+                    onTap: () {
+                      context.pushNamed( AppRoutes.ringDetailPage);
+                    },
+                  );
+                }).toList()),
                 const SizedBox(
                   height: 17,
                 )

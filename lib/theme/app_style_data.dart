@@ -287,53 +287,53 @@ class LightModeTheme extends AppTheme {
 
   @override
   DiyProgressViewStyle get diyProgressViewStyle => DiyProgressViewStyle(
-    titleStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: colors.color303538),
-    selectedBorderColor: colors.color424445,
-    unselectedBorderColor: colors.colorD3DAE0,
-  );
+        titleStyle: interRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: colors.color303538),
+        selectedBorderColor: colors.color424445,
+        unselectedBorderColor: colors.colorD3DAE0,
+      );
 
   @override
   DiamondDetailScreenStyle get diamondDetailScreenStyle => DiamondDetailScreenStyle(
-    skuStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    diamondNameStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
-    reviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    priceStyle: interBoldTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w500, color: colors.color303538),
-    seeProductStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
-    diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    selectDiamondStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
-  );
-
-  @override
-  RingDetailScreenStyle get ringDetailScreenStyle => RingDetailScreenStyle(
-        ringTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color8C8C8C),
-        ringCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-        ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
+        skuStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        diamondNameStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
         reviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         priceStyle: interBoldTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w500, color: colors.color303538),
-    metalHeaderStyle: interBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-    selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
-    approxPriceLabelStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-    approxPriceNoteStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-    buyInBulkStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-    askQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
-    selectSettingStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
-    settingTypeStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
-    settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-  );
+        seeProductStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
+        diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+        shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+        selectDiamondStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
+      );
 
+      @override
+    RingDetailScreenStyle get ringDetailScreenStyle => RingDetailScreenStyle(
+          ringTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color8C8C8C),
+          ringCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+          ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
+          reviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+          priceStyle: interBoldTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w500, color: colors.color303538),
+      metalHeaderStyle: interBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+      metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+      approxPriceLabelStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      approxPriceNoteStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      buyInBulkStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      askQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+      diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      shippingStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      selectSettingStyle: interBoldTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, color: colors.white),
+      settingTypeStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+      settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+      settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+    );
+    
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
-    haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-    emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
-  );
+        haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+        reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        phoneStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+        emailStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
+      );
 
   @override
   SelectionButtonStyle get selectionButtonStyle => SelectionButtonStyle(
@@ -353,18 +353,15 @@ class LightModeTheme extends AppTheme {
         gridIconColor: colors.primary,
         listIconColor: colors.color8C8C8C,
         filterProductCountTextStyle: interRegularTextStyle,
-        gridBackgroundColor: colors.colorC5DEEB,
+        gridBackgroundColor: colors.colorD3DAE0,
         gridBorderColor: colors.transparent,
         listBackgroundColor: colors.white,
-        listBorderColor: colors.colorC5DEEB,
+        listBorderColor: colors.colorD3DAE0,
         menuBackgroundColor: colors.white,
-        menuBorderColor: colors.colorC5DEEB,
+        menuBorderColor: colors.colorD3DAE0,
       );
-      
+
   @override
   FilterBottomActionBarStyle get filterBottomActionBarStyle =>
-      FilterBottomActionBarStyle(
-          borderColor: colors.colorD3DAE0,
-          transparentColor: colors.transparent,
-          dividerColor: colors.colorD3DAE0);
+      FilterBottomActionBarStyle(borderColor: colors.colorD3DAE0, transparentColor: colors.transparent, dividerColor: colors.colorD3DAE0);
 }

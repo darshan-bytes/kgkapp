@@ -30,7 +30,7 @@ class DiamondDetailScreen extends StatelessWidget {
       bottomNavigationBar: SmartButton(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 17),
         onTap: () {
-          Navigator.pushNamed(context, AppRoutes.settingListingPage);
+          context.pushNamed( AppRoutes.settingListingPage);
         },
         title: APPStrings.selectDiamond.tr,
       ),
