@@ -15,6 +15,7 @@ class AppRoutes {
   static const productListGridPage = '/productListGridPage';
   static const diamondDetailPage = '/diamondDetailPage';
   static const ringDetailPage = '/ringDetailPage';
+  static const diamondListingPage = '/diamondListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -98,6 +99,15 @@ class AppRoutes {
 
       case ringDetailPage:
         return MaterialPageRoute(builder: (_) => const RingDetailScreen(), settings: const RouteSettings(name: ringDetailPage));
+
+      case diamondListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DiamondListingBloc>(context).add(const GetDiamondProductListEvent());
+            return const DiamondListingScreen();
+          },
+          settings: const RouteSettings(name: diamondListingPage),
+        );
 
       default:
         return _errorRoute();

@@ -19,7 +19,7 @@ class SortScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomAppBar(
+            SmartAppBar(
               isBack: false,
               title: APPStrings.sortBy.tr,
               titleStyle: style.titleStyle,

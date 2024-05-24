@@ -9,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
     SignUpBloc signUpBloc = context.read<SignUpBloc>();
     return Scaffold(
       backgroundColor: style.backgroundColor,
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         appBarHeight: kToolbarHeight,
         backgroundColor: Colors.white,
         isBorder: false,

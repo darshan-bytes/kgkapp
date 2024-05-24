@@ -9,7 +9,7 @@ class ResetPasswordScreen extends StatelessWidget {
     final resetPasswordBloc = BlocProvider.of<ResetPasswordBloc>(context);
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         appBarHeight: 52,
         isBorder: false,
         backgroundColor: style.backgroundColor,

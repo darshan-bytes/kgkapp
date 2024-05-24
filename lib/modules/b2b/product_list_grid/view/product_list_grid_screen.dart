@@ -7,7 +7,7 @@ class ProductListGridScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductListGridBloc bloc = BlocProvider.of<ProductListGridBloc>(context);
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         title: APPStrings.ring.tr,
         onFavorite: () {},
         onFilter: () {},

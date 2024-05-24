@@ -20,7 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> with TickerProv
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).notificationScreenStyle;
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         title: APPStrings.notification.tr,
       ),
       body: Column(

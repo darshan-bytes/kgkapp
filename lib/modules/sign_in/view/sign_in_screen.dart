@@ -7,7 +7,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         appBarHeight: 52,
         isBorder: false,
         backgroundColor: style.backgroundColor,

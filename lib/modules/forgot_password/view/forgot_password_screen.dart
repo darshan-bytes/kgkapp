@@ -8,7 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
     final style = AppTheme.of(context).signInScreenStyle;
     final forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         appBarHeight: 52,
         isBorder: false,
         backgroundColor: style.backgroundColor,

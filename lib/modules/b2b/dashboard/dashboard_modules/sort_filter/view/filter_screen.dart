@@ -11,7 +11,7 @@ class FilterScreen extends StatelessWidget {
     final SortFilterBloc filterBloc = BlocProvider.of<SortFilterBloc>(context);
     return Scaffold(
       backgroundColor: style.subFilterBackgroundColor,
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         isBack: false,
         title: APPStrings.filters.tr,
         actions: [

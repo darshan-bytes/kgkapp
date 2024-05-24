@@ -23,6 +23,7 @@ class BlocGenerator {
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
       BlocProvider<RingDetailBloc>(create: (_) => RingDetailBloc()),
       BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
+      BlocProvider<DiamondListingBloc>(create: (_) => DiamondListingBloc()),
     ];
   }
 }

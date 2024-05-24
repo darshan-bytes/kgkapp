@@ -86,6 +86,7 @@ class APPStrings {
   //product list grid
   static const String previous = 'previous';
   static const String next = 'next';
+
   //Product item
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
@@ -124,4 +125,11 @@ class APPStrings {
   static const String brand = 'brand';
   static const String meleeWeight = 'melee_weight';
   static const String metal = 'metal';
+
+  // Diamond Listing
+  static const String filter = 'filter';
+  static const String sort = 'sort';
+  static const String naturalDiamond = "natural_diamond";
+  static const String looseDiamond = "loose_diamond";
+  static const String emptyProducts = "empty_products";
 }

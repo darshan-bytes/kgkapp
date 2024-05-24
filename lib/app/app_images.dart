@@ -38,6 +38,7 @@ class AppImages {
   static const String icArrowDown = 'assets/images/ic_arrow_down.svg';
   static const String icMinus = 'assets/images/ic_minus.svg';
   static const String icCheck = 'assets/images/ic_check.svg';
+
   //product item
   static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
   static const String icAddEye = 'assets/images/ic_add_eye.svg';
@@ -45,6 +46,8 @@ class AppImages {
   static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
   static const String icGram = 'assets/images/ic_gram.svg';
   static const String icDiamond = 'assets/images/ic_diamond.svg';
+  static const String icBlankDiamond = 'assets/images/ic_blank_diamond.svg';
+  static const String icStone = 'assets/images/ic_stone.svg';
 
   static const String icFullStar = 'assets/images/ic_full_star.svg';
   static const String icEmptyStar = 'assets/images/ic_empty_star.svg';
@@ -52,4 +55,10 @@ class AppImages {
   static const String icPhone = 'assets/images/ic_phone.svg';
   static const String icMail = 'assets/images/ic_mail.svg';
   static const String icArrowRight = 'assets/images/ic_arrow_right.svg';
+  // diamond listing
+  static const String icGrid = 'assets/images/ic_grid.svg';
+  static const String icList = 'assets/images/ic_list.svg';
+  static const String icMenu = 'assets/images/ic_menu.svg';
+  static const String icFilter = 'assets/images/ic_filter.svg';
+  static const String icSort = 'assets/images/ic_sort.svg';
 }

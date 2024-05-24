@@ -8,6 +8,7 @@ class AppThemes {
   AppColor appColor = const AppColor(
     primary: Color(0xFF083458),
     white: Color(0xFFFFFFFF),
+    transparent: Color(0x00000000),
     colorF65D3C: Color(0xFFF65D3C),
     color303538: Color(0xFF303538),
     colorD3DAE0: Color(0xFFD3DAE0),
@@ -62,6 +63,7 @@ class AppThemes {
 class AppColor {
   final Color primary;
   final Color white;
+  final Color transparent;
   final Color colorF65D3C;
   final Color color303538;
   final Color colorD3DAE0;
@@ -90,6 +92,7 @@ class AppColor {
     required this.color50B83C,
     required this.colorFAFAFA,
     required this.color424445,
+    required this.transparent,
   });
 }
 

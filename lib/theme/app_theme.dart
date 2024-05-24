@@ -73,6 +73,11 @@ abstract class AppTheme {
   RingDetailScreenStyle get ringDetailScreenStyle;
 
   InquiryWidgetStyle get inquiryWidgetStyle;
+  SelectionButtonStyle get selectionButtonStyle;
+
+  DiamondListingStyle get diamondListingStyle;
+
+  FilterBottomActionBarStyle get filterBottomActionBarStyle;
 }
 
 class PrimaryButtonStyle {
@@ -503,5 +508,60 @@ class InquiryWidgetStyle {
     required this.reachOutStyle,
     required this.phoneStyle,
     required this.emailStyle,
+  });
+}
+class SelectionButtonStyle {
+  final Color selectedButtonColor;
+  final Color unselectedButtonColor;
+  final Color selectedButtonBorderColor;
+  final Color unselectedButtonBorderColor;
+  final Color selectedButtonIconColor;
+  final Color unselectedButtonIconColor;
+  final TextStyle selectedButtonTextStyle;
+  final TextStyle unselectedButtonTextStyle;
+
+  SelectionButtonStyle({
+    required this.selectedButtonColor,
+    required this.unselectedButtonColor,
+    required this.selectedButtonBorderColor,
+    required this.unselectedButtonBorderColor,
+    required this.selectedButtonIconColor,
+    required this.unselectedButtonIconColor,
+    required this.selectedButtonTextStyle,
+    required this.unselectedButtonTextStyle,
+  });
+}
+
+class DiamondListingStyle {
+  final TextStyle filterProductCountTextStyle;
+  final Color gridBackgroundColor;
+  final Color gridBorderColor;
+  final Color gridIconColor;
+  final Color listBackgroundColor;
+  final Color listBorderColor;
+  final Color listIconColor;
+  final Color menuBackgroundColor;
+  final Color menuBorderColor;
+
+  DiamondListingStyle({
+    required this.filterProductCountTextStyle,
+    required this.gridBackgroundColor,
+    required this.gridBorderColor,
+    required this.listBackgroundColor,
+    required this.listBorderColor,
+    required this.menuBackgroundColor,
+    required this.menuBorderColor,
+    required this.gridIconColor,
+    required this.listIconColor,
+  });
+}
+
+class FilterBottomActionBarStyle{
+  final Color borderColor;
+  final Color transparentColor;
+  final Color dividerColor;
+  const FilterBottomActionBarStyle({required this.borderColor, 
+  required this.transparentColor, 
+  required this.dividerColor
   });
 }

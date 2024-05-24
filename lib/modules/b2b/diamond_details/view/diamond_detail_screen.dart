@@ -8,7 +8,7 @@ class DiamondDetailScreen extends StatelessWidget {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     final diamondBloc = context.read<DiamondDetailBloc>();
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SmartAppBar(
         title: '1.01 Carat Round Diamond',
         onFavorite: () { },
         onFilter: () { },
