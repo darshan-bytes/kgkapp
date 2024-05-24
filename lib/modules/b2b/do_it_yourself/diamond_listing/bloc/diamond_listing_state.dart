@@ -36,12 +36,12 @@ class ChangeListingTypeState extends DiamondListingState {
   List<Object> get props => [isGrid];
 }
 
-final class ProductChangePageNumberState extends DiamondListingState {
+final class DiamondProductChangePageNumberState extends DiamondListingState {
   @override
   List<Object> get props => [];
 }
 
-final class ProductReloadState extends DiamondListingState {
+final class DiamondProductReloadState extends DiamondListingState {
   @override
   List<Object> get props => [];
 }

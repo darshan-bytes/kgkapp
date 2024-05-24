@@ -48,7 +48,7 @@ class DiamondListingScreen extends StatelessWidget {
                   onPageChanged: (int index, String newValue) {
                     debugPrint("Checking index $index and value $newValue");
                     diamondListingBloc
-                        .add(ProductChangePageNumberEvent(newValue));
+                        .add(DiamondProductChangePageNumberEvent(newValue));
                   },
                 ),
                 const SizedBox(height: 24),
