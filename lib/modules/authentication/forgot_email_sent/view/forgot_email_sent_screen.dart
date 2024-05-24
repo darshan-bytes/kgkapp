@@ -46,7 +46,6 @@ class ForgotEmailSentScreen extends StatelessWidget {
                     APPStrings.didNotReceivedEmail.tr,
                     style: style.didNotGetEmailTextStyle,
                   ),
-                  const SizedBox(height: 8),
                   TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, AppRoutes.resetPasswordPage);

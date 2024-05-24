@@ -23,31 +23,34 @@ class _MyAppState extends State<MyApp> {
         builder: (context, appState) {
           AppBloc appBloc = BlocProvider.of<AppBloc>(context);
           return MaterialApp(
-            home: Stack(children: [
-              MaterialApp(
-                onGenerateRoute: AppRoutes.generateRoute,
-                initialRoute: AppRoutes.initialRoute,
-                title: APPStrings.appName,
-                navigatorKey: NavigatorKey.navigatorKey,
-                supportedLocales: const [
-                  Locale(APPStrings.languageEn, ''), // English
-                  Locale(APPStrings.languageKo, '')
-                ],
-                theme: appBloc.themeData,
-                locale: appBloc.locale,
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  AppLocalizations.delegate,
-                  CountryLocalizations.delegate,
-                ],
-              ),
-              if (appState is ConnectivityState && !appState.isConnected)
-                NoInternetScreen(
-                  theme: appBloc.themeData ?? appBloc.appThemes.light(),
-                )
-            ]),
+            home: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: Stack(children: [
+                MaterialApp(
+                  onGenerateRoute: AppRoutes.generateRoute,
+                  initialRoute: AppRoutes.initialRoute,
+                  title: APPStrings.appName,
+                  navigatorKey: NavigatorKey.navigatorKey,
+                  supportedLocales: const [
+                    Locale(APPStrings.languageEn, ''), // English
+                    Locale(APPStrings.languageKo, '')
+                  ],
+                  theme: appBloc.themeData,
+                  locale: appBloc.locale,
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    AppLocalizations.delegate,
+                    CountryLocalizations.delegate,
+                  ],
+                ),
+                if (appState is ConnectivityState && !appState.isConnected)
+                  NoInternetScreen(
+                    theme: appBloc.themeData ?? appBloc.appThemes.light(),
+                  )
+              ]),
+            ),
           );
         },
       ),
