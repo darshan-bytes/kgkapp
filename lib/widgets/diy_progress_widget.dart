@@ -1,11 +1,10 @@
-
 import 'package:kgk/kgk.dart';
 
 class DiyProgressWidget extends StatelessWidget {
   const DiyProgressWidget({
     super.key,
-    required this.selectedStep, 
-    this.padding,  
+    required this.selectedStep,
+    this.padding,
   });
 
   final int selectedStep;
@@ -14,7 +13,7 @@ class DiyProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
       child: Row(
         children: [
           _commonSelector(context, selectedStep == 1, 'Choose a Diamond', 1),
@@ -33,19 +32,24 @@ class DiyProgressWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor, width: 1),
         ),
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
             SmartText('$index'),
-            const SizedBox(width: 8,),
-            Expanded(child: SmartText(title, style: style.titleStyle,)),
+            const SizedBox(
+              width: 8,
+            ),
+            Expanded(
+                child: SmartText(
+              title,
+              style: style.titleStyle,
+            )),
           ],
         ),
       ),
     );
   }
-
 }

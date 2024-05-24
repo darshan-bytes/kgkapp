@@ -13,10 +13,10 @@ class SmartPagination extends StatefulWidget {
   });
 
   @override
-  _SmartPaginationState createState() => _SmartPaginationState();
+  SmartPaginationState createState() => SmartPaginationState();
 }
 
-class _SmartPaginationState extends State<SmartPagination> {
+class SmartPaginationState extends State<SmartPagination> {
   late String currentPage;
   late int currentPageIndex;
 
