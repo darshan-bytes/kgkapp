@@ -359,7 +359,8 @@ class SignUpScreen extends StatelessWidget {
     return SmartButton(
       title: APPStrings.register.tr,
       onTap: () {
-        Navigator.popAndPushNamed(context, AppRoutes.signInPage);
+        Navigator.popUntil(
+            context, (route) => (route.settings.name == AppRoutes.getReadyPage) || (route.settings.name == AppRoutes.signInPage));
       },
     );
   }

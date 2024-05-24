@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, AppRoutes.collectionPage);
           },
-          child: const Text('Home')),
+          child: const Text('View All Collection')),
     );
   }
 }

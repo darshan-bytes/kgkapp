@@ -20,7 +20,26 @@ class SettingListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+      bottomNavigationBar: FilterBottomActionBar(
+        onFilterTap: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (context) => FilterScreen(
+              onApply: () {},
+            ),
+          );
+        },
+        onSortTap: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (context) => const SortScreen(),
+          );
+        },
+      ),
       body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
@@ -120,6 +139,9 @@ class SettingListingScreen extends StatelessWidget {
                       productDetails: productDetails,
                       onEyeTap: () {},
                       onFavTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.ringDetailPage);
+                      },
                     );
                   }).toList(),
                 ),
