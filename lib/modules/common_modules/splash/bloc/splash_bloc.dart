@@ -4,6 +4,8 @@ part 'splash_event.dart';
 part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
+  late BuildContext context;
+
   SplashBloc() : super(SplashInitial()) {
     on<LoadSplashEvent>(navigateToGetReadyScreen);
   }

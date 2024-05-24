@@ -330,7 +330,6 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
-
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -357,12 +356,12 @@ class LightModeTheme extends AppTheme {
         gridIconColor: colors.primary,
         listIconColor: colors.color8C8C8C,
         filterProductCountTextStyle: interRegularTextStyle,
-        gridBackgroundColor: colors.colorC5DEEB,
+        gridBackgroundColor: colors.colorD3DAE0,
         gridBorderColor: colors.transparent,
         listBackgroundColor: colors.white,
-        listBorderColor: colors.colorC5DEEB,
+        listBorderColor: colors.colorD3DAE0,
         menuBackgroundColor: colors.white,
-        menuBorderColor: colors.colorC5DEEB,
+        menuBorderColor: colors.colorD3DAE0,
       );
 
   @override

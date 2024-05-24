@@ -151,18 +151,15 @@ class DiamondListingScreen extends StatelessWidget {
           if (diamondListingBloc.isGrid) {
             return Column(
               children: [
-                Wrap(
-                  spacing: 12.0,
-                  runSpacing: 12.0,
-                  children: diamondListingBloc.productList.map((ProductDetails productDetails) {
-                    return ProductGridItem(
-                      productDetails: productDetails,
-                      isStoneWithPrice: true,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                    );
-                  }).toList(),
-                ),
+                SmartGridView(
+                    items: diamondListingBloc.productList.map((ProductDetails productDetails) {
+                  return ProductGridItem(
+                    productDetails: productDetails,
+                    isStoneWithPrice: true,
+                    onEyeTap: () {},
+                    onFavTap: () {},
+                  );
+                }).toList()),
                 const SizedBox(
                   height: 17,
                 )
