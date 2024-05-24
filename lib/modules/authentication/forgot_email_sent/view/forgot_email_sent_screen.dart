@@ -31,15 +31,18 @@ class ForgotEmailSentScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  SmartRichText(
-                    spans: [
-                      SmartTextSpan(text: parts[0]), // Before placeholder
-                      SmartTextSpan(
-                        text: "your_email@example.com", // Placeholder text
-                        style: style.richSubTextStyle,
-                      ),
-                      SmartTextSpan(text: parts[1]), // After placeholder
-                    ],
+                  RichText(
+                    text: TextSpan(
+                      text: parts[0],
+                      style: style.didNotGetEmailTextStyle.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(
+                          text: "your_email@example.com", // Placeholder text
+                          style: style.richSubTextStyle,
+                        ),
+                        TextSpan(text: parts[1], style: style.didNotGetEmailTextStyle),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 48),
                   SmartText(
@@ -48,7 +51,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        context.pushNamed( AppRoutes.resetPasswordPage);
+                        context.pushNamed(AppRoutes.resetPasswordPage);
                       },
                       child: SmartText(
                         APPStrings.resend.tr,

@@ -59,7 +59,13 @@ class SmartRadioButton<T> extends StatelessWidget {
                   onChanged(value);
                 },
                 activeColor: activeColor ?? style.activeColor,
-                fillColor: WidgetStateProperty.all(activeColor ?? style.activeColor),
+                fillColor: WidgetStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return activeColor ?? style.activeColor;
+                  } else {
+                    return borderColor ?? style.borderColor;
+                  }
+                }),
               ),
             ),
             if (label != null) const SizedBox(width: 4),

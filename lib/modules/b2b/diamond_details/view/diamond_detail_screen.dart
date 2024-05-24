@@ -41,6 +41,7 @@ class DiamondDetailScreen extends StatelessWidget {
     return BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
       buildWhen: (_, current) => current is DiamondImagePageChangeState,
       builder: (context, state) {
+        final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
         return Column(
           children: [
             CarouselSlider(
@@ -70,8 +71,7 @@ class DiamondDetailScreen extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)
-                            .withOpacity(diamondBloc.current == entry.key ? 0.9 : 0.4)),
+                        color: diamondBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
                   ),
                 );
               }).toList(),

@@ -4,14 +4,13 @@ class SmartCheckbox extends StatelessWidget {
   final String? label;
   final bool value;
   final Function onChanged;
-  final TextStyle? checkboxStyle;
+  final TextStyle? labelStyle;
   final double? height;
   final double? width;
   final Color? activeColor;
   final Color? checkColor;
   final Color? borderColor;
   final EdgeInsets? padding;
-  final Widget? textLabel;
 
   const SmartCheckbox({
     super.key,
@@ -20,12 +19,11 @@ class SmartCheckbox extends StatelessWidget {
     required this.onChanged,
     this.height,
     this.width,
-    this.checkboxStyle,
+    this.labelStyle,
     this.activeColor,
     this.checkColor,
     this.borderColor,
     this.padding,
-    this.textLabel,
   });
 
   @override
@@ -56,13 +54,10 @@ class SmartCheckbox extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            textLabel != null
-                ? Expanded(
-                    child: SizedBox(
-                    child: textLabel,
-                  ))
-                : const SizedBox(),
-            label != null ? Expanded(child: SmartText(label, style: style.textStyle.merge(checkboxStyle))) : const SizedBox()
+            if (label != null)
+              Expanded(
+                child: SmartText(label, style: style.textStyle.merge(labelStyle)),
+              )
           ],
         ),
       ),

@@ -312,6 +312,7 @@ class SignUpScreen extends StatelessWidget {
       hintText: APPStrings.confirmPassword.tr,
       controller: signUpBloc.confirmPasswordController,
       focusNode: signUpBloc.confirmPasswordFocusNode,
+      textInputAction: TextInputAction.done,
       onEditingComplete: () {
         // signUpBloc.add(const SignUpSubmitEvent());
       },
@@ -366,29 +367,40 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildBusinessType(SignUpBloc signUpBloc, BuildContext context) {
-    return Row(
-      children: List.generate(signUpBloc.businessTypes.length, (index) {
-        final BusinessType businessType = signUpBloc.businessTypes[index];
-        return Row(
-          children: [
-            BlocBuilder<SignUpBloc, SignUpState>(
-              buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
-              builder: (context, state) {
-                return SmartRadioButton<BusinessType>(
-                  isToggle: true,
-                  groupValue: signUpBloc.selectedBusinessType,
-                  value: businessType,
-                  onChanged: (val) {
-                    signUpBloc.add(SignUpBusinessTypeChangedEvent(val));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SmartText(
+          APPStrings.businessType.tr,
+          style: AppTheme.of(context).textFieldStyle.labelStyle,
+        ),
+        const SizedBox(height: 4),
+        Wrap(
+          children: List.generate(signUpBloc.businessTypes.length, (index) {
+            final BusinessType businessType = signUpBloc.businessTypes[index];
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<SignUpBloc, SignUpState>(
+                  buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
+                  builder: (context, state) {
+                    return SmartRadioButton<BusinessType>(
+                      isToggle: true,
+                      groupValue: signUpBloc.selectedBusinessType,
+                      value: businessType,
+                      onChanged: (val) {
+                        signUpBloc.add(SignUpBusinessTypeChangedEvent(val));
+                      },
+                      label: businessType.name,
+                    );
                   },
-                  label: businessType.name,
-                );
-              },
-            ),
-            if (index != signUpBloc.businessTypes.length - 1) const SizedBox(width: 20)
-          ],
-        );
-      }).toList(),
+                ),
+                if (index != signUpBloc.businessTypes.length - 1) const SizedBox(width: 20)
+              ],
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 

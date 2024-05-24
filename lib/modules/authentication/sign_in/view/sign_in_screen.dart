@@ -116,6 +116,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildDivider(SignInScreenStyle style) {
     return Stack(
       alignment: Alignment.center,
@@ -135,6 +136,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildSocialMediaButtons() {
     return Row(
       mainAxisSize: MainAxisSize.min,

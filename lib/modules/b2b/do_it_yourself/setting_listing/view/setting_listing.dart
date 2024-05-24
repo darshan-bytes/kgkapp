@@ -138,7 +138,7 @@ class SettingListingScreen extends StatelessWidget {
                     onEyeTap: () {},
                     onFavTap: () {},
                     onTap: () {
-                      context.pushNamed( AppRoutes.ringDetailPage);
+                      context.pushNamed(AppRoutes.settingDetailPage);
                     },
                   );
                 }).toList()),

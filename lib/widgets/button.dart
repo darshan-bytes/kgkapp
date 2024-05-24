@@ -16,6 +16,10 @@ class SmartButton extends StatelessWidget {
   final Color? borderColor;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final String? prefixImage;
+  final Color? activeImageColor;
+  final Color? disableImageColor;
+  final double? imageSize;
 
   const SmartButton({
     super.key,
@@ -34,6 +38,10 @@ class SmartButton extends StatelessWidget {
     this.disableBackgroudColor,
     this.margin,
     this.disableTitleStyle,
+    this.prefixImage,
+    this.activeImageColor,
+    this.disableImageColor,
+    this.imageSize,
   });
 
   @override
@@ -68,13 +76,32 @@ class SmartButton extends StatelessWidget {
         height: height ?? 48,
         width: width ?? double.infinity,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        child: Center(
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
-          ),
-        ),
+        child: prefixImage.isNotNullNorEmpty
+            ? Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SmartImage(
+                      path: prefixImage!,
+                      height: imageSize ?? 24,
+                      width: imageSize ?? 24,
+                      color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      title,
+                      style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
+                    ),
+                  ],
+                ),
+              )
+            : Center(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
+                ),
+              ),
       ),
     );
   }

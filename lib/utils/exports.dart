@@ -68,6 +68,7 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/bloc/profile
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/profile_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/bloc/sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/filter_data_model.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_selected_settings_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/sort_data_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/filter_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/sort_screen.dart';
@@ -87,12 +88,13 @@ export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
 export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_bloc.dart';
 export 'package:kgk/modules/b2b/product_list_grid/view/product_list_screen.dart';
-export 'package:kgk/modules/b2b/ring_details/bloc/ring_detail_bloc.dart';
-export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
+export 'package:kgk/modules/b2b/setting_detail/bloc/setting_detail_bloc.dart';
+export 'package:kgk/modules/b2b/setting_detail/view/setting_detail_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/bloc/complete_product_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
@@ -101,6 +103,7 @@ export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
@@ -114,10 +117,12 @@ export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/custom_appbar.dart';
 export 'package:kgk/widgets/diy_progress_widget.dart';
+export 'package:kgk/widgets/expansion_tile.dart';
 export 'package:kgk/widgets/filter_bottom_actionbar.dart';
 export 'package:kgk/widgets/inquiry_widget.dart';
 export 'package:kgk/widgets/product_grid_item.dart';
 export 'package:kgk/widgets/product_list_item.dart';
+export 'package:kgk/widgets/product_selected_settings.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/responsive.dart';
 export 'package:kgk/widgets/selected_category_details.dart';

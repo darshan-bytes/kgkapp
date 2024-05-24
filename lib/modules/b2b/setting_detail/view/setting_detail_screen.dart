@@ -1,20 +1,19 @@
 import 'package:kgk/kgk.dart';
 
-class RingDetailScreen extends StatelessWidget {
-  const RingDetailScreen({super.key});
+class SettingDetailScreen extends StatelessWidget {
+  const SettingDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).ringDetailScreenStyle;
-    final ringBloc = context.read<RingDetailBloc>();
+    final ringBloc = context.read<SettingDetailBloc>();
     return Scaffold(
       appBar: SmartAppBar(
         title: 'DIY',
         onFavorite: () {},
         onFilter: () {},
       ),
-      body: BlocBuilder<RingDetailBloc, RingDetailState>(
-        buildWhen: (_, current) => current is RingImagePageChangeState,
+      body: BlocBuilder<SettingDetailBloc, SettingDetailState>(
+        buildWhen: (_, current) => current is SettingImagePageChangeState,
         builder: (context, state) {
           return SingleChildScrollView(
             child: Column(
@@ -35,21 +34,21 @@ class RingDetailScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SmartButton(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 17),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(AppRoutes.completeProductPage);
+        },
         title: APPStrings.selectSetting.tr,
       ),
     );
   }
 
-  Widget _imageSlider(BuildContext context, RingDetailBloc ringBloc) {
+  Widget _imageSlider(BuildContext context, SettingDetailBloc ringBloc) {
+    final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
     return Column(
       children: [
         CarouselSlider(
           items: ringBloc.imgList.map((e) {
-            return SmartImage(
-              path: e,
-              // width: double.infinity,
-            );
+            return SmartImage(path: e);
           }).toList(),
           carouselController: ringBloc.controller,
           options: CarouselOptions(
@@ -57,7 +56,7 @@ class RingDetailScreen extends StatelessWidget {
               viewportFraction: 1.5,
               aspectRatio: 1,
               onPageChanged: (index, reason) {
-                ringBloc.add(RingImagePageChangeEvent(index: index));
+                ringBloc.add(SettingImagePageChangeEvent(index: index));
               }),
         ),
         Row(
@@ -71,8 +70,7 @@ class RingDetailScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)
-                        .withOpacity(ringBloc.current == entry.key ? 0.9 : 0.4)),
+                    color: ringBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
               ),
             );
           }).toList(),
@@ -81,11 +79,11 @@ class RingDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetail(BuildContext context, RingDetailBloc ringBloc) {
-    final style = AppTheme.of(context).ringDetailScreenStyle;
-    final ringDetailBloc = context.read<RingDetailBloc>();
-    return BlocBuilder<RingDetailBloc, RingDetailState>(
-      buildWhen: (_, current) => current is RingSettingState,
+  Widget _productDetail(BuildContext context, SettingDetailBloc ringBloc) {
+    final style = AppTheme.of(context).settingDetailScreenStyle;
+    final ringDetailBloc = context.read<SettingDetailBloc>();
+    return BlocBuilder<SettingDetailBloc, SettingDetailState>(
+      buildWhen: (_, current) => current is SettingToggleState,
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(
@@ -151,7 +149,7 @@ class RingDetailScreen extends StatelessWidget {
                     width: 8,
                   ),
                   SmartText(
-                    APPStrings.reviews.interpolate([120]).tr,
+                    APPStrings.reviews.tr.interpolate([120]),
                     style: style.reviewStyle,
                   )
                 ],
@@ -259,7 +257,7 @@ class RingDetailScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  ringDetailBloc.add(RingSettingEvent(isSettingOpen: ringDetailBloc.isSettingOpen ? false : true));
+                  ringDetailBloc.add(SettingToggleEvent(isSettingOpen: ringDetailBloc.isSettingOpen ? false : true));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,52 +294,28 @@ class RingDetailScreen extends StatelessWidget {
                 ),
                 _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
               ],
-              const SizedBox(
-                height: 28,
-              ),
-              const Divider(
-                height: 1,
-              ),
-              const SizedBox(
-                height: 28,
-              ),
+              const SizedBox(height: 28),
+              const Divider(height: 1),
+              const SizedBox(height: 28),
               _settingWidget('Shape', 'Round', context),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               _settingWidget('Quantity', '1', context),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               _settingWidget('Total carat (min)', '1', context),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               _settingWidget('Color', 'F-G', context),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               _settingWidget('Clarity', 'VS2-SI1', context),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               _settingWidget('Setting', 'TypeThree Stone', context),
-              const SizedBox(
-                height: 28,
-              ),
-              const Divider(
-                height: 1,
-              ),
-              const SizedBox(
-                height: 28,
-              ),
+              const SizedBox(height: 28),
+              const Divider(height: 1),
+              const SizedBox(height: 28),
               const InquiryWidget(
                 email: 'enquiry.diaind@kgkmail.com',
                 phone: '+91 - 1234567830',
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
             ],
           ),
         );
@@ -349,8 +323,8 @@ class RingDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _metalSelectionWidget(BuildContext context, RingDetailBloc ringBloc) {
-    final style = AppTheme.of(context).ringDetailScreenStyle;
+  Widget _metalSelectionWidget(BuildContext context, SettingDetailBloc ringBloc) {
+    final style = AppTheme.of(context).settingDetailScreenStyle;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,7 +396,7 @@ class RingDetailScreen extends StatelessWidget {
   }
 
   Widget _settingWidget(String type, String value, BuildContext context) {
-    final style = AppTheme.of(context).ringDetailScreenStyle;
+    final style = AppTheme.of(context).settingDetailScreenStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

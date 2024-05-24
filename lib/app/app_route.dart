@@ -14,9 +14,10 @@ class AppRoutes {
   static const collectionPage = '/collectionPage';
   static const productListGridPage = '/productListGridPage';
   static const diamondDetailPage = '/diamondDetailPage';
-  static const ringDetailPage = '/ringDetailPage';
+  static const settingDetailPage = '/settingDetailPage';
   static const diamondListingPage = '/diamondListingPage';
   static const settingListingPage = '/settingListingPage';
+  static const completeProductPage = '/completeProductPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -104,10 +105,10 @@ class AppRoutes {
           settings: const RouteSettings(name: diamondDetailPage),
         );
 
-      case ringDetailPage:
+      case settingDetailPage:
         return MaterialPageRoute(
-          builder: (_) => const RingDetailScreen(),
-          settings: const RouteSettings(name: ringDetailPage),
+          builder: (_) => const SettingDetailScreen(),
+          settings: const RouteSettings(name: settingDetailPage),
         );
 
       case diamondListingPage:
@@ -126,6 +127,12 @@ class AppRoutes {
             return const SettingListingScreen();
           },
           settings: const RouteSettings(name: settingListingPage),
+        );
+
+      case completeProductPage:
+        return MaterialPageRoute(
+          builder: (_) => const CompleteProductScreen(),
+          settings: const RouteSettings(name: completeProductPage),
         );
 
       default:
