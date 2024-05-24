@@ -307,11 +307,11 @@ class LightModeTheme extends AppTheme {
 
   @override
   RingDetailScreenStyle get ringDetailScreenStyle => RingDetailScreenStyle(
-    ringTypeStyle: interBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color8C8C8C),
-    ringCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    ringNameStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
-    reviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
-    priceStyle: interBoldTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w500, color: colors.color303538),
+        ringTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color8C8C8C),
+        ringCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w400, color: colors.color303538),
+        reviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        priceStyle: interBoldTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w500, color: colors.color303538),
     metalHeaderStyle: interBoldTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
     metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
     selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),

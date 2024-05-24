@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'get_ready_event.dart';
+
 part 'get_ready_state.dart';
 
 class GetReadyBloc extends Bloc<GetReadyEvent, GetReadyState> {

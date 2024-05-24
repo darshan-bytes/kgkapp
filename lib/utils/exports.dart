@@ -82,25 +82,25 @@ export 'package:kgk/modules/b2b/ring_details/view/ring_detail_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 //model
-export 'package:kgk/modules/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
-export 'package:kgk/modules/forgot_email_sent/view/forgot_email_sent_screen.dart';
+export 'package:kgk/modules/authentication/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
+export 'package:kgk/modules/authentication/forgot_email_sent/view/forgot_email_sent_screen.dart';
 //screen
-export 'package:kgk/modules/forgot_password/bloc/forgot_password_bloc.dart';
-export 'package:kgk/modules/forgot_password/view/forgot_password_screen.dart';
+export 'package:kgk/modules/authentication/forgot_password/bloc/forgot_password_bloc.dart';
+export 'package:kgk/modules/authentication/forgot_password/view/forgot_password_screen.dart';
 // bloc
-export 'package:kgk/modules/get_ready/bloc/get_ready_bloc.dart';
+export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 //screen
-export 'package:kgk/modules/get_ready/view/get_ready_screen.dart';
-export 'package:kgk/modules/no_internet/bloc/no_internet_bloc.dart';
-export 'package:kgk/modules/no_internet/view/no_internert_screen.dart';
-export 'package:kgk/modules/reset_password/bloc/reset_password_bloc.dart';
-export 'package:kgk/modules/reset_password/view/reset_password_screen.dart';
-export 'package:kgk/modules/sign_in/bloc/sign_in_bloc.dart';
-export 'package:kgk/modules/sign_in/view/sign_in_screen.dart';
+export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
+export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
+export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.dart';
+export 'package:kgk/modules/authentication/reset_password/bloc/reset_password_bloc.dart';
+export 'package:kgk/modules/authentication/reset_password/view/reset_password_screen.dart';
+export 'package:kgk/modules/authentication/sign_in/bloc/sign_in_bloc.dart';
+export 'package:kgk/modules/authentication/sign_in/view/sign_in_screen.dart';
 // bloc
-export 'package:kgk/modules/splash/bloc/splash_bloc.dart';
+export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
-export 'package:kgk/modules/splash/view/splash_screen.dart';
+export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';

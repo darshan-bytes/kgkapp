@@ -103,9 +103,15 @@ class RingDetailScreen extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  SmartText(
-                    '●',
-                    color: colors(context).color8C8C8C,
+                  Container(
+                    height: 6,
+                    width: 6,
+                    decoration: BoxDecoration(
+                        color: colors(context).color8C8C8C,
+                        border: Border.all(
+                          color: colors(context).color8C8C8C,
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(50))),
                   ),
                   const SizedBox(
                     width: 8,
