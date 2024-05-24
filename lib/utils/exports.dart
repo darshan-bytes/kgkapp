@@ -123,6 +123,7 @@ export 'package:kgk/widgets/responsive.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/selection_button.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
+export 'package:kgk/widgets/smart_grid_view.dart';
 export 'package:kgk/widgets/smart_image_viewer.dart';
 export 'package:kgk/widgets/smart_pagaination.dart';
 export 'package:kgk/widgets/smart_switch.dart';

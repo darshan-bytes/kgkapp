@@ -55,11 +55,7 @@ class CollectionScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                // For divyraj
-                                Navigator.pushNamed(context, AppRoutes.productListGridPage);
-                                // For praj
-                                // Navigator.pushNamed(context, AppRoutes.diamondListingPage);
-                                // Navigator.pushNamed(context, AppRoutes.settingListingPage);
+                                context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productListData: index});
                               },
                               child: Container(
                                 margin: const EdgeInsets.only(bottom: 14),

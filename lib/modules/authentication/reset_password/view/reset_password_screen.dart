@@ -39,6 +39,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           SmartTextField(
                             controller: resetPasswordBloc.newPasswordController,
                             labelText: APPStrings.newPassword.tr,
+                            hintText: APPStrings.newPassword.tr,
                             lableStyle: style.labelStyle,
                             obscured: true,
                             keyboardType: TextInputType.visiblePassword,
@@ -50,6 +51,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           SmartTextField(
                             controller: resetPasswordBloc.confirmPasswordController,
                             labelText: APPStrings.confirmPassword.tr,
+                            hintText: APPStrings.confirmPassword.tr,
                             lableStyle: style.labelStyle,
                             keyboardType: TextInputType.visiblePassword,
                             obscured: true,
@@ -63,7 +65,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16.0),
                               child: SmartButton(
                                 onTap: () {
-                                  Navigator.pushNamed(context, AppRoutes.emailSentPage);
+                                  context.pushNamed( AppRoutes.emailSentPage);
                                 },
                                 title: APPStrings.confirmAndLogIn.tr,
                               ),

@@ -18,3 +18,12 @@ final class ReloadProductState extends ProductListGridState {
   @override
   List<Object> get props => [];
 }
+
+final class ProductChangeListingTypeState extends ProductListGridState {
+  final bool isGrid;
+
+  const ProductChangeListingTypeState(this.isGrid);
+
+  @override
+  List<Object> get props => [isGrid];
+}

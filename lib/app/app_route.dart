@@ -91,8 +91,11 @@ class AppRoutes {
 
       case productListGridPage:
         return MaterialPageRoute(
-          builder: (_) => const ProductListGridScreen(),
-          settings: const RouteSettings(name: productListGridPage),
+          builder: (context) {
+            BlocProvider.of<ProductListGridBloc>(context).add(InitialProductListGridEvent(context));
+            return const ProductListGridScreen();
+          },
+          settings: settings,
         );
 
       case diamondDetailPage:
@@ -141,5 +144,38 @@ class AppRoutes {
         ),
       );
     });
+  }
+}
+
+enum RoutesData {
+  productListData,
+}
+
+extension RoutesDataExtension on BuildContext {
+  Map<RoutesData, dynamic>? get routesData => ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
+
+  Future<dynamic> pushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.pushNamed(this, routeName, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this).pushNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> popAndPushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.popAndPushNamed(this, routeName, arguments: arguments);
+  }
+
+  Future<dynamic> popAndPushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this).popAndPushNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntil(String routeName, RoutePredicate predicate, {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 }

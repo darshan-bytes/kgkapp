@@ -4,6 +4,15 @@ sealed class ProductListGridEvent extends Equatable {
   const ProductListGridEvent();
 }
 
+final class InitialProductListGridEvent extends ProductListGridEvent {
+  final BuildContext context;
+
+  const InitialProductListGridEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
 class ChangePageNumberEvent extends ProductListGridEvent {
   final String pageNumber;
 
@@ -11,4 +20,13 @@ class ChangePageNumberEvent extends ProductListGridEvent {
 
   @override
   List<Object> get props => [pageNumber];
+}
+
+class ProductChangeListingTypeEvent extends ProductListGridEvent {
+  final bool isGrid;
+
+  const ProductChangeListingTypeEvent(this.isGrid);
+
+  @override
+  List<Object> get props => [isGrid];
 }

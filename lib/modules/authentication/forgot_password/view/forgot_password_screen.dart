@@ -53,7 +53,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 child: SmartButton(
                                   onTap: () {
-                                    Navigator.pushNamed(context, AppRoutes.emailSentPage);
+                                    context.pushNamed( AppRoutes.emailSentPage);
                                   },
                                   title: APPStrings.submit.tr,
                                 ),

@@ -209,7 +209,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                   suffixIcon: widget.suffixIcon ??
                       (widget.obscured
                           ? IconButton(
-                              icon: !_passwordVisible
+                              icon: _passwordVisible
                                   ? const SmartImage(
                                       path: AppImages.icEyeOpen,
                                     )
