@@ -2,6 +2,9 @@ part of 'setting_listing_bloc.dart';
 
 abstract class SettingListingState extends Equatable {
   const SettingListingState();
+
+  @override
+  List<Object> get props => [];
 }
 
 final class SettingListingInitial extends SettingListingState {

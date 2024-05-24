@@ -9,7 +9,7 @@ class SettingListingScreen extends StatelessWidget {
     final SettingListingBloc settingListingBloc = BlocProvider.of<SettingListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(AppConst.appBarHeight),
+        preferredSize: AppConst.appBarHeight,
         child: BlocBuilder<SettingListingBloc, SettingListingState>(
           builder: (context, state) {
             return SmartAppBar(
@@ -57,8 +57,7 @@ class SettingListingScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          //TODO: Here count manage using pagination value so currently this string remains static
-          SmartText(APPStrings.showingListLength.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
