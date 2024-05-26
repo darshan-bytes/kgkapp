@@ -85,6 +85,8 @@ abstract class AppTheme {
   SelectedSettingsStyle get selectedSettingsStyle;
 
   ImageCarouselStyle get imageCarouselStyle;
+
+  AddAccountScreenStyle get addAccountScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -627,5 +629,26 @@ class ImageCarouselStyle {
   ImageCarouselStyle({
     required this.dotColor,
     required this.selectedDotColor,
+  });
+}
+
+class AddAccountScreenStyle {
+  final Color backgroundColor;
+  final Color dotColor;
+  final Color filledDotColor;
+  final Color fillLineColor;
+  final Color borderColor;
+  final TextStyle shippingBillingAddressStyle;
+  final TextStyle paymentStyle;
+  final TextStyle isSameAddressStyle;
+  AddAccountScreenStyle({
+    required this.backgroundColor,
+    required this.dotColor,
+    required this.filledDotColor,
+    required this.fillLineColor,
+    required this.borderColor,
+    required this.shippingBillingAddressStyle,
+    required this.paymentStyle,
+    required this.isSameAddressStyle,
   });
 }

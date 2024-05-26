@@ -10,7 +10,17 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             context.pushNamed(AppRoutes.collectionPage);
           },
-          child: const Text('View All Collection')),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SmartButton(
+                  onTap: () {
+                    context.pushNamed(AppRoutes.addAccountPage);
+                  },
+                  title: "Add Account"),
+              const Text('View All Collection'),
+            ],
+          )),
     );
   }
 }

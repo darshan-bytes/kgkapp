@@ -55,6 +55,10 @@ export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
 export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_bloc.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_event.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_state.dart';
+export 'package:kgk/modules/b2b/add_account/view/add_account_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
 //model
@@ -68,7 +72,6 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/bloc/profile
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/profile_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/bloc/sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/filter_data_model.dart';
-export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_selected_settings_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/model/sort_data_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/filter_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/sort_filter/view/sort_screen.dart';
@@ -78,6 +81,9 @@ export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/view/smart_bottom_navigation_bar.dart';
 export 'package:kgk/modules/b2b/diamond_details/bloc/diamond_detail_bloc.dart';
 export 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/bloc/complete_product_bloc.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_selected_settings_model.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/bloc/diamond_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/view/diamond_listing.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/product_details.dart';
@@ -94,7 +100,6 @@ export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart'
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
-export 'package:kgk/modules/b2b/do_it_yourself/complete_product/bloc/complete_product_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
@@ -103,7 +108,6 @@ export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
-export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';

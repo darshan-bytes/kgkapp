@@ -18,6 +18,7 @@ class AppRoutes {
   static const diamondListingPage = '/diamondListingPage';
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
+  static const addAccountPage = '/addAccountPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -93,7 +94,8 @@ class AppRoutes {
       case productListGridPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ProductListBloc>(context).add(InitialProductListEvent(context));
+            BlocProvider.of<ProductListBloc>(context)
+                .add(InitialProductListEvent(context));
             return const ProductListScreen();
           },
           settings: settings,
@@ -114,7 +116,8 @@ class AppRoutes {
       case diamondListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DiamondListingBloc>(context).add(const GetDiamondProductListEvent());
+            BlocProvider.of<DiamondListingBloc>(context)
+                .add(const GetDiamondProductListEvent());
             return const DiamondListingScreen();
           },
           settings: const RouteSettings(name: diamondListingPage),
@@ -123,7 +126,8 @@ class AppRoutes {
       case settingListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SettingListingBloc>(context).add(const GetSettingProductListEvent());
+            BlocProvider.of<SettingListingBloc>(context)
+                .add(const GetSettingProductListEvent());
             return const SettingListingScreen();
           },
           settings: const RouteSettings(name: settingListingPage),
@@ -133,6 +137,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const CompleteProductScreen(),
           settings: const RouteSettings(name: completeProductPage),
+        );
+
+      case addAccountPage:
+        return MaterialPageRoute(
+          builder: (_) => const AddAccountScreen(),
+          settings: const RouteSettings(name: addAccountPage),
         );
 
       default:
@@ -159,31 +169,43 @@ enum RoutesData {
 }
 
 extension RoutesDataExtension on BuildContext {
-  Map<RoutesData, dynamic>? get routesData => ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
+  Map<RoutesData, dynamic>? get routesData =>
+      ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
 
-  Future<dynamic> pushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+  Future<dynamic> pushNamed(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.pushNamed(this, routeName, arguments: arguments);
   }
 
-  Future<dynamic> pushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+  Future<dynamic> pushNamedOfContext(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.of(this).pushNamed(routeName, arguments: arguments);
   }
 
-  Future<dynamic> popAndPushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.popAndPushNamed(this, routeName, arguments: arguments);
-  }
-
-  Future<dynamic> popAndPushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.of(this).popAndPushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> pushNamedAndRemoveUntil(String routeName, RoutePredicate predicate, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate, arguments: arguments);
-  }
-
-  Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
+  Future<dynamic> popAndPushNamed(String routeName,
       {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+    return await Navigator.popAndPushNamed(this, routeName,
+        arguments: arguments);
+  }
+
+  Future<dynamic> popAndPushNamedOfContext(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this)
+        .popAndPushNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntil(
+      String routeName, RoutePredicate predicate,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate,
+        arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntilOfContext(
+      String routeName, RoutePredicate predicate,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this)
+        .pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
   Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {

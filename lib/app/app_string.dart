@@ -34,7 +34,8 @@ class APPStrings {
   // Forgot Password Screen
   static const String submit = 'submit';
   static const String forgotPasswordDescription = 'forgot_password_description';
-  static const String emailHasBeenSendSuccessfully = 'email_has_been_send_successfully_to_your_email_address';
+  static const String emailHasBeenSendSuccessfully =
+      'email_has_been_send_successfully_to_your_email_address';
   static const String didNotReceivedEmail = 'did_not_received_email';
   static const String resend = 'resend';
 
@@ -55,7 +56,8 @@ class APPStrings {
 
   //Setting
   static const String announcements = 'announcements';
-  static const String notifyMeForEveryAnnouncement = 'notify_me_for_every_announcement';
+  static const String notifyMeForEveryAnnouncement =
+      'notify_me_for_every_announcement';
   static const String fileSharedBySalesman = 'file_shared_by_salesman';
   static const String shareBySalesmanDesc = 'share_by_salesman_desc';
   static const String orderStatusUpdate = 'order_status_update';
@@ -107,10 +109,12 @@ class APPStrings {
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';
   static const String reviews = 'reviews';
-  static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
+  static const String wantToSeeProductPhysically =
+      'want_to_see_product_physically';
   static const String orderSample = 'order_sample';
   static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
-  static const String shippingAcrossAllCountries = 'shipping_across_all_countries';
+  static const String shippingAcrossAllCountries =
+      'shipping_across_all_countries';
   static const String haveAQuestion = 'have_a_question';
   static const String reachoutToOurExpert = 'reachout_to_our_expert';
 
@@ -143,4 +147,16 @@ class APPStrings {
   static const String color = 'color';
   static const String clarity = 'clarity';
   static const String setting = 'setting';
+
+  //Add account
+  static const String shippingBillingAddress = 'shipping_billing_address';
+  static const String payment = 'payment';
+  static const String billingAddressSame = 'billing_address_same';
+  static const String streetAddress = 'street_address';
+  static const String apartmentSuite = 'apartment_suite';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String postalCode = 'postal_code';
+  static const String phoneNumber = 'phone_number';
+  static const String saveAddress = 'save_address';
 }

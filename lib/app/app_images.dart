@@ -11,9 +11,11 @@ class AppImages {
   static const String icHome = 'assets/images/ic_home.svg';
   static const String icHomeActive = 'assets/images/ic_home_active.svg';
   static const String icCategories = 'assets/images/ic_categories.svg';
-  static const String icCategoriesActive = 'assets/images/ic_categories_active.svg';
+  static const String icCategoriesActive =
+      'assets/images/ic_categories_active.svg';
   static const String icShoppingBag = 'assets/images/ic_shopping_bag.svg';
-  static const String icShoppingBagActive = 'assets/images/ic_shopping_bag_active.svg';
+  static const String icShoppingBagActive =
+      'assets/images/ic_shopping_bag_active.svg';
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
   static const String icSplashLogo = 'assets/images/ic_splash_logo.png';
@@ -40,7 +42,8 @@ class AppImages {
   static const String icCheck = 'assets/images/ic_check.svg';
 
   //product item
-  static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
+  static const String icProductFavIcon =
+      'assets/images/ic_product_fav_Icon.svg';
   static const String icAddEye = 'assets/images/ic_add_eye.svg';
   static const String icCancel = 'assets/images/ic_cancle.svg';
   static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
@@ -63,4 +66,8 @@ class AppImages {
   static const String icSort = 'assets/images/ic_sort.svg';
   static const String icShare = 'assets/images/ic_share.svg';
   static const String icRing = 'assets/images/ic_ring.svg';
+
+  //Add account
+  static const String icLineBlank = 'assets/images/ic_line_blank.svg';
+  static const String icLineFill = 'assets/images/ic_line_fill.svg';
 }
