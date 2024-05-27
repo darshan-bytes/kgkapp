@@ -4,12 +4,14 @@ class SmartPagination extends StatefulWidget {
   final List<String> pageNumbers;
   final String currentPage;
   final void Function(int index, String value) onPageChanged;
+  final EdgeInsetsGeometry? padding;
 
   const SmartPagination({
     super.key,
     required this.pageNumbers,
     required this.onPageChanged,
     required this.currentPage,
+    this.padding,
   });
 
   @override
@@ -52,76 +54,81 @@ class SmartPaginationState extends State<SmartPagination> {
     final style = AppTheme.of(context).customPageIndicatorStyle;
     bool isSelectionGreaterThanOne = widget.pageNumbers.indexOf(currentPage) > 0;
     bool isLastIndex = widget.pageNumbers.indexOf(currentPage) == widget.pageNumbers.length - 1;
-    return Row(
-      children: [
-        SmartButton(
-          onTap: previousPage,
-          title: APPStrings.previous.tr,
-          width: 118,
-          isEnabled: isSelectionGreaterThanOne ? true : false,
-        ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: SizedBox(
-            height: 48,
-            child: DropdownButtonFormField<String>(
-              value: currentPage,
-              style: style.textStyle,
-              menuMaxHeight: 300,
-              icon: Icon(
-                Icons.keyboard_arrow_down_sharp,
-                color: style.textColor,
-                weight: 0.5,
+    return Padding(
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 24),
+      child: Row(
+        children: [
+          SmartButton(
+            onTap: previousPage,
+            title: APPStrings.previous.tr,
+            width: 118,
+            isEnabled: isSelectionGreaterThanOne,
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: DropdownButtonFormField<String>(
+                value: currentPage,
+                style: style.textStyle,
+                menuMaxHeight: 300,
+                icon: Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  color: style.textColor,
+                  weight: 0.5,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                      color: style.borderColor,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                      color: style.borderColor,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                      color: style.borderColor,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                onChanged: (newValue) {
+                  if (newValue != null) {
+                    int index = widget.pageNumbers.indexOf(newValue);
+                    setState(() {
+                      currentPage = newValue;
+                      currentPageIndex = index;
+                    });
+                    widget.onPageChanged(index, newValue);
+                  }
+                },
+                items: widget.pageNumbers.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  borderSide: BorderSide(
-                    color: style.borderColor,
-                    width: 1,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  borderSide: BorderSide(
-                    color: style.borderColor,
-                    width: 1,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  borderSide: BorderSide(
-                    color: style.borderColor,
-                    width: 1,
-                  ),
-                ),
-              ),
-              onChanged: (newValue) {
-                int index = widget.pageNumbers.indexOf(newValue!);
-                setState(() {
-                  currentPage = newValue;
-                  currentPageIndex = index;
-                });
-                widget.onPageChanged(index, newValue);
-              },
-              items: widget.pageNumbers.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
             ),
           ),
-        ),
-        const SizedBox(width: 14),
-        SmartButton(
-          onTap: nextPage,
-          title: APPStrings.next.tr,
-          width: 118,
-          isEnabled: isLastIndex ? false : true,
-        ),
-      ],
+          const SizedBox(width: 14),
+          SmartButton(
+            onTap: nextPage,
+            title: APPStrings.next.tr,
+            width: 118,
+            isEnabled: !isLastIndex,
+          ),
+        ],
+      ),
     );
   }
 }

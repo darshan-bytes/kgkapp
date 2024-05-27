@@ -85,6 +85,8 @@ abstract class AppTheme {
   SelectedSettingsStyle get selectedSettingsStyle;
 
   ImageCarouselStyle get imageCarouselStyle;
+
+  WishListStyle get wishListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -627,5 +629,15 @@ class ImageCarouselStyle {
   ImageCarouselStyle({
     required this.dotColor,
     required this.selectedDotColor,
+  });
+}
+
+class WishListStyle {
+  final TextStyle numberOfItemsStyle;
+  final TextStyle totalAmountStyle;
+
+  WishListStyle({
+    required this.numberOfItemsStyle,
+    required this.totalAmountStyle,
   });
 }

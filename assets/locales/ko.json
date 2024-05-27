@@ -105,5 +105,8 @@
   "total_carat": "Total Carat",
   "color": "Color",
   "clarity": "Clarity",
-  "setting": "Setting"
+  "setting": "Setting",
+  "my_wishlist": "My Wishlist",
+  "product_x": "{#} Products",
+  "total": "Total"
 }
