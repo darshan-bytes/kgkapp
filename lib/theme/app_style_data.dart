@@ -233,20 +233,27 @@ class LightModeTheme extends AppTheme {
 
   @override
   ProductItemStyle get productItemStyle => ProductItemStyle(
-      backgroundColor: colors.white,
-      productNameStyle: interRegularTextStyle,
-      priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
-      discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
-      productBackgroundColor: colors.colorFAFAFA,
-      checkedPriceStyle: interRegularTextStyle.copyWith(
-        fontSize: 12,
-        color: colors.color8C8C8C,
-        decoration: TextDecoration.lineThrough,
-      ),
-      borderColor: colors.colorD3DAE0,
-      buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
-      diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
-      buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16));
+        backgroundColor: colors.white,
+        productNameStyle: interRegularTextStyle,
+        priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
+        discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+        productBackgroundColor: colors.colorFAFAFA,
+        checkedPriceStyle: interRegularTextStyle.copyWith(
+          fontSize: 12,
+          color: colors.color8C8C8C,
+          decoration: TextDecoration.lineThrough,
+        ),
+        borderColor: colors.colorD3DAE0,
+        buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
+        diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
+        buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(
+          color: colors.white,
+          fontSize: 16,
+        ),
+        transparentColor: colors.transparent,
+        removeBagTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
+        myBagDividerColor: colors.colorD3DAE0,
+      );
 
   @override
   SmartDropDownStyle get smartDropDownStyle => SmartDropDownStyle(
@@ -330,6 +337,7 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
+
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -402,4 +410,14 @@ class LightModeTheme extends AppTheme {
         numberOfItemsStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
         totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
+
+  // TODO: implement addAccountScreenStyle
+  AddAccountScreenStyle get addAccountScreenStyle => throw UnimplementedError();
+
+  @override
+  // TODO: implement countryPickerStyle
+  CountryPickerStyle get countryPickerStyle => throw UnimplementedError();
+
+  @override
+  MyBagScreenStyle get myBagScreenStyle => MyBagScreenStyle(backgroundColor: colors.white);
 }

@@ -108,5 +108,9 @@
   "setting": "Setting",
   "my_wishlist": "My Wishlist",
   "product_x": "{#} Products",
-  "total": "Total"
+  "total": "Total",
+  "my_bag_empty": "My Bag is empty",
+  "checkout": "Checkout",
+  "remove": "Remove",
+  "move_to_wishlist": "Move to Wishlist"
 }

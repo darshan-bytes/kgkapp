@@ -87,6 +87,12 @@ abstract class AppTheme {
   ImageCarouselStyle get imageCarouselStyle;
 
   WishListStyle get wishListStyle;
+
+  AddAccountScreenStyle get addAccountScreenStyle;
+
+  CountryPickerStyle get countryPickerStyle;
+
+  MyBagScreenStyle get myBagScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -359,6 +365,9 @@ class ProductItemStyle {
   final TextStyle buttonTextStyle;
   final TextStyle buttonWithIconTextStyle;
   final TextStyle diamondTextStyle;
+  final Color transparentColor;
+  final TextStyle removeBagTextStyle;
+  final Color myBagDividerColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -371,6 +380,9 @@ class ProductItemStyle {
     required this.buttonTextStyle,
     required this.buttonWithIconTextStyle,
     required this.diamondTextStyle,
+    required this.transparentColor,
+    required this.removeBagTextStyle,
+    required this.myBagDividerColor,
   });
 }
 
@@ -639,5 +651,51 @@ class WishListStyle {
   WishListStyle({
     required this.numberOfItemsStyle,
     required this.totalAmountStyle,
+  });
+}
+
+class AddAccountScreenStyle {
+  final Color backgroundColor;
+  final Color dotColor;
+  final Color filledDotColor;
+  final Color fillLineColor;
+  final Color borderColor;
+  final TextStyle shippingBillingAddressStyle;
+  final TextStyle paymentStyle;
+  final TextStyle isSameAddressStyle;
+
+  AddAccountScreenStyle({
+    required this.backgroundColor,
+    required this.dotColor,
+    required this.filledDotColor,
+    required this.fillLineColor,
+    required this.borderColor,
+    required this.shippingBillingAddressStyle,
+    required this.paymentStyle,
+    required this.isSameAddressStyle,
+  });
+}
+
+class CountryPickerStyle {
+  final Color backgroundColor;
+  final Color searchBorderColor;
+  final Color inputBorderColor;
+  final TextStyle inputTextStyle;
+  final TextStyle inputLableStyle;
+
+  CountryPickerStyle({
+    required this.backgroundColor,
+    required this.searchBorderColor,
+    required this.inputBorderColor,
+    required this.inputTextStyle,
+    required this.inputLableStyle,
+  });
+}
+
+class MyBagScreenStyle {
+  final Color backgroundColor;
+
+  MyBagScreenStyle({
+    required this.backgroundColor,
   });
 }
