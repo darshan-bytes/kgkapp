@@ -87,6 +87,8 @@ abstract class AppTheme {
   ImageCarouselStyle get imageCarouselStyle;
 
   AddAccountScreenStyle get addAccountScreenStyle;
+
+  CountryPickerStyle get countryPickerStyle;
 }
 
 class PrimaryButtonStyle {
@@ -641,6 +643,7 @@ class AddAccountScreenStyle {
   final TextStyle shippingBillingAddressStyle;
   final TextStyle paymentStyle;
   final TextStyle isSameAddressStyle;
+
   AddAccountScreenStyle({
     required this.backgroundColor,
     required this.dotColor,
@@ -650,5 +653,21 @@ class AddAccountScreenStyle {
     required this.shippingBillingAddressStyle,
     required this.paymentStyle,
     required this.isSameAddressStyle,
+  });
+}
+
+class CountryPickerStyle {
+  final Color backgroundColor;
+  final Color searchBorderColor;
+  final Color inputBorderColor;
+  final TextStyle inputTextStyle;
+  final TextStyle inputLableStyle;
+
+  CountryPickerStyle({
+    required this.backgroundColor,
+    required this.searchBorderColor,
+    required this.inputBorderColor,
+    required this.inputTextStyle,
+    required this.inputLableStyle,
   });
 }

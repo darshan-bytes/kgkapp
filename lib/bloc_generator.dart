@@ -5,8 +5,7 @@ class BlocGenerator {
     return [
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
-      BlocProvider<AppBloc>(
-          create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
+      BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),

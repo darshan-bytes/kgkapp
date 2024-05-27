@@ -5,8 +5,8 @@ class AddAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddAccountScreenStyle style =
-        AppTheme.of(context).addAccountScreenStyle;
+    final AddAccountScreenStyle style = AppTheme.of(context).addAccountScreenStyle;
+    final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
     final AddAccountBloc bloc = BlocProvider.of<AddAccountBloc>(context);
     return Scaffold(
       backgroundColor: style.backgroundColor,
@@ -30,14 +30,11 @@ class AddAccountScreen extends StatelessWidget {
                   // Here GestureDetector is used to trigger state change and temporarily use it for testing
                   GestureDetector(
                       onTap: () {
-                        context.read<AddAccountBloc>().add(
-                            AddAccountAddressChangeEvent(
-                                !bloc.isShippingAndBillingAddressFilled));
+                        bloc.add(AddAccountAddressChangeEvent(!bloc.isShippingAndBillingAddressFilled));
                       },
                       child: _buildShippingBillingAddress(bloc, style)),
                   _buildIsBillingAddressSameAsSelected(bloc, style),
-                  // Padding(padding: const EdgeInsets.symmetric(horizontal: 17)),
-                  generateAddressForm(bloc),
+                  generateAddressForm(bloc, countryPickerStyle),
                 ],
               ),
             );
@@ -47,19 +44,16 @@ class AddAccountScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShippingBillingAddress(
-      AddAccountBloc bloc, AddAccountScreenStyle style) {
+  Widget _buildShippingBillingAddress(AddAccountBloc bloc, AddAccountScreenStyle style) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: style.borderColor))),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 14),
       child: Row(
         children: [
           Container(
             height: 6,
             width: 6,
-            decoration: BoxDecoration(
-                color: style.filledDotColor, shape: BoxShape.circle),
+            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
           ),
           const SizedBox(width: 6),
           Flexible(
@@ -72,35 +66,26 @@ class AddAccountScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SmartImage(
               path: AppImages.icLineBlank,
-              color: bloc.isShippingAndBillingAddressFilled
-                  ? style.fillLineColor
-                  : style.dotColor,
+              color: bloc.isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
             ),
           ),
           Container(
             height: 6,
             width: 6,
             decoration: BoxDecoration(
-                color: bloc.isShippingAndBillingAddressFilled
-                    ? style.filledDotColor
-                    : style.dotColor,
-                shape: BoxShape.circle),
+                color: bloc.isShippingAndBillingAddressFilled ? style.filledDotColor : style.dotColor, shape: BoxShape.circle),
           ),
           const SizedBox(width: 6),
           SmartText(APPStrings.payment.tr,
-              style: bloc.isShippingAndBillingAddressFilled
-                  ? style.shippingBillingAddressStyle
-                  : style.paymentStyle),
+              style: bloc.isShippingAndBillingAddressFilled ? style.shippingBillingAddressStyle : style.paymentStyle),
         ],
       ),
     );
   }
 
-  Widget _buildIsBillingAddressSameAsSelected(
-      AddAccountBloc bloc, AddAccountScreenStyle style) {
+  Widget _buildIsBillingAddressSameAsSelected(AddAccountBloc bloc, AddAccountScreenStyle style) {
     return BlocBuilder<AddAccountBloc, AddAccountState>(
-      buildWhen: (previous, current) =>
-          current is AddAccountChangeAddressSameState,
+      buildWhen: (previous, current) => current is AddAccountChangeAddressSameState,
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 22),
@@ -119,7 +104,7 @@ class AddAccountScreen extends StatelessWidget {
     );
   }
 
-  Widget generateAddressForm(AddAccountBloc bloc) {
+  Widget generateAddressForm(AddAccountBloc bloc, CountryPickerStyle countryPickerStyle) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 17),
         child: Column(children: [
@@ -135,7 +120,7 @@ class AddAccountScreen extends StatelessWidget {
           const SizedBox(height: 24),
           _buildStateField(bloc),
           const SizedBox(height: 24),
-          _buildCountryField(bloc),
+          _buildCountryField(bloc, countryPickerStyle),
           const SizedBox(height: 24),
           _buildZipCodeField(bloc),
           const SizedBox(height: 24),
@@ -145,7 +130,6 @@ class AddAccountScreen extends StatelessWidget {
             onTap: () {},
             title: APPStrings.saveAddress.tr,
           ),
-          const SizedBox(height: 24),
         ]));
   }
 
@@ -195,88 +179,89 @@ class AddAccountScreen extends StatelessWidget {
   }
 
   Widget _buildCityField(AddAccountBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.city.tr,
-      hintText: APPStrings.city.tr,
-      controller: bloc.cityController,
-      focusNode: bloc.cityFocusNode,
-      nextFocus: bloc.stateFocusNode,
-      keyboardType: TextInputType.streetAddress,
+    return BlocBuilder<AddAccountBloc, AddAccountState>(
+      buildWhen: (previous, current) => current is AddAccountChangeCityState,
+      builder: (context, state) {
+        return SmartDropDown<City>(
+          hintText: APPStrings.city.tr,
+          labelText: APPStrings.city.tr,
+          items: bloc.arrCity.map((City city) {
+            return SmartDropDownItem<City>(
+              value: city,
+              title: city.name,
+            );
+          }).toList(),
+          onChanged: (city) {
+            if (city != null) {
+              bloc.add(AddAccountChangeCityEvent(city));
+            }
+          },
+          selectedItem: bloc.selectedCity,
+        );
+      },
     );
   }
 
   Widget _buildStateField(AddAccountBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.state.tr,
-      hintText: APPStrings.state.tr,
-      controller: bloc.stateController,
-      focusNode: bloc.stateFocusNode,
-      nextFocus: bloc.zipCodeFocusNode,
-      keyboardType: TextInputType.streetAddress,
-    );
+    return BlocBuilder<AddAccountBloc, AddAccountState>(
+        buildWhen: (previous, current) => current is AddAccountChangeStateState,
+        builder: (context, state) {
+          return SmartDropDown<StateModel>(
+            hintText: APPStrings.state.tr,
+            labelText: APPStrings.state.tr,
+            items: bloc.arrState.map((StateModel state) {
+              return SmartDropDownItem<StateModel>(
+                value: state,
+                title: state.name,
+              );
+            }).toList(),
+            onChanged: (state) {
+              if (state != null) {
+                bloc.add(AddAccountChangeStateEvent(state));
+              }
+            },
+            selectedItem: bloc.selectedState,
+          );
+        });
   }
 
-  Widget _buildZipCodeField(AddAccountBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.postalCode.tr,
-      hintText: APPStrings.postalCode.tr,
-      controller: bloc.zipCodeController,
-      focusNode: bloc.zipCodeFocusNode,
-      nextFocus: bloc.phoneFocusNode,
-      keyboardType: TextInputType.number,
-    );
-  }
-
-  Widget _buildPhoneField(AddAccountBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.phoneNumber.tr,
-      hintText: APPStrings.phoneNumber.tr,
-      controller: bloc.phoneController,
-      focusNode: bloc.phoneFocusNode,
-      keyboardType: TextInputType.phone,
-    );
-  }
-  
-  Widget _buildCountryField(AddAccountBloc bloc) {
-    return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpChangeCountryState,
+  Widget _buildCountryField(AddAccountBloc bloc, CountryPickerStyle countryPickerStyle) {
+    return BlocBuilder<AddAccountBloc, AddAccountState>(
+      buildWhen: (previous, current) => current is AddAccountChangeCountryState,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SmartText(
               APPStrings.country.tr,
-              style: AppTheme.of(context).textFieldStyle.labelStyle,
+              style: countryPickerStyle.inputLableStyle,
             ),
             const SizedBox(height: 4),
             InkWell(
               onTap: () {
-                showCountryPicker(
+                Utils.showCountryPickerModel(
                   context: context,
-                  showPhoneCode: false,
+                  countryPickerStyle: countryPickerStyle,
                   onSelect: (Country country) {
-                    // bloc.add(SignUpChangeCountryEvent(country));
+                    bloc.add(AddAccountChangeCountryEvent(country));
                   },
                 );
               },
               child: Container(
                 height: 48,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: AppTheme.of(context)
-                        .textFieldStyle
-                        .enabledTextFieldBorderColor,
+                    color: countryPickerStyle.inputBorderColor,
                   ),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: SmartText(
                         bloc.selectedCountry.name,
-                        style: AppTheme.of(context).textFieldStyle.textStyle,
+                        style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
                     const SizedBox(width: 4),
@@ -288,6 +273,27 @@ class AddAccountScreen extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildZipCodeField(AddAccountBloc bloc) {
+    return SmartTextField(
+      labelText: APPStrings.postalCode.tr,
+      hintText: APPStrings.postalCode.tr,
+      controller: bloc.zipCodeController,
+      focusNode: bloc.zipCodeFocusNode,
+      nextFocus: bloc.phoneFocusNode,
+      keyboardType: TextInputType.name,
+    );
+  }
+
+  Widget _buildPhoneField(AddAccountBloc bloc) {
+    return SmartTextField(
+      labelText: APPStrings.phoneNumber.tr,
+      hintText: APPStrings.phoneNumber.tr,
+      controller: bloc.phoneController,
+      focusNode: bloc.phoneFocusNode,
+      keyboardType: TextInputType.number,
     );
   }
 }

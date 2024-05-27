@@ -58,6 +58,8 @@ export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
 export 'package:kgk/modules/b2b/add_account/bloc/add_account_bloc.dart';
 export 'package:kgk/modules/b2b/add_account/bloc/add_account_event.dart';
 export 'package:kgk/modules/b2b/add_account/bloc/add_account_state.dart';
+export 'package:kgk/modules/b2b/add_account/model/city_selection_model.dart';
+export 'package:kgk/modules/b2b/add_account/model/state_selection_model.dart';
 export 'package:kgk/modules/b2b/add_account/view/add_account_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
@@ -112,7 +114,6 @@ export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';
-//Utils
 export 'package:kgk/utils/navigator_key.dart';
 export 'package:kgk/utils/utils.dart';
 export 'package:kgk/widgets/button.dart';

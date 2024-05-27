@@ -33,3 +33,30 @@ final class AddAccountRecordState extends AddAccountState {
   @override
   List<Object> get props => [];
 }
+
+final class AddAccountChangeCountryState extends AddAccountState {
+  final Country selectedCountry;
+
+  const AddAccountChangeCountryState(this.selectedCountry);
+
+  @override
+  List<Object> get props => [selectedCountry];
+}
+
+final class AddAccountChangeCityState extends AddAccountState {
+  final City selectedCity;
+
+  const AddAccountChangeCityState(this.selectedCity);
+
+  @override
+  List<Object> get props => [selectedCity];
+}
+
+final class AddAccountChangeStateState extends AddAccountState {
+  final StateModel selectedState;
+
+  const AddAccountChangeStateState(this.selectedState);
+
+  @override
+  List<Object> get props => [selectedState];
+}
