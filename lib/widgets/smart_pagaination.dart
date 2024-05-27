@@ -62,7 +62,7 @@ class SmartPaginationState extends State<SmartPagination> {
             onTap: previousPage,
             title: APPStrings.previous.tr,
             width: 118,
-            isEnabled: isSelectionGreaterThanOne,
+            isEnabled: isSelectionGreaterThanOne ? true : false,
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -102,14 +102,12 @@ class SmartPaginationState extends State<SmartPagination> {
                   ),
                 ),
                 onChanged: (newValue) {
-                  if (newValue != null) {
-                    int index = widget.pageNumbers.indexOf(newValue);
-                    setState(() {
-                      currentPage = newValue;
-                      currentPageIndex = index;
-                    });
-                    widget.onPageChanged(index, newValue);
-                  }
+                  int index = widget.pageNumbers.indexOf(newValue!);
+                  setState(() {
+                    currentPage = newValue;
+                    currentPageIndex = index;
+                  });
+                  widget.onPageChanged(index, newValue);
                 },
                 items: widget.pageNumbers.map((String value) {
                   return DropdownMenuItem<String>(
@@ -125,7 +123,7 @@ class SmartPaginationState extends State<SmartPagination> {
             onTap: nextPage,
             title: APPStrings.next.tr,
             width: 118,
-            isEnabled: !isLastIndex,
+            isEnabled: isLastIndex ? false : true,
           ),
         ],
       ),

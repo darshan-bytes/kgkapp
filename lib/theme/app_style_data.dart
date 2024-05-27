@@ -330,6 +330,7 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
+
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -402,4 +403,13 @@ class LightModeTheme extends AppTheme {
         numberOfItemsStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
         totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
+  // TODO: implement addAccountScreenStyle
+  AddAccountScreenStyle get addAccountScreenStyle => throw UnimplementedError();
+
+  @override
+  // TODO: implement countryPickerStyle
+  CountryPickerStyle get countryPickerStyle => throw UnimplementedError();
+
+  @override
+  MyBagScreenStyle get myBagScreenStyle => MyBagScreenStyle(backgroundColor: colors.white);
 }

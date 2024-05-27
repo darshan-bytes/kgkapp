@@ -20,7 +20,27 @@ class DiamondListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+      bottomNavigationBar: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+          builder: (context, state) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BlocBuilder<DiamondListingBloc, DiamondListingState>(
+                builder: (context, state) {
+              return SmartPagination(
+                pageNumbers: diamondListingBloc.pageNumbers,
+                currentPage: diamondListingBloc.selectedPageNumber,
+                onPageChanged: (int index, String newValue) {
+                  diamondListingBloc
+                      .add(DiamondProductChangePageNumberEvent(newValue));
+                },
+              );
+            }),
+            FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+          ],
+        );
+      }),
       body: SingleChildScrollView(child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
         builder: (context, state) {
           return SafeArea(
@@ -37,14 +57,6 @@ class DiamondListingScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 _buildProductList(style, diamondListingBloc),
                 const SizedBox(height: 7),
-                SmartPagination(
-                  pageNumbers: diamondListingBloc.pageNumbers,
-                  currentPage: diamondListingBloc.selectedPageNumber,
-                  onPageChanged: (int index, String newValue) {
-                    diamondListingBloc.add(DiamondProductChangePageNumberEvent(newValue));
-                  },
-                ),
-                const SizedBox(height: 24),
               ],
             ),
           ));
