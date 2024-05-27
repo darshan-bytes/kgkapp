@@ -143,4 +143,10 @@ class APPStrings {
   static const String color = 'color';
   static const String clarity = 'clarity';
   static const String setting = 'setting';
+
+  // Compare Product
+  static const String metalType = 'metal_type';
+  static const String settingType = 'setting_type';
+  static const String certified = 'certified';
+  static const String remove = 'remove';
 }

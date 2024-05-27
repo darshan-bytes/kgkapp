@@ -105,5 +105,9 @@
   "total_carat": "Total Carat",
   "color": "Color",
   "clarity": "Clarity",
-  "setting": "Setting"
+  "setting": "Setting",
+  "metal_type": "Metal Type",
+  "setting_type": "Setting Type",
+  "certified": "Certified",
+  "remove": "Remove"
 }

@@ -330,6 +330,7 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
+
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -395,5 +396,20 @@ class LightModeTheme extends AppTheme {
   ImageCarouselStyle get imageCarouselStyle => ImageCarouselStyle(
         dotColor: colors.colorC5DEEB,
         selectedDotColor: colors.primary,
+      );
+
+  @override
+  CompareProductStyle get compareProductStyle => CompareProductStyle(
+        productTitleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        productSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
+        productPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        productReviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        productRemoveStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  RatingbarStyle get ratingbarStyle => RatingbarStyle(
+        fillStarColor: colors.primary,
+        emptyStarColor: colors.color8C8C8C,
       );
 }

@@ -18,6 +18,7 @@ class AppRoutes {
   static const diamondListingPage = '/diamondListingPage';
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
+  static const compareProductPage = '/compareProductPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -133,6 +134,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const CompleteProductScreen(),
           settings: const RouteSettings(name: completeProductPage),
+        );
+
+      case compareProductPage:
+        return MaterialPageRoute(
+          builder: (_) => const CompareProductScreen(),
+          settings: const RouteSettings(name: compareProductPage),
         );
 
       default:
