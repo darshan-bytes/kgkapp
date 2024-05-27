@@ -177,6 +177,10 @@ class ProductGridItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
             ],
+            if (productDetails.discountPercentage.isNullOrEmpty)
+              const SizedBox(
+                height: 14,
+              ),
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32,
