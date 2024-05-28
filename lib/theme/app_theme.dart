@@ -86,11 +86,11 @@ abstract class AppTheme {
 
   ImageCarouselStyle get imageCarouselStyle;
 
-  WishListStyle get wishListStyle;
-
   AddAccountScreenStyle get addAccountScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
+
+  WishListStyle get wishListStyle;
 
   MyBagScreenStyle get myBagScreenStyle;
 }
@@ -646,16 +646,6 @@ class ImageCarouselStyle {
   });
 }
 
-class WishListStyle {
-  final TextStyle numberOfItemsStyle;
-  final TextStyle totalAmountStyle;
-
-  WishListStyle({
-    required this.numberOfItemsStyle,
-    required this.totalAmountStyle,
-  });
-}
-
 class AddAccountScreenStyle {
   final Color backgroundColor;
   final Color dotColor;
@@ -691,6 +681,16 @@ class CountryPickerStyle {
     required this.inputBorderColor,
     required this.inputTextStyle,
     required this.inputLableStyle,
+  });
+}
+
+class WishListStyle {
+  final TextStyle numberOfItemsStyle;
+  final TextStyle totalAmountStyle;
+
+  WishListStyle({
+    required this.numberOfItemsStyle,
+    required this.totalAmountStyle,
   });
 }
 

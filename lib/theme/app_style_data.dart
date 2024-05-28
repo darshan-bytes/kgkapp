@@ -412,13 +412,6 @@ class LightModeTheme extends AppTheme {
         totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
 
-  // TODO: implement addAccountScreenStyle
-  AddAccountScreenStyle get addAccountScreenStyle => throw UnimplementedError();
-
-  @override
-  // TODO: implement countryPickerStyle
-  CountryPickerStyle get countryPickerStyle => throw UnimplementedError();
-
   @override
   MyBagScreenStyle get myBagScreenStyle => MyBagScreenStyle(
         backgroundColor: colors.white,
@@ -426,4 +419,28 @@ class LightModeTheme extends AppTheme {
         itemSelectedStyle: interRegularTextStyle.copyWith(fontSize: 16),
         totalAmountStyle: interMediumBoldTextStyle,
       );
+
+  @override
+  AddAccountScreenStyle get addAccountScreenStyle => AddAccountScreenStyle(
+        backgroundColor: colors.white,
+        dotColor: colors.colorC5DEEB,
+        filledDotColor: colors.primary,
+        fillLineColor: colors.color424445,
+        borderColor: colors.colorD3DAE0,
+        shippingBillingAddressStyle: interRegularTextStyle,
+        paymentStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16),
+      );
+
+  @override
+  CountryPickerStyle get countryPickerStyle => CountryPickerStyle(
+      backgroundColor: colors.white,
+      searchBorderColor: colors.color8C98A8.withOpacity(0.2),
+      inputBorderColor: colors.colorD3DAE0,
+      inputTextStyle: interRegularTextStyle,
+      inputLableStyle: interRegularTextStyle.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: colors.color303538,
+      ));
 }

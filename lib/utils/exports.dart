@@ -55,6 +55,12 @@ export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
 export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_bloc.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_event.dart';
+export 'package:kgk/modules/b2b/add_account/bloc/add_account_state.dart';
+export 'package:kgk/modules/b2b/add_account/model/city_selection_model.dart';
+export 'package:kgk/modules/b2b/add_account/model/state_selection_model.dart';
+export 'package:kgk/modules/b2b/add_account/view/add_account_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
 //model
@@ -98,6 +104,7 @@ export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart'
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
+export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
@@ -106,13 +113,11 @@ export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
-export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
 //Theme
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';
-//Utils
 export 'package:kgk/utils/navigator_key.dart';
 export 'package:kgk/utils/utils.dart';
 export 'package:kgk/widgets/button.dart';

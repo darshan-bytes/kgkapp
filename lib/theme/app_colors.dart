@@ -6,21 +6,23 @@ AppColor colors(BuildContext context) => Theme.of(context).colors;
 class AppThemes {
   late ThemeData selectedColor;
   AppColor appColor = const AppColor(
-      primary: Color(0xFF083458),
-      white: Color(0xFFFFFFFF),
-      transparent: Color(0x00000000),
-      colorF65D3C: Color(0xFFF65D3C),
-      color303538: Color(0xFF303538),
-      colorD3DAE0: Color(0xFFD3DAE0),
-      colorF7F9FA: Color(0xFFF7F9FA),
-      color8C8C8C: Color(0xFF8C8C8C),
-      color083458: Color(0xFF083458),
-      colorECF4F9: Color(0xFFECF4F9),
-      color111620: Color(0xFF111620),
-      colorC5DEEB: Color(0xFFC5DEEB),
-      color50B83C: Color(0xFF50B83C),
-      colorFAFAFA: Color(0xFFFAFAFA),
-      color424445: Color(0xFF424445));
+    primary: Color(0xFF083458),
+    white: Color(0xFFFFFFFF),
+    transparent: Color(0x00000000),
+    colorF65D3C: Color(0xFFF65D3C),
+    color303538: Color(0xFF303538),
+    colorD3DAE0: Color(0xFFD3DAE0),
+    colorF7F9FA: Color(0xFFF7F9FA),
+    color8C8C8C: Color(0xFF8C8C8C),
+    color083458: Color(0xFF083458),
+    colorECF4F9: Color(0xFFECF4F9),
+    color111620: Color(0xFF111620),
+    colorC5DEEB: Color(0xFFC5DEEB),
+    color50B83C: Color(0xFF50B83C),
+    colorFAFAFA: Color(0xFFFAFAFA),
+    color424445: Color(0xFF424445),
+    color8C98A8: Color(0xFF8C98A8),
+  );
 
   ThemeData light({MaterialColor? theme}) {
     return ThemeData(
@@ -76,24 +78,25 @@ class AppColor {
   final Color color50B83C;
   final Color colorFAFAFA;
   final Color color424445;
+  final Color color8C98A8;
 
-  const AppColor({
-    required this.primary,
-    required this.white,
-    required this.colorF65D3C,
-    required this.color303538,
-    required this.colorD3DAE0,
-    required this.colorF7F9FA,
-    required this.color8C8C8C,
-    required this.color083458,
-    required this.colorECF4F9,
-    required this.color111620,
-    required this.colorC5DEEB,
-    required this.color50B83C,
-    required this.colorFAFAFA,
-    required this.color424445,
-    required this.transparent,
-  });
+  const AppColor(
+      {required this.primary,
+      required this.white,
+      required this.colorF65D3C,
+      required this.color303538,
+      required this.colorD3DAE0,
+      required this.colorF7F9FA,
+      required this.color8C8C8C,
+      required this.color083458,
+      required this.colorECF4F9,
+      required this.color111620,
+      required this.colorC5DEEB,
+      required this.color50B83C,
+      required this.colorFAFAFA,
+      required this.color424445,
+      required this.transparent,
+      required this.color8C98A8});
 }
 
 extension ThemeDataExtensions on ThemeData {
