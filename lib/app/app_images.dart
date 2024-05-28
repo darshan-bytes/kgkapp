@@ -68,4 +68,9 @@ class AppImages {
   //Add account
   static const String icLineBlank = 'assets/images/ic_line_blank.svg';
   static const String icLineFill = 'assets/images/ic_line_fill.svg';
+
+  //Payment screen
+  static const String icPaypal = 'assets/images/ic_paypal.svg';
+  static const String icUpi = 'assets/images/ic_upi.png';
+  static const String icPlus = 'assets/images/ic_plus.svg';
 }

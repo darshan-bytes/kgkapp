@@ -106,10 +106,12 @@ export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
+export 'package:kgk/modules/b2b/payment/bloc/payment_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internert_screen.dart';
+export 'package:kgk/modules/b2b/payment/view/payment_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen

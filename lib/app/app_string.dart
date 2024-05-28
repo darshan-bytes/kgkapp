@@ -167,4 +167,9 @@ class APPStrings {
   static const String settingType = 'setting_type';
   static const String certified = 'certified';
   static const String remove = 'remove';
+
+  //Payment
+  static const String paypal = 'paypal';
+  static const String upi = 'upi';
+  static const String checkout = 'checkout';
 }

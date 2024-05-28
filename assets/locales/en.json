@@ -124,5 +124,8 @@
   "remove": "Remove",
   "my_wishlist": "My Wishlist",
   "product_x": "{#} Products",
-  "total": "Total"
+  "total": "Total",
+  "paypal": "Paypal",
+  "upi": "UPI",
+  "checkout": "Checkout"
 }
