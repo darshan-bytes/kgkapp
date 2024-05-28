@@ -16,25 +16,40 @@ class CartProductItem extends StatelessWidget {
   final bool isFavourite;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
+  final CartProductQuantity? selectedQuantity;
+  final CartProductQuality? selectedQuality;
+  final List<CartProductQuality> qualityOptionsList;
+  final List<CartProductQuantity> quantityOptionsList;
+  final Function(CartProductQuality)? onQualityChanged;
+  final Function(CartProductQuantity)? onQuantityChanged;
+  final bool isSelectedProduct;
+  final Function(bool?)? onChangedCheckbox;
 
-  const CartProductItem({
-    super.key,
-    this.boxHeight = 96,
-    this.boxWidth = 96,
-    this.imageHeight,
-    this.imageWidth,
-    this.onTap,
-    required this.productDetails,
-    this.fit = BoxFit.cover,
-    this.onFavTap,
-    this.onAddToBagTap,
-    this.onEyeTap,
-    this.onRemoveTap,
-    this.onMoveToWishListTap,
-    this.isFavourite = false,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
-  });
+  const CartProductItem(
+      {super.key,
+      required this.productDetails,
+      this.boxHeight = 96,
+      this.boxWidth = 96,
+      this.imageHeight,
+      this.imageWidth,
+      this.onTap,
+      this.fit = BoxFit.cover,
+      this.onFavTap,
+      this.onAddToBagTap,
+      this.onEyeTap,
+      this.onRemoveTap,
+      this.onMoveToWishListTap,
+      this.isFavourite = false,
+      this.padding = EdgeInsets.zero,
+      this.margin = EdgeInsets.zero,
+      this.selectedQuantity,
+      this.selectedQuality,
+      required this.qualityOptionsList,
+      required this.quantityOptionsList,
+      this.onQualityChanged,
+      this.onQuantityChanged,
+      this.isSelectedProduct = false,
+      required this.onChangedCheckbox});
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +80,10 @@ class CartProductItem extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                      child: SelectionButton(
-                    isSelected: false,
-                    title: APPStrings.filter.tr,
-                    unselectedButtonBorderColor: Colors.transparent,
+                      child: SmartButton(
+                    activeBackgroundColor: style.backgroundColor,
+                    title: APPStrings.remove.tr,
+                    titleStyle: style.removeBagTextStyle,
                     borderRadius: const BorderRadius.all(Radius.zero),
                     onTap: () {
                       if (onRemoveTap != null) {
@@ -76,12 +91,12 @@ class CartProductItem extends StatelessWidget {
                       }
                     },
                   )),
-                  Container(width: 1, height: 48, color: Colors.black),
+                  Container(width: 1, height: 48, color: style.myBagDividerColor),
                   Expanded(
-                      child: SelectionButton(
-                          isSelected: false,
-                          title: APPStrings.sort.tr,
-                          unselectedButtonBorderColor: Colors.transparent,
+                      child: SmartButton(
+                          activeBackgroundColor: style.backgroundColor,
+                          title: APPStrings.moveToWishlist.tr,
+                          titleStyle: style.removeBagTextStyle,
                           borderRadius: const BorderRadius.all(Radius.zero),
                           onTap: () {
                             if (onMoveToWishListTap != null) {
@@ -113,14 +128,18 @@ class CartProductItem extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 8,
-          left: 8,
-          child: Row(
-            children: [
-              if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
-            ],
-          ),
-        ),
+            top: 8,
+            left: 8,
+            child: SmartCheckbox(
+              height: 24,
+              width: 24,
+              value: isSelectedProduct,
+              onChanged: (bool? newValue) {
+                if (onChangedCheckbox != null) {
+                  onChangedCheckbox!(newValue);
+                }
+              },
+            )),
       ],
     );
   }
@@ -182,13 +201,37 @@ class CartProductItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
             ],
-            if (onAddToBagTap != null)
-              SmartButton(
-                margin: const EdgeInsets.only(top: 16, bottom: 24),
-                titleStyle: style.buttonWithIconTextStyle,
-                onTap: onAddToBagTap!,
-                title: APPStrings.addToBag.tr,
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: SmartDropdownButtonFormField<CartProductQuality>(
+                      value: selectedQuality,
+                      items: qualityOptionsList,
+                      itemLabelBuilder: (CartProductQuality value) {
+                        return value.name;
+                      },
+                      onChanged: (newValue) => onQualityChanged?.call(newValue!),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 1,
+                    child: SmartDropdownButtonFormField<CartProductQuantity>(
+                      value: selectedQuantity,
+                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
+                      items: quantityOptionsList,
+                      itemLabelBuilder: (CartProductQuantity value) {
+                        return value.name;
+                      },
+                    ),
+                  ),
+                ],
               ),
+            )
           ],
         ),
       ),

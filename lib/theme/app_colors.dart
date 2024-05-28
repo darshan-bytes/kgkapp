@@ -6,28 +6,28 @@ AppColor colors(BuildContext context) => Theme.of(context).colors;
 class AppThemes {
   late ThemeData selectedColor;
   AppColor appColor = const AppColor(
-    primary: Color(0xFF083458),
-    white: Color(0xFFFFFFFF),
-    transparent: Color(0x00000000),
-    colorF65D3C: Color(0xFFF65D3C),
-    color303538: Color(0xFF303538),
-    colorD3DAE0: Color(0xFFD3DAE0),
-    colorF7F9FA: Color(0xFFF7F9FA),
-    color8C8C8C: Color(0xFF8C8C8C),
-    color083458: Color(0xFF083458),
-    colorECF4F9: Color(0xFFECF4F9),
-    color111620: Color(0xFF111620),
-    colorC5DEEB: Color(0xFFC5DEEB),
-    color50B83C: Color(0xFF50B83C),
-    colorFAFAFA: Color(0xFFFAFAFA),
-    color424445: Color(0xFF424445)
-  );
+      primary: Color(0xFF083458),
+      white: Color(0xFFFFFFFF),
+      transparent: Color(0x00000000),
+      colorF65D3C: Color(0xFFF65D3C),
+      color303538: Color(0xFF303538),
+      colorD3DAE0: Color(0xFFD3DAE0),
+      colorF7F9FA: Color(0xFFF7F9FA),
+      color8C8C8C: Color(0xFF8C8C8C),
+      color083458: Color(0xFF083458),
+      colorECF4F9: Color(0xFFECF4F9),
+      color111620: Color(0xFF111620),
+      colorC5DEEB: Color(0xFFC5DEEB),
+      color50B83C: Color(0xFF50B83C),
+      colorFAFAFA: Color(0xFFFAFAFA),
+      color424445: Color(0xFF424445));
 
   ThemeData light({MaterialColor? theme}) {
     return ThemeData(
         useMaterial3: true,
         primaryColor: appColor.primary,
         scaffoldBackgroundColor: Colors.white,
+        dividerTheme: DividerThemeData(color: appColor.colorD3DAE0),
         scrollbarTheme: ScrollbarThemeData(
           trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
         ),

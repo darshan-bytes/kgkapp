@@ -87,7 +87,7 @@ abstract class AppTheme {
   ImageCarouselStyle get imageCarouselStyle;
 
   WishListStyle get wishListStyle;
-  
+
   AddAccountScreenStyle get addAccountScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
@@ -346,11 +346,13 @@ class CustomPageIndicatorStyle {
   final Color borderColor;
   final Color textColor;
   final TextStyle textStyle;
+  final Color dropDownBackgroundColor;
 
   CustomPageIndicatorStyle({
     required this.borderColor,
     required this.textColor,
     required this.textStyle,
+    required this.dropDownBackgroundColor,
   });
 }
 
@@ -365,6 +367,9 @@ class ProductItemStyle {
   final TextStyle buttonTextStyle;
   final TextStyle buttonWithIconTextStyle;
   final TextStyle diamondTextStyle;
+  final Color transparentColor;
+  final TextStyle removeBagTextStyle;
+  final Color myBagDividerColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -377,6 +382,9 @@ class ProductItemStyle {
     required this.buttonTextStyle,
     required this.buttonWithIconTextStyle,
     required this.diamondTextStyle,
+    required this.transparentColor,
+    required this.removeBagTextStyle,
+    required this.myBagDividerColor,
   });
 }
 
@@ -688,8 +696,14 @@ class CountryPickerStyle {
 
 class MyBagScreenStyle {
   final Color backgroundColor;
+  final TextStyle productsTitleStyle;
+  final TextStyle itemSelectedStyle;
+  final TextStyle totalAmountStyle;
 
   MyBagScreenStyle({
     required this.backgroundColor,
+    required this.productsTitleStyle,
+    required this.itemSelectedStyle,
+    required this.totalAmountStyle,
   });
 }

@@ -91,6 +91,8 @@ class APPStrings {
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
   static const String ring = 'ring';
+  static const String remove = 'remove';
+  static const String moveToWishlist = 'move_to_wishlist';
 
   //Sort Filter
   static const String filters = 'filters';
@@ -148,4 +150,9 @@ class APPStrings {
   static const String myWishlist = 'my_wishlist';
   static const String productX = 'product_x';
   static const String total = 'total';
+
+  // My Bag
+  static const String myBagEmpty = 'my_bag_empty';
+  static const String checkout = 'checkout';
+  static const String selectProductItemX = 'select_product_item_x';
 }
