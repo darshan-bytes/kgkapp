@@ -89,6 +89,8 @@ abstract class AppTheme {
   CompareProductStyle get compareProductStyle;
 
   RatingbarStyle get ratingbarStyle;
+
+  WishListStyle get wishListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -657,5 +659,15 @@ class RatingbarStyle {
   RatingbarStyle({
     required this.fillStarColor,
     required this.emptyStarColor,
+  });
+}
+
+class WishListStyle {
+  final TextStyle numberOfItemsStyle;
+  final TextStyle totalAmountStyle;
+
+  WishListStyle({
+    required this.numberOfItemsStyle,
+    required this.totalAmountStyle,
   });
 }

@@ -109,5 +109,8 @@
   "metal_type": "Metal Type",
   "setting_type": "Setting Type",
   "certified": "Certified",
-  "remove": "Remove"
+  "remove": "Remove",
+  "my_wishlist": "My Wishlist",
+  "product_x": "{#} Products",
+  "total": "Total"
 }

@@ -144,6 +144,11 @@ class APPStrings {
   static const String clarity = 'clarity';
   static const String setting = 'setting';
 
+  // Wishlist
+  static const String myWishlist = 'my_wishlist';
+  static const String productX = 'product_x';
+  static const String total = 'total';
+
   // Compare Product
   static const String metalType = 'metal_type';
   static const String settingType = 'setting_type';

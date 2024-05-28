@@ -9,7 +9,9 @@ class CollectionScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.collection.tr,
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onFilter: () {},
       ),
       body: SingleChildScrollView(

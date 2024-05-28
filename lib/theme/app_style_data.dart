@@ -412,4 +412,10 @@ class LightModeTheme extends AppTheme {
         fillStarColor: colors.primary,
         emptyStarColor: colors.color8C8C8C,
       );
+
+  @override
+  WishListStyle get wishListStyle => WishListStyle(
+        numberOfItemsStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
 }

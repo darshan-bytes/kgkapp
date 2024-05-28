@@ -27,6 +27,7 @@ class BlocGenerator {
       BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc()),
       BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
+      BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
     ];
   }
 }
