@@ -18,6 +18,7 @@ class AppRoutes {
   static const diamondListingPage = '/diamondListingPage';
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
+  static const addAccountPage = '/addAccountPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
 
@@ -132,6 +133,12 @@ class AppRoutes {
       case completeProductPage:
         return MaterialPageRoute(
           builder: (_) => const CompleteProductScreen(),
+          settings: settings,
+        );
+
+      case addAccountPage:
+        return MaterialPageRoute(
+          builder: (_) => const AddAccountScreen(),
           settings: settings,
         );
 

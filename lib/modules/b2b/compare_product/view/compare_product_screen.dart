@@ -165,7 +165,7 @@ class CompareProductScreen extends StatelessWidget {
                 itemSize: 14,
                 ignoreGestures: true,
                 onRatingUpdate: (rating) {
-                  print(rating);
+                  printWrapped(rating.toString());
                 },
               ),
               const SizedBox(height: 6),

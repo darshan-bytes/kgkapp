@@ -139,7 +139,8 @@ class LightModeTheme extends AppTheme {
 
   @override
   SplashScreenStyle get splashScreenStyle => SplashScreenStyle(
-        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16),
+        skipTextStyle: interMediumBoldTextStyle.copyWith(
+            color: colors.white, fontSize: 16),
         titleStyle: interMediumBoldTextStyle,
         activeBackgroundColor: colors.white,
       );
@@ -155,14 +156,18 @@ class LightModeTheme extends AppTheme {
   SignInScreenStyle get signInScreenStyle => SignInScreenStyle(
         backgroundColor: colors.white,
         titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
-        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(
+            fontSize: 12, color: colors.color8C8C8C),
         labelStyle: interRegularTextStyle,
-        forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
+        forgotPasswordStyle:
+            interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        registerTextStyle:
+            interRegularTextStyle.copyWith(color: colors.color083458),
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
+  SmartRichTextStyle get smartRichTextStyle =>
+      SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
@@ -330,7 +335,6 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
-
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -412,6 +416,30 @@ class LightModeTheme extends AppTheme {
         fillStarColor: colors.primary,
         emptyStarColor: colors.color8C8C8C,
       );
+
+  @override
+  AddAccountScreenStyle get addAccountScreenStyle => AddAccountScreenStyle(
+        backgroundColor: colors.white,
+        dotColor: colors.colorC5DEEB,
+        filledDotColor: colors.primary,
+        fillLineColor: colors.color424445,
+        borderColor: colors.colorD3DAE0,
+        shippingBillingAddressStyle: interRegularTextStyle,
+        paymentStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16),
+      );
+
+  @override
+  CountryPickerStyle get countryPickerStyle => CountryPickerStyle(
+      backgroundColor: colors.white,
+      searchBorderColor: colors.color8C98A8.withOpacity(0.2),
+      inputBorderColor: colors.colorD3DAE0,
+      inputTextStyle: interRegularTextStyle,
+      inputLableStyle: interRegularTextStyle.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: colors.color303538,
+      ));
 
   @override
   WishListStyle get wishListStyle => WishListStyle(

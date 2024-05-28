@@ -90,6 +90,10 @@ abstract class AppTheme {
 
   RatingbarStyle get ratingbarStyle;
 
+  AddAccountScreenStyle get addAccountScreenStyle;
+
+  CountryPickerStyle get countryPickerStyle;
+
   WishListStyle get wishListStyle;
 }
 
@@ -659,6 +663,44 @@ class RatingbarStyle {
   RatingbarStyle({
     required this.fillStarColor,
     required this.emptyStarColor,
+  });
+}
+
+class AddAccountScreenStyle {
+  final Color backgroundColor;
+  final Color dotColor;
+  final Color filledDotColor;
+  final Color fillLineColor;
+  final Color borderColor;
+  final TextStyle shippingBillingAddressStyle;
+  final TextStyle paymentStyle;
+  final TextStyle isSameAddressStyle;
+
+  AddAccountScreenStyle({
+    required this.backgroundColor,
+    required this.dotColor,
+    required this.filledDotColor,
+    required this.fillLineColor,
+    required this.borderColor,
+    required this.shippingBillingAddressStyle,
+    required this.paymentStyle,
+    required this.isSameAddressStyle,
+  });
+}
+
+class CountryPickerStyle {
+  final Color backgroundColor;
+  final Color searchBorderColor;
+  final Color inputBorderColor;
+  final TextStyle inputTextStyle;
+  final TextStyle inputLableStyle;
+
+  CountryPickerStyle({
+    required this.backgroundColor,
+    required this.searchBorderColor,
+    required this.inputBorderColor,
+    required this.inputTextStyle,
+    required this.inputLableStyle,
   });
 }
 

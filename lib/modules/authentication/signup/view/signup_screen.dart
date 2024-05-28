@@ -406,6 +406,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildCountryField(SignUpBloc signUpBloc, BuildContext context) {
+    final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) => current is SignUpChangeCountryState,
       builder: (context, state) {
@@ -414,14 +415,14 @@ class SignUpScreen extends StatelessWidget {
           children: [
             SmartText(
               APPStrings.country.tr,
-              style: AppTheme.of(context).textFieldStyle.labelStyle,
+              style: countryPickerStyle.inputLableStyle,
             ),
             const SizedBox(height: 4),
             InkWell(
               onTap: () {
-                showCountryPicker(
+                Utils.showCountryPickerModel(
                   context: context,
-                  showPhoneCode: false,
+                  countryPickerStyle: countryPickerStyle,
                   onSelect: (Country country) {
                     signUpBloc.add(SignUpChangeCountryEvent(country));
                   },
@@ -432,7 +433,7 @@ class SignUpScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                    color: countryPickerStyle.inputBorderColor,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -441,7 +442,7 @@ class SignUpScreen extends StatelessWidget {
                     Expanded(
                       child: SmartText(
                         signUpBloc.selectedCountry.name,
-                        style: AppTheme.of(context).textFieldStyle.textStyle,
+                        style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
                     const SizedBox(width: 4),

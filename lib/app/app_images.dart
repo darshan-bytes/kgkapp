@@ -55,6 +55,7 @@ class AppImages {
   static const String icPhone = 'assets/images/ic_phone.svg';
   static const String icMail = 'assets/images/ic_mail.svg';
   static const String icArrowRight = 'assets/images/ic_arrow_right.svg';
+
   // diamond listing
   static const String icGrid = 'assets/images/ic_grid.svg';
   static const String icList = 'assets/images/ic_list.svg';
@@ -63,4 +64,8 @@ class AppImages {
   static const String icSort = 'assets/images/ic_sort.svg';
   static const String icShare = 'assets/images/ic_share.svg';
   static const String icRing = 'assets/images/ic_ring.svg';
+
+  //Add account
+  static const String icLineBlank = 'assets/images/ic_line_blank.svg';
+  static const String icLineFill = 'assets/images/ic_line_fill.svg';
 }
