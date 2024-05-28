@@ -144,6 +144,19 @@ class APPStrings {
   static const String clarity = 'clarity';
   static const String setting = 'setting';
 
+  //Add account
+  static const String shippingBillingAddress = 'shipping_billing_address';
+  static const String payment = 'payment';
+  static const String billingAddressSame = 'billing_address_same';
+  static const String streetAddress = 'street_address';
+  static const String apartmentSuite = 'apartment_suite';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String postalCode = 'postal_code';
+  static const String phoneNumber = 'phone_number';
+  static const String saveAddress = 'save_address';
+  static const String search = 'search';
+  static const String startTypingToSearch = 'start_typing_to_search';
   // Wishlist
   static const String myWishlist = 'my_wishlist';
   static const String productX = 'product_x';

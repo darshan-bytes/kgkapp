@@ -6,11 +6,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SmartText('Add Account', onTap: () {
+          context.pushNamed(AppRoutes.addAccountPage);
+        }),
+        SmartText(
+          'View All Collection',
           onTap: () {
             context.pushNamed(AppRoutes.collectionPage);
           },
-          child: const Text('View All Collection')),
+        ),
+      ]),
     );
   }
 }
