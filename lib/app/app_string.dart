@@ -157,4 +157,8 @@ class APPStrings {
   static const String saveAddress = 'save_address';
   static const String search = 'search';
   static const String startTypingToSearch = 'start_typing_to_search';
+  // Wishlist
+  static const String myWishlist = 'my_wishlist';
+  static const String productX = 'product_x';
+  static const String total = 'total';
 }

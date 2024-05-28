@@ -89,6 +89,8 @@ abstract class AppTheme {
   AddAccountScreenStyle get addAccountScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
+
+  WishListStyle get wishListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -669,5 +671,15 @@ class CountryPickerStyle {
     required this.inputBorderColor,
     required this.inputTextStyle,
     required this.inputLableStyle,
+  });
+}
+
+class WishListStyle {
+  final TextStyle numberOfItemsStyle;
+  final TextStyle totalAmountStyle;
+
+  WishListStyle({
+    required this.numberOfItemsStyle,
+    required this.totalAmountStyle,
   });
 }

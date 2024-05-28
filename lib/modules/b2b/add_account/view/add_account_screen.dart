@@ -105,32 +105,38 @@ class AddAccountScreen extends StatelessWidget {
   }
 
   Widget generateAddressForm(AddAccountBloc bloc, CountryPickerStyle countryPickerStyle) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17),
-        child: Column(children: [
-          _buildFirstNameField(bloc),
-          const SizedBox(height: 24),
-          _buildLastNameField(bloc),
-          const SizedBox(height: 24),
-          _buildStreetAddressField(bloc),
-          const SizedBox(height: 24),
-          _buildApartmentField(bloc),
-          const SizedBox(height: 24),
-          _buildCityField(bloc),
-          const SizedBox(height: 24),
-          _buildStateField(bloc),
-          const SizedBox(height: 24),
-          _buildCountryField(bloc, countryPickerStyle),
-          const SizedBox(height: 24),
-          _buildZipCodeField(bloc),
-          const SizedBox(height: 24),
-          _buildPhoneField(bloc),
-          const SizedBox(height: 24),
-          SmartButton(
-            onTap: () {},
-            title: APPStrings.saveAddress.tr,
-          ),
-        ]));
+    return BlocBuilder<AddAccountBloc, AddAccountState>(
+      buildWhen: (previous, current) =>
+          current is AddAccountChangeCityState || current is AddAccountChangeStateState || current is AddAccountChangeCountryState,
+      builder: (context, state) {
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: Column(children: [
+              _buildFirstNameField(bloc),
+              const SizedBox(height: 24),
+              _buildLastNameField(bloc),
+              const SizedBox(height: 24),
+              _buildStreetAddressField(bloc),
+              const SizedBox(height: 24),
+              _buildApartmentField(bloc),
+              const SizedBox(height: 24),
+              _buildCityField(bloc),
+              const SizedBox(height: 24),
+              _buildStateField(bloc),
+              const SizedBox(height: 24),
+              _buildCountryField(bloc, countryPickerStyle, context),
+              const SizedBox(height: 24),
+              _buildZipCodeField(bloc),
+              const SizedBox(height: 24),
+              _buildPhoneField(bloc),
+              const SizedBox(height: 24),
+              SmartButton(
+                onTap: () {},
+                title: APPStrings.saveAddress.tr,
+              ),
+            ]));
+      },
+    );
   }
 
   Widget _buildFirstNameField(AddAccountBloc bloc) {
@@ -179,100 +185,86 @@ class AddAccountScreen extends StatelessWidget {
   }
 
   Widget _buildCityField(AddAccountBloc bloc) {
-    return BlocBuilder<AddAccountBloc, AddAccountState>(
-      buildWhen: (previous, current) => current is AddAccountChangeCityState,
-      builder: (context, state) {
-        return SmartDropDown<City>(
-          hintText: APPStrings.city.tr,
-          labelText: APPStrings.city.tr,
-          items: bloc.arrCity.map((City city) {
-            return SmartDropDownItem<City>(
-              value: city,
-              title: city.name,
-            );
-          }).toList(),
-          onChanged: (city) {
-            if (city != null) {
-              bloc.add(AddAccountChangeCityEvent(city));
-            }
-          },
-          selectedItem: bloc.selectedCity,
+    return SmartDropDown<City>(
+      hintText: APPStrings.city.tr,
+      labelText: APPStrings.city.tr,
+      items: bloc.arrCity.map((City city) {
+        return SmartDropDownItem<City>(
+          value: city,
+          title: city.name,
         );
+      }).toList(),
+      onChanged: (city) {
+        if (city != null) {
+          bloc.add(AddAccountChangeCityEvent(city));
+        }
       },
+      selectedItem: bloc.selectedCity,
     );
   }
 
   Widget _buildStateField(AddAccountBloc bloc) {
-    return BlocBuilder<AddAccountBloc, AddAccountState>(
-        buildWhen: (previous, current) => current is AddAccountChangeStateState,
-        builder: (context, state) {
-          return SmartDropDown<StateModel>(
-            hintText: APPStrings.state.tr,
-            labelText: APPStrings.state.tr,
-            items: bloc.arrState.map((StateModel state) {
-              return SmartDropDownItem<StateModel>(
-                value: state,
-                title: state.name,
-              );
-            }).toList(),
-            onChanged: (state) {
-              if (state != null) {
-                bloc.add(AddAccountChangeStateEvent(state));
-              }
-            },
-            selectedItem: bloc.selectedState,
-          );
-        });
+    return SmartDropDown<StateModel>(
+      hintText: APPStrings.state.tr,
+      labelText: APPStrings.state.tr,
+      items: bloc.arrState.map((StateModel state) {
+        return SmartDropDownItem<StateModel>(
+          value: state,
+          title: state.name,
+        );
+      }).toList(),
+      onChanged: (state) {
+        if (state != null) {
+          bloc.add(AddAccountChangeStateEvent(state));
+        }
+      },
+      selectedItem: bloc.selectedState,
+    );
   }
 
-  Widget _buildCountryField(AddAccountBloc bloc, CountryPickerStyle countryPickerStyle) {
-    return BlocBuilder<AddAccountBloc, AddAccountState>(
-      buildWhen: (previous, current) => current is AddAccountChangeCountryState,
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SmartText(
-              APPStrings.country.tr,
-              style: countryPickerStyle.inputLableStyle,
-            ),
-            const SizedBox(height: 4),
-            InkWell(
-              onTap: () {
-                Utils.showCountryPickerModel(
-                  context: context,
-                  countryPickerStyle: countryPickerStyle,
-                  onSelect: (Country country) {
-                    bloc.add(AddAccountChangeCountryEvent(country));
-                  },
-                );
+  Widget _buildCountryField(AddAccountBloc bloc, CountryPickerStyle countryPickerStyle, context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SmartText(
+          APPStrings.country.tr,
+          style: countryPickerStyle.inputLableStyle,
+        ),
+        const SizedBox(height: 4),
+        InkWell(
+          onTap: () {
+            Utils.showCountryPickerModel(
+              context: context,
+              countryPickerStyle: countryPickerStyle,
+              onSelect: (Country country) {
+                bloc.add(AddAccountChangeCountryEvent(country));
               },
-              child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: countryPickerStyle.inputBorderColor,
-                  ),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SmartText(
-                        bloc.selectedCountry.name,
-                        style: countryPickerStyle.inputTextStyle,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    const SmartImage(path: AppImages.icArrowDown),
-                  ],
-                ),
+            );
+          },
+          child: Container(
+            height: 48,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: countryPickerStyle.inputBorderColor,
               ),
+              borderRadius: BorderRadius.circular(4),
             ),
-          ],
-        );
-      },
+            child: Row(
+              children: [
+                Expanded(
+                  child: SmartText(
+                    bloc.selectedCountry.name,
+                    style: countryPickerStyle.inputTextStyle,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const SmartImage(path: AppImages.icArrowDown),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

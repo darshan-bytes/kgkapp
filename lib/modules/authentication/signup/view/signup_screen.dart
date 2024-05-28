@@ -226,6 +226,7 @@ class SignUpScreen extends StatelessWidget {
                         onTap: () {
                           showCountryPicker(
                             context: context,
+                            useSafeArea: true,
                             showPhoneCode: true,
                             onSelect: (Country country) {
                               signUpBloc.add(SignUpChangeCountryCodeEvent(country: country, index: index));

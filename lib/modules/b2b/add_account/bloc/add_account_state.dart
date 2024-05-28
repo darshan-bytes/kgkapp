@@ -29,7 +29,7 @@ final class AddAccountChangeAddressSameState extends AddAccountState {
   List<Object> get props => [isShippingAndBillingAddressSame];
 }
 
-final class AddAccountRecordState extends AddAccountState {
+final class AddAccountReloadState extends AddAccountState {
   @override
   List<Object> get props => [];
 }

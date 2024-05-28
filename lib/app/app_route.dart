@@ -19,6 +19,7 @@ class AppRoutes {
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
   static const addAccountPage = '/addAccountPage';
+  static const wishListPage = '/wishListPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -141,6 +142,14 @@ class AppRoutes {
           builder: (_) => const AddAccountScreen(),
           settings: const RouteSettings(name: addAccountPage),
         );
+
+      case wishListPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
+            return const WishlistScreen();
+          },
+          settings: const RouteSettings(name: wishListPage));
 
       default:
         return _errorRoute();

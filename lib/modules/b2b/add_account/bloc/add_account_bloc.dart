@@ -74,25 +74,25 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
   }
 
   void _onChangeShippingAndBillingAddress(AddAccountAddressChangeEvent event, Emitter<AddAccountState> emit) {
-    emit(AddAccountRecordState());
+    emit(AddAccountReloadState());
     isShippingAndBillingAddressFilled = event.isShippingAndBillingAddressFilled;
     emit(AddAccountChangeAddressState(isShippingAndBillingAddressFilled));
   }
 
   void _onChangeShippingAddressSame(AddAccountAddressSameEvent event, Emitter<AddAccountState> emit) {
-    emit(AddAccountRecordState());
+    emit(AddAccountReloadState());
     isShippingAddressSame = event.isShippingAddressSame;
     emit(AddAccountChangeAddressSameState(isShippingAddressSame));
   }
 
   void _onChangeCountry(AddAccountChangeCountryEvent event, Emitter<AddAccountState> emit) {
-    emit(AddAccountRecordState());
+    emit(AddAccountReloadState());
     selectedCountry = event.selectedCountry;
     emit(AddAccountChangeCountryState(selectedCountry));
   }
 
   void _onChangeCity(AddAccountChangeCityEvent event, Emitter<AddAccountState> emit) {
-    emit(AddAccountRecordState());
+    emit(AddAccountReloadState());
     selectedCity = event.selectedCity;
     if (selectedCity != null) {
       emit(AddAccountChangeCityState(selectedCity!));
@@ -100,7 +100,7 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
   }
 
   void _onChangeState(AddAccountChangeStateEvent event, Emitter<AddAccountState> emit) {
-    emit(AddAccountRecordState());
+    emit(AddAccountReloadState());
     selectedState = event.selectedState;
     if (selectedState != null) {
       emit(AddAccountChangeStateState(selectedState!));
