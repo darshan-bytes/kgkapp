@@ -5,6 +5,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: GestureDetector(
+          onTap: () {
+            context.pushNamed(AppRoutes.compareProductPage);
+          },
+          child: const Text('View All Compare Product')),
+    );
   }
 }

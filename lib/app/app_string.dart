@@ -161,4 +161,10 @@ class APPStrings {
   static const String myWishlist = 'my_wishlist';
   static const String productX = 'product_x';
   static const String total = 'total';
+
+  // Compare Product
+  static const String metalType = 'metal_type';
+  static const String settingType = 'setting_type';
+  static const String certified = 'certified';
+  static const String remove = 'remove';
 }
