@@ -36,6 +36,11 @@ class MyBagScreen extends StatelessWidget {
                   _buildSelectAllProductBox(bloc, style),
                   const SizedBox(height: 24),
                   _buildMyBagList(bloc),
+                  _buildOrderSummary(bloc, style),
+                  const SizedBox(height: 32),
+                  _buildInquirySection(bloc, style),
+                  const SizedBox(height: 24),
+                  _buildSuggestedProductList(bloc, style)
                 ],
               ),
             );
@@ -65,9 +70,9 @@ class MyBagScreen extends StatelessWidget {
                   width: 24,
                   value: bloc.selectAllProduct,
                   onChanged: (value) {
-                    bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: value!));
+                    bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: !bloc.selectAllProduct));
                   },
-                  label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString()]),
+                  label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString]),
                   labelStyle: style.itemSelectedStyle,
                 ),
               ),
@@ -85,47 +90,129 @@ class MyBagScreen extends StatelessWidget {
   }
 
   Widget _buildMyBagList(MyBagBloc bloc) {
-    return BlocBuilder<MyBagBloc, MyBagState>(
-      buildWhen: (previous, current) => current is MyBagReloadState,
-      builder: (context, state) {
-        if (bloc.myBagProductList.isEmpty) {
-          return Center(child: SmartText(APPStrings.myBagEmpty.tr));
-        } else {
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 17),
-            itemBuilder: (context, index) {
-              ProductDetails product = bloc.myBagProductList[index];
-              return CartProductItem(
-                selectedQuality: product.productQuality,
-                selectedQuantity: product.productQuantity,
-                onRemoveTap: () {
-                  bloc.add(MyBagRemoveProduct(index: index, productDetails: product));
-                },
-                onMoveToWishListTap: () {},
-                margin: const EdgeInsets.only(bottom: 24),
-                onEyeTap: () {},
-                onTap: () {},
-                productDetails: product,
-                qualityOptionsList: product.cartProductQuality ?? [],
-                quantityOptionsList: product.cartProductQuantity ?? [],
-                onQualityChanged: (CartProductQuality value) {
-                  bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
-                },
-                onQuantityChanged: (CartProductQuantity value) {
-                  bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
-                },
-                isSelectedProduct: product.isSelectedProduct,
-                onChangedCheckbox: (value) {
-                  bloc.add(MyBagSelectProductChangedEvent(index: index, isSelectedProduct: !product.isSelectedProduct));
-                },
-              );
-            },
-            itemCount: bloc.myBagProductList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-          );
-        }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 17),
+      itemBuilder: (context, index) {
+        ProductDetails product = bloc.myBagProductList[index];
+        return CartProductItem(
+          selectedQuality: product.productQuality,
+          selectedQuantity: product.productQuantity,
+          onRemoveTap: () {
+            bloc.add(MyBagRemoveProduct(index: index, productDetails: product));
+          },
+          onMoveToWishListTap: () {},
+          margin: const EdgeInsets.only(bottom: 24),
+          onEyeTap: () {},
+          onTap: () {},
+          productDetails: product,
+          qualityOptionsList: product.cartProductQuality ?? [],
+          quantityOptionsList: product.cartProductQuantity ?? [],
+          onQualityChanged: (CartProductQuality value) {
+            bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
+          },
+          onQuantityChanged: (CartProductQuantity value) {
+            bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
+          },
+          isSelectedProduct: product.isSelectedProduct,
+          onChangedCheckbox: (value) {
+            bloc.add(MyBagSelectProductChangedEvent(index: index, isSelectedProduct: !product.isSelectedProduct));
+          },
+        );
       },
+      itemCount: bloc.myBagProductList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+    );
+  }
+
+  Widget _buildOrderSummary(MyBagBloc bloc, MyBagScreenStyle style) {
+    return OrderSummary(
+      onTapCheckout: () {},
+      items: const [
+        // Here String come from API
+        OrderSummaryItem(title: "Subtotal", value: "\$11,900.00"),
+        OrderSummaryItem(title: "Shipping", value: "\$0.00"),
+        OrderSummaryItem(title: "Sales tax", value: "\$0.00"),
+      ],
+      totalPrice: "\$35,700.00",
+    );
+  }
+
+  Widget _buildInquirySection(MyBagBloc bloc, MyBagScreenStyle style) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 17),
+      child: Column(
+        children: [
+          InquiryWidget(
+            phone: bloc.inquiryPhone,
+            email: bloc.inquiryEmail,
+            isRightArrow: false,
+            title: APPStrings.unhappyWithPricing.tr,
+          ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              const SmartImage(
+                path: AppImages.icDiamond,
+                height: 24,
+                width: 24,
+              ),
+              const SizedBox(width: 16),
+              SmartText(
+                APPStrings.diamondPurityYouCanTrust.tr,
+                style: style.diamondPurityStyle,
+              )
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              const SmartImage(path: AppImages.icTruck),
+              const SizedBox(width: 16),
+              SmartText(
+                APPStrings.shippingAcrossAllCountries.tr,
+                style: style.diamondPurityStyle,
+              )
+            ],
+          ),
+          const SizedBox(height: 32),
+          const Divider(height: 1),
+        ],
+      ),
+    );
+  }
+
+  _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(
+          APPStrings.youMayAlsoLike.tr,
+          style: style.productsTitleStyle,
+          optionalPadding: const EdgeInsets.only(left: 17),
+        ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: Wrap(
+              direction: Axis.horizontal,
+              spacing: 12.0,
+              runSpacing: 12,
+              children: bloc.suggestedProductList.map((product) {
+                return ProductGridItem(
+                  margin: const EdgeInsets.only(bottom: 17),
+                  onEyeTap: () {},
+                  onFavTap: () {},
+                  onAddToBagTap: () {},
+                  productDetails: product,
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

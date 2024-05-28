@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-abstract class AddAccountState extends Equatable {
+sealed class AddAccountState extends Equatable {
   const AddAccountState();
 }
 

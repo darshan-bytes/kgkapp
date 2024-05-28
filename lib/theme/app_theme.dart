@@ -86,6 +86,10 @@ abstract class AppTheme {
 
   ImageCarouselStyle get imageCarouselStyle;
 
+  CompareProductStyle get compareProductStyle;
+
+  RatingbarStyle get ratingbarStyle;
+
   AddAccountScreenStyle get addAccountScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
@@ -93,6 +97,8 @@ abstract class AppTheme {
   WishListStyle get wishListStyle;
 
   MyBagScreenStyle get myBagScreenStyle;
+
+  OrderSummaryStyle get orderSummaryStyle;
 }
 
 class PrimaryButtonStyle {
@@ -646,6 +652,32 @@ class ImageCarouselStyle {
   });
 }
 
+class CompareProductStyle {
+  final TextStyle productTitleStyle;
+  final TextStyle productSubTitleStyle;
+  final TextStyle productPriceStyle;
+  final TextStyle productReviewStyle;
+  final TextStyle productRemoveStyle;
+
+  CompareProductStyle({
+    required this.productTitleStyle,
+    required this.productSubTitleStyle,
+    required this.productPriceStyle,
+    required this.productReviewStyle,
+    required this.productRemoveStyle,
+  });
+}
+
+class RatingbarStyle {
+  final Color fillStarColor;
+  final Color emptyStarColor;
+
+  RatingbarStyle({
+    required this.fillStarColor,
+    required this.emptyStarColor,
+  });
+}
+
 class AddAccountScreenStyle {
   final Color backgroundColor;
   final Color dotColor;
@@ -699,11 +731,29 @@ class MyBagScreenStyle {
   final TextStyle productsTitleStyle;
   final TextStyle itemSelectedStyle;
   final TextStyle totalAmountStyle;
+  final TextStyle diamondPurityStyle;
 
   MyBagScreenStyle({
     required this.backgroundColor,
     required this.productsTitleStyle,
     required this.itemSelectedStyle,
     required this.totalAmountStyle,
+    required this.diamondPurityStyle,
+  });
+}
+
+class OrderSummaryStyle {
+  final Color backgroundColor;
+  final TextStyle orderSummaryTitleStyle;
+  final TextStyle orderSummaryItemStyle;
+  final TextStyle addPromoCodeStyle;
+  final TextStyle totalPriceStyle;
+
+  OrderSummaryStyle({
+    required this.backgroundColor,
+    required this.orderSummaryTitleStyle,
+    required this.orderSummaryItemStyle,
+    required this.addPromoCodeStyle,
+    required this.totalPriceStyle,
   });
 }

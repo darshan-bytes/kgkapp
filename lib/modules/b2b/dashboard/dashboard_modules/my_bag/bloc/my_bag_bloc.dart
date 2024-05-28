@@ -5,9 +5,16 @@ part 'my_bag_state.dart';
 
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   List<ProductDetails> myBagProductList = [];
+  List<ProductDetails> suggestedProductList = [];
   bool selectAllProduct = false;
   int totalPrice = 35700;
   int selectedProductCount = 0;
+
+  int get totalProductCount => myBagProductList.length;
+
+  String get selectedProductCountString => "$selectedProductCount/$totalProductCount";
+  String inquiryEmail = "enquiry.diaind@kgkmail.com";
+  String inquiryPhone = "+91 - 1234567830";
 
   MyBagBloc() : super(MyBagInitial()) {
     on<InitialMyBagEvent>(_onInitialMyBagEvent);
@@ -17,8 +24,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagSelectAllProductChangedEvent>(_onMyBagSelectAllProductChangedEvent);
     on<MyBagSelectProductChangedEvent>(_onMyBagSelectProductChangedEvent);
   }
-
-  int get totalProductCount => myBagProductList.length;
 
   void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {
     myBagProductList = List.generate(
@@ -31,15 +36,31 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
             "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__",
         name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
         originalPrice: "\$ 3,000",
-        productQuality: CartProductQuality(name: "18K Gold"),
-        productQuantity: CartProductQuantity(name: "1"),
+        productQuality: const CartProductQuality(name: "18K Gold"),
+        productQuantity: const CartProductQuantity(name: "1"),
         cartProductQuality: [
-          CartProductQuality(name: "18K Gold"),
-          CartProductQuality(name: "10K Gold"),
-          CartProductQuality(name: "14K Gold"),
-          CartProductQuality(name: "22K Gold"),
+          const CartProductQuality(name: "18K Gold"),
+          const CartProductQuality(name: "10K Gold"),
+          const CartProductQuality(name: "14K Gold"),
+          const CartProductQuality(name: "22K Gold"),
         ],
         cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
+      ),
+    );
+
+    _onGwtSuggestedProductList(event, emit);
+  }
+
+  void _onGwtSuggestedProductList(InitialMyBagEvent event, Emitter<MyBagState> emit) async {
+    suggestedProductList = List.generate(
+      8,
+      (index) => ProductDetails(
+        diamond: "1.5 gram",
+        gram: "1.5 gram",
+        imageUrl:
+            "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__",
+        name: "2.00 Carat H VS1 Excellent Cut Round Setting",
+        originalPrice: "\$ 3,000",
       ),
     );
   }
@@ -73,11 +94,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(MyBagReloadState());
     selectAllProduct = event.selectAllProduct;
     selectedProductCount = selectAllProduct ? myBagProductList.length : 0;
-
     for (ProductDetails product in myBagProductList) {
       product.isSelectedProduct = selectAllProduct;
     }
-
     emit(MyBagSelectAllProductChangedState(selectAllProduct: selectAllProduct));
   }
 
@@ -91,14 +110,5 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       selectedProductCount -= 1;
     }
     emit(MyBagSelectProductChangedState(index: event.index, isSelectedProduct: product.isSelectedProduct));
-  }
-
-  void onClearAll() {
-    myBagProductList.clear();
-    selectedProductCount = 0;
-  }
-
-  String selectedProductCountString() {
-    return "$selectedProductCount/$totalProductCount";
   }
 }

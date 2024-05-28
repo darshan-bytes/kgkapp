@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-abstract class AddAccountEvent extends Equatable {
+sealed class AddAccountEvent extends Equatable {
   const AddAccountEvent();
 }
 

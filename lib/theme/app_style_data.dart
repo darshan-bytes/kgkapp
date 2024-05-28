@@ -418,6 +418,22 @@ class LightModeTheme extends AppTheme {
         productsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24),
         itemSelectedStyle: interRegularTextStyle.copyWith(fontSize: 16),
         totalAmountStyle: interMediumBoldTextStyle,
+        diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      );
+
+  @override
+  CompareProductStyle get compareProductStyle => CompareProductStyle(
+        productTitleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        productSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
+        productPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        productReviewStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        productRemoveStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  RatingbarStyle get ratingbarStyle => RatingbarStyle(
+        fillStarColor: colors.primary,
+        emptyStarColor: colors.color8C8C8C,
       );
 
   @override
@@ -443,4 +459,13 @@ class LightModeTheme extends AppTheme {
         fontWeight: FontWeight.w400,
         color: colors.color303538,
       ));
+
+  @override
+  OrderSummaryStyle get orderSummaryStyle => OrderSummaryStyle(
+        backgroundColor: colors.colorF7F9FA,
+        orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18),
+        orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        totalPriceStyle: interMediumBoldTextStyle,
+      );
 }

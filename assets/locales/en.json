@@ -118,12 +118,21 @@
   "save_address": "Save Address",
   "search": "Search",
   "start_typing_to_search": "Start typing to search",
+  "metal_type": "Metal Type",
+  "setting_type": "Setting Type",
+  "certified": "Certified",
+  "remove": "Remove",
   "my_wishlist": "My Wishlist",
   "product_x": "{#} Products",
   "total": "Total",
   "my_bag_empty": "My Bag is empty",
   "checkout": "Checkout",
-  "remove": "Remove",
   "move_to_wishlist": "Move to Wishlist",
-  "select_product_item_x": "{#} items selected"
+  "select_product_item_x": "{#} items selected",
+  "order_summary": "Order Summary",
+  "add_promo_code": "Add Promo Code",
+  "you_may_also_like": "You may also like",
+  "unhappy_with_pricing": "Unhappy with pricing?",
+  "select_quality": "Select Quality",
+  "select_quantity": "Select Quantity"
 }

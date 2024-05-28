@@ -1,6 +1,6 @@
 part of 'my_bag_bloc.dart';
 
-abstract class MyBagState extends Equatable {
+sealed class MyBagState extends Equatable {
   const MyBagState();
 }
 

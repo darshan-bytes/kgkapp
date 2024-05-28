@@ -211,8 +211,11 @@ class CartProductItem extends StatelessWidget {
                     child: SmartDropdownButtonFormField<CartProductQuality>(
                       value: selectedQuality,
                       items: qualityOptionsList,
-                      itemLabelBuilder: (CartProductQuality value) {
-                        return value.name;
+                      itemLableBuilder: (CartProductQuality value) {
+                        if (value.name != null) {
+                          return value.name!;
+                        }
+                        return APPStrings.selectQuality.tr;
                       },
                       onChanged: (newValue) => onQualityChanged?.call(newValue!),
                     ),
@@ -224,8 +227,11 @@ class CartProductItem extends StatelessWidget {
                       value: selectedQuantity,
                       onChanged: (newValue) => onQuantityChanged?.call(newValue!),
                       items: quantityOptionsList,
-                      itemLabelBuilder: (CartProductQuantity value) {
-                        return value.name;
+                      itemLableBuilder: (CartProductQuantity value) {
+                        if (value.name != null) {
+                          return value.name!;
+                        }
+                        return APPStrings.selectQuantity.tr;
                       },
                     ),
                   ),

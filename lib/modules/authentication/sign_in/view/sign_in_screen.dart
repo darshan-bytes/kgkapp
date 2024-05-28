@@ -16,6 +16,7 @@ class SignInScreen extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
+            print(constraints.maxWidth);
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -171,7 +172,7 @@ class SignInScreen extends StatelessWidget {
         SmartTextSpan(
           text: APPStrings.register.tr,
           onTap: () {
-            context.pushNamed( AppRoutes.signUpPage);
+            context.pushNamed(AppRoutes.signUpPage);
           },
           style: style.registerTextStyle,
         )

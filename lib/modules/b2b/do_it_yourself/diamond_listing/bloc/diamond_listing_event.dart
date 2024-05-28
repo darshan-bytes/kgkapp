@@ -1,6 +1,6 @@
 part of 'diamond_listing_bloc.dart';
 
-abstract class DiamondListingEvent extends Equatable {
+sealed class DiamondListingEvent extends Equatable {
   const DiamondListingEvent();
   
   @override

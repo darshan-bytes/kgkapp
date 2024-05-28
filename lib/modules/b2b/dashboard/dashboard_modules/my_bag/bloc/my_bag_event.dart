@@ -1,6 +1,6 @@
 part of 'my_bag_bloc.dart';
 
-abstract class MyBagEvent extends Equatable {
+sealed class MyBagEvent extends Equatable {
   const MyBagEvent();
 }
 

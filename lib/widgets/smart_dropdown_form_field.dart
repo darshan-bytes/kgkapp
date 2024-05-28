@@ -3,7 +3,7 @@ import 'package:kgk/kgk.dart';
 class SmartDropdownButtonFormField<T> extends StatelessWidget {
   final T? value;
   final List<T> items;
-  final String Function(T) itemLabelBuilder;
+  final String Function(T) itemLableBuilder;
   final void Function(T?)? onChanged;
   final TextStyle? textStyle;
   final double menuMaxHeight;
@@ -14,7 +14,7 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
   const SmartDropdownButtonFormField({
     super.key,
     required this.items,
-    required this.itemLabelBuilder,
+    required this.itemLableBuilder,
     this.value,
     this.onChanged,
     this.textStyle,
@@ -64,7 +64,7 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
           return DropdownMenuItem<T>(
               value: value,
               child: SmartText(
-                itemLabelBuilder(value),
+                itemLableBuilder(value),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ));
