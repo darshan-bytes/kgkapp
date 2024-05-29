@@ -37,7 +37,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                       style: style.didNotGetEmailTextStyle.copyWith(height: 1.5),
                       children: [
                         TextSpan(
-                          text: "your_email@example.com", // Placeholder text
+                          text: "your_email@example.com",
                           style: style.richSubTextStyle,
                         ),
                         TextSpan(text: parts[1], style: style.didNotGetEmailTextStyle),

@@ -63,6 +63,9 @@ dependencies:
   # For Rating Bar
   flutter_rating_bar: ^4.0.1
 
+  #For Read more / Read less Text
+  readmore: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -28,8 +28,7 @@ class SmartRatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).ratingbarStyle;
-    return RatingBar.builder(
+    return RatingBar(
       initialRating: initialRating,
       ignoreGestures: ignoreGestures ?? false,
       direction: direction ?? Axis.horizontal,
@@ -37,9 +36,10 @@ class SmartRatingBar extends StatelessWidget {
       itemCount: itemCount ?? 5,
       itemSize: itemSize,
       itemPadding: itemPadding ?? EdgeInsets.zero,
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: fillStarColor ?? style.fillStarColor,
+      ratingWidget: RatingWidget(
+        empty: const SmartImage(path: AppImages.icEmptyStar),
+        full: const SmartImage(path: AppImages.icFullStar),
+        half: Container(),
       ),
       onRatingUpdate: onRatingUpdate,
     );

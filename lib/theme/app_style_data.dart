@@ -468,4 +468,37 @@ class LightModeTheme extends AppTheme {
         addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         totalPriceStyle: interMediumBoldTextStyle,
       );
+
+  @override
+  ProductDetailsStyle get productDetailsStyle => ProductDetailsStyle(
+        productTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        productCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        dotColor: colors.color8C8C8C,
+        productNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, color: colors.color303538),
+        ratingGlowColor: colors.primary,
+        compareProductStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        priceStyle: interSemiBoldTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        originalPriceStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        discountStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+        settingSelectionTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        settingSelectionValueStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        selectedSettingStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        selectedSettingBorderColor: colors.primary,
+        settingSelectionButtonColor: colors.colorF8F8F8,
+        customiseBoxBorderColor: colors.colorD3DAE0,
+        customiseBoxColor: colors.colorF7F9FA,
+        diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+        customerReviewTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        averageRatingStyle: interMediumBoldTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        viewAllReviewStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.primary),
+        compareCountBGColor: colors.color4885A3,
+      );
+
+  @override
+  ReviewDetailsStyle get reviewDetailsStyle => ReviewDetailsStyle(
+        userNameStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
+        dotColor: colors.color4885A3,
+        createdDateStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
 }

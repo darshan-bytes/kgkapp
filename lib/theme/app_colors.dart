@@ -22,6 +22,8 @@ class AppThemes {
     colorFAFAFA: Color(0xFFFAFAFA),
     color424445: Color(0xFF424445),
     color8C98A8: Color(0xFF8C98A8),
+    colorF8F8F8: Color(0xFFF8F8F8),
+    color4885A3: Color(0xFF4885A3),
   );
 
   ThemeData light({MaterialColor? theme}) {
@@ -79,24 +81,29 @@ class AppColor {
   final Color colorFAFAFA;
   final Color color424445;
   final Color color8C98A8;
+  final Color colorF8F8F8;
+  final Color color4885A3;
 
-  const AppColor(
-      {required this.primary,
-      required this.white,
-      required this.colorF65D3C,
-      required this.color303538,
-      required this.colorD3DAE0,
-      required this.colorF7F9FA,
-      required this.color8C8C8C,
-      required this.color083458,
-      required this.colorECF4F9,
-      required this.color111620,
-      required this.colorC5DEEB,
-      required this.color50B83C,
-      required this.colorFAFAFA,
-      required this.color424445,
-      required this.transparent,
-      required this.color8C98A8});
+  const AppColor({
+    required this.primary,
+    required this.white,
+    required this.colorF65D3C,
+    required this.color303538,
+    required this.colorD3DAE0,
+    required this.colorF7F9FA,
+    required this.color8C8C8C,
+    required this.color083458,
+    required this.colorECF4F9,
+    required this.color111620,
+    required this.colorC5DEEB,
+    required this.color50B83C,
+    required this.colorFAFAFA,
+    required this.color424445,
+    required this.transparent,
+    required this.color8C98A8,
+    required this.colorF8F8F8,
+    required this.color4885A3,
+  });
 }
 
 extension ThemeDataExtensions on ThemeData {

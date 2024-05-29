@@ -146,6 +146,22 @@ class APPStrings {
   static const String clarity = 'clarity';
   static const String setting = 'setting';
 
+  static const String diamondShape = 'diamond_shape';
+  static const String metalKaratage = 'metal_karatage';
+  static const String diamondQuality = 'diamond_quality';
+  static const String ringSize = 'ring_size';
+  static const String customiseDescription = 'customise_description';
+  static const String craftingDescription = 'crafting_description';
+
+  static const String customerReviews = 'customer_reviews';
+  static const String writeAReview = 'write_a_review';
+  static const String readMore = 'read_more';
+  static const String readLess = 'read_less';
+  static const String viewAllXReviews = 'view_all_x_reviews';
+  static const String youMayAlsoLike = 'you_may_also_like';
+  static const String recentlyViewed = 'recently_viewed';
+  static const String compare = 'compare';
+
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';
   static const String payment = 'payment';
@@ -176,7 +192,6 @@ class APPStrings {
   static const String certified = 'certified';
   static const String orderSummary = 'order_summary';
   static const String addPromoCode = 'add_promo_code';
-  static const String youMayAlsoLike = 'you_may_also_like';
   static const String unhappyWithPricing = 'unhappy_with_pricing';
   static const String selectQuality = 'select_quality';
   static const String selectQuantity = 'select_quantity';

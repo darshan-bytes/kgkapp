@@ -103,7 +103,9 @@ class MyBagScreen extends StatelessWidget {
           onMoveToWishListTap: () {},
           margin: const EdgeInsets.only(bottom: 24),
           onEyeTap: () {},
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: product.productId});
+          },
           productDetails: product,
           qualityOptionsList: product.cartProductQuality ?? [],
           quantityOptionsList: product.cartProductQuantity ?? [],
