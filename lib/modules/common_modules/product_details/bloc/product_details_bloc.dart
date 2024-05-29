@@ -7,6 +7,7 @@ part 'product_details_state.dart';
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
   String productName = '';
   ProductDetails? productDetails;
+  bool isCustomisation = false;
   final CarouselController controller = CarouselController();
   List<String> imgList = [
     "https://s3-alpha-sig.figma.com/img/9156/a32a/a7a41b3c1c10eb7ae104b2d7eca279eb?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jPe~zC0Ct0o7T7pV4gJRKyCzsQSM~YofLfJJy~uB6Dm2neQrjuzc6BjhjA2NWS7G1PLePl0a4V7igTOAVJsQvY1PNTYeiIMO12mtgRnqIfa4taVQerKt4W0zOR~HsABLODf1m3Z9QCMinRhmEf3J6aqWov1J639mmpMNlMMlAbY2eY8FE6pP~1~i2nNtMzEplnbIDQkH0CgEF1eFyR42IEzSP78Wyvb9wgbWLoqn5jXSMIEVqiM8FtTzyPrOWbCyU0ioLBAwNvVR4Skz3JV-Ri1itQNGJKLCqzUBgePluTy7EVxmUUocey4oXYjjhmz5v7T9Tp4FIP~rTezMK0i~bA__",
@@ -59,6 +60,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     ),
     ProductCustomizationOptions(
       id: '4',
+      name: APPStrings.diamondQuality.tr,
+      type: ProductCustomizationType.diamondQuality.value,
+      selectedValue: ProductCustomizationOptionValues(id: '1', value: 'Standard', image: 'https://i.ibb.co/RbD0fvW/Truck.png'),
+      values: [
+        ProductCustomizationOptionValues(id: '1', value: 'Standard', image: 'https://i.ibb.co/RbD0fvW/Truck.png'),
+        ProductCustomizationOptionValues(id: '2', value: 'Standard - 2', image: 'https://i.ibb.co/1qqDcCR/Truck-1.png'),
+        ProductCustomizationOptionValues(id: '3', value: 'Standard - 3', image: 'https://i.ibb.co/X2SdMK4/Truck-2.png'),
+      ],
+    ),
+    ProductCustomizationOptions(
+      id: '5',
       name: APPStrings.ringSize.tr,
       type: ProductCustomizationType.ringSize.value,
       selectedValue: ProductCustomizationOptionValues(id: '1', value: '5.5'),
@@ -121,6 +133,27 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(ProductDetailsLoadingState());
     productName = '14k Gold Engagement Ring';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
+    isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
+
+    if (isCustomisation) {
+      productCustomizations.insert(
+        0,
+        ProductCustomizationOptions(
+          id: productCustomizations.length.toString(),
+          name: APPStrings.head.tr,
+          type: ProductCustomizationType.image.value,
+          selectedValue:
+              ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
+          values: [
+            ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
+            ProductCustomizationOptionValues(id: '2', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
+            ProductCustomizationOptionValues(id: '3', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
+            ProductCustomizationOptionValues(id: '4', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
+            ProductCustomizationOptionValues(id: '5', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
+          ],
+        ),
+      );
+    }
     productDetails = ProductDetails(
       productId: productId,
       name: productName,

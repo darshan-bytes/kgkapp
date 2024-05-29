@@ -189,6 +189,7 @@ class AppRoutes {
 enum RoutesData {
   productListData,
   productId,
+  isCustomisationPage,
 }
 
 extension RoutesDataExtension on BuildContext {

@@ -108,7 +108,7 @@
   "setting": "Setting",
   "diamond_shape": "Diamond Shape",
   "metal_karatage": "Metal Karatage",
-  "diamond_quality": "Diamond Quality:",
+  "diamond_quality": "Diamond Quality",
   "ring_size": "Ring Size",
   "customise_description": "Customise Your Unique Jewellery Creations",
   "crafting_description": "Crafting Personalized Pieces, Tailored to Your Tastes",
@@ -147,5 +147,9 @@
   "add_promo_code": "Add Promo Code",
   "unhappy_with_pricing": "Unhappy with pricing?",
   "select_quality": "Select Quality",
-  "select_quantity": "Select Quantity"
+  "select_quantity": "Select Quantity",
+  "head": "Head",
+  "total_approx_price": "Total Approx Price",
+  "customise_product": "Customise product"
+
 }

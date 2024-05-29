@@ -46,12 +46,14 @@ class ProductDetailsCustomizations extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 _buildCustomizationType(isSelected, value, style, productCustomization.productCustomizationType),
-                                const SizedBox(height: 8),
-                                SmartText(
-                                  value.value,
-                                  style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
-                                  textAlign: TextAlign.center,
-                                ),
+                                if (value.value.isNotNullNorEmpty) ...[
+                                  const SizedBox(height: 8),
+                                  SmartText(
+                                    value.value,
+                                    style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ],
                             ),
                           ),
@@ -80,6 +82,30 @@ class ProductDetailsCustomizations extends StatelessWidget {
                                   style: isSelected ? style.settingSelectionTitleStyle : style.productTypeStyle,
                                 ),
                               )),
+                        ),
+                      );
+
+                    case ProductCustomizationType.diamondQuality:
+                      return InkWell(
+                        onTap: () {
+                          productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _buildCustomizationType(isSelected, value, style, productCustomization.productCustomizationType),
+                              if (value.value.isNotNullNorEmpty) ...[
+                                const SizedBox(height: 8),
+                                SmartText(
+                                  value.value,
+                                  style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ],
+                          ),
                         ),
                       );
 
@@ -120,6 +146,21 @@ class ProductDetailsCustomizations extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
+          ),
+          child: SmartImage(
+            path: value.image ?? '',
+            color: isSelected ? style.selectedSettingBorderColor : null,
+          ),
+        );
+
+      case ProductCustomizationType.diamondQuality:
+        return Container(
+          height: 50,
+          width: 50,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
+            shape: BoxShape.circle,
           ),
           child: SmartImage(
             path: value.image ?? '',

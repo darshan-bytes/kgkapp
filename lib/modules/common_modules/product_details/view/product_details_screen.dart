@@ -14,7 +14,7 @@ class ProductDetailsScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
             return SmartAppBar(
-              title: productDetailsBloc.productName,
+              title: productDetailsBloc.isCustomisation ? APPStrings.customiseProduct.tr : productDetailsBloc.productName,
               onFavorite: () {},
             );
           },
@@ -22,39 +22,104 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
       body: getScaffoldBody(productDetailsBloc, style),
       floatingActionButton: _buildCompareButton(productDetailsBloc, style),
-      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc),
+      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc, style),
     );
   }
 
-  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc) {
+  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
     return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: SmartButton(
-                prefixImage: AppImages.icShoppingBag,
-                title: APPStrings.addToBag.tr,
-                onTap: () {},
-              ),
+      child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+        buildWhen: (previous, current) => current is ProductDetailsLoadedState,
+        builder: (context, state) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (productDetailsBloc.isCustomisation) ...[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        APPStrings.totalApproxPrice.tr,
+                        style: style.totalApproxStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$1,470.00",
+                        style: style.totalApproxStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        '14K Rose and White Gold',
+                        style: style.totalApproxSubStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$120.00",
+                        style: style.totalApproxSubStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        'Round Diamond 0.5 ct',
+                        style: style.totalApproxSubStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$1350.00",
+                        style: style.totalApproxSubStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: SmartButton(
+                        prefixImage: AppImages.icShoppingBag,
+                        title: APPStrings.addToBag.tr,
+                        onTap: () {},
+                      ),
+                    ),
+                    if (!productDetailsBloc.isCustomisation) ...[
+                      const SizedBox(width: 8),
+                      SelectionButton(
+                        padding: const EdgeInsets.all(12),
+                        isSelected: false,
+                        onTap: () {},
+                        image: AppImages.icHeart,
+                      ),
+                      const SizedBox(width: 8),
+                      SelectionButton(
+                        padding: const EdgeInsets.all(12),
+                        isSelected: false,
+                        onTap: () {},
+                        image: AppImages.icShare,
+                      ),
+                    ],
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            SelectionButton(
-              padding: const EdgeInsets.all(12),
-              isSelected: false,
-              onTap: () {},
-              image: AppImages.icHeart,
-            ),
-            const SizedBox(width: 8),
-            SelectionButton(
-              padding: const EdgeInsets.all(12),
-              isSelected: false,
-              onTap: () {},
-              image: AppImages.icShare,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -65,7 +130,9 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         return productDetailsBloc.isCompare
             ? ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.pushNamed(AppRoutes.compareProductPage);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors(context).primary,
                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
@@ -104,7 +171,7 @@ class ProductDetailsScreen extends StatelessWidget {
               children: [
                 _imageSlider(productDetailsBloc),
                 const SizedBox(height: 40),
-                _productDetail(style, productDetailsBloc),
+                _productDetail(style, productDetailsBloc, context),
               ],
             );
           },
@@ -116,18 +183,34 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _imageSlider(ProductDetailsBloc productDetailsBloc) {
     return Column(
       children: [
-        CarouselSlider(
-          items: productDetailsBloc.imgList.map((e) {
-            return SmartImage(path: e);
-          }).toList(),
-          carouselController: productDetailsBloc.controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              viewportFraction: 1.5,
-              aspectRatio: 1,
-              onPageChanged: (index, reason) {
-                productDetailsBloc.add(OnProductImageChangeEvent(index));
-              }),
+        Stack(
+          children: [
+            CarouselSlider(
+              items: productDetailsBloc.imgList.map((e) {
+                return SmartImage(path: e);
+              }).toList(),
+              carouselController: productDetailsBloc.controller,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1.5,
+                  aspectRatio: 1,
+                  onPageChanged: (index, reason) {
+                    productDetailsBloc.add(OnProductImageChangeEvent(index));
+                  }),
+            ),
+            if (productDetailsBloc.isCustomisation)
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const SmartImage(
+                    path: AppImages.ic360,
+                    height: 36,
+                    width: 36,
+                  ),
+                  onPressed: () {},
+                ),
+              )
+          ],
         ),
         BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           buildWhen: (previous, current) => current is ProductImagePageChangeState,
@@ -155,7 +238,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
+  Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 17),
       child: Column(
@@ -173,8 +256,17 @@ class ProductDetailsScreen extends StatelessWidget {
           const Divider(height: 48),
           _buildCustomizationList(style, productDetailsBloc),
           const Divider(height: 48),
-          const ProductCustomiseDescriptionWidget(),
-          const Divider(height: 48),
+          if (!productDetailsBloc.isCustomisation) ...[
+            ProductCustomiseDescriptionWidget(
+              onTap: () {
+                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                  RoutesData.isCustomisationPage: true,
+                  RoutesData.productId: productDetailsBloc.productDetails?.productId,
+                });
+              },
+            ),
+            const Divider(height: 48),
+          ],
           Row(
             children: [
               const SmartImage(
