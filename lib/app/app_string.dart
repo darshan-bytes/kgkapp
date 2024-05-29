@@ -195,4 +195,7 @@ class APPStrings {
   static const String unhappyWithPricing = 'unhappy_with_pricing';
   static const String selectQuality = 'select_quality';
   static const String selectQuantity = 'select_quantity';
+  static const String head = 'head';
+  static const String totalApproxPrice = 'total_approx_price';
+  static const String customiseProduct = 'customise_product';
 }

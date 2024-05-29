@@ -492,6 +492,8 @@ class LightModeTheme extends AppTheme {
         averageRatingStyle: interMediumBoldTextStyle.copyWith(fontSize: 24, color: colors.color303538),
         viewAllReviewStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.primary),
         compareCountBGColor: colors.color4885A3,
+        totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18, color: colors.color303538),
+        totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
 
   @override
@@ -500,5 +502,10 @@ class LightModeTheme extends AppTheme {
         dotColor: colors.color4885A3,
         createdDateStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  CheckOutStyle get checkOutStyle => CheckOutStyle(
+        dividerColor: colors.colorD3DAE0,
       );
 }

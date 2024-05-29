@@ -68,4 +68,5 @@ class AppImages {
 
   //Add account
   static const String icPlus = 'assets/images/ic_plus.svg';
+  static const String ic360 = 'assets/images/ic_360.svg';
 }

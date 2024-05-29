@@ -10,6 +10,7 @@ enum ProductCustomizationType {
   metal('metal'),
   metalKaratage('metal_karatage'),
   ringSize('ring_size'),
+  diamondQuality('diamond_quality'),
   other('other'),
   ;
 

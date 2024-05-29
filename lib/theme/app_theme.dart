@@ -96,6 +96,8 @@ abstract class AppTheme {
 
   WishListStyle get wishListStyle;
 
+  CheckOutStyle get checkOutStyle;
+
   MyBagScreenStyle get myBagScreenStyle;
 
   OrderSummaryStyle get orderSummaryStyle;
@@ -730,6 +732,14 @@ class WishListStyle {
   });
 }
 
+class CheckOutStyle {
+  final Color dividerColor;
+
+  CheckOutStyle({
+    required this.dividerColor,
+  });
+}
+
 class MyBagScreenStyle {
   final Color backgroundColor;
   final TextStyle productsTitleStyle;
@@ -784,6 +794,8 @@ class ProductDetailsStyle {
   final TextStyle averageRatingStyle;
   final TextStyle viewAllReviewStyle;
   final Color compareCountBGColor;
+  final TextStyle totalApproxStyle;
+  final TextStyle totalApproxSubStyle;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -807,6 +819,8 @@ class ProductDetailsStyle {
     required this.averageRatingStyle,
     required this.viewAllReviewStyle,
     required this.compareCountBGColor,
+    required this.totalApproxStyle,
+    required this.totalApproxSubStyle,
   });
 }
 
