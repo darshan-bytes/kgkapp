@@ -66,60 +66,21 @@ class SmartPaginationState extends State<SmartPagination> {
           ),
           const SizedBox(width: 14),
           Expanded(
-            child: SizedBox(
-              height: 48,
-              child: DropdownButtonFormField<String>(
-                value: currentPage,
-                style: style.textStyle,
-                menuMaxHeight: 300,
-                icon: Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                  color: style.textColor,
-                  weight: 0.5,
-                ),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                      color: style.borderColor,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                      color: style.borderColor,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                      color: style.borderColor,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                onChanged: (newValue) {
-                  if (newValue != null) {
-                    int index = widget.pageNumbers.indexOf(newValue);
-                    setState(() {
-                      currentPage = newValue;
-                      currentPageIndex = index;
-                    });
-                    widget.onPageChanged(index, newValue);
-                  }
-                },
-                items: widget.pageNumbers.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
+              child: SmartDropdownButtonFormField<String>(
+                  textStyle: style.textStyle,
+                  items: widget.pageNumbers,
+                  onChanged: (newValue) {
+                    if (newValue != null) {
+                      int index = widget.pageNumbers.indexOf(newValue);
+                      setState(() {
+                        currentPage = newValue;
+                        currentPageIndex = index;
+                      });
+                      widget.onPageChanged(index, newValue);
+                    }
+                  },
+                  itemLableBuilder: (item) => item,
+                  value: currentPage)),
           const SizedBox(width: 14),
           SmartButton(
             onTap: nextPage,

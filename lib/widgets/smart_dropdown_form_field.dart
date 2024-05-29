@@ -30,13 +30,14 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
     return SizedBox(
       height: height,
       child: DropdownButtonFormField<T>(
+        isExpanded: true,
         value: value,
         style: textStyle ?? style.textStyle,
         menuMaxHeight: menuMaxHeight,
         icon: icon ?? const Icon(Icons.keyboard_arrow_down_sharp),
         dropdownColor: style.dropDownBackgroundColor,
         decoration: InputDecoration(
-          contentPadding: contentPadding ?? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
+          contentPadding: contentPadding ?? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
             borderSide: BorderSide(
@@ -65,6 +66,7 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
               value: value,
               child: SmartText(
                 itemLableBuilder(value),
+                style: textStyle ?? style.textStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ));
