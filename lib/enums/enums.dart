@@ -4,3 +4,16 @@ enum ImageType {
   file,
   svg,
 }
+
+enum ProductCustomizationType {
+  image('image'),
+  metal('metal'),
+  metalKaratage('metal_karatage'),
+  ringSize('ring_size'),
+  other('other'),
+  ;
+
+  final String value;
+
+  const ProductCustomizationType(this.value);
+}

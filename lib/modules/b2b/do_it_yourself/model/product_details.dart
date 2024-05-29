@@ -16,17 +16,18 @@ class ProductDetails {
   bool isSelectedProduct;
 
   ProductDetails(
-      {this.name,
+      {
+        this.productId,
+        this.name,
       this.offerPrice,
       this.originalPrice,
       this.imageUrl,
       this.discountPercentage,
       this.gram,
       this.diamond,
-      this.productId,
       this.productQuality,
       this.productQuantity,
       this.cartProductQuality,
       this.cartProductQuantity,
-      this.isSelectedProduct = false});
+      this.isSelectedProduct = false,});
 }

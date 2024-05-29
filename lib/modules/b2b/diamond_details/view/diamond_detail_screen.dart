@@ -30,7 +30,7 @@ class DiamondDetailScreen extends StatelessWidget {
       bottomNavigationBar: SmartButton(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 17),
         onTap: () {
-          context.pushNamed( AppRoutes.settingListingPage);
+          context.pushNamed(AppRoutes.settingListingPage);
         },
         title: APPStrings.selectDiamond.tr,
       ),
@@ -46,10 +46,7 @@ class DiamondDetailScreen extends StatelessWidget {
           children: [
             CarouselSlider(
               items: diamondBloc.imgList.map((e) {
-                return SmartImage(
-                  path: e,
-                  // width: double.infinity,
-                );
+                return SmartImage(path: e);
               }).toList(),
               carouselController: diamondBloc.controller,
               options: CarouselOptions(

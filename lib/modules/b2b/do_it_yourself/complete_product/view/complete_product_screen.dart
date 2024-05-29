@@ -64,10 +64,7 @@ class CompleteProductScreen extends StatelessWidget {
           children: [
             CarouselSlider(
               items: completeProductBloc.imgList.map((e) {
-                return SmartImage(
-                  path: e,
-                  // width: double.infinity,
-                );
+                return SmartImage(path: e);
               }).toList(),
               carouselController: completeProductBloc.controller,
               options: CarouselOptions(

@@ -99,6 +99,10 @@ abstract class AppTheme {
   MyBagScreenStyle get myBagScreenStyle;
 
   OrderSummaryStyle get orderSummaryStyle;
+
+  ProductDetailsStyle get productDetailsStyle;
+
+  ReviewDetailsStyle get reviewDetailsStyle;
 }
 
 class PrimaryButtonStyle {
@@ -755,5 +759,67 @@ class OrderSummaryStyle {
     required this.orderSummaryItemStyle,
     required this.addPromoCodeStyle,
     required this.totalPriceStyle,
+  });
+}
+
+class ProductDetailsStyle {
+  final TextStyle productTypeStyle;
+  final TextStyle productCodeStyle;
+  final Color dotColor;
+  final TextStyle productNameStyle;
+  final Color ratingGlowColor;
+  final TextStyle compareProductStyle;
+  final TextStyle priceStyle;
+  final TextStyle originalPriceStyle;
+  final TextStyle discountStyle;
+  final TextStyle settingSelectionTitleStyle;
+  final TextStyle settingSelectionValueStyle;
+  final TextStyle selectedSettingStyle;
+  final Color selectedSettingBorderColor;
+  final Color settingSelectionButtonColor;
+  final Color customiseBoxBorderColor;
+  final Color customiseBoxColor;
+  final TextStyle diamondPurityStyle;
+  final TextStyle customerReviewTitleStyle;
+  final TextStyle averageRatingStyle;
+  final TextStyle viewAllReviewStyle;
+  final Color compareCountBGColor;
+
+  ProductDetailsStyle({
+    required this.productTypeStyle,
+    required this.productCodeStyle,
+    required this.dotColor,
+    required this.productNameStyle,
+    required this.ratingGlowColor,
+    required this.compareProductStyle,
+    required this.priceStyle,
+    required this.originalPriceStyle,
+    required this.discountStyle,
+    required this.settingSelectionTitleStyle,
+    required this.settingSelectionValueStyle,
+    required this.selectedSettingStyle,
+    required this.selectedSettingBorderColor,
+    required this.settingSelectionButtonColor,
+    required this.customiseBoxBorderColor,
+    required this.customiseBoxColor,
+    required this.diamondPurityStyle,
+    required this.customerReviewTitleStyle,
+    required this.averageRatingStyle,
+    required this.viewAllReviewStyle,
+    required this.compareCountBGColor,
+  });
+}
+
+class ReviewDetailsStyle {
+  final TextStyle userNameStyle;
+  final Color dotColor;
+  final TextStyle createdDateStyle;
+  final TextStyle titleStyle;
+
+  ReviewDetailsStyle({
+    required this.userNameStyle,
+    required this.dotColor,
+    required this.createdDateStyle,
+    required this.titleStyle,
   });
 }
