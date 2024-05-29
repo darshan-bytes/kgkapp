@@ -1,19 +1,32 @@
-class ProductDetails {
-  final String? name;
-  final String? offerPrice;
-  final String? originalPrice;
-  final String? imageUrl;
-  final String? discountPercentage;
-  final String? gram;
-  final String? diamond;
+import 'package:kgk/kgk.dart';
 
-  ProductDetails({
-    this.name,
-    this.offerPrice,
-    this.originalPrice,
-    this.imageUrl,
-    this.discountPercentage,
-    this.gram,
-    this.diamond,
-  });
+class ProductDetails {
+  String? productId;
+  String? name;
+  String? offerPrice;
+  String? originalPrice;
+  String? imageUrl;
+  String? discountPercentage;
+  String? gram;
+  String? diamond;
+  CartProductQuality? productQuality;
+  CartProductQuantity? productQuantity;
+  List<CartProductQuality>? cartProductQuality;
+  List<CartProductQuantity>? cartProductQuantity;
+  bool isSelectedProduct;
+
+  ProductDetails(
+      {this.name,
+      this.offerPrice,
+      this.originalPrice,
+      this.imageUrl,
+      this.discountPercentage,
+      this.gram,
+      this.diamond,
+      this.productId,
+      this.productQuality,
+      this.productQuantity,
+      this.cartProductQuality,
+      this.cartProductQuantity,
+      this.isSelectedProduct = false});
 }

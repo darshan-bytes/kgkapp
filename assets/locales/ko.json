@@ -124,5 +124,15 @@
   "start_typing_to_search": "Start typing to search",
   "my_wishlist": "My Wishlist",
   "product_x": "{#} Products",
-  "total": "Total"
+  "total": "Total",
+  "my_bag_empty": "My Bag is empty",
+  "checkout": "Checkout",
+  "move_to_wishlist": "Move to Wishlist",
+  "select_product_item_x": "{#} items selected",
+  "add_promo_code": "Add Promo Code",
+  "order_summary": "Order Summary",
+  "you_may_also_like": "You may also like",
+  "unhappy_with_pricing": "Unhappy with pricing?",
+  "select_quality": "Select Quality",
+  "select_quantity": "Select Quantity"
 }

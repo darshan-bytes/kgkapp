@@ -29,6 +29,7 @@ class AppThemes {
         useMaterial3: true,
         primaryColor: appColor.primary,
         scaffoldBackgroundColor: Colors.white,
+        dividerTheme: DividerThemeData(color: appColor.colorD3DAE0),
         scrollbarTheme: ScrollbarThemeData(
           trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
         ),

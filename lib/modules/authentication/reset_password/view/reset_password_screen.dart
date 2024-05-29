@@ -54,6 +54,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             hintText: APPStrings.confirmPassword.tr,
                             lableStyle: style.labelStyle,
                             keyboardType: TextInputType.visiblePassword,
+                            textInputAction: TextInputAction.done,
                             obscured: true,
                             onEditingComplete: () {
                               FocusScope.of(context).nextFocus();
@@ -65,7 +66,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16.0),
                               child: SmartButton(
                                 onTap: () {
-                                  context.pushNamed( AppRoutes.emailSentPage);
+                                  context.pushNamed(AppRoutes.emailSentPage);
                                 },
                                 title: APPStrings.confirmAndLogIn.tr,
                               ),

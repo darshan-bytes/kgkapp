@@ -66,6 +66,5 @@ class AppImages {
   static const String icRing = 'assets/images/ic_ring.svg';
 
   //Add account
-  static const String icLineBlank = 'assets/images/ic_line_blank.svg';
-  static const String icLineFill = 'assets/images/ic_line_fill.svg';
+  static const String icPlus = 'assets/images/ic_plus.svg';
 }

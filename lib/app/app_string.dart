@@ -91,6 +91,8 @@ class APPStrings {
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
   static const String ring = 'ring';
+  static const String remove = 'remove';
+  static const String moveToWishlist = 'move_to_wishlist';
 
   //Sort Filter
   static const String filters = 'filters';
@@ -157,14 +159,25 @@ class APPStrings {
   static const String saveAddress = 'save_address';
   static const String search = 'search';
   static const String startTypingToSearch = 'start_typing_to_search';
+
   // Wishlist
   static const String myWishlist = 'my_wishlist';
   static const String productX = 'product_x';
   static const String total = 'total';
 
+  // My Bag
+  static const String myBagEmpty = 'my_bag_empty';
+  static const String checkout = 'checkout';
+  static const String selectProductItemX = 'select_product_item_x';
+
   // Compare Product
   static const String metalType = 'metal_type';
   static const String settingType = 'setting_type';
   static const String certified = 'certified';
-  static const String remove = 'remove';
+  static const String orderSummary = 'order_summary';
+  static const String addPromoCode = 'add_promo_code';
+  static const String youMayAlsoLike = 'you_may_also_like';
+  static const String unhappyWithPricing = 'unhappy_with_pricing';
+  static const String selectQuality = 'select_quality';
+  static const String selectQuantity = 'select_quantity';
 }

@@ -95,6 +95,10 @@ abstract class AppTheme {
   CountryPickerStyle get countryPickerStyle;
 
   WishListStyle get wishListStyle;
+
+  MyBagScreenStyle get myBagScreenStyle;
+
+  OrderSummaryStyle get orderSummaryStyle;
 }
 
 class PrimaryButtonStyle {
@@ -348,11 +352,13 @@ class CustomPageIndicatorStyle {
   final Color borderColor;
   final Color textColor;
   final TextStyle textStyle;
+  final Color dropDownBackgroundColor;
 
   CustomPageIndicatorStyle({
     required this.borderColor,
     required this.textColor,
     required this.textStyle,
+    required this.dropDownBackgroundColor,
   });
 }
 
@@ -367,6 +373,9 @@ class ProductItemStyle {
   final TextStyle buttonTextStyle;
   final TextStyle buttonWithIconTextStyle;
   final TextStyle diamondTextStyle;
+  final Color transparentColor;
+  final TextStyle removeBagTextStyle;
+  final Color myBagDividerColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -379,6 +388,9 @@ class ProductItemStyle {
     required this.buttonTextStyle,
     required this.buttonWithIconTextStyle,
     required this.diamondTextStyle,
+    required this.transparentColor,
+    required this.removeBagTextStyle,
+    required this.myBagDividerColor,
   });
 }
 
@@ -711,5 +723,37 @@ class WishListStyle {
   WishListStyle({
     required this.numberOfItemsStyle,
     required this.totalAmountStyle,
+  });
+}
+
+class MyBagScreenStyle {
+  final Color backgroundColor;
+  final TextStyle productsTitleStyle;
+  final TextStyle itemSelectedStyle;
+  final TextStyle totalAmountStyle;
+  final TextStyle diamondPurityStyle;
+
+  MyBagScreenStyle({
+    required this.backgroundColor,
+    required this.productsTitleStyle,
+    required this.itemSelectedStyle,
+    required this.totalAmountStyle,
+    required this.diamondPurityStyle,
+  });
+}
+
+class OrderSummaryStyle {
+  final Color backgroundColor;
+  final TextStyle orderSummaryTitleStyle;
+  final TextStyle orderSummaryItemStyle;
+  final TextStyle addPromoCodeStyle;
+  final TextStyle totalPriceStyle;
+
+  OrderSummaryStyle({
+    required this.backgroundColor,
+    required this.orderSummaryTitleStyle,
+    required this.orderSummaryItemStyle,
+    required this.addPromoCodeStyle,
+    required this.totalPriceStyle,
   });
 }

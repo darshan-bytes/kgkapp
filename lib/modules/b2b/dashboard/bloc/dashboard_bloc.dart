@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'dashboard_event.dart';
-
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
@@ -19,7 +18,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   ///[blocList] is a list of blocs that are used in the bottom navigation bar and used for performing
   /// actions on the screen based on the current index
-  final blocList = [
+  final List<Bloc> blocList = [
     BlocProvider.of<HomeBloc>(getNavigatorKeyContext),
     BlocProvider.of<CategoriesBloc>(getNavigatorKeyContext),
     BlocProvider.of<MyBagBloc>(getNavigatorKeyContext),
@@ -40,6 +39,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   ) {
     if (currentIndex != event.index) {
       currentIndex = event.index;
+      switch (event.index) {
+        case 2:
+          blocList[currentIndex].add(InitialMyBagEvent());
+          break;
+      }
       emit(DashboardChangeTabState(event.index));
     }
   }

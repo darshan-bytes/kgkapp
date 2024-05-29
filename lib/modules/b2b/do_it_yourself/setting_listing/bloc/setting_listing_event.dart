@@ -1,6 +1,6 @@
 part of 'setting_listing_bloc.dart';
 
-abstract class SettingListingEvent extends Equatable {
+sealed class SettingListingEvent extends Equatable {
   const SettingListingEvent();
 
   @override

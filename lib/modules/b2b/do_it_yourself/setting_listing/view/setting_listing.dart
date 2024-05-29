@@ -6,7 +6,8 @@ class SettingListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final SettingListingBloc settingListingBloc = BlocProvider.of<SettingListingBloc>(context);
+    final SettingListingBloc settingListingBloc =
+        BlocProvider.of<SettingListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
@@ -20,27 +21,45 @@ class SettingListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: FilterBottomActionBar(
-        onFilterTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            useSafeArea: true,
-            builder: (context) => FilterScreen(
-              onApply: () {},
+      bottomNavigationBar: BlocBuilder<SettingListingBloc, SettingListingState>(
+          builder: (context, state) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SmartPagination(
+              pageNumbers: settingListingBloc.pageNumbers,
+              currentPage: settingListingBloc.selectedPageNumber,
+              onPageChanged: (int index, String newValue) {
+                settingListingBloc
+                    .add(SettingProductChangePageNumberEvent(newValue));
+              },
             ),
-          );
-        },
-        onSortTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            useSafeArea: true,
-            builder: (context) => const SortScreen(),
-          );
-        },
-      ),
-      body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
+            FilterBottomActionBar(
+              onFilterTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+              onSortTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            ),
+          ],
+        );
+      }),
+      body: SingleChildScrollView(
+          child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -48,20 +67,13 @@ class SettingListingScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 16),
-                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
+                const DiyProgressWidget(
+                    padding: EdgeInsets.zero, selectedStep: 2),
                 const SizedBox(height: 24),
                 _buildProductFilterCount(style, settingListingBloc),
                 const SizedBox(height: 24),
                 _buildProductList(style, settingListingBloc),
                 const SizedBox(height: 7),
-                SmartPagination(
-                  pageNumbers: settingListingBloc.pageNumbers,
-                  currentPage: settingListingBloc.selectedPageNumber,
-                  onPageChanged: (int index, String newValue) {
-                    settingListingBloc.add(SettingProductChangePageNumberEvent(newValue));
-                  },
-                ),
-                const SizedBox(height: 24),
               ],
             ),
           ));
@@ -70,13 +82,15 @@ class SettingListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
+  Widget _buildProductFilterCount(
+      DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return SizedBox(
       height: 48,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]),
+              style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -91,9 +105,12 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4),
+                      bottomLeft: Radius.circular(4)),
                   onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent(true));
+                    settingListingBloc
+                        .add(const SettingChangeListingTypeEvent(true));
                   },
                 ),
                 SelectionButton(
@@ -106,9 +123,12 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      bottomRight: Radius.circular(4)),
                   onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent(false));
+                    settingListingBloc
+                        .add(const SettingChangeListingTypeEvent(false));
                   },
                 ),
               ],
@@ -119,7 +139,8 @@ class SettingListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
+  Widget _buildProductList(
+      DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
       builder: (context, state) {
         if (state is LoadingState) {
@@ -132,7 +153,8 @@ class SettingListingScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items: settingListingBloc.productList.map((ProductDetails productDetails) {
+                    items: settingListingBloc.productList
+                        .map((ProductDetails productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     onEyeTap: () {},
