@@ -501,4 +501,12 @@ class LightModeTheme extends AppTheme {
         createdDateStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
+
+  @override
+  OrderConfirmationStyle get orderConfirmationStyle => OrderConfirmationStyle(
+        titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        orderNumberStyle: interRegularTextStyle.copyWith(fontSize: 16, decoration: TextDecoration.underline),
+        descriptionStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      );
 }

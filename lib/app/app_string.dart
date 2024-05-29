@@ -195,4 +195,12 @@ class APPStrings {
   static const String unhappyWithPricing = 'unhappy_with_pricing';
   static const String selectQuality = 'select_quality';
   static const String selectQuantity = 'select_quantity';
+
+  //order confirmation
+  static const String thankYouForYourPurchase = 'thank_you_for_your_purchase';
+  static const String yourOrderNumber = 'your_order_number';
+  static const String orderConfirmWithTrackInfo = 'order_confirm_with_track_info';
+  static const String continueShopping = 'continue_shopping';
+
+  static const String subTotal = 'sub_total';
 }

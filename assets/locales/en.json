@@ -147,5 +147,9 @@
   "add_promo_code": "Add Promo Code",
   "unhappy_with_pricing": "Unhappy with pricing?",
   "select_quality": "Select Quality",
-  "select_quantity": "Select Quantity"
+  "select_quantity": "Select Quantity",
+  "thank_you_for_your_purchase": "Thank you for your purchase!",
+  "your_order_number": "Your order number is: ",
+  "order_confirm_with_track_info": "We'll email you an order confirmation with details and tracking info.",
+  "continue_shopping": "Continue shopping"
 }

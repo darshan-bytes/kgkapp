@@ -103,6 +103,8 @@ abstract class AppTheme {
   ProductDetailsStyle get productDetailsStyle;
 
   ReviewDetailsStyle get reviewDetailsStyle;
+
+  OrderConfirmationStyle get orderConfirmationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -821,5 +823,19 @@ class ReviewDetailsStyle {
     required this.dotColor,
     required this.createdDateStyle,
     required this.titleStyle,
+  });
+}
+
+class OrderConfirmationStyle {
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle orderNumberStyle;
+  final TextStyle descriptionStyle;
+
+  OrderConfirmationStyle({
+    required this.titleTextStyle,
+    required this.subTitleStyle,
+    required this.orderNumberStyle,
+    required this.descriptionStyle,
   });
 }

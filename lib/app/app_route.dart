@@ -22,6 +22,7 @@ class AppRoutes {
   static const addAccountPage = '/addAccountPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
+  static const orderConfirmationPage = '/orderConfirmationPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -167,6 +168,14 @@ class AppRoutes {
           settings: settings,
         );
 
+      case orderConfirmationPage:
+        return MaterialPageRoute(
+          builder: (context) => OrderConfirmationScreen(
+            orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -189,6 +198,7 @@ class AppRoutes {
 enum RoutesData {
   productListData,
   productId,
+  orderNumber,
 }
 
 extension RoutesDataExtension on BuildContext {
