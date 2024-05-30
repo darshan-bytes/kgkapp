@@ -107,6 +107,8 @@ abstract class AppTheme {
   ReviewDetailsStyle get reviewDetailsStyle;
 
   PaymentStyle get paymentStyle;
+  
+  MyBagDiamondItemStyle get myBagDiamondItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -863,5 +865,24 @@ class PaymentStyle {
     required this.isSameAddressStyle,
     required this.footerTotalStyle,
     required this.footerTotalAmountStyle,
+
+  });
+}
+
+class MyBagDiamondItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final TextStyle headingStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle richTextStyle;
+
+  MyBagDiamondItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.headingStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.richTextStyle,
   });
 }

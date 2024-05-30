@@ -36,12 +36,11 @@ final class MyBagProductQuantityChangedState extends MyBagState {
 
 final class MyBagProductRemovedState extends MyBagState {
   final int index;
-  final ProductDetails productDetails;
 
-  const MyBagProductRemovedState({required this.index, required this.productDetails});
+  const MyBagProductRemovedState({required this.index});
 
   @override
-  List<Object> get props => [index, productDetails];
+  List<Object> get props => [index];
 }
 
 final class MyBagSelectAllProductChangedState extends MyBagState {

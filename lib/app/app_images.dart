@@ -71,4 +71,7 @@ class AppImages {
   static const String icUpi = 'assets/images/ic_upi.png';
   static const String icPlus = 'assets/images/ic_plus.svg';
   static const String ic360 = 'assets/images/ic_360.svg';
+
+  //My Bag Screen
+  static const String icMoreHorizontal = 'assets/images/ic_more_horizontal.svg';
 }

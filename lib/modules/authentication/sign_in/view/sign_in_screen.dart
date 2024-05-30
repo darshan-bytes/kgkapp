@@ -8,61 +8,46 @@ class SignInScreen extends StatelessWidget {
     final style = AppTheme.of(context).signInScreenStyle;
     final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
-      appBar: SmartAppBar(
-        appBarHeight: 52,
-        isBorder: false,
-        backgroundColor: style.backgroundColor,
-      ),
+      bottomNavigationBar: buildRichText(context),
+      appBar: SmartAppBar(appBarHeight: 52, isBorder: false, backgroundColor: style.backgroundColor),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 17),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SmartText(
-                                APPStrings.login.tr,
-                                style: style.titleTextStyle,
-                              ),
-                              SmartText(
-                                APPStrings.enterYourAccountDetails.tr,
-                                style: style.subTitleStyle,
-                              ),
-                              const SizedBox(height: 32),
-                              _buildEmailField(style, context, bloc),
-                              const SizedBox(height: 24),
-                              _buildPasswordField(style, context, bloc),
-                              const SizedBox(height: 16),
-                              _buildForgotPasswordText(context, style),
-                              const SizedBox(height: 32),
-                              _buildLoginButton(context),
-
-                              /// TODO: Social login button
-                              // const SizedBox(height: 32),
-                              // _buildDivider(style),
-                              // const SizedBox(height: 24),
-                              // _buildSocialMediaButtons(),
-                              const SizedBox(height: 24),
-                            ],
-                          ),
-                        ),
+                      SmartText(
+                        APPStrings.login.tr,
+                        style: style.titleTextStyle,
                       ),
-                      buildRichText(context),
+                      SmartText(
+                        APPStrings.enterYourAccountDetails.tr,
+                        style: style.subTitleStyle,
+                      ),
+                      const SizedBox(height: 32),
+                      _buildEmailField(style, context, bloc),
+                      const SizedBox(height: 24),
+                      _buildPasswordField(style, context, bloc),
                       const SizedBox(height: 16),
+                      _buildForgotPasswordText(context, style),
+                      const SizedBox(height: 32),
+                      _buildLoginButton(context),
+                      // TODO: For social media buttons
+                      // const SizedBox(height: 32),
+                      // _buildDivider(style),
+                      // const SizedBox(height: 24),
+                      // _buildSocialMediaButtons(),
+                      const SizedBox(height: 24),
                     ],
                   ),
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
@@ -166,18 +151,21 @@ class SignInScreen extends StatelessWidget {
 
   Widget buildRichText(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    return SmartRichText(
-      spans: [
-        SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
-        SmartTextSpan(text: ' '),
-        SmartTextSpan(
-          text: APPStrings.register.tr,
-          onTap: () {
-            context.pushNamed(AppRoutes.signUpPage);
-          },
-          style: style.registerTextStyle,
-        )
-      ],
+    return SafeArea(
+      child: SmartRichText(
+        textAlign: TextAlign.center,
+        spans: [
+          SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
+          SmartTextSpan(text: ' '),
+          SmartTextSpan(
+            text: APPStrings.register.tr,
+            onTap: () {
+              context.pushNamed(AppRoutes.signUpPage);
+            },
+            style: style.registerTextStyle,
+          )
+        ],
+      ),
     );
   }
 }

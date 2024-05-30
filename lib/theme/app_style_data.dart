@@ -522,4 +522,14 @@ class LightModeTheme extends AppTheme {
         footerTotalStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16),
         footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16),
       );
+
+  @override
+  MyBagDiamondItemStyle get myBagDiamondItemStyle => MyBagDiamondItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        headingStyle: interMediumBoldTextStyle,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        richTextStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color50B83C),
+      );
 }
