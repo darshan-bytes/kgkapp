@@ -19,7 +19,8 @@ class AppRoutes {
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
   static const productDetailsPage = '/productDetailsPage';
-  static const addAccountPage = '/addAccountPage';
+  static const addAddressPage = '/addAddressPage';
+  static const addressListPage = '/addressListPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
   static const paymentPage = '/paymentPage';
@@ -137,9 +138,15 @@ class AppRoutes {
           settings: settings,
         );
 
-      case addAccountPage:
+      case addAddressPage:
         return MaterialPageRoute(
-          builder: (_) => const AddAccountScreen(),
+          builder: (_) => const AddAddressScreen(),
+          settings: settings,
+        );
+
+      case addressListPage:
+        return MaterialPageRoute(
+          builder: (_) => const AddressListScreen(),
           settings: settings,
         );
 
@@ -197,6 +204,7 @@ enum RoutesData {
   productListData,
   productId,
   isCustomisationPage,
+  addressDetails,
 }
 
 extension RoutesDataExtension on BuildContext {

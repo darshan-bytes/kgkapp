@@ -232,4 +232,5 @@ class APPStrings {
   static const String yourRate = 'your_rate';
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
+  static const String addAddress = 'add_address';
 }

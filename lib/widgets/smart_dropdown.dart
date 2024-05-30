@@ -65,7 +65,7 @@ class SmartDropDown<T> extends StatelessWidget {
                     style: title.isNotNullNorEmpty ? textFieldStyle.textStyle : textFieldStyle.hintStyle,
                   ),
                 ),
-                const SmartImage(path: AppImages.icArrowDown),
+                const SmartImage(path: AppImages.icArrowDropDown),
               ],
             ),
           ),

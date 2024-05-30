@@ -437,15 +437,15 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  AddAccountScreenStyle get addAccountScreenStyle => AddAccountScreenStyle(
+  AddAddressScreenStyle get addAddressScreenStyle => AddAddressScreenStyle(
         backgroundColor: colors.white,
         dotColor: colors.colorC5DEEB,
         filledDotColor: colors.primary,
         fillLineColor: colors.color424445,
         borderColor: colors.colorD3DAE0,
         shippingBillingAddressStyle: interRegularTextStyle,
-        paymentStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        paymentStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
       );
 
   @override
@@ -531,5 +531,20 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16),
         richTextStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color50B83C),
+      );
+
+  @override
+  AddressSelectionStyle get addressSelectionStyle => AddressSelectionStyle(
+        addressNameStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+        fullAddressStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        contactNumberStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+      );
+
+  @override
+  AddressListStyle get addressListStyle => AddressListStyle(
+        backgroundColor: colors.colorF7F9FA,
+        arrowColor: colors.primary,
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+        nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
       );
 }
