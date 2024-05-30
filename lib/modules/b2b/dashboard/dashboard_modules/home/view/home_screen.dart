@@ -16,6 +16,12 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.collectionPage);
           },
         ),
+        SmartText(
+          APPStrings.writeAReview.tr,
+          onTap: () {
+            context.pushNamed(AppRoutes.writeReviewPage);
+          },
+        ),
       ]),
     );
   }

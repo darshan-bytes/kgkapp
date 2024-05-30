@@ -209,4 +209,10 @@ class APPStrings {
   static const String shipping = 'shipping';
   static const String salesTax = 'sales_tax';
   static const String placeOrder = 'place_order';
+
+  //Write Review
+  static const String stars = 'stars';
+  static const String title = 'title';
+  static const String review = 'review';
+  static const String images = 'images';
 }

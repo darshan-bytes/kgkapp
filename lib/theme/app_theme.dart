@@ -107,6 +107,8 @@ abstract class AppTheme {
   ReviewDetailsStyle get reviewDetailsStyle;
 
   PaymentStyle get paymentStyle;
+
+  WriteReviewScreenStyle get writeReviewScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -863,5 +865,13 @@ class PaymentStyle {
     required this.isSameAddressStyle,
     required this.footerTotalStyle,
     required this.footerTotalAmountStyle,
+  });
+}
+
+class WriteReviewScreenStyle {
+  final TextStyle labelStyle;
+
+  WriteReviewScreenStyle({
+    required this.labelStyle,
   });
 }

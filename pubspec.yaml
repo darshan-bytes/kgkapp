@@ -69,6 +69,9 @@ dependencies:
   #For Screen Util
   flutter_screenutil: ^5.9.1
 
+  #For Dotted Border
+  dotted_border: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

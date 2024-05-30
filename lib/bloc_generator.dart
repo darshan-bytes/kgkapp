@@ -30,6 +30,7 @@ class BlocGenerator {
       BlocProvider<AddAccountBloc>(create: (_) => AddAccountBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
+      BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
     ];
   }
 }

@@ -23,6 +23,7 @@ class AppRoutes {
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
   static const paymentPage = '/paymentPage';
+  static const writeReviewPage = '/writeReviewPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -171,6 +172,12 @@ class AppRoutes {
             lazy: false,
             child: const ProductDetailsScreen(),
           ),
+          settings: settings,
+        );
+
+      case writeReviewPage:
+        return MaterialPageRoute(
+          builder: (_) => const WriteReviewScreen(),
           settings: settings,
         );
 

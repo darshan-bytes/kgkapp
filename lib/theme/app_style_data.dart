@@ -522,4 +522,7 @@ class LightModeTheme extends AppTheme {
         footerTotalStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16),
         footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16),
       );
+
+  @override
+  WriteReviewScreenStyle get writeReviewScreenStyle => WriteReviewScreenStyle(labelStyle: interRegularTextStyle);
 }
