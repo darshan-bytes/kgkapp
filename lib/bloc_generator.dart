@@ -29,6 +29,7 @@ class BlocGenerator {
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
       BlocProvider<AddAccountBloc>(create: (_) => AddAccountBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
+      BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
     ];
   }
 }

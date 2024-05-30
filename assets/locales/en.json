@@ -152,5 +152,10 @@
   "total_approx_price": "Total Approx Price",
   "customise_product": "Customise product",
   "paypal": "Paypal",
-  "upi": "UPI"
+  "upi": "UPI",
+  "price_details": "Price details",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "sales_tax": "Sales tax",
+  "place_order": "Place Order"
 }
