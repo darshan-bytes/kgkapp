@@ -66,7 +66,9 @@ class AppImages {
   static const String icRing = 'assets/images/ic_ring.svg';
   static const String icEdit = 'assets/images/ic_edit.svg';
 
-  //Add account
+  //Payment screen
+  static const String icPaypal = 'assets/images/ic_paypal.svg';
+  static const String icUpi = 'assets/images/ic_upi.png';
   static const String icPlus = 'assets/images/ic_plus.svg';
   static const String ic360 = 'assets/images/ic_360.svg';
 }

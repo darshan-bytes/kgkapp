@@ -508,4 +508,18 @@ class LightModeTheme extends AppTheme {
   CheckOutStyle get checkOutStyle => CheckOutStyle(
         dividerColor: colors.colorD3DAE0,
       );
+
+  @override
+  PaymentStyle get paymentStyle => PaymentStyle(
+        backgroundColor: colors.white,
+        dotColor: colors.colorC5DEEB,
+        filledDotColor: colors.primary,
+        fillLineColor: colors.color424445,
+        borderColor: colors.colorD3DAE0,
+        shippingBillingAddressStyle: interRegularTextStyle,
+        paymentStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        footerTotalStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16),
+        footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16),
+      );
 }

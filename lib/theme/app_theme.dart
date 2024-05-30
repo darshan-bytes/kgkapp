@@ -105,6 +105,8 @@ abstract class AppTheme {
   ProductDetailsStyle get productDetailsStyle;
 
   ReviewDetailsStyle get reviewDetailsStyle;
+
+  PaymentStyle get paymentStyle;
 }
 
 class PrimaryButtonStyle {
@@ -835,5 +837,31 @@ class ReviewDetailsStyle {
     required this.dotColor,
     required this.createdDateStyle,
     required this.titleStyle,
+  });
+}
+
+class PaymentStyle {
+  final Color backgroundColor;
+  final Color dotColor;
+  final Color filledDotColor;
+  final Color fillLineColor;
+  final Color borderColor;
+  final TextStyle shippingBillingAddressStyle;
+  final TextStyle paymentStyle;
+  final TextStyle isSameAddressStyle;
+  final TextStyle footerTotalStyle;
+  final TextStyle footerTotalAmountStyle;
+
+  PaymentStyle({
+    required this.backgroundColor,
+    required this.dotColor,
+    required this.filledDotColor,
+    required this.fillLineColor,
+    required this.borderColor,
+    required this.shippingBillingAddressStyle,
+    required this.paymentStyle,
+    required this.isSameAddressStyle,
+    required this.footerTotalStyle,
+    required this.footerTotalAmountStyle,
   });
 }

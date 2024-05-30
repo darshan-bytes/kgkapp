@@ -198,4 +198,15 @@ class APPStrings {
   static const String head = 'head';
   static const String totalApproxPrice = 'total_approx_price';
   static const String customiseProduct = 'customise_product';
+
+  //Payment
+  static const String paypal = 'paypal';
+  static const String upi = 'upi';
+
+  //Price Details
+  static const String priceDetails = 'price_details';
+  static const String subtotal = 'subtotal';
+  static const String shipping = 'shipping';
+  static const String salesTax = 'sales_tax';
+  static const String placeOrder = 'place_order';
 }

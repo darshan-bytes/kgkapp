@@ -1,15 +1,21 @@
 import 'package:kgk/kgk.dart';
 
 class OrderSummary extends StatelessWidget {
+  final String? title;
   final List<OrderSummaryItem> items;
   final String totalPrice;
-  final void Function() onTapCheckout;
+  final void Function()? onTapCheckout;
+  final bool isPromoCodeApplied;
+  final TextStyle? titleStyle;
 
   const OrderSummary({
+    this.title,
     super.key,
     required this.items,
     required this.totalPrice,
-    required this.onTapCheckout,
+    this.onTapCheckout,
+    this.isPromoCodeApplied = true,
+    this.titleStyle,
   });
 
   @override
@@ -23,8 +29,8 @@ class OrderSummary extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SmartText(
-            APPStrings.orderSummary.tr,
-            style: style.orderSummaryTitleStyle,
+            title ?? APPStrings.orderSummary.tr,
+            style: titleStyle == null ? style.orderSummaryTitleStyle : style.orderSummaryTitleStyle.merge(titleStyle),
           ),
           const SizedBox(height: 24),
           ListView.separated(
@@ -38,13 +44,17 @@ class OrderSummary extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 16),
           ),
           const SizedBox(height: 16),
-          const Divider(height: 1),
-          _buildPromoCodeSection(style),
-          const Divider(height: 1),
+          if (isPromoCodeApplied) ...[
+            const Divider(height: 1),
+            _buildPromoCodeSection(style),
+            const Divider(height: 1),
+          ],
           const SizedBox(height: 16),
           _buildTotalSection(style),
-          const SizedBox(height: 24),
-          SmartButton(onTap: onTapCheckout, title: APPStrings.checkout.tr),
+          if (onTapCheckout != null) ...[
+            const SizedBox(height: 24),
+            SmartButton(onTap: onTapCheckout!, title: APPStrings.checkout.tr),
+          ]
         ],
       ),
     );

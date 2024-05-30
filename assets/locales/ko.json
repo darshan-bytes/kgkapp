@@ -139,8 +139,8 @@
   "my_wishlist": "My Wishlist",
   "product_x": "{#} Products",
   "total": "Total",
-  "my_bag_empty": "My Bag is empty",
   "checkout": "Checkout",
+  "my_bag_empty": "My Bag is empty",
   "move_to_wishlist": "Move to Wishlist",
   "select_product_item_x": "{#} items selected",
   "add_promo_code": "Add Promo Code",
@@ -150,5 +150,12 @@
   "select_quantity": "Select Quantity",
   "head": "Head",
   "total_approx_price": "Total Approx Price",
-  "customise_product": "Customise product"
+  "customise_product": "Customise product",
+  "paypal": "Paypal",
+  "upi": "UPI",
+  "price_details": "Price details",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "sales_tax": "Sales tax",
+  "place_order": "Place Order"
 }

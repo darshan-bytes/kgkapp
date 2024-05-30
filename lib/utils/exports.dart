@@ -117,11 +117,13 @@ export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
+export 'package:kgk/modules/b2b/payment/bloc/payment_bloc.dart';
 export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
+export 'package:kgk/modules/b2b/payment/view/payment_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internet_screen.dart';
 
 // bloc

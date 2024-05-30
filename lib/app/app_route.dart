@@ -22,6 +22,7 @@ class AppRoutes {
   static const addAccountPage = '/addAccountPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
+  static const paymentPage = '/paymentPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -154,6 +155,12 @@ class AppRoutes {
       case compareProductPage:
         return MaterialPageRoute(
           builder: (_) => const CompareProductScreen(),
+          settings: settings,
+        );
+
+      case paymentPage:
+        return MaterialPageRoute(
+          builder: (_) => const PaymentScreen(),
           settings: settings,
         );
 
