@@ -91,6 +91,8 @@ class APPStrings {
   static const String addToBag = 'add_to_bag';
   static const String select = 'select';
   static const String ring = 'ring';
+  static const String remove = 'remove';
+  static const String moveToWishlist = 'move_to_wishlist';
 
   //Sort Filter
   static const String filters = 'filters';
@@ -144,6 +146,22 @@ class APPStrings {
   static const String clarity = 'clarity';
   static const String setting = 'setting';
 
+  static const String diamondShape = 'diamond_shape';
+  static const String metalKaratage = 'metal_karatage';
+  static const String diamondQuality = 'diamond_quality';
+  static const String ringSize = 'ring_size';
+  static const String customiseDescription = 'customise_description';
+  static const String craftingDescription = 'crafting_description';
+
+  static const String customerReviews = 'customer_reviews';
+  static const String writeAReview = 'write_a_review';
+  static const String readMore = 'read_more';
+  static const String readLess = 'read_less';
+  static const String viewAllXReviews = 'view_all_x_reviews';
+  static const String youMayAlsoLike = 'you_may_also_like';
+  static const String recentlyViewed = 'recently_viewed';
+  static const String compare = 'compare';
+
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';
   static const String payment = 'payment';
@@ -157,19 +175,31 @@ class APPStrings {
   static const String saveAddress = 'save_address';
   static const String search = 'search';
   static const String startTypingToSearch = 'start_typing_to_search';
+
   // Wishlist
   static const String myWishlist = 'my_wishlist';
   static const String productX = 'product_x';
   static const String total = 'total';
 
+  // My Bag
+  static const String myBagEmpty = 'my_bag_empty';
+  static const String checkout = 'checkout';
+  static const String selectProductItemX = 'select_product_item_x';
+
   // Compare Product
   static const String metalType = 'metal_type';
   static const String settingType = 'setting_type';
   static const String certified = 'certified';
-  static const String remove = 'remove';
+  static const String orderSummary = 'order_summary';
+  static const String addPromoCode = 'add_promo_code';
+  static const String unhappyWithPricing = 'unhappy_with_pricing';
+  static const String selectQuality = 'select_quality';
+  static const String selectQuantity = 'select_quantity';
+  static const String head = 'head';
+  static const String totalApproxPrice = 'total_approx_price';
+  static const String customiseProduct = 'customise_product';
 
   //Payment
   static const String paypal = 'paypal';
   static const String upi = 'upi';
-  static const String checkout = 'checkout';
 }

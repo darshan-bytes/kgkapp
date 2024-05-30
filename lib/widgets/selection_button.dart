@@ -19,26 +19,25 @@ class SelectionButton extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final double? iconBetweenSpace;
 
-  const SelectionButton({
-    super.key,
-    required this.isSelected,
-    this.title,
-    this.image,
-    required this.onTap,
-    this.height,
-    this.width,
-    this.padding,
-    this.selectedButtonColor,
-    this.unselectedButtonColor,
-    this.selectedButtonBorderColor,
-    this.unselectedButtonBorderColor,
-    this.selectedButtonIconColor,
-    this.unselectedButtonIconColor,
-    this.selectedButtonTextStyle,
-    this.unselectedButtonTextStyle,
-    this.borderRadius,
-    this.iconBetweenSpace
-  });
+  const SelectionButton(
+      {super.key,
+      required this.isSelected,
+      this.title,
+      this.image,
+      required this.onTap,
+      this.height,
+      this.width,
+      this.padding,
+      this.selectedButtonColor,
+      this.unselectedButtonColor,
+      this.selectedButtonBorderColor,
+      this.unselectedButtonBorderColor,
+      this.selectedButtonIconColor,
+      this.unselectedButtonIconColor,
+      this.selectedButtonTextStyle,
+      this.unselectedButtonTextStyle,
+      this.borderRadius,
+      this.iconBetweenSpace});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +60,7 @@ class SelectionButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (image != null)
               SmartImage(
@@ -69,7 +69,7 @@ class SelectionButton extends StatelessWidget {
                     ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
                     : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
               ),
-            if (image != null && title != null)   SizedBox(width:iconBetweenSpace ?? 8),
+            if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8),
             if (title != null)
               Flexible(
                 child: SmartText(

@@ -25,7 +25,7 @@ class AddAccountScreen extends StatelessWidget {
           builder: (context, state) {
             return SafeArea(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Here GestureDetector is used to trigger state change and temporarily use it for testing
                   GestureDetector(
@@ -64,9 +64,8 @@ class AddAccountScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: SmartImage(
-              path: AppImages.icLineBlank,
-              color: bloc.isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
+            child: DotIndicator(
+              dotColor: bloc.isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
             ),
           ),
           Container(

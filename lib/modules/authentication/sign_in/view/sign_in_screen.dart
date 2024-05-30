@@ -171,7 +171,7 @@ class SignInScreen extends StatelessWidget {
         SmartTextSpan(
           text: APPStrings.register.tr,
           onTap: () {
-            context.pushNamed( AppRoutes.signUpPage);
+            context.pushNamed(AppRoutes.signUpPage);
           },
           style: style.registerTextStyle,
         )

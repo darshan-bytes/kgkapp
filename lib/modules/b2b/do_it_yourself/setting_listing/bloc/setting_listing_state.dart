@@ -1,6 +1,6 @@
 part of 'setting_listing_bloc.dart';
 
-abstract class SettingListingState extends Equatable {
+sealed class SettingListingState extends Equatable {
   const SettingListingState();
 
   @override

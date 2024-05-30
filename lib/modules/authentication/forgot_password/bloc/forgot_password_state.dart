@@ -1,6 +1,6 @@
 part of 'forgot_password_bloc.dart';
 
-abstract class ForgotPasswordState extends Equatable {
+sealed class ForgotPasswordState extends Equatable {
   const ForgotPasswordState();
 
   @override

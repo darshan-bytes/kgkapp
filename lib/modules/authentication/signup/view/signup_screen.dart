@@ -71,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                       ...generateIndividualForm(signUpBloc, context)
                     else
                       ...generateCompanyForm(signUpBloc, context),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 32),
                     _buildRegisterButton(context),
                   ],
                 ),

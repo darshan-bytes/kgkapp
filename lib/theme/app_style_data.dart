@@ -139,8 +139,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   SplashScreenStyle get splashScreenStyle => SplashScreenStyle(
-        skipTextStyle: interMediumBoldTextStyle.copyWith(
-            color: colors.white, fontSize: 16),
+        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16),
         titleStyle: interMediumBoldTextStyle,
         activeBackgroundColor: colors.white,
       );
@@ -156,18 +155,14 @@ class LightModeTheme extends AppTheme {
   SignInScreenStyle get signInScreenStyle => SignInScreenStyle(
         backgroundColor: colors.white,
         titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32),
-        subTitleStyle: interRegularTextStyle.copyWith(
-            fontSize: 12, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
         labelStyle: interRegularTextStyle,
-        forgotPasswordStyle:
-            interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        registerTextStyle:
-            interRegularTextStyle.copyWith(color: colors.color083458),
+        forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
       );
 
   @override
-  SmartRichTextStyle get smartRichTextStyle =>
-      SmartRichTextStyle(textStyle: interRegularTextStyle);
+  SmartRichTextStyle get smartRichTextStyle => SmartRichTextStyle(textStyle: interRegularTextStyle);
 
   @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
@@ -238,20 +233,27 @@ class LightModeTheme extends AppTheme {
 
   @override
   ProductItemStyle get productItemStyle => ProductItemStyle(
-      backgroundColor: colors.white,
-      productNameStyle: interRegularTextStyle,
-      priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
-      discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
-      productBackgroundColor: colors.colorFAFAFA,
-      checkedPriceStyle: interRegularTextStyle.copyWith(
-        fontSize: 12,
-        color: colors.color8C8C8C,
-        decoration: TextDecoration.lineThrough,
-      ),
-      borderColor: colors.colorD3DAE0,
-      buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
-      diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
-      buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16));
+        backgroundColor: colors.white,
+        productNameStyle: interRegularTextStyle,
+        priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14),
+        discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+        productBackgroundColor: colors.colorFAFAFA,
+        checkedPriceStyle: interRegularTextStyle.copyWith(
+          fontSize: 12,
+          color: colors.color8C8C8C,
+          decoration: TextDecoration.lineThrough,
+        ),
+        borderColor: colors.colorD3DAE0,
+        buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12),
+        diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12),
+        buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(
+          color: colors.white,
+          fontSize: 16,
+        ),
+        transparentColor: colors.transparent,
+        removeBagTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
+        myBagDividerColor: colors.colorD3DAE0,
+      );
 
   @override
   SmartDropDownStyle get smartDropDownStyle => SmartDropDownStyle(
@@ -265,6 +267,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   CustomPageIndicatorStyle get customPageIndicatorStyle => CustomPageIndicatorStyle(
+        dropDownBackgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,
         textColor: colors.primary,
         textStyle: interRegularTextStyle.copyWith(fontSize: 16),
@@ -335,6 +338,7 @@ class LightModeTheme extends AppTheme {
         settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
       );
+
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: colors.color303538),
@@ -403,6 +407,21 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  WishListStyle get wishListStyle => WishListStyle(
+        numberOfItemsStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  MyBagScreenStyle get myBagScreenStyle => MyBagScreenStyle(
+        backgroundColor: colors.white,
+        productsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24),
+        itemSelectedStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        totalAmountStyle: interMediumBoldTextStyle,
+        diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+      );
+
+  @override
   CompareProductStyle get compareProductStyle => CompareProductStyle(
         productTitleStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
         productSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
@@ -442,8 +461,51 @@ class LightModeTheme extends AppTheme {
       ));
 
   @override
-  WishListStyle get wishListStyle => WishListStyle(
-        numberOfItemsStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
-        totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+  OrderSummaryStyle get orderSummaryStyle => OrderSummaryStyle(
+        backgroundColor: colors.colorF7F9FA,
+        orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18),
+        orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16),
+        addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        totalPriceStyle: interMediumBoldTextStyle,
+      );
+
+  @override
+  ProductDetailsStyle get productDetailsStyle => ProductDetailsStyle(
+        productTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        productCodeStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        dotColor: colors.color8C8C8C,
+        productNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28, color: colors.color303538),
+        ratingGlowColor: colors.primary,
+        compareProductStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        priceStyle: interSemiBoldTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        originalPriceStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        discountStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color50B83C),
+        settingSelectionTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        settingSelectionValueStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color8C8C8C),
+        selectedSettingStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.color303538),
+        selectedSettingBorderColor: colors.primary,
+        settingSelectionButtonColor: colors.colorF8F8F8,
+        customiseBoxBorderColor: colors.colorD3DAE0,
+        customiseBoxColor: colors.colorF7F9FA,
+        diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color8C8C8C),
+        customerReviewTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        averageRatingStyle: interMediumBoldTextStyle.copyWith(fontSize: 24, color: colors.color303538),
+        viewAllReviewStyle: interRegularTextStyle.copyWith(fontSize: 14, color: colors.primary),
+        compareCountBGColor: colors.color4885A3,
+        totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18, color: colors.color303538),
+        totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  ReviewDetailsStyle get reviewDetailsStyle => ReviewDetailsStyle(
+        userNameStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color303538),
+        dotColor: colors.color4885A3,
+        createdDateStyle: interRegularTextStyle.copyWith(fontSize: 12, color: colors.color8C8C8C),
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16, color: colors.color303538),
+      );
+
+  @override
+  CheckOutStyle get checkOutStyle => CheckOutStyle(
+        dividerColor: colors.colorD3DAE0,
       );
 }

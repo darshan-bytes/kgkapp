@@ -18,6 +18,7 @@ class AppRoutes {
   static const diamondListingPage = '/diamondListingPage';
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
+  static const productDetailsPage = '/productDetailsPage';
   static const addAccountPage = '/addAccountPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
@@ -27,8 +28,7 @@ class AppRoutes {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
     switch (settings.name) {
       case initialRoute:
-        return MaterialPageRoute(
-          builder: (_) => const SplashScreen(), settings: settings);
+        return MaterialPageRoute(builder: (_) => const SplashScreen(), settings: settings);
 
       case getReadyPage:
         return MaterialPageRoute(
@@ -164,6 +164,16 @@ class AppRoutes {
           settings: settings,
         );
 
+      case productDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<ProductDetailsBloc>(
+            create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
+            lazy: false,
+            child: const ProductDetailsScreen(),
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -185,6 +195,8 @@ class AppRoutes {
 
 enum RoutesData {
   productListData,
+  productId,
+  isCustomisationPage,
 }
 
 extension RoutesDataExtension on BuildContext {

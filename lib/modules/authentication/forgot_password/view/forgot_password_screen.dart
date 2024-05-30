@@ -43,6 +43,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                               hintText: APPStrings.email.tr,
                               lableStyle: style.labelStyle,
                               keyboardType: TextInputType.emailAddress,
+                              textInputAction: TextInputAction.done,
                               onEditingComplete: () {
                                 FocusScope.of(context).nextFocus();
                               },
@@ -53,7 +54,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 child: SmartButton(
                                   onTap: () {
-                                    context.pushNamed( AppRoutes.emailSentPage);
+                                    context.pushNamed(AppRoutes.emailSentPage);
                                   },
                                   title: APPStrings.submit.tr,
                                 ),

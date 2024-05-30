@@ -1,8 +1,11 @@
 import 'package:kgk/kgk.dart';
 
 class InquiryWidget extends StatelessWidget {
-  const InquiryWidget({super.key, required this.phone, required this.email});
+  const InquiryWidget({super.key, required this.phone, required this.email, this.title, this.description, this.isRightArrow = true});
 
+  final String? title;
+  final String? description;
+  final bool isRightArrow;
   final String email;
   final String phone;
 
@@ -20,11 +23,11 @@ class InquiryWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SmartText(
-                  APPStrings.haveAQuestion.tr,
+                  title ?? APPStrings.haveAQuestion.tr,
                   style: style.haveAQuestionStyle,
                 ),
                 const SizedBox(height: 8),
-                SmartText(APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle),
+                SmartText(description ?? APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -44,10 +47,11 @@ class InquiryWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 4),
-            child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16),
-          )
+          if (isRightArrow)
+            const Padding(
+              padding: EdgeInsets.only(top: 10, left: 20, right: 4),
+              child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16),
+            )
         ],
       ),
     );

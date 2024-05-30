@@ -25,7 +25,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   void getRouteData(BuildContext context) async {
-    context = context;
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
       if (data[RoutesData.productListData] != null) {

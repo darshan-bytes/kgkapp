@@ -1,0 +1,57 @@
+part of 'product_details_bloc.dart';
+
+sealed class ProductDetailsEvent extends Equatable {
+  const ProductDetailsEvent();
+}
+
+final class LoadProductDetailsEvent extends ProductDetailsEvent {
+  final BuildContext context;
+
+  const LoadProductDetailsEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class OnProductImageChangeEvent extends ProductDetailsEvent {
+  final int index;
+
+  const OnProductImageChangeEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+final class ToggleCompareProductEvent extends ProductDetailsEvent {
+  const ToggleCompareProductEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductCustomizationChangeEvent extends ProductDetailsEvent {
+  final int index;
+  final int childIndex;
+
+  const ProductCustomizationChangeEvent({
+    required this.index,
+    required this.childIndex,
+  });
+
+  @override
+  List<Object> get props => [index, childIndex];
+}
+
+final class RingDetailsToggleEvent extends ProductDetailsEvent {
+  const RingDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class DiamondDetailsToggleEvent extends ProductDetailsEvent {
+  const DiamondDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
+}

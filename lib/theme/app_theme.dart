@@ -95,6 +95,16 @@ abstract class AppTheme {
   CountryPickerStyle get countryPickerStyle;
 
   WishListStyle get wishListStyle;
+
+  CheckOutStyle get checkOutStyle;
+
+  MyBagScreenStyle get myBagScreenStyle;
+
+  OrderSummaryStyle get orderSummaryStyle;
+
+  ProductDetailsStyle get productDetailsStyle;
+
+  ReviewDetailsStyle get reviewDetailsStyle;
 }
 
 class PrimaryButtonStyle {
@@ -348,11 +358,13 @@ class CustomPageIndicatorStyle {
   final Color borderColor;
   final Color textColor;
   final TextStyle textStyle;
+  final Color dropDownBackgroundColor;
 
   CustomPageIndicatorStyle({
     required this.borderColor,
     required this.textColor,
     required this.textStyle,
+    required this.dropDownBackgroundColor,
   });
 }
 
@@ -367,6 +379,9 @@ class ProductItemStyle {
   final TextStyle buttonTextStyle;
   final TextStyle buttonWithIconTextStyle;
   final TextStyle diamondTextStyle;
+  final Color transparentColor;
+  final TextStyle removeBagTextStyle;
+  final Color myBagDividerColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -379,6 +394,9 @@ class ProductItemStyle {
     required this.buttonTextStyle,
     required this.buttonWithIconTextStyle,
     required this.diamondTextStyle,
+    required this.transparentColor,
+    required this.removeBagTextStyle,
+    required this.myBagDividerColor,
   });
 }
 
@@ -711,5 +729,111 @@ class WishListStyle {
   WishListStyle({
     required this.numberOfItemsStyle,
     required this.totalAmountStyle,
+  });
+}
+
+class CheckOutStyle {
+  final Color dividerColor;
+
+  CheckOutStyle({
+    required this.dividerColor,
+  });
+}
+
+class MyBagScreenStyle {
+  final Color backgroundColor;
+  final TextStyle productsTitleStyle;
+  final TextStyle itemSelectedStyle;
+  final TextStyle totalAmountStyle;
+  final TextStyle diamondPurityStyle;
+
+  MyBagScreenStyle({
+    required this.backgroundColor,
+    required this.productsTitleStyle,
+    required this.itemSelectedStyle,
+    required this.totalAmountStyle,
+    required this.diamondPurityStyle,
+  });
+}
+
+class OrderSummaryStyle {
+  final Color backgroundColor;
+  final TextStyle orderSummaryTitleStyle;
+  final TextStyle orderSummaryItemStyle;
+  final TextStyle addPromoCodeStyle;
+  final TextStyle totalPriceStyle;
+
+  OrderSummaryStyle({
+    required this.backgroundColor,
+    required this.orderSummaryTitleStyle,
+    required this.orderSummaryItemStyle,
+    required this.addPromoCodeStyle,
+    required this.totalPriceStyle,
+  });
+}
+
+class ProductDetailsStyle {
+  final TextStyle productTypeStyle;
+  final TextStyle productCodeStyle;
+  final Color dotColor;
+  final TextStyle productNameStyle;
+  final Color ratingGlowColor;
+  final TextStyle compareProductStyle;
+  final TextStyle priceStyle;
+  final TextStyle originalPriceStyle;
+  final TextStyle discountStyle;
+  final TextStyle settingSelectionTitleStyle;
+  final TextStyle settingSelectionValueStyle;
+  final TextStyle selectedSettingStyle;
+  final Color selectedSettingBorderColor;
+  final Color settingSelectionButtonColor;
+  final Color customiseBoxBorderColor;
+  final Color customiseBoxColor;
+  final TextStyle diamondPurityStyle;
+  final TextStyle customerReviewTitleStyle;
+  final TextStyle averageRatingStyle;
+  final TextStyle viewAllReviewStyle;
+  final Color compareCountBGColor;
+  final TextStyle totalApproxStyle;
+  final TextStyle totalApproxSubStyle;
+
+  ProductDetailsStyle({
+    required this.productTypeStyle,
+    required this.productCodeStyle,
+    required this.dotColor,
+    required this.productNameStyle,
+    required this.ratingGlowColor,
+    required this.compareProductStyle,
+    required this.priceStyle,
+    required this.originalPriceStyle,
+    required this.discountStyle,
+    required this.settingSelectionTitleStyle,
+    required this.settingSelectionValueStyle,
+    required this.selectedSettingStyle,
+    required this.selectedSettingBorderColor,
+    required this.settingSelectionButtonColor,
+    required this.customiseBoxBorderColor,
+    required this.customiseBoxColor,
+    required this.diamondPurityStyle,
+    required this.customerReviewTitleStyle,
+    required this.averageRatingStyle,
+    required this.viewAllReviewStyle,
+    required this.compareCountBGColor,
+    required this.totalApproxStyle,
+    required this.totalApproxSubStyle,
+  });
+}
+
+class ReviewDetailsStyle {
+  final TextStyle userNameStyle;
+  final Color dotColor;
+  final TextStyle createdDateStyle;
+  final TextStyle titleStyle;
+
+  ReviewDetailsStyle({
+    required this.userNameStyle,
+    required this.dotColor,
+    required this.createdDateStyle,
+    required this.titleStyle,
   });
 }
