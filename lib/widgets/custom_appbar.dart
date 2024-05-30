@@ -68,14 +68,14 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
           Navigator.pop(context);
         }
       },
-      child: const SizedBox(
-        height: 24,
-        width: 24,
+      child: SizedBox(
+        height: 24.w,
+        width: 24.w,
         child: Center(
           child: SmartImage(
             path: AppImages.icBack,
-            height: 24,
-            width: 24,
+            height: 24.w,
+            width: 24.w,
           ),
         ),
       ),
@@ -87,7 +87,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       mainAxisAlignment: isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         if (leading == null && isBack) leadingIcon(context),
-        if (leading == null && isBack) const SizedBox(width: 6),
+        if (leading == null && isBack) SizedBox(width: 6.w),
         if (title != null)
           Expanded(
             child: SmartText(
@@ -116,21 +116,21 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions.add(_buildIconButton(onNotification!, AppImages.icNotification, 24));
     }
     if (this.actions != null) {
-      actions.add(const SizedBox(width: 17));
+      actions.add(SizedBox(width: 17.w));
     }
     actions.addAll(this.actions ?? []);
-    actions.add(SizedBox(width: optionalEndSpacing ?? 17));
+    actions.add(SizedBox(width: optionalEndSpacing ?? 17.w));
     return actions;
   }
 
   Widget _buildIconButton(VoidCallback onTap, String assetPath, double size) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: EdgeInsets.only(left: 20.w),
       child: InkWell(
         onTap: onTap,
         child: SizedBox(
-          height: size,
-          width: size,
+          height: size.w,
+          width: size.w,
           child: Center(
             child: SmartImage(
               path: assetPath,

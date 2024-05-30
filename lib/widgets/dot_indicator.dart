@@ -8,40 +8,40 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 44,
+      width: 44.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 2,
-            width: 5,
+            height: 2.h,
+            width: 5.w,
             decoration: BoxDecoration(
               color: dotColor,
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(1)),
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(1.r)),
             ),
           ),
           Container(
-            height: 2,
-            width: 10,
+            height: 2.h,
+            width: 10.w,
             decoration: BoxDecoration(
               color: dotColor,
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(1), left: Radius.circular(1)),
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(1.r), left: Radius.circular(1.r)),
             ),
           ),
           Container(
-            height: 2,
-            width: 10,
+            height: 2.h,
+            width: 10.w,
             decoration: BoxDecoration(
               color: dotColor,
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(1), left: Radius.circular(1)),
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(1.r), left: Radius.circular(1.r)),
             ),
           ),
           Container(
-            height: 2,
-            width: 5,
+            height: 2.h,
+            width: 5.w,
             decoration: BoxDecoration(
               color: dotColor,
-              borderRadius: const BorderRadius.horizontal(left: Radius.circular(1)),
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(1.r)),
             ),
           ),
         ],

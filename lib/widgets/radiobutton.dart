@@ -42,14 +42,14 @@ class SmartRadioButton<T> extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: padding ?? const EdgeInsets.symmetric(vertical: 12),
+        padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 24,
-              width: 24,
+              height: 24.w,
+              width: 24.w,
               child: Radio<T>(
                 value: value,
                 focusNode: focusNode,
@@ -68,7 +68,7 @@ class SmartRadioButton<T> extends StatelessWidget {
                 }),
               ),
             ),
-            if (label != null) const SizedBox(width: 4),
+            if (label != null) SizedBox(width: 4.w),
             if (label != null)
               SmartText(
                 label,

@@ -63,17 +63,17 @@ class SettingListingScreen extends StatelessWidget {
         builder: (context, state) {
           return SafeArea(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17),
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(
               children: [
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 const DiyProgressWidget(
                     padding: EdgeInsets.zero, selectedStep: 2),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildProductFilterCount(style, settingListingBloc),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildProductList(style, settingListingBloc),
-                const SizedBox(height: 7),
+                SizedBox(height: 7.h),
               ],
             ),
           ));
@@ -85,7 +85,7 @@ class SettingListingScreen extends StatelessWidget {
   Widget _buildProductFilterCount(
       DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return SizedBox(
-      height: 48,
+      height: 48.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -96,7 +96,7 @@ class SettingListingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SelectionButton(
-                  width: 48,
+                  width: 48.w,
                   isSelected: settingListingBloc.isGrid,
                   image: AppImages.icGrid,
                   selectedButtonColor: style.gridBackgroundColor,
@@ -105,16 +105,14 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(4),
-                      bottomLeft: Radius.circular(4)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
                     settingListingBloc
                         .add(const SettingChangeListingTypeEvent(true));
                   },
                 ),
                 SelectionButton(
-                  width: 48,
+                  width: 48.w,
                   isSelected: !settingListingBloc.isGrid,
                   image: AppImages.icList,
                   selectedButtonColor: style.gridBackgroundColor,
@@ -123,9 +121,7 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(4),
-                      bottomRight: Radius.circular(4)),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
                     settingListingBloc
                         .add(const SettingChangeListingTypeEvent(false));
@@ -164,15 +160,15 @@ class SettingListingScreen extends StatelessWidget {
                     },
                   );
                 }).toList()),
-                const SizedBox(
-                  height: 17,
+                SizedBox(
+                  height: 17.h,
                 )
               ],
             );
           } else {
             return ListView.builder(
               itemBuilder: (context, index) => ProductListItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},

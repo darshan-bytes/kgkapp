@@ -47,15 +47,15 @@ class AddAccountScreen extends StatelessWidget {
   Widget _buildShippingBillingAddress(AddAccountBloc bloc, AddAccountScreenStyle style) {
     return Container(
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 14),
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
       child: Row(
         children: [
           Container(
-            height: 6,
-            width: 6,
+            height: 6.w,
+            width: 6.w,
             decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
           Flexible(
             child: SmartText(
               APPStrings.shippingBillingAddress.tr,
@@ -63,18 +63,18 @@ class AddAccountScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: DotIndicator(
               dotColor: bloc.isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
             ),
           ),
           Container(
-            height: 6,
-            width: 6,
+            height: 6.w,
+            width: 6.w,
             decoration: BoxDecoration(
                 color: bloc.isShippingAndBillingAddressFilled ? style.filledDotColor : style.dotColor, shape: BoxShape.circle),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
           SmartText(APPStrings.payment.tr,
               style: bloc.isShippingAndBillingAddressFilled ? style.shippingBillingAddressStyle : style.paymentStyle),
         ],
@@ -87,10 +87,10 @@ class AddAccountScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is AddAccountChangeAddressSameState,
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 22),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 22.h),
           child: SmartCheckbox(
-            height: 24,
-            width: 24,
+            height: 24.w,
+            width: 24.w,
             value: bloc.isShippingAddressSame,
             onChanged: (value) {
               bloc.add(AddAccountAddressSameEvent(value));
@@ -109,26 +109,26 @@ class AddAccountScreen extends StatelessWidget {
           current is AddAccountChangeCityState || current is AddAccountChangeStateState || current is AddAccountChangeCountryState,
       builder: (context, state) {
         return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17),
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(children: [
               _buildFirstNameField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildLastNameField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildStreetAddressField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildApartmentField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildCityField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildStateField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildCountryField(bloc, countryPickerStyle, context),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildZipCodeField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _buildPhoneField(bloc),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               SmartButton(
                 onTap: () {},
                 title: APPStrings.saveAddress.tr,
@@ -229,7 +229,7 @@ class AddAccountScreen extends StatelessWidget {
           APPStrings.country.tr,
           style: countryPickerStyle.inputLableStyle,
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         InkWell(
           onTap: () {
             Utils.showCountryPickerModel(
@@ -241,13 +241,13 @@ class AddAccountScreen extends StatelessWidget {
             );
           },
           child: Container(
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            height: 48.h,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
             decoration: BoxDecoration(
               border: Border.all(
                 color: countryPickerStyle.inputBorderColor,
               ),
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
             ),
             child: Row(
               children: [
@@ -257,7 +257,7 @@ class AddAccountScreen extends StatelessWidget {
                     style: countryPickerStyle.inputTextStyle,
                   ),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4.w),
                 const SmartImage(path: AppImages.icArrowDown),
               ],
             ),

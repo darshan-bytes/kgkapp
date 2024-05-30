@@ -2,8 +2,8 @@ import 'package:kgk/kgk.dart';
 
 class CartProductItem extends StatelessWidget {
   final ProductDetails productDetails;
-  final double boxHeight;
-  final double boxWidth;
+  final double? boxHeight;
+  final double? boxWidth;
   final double? imageHeight;
   final double? imageWidth;
   final Function()? onTap;
@@ -28,8 +28,8 @@ class CartProductItem extends StatelessWidget {
   const CartProductItem(
       {super.key,
       required this.productDetails,
-      this.boxHeight = 96,
-      this.boxWidth = 96,
+      this.boxHeight,
+      this.boxWidth,
       this.imageHeight,
       this.imageWidth,
       this.onTap,
@@ -69,7 +69,7 @@ class CartProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 productImageSection(style),
-                const SizedBox(width: 16),
+                SizedBox(width: 16.w),
                 productDetailsSection(style, context),
               ],
             ),
@@ -91,7 +91,7 @@ class CartProductItem extends StatelessWidget {
                       }
                     },
                   )),
-                  Container(width: 1, height: 48, color: style.myBagDividerColor),
+                  Container(width: 1.w, height: 48.h, color: style.myBagDividerColor),
                   Expanded(
                       child: SmartButton(
                           activeBackgroundColor: style.backgroundColor,
@@ -116,8 +116,8 @@ class CartProductItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: boxHeight,
-          width: boxWidth,
+          height: boxHeight ?? 96.w,
+          width: boxWidth ?? 96.w,
           alignment: Alignment.center,
           color: style.productBackgroundColor,
           child: SmartImage(
@@ -128,11 +128,11 @@ class CartProductItem extends StatelessWidget {
           ),
         ),
         Positioned(
-            top: 8,
-            left: 8,
+            top: 8.h,
+            left: 8.w,
             child: SmartCheckbox(
-              height: 24,
-              width: 24,
+              height: 24.w,
+              width: 24.w,
               value: isSelectedProduct,
               onChanged: (bool? newValue) {
                 if (onChangedCheckbox != null) {
@@ -155,15 +155,15 @@ class CartProductItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? style.backgroundColor,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(4.r),
         ),
-        height: 24,
-        width: 24,
+        height: 24.w,
+        width: 24.w,
         alignment: Alignment.center,
         child: SmartImage(
           path: path,
-          height: 16,
-          width: 16,
+          height: 16.w,
+          width: 16.w,
           fit: BoxFit.contain,
         ),
       ),
@@ -184,25 +184,25 @@ class CartProductItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               priceSection(style),
             ],
             if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               diamondAndGramSection(style, context),
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartText(
                 productDetails.discountPercentage,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
             ],
             Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -220,7 +220,7 @@ class CartProductItem extends StatelessWidget {
                       onChanged: (newValue) => onQualityChanged?.call(newValue!),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   Expanded(
                     flex: 1,
                     child: SmartDropdownButtonFormField<CartProductQuantity>(
@@ -256,7 +256,7 @@ class CartProductItem extends StatelessWidget {
           ),
         ),
         if (productDetails.offerPrice.isNotNullNorEmpty) ...[
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Flexible(
             child: SmartText(
               productDetails.originalPrice,
@@ -278,8 +278,8 @@ class CartProductItem extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SmartImage(path: AppImages.icBlankDiamond, height: 16, width: 16),
-                const SizedBox(width: 4),
+                SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
                     productDetails.diamond,
@@ -291,15 +291,15 @@ class CartProductItem extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
         ],
         if (productDetails.gram.isNotNullNorEmpty)
           Flexible(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SmartImage(path: AppImages.icGram, height: 16, width: 16),
-                const SizedBox(width: 4),
+                SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
                     productDetails.gram,

@@ -43,14 +43,14 @@ class ProductListScreen extends StatelessWidget {
       body: SingleChildScrollView(
           child: SafeArea(
               child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17),
+        padding: EdgeInsets.symmetric(horizontal: 17.w),
         child: Column(
           children: [
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildProductFilterCount(diamondListingStyle, bloc),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             _buildProductList(diamondListingStyle, bloc),
-            const SizedBox(height: 7),
+            SizedBox(height: 7.h),
           ],
         ),
       ))),
@@ -64,7 +64,7 @@ class ProductListScreen extends StatelessWidget {
           current is ProductChangeListingTypeState,
       builder: (context, state) {
         return SizedBox(
-          height: 48,
+          height: 48.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -76,7 +76,7 @@ class ProductListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SelectionButton(
-                      width: 48,
+                      width: 48.w,
                       isSelected: bloc.isGrid,
                       image: AppImages.icGrid,
                       selectedButtonColor: style.gridBackgroundColor,
@@ -85,15 +85,13 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(4),
-                          bottomLeft: Radius.circular(4)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ProductChangeListingTypeEvent(true));
                       },
                     ),
                     SelectionButton(
-                      width: 48,
+                      width: 48.w,
                       isSelected: !bloc.isGrid,
                       image: AppImages.icList,
                       selectedButtonColor: style.gridBackgroundColor,
@@ -102,9 +100,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(4),
-                          bottomRight: Radius.circular(4)),
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ProductChangeListingTypeEvent(false));
                       },
@@ -141,15 +137,15 @@ class ProductListScreen extends StatelessWidget {
                     },
                   );
                 }).toList()),
-                const SizedBox(
-                  height: 17,
+                SizedBox(
+                  height: 17.h,
                 )
               ],
             );
           } else {
             return ListView.builder(
               itemBuilder: (context, index) => ProductListItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},

@@ -51,16 +51,16 @@ class WishlistScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is WishlistDataFetchedState,
           builder: (context, state) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14.h),
                   SmartText(
                     APPStrings.productX.tr.interpolate(["12"]),
                     style: wishlistStyle.numberOfItemsStyle,
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -74,22 +74,10 @@ class WishlistScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14.h),
                   _buildWishlistCount(bloc),
-                  const SizedBox(height: 14),
-                  // BlocBuilder<WishlistBloc, WishlistState>(
-                  //   buildWhen: (previous, current) => current is ChangeWishlistPageNumberState,
-                  //   builder: (context, state) {
-                  //     return SmartPagination(
-                  //       pageNumbers: bloc.pageNumbers,
-                  //       currentPage: bloc.selectedPageNumber,
-                  //       onPageChanged: (int index, String newValue) {
-                  //         bloc.add(ChangeWishlistPageNumberEvent(newValue));
-                  //       },
-                  //     );
-                  //   },
-                  // ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 14.h),
+                  SizedBox(height: 24.h),
                 ],
               ),
             );

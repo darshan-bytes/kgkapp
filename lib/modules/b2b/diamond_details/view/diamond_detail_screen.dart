@@ -20,15 +20,15 @@ class DiamondDetailScreen extends StatelessWidget {
               selectedStep: 1,
             ),
             _imageSlider(diamondBloc),
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: 40.h,
             ),
             _productDetail(context, diamondBloc)
           ],
         ),
       ),
       bottomNavigationBar: SmartButton(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 17),
+        margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
         onTap: () {
           context.pushNamed(AppRoutes.settingListingPage);
         },
@@ -63,9 +63,9 @@ class DiamondDetailScreen extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => diamondBloc.controller.animateToPage(entry.key),
                   child: Container(
-                    width: 10.0,
-                    height: 10.0,
-                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    width: 10.0.w,
+                    height: 10.0.w,
+                    margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: diamondBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
@@ -82,7 +82,7 @@ class DiamondDetailScreen extends StatelessWidget {
   Widget _productDetail(BuildContext context, DiamondDetailBloc diamondBloc) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,12 +90,12 @@ class DiamondDetailScreen extends StatelessWidget {
             'SKU 14178065',
             style: style.skuStyle,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           SmartText(
             '1.01 Carat Round Diamond',
             style: style.diamondNameStyle,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Row(
             children: [
               RatingBar(
@@ -104,77 +104,77 @@ class DiamondDetailScreen extends StatelessWidget {
                 onRatingUpdate: (double value) {},
                 allowHalfRating: false,
                 itemSize: 16,
-                itemPadding: const EdgeInsets.only(right: 2, left: 2),
+                itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
                 ratingWidget: RatingWidget(
                   empty: const SmartImage(path: AppImages.icEmptyStar),
                   full: const SmartImage(path: AppImages.icFullStar),
                   half: Container(),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               SmartText(
                 APPStrings.reviews.interpolate([120]).tr,
                 style: style.reviewStyle,
               )
             ],
           ),
-          const SizedBox(height: 24),
-          const Divider(height: 1),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
+          Divider(height: 1.h),
+          SizedBox(height: 24.h),
           SmartText(
             '\$3,020',
             style: style.priceStyle,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Row(
             children: [
               SmartText(
                 APPStrings.wantToSeeProductPhysically.tr,
                 style: style.seeProductStyle,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               SmartText(
                 APPStrings.orderSample.tr,
                 style: style.orderSampleStyle,
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          const Divider(height: 1),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
+          Divider(height: 1.h),
+          SizedBox(height: 24.h),
           Row(
             children: [
-              const SmartImage(
+              SmartImage(
                 path: AppImages.icDiamond,
-                height: 24,
-                width: 24,
+                height: 24.w,
+                width: 24.w,
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.diamondPurityYouCanTrust.tr,
                 style: style.diamondPurityStyle,
               )
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               const SmartImage(path: AppImages.icTruck),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.shippingAcrossAllCountries.tr,
                 style: style.shippingStyle,
               )
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          const SizedBox(height: 24),
-          const Divider(height: 1),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
+          Divider(height: 1.h),
+          SizedBox(height: 24.h),
         ],
       ),
     );

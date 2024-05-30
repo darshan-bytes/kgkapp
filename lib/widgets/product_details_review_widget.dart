@@ -10,7 +10,7 @@ class ProductReviewsDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SmartText(APPStrings.customerReviews.tr, style: style.customerReviewTitleStyle),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -21,7 +21,7 @@ class ProductReviewsDetails extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(right: BorderSide(color: style.customiseBoxBorderColor)),
                 ),
-                padding: const EdgeInsets.fromLTRB(0, 42, 24, 42),
+                padding: EdgeInsets.fromLTRB(0, 42.w, 24.h, 42.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -30,11 +30,11 @@ class ProductReviewsDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SmartText('4.0', style: style.averageRatingStyle),
-                        const SizedBox(width: 4),
-                        const SmartImage(path: AppImages.icFullStar, height: 20, width: 20),
+                        SizedBox(width: 4.w),
+                        SmartImage(path: AppImages.icFullStar, height: 20.h, width: 20.w),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     SmartText(
                       APPStrings.reviews.tr.interpolate([120]),
                       style: style.productCodeStyle,
@@ -46,14 +46,14 @@ class ProductReviewsDetails extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                padding: const EdgeInsets.only(left: 24),
+                padding: EdgeInsets.only(left: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       children: [
                         SmartText('5'.tr),
-                        const SizedBox(width: 18),
+                        SizedBox(width: 18.w),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: 0.8,
@@ -63,11 +63,11 @@ class ProductReviewsDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         SmartText('4'.tr),
-                        const SizedBox(width: 18),
+                        SizedBox(width: 18.w),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: 0.5,
@@ -77,11 +77,11 @@ class ProductReviewsDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         SmartText('3'.tr),
-                        const SizedBox(width: 18),
+                        SizedBox(width: 18.w),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: 0.0,
@@ -91,11 +91,11 @@ class ProductReviewsDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         SmartText('2'.tr),
-                        const SizedBox(width: 18),
+                        SizedBox(width: 18.w),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: 0.1,
@@ -105,11 +105,11 @@ class ProductReviewsDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         SmartText('1'.tr),
-                        const SizedBox(width: 18),
+                        SizedBox(width: 18.w),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: 0.2,
@@ -125,7 +125,7 @@ class ProductReviewsDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         SmartButton(
           onTap: () {},
           title: APPStrings.writeAReview.tr,

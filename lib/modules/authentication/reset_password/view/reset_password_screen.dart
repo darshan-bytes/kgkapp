@@ -10,7 +10,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: 52,
+        appBarHeight: 52.h,
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
@@ -20,7 +20,7 @@ class ResetPasswordScreen extends StatelessWidget {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(minHeight: constraints.maxHeight),
                     child: IntrinsicHeight(
@@ -35,7 +35,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             APPStrings.resetPasswordDescription.tr,
                             style: style.subTitleStyle,
                           ),
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32.h),
                           SmartTextField(
                             controller: resetPasswordBloc.newPasswordController,
                             labelText: APPStrings.newPassword.tr,
@@ -47,7 +47,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               FocusScope.of(context).nextFocus();
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           SmartTextField(
                             controller: resetPasswordBloc.confirmPasswordController,
                             labelText: APPStrings.confirmPassword.tr,
@@ -63,7 +63,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           const Spacer(),
                           if (state is ResetPasswordInitial)
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16.0),
+                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
                               child: SmartButton(
                                 onTap: () {
                                   context.pushNamed(AppRoutes.emailSentPage);

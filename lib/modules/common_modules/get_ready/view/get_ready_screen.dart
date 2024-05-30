@@ -20,7 +20,7 @@ class GetReadyScreen extends StatelessWidget {
               ),
               SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -32,12 +32,12 @@ class GetReadyScreen extends StatelessWidget {
                         },
                         textAlign: TextAlign.end,
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Center(
                           child: SmartImage(
                             path: AppImages.icSplashLogo,
-                            height: 112,
-                            width: 112,
+                            height: 112.w,
+                            width: 112.w,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -56,7 +56,7 @@ class GetReadyScreen extends StatelessWidget {
                               title: APPStrings.login.tr,
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: 16.w),
                           Expanded(
                             child: SmartButton(
                               onTap: () {

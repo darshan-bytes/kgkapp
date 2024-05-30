@@ -24,10 +24,10 @@ class PaymentScreen extends StatelessWidget {
                     plusIconPath: AppImages.icPlus,
                     context: context,
                   ),
-                  const Divider(
-                    height: 0.5,
-                    endIndent: 14,
-                    indent: 14,
+                  Divider(
+                    height: 0.5.h,
+                    endIndent: 14.w,
+                    indent: 14.w,
                   ),
                   _paymentOption(
                     onTap: () {},
@@ -39,16 +39,16 @@ class PaymentScreen extends StatelessWidget {
                   const Spacer(),
                   _buildOrderSummary(),
                   Container(
-                    height: 80,
-                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    height: 80.h,
+                    margin: EdgeInsets.symmetric(horizontal: 14.w),
                     child: Row(
                       children: [
                         SmartText(
                           APPStrings.total.tr,
                           style: style.footerTotalStyle,
                         ),
-                        const SizedBox(
-                          width: 8,
+                        SizedBox(
+                          width: 8.w,
                         ),
                         SmartText(
                           '\$35,700,00',
@@ -58,7 +58,7 @@ class PaymentScreen extends StatelessWidget {
                         SmartButton(
                           onTap: () {},
                           title: APPStrings.placeOrder.tr,
-                          width: 168,
+                          width: 168.w,
                         )
                       ],
                     ),
@@ -84,19 +84,19 @@ class PaymentScreen extends StatelessWidget {
         InkWell(
           onTap: onTap,
           child: Container(
-            height: 48,
-            margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+            height: 48.h,
+            margin: EdgeInsets.symmetric(horizontal: 17.w, vertical: 10.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SmartImage(path: imagePath, height: 24, width: 24),
-                const SizedBox(
-                  width: 10,
+                SmartImage(path: imagePath, height: 24.w, width: 24.w),
+                SizedBox(
+                  width: 10.w,
                 ),
                 SmartText(text),
                 const Spacer(),
-                SmartImage(path: plusIconPath, height: 24, width: 24),
+                SmartImage(path: plusIconPath, height: 24.w, width: 24.w),
               ],
             ),
           ),
@@ -108,15 +108,15 @@ class PaymentScreen extends StatelessWidget {
   Widget _buildShippingBillingAddress(PaymentBloc bloc, PaymentStyle style) {
     return Container(
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 14),
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
       child: Row(
         children: [
           Container(
-            height: 6,
-            width: 6,
+            height: 6.w,
+            width: 6.w,
             decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
           Flexible(
             child: SmartText(
               APPStrings.shippingBillingAddress.tr,
@@ -124,17 +124,17 @@ class PaymentScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: DotIndicator(
               dotColor: style.fillLineColor,
             ),
           ),
           Container(
-            height: 6,
-            width: 6,
+            height: 6.w,
+            width: 6.w,
             decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
           SmartText(APPStrings.payment.tr, style: style.shippingBillingAddressStyle),
         ],
       ),
@@ -144,7 +144,7 @@ class PaymentScreen extends StatelessWidget {
   Widget _buildOrderSummary() {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
-      titleStyle: const TextStyle(fontSize: 24),
+      titleStyle: TextStyle(fontSize: 24.sp),
       isPromoCodeApplied: false,
       items: [
         // Here String come from API

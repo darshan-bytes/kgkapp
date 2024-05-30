@@ -9,7 +9,7 @@ class SignInScreen extends StatelessWidget {
     final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: 52,
+        appBarHeight: 52.h,
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
@@ -24,7 +24,7 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17),
+                          padding: EdgeInsets.symmetric(horizontal: 17.w),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -36,13 +36,13 @@ class SignInScreen extends StatelessWidget {
                                 APPStrings.enterYourAccountDetails.tr,
                                 style: style.subTitleStyle,
                               ),
-                              const SizedBox(height: 32),
+                              SizedBox(height: 32.h),
                               _buildEmailField(style, context, bloc),
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24.h),
                               _buildPasswordField(style, context, bloc),
-                              const SizedBox(height: 16),
+                              SizedBox(height: 16.h),
                               _buildForgotPasswordText(context, style),
-                              const SizedBox(height: 32),
+                              SizedBox(height: 32.h),
                               _buildLoginButton(context),
 
                               /// TODO: Social login button
@@ -50,13 +50,13 @@ class SignInScreen extends StatelessWidget {
                               // _buildDivider(style),
                               // const SizedBox(height: 24),
                               // _buildSocialMediaButtons(),
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24.h),
                             ],
                           ),
                         ),
                       ),
                       buildRichText(context),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                   ),
                 ),
@@ -125,7 +125,7 @@ class SignInScreen extends StatelessWidget {
       children: [
         const Divider(),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           color: style.backgroundColor,
           child: SmartText(
             APPStrings.orLoginWith.tr,
@@ -150,12 +150,12 @@ class SignInScreen extends StatelessWidget {
             path: AppImages.icFacebook,
           ),
         ),
-        const SizedBox(width: 40),
+        SizedBox(width: 40.w),
         GestureDetector(
           onTap: () {},
           child: const SmartImage(path: AppImages.icGoogle),
         ),
-        const SizedBox(width: 40),
+        SizedBox(width: 40.w),
         GestureDetector(
           onTap: () {},
           child: const SmartImage(path: AppImages.icZoho),
