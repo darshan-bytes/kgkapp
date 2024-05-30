@@ -11,8 +11,8 @@ class NoInternetScreen extends StatelessWidget {
       data: theme,
       child: Scaffold(
         body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: context.height,
+          width: context.width,
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

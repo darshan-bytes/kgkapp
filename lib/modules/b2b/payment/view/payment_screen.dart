@@ -11,58 +11,60 @@ class PaymentScreen extends StatelessWidget {
       appBar: SmartAppBar(title: APPStrings.checkout.tr),
       body: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                _buildShippingBillingAddress(bloc, style),
-                _paymentOption(
-                  onTap: () {},
-                  imagePath: AppImages.icPaypal,
-                  text: APPStrings.paypal.tr,
-                  plusIconPath: AppImages.icPlus,
-                  context: context,
-                ),
-                const Divider(
-                  height: 0.5,
-                  endIndent: 14,
-                  indent: 14,
-                ),
-                _paymentOption(
-                  onTap: () {},
-                  imagePath: AppImages.icUpi,
-                  text: APPStrings.upi.tr,
-                  plusIconPath: AppImages.icPlus,
-                  context: context,
-                ),
-                const Spacer(),
-                _buildOrderSummary(),
-                Container(
-                  height: 80,
-                  margin: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Row(
-                    children: [
-                      SmartText(
-                        APPStrings.total.tr,
-                        style: style.footerTotalStyle,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      SmartText(
-                        '\$35,700,00',
-                        style: style.footerTotalAmountStyle,
-                      ),
-                      const Spacer(),
-                      SmartButton(
-                        onTap: () {},
-                        title: APPStrings.placeOrder.tr,
-                        width: 168,
-                      )
-                    ],
+          return SafeArea(
+            child: SizedBox(
+              height: context.height,
+              child: Column(
+                children: [
+                  _buildShippingBillingAddress(bloc, style),
+                  _paymentOption(
+                    onTap: () {},
+                    imagePath: AppImages.icPaypal,
+                    text: APPStrings.paypal.tr,
+                    plusIconPath: AppImages.icPlus,
+                    context: context,
                   ),
-                )
-              ],
+                  const Divider(
+                    height: 0.5,
+                    endIndent: 14,
+                    indent: 14,
+                  ),
+                  _paymentOption(
+                    onTap: () {},
+                    imagePath: AppImages.icUpi,
+                    text: APPStrings.upi.tr,
+                    plusIconPath: AppImages.icPlus,
+                    context: context,
+                  ),
+                  const Spacer(),
+                  _buildOrderSummary(),
+                  Container(
+                    height: 80,
+                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    child: Row(
+                      children: [
+                        SmartText(
+                          APPStrings.total.tr,
+                          style: style.footerTotalStyle,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        SmartText(
+                          '\$35,700,00',
+                          style: style.footerTotalAmountStyle,
+                        ),
+                        const Spacer(),
+                        SmartButton(
+                          onTap: () {},
+                          title: APPStrings.placeOrder.tr,
+                          width: 168,
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },

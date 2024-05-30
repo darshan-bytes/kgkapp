@@ -20,10 +20,10 @@ class SelectedCategoryDetails extends StatelessWidget {
                     : Alignment.centerLeft,
             child: Container(
               margin: arrowPosition == ArrowPosition.rightTop
-                  ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.15)
+                  ? EdgeInsets.only(right: context.width * 0.15)
                   : arrowPosition == ArrowPosition.centerTop
                       ? EdgeInsets.zero
-                      : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+                      : EdgeInsets.only(left: context.width * 0.15),
               child: ClipPath(
                 clipper: TriangleClipper(arrowPosition: arrowPosition),
                 child: Container(

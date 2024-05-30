@@ -24,7 +24,7 @@ class Utils {
       countryListTheme: CountryListThemeData(
         flagSize: 25,
         backgroundColor: countryPickerStyle.backgroundColor,
-        bottomSheetHeight: MediaQuery.of(context).size.height * 0.8,
+        bottomSheetHeight: context.height * 0.8,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(10.0),
           topRight: Radius.circular(10.0),
