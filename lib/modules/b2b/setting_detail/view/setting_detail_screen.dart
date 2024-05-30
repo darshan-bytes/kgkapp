@@ -339,7 +339,7 @@ class SettingDetailScreen extends StatelessWidget {
         Container(
           height: 100,
           alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width,
+          width: context.width,
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,

@@ -14,8 +14,8 @@ class GetReadyScreen extends StatelessWidget {
           return Stack(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
+                height: context.height,
+                width: context.width,
                 child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
               ),
               SafeArea(

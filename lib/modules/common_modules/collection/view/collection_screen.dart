@@ -17,7 +17,7 @@ class CollectionScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(children: [
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: context.width,
             margin: const EdgeInsets.only(bottom: 20),
             height: 176,
             color: style.headerBgColor,
@@ -66,7 +66,7 @@ class CollectionScreen extends StatelessWidget {
                                       ? "https://i.ibb.co/CQCRPFy/Banner.png"
                                       : "https://i.ibb.co/k4n8Qry/Banner.png",
                                   height: index == 0 || index == 3 ? 200 : 140,
-                                  width: MediaQuery.of(context).size.width,
+                                  width: context.width,
                                   fit: BoxFit.fill,
                                 ),
                               ),

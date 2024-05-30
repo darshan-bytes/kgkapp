@@ -39,7 +39,7 @@ class ProductGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).productItemStyle;
-    final double productItemWidth = (MediaQuery.of(context).size.width - 46) / 2;
+    final double productItemWidth = (context.width - 46) / 2;
 
     return GestureDetector(
       onTap: onTap,
