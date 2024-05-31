@@ -94,32 +94,40 @@ class MyBagScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17),
       itemBuilder: (context, index) {
         ProductDetails product = bloc.myBagProductList[index];
-        return CartProductItem(
-          selectedQuality: product.productQuality,
-          selectedQuantity: product.productQuantity,
-          onRemoveTap: () {
-            bloc.add(MyBagRemoveProduct(index: index, productDetails: product));
-          },
-          onMoveToWishListTap: () {},
-          margin: const EdgeInsets.only(bottom: 24),
-          onEyeTap: () {},
-          onTap: () {
-            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: product.productId});
-          },
-          productDetails: product,
-          qualityOptionsList: product.cartProductQuality ?? [],
-          quantityOptionsList: product.cartProductQuantity ?? [],
-          onQualityChanged: (CartProductQuality value) {
-            bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
-          },
-          onQuantityChanged: (CartProductQuantity value) {
-            bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
-          },
-          isSelectedProduct: product.isSelectedProduct,
-          onChangedCheckbox: (value) {
-            bloc.add(MyBagSelectProductChangedEvent(index: index, isSelectedProduct: !product.isSelectedProduct));
-          },
-        );
+        if (product.isDiamondProduct) {
+          return MyBagDiamondItem(
+            onTap: () {},
+            productDetails: product,
+            margin: const EdgeInsets.only(bottom: 17),
+          );
+        } else {
+          return CartProductItem(
+            selectedQuality: product.productQuality,
+            selectedQuantity: product.productQuantity,
+            onRemoveTap: () {
+              bloc.add(MyBagRemoveProduct(index: index));
+            },
+            onMoveToWishListTap: () {},
+            margin: const EdgeInsets.only(bottom: 24),
+            onEyeTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: product.productId});
+            },
+            productDetails: product,
+            qualityOptionsList: product.cartProductQuality ?? [],
+            quantityOptionsList: product.cartProductQuantity ?? [],
+            onQualityChanged: (CartProductQuality value) {
+              bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
+            },
+            onQuantityChanged: (CartProductQuantity value) {
+              bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
+            },
+            isSelectedProduct: product.isSelectedProduct,
+            onChangedCheckbox: (value) {
+              bloc.add(MyBagSelectProductChangedEvent(index: index));
+            },
+          );
+        }
       },
       itemCount: bloc.myBagProductList.length,
       shrinkWrap: true,
