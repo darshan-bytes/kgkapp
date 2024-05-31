@@ -30,6 +30,7 @@ class CompleteProductScreen extends StatelessWidget {
           children: [
             Expanded(
               child: SmartButton(
+                height: 48.w,
                 prefixImage: AppImages.icShoppingBag,
                 title: APPStrings.addToBag.tr,
                 onTap: () {},
@@ -37,10 +38,13 @@ class CompleteProductScreen extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
             SelectionButton(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               isSelected: false,
               onTap: () {},
               image: AppImages.icHeart,
+              height: 48.w,
+              // imageHeight: 24.w,
+              // imageWidth: 24.w,
             ),
             const SizedBox(width: 8),
             SelectionButton(
@@ -48,6 +52,7 @@ class CompleteProductScreen extends StatelessWidget {
               isSelected: false,
               onTap: () {},
               image: AppImages.icShare,
+              height: 48.w,
             ),
           ],
         ),

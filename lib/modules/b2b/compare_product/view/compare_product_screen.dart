@@ -37,7 +37,7 @@ class CompareProductScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  height: 132.h,
+                  height: 132.w,
                   padding: EdgeInsets.symmetric(horizontal: 14.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -45,8 +45,8 @@ class CompareProductScreen extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
+                        spreadRadius: 5.r,
+                        blurRadius: 7.r,
                         offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ],
@@ -70,7 +70,7 @@ class CompareProductScreen extends StatelessWidget {
                                         onTap: () {},
                                         title: APPStrings.addToBag.tr,
                                         width: 114.w,
-                                        height: 48.h,
+                                        height: 48.w,
                                       ),
                                       SizedBox(
                                         height: 8.h,
@@ -182,7 +182,7 @@ class CompareProductScreen extends StatelessWidget {
   }
 
   Widget _buildProductDetailWidgets(int index, String label, String value, CompareProductStyle style,
-      {double textHeight = 40, int maxLines = 2}) {
+      {double textHeight = 48, int maxLines = 2}) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Visibility(
         visible: index == 0,
@@ -200,8 +200,8 @@ class CompareProductScreen extends StatelessWidget {
       Divider(height: 1.h),
       SizedBox(height: 8.h),
       Container(
-        margin: EdgeInsets.only(right: 10.w),
-        height: textHeight,
+        margin: EdgeInsets.only(right: 12.w),
+        height: textHeight.h,
         child: SmartText(
           value,
           style: style.productTitleStyle,

@@ -7,6 +7,8 @@ class SelectionButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final double? height;
   final double? width;
+  final double? imageHeight;
+  final double? imageWidth;
   final EdgeInsetsGeometry? padding;
   final Color? selectedButtonColor;
   final Color? unselectedButtonColor;
@@ -27,6 +29,8 @@ class SelectionButton extends StatelessWidget {
       required this.onTap,
       this.height,
       this.width,
+      this.imageHeight,
+      this.imageWidth,
       this.padding,
       this.selectedButtonColor,
       this.unselectedButtonColor,
@@ -46,7 +50,7 @@ class SelectionButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: height ?? 48.h,
+        height: height ?? 48.w,
         width: width,
         padding: padding,
         decoration: BoxDecoration(
@@ -68,6 +72,8 @@ class SelectionButton extends StatelessWidget {
                 color: isSelected
                     ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
                     : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
+                height: imageHeight,
+                width: imageWidth,
               ),
             if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8.h),
             if (title != null)

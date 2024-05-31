@@ -117,6 +117,7 @@ class AddAddressScreen extends StatelessWidget {
   Widget _buildApartmentField(AddAddressBloc bloc) {
     return SmartTextField(
       labelText: APPStrings.apartmentSuite.tr,
+      hintText: APPStrings.apartmentSuite.tr,
       controller: bloc.apartmentController,
       focusNode: bloc.apartmentFocusNode,
       nextFocus: bloc.cityFocusNode,

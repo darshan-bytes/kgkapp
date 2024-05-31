@@ -146,7 +146,10 @@ class AppRoutes {
 
       case addressListPage:
         return MaterialPageRoute(
-          builder: (_) => const AddressListScreen(),
+          builder: (context) {
+            BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
+            return const AddressListScreen();
+          },
           settings: settings,
         );
 
@@ -233,6 +236,14 @@ extension RoutesDataExtension on BuildContext {
   Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
       {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+  }
+
+  dynamic popUntil(RoutePredicate predicate) async {
+    return Navigator.popUntil(this, predicate);
+  }
+
+  dynamic popUntilOfContext(RoutePredicate predicate) async {
+    return Navigator.of(this).popUntil(predicate);
   }
 
   Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {

@@ -6,6 +6,7 @@ part 'address_list_state.dart';
 
 class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   AddressListBloc() : super(AddressListInitial()) {
+    on<LoadAddressListEvent>(_onLoadAddressListEvent);
     on<ChangeSelectedAddressEvent>(_onChangeSelectedAddressEvent);
     on<DeleteAddressEvent>(_onDeleteAddressEvent);
     on<EditAddressEvent>(_onEditAddressEvent);
@@ -57,6 +58,11 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
             offerPrice: '\$3,000.00',
           ));
 
+  void _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) {
+    selectedAddress = addressList.first;
+    emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame, productList));
+  }
+
   void _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) {
     int oldIndex = addressList.indexOf(selectedAddress ?? AddressDetails());
     selectedAddress = addressList[event.index];
@@ -65,8 +71,8 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   void _onDeleteAddressEvent(DeleteAddressEvent event, Emitter<AddressListState> emit) {
     emit(const AddressListReloadState());
-    if (selectedAddress == addressList[event.index]) {
-      selectedAddress = null;
+    if (selectedAddress == addressList[event.index] && addressList.length > 1) {
+      selectedAddress = addressList.first;
     }
     addressList.removeAt(event.index);
     emit(const DeleteAddressState());

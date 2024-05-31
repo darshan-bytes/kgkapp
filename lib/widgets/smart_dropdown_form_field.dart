@@ -28,7 +28,7 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).customPageIndicatorStyle;
     return SizedBox(
-      height: height ?? 48.h,
+      height: height ?? 48.w,
       child: DropdownButtonFormField<T>(
         isExpanded: true,
         value: value,

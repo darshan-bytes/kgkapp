@@ -22,11 +22,11 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
       body: getScaffoldBody(productDetailsBloc, style),
       floatingActionButton: _buildCompareButton(productDetailsBloc, style),
-      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc, style),
+      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc, style, context),
     );
   }
 
-  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
+  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style, BuildContext context) {
     return SafeArea(
       child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         buildWhen: (previous, current) => current is ProductDetailsLoadedState,
@@ -95,7 +95,10 @@ class ProductDetailsScreen extends StatelessWidget {
                       child: SmartButton(
                         prefixImage: AppImages.icShoppingBag,
                         title: APPStrings.addToBag.tr,
-                        onTap: () {},
+                        onTap: () {
+                          BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(2));
+                          context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
+                        },
                       ),
                     ),
                     if (!productDetailsBloc.isCustomisation) ...[

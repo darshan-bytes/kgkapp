@@ -4,6 +4,13 @@ sealed class AddressListEvent extends Equatable {
   const AddressListEvent();
 }
 
+final class LoadAddressListEvent extends AddressListEvent {
+  const LoadAddressListEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class ChangeSelectedAddressEvent extends AddressListEvent {
   final int index;
 

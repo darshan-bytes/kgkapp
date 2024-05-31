@@ -6,7 +6,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignUpStyle style = AppTheme.of(context).signUpStyle;
-    SignUpBloc signUpBloc = context.read<SignUpBloc>();
+    SignUpBloc signUpBloc = BlocProvider.of<SignUpBloc>(context);
     return Scaffold(
       backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
@@ -93,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 48.h,
+        height: 48.w,
         decoration: BoxDecoration(
           color: isSelected ? style.selectedAccountTypeColor : style.unselectedAccountTypeColor,
           borderRadius: BorderRadius.circular(4.r),
@@ -429,7 +429,7 @@ class SignUpScreen extends StatelessWidget {
                 );
               },
               child: Container(
-                height: 48.h,
+                height: 48.w,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   border: Border.all(

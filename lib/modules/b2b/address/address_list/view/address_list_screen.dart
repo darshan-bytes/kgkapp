@@ -98,7 +98,9 @@ class AddressListScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SmartButton(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed(AppRoutes.paymentPage);
+                  },
                   title: APPStrings.saveAddress.tr,
                 ),
                 const SizedBox(height: 16),
