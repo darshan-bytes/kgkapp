@@ -33,6 +33,7 @@ class SmartRadioButton<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).radioButtonStyle;
+    bool isSelected = groupValue == value;
     return GestureDetector(
       onTap: () {
         if (isToggle && groupValue == value) {
@@ -50,22 +51,10 @@ class SmartRadioButton<T> extends StatelessWidget {
             SizedBox(
               height: 24,
               width: 24,
-              child: Radio<T>(
-                value: value,
-                focusNode: focusNode,
-                groupValue: groupValue,
-                toggleable: isToggle,
-                onChanged: (value) {
-                  onChanged(value);
-                },
-                activeColor: activeColor ?? style.activeColor,
-                fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return activeColor ?? style.activeColor;
-                  } else {
-                    return borderColor ?? style.borderColor;
-                  }
-                }),
+              child: SmartImage(
+                path: isSelected ? AppImages.icRadioSelected : AppImages.icRadio,
+                height: 24,
+                width: 24,
               ),
             ),
             if (label != null) const SizedBox(width: 4),
