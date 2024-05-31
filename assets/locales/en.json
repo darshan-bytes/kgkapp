@@ -183,5 +183,7 @@
   "depth_percentage": "Depth %",
   "table_percentage": "Table %",
   "your_percentage": "Your %",
-  "add_address": "Add Address"
+  "add_address": "Add Address",
+  "maximum_five_images": "Maximum limit reached. Try again later",
+  "select_up_to_five_images": "Please select up to five images"
 }

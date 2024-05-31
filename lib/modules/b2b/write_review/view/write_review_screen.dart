@@ -1,8 +1,5 @@
 import 'package:kgk/kgk.dart';
 
-const String diamondImage =
-    "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__";
-
 class WriteReviewScreen extends StatelessWidget {
   const WriteReviewScreen({super.key});
 
@@ -10,60 +7,54 @@ class WriteReviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final WriteReviewScreenStyle style = AppTheme.of(context).writeReviewScreenStyle;
     WriteReviewBloc bloc = BlocProvider.of<WriteReviewBloc>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: SmartAppBar(
         title: APPStrings.writeAReview.tr,
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(17.h),
-        child: SmartButton(
-          onTap: () {},
-          title: APPStrings.submit.tr,
-        ),
+      bottomNavigationBar: SmartButton(
+        margin: EdgeInsets.all(17.w),
+        onTap: () {
+          // Add your submit logic here
+        },
+        title: APPStrings.submit.tr,
       ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 24.h),
-                      _buildStarsView(style),
-                      SizedBox(height: 24.h),
-                      _buildTitleField(bloc),
-                      SizedBox(height: 24.h),
-                      _buildReviewField(bloc, style),
-                      SizedBox(height: 24.h),
-                      _buildPickImageSection()
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 24.h),
+                ...buildStarsView(style),
+                SizedBox(height: 24.h),
+                _buildTitleField(bloc),
+                SizedBox(height: 24.h),
+                _buildReviewField(bloc, style, context),
+                SizedBox(height: 24.h),
+                _buildPickImageSection(bloc, style),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildStarsView(WriteReviewScreenStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.stars.tr, style: style.labelStyle),
-        SizedBox(height: 8.h),
-        SmartRatingBar(
-          initialRating: 0,
-          itemSize: 32.w,
-          onRatingUpdate: (value) {},
-        ),
-      ],
-    );
+  List<Widget> buildStarsView(WriteReviewScreenStyle style) {
+    return [
+      SmartText(APPStrings.stars.tr, style: style.labelStyle),
+      SizedBox(height: 8.h),
+      SmartRatingBar(
+        initialRating: 0,
+        itemSize: 32.w,
+        onRatingUpdate: (value) {
+          // Handle rating update
+        },
+      ),
+    ];
   }
 
   Widget _buildTitleField(WriteReviewBloc bloc) {
@@ -78,12 +69,15 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewField(WriteReviewBloc bloc, WriteReviewScreenStyle style) {
+  Widget _buildReviewField(WriteReviewBloc bloc, WriteReviewScreenStyle style, context) {
     return SmartTextField(
       labelText: APPStrings.review.tr,
       hintText: APPStrings.review.tr,
       controller: bloc.reviewController,
       focusNode: bloc.reviewFocusNode,
+      onEditingComplete: () {
+        FocusScope.of(context).unfocus();
+      },
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
       textInputAction: TextInputAction.done,
@@ -93,131 +87,123 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPickImageSection() {
-    return InkWell(
-      onTap: () {},
-      child: DottedBorder(
-          dashPattern: const [8, 4],
-          radius: Radius.circular(4.r),
-          borderType: BorderType.RRect,
-          strokeWidth: 1.5,
-          color: Color(0xFFD3DAE0),
-          child: SizedBox(
-            height: 96.h,
-            width: 96.h,
-            child: Center(child: SmartImage(path: AppImages.icPlus)),
-          )),
+  Widget _buildPickImageSection(WriteReviewBloc bloc, WriteReviewScreenStyle style) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(
+          APPStrings.images.tr,
+          style: style.labelStyle,
+        ),
+        SizedBox(height: 8.h),
+        BlocBuilder<WriteReviewBloc, WriteReviewState>(
+          buildWhen: (previous, current) => current is PickImageState || current is RemoveSelectedImageState,
+          builder: (context, state) {
+            List<Widget> imageWidgets = [
+              if (bloc.availablePickImageLength > 0)
+                InkWell(
+                  onTap: () {
+                    bloc.reviewFocusNode.unfocus();
+                    bloc.titleFocusNode.unfocus();
+                    FocusScope.of(context).unfocus();
+                    bloc.reviewFocusNode.unfocus();
+                    _showImagePickDialog(context, bloc);
+                  },
+                  child: DottedBorder(
+                    padding: EdgeInsets.zero,
+                    borderPadding: EdgeInsets.zero,
+                    dashPattern: const [8, 4],
+                    radius: Radius.circular(4.r),
+                    borderType: BorderType.RRect,
+                    strokeWidth: 1.5.w,
+                    color: style.borderColor,
+                    child: SizedBox(
+                      height: 96.w,
+                      width: 96.w,
+                      child: const Center(child: SmartImage(path: AppImages.icPlus)),
+                    ),
+                  ),
+                ),
+            ];
+
+            if (bloc.selectedImages.isNotEmpty) {
+              imageWidgets.addAll(
+                List.generate(
+                  bloc.selectedImages.length,
+                  (index) {
+                    return _buildImageThumbnail(bloc.selectedImages[index], bloc, style, index);
+                  },
+                ),
+              );
+            }
+
+            return Wrap(
+              spacing: 17.w,
+              runSpacing: 17.w,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: imageWidgets,
+            );
+          },
+        ),
+      ],
     );
-    // return ImagesHorizontalListWithCustomTitle(
-    //   title: APPStrings.images.tr,
-    //   images: [diamondImage, diamondImage, diamondImage, diamondImage, diamondImage, diamondImage],
-    //   onShowAll: () {},
-    // );
   }
-}
 
-class ImagesHorizontalListWithCustomTitle extends StatelessWidget {
-  final List<String?>? images;
-  final Function(int index)? onTap;
-  final Function()? onShowAll;
-  final Function()? viewAll;
-  final String? title;
-  final EdgeInsets? padding;
-  final double? titleImageBetweenSpacing;
-  final EdgeInsets? titlePadding;
-  final double? imageSize;
-
-  const ImagesHorizontalListWithCustomTitle({
-    super.key,
-    this.onTap,
-    this.onShowAll,
-    this.title,
-    this.images,
-    this.padding,
-    this.imageSize,
-    this.titlePadding,
-    this.titleImageBetweenSpacing,
-    this.viewAll,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final int displayImageCount = min(images?.length ?? 0, 5);
-    final double itemWidth = imageSize ?? (context.width - 64) / 5;
-    return Padding(
-      padding: padding ?? EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+  Widget _buildImageThumbnail(XFile imageFile, WriteReviewBloc bloc, WriteReviewScreenStyle style, int index) {
+    return SizedBox(
+      height: 96.w,
+      width: 96.w,
+      child: Stack(
         children: [
-          if (title.isNotNullNorEmpty) ...[
-            Padding(
-                padding: titlePadding ?? const EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  children: [
-                    Expanded(child: SmartText(title!)),
-                    onShowAll != null
-                        ? InkWell(
-                            onTap: onShowAll,
-                            child: SmartText(
-                              'see_all'.tr,
-                            ),
-                          )
-                        : const SizedBox(),
-                  ],
-                )),
-          ],
-          if (images.isNotNullNorEmpty)
-            SizedBox(
-              height: 65,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: displayImageCount,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) {
-                  return Stack(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          if (onTap != null) {
-                            onTap!(index);
-                          }
-                        },
-                        child: SmartImage(
-                          path: images![index] ?? '',
-                          imageBorderRadius: BorderRadius.circular(8),
-                          height: imageSize ?? 65,
-                          width: itemWidth,
-                        ),
-                      ),
-                      if (index == displayImageCount - 1 && (images?.length ?? 1) > 5)
-                        Positioned(
-                          bottom: 0,
-                          child: GestureDetector(
-                            onTap: viewAll,
-                            child: Container(
-                              width: itemWidth,
-                              height: 65,
-                              padding: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.6),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              alignment: Alignment.center,
-                              child: SmartText(
-                                'view_all'.tr,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  );
-                },
+          SmartImage(
+            path: imageFile.path,
+            fit: BoxFit.cover,
+            height: 96.w,
+            width: 96.w,
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: GestureDetector(
+              onTap: () {
+                bloc.add(RemoveSelectedImageEvent(selectedImage: index));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                height: 24.w,
+                width: 24.w,
+                alignment: Alignment.center,
+                child: const SmartImage(
+                  path: AppImages.icCancel,
+                ),
               ),
             ),
+          ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showImagePickDialog(BuildContext context, WriteReviewBloc bloc) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) {
+        return ImagePickDialogSheet(
+          onTapSource: (ImageSource imageSource) {
+            bloc.add(PickImageEvent(imageSource: imageSource));
+          },
+        );
+      },
+    ).then(
+      (value) {
+        bloc.reviewFocusNode.unfocus();
+        bloc.titleFocusNode.unfocus();
+      },
     );
   }
 }

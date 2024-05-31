@@ -920,9 +920,11 @@ class AddressListStyle {
 }
 
 class WriteReviewScreenStyle {
+  final Color borderColor;
   final TextStyle labelStyle;
 
   WriteReviewScreenStyle({
     required this.labelStyle,
+    required this.borderColor,
   });
 }

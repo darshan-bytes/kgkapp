@@ -215,6 +215,9 @@ class APPStrings {
   static const String title = 'title';
   static const String review = 'review';
   static const String images = 'images';
+  static const String maximumFiveImages = 'maximum_five_images';
+  static const String selectUpToFiveImages = 'select_up_to_five_images';
+
   //My bag diamond item
   static const String ct = 'ct';
   static const String colour = 'colour';
