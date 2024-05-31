@@ -63,7 +63,7 @@ class SmartTextField extends StatefulWidget {
     this.maxLines,
     this.maxLength,
     this.expand,
-    this.height = 48,
+    this.height,
     this.style,
     this.errorStyle,
     this.suffixIcon,
@@ -104,7 +104,7 @@ class SmartTextField extends StatefulWidget {
     this.maxLines,
     this.maxLength,
     this.expand,
-    this.height = 48,
+    this.height,
     this.style,
     this.errorStyle,
     this.suffixIcon,
@@ -147,7 +147,7 @@ class SmartTextFieldState extends State<SmartTextField> {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).textFieldStyle;
     return Padding(
-      padding: widget.padding ?? const EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: widget.padding ?? EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,10 +156,10 @@ class SmartTextFieldState extends State<SmartTextField> {
               widget.labelStyle!,
               style: style.labelStyle.merge(widget.lableStyle),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
           ],
           SizedBox(
-            height: widget.height,
+            height: widget.height ?? 48.h,
             child: TextFormField(
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
@@ -183,12 +183,12 @@ class SmartTextFieldState extends State<SmartTextField> {
                   filled: true,
                   errorStyle: style.errorStyle.merge(widget.errorStyle),
                   fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ?? const EdgeInsets.all(16),
+                  contentPadding: widget.contentPadding ?? EdgeInsets.all(16.w),
                   disabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.r)),
                       borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor)),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4)),
+                    borderRadius: BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4.r)),
                     borderSide: BorderSide(
                       color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor,
                     ),
@@ -197,11 +197,11 @@ class SmartTextFieldState extends State<SmartTextField> {
                       borderSide: BorderSide(
                         color: style.focusedTextFieldBorderColor,
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      borderRadius: BorderRadius.all(Radius.circular(4.r))),
                   errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: BorderRadius.all(Radius.circular(4.r))),
                   focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: BorderRadius.all(Radius.circular(4.r))),
                   hintText: widget.hintText,
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
@@ -213,10 +213,10 @@ class SmartTextFieldState extends State<SmartTextField> {
                                   ? const SmartImage(
                                       path: AppImages.icEyeOpen,
                                     )
-                                  : const SmartImage(
+                                  : SmartImage(
                                       path: AppImages.icEyeClose,
-                                      width: 16,
-                                      height: 16,
+                                      width: 16.w,
+                                      height: 16.w,
                                     ),
                               onPressed: _toggle,
                             )

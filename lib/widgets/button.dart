@@ -56,7 +56,7 @@ class SmartButton extends StatelessWidget {
               ? <BoxShadow>[
                   BoxShadow(
                     color: style.activeBackgroundColor.withOpacity(0.9),
-                    blurRadius: 10.0,
+                    blurRadius: 10.0.r,
                     spreadRadius: -8.0,
                     offset: const Offset(0.0, 8.0),
                   )
@@ -68,14 +68,14 @@ class SmartButton extends StatelessWidget {
           borderRadius: borderRadius ?? BorderRadius.circular(4),
           border: borderColor != null
               ? Border.all(
-                  width: 1,
+                  width: 1.w,
                   color: borderColor!,
                 )
               : null,
         ),
-        height: height ?? 48,
+        height: height ?? 48.h,
         width: width ?? double.infinity,
-        padding: padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         child: prefixImage.isNotNullNorEmpty
             ? Center(
                 child: Row(
@@ -83,11 +83,11 @@ class SmartButton extends StatelessWidget {
                   children: [
                     SmartImage(
                       path: prefixImage!,
-                      height: imageSize ?? 24,
-                      width: imageSize ?? 24,
+                      height: imageSize ?? 24.w,
+                      width: imageSize ?? 24.w,
                       color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Text(
                       title,
                       style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),

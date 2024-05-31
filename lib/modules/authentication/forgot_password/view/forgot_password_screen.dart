@@ -9,13 +9,13 @@ class ForgotPasswordScreen extends StatelessWidget {
     final forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: 52,
+        appBarHeight: 52.h,
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
       bottomNavigationBar: SafeArea(
         child: SmartButton(
-          margin: const EdgeInsets.symmetric(horizontal: 17),
+          margin: EdgeInsets.symmetric(horizontal: 17.w),
           onTap: () {
             context.pushNamed(AppRoutes.emailSentPage);
           },
@@ -30,7 +30,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17),
+                      padding: EdgeInsets.symmetric(horizontal: 17.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -42,7 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             APPStrings.forgotPasswordDescription.tr,
                             style: style.subTitleStyle,
                           ),
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32.h),
                           SmartTextField(
                             controller: forgotPasswordBloc.emailController,
                             labelText: APPStrings.email.tr,

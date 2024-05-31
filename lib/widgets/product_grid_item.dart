@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class ProductGridItem extends StatelessWidget {
   final ProductDetails productDetails;
-  final double boxHeight;
+  final double? boxHeight;
   final double? boxWidth;
   final double? imageHeight;
   final double? imageWidth;
@@ -19,7 +19,7 @@ class ProductGridItem extends StatelessWidget {
 
   const ProductGridItem({
     super.key,
-    this.boxHeight = 172,
+    this.boxHeight,
     this.boxWidth,
     this.imageHeight,
     this.imageWidth,
@@ -39,7 +39,7 @@ class ProductGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).productItemStyle;
-    final double productItemWidth = (context.width - 46) / 2;
+    final double productItemWidth = (context.width - 46.w) / 2;
 
     return GestureDetector(
       onTap: onTap,
@@ -67,7 +67,7 @@ class ProductGridItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: boxHeight,
+          height: boxHeight ?? 172.h,
           width: width,
           alignment: Alignment.center,
           color: style.productBackgroundColor,
@@ -94,7 +94,7 @@ class ProductGridItem extends StatelessWidget {
           child: Row(
             children: [
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               if (onFavTap != null)
                 buildIcon(path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon, onTap: onFavTap, style: style),
             ],
@@ -109,13 +109,13 @@ class ProductGridItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(color: backgroundColor ?? style.backgroundColor, borderRadius: BorderRadius.circular(4)),
-        height: 24,
-        width: 24,
+        height: 24.w,
+        width: 24.w,
         alignment: Alignment.center,
         child: SmartImage(
           path: path,
-          height: 16,
-          width: 16,
+          height: 16.w,
+          width: 16.w,
           fit: BoxFit.contain,
         ),
       ),
@@ -127,7 +127,7 @@ class ProductGridItem extends StatelessWidget {
       child: Container(
         width: width,
         color: style.backgroundColor,
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +139,7 @@ class ProductGridItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -152,7 +152,7 @@ class ProductGridItem extends StatelessWidget {
                     ),
                   ),
                   if (productDetails.offerPrice.isNotNullNorEmpty) ...[
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     Flexible(
                       child: SmartText(
                         productDetails.originalPrice,
@@ -162,29 +162,29 @@ class ProductGridItem extends StatelessWidget {
                       ),
                     ),
                   ] else ...[
-                    if (isStoneWithPrice) const SmartImage(path: AppImages.icStone, height: 16, width: 16)
+                    if (isStoneWithPrice) SmartImage(path: AppImages.icStone, height: 16.w, width: 16.w)
                   ],
                 ],
               ),
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartText(
                 productDetails.discountPercentage,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
             ],
             if (productDetails.discountPercentage.isNullOrEmpty)
-              const SizedBox(
-                height: 14,
+              SizedBox(
+                height: 14.h,
               ),
             if (onAddToBagTap != null)
               SmartButton(
-                height: 32,
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                height: 32.h,
+                padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,

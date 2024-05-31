@@ -19,11 +19,11 @@ class SplashScreen extends StatelessWidget {
             SizedBox(
               height: context.height,
               width: context.width,
-              child: const Center(
+              child: Center(
                 child: SmartImage(
                   path: AppImages.icSplashLogo,
-                  height: 112,
-                  width: 112,
+                  height: 112.w,
+                  width: 112.w,
                   fit: BoxFit.cover,
                 ),
               ),

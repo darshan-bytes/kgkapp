@@ -13,8 +13,9 @@ class InquiryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).inquiryWidgetStyle;
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: colors(context).colorD3DAE0, width: 1), borderRadius: BorderRadius.circular(8)),
-      padding: const EdgeInsets.all(16),
+      decoration:
+          BoxDecoration(border: Border.all(color: colors(context).colorD3DAE0, width: 1.w), borderRadius: BorderRadius.circular(8.r)),
+      padding: EdgeInsets.all(16.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,9 +27,9 @@ class InquiryWidget extends StatelessWidget {
                   title ?? APPStrings.haveAQuestion.tr,
                   style: style.haveAQuestionStyle,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 SmartText(description ?? APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Row(
                   children: [
                     const SmartImage(path: AppImages.icPhone),
@@ -40,7 +41,7 @@ class InquiryWidget extends StatelessWidget {
                 Row(
                   children: [
                     const SmartImage(path: AppImages.icMail),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     SmartText(email, style: style.emailStyle),
                   ],
                 ),
@@ -48,9 +49,9 @@ class InquiryWidget extends StatelessWidget {
             ),
           ),
           if (isRightArrow)
-            const Padding(
-              padding: EdgeInsets.only(top: 10, left: 20, right: 4),
-              child: SmartImage(path: AppImages.icArrowRight, height: 16, width: 16),
+            Padding(
+              padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 4.w),
+              child: SmartImage(path: AppImages.icArrowRight, height: 16.w, width: 16.w),
             )
         ],
       ),

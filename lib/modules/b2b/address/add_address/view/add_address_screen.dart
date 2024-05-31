@@ -31,10 +31,10 @@ class AddAddressScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is AddAddressChangeAddressSameState,
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 22),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 22.h),
           child: SmartCheckbox(
-            height: 24,
-            width: 24,
+            height: 24.w,
+            width: 24.w,
             value: bloc.isShippingAddressSame,
             onChanged: (value) {
               bloc.add(AddAddressAddressSameEvent(value));
@@ -49,33 +49,33 @@ class AddAddressScreen extends StatelessWidget {
 
   Widget generateAddressForm(AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17),
+        padding: EdgeInsets.symmetric(horizontal: 17.w),
         child: Column(children: [
           _buildFirstNameField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildLastNameField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildStreetAddressField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildApartmentField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildCityField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildStateField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildCountryField(bloc, countryPickerStyle),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildZipCodeField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           _buildPhoneField(bloc),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           SmartButton(
             onTap: () {
               bloc.add(SaveAddressEvent(context));
             },
             title: APPStrings.saveAddress.tr,
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
         ]));
   }
 
@@ -180,7 +180,7 @@ class AddAddressScreen extends StatelessWidget {
           APPStrings.country.tr,
           style: countryPickerStyle.inputLableStyle,
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         BlocBuilder<AddAddressBloc, AddAddressState>(
           buildWhen: (previous, current) => current is AddAddressChangeCountryState,
           builder: (context, state) {
@@ -195,13 +195,13 @@ class AddAddressScreen extends StatelessWidget {
                 );
               },
               child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                height: 48.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: countryPickerStyle.inputBorderColor,
                   ),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Row(
                   children: [
@@ -211,8 +211,8 @@ class AddAddressScreen extends StatelessWidget {
                         style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    const SmartImage(path: AppImages.icArrowDropDown),
+                    SizedBox(width: 4.w),
+                    SmartImage(path: AppImages.icArrowDropDown),
                   ],
                 ),
               ),

@@ -14,18 +14,18 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final CategoryTileStyle categoryTileStyle = AppTheme.of(context).categoryTileStyle;
     return Container(
-      margin: const EdgeInsets.only(top: 6.0, bottom: 6.0, right: 6.0, left: 6.0),
+      margin: EdgeInsets.only(top: 6.0.h, bottom: 6.0.h, right: 6.0.w, left: 6.0.w),
       color: Colors.white,
       child: Stack(
         children: [
           SmartImage(
             path: category.image ?? 'https://i.ibb.co/HgjT1rt/Image.png',
-            height: 134,
+            height: 134.h,
             width: context.width,
             fit: BoxFit.fill,
           ),
           Container(
-            margin: const EdgeInsets.all(8.0),
+            margin: EdgeInsets.all(8.0.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,12 +34,12 @@ class CategoryTile extends StatelessWidget {
                   category.name ?? '',
                   style: categoryTileStyle.labelStyle,
                 ),
-                const SizedBox(
-                  width: 10,
+                SizedBox(
+                  width: 10.w,
                 ),
                 Icon(
                   isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                  size: 16,
+                  size: 16.w,
                 ),
               ],
             ),

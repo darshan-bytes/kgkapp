@@ -7,37 +7,21 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 24,),
+        SizedBox(height: 24.h),
         _commonItemWidget(context,
-            title: APPStrings.announcements.tr,
-          desc: APPStrings.notifyMeForEveryAnnouncement.tr,
-          onSwitchChange: (val) {
-
-          }
-        ),
+            title: APPStrings.announcements.tr, desc: APPStrings.notifyMeForEveryAnnouncement.tr, onSwitchChange: (val) {}),
         _commonItemWidget(context,
-            title: APPStrings.fileSharedBySalesman.tr,
-            desc: APPStrings.shareBySalesmanDesc.tr,
-            onSwitchChange: (val) {
-
-            }
-        ),
+            title: APPStrings.fileSharedBySalesman.tr, desc: APPStrings.shareBySalesmanDesc.tr, onSwitchChange: (val) {}),
         _commonItemWidget(context,
-            title: APPStrings.orderStatusUpdate.tr,
-            desc: APPStrings.changeInOrderStatus.tr,
-            onSwitchChange: (val) {
-
-            }
-        ),
+            title: APPStrings.orderStatusUpdate.tr, desc: APPStrings.changeInOrderStatus.tr, onSwitchChange: (val) {}),
       ],
     );
   }
 
-  Widget _commonItemWidget(BuildContext context, {required String title, required String desc,
-    required Function(bool) onSwitchChange}) {
+  Widget _commonItemWidget(BuildContext context, {required String title, required String desc, required Function(bool) onSwitchChange}) {
     final style = AppTheme.of(context).settingViewStyle;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,24 +39,32 @@ class SettingsView extends StatelessWidget {
                 value: true,
                 onSwitchChange: onSwitchChange,
                 thumbColor: style.thumbColor,
-                height: 24,
-                width: 50,
+                height: 24.h,
+                width: 50.w,
               ),
             ],
           ),
-          const SizedBox(height: 4,),
+          SizedBox(
+            height: 4.h,
+          ),
           SmartText(
             desc,
             style: style.descStyle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 16,),
-          Divider(height: 1, color: style.dividerColor,),
-          const SizedBox(height: 16,),
+          SizedBox(
+            height: 16.h,
+          ),
+          Divider(
+            height: 1.h,
+            color: style.dividerColor,
+          ),
+          SizedBox(
+            height: 16.h,
+          ),
         ],
       ),
     );
   }
-
 }

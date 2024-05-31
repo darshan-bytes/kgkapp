@@ -10,13 +10,13 @@ class ResetPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: 52,
+        appBarHeight: 52.h,
         isBorder: false,
         backgroundColor: style.backgroundColor,
       ),
       bottomNavigationBar: SafeArea(
         child: SmartButton(
-          margin: const EdgeInsets.symmetric(horizontal: 17),
+          margin: EdgeInsets.symmetric(horizontal: 17.w),
           onTap: () {
             context.pushNamed(AppRoutes.emailSentPage);
           },
@@ -29,7 +29,7 @@ class ResetPasswordScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -41,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         APPStrings.resetPasswordDescription.tr,
                         style: style.subTitleStyle,
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32.h),
                       SmartTextField(
                         controller: resetPasswordBloc.newPasswordController,
                         labelText: APPStrings.newPassword.tr,
@@ -54,7 +54,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           FocusScope.of(context).nextFocus();
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       SmartTextField(
                         controller: resetPasswordBloc.confirmPasswordController,
                         labelText: APPStrings.confirmPassword.tr,

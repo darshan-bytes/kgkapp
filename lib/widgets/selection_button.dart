@@ -46,12 +46,12 @@ class SelectionButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: height ?? 48,
+        height: height ?? 48.h,
         width: width,
         padding: padding,
         decoration: BoxDecoration(
           color: isSelected ? (selectedButtonColor ?? style.selectedButtonColor) : (unselectedButtonColor ?? style.unselectedButtonColor),
-          borderRadius: borderRadius ?? BorderRadius.circular(4),
+          borderRadius: borderRadius ?? BorderRadius.circular(4.r),
           border: Border.all(
             color: isSelected
                 ? (selectedButtonBorderColor ?? style.selectedButtonBorderColor)
@@ -69,7 +69,7 @@ class SelectionButton extends StatelessWidget {
                     ? (selectedButtonIconColor ?? style.selectedButtonIconColor)
                     : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
               ),
-            if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8),
+            if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8.h),
             if (title != null)
               Flexible(
                 child: SmartText(

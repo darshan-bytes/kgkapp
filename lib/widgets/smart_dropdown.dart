@@ -32,7 +32,7 @@ class SmartDropDown<T> extends StatelessWidget {
             labelText!,
             style: textFieldStyle.labelStyle,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
         ],
         InkWell(
           onTap: () {
@@ -49,10 +49,10 @@ class SmartDropDown<T> extends StatelessWidget {
                 });
           },
           child: Container(
-            height: buttonHeight ?? 48,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            height: buttonHeight ?? 48.h,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
               border: Border.all(
                 color: textFieldStyle.enabledTextFieldBorderColor,
               ),
@@ -98,12 +98,12 @@ class SmartDropDownView<T> extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.r),
+          topRight: Radius.circular(24.r),
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -113,7 +113,7 @@ class SmartDropDownView<T> extends StatelessWidget {
               hintText!,
               style: style.labelStyle,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
           ],
           Flexible(
             child: Padding(
@@ -144,13 +144,13 @@ class SmartDropDownView<T> extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: style.backgroundColor,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
               border: Border.all(
                 color: isSelected ? style.selectedBorderColor : style.unSelectedBorderColor,
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -162,14 +162,14 @@ class SmartDropDownView<T> extends StatelessWidget {
                           path: AppImages.icCheck,
                           fit: BoxFit.contain,
                         )
-                      : const SizedBox(height: 24)
+                      : SizedBox(height: 24.h)
                 ],
               ),
             ),
           ),
         );
       },
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
+      separatorBuilder: (context, index) => SizedBox(height: 8.h),
     );
   }
 }

@@ -17,7 +17,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SmartText(productCustomization.name, style: style.settingSelectionTitleStyle),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -35,19 +35,19 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.image:
                     case ProductCustomizationType.metal:
                       return SizedBox(
-                        width: 72,
+                        width: 72.w,
                         child: InkWell(
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 _buildCustomizationType(isSelected, value, style, productCustomization.productCustomizationType),
                                 if (value.value.isNotNullNorEmpty) ...[
-                                  const SizedBox(height: 8),
+                                  SizedBox(height: 8.h),
                                   SmartText(
                                     value.value,
                                     style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
@@ -62,20 +62,20 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.metalKaratage:
                     case ProductCustomizationType.ringSize:
                       return Padding(
-                        padding: EdgeInsets.only(right: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14 : 0),
+                        padding: EdgeInsets.only(right: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14.w : 0),
                         child: InkWell(
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
                           child: ConstrainedBox(
-                              constraints: const BoxConstraints(minWidth: 40),
+                              constraints: BoxConstraints(minWidth: 40.w),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: style.settingSelectionButtonColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: isSelected ? Border.all(color: style.selectedSettingBorderColor, width: 1) : null,
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: isSelected ? Border.all(color: style.selectedSettingBorderColor, width: 1.w) : null,
                                 ),
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(8.w),
                                 alignment: Alignment.center,
                                 child: SmartText(
                                   value.value,
@@ -91,13 +91,13 @@ class ProductDetailsCustomizations extends StatelessWidget {
                           productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               _buildCustomizationType(isSelected, value, style, productCustomization.productCustomizationType),
                               if (value.value.isNotNullNorEmpty) ...[
-                                const SizedBox(height: 8),
+                                SizedBox(height: 8.h),
                                 SmartText(
                                   value.value,
                                   style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
@@ -126,23 +126,23 @@ class ProductDetailsCustomizations extends StatelessWidget {
     switch (productCustomizationType) {
       case ProductCustomizationType.image:
         return Container(
-          height: 42,
-          width: 42,
+          height: 42.w,
+          width: 42.w,
           decoration: BoxDecoration(
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
           ),
           child: SmartImage(
             path: value.image ?? '',
-            imageBorderRadius: BorderRadius.circular(10),
+            imageBorderRadius: BorderRadius.circular(10.r),
             color: isSelected ? style.selectedSettingBorderColor : null,
           ),
         );
       case ProductCustomizationType.metal:
         return Container(
-          height: 34,
-          width: 34,
-          padding: const EdgeInsets.all(4),
+          height: 34.w,
+          width: 34.w,
+          padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
@@ -155,9 +155,9 @@ class ProductDetailsCustomizations extends StatelessWidget {
 
       case ProductCustomizationType.diamondQuality:
         return Container(
-          height: 50,
-          width: 50,
-          padding: const EdgeInsets.all(8),
+          height: 50.w,
+          width: 50.w,
+          padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
             shape: BoxShape.circle,

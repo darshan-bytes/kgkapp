@@ -18,8 +18,8 @@ class CollectionScreen extends StatelessWidget {
         child: Column(children: [
           Container(
             width: context.width,
-            margin: const EdgeInsets.only(bottom: 20),
-            height: 176,
+            margin: EdgeInsets.only(bottom: 20.h),
+            height: 176.h,
             color: style.headerBgColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +38,7 @@ class CollectionScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 14),
+            margin: EdgeInsets.symmetric(horizontal: 14.w),
             child: ListView.builder(
                 itemBuilder: (context, index) {
                   return Column(
@@ -47,8 +47,8 @@ class CollectionScreen extends StatelessWidget {
                         "Love & passion on January",
                         style: style.collectionListTitleStyle,
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: 20.h,
                       ),
                       ListView.builder(
                           itemCount: 4,
@@ -60,20 +60,20 @@ class CollectionScreen extends StatelessWidget {
                                 context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productListData: index});
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(bottom: 14),
+                                margin: EdgeInsets.only(bottom: 14.h),
                                 child: SmartImage(
                                   path: index == 0 || index == 3
                                       ? "https://i.ibb.co/CQCRPFy/Banner.png"
                                       : "https://i.ibb.co/k4n8Qry/Banner.png",
-                                  height: index == 0 || index == 3 ? 200 : 140,
+                                  height: index == 0 || index == 3 ? 200.h : 140.h,
                                   width: context.width,
                                   fit: BoxFit.fill,
                                 ),
                               ),
                             );
                           }),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: 20.h,
                       ),
                     ],
                   );
