@@ -437,7 +437,7 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  AddAccountScreenStyle get addAccountScreenStyle => AddAccountScreenStyle(
+  AddAddressScreenStyle get addAddressScreenStyle => AddAddressScreenStyle(
         backgroundColor: colors.white,
         dotColor: colors.colorC5DEEB,
         filledDotColor: colors.primary,
@@ -521,5 +521,30 @@ class LightModeTheme extends AppTheme {
         isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         footerTotalStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
         footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+      );
+
+  @override
+  MyBagDiamondItemStyle get myBagDiamondItemStyle => MyBagDiamondItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        headingStyle: interMediumBoldTextStyle,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
+      );
+
+  @override
+  AddressSelectionStyle get addressSelectionStyle => AddressSelectionStyle(
+        addressNameStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        fullAddressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        contactNumberStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      );
+
+  @override
+  AddressListStyle get addressListStyle => AddressListStyle(
+        backgroundColor: colors.colorF7F9FA,
+        arrowColor: colors.primary,
+        isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
       );
 }

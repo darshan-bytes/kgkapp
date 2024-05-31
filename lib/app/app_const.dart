@@ -1,6 +1,4 @@
-import 'dart:ui';
-
-import 'package:kgk/utils/exports.dart';
+import 'package:kgk/kgk.dart';
 
 /// This class is a Dart class that contains a  constant that are used throughout the app
 class AppConst {

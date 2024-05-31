@@ -16,7 +16,7 @@ class PaymentScreen extends StatelessWidget {
               height: context.height,
               child: Column(
                 children: [
-                  _buildShippingBillingAddress(bloc, style),
+                  const CheckoutHeaderProgressbar(isShippingAndBillingAddressFilled: true),
                   _paymentOption(
                     onTap: () {},
                     imagePath: AppImages.icPaypal,
@@ -102,42 +102,6 @@ class PaymentScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildShippingBillingAddress(PaymentBloc bloc, PaymentStyle style) {
-    return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
-      child: Row(
-        children: [
-          Container(
-            height: 6.w,
-            width: 6.w,
-            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
-          ),
-          SizedBox(width: 6.w),
-          Flexible(
-            child: SmartText(
-              APPStrings.shippingBillingAddress.tr,
-              style: style.shippingBillingAddressStyle,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: DotIndicator(
-              dotColor: style.fillLineColor,
-            ),
-          ),
-          Container(
-            height: 6.w,
-            width: 6.w,
-            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
-          ),
-          SizedBox(width: 6.w),
-          SmartText(APPStrings.payment.tr, style: style.shippingBillingAddressStyle),
-        ],
-      ),
     );
   }
 

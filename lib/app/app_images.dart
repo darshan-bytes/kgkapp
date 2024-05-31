@@ -6,6 +6,8 @@ class AppImages {
   static const String icEyeOpen = 'assets/images/ic_eye_open.svg';
   static const String icEyeClose = 'assets/images/ic_eye_close.svg';
   static const String icPlaceholder = 'assets/images/ic_placeholder.png';
+  static const String icRadio = 'assets/images/ic_radio.svg';
+  static const String icRadioSelected = 'assets/images/ic_radio_selected.svg';
 
   ///Tab bar icons
   static const String icHome = 'assets/images/ic_home.svg';
@@ -35,7 +37,9 @@ class AppImages {
   //Authentication
   static const String icUser = 'assets/images/ic_user.svg';
   static const String icCompany = 'assets/images/ic_company.svg';
+  static const String icArrowDropDown = 'assets/images/ic_arrow_drop_down.svg';
   static const String icArrowDown = 'assets/images/ic_arrow_down.svg';
+  static const String icArrowUp = 'assets/images/ic_arrow_up.svg';
   static const String icMinus = 'assets/images/ic_minus.svg';
   static const String icCheck = 'assets/images/ic_check.svg';
 
@@ -71,4 +75,8 @@ class AppImages {
   static const String icUpi = 'assets/images/ic_upi.png';
   static const String icPlus = 'assets/images/ic_plus.svg';
   static const String ic360 = 'assets/images/ic_360.svg';
+
+  //My Bag Screen
+  static const String icMoreHorizontal = 'assets/images/ic_more_horizontal.svg';
+  static const String icEditPrimary = 'assets/images/ic_edit_primary.svg';
 }
