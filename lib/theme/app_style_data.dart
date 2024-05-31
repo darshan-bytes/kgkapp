@@ -549,5 +549,6 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  WriteReviewScreenStyle get writeReviewScreenStyle => WriteReviewScreenStyle(labelStyle: interRegularTextStyle);
+  WriteReviewScreenStyle get writeReviewScreenStyle =>
+      WriteReviewScreenStyle(labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
 }

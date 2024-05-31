@@ -9,7 +9,7 @@ class Utils {
       message: message,
       duration: const Duration(seconds: 2),
       flushbarPosition: FlushbarPosition.TOP,
-      backgroundColor: Colors.blue,
+      backgroundColor: AppThemes().appColor.primary,
       margin: const EdgeInsets.all(10),
       borderRadius: const BorderRadius.all(Radius.circular(10)),
     ).show(NavigatorKey.navigatorKey.currentContext!);
