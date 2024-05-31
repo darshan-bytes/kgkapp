@@ -13,7 +13,7 @@ class DiyProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
       child: Row(
         children: [
           _commonSelector(context, selectedStep == 1, 'Choose a', 1, 'Diamond'),
@@ -32,15 +32,15 @@ class DiyProgressWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor, width: 1),
         ),
-        padding: const EdgeInsets.all(12),
-        height: 70,
+        padding: EdgeInsets.all(12.w),
+        height: 70.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
             SmartText('$index', style: style.indexStyle),
-            const SizedBox(
-              width: 8,
+            SizedBox(
+              width: 8.w,
             ),
             Expanded(
                 child: SmartRichText(

@@ -27,10 +27,11 @@ class BlocGenerator {
       BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc()),
       BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
-      BlocProvider<AddAccountBloc>(create: (_) => AddAccountBloc()),
+      BlocProvider<AddAddressBloc>(create: (_) => AddAddressBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
       BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
+      BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
     ];
   }
 }

@@ -5,8 +5,7 @@ class ProductListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DiamondListingStyle diamondListingStyle =
-        AppTheme.of(context).diamondListingStyle;
+    final DiamondListingStyle diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     final ProductListBloc bloc = BlocProvider.of<ProductListBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -43,40 +42,36 @@ class ProductListScreen extends StatelessWidget {
       body: SingleChildScrollView(
           child: SafeArea(
               child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 17),
+        padding: EdgeInsets.symmetric(horizontal: 17.w),
         child: Column(
           children: [
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildProductFilterCount(diamondListingStyle, bloc),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             _buildProductList(diamondListingStyle, bloc),
-            const SizedBox(height: 7),
+            SizedBox(height: 7.h),
           ],
         ),
       ))),
     );
   }
 
-  Widget _buildProductFilterCount(
-      DiamondListingStyle style, ProductListBloc bloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, ProductListBloc bloc) {
     return BlocBuilder<ProductListBloc, ProductListState>(
-      buildWhen: (previous, current) =>
-          current is ProductChangeListingTypeState,
+      buildWhen: (previous, current) => current is ProductChangeListingTypeState,
       builder: (context, state) {
         return SizedBox(
-          height: 48,
+          height: 48.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(
-                  APPStrings.showingListLengthX.tr.interpolate(["1", "24"]),
-                  style: style.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SelectionButton(
-                      width: 48,
+                      width: 48.w,
                       isSelected: bloc.isGrid,
                       image: AppImages.icGrid,
                       selectedButtonColor: style.gridBackgroundColor,
@@ -85,15 +80,13 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(4),
-                          bottomLeft: Radius.circular(4)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ProductChangeListingTypeEvent(true));
                       },
                     ),
                     SelectionButton(
-                      width: 48,
+                      width: 48.w,
                       isSelected: !bloc.isGrid,
                       image: AppImages.icList,
                       selectedButtonColor: style.gridBackgroundColor,
@@ -102,9 +95,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(4),
-                          bottomRight: Radius.circular(4)),
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ProductChangeListingTypeEvent(false));
                       },
@@ -129,32 +120,40 @@ class ProductListScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items:
-                        bloc.productList.map((ProductDetails productDetails) {
+                    items: bloc.productList.map((ProductDetails productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     onAddToBagTap: bloc.fromRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
                     onTap: () {
-                      context.pushNamed(AppRoutes.diamondDetailPage);
+                      if (bloc.fromRing) {
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: productDetails.productId ?? ''});
+                      } else {
+                        context.pushNamed(AppRoutes.diamondDetailPage);
+                      }
                     },
                   );
                 }).toList()),
-                const SizedBox(
-                  height: 17,
+                SizedBox(
+                  height: 17.h,
                 )
               ],
             );
           } else {
             return ListView.builder(
               itemBuilder: (context, index) => ProductListItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
                 onTap: () {
-                  context.pushNamed(AppRoutes.diamondDetailPage);
+                  if (bloc.fromRing) {
+                    context.pushNamed(AppRoutes.productDetailsPage,
+                        arguments: {RoutesData.productId: bloc.productList[index].productId ?? ''});
+                  } else {
+                    context.pushNamed(AppRoutes.diamondDetailPage);
+                  }
                 },
                 productDetails: bloc.productList[index],
               ),

@@ -6,9 +6,9 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
   final String Function(T) itemLableBuilder;
   final void Function(T?)? onChanged;
   final TextStyle? textStyle;
-  final double menuMaxHeight;
+  final double? menuMaxHeight;
   final Widget? icon;
-  final double height;
+  final double? height;
   final EdgeInsetsGeometry? contentPadding;
 
   const SmartDropdownButtonFormField({
@@ -18,8 +18,8 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
     this.value,
     this.onChanged,
     this.textStyle,
-    this.height = 48,
-    this.menuMaxHeight = 300,
+    this.height,
+    this.menuMaxHeight,
     this.icon,
     this.contentPadding,
   });
@@ -28,35 +28,35 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).customPageIndicatorStyle;
     return SizedBox(
-      height: height,
+      height: height ?? 48.w,
       child: DropdownButtonFormField<T>(
         isExpanded: true,
         value: value,
         style: textStyle ?? style.textStyle,
-        menuMaxHeight: menuMaxHeight,
+        menuMaxHeight: menuMaxHeight ?? 300.h,
         icon: icon ?? const Icon(Icons.keyboard_arrow_down_sharp),
         dropdownColor: style.dropDownBackgroundColor,
         decoration: InputDecoration(
-          contentPadding: contentPadding ?? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+          contentPadding: contentPadding ?? EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(4.0.r),
             borderSide: BorderSide(
               color: style.borderColor,
-              width: 1,
+              width: 1.w,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(4.0.r),
             borderSide: BorderSide(
               color: style.borderColor,
-              width: 1,
+              width: 1.w,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(4.0.r),
             borderSide: BorderSide(
               color: style.borderColor,
-              width: 1,
+              width: 1.w,
             ),
           ),
         ),

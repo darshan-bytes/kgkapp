@@ -60,8 +60,8 @@ class SmartBottomNavigationBar extends StatelessWidget {
               //TODO: Replace the image URL with the actual image URL
               BottomNavigationBarItem(
                 icon: Container(
-                    height: 24,
-                    width: 24,
+                    height: 24.w,
+                    width: 24.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -70,15 +70,15 @@ class SmartBottomNavigationBar extends StatelessWidget {
                       imageBorderRadius: BorderRadius.circular(12),
                     )),
                 activeIcon: Container(
-                    height: 24,
-                    width: 24,
+                    height: 24.w,
+                    width: 24.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: style.indicatorColor, width: 1),
+                      border: Border.all(color: style.indicatorColor, width: 1.w),
                     ),
                     child: SmartImage(
                       path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(12),
+                      imageBorderRadius: BorderRadius.circular(12.r),
                     )),
                 label: APPStrings.profile.tr,
               ),

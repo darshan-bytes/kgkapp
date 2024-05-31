@@ -34,14 +34,14 @@ class SmartCheckbox extends StatelessWidget {
         onChanged(!value);
       },
       child: Padding(
-        padding: padding ?? const EdgeInsets.all(0.0),
+        padding: padding ?? EdgeInsets.zero,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: height ?? 20,
-              width: width ?? 20,
+              height: height ?? 20.w,
+              width: width ?? 20.w,
               child: Checkbox(
                 activeColor: style.activeColor,
                 checkColor: style.checkColor,
@@ -53,7 +53,7 @@ class SmartCheckbox extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             if (label != null)
               Expanded(
                 child: SmartText(label, style: style.textStyle.merge(labelStyle)),

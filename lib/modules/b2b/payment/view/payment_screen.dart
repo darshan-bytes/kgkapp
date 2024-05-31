@@ -16,7 +16,7 @@ class PaymentScreen extends StatelessWidget {
               height: context.height,
               child: Column(
                 children: [
-                  _buildShippingBillingAddress(bloc, style),
+                  const CheckoutHeaderProgressbar(isShippingAndBillingAddressFilled: true),
                   _paymentOption(
                     onTap: () {},
                     imagePath: AppImages.icPaypal,
@@ -24,10 +24,10 @@ class PaymentScreen extends StatelessWidget {
                     plusIconPath: AppImages.icPlus,
                     context: context,
                   ),
-                  const Divider(
-                    height: 0.5,
-                    endIndent: 14,
-                    indent: 14,
+                  Divider(
+                    height: 0.5.h,
+                    endIndent: 14.w,
+                    indent: 14.w,
                   ),
                   _paymentOption(
                     onTap: () {},
@@ -39,16 +39,16 @@ class PaymentScreen extends StatelessWidget {
                   const Spacer(),
                   _buildOrderSummary(),
                   Container(
-                    height: 80,
-                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    height: 80.h,
+                    margin: EdgeInsets.symmetric(horizontal: 14.w),
                     child: Row(
                       children: [
                         SmartText(
                           APPStrings.total.tr,
                           style: style.footerTotalStyle,
                         ),
-                        const SizedBox(
-                          width: 8,
+                        SizedBox(
+                          width: 8.w,
                         ),
                         SmartText(
                           '\$35,700,00',
@@ -56,9 +56,12 @@ class PaymentScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         SmartButton(
-                          onTap: () {},
+                          onTap: () {
+                            // TODO: Implement place order
+                            // context.pushNamed(AppRoutes.orderSuccessPage);
+                          },
                           title: APPStrings.placeOrder.tr,
-                          width: 168,
+                          width: 168.w,
                         )
                       ],
                     ),
@@ -84,19 +87,19 @@ class PaymentScreen extends StatelessWidget {
         InkWell(
           onTap: onTap,
           child: Container(
-            height: 48,
-            margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+            height: 48.h,
+            margin: EdgeInsets.symmetric(horizontal: 17.w, vertical: 10.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SmartImage(path: imagePath, height: 24, width: 24),
-                const SizedBox(
-                  width: 10,
+                SmartImage(path: imagePath, height: 24.w, width: 24.w),
+                SizedBox(
+                  width: 10.w,
                 ),
                 SmartText(text),
                 const Spacer(),
-                SmartImage(path: plusIconPath, height: 24, width: 24),
+                SmartImage(path: plusIconPath, height: 24.w, width: 24.w),
               ],
             ),
           ),
@@ -105,46 +108,10 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShippingBillingAddress(PaymentBloc bloc, PaymentStyle style) {
-    return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 14),
-      child: Row(
-        children: [
-          Container(
-            height: 6,
-            width: 6,
-            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 6),
-          Flexible(
-            child: SmartText(
-              APPStrings.shippingBillingAddress.tr,
-              style: style.shippingBillingAddressStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: DotIndicator(
-              dotColor: style.fillLineColor,
-            ),
-          ),
-          Container(
-            height: 6,
-            width: 6,
-            decoration: BoxDecoration(color: style.filledDotColor, shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 6),
-          SmartText(APPStrings.payment.tr, style: style.shippingBillingAddressStyle),
-        ],
-      ),
-    );
-  }
-
   Widget _buildOrderSummary() {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
-      titleStyle: const TextStyle(fontSize: 24),
+      titleStyle: TextStyle(fontSize: 24.sp),
       isPromoCodeApplied: false,
       items: [
         // Here String come from API

@@ -11,11 +11,11 @@ class ProductCustomiseDescriptionWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: style.customiseBoxColor,
           border: Border.all(color: style.customiseBoxBorderColor),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(
           children: [
@@ -24,12 +24,12 @@ class ProductCustomiseDescriptionWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SmartText(APPStrings.customiseDescription.tr, style: style.settingSelectionTitleStyle),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   SmartText(APPStrings.craftingDescription.tr, style: style.productCodeStyle),
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             IconButton(
                 onPressed: () {
                   onTap();

@@ -14,20 +14,24 @@ class ProductDetails {
   List<CartProductQuality>? cartProductQuality;
   List<CartProductQuantity>? cartProductQuantity;
   bool isSelectedProduct;
+  bool isDiamondProduct;
+  DiamondClarityChart? diamondClarityChart;
 
-  ProductDetails(
-      {
-        this.productId,
-        this.name,
-      this.offerPrice,
-      this.originalPrice,
-      this.imageUrl,
-      this.discountPercentage,
-      this.gram,
-      this.diamond,
-      this.productQuality,
-      this.productQuantity,
-      this.cartProductQuality,
-      this.cartProductQuantity,
-      this.isSelectedProduct = false,});
+  ProductDetails({
+    this.productId,
+    this.name,
+    this.offerPrice,
+    this.originalPrice,
+    this.imageUrl,
+    this.discountPercentage,
+    this.gram,
+    this.diamond,
+    this.productQuality,
+    this.productQuantity,
+    this.cartProductQuality,
+    this.cartProductQuantity,
+    this.isSelectedProduct = false,
+    this.isDiamondProduct = false,
+    this.diamondClarityChart,
+  });
 }

@@ -33,7 +33,7 @@ class _NotificationScreenState extends State<NotificationScreen> with TickerProv
             indicatorWeight: 4,
             unselectedLabelStyle: style.tabTitleStyle,
             indicatorSize: TabBarIndicatorSize.label,
-            indicatorPadding: const EdgeInsets.only(left: -30, right: -30),
+            indicatorPadding: EdgeInsets.only(left: -30.w, right: -30.w),
             tabs: [
               Tab(text: APPStrings.allNotification.tr),
               Tab(text: APPStrings.settings.tr),

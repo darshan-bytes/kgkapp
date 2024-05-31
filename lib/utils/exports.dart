@@ -21,15 +21,14 @@ export 'package:flutter/services.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_rating_bar/flutter_rating_bar.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
-export 'package:readmore/readmore.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_const.dart';
 export 'package:kgk/app/app_fonts.dart';
 export 'package:kgk/app/app_images.dart';
 export 'package:kgk/utils/context_extensions.dart';
-export 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //app
 export 'package:kgk/app/app_route.dart';
@@ -53,6 +52,7 @@ export 'package:kgk/modules/authentication/forgot_email_sent/view/forgot_email_s
 //screen
 export 'package:kgk/modules/authentication/forgot_password/bloc/forgot_password_bloc.dart';
 export 'package:kgk/modules/authentication/forgot_password/view/forgot_password_screen.dart';
+export 'package:kgk/modules/b2b/address/address_list/view/address_list_screen.dart';
 export 'package:kgk/modules/authentication/reset_password/bloc/reset_password_bloc.dart';
 export 'package:kgk/modules/authentication/reset_password/view/reset_password_screen.dart';
 export 'package:kgk/modules/authentication/sign_in/bloc/sign_in_bloc.dart';
@@ -61,13 +61,10 @@ export 'package:kgk/modules/authentication/signup/bloc/signup_bloc.dart';
 export 'package:kgk/modules/authentication/signup/model/business_type_model.dart';
 export 'package:kgk/modules/authentication/signup/model/office_location_model.dart';
 export 'package:kgk/modules/authentication/signup/view/signup_screen.dart';
-export 'package:kgk/modules/common_modules/product_details/view/product_details_screen.dart';
-export 'package:kgk/modules/b2b/add_account/bloc/add_account_bloc.dart';
-export 'package:kgk/modules/b2b/add_account/bloc/add_account_event.dart';
-export 'package:kgk/modules/b2b/add_account/bloc/add_account_state.dart';
-export 'package:kgk/modules/b2b/add_account/model/city_selection_model.dart';
-export 'package:kgk/modules/b2b/add_account/model/state_selection_model.dart';
-export 'package:kgk/modules/b2b/add_account/view/add_account_screen.dart';
+export 'package:kgk/modules/b2b/address/add_address/bloc/add_address_bloc.dart';
+export 'package:kgk/modules/b2b/address/add_address/model/city_selection_model.dart';
+export 'package:kgk/modules/b2b/address/add_address/model/state_selection_model.dart';
+export 'package:kgk/modules/b2b/address/add_address/view/add_address_screen.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
@@ -102,6 +99,7 @@ export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_se
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/bloc/diamond_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/view/diamond_listing.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/model/diamond_clarity_chart.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/product_details.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/bloc/setting_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
@@ -117,34 +115,33 @@ export 'package:kgk/modules/common_modules/collection/view/collection_screen.dar
 export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
+export 'package:kgk/modules/b2b/address/add_address/model/address_details_model.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 export 'package:kgk/modules/b2b/payment/bloc/payment_bloc.dart';
 export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
+export 'package:kgk/modules/b2b/address/address_list/bloc/address_list_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/b2b/payment/view/payment_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internet_screen.dart';
+export 'package:kgk/modules/common_modules/product_details/view/product_details_screen.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
-
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';
-
-//Utils
 export 'package:kgk/utils/navigator_key.dart';
 export 'package:kgk/utils/utils.dart';
 export 'package:kgk/widgets/button.dart';
-export 'package:kgk/widgets/cart_product_item.dart';
 export 'package:kgk/widgets/categories_row.dart';
 export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
@@ -154,6 +151,8 @@ export 'package:kgk/widgets/dot_indicator.dart';
 export 'package:kgk/widgets/expansion_tile.dart';
 export 'package:kgk/widgets/filter_bottom_actionbar.dart';
 export 'package:kgk/widgets/inquiry_widget.dart';
+export 'package:kgk/widgets/my_bag/cart_product_item.dart';
+export 'package:kgk/widgets/my_bag/my_bag_diamond_item.dart';
 export 'package:kgk/widgets/order_summary.dart';
 export 'package:kgk/widgets/product_customer_review_widget.dart';
 export 'package:kgk/widgets/product_customise_description_widget.dart';
@@ -175,6 +174,9 @@ export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
+export 'package:readmore/readmore.dart';
+export 'package:kgk/widgets/address_selection_widget.dart';
+export 'package:kgk/widgets/checkout_header_progressbar.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

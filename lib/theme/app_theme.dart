@@ -90,7 +90,7 @@ abstract class AppTheme {
 
   RatingbarStyle get ratingbarStyle;
 
-  AddAccountScreenStyle get addAccountScreenStyle;
+  AddAddressScreenStyle get addAddressScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
 
@@ -109,6 +109,12 @@ abstract class AppTheme {
   PaymentStyle get paymentStyle;
 
   WriteReviewScreenStyle get writeReviewScreenStyle;
+  
+  MyBagDiamondItemStyle get myBagDiamondItemStyle;
+
+  AddressSelectionStyle get addressSelectionStyle;
+
+  AddressListStyle get addressListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -688,7 +694,7 @@ class RatingbarStyle {
   });
 }
 
-class AddAccountScreenStyle {
+class AddAddressScreenStyle {
   final Color backgroundColor;
   final Color dotColor;
   final Color filledDotColor;
@@ -698,7 +704,7 @@ class AddAccountScreenStyle {
   final TextStyle paymentStyle;
   final TextStyle isSameAddressStyle;
 
-  AddAccountScreenStyle({
+  AddAddressScreenStyle({
     required this.backgroundColor,
     required this.dotColor,
     required this.filledDotColor,
@@ -865,6 +871,51 @@ class PaymentStyle {
     required this.isSameAddressStyle,
     required this.footerTotalStyle,
     required this.footerTotalAmountStyle,
+
+  });
+}
+
+class MyBagDiamondItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final TextStyle headingStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle richTextStyle;
+
+  MyBagDiamondItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.headingStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.richTextStyle,
+  });
+}
+
+class AddressSelectionStyle {
+  final TextStyle addressNameStyle;
+  final TextStyle fullAddressStyle;
+  final TextStyle contactNumberStyle;
+
+  AddressSelectionStyle({
+    required this.addressNameStyle,
+    required this.fullAddressStyle,
+    required this.contactNumberStyle,
+  });
+}
+
+class AddressListStyle {
+  final Color backgroundColor;
+  final Color arrowColor;
+  final TextStyle isSameAddressStyle;
+  final TextStyle nProductsTitleStyle;
+
+  AddressListStyle({
+    required this.backgroundColor,
+    required this.arrowColor,
+    required this.isSameAddressStyle,
+    required this.nProductsTitleStyle,
   });
 }
 

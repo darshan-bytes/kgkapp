@@ -7,7 +7,14 @@ class SmartGridView extends StatelessWidget {
   final double runSpacing;
   final double? height;
 
-  const SmartGridView({super.key, required this.items, this.columns = 2, this.spacing = 12.0, this.runSpacing = 12.0, this.height});
+  const SmartGridView({
+    super.key,
+    required this.items,
+    this.columns = 2,
+    this.spacing = 12.0,
+    this.runSpacing = 12.0,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {

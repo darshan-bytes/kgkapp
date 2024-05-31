@@ -29,7 +29,7 @@ class SmartText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? style = _style ?? const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.black);
+    TextStyle? style = _style ?? TextStyle(fontSize: 14.0.sp, fontWeight: FontWeight.w400, color: Colors.black);
     Widget child = Text(
       _text ?? '',
       style: ((color != null || fontWeight != null || decoration != null))

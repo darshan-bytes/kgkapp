@@ -19,35 +19,40 @@ class CompleteProductScreen extends StatelessWidget {
           children: [
             const DiyProgressWidget(selectedStep: 3),
             _imageSlider(completeProductBloc),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
             _productDetail(style, completeProductBloc, context)
           ],
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: Row(
           children: [
             Expanded(
               child: SmartButton(
+                height: 48.w,
                 prefixImage: AppImages.icShoppingBag,
                 title: APPStrings.addToBag.tr,
                 onTap: () {},
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             SelectionButton(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               isSelected: false,
               onTap: () {},
               image: AppImages.icHeart,
+              height: 48.w,
+              // imageHeight: 24.w,
+              // imageWidth: 24.w,
             ),
             const SizedBox(width: 8),
             SelectionButton(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               isSelected: false,
               onTap: () {},
               image: AppImages.icShare,
+              height: 48.w,
             ),
           ],
         ),
@@ -81,9 +86,9 @@ class CompleteProductScreen extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => completeProductBloc.controller.animateToPage(entry.key),
                   child: Container(
-                    width: 10.0,
-                    height: 10.0,
-                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    width: 10.0.w,
+                    height: 10.0.w,
+                    margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color:
@@ -100,17 +105,17 @@ class CompleteProductScreen extends StatelessWidget {
 
   Widget _productDetail(CompleteProductStyle style, CompleteProductBloc completeProductBloc, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               SmartText('Martin Flyer', style: style.productTypeStyle),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Container(
-                height: 6,
-                width: 6,
+                height: 6.w,
+                width: 6.w,
                 decoration: BoxDecoration(
                     color: colors(context).color8C8C8C,
                     border: Border.all(
@@ -118,13 +123,13 @@ class CompleteProductScreen extends StatelessWidget {
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(50))),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               SmartText('DERC03RDA', style: style.productCodeStyle),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           SmartText('1.01 Carat Round Diamond', style: style.productNameStyle),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Row(
             children: [
               RatingBar(
@@ -134,15 +139,15 @@ class CompleteProductScreen extends StatelessWidget {
                 onRatingUpdate: (double value) {},
                 allowHalfRating: false,
                 itemSize: 16,
-                itemPadding: const EdgeInsets.only(right: 2, left: 2),
+                itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
                 ratingWidget: RatingWidget(
                   empty: const SmartImage(path: AppImages.icEmptyStar),
                   full: const SmartImage(path: AppImages.icFullStar),
                   half: Container(),
                 ),
               ),
-              const SizedBox(
-                width: 8,
+              SizedBox(
+                width: 8.w,
               ),
               SmartText(
                 APPStrings.reviews.tr.interpolate([120]),
@@ -150,9 +155,9 @@ class CompleteProductScreen extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _compareWidget(completeProductBloc),
-          const Divider(height: 40),
+          Divider(height: 40.h),
           ProductSelectedSettings(
             onTap: () {},
             selectedSettings: SelectedSettings(
@@ -163,7 +168,7 @@ class CompleteProductScreen extends StatelessWidget {
               imageColor: style.ratingGlowColor,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           ProductSelectedSettings(
             onTap: () {},
             selectedSettings: SelectedSettings(
@@ -173,21 +178,21 @@ class CompleteProductScreen extends StatelessWidget {
               image: AppImages.icRing,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               SmartText(APPStrings.approxPrice.tr, style: style.productTypeStyle),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               SmartText('\$1200.00', style: style.priceStyle),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           RichText(
             text: TextSpan(
               text: APPStrings.buyingInBulk.tr,
               style: style.productTypeStyle,
               children: [
-                const WidgetSpan(child: SizedBox(width: 12)),
+                WidgetSpan(child: SizedBox(width: 12.w)),
                 TextSpan(
                   text: APPStrings.askForQuotation.tr,
                   style: style.detailsHeaderStyle,
@@ -195,46 +200,46 @@ class CompleteProductScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           SmartText(APPStrings.approxPriceNote.tr, style: style.productTypeStyle),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           Row(
             children: [
-              const SmartImage(
+              SmartImage(
                 path: AppImages.icDiamond,
-                height: 24,
-                width: 24,
+                height: 24.w,
+                width: 24.w,
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.diamondPurityYouCanTrust.tr,
                 style: style.diamondPurityStyle,
               )
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               const SmartImage(path: AppImages.icTruck),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.shippingAcrossAllCountries.tr,
                 style: style.diamondPurityStyle,
               )
             ],
           ),
-          const SizedBox(height: 32),
-          const Divider(height: 1),
+          SizedBox(height: 32.h),
+          Divider(height: 1.h),
           _ringDetails(completeProductBloc, style, context),
-          const Divider(height: 1),
+          Divider(height: 1.h),
           _diamondDetails(completeProductBloc, style, context),
-          const Divider(height: 1),
-          const SizedBox(height: 28),
+          Divider(height: 1.h),
+          SizedBox(height: 28.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
         ],
       ),
     );
@@ -245,7 +250,7 @@ class CompleteProductScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is CompleteProductRingDetailsToggleState,
       builder: (context, state) {
         return Padding(
-          padding: completeProductBloc.isRingDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          padding: completeProductBloc.isRingDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
           child: SmartExpansionTile(
             key: completeProductBloc.ringDetailsKey,
             title: SmartText(
@@ -253,17 +258,17 @@ class CompleteProductScreen extends StatelessWidget {
               style: style.detailsHeaderStyle,
             ),
             trailing: (completeProductBloc.isRingDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
               completeProductBloc.add(ProductRingDetailsToggleEvent(isRingDetailsOpen: !completeProductBloc.isRingDetailsOpen));
             },
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.brand, 'Flyerfit', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
             ],
           ),
@@ -277,7 +282,7 @@ class CompleteProductScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is CompleteProductDiamondDetailsToggleState,
       builder: (context, state) {
         return Padding(
-          padding: completeProductBloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          padding: completeProductBloc.isDiamondDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
           child: SmartExpansionTile(
             initiallyExpanded: completeProductBloc.isDiamondDetailsOpen,
             key: completeProductBloc.diamondDetailsKey,
@@ -286,23 +291,23 @@ class CompleteProductScreen extends StatelessWidget {
               style: style.detailsHeaderStyle,
             ),
             trailing: (completeProductBloc.isDiamondDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
               completeProductBloc.add(ProductDiamondDetailsToggleEvent(isDiamondDetailsOpen: !completeProductBloc.isDiamondDetailsOpen));
             },
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.quantity, '1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.totalCarat, '1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.color, 'F-G', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
             ],
           ),
