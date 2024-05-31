@@ -183,7 +183,7 @@ class ProductGridItem extends StatelessWidget {
               ),
             if (onAddToBagTap != null)
               SmartButton(
-                height: 32.h,
+                height: 32.w,
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,

@@ -159,7 +159,7 @@ class SmartTextFieldState extends State<SmartTextField> {
             SizedBox(height: 8.h),
           ],
           SizedBox(
-            height: widget.height ?? 48.h,
+            height: widget.height ?? 48.w,
             child: TextFormField(
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),

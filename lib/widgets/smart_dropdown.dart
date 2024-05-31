@@ -49,7 +49,7 @@ class SmartDropDown<T> extends StatelessWidget {
                 });
           },
           child: Container(
-            height: buttonHeight ?? 48.h,
+            height: buttonHeight ?? 48.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),

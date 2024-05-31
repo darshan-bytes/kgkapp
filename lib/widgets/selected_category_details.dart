@@ -37,7 +37,7 @@ class SelectedCategoryDetails extends StatelessWidget {
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 10.w),
-            height: 260.h,
+            height: 260.w,
             alignment: Alignment.center,
             color: categoryTileStyle.backgroundColor,
             child: ListView.builder(

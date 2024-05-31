@@ -337,7 +337,7 @@ class SettingDetailScreen extends StatelessWidget {
           height: 12.h,
         ),
         Container(
-          height: 100.h,
+          height: 100.w,
           alignment: Alignment.center,
           width: context.width,
           child: ListView.builder(
@@ -361,7 +361,7 @@ class SettingDetailScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: colors(context).white,
-                          border: isSelected ? Border.all(color: colors(context).color083458, width: 1) : null,
+                          border: isSelected ? Border.all(color: colors(context).color083458, width: 1.w) : null,
                         ),
                         child: Center(
                           child: FractionallySizedBox(

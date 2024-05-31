@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'signup_event.dart';
+
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {

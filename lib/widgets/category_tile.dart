@@ -20,7 +20,7 @@ class CategoryTile extends StatelessWidget {
         children: [
           SmartImage(
             path: category.image ?? 'https://i.ibb.co/HgjT1rt/Image.png',
-            height: 134.h,
+            height: 134.w,
             width: context.width,
             fit: BoxFit.fill,
           ),

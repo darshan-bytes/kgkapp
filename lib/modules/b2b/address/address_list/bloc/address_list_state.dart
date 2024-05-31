@@ -9,6 +9,23 @@ final class AddressListInitial extends AddressListState {
   List<Object> get props => [];
 }
 
+final class AddressListLoadedState extends AddressListState {
+  final List<AddressDetails> addressList;
+  final AddressDetails selectedAddress;
+  final bool isBillingAndShippingSame;
+  final List<ProductDetails> productList;
+
+  const AddressListLoadedState(
+    this.addressList,
+    this.selectedAddress,
+    this.isBillingAndShippingSame,
+    this.productList,
+  );
+
+  @override
+  List<Object> get props => [addressList, selectedAddress, isBillingAndShippingSame, productList];
+}
+
 final class AddressListReloadState extends AddressListState {
   const AddressListReloadState();
 

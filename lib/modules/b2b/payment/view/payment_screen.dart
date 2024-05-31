@@ -56,7 +56,10 @@ class PaymentScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         SmartButton(
-                          onTap: () {},
+                          onTap: () {
+                            // TODO: Implement place order
+                            // context.pushNamed(AppRoutes.orderSuccessPage);
+                          },
                           title: APPStrings.placeOrder.tr,
                           width: 168.w,
                         )

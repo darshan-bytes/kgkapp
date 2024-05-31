@@ -14,12 +14,19 @@ class ForgotPasswordScreen extends StatelessWidget {
         backgroundColor: style.backgroundColor,
       ),
       bottomNavigationBar: SafeArea(
-        child: SmartButton(
-          margin: EdgeInsets.symmetric(horizontal: 17.w),
-          onTap: () {
-            context.pushNamed(AppRoutes.emailSentPage);
-          },
-          title: APPStrings.submit.tr,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SmartButton(
+              margin: EdgeInsets.symmetric(horizontal: 17.w),
+              onTap: () {
+                context.pushNamed(AppRoutes.emailSentPage);
+              },
+              title: APPStrings.submit.tr,
+            ),
+            SizedBox(height: 16.h),
+          ],
         ),
       ),
       body: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(

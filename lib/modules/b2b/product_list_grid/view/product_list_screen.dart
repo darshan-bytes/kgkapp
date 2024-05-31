@@ -5,8 +5,7 @@ class ProductListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DiamondListingStyle diamondListingStyle =
-        AppTheme.of(context).diamondListingStyle;
+    final DiamondListingStyle diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     final ProductListBloc bloc = BlocProvider.of<ProductListBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -57,20 +56,16 @@ class ProductListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(
-      DiamondListingStyle style, ProductListBloc bloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, ProductListBloc bloc) {
     return BlocBuilder<ProductListBloc, ProductListState>(
-      buildWhen: (previous, current) =>
-          current is ProductChangeListingTypeState,
+      buildWhen: (previous, current) => current is ProductChangeListingTypeState,
       builder: (context, state) {
         return SizedBox(
           height: 48.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(
-                  APPStrings.showingListLengthX.tr.interpolate(["1", "24"]),
-                  style: style.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -125,15 +120,18 @@ class ProductListScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items:
-                        bloc.productList.map((ProductDetails productDetails) {
+                    items: bloc.productList.map((ProductDetails productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     onAddToBagTap: bloc.fromRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
                     onTap: () {
-                      context.pushNamed(AppRoutes.diamondDetailPage);
+                      if (bloc.fromRing) {
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: productDetails.productId ?? ''});
+                      } else {
+                        context.pushNamed(AppRoutes.diamondDetailPage);
+                      }
                     },
                   );
                 }).toList()),
@@ -150,7 +148,12 @@ class ProductListScreen extends StatelessWidget {
                 onFavTap: () {},
                 onAddToBagTap: () {},
                 onTap: () {
-                  context.pushNamed(AppRoutes.diamondDetailPage);
+                  if (bloc.fromRing) {
+                    context.pushNamed(AppRoutes.productDetailsPage,
+                        arguments: {RoutesData.productId: bloc.productList[index].productId ?? ''});
+                  } else {
+                    context.pushNamed(AppRoutes.diamondDetailPage);
+                  }
                 },
                 productDetails: bloc.productList[index],
               ),

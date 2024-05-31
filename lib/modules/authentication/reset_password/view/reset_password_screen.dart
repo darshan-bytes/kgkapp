@@ -15,12 +15,19 @@ class ResetPasswordScreen extends StatelessWidget {
         backgroundColor: style.backgroundColor,
       ),
       bottomNavigationBar: SafeArea(
-        child: SmartButton(
-          margin: EdgeInsets.symmetric(horizontal: 17.w),
-          onTap: () {
-            context.pushNamed(AppRoutes.emailSentPage);
-          },
-          title: APPStrings.confirmAndLogIn.tr,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SmartButton(
+              margin: EdgeInsets.symmetric(horizontal: 17.w),
+              onTap: () {
+                context.popUntil((route) => route.settings.name == AppRoutes.signInPage);
+              },
+              title: APPStrings.confirmAndLogIn.tr,
+            ),
+            SizedBox(height: 16.h),
+          ],
         ),
       ),
       body: SafeArea(

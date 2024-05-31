@@ -91,7 +91,7 @@ class CartProductItem extends StatelessWidget {
                       }
                     },
                   )),
-                  Container(width: 1.w, height: 48.h, color: style.myBagDividerColor),
+                  Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
                   Expanded(
                       child: SmartButton(
                           activeBackgroundColor: style.backgroundColor,

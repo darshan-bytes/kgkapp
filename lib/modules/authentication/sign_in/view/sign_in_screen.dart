@@ -152,18 +152,25 @@ class SignInScreen extends StatelessWidget {
   Widget buildRichText(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
     return SafeArea(
-      child: SmartRichText(
-        textAlign: TextAlign.center,
-        spans: [
-          SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
-          SmartTextSpan(text: ' '),
-          SmartTextSpan(
-            text: APPStrings.register.tr,
-            onTap: () {
-              context.pushNamed(AppRoutes.signUpPage);
-            },
-            style: style.registerTextStyle,
-          )
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SmartRichText(
+            textAlign: TextAlign.center,
+            spans: [
+              SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
+              SmartTextSpan(text: ' '),
+              SmartTextSpan(
+                text: APPStrings.register.tr,
+                onTap: () {
+                  context.pushNamed(AppRoutes.signUpPage);
+                },
+                style: style.registerTextStyle,
+              )
+            ],
+          ),
+          SizedBox(height: 16.h),
         ],
       ),
     );

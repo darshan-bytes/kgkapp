@@ -123,7 +123,10 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       zipCode: zipCodeController.text,
     );
     clearFormData();
-    event.context.pop(arguments: {RoutesData.addressDetails: addressDetails});
+    //TODO: Implement the logic to save the address and navigate to the previous screen with the saved address
+    // here I've commented the code to pop the screen and pass the addressDetails to the previous screen. Uncomment when validation added
+    // event.context.pop(arguments: {RoutesData.addressDetails: addressDetails});
+    event.context.pop();
     emit(const AddAddressChangeAddressState());
   }
 
