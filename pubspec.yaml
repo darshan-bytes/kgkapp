@@ -66,6 +66,9 @@ dependencies:
   #For Read more / Read less Text
   readmore: ^3.0.0
 
+  #For Screen Util
+  flutter_screenutil: ^5.9.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

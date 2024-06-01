@@ -6,7 +6,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignUpStyle style = AppTheme.of(context).signUpStyle;
-    SignUpBloc signUpBloc = context.read<SignUpBloc>();
+    SignUpBloc signUpBloc = BlocProvider.of<SignUpBloc>(context);
     return Scaffold(
       backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
           builder: (context, state) {
             return SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 18),
+                padding: EdgeInsets.only(left: 18.w, right: 18.w, bottom: 18.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -28,17 +28,17 @@ class SignUpScreen extends StatelessWidget {
                       APPStrings.createAccount.tr,
                       style: style.titleStyle,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     SmartText(
                       APPStrings.enterAccountDetails.tr,
                       style: style.subTitleStyle,
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h),
                     SmartText(
                       APPStrings.selectAccountType.tr,
                       style: style.selectAccountStyle,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Row(
                       children: [
                         Expanded(
@@ -52,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12.w),
                         Expanded(
                           child: _buildAccountTypeSelection(
                             style: style,
@@ -66,12 +66,12 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     if (signUpBloc.isIndividual)
                       ...generateIndividualForm(signUpBloc, context)
                     else
                       ...generateCompanyForm(signUpBloc, context),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h),
                     _buildRegisterButton(context),
                   ],
                 ),
@@ -93,10 +93,10 @@ class SignUpScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 48,
+        height: 48.w,
         decoration: BoxDecoration(
           color: isSelected ? style.selectedAccountTypeColor : style.unselectedAccountTypeColor,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(4.r),
           border: Border.all(
             color: isSelected ? style.selectedAccountTypeBorderColor : style.unselectedAccountTypeBorderColor,
           ),
@@ -108,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
               path: image,
               color: isSelected ? style.selectedAccountTypeIconColor : style.unselectedAccountTypeIconColor,
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             SmartText(
               title,
               style: isSelected ? style.selectedAccountTypeTextStyle : style.unselectedAccountTypeTextStyle,
@@ -122,15 +122,15 @@ class SignUpScreen extends StatelessWidget {
   List<Widget> generateIndividualForm(SignUpBloc signUpBloc, BuildContext context) {
     return <Widget>[
       _buildFirstNameField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildLastNameField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildEmailField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildContactNumberField(signUpBloc, context),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildPasswordField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildConfirmPasswordField(signUpBloc),
     ];
   }
@@ -138,25 +138,25 @@ class SignUpScreen extends StatelessWidget {
   List<Widget> generateCompanyForm(SignUpBloc signUpBloc, BuildContext context) {
     return <Widget>[
       _buildCompanyNameField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildCompanyLocationField(signUpBloc),
-      const SizedBox(height: 12),
+      SizedBox(height: 24.h),
       _buildBusinessType(signUpBloc, context),
-      const SizedBox(height: 12),
+      SizedBox(height: 12.h),
       const Divider(),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildFirstNameField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildLastNameField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildEmailField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildContactNumberField(signUpBloc, context),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildCountryField(signUpBloc, context),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildPasswordField(signUpBloc),
-      const SizedBox(height: 24),
+      SizedBox(height: 24.h),
       _buildConfirmPasswordField(signUpBloc),
     ];
   }
@@ -234,11 +234,11 @@ class SignUpScreen extends StatelessWidget {
                           );
                         },
                         child: SizedBox(
-                          width: 95,
+                          width: 95.w,
                           child: Container(
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.all(12),
-                            margin: const EdgeInsets.only(right: 12),
+                            padding: EdgeInsets.all(12.w),
+                            margin: EdgeInsets.only(right: 12.w),
                             decoration: BoxDecoration(
                               border: Border(
                                 right: BorderSide(
@@ -253,8 +253,8 @@ class SignUpScreen extends StatelessWidget {
                                   '+${signUpBloc.selectedCountryCodes[index].phoneCode}',
                                   style: AppTheme.of(context).textFieldStyle.textStyle,
                                 ),
-                                const SizedBox(width: 4),
-                                const SmartImage(path: AppImages.icArrowDown),
+                                SizedBox(width: 4.w),
+                                const SmartImage(path: AppImages.icArrowDropDown),
                               ],
                             ),
                           ),
@@ -268,20 +268,20 @@ class SignUpScreen extends StatelessWidget {
                           onPressed: () {
                             signUpBloc.add(SignUpRemoveContactEvent(index));
                           },
-                          icon: const SmartImage(
+                          icon: SmartImage(
                             path: AppImages.icMinus,
-                            height: 16,
-                            width: 16,
+                            height: 16.w,
+                            width: 16.w,
                           ),
                         ),
                 );
               },
               separatorBuilder: (_, __) {
-                return const SizedBox(height: 8);
+                return SizedBox(height: 8.h);
               },
             ),
             if (!signUpBloc.isIndividual) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               SmartText(
                 APPStrings.add.tr,
                 style: AppTheme.of(context).textFieldStyle.textStyle,
@@ -375,7 +375,7 @@ class SignUpScreen extends StatelessWidget {
           APPStrings.businessType.tr,
           style: AppTheme.of(context).textFieldStyle.labelStyle,
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Wrap(
           children: List.generate(signUpBloc.businessTypes.length, (index) {
             final BusinessType businessType = signUpBloc.businessTypes[index];
@@ -396,7 +396,7 @@ class SignUpScreen extends StatelessWidget {
                     );
                   },
                 ),
-                if (index != signUpBloc.businessTypes.length - 1) const SizedBox(width: 20)
+                if (index != signUpBloc.businessTypes.length - 1) SizedBox(width: 20.w)
               ],
             );
           }).toList(),
@@ -417,7 +417,7 @@ class SignUpScreen extends StatelessWidget {
               APPStrings.country.tr,
               style: countryPickerStyle.inputLableStyle,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h),
             InkWell(
               onTap: () {
                 Utils.showCountryPickerModel(
@@ -429,13 +429,13 @@ class SignUpScreen extends StatelessWidget {
                 );
               },
               child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                height: 48.w,
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: countryPickerStyle.inputBorderColor,
                   ),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Row(
                   children: [
@@ -445,8 +445,8 @@ class SignUpScreen extends StatelessWidget {
                         style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    const SmartImage(path: AppImages.icArrowDown),
+                    SizedBox(width: 4.w),
+                    const SmartImage(path: AppImages.icArrowDropDown),
                   ],
                 ),
               ),

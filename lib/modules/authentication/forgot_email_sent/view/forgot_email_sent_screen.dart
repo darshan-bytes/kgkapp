@@ -10,7 +10,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
     final List<String> parts = APPStrings.emailHasBeenSendSuccessfully.tr.split('{#}');
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: 52,
+        appBarHeight: 52.h,
         isBorder: false,
         backgroundColor: signInStyle.backgroundColor,
       ),
@@ -18,7 +18,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
         builder: (context, state) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -30,11 +30,11 @@ class ForgotEmailSentScreen extends StatelessWidget {
                       style: signInStyle.titleTextStyle,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   RichText(
                     text: TextSpan(
                       text: parts[0],
-                      style: style.didNotGetEmailTextStyle.copyWith(height: 1.5),
+                      style: style.didNotGetEmailTextStyle.copyWith(height: 1.5.h),
                       children: [
                         TextSpan(
                           text: "your_email@example.com",
@@ -44,7 +44,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 48.h),
                   SmartText(
                     APPStrings.didNotReceivedEmail.tr,
                     style: style.didNotGetEmailTextStyle,

@@ -5,12 +5,29 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-          onTap: () {
-            context.pushNamed(AppRoutes.compareProductPage);
-          },
-          child: const Text('View All Compare Product')),
+    return Scaffold(
+      body: SizedBox(
+        width: context.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+                onTap: () {
+                  context.pushNamed(AppRoutes.compareProductPage);
+                },
+                child: const Text('View All Compare Product')),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+                onTap: () {
+                  context.pushNamed(AppRoutes.paymentPage);
+                },
+                child: const Text('Payment Screen')),
+          ],
+        ),
+      ),
     );
   }
 }

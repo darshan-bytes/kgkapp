@@ -12,17 +12,17 @@ class ProductCustomerReviewWidget extends StatelessWidget {
         Row(
           children: [
             SmartText('Esther Howard', style: style.userNameStyle),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Container(
-              height: 4,
-              width: 4,
+              height: 4.w,
+              width: 4.w,
               decoration: BoxDecoration(
                 color: style.dotColor,
                 border: Border.all(color: style.dotColor),
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             SmartText('01/05/23', style: style.createdDateStyle),
           ],
         ),
@@ -40,8 +40,8 @@ class ProductCustomerReviewWidget extends StatelessWidget {
           'I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone.',
           trimLines: 4,
           trimMode: TrimMode.Line,
-          trimCollapsedText: APPStrings.readMore,
-          trimExpandedText: APPStrings.readLess,
+          trimCollapsedText: APPStrings.readMore.tr,
+          trimExpandedText: APPStrings.readLess.tr,
           style: style.createdDateStyle,
         ),
         const SizedBox(height: 12),

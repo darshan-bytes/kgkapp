@@ -15,20 +15,20 @@ class CompareProductScreen extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(14),
+                padding: EdgeInsets.all(14.w),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
                       Table(
                         defaultColumnWidth: const IntrinsicColumnWidth(),
-                        columnWidths: const {
-                          0: FixedColumnWidth(124),
+                        columnWidths: {
+                          0: FixedColumnWidth(124.w),
                         },
                         children: [_buildTableRow(style)],
                       ),
-                      const SizedBox(
-                        height: 132,
+                      SizedBox(
+                        height: 132.h,
                       )
                     ],
                   ),
@@ -37,31 +37,31 @@ class CompareProductScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  height: 132,
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  height: 132.w,
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
+                        spreadRadius: 5.r,
+                        blurRadius: 7.r,
                         offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
                   child: Table(
                     defaultColumnWidth: const IntrinsicColumnWidth(),
-                    columnWidths: const {
-                      0: FixedColumnWidth(124),
+                    columnWidths: {
+                      0: FixedColumnWidth(124.w),
                     },
                     children: [
                       TableRow(
                           children: List.generate(
                               5,
                               (index) => SizedBox(
-                                  width: 130,
+                                  width: 130.w,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,17 +69,17 @@ class CompareProductScreen extends StatelessWidget {
                                       SmartButton(
                                         onTap: () {},
                                         title: APPStrings.addToBag.tr,
-                                        width: 114,
-                                        height: 48,
+                                        width: 114.w,
+                                        height: 48.w,
                                       ),
-                                      const SizedBox(
-                                        height: 8,
+                                      SizedBox(
+                                        height: 8.h,
                                       ),
                                       InkWell(
                                         onTap: () {},
                                         child: Container(
-                                          height: 48,
-                                          width: 114,
+                                          height: 48.h,
+                                          width: 114.w,
                                           alignment: Alignment.center,
                                           child: SmartText(APPStrings.remove.tr, style: style.productRemoveStyle),
                                         ),
@@ -101,20 +101,20 @@ class CompareProductScreen extends StatelessWidget {
 
   Widget _buildTableCell(int index, CompareProductStyle style) {
     return Container(
-      width: 130,
+      width: 130.w,
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SmartImage(
+          SmartImage(
             path: 'https://www.figma.com/file/xHJugBedFGw3uWVpWmaqcF/image/9b088e68788432f985282804ce6fe7e5cba65948',
-            width: 114,
-            height: 114,
+            width: 114.w,
+            height: 114.w,
             color: Colors.black,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Container(
-            margin: const EdgeInsets.only(right: 10),
+            margin: EdgeInsets.only(right: 10.w),
             child: SmartText(
               'Diamond Vine Ring in 18k Rose Gold',
               maxLines: 2,
@@ -122,14 +122,14 @@ class CompareProductScreen extends StatelessWidget {
               style: style.productTitleStyle,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           SmartText(
             '\$5,000.00',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: style.productPriceStyle,
           ),
-          const SizedBox(height: 28),
+          SizedBox(height: 28.h),
           _buildProductDetailWidgets(index, APPStrings.brand.tr, "Flyerfit", style),
           _buildProductDetailWidgets(index, APPStrings.productType.tr, "Engagement Ring", style),
           _buildProductDetailWidgets(index, APPStrings.metalType.tr, "Platinum", style),
@@ -152,14 +152,14 @@ class CompareProductScreen extends StatelessWidget {
                   style: style.productSubTitleStyle,
                 ),
               ),
-              const SizedBox(height: 8),
-              const Divider(height: 1),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
+              Divider(height: 1.h),
+              SizedBox(height: 8.h),
               SmartText(
                 '4.0',
                 style: style.productTitleStyle,
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartRatingBar(
                 initialRating: 3,
                 itemSize: 14,
@@ -168,12 +168,12 @@ class CompareProductScreen extends StatelessWidget {
                   printWrapped(rating.toString());
                 },
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6.h),
               SmartText(
                 "120 reviews",
                 style: style.productReviewStyle,
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
             ],
           )
         ],
@@ -182,7 +182,7 @@ class CompareProductScreen extends StatelessWidget {
   }
 
   Widget _buildProductDetailWidgets(int index, String label, String value, CompareProductStyle style,
-      {double textHeight = 40, int maxLines = 2}) {
+      {double textHeight = 48, int maxLines = 2}) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Visibility(
         visible: index == 0,
@@ -196,19 +196,19 @@ class CompareProductScreen extends StatelessWidget {
           style: style.productSubTitleStyle,
         ),
       ),
-      const SizedBox(height: 8),
-      const Divider(height: 1),
-      const SizedBox(height: 8),
+      SizedBox(height: 8.h),
+      Divider(height: 1.h),
+      SizedBox(height: 8.h),
       Container(
-        margin: const EdgeInsets.only(right: 10),
-        height: textHeight,
+        margin: EdgeInsets.only(right: 12.w),
+        height: textHeight.h,
         child: SmartText(
           value,
           style: style.productTitleStyle,
           maxLines: maxLines,
         ),
       ),
-      const SizedBox(height: 14),
+      SizedBox(height: 14.h),
     ]);
   }
 }

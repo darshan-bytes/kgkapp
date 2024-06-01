@@ -45,18 +45,18 @@ class DiamondListingScreen extends StatelessWidget {
         builder: (context, state) {
           return SafeArea(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 17),
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(
               children: [
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildSelectionDiamond(diamondListingBloc),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildProductFilterCount(style, diamondListingBloc),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildProductList(style, diamondListingBloc),
-                const SizedBox(height: 7),
+                SizedBox(height: 7.h),
               ],
             ),
           ));
@@ -72,7 +72,7 @@ class DiamondListingScreen extends StatelessWidget {
           child: SelectionButton(
             isSelected: diamondListingBloc.isIndividual,
             title: APPStrings.naturalDiamond.tr,
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(true));
             },
@@ -82,7 +82,7 @@ class DiamondListingScreen extends StatelessWidget {
           child: SelectionButton(
             isSelected: !diamondListingBloc.isIndividual,
             title: APPStrings.looseDiamond.tr,
-            borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(false));
             },
@@ -94,7 +94,7 @@ class DiamondListingScreen extends StatelessWidget {
 
   Widget _buildProductFilterCount(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
     return SizedBox(
-      height: 48,
+      height: 48.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -104,7 +104,7 @@ class DiamondListingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SelectionButton(
-                  width: 48,
+                  width: 48.w,
                   isSelected: diamondListingBloc.isGrid,
                   image: AppImages.icGrid,
                   selectedButtonColor: style.gridBackgroundColor,
@@ -113,13 +113,13 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
                     diamondListingBloc.add(const ChangeListingTypeEvent(true));
                   },
                 ),
                 SelectionButton(
-                  width: 48,
+                  width: 48.w,
                   isSelected: !diamondListingBloc.isGrid,
                   image: AppImages.icList,
                   selectedButtonColor: style.gridBackgroundColor,
@@ -128,14 +128,14 @@ class DiamondListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: style.listIconColor,
                   unselectedButtonColor: style.listBackgroundColor,
                   unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: const BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
                     diamondListingBloc.add(const ChangeListingTypeEvent(false));
                   },
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16.w),
                 SelectionButton(
-                  width: 48,
+                  width: 48.w,
                   isSelected: true,
                   selectedButtonColor: style.menuBackgroundColor,
                   selectedButtonBorderColor: style.menuBorderColor,
@@ -172,15 +172,15 @@ class DiamondListingScreen extends StatelessWidget {
                     onFavTap: () {},
                   );
                 }).toList()),
-                const SizedBox(
-                  height: 17,
+                SizedBox(
+                  height: 17.h,
                 )
               ],
             );
           } else {
             return ListView.builder(
               itemBuilder: (context, index) => ProductListItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},

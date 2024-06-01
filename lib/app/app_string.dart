@@ -203,4 +203,42 @@ class APPStrings {
   static const String continueShopping = 'continue_shopping';
 
   static const String subTotal = 'sub_total';
+  static const String head = 'head';
+  static const String totalApproxPrice = 'total_approx_price';
+  static const String customiseProduct = 'customise_product';
+
+  //Payment
+  static const String paypal = 'paypal';
+  static const String upi = 'upi';
+
+  //Price Details
+  static const String priceDetails = 'price_details';
+  static const String subtotal = 'subtotal';
+  static const String shipping = 'shipping';
+  static const String salesTax = 'sales_tax';
+  static const String placeOrder = 'place_order';
+
+  //My bag diamond item
+  static const String ct = 'ct';
+  static const String colour = 'colour';
+  static const String lotNumber = 'lot_number';
+  static const String certificateNumber = 'certificate_number';
+  static const String measurements = 'measurements';
+  static const String lab = 'lab';
+  static const String cut = 'cut';
+  static const String polish = 'polish';
+  static const String symmetry = 'symmetry';
+  static const String flourish = 'flourish';
+  static const String table = 'table';
+  static const String tablePercentage = 'table_percentage';
+  static const String rap = 'rap';
+  static const String depth = 'depth';
+  static const String depthPercentage = 'depth_percentage';
+  static const String kgkAmount = 'kgk_amount';
+  static const String your = 'your';
+  static const String yourPercentage = 'your_percentage';
+  static const String yourRate = 'your_rate';
+  static const String yourValue = 'your_value';
+  static const String dash = 'dash';
+  static const String addAddress = 'add_address';
 }

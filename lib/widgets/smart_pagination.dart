@@ -55,16 +55,16 @@ class SmartPaginationState extends State<SmartPagination> {
     bool isSelectionGreaterThanOne = widget.pageNumbers.indexOf(currentPage) > 0;
     bool isLastIndex = widget.pageNumbers.indexOf(currentPage) == widget.pageNumbers.length - 1;
     return Padding(
-      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 17, vertical: 24),
+      padding: widget.padding ?? EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
       child: Row(
         children: [
           SmartButton(
             onTap: previousPage,
             title: APPStrings.previous.tr,
-            width: 118,
+            width: 118.w,
             isEnabled: isSelectionGreaterThanOne,
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
           Expanded(
               child: SmartDropdownButtonFormField<String>(
                   textStyle: style.textStyle,
@@ -81,11 +81,11 @@ class SmartPaginationState extends State<SmartPagination> {
                   },
                   itemLableBuilder: (item) => item,
                   value: currentPage)),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
           SmartButton(
             onTap: nextPage,
             title: APPStrings.next.tr,
-            width: 118,
+            width: 118.w,
             isEnabled: !isLastIndex,
           ),
         ],

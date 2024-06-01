@@ -18,22 +18,22 @@ class ProductSelectedSettings extends StatelessWidget {
       children: [
         SmartImage(
           path: selectedSettings.image ?? '',
-          height: 24,
-          width: 24,
+          height: 24.w,
+          width: 24.w,
           color: selectedSettings.imageColor,
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SmartText(selectedSettings.name, style: style.titleStyle),
-              const SizedBox(height: 6),
+              SizedBox(height: 6.h),
               SmartText(selectedSettings.specification, style: style.specialityStyle),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartText(selectedSettings.price, style: style.titleStyle),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               SmartText(
                 APPStrings.change.tr,
                 style: style.changeTextStyle,

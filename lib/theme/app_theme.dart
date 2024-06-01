@@ -90,11 +90,13 @@ abstract class AppTheme {
 
   RatingbarStyle get ratingbarStyle;
 
-  AddAccountScreenStyle get addAccountScreenStyle;
+  AddAddressScreenStyle get addAddressScreenStyle;
 
   CountryPickerStyle get countryPickerStyle;
 
   WishListStyle get wishListStyle;
+
+  CheckOutStyle get checkOutStyle;
 
   MyBagScreenStyle get myBagScreenStyle;
 
@@ -105,6 +107,14 @@ abstract class AppTheme {
   ReviewDetailsStyle get reviewDetailsStyle;
 
   OrderConfirmationStyle get orderConfirmationStyle;
+
+  PaymentStyle get paymentStyle;
+
+  MyBagDiamondItemStyle get myBagDiamondItemStyle;
+
+  AddressSelectionStyle get addressSelectionStyle;
+
+  AddressListStyle get addressListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -684,7 +694,7 @@ class RatingbarStyle {
   });
 }
 
-class AddAccountScreenStyle {
+class AddAddressScreenStyle {
   final Color backgroundColor;
   final Color dotColor;
   final Color filledDotColor;
@@ -694,7 +704,7 @@ class AddAccountScreenStyle {
   final TextStyle paymentStyle;
   final TextStyle isSameAddressStyle;
 
-  AddAccountScreenStyle({
+  AddAddressScreenStyle({
     required this.backgroundColor,
     required this.dotColor,
     required this.filledDotColor,
@@ -729,6 +739,14 @@ class WishListStyle {
   WishListStyle({
     required this.numberOfItemsStyle,
     required this.totalAmountStyle,
+  });
+}
+
+class CheckOutStyle {
+  final Color dividerColor;
+
+  CheckOutStyle({
+    required this.dividerColor,
   });
 }
 
@@ -786,6 +804,8 @@ class ProductDetailsStyle {
   final TextStyle averageRatingStyle;
   final TextStyle viewAllReviewStyle;
   final Color compareCountBGColor;
+  final TextStyle totalApproxStyle;
+  final TextStyle totalApproxSubStyle;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -809,6 +829,8 @@ class ProductDetailsStyle {
     required this.averageRatingStyle,
     required this.viewAllReviewStyle,
     required this.compareCountBGColor,
+    required this.totalApproxStyle,
+    required this.totalApproxSubStyle,
   });
 }
 
@@ -837,5 +859,75 @@ class OrderConfirmationStyle {
     required this.subTitleStyle,
     required this.orderNumberStyle,
     required this.descriptionStyle,
+  });
+}
+
+class PaymentStyle {
+  final Color backgroundColor;
+  final Color dotColor;
+  final Color filledDotColor;
+  final Color fillLineColor;
+  final Color borderColor;
+  final TextStyle shippingBillingAddressStyle;
+  final TextStyle paymentStyle;
+  final TextStyle isSameAddressStyle;
+  final TextStyle footerTotalStyle;
+  final TextStyle footerTotalAmountStyle;
+
+  PaymentStyle({
+    required this.backgroundColor,
+    required this.dotColor,
+    required this.filledDotColor,
+    required this.fillLineColor,
+    required this.borderColor,
+    required this.shippingBillingAddressStyle,
+    required this.paymentStyle,
+    required this.isSameAddressStyle,
+    required this.footerTotalStyle,
+    required this.footerTotalAmountStyle,
+  });
+}
+
+class MyBagDiamondItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final TextStyle headingStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle richTextStyle;
+
+  MyBagDiamondItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.headingStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.richTextStyle,
+  });
+}
+
+class AddressSelectionStyle {
+  final TextStyle addressNameStyle;
+  final TextStyle fullAddressStyle;
+  final TextStyle contactNumberStyle;
+
+  AddressSelectionStyle({
+    required this.addressNameStyle,
+    required this.fullAddressStyle,
+    required this.contactNumberStyle,
+  });
+}
+
+class AddressListStyle {
+  final Color backgroundColor;
+  final Color arrowColor;
+  final TextStyle isSameAddressStyle;
+  final TextStyle nProductsTitleStyle;
+
+  AddressListStyle({
+    required this.backgroundColor,
+    required this.arrowColor,
+    required this.isSameAddressStyle,
+    required this.nProductsTitleStyle,
   });
 }

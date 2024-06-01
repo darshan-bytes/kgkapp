@@ -20,24 +20,24 @@ class SelectedCategoryDetails extends StatelessWidget {
                     : Alignment.centerLeft,
             child: Container(
               margin: arrowPosition == ArrowPosition.rightTop
-                  ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.15)
+                  ? EdgeInsets.only(right: context.width * 0.15)
                   : arrowPosition == ArrowPosition.centerTop
                       ? EdgeInsets.zero
-                      : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+                      : EdgeInsets.only(left: context.width * 0.15),
               child: ClipPath(
                 clipper: TriangleClipper(arrowPosition: arrowPosition),
                 child: Container(
                   color: categoryTileStyle.backgroundColor,
-                  height: 10,
-                  width: 20,
+                  height: 10.h,
+                  width: 20.w,
                 ),
               ),
             ),
           ),
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            height: 260,
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            height: 260.w,
             alignment: Alignment.center,
             color: categoryTileStyle.backgroundColor,
             child: ListView.builder(
@@ -45,13 +45,13 @@ class SelectedCategoryDetails extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    margin: EdgeInsets.symmetric(horizontal: 12.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 14, bottom: 14),
+                          padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
                           child: SmartText(
                             productsDetailsList[index],
                             style: categoryTileStyle.detailStyle,
@@ -59,7 +59,7 @@ class SelectedCategoryDetails extends StatelessWidget {
                         ),
                         if (index != 4)
                           Container(
-                            height: 0.8,
+                            height: 0.8.h,
                             color: categoryTileStyle.dividerLineColor,
                           )
                       ],

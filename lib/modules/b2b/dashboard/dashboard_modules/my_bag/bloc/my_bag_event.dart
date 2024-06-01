@@ -31,12 +31,11 @@ final class MyBagChangeProductQuantity extends MyBagEvent {
 
 final class MyBagRemoveProduct extends MyBagEvent {
   final int index;
-  final ProductDetails productDetails;
 
-  const MyBagRemoveProduct({required this.index, required this.productDetails});
+  const MyBagRemoveProduct({required this.index});
 
   @override
-  List<Object> get props => [index, productDetails];
+  List<Object> get props => [index];
 }
 
 final class MyBagSelectAllProductChangedEvent extends MyBagEvent {
@@ -50,10 +49,9 @@ final class MyBagSelectAllProductChangedEvent extends MyBagEvent {
 
 final class MyBagSelectProductChangedEvent extends MyBagEvent {
   final int index;
-  final bool isSelectedProduct;
 
-  const MyBagSelectProductChangedEvent({required this.index, required this.isSelectedProduct});
+  const MyBagSelectProductChangedEvent({required this.index});
 
   @override
-  List<Object> get props => [index, isSelectedProduct];
+  List<Object> get props => [index];
 }

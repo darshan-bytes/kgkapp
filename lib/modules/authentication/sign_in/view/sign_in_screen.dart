@@ -8,59 +8,46 @@ class SignInScreen extends StatelessWidget {
     final style = AppTheme.of(context).signInScreenStyle;
     final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
-      appBar: SmartAppBar(
-        appBarHeight: 52,
-        isBorder: false,
-        backgroundColor: style.backgroundColor,
-      ),
+      bottomNavigationBar: buildRichText(context),
+      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SmartText(
-                                APPStrings.login.tr,
-                                style: style.titleTextStyle,
-                              ),
-                              SmartText(
-                                APPStrings.enterYourAccountDetails.tr,
-                                style: style.subTitleStyle,
-                              ),
-                              const SizedBox(height: 32),
-                              _buildEmailField(style, context, bloc),
-                              const SizedBox(height: 24),
-                              _buildPasswordField(style, context, bloc),
-                              const SizedBox(height: 16),
-                              _buildForgotPasswordText(context, style),
-                              const SizedBox(height: 32),
-                              _buildLoginButton(context),
-                              // const SizedBox(height: 32),
-                              // _buildDivider(style),
-                              // const SizedBox(height: 24),
-                              // _buildSocialMediaButtons(),
-                              const SizedBox(height: 24),
-                            ],
-                          ),
-                        ),
+                      SmartText(
+                        APPStrings.login.tr,
+                        style: style.titleTextStyle,
                       ),
-                      buildRichText(context),
-                      const SizedBox(height: 16),
+                      SmartText(
+                        APPStrings.enterYourAccountDetails.tr,
+                        style: style.subTitleStyle,
+                      ),
+                      SizedBox(height: 32.h),
+                      _buildEmailField(style, context, bloc),
+                      SizedBox(height: 24.h),
+                      _buildPasswordField(style, context, bloc),
+                      SizedBox(height: 16.h),
+                      _buildForgotPasswordText(context, style),
+                      SizedBox(height: 32.h),
+                      _buildLoginButton(context),
+                      // TODO: For social media buttons
+                      // const SizedBox(height: 32),
+                      // _buildDivider(style),
+                      // const SizedBox(height: 24),
+                      // _buildSocialMediaButtons(),
+                      SizedBox(height: 24.h),
                     ],
                   ),
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
@@ -123,7 +110,7 @@ class SignInScreen extends StatelessWidget {
       children: [
         const Divider(),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           color: style.backgroundColor,
           child: SmartText(
             APPStrings.orLoginWith.tr,
@@ -148,12 +135,12 @@ class SignInScreen extends StatelessWidget {
             path: AppImages.icFacebook,
           ),
         ),
-        const SizedBox(width: 40),
+        SizedBox(width: 40.w),
         GestureDetector(
           onTap: () {},
           child: const SmartImage(path: AppImages.icGoogle),
         ),
-        const SizedBox(width: 40),
+        SizedBox(width: 40.w),
         GestureDetector(
           onTap: () {},
           child: const SmartImage(path: AppImages.icZoho),
@@ -164,18 +151,28 @@ class SignInScreen extends StatelessWidget {
 
   Widget buildRichText(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    return SmartRichText(
-      spans: [
-        SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
-        SmartTextSpan(text: ' '),
-        SmartTextSpan(
-          text: APPStrings.register.tr,
-          onTap: () {
-            context.pushNamed(AppRoutes.signUpPage);
-          },
-          style: style.registerTextStyle,
-        )
-      ],
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SmartRichText(
+            textAlign: TextAlign.center,
+            spans: [
+              SmartTextSpan(text: APPStrings.dontHaveAccount.tr),
+              SmartTextSpan(text: ' '),
+              SmartTextSpan(
+                text: APPStrings.register.tr,
+                onTap: () {
+                  context.pushNamed(AppRoutes.signUpPage);
+                },
+                style: style.registerTextStyle,
+              )
+            ],
+          ),
+          SizedBox(height: 16.h),
+        ],
+      ),
     );
   }
 }

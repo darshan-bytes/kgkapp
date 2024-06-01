@@ -1,32 +1,38 @@
 import 'package:kgk/kgk.dart';
 
 class OrderSummary extends StatelessWidget {
+  final String? title;
   final List<OrderSummaryItem> items;
   final String totalPrice;
-  final void Function() onTapCheckout;
+  final void Function()? onTapCheckout;
+  final bool isPromoCodeApplied;
+  final TextStyle? titleStyle;
 
   const OrderSummary({
+    this.title,
     super.key,
     required this.items,
     required this.totalPrice,
-    required this.onTapCheckout,
+    this.onTapCheckout,
+    this.isPromoCodeApplied = true,
+    this.titleStyle,
   });
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).orderSummaryStyle;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
       color: style.backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           SmartText(
-            APPStrings.orderSummary.tr,
-            style: style.orderSummaryTitleStyle,
+            title ?? APPStrings.orderSummary.tr,
+            style: titleStyle == null ? style.orderSummaryTitleStyle : style.orderSummaryTitleStyle.merge(titleStyle),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -35,16 +41,20 @@ class OrderSummary extends StatelessWidget {
               final item = items[index];
               return _buildOrderSummaryItem(item, style);
             },
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            separatorBuilder: (context, index) => SizedBox(height: 16.h),
           ),
-          const SizedBox(height: 16),
-          const Divider(height: 1),
-          _buildPromoCodeSection(style),
-          const Divider(height: 1),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
+          if (isPromoCodeApplied) ...[
+            Divider(height: 1.h),
+            _buildPromoCodeSection(style),
+            Divider(height: 1.h),
+          ],
+          SizedBox(height: 16.h),
           _buildTotalSection(style),
-          const SizedBox(height: 24),
-          SmartButton(onTap: onTapCheckout, title: APPStrings.checkout.tr),
+          if (onTapCheckout != null) ...[
+            SizedBox(height: 24.h),
+            SmartButton(onTap: onTapCheckout!, title: APPStrings.checkout.tr),
+          ]
         ],
       ),
     );
@@ -58,7 +68,7 @@ class OrderSummary extends StatelessWidget {
           item.title,
           style: style.orderSummaryItemStyle,
         )),
-        const SizedBox(width: 17),
+        SizedBox(width: 17.w),
         SmartText(item.value, style: style.orderSummaryItemStyle),
       ],
     );
@@ -66,11 +76,11 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildPromoCodeSection(style) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 18),
+      padding: EdgeInsets.symmetric(vertical: 18.h),
       child: Row(
         children: [
           Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
-          const SizedBox(width: 17),
+          SizedBox(width: 17.w),
           const SmartImage(path: AppImages.icPlus),
         ],
       ),
@@ -79,7 +89,7 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildTotalSection(OrderSummaryStyle style) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12),
+      padding: EdgeInsets.only(top: 12.h),
       child: Row(
         children: [
           Expanded(
@@ -87,7 +97,7 @@ class OrderSummary extends StatelessWidget {
             APPStrings.total.tr,
             style: style.orderSummaryItemStyle,
           )),
-          const SizedBox(width: 17),
+          SizedBox(width: 17.w),
           SmartText(
             totalPrice,
             style: style.totalPriceStyle,

@@ -2,8 +2,8 @@ import 'package:kgk/kgk.dart';
 
 class ProductListItem extends StatelessWidget {
   final ProductDetails productDetails;
-  final double boxHeight;
-  final double boxWidth;
+  final double? boxHeight;
+  final double? boxWidth;
   final double? imageHeight;
   final double? imageWidth;
   final Function()? onTap;
@@ -17,8 +17,8 @@ class ProductListItem extends StatelessWidget {
 
   const ProductListItem({
     super.key,
-    this.boxHeight = 144,
-    this.boxWidth = 144,
+    this.boxHeight,
+    this.boxWidth,
     this.imageHeight,
     this.imageWidth,
     this.onTap,
@@ -48,7 +48,7 @@ class ProductListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             productImageSection(style),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             productDetailsSection(style, context),
           ],
         ),
@@ -60,8 +60,8 @@ class ProductListItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: boxHeight,
-          width: boxWidth,
+          height: boxHeight ?? 144.w,
+          width: boxWidth ?? 144.w,
           alignment: Alignment.center,
           color: style.productBackgroundColor,
           child: SmartImage(
@@ -77,7 +77,7 @@ class ProductListItem extends StatelessWidget {
           child: Row(
             children: [
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               if (onFavTap != null)
                 buildIcon(path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon, onTap: onFavTap, style: style),
             ],
@@ -98,15 +98,15 @@ class ProductListItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? style.backgroundColor,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(4.r),
         ),
-        height: 24,
-        width: 24,
+        height: 24.w,
+        width: 24.w,
         alignment: Alignment.center,
         child: SmartImage(
           path: path,
-          height: 16,
-          width: 16,
+          height: 16.w,
+          width: 16.w,
           fit: BoxFit.contain,
         ),
       ),
@@ -127,25 +127,25 @@ class ProductListItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               priceSection(style),
             ],
             if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
               diamondAndGramSection(style, context),
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartText(
                 productDetails.discountPercentage,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
             ],
             if (onAddToBagTap != null)
               SmartButton(
-                margin: productDetails.discountPercentage.isNullOrEmpty ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
+                margin: productDetails.discountPercentage.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
                 titleStyle: style.buttonWithIconTextStyle,
                 onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
@@ -168,7 +168,7 @@ class ProductListItem extends StatelessWidget {
           ),
         ),
         if (productDetails.offerPrice.isNotNullNorEmpty) ...[
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Flexible(
             child: SmartText(
               productDetails.originalPrice,
@@ -190,8 +190,8 @@ class ProductListItem extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SmartImage(path: AppImages.icBlankDiamond, height: 16, width: 16),
-                const SizedBox(width: 4),
+                SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
                     productDetails.diamond,
@@ -203,15 +203,15 @@ class ProductListItem extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
         ],
         if (productDetails.gram.isNotNullNorEmpty)
           Flexible(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SmartImage(path: AppImages.icGram, height: 16, width: 16),
-                const SizedBox(width: 4),
+                SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
                     productDetails.gram,

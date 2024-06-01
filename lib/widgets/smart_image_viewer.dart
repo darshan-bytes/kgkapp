@@ -85,15 +85,15 @@ class SmartImage extends StatelessWidget {
                         fit: fit ?? BoxFit.cover,
                       ),
                   placeholder: (context, url) => SizedBox(
-                        height: height ?? 50,
-                        width: height ?? 50,
+                        height: height ?? 50.w,
+                        width: height ?? 50.w,
                         child: Container(
-                            height: 20,
-                            width: 20,
+                            height: 20.w,
+                            width: 20.w,
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: 20,
-                              width: 20,
+                              height: 20.w,
+                              width: 20.w,
                               child: CircularProgressIndicator(strokeWidth: 3, color: AppTheme.of(context).colors.primary),
                             )),
                       ),

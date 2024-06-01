@@ -14,7 +14,7 @@ class ProductDetailsScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
             return SmartAppBar(
-              title: productDetailsBloc.productName,
+              title: productDetailsBloc.isCustomisation ? APPStrings.customiseProduct.tr : productDetailsBloc.productName,
               onFavorite: () {},
             );
           },
@@ -22,39 +22,107 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
       body: getScaffoldBody(productDetailsBloc, style),
       floatingActionButton: _buildCompareButton(productDetailsBloc, style),
-      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc),
+      bottomNavigationBar: _buildBottomNavigationBar(productDetailsBloc, style, context),
     );
   }
 
-  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc) {
+  Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style, BuildContext context) {
     return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: SmartButton(
-                prefixImage: AppImages.icShoppingBag,
-                title: APPStrings.addToBag.tr,
-                onTap: () {},
-              ),
+      child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+        buildWhen: (previous, current) => current is ProductDetailsLoadedState,
+        builder: (context, state) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (productDetailsBloc.isCustomisation) ...[
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        APPStrings.totalApproxPrice.tr,
+                        style: style.totalApproxStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$1,470.00",
+                        style: style.totalApproxStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        '14K Rose and White Gold',
+                        style: style.totalApproxSubStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$120.00",
+                        style: style.totalApproxSubStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  Row(
+                    children: [
+                      SmartText(
+                        'Round Diamond 0.5 ct',
+                        style: style.totalApproxSubStyle,
+                      ),
+                      const Spacer(),
+                      SmartText(
+                        "\$1350.00",
+                        style: style.totalApproxSubStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: SmartButton(
+                        prefixImage: AppImages.icShoppingBag,
+                        title: APPStrings.addToBag.tr,
+                        onTap: () {
+                          BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(2));
+                          context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
+                        },
+                      ),
+                    ),
+                    if (!productDetailsBloc.isCustomisation) ...[
+                      SizedBox(width: 8.w),
+                      SelectionButton(
+                        padding: EdgeInsets.all(12.w),
+                        isSelected: false,
+                        onTap: () {},
+                        image: AppImages.icHeart,
+                      ),
+                      SizedBox(width: 8.w),
+                      SelectionButton(
+                        padding: EdgeInsets.all(12.w),
+                        isSelected: false,
+                        onTap: () {},
+                        image: AppImages.icShare,
+                      ),
+                    ],
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            SelectionButton(
-              padding: const EdgeInsets.all(12),
-              isSelected: false,
-              onTap: () {},
-              image: AppImages.icHeart,
-            ),
-            const SizedBox(width: 8),
-            SelectionButton(
-              padding: const EdgeInsets.all(12),
-              isSelected: false,
-              onTap: () {},
-              image: AppImages.icShare,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -65,24 +133,26 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         return productDetailsBloc.isCompare
             ? ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.pushNamed(AppRoutes.compareProductPage);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors(context).primary,
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SmartText(APPStrings.compare.tr, style: AppTheme.of(context).primaryButtonStyle.titleStyle),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     Container(
-                      height: 24,
-                      width: 24,
+                      height: 24.w,
+                      width: 24.w,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: style.compareCountBGColor,
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: SmartText('3', style: AppTheme.of(context).primaryButtonStyle.titleStyle),
                     )
@@ -103,8 +173,8 @@ class ProductDetailsScreen extends StatelessWidget {
             return Column(
               children: [
                 _imageSlider(productDetailsBloc),
-                const SizedBox(height: 40),
-                _productDetail(style, productDetailsBloc),
+                SizedBox(height: 40.h),
+                _productDetail(style, productDetailsBloc, context),
               ],
             );
           },
@@ -116,18 +186,34 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _imageSlider(ProductDetailsBloc productDetailsBloc) {
     return Column(
       children: [
-        CarouselSlider(
-          items: productDetailsBloc.imgList.map((e) {
-            return SmartImage(path: e);
-          }).toList(),
-          carouselController: productDetailsBloc.controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              viewportFraction: 1.5,
-              aspectRatio: 1,
-              onPageChanged: (index, reason) {
-                productDetailsBloc.add(OnProductImageChangeEvent(index));
-              }),
+        Stack(
+          children: [
+            CarouselSlider(
+              items: productDetailsBloc.imgList.map((e) {
+                return SmartImage(path: e);
+              }).toList(),
+              carouselController: productDetailsBloc.controller,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1.5,
+                  aspectRatio: 1,
+                  onPageChanged: (index, reason) {
+                    productDetailsBloc.add(OnProductImageChangeEvent(index));
+                  }),
+            ),
+            if (productDetailsBloc.isCustomisation)
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: SmartImage(
+                    path: AppImages.ic360,
+                    height: 36.w,
+                    width: 36.w,
+                  ),
+                  onPressed: () {},
+                ),
+              )
+          ],
         ),
         BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           buildWhen: (previous, current) => current is ProductImagePageChangeState,
@@ -139,9 +225,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => productDetailsBloc.controller.animateToPage(entry.key),
                   child: Container(
-                    width: 10.0,
-                    height: 10.0,
-                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    width: 10.0.w,
+                    height: 10.0.w,
+                    margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: productDetailsBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
@@ -155,78 +241,87 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
+  Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _productTypeAndCode(style),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           SmartText(productDetailsBloc.productName, style: style.productNameStyle),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _buildRatingBarAndReviews(style),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _compareWidget(productDetailsBloc, style),
-          const Divider(height: 48),
+          Divider(height: 48.h),
           _buildPriceDetails(style),
-          const Divider(height: 48),
+          Divider(height: 48.h),
           _buildCustomizationList(style, productDetailsBloc),
-          const Divider(height: 48),
-          const ProductCustomiseDescriptionWidget(),
-          const Divider(height: 48),
+          Divider(height: 48.h),
+          if (!productDetailsBloc.isCustomisation) ...[
+            ProductCustomiseDescriptionWidget(
+              onTap: () {
+                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                  RoutesData.isCustomisationPage: true,
+                  RoutesData.productId: productDetailsBloc.productDetails?.productId,
+                });
+              },
+            ),
+            Divider(height: 48.h),
+          ],
           Row(
             children: [
-              const SmartImage(
+              SmartImage(
                 path: AppImages.icDiamond,
-                height: 24,
-                width: 24,
+                height: 24.w,
+                width: 24.w,
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.diamondPurityYouCanTrust.tr,
                 style: style.diamondPurityStyle,
               )
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               const SmartImage(path: AppImages.icTruck),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               SmartText(
                 APPStrings.shippingAcrossAllCountries.tr,
                 style: style.diamondPurityStyle,
               )
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           const Divider(),
           _ringDetails(productDetailsBloc, style),
           const Divider(),
           _diamondDetails(productDetailsBloc, style),
           const Divider(),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           const ProductReviewsDetails(),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             primary: false,
             itemCount: 4,
             itemBuilder: (context, index) => const ProductCustomerReviewWidget(),
-            separatorBuilder: (_, __) => const Divider(height: 32),
+            separatorBuilder: (_, __) => Divider(height: 32.h),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           _buildSuggestedProductList(productDetailsBloc, style),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           _buildRecentlyViewedProductList(productDetailsBloc, style),
         ],
       ),
@@ -237,18 +332,18 @@ class ProductDetailsScreen extends StatelessWidget {
     return Row(
       children: [
         SmartText('Martin Flyer', style: style.productTypeStyle),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         Container(
-          height: 4,
-          width: 4,
+          height: 4.w,
+          width: 4.w,
           decoration: BoxDecoration(
               color: style.dotColor,
               border: Border.all(
                 color: style.dotColor,
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(50))),
+              borderRadius: BorderRadius.all(Radius.circular(50.r))),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         SmartText('DERC03RDA', style: style.productCodeStyle),
       ],
     );
@@ -263,7 +358,7 @@ class ProductDetailsScreen extends StatelessWidget {
           onRatingUpdate: (value) {},
           ignoreGestures: true,
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         SmartText(
           APPStrings.reviews.tr.interpolate([120]),
           style: style.productCodeStyle,
@@ -292,9 +387,9 @@ class ProductDetailsScreen extends StatelessWidget {
     return Row(
       children: [
         SmartText('\$1200.00', style: style.priceStyle),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         SmartText('\$1600.00', style: style.originalPriceStyle),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         SmartText('(3% OFF)', style: style.discountStyle),
       ],
     );
@@ -306,7 +401,7 @@ class ProductDetailsScreen extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: productDetailsBloc.productCustomizations.length,
       itemBuilder: (context, index) => ProductDetailsCustomizations(index: index),
-      separatorBuilder: (_, __) => const Divider(height: 48),
+      separatorBuilder: (_, __) => Divider(height: 48.h),
     );
   }
 
@@ -315,7 +410,7 @@ class ProductDetailsScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is RingDetailsToggleState,
       builder: (context, state) {
         return Padding(
-          padding: productDetailsBloc.isRingDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          padding: productDetailsBloc.isRingDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
           child: SmartExpansionTile(
             key: productDetailsBloc.ringDetailsKey,
             title: SmartText(
@@ -323,17 +418,17 @@ class ProductDetailsScreen extends StatelessWidget {
               style: style.settingSelectionTitleStyle,
             ),
             trailing: (productDetailsBloc.isRingDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
               productDetailsBloc.add(const RingDetailsToggleEvent());
             },
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.brand, 'Flyerfit', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
             ],
           ),
@@ -362,17 +457,17 @@ class ProductDetailsScreen extends StatelessWidget {
               productDetailsBloc.add(const DiamondDetailsToggleEvent());
             },
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.quantity, '1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.totalCarat, '1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.color, 'F-G', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
             ],
           ),
@@ -397,7 +492,7 @@ class ProductDetailsScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SmartText(APPStrings.youMayAlsoLike.tr, style: style.customerReviewTitleStyle),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Wrap(
@@ -407,7 +502,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: List.generate(productDetailsBloc.suggestedProductList.length, (index) {
               ProductDetails product = productDetailsBloc.suggestedProductList[index];
               return ProductGridItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 productDetails: product,
@@ -424,7 +519,7 @@ class ProductDetailsScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SmartText(APPStrings.recentlyViewed.tr, style: style.customerReviewTitleStyle),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Wrap(
@@ -434,7 +529,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: List.generate(productDetailsBloc.recentlyViewedProductList.length, (index) {
               ProductDetails product = productDetailsBloc.recentlyViewedProductList[index];
               return ProductGridItem(
-                margin: const EdgeInsets.only(bottom: 17),
+                margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
                 onFavTap: () {},
                 productDetails: product,
