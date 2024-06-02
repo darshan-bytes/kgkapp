@@ -174,6 +174,7 @@ export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:readmore/readmore.dart';
 export 'package:kgk/widgets/address_selection_widget.dart';
 export 'package:kgk/widgets/checkout_header_progressbar.dart';
+export 'package:kgk/modules/b2b/diamond_info_popup/view/diamond_info_popup_screen.dart';
 
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

@@ -16,6 +16,12 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.collectionPage);
           },
         ),
+        SmartText(
+          'diamond info popup screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+          },
+        ),
       ]),
     );
   }

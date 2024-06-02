@@ -179,5 +179,13 @@
   "depth_percentage": "Depth %",
   "table_percentage": "Table %",
   "your_percentage": "Your %",
-  "add_address": "Add Address"
+  "add_address": "Add Address",
+  "diamonds": "Diamonds",
+  "basic_info": "Basic Info",
+  "inclusion_info": "Inclusion info",
+  "other": "Other",
+  "price_details_title": "Price details",
+  "certificate": "Certificate",
+  "purity_guaranteed": "Purity Guaranteed",
+  "view_more_details": "View more details"
 }

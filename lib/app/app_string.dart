@@ -233,4 +233,14 @@ class APPStrings {
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
   static const String addAddress = 'add_address';
+
+  //Diamonds info popup
+  static const String diamonds = 'diamonds';
+  static const String basicInfo = 'basic_info';
+  static const String inclusionInfo = 'inclusion_info';
+  static const String other = 'other';
+  static const String priceDetailsTitle = 'price_details_title';
+  static const String certificate = 'certificate';
+  static const String purityGuaranteed = 'purity_guaranteed';
+  static const String viewMoreDetails = 'view_more_details';
 }
