@@ -233,4 +233,15 @@ class APPStrings {
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
   static const String addAddress = 'add_address';
+
+  //Product menu bottom sheet
+  static const String buyNow = 'buy_now';
+  static const String discuss = 'discuss';
+  static const String meeting = 'meeting';
+  static const String quotation = 'quotation';
+  static const String export = 'export';
+  static const String more = 'more';
+  static const String subTotal = 'sub_total';
+  static const String moreDetails = 'more_details';
+  static const String lessDetails = 'less_details';
 }

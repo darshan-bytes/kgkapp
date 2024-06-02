@@ -1,0 +1,194 @@
+import 'package:kgk/kgk.dart';
+
+class ProductMenuBottomsheet extends StatelessWidget {
+  const ProductMenuBottomsheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ProductMenuBottomSheetBloc bloc = BlocProvider.of<ProductMenuBottomSheetBloc>(context);
+    final ProductMenuBottomsheetStyle style = AppTheme.of(context).productMenuBottomsheetStyle;
+
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: style.backgroundColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildAppBar(context, style),
+          Flexible(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: BlocBuilder<ProductMenuBottomSheetBloc, ProductMenuBottomSheetState>(
+                  buildWhen: (previous, current) => current is ProductMenuBottomSheetReloadState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        if (bloc.showMoreDetails) ...[
+                          ..._buildInfoRows(style),
+                          SizedBox(height: 16.h),
+                          const Divider(),
+                          SizedBox(height: 16.h),
+                        ],
+                        _buildProductDetailsView(bloc, style),
+                        SizedBox(height: 16.h),
+                        _buildButtons(),
+                        SizedBox(height: 16.h),
+                        _buildActionGrid(style),
+                        SizedBox(height: 16.h),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppBar(BuildContext context, ProductMenuBottomsheetStyle style) {
+    return SmartAppBar(
+      isBack: false,
+      appBarHeight: kToolbarHeight.h,
+      isBorder: false,
+      backgroundColor: style.backgroundColor,
+      actions: [
+        InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: SmartImage(
+            path: AppImages.icCross,
+            color: style.primaryColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _buildInfoRows(style) {
+    return [
+      _buildProductDetailsItem('Total diamonds', '9', '', style),
+      SizedBox(height: 12.h),
+      _buildProductDetailsItem('Total carats', '9.00', '', style),
+      SizedBox(height: 12.h),
+      _buildProductDetailsItem('Average discount', '15%', '', style),
+      SizedBox(height: 12.h),
+      _buildProductDetailsItem('Round', '3 ct', '\$30,000', style),
+      SizedBox(height: 12.h),
+      _buildProductDetailsItem('Oval', '3 ct', '\$30,000', style),
+      SizedBox(height: 12.h),
+      _buildProductDetailsItem('Marquise', '3 ct', '\$30,000', style),
+    ];
+  }
+
+  Widget _buildProductDetailsItem(String title, String quantity, String amount, ProductMenuBottomsheetStyle style) {
+    return Row(
+      children: [
+        Expanded(child: SmartText(title, style: style.diamondTitleStyle)),
+        SizedBox(width: 17.w),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(child: SmartText(quantity, style: style.diamondValueStyle, textAlign: TextAlign.end)),
+              SizedBox(width: 17.w),
+              Expanded(child: SmartText(amount, style: style.diamondValueStyle, textAlign: TextAlign.end)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProductDetailsView(ProductMenuBottomSheetBloc bloc, ProductMenuBottomsheetStyle style) {
+    return BlocBuilder<ProductMenuBottomSheetBloc, ProductMenuBottomSheetState>(
+      buildWhen: (previous, current) => current is ChangeMoreDetailsState,
+      builder: (context, state) {
+        final bool showMoreDetails = bloc.showMoreDetails;
+        return Row(
+          children: [
+            SmartText(APPStrings.subTotal.tr, style: style.subTotalStyle),
+            SizedBox(width: 8.w),
+            Expanded(
+              child: SmartText(
+                bloc.subTotalAmount,
+                style: style.totalAmountStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            InkWell(
+              onTap: () => bloc.add(const ChangeMoreDetailsEvent()),
+              child: SmartText(
+                showMoreDetails ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+                style: style.moreDetailsStyle,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildButtons() {
+    return Column(
+      children: [
+        SmartButton(onTap: () {}, title: APPStrings.addToBag.tr),
+        SizedBox(height: 8.h),
+        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr),
+      ],
+    );
+  }
+
+  Widget _buildActionGrid(ProductMenuBottomsheetStyle style) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildActionItem(AppImages.icComment, APPStrings.discuss.tr, () {}, style),
+        _buildActionItem(AppImages.icMeeting, APPStrings.meeting.tr, () {}, style),
+        _buildActionItem(AppImages.icFile, APPStrings.quotation.tr, () {}, style),
+        _buildActionItem(AppImages.icExport, APPStrings.export.tr, () {}, style),
+        _buildActionItem(AppImages.icMoreHorizontal, APPStrings.more.tr, () {}, style),
+      ],
+    );
+  }
+
+  Widget _buildActionItem(String imagePath, String text, VoidCallback onTap, ProductMenuBottomsheetStyle style) {
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 32.w,
+              width: 32.w,
+              child: Center(
+                child: SmartImage(
+                  path: imagePath,
+                ),
+              ),
+            ),
+            SmartText(
+              text,
+              style: style.imageLableStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

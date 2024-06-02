@@ -547,4 +547,16 @@ class LightModeTheme extends AppTheme {
         isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
       );
+
+  @override
+  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle => ProductMenuBottomsheetStyle(
+        backgroundColor: colors.white,
+        primaryColor: colors.primary,
+        subTotalStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        moreDetailsStyle: interRegularTextStyle,
+        totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        imageLableStyle: interRegularTextStyle,
+        diamondTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        diamondValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+      );
 }
