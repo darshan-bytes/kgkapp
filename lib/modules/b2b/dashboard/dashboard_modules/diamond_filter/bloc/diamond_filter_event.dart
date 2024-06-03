@@ -1,0 +1,53 @@
+part of 'diamond_filter_bloc.dart';
+
+sealed class DiamondFilterEvent extends Equatable {
+  const DiamondFilterEvent();
+}
+
+final class LoadDiamondFilterDataEvent extends DiamondFilterEvent {
+  const LoadDiamondFilterDataEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SelectDiamondFilterDataEvent extends DiamondFilterEvent {
+  final FilterData filterData;
+
+  const SelectDiamondFilterDataEvent({required this.filterData});
+
+  @override
+  List<Object> get props => [filterData];
+}
+
+final class SelectSecondaryDiamondFilterDataEvent extends DiamondFilterEvent {
+  final SecondaryFilterData secondaryFilterData;
+
+  const SelectSecondaryDiamondFilterDataEvent({required this.secondaryFilterData});
+
+  @override
+  List<Object> get props => [secondaryFilterData];
+}
+
+final class SearchDiamondFilterDataEvent extends DiamondFilterEvent {
+  final String searchQuery;
+
+  const SearchDiamondFilterDataEvent({required this.searchQuery});
+
+  @override
+  List<Object> get props => [searchQuery];
+}
+
+final class ClearAllDiamondFilterDataEvent extends DiamondFilterEvent {
+  const ClearAllDiamondFilterDataEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ApplyDiamondFilterDataEvent extends DiamondFilterEvent {
+  const ApplyDiamondFilterDataEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -293,6 +293,7 @@ class LightModeTheme extends AppTheme {
         itemBorderColor: colors.colorD3DAE0,
         closeButtonBackgroundColor: colors.white,
         closeButtonStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.primary),
+        selectedImageColor: colors.primary,
       );
 
   @override

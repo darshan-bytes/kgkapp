@@ -111,20 +111,20 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   void _onSaveAddressEvent(SaveAddressEvent event, Emitter<AddAddressState> emit) {
     emit(AddAddressReloadState());
-    AddressDetails addressDetails = AddressDetails(
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      contactNumber: phoneController.text,
-      addressLine1: streetAddressController.text,
-      addressLine2: apartmentController.text,
-      city: selectedCity?.name ?? "",
-      state: selectedState?.name ?? "",
-      country: selectedCountry.name,
-      zipCode: zipCodeController.text,
-    );
-    clearFormData();
     //TODO: Implement the logic to save the address and navigate to the previous screen with the saved address
     // here I've commented the code to pop the screen and pass the addressDetails to the previous screen. Uncomment when validation added
+    // AddressDetails addressDetails = AddressDetails(
+    //   firstName: firstNameController.text,
+    //   lastName: lastNameController.text,
+    //   contactNumber: phoneController.text,
+    //   addressLine1: streetAddressController.text,
+    //   addressLine2: apartmentController.text,
+    //   city: selectedCity?.name ?? "",
+    //   state: selectedState?.name ?? "",
+    //   country: selectedCountry.name,
+    //   zipCode: zipCodeController.text,
+    // );
+    clearFormData();
     // event.context.pop(arguments: {RoutesData.addressDetails: addressDetails});
     event.context.pop();
     emit(const AddAddressChangeAddressState());

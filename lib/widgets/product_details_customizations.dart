@@ -36,7 +36,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.metal:
                       return SizedBox(
                         width: 72.w,
-                        child: InkWell(
+                        child: GestureDetector(
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
@@ -63,7 +63,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.ringSize:
                       return Padding(
                         padding: EdgeInsets.only(right: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14.w : 0),
-                        child: InkWell(
+                        child: GestureDetector(
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
@@ -86,7 +86,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                       );
 
                     case ProductCustomizationType.diamondQuality:
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () {
                           productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                         },
