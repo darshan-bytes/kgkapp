@@ -14,6 +14,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   String inquiryEmail = "enquiry.diaind@kgkmail.com";
   String inquiryPhone = "+91 - 1234567830";
 
+  // For Product menu bottom sheet
+  bool showMoreDetails = false;
+  String subTotalAmount = "\$18000";
+
   List<ProductDetails> myBagProductList = List.generate(
     8,
     (index) => ProductDetails(
@@ -74,9 +78,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<InitialMyBagEvent>(_onInitialMyBagEvent);
     on<MyBagChangeProductQuality>(_onMyBagChangeProductQuality);
     on<MyBagChangeProductQuantity>(_onMyBagChangeProductQuantity);
-    on<MyBagRemoveProduct>(_onMyBagRemoveProduct);
+    on<MyBagRemoveProductEvent>(_onMyBagRemoveProduct);
     on<MyBagSelectAllProductChangedEvent>(_onMyBagSelectAllProductChangedEvent);
     on<MyBagSelectProductChangedEvent>(_onMyBagSelectProductChangedEvent);
+    on<ShowFullProductDetailsEvent>(_onShowFullProductDetailsEvent);
   }
 
   void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {
@@ -99,7 +104,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     }
   }
 
-  void _onMyBagRemoveProduct(MyBagRemoveProduct event, Emitter<MyBagState> emit) {
+  void _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) {
     emit(MyBagReloadState());
     if (myBagProductList[event.index].isSelectedProduct) {
       selectedProductCount -= 1;
@@ -128,5 +133,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       selectedProductCount -= 1;
     }
     emit(MyBagSelectProductChangedState(index: event.index, isSelectedProduct: product.isSelectedProduct));
+  }
+
+  void _onShowFullProductDetailsEvent(ShowFullProductDetailsEvent event, Emitter<MyBagState> emit) {
+    emit(MyBagReloadState());
+    showMoreDetails = !showMoreDetails;
+    emit(ShowFullProductDetailsState());
   }
 }

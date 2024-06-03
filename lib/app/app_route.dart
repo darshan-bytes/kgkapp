@@ -187,7 +187,7 @@ class AppRoutes {
 
       case productMenuBottomSheet:
         return MaterialPageRoute(
-          builder: (_) => const ProductMenuBottomsheet(),
+          builder: (_) => const ProductMenuBottomSheet(),
           settings: settings,
         );
 

@@ -1,11 +1,11 @@
 import 'package:kgk/kgk.dart';
 
-class ProductMenuBottomsheet extends StatelessWidget {
-  const ProductMenuBottomsheet({super.key});
+class ProductMenuBottomSheet extends StatelessWidget {
+  const ProductMenuBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ProductMenuBottomSheetBloc bloc = BlocProvider.of<ProductMenuBottomSheetBloc>(context);
+    final MyBagBloc bloc = BlocProvider.of<MyBagBloc>(context);
     final ProductMenuBottomsheetStyle style = AppTheme.of(context).productMenuBottomsheetStyle;
 
     return Container(
@@ -26,8 +26,8 @@ class ProductMenuBottomsheet extends StatelessWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: BlocBuilder<ProductMenuBottomSheetBloc, ProductMenuBottomSheetState>(
-                  buildWhen: (previous, current) => current is ProductMenuBottomSheetReloadState,
+                child: BlocBuilder<MyBagBloc, MyBagState>(
+                  buildWhen: (previous, current) => current is MyBagReloadState,
                   builder: (context, state) {
                     return Column(
                       children: [
@@ -58,13 +58,13 @@ class ProductMenuBottomsheet extends StatelessWidget {
   Widget _buildAppBar(BuildContext context, ProductMenuBottomsheetStyle style) {
     return SmartAppBar(
       isBack: false,
-      appBarHeight: kToolbarHeight.h,
+      appBarHeight: AppConst.defaultAppBarHeight,
       isBorder: false,
       backgroundColor: style.backgroundColor,
       actions: [
         InkWell(
           onTap: () {
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: SmartImage(
             path: AppImages.icCross,
@@ -110,9 +110,9 @@ class ProductMenuBottomsheet extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDetailsView(ProductMenuBottomSheetBloc bloc, ProductMenuBottomsheetStyle style) {
-    return BlocBuilder<ProductMenuBottomSheetBloc, ProductMenuBottomSheetState>(
-      buildWhen: (previous, current) => current is ChangeMoreDetailsState,
+  Widget _buildProductDetailsView(MyBagBloc bloc, ProductMenuBottomsheetStyle style) {
+    return BlocBuilder<MyBagBloc, MyBagState>(
+      buildWhen: (previous, current) => current is ShowFullProductDetailsState,
       builder: (context, state) {
         final bool showMoreDetails = bloc.showMoreDetails;
         return Row(
@@ -128,7 +128,7 @@ class ProductMenuBottomsheet extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () => bloc.add(const ChangeMoreDetailsEvent()),
+              onTap: () => bloc.add(const ShowFullProductDetailsEvent()),
               child: SmartText(
                 showMoreDetails ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
                 style: style.moreDetailsStyle,

@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               context: context,
               isScrollControlled: true,
               useSafeArea: true,
-              builder: (context) => const ProductMenuBottomsheet(),
+              builder: (context) => const ProductMenuBottomSheet(),
             );
           },
         ),
