@@ -213,7 +213,7 @@ class AddAddressScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 4.w),
-                    SmartImage(path: AppImages.icArrowDropDown),
+                    const SmartImage(path: AppImages.icArrowDropDown),
                   ],
                 ),
               ),

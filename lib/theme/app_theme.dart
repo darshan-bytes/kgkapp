@@ -453,6 +453,7 @@ class FilterStyle {
   final Color itemBorderColor;
   final Color closeButtonBackgroundColor;
   final TextStyle closeButtonStyle;
+  final Color selectedImageColor;
 
   FilterStyle({
     required this.backgroundColor,
@@ -465,6 +466,7 @@ class FilterStyle {
     required this.itemBorderColor,
     required this.closeButtonBackgroundColor,
     required this.closeButtonStyle,
+    required this.selectedImageColor,
   });
 }
 
