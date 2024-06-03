@@ -37,7 +37,26 @@ class DiamondListingScreen extends StatelessWidget {
                 },
               );
             }),
-            FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+            FilterBottomActionBar(
+              onFilterTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+              onSortTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            ),
           ],
         );
       }),

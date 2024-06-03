@@ -244,4 +244,11 @@ class APPStrings {
   static const String subTotal = 'sub_total';
   static const String moreDetails = 'more_details';
   static const String lessDetails = 'less_details';
+
+  static const String totalDiamonds = 'total_diamonds';
+  static const String totalCarats = 'total_carats';
+  static const String averageDiscount = 'average_discount';
+  static const String round = 'round';
+  static const String oval = 'oval';
+  static const String marquise = 'marquise';
 }

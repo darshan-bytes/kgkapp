@@ -77,17 +77,17 @@ class ProductMenuBottomsheet extends StatelessWidget {
 
   List<Widget> _buildInfoRows(style) {
     return [
-      _buildProductDetailsItem('Total diamonds', '9', '', style),
+      _buildProductDetailsItem(APPStrings.totalDiamonds.tr, '9', '', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem('Total carats', '9.00', '', style),
+      _buildProductDetailsItem(APPStrings.totalCarats.tr, '9.00', '', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem('Average discount', '15%', '', style),
+      _buildProductDetailsItem(APPStrings.averageDiscount.tr, '15%', '', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem('Round', '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem('Oval', '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem('Marquise', '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000', style),
     ];
   }
 
