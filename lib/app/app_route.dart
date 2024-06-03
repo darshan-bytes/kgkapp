@@ -25,6 +25,7 @@ class AppRoutes {
   static const compareProductPage = '/compareProductPage';
   static const paymentPage = '/paymentPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
+  static const auctionPage = '/auctionPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -188,6 +189,12 @@ class AppRoutes {
       case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
+      case auctionPage:
+        return MaterialPageRoute(
+          builder: (_) => const AuctionScreen(),
           settings: settings,
         );
 

@@ -115,6 +115,8 @@ abstract class AppTheme {
   AddressListStyle get addressListStyle;
 
   ProductMenuBottomsheetStyle get productMenuBottomsheetStyle;
+
+  AuctionScreenStyle get auctionScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -941,3 +943,5 @@ class ProductMenuBottomsheetStyle {
     required this.diamondValueStyle,
   });
 }
+
+class AuctionScreenStyle {}

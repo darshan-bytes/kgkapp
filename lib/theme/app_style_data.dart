@@ -560,4 +560,7 @@ class LightModeTheme extends AppTheme {
         diamondTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         diamondValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
       );
+
+  @override
+  AuctionScreenStyle get auctionScreenStyle => AuctionScreenStyle();
 }

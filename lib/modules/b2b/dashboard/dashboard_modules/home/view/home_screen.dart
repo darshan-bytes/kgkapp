@@ -24,6 +24,12 @@ class HomeScreen extends StatelessWidget {
             );
           },
         ),
+        SmartText(
+          'auction',
+          onTap: () async {
+            context.pushNamed(AppRoutes.auctionPage);
+          },
+        ),
       ]),
     );
   }
