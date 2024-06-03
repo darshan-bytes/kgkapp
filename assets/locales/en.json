@@ -179,5 +179,20 @@
   "depth_percentage": "Depth %",
   "table_percentage": "Table %",
   "your_percentage": "Your %",
-  "add_address": "Add Address"
+  "add_address": "Add Address",
+  "buy_now": "Buy Now",
+  "discuss": "Discuss",
+  "meeting": "Meeting",
+  "quotation": "Quotation",
+  "export": "Export",
+  "more": "More",
+  "sub_total": "Sub total",
+  "more_details": "More details",
+  "less_details": "Less details",
+  "total_diamonds": "Total diamonds",
+  "total_carats": "Total carats",
+  "average_discount": "Average discount",
+  "round": "Round",
+  "oval": "Oval",
+  "marquise": "Marquise"
 }

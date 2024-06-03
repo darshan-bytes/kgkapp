@@ -61,3 +61,8 @@ final class MyBagSelectProductChangedState extends MyBagState {
   @override
   List<Object> get props => [index, isSelectedProduct];
 }
+
+final class ShowFullProductDetailsState extends MyBagState {
+  @override
+  List<Object> get props => [];
+}

@@ -23,7 +23,7 @@ class SortScreen extends StatelessWidget {
               isBack: false,
               title: APPStrings.sortBy.tr,
               titleStyle: style.titleStyle,
-              appBarHeight: kToolbarHeight,
+              appBarHeight: AppConst.defaultAppBarHeight,
               actions: [
                 InkWell(
                   onTap: () {
