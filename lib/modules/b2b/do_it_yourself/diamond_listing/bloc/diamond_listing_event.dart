@@ -8,10 +8,12 @@ sealed class DiamondListingEvent extends Equatable {
 }
 
 class GetDiamondProductListEvent extends DiamondListingEvent {
-  const GetDiamondProductListEvent();
+  final BuildContext context;
+
+  const GetDiamondProductListEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class DiamondChangeTypeEvent extends DiamondListingEvent {
