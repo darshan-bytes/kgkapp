@@ -109,12 +109,14 @@ abstract class AppTheme {
   PaymentStyle get paymentStyle;
 
   WriteReviewScreenStyle get writeReviewScreenStyle;
-  
+
   MyBagDiamondItemStyle get myBagDiamondItemStyle;
 
   AddressSelectionStyle get addressSelectionStyle;
 
   AddressListStyle get addressListStyle;
+
+  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle;
 }
 
 class PrimaryButtonStyle {
@@ -453,6 +455,7 @@ class FilterStyle {
   final Color itemBorderColor;
   final Color closeButtonBackgroundColor;
   final TextStyle closeButtonStyle;
+  final Color selectedImageColor;
 
   FilterStyle({
     required this.backgroundColor,
@@ -465,6 +468,7 @@ class FilterStyle {
     required this.itemBorderColor,
     required this.closeButtonBackgroundColor,
     required this.closeButtonStyle,
+    required this.selectedImageColor,
   });
 }
 
@@ -871,7 +875,6 @@ class PaymentStyle {
     required this.isSameAddressStyle,
     required this.footerTotalStyle,
     required this.footerTotalAmountStyle,
-
   });
 }
 
@@ -926,5 +929,27 @@ class WriteReviewScreenStyle {
   WriteReviewScreenStyle({
     required this.labelStyle,
     required this.borderColor,
+  });
+}
+
+class ProductMenuBottomsheetStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final TextStyle subTotalStyle;
+  final TextStyle moreDetailsStyle;
+  final TextStyle totalAmountStyle;
+  final TextStyle imageLableStyle;
+  final TextStyle diamondTitleStyle;
+  final TextStyle diamondValueStyle;
+
+  ProductMenuBottomsheetStyle({
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.subTotalStyle,
+    required this.moreDetailsStyle,
+    required this.totalAmountStyle,
+    required this.imageLableStyle,
+    required this.diamondTitleStyle,
+    required this.diamondValueStyle,
   });
 }

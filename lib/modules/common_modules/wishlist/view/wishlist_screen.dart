@@ -27,23 +27,26 @@ class WishlistScreen extends StatelessWidget {
               );
             },
           ),
-          FilterBottomActionBar(onFilterTap: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              useSafeArea: true,
-              builder: (context) => FilterScreen(
-                onApply: () {},
-              ),
-            );
-          }, onSortTap: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              useSafeArea: true,
-              builder: (context) => const SortScreen(),
-            );
-          }),
+          FilterBottomActionBar(
+            onFilterTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+            onSortTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                builder: (context) => const SortScreen(),
+              );
+            },
+          ),
         ],
       ),
       body: SingleChildScrollView(

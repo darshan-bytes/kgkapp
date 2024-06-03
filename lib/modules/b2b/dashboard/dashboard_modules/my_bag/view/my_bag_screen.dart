@@ -110,7 +110,7 @@ class MyBagScreen extends StatelessWidget {
             selectedQuality: product.productQuality,
             selectedQuantity: product.productQuantity,
             onRemoveTap: () {
-              bloc.add(MyBagRemoveProduct(index: index));
+              bloc.add(MyBagRemoveProductEvent(index: index));
             },
             onMoveToWishListTap: () {},
             margin: EdgeInsets.only(bottom: 24.h),

@@ -18,6 +18,7 @@ class PaymentScreen extends StatelessWidget {
                 children: [
                   const CheckoutHeaderProgressbar(isShippingAndBillingAddressFilled: true),
                   _paymentOption(
+                    style: style,
                     onTap: () {},
                     imagePath: AppImages.icPaypal,
                     text: APPStrings.paypal.tr,
@@ -30,6 +31,7 @@ class PaymentScreen extends StatelessWidget {
                     indent: 14.w,
                   ),
                   _paymentOption(
+                    style: style,
                     onTap: () {},
                     imagePath: AppImages.icUpi,
                     text: APPStrings.upi.tr,
@@ -37,7 +39,7 @@ class PaymentScreen extends StatelessWidget {
                     context: context,
                   ),
                   const Spacer(),
-                  _buildOrderSummary(),
+                  _buildOrderSummary(style),
                   Container(
                     height: 80.h,
                     margin: EdgeInsets.symmetric(horizontal: 14.w),
@@ -51,7 +53,7 @@ class PaymentScreen extends StatelessWidget {
                           width: 8.w,
                         ),
                         SmartText(
-                          '\$35,700,00',
+                          '\$35,700.00',
                           style: style.footerTotalAmountStyle,
                         ),
                         const Spacer(),
@@ -76,6 +78,7 @@ class PaymentScreen extends StatelessWidget {
   }
 
   Widget _paymentOption({
+    required PaymentStyle style,
     required VoidCallback onTap,
     required String imagePath,
     required String text,
@@ -99,7 +102,12 @@ class PaymentScreen extends StatelessWidget {
                 ),
                 SmartText(text),
                 const Spacer(),
-                SmartImage(path: plusIconPath, height: 24.w, width: 24.w),
+                SmartImage(
+                  path: plusIconPath,
+                  height: 24.w,
+                  width: 24.w,
+                  color: style.filledDotColor,
+                ),
               ],
             ),
           ),
@@ -108,7 +116,7 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderSummary() {
+  Widget _buildOrderSummary(PaymentStyle style) {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
       titleStyle: TextStyle(fontSize: 24.sp),
@@ -119,6 +127,7 @@ class PaymentScreen extends StatelessWidget {
         OrderSummaryItem(title: APPStrings.shipping.tr, value: "\$0.00"),
         OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
       ],
+      totalStyle: style.footerTotalAmountStyle,
       totalPrice: "\$35,700.00",
     );
   }

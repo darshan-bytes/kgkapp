@@ -293,6 +293,7 @@ class LightModeTheme extends AppTheme {
         itemBorderColor: colors.colorD3DAE0,
         closeButtonBackgroundColor: colors.white,
         closeButtonStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.primary),
+        selectedImageColor: colors.primary,
       );
 
   @override
@@ -551,4 +552,16 @@ class LightModeTheme extends AppTheme {
   @override
   WriteReviewScreenStyle get writeReviewScreenStyle =>
       WriteReviewScreenStyle(labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
+
+  @override
+  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle => ProductMenuBottomsheetStyle(
+        backgroundColor: colors.white,
+        primaryColor: colors.primary,
+        subTotalStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        moreDetailsStyle: interRegularTextStyle,
+        totalAmountStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        imageLableStyle: interRegularTextStyle,
+        diamondTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        diamondValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+      );
 }

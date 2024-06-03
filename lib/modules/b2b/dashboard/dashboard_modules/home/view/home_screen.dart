@@ -7,9 +7,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SmartText('Add Account', onTap: () {
-          context.pushNamed(AppRoutes.addressListPage);
-        }),
         SmartText(
           'View All Collection',
           onTap: () {
@@ -20,6 +17,17 @@ class HomeScreen extends StatelessWidget {
           APPStrings.writeAReview.tr,
           onTap: () {
             context.pushNamed(AppRoutes.writeReviewPage);
+          },
+        ),
+        SmartText(
+          'product menu bottom sheet',
+          onTap: () async {
+            await showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => const ProductMenuBottomSheet(),
+            );
           },
         ),
       ]),

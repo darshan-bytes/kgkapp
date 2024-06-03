@@ -34,7 +34,26 @@ class ProductListScreen extends StatelessWidget {
                   bloc.add(ChangePageNumberEvent(newValue));
                 },
               ),
-              FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+              FilterBottomActionBar(
+                onFilterTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => FilterScreen(
+                      onApply: () {},
+                    ),
+                  );
+                },
+                onSortTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => const SortScreen(),
+                  );
+                },
+              ),
             ],
           );
         },

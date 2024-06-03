@@ -67,7 +67,7 @@ dependencies:
   readmore: ^3.0.0
 
   #For Screen Util
-  flutter_screenutil: ^5.9.2
+  flutter_screenutil: ^5.9.3
 
   #For Dotted Border
   dotted_border: ^2.1.0
