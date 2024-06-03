@@ -31,6 +31,7 @@ class BlocGenerator {
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
+      BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
     ];
   }
 }
