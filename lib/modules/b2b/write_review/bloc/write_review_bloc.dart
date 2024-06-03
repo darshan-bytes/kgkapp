@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'write_review_event.dart';
-
 part 'write_review_state.dart';
 
 class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {

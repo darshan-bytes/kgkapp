@@ -1,4 +1,4 @@
-import 'package:kgk/kgk.dart';
+ import 'package:kgk/kgk.dart';
 
 class WriteReviewScreen extends StatelessWidget {
   const WriteReviewScreen({super.key});
@@ -6,8 +6,7 @@ class WriteReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final WriteReviewScreenStyle style = AppTheme.of(context).writeReviewScreenStyle;
-    WriteReviewBloc bloc = BlocProvider.of<WriteReviewBloc>(context);
-
+    final WriteReviewBloc bloc = BlocProvider.of<WriteReviewBloc>(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: SmartAppBar(
@@ -50,9 +49,7 @@ class WriteReviewScreen extends StatelessWidget {
       SmartRatingBar(
         initialRating: 0,
         itemSize: 32.w,
-        onRatingUpdate: (value) {
-          // Handle rating update
-        },
+        onRatingUpdate: (value) {},
       ),
     ];
   }
