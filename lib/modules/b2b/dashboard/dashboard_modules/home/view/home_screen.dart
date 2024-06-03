@@ -7,9 +7,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SmartText('Add Account', onTap: () {
-          context.pushNamed(AppRoutes.addressListPage);
-        }),
         SmartText(
           'View All Collection',
           onTap: () {

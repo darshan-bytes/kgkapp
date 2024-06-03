@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
                       value: SystemUiOverlayStyle.light,
                       child: Stack(children: [
                         MaterialApp(
+                          debugShowCheckedModeBanner: false,
                           onGenerateRoute: AppRoutes.generateRoute,
                           initialRoute: AppRoutes.initialRoute,
                           title: APPStrings.appName,
@@ -48,6 +49,16 @@ class _MyAppState extends State<MyApp> {
                             AppLocalizations.delegate,
                             CountryLocalizations.delegate,
                           ],
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 55, right: 50),
+                            child: const Banner(
+                              message: "31-May-24",
+                              location: BannerLocation.bottomStart,
+                            ),
+                          ),
                         ),
                         if (appState is ConnectivityState && !appState.isConnected)
                           NoInternetScreen(
