@@ -7,6 +7,7 @@ class OrderSummary extends StatelessWidget {
   final void Function()? onTapCheckout;
   final bool isPromoCodeApplied;
   final TextStyle? titleStyle;
+  final TextStyle? totalStyle;
 
   const OrderSummary({
     this.title,
@@ -16,6 +17,7 @@ class OrderSummary extends StatelessWidget {
     this.onTapCheckout,
     this.isPromoCodeApplied = true,
     this.titleStyle,
+    this.totalStyle,
   });
 
   @override
@@ -100,7 +102,7 @@ class OrderSummary extends StatelessWidget {
           SizedBox(width: 17.w),
           SmartText(
             totalPrice,
-            style: style.totalPriceStyle,
+            style: totalStyle ?? style.totalPriceStyle,
           ),
         ],
       ),

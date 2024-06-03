@@ -25,6 +25,7 @@ class AppRoutes {
   static const compareProductPage = '/compareProductPage';
   static const paymentPage = '/paymentPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
+  static const productMenuBottomSheet = '/productMenuBottomSheet';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -118,7 +119,7 @@ class AppRoutes {
       case diamondListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DiamondListingBloc>(context).add(const GetDiamondProductListEvent());
+            BlocProvider.of<DiamondListingBloc>(context).add(GetDiamondProductListEvent(context));
             return const DiamondListingScreen();
           },
           settings: settings,
@@ -191,6 +192,12 @@ class AppRoutes {
           settings: settings,
         );
 
+        case productMenuBottomSheet:
+        return MaterialPageRoute(
+          builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -215,6 +222,12 @@ enum RoutesData {
   productId,
   isCustomisationPage,
   addressDetails,
+  isPageFor,
+}
+
+enum ScreenIdentifier {
+  productListingForDiamonds,
+  diamondListingForDIY,
 }
 
 extension RoutesDataExtension on BuildContext {

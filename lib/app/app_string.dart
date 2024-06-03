@@ -233,8 +233,26 @@ class APPStrings {
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
   static const String addAddress = 'add_address';
+  
+  //Product menu bottom sheet
+  static const String buyNow = 'buy_now';
+  static const String discuss = 'discuss';
+  static const String meeting = 'meeting';
+  static const String quotation = 'quotation';
+  static const String export = 'export';
+  static const String more = 'more';
+  static const String subTotal = 'sub_total';
+  static const String moreDetails = 'more_details';
+  static const String lessDetails = 'less_details';
 
-  //Diamonds info popup
+  static const String totalDiamonds = 'total_diamonds';
+  static const String totalCarats = 'total_carats';
+  static const String averageDiscount = 'average_discount';
+  static const String round = 'round';
+  static const String oval = 'oval';
+  static const String marquise = 'marquise';
+
+    //Diamonds info popup
   static const String diamonds = 'diamonds';
   static const String basicInfo = 'basic_info';
   static const String inclusionInfo = 'inclusion_info';

@@ -79,4 +79,10 @@ class AppImages {
   //My Bag Screen
   static const String icMoreHorizontal = 'assets/images/ic_more_horizontal.svg';
   static const String icEditPrimary = 'assets/images/ic_edit_primary.svg';
+
+  //Product Menu Bottom Sheet
+  static const String icFile = 'assets/images/ic_file.svg';
+  static const String icMeeting = 'assets/images/ic_meeting.svg';
+  static const String icComment = 'assets/images/ic_comment.svg';
+  static const String icExport = 'assets/images/ic_export.svg';
 }

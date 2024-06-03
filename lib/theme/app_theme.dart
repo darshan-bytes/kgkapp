@@ -113,6 +113,8 @@ abstract class AppTheme {
   AddressSelectionStyle get addressSelectionStyle;
 
   AddressListStyle get addressListStyle;
+
+  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle;
 }
 
 class PrimaryButtonStyle {
@@ -869,7 +871,6 @@ class PaymentStyle {
     required this.isSameAddressStyle,
     required this.footerTotalStyle,
     required this.footerTotalAmountStyle,
-
   });
 }
 
@@ -914,5 +915,27 @@ class AddressListStyle {
     required this.arrowColor,
     required this.isSameAddressStyle,
     required this.nProductsTitleStyle,
+  });
+}
+
+class ProductMenuBottomsheetStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final TextStyle subTotalStyle;
+  final TextStyle moreDetailsStyle;
+  final TextStyle totalAmountStyle;
+  final TextStyle imageLableStyle;
+  final TextStyle diamondTitleStyle;
+  final TextStyle diamondValueStyle;
+
+  ProductMenuBottomsheetStyle({
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.subTotalStyle,
+    required this.moreDetailsStyle,
+    required this.totalAmountStyle,
+    required this.imageLableStyle,
+    required this.diamondTitleStyle,
+    required this.diamondValueStyle,
   });
 }
