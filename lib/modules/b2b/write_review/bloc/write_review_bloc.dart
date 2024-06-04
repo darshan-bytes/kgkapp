@@ -47,7 +47,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   void _onRemoveSelectedImage(RemoveSelectedImageEvent event, Emitter<WriteReviewState> emit) {
     emit(const WriteReviewReloadState());
     if (imageFileList.isNotNullNorEmpty) {
-      imageFileList!.removeAt(event.selectedImage);
+      imageFileList?.removeAt(event.selectedImage);
       emit(const RemoveSelectedImageState());
     }
   }
