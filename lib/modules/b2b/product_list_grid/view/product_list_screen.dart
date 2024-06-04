@@ -147,9 +147,13 @@ class ProductListScreen extends StatelessWidget {
                     onFavTap: () {},
                     onTap: () {
                       if (bloc.fromRing) {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: productDetails.productId ?? ''});
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                          RoutesData.productId: productDetails.productId ?? '',
+                          RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                        });
                       } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage);
+                        context.pushNamed(AppRoutes.diamondDetailPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
                       }
                     },
                   );
@@ -168,8 +172,10 @@ class ProductListScreen extends StatelessWidget {
                 onAddToBagTap: () {},
                 onTap: () {
                   if (bloc.fromRing) {
-                    context.pushNamed(AppRoutes.productDetailsPage,
-                        arguments: {RoutesData.productId: bloc.productList[index].productId ?? ''});
+                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                      RoutesData.productId: bloc.productList[index].productId ?? '',
+                      RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                    });
                   } else {
                     context.pushNamed(AppRoutes.diamondDetailPage);
                   }

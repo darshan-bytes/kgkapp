@@ -495,6 +495,7 @@ class LightModeTheme extends AppTheme {
         compareCountBGColor: colors.color4885A3,
         totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override

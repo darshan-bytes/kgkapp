@@ -247,7 +247,7 @@ class ProductDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _productTypeAndCode(style),
+          _productTypeAndCode(style, productDetailsBloc),
           SizedBox(height: 8.h),
           SmartText(productDetailsBloc.productName, style: style.productNameStyle),
           SizedBox(height: 8.h),
@@ -255,16 +255,17 @@ class ProductDetailsScreen extends StatelessWidget {
           SizedBox(height: 16.h),
           _compareWidget(productDetailsBloc, style),
           Divider(height: 48.h),
-          _buildPriceDetails(style),
+          _buildPriceDetails(style, productDetailsBloc),
           Divider(height: 48.h),
           _buildCustomizationList(style, productDetailsBloc),
-          Divider(height: 48.h),
-          if (!productDetailsBloc.isCustomisation) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) Divider(height: 48.h),
+          if (!productDetailsBloc.isCustomisation && productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
             ProductCustomiseDescriptionWidget(
               onTap: () {
                 context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                   RoutesData.isCustomisationPage: true,
                   RoutesData.productId: productDetailsBloc.productDetails?.productId,
+                  RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
                 });
               },
             ),
@@ -295,42 +296,49 @@ class ProductDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(height: 24.h),
-          const Divider(),
-          _ringDetails(productDetailsBloc, style),
-          const Divider(),
-          _diamondDetails(productDetailsBloc, style),
-          const Divider(),
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+            SizedBox(height: 24.h),
+            const Divider(),
+            _ringDetails(productDetailsBloc, style),
+            const Divider(),
+            _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+          ],
           SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
           SizedBox(height: 32.h),
-          const ProductReviewsDetails(),
-          SizedBox(height: 32.h),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            primary: false,
-            itemCount: 4,
-            itemBuilder: (context, index) => const ProductCustomerReviewWidget(),
-            separatorBuilder: (_, __) => Divider(height: 32.h),
-          ),
-          SizedBox(height: 16.h),
-          SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle),
-          SizedBox(height: 32.h),
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+            const ProductReviewsDetails(),
+            SizedBox(height: 32.h),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: false,
+              itemCount: 4,
+              itemBuilder: (context, index) => const ProductCustomerReviewWidget(),
+              separatorBuilder: (_, __) => Divider(height: 32.h),
+            ),
+            SizedBox(height: 16.h),
+            SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle),
+            SizedBox(height: 32.h),
+          ],
           _buildSuggestedProductList(productDetailsBloc, style),
-          SizedBox(height: 32.h),
-          _buildRecentlyViewedProductList(productDetailsBloc, style),
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+            SizedBox(height: 32.h),
+            _buildRecentlyViewedProductList(productDetailsBloc, style),
+          ]
         ],
       ),
     );
   }
 
-  Widget _productTypeAndCode(ProductDetailsStyle style) {
-    return Row(
-      children: [
+  Widget _productTypeAndCode(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
+    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+        ? Row(
+            children: [
         SmartText('Martin Flyer', style: style.productTypeStyle),
         SizedBox(width: 8.w),
         Container(
@@ -346,7 +354,8 @@ class ProductDetailsScreen extends StatelessWidget {
         SizedBox(width: 8.w),
         SmartText('DERC03RDA', style: style.productCodeStyle),
       ],
-    );
+          )
+        : SmartText('SKU 14178065', style: style.productCodeStyle);
   }
 
   Widget _buildRatingBarAndReviews(ProductDetailsStyle style) {
@@ -360,7 +369,7 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         SizedBox(width: 8.w),
         SmartText(
-          APPStrings.reviews.tr.interpolate([120]),
+          APPStrings.reviewsX.tr.interpolate([120]),
           style: style.productCodeStyle,
         )
       ],
@@ -383,16 +392,36 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceDetails(ProductDetailsStyle style) {
-    return Row(
-      children: [
-        SmartText('\$1200.00', style: style.priceStyle),
-        SizedBox(width: 8.w),
-        SmartText('\$1600.00', style: style.originalPriceStyle),
-        SizedBox(width: 8.w),
-        SmartText('(3% OFF)', style: style.discountStyle),
-      ],
-    );
+  Widget _buildPriceDetails(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
+    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+        ? Row(
+            children: [
+              SmartText('\$1200.00', style: style.priceStyle),
+              SizedBox(width: 8.w),
+              SmartText('\$1600.00', style: style.originalPriceStyle),
+              SizedBox(width: 8.w),
+              SmartText('(3% OFF)', style: style.discountStyle),
+            ],
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SmartText('\$3,020', style: style.priceStyle),
+              SizedBox(
+                height: 8.h,
+              ),
+              Row(
+                children: [
+                  SmartText(APPStrings.wantToSeeProductPhysically.tr, style: style.productCodeStyle),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: SmartText(APPStrings.orderSample.tr, style: style.orderSampleStyle),
+                  ),
+                ],
+              ),
+            ],
+          );
   }
 
   Widget _buildCustomizationList(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
@@ -506,6 +535,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 productDetails: product,
+                isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds,
               );
             }),
           ),

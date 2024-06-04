@@ -149,7 +149,7 @@ class SettingDetailScreen extends StatelessWidget {
                     width: 8.w,
                   ),
                   SmartText(
-                    APPStrings.reviews.tr.interpolate([120]),
+                    APPStrings.reviewsX.tr.interpolate([120]),
                     style: style.reviewStyle,
                   )
                 ],

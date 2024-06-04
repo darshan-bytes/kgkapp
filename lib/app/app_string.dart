@@ -108,7 +108,7 @@ class APPStrings {
 
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';
-  static const String reviews = 'reviews';
+  static const String reviewsX = 'reviews_x';
   static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
   static const String orderSample = 'order_sample';
   static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
