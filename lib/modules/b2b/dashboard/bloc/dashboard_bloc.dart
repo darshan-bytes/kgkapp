@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'dashboard_event.dart';
+
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
@@ -10,7 +11,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   ///[pages] is a list of widgets that will be displayed on the screen based on the current index
   final List<Widget> pages = [
     const HomeScreen(),
-    const CategoriesScreen(),
+    // const CategoriesScreen(),
+    Container(),
     const MyBagScreen(),
     const SupportScreen(),
     const ProfileScreen(),

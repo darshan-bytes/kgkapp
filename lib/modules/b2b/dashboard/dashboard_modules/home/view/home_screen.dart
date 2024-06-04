@@ -6,14 +6,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SmartText(
-          'View All Collection',
-          onTap: () {
-            context.pushNamed(AppRoutes.collectionPage);
-          },
-        ),
-        SmartText(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SmartText(
+            'View All Collection',
+            onTap: () {
+              context.pushNamed(AppRoutes.collectionPage);
+            },
+          ),
+          /*SmartText(
           'product menu bottom sheet',
           onTap: () async {
             await showModalBottomSheet(
@@ -23,8 +25,9 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => const ProductMenuBottomSheet(),
             );
           },
-        ),
-      ]),
+        ),*/
+        ],
+      ),
     );
   }
 }

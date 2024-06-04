@@ -11,19 +11,19 @@ class SupportScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SmartText(
-              'diamond filter',
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  builder: (context) => DiamondFilterScreen(
-                    onApply: () {},
-                  ),
-                );
-              },
-            ),
+            // SmartText(
+            //   'diamond filter',
+            //   onTap: () {
+            //     showModalBottomSheet(
+            //       context: context,
+            //       isScrollControlled: true,
+            //       useSafeArea: true,
+            //       builder: (context) => DiamondFilterScreen(
+            //         onApply: () {},
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

@@ -127,7 +127,8 @@ class ProductGridItem extends StatelessWidget {
       child: Container(
         width: width,
         color: style.backgroundColor,
-        padding: EdgeInsets.only(top: 12.w, left: 12.w, right: 12.w, bottom: 0.w),
+        padding:
+            EdgeInsets.only(top: 12.w, left: 12.w, right: 12.w, bottom: productDetails.discountPercentage.isNotNullNorEmpty ? 12.w : 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
