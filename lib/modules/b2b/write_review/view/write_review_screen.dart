@@ -8,17 +8,10 @@ class WriteReviewScreen extends StatelessWidget {
     final WriteReviewScreenStyle style = AppTheme.of(context).writeReviewScreenStyle;
     final WriteReviewBloc bloc = BlocProvider.of<WriteReviewBloc>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: SmartAppBar(
         title: APPStrings.writeAReview.tr,
       ),
-      bottomNavigationBar: SmartButton(
-        margin: EdgeInsets.all(17.w),
-        onTap: () {
-          // Add your submit logic here
-        },
-        title: APPStrings.submit.tr,
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
@@ -72,9 +65,6 @@ class WriteReviewScreen extends StatelessWidget {
       hintText: APPStrings.review.tr,
       controller: bloc.reviewController,
       focusNode: bloc.reviewFocusNode,
-      onEditingComplete: () {
-        FocusScope.of(context).unfocus();
-      },
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
       textInputAction: TextInputAction.done,
@@ -124,7 +114,7 @@ class WriteReviewScreen extends StatelessWidget {
                 List.generate(
                   bloc.selectedImages.length,
                   (index) {
-                    return _buildImageThumbnail(bloc.selectedImages[index], bloc, style, index);
+                    return _buildImageItem(bloc.selectedImages[index], bloc, index);
                   },
                 ),
               );
@@ -142,7 +132,7 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageThumbnail(XFile imageFile, WriteReviewBloc bloc, WriteReviewScreenStyle style, int index) {
+  Widget _buildImageItem(XFile imageFile, WriteReviewBloc bloc, int index) {
     return SizedBox(
       height: 96.w,
       width: 96.w,
@@ -156,8 +146,8 @@ class WriteReviewScreen extends StatelessWidget {
             imageBorderRadius: BorderRadius.circular(4.r),
           ),
           Positioned(
-            top: 8,
-            right: 8,
+            top: 8.w,
+            right: 8.w,
             child: GestureDetector(
               onTap: () {
                 bloc.add(RemoveSelectedImageEvent(selectedImage: index));
@@ -165,7 +155,7 @@ class WriteReviewScreen extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 height: 24.w,
                 width: 24.w,
@@ -198,6 +188,18 @@ class WriteReviewScreen extends StatelessWidget {
         bloc.reviewFocusNode.unfocus();
         bloc.titleFocusNode.unfocus();
       },
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return SafeArea(
+      child: SmartButton(
+        margin: EdgeInsets.all(17.w),
+        onTap: () {
+          // Add your submit logic here
+        },
+        title: APPStrings.submit.tr,
+      ),
     );
   }
 }

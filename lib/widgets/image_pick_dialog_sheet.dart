@@ -17,41 +17,43 @@ class ImagePickDialogSheet extends StatelessWidget {
           topRight: Radius.circular(8.r),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildAppBar(context, style),
-          Flexible(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: pickOption(context, icon: AppImages.icCamera, label: APPStrings.camera.tr, onTap: () {
-                            Navigator.pop(context);
-                            onTapSource(ImageSource.camera);
-                          }),
-                        ),
-                        Expanded(
-                          child: pickOption(context, icon: AppImages.icImage, label: APPStrings.gallery.tr, onTap: () {
-                            Navigator.pop(context);
-                            onTapSource(ImageSource.gallery);
-                          }),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 24.h),
-                  ],
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildAppBar(context, style),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: pickOption(context, icon: AppImages.icCamera, label: APPStrings.camera.tr, onTap: () {
+                              Navigator.pop(context);
+                              onTapSource(ImageSource.camera);
+                            }),
+                          ),
+                          Expanded(
+                            child: pickOption(context, icon: AppImages.icImage, label: APPStrings.gallery.tr, onTap: () {
+                              Navigator.pop(context);
+                              onTapSource(ImageSource.gallery);
+                            }),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 24.h),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

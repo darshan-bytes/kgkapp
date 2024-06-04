@@ -1,12 +1,14 @@
 import 'package:kgk/kgk.dart';
 
 part 'write_review_event.dart';
+
 part 'write_review_state.dart';
 
 class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   final ImagePicker _picker = ImagePicker();
   List<XFile>? imageFileList = [];
-  final int maxImagesCount = 5;
+
+  int get maxImagesCount => AppConst.maxImagesCount;
 
   int get availablePickImageLength => maxImagesCount - (imageFileList?.length ?? 0);
 
@@ -47,7 +49,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   void _onRemoveSelectedImage(RemoveSelectedImageEvent event, Emitter<WriteReviewState> emit) {
     emit(const WriteReviewReloadState());
     if (imageFileList.isNotNullNorEmpty) {
-      imageFileList!.removeAt(event.selectedImage);
+      imageFileList?.removeAt(event.selectedImage);
       emit(const RemoveSelectedImageState());
     }
   }
@@ -73,10 +75,15 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   }
 
   void _handlePlatformException(PlatformException e) {
-    if (e.code == 'camera_access_denied') {
-      Utils.showMessage("Camera Access Denied. Please enable it in the settings.");
-    } else {
-      Utils.showMessage("An error occurred: ${e.message}");
+    switch (e.code) {
+      case 'camera_access_denied':
+      case 'photo_access_denied':
+        Utils.showMessage(e.message ?? "");
+        //TODO: need to navigate to settings to allow permission
+        break;
+      default:
+        Utils.showMessage("An error occurred: ${e.message}");
+        break;
     }
   }
 }
