@@ -65,7 +65,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (onBack != null) {
           onBack!();
         } else {
-          Navigator.pop(context);
+          context.pop();
         }
       },
       child: SizedBox(

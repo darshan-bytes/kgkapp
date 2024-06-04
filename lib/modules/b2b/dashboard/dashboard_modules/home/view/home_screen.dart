@@ -14,7 +14,13 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         SmartText(
-          'product menu bottom sheet',
+          'Diamond info popup screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+          },
+        ),
+        SmartText(
+          'Product Menu Bottom Sheet',
           onTap: () async {
             await showModalBottomSheet(
               context: context,

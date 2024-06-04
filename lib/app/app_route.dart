@@ -24,6 +24,7 @@ class AppRoutes {
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
   static const paymentPage = '/paymentPage';
+  static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -185,7 +186,13 @@ class AppRoutes {
           settings: settings,
         );
 
-      case productMenuBottomSheet:
+      case diamondInfoPopupPage:
+        return MaterialPageRoute(
+          builder: (_) => const DiamondInfoPopupScreen(),
+          settings: settings,
+        );
+
+        case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
           settings: settings,

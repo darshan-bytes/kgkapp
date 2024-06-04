@@ -114,7 +114,9 @@ abstract class AppTheme {
 
   AddressListStyle get addressListStyle;
 
-  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle;
+  ProductMenuBottomSheetStyle get productMenuBottomSheetStyle;
+
+  DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -920,7 +922,7 @@ class AddressListStyle {
   });
 }
 
-class ProductMenuBottomsheetStyle {
+class ProductMenuBottomSheetStyle {
   final Color backgroundColor;
   final Color primaryColor;
   final TextStyle subTotalStyle;
@@ -930,7 +932,7 @@ class ProductMenuBottomsheetStyle {
   final TextStyle diamondTitleStyle;
   final TextStyle diamondValueStyle;
 
-  ProductMenuBottomsheetStyle({
+  ProductMenuBottomSheetStyle({
     required this.backgroundColor,
     required this.primaryColor,
     required this.subTotalStyle,
@@ -939,5 +941,25 @@ class ProductMenuBottomsheetStyle {
     required this.imageLableStyle,
     required this.diamondTitleStyle,
     required this.diamondValueStyle,
+  });
+}
+
+class DiamondInfoPopupScreenStyle {
+  final TextStyle offerPriceStyle;
+  final TextStyle actualPriceStyle;
+  final TextStyle productNameStyle;
+  final TextStyle labelStyle;
+  final TextStyle itemTitleStyle;
+  final TextStyle itemValueStyle;
+  final TextStyle viewMoreDetailsTextStyle;
+
+  DiamondInfoPopupScreenStyle({
+    required this.offerPriceStyle,
+    required this.actualPriceStyle,
+    required this.productNameStyle,
+    required this.labelStyle,
+    required this.itemTitleStyle,
+    required this.itemValueStyle,
+    required this.viewMoreDetailsTextStyle,
   });
 }

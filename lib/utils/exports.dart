@@ -93,6 +93,9 @@ export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/view/smart_bottom_navigation_bar.dart';
 export 'package:kgk/modules/b2b/diamond_details/bloc/diamond_detail_bloc.dart';
 export 'package:kgk/modules/b2b/diamond_details/view/diamond_detail_screen.dart';
+export 'package:kgk/modules/b2b/diamond_info_popup/bloc/diamond_info_popup_bloc.dart';
+export 'package:kgk/modules/b2b/diamond_info_popup/model/product_info_model.dart';
+export 'package:kgk/modules/b2b/diamond_info_popup/view/diamond_info_popup_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/bloc/complete_product_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_selected_settings_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
@@ -174,6 +177,5 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:readmore/readmore.dart';
-
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';
