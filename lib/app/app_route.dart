@@ -204,6 +204,7 @@ class AppRoutes {
           builder: (context) => OrderConfirmationScreen(
             orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
           ),
+          settings: settings,
         );
 
       default:
