@@ -70,6 +70,8 @@ export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/view/diamond_filter_screen.dart';
+export 'package:kgk/widgets/quotation_request_confirmation_bottomsheet.dart';
 
 //model
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/model/categories_model.dart';
