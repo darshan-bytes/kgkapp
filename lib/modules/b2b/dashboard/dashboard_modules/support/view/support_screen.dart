@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/view/diamond_filter_screen.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -12,7 +11,7 @@ class SupportScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SmartText(
-              'diamond filter',
+              'Diamond Filter',
               onTap: () {
                 showModalBottomSheet(
                   context: context,
@@ -20,6 +19,28 @@ class SupportScreen extends StatelessWidget {
                   useSafeArea: true,
                   builder: (context) => DiamondFilterScreen(
                     onApply: () {},
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20.h),
+            SmartText(
+              'Quotation Request Confirmation',
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6.w),
+                      topRight: Radius.circular(6.w),
+                    ),
+                  ),
+                  builder: (context) => QuotationRequestConfirmation(
+                    onContinueShopping: () {
+                      context.pop();
+                    },
                   ),
                 );
               },

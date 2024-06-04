@@ -75,6 +75,9 @@ dependencies:
   #For Image Pick
   image_picker: ^1.1.2
 
+  #For Permission Handle
+  permission_handler: ^11.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

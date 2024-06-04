@@ -106,6 +106,8 @@ abstract class AppTheme {
 
   ReviewDetailsStyle get reviewDetailsStyle;
 
+  OrderConfirmationStyle get orderConfirmationStyle;
+
   PaymentStyle get paymentStyle;
 
   WriteReviewScreenStyle get writeReviewScreenStyle;
@@ -119,6 +121,8 @@ abstract class AppTheme {
   ProductMenuBottomSheetStyle get productMenuBottomSheetStyle;
 
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
+
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -211,11 +215,13 @@ class CustomAppBarStyle {
   final Color backgroundColor;
   final Color borderColor;
   final TextStyle titleStyle;
+  final Color transparentColor;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
+    required this.transparentColor,
   });
 }
 
@@ -386,6 +392,7 @@ class ProductItemStyle {
   final Color backgroundColor;
   final Color productBackgroundColor;
   final Color borderColor;
+  final Color outOfStockBackgroundColor;
   final TextStyle productNameStyle;
   final TextStyle priceTextStyle;
   final TextStyle discountTextStyle;
@@ -396,6 +403,7 @@ class ProductItemStyle {
   final Color transparentColor;
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
+  final TextStyle outOfStockStyle;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -411,6 +419,8 @@ class ProductItemStyle {
     required this.transparentColor,
     required this.removeBagTextStyle,
     required this.myBagDividerColor,
+    required this.outOfStockBackgroundColor,
+    required this.outOfStockStyle,
   });
 }
 
@@ -854,6 +864,20 @@ class ReviewDetailsStyle {
   });
 }
 
+class OrderConfirmationStyle {
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle orderNumberStyle;
+  final TextStyle descriptionStyle;
+
+  OrderConfirmationStyle({
+    required this.titleTextStyle,
+    required this.subTitleStyle,
+    required this.orderNumberStyle,
+    required this.descriptionStyle,
+  });
+}
+
 class PaymentStyle {
   final Color backgroundColor;
   final Color dotColor;
@@ -973,5 +997,15 @@ class DiamondInfoPopupScreenStyle {
     required this.itemTitleStyle,
     required this.itemValueStyle,
     required this.viewMoreDetailsTextStyle,
+  });
+}
+
+class QuotationRequestConfirmationStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+
+  QuotationRequestConfirmationStyle({
+    required this.titleStyle,
+    required this.detailsTextStyle,
   });
 }

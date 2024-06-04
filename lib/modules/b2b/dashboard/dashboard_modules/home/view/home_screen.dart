@@ -14,15 +14,21 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         SmartText(
-          APPStrings.writeAReview.tr,
+          'Order Confirmation',
           onTap: () {
-            context.pushNamed(AppRoutes.writeReviewPage);
+            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
           },
         ),
         SmartText(
           'Diamond info popup screen',
           onTap: () {
             context.pushNamed(AppRoutes.diamondInfoPopupPage);
+          },
+        ),
+        SmartText(
+          'Write a review screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.writeReviewPage);
           },
         ),
         SmartText(

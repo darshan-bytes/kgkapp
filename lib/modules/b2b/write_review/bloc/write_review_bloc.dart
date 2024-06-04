@@ -23,6 +23,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   WriteReviewBloc() : super(const WriteReviewInitial()) {
     on<PickImageEvent>(_onMultiImagePicked);
     on<RemoveSelectedImageEvent>(_onRemoveSelectedImage);
+    on<WriteReviewResetEvent>(_onWriteReviewReset);
   }
 
   Future<void> _onMultiImagePicked(PickImageEvent event, Emitter<WriteReviewState> emit) async {
@@ -44,6 +45,15 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     } on PlatformException catch (e) {
       _handlePlatformException(e);
     }
+  }
+
+  void _onWriteReviewReset(WriteReviewResetEvent event, Emitter<WriteReviewState> emit) {
+    reviewController.clear();
+    titleController.clear();
+    titleFocusNode.unfocus();
+    reviewFocusNode.unfocus();
+    imageFileList = null;
+    emit(const WriteReviewReloadState());
   }
 
   void _onRemoveSelectedImage(RemoveSelectedImageEvent event, Emitter<WriteReviewState> emit) {
@@ -74,12 +84,12 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     }
   }
 
-  void _handlePlatformException(PlatformException e) {
+  Future<void> _handlePlatformException(PlatformException e) async {
     switch (e.code) {
       case 'camera_access_denied':
       case 'photo_access_denied':
         Utils.showMessage(e.message ?? "");
-        //TODO: need to navigate to settings to allow permission
+        await openAppSettings();
         break;
       default:
         Utils.showMessage("An error occurred: ${e.message}");

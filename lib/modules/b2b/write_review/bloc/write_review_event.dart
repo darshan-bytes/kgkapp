@@ -24,3 +24,10 @@ final class RemoveSelectedImageEvent extends WriteReviewEvent {
   @override
   List<Object> get props => [selectedImage];
 }
+
+final class WriteReviewResetEvent extends WriteReviewEvent {
+  const WriteReviewResetEvent();
+
+  @override
+  List<Object> get props => [];
+}
