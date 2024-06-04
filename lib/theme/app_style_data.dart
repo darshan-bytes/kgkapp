@@ -344,8 +344,8 @@ class LightModeTheme extends AppTheme {
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
         haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        phoneStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
-        emailStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        phoneStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        emailStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
       );
 
   @override
@@ -549,12 +549,12 @@ class LightModeTheme extends AppTheme {
         nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
       );
 
-  @override
-  WriteReviewScreenStyle get writeReviewScreenStyle =>
-      WriteReviewScreenStyle(labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
+@override
+  WriteReviewScreenStyle get writeReviewScreenStyle => WriteReviewScreenStyle(
+      labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
 
   @override
-  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle => ProductMenuBottomsheetStyle(
+  ProductMenuBottomSheetStyle get productMenuBottomSheetStyle => ProductMenuBottomSheetStyle(
         backgroundColor: colors.white,
         primaryColor: colors.primary,
         subTotalStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
@@ -563,5 +563,17 @@ class LightModeTheme extends AppTheme {
         imageLableStyle: interRegularTextStyle,
         diamondTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         diamondValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+      );
+
+  @override
+  DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle => DiamondInfoPopupScreenStyle(
+        offerPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        actualPriceStyle: interRegularTextStyle.copyWith(
+            fontSize: 16.sp, color: colors.color8C8C8C, decoration: TextDecoration.lineThrough, decorationColor: colors.color8C8C8C),
+        productNameStyle: interMediumBoldTextStyle,
+        labelStyle: interMediumBoldTextStyle,
+        itemTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        itemValueStyle: interRegularTextStyle,
+        viewMoreDetailsTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
       );
 }

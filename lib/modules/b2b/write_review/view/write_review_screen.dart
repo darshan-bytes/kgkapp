@@ -1,4 +1,4 @@
- import 'package:kgk/kgk.dart';
+import 'package:kgk/kgk.dart';
 
 class WriteReviewScreen extends StatelessWidget {
   const WriteReviewScreen({super.key});
@@ -100,10 +100,6 @@ class WriteReviewScreen extends StatelessWidget {
               if (bloc.availablePickImageLength > 0)
                 InkWell(
                   onTap: () {
-                    bloc.reviewFocusNode.unfocus();
-                    bloc.titleFocusNode.unfocus();
-                    FocusScope.of(context).unfocus();
-                    bloc.reviewFocusNode.unfocus();
                     _showImagePickDialog(context, bloc);
                   },
                   child: DottedBorder(
@@ -157,6 +153,7 @@ class WriteReviewScreen extends StatelessWidget {
             fit: BoxFit.cover,
             height: 96.w,
             width: 96.w,
+            imageBorderRadius: BorderRadius.circular(4.r),
           ),
           Positioned(
             top: 8,
