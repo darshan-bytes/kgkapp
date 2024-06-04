@@ -572,4 +572,10 @@ class LightModeTheme extends AppTheme {
         itemValueStyle: interRegularTextStyle,
         viewMoreDetailsTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
       );
+
+  @override
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle => QuotationRequestConfirmationStyle(
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp, color: colors.color303538),
+        detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      );
 }

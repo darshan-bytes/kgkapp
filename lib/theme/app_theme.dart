@@ -117,6 +117,8 @@ abstract class AppTheme {
   ProductMenuBottomSheetStyle get productMenuBottomSheetStyle;
 
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
+
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -961,5 +963,15 @@ class DiamondInfoPopupScreenStyle {
     required this.itemTitleStyle,
     required this.itemValueStyle,
     required this.viewMoreDetailsTextStyle,
+  });
+}
+
+class QuotationRequestConfirmationStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+
+  QuotationRequestConfirmationStyle({
+    required this.titleStyle,
+    required this.detailsTextStyle,
   });
 }

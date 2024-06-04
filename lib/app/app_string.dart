@@ -299,4 +299,8 @@ class APPStrings {
   static const String disc = 'disc';
   static const String pricePerCrt = 'price_per_crt';
   static const String amount = 'amount';
+
+  static const String requestSubmitted = 'request_submitted';
+  static const String requestSubmittedDesc = 'request_submitted_desc';
+  static const String continueShopping = 'continue_shopping';
 }
