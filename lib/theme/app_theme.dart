@@ -211,11 +211,13 @@ class CustomAppBarStyle {
   final Color backgroundColor;
   final Color borderColor;
   final TextStyle titleStyle;
+  final Color transparentColor;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
+    required this.transparentColor,
   });
 }
 
@@ -386,6 +388,7 @@ class ProductItemStyle {
   final Color backgroundColor;
   final Color productBackgroundColor;
   final Color borderColor;
+  final Color outOfStockBackgroundColor;
   final TextStyle productNameStyle;
   final TextStyle priceTextStyle;
   final TextStyle discountTextStyle;
@@ -396,6 +399,7 @@ class ProductItemStyle {
   final Color transparentColor;
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
+  final TextStyle outOfStockStyle;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -411,6 +415,8 @@ class ProductItemStyle {
     required this.transparentColor,
     required this.removeBagTextStyle,
     required this.myBagDividerColor,
+    required this.outOfStockBackgroundColor,
+    required this.outOfStockStyle,
   });
 }
 
