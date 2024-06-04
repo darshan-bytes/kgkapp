@@ -16,7 +16,9 @@ class MyBagScreen extends StatelessWidget {
               title: APPStrings.myBag.tr,
               isBack: false,
               onFilter: () {},
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),

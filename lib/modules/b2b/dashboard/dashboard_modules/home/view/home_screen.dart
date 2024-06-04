@@ -15,6 +15,15 @@ class HomeScreen extends StatelessWidget {
               context.pushNamed(AppRoutes.collectionPage);
             },
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          SmartText(
+            'DIY',
+            onTap: () {
+              context.pushNamed(AppRoutes.diamondListingPage);
+            },
+          ),
           /*SmartText(
           'product menu bottom sheet',
           onTap: () async {

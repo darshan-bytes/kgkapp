@@ -10,7 +10,9 @@ class CompleteProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.diy.tr,
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onFilter: () {},
       ),
       body: SingleChildScrollView(
@@ -234,6 +236,8 @@ class CompleteProductScreen extends StatelessWidget {
           Divider(height: 1.h),
           _diamondDetails(completeProductBloc, style, context),
           Divider(height: 1.h),
+          _gemstoneDetails(completeProductBloc),
+          Divider(height: 1.h),
           SizedBox(height: 28.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
@@ -257,9 +261,11 @@ class CompleteProductScreen extends StatelessWidget {
               'Ring details',
               style: style.detailsHeaderStyle,
             ),
-            trailing: (completeProductBloc.isRingDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
+            trailing: Icon(
+              completeProductBloc.isRingDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              size: 24.w,
+              color: style.ratingGlowColor,
+            ),
             onExpansionChanged: (value) {
               completeProductBloc.add(ProductRingDetailsToggleEvent(isRingDetailsOpen: !completeProductBloc.isRingDetailsOpen));
             },
@@ -294,7 +300,7 @@ class CompleteProductScreen extends StatelessWidget {
                 ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
                 : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
-              completeProductBloc.add(ProductDiamondDetailsToggleEvent(isDiamondDetailsOpen: !completeProductBloc.isDiamondDetailsOpen));
+              completeProductBloc.add(const CompleteProductDiamondDetailsToggleEvent());
             },
             children: [
               SizedBox(height: 16.h),
@@ -345,6 +351,47 @@ class CompleteProductScreen extends StatelessWidget {
           style: style.settingValueStyle,
         ),
       ],
+    );
+  }
+
+  Widget _gemstoneDetails(CompleteProductBloc completeProductBloc) {
+    return BlocBuilder<CompleteProductBloc, CompleteProductState>(
+      buildWhen: (previous, current) => current is CompleteProductDiamondDetailsToggleState,
+      builder: (context, state) {
+        final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
+        return Padding(
+          padding: completeProductBloc.isGemstoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          child: SmartExpansionTile(
+            initiallyExpanded: completeProductBloc.isGemstoneDetailsOpen,
+            key: completeProductBloc.gemstoneDetailsKey,
+            title: SmartText(
+              'Gemstone details',
+              style: style.settingSelectionTitleStyle,
+            ),
+            trailing: (completeProductBloc.isGemstoneDetailsOpen)
+                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+            onExpansionChanged: (value) {
+              completeProductBloc.add(const CompleteProductGemstoneDetailsToggleEvent());
+            },
+            children: [
+              SizedBox(height: 16.h),
+              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.quantity, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.totalCarat, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.color, 'F-G', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
+              SizedBox(height: 28.h),
+            ],
+          ),
+        );
+      },
     );
   }
 }

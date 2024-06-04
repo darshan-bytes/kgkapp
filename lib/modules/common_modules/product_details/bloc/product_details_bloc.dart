@@ -92,7 +92,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   bool isRingDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> ringDetailsKey = GlobalKey();
   bool isDiamondDetailsOpen = false;
+  bool isGemstoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
+  GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
 
   List<ProductDetails> suggestedProductList = List.generate(
     8,
@@ -126,7 +128,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
     on<ProductCustomizationChangeEvent>(_onOnProductCustomizationChange);
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
-    on<DiamondDetailsToggleEvent>(_onDiamondDetailsToggleEvent);
+    on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
+    on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
   }
 
   void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
@@ -187,8 +190,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(RingDetailsToggleState(isRingDetailsOpen));
   }
 
-  void _onDiamondDetailsToggleEvent(DiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
+  void _onProductDiamondDetailsToggleEvent(ProductDiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
     isDiamondDetailsOpen = !isDiamondDetailsOpen;
-    emit(DiamondDetailsToggleState(isDiamondDetailsOpen));
+    emit(ProductDiamondDetailsToggleState(isDiamondDetailsOpen));
+  }
+
+  void _onGemstoneDetailsToggleEvent(GemstoneDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
+    isGemstoneDetailsOpen = !isGemstoneDetailsOpen;
+    emit(GemstoneDetailsToggleState(isGemstoneDetailsOpen));
   }
 }

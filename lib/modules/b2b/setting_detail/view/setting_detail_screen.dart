@@ -9,7 +9,9 @@ class SettingDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: 'DIY',
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onFilter: () {},
       ),
       body: BlocBuilder<SettingDetailBloc, SettingDetailState>(
@@ -252,38 +254,29 @@ class SettingDetailScreen extends StatelessWidget {
               Divider(
                 height: 1.h,
               ),
-              SizedBox(
-                height: 32.h,
-              ),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   ringDetailBloc.add(SettingToggleEvent(isSettingOpen: ringDetailBloc.isSettingOpen ? false : true));
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SmartText(
-                      APPStrings.settingDetails.tr,
-                      style: style.settingHeaderStyle,
-                    ),
-                    if (!ringDetailBloc.isSettingOpen) ...[
-                      Icon(
-                        Icons.keyboard_arrow_up,
-                        size: 24.w,
+                child: SizedBox(
+                  height: 52,
+                  //color: Colors.amber,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SmartText(
+                        APPStrings.settingDetails.tr,
+                        style: style.settingHeaderStyle,
                       ),
-                    ] else ...[
                       Icon(
-                        Icons.keyboard_arrow_down,
+                        ringDetailBloc.isSettingOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
                         size: 24.w,
                       ),
                     ],
-                  ],
+                  ),
                 ),
               ),
               if (!ringDetailBloc.isSettingOpen) ...[
-                SizedBox(
-                  height: 16.h,
-                ),
                 _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
                 SizedBox(
                   height: 14.h,
@@ -293,8 +286,8 @@ class SettingDetailScreen extends StatelessWidget {
                   height: 14.h,
                 ),
                 _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
+                SizedBox(height: 28.h),
               ],
-              SizedBox(height: 28.h),
               Divider(height: 1.h),
               SizedBox(height: 28.h),
               _settingWidget('Shape', 'Round', context),

@@ -12,3 +12,10 @@ class DiamondImagePageChangeEvent extends DiamondDetailEvent {
   @override
   List<Object> get props => [index];
 }
+
+final class DiamondDetailsToggleEvent extends DiamondDetailEvent {
+  const DiamondDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
+}
