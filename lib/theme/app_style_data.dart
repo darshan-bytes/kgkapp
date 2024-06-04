@@ -149,6 +149,7 @@ class LightModeTheme extends AppTheme {
         backgroundColor: colors.colorF7F9FA,
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
         borderColor: colors.colorD3DAE0,
+        transparentColor: colors.transparent,
       );
 
   @override
@@ -253,6 +254,8 @@ class LightModeTheme extends AppTheme {
         transparentColor: colors.transparent,
         removeBagTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
         myBagDividerColor: colors.colorD3DAE0,
+        outOfStockBackgroundColor: colors.colorDDECF4,
+        outOfStockStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       );
 
   @override

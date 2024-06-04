@@ -233,7 +233,7 @@ class APPStrings {
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
   static const String addAddress = 'add_address';
-  
+
   //Product menu bottom sheet
   static const String buyNow = 'buy_now';
   static const String discuss = 'discuss';
@@ -252,7 +252,7 @@ class APPStrings {
   static const String oval = 'oval';
   static const String marquise = 'marquise';
 
-    //Diamonds info popup
+  //Diamonds info popup
   static const String diamonds = 'diamonds';
   static const String basicInfo = 'basic_info';
   static const String inclusionInfo = 'inclusion_info';
@@ -303,4 +303,5 @@ class APPStrings {
   static const String requestSubmitted = 'request_submitted';
   static const String requestSubmittedDesc = 'request_submitted_desc';
   static const String continueShopping = 'continue_shopping';
+  static const String outOfStock = 'out_of_stock';
 }
