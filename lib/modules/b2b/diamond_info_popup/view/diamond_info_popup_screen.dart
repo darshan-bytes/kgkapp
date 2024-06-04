@@ -77,11 +77,11 @@ class DiamondInfoPopupScreen extends StatelessWidget {
               SizedBox(height: 8.h),
               const Divider(),
               SizedBox(height: 16.h),
-              _buildPriceDetailsIfo(productInfoModel, style),
+              _buildPriceDetailsInfo(productInfoModel, style),
               SizedBox(height: 16.h),
               const Divider(),
               SizedBox(height: 24.h),
-              _buildInquirySection(context, style),
+              _buildInquirySection(context),
               SizedBox(height: 24.h),
               InkWell(
                 onTap: () {},
@@ -219,7 +219,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceDetailsIfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
+  Widget _buildPriceDetailsInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -243,7 +243,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInquirySection(BuildContext context, DiamondInfoPopupScreenStyle style) {
+  Widget _buildInquirySection(BuildContext context) {
     final MyBagScreenStyle myBagScreenStyle = AppTheme.of(context).myBagScreenStyle;
     return Column(
       children: [
