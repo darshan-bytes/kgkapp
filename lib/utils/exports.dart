@@ -108,6 +108,7 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
+export 'package:kgk/modules/b2b/order_confirmation/view/order_confirmation_screen.dart';
 export 'package:kgk/modules/b2b/payment/bloc/payment_bloc.dart';
 export 'package:kgk/modules/b2b/payment/view/payment_screen.dart';
 export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_bloc.dart';
@@ -119,17 +120,22 @@ export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart'
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
+export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
+
+// bloc
+export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
+export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
+
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internet_screen.dart';
-export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
-export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
+
 export 'package:kgk/modules/common_modules/product_details/view/product_details_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
+//screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
-export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';

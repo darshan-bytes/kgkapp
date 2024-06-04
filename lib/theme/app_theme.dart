@@ -106,6 +106,8 @@ abstract class AppTheme {
 
   ReviewDetailsStyle get reviewDetailsStyle;
 
+  OrderConfirmationStyle get orderConfirmationStyle;
+
   PaymentStyle get paymentStyle;
 
   MyBagDiamondItemStyle get myBagDiamondItemStyle;
@@ -857,6 +859,20 @@ class ReviewDetailsStyle {
     required this.dotColor,
     required this.createdDateStyle,
     required this.titleStyle,
+  });
+}
+
+class OrderConfirmationStyle {
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle orderNumberStyle;
+  final TextStyle descriptionStyle;
+
+  OrderConfirmationStyle({
+    required this.titleTextStyle,
+    required this.subTitleStyle,
+    required this.orderNumberStyle,
+    required this.descriptionStyle,
   });
 }
 

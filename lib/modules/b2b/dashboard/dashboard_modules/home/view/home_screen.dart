@@ -14,6 +14,12 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         SmartText(
+          'Order Confirmation',
+          onTap: () {
+            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
+          },
+        ),
+        SmartText(
           'Diamond info popup screen',
           onTap: () {
             context.pushNamed(AppRoutes.diamondInfoPopupPage);

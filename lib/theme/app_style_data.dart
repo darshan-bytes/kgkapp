@@ -553,6 +553,14 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  OrderConfirmationStyle get orderConfirmationStyle => OrderConfirmationStyle(
+        titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        orderNumberStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, decoration: TextDecoration.underline),
+        descriptionStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      );
+
+  @override
   ProductMenuBottomSheetStyle get productMenuBottomSheetStyle => ProductMenuBottomSheetStyle(
         backgroundColor: colors.white,
         primaryColor: colors.primary,
