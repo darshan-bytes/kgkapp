@@ -14,7 +14,9 @@ class ProductListScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: APPStrings.ring.tr,
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
               onFilter: () {},
             );
           },
@@ -148,8 +150,6 @@ class ProductListScreen extends StatelessWidget {
                     onTap: () {
                       if (bloc.fromRing) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: productDetails.productId ?? ''});
-                      } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage);
                       }
                     },
                   );

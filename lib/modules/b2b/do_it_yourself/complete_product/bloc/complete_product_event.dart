@@ -31,11 +31,16 @@ class ProductRingDetailsToggleEvent extends CompleteProductEvent {
   List<Object> get props => [isRingDetailsOpen];
 }
 
-class ProductDiamondDetailsToggleEvent extends CompleteProductEvent {
-  final bool isDiamondDetailsOpen;
-
-  const ProductDiamondDetailsToggleEvent({required this.isDiamondDetailsOpen});
+class CompleteProductDiamondDetailsToggleEvent extends CompleteProductEvent {
+  const CompleteProductDiamondDetailsToggleEvent();
 
   @override
-  List<Object> get props => [isDiamondDetailsOpen];
+  List<Object> get props => [];
+}
+
+class CompleteProductGemstoneDetailsToggleEvent extends CompleteProductEvent {
+  const CompleteProductGemstoneDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
 }

@@ -127,8 +127,7 @@ class ProductGridItem extends StatelessWidget {
       child: Container(
         width: width,
         color: style.backgroundColor,
-        padding:
-            EdgeInsets.only(top: 12.w, left: 12.w, right: 12.w, bottom: productDetails.discountPercentage.isNotNullNorEmpty ? 12.w : 0),
+        padding: EdgeInsets.all(12.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,15 +175,11 @@ class ProductGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
-              SizedBox(height: 8.h),
             ],
-            if (productDetails.discountPercentage.isNullOrEmpty)
-              SizedBox(
-                height: 14.h,
-              ),
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
+                margin: EdgeInsets.only(top: 8.h),
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,

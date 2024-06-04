@@ -49,8 +49,15 @@ final class RingDetailsToggleEvent extends ProductDetailsEvent {
   List<Object> get props => [];
 }
 
-final class DiamondDetailsToggleEvent extends ProductDetailsEvent {
-  const DiamondDetailsToggleEvent();
+final class ProductDiamondDetailsToggleEvent extends ProductDetailsEvent {
+  const ProductDiamondDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class GemstoneDetailsToggleEvent extends ProductDetailsEvent {
+  const GemstoneDetailsToggleEvent();
 
   @override
   List<Object> get props => [];

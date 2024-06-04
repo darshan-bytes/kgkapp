@@ -9,7 +9,9 @@ class DiamondDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: '1.01 Carat Round Diamond',
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onFilter: () {},
       ),
       body: SingleChildScrollView(
@@ -168,15 +170,70 @@ class DiamondDetailScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
+          Divider(height: 1.h),
+          _diamondDetails(diamondBloc),
+          Divider(height: 1.h),
+          SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
           SizedBox(height: 24.h),
-          Divider(height: 1.h),
-          SizedBox(height: 24.h),
         ],
       ),
+    );
+  }
+
+  Widget _diamondDetails(DiamondDetailBloc diamondDetailsBloc) {
+    return BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
+      buildWhen: (previous, current) => current is DiamondDetailsToggleState,
+      builder: (context, state) {
+        final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
+        return Padding(
+          padding: diamondDetailsBloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          child: SmartExpansionTile(
+            initiallyExpanded: diamondDetailsBloc.isDiamondDetailsOpen,
+            key: diamondDetailsBloc.diamondDetailsKey,
+            title: SmartText(
+              'Diamond details',
+              style: style.settingSelectionTitleStyle,
+            ),
+            trailing: Icon(
+              diamondDetailsBloc.isDiamondDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              size: 24.w,
+              color: style.ratingGlowColor,
+            ),
+            onExpansionChanged: (value) {
+              diamondDetailsBloc.add(const DiamondDetailsToggleEvent());
+            },
+            children: [
+              SizedBox(height: 16.h),
+              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.quantity, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.totalCarat, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.color, 'F-G', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _settingWidget(String type, String value, BuildContext context) {
+    final style = AppTheme.of(context).settingDetailScreenStyle;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SmartText(type, style: style.settingTypeStyle),
+        SmartText(value, style: style.settingValueStyle),
+      ],
     );
   }
 }

@@ -110,7 +110,7 @@ class LightModeTheme extends AppTheme {
         hintStyle: interRegularTextStyle.copyWith(
           fontSize: 14.sp,
           fontWeight: FontWeight.w400,
-          color: colors.color303538,
+          color: colors.color8C8C8C,
         ),
       );
 
@@ -325,7 +325,7 @@ class LightModeTheme extends AppTheme {
         ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, fontWeight: FontWeight.w400, color: colors.color303538),
         reviewStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         priceStyle: interBoldTextStyle.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500, color: colors.color303538),
-        metalHeaderStyle: interBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        metalHeaderStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         approxPriceLabelStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),

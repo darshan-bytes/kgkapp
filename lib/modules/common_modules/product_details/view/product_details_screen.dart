@@ -15,7 +15,9 @@ class ProductDetailsScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: productDetailsBloc.isCustomisation ? APPStrings.customiseProduct.tr : productDetailsBloc.productName,
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),
@@ -301,6 +303,8 @@ class ProductDetailsScreen extends StatelessWidget {
           const Divider(),
           _diamondDetails(productDetailsBloc, style),
           const Divider(),
+          _gemstoneDetails(productDetailsBloc, style),
+          const Divider(),
           SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
@@ -439,7 +443,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _diamondDetails(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is DiamondDetailsToggleState,
+      buildWhen: (previous, current) => current is ProductDiamondDetailsToggleState,
       builder: (context, state) {
         return Padding(
           padding: productDetailsBloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
@@ -454,7 +458,46 @@ class ProductDetailsScreen extends StatelessWidget {
                 ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
                 : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
-              productDetailsBloc.add(const DiamondDetailsToggleEvent());
+              productDetailsBloc.add(const ProductDiamondDetailsToggleEvent());
+            },
+            children: [
+              SizedBox(height: 16.h),
+              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.quantity, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.totalCarat, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.color, 'F-G', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _gemstoneDetails(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is GemstoneDetailsToggleState,
+      builder: (context, state) {
+        return Padding(
+          padding: productDetailsBloc.isGemstoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          child: SmartExpansionTile(
+            initiallyExpanded: productDetailsBloc.isGemstoneDetailsOpen,
+            key: productDetailsBloc.gemstoneDetailsKey,
+            title: SmartText(
+              'Gemstone details',
+              style: style.settingSelectionTitleStyle,
+            ),
+            trailing: (productDetailsBloc.isGemstoneDetailsOpen)
+                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+            onExpansionChanged: (value) {
+              productDetailsBloc.add(const GemstoneDetailsToggleEvent());
             },
             children: [
               SizedBox(height: 16.h),
