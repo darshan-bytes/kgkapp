@@ -37,7 +37,26 @@ class DiamondListingScreen extends StatelessWidget {
                 },
               );
             }),
-            FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+            FilterBottomActionBar(
+              onFilterTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+              onSortTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            ),
           ],
         );
       }),
@@ -48,8 +67,9 @@ class DiamondListingScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(
               children: [
-                SizedBox(height: 16.h),
-                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY) SizedBox(height: 16.h),
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY)
+                  const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
                 SizedBox(height: 24.h),
                 _buildSelectionDiamond(diamondListingBloc),
                 SizedBox(height: 24.h),

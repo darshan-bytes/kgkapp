@@ -5,6 +5,49 @@ class SupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SmartText(
+              'Diamond Filter',
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => DiamondFilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20.h),
+            SmartText(
+              'Quotation Request Confirmation',
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6.w),
+                      topRight: Radius.circular(6.w),
+                    ),
+                  ),
+                  builder: (context) => QuotationRequestConfirmation(
+                    onContinueShopping: () {
+                      context.pop();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

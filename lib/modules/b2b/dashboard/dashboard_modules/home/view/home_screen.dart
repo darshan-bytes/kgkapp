@@ -7,9 +7,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SmartText('Add Account', onTap: () {
-          context.pushNamed(AppRoutes.addressListPage);
-        }),
         SmartText(
           'View All Collection',
           onTap: () {
@@ -26,10 +23,27 @@ class HomeScreen extends StatelessWidget {
           onPressed: () => showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            builder: (context) => DiamondPurchaseSheet(),
+            builder: (context) => const DiamondPurchaseSheet(),
           ),
-          child: Text('Show Bottom Sheet'),
-        )
+          child: const SmartText('Show Bottom Sheet'),
+        ),
+        SmartText(
+          'Diamond info popup screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+          },
+        ),
+        SmartText(
+          'Product Menu Bottom Sheet',
+          onTap: () async {
+            await showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => const ProductMenuBottomSheet(),
+            );
+          },
+        ),
       ]),
     );
   }

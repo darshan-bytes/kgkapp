@@ -10,7 +10,8 @@ class OrderConfirmationScreen extends StatelessWidget {
     final style = AppTheme.of(context).orderConfirmationStyle;
     return Scaffold(
       appBar: SmartAppBar(
-        appBarHeight: kToolbarHeight,
+        isBack: false,
+        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
         onFilter: () {},
         onFavorite: () {},
         onNotification: () {},
@@ -19,7 +20,7 @@ class OrderConfirmationScreen extends StatelessWidget {
           child: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(17),
+            padding: EdgeInsets.all(17.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -27,15 +28,15 @@ class OrderConfirmationScreen extends StatelessWidget {
                   APPStrings.thankYouForYourPurchase.tr,
                   style: style.titleTextStyle,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildYourOrderSummary(style),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 SmartText(
                   APPStrings.orderConfirmWithTrackInfo.tr,
                   style: style.descriptionStyle,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _buildContinueShoppingButton(),
               ],
             ),

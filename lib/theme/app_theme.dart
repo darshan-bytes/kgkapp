@@ -115,6 +115,12 @@ abstract class AppTheme {
   AddressSelectionStyle get addressSelectionStyle;
 
   AddressListStyle get addressListStyle;
+
+  ProductMenuBottomSheetStyle get productMenuBottomSheetStyle;
+
+  DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
+
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -207,11 +213,13 @@ class CustomAppBarStyle {
   final Color backgroundColor;
   final Color borderColor;
   final TextStyle titleStyle;
+  final Color transparentColor;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
+    required this.transparentColor,
   });
 }
 
@@ -382,6 +390,7 @@ class ProductItemStyle {
   final Color backgroundColor;
   final Color productBackgroundColor;
   final Color borderColor;
+  final Color outOfStockBackgroundColor;
   final TextStyle productNameStyle;
   final TextStyle priceTextStyle;
   final TextStyle discountTextStyle;
@@ -392,6 +401,7 @@ class ProductItemStyle {
   final Color transparentColor;
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
+  final TextStyle outOfStockStyle;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -407,6 +417,8 @@ class ProductItemStyle {
     required this.transparentColor,
     required this.removeBagTextStyle,
     required this.myBagDividerColor,
+    required this.outOfStockBackgroundColor,
+    required this.outOfStockStyle,
   });
 }
 
@@ -453,6 +465,7 @@ class FilterStyle {
   final Color itemBorderColor;
   final Color closeButtonBackgroundColor;
   final TextStyle closeButtonStyle;
+  final Color selectedImageColor;
 
   FilterStyle({
     required this.backgroundColor,
@@ -465,6 +478,7 @@ class FilterStyle {
     required this.itemBorderColor,
     required this.closeButtonBackgroundColor,
     required this.closeButtonStyle,
+    required this.selectedImageColor,
   });
 }
 
@@ -929,5 +943,57 @@ class AddressListStyle {
     required this.arrowColor,
     required this.isSameAddressStyle,
     required this.nProductsTitleStyle,
+  });
+}
+
+class ProductMenuBottomSheetStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final TextStyle subTotalStyle;
+  final TextStyle moreDetailsStyle;
+  final TextStyle totalAmountStyle;
+  final TextStyle imageLableStyle;
+  final TextStyle diamondTitleStyle;
+  final TextStyle diamondValueStyle;
+
+  ProductMenuBottomSheetStyle({
+    required this.backgroundColor,
+    required this.primaryColor,
+    required this.subTotalStyle,
+    required this.moreDetailsStyle,
+    required this.totalAmountStyle,
+    required this.imageLableStyle,
+    required this.diamondTitleStyle,
+    required this.diamondValueStyle,
+  });
+}
+
+class DiamondInfoPopupScreenStyle {
+  final TextStyle offerPriceStyle;
+  final TextStyle actualPriceStyle;
+  final TextStyle productNameStyle;
+  final TextStyle labelStyle;
+  final TextStyle itemTitleStyle;
+  final TextStyle itemValueStyle;
+  final TextStyle viewMoreDetailsTextStyle;
+
+  DiamondInfoPopupScreenStyle({
+    required this.offerPriceStyle,
+    required this.actualPriceStyle,
+    required this.productNameStyle,
+    required this.labelStyle,
+    required this.itemTitleStyle,
+    required this.itemValueStyle,
+    required this.viewMoreDetailsTextStyle,
+  });
+}
+
+class QuotationRequestConfirmationStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+
+  QuotationRequestConfirmationStyle({
+    required this.titleStyle,
+    required this.detailsTextStyle,
   });
 }

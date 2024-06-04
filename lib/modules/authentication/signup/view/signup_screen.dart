@@ -10,7 +10,7 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
-        appBarHeight: kToolbarHeight,
+        appBarHeight: AppConst.defaultAppBarHeight,
         backgroundColor: Colors.white,
         isBorder: false,
       ),

@@ -25,6 +25,8 @@ class AppRoutes {
   static const compareProductPage = '/compareProductPage';
   static const orderConfirmationPage = '/orderConfirmationPage';
   static const paymentPage = '/paymentPage';
+  static const diamondInfoPopupPage = '/diamondInfoPopupPage';
+  static const productMenuBottomSheet = '/productMenuBottomSheet';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -118,7 +120,7 @@ class AppRoutes {
       case diamondListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DiamondListingBloc>(context).add(const GetDiamondProductListEvent());
+            BlocProvider.of<DiamondListingBloc>(context).add(GetDiamondProductListEvent(context));
             return const DiamondListingScreen();
           },
           settings: settings,
@@ -185,12 +187,23 @@ class AppRoutes {
           settings: settings,
         );
 
+      case diamondInfoPopupPage:
+        return MaterialPageRoute(
+          builder: (_) => const DiamondInfoPopupScreen(),
+          settings: settings,
+        );
+
+      case productMenuBottomSheet:
+        return MaterialPageRoute(
+          builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
       case orderConfirmationPage:
         return MaterialPageRoute(
           builder: (context) => OrderConfirmationScreen(
             orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
           ),
-          settings: settings,
         );
 
       default:
@@ -218,6 +231,12 @@ enum RoutesData {
   orderNumber,
   isCustomisationPage,
   addressDetails,
+  isPageFor,
+}
+
+enum ScreenIdentifier {
+  productListingForDiamonds,
+  diamondListingForDIY,
 }
 
 extension RoutesDataExtension on BuildContext {

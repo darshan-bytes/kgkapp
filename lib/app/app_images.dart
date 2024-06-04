@@ -8,6 +8,8 @@ class AppImages {
   static const String icPlaceholder = 'assets/images/ic_placeholder.png';
   static const String icRadio = 'assets/images/ic_radio.svg';
   static const String icRadioSelected = 'assets/images/ic_radio_selected.svg';
+  static const String icCertificate = 'assets/images/ic_certificate.svg';
+  static const String icCustomisable = 'assets/images/ic_customisable.svg';
 
   ///Tab bar icons
   static const String icHome = 'assets/images/ic_home.svg';
@@ -79,4 +81,10 @@ class AppImages {
   //My Bag Screen
   static const String icMoreHorizontal = 'assets/images/ic_more_horizontal.svg';
   static const String icEditPrimary = 'assets/images/ic_edit_primary.svg';
+
+  //Product Menu Bottom Sheet
+  static const String icFile = 'assets/images/ic_file.svg';
+  static const String icMeeting = 'assets/images/ic_meeting.svg';
+  static const String icComment = 'assets/images/ic_comment.svg';
+  static const String icExport = 'assets/images/ic_export.svg';
 }

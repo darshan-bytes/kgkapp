@@ -34,7 +34,26 @@ class ProductListScreen extends StatelessWidget {
                   bloc.add(ChangePageNumberEvent(newValue));
                 },
               ),
-              FilterBottomActionBar(onFilterTap: () {}, onSortTap: () {}),
+              FilterBottomActionBar(
+                onFilterTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => FilterScreen(
+                      onApply: () {},
+                    ),
+                  );
+                },
+                onSortTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => const SortScreen(),
+                  );
+                },
+              ),
             ],
           );
         },
@@ -121,8 +140,11 @@ class ProductListScreen extends StatelessWidget {
               children: [
                 SmartGridView(
                     items: bloc.productList.map((ProductDetails productDetails) {
+                  /// If need to  product customization icon then remove onCancel voidCallback
                   return ProductGridItem(
                     productDetails: productDetails,
+                    isCustomisable: bloc.productList[0] == productDetails ? true : false,
+                    isOutOfStock: bloc.productList[0] == productDetails ? true : false,
                     onAddToBagTap: bloc.fromRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
@@ -147,6 +169,7 @@ class ProductListScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
+                isCustomisable: index == 0 ? true : false,
                 onTap: () {
                   if (bloc.fromRing) {
                     context.pushNamed(AppRoutes.productDetailsPage,
