@@ -259,5 +259,6 @@
   "out_of_stock": "Out of stock",
   "ok": "Ok",
   "cancel": "Cancel",
-  "error_allow_camera_settings": "Please allow access to camera in settings"
+  "error_allow_camera_settings": "Please allow access to camera in settings",
+  "per_cts": "Per Cts"
 }
