@@ -45,9 +45,11 @@ export 'package:kgk/enums/enums.dart';
 export 'package:kgk/extension_methods/list.dart';
 export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
+
 //model
 export 'package:kgk/modules/authentication/forgot_email_sent/bloc/forgot_email_sent_bloc.dart';
 export 'package:kgk/modules/authentication/forgot_email_sent/view/forgot_email_sent_screen.dart';
+
 //screen
 export 'package:kgk/modules/authentication/forgot_password/bloc/forgot_password_bloc.dart';
 export 'package:kgk/modules/authentication/forgot_password/view/forgot_password_screen.dart';
@@ -70,9 +72,13 @@ export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/view/diamond_filter_screen.dart';
+export 'package:kgk/widgets/quotation_request_confirmation_bottomsheet.dart';
+
 //model
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/view/categories_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/bloc/diamond_filter_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/home/bloc/home_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/home/view/home_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/my_bag/bloc/my_bag_bloc.dart';
@@ -107,6 +113,7 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/b2b/notification/view/all_notifications_view.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification/view/settings_view.dart';
+export 'package:kgk/modules/b2b/order_confirmation/view/order_confirmation_screen.dart';
 export 'package:kgk/modules/b2b/payment/bloc/payment_bloc.dart';
 export 'package:kgk/modules/b2b/payment/view/payment_screen.dart';
 export 'package:kgk/modules/b2b/product_list_grid/bloc/product_list_bloc.dart';
@@ -120,12 +127,13 @@ export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart'
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
 export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
+export 'package:permission_handler/permission_handler.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
- 
+
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
@@ -134,9 +142,9 @@ export 'package:kgk/modules/common_modules/product_details/view/product_details_
 
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
+
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
-export 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/bloc/diamond_filter_bloc.dart';
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';
@@ -149,7 +157,6 @@ export 'package:kgk/widgets/categories_row.dart';
 export 'package:kgk/widgets/category_tile.dart';
 export 'package:kgk/widgets/checkbox.dart';
 export 'package:kgk/widgets/checkout_header_progressbar.dart';
-export 'package:kgk/widgets/custom_appbar.dart';
 export 'package:kgk/widgets/diy_progress_widget.dart';
 export 'package:kgk/widgets/dot_indicator.dart';
 export 'package:kgk/widgets/expansion_tile.dart';
@@ -169,6 +176,7 @@ export 'package:kgk/widgets/product_selected_settings.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/selection_button.dart';
+export 'package:kgk/widgets/smart_appbar.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
 export 'package:kgk/widgets/smart_dropdown_form_field.dart';
 export 'package:kgk/widgets/smart_grid_view.dart';
@@ -180,5 +188,6 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:readmore/readmore.dart';
+
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';

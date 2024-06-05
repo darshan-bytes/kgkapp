@@ -1,12 +1,14 @@
 import 'package:kgk/kgk.dart';
 
 part 'write_review_event.dart';
+
 part 'write_review_state.dart';
 
 class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   final ImagePicker _picker = ImagePicker();
   List<XFile>? imageFileList = [];
-  final int maxImagesCount = 5;
+
+  int get maxImagesCount => AppConst.maxImagesCount;
 
   int get availablePickImageLength => maxImagesCount - (imageFileList?.length ?? 0);
 
@@ -21,6 +23,7 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   WriteReviewBloc() : super(const WriteReviewInitial()) {
     on<PickImageEvent>(_onMultiImagePicked);
     on<RemoveSelectedImageEvent>(_onRemoveSelectedImage);
+    on<WriteReviewResetEvent>(_onWriteReviewReset);
   }
 
   Future<void> _onMultiImagePicked(PickImageEvent event, Emitter<WriteReviewState> emit) async {
@@ -42,6 +45,15 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     } on PlatformException catch (e) {
       _handlePlatformException(e);
     }
+  }
+
+  void _onWriteReviewReset(WriteReviewResetEvent event, Emitter<WriteReviewState> emit) {
+    reviewController.clear();
+    titleController.clear();
+    titleFocusNode.unfocus();
+    reviewFocusNode.unfocus();
+    imageFileList = null;
+    emit(const WriteReviewReloadState());
   }
 
   void _onRemoveSelectedImage(RemoveSelectedImageEvent event, Emitter<WriteReviewState> emit) {
@@ -72,11 +84,16 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     }
   }
 
-  void _handlePlatformException(PlatformException e) {
-    if (e.code == 'camera_access_denied') {
-      Utils.showMessage("Camera Access Denied. Please enable it in the settings.");
-    } else {
-      Utils.showMessage("An error occurred: ${e.message}");
+  Future<void> _handlePlatformException(PlatformException e) async {
+    switch (e.code) {
+      case 'camera_access_denied':
+      case 'photo_access_denied':
+        Utils.showMessage(e.message ?? "");
+        await openAppSettings();
+        break;
+      default:
+        Utils.showMessage("An error occurred: ${e.message}");
+        break;
     }
   }
 }

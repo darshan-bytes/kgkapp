@@ -23,6 +23,7 @@ class AppRoutes {
   static const addressListPage = '/addressListPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
+  static const orderConfirmationPage = '/orderConfirmationPage';
   static const paymentPage = '/paymentPage';
   static const writeReviewPage = '/writeReviewPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
@@ -193,7 +194,7 @@ class AppRoutes {
           settings: settings,
         );
 
-        case productMenuBottomSheet:
+      case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
           settings: settings,
@@ -201,7 +202,18 @@ class AppRoutes {
 
       case writeReviewPage:
         return MaterialPageRoute(
-          builder: (_) => const WriteReviewScreen(),
+          builder: (context) {
+            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewResetEvent());
+            return const WriteReviewScreen();
+          },
+          settings: settings,
+        );
+
+      case orderConfirmationPage:
+        return MaterialPageRoute(
+          builder: (context) => OrderConfirmationScreen(
+            orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
+          ),
           settings: settings,
         );
 
@@ -227,6 +239,7 @@ class AppRoutes {
 enum RoutesData {
   productListData,
   productId,
+  orderNumber,
   isCustomisationPage,
   addressDetails,
   isPageFor,

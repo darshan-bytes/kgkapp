@@ -14,6 +14,7 @@ class ProductListItem extends StatelessWidget {
   final bool isFavourite;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
+  final bool isCustomisable;
 
   const ProductListItem({
     super.key,
@@ -30,6 +31,7 @@ class ProductListItem extends StatelessWidget {
     this.isFavourite = false,
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
+    this.isCustomisable = false,
   });
 
   @override
@@ -72,6 +74,15 @@ class ProductListItem extends StatelessWidget {
           ),
         ),
         Positioned(
+          top: 8,
+          right: 8,
+          child: Row(
+            children: [
+              if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
+            ],
+          ),
+        ),
+        Positioned(
           bottom: 8,
           right: 8,
           child: Row(
@@ -87,19 +98,14 @@ class ProductListItem extends StatelessWidget {
     );
   }
 
-  Widget buildIcon({
-    required String path,
-    Function()? onTap,
-    required ProductItemStyle style,
-    Color? backgroundColor,
-  }) {
+  Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: backgroundColor ?? style.backgroundColor,
-          borderRadius: BorderRadius.circular(4.r),
-        ),
+            color: backgroundColor ?? style.backgroundColor,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: borderColor ?? style.transparentColor)),
         height: 24.w,
         width: 24.w,
         alignment: Alignment.center,
@@ -131,6 +137,7 @@ class ProductListItem extends StatelessWidget {
               priceSection(style),
             ],
             if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
+              SizedBox(height: 4.h),
               diamondAndGramSection(style, context),
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
