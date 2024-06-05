@@ -578,7 +578,11 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  AuctionScreenStyle get auctionScreenStyle => AuctionScreenStyle();
+  AuctionScreenStyle get auctionScreenStyle => AuctionScreenStyle(
+        bidPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 20.sp),
+        bidPriceLableStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        primaryColor: colors.primary,
+      );
 
   @override
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle => DiamondInfoPopupScreenStyle(

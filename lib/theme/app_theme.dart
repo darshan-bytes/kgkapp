@@ -988,7 +988,17 @@ class ProductMenuBottomSheetStyle {
   });
 }
 
-class AuctionScreenStyle {}
+class AuctionScreenStyle {
+  final TextStyle bidPriceLableStyle;
+  final TextStyle bidPriceStyle;
+  final Color primaryColor;
+
+  AuctionScreenStyle({
+    required this.bidPriceLableStyle,
+    required this.bidPriceStyle,
+    required this.primaryColor,
+  });
+}
 
 class DiamondInfoPopupScreenStyle {
   final TextStyle offerPriceStyle;

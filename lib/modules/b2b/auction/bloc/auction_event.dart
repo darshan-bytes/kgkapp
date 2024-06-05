@@ -12,3 +12,10 @@ class AuctionDiamondImagePageChangeEvent extends AuctionEvent {
   @override
   List<Object> get props => [index];
 }
+
+final class AuctionProductCompareToggleEvent extends AuctionEvent {
+  const AuctionProductCompareToggleEvent();
+
+  @override
+  List<Object> get props => [];
+}
