@@ -8,7 +8,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   bool isCustomisation = false;
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productDetailForDefault;
   final CarouselController controller = CarouselController();
+
   List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
     "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
@@ -103,7 +105,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           ? "https://s3-alpha-sig.figma.com/img/0ba8/8350/c9044a7ca4c5737635c215d420bddce0?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XGyPVEIZPONfyOIm3dzVeBRwheWGhTu13CHbV3qHy7JmSqsbCkSI9gsbn0yyKnAZu0QsocO-siGscgeVTLh2kCU0yk-gvQdLAoU6~OieGjMkhYddOSqWrJwcX18ZzDkEX2YQn1g2X4Psh6MLOq9w0ugt2OuYqialfV8AEK6njZcIJthBraWtQTJBPxu2m4Y2t8q8GOUSNroW6cpJJP84R6wgx~SYuAtdOST~NWn9BQZxlLTT72sBX6A5hDdKKUuIwZ5W5MH52bPe8u4NwJ~XeayJKv2mebjlTFDTHDJITDBsMhDd9anziWhtXuiLXST2lSyz0oHwR2q0KQzlRcTy5A__"
           : "https://s3-alpha-sig.figma.com/img/891f/a5e1/15a433edae27d4ac1983e4070c4f5358?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TWL6ZqLZZ6obSpBXhFz99wnVCHatZYEeglMeGWKUN9MGLpEW7y4bZGKrAM3ijc7umAR1uxFYMS7XGSlxj3RPboAr3kGYjQ73jHLEpKernHvEo95qqNtyf6pypP39lnoXI3aS-MPyICdXN-oRrkjKEHAzY14f~LuWa19aYx2ywDMIn3hMLgmlngUNGlWPaO1QcV1jHuhDA4PB-0DC28Rwv84aWpBhGs4L8yWl2aUFf5IiqPSML4kAClrZ9cSrx0SCq9S-50cvzYHO7EUk3nByRSs1g4M8cNS1CtOrKCnmqc015EXjcE8UXjpi43YzKU0Vkc9~VkJIFsJwnwNH9b9DpQ__",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000",
+      originalPrice: "\$ 5,000.00",
     ),
   );
 
@@ -116,7 +118,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           ? "https://s3-alpha-sig.figma.com/img/e8d4/b8e6/871b736fbf2cea8eca4a9f90ac3c419d?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UhE~3IjAPdKYGRKMjokhqzHeadcdieYDtB9WPuek3ycMRvW0LteBBhrmKWzwPoAGQNp82xqTovtnOPrc4EoCSzGSsnnLrdwHdijnoUvGraxzbiYix60jqBvQNlz4M8xcBheWj13r9ITtlFkqexd0uuGbi8jDbQMWeWIykPWfgui8B-Io2NSl35qKqxmgw1nPN6pWeEfKFRaPSGZnPRZGu2Gxh~KhS6WjUvk6rTQCG92EUCIUSl6gRX8mvkUa~XfGtnkR-pvcOTYRwepxZkjVlRyAekO7WSg~w6pxP-PLwdzwGCrDWhC-5aWmjaRfL2~rpvTvdb1fC5NJe-qwWS97wA__"
           : "https://s3-alpha-sig.figma.com/img/86b4/491b/425b79510ad32e0cd47e38d109c4bdc6?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=C0NlP7cRvU1~IIU0OGDYAG9Fx2D9uXaSvh0OyGwZmbuvwzxAebVL2y6ThV9c0N4tO5MunUS0NIyonwRoZOqB8wE-cqQNipxOTVADmwuRk6mUbMMsVWtzWZLHcSEtwnwU1jUhT7Voq4kTEPjyOOfO~0qSJ2HnEFk2eQHO82PvAz1eAdlnWFW9GmwtDas~SDlo7pnLUVjOU2V04yO8W10oHCOfABF7nRT5YRXgKSTgGH6LsqJvKuWzDNSYxcj3znME~TcDE-7GYc2fAFeHprcA1FOIQ2fYSglZzc~lhCXed8Knv97Iz4HJ0OTJh1cQsiRpuWNFoInbQHDtV0mhJOoCyw__",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000",
+      originalPrice: "\$ 5,000.00",
     ),
   );
 
@@ -131,7 +133,34 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
     emit(ProductDetailsLoadingState());
-    productName = '14k Gold Engagement Ring';
+    getScreenIdentifier(event.context);
+
+    if (screenIdentifier == ScreenIdentifier.productDetailForDiamonds) {
+      productCustomizations.clear();
+      imgList.clear();
+      suggestedProductList.clear();
+
+      imgList = [
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+      ];
+
+      suggestedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
+    }
+
+    productName = screenIdentifier == ScreenIdentifier.productDetailForDefault ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
@@ -162,6 +191,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       discountPercentage: '(3% OFF)',
     );
     emit(ProductDetailsLoadedState(productDetails!));
+  }
+
+  void getScreenIdentifier(BuildContext context) {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productDetailForDefault;
   }
 
   void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {

@@ -146,7 +146,7 @@ class CompareProductScreen extends StatelessWidget {
                 maintainAnimation: true,
                 maintainState: true,
                 child: SmartText(
-                  APPStrings.reviews.tr.interpolate(['']),
+                  APPStrings.reviews.tr,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: style.productSubTitleStyle,

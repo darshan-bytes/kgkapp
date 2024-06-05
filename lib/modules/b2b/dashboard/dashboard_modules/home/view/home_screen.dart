@@ -42,6 +42,12 @@ class HomeScreen extends StatelessWidget {
             );
           },
         ),
+        SmartText(
+          'Full Diamond Details',
+          onTap: () async {
+            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
+          },
+        ),
       ]),
     );
   }

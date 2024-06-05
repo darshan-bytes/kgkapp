@@ -824,6 +824,7 @@ class ProductDetailsStyle {
   final Color compareCountBGColor;
   final TextStyle totalApproxStyle;
   final TextStyle totalApproxSubStyle;
+  final TextStyle orderSampleStyle;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -849,6 +850,7 @@ class ProductDetailsStyle {
     required this.compareCountBGColor,
     required this.totalApproxStyle,
     required this.totalApproxSubStyle,
+    required this.orderSampleStyle,
   });
 }
 

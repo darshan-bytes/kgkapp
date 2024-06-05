@@ -182,7 +182,13 @@ class ProductGridItem extends StatelessWidget {
                       ),
                     ),
                   ] else ...[
-                    if (isStoneWithPrice) SmartImage(path: AppImages.icStone, height: 16.w, width: 16.w)
+                    if (isStoneWithPrice)
+                      SmartImage(
+                        path: AppImages.icStone,
+                        height: 20.w,
+                        width: 20.w,
+                        fit: BoxFit.fill,
+                      )
                   ],
                 ],
               ),

@@ -49,9 +49,11 @@ class InquiryWidget extends StatelessWidget {
             ),
           ),
           if (isRightArrow)
-            Padding(
-              padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 4.w),
-              child: SmartImage(path: AppImages.icArrowRight, height: 16.w, width: 16.w),
+            Container(
+              height: 32.w,
+              width: 32.w,
+              alignment: Alignment.center,
+              child: SmartImage(path: AppImages.icArrowRight, height: 14.w, width: 14.w),
             )
         ],
       ),
