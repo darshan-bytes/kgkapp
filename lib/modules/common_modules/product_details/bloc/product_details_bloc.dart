@@ -193,10 +193,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(ProductDetailsLoadedState(productDetails!));
   }
 
-  getScreenIdentifier(BuildContext context) {
+  void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productDetailForDefault;
-    return screenIdentifier;
   }
 
   void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {

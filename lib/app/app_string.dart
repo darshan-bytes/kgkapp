@@ -109,6 +109,7 @@ class APPStrings {
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';
   static const String reviewsX = 'reviews_x';
+  static const String reviews = 'reviews';
   static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
   static const String orderSample = 'order_sample';
   static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
@@ -195,6 +196,14 @@ class APPStrings {
   static const String unhappyWithPricing = 'unhappy_with_pricing';
   static const String selectQuality = 'select_quality';
   static const String selectQuantity = 'select_quantity';
+
+  //order confirmation
+  static const String thankYouForYourPurchase = 'thank_you_for_your_purchase';
+  static const String yourOrderNumber = 'your_order_number';
+  static const String orderConfirmWithTrackInfo = 'order_confirm_with_track_info';
+  static const String continueShopping = 'continue_shopping';
+
+  static const String subTotal = 'sub_total';
   static const String head = 'head';
   static const String totalApproxPrice = 'total_approx_price';
   static const String customiseProduct = 'customise_product';
@@ -233,7 +242,7 @@ class APPStrings {
   static const String yourValue = 'your_value';
   static const String dash = 'dash';
   static const String addAddress = 'add_address';
-  
+
   //Product menu bottom sheet
   static const String buyNow = 'buy_now';
   static const String discuss = 'discuss';
@@ -241,10 +250,8 @@ class APPStrings {
   static const String quotation = 'quotation';
   static const String export = 'export';
   static const String more = 'more';
-  static const String subTotal = 'sub_total';
   static const String moreDetails = 'more_details';
   static const String lessDetails = 'less_details';
-
   static const String totalDiamonds = 'total_diamonds';
   static const String totalCarats = 'total_carats';
   static const String averageDiscount = 'average_discount';
@@ -252,7 +259,7 @@ class APPStrings {
   static const String oval = 'oval';
   static const String marquise = 'marquise';
 
-    //Diamonds info popup
+  //Diamonds info popup
   static const String diamonds = 'diamonds';
   static const String basicInfo = 'basic_info';
   static const String inclusionInfo = 'inclusion_info';
@@ -299,4 +306,7 @@ class APPStrings {
   static const String disc = 'disc';
   static const String pricePerCrt = 'price_per_crt';
   static const String amount = 'amount';
+  static const String requestSubmitted = 'request_submitted';
+  static const String requestSubmittedDesc = 'request_submitted_desc';
+  static const String outOfStock = 'out_of_stock';
 }

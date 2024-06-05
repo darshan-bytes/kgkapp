@@ -23,6 +23,7 @@ class AppRoutes {
   static const addressListPage = '/addressListPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
+  static const orderConfirmationPage = '/orderConfirmationPage';
   static const paymentPage = '/paymentPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
@@ -195,9 +196,17 @@ class AppRoutes {
           settings: settings,
         );
 
-        case productMenuBottomSheet:
+      case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
+      case orderConfirmationPage:
+        return MaterialPageRoute(
+          builder: (context) => OrderConfirmationScreen(
+            orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
+          ),
           settings: settings,
         );
 
@@ -223,6 +232,7 @@ class AppRoutes {
 enum RoutesData {
   productListData,
   productId,
+  orderNumber,
   isCustomisationPage,
   addressDetails,
   isPageFor,

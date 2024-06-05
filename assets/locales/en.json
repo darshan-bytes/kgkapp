@@ -75,6 +75,7 @@
   "price_low_to_high": "Price - Low to High",
   "select_diamond": "Select Diamond",
   "reviews_x": "{#} Reviews",
+  "reviews": "Reviews",
   "want_to_see_product_physically": "Want to see product physically?",
   "order_sample": "Order Sample",
   "diamond_purity_you_can_trust": "Diamond Purity You Can Trust!",
@@ -148,6 +149,9 @@
   "unhappy_with_pricing": "Unhappy with pricing?",
   "select_quality": "Select Quality",
   "select_quantity": "Select Quantity",
+  "thank_you_for_your_purchase": "Thank you for your purchase!",
+  "your_order_number": "Your order number is: ",
+  "order_confirm_with_track_info": "We'll email you an order confirmation with details and tracking info.",
   "head": "Head",
   "total_approx_price": "Total Approx Price",
   "customise_product": "Customise product",
@@ -240,5 +244,9 @@
   "report_comments": "Report comments",
   "disc": "Disc",
   "price_per_crt": "Price/Crt",
-  "amount": "Amount"
+  "amount": "Amount",
+  "request_submitted": "Your request is submitted successfully.",
+  "request_submitted_desc": "Your request for a quotation has been submitted, and our sales representative will get in touch with you soon.",
+  "continue_shopping": "Continue Shopping",
+  "out_of_stock": "Out of stock"
 }

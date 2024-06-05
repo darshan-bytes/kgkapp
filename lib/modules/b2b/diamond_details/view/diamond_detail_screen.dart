@@ -99,7 +99,7 @@ class DiamondDetailScreen extends StatelessWidget {
           SizedBox(height: 8.h),
           Row(
             children: [
-              SmartRatingBar(initialRating: 4, itemSize: 16, onRatingUpdate: (double value) {}),
+              SmartRatingBar(initialRating: 4, itemSize: 16.w, onRatingUpdate: (double value) {}),
               SizedBox(width: 8.w),
               SmartText(
                 APPStrings.reviewsX.tr.interpolate([4]),

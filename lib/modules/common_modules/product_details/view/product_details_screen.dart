@@ -27,103 +27,118 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style, BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-        buildWhen: (previous, current) => current is ProductDetailsLoadedState,
-        builder: (context, state) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (productDetailsBloc.isCustomisation) ...[
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      SmartText(
-                        APPStrings.totalApproxPrice.tr,
-                        style: style.totalApproxStyle,
-                      ),
-                      const Spacer(),
-                      SmartText(
-                        "\$1,470.00",
-                        style: style.totalApproxStyle,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 14.h,
-                  ),
-                  Row(
-                    children: [
-                      SmartText(
-                        '14K Rose and White Gold',
-                        style: style.totalApproxSubStyle,
-                      ),
-                      const Spacer(),
-                      SmartText(
-                        "\$120.00",
-                        style: style.totalApproxSubStyle,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 14.h,
-                  ),
-                  Row(
-                    children: [
-                      SmartText(
-                        'Round Diamond 0.5 ct',
-                        style: style.totalApproxSubStyle,
-                      ),
-                      const Spacer(),
-                      SmartText(
-                        "\$1350.00",
-                        style: style.totalApproxSubStyle,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 14.h,
-                  ),
-                ],
-                Row(
-                  children: [
-                    Expanded(
-                      child: SmartButton(
-                        prefixImage: AppImages.icShoppingBag,
-                        title: APPStrings.addToBag.tr,
-                        onTap: () {
-                          BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(2));
-                          context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
-                        },
-                      ),
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is ProductDetailsLoadedState,
+      builder: (context, state) {
+        return Container(
+          decoration: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+              ? null
+              : BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 7.r,
+                      blurRadius: 7.r,
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
-                    if (!productDetailsBloc.isCustomisation) ...[
-                      SizedBox(width: 8.w),
-                      SelectionButton(
-                        padding: EdgeInsets.all(12.w),
-                        isSelected: false,
-                        onTap: () {},
-                        image: AppImages.icHeart,
-                      ),
-                      SizedBox(width: 8.w),
-                      SelectionButton(
-                        padding: EdgeInsets.all(12.w),
-                        isSelected: false,
-                        onTap: () {},
-                        image: AppImages.icShare,
-                      ),
-                    ],
                   ],
                 ),
-              ],
+          child: SafeArea(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (productDetailsBloc.isCustomisation) ...[
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        SmartText(
+                          APPStrings.totalApproxPrice.tr,
+                          style: style.totalApproxStyle,
+                        ),
+                        const Spacer(),
+                        SmartText(
+                          "\$1,470.00",
+                          style: style.totalApproxStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
+                    Row(
+                      children: [
+                        SmartText(
+                          '14K Rose and White Gold',
+                          style: style.totalApproxSubStyle,
+                        ),
+                        const Spacer(),
+                        SmartText(
+                          "\$120.00",
+                          style: style.totalApproxSubStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
+                    Row(
+                      children: [
+                        SmartText(
+                          'Round Diamond 0.5 ct',
+                          style: style.totalApproxSubStyle,
+                        ),
+                        const Spacer(),
+                        SmartText(
+                          "\$1350.00",
+                          style: style.totalApproxSubStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
+                  ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SmartButton(
+                          prefixImage: AppImages.icShoppingBag,
+                          title: APPStrings.addToBag.tr,
+                          onTap: () {
+                            BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(2));
+                            context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
+                          },
+                        ),
+                      ),
+                      if (!productDetailsBloc.isCustomisation) ...[
+                        SizedBox(width: 8.w),
+                        SelectionButton(
+                          padding: EdgeInsets.all(12.w),
+                          isSelected: false,
+                          onTap: () {},
+                          image: AppImages.icHeart,
+                        ),
+                        SizedBox(width: 8.w),
+                        SelectionButton(
+                          padding: EdgeInsets.all(12.w),
+                          isSelected: false,
+                          onTap: () {},
+                          image: AppImages.icShare,
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -309,6 +324,12 @@ class ProductDetailsScreen extends StatelessWidget {
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds) ...[
+            SizedBox(height: 14.h),
+            const Divider(),
+            _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+          ],
           SizedBox(height: 32.h),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
             const ProductReviewsDetails(),
@@ -339,21 +360,21 @@ class ProductDetailsScreen extends StatelessWidget {
     return productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
         ? Row(
             children: [
-        SmartText('Martin Flyer', style: style.productTypeStyle),
-        SizedBox(width: 8.w),
-        Container(
-          height: 4.w,
-          width: 4.w,
-          decoration: BoxDecoration(
-              color: style.dotColor,
-              border: Border.all(
-                color: style.dotColor,
+              SmartText('Martin Flyer', style: style.productTypeStyle),
+              SizedBox(width: 8.w),
+              Container(
+                height: 4.w,
+                width: 4.w,
+                decoration: BoxDecoration(
+                    color: style.dotColor,
+                    border: Border.all(
+                      color: style.dotColor,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(50.r))),
               ),
-              borderRadius: BorderRadius.all(Radius.circular(50.r))),
-        ),
-        SizedBox(width: 8.w),
-        SmartText('DERC03RDA', style: style.productCodeStyle),
-      ],
+              SizedBox(width: 8.w),
+              SmartText('DERC03RDA', style: style.productCodeStyle),
+            ],
           )
         : SmartText('SKU 14178065', style: style.productCodeStyle);
   }
@@ -476,7 +497,7 @@ class ProductDetailsScreen extends StatelessWidget {
             initiallyExpanded: productDetailsBloc.isDiamondDetailsOpen,
             key: productDetailsBloc.diamondDetailsKey,
             title: SmartText(
-              'Diamond details',
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault ? 'Diamond details' : 'Product details',
               style: style.settingSelectionTitleStyle,
             ),
             trailing: (productDetailsBloc.isDiamondDetailsOpen)
