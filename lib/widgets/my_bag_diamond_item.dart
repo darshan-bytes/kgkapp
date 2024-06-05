@@ -23,9 +23,10 @@ class MyBagDiamondItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: padding ?? const EdgeInsets.all(16.0),
+        padding: padding ?? EdgeInsets.all(16.0.w),
         margin: margin,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
           color: style.backgroundColor,
           border: Border.all(color: style.borderColor),
         ),
@@ -34,8 +35,8 @@ class MyBagDiamondItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SmartImage(path: productDetails.imageUrl ?? '', height: 32, width: 32),
-                const SizedBox(width: 8),
+                SmartImage(path: productDetails.imageUrl ?? '', height: 32.w, width: 32.w),
+                SizedBox(width: 8.w),
                 Expanded(
                   child: SmartText(
                     chart.lotNumber,
@@ -44,7 +45,7 @@ class MyBagDiamondItem extends StatelessWidget {
                     style: style.headingStyle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 InkWell(
                     onTap: () {
                       if (onTapMenuButton != null) {
@@ -54,7 +55,7 @@ class MyBagDiamondItem extends StatelessWidget {
                     child: const SmartImage(path: AppImages.icMoreHorizontal))
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -64,7 +65,7 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.clarity.tr, chart.clarity, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,16 +73,16 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.certificateNumber.tr, chart.certificateNumber, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildDetailColumn(APPStrings.measurements.tr, chart.measurements, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const Divider(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -91,7 +92,7 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.symmetry.tr, chart.symmetry, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -101,18 +102,18 @@ class MyBagDiamondItem extends StatelessWidget {
                 const Expanded(child: SizedBox()),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const Divider(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildDetailColumn(APPStrings.rap.tr, chart.rap, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style)),
+                Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style, isDiscount: true)),
                 Expanded(child: _buildDetailColumn(APPStrings.kgkAmount.tr, chart.kgkAmount, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -127,9 +128,10 @@ class MyBagDiamondItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, {bool isTextFormField = false}) {
+  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
+      {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: const EdgeInsets.only(right: 17),
+      padding: EdgeInsets.only(right: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,13 +141,13 @@ class MyBagDiamondItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: style.titleStyle,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           isTextFormField && value != null
               ? SizedBox(
-                  width: 56,
+                  width: 56.w,
                   child: SmartTextField(
-                    height: 32,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    height: 32.h,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                     isEnabled: false,
                     controller: TextEditingController(text: value),
                     disabledBorderColor: style.borderColor,
@@ -156,7 +158,7 @@ class MyBagDiamondItem extends StatelessWidget {
                   value.isNullOrEmpty ? APPStrings.dash.tr : value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: style.subTitleStyle,
+                  style: isDiscount ? style.richTextStyle : style.subTitleStyle,
                 ),
         ],
       ),

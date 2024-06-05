@@ -89,4 +89,11 @@ class AppImages {
   static const String icMeeting = 'assets/images/ic_meeting.svg';
   static const String icComment = 'assets/images/ic_comment.svg';
   static const String icExport = 'assets/images/ic_export.svg';
+
+  //Product Info clarity chat
+  static const String icDNA = 'assets/images/ic_dna.svg';
+  static const String icFlagUSA = 'assets/images/ic_flag_usa.svg';
+  static const String icImageThin = 'assets/images/ic_image_thin.svg';
+  static const String icProductCertificate = 'assets/images/ic_product_certificate.svg';
+  static const String icRotate3D = 'assets/images/ic_rotate_3d.svg';
 }
