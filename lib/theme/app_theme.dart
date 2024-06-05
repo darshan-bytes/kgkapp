@@ -123,6 +123,8 @@ abstract class AppTheme {
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
 
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
+
+  ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
 }
 
 class PrimaryButtonStyle {
@@ -949,10 +951,12 @@ class AddressListStyle {
 }
 
 class WriteReviewScreenStyle {
+  final Color whiteColor;
   final Color borderColor;
   final TextStyle labelStyle;
 
   WriteReviewScreenStyle({
+    required this.whiteColor,
     required this.labelStyle,
     required this.borderColor,
   });
@@ -1007,5 +1011,17 @@ class QuotationRequestConfirmationStyle {
   QuotationRequestConfirmationStyle({
     required this.titleStyle,
     required this.detailsTextStyle,
+  });
+}
+
+class ShowDoubleActionDialogStyle {
+  final TextStyle titleStyle;
+  final TextStyle contentStyle;
+  final TextStyle okButtonStyle;
+
+  ShowDoubleActionDialogStyle({
+    required this.titleStyle,
+    required this.contentStyle,
+    required this.okButtonStyle,
   });
 }

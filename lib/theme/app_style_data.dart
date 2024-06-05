@@ -552,9 +552,9 @@ class LightModeTheme extends AppTheme {
         nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
       );
 
-@override
-  WriteReviewScreenStyle get writeReviewScreenStyle => WriteReviewScreenStyle(
-      labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
+  @override
+  WriteReviewScreenStyle get writeReviewScreenStyle =>
+      WriteReviewScreenStyle(whiteColor: colors.white, labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
 
   @override
   OrderConfirmationStyle get orderConfirmationStyle => OrderConfirmationStyle(
@@ -592,5 +592,12 @@ class LightModeTheme extends AppTheme {
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle => QuotationRequestConfirmationStyle(
         titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp, color: colors.color303538),
         detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      );
+
+  @override
+  ShowDoubleActionDialogStyle get showDoubleActionDialogStyle => ShowDoubleActionDialogStyle(
+        titleStyle: interMediumBoldTextStyle,
+        contentStyle: interRegularTextStyle,
+        okButtonStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
       );
 }

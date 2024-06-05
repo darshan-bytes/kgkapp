@@ -203,7 +203,7 @@ class AppRoutes {
       case writeReviewPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewResetEvent());
+            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
             return const WriteReviewScreen();
           },
           settings: settings,

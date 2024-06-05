@@ -34,13 +34,13 @@ class ImagePickDialogSheet extends StatelessWidget {
                         children: [
                           Expanded(
                             child: pickOption(context, icon: AppImages.icCamera, label: APPStrings.camera.tr, onTap: () {
-                              Navigator.pop(context);
+                              context.pop();
                               onTapSource(ImageSource.camera);
                             }),
                           ),
                           Expanded(
                             child: pickOption(context, icon: AppImages.icImage, label: APPStrings.gallery.tr, onTap: () {
-                              Navigator.pop(context);
+                              context.pop();
                               onTapSource(ImageSource.gallery);
                             }),
                           )

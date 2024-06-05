@@ -84,7 +84,8 @@ class WriteReviewScreen extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         BlocBuilder<WriteReviewBloc, WriteReviewState>(
-          buildWhen: (previous, current) => current is PickImageState || current is RemoveSelectedImageState,
+          buildWhen: (previous, current) =>
+              current is PickImageState || current is RemoveSelectedImageState || current is WriteReviewInitial,
           builder: (context, state) {
             List<Widget> imageWidgets = [
               if (bloc.availablePickImageLength > 0)
@@ -109,12 +110,12 @@ class WriteReviewScreen extends StatelessWidget {
                 ),
             ];
 
-            if (bloc.selectedImages.isNotEmpty) {
+            if (bloc.imageFileList.isNotEmpty) {
               imageWidgets.addAll(
                 List.generate(
-                  bloc.selectedImages.length,
+                  bloc.imageFileList.length,
                   (index) {
-                    return _buildImageItem(bloc.selectedImages[index], bloc, index);
+                    return _buildImageItem(bloc.imageFileList[index], bloc, index, style);
                   },
                 ),
               );
@@ -132,7 +133,7 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageItem(XFile imageFile, WriteReviewBloc bloc, int index) {
+  Widget _buildImageItem(XFile imageFile, WriteReviewBloc bloc, int index, WriteReviewScreenStyle style) {
     return SizedBox(
       height: 96.w,
       width: 96.w,
@@ -154,7 +155,7 @@ class WriteReviewScreen extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: style.whiteColor,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 height: 24.w,

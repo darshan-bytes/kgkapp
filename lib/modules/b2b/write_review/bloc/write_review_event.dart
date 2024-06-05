@@ -7,6 +7,13 @@ sealed class WriteReviewEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class WriteReviewInitialEvent extends WriteReviewEvent {
+  const WriteReviewInitialEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class PickImageEvent extends WriteReviewEvent {
   final ImageSource imageSource;
 

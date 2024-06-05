@@ -223,8 +223,8 @@ class APPStrings {
   static const String title = 'title';
   static const String review = 'review';
   static const String images = 'images';
-  static const String maximumFiveImages = 'maximum_five_images';
-  static const String selectUpToFiveImages = 'select_up_to_five_images';
+  static const String errorMaximumFiveImages = 'error_maximum_five_images';
+  static const String errorSelectUpToFiveImages = 'error_select_up_to_five_images';
   static const String camera = 'camera';
   static const String gallery = 'gallery';
 
@@ -318,4 +318,7 @@ class APPStrings {
   static const String requestSubmitted = 'request_submitted';
   static const String requestSubmittedDesc = 'request_submitted_desc';
   static const String outOfStock = 'out_of_stock';
+  static const String ok = 'ok';
+  static const String cancel = 'cancel';
+  static const String errorAllowCameraSettings = 'error_allow_camera_settings';
 }
