@@ -261,5 +261,14 @@
   "cancel": "Cancel",
   "error_allow_camera_settings": "Please allow access to camera in settings",
   "starting_bid_price": "Starting bid price",
-  "per_cts": "Per Cts"
+  "per_cts": "Per Cts",
+  "recent_bid": "Recent bids",
+  "view_all": "View All",
+  "auction_end_in": "Auction ends in:",
+  "all_bids": "All bids",
+  "my_bid": "My bid",
+  "place_bid": "Place Bid",
+  "enter_bid_amount_higher_than_x": "Enter bid amount higher than {#}",
+  "your_bid_of": "Your bid of ",
+  "has_been_placed": " has been placed"
 }

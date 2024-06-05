@@ -206,7 +206,10 @@ class AppRoutes {
 
       case auctionPage:
         return MaterialPageRoute(
-          builder: (_) => const AuctionScreen(),
+          builder: (context) {
+            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            return const AuctionScreen();
+          },
           settings: settings,
         );
 

@@ -16,8 +16,7 @@ class HomeScreen extends StatelessWidget {
         SmartText(
           'Order Confirmation',
           onTap: () {
-            context.pushNamed(AppRoutes.orderConfirmationPage,
-                arguments: {RoutesData.orderNumber: "3000000049"});
+            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
           },
         ),
         SmartText(
@@ -52,9 +51,7 @@ class HomeScreen extends StatelessWidget {
         SmartText(
           'Full Diamond Details',
           onTap: () async {
-            context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-              RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds
-            });
+            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
           },
         ),
       ]),

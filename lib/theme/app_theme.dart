@@ -994,11 +994,33 @@ class AuctionScreenStyle {
   final TextStyle bidPriceLableStyle;
   final TextStyle bidPriceStyle;
   final Color primaryColor;
+  final TextStyle auctionTimerStyle;
+  final TextStyle recentBidStyle;
+  final TextStyle recentBidValueStyle;
+  final Color recentBidBackgroundColor;
+  final Color borderColor;
+  final Color whiteColor;
+  final TextStyle allBidsTitleStyle;
+  final TextStyle myBidTextStyle;
+  final Color myBidBackgroundColor;
+  final Color textFieldBorderColor;
+  final Color boxShadowColor;
 
   AuctionScreenStyle({
     required this.bidPriceLableStyle,
     required this.bidPriceStyle,
     required this.primaryColor,
+    required this.auctionTimerStyle,
+    required this.recentBidStyle,
+    required this.recentBidValueStyle,
+    required this.recentBidBackgroundColor,
+    required this.borderColor,
+    required this.whiteColor,
+    required this.allBidsTitleStyle,
+    required this.myBidTextStyle,
+    required this.myBidBackgroundColor,
+    required this.textFieldBorderColor,
+    required this.boxShadowColor,
   });
 }
 

@@ -12,6 +12,8 @@ class AppImages {
   static const String icCamera = 'assets/images/ic_camera.svg';
   static const String icImage = 'assets/images/ic_image.svg';
   static const String icCustomisable = 'assets/images/ic_customisable.svg';
+  static const String icCalendar = 'assets/images/ic_calendar.svg';
+  static const String icSuccessPlaceBid = 'assets/images/ic_success_place_bid.svg';
 
   ///Tab bar icons
   static const String icHome = 'assets/images/ic_home.svg';

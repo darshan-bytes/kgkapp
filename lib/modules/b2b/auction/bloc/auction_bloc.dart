@@ -5,8 +5,15 @@ part 'auction_state.dart';
 
 class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   int current = 0;
-  final CarouselController controller = CarouselController();
   bool isCompare = false;
+  bool isMyBidPlaced = false;
+
+  Timer? _timer;
+  Duration auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
+
+  TextEditingController bidAmountController = TextEditingController();
+  final CarouselController controller = CarouselController();
+  final ScrollController scrollController = ScrollController();
 
   final List<String> imgList = [
     "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
@@ -17,20 +24,49 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
   ];
 
-  List<ProductDetails> suggestedProductList = List.generate(
+  List<Map<String, dynamic>> recentBidList = [
+    {"date_time": "17/03/23 10:00 PM", "price": "\$9000.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$8500.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$8000.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$7500.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$7000.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$6500.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$6000.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$5500.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$5000.00"},
+    {"date_time": "17/03/23 10:00 PM", "price": "\$4500.00"},
+  ];
+
+  List<ProductDetails> youMayAlisLikeProductList = List.generate(
     8,
     (index) => ProductDetails(
       diamond: "1.5 gram",
       gram: "1.5 gram",
       imageUrl: "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      originalPrice: "\$ 3,000",
+      originalPrice: "\$1,600.00",
     ),
   );
 
   AuctionBloc() : super(AuctionInitial()) {
+    on<AuctionInitialEvent>(_onInitEvent);
     on<AuctionDiamondImagePageChangeEvent>(_onAuctionDiamondImagePageChangeEvent);
-    on<AuctionProductCompareToggleEvent>(_onAuctionProductCompareToggle);
+    on<AuctionProductCompareToggleEvent>(_onAuctionProductCompareToggleEvent);
+    on<AuctionStartTimerEvent>(_onStartTimer);
+    on<AuctionUpdateTimerEvent>(_onUpdateTimer);
+    on<AuctionTimerCompletedEvent>(_onAuctionTimerCompletedEvent);
+    on<AuctionPlaceBidEvent>(_onPlaceBidEvent);
+  }
+
+  void _onInitEvent(AuctionInitialEvent event, Emitter<AuctionState> emit) async {
+    resetData();
+  }
+
+  void resetData() {
+    _timer?.cancel();
+    bidAmountController.clear();
+    auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
+    add(const AuctionStartTimerEvent());
   }
 
   void _onAuctionDiamondImagePageChangeEvent(AuctionDiamondImagePageChangeEvent event, Emitter<AuctionState> emit) {
@@ -38,9 +74,55 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     emit(AuctionDiamondImagePageChangeState());
   }
 
-  void _onAuctionProductCompareToggle(AuctionProductCompareToggleEvent event, Emitter<AuctionState> emit) {
+  void _onAuctionProductCompareToggleEvent(AuctionProductCompareToggleEvent event, Emitter<AuctionState> emit) {
     emit(const AuctionReloadState());
     isCompare = !isCompare;
     emit(const AuctionProductCompareToggleState());
+  }
+
+  void _onStartTimer(AuctionStartTimerEvent event, Emitter<AuctionState> emit) {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (auctionEndDuration.compareTo(const Duration(days: 0, hours: 0, minutes: 0, seconds: 0)) > 0) {
+        auctionEndDuration -= const Duration(seconds: 1);
+        add(AuctionUpdateTimerEvent(auctionEndDuration));
+      } else {
+        _timer?.cancel();
+        auctionEndDuration = const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
+        add(AuctionTimerCompletedEvent(auctionEndDuration));
+      }
+    });
+  }
+
+  void _onUpdateTimer(AuctionUpdateTimerEvent event, Emitter<AuctionState> emit) {
+    emit(AuctionTimerUpdateState(event.duration));
+  }
+
+  void _onAuctionTimerCompletedEvent(AuctionTimerCompletedEvent event, Emitter<AuctionState> emit) {
+    emit(const AuctionTimerCompletedState());
+  }
+
+  void _onPlaceBidEvent(AuctionPlaceBidEvent event, Emitter<AuctionState> emit) {
+    emit(const AuctionReloadState());
+    isMyBidPlaced = true;
+    bidAmountController.clear();
+    _scrollDown();
+    emit(const AuctionPlaceBidState());
+  }
+
+  String formatDuration(Duration duration) {
+    String days = duration.inDays.toString();
+    String hours = (duration.inHours % 24).toString();
+    String minutes = (duration.inMinutes % 60).toString();
+    String seconds = (duration.inSeconds % 60).toString();
+    return "$days${"d"} : $hours${"hr"} : $minutes${"mins"} : $seconds${"sec"}";
+  }
+
+  void _scrollDown() {
+    scrollController.animateTo(
+      scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 }

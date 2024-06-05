@@ -19,3 +19,42 @@ final class AuctionProductCompareToggleEvent extends AuctionEvent {
   @override
   List<Object> get props => [];
 }
+
+final class AuctionInitialEvent extends AuctionEvent {
+  const AuctionInitialEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class AuctionStartTimerEvent extends AuctionEvent {
+  const AuctionStartTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class AuctionTimerCompletedEvent extends AuctionEvent {
+  final Duration duration;
+
+  const AuctionTimerCompletedEvent(this.duration);
+
+  @override
+  List<Object> get props => [duration];
+}
+
+final class AuctionUpdateTimerEvent extends AuctionEvent {
+  final Duration duration;
+
+  const AuctionUpdateTimerEvent(this.duration);
+
+  @override
+  List<Object> get props => [duration];
+}
+
+final class AuctionPlaceBidEvent extends AuctionEvent {
+  const AuctionPlaceBidEvent();
+
+  @override
+  List<Object> get props => [];
+}

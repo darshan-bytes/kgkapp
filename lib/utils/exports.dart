@@ -65,6 +65,9 @@ export 'package:kgk/modules/b2b/address/add_address/model/state_selection_model.
 export 'package:kgk/modules/b2b/address/add_address/view/add_address_screen.dart';
 export 'package:kgk/modules/b2b/address/address_list/bloc/address_list_bloc.dart';
 export 'package:kgk/modules/b2b/address/address_list/view/address_list_screen.dart';
+export 'package:kgk/modules/b2b/auction/bloc/auction_bloc.dart';
+export 'package:kgk/modules/b2b/auction/view/all_bids_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/auction/view/auction_screen.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
@@ -121,28 +124,21 @@ export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
-export 'package:kgk/modules/b2b/auction/view/auction_screen.dart';
-
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
-export 'package:kgk/modules/b2b/auction/bloc/auction_bloc.dart';
-export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
-export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
-export 'package:permission_handler/permission_handler.dart';
-
-// bloc
-export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
-export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
-
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
 export 'package:kgk/modules/common_modules/no_internet/bloc/no_internet_bloc.dart';
 export 'package:kgk/modules/common_modules/no_internet/view/no_internet_screen.dart';
+export 'package:kgk/modules/common_modules/product_details/bloc/product_details_bloc.dart';
+export 'package:kgk/modules/common_modules/product_details/model/product_customization_options.dart';
 export 'package:kgk/modules/common_modules/product_details/view/product_details_screen.dart';
 // bloc
 export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 //screen
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
+export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
+export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';
@@ -187,6 +183,7 @@ export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
+export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 
 export '../../../widgets/smart_rich_text.dart';

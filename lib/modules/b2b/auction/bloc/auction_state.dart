@@ -27,3 +27,26 @@ final class AuctionReloadState extends AuctionState {
   @override
   List<Object> get props => [];
 }
+
+final class AuctionTimerUpdateState extends AuctionState {
+  final Duration duration;
+
+  const AuctionTimerUpdateState(this.duration);
+
+  @override
+  List<Object> get props => [duration];
+}
+
+final class AuctionTimerCompletedState extends AuctionState {
+  const AuctionTimerCompletedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class AuctionPlaceBidState extends AuctionState {
+  const AuctionPlaceBidState();
+
+  @override
+  List<Object> get props => [];
+}
