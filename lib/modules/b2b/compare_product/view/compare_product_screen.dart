@@ -162,7 +162,7 @@ class CompareProductScreen extends StatelessWidget {
               SizedBox(height: 4.h),
               SmartRatingBar(
                 initialRating: 3,
-                itemSize: 14,
+                itemSize: 14.w,
                 ignoreGestures: true,
                 onRatingUpdate: (rating) {
                   printWrapped(rating.toString());

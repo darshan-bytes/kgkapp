@@ -37,9 +37,17 @@ class SmartRatingBar extends StatelessWidget {
       itemSize: itemSize,
       itemPadding: itemPadding ?? EdgeInsets.zero,
       ratingWidget: RatingWidget(
-        empty: const SmartImage(path: AppImages.icEmptyStar),
-        full: const SmartImage(path: AppImages.icFullStar),
-        half: Container(),
+        empty: Icon(
+          Icons.star_border,
+          size: itemSize,
+          color: AppTheme.of(context).colors.primary,
+        ),
+        full: Icon(
+          Icons.star,
+          size: itemSize,
+          color: AppTheme.of(context).colors.primary,
+        ),
+        half: const SizedBox.shrink(),
       ),
       onRatingUpdate: onRatingUpdate,
     );

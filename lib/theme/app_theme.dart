@@ -110,6 +110,8 @@ abstract class AppTheme {
 
   PaymentStyle get paymentStyle;
 
+  WriteReviewScreenStyle get writeReviewScreenStyle;
+
   MyBagDiamondItemStyle get myBagDiamondItemStyle;
 
   AddressSelectionStyle get addressSelectionStyle;
@@ -121,6 +123,8 @@ abstract class AppTheme {
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
 
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
+
+  ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
 }
 
 class PrimaryButtonStyle {
@@ -946,6 +950,18 @@ class AddressListStyle {
   });
 }
 
+class WriteReviewScreenStyle {
+  final Color whiteColor;
+  final Color borderColor;
+  final TextStyle labelStyle;
+
+  WriteReviewScreenStyle({
+    required this.whiteColor,
+    required this.labelStyle,
+    required this.borderColor,
+  });
+}
+
 class ProductMenuBottomSheetStyle {
   final Color backgroundColor;
   final Color primaryColor;
@@ -995,5 +1011,17 @@ class QuotationRequestConfirmationStyle {
   QuotationRequestConfirmationStyle({
     required this.titleStyle,
     required this.detailsTextStyle,
+  });
+}
+
+class ShowDoubleActionDialogStyle {
+  final TextStyle titleStyle;
+  final TextStyle contentStyle;
+  final TextStyle okButtonStyle;
+
+  ShowDoubleActionDialogStyle({
+    required this.titleStyle,
+    required this.contentStyle,
+    required this.okButtonStyle,
   });
 }

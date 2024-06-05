@@ -25,6 +25,7 @@ class AppRoutes {
   static const compareProductPage = '/compareProductPage';
   static const orderConfirmationPage = '/orderConfirmationPage';
   static const paymentPage = '/paymentPage';
+  static const writeReviewPage = '/writeReviewPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
 
@@ -196,6 +197,15 @@ class AppRoutes {
       case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
+      case writeReviewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
+            return const WriteReviewScreen();
+          },
           settings: settings,
         );
 

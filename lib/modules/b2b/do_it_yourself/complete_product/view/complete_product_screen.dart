@@ -138,7 +138,7 @@ class CompleteProductScreen extends StatelessWidget {
                 glowColor: style.ratingGlowColor,
                 onRatingUpdate: (double value) {},
                 allowHalfRating: false,
-                itemSize: 16,
+                itemSize: 16.w,
                 itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
                 ratingWidget: RatingWidget(
                   empty: const SmartImage(path: AppImages.icEmptyStar),

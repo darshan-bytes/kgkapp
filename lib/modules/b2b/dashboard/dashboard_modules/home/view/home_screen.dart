@@ -26,6 +26,12 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         SmartText(
+          'Write a review screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.writeReviewPage);
+          },
+        ),
+        SmartText(
           'Product Menu Bottom Sheet',
           onTap: () async {
             await showModalBottomSheet(
