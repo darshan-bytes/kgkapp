@@ -917,6 +917,7 @@ class MyBagDiamondItemStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle richTextStyle;
+  final Color selectedBackgroundColor;
 
   MyBagDiamondItemStyle({
     required this.backgroundColor,
@@ -925,6 +926,7 @@ class MyBagDiamondItemStyle {
     required this.titleStyle,
     required this.subTitleStyle,
     required this.richTextStyle,
+    required this.selectedBackgroundColor,
   });
 }
 

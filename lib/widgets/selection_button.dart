@@ -53,6 +53,7 @@ class SelectionButton extends StatelessWidget {
         height: height ?? 48.w,
         width: width,
         padding: padding,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? (selectedButtonColor ?? style.selectedButtonColor) : (unselectedButtonColor ?? style.unselectedButtonColor),
           borderRadius: borderRadius ?? BorderRadius.circular(4.r),

@@ -323,4 +323,5 @@ class APPStrings {
   static const String cancel = 'cancel';
   static const String errorAllowCameraSettings = 'error_allow_camera_settings';
   static const String startingBidPrice = 'starting_bid_price';
+  static const String perCts = 'per_cts';
 }

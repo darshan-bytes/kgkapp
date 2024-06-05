@@ -20,20 +20,17 @@ class DiamondListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: BlocBuilder<DiamondListingBloc, DiamondListingState>(
-          builder: (context, state) {
+      bottomNavigationBar: BlocBuilder<DiamondListingBloc, DiamondListingState>(builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            BlocBuilder<DiamondListingBloc, DiamondListingState>(
-                builder: (context, state) {
+            BlocBuilder<DiamondListingBloc, DiamondListingState>(builder: (context, state) {
               return SmartPagination(
                 pageNumbers: diamondListingBloc.pageNumbers,
                 currentPage: diamondListingBloc.selectedPageNumber,
                 onPageChanged: (int index, String newValue) {
-                  diamondListingBloc
-                      .add(DiamondProductChangePageNumberEvent(newValue));
+                  diamondListingBloc.add(DiamondProductChangePageNumberEvent(newValue));
                 },
               );
             }),
