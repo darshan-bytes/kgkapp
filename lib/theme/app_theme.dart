@@ -106,7 +106,11 @@ abstract class AppTheme {
 
   ReviewDetailsStyle get reviewDetailsStyle;
 
+  OrderConfirmationStyle get orderConfirmationStyle;
+
   PaymentStyle get paymentStyle;
+
+  WriteReviewScreenStyle get writeReviewScreenStyle;
 
   MyBagDiamondItemStyle get myBagDiamondItemStyle;
 
@@ -114,9 +118,15 @@ abstract class AppTheme {
 
   AddressListStyle get addressListStyle;
 
-  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle;
-
   AuctionScreenStyle get auctionScreenStyle;
+
+  ProductMenuBottomSheetStyle get productMenuBottomSheetStyle;
+
+  DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle;
+
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
+
+  ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
 }
 
 class PrimaryButtonStyle {
@@ -209,11 +219,13 @@ class CustomAppBarStyle {
   final Color backgroundColor;
   final Color borderColor;
   final TextStyle titleStyle;
+  final Color transparentColor;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
+    required this.transparentColor,
   });
 }
 
@@ -384,6 +396,7 @@ class ProductItemStyle {
   final Color backgroundColor;
   final Color productBackgroundColor;
   final Color borderColor;
+  final Color outOfStockBackgroundColor;
   final TextStyle productNameStyle;
   final TextStyle priceTextStyle;
   final TextStyle discountTextStyle;
@@ -394,6 +407,7 @@ class ProductItemStyle {
   final Color transparentColor;
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
+  final TextStyle outOfStockStyle;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -409,6 +423,8 @@ class ProductItemStyle {
     required this.transparentColor,
     required this.removeBagTextStyle,
     required this.myBagDividerColor,
+    required this.outOfStockBackgroundColor,
+    required this.outOfStockStyle,
   });
 }
 
@@ -810,6 +826,7 @@ class ProductDetailsStyle {
   final Color compareCountBGColor;
   final TextStyle totalApproxStyle;
   final TextStyle totalApproxSubStyle;
+  final TextStyle orderSampleStyle;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -835,6 +852,7 @@ class ProductDetailsStyle {
     required this.compareCountBGColor,
     required this.totalApproxStyle,
     required this.totalApproxSubStyle,
+    required this.orderSampleStyle,
   });
 }
 
@@ -849,6 +867,20 @@ class ReviewDetailsStyle {
     required this.dotColor,
     required this.createdDateStyle,
     required this.titleStyle,
+  });
+}
+
+class OrderConfirmationStyle {
+  final TextStyle titleTextStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle orderNumberStyle;
+  final TextStyle descriptionStyle;
+
+  OrderConfirmationStyle({
+    required this.titleTextStyle,
+    required this.subTitleStyle,
+    required this.orderNumberStyle,
+    required this.descriptionStyle,
   });
 }
 
@@ -922,7 +954,19 @@ class AddressListStyle {
   });
 }
 
-class ProductMenuBottomsheetStyle {
+class WriteReviewScreenStyle {
+  final Color whiteColor;
+  final Color borderColor;
+  final TextStyle labelStyle;
+
+  WriteReviewScreenStyle({
+    required this.whiteColor,
+    required this.labelStyle,
+    required this.borderColor,
+  });
+}
+
+class ProductMenuBottomSheetStyle {
   final Color backgroundColor;
   final Color primaryColor;
   final TextStyle subTotalStyle;
@@ -932,7 +976,7 @@ class ProductMenuBottomsheetStyle {
   final TextStyle diamondTitleStyle;
   final TextStyle diamondValueStyle;
 
-  ProductMenuBottomsheetStyle({
+  ProductMenuBottomSheetStyle({
     required this.backgroundColor,
     required this.primaryColor,
     required this.subTotalStyle,
@@ -945,3 +989,45 @@ class ProductMenuBottomsheetStyle {
 }
 
 class AuctionScreenStyle {}
+
+class DiamondInfoPopupScreenStyle {
+  final TextStyle offerPriceStyle;
+  final TextStyle actualPriceStyle;
+  final TextStyle productNameStyle;
+  final TextStyle labelStyle;
+  final TextStyle itemTitleStyle;
+  final TextStyle itemValueStyle;
+  final TextStyle viewMoreDetailsTextStyle;
+
+  DiamondInfoPopupScreenStyle({
+    required this.offerPriceStyle,
+    required this.actualPriceStyle,
+    required this.productNameStyle,
+    required this.labelStyle,
+    required this.itemTitleStyle,
+    required this.itemValueStyle,
+    required this.viewMoreDetailsTextStyle,
+  });
+}
+
+class QuotationRequestConfirmationStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+
+  QuotationRequestConfirmationStyle({
+    required this.titleStyle,
+    required this.detailsTextStyle,
+  });
+}
+
+class ShowDoubleActionDialogStyle {
+  final TextStyle titleStyle;
+  final TextStyle contentStyle;
+  final TextStyle okButtonStyle;
+
+  ShowDoubleActionDialogStyle({
+    required this.titleStyle,
+    required this.contentStyle,
+    required this.okButtonStyle,
+  });
+}

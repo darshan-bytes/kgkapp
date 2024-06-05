@@ -8,6 +8,10 @@ class AppImages {
   static const String icPlaceholder = 'assets/images/ic_placeholder.png';
   static const String icRadio = 'assets/images/ic_radio.svg';
   static const String icRadioSelected = 'assets/images/ic_radio_selected.svg';
+  static const String icCertificate = 'assets/images/ic_certificate.svg';
+  static const String icCamera = 'assets/images/ic_camera.svg';
+  static const String icImage = 'assets/images/ic_image.svg';
+  static const String icCustomisable = 'assets/images/ic_customisable.svg';
 
   ///Tab bar icons
   static const String icHome = 'assets/images/ic_home.svg';

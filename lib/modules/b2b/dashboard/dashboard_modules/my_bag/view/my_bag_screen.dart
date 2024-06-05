@@ -116,7 +116,8 @@ class MyBagScreen extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 24.h),
             onEyeTap: () {},
             onTap: () {
-              context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: product.productId});
+              context.pushNamed(AppRoutes.productDetailsPage,
+                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault});
             },
             productDetails: product,
             qualityOptionsList: product.cartProductQuality ?? [],

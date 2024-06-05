@@ -140,16 +140,23 @@ class ProductListScreen extends StatelessWidget {
               children: [
                 SmartGridView(
                     items: bloc.productList.map((ProductDetails productDetails) {
+                  /// If need to  product customization icon then remove onCancel voidCallback
                   return ProductGridItem(
                     productDetails: productDetails,
+                    isCustomisable: bloc.productList[0] == productDetails,
+                    isOutOfStock: bloc.productList[0] == productDetails,
                     onAddToBagTap: bloc.fromRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
                     onTap: () {
                       if (bloc.fromRing) {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.productId: productDetails.productId ?? ''});
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                          RoutesData.productId: productDetails.productId ?? '',
+                          RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                        });
                       } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage);
+                        context.pushNamed(AppRoutes.diamondDetailPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
                       }
                     },
                   );
@@ -166,10 +173,13 @@ class ProductListScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
+                isCustomisable: index == 0 ? true : false,
                 onTap: () {
                   if (bloc.fromRing) {
-                    context.pushNamed(AppRoutes.productDetailsPage,
-                        arguments: {RoutesData.productId: bloc.productList[index].productId ?? ''});
+                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                      RoutesData.productId: bloc.productList[index].productId ?? '',
+                      RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                    });
                   } else {
                     context.pushNamed(AppRoutes.diamondDetailPage);
                   }

@@ -5,4 +5,5 @@ class AppConst {
   static Size appBarHeight = Size.fromHeight(72.0.h);
   static Size designSize = const Size(390, 844);
   static double defaultAppBarHeight = 52.0.h;
+  static const int maxImagesCount = 5;
 }

@@ -36,7 +36,7 @@ class ProductReviewsDetails extends StatelessWidget {
                     ),
                     SizedBox(height: 8.h),
                     SmartText(
-                      APPStrings.reviews.tr.interpolate([120]),
+                      APPStrings.reviewsX.tr.interpolate([120]),
                       style: style.productCodeStyle,
                     ),
                   ],
