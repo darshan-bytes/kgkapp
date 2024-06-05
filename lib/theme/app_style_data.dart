@@ -345,10 +345,10 @@ class LightModeTheme extends AppTheme {
 
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
-        haveAQuestionStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        haveAQuestionStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        phoneStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
-        emailStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        phoneStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        emailStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
       );
 
   @override
@@ -498,6 +498,7 @@ class LightModeTheme extends AppTheme {
         compareCountBGColor: colors.color4885A3,
         totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override

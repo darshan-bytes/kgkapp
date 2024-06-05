@@ -108,7 +108,10 @@ class AppRoutes {
 
       case diamondDetailPage:
         return MaterialPageRoute(
-          builder: (_) => const DiamondDetailScreen(),
+          builder: (context) {
+            BlocProvider.of<DiamondDetailBloc>(context).add(DiamondDetailInitialEvent(context: context));
+            return const DiamondDetailScreen();
+          },
           settings: settings,
         );
 
@@ -248,6 +251,10 @@ enum RoutesData {
 enum ScreenIdentifier {
   productListingForDiamonds,
   diamondListingForDIY,
+  diamondDetailForDIY,
+  diamondDetailForDefault,
+  productDetailForDiamonds,
+  productDetailForDefault,
 }
 
 extension RoutesDataExtension on BuildContext {
