@@ -65,6 +65,9 @@ export 'package:kgk/modules/b2b/address/add_address/model/state_selection_model.
 export 'package:kgk/modules/b2b/address/add_address/view/add_address_screen.dart';
 export 'package:kgk/modules/b2b/address/address_list/bloc/address_list_bloc.dart';
 export 'package:kgk/modules/b2b/address/address_list/view/address_list_screen.dart';
+export 'package:kgk/modules/b2b/auction/bloc/auction_bloc.dart';
+export 'package:kgk/modules/b2b/auction/view/all_bids_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/auction/view/auction_screen.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';

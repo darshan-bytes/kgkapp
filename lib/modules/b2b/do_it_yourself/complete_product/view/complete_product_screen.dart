@@ -132,19 +132,13 @@ class CompleteProductScreen extends StatelessWidget {
           SizedBox(height: 8.h),
           Row(
             children: [
-              RatingBar(
+              SmartRatingBar(
                 itemCount: 5,
                 initialRating: 4,
-                glowColor: style.ratingGlowColor,
                 onRatingUpdate: (double value) {},
                 allowHalfRating: false,
                 itemSize: 16.w,
                 itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
-                ratingWidget: RatingWidget(
-                  empty: const SmartImage(path: AppImages.icEmptyStar),
-                  full: const SmartImage(path: AppImages.icFullStar),
-                  half: Container(),
-                ),
               ),
               SizedBox(
                 width: 8.w,

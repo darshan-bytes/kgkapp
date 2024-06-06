@@ -578,6 +578,24 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  AuctionScreenStyle get auctionScreenStyle => AuctionScreenStyle(
+        bidPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 20.sp),
+        bidPriceLableStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        primaryColor: colors.primary,
+        borderColor: colors.colorD3DAE0,
+        recentBidBackgroundColor: colors.colorF7F9FA,
+        auctionTimerStyle: interRegularTextStyle,
+        recentBidStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
+        recentBidValueStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
+        whiteColor: colors.white,
+        allBidsTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        myBidTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        myBidBackgroundColor: colors.color9DCAE0,
+        textFieldBorderColor: colors.colorD3DAE0,
+        boxShadowColor: colors.black,
+      );
+
+  @override
   DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle => DiamondInfoPopupScreenStyle(
         offerPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
         actualPriceStyle: interRegularTextStyle.copyWith(

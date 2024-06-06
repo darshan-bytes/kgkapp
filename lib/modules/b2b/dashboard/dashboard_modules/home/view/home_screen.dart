@@ -43,6 +43,12 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         SmartText(
+          'auction',
+          onTap: () async {
+            context.pushNamed(AppRoutes.auctionPage);
+          },
+        ),
+        SmartText(
           'Full Diamond Details',
           onTap: () async {
             context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});

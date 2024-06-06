@@ -322,5 +322,15 @@ class APPStrings {
   static const String ok = 'ok';
   static const String cancel = 'cancel';
   static const String errorAllowCameraSettings = 'error_allow_camera_settings';
+  static const String startingBidPrice = 'starting_bid_price';
   static const String perCts = 'per_cts';
+  static const String recentBid = 'recent_bid';
+  static const String viewAll = 'view_all';
+  static const String auctionEndIn = 'auction_end_in';
+  static const String allBids = 'all_bids';
+  static const String myBid = 'my_bid';
+  static const String placeBid = 'place_bid';
+  static const String enterBidAmountHigherThanX = 'enter_bid_amount_higher_than_x';
+  static const String yourBidOf = 'your_bid_of';
+  static const String hasBeenPlaced = 'has_been_placed';
 }
