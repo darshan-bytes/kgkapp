@@ -58,11 +58,11 @@ class CollectionScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 /// Navigation for diamondListingPage
-                                // context.pushNamed(AppRoutes.diamondListingPage,
-                                //     arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForDiamonds});
+                                context.pushNamed(AppRoutes.diamondListingPage,
+                                    arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForDiamonds});
 
                                 /// Navigation for productListGridPage
-                                context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productListData: index});
+                                // context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productListData: index});
                               },
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 14.h),

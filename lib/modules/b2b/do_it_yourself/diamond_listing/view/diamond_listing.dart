@@ -196,13 +196,53 @@ class DiamondListingScreen extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => ProductListItem(
-                margin: EdgeInsets.only(bottom: 17.h),
-                onEyeTap: () {},
-                onFavTap: () {},
-                onAddToBagTap: () {},
-                productDetails: diamondListingBloc.productList[index],
-              ),
+              itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY
+                  ? ProductListItem(
+                      margin: EdgeInsets.only(bottom: 17.h),
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onAddToBagTap: () {},
+                      productDetails: diamondListingBloc.productList[index],
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(bottom: 20.h),
+                      child: ProductInfoItem(
+                          onTap360View: () => printWrapped("onTap360View"),
+                          onTapDNA: () => printWrapped("onTapDNA"),
+                          onTapCertificate: () => printWrapped("onTapCertificate"),
+                          onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                          onTapUSA: () => printWrapped("onTapUSA"),
+                          onTapMenuButton: () => printWrapped("onTapMenuButton"),
+                          isSelectedBackground: (index % 2 != 0),
+                          productDetails: ProductDetails(
+                            productInfoClarityChat: ProductInfoClarityChat(
+                              productId: "1",
+                              productName: "1.00 Cts Round Diamond",
+                              ct: "10.04",
+                              shape: "Marquise",
+                              colour: "H",
+                              clarity: "VVS1",
+                              lotNumber: "MBFG716306",
+                              certificateNumber: "230000066395",
+                              measurements: "10.18 x 8.34 x 6.14",
+                              lab: "GIA",
+                              cut: "Excellent",
+                              polish: "Excellent",
+                              symmetry: "Excellent",
+                              flourish: "O",
+                              tablePercentage: "50",
+                              depthPercentage: "50",
+                              rap: "\$35,500.00",
+                              discount: "-30.00",
+                              perCts: "\$24,850.00",
+                              amount: "\$1,24,995.50",
+                            ),
+                            productId: "1",
+                            diamond: "1.5 gram",
+                            gram: "1.5 gram",
+                            imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
+                          )),
+                    ),
               itemCount: diamondListingBloc.productList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

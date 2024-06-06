@@ -131,7 +131,7 @@ class MyBagDiamondItem extends StatelessWidget {
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 17.w),
+      padding: EdgeInsets.only(right: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
