@@ -151,19 +151,13 @@ class AuctionScreen extends StatelessWidget {
   Widget _buildRatingSection(DiamondDetailScreenStyle diamondDetailScreenStyle, AuctionScreenStyle style) {
     return Row(
       children: [
-        RatingBar(
+        SmartRatingBar(
           itemCount: 5,
-          glowColor: style.primaryColor,
           onRatingUpdate: (double value) {},
           initialRating: 4,
           allowHalfRating: false,
           itemSize: 16.sp,
           itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
-          ratingWidget: RatingWidget(
-            empty: const SmartImage(path: AppImages.icEmptyStar),
-            full: const SmartImage(path: AppImages.icFullStar),
-            half: Container(),
-          ),
         ),
         SizedBox(width: 8.w),
         SmartText(
@@ -218,6 +212,7 @@ class AuctionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              key: bloc.targetKey,
               decoration: BoxDecoration(
                 color: style.recentBidBackgroundColor,
                 borderRadius: BorderRadius.circular(8.r),
@@ -466,29 +461,32 @@ class AuctionScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                                borderSide: BorderSide(color: style.textFieldBorderColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                                borderSide: BorderSide(color: style.textFieldBorderColor),
-                              ),
-                              border: OutlineInputBorder(
+                        child: SizedBox(
+                          height: 48.w,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                                   borderSide: BorderSide(color: style.textFieldBorderColor),
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r))),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                                borderSide: BorderSide(color: style.textFieldBorderColor),
-                              )),
-                          controller: bloc.bidAmountController,
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.words,
-                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                          maxLines: 1,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                                  borderSide: BorderSide(color: style.textFieldBorderColor),
+                                ),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: style.textFieldBorderColor),
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r))),
+                                // contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.6.w),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                                  borderSide: BorderSide(color: style.textFieldBorderColor),
+                                )),
+                            controller: bloc.bidAmountController,
+                            keyboardType: TextInputType.number,
+                            textCapitalization: TextCapitalization.words,
+                            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                            maxLines: 1,
+                          ),
                         ),
                       ),
                       SmartButton(

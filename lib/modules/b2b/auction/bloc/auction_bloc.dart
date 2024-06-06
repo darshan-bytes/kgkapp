@@ -14,6 +14,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   TextEditingController bidAmountController = TextEditingController();
   final CarouselController controller = CarouselController();
   final ScrollController scrollController = ScrollController();
+  final GlobalKey targetKey = GlobalKey();
 
   final List<String> imgList = [
     "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
@@ -106,22 +107,41 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     emit(const AuctionReloadState());
     isMyBidPlaced = true;
     bidAmountController.clear();
-    _scrollDown();
+    _scrollToRecentBids();
     emit(const AuctionPlaceBidState());
   }
 
   String formatDuration(Duration duration) {
-    String days = duration.inDays.toString();
-    String hours = (duration.inHours % 24).toString();
-    String minutes = (duration.inMinutes % 60).toString();
-    String seconds = (duration.inSeconds % 60).toString();
-    return "$days${"d"} : $hours${"hr"} : $minutes${"mins"} : $seconds${"sec"}";
+    int days = duration.inDays;
+    int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+
+    List<String> parts = [];
+
+    if (days > 0) {
+      parts.add("$days${"d"}");
+    }
+    if (hours > 0) {
+      parts.add("$hours${"hr"}");
+    }
+    if (minutes > 0) {
+      parts.add("$minutes${"mins"}");
+    }
+    if (seconds > 0 || parts.isEmpty) {
+      parts.add("$seconds${"sec"}");
+    }
+
+    return parts.join(" : ");
+
+    /// For display full time in days, hours, minutes, seconds
+    //   return "$days${"d"} : $hours${"hr"} : $minutes${"mins"} : $seconds${"sec"}";
   }
 
-  void _scrollDown() {
-    scrollController.animateTo(
-      scrollController.position.minScrollExtent,
-      duration: const Duration(milliseconds: 1000),
+  void _scrollToRecentBids() {
+    Scrollable.ensureVisible(
+      targetKey.currentContext!,
+      duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
   }
