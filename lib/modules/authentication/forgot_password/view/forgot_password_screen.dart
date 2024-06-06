@@ -54,7 +54,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             controller: forgotPasswordBloc.emailController,
                             labelText: APPStrings.email.tr,
                             hintText: APPStrings.email.tr,
-                            lableStyle: style.labelStyle,
+                            labelStyle: style.labelStyle,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
                             onEditingComplete: () {

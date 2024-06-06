@@ -103,6 +103,7 @@ class APPStrings {
   static const String searchByX = 'search_by_x';
   static const String whatsNew = 'whats_new';
   static const String discount = 'discount';
+  static const String popularity = 'popularity';
   static const String priceHighToLow = 'price_high_to_low';
   static const String priceLowToHigh = 'price_low_to_high';
 
@@ -251,4 +252,5 @@ class APPStrings {
   static const String round = 'round';
   static const String oval = 'oval';
   static const String marquise = 'marquise';
+  static const String diamondDetails = 'diamond_details';
 }

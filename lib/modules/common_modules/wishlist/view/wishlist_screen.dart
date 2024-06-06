@@ -99,6 +99,8 @@ class WishlistScreen extends StatelessWidget {
         onEyeTap: () {},
         onFavTap: () {},
         onTap: () {},
+        onCancelTap: () {},
+        isFavourite: true,
       );
     }).toList());
   }

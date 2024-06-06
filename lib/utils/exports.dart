@@ -163,6 +163,7 @@ export 'package:kgk/widgets/product_selected_settings.dart';
 export 'package:kgk/widgets/radiobutton.dart';
 export 'package:kgk/widgets/selected_category_details.dart';
 export 'package:kgk/widgets/selection_button.dart';
+export 'package:kgk/widgets/smart_carousel_slider.dart';
 export 'package:kgk/widgets/smart_dropdown.dart';
 export 'package:kgk/widgets/smart_dropdown_form_field.dart';
 export 'package:kgk/widgets/smart_grid_view.dart';

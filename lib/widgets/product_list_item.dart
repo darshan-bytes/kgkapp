@@ -149,6 +149,7 @@ class ProductListItem extends StatelessWidget {
                 titleStyle: style.buttonWithIconTextStyle,
                 onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
+                prefixImage: AppImages.icShoppingBag,
               ),
           ],
         ),

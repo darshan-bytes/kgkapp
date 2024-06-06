@@ -83,11 +83,11 @@ class ProductMenuBottomSheet extends StatelessWidget {
       SizedBox(height: 12.h),
       _buildProductDetailsItem(APPStrings.averageDiscount.tr, '15%', '', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000.00', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000.00', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000.00', style),
     ];
   }
 

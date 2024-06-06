@@ -72,7 +72,10 @@ class AppRoutes {
 
       case resetPasswordPage:
         return MaterialPageRoute(
-          builder: (_) => const ResetPasswordScreen(),
+          builder: (context) {
+            BlocProvider.of<ResetPasswordBloc>(context).add(const ResetPasswordInitialEvent());
+            return const ResetPasswordScreen();
+          },
           settings: settings,
         );
 

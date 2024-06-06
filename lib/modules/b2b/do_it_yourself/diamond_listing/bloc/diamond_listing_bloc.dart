@@ -40,11 +40,11 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
           20,
           (index) => productList.add(
                 ProductDetails(
-                  diamond: "1.5 gram",
-                  gram: "1.5 gram",
+                  diamond: "2.5 crt",
+                  gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
                   name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-                  originalPrice: "\$ 3,000.00",
+                  originalPrice: "\$3,000.00",
                   discountPercentage: "Save UP TO 10%",
                 ),
               ));
@@ -54,11 +54,11 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
           20,
           (index) => productList.add(
                 ProductDetails(
-                    diamond: "1.5 gram",
-                    gram: "1.5 gram",
+                    diamond: "2.5 crt",
+                    gram: "1.5 grms",
                     imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
                     name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-                    originalPrice: "\$ 3,000.00"),
+                    originalPrice: "\$3,000.00"),
               ));
     }
 

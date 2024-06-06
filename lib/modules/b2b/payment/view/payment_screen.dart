@@ -127,7 +127,7 @@ class PaymentScreen extends StatelessWidget {
         OrderSummaryItem(title: APPStrings.shipping.tr, value: "\$0.00"),
         OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
       ],
-      totalStyle: style.footerTotalAmountStyle,
+      // totalStyle: style.footerTotalAmountStyle,
       totalPrice: "\$35,700.00",
     );
   }

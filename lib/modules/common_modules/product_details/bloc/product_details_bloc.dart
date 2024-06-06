@@ -99,26 +99,26 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   List<ProductDetails> suggestedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0
           ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
           : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000",
+      originalPrice: "\$5,000.00",
     ),
   );
 
   List<ProductDetails> recentlyViewedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0
           ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
           : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000",
+      originalPrice: "\$5,000.00",
     ),
   );
 
@@ -144,7 +144,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ProductCustomizationOptions(
           id: productCustomizations.length.toString(),
           name: APPStrings.head.tr,
-          type: ProductCustomizationType.image.value,
+          type: ProductCustomizationType.head.value,
           selectedValue:
               ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
           values: [
@@ -160,8 +160,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     productDetails = ProductDetails(
       productId: productId,
       name: productName,
-      offerPrice: '\$ 1200.00',
-      originalPrice: '\$ 1600.00',
+      offerPrice: '\$1200.00',
+      originalPrice: '\$1600.00',
       discountPercentage: '(3% OFF)',
     );
     emit(ProductDetailsLoadedState(productDetails!));

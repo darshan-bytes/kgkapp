@@ -118,52 +118,54 @@ class DiamondListingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: diamondListingBloc.isGrid,
-                  image: AppImages.icGrid,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(true));
-                  },
-                ),
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: !diamondListingBloc.isGrid,
-                  image: AppImages.icList,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-                  onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(false));
-                  },
-                ),
-                SizedBox(width: 16.w),
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: true,
-                  selectedButtonColor: style.menuBackgroundColor,
-                  selectedButtonBorderColor: style.menuBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  image: AppImages.icMenu,
-                  onTap: () {},
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              SelectionButton(
+                width: 48.w,
+                isSelected: diamondListingBloc.isGrid,
+                image: AppImages.icGrid,
+                imageHeight: 24.5.w,
+                imageWidth: 24.5.w,
+                selectedButtonColor: style.gridBackgroundColor,
+                selectedButtonBorderColor: style.gridBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                unselectedButtonIconColor: style.listIconColor,
+                unselectedButtonColor: style.listBackgroundColor,
+                unselectedButtonBorderColor: style.listBorderColor,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const ChangeListingTypeEvent(true));
+                },
+              ),
+              SelectionButton(
+                width: 48.w,
+                isSelected: !diamondListingBloc.isGrid,
+                image: AppImages.icList,
+                imageHeight: 18.h,
+                selectedButtonColor: style.gridBackgroundColor,
+                selectedButtonBorderColor: style.gridBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                unselectedButtonIconColor: style.listIconColor,
+                unselectedButtonColor: style.listBackgroundColor,
+                unselectedButtonBorderColor: style.listBorderColor,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const ChangeListingTypeEvent(false));
+                },
+              ),
+              SizedBox(width: 16.w),
+              SelectionButton(
+                width: 48.w,
+                imageHeight: 24.5.w,
+                imageWidth: 24.5.w,
+                isSelected: true,
+                selectedButtonColor: style.menuBackgroundColor,
+                selectedButtonBorderColor: style.menuBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                image: AppImages.icMenu,
+                onTap: () {},
+              ),
+            ],
           )
         ],
       ),

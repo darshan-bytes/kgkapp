@@ -108,7 +108,7 @@ class MyBagDiamondItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildDetailColumn(APPStrings.rap.tr, chart.rap, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style)),
+                Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style, isDiscount: true)),
                 Expanded(child: _buildDetailColumn(APPStrings.kgkAmount.tr, chart.kgkAmount, style)),
               ],
             ),
@@ -127,9 +127,10 @@ class MyBagDiamondItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, {bool isTextFormField = false}) {
+  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
+      {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: const EdgeInsets.only(right: 17),
+      padding: EdgeInsets.only(right: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,13 +140,13 @@ class MyBagDiamondItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: style.titleStyle,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           isTextFormField && value != null
               ? SizedBox(
-                  width: 56,
+                  width: 56.w,
                   child: SmartTextField(
-                    height: 32,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    height: 32.h,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                     isEnabled: false,
                     controller: TextEditingController(text: value),
                     disabledBorderColor: style.borderColor,
@@ -156,7 +157,7 @@ class MyBagDiamondItem extends StatelessWidget {
                   value.isNullOrEmpty ? APPStrings.dash.tr : value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: style.subTitleStyle,
+                  style: isDiscount ? style.richTextStyle : style.subTitleStyle,
                 ),
         ],
       ),

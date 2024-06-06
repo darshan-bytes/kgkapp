@@ -6,7 +6,6 @@ part 'my_bag_state.dart';
 
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool selectAllProduct = false;
-  int totalPrice = 35700;
   int selectedProductCount = 0;
 
   int get totalProductCount => myBagProductList.length;
@@ -17,7 +16,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   // For Product menu bottom sheet
   bool showMoreDetails = false;
-  String subTotalAmount = "\$18000";
+  String subTotalAmount = "\$18000.00";
 
   List<ProductDetails> myBagProductList = List.generate(
     8,
@@ -46,11 +45,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       ),
       isDiamondProduct: index % 2 == 0,
       productId: index.toString(),
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      originalPrice: "\$ 3,000",
+      originalPrice: "\$3,000.00",
       productQuality: const CartProductQuality(name: "18K Gold"),
       productQuantity: const CartProductQuantity(name: "1"),
       cartProductQuality: [
@@ -65,11 +64,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   List<ProductDetails> suggestedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-      originalPrice: "\$ 3,000",
+      originalPrice: "\$3,000.00",
     ),
   );
 

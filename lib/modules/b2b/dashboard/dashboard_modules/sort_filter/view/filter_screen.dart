@@ -23,75 +23,78 @@ class FilterScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: _buildFilterList(context, filterBloc, style),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              color: style.backgroundColor,
-              child: BlocBuilder<SortFilterBloc, SortFilterState>(
-                buildWhen: (previous, current) => current is FilterDataSelectedState,
-                builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SmartTextField.search(
-                        hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData.name]),
-                        controller: filterBloc.searchController,
-                        enabledBorderRadius: 8,
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(
-                        child: _buildSubFilterList(context, filterBloc, style),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          border: Border(
-            top: BorderSide(
-              color: style.itemBorderColor,
-            ),
-          ),
-        ),
+      body: SafeArea(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: SmartButton(
-                activeBackgroundColor: style.closeButtonBackgroundColor,
-                titleStyle: style.closeButtonStyle,
-                title: APPStrings.close.tr,
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+              flex: 1,
+              child: _buildFilterList(context, filterBloc, style),
             ),
-            const SizedBox(width: 16),
             Expanded(
-              child: SmartButton(
-                title: APPStrings.apply.tr,
-                onTap: () {
-                  filterBloc.add(const ApplyFilterDataEvent());
-                  onApply();
-                  Navigator.of(context).pop();
-                },
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.all(16.w),
+                color: style.backgroundColor,
+                child: BlocBuilder<SortFilterBloc, SortFilterState>(
+                  buildWhen: (previous, current) => current is FilterDataSelectedState,
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SmartTextField.search(
+                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData.name?.toLowerCase()]),
+                          controller: filterBloc.searchController,
+                        ),
+                        SizedBox(height: 4.h),
+                        Expanded(
+                          child: _buildSubFilterList(context, filterBloc, style),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: style.backgroundColor,
+            border: Border(
+              top: BorderSide(
+                color: style.itemBorderColor,
+              ),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: SmartButton(
+                  activeBackgroundColor: style.closeButtonBackgroundColor,
+                  titleStyle: style.closeButtonStyle,
+                  title: APPStrings.close.tr,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: SmartButton(
+                  title: APPStrings.apply.tr,
+                  onTap: () {
+                    filterBloc.add(const ApplyFilterDataEvent());
+                    onApply();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -153,7 +156,7 @@ class FilterScreen extends StatelessWidget {
                     filterBloc.add(SelectSecondaryFilterDataEvent(secondaryFilterData: secondaryFilterData));
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(color: style.itemBorderColor),

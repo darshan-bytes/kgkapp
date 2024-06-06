@@ -45,7 +45,7 @@ class SmartCheckbox extends StatelessWidget {
               child: Checkbox(
                 activeColor: style.activeColor,
                 checkColor: style.checkColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                 side: BorderSide(color: borderColor ?? style.borderColor),
                 value: value,
                 onChanged: (bool? newValue) {
@@ -53,7 +53,7 @@ class SmartCheckbox extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(width: 8.w),
+            SizedBox(width: 6.w),
             if (label != null)
               Expanded(
                 child: SmartText(label, style: style.textStyle.merge(labelStyle)),

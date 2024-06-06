@@ -5,7 +5,7 @@ class SettingDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ringBloc = context.read<SettingDetailBloc>();
+    final settingDetailBloc = BlocProvider.of<SettingDetailBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
         title: 'DIY',
@@ -14,83 +14,41 @@ class SettingDetailScreen extends StatelessWidget {
         },
         onFilter: () {},
       ),
-      body: BlocBuilder<SettingDetailBloc, SettingDetailState>(
-        buildWhen: (_, current) => current is SettingImagePageChangeState,
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const DiyProgressWidget(
-                  selectedStep: 2,
-                ),
-                _imageSlider(context, ringBloc),
-                SizedBox(
-                  height: 40.h,
-                ),
-                _productDetail(context, ringBloc)
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const DiyProgressWidget(
+              selectedStep: 2,
             ),
-          );
-        },
+            SmartCarouselSlider(
+              imgList: settingDetailBloc.imgList,
+              controller: settingDetailBloc.controller,
+            ),
+            SizedBox(height: 40.h),
+            _productDetail(context, settingDetailBloc)
+          ],
+        ),
       ),
-      bottomNavigationBar: SmartButton(
-        margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
-        onTap: () {
-          Navigator.of(context).pushNamed(AppRoutes.completeProductPage);
-        },
-        title: APPStrings.selectSetting.tr,
+      bottomNavigationBar: SafeArea(
+        child: SmartButton(
+          margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
+          onTap: () {
+            Navigator.of(context).pushNamed(AppRoutes.completeProductPage);
+          },
+          title: APPStrings.selectSetting.tr,
+        ),
       ),
     );
   }
 
-  Widget _imageSlider(BuildContext context, SettingDetailBloc ringBloc) {
-    final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
-    return Column(
-      children: [
-        CarouselSlider(
-          items: ringBloc.imgList.map((e) {
-            return SmartImage(path: e);
-          }).toList(),
-          carouselController: ringBloc.controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              viewportFraction: 1.5,
-              aspectRatio: 1,
-              onPageChanged: (index, reason) {
-                ringBloc.add(SettingImagePageChangeEvent(index: index));
-              }),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: ringBloc.imgList.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => ringBloc.controller.animateToPage(entry.key),
-              child: Container(
-                width: 10.0.w,
-                height: 10.0.w,
-                margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ringBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
-  Widget _productDetail(BuildContext context, SettingDetailBloc ringBloc) {
+  Widget _productDetail(BuildContext context, SettingDetailBloc settingDetailBloc) {
     final style = AppTheme.of(context).settingDetailScreenStyle;
-    final ringDetailBloc = context.read<SettingDetailBloc>();
     return BlocBuilder<SettingDetailBloc, SettingDetailState>(
       buildWhen: (_, current) => current is SettingToggleState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 17.w,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 17.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -100,9 +58,7 @@ class SettingDetailScreen extends StatelessWidget {
                     'Martin Flyer',
                     style: style.ringTypeStyle,
                   ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
+                  SizedBox(width: 8.w),
                   Container(
                     height: 6.w,
                     width: 6.w,
@@ -113,95 +69,58 @@ class SettingDetailScreen extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50.r))),
                   ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
+                  SizedBox(width: 8.w),
                   SmartText(
                     'DERC03RDA',
                     style: style.ringCodeStyle,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 8.h),
               SmartText(
                 '1.01 Carat Round Diamond',
                 style: style.ringNameStyle,
               ),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 8.h),
               Row(
                 children: [
-                  RatingBar(
-                    itemCount: 5,
-                    glowColor: colors(context).primary,
+                  SmartRatingBar(
+                    initialRating: 3,
+                    itemSize: 16.w,
                     onRatingUpdate: (double value) {},
-                    allowHalfRating: false,
-                    itemSize: 16,
-                    itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
-                    ratingWidget: RatingWidget(
-                      empty: const SmartImage(path: AppImages.icEmptyStar),
-                      full: const SmartImage(path: AppImages.icFullStar),
-                      half: Container(),
-                    ),
                   ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  SmartText(
-                    APPStrings.reviews.tr.interpolate([120]),
-                    style: style.reviewStyle,
-                  )
+                  SizedBox(width: 8.w),
+                  SmartText(APPStrings.reviews.tr.interpolate([120]), style: style.reviewStyle)
                 ],
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Divider(
-                height: 1.h,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              _metalSelectionWidget(context, ringBloc),
-              SizedBox(
-                height: 10.h,
-              ),
-              Divider(
-                height: 1.h,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
+              SizedBox(height: 20.h),
+              Divider(height: 1.h),
+              SizedBox(height: 20.h),
+              _metalSelectionWidget(context, settingDetailBloc),
+              SizedBox(height: 10.h),
+              Divider(height: 1.h),
+              SizedBox(height: 16.h),
               Row(
                 children: [
                   SmartText(
                     APPStrings.approxPrice.tr,
                     style: style.approxPriceLabelStyle,
                   ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
+                  SizedBox(width: 12.w),
                   SmartText(
                     '\$1200.00',
                     style: style.priceStyle,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 8.h),
               Row(
                 children: [
                   SmartText(
                     APPStrings.buyingInBulk.tr,
                     style: style.buyInBulkStyle,
                   ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
+                  SizedBox(width: 12.w),
                   InkWell(
                     onTap: () {},
                     child: SmartText(
@@ -211,97 +130,38 @@ class SettingDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 8.h),
               SmartText(
                 APPStrings.approxPriceNote.tr,
                 style: style.approxPriceNoteStyle,
               ),
-              SizedBox(
-                height: 32.h,
-              ),
+              SizedBox(height: 32.h),
               Row(
                 children: [
                   const SmartImage(path: AppImages.icDiamond),
-                  SizedBox(
-                    width: 16.w,
-                  ),
+                  SizedBox(width: 16.w),
                   SmartText(
                     APPStrings.diamondPurityYouCanTrust.tr,
                     style: style.diamondPurityStyle,
                   )
                 ],
               ),
-              SizedBox(
-                height: 16.h,
-              ),
+              SizedBox(height: 16.h),
               Row(
                 children: [
                   const SmartImage(path: AppImages.icTruck),
-                  SizedBox(
-                    width: 16.w,
-                  ),
+                  SizedBox(width: 16.w),
                   SmartText(
                     APPStrings.shippingAcrossAllCountries.tr,
                     style: style.shippingStyle,
                   )
                 ],
               ),
-              SizedBox(
-                height: 32.h,
-              ),
-              Divider(
-                height: 1.h,
-              ),
-              InkWell(
-                onTap: () {
-                  ringDetailBloc.add(SettingToggleEvent(isSettingOpen: ringDetailBloc.isSettingOpen ? false : true));
-                },
-                child: SizedBox(
-                  height: 52,
-                  //color: Colors.amber,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SmartText(
-                        APPStrings.settingDetails.tr,
-                        style: style.settingHeaderStyle,
-                      ),
-                      Icon(
-                        ringDetailBloc.isSettingOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-                        size: 24.w,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              if (!ringDetailBloc.isSettingOpen) ...[
-                _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
-                SizedBox(
-                  height: 14.h,
-                ),
-                _settingWidget(APPStrings.brand, 'Flyerfit', context),
-                SizedBox(
-                  height: 14.h,
-                ),
-                _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
-                SizedBox(height: 28.h),
-              ],
+              SizedBox(height: 32.h),
               Divider(height: 1.h),
-              SizedBox(height: 28.h),
-              _settingWidget('Shape', 'Round', context),
-              SizedBox(height: 12.h),
-              _settingWidget('Quantity', '1', context),
-              SizedBox(height: 12.h),
-              _settingWidget('Total carat (min)', '1', context),
-              SizedBox(height: 12.h),
-              _settingWidget('Color', 'F-G', context),
-              SizedBox(height: 12.h),
-              _settingWidget('Clarity', 'VS2-SI1', context),
-              SizedBox(height: 12.h),
-              _settingWidget('Setting', 'TypeThree Stone', context),
-              SizedBox(height: 28.h),
+              _buildSettingDetails(settingDetailBloc, style),
+              Divider(height: 1.h),
+              _buildDiamondDetails(settingDetailBloc, style),
               Divider(height: 1.h),
               SizedBox(height: 28.h),
               const InquiryWidget(
@@ -316,19 +176,14 @@ class SettingDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _metalSelectionWidget(BuildContext context, SettingDetailBloc ringBloc) {
+  Widget _metalSelectionWidget(BuildContext context, SettingDetailBloc settingDetailBloc) {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(
-          APPStrings.metal.tr,
-          style: style.metalHeaderStyle,
-        ),
-        SizedBox(
-          height: 12.h,
-        ),
+        SmartText(APPStrings.metal.tr, style: style.metalHeaderStyle),
+        SizedBox(height: 12.h),
         Container(
           height: 100.w,
           alignment: Alignment.center,
@@ -338,48 +193,56 @@ class SettingDetailScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.zero,
             physics: const BouncingScrollPhysics(),
-            itemCount: 10,
+            itemCount: settingDetailBloc.metalCustomisation.values?.length ?? 0,
             itemBuilder: (context, index) {
-              bool isSelected = index % 3 == 0;
-              return InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 34.w,
-                        width: 34.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: colors(context).white,
-                          border: isSelected ? Border.all(color: colors(context).color083458, width: 1.w) : null,
-                        ),
-                        child: Center(
-                          child: FractionallySizedBox(
-                            heightFactor: 0.8,
-                            widthFactor: 0.8,
-                            child: Container(
+              return BlocBuilder<SettingDetailBloc, SettingDetailState>(
+                buildWhen: (previous, current) =>
+                    current is MetalCustomizationChangeState && (current.index == index || current.previousIndex == index),
+                builder: (context, state) {
+                  ProductCustomizationOptionValues value = settingDetailBloc.metalCustomisation.values![index];
+                  bool isSelected = settingDetailBloc.metalCustomisation.selectedValue == value;
+                  return SizedBox(
+                    width: 72.w,
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                      onTap: () {
+                        settingDetailBloc.add(MetalCustomizationChangeEvent(index: index));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 6.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 34.w,
+                              width: 34.w,
+                              padding: EdgeInsets.all(4.w),
                               decoration: BoxDecoration(
-                                color: colors(context).primary,
                                 shape: BoxShape.circle,
+                                border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
+                              ),
+                              child: SmartImage(
+                                path: value.image ?? '',
+                                color: isSelected ? style.selectedSettingBorderColor : null,
                               ),
                             ),
-                          ),
+                            if (value.value.isNotNullNorEmpty) ...[
+                              SizedBox(height: 8.h),
+                              SmartText(
+                                value.value,
+                                style: isSelected ? style.selectedSettingStyle : style.settingSelectionValueStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      SmartText(
-                        'White \nGold',
-                        style: isSelected ? style.selectedMetalNameStyle : style.metalNameStyle,
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             },
           ),
@@ -388,8 +251,7 @@ class SettingDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _settingWidget(String type, String value, BuildContext context) {
-    final style = AppTheme.of(context).settingDetailScreenStyle;
+  Widget _settingWidget(String type, String value, SettingDetailScreenStyle style) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -402,6 +264,72 @@ class SettingDetailScreen extends StatelessWidget {
           style: style.settingValueStyle,
         ),
       ],
+    );
+  }
+
+  Widget _buildSettingDetails(SettingDetailBloc settingDetailBloc, SettingDetailScreenStyle style) {
+    return BlocBuilder<SettingDetailBloc, SettingDetailState>(
+      buildWhen: (_, current) => current is SettingToggleState,
+      builder: (context, state) {
+        return SmartExpansionTile(
+          initiallyExpanded: settingDetailBloc.isSettingOpen,
+          key: settingDetailBloc.settingDetailsKey,
+          title: SmartText(
+            APPStrings.settingDetails.tr,
+            style: style.settingHeaderStyle,
+          ),
+          trailing: (settingDetailBloc.isSettingOpen)
+              ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.selectedSettingBorderColor)
+              : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.selectedSettingBorderColor),
+          onExpansionChanged: (value) {
+            settingDetailBloc.add(const SettingToggleEvent());
+          },
+          children: [
+            _settingWidget(APPStrings.productType.tr, 'Engagement Ring', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.brand.tr, 'Flyerfit', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.meleeWeight.tr, 'SA-.25cts Dia-0.28cts', style),
+            SizedBox(height: 28.h),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDiamondDetails(SettingDetailBloc settingDetailBloc, SettingDetailScreenStyle style) {
+    return BlocBuilder<SettingDetailBloc, SettingDetailState>(
+      buildWhen: (_, current) => current is SettingDiamondToggleState,
+      builder: (context, state) {
+        return SmartExpansionTile(
+          initiallyExpanded: settingDetailBloc.isDiamondDetailsOpen,
+          key: settingDetailBloc.diamondDetailsKey,
+          title: SmartText(
+            APPStrings.diamondDetails.tr,
+            style: style.settingHeaderStyle,
+          ),
+          trailing: (settingDetailBloc.isDiamondDetailsOpen)
+              ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.selectedSettingBorderColor)
+              : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.selectedSettingBorderColor),
+          onExpansionChanged: (value) {
+            settingDetailBloc.add(const SettingDiamondDetailsToggleEvent());
+          },
+          children: [
+            _settingWidget(APPStrings.shape.tr, 'Round', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.quantity.tr, '1', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.totalCarat.tr, '1', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.color.tr, 'F-G', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', style),
+            SizedBox(height: 14.h),
+            _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', style),
+            SizedBox(height: 14.h),
+          ],
+        );
+      },
     );
   }
 }
