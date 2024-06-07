@@ -57,7 +57,7 @@ class SignInScreen extends StatelessWidget {
     return SmartTextField(
       labelText: APPStrings.email.tr,
       hintText: APPStrings.email.tr,
-      lableStyle: style.labelStyle,
+      labelStyle: style.labelStyle,
       keyboardType: TextInputType.emailAddress,
       onEditingComplete: () {
         FocusScope.of(context).nextFocus();
@@ -71,7 +71,7 @@ class SignInScreen extends StatelessWidget {
       labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
       keyboardType: TextInputType.visiblePassword,
-      lableStyle: style.labelStyle,
+      labelStyle: style.labelStyle,
       textInputAction: TextInputAction.done,
       onEditingComplete: () {
         FocusScope.of(context).unfocus();

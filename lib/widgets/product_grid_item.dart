@@ -161,37 +161,39 @@ class ProductGridItem extends StatelessWidget {
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: SmartText(
-                      productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: style.priceTextStyle,
+                  Expanded(
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        SmartText(
+                          productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+                          style: style.priceTextStyle,
+                          optionalPadding: EdgeInsets.only(right: 8.w),
+                        ),
+                        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+                          SmartText(
+                            productDetails.originalPrice,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: style.checkedPriceStyle,
+                          ),
+                        ]
+                      ],
                     ),
                   ),
-                  if (productDetails.offerPrice.isNotNullNorEmpty) ...[
-                    SizedBox(width: 10.w),
-                    Flexible(
-                      child: SmartText(
-                        productDetails.originalPrice,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: style.checkedPriceStyle,
-                      ),
-                    ),
-                  ] else ...[
-                    if (isStoneWithPrice)
-                      SmartImage(
-                        path: AppImages.icStone,
-                        height: 20.w,
-                        width: 20.w,
-                        fit: BoxFit.fill,
-                      )
-                  ],
+                  if (isStoneWithPrice)
+                    SmartImage(
+                      path: AppImages.icStone,
+                      height: 20.w,
+                      width: 20.w,
+                      fit: BoxFit.fill,
+                    )
                 ],
-              ),
+              )
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),

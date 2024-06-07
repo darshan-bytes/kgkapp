@@ -34,9 +34,15 @@ class ProductDetailsCustomizations extends StatelessWidget {
                   switch (productCustomization.productCustomizationType) {
                     case ProductCustomizationType.image:
                     case ProductCustomizationType.metal:
+                    case ProductCustomizationType.head:
                       return SizedBox(
-                        width: 72.w,
-                        child: GestureDetector(
+                        width: productCustomization.productCustomizationType == ProductCustomizationType.head ? 87.w : 72.w,
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          overlayColor: WidgetStateProperty.all(Colors.transparent),
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
@@ -63,7 +69,12 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.ringSize:
                       return Padding(
                         padding: EdgeInsets.only(right: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14.w : 0),
-                        child: GestureDetector(
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          overlayColor: WidgetStateProperty.all(Colors.transparent),
                           onTap: () {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
@@ -86,7 +97,12 @@ class ProductDetailsCustomizations extends StatelessWidget {
                       );
 
                     case ProductCustomizationType.diamondQuality:
-                      return GestureDetector(
+                      return InkWell(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        overlayColor: WidgetStateProperty.all(Colors.transparent),
                         onTap: () {
                           productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                         },
@@ -125,6 +141,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
       ProductCustomizationType productCustomizationType) {
     switch (productCustomizationType) {
       case ProductCustomizationType.image:
+      case ProductCustomizationType.head:
         return Container(
           height: 42.w,
           width: 42.w,

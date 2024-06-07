@@ -25,7 +25,9 @@ extension StringExtensions on String {
     }
   }
 
-  String get toUpperCaseCustom => toUpperCase();
+  String get toUpperCamelCase {
+    return split(' ').map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+  }
 
   String get getInitials {
     if (trim().isEmpty) {

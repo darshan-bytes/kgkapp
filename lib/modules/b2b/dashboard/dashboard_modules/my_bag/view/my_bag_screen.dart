@@ -16,7 +16,9 @@ class MyBagScreen extends StatelessWidget {
               title: APPStrings.myBag.tr,
               isBack: false,
               onFilter: () {},
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),
@@ -77,7 +79,7 @@ class MyBagScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20.w),
-              SmartText("\$${bloc.totalPrice}", style: style.totalAmountStyle),
+              SmartText("\$35,700.00", style: style.totalAmountStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -223,7 +225,6 @@ class MyBagScreen extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 17.h),
                   onEyeTap: () {},
                   onFavTap: () {},
-                  onAddToBagTap: () {},
                   productDetails: product,
                 );
               }).toList(),

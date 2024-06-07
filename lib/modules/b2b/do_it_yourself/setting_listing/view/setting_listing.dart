@@ -16,7 +16,9 @@ class SettingListingScreen extends StatelessWidget {
             return SmartAppBar(
               title: settingListingBloc.settingListingAppbarTitle,
               onFilter: () {},
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),

@@ -110,7 +110,7 @@ class LightModeTheme extends AppTheme {
         hintStyle: interRegularTextStyle.copyWith(
           fontSize: 14.sp,
           fontWeight: FontWeight.w400,
-          color: colors.color303538,
+          color: colors.color8C8C8C,
         ),
       );
 
@@ -328,7 +328,7 @@ class LightModeTheme extends AppTheme {
         ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, fontWeight: FontWeight.w400, color: colors.color303538),
         reviewStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         priceStyle: interBoldTextStyle.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500, color: colors.color303538),
-        metalHeaderStyle: interBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        metalHeaderStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         approxPriceLabelStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
@@ -339,16 +339,20 @@ class LightModeTheme extends AppTheme {
         shippingStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         selectSettingStyle: interBoldTextStyle.copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500, color: colors.white),
         settingTypeStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
-        settingValueStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        settingValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         settingHeaderStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        settingSelectionButtonColor: colors.colorF8F8F8,
+        selectedSettingBorderColor: colors.primary,
+        selectedSettingStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        settingSelectionValueStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
       );
 
   @override
   InquiryWidgetStyle get inquiryWidgetStyle => InquiryWidgetStyle(
-        haveAQuestionStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        haveAQuestionStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         reachOutStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        phoneStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
-        emailStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        phoneStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        emailStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
       );
 
   @override
@@ -467,10 +471,11 @@ class LightModeTheme extends AppTheme {
   @override
   OrderSummaryStyle get orderSummaryStyle => OrderSummaryStyle(
         backgroundColor: colors.colorF7F9FA,
-        orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18.sp),
-        orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        totalPriceStyle: interMediumBoldTextStyle,
+        totalPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.black),
+        orderSummaryItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
       );
 
   @override
@@ -551,6 +556,8 @@ class LightModeTheme extends AppTheme {
         arrowColor: colors.primary,
         isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
+        footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+        whiteColor: colors.white,
       );
 
   @override

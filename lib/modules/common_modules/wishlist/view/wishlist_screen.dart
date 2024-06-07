@@ -95,14 +95,12 @@ class WishlistScreen extends StatelessWidget {
         items: bloc.productList.map((ProductDetails productDetails) {
       return ProductGridItem(
         productDetails: productDetails,
-        isFavourite: true,
         onAddToBagTap: () {},
         onEyeTap: () {},
         onFavTap: () {},
-        onTap: () {
-          // context.pushNamed(AppRoutes.diamondDetailPage);
-        },
+        onTap: () {},
         onCancelTap: () {},
+        isFavourite: true,
       );
     }).toList());
   }

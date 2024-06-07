@@ -15,7 +15,9 @@ class ProductDetailsScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: productDetailsBloc.isCustomisation ? APPStrings.customiseProduct.tr : productDetailsBloc.productName,
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),
@@ -187,7 +189,11 @@ class ProductDetailsScreen extends StatelessWidget {
           builder: (context, state) {
             return Column(
               children: [
-                _imageSlider(productDetailsBloc),
+                SmartCarouselSlider(
+                  imgList: productDetailsBloc.imgList,
+                  controller: productDetailsBloc.controller,
+                  on360Tap: productDetailsBloc.isCustomisation ? () {} : null,
+                ),
                 SizedBox(height: 40.h),
                 _productDetail(style, productDetailsBloc, context),
               ],
@@ -195,64 +201,6 @@ class ProductDetailsScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Widget _imageSlider(ProductDetailsBloc productDetailsBloc) {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            CarouselSlider(
-              items: productDetailsBloc.imgList.map((e) {
-                return SmartImage(path: e);
-              }).toList(),
-              carouselController: productDetailsBloc.controller,
-              options: CarouselOptions(
-                  autoPlay: true,
-                  viewportFraction: 1.5,
-                  aspectRatio: 1,
-                  onPageChanged: (index, reason) {
-                    productDetailsBloc.add(OnProductImageChangeEvent(index));
-                  }),
-            ),
-            if (productDetailsBloc.isCustomisation)
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: SmartImage(
-                    path: AppImages.ic360,
-                    height: 36.w,
-                    width: 36.w,
-                  ),
-                  onPressed: () {},
-                ),
-              )
-          ],
-        ),
-        BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-          buildWhen: (previous, current) => current is ProductImagePageChangeState,
-          builder: (context, state) {
-            final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: productDetailsBloc.imgList.asMap().entries.map((entry) {
-                return GestureDetector(
-                  onTap: () => productDetailsBloc.controller.animateToPage(entry.key),
-                  child: Container(
-                    width: 10.0.w,
-                    height: 10.0.w,
-                    margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: productDetailsBloc.current == entry.key ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
-                  ),
-                );
-              }).toList(),
-            );
-          },
-        ),
-      ],
     );
   }
 
@@ -272,7 +220,7 @@ class ProductDetailsScreen extends StatelessWidget {
           Divider(height: 48.h),
           _buildPriceDetails(style, productDetailsBloc),
           Divider(height: 48.h),
-          _buildCustomizationList(style, productDetailsBloc),
+          _buildCustomizationList(productDetailsBloc),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) Divider(height: 48.h),
           if (!productDetailsBloc.isCustomisation && productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
             ProductCustomiseDescriptionWidget(
@@ -317,6 +265,8 @@ class ProductDetailsScreen extends StatelessWidget {
             _ringDetails(productDetailsBloc, style),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+            _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
           SizedBox(height: 24.h),
@@ -445,7 +395,7 @@ class ProductDetailsScreen extends StatelessWidget {
           );
   }
 
-  Widget _buildCustomizationList(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
+  Widget _buildCustomizationList(ProductDetailsBloc productDetailsBloc) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -477,9 +427,9 @@ class ProductDetailsScreen extends StatelessWidget {
               SizedBox(height: 16.h),
               _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.brand, 'Flyerfit', context),
+              _settingWidget(APPStrings.brand.tr, 'Flyerfit', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
+              _settingWidget(APPStrings.meleeWeight.tr, 'SA-.25cts Dia-0.28cts', context),
             ],
           ),
         );
@@ -489,7 +439,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _diamondDetails(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is DiamondDetailsToggleState,
+      buildWhen: (previous, current) => current is ProductDiamondDetailsToggleState,
       builder: (context, state) {
         return Padding(
           padding: productDetailsBloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
@@ -497,28 +447,69 @@ class ProductDetailsScreen extends StatelessWidget {
             initiallyExpanded: productDetailsBloc.isDiamondDetailsOpen,
             key: productDetailsBloc.diamondDetailsKey,
             title: SmartText(
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault ? 'Diamond details' : 'Product details',
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+                  ? APPStrings.diamondDetails.tr
+                  : APPStrings.productDetails.tr,
               style: style.settingSelectionTitleStyle,
             ),
             trailing: (productDetailsBloc.isDiamondDetailsOpen)
                 ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
                 : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
-              productDetailsBloc.add(const DiamondDetailsToggleEvent());
+              productDetailsBloc.add(const ProductDiamondDetailsToggleEvent());
             },
             children: [
               SizedBox(height: 16.h),
               _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity, '1', context),
+              _settingWidget(APPStrings.quantity.tr, '1', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat, '1', context),
+              _settingWidget(APPStrings.totalCarat.tr, '1', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color, 'F-G', context),
+              _settingWidget(APPStrings.color.tr, 'F-G', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity, 'VS2-SI1', context),
+              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting, 'TypeThree Stone', context),
+              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _gemstoneDetails(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is GemstoneDetailsToggleState,
+      builder: (context, state) {
+        return Padding(
+          padding: productDetailsBloc.isGemstoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          child: SmartExpansionTile(
+            initiallyExpanded: productDetailsBloc.isGemstoneDetailsOpen,
+            key: productDetailsBloc.gemstoneDetailsKey,
+            title: SmartText(
+              'Gemstone details',
+              style: style.settingSelectionTitleStyle,
+            ),
+            trailing: (productDetailsBloc.isGemstoneDetailsOpen)
+                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+            onExpansionChanged: (value) {
+              productDetailsBloc.add(const GemstoneDetailsToggleEvent());
+            },
+            children: [
+              SizedBox(height: 16.h),
+              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.quantity.tr, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.totalCarat.tr, '1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.color.tr, 'F-G', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
+              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
             ],
           ),
         );

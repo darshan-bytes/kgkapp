@@ -14,7 +14,9 @@ class ProductListScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: APPStrings.ring.tr,
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
               onFilter: () {},
             );
           },

@@ -6,8 +6,8 @@ class SmartTextField extends StatefulWidget {
   final String? hintText;
   final TextStyle? hintStyle;
   final EdgeInsets? padding;
-  final String? labelStyle;
-  final TextStyle? lableStyle;
+  final String? labelText;
+  final TextStyle? labelStyle;
   final String? errorText;
   final bool obscured;
   final bool readOnly;
@@ -39,6 +39,8 @@ class SmartTextField extends StatefulWidget {
   final TapRegionCallback? onTapOutside;
   final VoidCallback? onEditingComplete;
 
+  final bool isSearch;
+
   const SmartTextField({
     super.key,
     this.controller,
@@ -58,7 +60,7 @@ class SmartTextField extends StatefulWidget {
     this.errorText,
     this.hintStyle,
     String? labelText,
-    this.lableStyle,
+    this.labelStyle,
     this.padding,
     this.maxLines,
     this.maxLength,
@@ -78,7 +80,8 @@ class SmartTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTapOutside,
     this.onEditingComplete,
-  }) : labelStyle = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null;
+  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+        isSearch = false;
 
   const SmartTextField.search({
     super.key,
@@ -99,7 +102,7 @@ class SmartTextField extends StatefulWidget {
     this.errorText,
     this.hintStyle,
     String? labelText,
-    this.lableStyle,
+    this.labelStyle,
     this.padding,
     this.maxLines,
     this.maxLength,
@@ -118,17 +121,9 @@ class SmartTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTapOutside,
     this.onEditingComplete,
-  })  : labelStyle = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
-        prefixIcon = const FittedBox(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: SmartImage(
-              path: AppImages.icSearch,
-              height: 16,
-              width: 16,
-            ),
-          ),
-        );
+    this.prefixIcon,
+  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+        isSearch = true;
 
   @override
   State<SmartTextField> createState() => SmartTextFieldState();
@@ -151,15 +146,15 @@ class SmartTextFieldState extends State<SmartTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.labelStyle != null) ...[
+          if (widget.labelText != null) ...[
             SmartText(
-              widget.labelStyle!,
-              style: style.labelStyle.merge(widget.lableStyle),
+              widget.labelText!,
+              style: style.labelStyle.merge(widget.labelStyle),
             ),
             SizedBox(height: 8.h),
           ],
           SizedBox(
-            height: widget.height ?? 48.w,
+            height: widget.height ?? (widget.isSearch ? 40.w : 48.w),
             child: TextFormField(
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
@@ -183,7 +178,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                   filled: true,
                   errorStyle: style.errorStyle.merge(widget.errorStyle),
                   fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ?? EdgeInsets.all(16.w),
+                  contentPadding: widget.contentPadding ?? EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
                   disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4.r)),
                       borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor)),
@@ -205,7 +200,19 @@ class SmartTextFieldState extends State<SmartTextField> {
                   hintText: widget.hintText,
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
-                  prefixIcon: widget.prefixIcon,
+                  prefixIcon: widget.isSearch
+                      ? FittedBox(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
+                            padding: EdgeInsets.zero,
+                            child: SmartImage(
+                              path: AppImages.icSearch,
+                              height: 16.w,
+                              width: 16.w,
+                            ),
+                          ),
+                        )
+                      : widget.prefixIcon,
                   suffixIcon: widget.suffixIcon ??
                       (widget.obscured
                           ? IconButton(

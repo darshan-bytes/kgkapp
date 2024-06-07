@@ -25,8 +25,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     List.generate(
         20,
         (index) => productList.add(ProductDetails(
-              imageUrl:
-                  'https://s3-alpha-sig.figma.com/img/b565/a299/4cad8feb0dc565fcb23a5df4b8a8aa9f?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bngvfjokcYR5qP3qicAkkvvY9SxFgBLXhBlaL~4lqLjlUOko6k2LOmg5LT5GSAikSbdf4TJh64kIfhs59GcliNFg9UQU9Zstps6QkpWjHsgc~kInzl3rKyBeeFTQDGMFwLzBsLdjlnQiYh7uN3Y8xPpFeW7xewz~z9TST5RzBgFkAd2d-jyJiyrnlOc5ubcYsSlBG3DpKp7--GzK4OzkespCMjGgFO608x3N-~~CVZd5QeNBYTLTJODLe9DABhX~DDeTDyun-3Ihcp7jvxl7y9UbR9zLQDR6H67fYYxXN3WhLZshgLz8RVAT~RG-UDqKv2zTyMd-f8xi9E4CAy7sng__',
+              imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
               name: "Diamond Vine Ring in 18k Rose Gold",
               originalPrice: '\$5,000.00',
               // offerPrice: '\$3,000.00',

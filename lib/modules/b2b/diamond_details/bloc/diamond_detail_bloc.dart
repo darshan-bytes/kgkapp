@@ -14,12 +14,16 @@ class DiamondDetailBloc extends Bloc<DiamondDetailEvent, DiamondDetailState> {
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondDetailForDefault;
 
+  bool isDiamondDetailsOpen = false;
+  GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
+
   int current = 0;
   final CarouselController controller = CarouselController();
 
   DiamondDetailBloc() : super(DiamondDetailInitial()) {
     on<DiamondDetailInitialEvent>(_diamondDetailInitialEvent);
     on<DiamondImagePageChangeEvent>(_diamondImagePageChange);
+    on<DiamondDetailsToggleEvent>(_onDiamondDetailsToggleEvent);
   }
 
   void _diamondDetailInitialEvent(DiamondDetailInitialEvent event, Emitter<DiamondDetailState> emit) {
@@ -32,5 +36,11 @@ class DiamondDetailBloc extends Bloc<DiamondDetailEvent, DiamondDetailState> {
     current = event.index;
     emit(DiamondImagePageChangeState());
     emit(DiamondDetailInitial());
+  }
+
+  void _onDiamondDetailsToggleEvent(DiamondDetailsToggleEvent event, Emitter<DiamondDetailState> emit) {
+    emit(DiamondDetailReloadState());
+    isDiamondDetailsOpen = !isDiamondDetailsOpen;
+    emit(DiamondDetailsToggleState(isDiamondDetailsOpen));
   }
 }

@@ -103,6 +103,7 @@ class APPStrings {
   static const String searchByX = 'search_by_x';
   static const String whatsNew = 'whats_new';
   static const String discount = 'discount';
+  static const String popularity = 'popularity';
   static const String priceHighToLow = 'price_high_to_low';
   static const String priceLowToHigh = 'price_low_to_high';
 
@@ -333,4 +334,6 @@ class APPStrings {
   static const String enterBidAmountHigherThanX = 'enter_bid_amount_higher_than_x';
   static const String yourBidOf = 'your_bid_of';
   static const String hasBeenPlaced = 'has_been_placed';
+  static const String diamondDetails = 'diamond_details';
+  static const String productDetails = 'product_details';
 }

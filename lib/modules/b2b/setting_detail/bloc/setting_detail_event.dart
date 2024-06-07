@@ -5,18 +5,32 @@ sealed class SettingDetailEvent extends Equatable {
 }
 
 class SettingToggleEvent extends SettingDetailEvent {
-  final bool isSettingOpen;
-
-  const SettingToggleEvent({required this.isSettingOpen});
+  const SettingToggleEvent();
 
   @override
-  List<Object> get props => [isSettingOpen];
+  List<Object> get props => [];
+}
+
+class SettingDiamondDetailsToggleEvent extends SettingDetailEvent {
+  const SettingDiamondDetailsToggleEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class SettingImagePageChangeEvent extends SettingDetailEvent {
   final int index;
 
   const SettingImagePageChangeEvent({required this.index});
+
+  @override
+  List<Object> get props => [index];
+}
+
+final class MetalCustomizationChangeEvent extends SettingDetailEvent {
+  final int index;
+
+  const MetalCustomizationChangeEvent({required this.index});
 
   @override
   List<Object> get props => [index];
