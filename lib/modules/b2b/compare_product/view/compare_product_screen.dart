@@ -131,7 +131,7 @@ class CompareProductScreen extends StatelessWidget {
           ),
           SizedBox(height: 28.h),
           _buildProductDetailWidgets(index, APPStrings.brand.tr, "Flyerfit", style),
-          _buildProductDetailWidgets(index, APPStrings.productType.tr.toUpperCamelCase, "Engagement Ring", style),
+          _buildProductDetailWidgets(index, APPStrings.productType.tr, "Engagement Ring", style),
           _buildProductDetailWidgets(index, APPStrings.metalType.tr, "Platinum", style),
           _buildProductDetailWidgets(index, APPStrings.settingType.tr, "Micropave Halo", style),
           _buildProductDetailWidgets(index, APPStrings.meleeWeight.tr, "Diamond 0.31 Cts H/I/SI2", style),
