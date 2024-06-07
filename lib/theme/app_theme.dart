@@ -1047,10 +1047,12 @@ class DiamondInfoPopupScreenStyle {
 class QuotationRequestConfirmationStyle {
   final TextStyle titleStyle;
   final TextStyle detailsTextStyle;
+  final Color primaryColor;
 
   QuotationRequestConfirmationStyle({
     required this.titleStyle,
     required this.detailsTextStyle,
+    required this.primaryColor,
   });
 }
 

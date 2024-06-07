@@ -21,6 +21,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 8.h),
           _buildAppBar(context, style),
           Flexible(
             child: SingleChildScrollView(

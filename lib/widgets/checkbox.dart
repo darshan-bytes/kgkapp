@@ -55,7 +55,7 @@ class SmartCheckbox extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
             if (label != null)
-              Expanded(
+              Flexible(
                 child: SmartText(label, style: style.textStyle.merge(labelStyle)),
               )
           ],

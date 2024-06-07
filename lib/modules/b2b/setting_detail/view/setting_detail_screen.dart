@@ -295,7 +295,7 @@ class SettingDetailScreen extends StatelessWidget {
                 _settingWidget(APPStrings.meleeWeight, 'SA-.25cts Dia-0.28cts', context),
               ],
               SizedBox(height: 28.h),
-              Divider(height: 1.h),
+              const Divider(),
               SizedBox(height: 28.h),
               _settingWidget('Shape', 'Round', context),
               SizedBox(height: 12.h),
@@ -309,7 +309,7 @@ class SettingDetailScreen extends StatelessWidget {
               SizedBox(height: 12.h),
               _settingWidget('Setting', 'TypeThree Stone', context),
               SizedBox(height: 28.h),
-              Divider(height: 1.h),
+              const Divider(),
               SizedBox(height: 28.h),
               const InquiryWidget(
                 email: 'enquiry.diaind@kgkmail.com',

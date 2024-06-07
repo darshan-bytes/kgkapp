@@ -54,6 +54,7 @@ class QuotationRequestConfirmation extends StatelessWidget {
                     path: AppImages.icCross,
                     height: 24.w,
                     width: 24.w,
+                    color: style.primaryColor,
                   ),
                 ),
               )

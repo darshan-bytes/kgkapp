@@ -68,30 +68,32 @@ class FilterScreen extends StatelessWidget {
             ),
           ),
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: SmartButton(
-                activeBackgroundColor: style.closeButtonBackgroundColor,
-                titleStyle: style.closeButtonStyle,
-                title: APPStrings.close.tr,
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: SmartButton(
+                  activeBackgroundColor: style.closeButtonBackgroundColor,
+                  titleStyle: style.closeButtonStyle,
+                  title: APPStrings.close.tr,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: SmartButton(
-                title: APPStrings.apply.tr,
-                onTap: () {
-                  filterBloc.add(const ApplyFilterDataEvent());
-                  onApply();
-                  Navigator.of(context).pop();
-                },
+              const SizedBox(width: 16),
+              Expanded(
+                child: SmartButton(
+                  title: APPStrings.apply.tr,
+                  onTap: () {
+                    filterBloc.add(const ApplyFilterDataEvent());
+                    onApply();
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -32,7 +32,7 @@ class AllBidsBottomSheet extends StatelessWidget {
                       style: style,
                       isMyBid: index == 2);
                 },
-                separatorBuilder: (context, index) => Divider(height: 1.h),
+                separatorBuilder: (context, index) => const Divider(),
                 itemCount: bloc.recentBidList.length,
               ),
             ),
