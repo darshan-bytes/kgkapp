@@ -17,9 +17,12 @@ class SupportScreen extends StatelessWidget {
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
-                  builder: (context) => DiamondFilterScreen(
-                    onApply: () {},
-                  ),
+                  builder: (context) {
+                    BlocProvider.of<DiamondFilterBloc>(context).add(const LoadDiamondFilterDataEvent());
+                    return DiamondFilterScreen(
+                      onApply: () {},
+                    );
+                  },
                 );
               },
             ),
