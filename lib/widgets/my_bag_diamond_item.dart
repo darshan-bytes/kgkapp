@@ -23,9 +23,10 @@ class MyBagDiamondItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: padding ?? const EdgeInsets.all(16.0),
+        padding: padding ?? EdgeInsets.all(16.0.w),
         margin: margin,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
           color: style.backgroundColor,
           border: Border.all(color: style.borderColor),
         ),
@@ -34,8 +35,8 @@ class MyBagDiamondItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SmartImage(path: productDetails.imageUrl ?? '', height: 32, width: 32),
-                const SizedBox(width: 8),
+                SmartImage(path: productDetails.imageUrl ?? '', height: 32.w, width: 32.w),
+                SizedBox(width: 8.w),
                 Expanded(
                   child: SmartText(
                     chart.lotNumber,
@@ -44,7 +45,7 @@ class MyBagDiamondItem extends StatelessWidget {
                     style: style.headingStyle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 InkWell(
                     onTap: () {
                       if (onTapMenuButton != null) {
@@ -54,7 +55,7 @@ class MyBagDiamondItem extends StatelessWidget {
                     child: const SmartImage(path: AppImages.icMoreHorizontal))
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -64,7 +65,7 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.clarity.tr, chart.clarity, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,16 +73,16 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.certificateNumber.tr, chart.certificateNumber, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildDetailColumn(APPStrings.measurements.tr, chart.measurements, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const Divider(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -91,7 +92,7 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.symmetry.tr, chart.symmetry, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -101,9 +102,9 @@ class MyBagDiamondItem extends StatelessWidget {
                 const Expanded(child: SizedBox()),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const Divider(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,7 +113,7 @@ class MyBagDiamondItem extends StatelessWidget {
                 Expanded(child: _buildDetailColumn(APPStrings.kgkAmount.tr, chart.kgkAmount, style)),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,7 +131,7 @@ class MyBagDiamondItem extends StatelessWidget {
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 17.w),
+      padding: EdgeInsets.only(right: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

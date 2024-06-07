@@ -18,9 +18,10 @@ class DiamondDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const DiyProgressWidget(
-              selectedStep: 1,
-            ),
+            if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY)
+              const DiyProgressWidget(
+                selectedStep: 1,
+              ),
             SmartCarouselSlider(
               imgList: diamondBloc.imgList,
               controller: diamondBloc.controller,
@@ -63,22 +64,10 @@ class DiamondDetailScreen extends StatelessWidget {
           SizedBox(height: 8.h),
           Row(
             children: [
-              RatingBar(
-                itemCount: 5,
-                glowColor: colors(context).primary,
-                onRatingUpdate: (double value) {},
-                allowHalfRating: false,
-                itemSize: 16,
-                itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
-                ratingWidget: RatingWidget(
-                  empty: const SmartImage(path: AppImages.icEmptyStar),
-                  full: const SmartImage(path: AppImages.icFullStar),
-                  half: Container(),
-                ),
-              ),
+              SmartRatingBar(initialRating: 4, itemSize: 16.w, onRatingUpdate: (double value) {}),
               SizedBox(width: 8.w),
               SmartText(
-                APPStrings.reviews.interpolate([120]).tr,
+                APPStrings.reviewsX.tr.interpolate([4]),
                 style: style.reviewStyle,
               )
             ],

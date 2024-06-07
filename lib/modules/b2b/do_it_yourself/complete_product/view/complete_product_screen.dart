@@ -97,15 +97,17 @@ class CompleteProductScreen extends StatelessWidget {
           Row(
             children: [
               SmartRatingBar(
+                itemCount: 5,
                 initialRating: 4,
-                itemSize: 16.w,
                 onRatingUpdate: (double value) {},
+                itemSize: 16.w,
+                itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
               ),
               SizedBox(
                 width: 8.w,
               ),
               SmartText(
-                APPStrings.reviews.tr.interpolate([120]),
+                APPStrings.reviewsX.tr.interpolate([120]),
                 style: style.productCodeStyle,
               )
             ],

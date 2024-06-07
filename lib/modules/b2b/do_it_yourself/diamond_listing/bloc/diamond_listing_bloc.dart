@@ -26,10 +26,9 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
     on<DiamondProductChangePageNumberEvent>(_onPageNumberChanged);
   }
 
-  getScreenIdentifier(BuildContext context) {
+  void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondListingForDIY;
-    return screenIdentifier;
   }
 
   Future<void> _onGetDiamondProductListEvent(GetDiamondProductListEvent event, Emitter<DiamondListingState> emit) async {

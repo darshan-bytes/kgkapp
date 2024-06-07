@@ -8,7 +8,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   bool isCustomisation = false;
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productDetailForDefault;
   final CarouselController controller = CarouselController();
+
   List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
     "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
@@ -134,7 +136,34 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
     emit(ProductDetailsLoadingState());
-    productName = '14k Gold Engagement Ring';
+    getScreenIdentifier(event.context);
+
+    if (screenIdentifier == ScreenIdentifier.productDetailForDiamonds) {
+      productCustomizations.clear();
+      imgList.clear();
+      suggestedProductList.clear();
+
+      imgList = [
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+        "https://i.ibb.co/8s6hWz2/image-414.png",
+      ];
+
+      suggestedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
+    }
+
+    productName = screenIdentifier == ScreenIdentifier.productDetailForDefault ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
@@ -165,6 +194,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       discountPercentage: '(3% OFF)',
     );
     emit(ProductDetailsLoadedState(productDetails!));
+  }
+
+  void getScreenIdentifier(BuildContext context) {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productDetailForDefault;
   }
 
   void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {

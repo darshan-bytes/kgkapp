@@ -1,5 +1,6 @@
 import 'package:kgk/kgk.dart';
 
+// main file
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager().init();

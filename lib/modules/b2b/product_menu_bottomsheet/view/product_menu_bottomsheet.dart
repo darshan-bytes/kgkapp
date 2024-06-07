@@ -6,15 +6,15 @@ class ProductMenuBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MyBagBloc bloc = BlocProvider.of<MyBagBloc>(context);
-    final ProductMenuBottomsheetStyle style = AppTheme.of(context).productMenuBottomsheetStyle;
+    final ProductMenuBottomSheetStyle style = AppTheme.of(context).productMenuBottomSheetStyle;
 
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.r),
-          topRight: Radius.circular(16.r),
+          topLeft: Radius.circular(6.r),
+          topRight: Radius.circular(6.r),
         ),
       ),
       child: Column(
@@ -55,7 +55,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(BuildContext context, ProductMenuBottomsheetStyle style) {
+  Widget _buildAppBar(BuildContext context, ProductMenuBottomSheetStyle style) {
     return SmartAppBar(
       isBack: false,
       appBarHeight: AppConst.defaultAppBarHeight,
@@ -91,7 +91,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     ];
   }
 
-  Widget _buildProductDetailsItem(String title, String quantity, String amount, ProductMenuBottomsheetStyle style) {
+  Widget _buildProductDetailsItem(String title, String quantity, String amount, ProductMenuBottomSheetStyle style) {
     return Row(
       children: [
         Expanded(child: SmartText(title, style: style.diamondTitleStyle)),
@@ -110,7 +110,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDetailsView(MyBagBloc bloc, ProductMenuBottomsheetStyle style) {
+  Widget _buildProductDetailsView(MyBagBloc bloc, ProductMenuBottomSheetStyle style) {
     return BlocBuilder<MyBagBloc, MyBagState>(
       buildWhen: (previous, current) => current is ShowFullProductDetailsState,
       builder: (context, state) {
@@ -150,7 +150,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActionGrid(ProductMenuBottomsheetStyle style) {
+  Widget _buildActionGrid(ProductMenuBottomSheetStyle style) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -163,7 +163,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActionItem(String imagePath, String text, VoidCallback onTap, ProductMenuBottomsheetStyle style) {
+  Widget _buildActionItem(String imagePath, String text, VoidCallback onTap, ProductMenuBottomSheetStyle style) {
     return Expanded(
       child: InkWell(
         onTap: onTap,

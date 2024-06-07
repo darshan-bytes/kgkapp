@@ -23,8 +23,12 @@ class AppRoutes {
   static const addressListPage = '/addressListPage';
   static const wishListPage = '/wishListPage';
   static const compareProductPage = '/compareProductPage';
+  static const orderConfirmationPage = '/orderConfirmationPage';
   static const paymentPage = '/paymentPage';
+  static const writeReviewPage = '/writeReviewPage';
+  static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
+  static const auctionPage = '/auctionPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -108,7 +112,10 @@ class AppRoutes {
 
       case diamondDetailPage:
         return MaterialPageRoute(
-          builder: (_) => const DiamondDetailScreen(),
+          builder: (context) {
+            BlocProvider.of<DiamondDetailBloc>(context).add(DiamondDetailInitialEvent(context: context));
+            return const DiamondDetailScreen();
+          },
           settings: settings,
         );
 
@@ -188,9 +195,41 @@ class AppRoutes {
           settings: settings,
         );
 
+      case diamondInfoPopupPage:
+        return MaterialPageRoute(
+          builder: (_) => const DiamondInfoPopupScreen(),
+          settings: settings,
+        );
+
       case productMenuBottomSheet:
         return MaterialPageRoute(
           builder: (_) => const ProductMenuBottomSheet(),
+          settings: settings,
+        );
+
+      case auctionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            return const AuctionScreen();
+          },
+          settings: settings,
+        );
+
+      case writeReviewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
+            return const WriteReviewScreen();
+          },
+          settings: settings,
+        );
+
+      case orderConfirmationPage:
+        return MaterialPageRoute(
+          builder: (context) => OrderConfirmationScreen(
+            orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
+          ),
           settings: settings,
         );
 
@@ -216,6 +255,7 @@ class AppRoutes {
 enum RoutesData {
   productListData,
   productId,
+  orderNumber,
   isCustomisationPage,
   addressDetails,
   isPageFor,
@@ -224,6 +264,10 @@ enum RoutesData {
 enum ScreenIdentifier {
   productListingForDiamonds,
   diamondListingForDIY,
+  diamondDetailForDIY,
+  diamondDetailForDefault,
+  productDetailForDiamonds,
+  productDetailForDefault,
 }
 
 extension RoutesDataExtension on BuildContext {

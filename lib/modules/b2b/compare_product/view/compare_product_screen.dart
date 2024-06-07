@@ -146,7 +146,7 @@ class CompareProductScreen extends StatelessWidget {
                 maintainAnimation: true,
                 maintainState: true,
                 child: SmartText(
-                  APPStrings.reviews.tr.interpolate(['']),
+                  APPStrings.reviews.tr,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: style.productSubTitleStyle,
@@ -162,7 +162,7 @@ class CompareProductScreen extends StatelessWidget {
               SizedBox(height: 4.h),
               SmartRatingBar(
                 initialRating: 3,
-                itemSize: 14,
+                itemSize: 14.w,
                 ignoreGestures: true,
                 onRatingUpdate: (rating) {
                   printWrapped(rating.toString());

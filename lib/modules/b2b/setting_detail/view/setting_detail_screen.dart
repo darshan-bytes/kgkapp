@@ -90,7 +90,7 @@ class SettingDetailScreen extends StatelessWidget {
                     onRatingUpdate: (double value) {},
                   ),
                   SizedBox(width: 8.w),
-                  SmartText(APPStrings.reviews.tr.interpolate([120]), style: style.reviewStyle)
+                  SmartText(APPStrings.reviewsX.tr.interpolate([120]), style: style.reviewStyle)
                 ],
               ),
               SizedBox(height: 20.h),

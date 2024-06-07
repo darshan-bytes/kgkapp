@@ -14,6 +14,11 @@ final class DiamondImagePageChangeState extends DiamondDetailState {
   List<Object> get props => [];
 }
 
+final class DiamondDetailReloadedState extends DiamondDetailState {
+  @override
+  List<Object> get props => [];
+}
+
 final class DiamondDetailsToggleState extends DiamondDetailState {
   final bool isDiamondDetailsOpen;
 

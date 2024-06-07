@@ -23,40 +23,45 @@ class DiamondFilterScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: _buildFilterList(context, diamondFilterBloc, style),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              color: style.backgroundColor,
-              child: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-                buildWhen: (previous, current) => current is DiamondFilterDataSelectedState,
-                builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SmartTextField.search(
-                        hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData.name]),
-                        controller: diamondFilterBloc.searchController,
-                        enabledBorderRadius: 8.r,
-                      ),
-                      SizedBox(height: 16.h),
-                      Expanded(
-                        child: _buildSubFilterList(context, diamondFilterBloc, style),
-                      ),
-                    ],
-                  );
-                },
+      body: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
+        buildWhen: (previous, current) => current is DiamondFilterDataLoadedState,
+        builder: (context, state) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 1,
+                child: _buildFilterList(context, diamondFilterBloc, style),
               ),
-            ),
-          ),
-        ],
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.all(16.w),
+                  color: style.backgroundColor,
+                  child: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
+                    buildWhen: (previous, current) => current is DiamondFilterDataSelectedState,
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SmartTextField.search(
+                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData.name]),
+                            controller: diamondFilterBloc.searchController,
+                            enabledBorderRadius: 8.r,
+                          ),
+                          SizedBox(height: 16.h),
+                          Expanded(
+                            child: _buildSubFilterList(context, diamondFilterBloc, style),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -150,7 +155,7 @@ class DiamondFilterScreen extends StatelessWidget {
                 final secondaryFilterData = diamondFilterBloc.secondaryFilterDataDisplay[index];
                 return InkWell(
                   onTap: () {
-                    diamondFilterBloc.add(SelectSecondaryDiamondFilterDataEvent(secondaryFilterData: secondaryFilterData));
+                    handleOnChange(diamondFilterBloc, secondaryFilterData);
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -161,7 +166,7 @@ class DiamondFilterScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        if (secondaryFilterData.image.isNotNullNorEmpty) ...[
+                        if (secondaryFilterData.image.isNotNullNorEmpty)
                           Padding(
                             padding: EdgeInsets.all(4.w),
                             child: SmartImage(
@@ -170,16 +175,21 @@ class DiamondFilterScreen extends StatelessWidget {
                               width: 24.w,
                               color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
                             ),
-                          ),
-                          SizedBox(width: 8.w),
-                        ],
+                          )
+                        else
+                          SmartCheckbox(
+                              value: secondaryFilterData.isSelected,
+                              onChanged: () {
+                                handleOnChange(diamondFilterBloc, secondaryFilterData);
+                              }),
+                        SizedBox(width: 8.w),
                         Expanded(
                           child: SmartText(
                             secondaryFilterData.name,
                             style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
                           ),
                         ),
-                        if (secondaryFilterData.isSelected)
+                        if (secondaryFilterData.isSelected && secondaryFilterData.image.isNotNullNorEmpty)
                           SmartImage(
                             path: AppImages.icCheck,
                             height: 16.w,
@@ -195,5 +205,17 @@ class DiamondFilterScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// [handleOnChange] Handles the change event for a secondary filter data item.
+  ///
+  /// This function is called when a secondary filter data item is selected or deselected.
+  /// It dispatches a `SelectSecondaryDiamondFilterDataEvent` with the selected `secondaryFilterData`.
+  ///
+  /// Parameters:
+  /// - `diamondFilterBloc`: the bloc that manages the state of the diamond filter.
+  /// - `secondaryFilterData`: the secondary filter data item that was selected or deselected.
+  void handleOnChange(DiamondFilterBloc diamondFilterBloc, SecondaryFilterData secondaryFilterData) {
+    diamondFilterBloc.add(SelectSecondaryDiamondFilterDataEvent(secondaryFilterData: secondaryFilterData));
   }
 }

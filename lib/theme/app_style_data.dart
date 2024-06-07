@@ -149,6 +149,7 @@ class LightModeTheme extends AppTheme {
         backgroundColor: colors.colorF7F9FA,
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
         borderColor: colors.colorD3DAE0,
+        transparentColor: colors.transparent,
       );
 
   @override
@@ -253,6 +254,8 @@ class LightModeTheme extends AppTheme {
         transparentColor: colors.transparent,
         removeBagTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
         myBagDividerColor: colors.colorD3DAE0,
+        outOfStockBackgroundColor: colors.colorDDECF4,
+        outOfStockStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       );
 
   @override
@@ -500,6 +503,7 @@ class LightModeTheme extends AppTheme {
         compareCountBGColor: colors.color4885A3,
         totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override
@@ -531,13 +535,13 @@ class LightModeTheme extends AppTheme {
 
   @override
   MyBagDiamondItemStyle get myBagDiamondItemStyle => MyBagDiamondItemStyle(
-        backgroundColor: colors.white,
-        borderColor: colors.colorD3DAE0,
-        headingStyle: interMediumBoldTextStyle,
-        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
-        richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
-      );
+      backgroundColor: colors.white,
+      borderColor: colors.colorD3DAE0,
+      headingStyle: interMediumBoldTextStyle,
+      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+      richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
+      selectedBackgroundColor: colors.colorF7F9FA);
 
   @override
   AddressSelectionStyle get addressSelectionStyle => AddressSelectionStyle(
@@ -557,7 +561,19 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  ProductMenuBottomsheetStyle get productMenuBottomsheetStyle => ProductMenuBottomsheetStyle(
+  WriteReviewScreenStyle get writeReviewScreenStyle =>
+      WriteReviewScreenStyle(whiteColor: colors.white, labelStyle: interRegularTextStyle, borderColor: colors.colorD3DAE0);
+
+  @override
+  OrderConfirmationStyle get orderConfirmationStyle => OrderConfirmationStyle(
+        titleTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        orderNumberStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, decoration: TextDecoration.underline),
+        descriptionStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      );
+
+  @override
+  ProductMenuBottomSheetStyle get productMenuBottomSheetStyle => ProductMenuBottomSheetStyle(
         backgroundColor: colors.white,
         primaryColor: colors.primary,
         subTotalStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
@@ -566,5 +582,48 @@ class LightModeTheme extends AppTheme {
         imageLableStyle: interRegularTextStyle,
         diamondTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         diamondValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+      );
+
+  @override
+  AuctionScreenStyle get auctionScreenStyle => AuctionScreenStyle(
+        bidPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 20.sp),
+        bidPriceLableStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        primaryColor: colors.primary,
+        borderColor: colors.colorD3DAE0,
+        recentBidBackgroundColor: colors.colorF7F9FA,
+        auctionTimerStyle: interRegularTextStyle,
+        recentBidStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
+        recentBidValueStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
+        whiteColor: colors.white,
+        allBidsTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        myBidTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        myBidBackgroundColor: colors.color9DCAE0,
+        textFieldBorderColor: colors.colorD3DAE0,
+        boxShadowColor: colors.black,
+      );
+
+  @override
+  DiamondInfoPopupScreenStyle get diamondInfoPopupScreenStyle => DiamondInfoPopupScreenStyle(
+        offerPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        actualPriceStyle: interRegularTextStyle.copyWith(
+            fontSize: 16.sp, color: colors.color8C8C8C, decoration: TextDecoration.lineThrough, decorationColor: colors.color8C8C8C),
+        productNameStyle: interMediumBoldTextStyle,
+        labelStyle: interMediumBoldTextStyle,
+        itemTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        itemValueStyle: interRegularTextStyle,
+        viewMoreDetailsTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
+      );
+
+  @override
+  QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle => QuotationRequestConfirmationStyle(
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp, color: colors.color303538),
+        detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      );
+
+  @override
+  ShowDoubleActionDialogStyle get showDoubleActionDialogStyle => ShowDoubleActionDialogStyle(
+        titleStyle: interMediumBoldTextStyle,
+        contentStyle: interRegularTextStyle,
+        okButtonStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
       );
 }

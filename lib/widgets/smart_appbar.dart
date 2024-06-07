@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
-  final Widget? leading;
+  final String? leadingImage;
   final List<Widget>? actions;
   final Color? backgroundColor;
   final double? appBarHeight;
@@ -22,7 +22,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   SmartAppBar({
     super.key,
     this.title,
-    this.leading,
+    this.leadingImage,
     this.actions,
     this.backgroundColor,
     this.onFilter,
@@ -44,7 +44,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).appBarStyle;
+    final CustomAppBarStyle style = AppTheme.of(context).appBarStyle;
     return AppBar(
       automaticallyImplyLeading: false,
       centerTitle: isCenter,
@@ -52,42 +52,55 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: backgroundColor ?? style.backgroundColor,
       toolbarHeight: appBarHeight,
       elevation: 0,
+      titleSpacing: 0,
       title: _buildTitle(style, context),
-      leading: leading,
       actions: _buildActions(),
       shape: isBorder ? Border(bottom: BorderSide(color: style.borderColor)) : null,
     );
   }
 
-  Widget leadingIcon(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (onBack != null) {
-          onBack!();
-        } else {
-          Navigator.pop(context);
-        }
-      },
-      child: SizedBox(
-        height: 24.w,
-        width: 24.w,
-        child: Center(
-          child: SmartImage(
-            path: AppImages.icBack,
-            height: 24.w,
-            width: 24.w,
+  Widget leadingIcon(BuildContext context, CustomAppBarStyle style) {
+    if (!isBack && leadingImage.isNotNullNorEmpty) {
+      return SmartImage(
+        path: leadingImage ?? '',
+        height: 40.w,
+        width: 40.w,
+      );
+    } else if (isBack) {
+      return GestureDetector(
+        onTap: () {
+          if (onBack != null) {
+            onBack!();
+          } else {
+            context.pop();
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.only(left: 17.w),
+          height: 72.w,
+          width: 41.w,
+          color: style.transparentColor,
+          child: Center(
+            child: SmartImage(
+              path: AppImages.icBack,
+              height: 24.w,
+              width: 24.w,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget _buildTitle(CustomAppBarStyle style, context) {
     return Row(
       mainAxisAlignment: isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        if (leading == null && isBack) leadingIcon(context),
-        if (leading == null && isBack) SizedBox(width: 6.w),
+        if (!isBack) SizedBox(width: 17.w),
+        leadingIcon(context, style),
+        if (isBack || leadingImage.isNotNullNorEmpty) SizedBox(width: 6.w),
         if (title != null)
           Expanded(
             child: SmartText(

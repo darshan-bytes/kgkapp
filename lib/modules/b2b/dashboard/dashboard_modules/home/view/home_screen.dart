@@ -6,26 +6,33 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SmartText(
-            'View All Collection',
-            onTap: () {
-              context.pushNamed(AppRoutes.collectionPage);
-            },
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SmartText(
-            'DIY',
-            onTap: () {
-              context.pushNamed(AppRoutes.diamondListingPage);
-            },
-          ),
-          /*SmartText(
-          'product menu bottom sheet',
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SmartText(
+          'View All Collection',
+          onTap: () {
+            context.pushNamed(AppRoutes.collectionPage);
+          },
+        ),
+        SmartText(
+          'Order Confirmation',
+          onTap: () {
+            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
+          },
+        ),
+        SmartText(
+          'Diamond info popup screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+          },
+        ),
+        SmartText(
+          'Write a review screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.writeReviewPage);
+          },
+        ),
+        SmartText(
+          'Product Menu Bottom Sheet',
           onTap: () async {
             await showModalBottomSheet(
               context: context,
@@ -34,9 +41,20 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => const ProductMenuBottomSheet(),
             );
           },
-        ),*/
-        ],
-      ),
+        ),
+        SmartText(
+          'auction',
+          onTap: () async {
+            context.pushNamed(AppRoutes.auctionPage);
+          },
+        ),
+        SmartText(
+          'Full Diamond Details',
+          onTap: () async {
+            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
+          },
+        ),
+      ]),
     );
   }
 }

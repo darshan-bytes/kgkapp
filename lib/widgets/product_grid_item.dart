@@ -13,6 +13,8 @@ class ProductGridItem extends StatelessWidget {
   final Function()? onCancelTap;
   final bool isFavourite;
   final BoxFit fit;
+  final bool isCustomisable;
+  final bool isOutOfStock;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final bool isStoneWithPrice;
@@ -34,11 +36,13 @@ class ProductGridItem extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
     this.isStoneWithPrice = false,
+    this.isCustomisable = false,
+    this.isOutOfStock = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).productItemStyle;
+    final ProductItemStyle style = AppTheme.of(context).productItemStyle;
     final double productItemWidth = (context.width - 46.w) / 2;
 
     return GestureDetector(
@@ -78,16 +82,29 @@ class ProductGridItem extends StatelessWidget {
             fit: fit,
           ),
         ),
-        Positioned(
-          top: 8,
-          right: 8,
-          child: Row(
-            children: [
-              if (onCancelTap != null)
-                buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
-            ],
+        if (isOutOfStock)
+          Positioned(
+            top: 8,
+            left: 8,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
+              child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
+            ),
           ),
-        ),
+        if (isCustomisable)
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Row(
+              children: [
+                if (isCustomisable && onCancelTap == null)
+                  buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
+                if (onCancelTap != null)
+                  buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
+              ],
+            ),
+          ),
         Positioned(
           bottom: 8,
           right: 8,
@@ -104,11 +121,14 @@ class ProductGridItem extends StatelessWidget {
     );
   }
 
-  Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor}) {
+  Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(color: backgroundColor ?? style.backgroundColor, borderRadius: BorderRadius.circular(4)),
+        decoration: BoxDecoration(
+            color: backgroundColor ?? style.backgroundColor,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: borderColor ?? style.transparentColor)),
         height: 24.w,
         width: 24.w,
         alignment: Alignment.center,

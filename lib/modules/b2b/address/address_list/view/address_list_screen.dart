@@ -78,7 +78,8 @@ class AddressListScreen extends StatelessWidget {
                                 onEyeTap: () {},
                                 onFavTap: () {},
                                 onTap: () {
-                                  context.pushNamed(AppRoutes.diamondDetailPage);
+                                  context.pushNamed(AppRoutes.diamondDetailPage,
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
                                 },
                               );
                             }).toList()),

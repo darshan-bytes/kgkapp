@@ -109,6 +109,7 @@ class APPStrings {
 
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';
+  static const String reviewsX = 'reviews_x';
   static const String reviews = 'reviews';
   static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
   static const String orderSample = 'order_sample';
@@ -196,6 +197,14 @@ class APPStrings {
   static const String unhappyWithPricing = 'unhappy_with_pricing';
   static const String selectQuality = 'select_quality';
   static const String selectQuantity = 'select_quantity';
+
+  //order confirmation
+  static const String thankYouForYourPurchase = 'thank_you_for_your_purchase';
+  static const String yourOrderNumber = 'your_order_number';
+  static const String orderConfirmWithTrackInfo = 'order_confirm_with_track_info';
+  static const String continueShopping = 'continue_shopping';
+
+  static const String subTotal = 'sub_total';
   static const String head = 'head';
   static const String totalApproxPrice = 'total_approx_price';
   static const String customiseProduct = 'customise_product';
@@ -210,6 +219,16 @@ class APPStrings {
   static const String shipping = 'shipping';
   static const String salesTax = 'sales_tax';
   static const String placeOrder = 'place_order';
+
+  //Write Review
+  static const String stars = 'stars';
+  static const String title = 'title';
+  static const String review = 'review';
+  static const String images = 'images';
+  static const String errorMaximumFiveImages = 'error_maximum_five_images';
+  static const String errorSelectUpToFiveImages = 'error_select_up_to_five_images';
+  static const String camera = 'camera';
+  static const String gallery = 'gallery';
 
   //My bag diamond item
   static const String ct = 'ct';
@@ -242,15 +261,79 @@ class APPStrings {
   static const String quotation = 'quotation';
   static const String export = 'export';
   static const String more = 'more';
-  static const String subTotal = 'sub_total';
   static const String moreDetails = 'more_details';
   static const String lessDetails = 'less_details';
-
   static const String totalDiamonds = 'total_diamonds';
   static const String totalCarats = 'total_carats';
   static const String averageDiscount = 'average_discount';
   static const String round = 'round';
   static const String oval = 'oval';
   static const String marquise = 'marquise';
+
+  //Diamonds info popup
+  static const String diamonds = 'diamonds';
+  static const String basicInfo = 'basic_info';
+  static const String inclusionInfo = 'inclusion_info';
+  static const String other = 'other';
+  static const String priceDetailsTitle = 'price_details_title';
+  static const String certificate = 'certificate';
+  static const String purityGuaranteed = 'purity_guaranteed';
+  static const String viewMoreDetails = 'view_more_details';
+  static const String lotNo = 'lot_no';
+  static const String certificateNo = 'certificate_no';
+  static const String size = 'size';
+  static const String carat = 'carat';
+  static const String fluorescence = 'fluorescence';
+  static const String location = 'location';
+  static const String length = 'length';
+  static const String width = 'width';
+  static const String crownAngle = 'crown_angle';
+  static const String crownHeight = 'crown_height';
+  static const String pavilionAngle = 'pavilion_angle';
+  static const String pavilionDepth = 'pavilion_depth';
+  static const String girdle = 'girdle';
+  static const String culetSize = 'culet_size';
+  static const String girdleCondition = 'girdle_condition';
+  static const String laserInclusion = 'laser_inclusion';
+  static const String lowerHalf = 'lower_half';
+  static const String starLength = 'star_length';
+  static const String girdlePercentage = 'girdle_percentage';
+  static const String colorGrading = 'color_grading';
+  static const String clarityGrading = 'clarity_grading';
+  static const String blackTable = 'black_table';
+  static const String blackCrown = 'black_crown';
+  static const String crownOpen = 'crown_open';
+  static const String tableOpen = 'table_open';
+  static const String pavOpen = 'pav_open';
+  static const String milkey = 'milkey';
+  static const String heartAndArrow = 'heart_and_arrow';
+  static const String noBGM = 'no_bgm';
+  static const String girdleInclusion = 'girdle_inclusion';
+  static const String whiteInCenter = 'white_in_center';
+  static const String whiteInCrown = 'white_in_crown';
+  static const String countryOfOrigin = 'country_of_origin';
+  static const String keyToSymbol = 'key_to_symbol';
+  static const String reportComments = 'report_comments';
+  static const String disc = 'disc';
+  static const String pricePerCrt = 'price_per_crt';
+  static const String amount = 'amount';
+  static const String requestSubmitted = 'request_submitted';
+  static const String requestSubmittedDesc = 'request_submitted_desc';
+  static const String outOfStock = 'out_of_stock';
+  static const String ok = 'ok';
+  static const String cancel = 'cancel';
+  static const String errorAllowCameraSettings = 'error_allow_camera_settings';
+  static const String startingBidPrice = 'starting_bid_price';
+  static const String perCts = 'per_cts';
+  static const String recentBid = 'recent_bid';
+  static const String viewAll = 'view_all';
+  static const String auctionEndIn = 'auction_end_in';
+  static const String allBids = 'all_bids';
+  static const String myBid = 'my_bid';
+  static const String placeBid = 'place_bid';
+  static const String enterBidAmountHigherThanX = 'enter_bid_amount_higher_than_x';
+  static const String yourBidOf = 'your_bid_of';
+  static const String hasBeenPlaced = 'has_been_placed';
   static const String diamondDetails = 'diamond_details';
+  static const String productDetails = 'product_details';
 }
