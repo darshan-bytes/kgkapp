@@ -238,7 +238,7 @@ class AuctionScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 10.h),
-                  Divider(height: 1.h),
+                  const Divider(),
                   SizedBox(height: 10.h),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -444,7 +444,7 @@ class AuctionScreen extends StatelessWidget {
                   color: style.boxShadowColor.withOpacity(0.17),
                   spreadRadius: 0.r,
                   blurRadius: 16.r,
-                  offset: const Offset(0, 3),
+                  offset: const Offset(0, -2),
                 ),
               ],
             ),

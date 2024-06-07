@@ -47,9 +47,9 @@ class OrderSummary extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           if (isPromoCodeApplied) ...[
-            Divider(height: 1.h),
+            const Divider(),
             _buildPromoCodeSection(style),
-            Divider(height: 1.h),
+            const Divider(),
           ],
           SizedBox(height: 16.h),
           _buildTotalSection(style),

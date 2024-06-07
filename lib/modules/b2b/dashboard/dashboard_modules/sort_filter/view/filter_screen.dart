@@ -61,39 +61,39 @@ class FilterScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           decoration: BoxDecoration(
             color: style.backgroundColor,
             border: Border(
-              top: BorderSide(
-                color: style.itemBorderColor,
-              ),
+              top: BorderSide(color: style.itemBorderColor),
             ),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: SmartButton(
-                  activeBackgroundColor: style.closeButtonBackgroundColor,
-                  titleStyle: style.closeButtonStyle,
-                  title: APPStrings.close.tr,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
+          child: SafeArea(
+            child: Row(
+              children: [
+                Expanded(
+                  child: SmartButton(
+                    activeBackgroundColor: style.closeButtonBackgroundColor,
+                    titleStyle: style.closeButtonStyle,
+                    title: APPStrings.close.tr,
+                    onTap: () {
+                      context.pop();
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: SmartButton(
-                  title: APPStrings.apply.tr,
-                  onTap: () {
-                    filterBloc.add(const ApplyFilterDataEvent());
-                    onApply();
-                    Navigator.of(context).pop();
-                  },
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: SmartButton(
+                    title: APPStrings.apply.tr,
+                    onTap: () {
+                      filterBloc.add(const ApplyFilterDataEvent());
+                      onApply();
+                      context.pop();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -117,7 +117,7 @@ class FilterScreen extends StatelessWidget {
                   filterBloc.add(SelectFilterDataEvent(filterData: filterData));
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: isSelected ? style.selectedBackgroundColor : null,
                     border: Border(
@@ -171,10 +171,10 @@ class FilterScreen extends StatelessWidget {
                           ),
                         ),
                         if (secondaryFilterData.isSelected)
-                          const SmartImage(
+                          SmartImage(
                             path: AppImages.icCheck,
-                            height: 16,
-                            width: 16,
+                            height: 16.w,
+                            width: 16.w,
                           ),
                       ],
                     ),

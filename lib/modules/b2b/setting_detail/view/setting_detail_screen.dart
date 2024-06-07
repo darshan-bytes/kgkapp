@@ -34,7 +34,7 @@ class SettingDetailScreen extends StatelessWidget {
         child: SmartButton(
           margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
           onTap: () {
-            Navigator.of(context).pushNamed(AppRoutes.completeProductPage);
+            context.pushNamed(AppRoutes.completeProductPage);
           },
           title: APPStrings.selectSetting.tr,
         ),
@@ -54,10 +54,7 @@ class SettingDetailScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SmartText(
-                    'Martin Flyer',
-                    style: style.ringTypeStyle,
-                  ),
+                  SmartText('Martin Flyer', style: style.ringTypeStyle),
                   SizedBox(width: 8.w),
                   Container(
                     height: 6.w,
@@ -160,9 +157,9 @@ class SettingDetailScreen extends StatelessWidget {
               SizedBox(height: 32.h),
               Divider(height: 1.h),
               _buildSettingDetails(settingDetailBloc, style),
-              Divider(height: 1.h),
+              const Divider(),
               _buildDiamondDetails(settingDetailBloc, style),
-              Divider(height: 1.h),
+              const Divider(),
               SizedBox(height: 28.h),
               const InquiryWidget(
                 email: 'enquiry.diaind@kgkmail.com',

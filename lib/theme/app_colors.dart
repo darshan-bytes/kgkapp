@@ -28,7 +28,6 @@ class AppThemes {
     color64636D: Color(0xFF64636D),
     color9DCAE0: Color(0xFF9DCAE0),
     black: Color(0xFF000000),
-    colorBlack: Color(0xFF000000),
   );
 
   ThemeData light({MaterialColor? theme}) {
@@ -36,7 +35,7 @@ class AppThemes {
         useMaterial3: true,
         primaryColor: appColor.primary,
         scaffoldBackgroundColor: Colors.white,
-        dividerTheme: DividerThemeData(color: appColor.colorD3DAE0),
+        dividerTheme: DividerThemeData(color: appColor.colorD3DAE0, space: 1.h),
         scrollbarTheme: ScrollbarThemeData(
           trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
         ),
@@ -92,7 +91,6 @@ class AppColor {
   final Color colorDDECF4;
   final Color color64636D;
   final Color color9DCAE0;
-  final Color colorBlack;
 
   const AppColor({
     required this.primary,
@@ -117,7 +115,6 @@ class AppColor {
     required this.color64636D,
     required this.color9DCAE0,
     required this.black,
-    required this.colorBlack,
   });
 }
 

@@ -155,14 +155,11 @@ class AddressListScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ToggleBillingAndShippingSameState,
       builder: (context, state) {
         return SmartCheckbox(
-          // height: 24.w,
-          // width: 24.w,
           value: addressListBloc.isBillingAndShippingSame,
           onChanged: (value) {
             addressListBloc.add(const ToggleBillingAndShippingSameEvent());
           },
           label: APPStrings.billingAddressSame.tr,
-          // labelStyle: style.isSameAddressStyle,
         );
       },
     );
@@ -171,7 +168,6 @@ class AddressListScreen extends StatelessWidget {
   Widget _buildOrderSummary(AddressListStyle style) {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
-      // titleStyle: const TextStyle(fontSize: 24),
       isPromoCodeApplied: false,
       items: [
         // Here String come from API

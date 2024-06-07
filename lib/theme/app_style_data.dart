@@ -474,7 +474,7 @@ class LightModeTheme extends AppTheme {
         orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        totalPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.colorBlack),
+        totalPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.black),
         orderSummaryItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
       );
 
@@ -618,6 +618,7 @@ class LightModeTheme extends AppTheme {
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle => QuotationRequestConfirmationStyle(
         titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp, color: colors.color303538),
         detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        primaryColor: colors.primary,
       );
 
   @override

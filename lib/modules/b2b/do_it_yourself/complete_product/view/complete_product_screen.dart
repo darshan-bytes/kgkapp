@@ -49,10 +49,8 @@ class CompleteProductScreen extends StatelessWidget {
                 onTap: () {},
                 image: AppImages.icHeart,
                 height: 48.w,
-                // imageHeight: 24.w,
-                // imageWidth: 24.w,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               SelectionButton(
                 padding: EdgeInsets.all(12.w),
                 isSelected: false,
@@ -85,7 +83,7 @@ class CompleteProductScreen extends StatelessWidget {
                     border: Border.all(
                       color: colors(context).color8C8C8C,
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                    borderRadius: BorderRadius.all(Radius.circular(50.r))),
               ),
               SizedBox(width: 8.w),
               SmartText('DERC03RDA', style: style.productCodeStyle),
@@ -103,13 +101,8 @@ class CompleteProductScreen extends StatelessWidget {
                 itemSize: 16.w,
                 itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
               ),
-              SizedBox(
-                width: 8.w,
-              ),
-              SmartText(
-                APPStrings.reviewsX.tr.interpolate([120]),
-                style: style.productCodeStyle,
-              )
+              SizedBox(width: 8.w),
+              SmartText(APPStrings.reviewsX.tr.interpolate([120]), style: style.productCodeStyle)
             ],
           ),
           SizedBox(height: 16.h),
@@ -186,11 +179,11 @@ class CompleteProductScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          Divider(height: 1.h),
+          const Divider(),
           _ringDetails(completeProductBloc, style, context),
-          Divider(height: 1.h),
+          const Divider(),
           _diamondDetails(completeProductBloc, style, context),
-          Divider(height: 1.h),
+          const Divider(),
           _gemstoneDetails(completeProductBloc),
           Divider(height: 1.h),
           SizedBox(height: 28.h),
@@ -309,7 +302,7 @@ class CompleteProductScreen extends StatelessWidget {
       builder: (context, state) {
         final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
         return Padding(
-          padding: completeProductBloc.isGemstoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          padding: completeProductBloc.isGemstoneDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
           child: SmartExpansionTile(
             initiallyExpanded: completeProductBloc.isGemstoneDetailsOpen,
             key: completeProductBloc.gemstoneDetailsKey,
@@ -318,8 +311,8 @@ class CompleteProductScreen extends StatelessWidget {
               style: style.settingSelectionTitleStyle,
             ),
             trailing: (completeProductBloc.isGemstoneDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
+                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
+                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
             onExpansionChanged: (value) {
               completeProductBloc.add(const CompleteProductGemstoneDetailsToggleEvent());
             },
