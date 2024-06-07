@@ -163,7 +163,7 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
     ),
   ];
 
-  late FilterData selectedFilterData;
+  late FilterData selectedFilterData = filterData.first;
   List<SecondaryFilterData> secondaryFilterDataDisplay = [];
 
   final TextEditingController searchController = TextEditingController();
@@ -173,7 +173,6 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
   }
 
   void _onLoadDiamondFilterDataEvent(LoadDiamondFilterDataEvent event, Emitter<DiamondFilterState> emit) {
-    selectedFilterData = filterData.first;
     secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData ?? [];
     searchController.addListener(searchChange);
     emit(DiamondFilterDataLoadedState(filterData));
