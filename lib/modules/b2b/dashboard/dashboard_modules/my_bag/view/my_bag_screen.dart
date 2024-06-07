@@ -194,7 +194,7 @@ class MyBagScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          Divider(height: 1.h),
+          const Divider(),
         ],
       ),
     );

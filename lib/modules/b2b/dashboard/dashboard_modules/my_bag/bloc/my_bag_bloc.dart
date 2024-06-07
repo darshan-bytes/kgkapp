@@ -16,7 +16,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   // For Product menu bottom sheet
   bool showMoreDetails = false;
-  String subTotalAmount = "\$18000";
+  String subTotalAmount = "\$90,000.00";
 
   List<ProductDetails> myBagProductList = List.generate(
     8,

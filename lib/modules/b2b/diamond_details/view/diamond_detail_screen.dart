@@ -108,7 +108,7 @@ class DiamondDetailScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          Divider(height: 1.h),
+          const Divider(),
           SizedBox(height: 24.h),
           SmartText(
             '\$3,020',
@@ -129,7 +129,7 @@ class DiamondDetailScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          Divider(height: 1.h),
+          const Divider(),
           SizedBox(height: 24.h),
           Row(
             children: [
@@ -162,7 +162,7 @@ class DiamondDetailScreen extends StatelessWidget {
             phone: '+91 - 1234567830',
           ),
           SizedBox(height: 24.h),
-          Divider(height: 1.h),
+          const Divider(),
           SizedBox(height: 24.h),
         ],
       ),

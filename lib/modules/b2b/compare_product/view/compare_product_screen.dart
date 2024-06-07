@@ -153,7 +153,7 @@ class CompareProductScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
-              Divider(height: 1.h),
+              const Divider(),
               SizedBox(height: 8.h),
               SmartText(
                 '4.0',
@@ -197,7 +197,7 @@ class CompareProductScreen extends StatelessWidget {
         ),
       ),
       SizedBox(height: 8.h),
-      Divider(height: 1.h),
+      const Divider(),
       SizedBox(height: 8.h),
       Container(
         margin: EdgeInsets.only(right: 12.w),
