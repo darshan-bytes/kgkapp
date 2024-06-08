@@ -185,6 +185,10 @@ class DiamondListingScreen extends StatelessWidget {
                   return ProductGridItem(
                     productDetails: productDetails,
                     isStoneWithPrice: true,
+                    onTap: () {
+                      context
+                          .pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDIY});
+                    },
                     onEyeTap: () {},
                     onFavTap: () {},
                   );

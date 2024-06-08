@@ -260,10 +260,13 @@ enum RoutesData {
 
 enum ScreenIdentifier {
   productListingForDiamonds,
+  productListingForRing,
+  productListingForGemstones,
   diamondListingForDIY,
   diamondDetailForDIY,
   diamondDetailForDefault,
   productDetailForDiamonds,
+  productDetailForGemstones,
   productDetailForDefault,
 }
 

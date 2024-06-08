@@ -13,7 +13,7 @@ class ProductListScreen extends StatelessWidget {
         child: BlocBuilder<ProductListBloc, ProductListState>(
           builder: (context, state) {
             return SmartAppBar(
-              title: APPStrings.ring.tr,
+              title: bloc.appbarTitle,
               onFavorite: () {},
               onFilter: () {},
             );
@@ -143,13 +143,15 @@ class ProductListScreen extends StatelessWidget {
                   /// If need to  product customization icon then remove onCancel voidCallback
                   return ProductGridItem(
                     productDetails: productDetails,
-                    isCustomisable: bloc.productList[0] == productDetails,
-                    isOutOfStock: bloc.productList[0] == productDetails,
-                    onAddToBagTap: bloc.fromRing ? () {} : null,
+                    isCustomisable:
+                        bloc.screenIdentifier == ScreenIdentifier.productListingForRing && bloc.productList[0] == productDetails,
+                    isOutOfStock: bloc.screenIdentifier == ScreenIdentifier.productListingForRing && bloc.productList[0] == productDetails,
+                    onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productListingForRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
+                    isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productListingForRing,
                     onTap: () {
-                      if (bloc.fromRing) {
+                      if (bloc.screenIdentifier == ScreenIdentifier.productListingForRing) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                           RoutesData.productId: productDetails.productId ?? '',
                           RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
@@ -173,9 +175,9 @@ class ProductListScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
-                isCustomisable: index == 0 ? true : false,
+                isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productListingForRing && index == 0,
                 onTap: () {
-                  if (bloc.fromRing) {
+                  if (bloc.screenIdentifier == ScreenIdentifier.productListingForRing) {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                       RoutesData.productId: bloc.productList[index].productId ?? '',
                       RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
