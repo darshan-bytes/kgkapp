@@ -212,22 +212,25 @@ class MyBagScreen extends StatelessWidget {
           optionalPadding: EdgeInsets.only(left: 17.w),
         ),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Wrap(
-              direction: Axis.horizontal,
-              spacing: 12.w,
-              runSpacing: 12.2,
-              children: bloc.suggestedProductList.map((product) {
-                return ProductGridItem(
-                  margin: EdgeInsets.only(bottom: 17.h),
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  productDetails: product,
-                );
-              }).toList(),
+        Scrollbar(
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 12.w,
+                runSpacing: 12.2,
+                children: bloc.suggestedProductList.map((product) {
+                  return ProductGridItem(
+                    margin: EdgeInsets.only(bottom: 17.h),
+                    onEyeTap: () {},
+                    onFavTap: () {},
+                    productDetails: product,
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),

@@ -13,45 +13,22 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.collectionPage);
           },
         ),
+        const SizedBox(
+          height: 20,
+        ),
         SmartText(
-          'Order Confirmation',
+          'DIY',
           onTap: () {
-            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
+            context.pushNamed(AppRoutes.diamondListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondListingForDIY});
           },
         ),
-        SmartText(
-          'Diamond info popup screen',
-          onTap: () {
-            context.pushNamed(AppRoutes.diamondInfoPopupPage);
-          },
+        const SizedBox(
+          height: 20,
         ),
         SmartText(
-          'Write a review screen',
-          onTap: () {
-            context.pushNamed(AppRoutes.writeReviewPage);
-          },
-        ),
-        SmartText(
-          'Product Menu Bottom Sheet',
-          onTap: () async {
-            await showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              useSafeArea: true,
-              builder: (context) => const ProductMenuBottomSheet(),
-            );
-          },
-        ),
-        SmartText(
-          'auction',
+          'Auction',
           onTap: () async {
             context.pushNamed(AppRoutes.auctionPage);
-          },
-        ),
-        SmartText(
-          'Full Diamond Details',
-          onTap: () async {
-            context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
           },
         ),
       ]),

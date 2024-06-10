@@ -84,7 +84,10 @@ class DiamondInfoPopupScreen extends StatelessWidget {
               _buildInquirySection(context),
               SizedBox(height: 24.h),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.productDetailsPage,
+                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
+                },
                 child: Center(
                   child: SmartText(
                     APPStrings.viewMoreDetails.tr,

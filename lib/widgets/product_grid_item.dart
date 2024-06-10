@@ -18,6 +18,8 @@ class ProductGridItem extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final bool isStoneWithPrice;
+  final String? prefixImage;
+  final double? imageSize;
 
   const ProductGridItem({
     super.key,
@@ -38,6 +40,8 @@ class ProductGridItem extends StatelessWidget {
     this.isStoneWithPrice = false,
     this.isCustomisable = false,
     this.isOutOfStock = false,
+    this.prefixImage,
+    this.imageSize,
   });
 
   @override
@@ -92,19 +96,18 @@ class ProductGridItem extends StatelessWidget {
               child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
             ),
           ),
-        if (isCustomisable)
-          Positioned(
-            top: 8,
-            right: 8,
-            child: Row(
-              children: [
-                if (isCustomisable && onCancelTap == null)
-                  buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-                if (onCancelTap != null)
-                  buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
-              ],
-            ),
+        Positioned(
+          top: 8,
+          right: 8,
+          child: Row(
+            children: [
+              if (isCustomisable && onCancelTap == null)
+                buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
+              if (onCancelTap != null)
+                buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
+            ],
           ),
+        ),
         Positioned(
           bottom: 8,
           right: 8,
@@ -212,7 +215,9 @@ class ProductGridItem extends StatelessWidget {
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
-                isShadow: true,
+                prefixImage: prefixImage,
+                isShadow: false,
+                imageSize: imageSize,
               ),
           ],
         ),

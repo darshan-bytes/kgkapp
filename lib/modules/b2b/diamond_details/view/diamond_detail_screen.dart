@@ -15,22 +15,26 @@ class DiamondDetailScreen extends StatelessWidget {
         onFilter: () {},
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY)
-              const DiyProgressWidget(
-                selectedStep: 1,
-              ),
-            SmartCarouselSlider(
-              imgList: diamondBloc.imgList,
-              controller: diamondBloc.controller,
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            _productDetail(context, diamondBloc)
-          ],
+        child: BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY)
+                  const DiyProgressWidget(
+                    selectedStep: 1,
+                  ),
+                SmartCarouselSlider(
+                  imgList: diamondBloc.imgList,
+                  controller: diamondBloc.controller,
+                ),
+                SizedBox(
+                  height: 40.h,
+                ),
+                _productDetail(context, diamondBloc)
+              ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: SafeArea(
@@ -122,14 +126,14 @@ class DiamondDetailScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
+          const Divider(),
+          _diamondDetails(diamondBloc),
+          Divider(height: 1.h),
+          SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          SizedBox(height: 24.h),
-          const Divider(),
-          _diamondDetails(diamondBloc),
-          Divider(height: 1.h),
           SizedBox(height: 24.h),
         ],
       ),

@@ -127,7 +127,9 @@ class ProductReviewsDetails extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         SmartButton(
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(AppRoutes.writeReviewPage);
+          },
           title: APPStrings.writeAReview.tr,
           prefixImage: AppImages.icEdit,
         ),
