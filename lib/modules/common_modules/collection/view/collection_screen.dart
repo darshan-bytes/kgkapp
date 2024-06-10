@@ -57,23 +57,17 @@ class CollectionScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                /// Navigation for diamondListingPage
-                                // context.pushNamed(AppRoutes.diamondListingPage,
-                                //     arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForDiamonds});
-
+                                /// Make navigation as per screen config
                                 if (index == 0) {
                                   context.pushNamed(AppRoutes.productListGridPage,
-                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForRing});
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
                                 } else if (index == 1) {
-                                  context.pushNamed(AppRoutes.productListGridPage,
-                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForDiamonds});
+                                  context.pushNamed(AppRoutes.diamondListingPage,
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
                                 } else if (index == 2) {
-                                  context.pushNamed(AppRoutes.productListGridPage,
-                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productListingForGemstones});
+                                  context.pushNamed(AppRoutes.diamondListingPage,
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForGemstones});
                                 }
-
-                                /// Navigation for productListGridPage
-                                // context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productListData: index});
                               },
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 14.h),

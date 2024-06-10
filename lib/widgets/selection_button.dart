@@ -21,27 +21,28 @@ class SelectionButton extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final double? iconBetweenSpace;
 
-  const SelectionButton(
-      {super.key,
-      required this.isSelected,
-      this.title,
-      this.image,
-      required this.onTap,
-      this.height,
-      this.width,
-      this.imageHeight,
-      this.imageWidth,
-      this.padding,
-      this.selectedButtonColor,
-      this.unselectedButtonColor,
-      this.selectedButtonBorderColor,
-      this.unselectedButtonBorderColor,
-      this.selectedButtonIconColor,
-      this.unselectedButtonIconColor,
-      this.selectedButtonTextStyle,
-      this.unselectedButtonTextStyle,
-      this.borderRadius,
-      this.iconBetweenSpace});
+  const SelectionButton({
+    super.key,
+    required this.isSelected,
+    this.title,
+    this.image,
+    required this.onTap,
+    this.height,
+    this.width,
+    this.imageHeight,
+    this.imageWidth,
+    this.padding,
+    this.selectedButtonColor,
+    this.unselectedButtonColor,
+    this.selectedButtonBorderColor,
+    this.unselectedButtonBorderColor,
+    this.selectedButtonIconColor,
+    this.unselectedButtonIconColor,
+    this.selectedButtonTextStyle,
+    this.unselectedButtonTextStyle,
+    this.borderRadius,
+    this.iconBetweenSpace,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,7 @@ class SelectionButton extends StatelessWidget {
                 height: imageHeight,
                 width: imageWidth,
               ),
-            if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8.h),
+            if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8.w),
             if (title != null)
               Flexible(
                 child: SmartText(

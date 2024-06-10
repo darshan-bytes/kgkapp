@@ -61,11 +61,20 @@ final class RingDetailsToggleState extends ProductDetailsState {
   List<Object> get props => [isRingDetailsOpen];
 }
 
-final class DiamondDetailsToggleState extends ProductDetailsState {
+final class ProductDiamondDetailsToggleState extends ProductDetailsState {
   final bool isDiamondDetailsOpen;
 
-  const DiamondDetailsToggleState(this.isDiamondDetailsOpen);
+  const ProductDiamondDetailsToggleState(this.isDiamondDetailsOpen);
 
   @override
   List<Object> get props => [isDiamondDetailsOpen];
+}
+
+final class GemstoneDetailsToggleState extends ProductDetailsState {
+  final bool isGemstoneDetailsOpen;
+
+  const GemstoneDetailsToggleState(this.isGemstoneDetailsOpen);
+
+  @override
+  List<Object> get props => [isGemstoneDetailsOpen];
 }

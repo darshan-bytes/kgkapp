@@ -13,7 +13,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   String appbarTitle = APPStrings.ring.tr;
 
-  ScreenIdentifier screenIdentifier = ScreenIdentifier.productListingForRing;
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
 
   List<ProductDetails> productList = [];
 
@@ -32,7 +32,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   void getRouteData(BuildContext context) async {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
-      screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productListingForRing;
+      screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
     }
   }
 
@@ -41,7 +41,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     isGrid = true;
     getRouteData(event.context);
 
-    if (screenIdentifier == ScreenIdentifier.productListingForRing) {
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
       List.generate(
@@ -54,34 +54,18 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 offerPrice: '\$3,000.00',
               )));
       emit(ProductListInitial());
-    } else if (screenIdentifier == ScreenIdentifier.productListingForDiamonds) {
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamond.tr;
       productList.clear();
       List.generate(
           20,
           (index) => productList.add(
                 ProductDetails(
-                  diamond: "1.5 gram",
-                  gram: "1.5 gram",
+                  diamond: "2.5 crt",
+                  gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
                   name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-                  originalPrice: "\$3,000",
-                ),
-              ));
-      emit(ProductListInitial());
-    } else if (screenIdentifier == ScreenIdentifier.productListingForGemstones) {
-      appbarTitle = APPStrings.gemstone.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetails(
-                  diamond: "1.5 gram",
-                  gram: "1.5 gram",
-                  imageUrl:
-                      index % 2 == 0 ? "https://i.ibb.co/477f41r/Group-1410089379.png" : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",
-                  name: "0.35 Carat Super Premium Oval Moissanite",
-                  originalPrice: "\$1,600 .00",
+                  originalPrice: "\$3,000.00",
                 ),
               ));
       emit(ProductListInitial());

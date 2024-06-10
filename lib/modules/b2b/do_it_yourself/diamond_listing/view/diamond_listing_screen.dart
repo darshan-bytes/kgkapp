@@ -15,7 +15,9 @@ class DiamondListingScreen extends StatelessWidget {
             return SmartAppBar(
               title: diamondListingBloc.diamondListingAppbarTitle,
               onFilter: () {},
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),
@@ -64,8 +66,8 @@ class DiamondListingScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(
               children: [
-                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY) SizedBox(height: 16.h),
-                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY)
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
                   const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
                 SizedBox(height: 24.h),
                 _buildSelectionDiamond(diamondListingBloc),
@@ -88,7 +90,7 @@ class DiamondListingScreen extends StatelessWidget {
         Expanded(
           child: SelectionButton(
             isSelected: diamondListingBloc.isIndividual,
-            title: APPStrings.naturalDiamond.tr,
+            title: diamondListingBloc.tabOneTitle,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(true));
@@ -98,7 +100,7 @@ class DiamondListingScreen extends StatelessWidget {
         Expanded(
           child: SelectionButton(
             isSelected: !diamondListingBloc.isIndividual,
-            title: APPStrings.looseDiamond.tr,
+            title: diamondListingBloc.tabTwoTitle,
             borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(false));
@@ -116,52 +118,54 @@ class DiamondListingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: diamondListingBloc.isGrid,
-                  image: AppImages.icGrid,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(true));
-                  },
-                ),
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: !diamondListingBloc.isGrid,
-                  image: AppImages.icList,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-                  onTap: () {
-                    diamondListingBloc.add(const ChangeListingTypeEvent(false));
-                  },
-                ),
-                SizedBox(width: 16.w),
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: true,
-                  selectedButtonColor: style.menuBackgroundColor,
-                  selectedButtonBorderColor: style.menuBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  image: AppImages.icMenu,
-                  onTap: () {},
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              SelectionButton(
+                width: 48.w,
+                isSelected: diamondListingBloc.isGrid,
+                image: AppImages.icGrid,
+                imageHeight: 24.5.w,
+                imageWidth: 24.5.w,
+                selectedButtonColor: style.gridBackgroundColor,
+                selectedButtonBorderColor: style.gridBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                unselectedButtonIconColor: style.listIconColor,
+                unselectedButtonColor: style.listBackgroundColor,
+                unselectedButtonBorderColor: style.listBorderColor,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const ChangeListingTypeEvent(true));
+                },
+              ),
+              SelectionButton(
+                width: 48.w,
+                isSelected: !diamondListingBloc.isGrid,
+                image: AppImages.icList,
+                imageHeight: 18.h,
+                selectedButtonColor: style.gridBackgroundColor,
+                selectedButtonBorderColor: style.gridBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                unselectedButtonIconColor: style.listIconColor,
+                unselectedButtonColor: style.listBackgroundColor,
+                unselectedButtonBorderColor: style.listBorderColor,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const ChangeListingTypeEvent(false));
+                },
+              ),
+              SizedBox(width: 16.w),
+              SelectionButton(
+                width: 48.w,
+                imageHeight: 24.5.w,
+                imageWidth: 24.5.w,
+                isSelected: true,
+                selectedButtonColor: style.menuBackgroundColor,
+                selectedButtonBorderColor: style.menuBorderColor,
+                selectedButtonIconColor: style.gridIconColor,
+                image: AppImages.icMenu,
+                onTap: () {},
+              ),
+            ],
           )
         ],
       ),
@@ -186,8 +190,16 @@ class DiamondListingScreen extends StatelessWidget {
                     productDetails: productDetails,
                     isStoneWithPrice: true,
                     onTap: () {
-                      context
-                          .pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDIY});
+                      if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
+                        context
+                            .pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                      } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                        context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                      } else {
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                      }
                     },
                     onEyeTap: () {},
                     onFavTap: () {},
@@ -200,7 +212,7 @@ class DiamondListingScreen extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY
+              itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
                   ? ProductListItem(
                       margin: EdgeInsets.only(bottom: 17.h),
                       onEyeTap: () {},
@@ -216,8 +228,18 @@ class DiamondListingScreen extends StatelessWidget {
                           onTapCertificate: () => printWrapped("onTapCertificate"),
                           onTapImageViewer: () => printWrapped("onTapImageViewer"),
                           onTapUSA: () => printWrapped("onTapUSA"),
-                          onTapMenuButton: () => printWrapped("onTapMenuButton"),
+                          onTapMenuButton: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              useSafeArea: true,
+                              builder: (context) => const ProductMenuBottomSheet(),
+                            );
+                          },
                           isSelectedBackground: (index % 2 != 0),
+                          onTap: () {
+                            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+                          },
                           productDetails: ProductDetails(
                             productInfoClarityChat: ProductInfoClarityChat(
                               productId: "1",

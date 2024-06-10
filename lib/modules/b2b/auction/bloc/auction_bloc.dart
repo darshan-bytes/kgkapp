@@ -13,6 +13,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
 
   TextEditingController bidAmountController = TextEditingController();
   final CarouselController controller = CarouselController();
+  final ScrollController listScrollController = ScrollController();
   final ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey();
 
@@ -123,7 +124,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
       parts.add("$days${"d"}");
     }
     if (hours > 0) {
-      parts.add("$hours${"hr"}");
+      parts.add("$hours${"hrs"}");
     }
     if (minutes > 0) {
       parts.add("$minutes${"mins"}");
@@ -135,7 +136,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     return parts.join(" : ");
 
     /// For display full time in days, hours, minutes, seconds
-    //   return "$days${"d"} : $hours${"hr"} : $minutes${"mins"} : $seconds${"sec"}";
+    //   return "$days${"d"} : $hours${"hrs"} : $minutes${"mins"} : $seconds${"sec"}";
   }
 
   void _scrollToRecentBids() {

@@ -1,12 +1,13 @@
 import 'package:kgk/kgk.dart';
 
 part 'my_bag_event.dart';
+
 part 'my_bag_state.dart';
 
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool selectAllProduct = false;
-  int totalPrice = 35700;
   int selectedProductCount = 0;
+  final ScrollController scrollController = ScrollController();
 
   int get totalProductCount => myBagProductList.length;
 
@@ -16,7 +17,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   // For Product menu bottom sheet
   bool showMoreDetails = false;
-  String subTotalAmount = "\$18000";
+  String subTotalAmount = "\$90,000.00";
 
   List<ProductDetails> myBagProductList = List.generate(
     8,
@@ -45,12 +46,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       ),
       isDiamondProduct: index % 2 == 0,
       productId: index.toString(),
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
-      imageUrl:
-          "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
+      imageUrl: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      originalPrice: "\$ 3,000",
+      originalPrice: "\$3,000.00",
       productQuality: const CartProductQuality(name: "18K Gold"),
       productQuantity: const CartProductQuantity(name: "1"),
       cartProductQuality: [
@@ -65,12 +65,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   List<ProductDetails> suggestedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
-      imageUrl:
-          "https://s3-alpha-sig.figma.com/img/9ebd/9517/705a51c9fc5153f1dfac36afd60d16c9?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CEg00oBHot6FBC0S~Jgw7iEpQ8mNWZVdQNorFxVAef310QMk5wmJYsAJm6gNWbd9YG-WSLNPc6Q9MAPEeXz2BgYTWjrTnkQWPWCgxqJswcHGQHgnZxMZmXM96HnkylNG17Pg~WURYovysiTsZS8p7H35ha09xWKBhxQvFf8Y6I5pyO2QTiPF-xHyabnzy~6lzTJXnXrEbKli7InPVL0hXMn1EDrTSMr4BAh1y0oZYzz-VQWRuFRn7mmyBpOhrkUrBMucWnlfpB9F3rz72aAqE898LfJTKfdSILEP41fI-fVdASU9sAMhm6b9XPwXvt-VjcU0PqEdDuUh8sAgW2fDGw__",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
+      imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-      originalPrice: "\$ 3,000",
+      originalPrice: "\$3,000.00",
     ),
   );
 

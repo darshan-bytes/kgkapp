@@ -34,6 +34,8 @@ class AddressListScreen extends StatelessWidget {
                             isSelected: false,
                             title: APPStrings.addAddress.tr,
                             image: AppImages.icPlus,
+                            selectedButtonBorderColor: style.whiteColor,
+                            unselectedButtonBorderColor: style.whiteColor,
                           ),
                         ],
                       ),
@@ -46,48 +48,13 @@ class AddressListScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildIsBillingAddressSameAsSelected(addressListBloc, style),
-                      SmartExpansionTile(
-                        key: addressListBloc.productsListExpansionKey,
-                        initiallyExpanded: addressListBloc.isProductListExpanded,
-                        title: SmartText(
-                          APPStrings.productX.tr.interpolate([addressListBloc.productList.length]),
-                          style: style.nProductsTitleStyle,
-                        ),
-                        trailing: BlocBuilder<AddressListBloc, AddressListState>(
-                          buildWhen: (previous, current) => current is ChangeProductListExpansionState,
-                          builder: (context, state) {
-                            return SmartImage(
-                                path: addressListBloc.isProductListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
-                                width: 24,
-                                height: 24,
-                                color: style.arrowColor);
-                          },
-                        ),
-                        onExpansionChanged: (isExpanded) {
-                          addressListBloc.add(const ChangeProductListExpansionEvent());
-                        },
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            child: SmartGridView(
-                                items: addressListBloc.productList.map((ProductDetails productDetails) {
-                              return ProductGridItem(
-                                productDetails: productDetails,
-                                onEyeTap: () {},
-                                onFavTap: () {},
-                                onTap: () {
-                                  context.pushNamed(AppRoutes.diamondDetailPage,
-                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
-                                },
-                              );
-                            }).toList()),
-                          ),
-                        ],
+                      SizedBox(
+                        height: 24.h,
                       ),
                     ],
                   ),
                 ),
-                _buildOrderSummary()
+                _buildOrderSummary(style)
               ],
             ),
           ),
@@ -102,7 +69,7 @@ class AddressListScreen extends StatelessWidget {
                   onTap: () {
                     context.pushNamed(AppRoutes.paymentPage);
                   },
-                  title: APPStrings.saveAddress.tr,
+                  title: APPStrings.strContinue.tr,
                 ),
                 const SizedBox(height: 16),
               ],
@@ -153,23 +120,19 @@ class AddressListScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ToggleBillingAndShippingSameState,
       builder: (context, state) {
         return SmartCheckbox(
-          height: 24,
-          width: 24,
           value: addressListBloc.isBillingAndShippingSame,
           onChanged: (value) {
             addressListBloc.add(const ToggleBillingAndShippingSameEvent());
           },
           label: APPStrings.billingAddressSame.tr,
-          labelStyle: style.isSameAddressStyle,
         );
       },
     );
   }
 
-  Widget _buildOrderSummary() {
+  Widget _buildOrderSummary(AddressListStyle style) {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
-      titleStyle: const TextStyle(fontSize: 24),
       isPromoCodeApplied: false,
       items: [
         // Here String come from API
@@ -178,6 +141,7 @@ class AddressListScreen extends StatelessWidget {
         OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
       ],
       totalPrice: "\$35,700.00",
+      totalStyle: style.footerTotalAmountStyle,
     );
   }
 }

@@ -20,6 +20,7 @@ class SmartButton extends StatelessWidget {
   final Color? activeImageColor;
   final Color? disableImageColor;
   final double? imageSize;
+  final BoxShadow? boxShadow;
 
   const SmartButton({
     super.key,
@@ -42,6 +43,7 @@ class SmartButton extends StatelessWidget {
     this.activeImageColor,
     this.disableImageColor,
     this.imageSize,
+    this.boxShadow,
   });
 
   @override
@@ -52,16 +54,16 @@ class SmartButton extends StatelessWidget {
       child: Container(
         margin: margin,
         decoration: BoxDecoration(
-          boxShadow: isShadow
-              ? <BoxShadow>[
-                  BoxShadow(
-                    color: style.activeBackgroundColor.withOpacity(0.9),
-                    blurRadius: 10.0.r,
-                    spreadRadius: -8.0,
-                    offset: const Offset(0.0, 8.0),
-                  )
-                ]
-              : null,
+          boxShadow: <BoxShadow>[
+            if (isShadow)
+              BoxShadow(
+                color: style.activeBackgroundColor.withOpacity(0.9),
+                blurRadius: 10.0.r,
+                spreadRadius: -8.0,
+                offset: const Offset(0.0, 8.0),
+              ),
+            if (boxShadow != null) boxShadow!
+          ],
           color: isEnabled
               ? (activeBackgroundColor ?? style.activeBackgroundColor)
               : (disableBackgroudColor ?? style.disableBackgroundColor), // Change the color when disabled

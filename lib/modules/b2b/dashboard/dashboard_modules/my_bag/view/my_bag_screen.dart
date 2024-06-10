@@ -16,7 +16,9 @@ class MyBagScreen extends StatelessWidget {
               title: APPStrings.myBag.tr,
               isBack: false,
               onFilter: () {},
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
             );
           },
         ),
@@ -77,7 +79,7 @@ class MyBagScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20.w),
-              SmartText("\$${bloc.totalPrice}", style: style.totalAmountStyle),
+              SmartText("\$35,700.00", style: style.totalAmountStyle),
             ],
           ),
           SizedBox(height: 16.h),
@@ -117,7 +119,7 @@ class MyBagScreen extends StatelessWidget {
             onEyeTap: () {},
             onTap: () {
               context.pushNamed(AppRoutes.productDetailsPage,
-                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault});
+                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productForRing});
             },
             productDetails: product,
             qualityOptionsList: product.cartProductQuality ?? [],
@@ -194,7 +196,7 @@ class MyBagScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          Divider(height: 1.h),
+          const Divider(),
         ],
       ),
     );
@@ -210,23 +212,27 @@ class MyBagScreen extends StatelessWidget {
           optionalPadding: EdgeInsets.only(left: 17.w),
         ),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Wrap(
-              direction: Axis.horizontal,
-              spacing: 12.w,
-              runSpacing: 12.2,
-              children: bloc.suggestedProductList.map((product) {
-                return ProductGridItem(
-                  margin: EdgeInsets.only(bottom: 17.h),
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  onAddToBagTap: () {},
-                  productDetails: product,
-                );
-              }).toList(),
+        Scrollbar(
+          controller: bloc.scrollController,
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            controller: bloc.scrollController,
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 12.w,
+                runSpacing: 12.2,
+                children: bloc.suggestedProductList.map((product) {
+                  return ProductGridItem(
+                    margin: EdgeInsets.only(bottom: 17.h),
+                    onEyeTap: () {},
+                    onFavTap: () {},
+                    productDetails: product,
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),

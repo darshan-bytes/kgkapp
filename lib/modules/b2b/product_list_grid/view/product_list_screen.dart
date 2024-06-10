@@ -14,7 +14,9 @@ class ProductListScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: bloc.appbarTitle,
-              onFavorite: () {},
+              onFavorite: () {
+                context.pushNamed(AppRoutes.wishListPage);
+              },
               onFilter: () {},
             );
           },
@@ -143,22 +145,20 @@ class ProductListScreen extends StatelessWidget {
                   /// If need to  product customization icon then remove onCancel voidCallback
                   return ProductGridItem(
                     productDetails: productDetails,
-                    isCustomisable:
-                        bloc.screenIdentifier == ScreenIdentifier.productListingForRing && bloc.productList[0] == productDetails,
-                    isOutOfStock: bloc.screenIdentifier == ScreenIdentifier.productListingForRing && bloc.productList[0] == productDetails,
-                    onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productListingForRing ? () {} : null,
+                    isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
+                    isOutOfStock: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
+                    onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
-                    isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productListingForRing,
+                    prefixImage: AppImages.icShoppingBag,
+                    imageSize: 16.w,
+                    isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productForRing,
                     onTap: () {
-                      if (bloc.screenIdentifier == ScreenIdentifier.productListingForRing) {
+                      if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.productId: productDetails.productId ?? '',
-                          RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
-                        });
+                          RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
                       } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage,
-                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
+                        context.pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                       }
                     },
                   );
@@ -175,12 +175,12 @@ class ProductListScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
-                isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productListingForRing && index == 0,
+                isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && index == 0,
                 onTap: () {
-                  if (bloc.screenIdentifier == ScreenIdentifier.productListingForRing) {
+                  if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                       RoutesData.productId: bloc.productList[index].productId ?? '',
-                      RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                      RoutesData.isPageFor: bloc.screenIdentifier
                     });
                   } else {
                     context.pushNamed(AppRoutes.diamondDetailPage);

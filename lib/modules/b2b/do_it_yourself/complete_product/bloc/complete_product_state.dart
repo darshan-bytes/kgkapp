@@ -44,3 +44,12 @@ class CompleteProductDiamondDetailsToggleState extends CompleteProductState {
   @override
   List<Object> get props => [isDiamondDetailsOpen];
 }
+
+class CompleteProductGemstoneDetailsToggleState extends CompleteProductState {
+  final bool isGemstoneDetailsOpen;
+
+  const CompleteProductGemstoneDetailsToggleState(this.isGemstoneDetailsOpen);
+
+  @override
+  List<Object> get props => [isGemstoneDetailsOpen];
+}

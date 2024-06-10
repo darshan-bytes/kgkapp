@@ -18,6 +18,8 @@ class ProductGridItem extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final bool isStoneWithPrice;
+  final String? prefixImage;
+  final double? imageSize;
 
   const ProductGridItem({
     super.key,
@@ -38,6 +40,8 @@ class ProductGridItem extends StatelessWidget {
     this.isStoneWithPrice = false,
     this.isCustomisable = false,
     this.isOutOfStock = false,
+    this.prefixImage,
+    this.imageSize,
   });
 
   @override
@@ -92,19 +96,18 @@ class ProductGridItem extends StatelessWidget {
               child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
             ),
           ),
-        if (isCustomisable)
-          Positioned(
-            top: 8,
-            right: 8,
-            child: Row(
-              children: [
-                if (isCustomisable && onCancelTap == null)
-                  buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-                if (onCancelTap != null)
-                  buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
-              ],
-            ),
+        Positioned(
+          top: 8,
+          right: 8,
+          child: Row(
+            children: [
+              if (isCustomisable && onCancelTap == null)
+                buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
+              if (onCancelTap != null)
+                buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
+            ],
           ),
+        ),
         Positioned(
           bottom: 8,
           right: 8,
@@ -161,37 +164,39 @@ class ProductGridItem extends StatelessWidget {
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: SmartText(
-                      productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: style.priceTextStyle,
+                  Expanded(
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        SmartText(
+                          productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+                          style: style.priceTextStyle,
+                          optionalPadding: EdgeInsets.only(right: 8.w),
+                        ),
+                        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+                          SmartText(
+                            productDetails.originalPrice,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: style.checkedPriceStyle,
+                          ),
+                        ]
+                      ],
                     ),
                   ),
-                  if (productDetails.offerPrice.isNotNullNorEmpty) ...[
-                    SizedBox(width: 10.w),
-                    Flexible(
-                      child: SmartText(
-                        productDetails.originalPrice,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: style.checkedPriceStyle,
-                      ),
-                    ),
-                  ] else ...[
-                    if (isStoneWithPrice)
-                      SmartImage(
-                        path: AppImages.icStone,
-                        height: 20.w,
-                        width: 20.w,
-                        fit: BoxFit.fill,
-                      )
-                  ],
+                  if (isStoneWithPrice)
+                    SmartImage(
+                      path: AppImages.icStone,
+                      height: 20.w,
+                      width: 20.w,
+                      fit: BoxFit.fill,
+                    )
                 ],
-              ),
+              )
             ],
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
@@ -210,7 +215,9 @@ class ProductGridItem extends StatelessWidget {
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,
                 title: APPStrings.addToBag.tr,
-                isShadow: true,
+                prefixImage: prefixImage,
+                isShadow: false,
+                imageSize: imageSize,
               ),
           ],
         ),

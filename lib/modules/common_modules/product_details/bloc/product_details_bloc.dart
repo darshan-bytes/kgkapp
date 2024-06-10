@@ -8,8 +8,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   bool isCustomisation = false;
-  ScreenIdentifier screenIdentifier = ScreenIdentifier.productDetailForDefault;
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselController controller = CarouselController();
+  final ScrollController youMayLikeScrollController = ScrollController();
+  final ScrollController recentViewScrollController = ScrollController();
 
   List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
@@ -94,31 +96,33 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   bool isRingDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> ringDetailsKey = GlobalKey();
   bool isDiamondDetailsOpen = false;
+  bool isGemstoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
+  GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
 
   List<ProductDetails> suggestedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0
-          ? "https://s3-alpha-sig.figma.com/img/0ba8/8350/c9044a7ca4c5737635c215d420bddce0?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XGyPVEIZPONfyOIm3dzVeBRwheWGhTu13CHbV3qHy7JmSqsbCkSI9gsbn0yyKnAZu0QsocO-siGscgeVTLh2kCU0yk-gvQdLAoU6~OieGjMkhYddOSqWrJwcX18ZzDkEX2YQn1g2X4Psh6MLOq9w0ugt2OuYqialfV8AEK6njZcIJthBraWtQTJBPxu2m4Y2t8q8GOUSNroW6cpJJP84R6wgx~SYuAtdOST~NWn9BQZxlLTT72sBX6A5hDdKKUuIwZ5W5MH52bPe8u4NwJ~XeayJKv2mebjlTFDTHDJITDBsMhDd9anziWhtXuiLXST2lSyz0oHwR2q0KQzlRcTy5A__"
-          : "https://s3-alpha-sig.figma.com/img/891f/a5e1/15a433edae27d4ac1983e4070c4f5358?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TWL6ZqLZZ6obSpBXhFz99wnVCHatZYEeglMeGWKUN9MGLpEW7y4bZGKrAM3ijc7umAR1uxFYMS7XGSlxj3RPboAr3kGYjQ73jHLEpKernHvEo95qqNtyf6pypP39lnoXI3aS-MPyICdXN-oRrkjKEHAzY14f~LuWa19aYx2ywDMIn3hMLgmlngUNGlWPaO1QcV1jHuhDA4PB-0DC28Rwv84aWpBhGs4L8yWl2aUFf5IiqPSML4kAClrZ9cSrx0SCq9S-50cvzYHO7EUk3nByRSs1g4M8cNS1CtOrKCnmqc015EXjcE8UXjpi43YzKU0Vkc9~VkJIFsJwnwNH9b9DpQ__",
+          ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
+          : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000.00",
+      originalPrice: "\$5,000.00",
     ),
   );
 
   List<ProductDetails> recentlyViewedProductList = List.generate(
     8,
     (index) => ProductDetails(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
       imageUrl: index % 2 == 0
-          ? "https://s3-alpha-sig.figma.com/img/e8d4/b8e6/871b736fbf2cea8eca4a9f90ac3c419d?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UhE~3IjAPdKYGRKMjokhqzHeadcdieYDtB9WPuek3ycMRvW0LteBBhrmKWzwPoAGQNp82xqTovtnOPrc4EoCSzGSsnnLrdwHdijnoUvGraxzbiYix60jqBvQNlz4M8xcBheWj13r9ITtlFkqexd0uuGbi8jDbQMWeWIykPWfgui8B-Io2NSl35qKqxmgw1nPN6pWeEfKFRaPSGZnPRZGu2Gxh~KhS6WjUvk6rTQCG92EUCIUSl6gRX8mvkUa~XfGtnkR-pvcOTYRwepxZkjVlRyAekO7WSg~w6pxP-PLwdzwGCrDWhC-5aWmjaRfL2~rpvTvdb1fC5NJe-qwWS97wA__"
-          : "https://s3-alpha-sig.figma.com/img/86b4/491b/425b79510ad32e0cd47e38d109c4bdc6?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=C0NlP7cRvU1~IIU0OGDYAG9Fx2D9uXaSvh0OyGwZmbuvwzxAebVL2y6ThV9c0N4tO5MunUS0NIyonwRoZOqB8wE-cqQNipxOTVADmwuRk6mUbMMsVWtzWZLHcSEtwnwU1jUhT7Voq4kTEPjyOOfO~0qSJ2HnEFk2eQHO82PvAz1eAdlnWFW9GmwtDas~SDlo7pnLUVjOU2V04yO8W10oHCOfABF7nRT5YRXgKSTgGH6LsqJvKuWzDNSYxcj3znME~TcDE-7GYc2fAFeHprcA1FOIQ2fYSglZzc~lhCXed8Knv97Iz4HJ0OTJh1cQsiRpuWNFoInbQHDtV0mhJOoCyw__",
+          ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
+          : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$ 5,000.00",
+      originalPrice: "\$5,000.00",
     ),
   );
 
@@ -128,14 +132,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
     on<ProductCustomizationChangeEvent>(_onOnProductCustomizationChange);
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
-    on<DiamondDetailsToggleEvent>(_onDiamondDetailsToggleEvent);
+    on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
+    on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
   }
 
   void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
     emit(ProductDetailsLoadingState());
     getScreenIdentifier(event.context);
 
-    if (screenIdentifier == ScreenIdentifier.productDetailForDiamonds) {
+    if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
@@ -158,9 +163,45 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           originalPrice: "\$ 5,000.00",
         ),
       );
+    } else if (screenIdentifier == ScreenIdentifier.diamondForGemstones) {
+      productCustomizations.clear();
+      imgList.clear();
+      suggestedProductList.clear();
+      recentlyViewedProductList.clear();
+
+      imgList = [
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+      ];
+
+      recentlyViewedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
+
+      suggestedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
     }
 
-    productName = screenIdentifier == ScreenIdentifier.productDetailForDefault ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
+    productName = screenIdentifier == ScreenIdentifier.productForRing ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
@@ -170,7 +211,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ProductCustomizationOptions(
           id: productCustomizations.length.toString(),
           name: APPStrings.head.tr,
-          type: ProductCustomizationType.image.value,
+          type: ProductCustomizationType.head.value,
           selectedValue:
               ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
           values: [
@@ -186,8 +227,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     productDetails = ProductDetails(
       productId: productId,
       name: productName,
-      offerPrice: '\$ 1200.00',
-      originalPrice: '\$ 1600.00',
+      offerPrice: '\$1200.00',
+      originalPrice: '\$1600.00',
       discountPercentage: '(3% OFF)',
     );
     emit(ProductDetailsLoadedState(productDetails!));
@@ -195,7 +236,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
-    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productDetailForDefault;
+    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
   }
 
   void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {
@@ -221,8 +262,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(RingDetailsToggleState(isRingDetailsOpen));
   }
 
-  void _onDiamondDetailsToggleEvent(DiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
+  void _onProductDiamondDetailsToggleEvent(ProductDiamondDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
     isDiamondDetailsOpen = !isDiamondDetailsOpen;
-    emit(DiamondDetailsToggleState(isDiamondDetailsOpen));
+    emit(ProductDiamondDetailsToggleState(isDiamondDetailsOpen));
+  }
+
+  void _onGemstoneDetailsToggleEvent(GemstoneDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
+    isGemstoneDetailsOpen = !isGemstoneDetailsOpen;
+    emit(GemstoneDetailsToggleState(isGemstoneDetailsOpen));
   }
 }

@@ -78,7 +78,10 @@ class CompareProductScreen extends StatelessWidget {
                                           height: 48.h,
                                           width: 114.w,
                                           alignment: Alignment.center,
-                                          child: SmartText(APPStrings.remove.tr, style: style.productRemoveStyle),
+                                          child: Icon(
+                                            Icons.delete_forever,
+                                            color: style.primaryColor,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -131,7 +134,7 @@ class CompareProductScreen extends StatelessWidget {
           _buildProductDetailWidgets(index, APPStrings.productType.tr, "Engagement Ring", style),
           _buildProductDetailWidgets(index, APPStrings.metalType.tr, "Platinum", style),
           _buildProductDetailWidgets(index, APPStrings.settingType.tr, "Micropave Halo", style),
-          _buildProductDetailWidgets(index, APPStrings.metalType.tr, "Diamond 0.31 Cts H/I/SI2", style),
+          _buildProductDetailWidgets(index, APPStrings.meleeWeight.tr, "Diamond 0.31 Cts H/I/SI2", style),
           _buildProductDetailWidgets(index, APPStrings.certified.tr, "Oval 11 Certified Diamond 1.200 Cts H-SI1 GIA/6412091876", style,
               textHeight: 100, maxLines: 5),
           Column(
@@ -150,7 +153,7 @@ class CompareProductScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
-              Divider(height: 1.h),
+              const Divider(),
               SizedBox(height: 8.h),
               SmartText(
                 '4.0',
@@ -194,7 +197,7 @@ class CompareProductScreen extends StatelessWidget {
         ),
       ),
       SizedBox(height: 8.h),
-      Divider(height: 1.h),
+      const Divider(),
       SizedBox(height: 8.h),
       Container(
         margin: EdgeInsets.only(right: 12.w),

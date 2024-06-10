@@ -21,6 +21,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 8.h),
           _buildAppBar(context, style),
           Flexible(
             child: SingleChildScrollView(
@@ -39,7 +40,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
                         ],
                         _buildProductDetailsView(bloc, style),
                         SizedBox(height: 16.h),
-                        _buildButtons(),
+                        _buildButtons(context),
                         SizedBox(height: 16.h),
                         _buildActionGrid(style),
                         SizedBox(height: 16.h),
@@ -83,11 +84,11 @@ class ProductMenuBottomSheet extends StatelessWidget {
       SizedBox(height: 12.h),
       _buildProductDetailsItem(APPStrings.averageDiscount.tr, '15%', '', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.round.tr, '3 ct', '\$30,000.00', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.oval.tr, '3 ct', '\$30,000.00', style),
       SizedBox(height: 12.h),
-      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000', style),
+      _buildProductDetailsItem(APPStrings.marquise.tr, '3 ct', '\$30,000.00', style),
     ];
   }
 
@@ -140,12 +141,32 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildButtons() {
+  Widget _buildButtons(BuildContext context) {
     return Column(
       children: [
         SmartButton(onTap: () {}, title: APPStrings.addToBag.tr),
         SizedBox(height: 8.h),
-        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr),
+        SmartButton(
+            onTap: () {
+              context.pop();
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(6.w),
+                    topRight: Radius.circular(6.w),
+                  ),
+                ),
+                builder: (context) => QuotationRequestConfirmation(
+                  onContinueShopping: () {
+                    context.pop();
+                  },
+                ),
+              );
+            },
+            title: APPStrings.buyNow.tr),
       ],
     );
   }
