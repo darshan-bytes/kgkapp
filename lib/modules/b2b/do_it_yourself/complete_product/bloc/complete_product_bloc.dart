@@ -6,6 +6,8 @@ part 'complete_product_state.dart';
 
 class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductState> {
   int current = 0;
+  bool isGemstoneDetailsOpen = false;
+  GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
   final CarouselController controller = CarouselController();
   final List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
@@ -26,7 +28,8 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
     on<CompleteProductImageChangeEvent>(_onCompleteProductImageChangeEvent);
     on<CompleteProductCompareToggle>(_onCompleteProductCompareToggle);
     on<ProductRingDetailsToggleEvent>(_onProductRingDetailsToggleEvent);
-    on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
+    on<CompleteProductDiamondDetailsToggleEvent>(_onCompleteProductDiamondDetailsToggleEvent);
+    on<CompleteProductGemstoneDetailsToggleEvent>(_onCompleteProductGemstoneDetailsToggleEvent);
   }
 
   void _onCompleteProductImageChangeEvent(CompleteProductImageChangeEvent event, Emitter<CompleteProductState> emit) {
@@ -44,8 +47,13 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
     emit(CompleteProductRingDetailsToggleState(isRingDetailsOpen));
   }
 
-  void _onProductDiamondDetailsToggleEvent(ProductDiamondDetailsToggleEvent event, Emitter<CompleteProductState> emit) {
-    isDiamondDetailsOpen = event.isDiamondDetailsOpen;
+  void _onCompleteProductDiamondDetailsToggleEvent(CompleteProductDiamondDetailsToggleEvent event, Emitter<CompleteProductState> emit) {
+    isDiamondDetailsOpen = !isDiamondDetailsOpen;
     emit(CompleteProductDiamondDetailsToggleState(isDiamondDetailsOpen));
+  }
+
+  void _onCompleteProductGemstoneDetailsToggleEvent(CompleteProductGemstoneDetailsToggleEvent event, Emitter<CompleteProductState> emit) {
+    isGemstoneDetailsOpen = !isGemstoneDetailsOpen;
+    emit(CompleteProductGemstoneDetailsToggleState(isGemstoneDetailsOpen));
   }
 }

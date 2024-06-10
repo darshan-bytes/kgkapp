@@ -19,12 +19,18 @@ class ResetPasswordScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SmartButton(
-              margin: EdgeInsets.symmetric(horizontal: 17.w),
-              onTap: () {
-                context.popUntil((route) => route.settings.name == AppRoutes.signInPage);
+            BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+              buildWhen: (previous, current) => current is ResetPasswordChangedState || current is ResetPasswordConfirmChangedState,
+              builder: (context, state) {
+                return SmartButton(
+                  isEnabled: resetPasswordBloc.isFormFilled,
+                  margin: EdgeInsets.symmetric(horizontal: 17.w),
+                  onTap: () {
+                    context.popUntil((route) => route.settings.name == AppRoutes.signInPage);
+                  },
+                  title: APPStrings.confirmAndLogIn.tr,
+                );
               },
-              title: APPStrings.confirmAndLogIn.tr,
             ),
             SizedBox(height: 16.h),
           ],
@@ -53,27 +59,23 @@ class ResetPasswordScreen extends StatelessWidget {
                         controller: resetPasswordBloc.newPasswordController,
                         labelText: APPStrings.newPassword.tr,
                         hintText: APPStrings.newPassword.tr,
-                        lableStyle: style.labelStyle,
+                        labelStyle: style.labelStyle,
                         obscured: true,
                         keyboardType: TextInputType.visiblePassword,
+                        focusNode: resetPasswordBloc.newPasswordFocusNode,
                         nextFocus: resetPasswordBloc.confirmPasswordFocusNode,
-                        onEditingComplete: () {
-                          FocusScope.of(context).nextFocus();
-                        },
+                        textInputAction: TextInputAction.next,
                       ),
                       SizedBox(height: 16.h),
                       SmartTextField(
                         controller: resetPasswordBloc.confirmPasswordController,
                         labelText: APPStrings.confirmPassword.tr,
                         hintText: APPStrings.confirmPassword.tr,
-                        lableStyle: style.labelStyle,
+                        labelStyle: style.labelStyle,
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
                         obscured: true,
                         focusNode: resetPasswordBloc.confirmPasswordFocusNode,
-                        onEditingComplete: () {
-                          FocusScope.of(context).nextFocus();
-                        },
                       ),
                     ],
                   ),

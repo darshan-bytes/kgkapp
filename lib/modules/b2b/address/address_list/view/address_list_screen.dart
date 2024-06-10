@@ -34,6 +34,8 @@ class AddressListScreen extends StatelessWidget {
                             isSelected: false,
                             title: APPStrings.addAddress.tr,
                             image: AppImages.icPlus,
+                            selectedButtonBorderColor: style.whiteColor,
+                            unselectedButtonBorderColor: style.whiteColor,
                           ),
                         ],
                       ),
@@ -87,7 +89,7 @@ class AddressListScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                _buildOrderSummary()
+                _buildOrderSummary(style)
               ],
             ),
           ),
@@ -153,23 +155,19 @@ class AddressListScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ToggleBillingAndShippingSameState,
       builder: (context, state) {
         return SmartCheckbox(
-          height: 24,
-          width: 24,
           value: addressListBloc.isBillingAndShippingSame,
           onChanged: (value) {
             addressListBloc.add(const ToggleBillingAndShippingSameEvent());
           },
           label: APPStrings.billingAddressSame.tr,
-          labelStyle: style.isSameAddressStyle,
         );
       },
     );
   }
 
-  Widget _buildOrderSummary() {
+  Widget _buildOrderSummary(AddressListStyle style) {
     return OrderSummary(
       title: APPStrings.priceDetails.tr,
-      titleStyle: const TextStyle(fontSize: 24),
       isPromoCodeApplied: false,
       items: [
         // Here String come from API
@@ -178,6 +176,7 @@ class AddressListScreen extends StatelessWidget {
         OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
       ],
       totalPrice: "\$35,700.00",
+      totalStyle: style.footerTotalAmountStyle,
     );
   }
 }

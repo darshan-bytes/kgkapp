@@ -547,6 +547,10 @@ class SettingDetailScreenStyle {
   final TextStyle settingTypeStyle;
   final TextStyle settingValueStyle;
   final TextStyle settingHeaderStyle;
+  final Color selectedSettingBorderColor;
+  final Color settingSelectionButtonColor;
+  final TextStyle settingSelectionValueStyle;
+  final TextStyle selectedSettingStyle;
 
   SettingDetailScreenStyle({
     required this.ringTypeStyle,
@@ -567,6 +571,10 @@ class SettingDetailScreenStyle {
     required this.settingTypeStyle,
     required this.settingValueStyle,
     required this.settingHeaderStyle,
+    required this.selectedSettingBorderColor,
+    required this.settingSelectionButtonColor,
+    required this.settingSelectionValueStyle,
+    required this.selectedSettingStyle,
   });
 }
 
@@ -790,6 +798,7 @@ class OrderSummaryStyle {
   final Color backgroundColor;
   final TextStyle orderSummaryTitleStyle;
   final TextStyle orderSummaryItemStyle;
+  final TextStyle orderSummaryItemValueStyle;
   final TextStyle addPromoCodeStyle;
   final TextStyle totalPriceStyle;
 
@@ -799,6 +808,7 @@ class OrderSummaryStyle {
     required this.orderSummaryItemStyle,
     required this.addPromoCodeStyle,
     required this.totalPriceStyle,
+    required this.orderSummaryItemValueStyle,
   });
 }
 
@@ -944,15 +954,20 @@ class AddressSelectionStyle {
 
 class AddressListStyle {
   final Color backgroundColor;
+  final Color whiteColor;
   final Color arrowColor;
   final TextStyle isSameAddressStyle;
   final TextStyle nProductsTitleStyle;
+
+  final TextStyle footerTotalAmountStyle;
 
   AddressListStyle({
     required this.backgroundColor,
     required this.arrowColor,
     required this.isSameAddressStyle,
     required this.nProductsTitleStyle,
+    required this.footerTotalAmountStyle,
+    required this.whiteColor,
   });
 }
 

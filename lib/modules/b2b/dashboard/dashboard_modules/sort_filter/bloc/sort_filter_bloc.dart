@@ -8,6 +8,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   List<SortData> sortData = [
     SortData(name: APPStrings.whatsNew.tr, code: 'new'),
     SortData(name: APPStrings.discount.tr, code: 'discount'),
+    SortData(name: APPStrings.popularity.tr, code: 'popularity'),
     SortData(name: APPStrings.priceHighToLow.tr, code: 'price_asc'),
     SortData(name: APPStrings.priceLowToHigh.tr, code: 'price_desc'),
   ];

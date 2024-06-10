@@ -71,7 +71,7 @@ class OrderSummary extends StatelessWidget {
           style: style.orderSummaryItemStyle,
         )),
         SizedBox(width: 17.w),
-        SmartText(item.value, style: style.orderSummaryItemStyle),
+        SmartText(item.value, style: style.orderSummaryItemValueStyle),
       ],
     );
   }

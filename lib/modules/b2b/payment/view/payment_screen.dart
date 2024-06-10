@@ -49,9 +49,7 @@ class PaymentScreen extends StatelessWidget {
                           APPStrings.total.tr,
                           style: style.footerTotalStyle,
                         ),
-                        SizedBox(
-                          width: 8.w,
-                        ),
+                        SizedBox(width: 8.w),
                         SmartText(
                           '\$35,700.00',
                           style: style.footerTotalAmountStyle,
@@ -59,8 +57,7 @@ class PaymentScreen extends StatelessWidget {
                         const Spacer(),
                         SmartButton(
                           onTap: () {
-                            // TODO: Implement place order
-                            // context.pushNamed(AppRoutes.orderSuccessPage);
+                            context.pushNamed(AppRoutes.orderConfirmationPage, arguments: {RoutesData.orderNumber: "3000000049"});
                           },
                           title: APPStrings.placeOrder.tr,
                           width: 168.w,
@@ -127,7 +124,7 @@ class PaymentScreen extends StatelessWidget {
         OrderSummaryItem(title: APPStrings.shipping.tr, value: "\$0.00"),
         OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
       ],
-      totalStyle: style.footerTotalAmountStyle,
+      // totalStyle: style.footerTotalAmountStyle,
       totalPrice: "\$35,700.00",
     );
   }
