@@ -6,6 +6,7 @@ class CompareProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CompareProductStyle style = AppTheme.of(context).compareProductStyle;
+    final bloc = BlocProvider.of<CompareProductBloc>(context);
     return Scaffold(
         appBar: SmartAppBar(
           title: APPStrings.compareProduct.tr,
@@ -22,9 +23,7 @@ class CompareProductScreen extends StatelessWidget {
                     children: [
                       Table(
                         defaultColumnWidth: const IntrinsicColumnWidth(),
-                        columnWidths: {
-                          0: FixedColumnWidth(124.w),
-                        },
+                        columnWidths: bloc.generateTableColumnWidths(5, 124.w),
                         children: [_buildTableRow(style)],
                       ),
                       SizedBox(
@@ -53,9 +52,7 @@ class CompareProductScreen extends StatelessWidget {
                   ),
                   child: Table(
                     defaultColumnWidth: const IntrinsicColumnWidth(),
-                    columnWidths: {
-                      0: FixedColumnWidth(124.w),
-                    },
+                    columnWidths: bloc.generateTableColumnWidths(5, 124.w),
                     children: [
                       TableRow(
                           children: List.generate(
@@ -81,7 +78,10 @@ class CompareProductScreen extends StatelessWidget {
                                           height: 48.h,
                                           width: 114.w,
                                           alignment: Alignment.center,
-                                          child: SmartText(APPStrings.remove.tr, style: style.productRemoveStyle),
+                                          child: Icon(
+                                            Icons.delete_forever,
+                                            color: style.primaryColor,
+                                          ),
                                         ),
                                       ),
                                     ],

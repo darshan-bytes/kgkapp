@@ -190,7 +190,13 @@ class DiamondListingScreen extends StatelessWidget {
                     productDetails: productDetails,
                     isStoneWithPrice: true,
                     onTap: () {
-                      context.pushNamed(AppRoutes.diamondDetailPage);
+                      if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY) {
+                        context.pushNamed(AppRoutes.diamondDetailPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDIY});
+                      } else {
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
+                      }
                     },
                     onEyeTap: () {},
                     onFavTap: () {},
@@ -219,8 +225,18 @@ class DiamondListingScreen extends StatelessWidget {
                           onTapCertificate: () => printWrapped("onTapCertificate"),
                           onTapImageViewer: () => printWrapped("onTapImageViewer"),
                           onTapUSA: () => printWrapped("onTapUSA"),
-                          onTapMenuButton: () => printWrapped("onTapMenuButton"),
+                          onTapMenuButton: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              useSafeArea: true,
+                              builder: (context) => const ProductMenuBottomSheet(),
+                            );
+                          },
                           isSelectedBackground: (index % 2 != 0),
+                          onTap: () {
+                            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+                          },
                           productDetails: ProductDetails(
                             productInfoClarityChat: ProductInfoClarityChat(
                               productId: "1",

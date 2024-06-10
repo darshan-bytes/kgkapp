@@ -375,20 +375,26 @@ class AuctionScreen extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Wrap(
-            direction: Axis.horizontal,
-            spacing: 12.w,
-            runSpacing: 12.2.w,
-            children: bloc.youMayAlisLikeProductList.map((product) {
-              return ProductGridItem(
-                margin: EdgeInsets.only(bottom: 17.h),
-                onEyeTap: () {},
-                onFavTap: () {},
-                productDetails: product,
-                isStoneWithPrice: true,
-              );
-            }).toList(),
+          child: Scrollbar(
+            thumbVisibility: true,
+            trackVisibility: true,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 12,
+                runSpacing: 12.2,
+                children: bloc.youMayAlisLikeProductList.map((product) {
+                  return ProductGridItem(
+                    margin: EdgeInsets.only(bottom: 17.h),
+                    onEyeTap: () {},
+                    onFavTap: () {},
+                    productDetails: product,
+                    isStoneWithPrice: true,
+                  );
+                }).toList(),
+              ),
+            ),
           ),
         ),
       ],
@@ -465,6 +471,7 @@ class AuctionScreen extends StatelessWidget {
                           height: 48.w,
                           child: TextFormField(
                             decoration: InputDecoration(
+                                hintText: '',
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                                   borderSide: BorderSide(color: style.textFieldBorderColor),

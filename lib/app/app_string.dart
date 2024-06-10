@@ -336,4 +336,5 @@ class APPStrings {
   static const String hasBeenPlaced = 'has_been_placed';
   static const String diamondDetails = 'diamond_details';
   static const String productDetails = 'product_details';
+  static const String strContinue = 'continue';
 }

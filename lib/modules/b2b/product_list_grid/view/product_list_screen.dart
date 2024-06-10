@@ -150,6 +150,8 @@ class ProductListScreen extends StatelessWidget {
                     onAddToBagTap: bloc.fromRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
+                    prefixImage: AppImages.icShoppingBag,
+                    imageSize: 16.w,
                     onTap: () {
                       if (bloc.fromRing) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {

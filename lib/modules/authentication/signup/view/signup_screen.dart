@@ -262,9 +262,8 @@ class SignUpScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  suffixIcon: signUpBloc.isIndividual || (signUpBloc.contactNumberControllers.length == 1)
-                      ? null
-                      : IconButton(
+                  suffixIcon: (!signUpBloc.isIndividual && index > 0)
+                      ? IconButton(
                           onPressed: () {
                             signUpBloc.add(SignUpRemoveContactEvent(index));
                           },
@@ -273,14 +272,15 @@ class SignUpScreen extends StatelessWidget {
                             height: 16.w,
                             width: 16.w,
                           ),
-                        ),
+                        )
+                      : null,
                 );
               },
               separatorBuilder: (_, __) {
                 return SizedBox(height: 8.h);
               },
             ),
-            if (!signUpBloc.isIndividual) ...[
+            if (!signUpBloc.isIndividual && signUpBloc.contactNumberControllers.length < 2) ...[
               SizedBox(height: 8.h),
               SmartText(
                 APPStrings.add.tr,

@@ -436,6 +436,7 @@ class LightModeTheme extends AppTheme {
         productPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         productReviewStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         productRemoveStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        primaryColor: colors.primary,
       );
 
   @override

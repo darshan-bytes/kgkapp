@@ -269,17 +269,17 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds) ...[
+            SizedBox(height: 24.h),
+            const Divider(),
+            _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+          ],
           SizedBox(height: 24.h),
           const InquiryWidget(
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds) ...[
-            SizedBox(height: 14.h),
-            const Divider(),
-            _diamondDetails(productDetailsBloc, style),
-            const Divider(),
-          ],
           SizedBox(height: 32.h),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
             const ProductReviewsDetails(),
@@ -534,22 +534,25 @@ class ProductDetailsScreen extends StatelessWidget {
       children: [
         SmartText(APPStrings.youMayAlsoLike.tr, style: style.customerReviewTitleStyle),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Wrap(
-            direction: Axis.horizontal,
-            spacing: 12.0,
-            runSpacing: 12,
-            children: List.generate(productDetailsBloc.suggestedProductList.length, (index) {
-              ProductDetails product = productDetailsBloc.suggestedProductList[index];
-              return ProductGridItem(
-                margin: EdgeInsets.only(bottom: 17.h),
-                onEyeTap: () {},
-                onFavTap: () {},
-                productDetails: product,
-                isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds,
-              );
-            }),
+        Scrollbar(
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              direction: Axis.horizontal,
+              spacing: 12.0,
+              runSpacing: 12,
+              children: List.generate(productDetailsBloc.suggestedProductList.length, (index) {
+                ProductDetails product = productDetailsBloc.suggestedProductList[index];
+                return ProductGridItem(
+                  margin: EdgeInsets.only(bottom: 17.h),
+                  onEyeTap: () {},
+                  onFavTap: () {},
+                  productDetails: product,
+                  isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds,
+                );
+              }),
+            ),
           ),
         ),
       ],
@@ -562,21 +565,24 @@ class ProductDetailsScreen extends StatelessWidget {
       children: [
         SmartText(APPStrings.recentlyViewed.tr, style: style.customerReviewTitleStyle),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Wrap(
-            direction: Axis.horizontal,
-            spacing: 12.0,
-            runSpacing: 12,
-            children: List.generate(productDetailsBloc.recentlyViewedProductList.length, (index) {
-              ProductDetails product = productDetailsBloc.recentlyViewedProductList[index];
-              return ProductGridItem(
-                margin: EdgeInsets.only(bottom: 17.h),
-                onEyeTap: () {},
-                onFavTap: () {},
-                productDetails: product,
-              );
-            }),
+        Scrollbar(
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              direction: Axis.horizontal,
+              spacing: 12.0,
+              runSpacing: 12,
+              children: List.generate(productDetailsBloc.recentlyViewedProductList.length, (index) {
+                ProductDetails product = productDetailsBloc.recentlyViewedProductList[index];
+                return ProductGridItem(
+                  margin: EdgeInsets.only(bottom: 17.h),
+                  onEyeTap: () {},
+                  onFavTap: () {},
+                  productDetails: product,
+                );
+              }),
+            ),
           ),
         ),
       ],

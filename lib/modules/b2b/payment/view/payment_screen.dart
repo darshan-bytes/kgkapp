@@ -5,7 +5,6 @@ class PaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<PaymentBloc>(context);
     final style = AppTheme.of(context).paymentStyle;
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.checkout.tr),
