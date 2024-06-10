@@ -86,6 +86,8 @@ class APPStrings {
   //product list grid
   static const String previous = 'previous';
   static const String next = 'next';
+  static const String precious = 'precious';
+  static const String semi_precious = 'semi_precious';
 
   //Product item
   static const String addToBag = 'add_to_bag';

@@ -20,7 +20,7 @@ class DiamondDetailScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY)
+                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
                   const DiyProgressWidget(
                     selectedStep: 1,
                   ),

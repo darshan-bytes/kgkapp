@@ -6,7 +6,6 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final WishlistBloc bloc = BlocProvider.of<WishlistBloc>(context);
-    final WishListStyle wishlistStyle = AppTheme.of(context).wishListStyle;
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.myWishlist.tr,

@@ -33,7 +33,7 @@ class ProductDetailsScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ProductDetailsLoadedState,
       builder: (context, state) {
         return Container(
-          decoration: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+          decoration: productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing
               ? null
               : BoxDecoration(
                   color: Colors.white,
@@ -221,14 +221,14 @@ class ProductDetailsScreen extends StatelessWidget {
           _buildPriceDetails(style, productDetailsBloc),
           Divider(height: 48.h),
           _buildCustomizationList(productDetailsBloc),
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) Divider(height: 48.h),
-          if (!productDetailsBloc.isCustomisation && productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) Divider(height: 48.h),
+          if (!productDetailsBloc.isCustomisation && productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             ProductCustomiseDescriptionWidget(
               onTap: () {
                 context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                   RoutesData.isCustomisationPage: true,
                   RoutesData.productId: productDetailsBloc.productDetails?.productId,
-                  RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                  RoutesData.isPageFor: productDetailsBloc.screenIdentifier
                 });
               },
             ),
@@ -259,7 +259,7 @@ class ProductDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _ringDetails(productDetailsBloc, style),
@@ -269,7 +269,7 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
@@ -281,7 +281,7 @@ class ProductDetailsScreen extends StatelessWidget {
             phone: '+91 - 1234567830',
           ),
           SizedBox(height: 32.h),
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             const ProductReviewsDetails(),
             SizedBox(height: 32.h),
             ListView.separated(
@@ -297,7 +297,8 @@ class ProductDetailsScreen extends StatelessWidget {
             SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(productDetailsBloc, style),
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing ||
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.diamondForGemstones) ...[
             SizedBox(height: 32.h),
             _buildRecentlyViewedProductList(productDetailsBloc, style),
           ]
@@ -307,7 +308,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _productTypeAndCode(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
-    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(
             children: [
               SmartText('Martin Flyer', style: style.productTypeStyle),
@@ -364,7 +365,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildPriceDetails(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
-    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+    return productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(
             children: [
               SmartText('\$1200.00', style: style.priceStyle),
@@ -447,7 +448,7 @@ class ProductDetailsScreen extends StatelessWidget {
             initiallyExpanded: productDetailsBloc.isDiamondDetailsOpen,
             key: productDetailsBloc.diamondDetailsKey,
             title: SmartText(
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDefault
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing
                   ? APPStrings.diamondDetails.tr
                   : APPStrings.productDetails.tr,
               style: style.settingSelectionTitleStyle,
@@ -535,8 +536,10 @@ class ProductDetailsScreen extends StatelessWidget {
         SmartText(APPStrings.youMayAlsoLike.tr, style: style.customerReviewTitleStyle),
         SizedBox(height: 16.h),
         Scrollbar(
+          controller: productDetailsBloc.youMayLikeScrollController,
           thumbVisibility: true,
           child: SingleChildScrollView(
+            controller: productDetailsBloc.youMayLikeScrollController,
             scrollDirection: Axis.horizontal,
             child: Wrap(
               direction: Axis.horizontal,
@@ -549,7 +552,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   onEyeTap: () {},
                   onFavTap: () {},
                   productDetails: product,
-                  isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productDetailForDiamonds,
+                  isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds,
                 );
               }),
             ),
@@ -566,9 +569,11 @@ class ProductDetailsScreen extends StatelessWidget {
         SmartText(APPStrings.recentlyViewed.tr, style: style.customerReviewTitleStyle),
         SizedBox(height: 16.h),
         Scrollbar(
+          controller: productDetailsBloc.recentViewScrollController,
           thumbVisibility: true,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            controller: productDetailsBloc.recentViewScrollController,
             child: Wrap(
               direction: Axis.horizontal,
               spacing: 12.0,

@@ -274,5 +274,7 @@
   "has_been_placed": " has been placed",
   "diamond_details": "Diamond details",
   "product_details": "Product details",
-  "continue": "Continue"
+  "continue": "Continue",
+  "precious": "Precious",
+  "semi_precious": "Semi Precious"
 }

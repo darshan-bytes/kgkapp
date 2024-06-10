@@ -13,6 +13,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
 
   TextEditingController bidAmountController = TextEditingController();
   final CarouselController controller = CarouselController();
+  final ScrollController listScrollController = ScrollController();
   final ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey();
 

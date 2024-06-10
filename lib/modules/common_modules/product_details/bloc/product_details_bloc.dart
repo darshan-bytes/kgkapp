@@ -8,8 +8,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   bool isCustomisation = false;
-  ScreenIdentifier screenIdentifier = ScreenIdentifier.productDetailForDefault;
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselController controller = CarouselController();
+  final ScrollController youMayLikeScrollController = ScrollController();
+  final ScrollController recentViewScrollController = ScrollController();
 
   List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
@@ -138,7 +140,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(ProductDetailsLoadingState());
     getScreenIdentifier(event.context);
 
-    if (screenIdentifier == ScreenIdentifier.productDetailForDiamonds) {
+    if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
@@ -161,9 +163,45 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           originalPrice: "\$ 5,000.00",
         ),
       );
+    } else if (screenIdentifier == ScreenIdentifier.diamondForGemstones) {
+      productCustomizations.clear();
+      imgList.clear();
+      suggestedProductList.clear();
+      recentlyViewedProductList.clear();
+
+      imgList = [
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+        "https://i.ibb.co/477f41r/Group-1410089379.png",
+      ];
+
+      recentlyViewedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
+
+      suggestedProductList = List.generate(
+        8,
+        (index) => ProductDetails(
+          diamond: "1.5 gram",
+          gram: "1.5 gram",
+          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
+          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          originalPrice: "\$ 5,000.00",
+        ),
+      );
     }
 
-    productName = screenIdentifier == ScreenIdentifier.productDetailForDefault ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
+    productName = screenIdentifier == ScreenIdentifier.productForRing ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
@@ -198,7 +236,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
-    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productDetailForDefault;
+    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
   }
 
   void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {

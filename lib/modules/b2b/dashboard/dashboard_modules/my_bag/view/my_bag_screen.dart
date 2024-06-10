@@ -119,7 +119,7 @@ class MyBagScreen extends StatelessWidget {
             onEyeTap: () {},
             onTap: () {
               context.pushNamed(AppRoutes.productDetailsPage,
-                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault});
+                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productForRing});
             },
             productDetails: product,
             qualityOptionsList: product.cartProductQuality ?? [],
@@ -213,8 +213,10 @@ class MyBagScreen extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         Scrollbar(
+          controller: bloc.scrollController,
           thumbVisibility: true,
           child: SingleChildScrollView(
+            controller: bloc.scrollController,
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 17.w),

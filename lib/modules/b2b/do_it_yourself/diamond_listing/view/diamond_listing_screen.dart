@@ -66,8 +66,8 @@ class DiamondListingScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: Column(
               children: [
-                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY) SizedBox(height: 16.h),
-                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY)
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
+                if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
                   const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
                 SizedBox(height: 24.h),
                 _buildSelectionDiamond(diamondListingBloc),
@@ -90,7 +90,7 @@ class DiamondListingScreen extends StatelessWidget {
         Expanded(
           child: SelectionButton(
             isSelected: diamondListingBloc.isIndividual,
-            title: APPStrings.naturalDiamond.tr,
+            title: diamondListingBloc.tabOneTitle,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(true));
@@ -100,7 +100,7 @@ class DiamondListingScreen extends StatelessWidget {
         Expanded(
           child: SelectionButton(
             isSelected: !diamondListingBloc.isIndividual,
-            title: APPStrings.looseDiamond.tr,
+            title: diamondListingBloc.tabTwoTitle,
             borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
             onTap: () {
               diamondListingBloc.add(const DiamondChangeTypeEvent(false));
@@ -190,12 +190,15 @@ class DiamondListingScreen extends StatelessWidget {
                     productDetails: productDetails,
                     isStoneWithPrice: true,
                     onTap: () {
-                      if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondListingForDIY) {
-                        context.pushNamed(AppRoutes.diamondDetailPage,
-                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDIY});
+                      if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
+                        context
+                            .pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                      } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                        context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else {
                         context.pushNamed(AppRoutes.productDetailsPage,
-                            arguments: {RoutesData.isPageFor: ScreenIdentifier.productDetailForDiamonds});
+                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       }
                     },
                     onEyeTap: () {},
@@ -209,7 +212,7 @@ class DiamondListingScreen extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondDetailForDIY
+              itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
                   ? ProductListItem(
                       margin: EdgeInsets.only(bottom: 17.h),
                       onEyeTap: () {},

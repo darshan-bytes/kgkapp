@@ -13,7 +13,7 @@ class AuctionScreen extends StatelessWidget {
         onFavorite: () {},
       ),
       body: ListView(
-        controller: bloc.scrollController,
+        controller: bloc.listScrollController,
         shrinkWrap: true,
         children: [
           _buildImageSlider(bloc),
@@ -376,10 +376,11 @@ class AuctionScreen extends StatelessWidget {
         SizedBox(height: 16.h),
         SingleChildScrollView(
           child: Scrollbar(
+            controller: bloc.scrollController,
             thumbVisibility: true,
-            trackVisibility: true,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+              controller: bloc.scrollController,
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 12,

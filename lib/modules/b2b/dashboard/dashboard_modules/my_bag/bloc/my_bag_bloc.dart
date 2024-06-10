@@ -7,6 +7,7 @@ part 'my_bag_state.dart';
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool selectAllProduct = false;
   int selectedProductCount = 0;
+  final ScrollController scrollController = ScrollController();
 
   int get totalProductCount => myBagProductList.length;
 

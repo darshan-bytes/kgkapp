@@ -6,7 +6,7 @@ class CompareProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CompareProductStyle style = AppTheme.of(context).compareProductStyle;
-    final bloc = BlocProvider.of<CompareProductBloc>(context);
+    final CompareProductBloc bloc = BlocProvider.of<CompareProductBloc>(context);
     return Scaffold(
         appBar: SmartAppBar(
           title: APPStrings.compareProduct.tr,

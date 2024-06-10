@@ -13,7 +13,7 @@ class ProductListScreen extends StatelessWidget {
         child: BlocBuilder<ProductListBloc, ProductListState>(
           builder: (context, state) {
             return SmartAppBar(
-              title: APPStrings.ring.tr,
+              title: bloc.appbarTitle,
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
@@ -145,22 +145,20 @@ class ProductListScreen extends StatelessWidget {
                   /// If need to  product customization icon then remove onCancel voidCallback
                   return ProductGridItem(
                     productDetails: productDetails,
-                    isCustomisable: bloc.productList[0] == productDetails,
-                    isOutOfStock: bloc.productList[0] == productDetails,
-                    onAddToBagTap: bloc.fromRing ? () {} : null,
+                    isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
+                    isOutOfStock: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
+                    onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
                     onEyeTap: () {},
                     onFavTap: () {},
                     prefixImage: AppImages.icShoppingBag,
                     imageSize: 16.w,
+                    isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productForRing,
                     onTap: () {
-                      if (bloc.fromRing) {
+                      if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.productId: productDetails.productId ?? '',
-                          RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
-                        });
+                          RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
                       } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage,
-                            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
+                        context.pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                       }
                     },
                   );
@@ -177,12 +175,12 @@ class ProductListScreen extends StatelessWidget {
                 onEyeTap: () {},
                 onFavTap: () {},
                 onAddToBagTap: () {},
-                isCustomisable: index == 0 ? true : false,
+                isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && index == 0,
                 onTap: () {
-                  if (bloc.fromRing) {
+                  if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                       RoutesData.productId: bloc.productList[index].productId ?? '',
-                      RoutesData.isPageFor: ScreenIdentifier.productDetailForDefault
+                      RoutesData.isPageFor: bloc.screenIdentifier
                     });
                   } else {
                     context.pushNamed(AppRoutes.diamondDetailPage);

@@ -103,7 +103,7 @@ export 'package:kgk/modules/b2b/do_it_yourself/complete_product/bloc/complete_pr
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/product_selected_settings_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/view/complete_product_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/bloc/diamond_listing_bloc.dart';
-export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/view/diamond_listing.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/diamond_listing/view/diamond_listing_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/diamond_clarity_chart.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/product_details.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/bloc/setting_listing_bloc.dart';

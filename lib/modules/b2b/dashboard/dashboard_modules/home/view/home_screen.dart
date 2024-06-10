@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         SmartText(
           'DIY',
           onTap: () {
-            context.pushNamed(AppRoutes.diamondListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondListingForDIY});
+            context.pushNamed(AppRoutes.diamondListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
           },
         ),
         const SizedBox(

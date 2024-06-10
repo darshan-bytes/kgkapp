@@ -11,6 +11,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   // check user come form ring or diamond
   bool fromRing = true;
 
+  String appbarTitle = APPStrings.ring.tr;
+
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
+
   List<ProductDetails> productList = [];
 
   // List of numbers for the dropdown
@@ -28,14 +32,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   void getRouteData(BuildContext context) async {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
-      if (data[RoutesData.productListData] != null) {
-        final int userData = data[RoutesData.productListData];
-        if (userData == 0) {
-          fromRing = true;
-        } else {
-          fromRing = false;
-        }
-      }
+      screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
     }
   }
 
@@ -44,7 +41,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     isGrid = true;
     getRouteData(event.context);
 
-    if (fromRing) {
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      appbarTitle = APPStrings.ring.tr;
       productList.clear();
       List.generate(
           20,
@@ -56,7 +54,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 offerPrice: '\$3,000.00',
               )));
       emit(ProductListInitial());
-    } else {
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
+      appbarTitle = APPStrings.diamond.tr;
       productList.clear();
       List.generate(
           20,

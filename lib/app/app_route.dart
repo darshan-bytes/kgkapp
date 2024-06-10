@@ -262,12 +262,11 @@ enum RoutesData {
 }
 
 enum ScreenIdentifier {
-  productListingForDiamonds,
-  diamondListingForDIY,
-  diamondDetailForDIY,
-  diamondDetailForDefault,
-  productDetailForDiamonds,
-  productDetailForDefault,
+  diamondForDIY,
+  diamondForDefault,
+  diamondForGemstones,
+  productForDiamonds,
+  productForRing,
 }
 
 extension RoutesDataExtension on BuildContext {
