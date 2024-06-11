@@ -52,7 +52,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
                   discountPercentage: "Save UP TO 10%",
                 ),
               ));
-    } else if (screenIdentifier == ScreenIdentifier.diamondForGemstones) {
+    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       stoneListingAppbarTitle = APPStrings.gemstone.tr;
       productList.clear();
       tabOneTitle = APPStrings.precious.tr;

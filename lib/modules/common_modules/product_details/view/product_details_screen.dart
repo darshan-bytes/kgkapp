@@ -269,7 +269,8 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds ||
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
@@ -298,7 +299,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
           _buildSuggestedProductList(productDetailsBloc, style),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.diamondForGemstones) ...[
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 32.h),
             _buildRecentlyViewedProductList(productDetailsBloc, style),
           ]

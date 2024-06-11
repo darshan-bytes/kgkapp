@@ -11,8 +11,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   ///[pages] is a list of widgets that will be displayed on the screen based on the current index
   final List<Widget> pages = [
     const HomeScreen(),
-    // const CategoriesScreen(),
-    Container(),
+    const CategoriesScreen(),
     const MyBagScreen(),
     const SupportScreen(),
     const ProfileScreen(),
