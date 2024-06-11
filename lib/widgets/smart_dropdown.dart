@@ -8,6 +8,8 @@ class SmartDropDown<T> extends StatelessWidget {
   final double? buttonHeight;
   final String? hintText;
   final String? labelText;
+  final Axis scrollDirection;
+  final FocusNode? focusNode;
 
   const SmartDropDown({
     super.key,
@@ -18,6 +20,8 @@ class SmartDropDown<T> extends StatelessWidget {
     this.buttonHeight,
     this.hintText,
     this.labelText,
+    this.scrollDirection = Axis.vertical,
+    this.focusNode,
   });
 
   @override
@@ -35,11 +39,14 @@ class SmartDropDown<T> extends StatelessWidget {
           SizedBox(height: 8.h),
         ],
         InkWell(
+          focusNode: focusNode,
           onTap: () {
             showModalBottomSheet(
                 context: context,
+                isScrollControlled: scrollDirection == Axis.horizontal,
                 builder: (context) {
                   return SmartDropDownView(
+                    scrollDirection: scrollDirection,
                     hintText: hintText,
                     onTap: onChanged,
                     items: items,
@@ -81,59 +88,61 @@ class SmartDropDownView<T> extends StatelessWidget {
   final T? selectedItem;
   final double? height;
   final String? hintText;
+  final Axis scrollDirection;
 
-  const SmartDropDownView({
+  SmartDropDownView({
     super.key,
     required this.onTap,
     required this.items,
     this.selectedItem,
     this.height,
     this.hintText,
+    this.scrollDirection = Axis.vertical,
   });
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     SmartDropDownStyle style = AppTheme.of(context).smartDropDownStyle;
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24.r),
-          topRight: Radius.circular(24.r),
+    Widget child = SafeArea(
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: style.backgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24.r),
+            topRight: Radius.circular(24.r),
+          ),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (hintText.isNotNullNorEmpty) ...[
+              SmartText(hintText!, style: style.labelStyle),
+              SizedBox(height: 16.h),
+            ],
+            Flexible(child: _buildItemList(items, style, context)),
+          ],
         ),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (hintText.isNotNullNorEmpty) ...[
-            SmartText(
-              hintText!,
-              style: style.labelStyle,
-            ),
-            SizedBox(height: 16.h),
-          ],
-          Flexible(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: _buildItemList(items, style, context),
-            ),
-          ),
-        ],
-      ),
     );
+
+    return child;
   }
 
   Widget _buildItemList(List<SmartDropDownItem<T>> filteredList, SmartDropDownStyle style, BuildContext context) {
-    return ListView.separated(
+    Widget child = ListView.separated(
+      controller: _scrollController,
+      scrollDirection: scrollDirection,
       shrinkWrap: true,
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
         final bool isSelected = selectedItem != null && item.value == selectedItem;
-        return GestureDetector(
+        Widget child = GestureDetector(
           onTap: () {
             if (item.enabled) {
               onTap(item.value);
@@ -143,33 +152,48 @@ class SmartDropDownView<T> extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: style.backgroundColor,
+              color: isSelected ? style.selectedBorderColor : style.backgroundColor,
               borderRadius: BorderRadius.circular(4.r),
               border: Border.all(
                 color: isSelected ? style.selectedBorderColor : style.unSelectedBorderColor,
               ),
             ),
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: SmartText(item.title, style: style.titleTextStyle),
-                  ),
-                  isSelected
-                      ? const SmartImage(
-                          path: AppImages.icCheck,
-                          fit: BoxFit.contain,
-                        )
-                      : SizedBox(height: 24.h)
-                ],
-              ),
-            ),
+            padding: EdgeInsets.all(12.w),
+            child: SmartText(item.title, style: isSelected ? style.selectedTitleTextStyle : style.titleTextStyle),
           ),
         );
+
+        if (scrollDirection == Axis.horizontal) {
+          child = ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 50.w,
+              maxHeight: 50.h,
+            ),
+            child: child,
+          );
+        }
+
+        return child;
       },
-      separatorBuilder: (context, index) => SizedBox(height: 8.h),
+      separatorBuilder: (context, index) => SizedBox(
+        height: scrollDirection == Axis.vertical ? 8.h : 0,
+        width: scrollDirection == Axis.horizontal ? 8.w : 0,
+      ),
+    );
+
+    return Scrollbar(
+      thumbVisibility: true,
+      controller: _scrollController,
+      scrollbarOrientation: scrollDirection == Axis.horizontal ? ScrollbarOrientation.bottom : ScrollbarOrientation.right,
+      child: scrollDirection == Axis.horizontal
+          ? Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: SizedBox(
+                height: 50.w,
+                child: child,
+              ),
+            )
+          : child,
     );
   }
 }

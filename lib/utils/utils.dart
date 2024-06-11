@@ -22,7 +22,7 @@ class Utils {
       showPhoneCode: false,
       useSafeArea: true,
       countryListTheme: CountryListThemeData(
-        flagSize: 25.sh,
+        flagSize: 25.w,
         backgroundColor: countryPickerStyle.backgroundColor,
         bottomSheetHeight: (context.height * 0.8).h,
         borderRadius: BorderRadius.only(

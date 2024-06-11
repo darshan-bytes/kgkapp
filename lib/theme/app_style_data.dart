@@ -135,6 +135,7 @@ class LightModeTheme extends AppTheme {
         indicatorColor: colors.primary,
         backgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,
+        boxShadowColor: colors.black.withOpacity(0.17),
       );
 
   @override
@@ -266,6 +267,7 @@ class LightModeTheme extends AppTheme {
         selectedBorderColor: colors.primary,
         unSelectedBorderColor: colors.colorD3DAE0,
         labelStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        selectedTitleTextStyle: interSemiBoldTextStyle.copyWith(color: colors.white),
       );
 
   @override
@@ -427,6 +429,11 @@ class LightModeTheme extends AppTheme {
         itemSelectedStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         totalAmountStyle: interMediumBoldTextStyle,
         diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        bottomNavBarShadowColor: colors.black.withOpacity(0.08),
+        bottomBarTotalTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        bottomBarTotalAmountTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
+        bottomBarMoreLessTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        textInfoValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
       );
 
   @override
@@ -475,7 +482,7 @@ class LightModeTheme extends AppTheme {
         orderSummaryTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         orderSummaryItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        totalPriceStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.black),
+        totalPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         orderSummaryItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
       );
 

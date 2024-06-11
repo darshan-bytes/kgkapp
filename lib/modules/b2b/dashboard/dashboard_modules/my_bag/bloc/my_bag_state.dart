@@ -66,3 +66,21 @@ final class ShowFullProductDetailsState extends MyBagState {
   @override
   List<Object> get props => [];
 }
+
+final class MyBagPaymentConditionChangedState extends MyBagState {
+  final PaymentCondition paymentCondition;
+
+  const MyBagPaymentConditionChangedState({required this.paymentCondition});
+
+  @override
+  List<Object> get props => [paymentCondition];
+}
+
+final class MyBagToggleReadMoreDetailsState extends MyBagState {
+  final bool isReadMoreDetailsOpen;
+
+  const MyBagToggleReadMoreDetailsState(this.isReadMoreDetailsOpen);
+
+  @override
+  List<Object> get props => [isReadMoreDetailsOpen];
+}

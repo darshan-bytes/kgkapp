@@ -5,8 +5,9 @@ class MyBagScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyBagBloc bloc = BlocProvider.of<MyBagBloc>(context);
+    final MyBagBloc myBagBloc = BlocProvider.of<MyBagBloc>(context);
     final MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
@@ -23,31 +24,145 @@ class MyBagScreen extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(
-        child: BlocBuilder<MyBagBloc, MyBagState>(
-          buildWhen: (_, current) => current is MyBagReloadState,
-          builder: (context, state) {
-            if (bloc.myBagProductList.isEmpty) {
-              return Center(child: SmartText(APPStrings.myBagEmpty.tr));
-            }
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: _getBody(myBagBloc, style),
+      bottomNavigationBar: buildBottomNavBar(myBagBloc, style, context),
+    );
+  }
+
+  Widget buildBottomNavBar(MyBagBloc myBagBloc, MyBagScreenStyle style, BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
+      decoration: BoxDecoration(
+        color: style.backgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: style.bottomNavBarShadowColor,
+            offset: const Offset(0, -8),
+            blurRadius: 24.r,
+          ),
+        ],
+      ),
+      child: BlocBuilder<MyBagBloc, MyBagState>(
+        buildWhen: (_, current) => current is MyBagToggleReadMoreDetailsState,
+        builder: (context, state) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                child: myBagBloc.isReadMoreDetailsOpen
+                    ? Column(
+                        children: [
+                          BlocBuilder<MyBagBloc, MyBagState>(
+                            buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+                            builder: (context, state) {
+                              return SmartDropDown(
+                                focusNode: myBagBloc.paymentConditionFocusNode,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    myBagBloc.variationFocusNode.requestFocus();
+                                    myBagBloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
+                                  }
+                                },
+                                items:
+                                    myBagBloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
+                                selectedItem: myBagBloc.selectedPaymentCondition,
+                                hintText: APPStrings.paymentCondition.tr,
+                                labelText: APPStrings.paymentCondition.tr,
+                              );
+                            },
+                          ),
+                          SizedBox(height: 24.h),
+                          SmartTextField(
+                            suffixText: APPStrings.percentage,
+                            labelText: APPStrings.plusMinus,
+                            hintText: APPStrings.plusMinus,
+                            controller: myBagBloc.variationController,
+                            focusNode: myBagBloc.variationFocusNode,
+                            nextFocus: myBagBloc.noteFocusNode,
+                            textInputFormatter: [DoubleInputFormatter()],
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          ),
+                          SizedBox(height: 24.h),
+                          SmartTextField(
+                            labelText: APPStrings.commentQuestion.tr,
+                            hintText: APPStrings.commentQuestion.tr,
+                            controller: myBagBloc.noteController,
+                            focusNode: myBagBloc.noteFocusNode,
+                            maxLines: 3,
+                            textInputAction: TextInputAction.done,
+                          ),
+                          SizedBox(height: 24.h),
+                          const Divider(),
+                          SizedBox(height: 24.h),
+                        ],
+                      )
+                    : const SizedBox(),
+              ),
+              Row(
                 children: [
-                  SizedBox(height: 24.h),
-                  _buildSelectAllProductBox(bloc, style, context),
-                  SizedBox(height: 24.h),
-                  _buildMyBagList(bloc),
-                  _buildOrderSummary(bloc, style, context),
-                  SizedBox(height: 32.h),
-                  _buildInquirySection(bloc, style),
-                  SizedBox(height: 24.h),
-                  _buildSuggestedProductList(bloc, style)
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        text: APPStrings.total.tr,
+                        style: style.bottomBarTotalTextStyle,
+                        children: [
+                          WidgetSpan(child: SizedBox(width: 8.w)),
+                          TextSpan(
+                            text: '\$35,700.00',
+                            style: style.bottomBarTotalAmountTextStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SmartText(
+                    onTap: () {
+                      myBagBloc.add(const MyBagToggleReadMoreDetailsEvent());
+                    },
+                    myBagBloc.isReadMoreDetailsOpen ? APPStrings.readLess.tr : APPStrings.moreDetails.tr,
+                    style: style.bottomBarMoreLessTextStyle,
+                  ),
                 ],
               ),
-            );
-          },
-        ),
+              SizedBox(height: 16.h),
+              buildCheckoutButton(context),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _getBody(MyBagBloc bloc, MyBagScreenStyle style) {
+    return SafeArea(
+      child: BlocBuilder<MyBagBloc, MyBagState>(
+        buildWhen: (_, current) => current is MyBagReloadState,
+        builder: (context, state) {
+          if (bloc.myBagProductList.isEmpty) {
+            return Center(child: SmartText(APPStrings.myBagEmpty.tr));
+          }
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 24.h),
+                _buildSelectAllProductBox(bloc, style, context),
+                SizedBox(height: 24.h),
+                _buildMyBagList(bloc),
+                _buildBagTotalDiamondItemsDetails(bloc, style),
+                SizedBox(height: 24.h),
+                _buildOrderSummary(bloc, style, context),
+                SizedBox(height: 32.h),
+                _buildInquirySection(bloc, style),
+                SizedBox(height: 24.h),
+                _buildSuggestedProductList(bloc, style)
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -83,16 +198,20 @@ class MyBagScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          SmartButton(
-            onTap: () {
-              context.pushNamed(AppRoutes.addressListPage);
-            },
-            title: APPStrings.checkout.tr,
-          ),
+          buildCheckoutButton(context),
           SizedBox(height: 24.h),
           const Divider()
         ],
       ),
+    );
+  }
+
+  Widget buildCheckoutButton(BuildContext context) {
+    return SmartButton(
+      onTap: () {
+        context.pushNamed(AppRoutes.addressListPage);
+      },
+      title: APPStrings.checkout.tr,
     );
   }
 
@@ -202,7 +321,7 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style) {
+  Widget _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -237,6 +356,81 @@ class MyBagScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBagTotalDiamondItemsDetails(MyBagBloc bloc, MyBagScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 14.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.contactEmail.tr, 'jasons@example.com', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.contactPhone.tr, '66362389', style),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.totalWeight.tr, '20.120', style),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextInfoColumn(String title, String value, MyBagScreenStyle style) {
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SmartText(
+            title,
+            style: style.bottomBarTotalTextStyle,
+          ),
+          SizedBox(height: 8.h),
+          SmartText(
+            value,
+            style: style.textInfoValueStyle,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,9 +1,12 @@
 /// This class is a Dart class that contains a bunch of static strings that are used throughout the app
 /// Here we have defined all the strings of keys
 class APPStrings {
+  /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
   static const String languageKo = 'ko';
+  static const String plusMinus = '+/-';
+  static const String percentage = '%';
 
   static const String welcomeBack = 'welcome_back';
   static const String pleaseEnterEmailPass = 'please_enter_email_pass';
@@ -87,7 +90,7 @@ class APPStrings {
   static const String previous = 'previous';
   static const String next = 'next';
   static const String precious = 'precious';
-  static const String semi_precious = 'semi_precious';
+  static const String semiPrecious = 'semi_precious';
 
   //Product item
   static const String addToBag = 'add_to_bag';
@@ -339,4 +342,16 @@ class APPStrings {
   static const String diamondDetails = 'diamond_details';
   static const String productDetails = 'product_details';
   static const String strContinue = 'continue';
+  static const String paymentCondition = 'payment_condition';
+  static const String commentQuestion = 'comment_question';
+  static const String totalStones = 'total_stones';
+  static const String origTotalDiscount = 'orig_total_discount';
+  static const String contactEmail = 'contact_email';
+  static const String contactPhone = 'contact_phone';
+  static const String totalPriceAfterDiscount = 'total_price_after_discount';
+  static const String totalWeight = 'total_weight';
+  static const String avgPricePerCarat = 'avg_price_per_carat';
+  static const String originalRatePerCarat = 'original_rate_per_carat';
+  static const String totalRequestedDiscount = 'total_requested_discount';
+  static const String totalValueAfterDiscount = 'total_value_after_discount';
 }

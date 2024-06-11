@@ -25,31 +25,32 @@ class CartProductItem extends StatelessWidget {
   final bool isSelectedProduct;
   final Function(bool?)? onChangedCheckbox;
 
-  const CartProductItem(
-      {super.key,
-      required this.productDetails,
-      this.boxHeight,
-      this.boxWidth,
-      this.imageHeight,
-      this.imageWidth,
-      this.onTap,
-      this.fit = BoxFit.cover,
-      this.onFavTap,
-      this.onAddToBagTap,
-      this.onEyeTap,
-      this.onRemoveTap,
-      this.onMoveToWishListTap,
-      this.isFavourite = false,
-      this.padding = EdgeInsets.zero,
-      this.margin = EdgeInsets.zero,
-      this.selectedQuantity,
-      this.selectedQuality,
-      required this.qualityOptionsList,
-      required this.quantityOptionsList,
-      this.onQualityChanged,
-      this.onQuantityChanged,
-      this.isSelectedProduct = false,
-      required this.onChangedCheckbox});
+  const CartProductItem({
+    super.key,
+    required this.productDetails,
+    this.boxHeight,
+    this.boxWidth,
+    this.imageHeight,
+    this.imageWidth,
+    this.onTap,
+    this.fit = BoxFit.cover,
+    this.onFavTap,
+    this.onAddToBagTap,
+    this.onEyeTap,
+    this.onRemoveTap,
+    this.onMoveToWishListTap,
+    this.isFavourite = false,
+    this.padding = EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
+    this.selectedQuantity,
+    this.selectedQuality,
+    required this.qualityOptionsList,
+    required this.quantityOptionsList,
+    this.onQualityChanged,
+    this.onQuantityChanged,
+    this.isSelectedProduct = false,
+    required this.onChangedCheckbox,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -208,31 +209,22 @@ class CartProductItem extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: SmartDropdownButtonFormField<CartProductQuality>(
-                      value: selectedQuality,
-                      items: qualityOptionsList,
-                      itemLableBuilder: (CartProductQuality value) {
-                        if (value.name != null) {
-                          return value.name!;
-                        }
-                        return APPStrings.selectQuality.tr;
-                      },
+                    child: SmartDropDown<CartProductQuality>(
+                      selectedItem: selectedQuality,
+                      items: qualityOptionsList.map((e) => SmartDropDownItem<CartProductQuality>(value: e, title: e.name ?? '')).toList(),
+                      hintText: APPStrings.selectQuality.tr,
                       onChanged: (newValue) => onQualityChanged?.call(newValue!),
                     ),
                   ),
                   SizedBox(width: 8.w),
                   Expanded(
                     flex: 1,
-                    child: SmartDropdownButtonFormField<CartProductQuantity>(
-                      value: selectedQuantity,
+                    child: SmartDropDown<CartProductQuantity>(
+                      scrollDirection: Axis.horizontal,
+                      selectedItem: selectedQuantity,
                       onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                      items: quantityOptionsList,
-                      itemLableBuilder: (CartProductQuantity value) {
-                        if (value.name != null) {
-                          return value.name!;
-                        }
-                        return APPStrings.selectQuantity.tr;
-                      },
+                      items: quantityOptionsList.map((e) => SmartDropDownItem<CartProductQuantity>(value: e, title: e.name ?? '')).toList(),
+                      hintText: APPStrings.selectQuantity.tr,
                     ),
                   ),
                 ],

@@ -62,3 +62,19 @@ final class ShowFullProductDetailsEvent extends MyBagEvent {
   @override
   List<Object> get props => [];
 }
+
+final class MyBagPaymentConditionChangedEvent extends MyBagEvent {
+  final PaymentCondition paymentCondition;
+
+  const MyBagPaymentConditionChangedEvent({required this.paymentCondition});
+
+  @override
+  List<Object> get props => [paymentCondition];
+}
+
+final class MyBagToggleReadMoreDetailsEvent extends MyBagEvent {
+  const MyBagToggleReadMoreDetailsEvent();
+
+  @override
+  List<Object> get props => [];
+}

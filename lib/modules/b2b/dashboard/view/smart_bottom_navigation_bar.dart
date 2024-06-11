@@ -14,12 +14,15 @@ class SmartBottomNavigationBar extends StatelessWidget {
     Widget child = Container(
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        border: Border(
-          top: BorderSide(
-            color: style.borderColor,
-            width: 1,
+        border: Border(top: BorderSide(color: style.borderColor, width: 1.w)),
+        boxShadow: [
+          BoxShadow(
+            color: style.boxShadowColor,
+            blurRadius: 16.r,
+            spreadRadius: 0.r,
+            offset: const Offset(0, -2),
           ),
-        ),
+        ],
       ),
       child: BlocBuilder<DashboardBloc, DashboardState>(
         buildWhen: (previous, current) {
@@ -63,17 +66,17 @@ class SmartBottomNavigationBar extends StatelessWidget {
                     height: 24.w,
                     width: 24.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: SmartImage(
                       path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(12),
+                      imageBorderRadius: BorderRadius.circular(12.r),
                     )),
                 activeIcon: Container(
                     height: 24.w,
                     width: 24.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(color: style.indicatorColor, width: 1.w),
                     ),
                     child: SmartImage(
