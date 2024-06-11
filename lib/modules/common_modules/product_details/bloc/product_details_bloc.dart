@@ -128,7 +128,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   ProductDetailsBloc() : super(ProductDetailsInitialState()) {
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
-    on<OnProductImageChangeEvent>(_onOnProductImageChange);
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
     on<ProductCustomizationChangeEvent>(_onOnProductCustomizationChange);
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
@@ -237,11 +236,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
-  }
-
-  void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {
-    current = event.index;
-    emit(ProductImagePageChangeState(current));
   }
 
   void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {

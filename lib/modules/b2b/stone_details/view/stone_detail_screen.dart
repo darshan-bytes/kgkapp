@@ -1,11 +1,11 @@
 import 'package:kgk/kgk.dart';
 
-class DiamondDetailScreen extends StatelessWidget {
-  const DiamondDetailScreen({super.key});
+class StoneDetailScreen extends StatelessWidget {
+  const StoneDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final diamondBloc = context.read<DiamondDetailBloc>();
+    final diamondBloc = context.read<StoneDetailBloc>();
     return Scaffold(
       appBar: SmartAppBar(
         title: '1.01 Carat Round Diamond',
@@ -15,7 +15,7 @@ class DiamondDetailScreen extends StatelessWidget {
         onFilter: () {},
       ),
       body: SingleChildScrollView(
-        child: BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
+        child: BlocBuilder<StoneDetailBloc, StoneDetailState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class DiamondDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetail(BuildContext context, DiamondDetailBloc diamondBloc) {
+  Widget _productDetail(BuildContext context, StoneDetailBloc diamondBloc) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
@@ -140,27 +140,27 @@ class DiamondDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _diamondDetails(DiamondDetailBloc diamondDetailsBloc) {
-    return BlocBuilder<DiamondDetailBloc, DiamondDetailState>(
-      buildWhen: (previous, current) => current is DiamondDetailsToggleState,
+  Widget _diamondDetails(StoneDetailBloc diamondDetailsBloc) {
+    return BlocBuilder<StoneDetailBloc, StoneDetailState>(
+      buildWhen: (previous, current) => current is StoneDetailsToggleState,
       builder: (context, state) {
         final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
         return Padding(
-          padding: diamondDetailsBloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
+          padding: diamondDetailsBloc.isStoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
           child: SmartExpansionTile(
-            initiallyExpanded: diamondDetailsBloc.isDiamondDetailsOpen,
-            key: diamondDetailsBloc.diamondDetailsKey,
+            initiallyExpanded: diamondDetailsBloc.isStoneDetailsOpen,
+            key: diamondDetailsBloc.stoneDetailsKey,
             title: SmartText(
               APPStrings.diamondDetails.tr,
               style: style.settingSelectionTitleStyle,
             ),
             trailing: Icon(
-              diamondDetailsBloc.isDiamondDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              diamondDetailsBloc.isStoneDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
               size: 24.w,
               color: style.ratingGlowColor,
             ),
             onExpansionChanged: (value) {
-              diamondDetailsBloc.add(const DiamondDetailsToggleEvent());
+              diamondDetailsBloc.add(const StoneDetailsToggleEvent());
             },
             children: [
               SizedBox(height: 16.h),

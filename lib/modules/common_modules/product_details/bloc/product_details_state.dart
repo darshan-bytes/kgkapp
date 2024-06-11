@@ -23,15 +23,6 @@ final class ProductDetailsLoadedState extends ProductDetailsState {
   List<Object> get props => [productDetails];
 }
 
-final class ProductImagePageChangeState extends ProductDetailsState {
-  final int current;
-
-  const ProductImagePageChangeState(this.current);
-
-  @override
-  List<Object> get props => [current];
-}
-
 final class ProductCompareToggleState extends ProductDetailsState {
   final bool isCompare;
 

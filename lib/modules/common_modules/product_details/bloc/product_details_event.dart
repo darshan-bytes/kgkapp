@@ -13,15 +13,6 @@ final class LoadProductDetailsEvent extends ProductDetailsEvent {
   List<Object> get props => [context];
 }
 
-final class OnProductImageChangeEvent extends ProductDetailsEvent {
-  final int index;
-
-  const OnProductImageChangeEvent(this.index);
-
-  @override
-  List<Object> get props => [index];
-}
-
 final class ToggleCompareProductEvent extends ProductDetailsEvent {
   const ToggleCompareProductEvent();
 

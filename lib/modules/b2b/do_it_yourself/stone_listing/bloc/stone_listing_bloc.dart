@@ -1,11 +1,11 @@
 import 'package:kgk/kgk.dart';
 
-part 'diamond_listing_event.dart';
+part 'stone_listing_event.dart';
 
-part 'diamond_listing_state.dart';
+part 'stone_listing_state.dart';
 
-class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> {
-  bool isIndividual = true;
+class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
+  bool isInitialToggle = true;
   bool isGrid = true;
   List<ProductDetails> productList = [];
 
@@ -20,13 +20,13 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
   // The selected number of pages, initialized to the first item
   String selectedPageNumber = '01';
 
-  String diamondListingAppbarTitle = "DIY";
+  String stoneListingAppbarTitle = "DIY";
 
-  DiamondListingBloc() : super(const DiamondListingInitial()) {
-    on<GetDiamondProductListEvent>(_onGetDiamondProductListEvent);
-    on<DiamondChangeTypeEvent>(_onDiamondChangeTypeEvent);
-    on<ChangeListingTypeEvent>(_onChangeListingTypeEvent);
-    on<DiamondProductChangePageNumberEvent>(_onPageNumberChanged);
+  StoneListingBloc() : super(const StoneListingInitial()) {
+    on<GetStoneProductListEvent>(_onGetStoneProductListEvent);
+    on<StoneChangeTypeEvent>(_onStoneChangeTypeEvent);
+    on<StoneChangeListingTypeEvent>(_onChangeListingTypeEvent);
+    on<StoneProductChangePageNumberEvent>(_onPageNumberChanged);
   }
 
   void getScreenIdentifier(BuildContext context) {
@@ -34,11 +34,11 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
   }
 
-  Future<void> _onGetDiamondProductListEvent(GetDiamondProductListEvent event, Emitter<DiamondListingState> emit) async {
-    emit(const LoadingState());
+  Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
+    emit(const StoneLoadingState());
     getScreenIdentifier(event.context);
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      diamondListingAppbarTitle = APPStrings.diy.tr;
+      stoneListingAppbarTitle = APPStrings.diy.tr;
       productList.clear();
       List.generate(
           20,
@@ -53,7 +53,7 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
                 ),
               ));
     } else if (screenIdentifier == ScreenIdentifier.diamondForGemstones) {
-      diamondListingAppbarTitle = APPStrings.gemstone.tr;
+      stoneListingAppbarTitle = APPStrings.gemstone.tr;
       productList.clear();
       tabOneTitle = APPStrings.precious.tr;
       tabTwoTitle = APPStrings.semi_precious.tr;
@@ -70,7 +70,7 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
                 ),
               ));
     } else {
-      diamondListingAppbarTitle = APPStrings.diamond.tr;
+      stoneListingAppbarTitle = APPStrings.diamond.tr;
       productList.clear();
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
@@ -86,22 +86,22 @@ class DiamondListingBloc extends Bloc<DiamondListingEvent, DiamondListingState> 
               ));
     }
 
-    emit(const DiamondListingInitial());
+    emit(const StoneListingInitial());
   }
 
-  void _onDiamondChangeTypeEvent(DiamondChangeTypeEvent event, Emitter<DiamondListingState> emit) {
-    isIndividual = event.isIndividual;
-    emit(DiamondChangeTypeState(isIndividual));
+  void _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) {
+    isInitialToggle = event.isInitialToggle;
+    emit(StoneChangeTypeState(isInitialToggle));
   }
 
-  void _onChangeListingTypeEvent(ChangeListingTypeEvent event, Emitter<DiamondListingState> emit) {
+  void _onChangeListingTypeEvent(StoneChangeListingTypeEvent event, Emitter<StoneListingState> emit) {
     isGrid = event.isGrid;
-    emit(ChangeListingTypeState(event.isGrid));
+    emit(StoneChangeListingTypeState(event.isGrid));
   }
 
-  void _onPageNumberChanged(DiamondProductChangePageNumberEvent event, Emitter<DiamondListingState> emit) {
-    emit(DiamondProductReloadState());
+  void _onPageNumberChanged(StoneProductChangePageNumberEvent event, Emitter<StoneListingState> emit) {
+    emit(StoneProductReloadState());
     selectedPageNumber = event.pageNumber;
-    emit(DiamondProductChangePageNumberState());
+    emit(StoneProductChangePageNumberState());
   }
 }
