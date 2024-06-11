@@ -5,7 +5,6 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: SizedBox(

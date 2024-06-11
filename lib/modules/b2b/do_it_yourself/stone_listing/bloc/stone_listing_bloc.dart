@@ -56,7 +56,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       stoneListingAppbarTitle = APPStrings.gemstone.tr;
       productList.clear();
       tabOneTitle = APPStrings.precious.tr;
-      tabTwoTitle = APPStrings.semi_precious.tr;
+      tabTwoTitle = APPStrings.semiPrecious.tr;
       List.generate(
           20,
           (index) => productList.add(

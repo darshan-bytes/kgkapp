@@ -112,7 +112,7 @@ class DiamondFilterScreen extends StatelessWidget {
           return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
             buildWhen: (previous, current) => current is DiamondFilterDataSelectedState,
             builder: (context, state) {
-              final filterData = diamondFilterBloc.filterData[index];
+              final FilterData filterData = diamondFilterBloc.filterData[index];
               bool isSelected = diamondFilterBloc.selectedFilterData == filterData;
               return InkWell(
                 onTap: () {

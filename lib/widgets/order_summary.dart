@@ -22,7 +22,7 @@ class OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).orderSummaryStyle;
+    final OrderSummaryStyle style = AppTheme.of(context).orderSummaryStyle;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
       color: style.backgroundColor,
@@ -76,14 +76,14 @@ class OrderSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildPromoCodeSection(style) {
+  Widget _buildPromoCodeSection(OrderSummaryStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 18.h),
       child: Row(
         children: [
           Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
           SizedBox(width: 17.w),
-          const SmartImage(path: AppImages.icPlus),
+          SmartText(APPStrings.apply.tr, style: totalStyle ?? style.totalPriceStyle)
         ],
       ),
     );

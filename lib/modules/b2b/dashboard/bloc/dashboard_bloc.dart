@@ -5,6 +5,12 @@ part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+  static const int homeIndex = 0;
+  static const int categoriesIndex = 1;
+  static const int myBagIndex = 2;
+  static const int supportIndex = 3;
+  static const int profileIndex = 4;
+
   ///[currentIndex] is used to keep track of the current index of the bottom navigation bar
   int currentIndex = 0;
 
@@ -41,7 +47,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     if (currentIndex != event.index) {
       currentIndex = event.index;
       switch (event.index) {
-        case 2:
+        case myBagIndex:
           blocList[currentIndex].add(InitialMyBagEvent());
           break;
       }

@@ -38,6 +38,7 @@ class SmartTextField extends StatefulWidget {
   final bool autofocus;
   final TapRegionCallback? onTapOutside;
   final VoidCallback? onEditingComplete;
+  final String? suffixText;
 
   final bool isSearch;
 
@@ -80,6 +81,7 @@ class SmartTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTapOutside,
     this.onEditingComplete,
+    this.suffixText,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = false;
 
@@ -122,6 +124,7 @@ class SmartTextField extends StatefulWidget {
     this.onTapOutside,
     this.onEditingComplete,
     this.prefixIcon,
+    this.suffixText,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = true;
 
@@ -173,6 +176,7 @@ class SmartTextFieldState extends State<SmartTextField> {
               cursorColor: style.blackColor,
               controller: widget.controller,
               decoration: InputDecoration(
+                  suffixText: widget.suffixText,
                   errorMaxLines: 6,
                   counterText: '',
                   filled: true,

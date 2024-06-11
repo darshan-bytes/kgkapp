@@ -58,6 +58,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         const CartProductQuality(name: "10K Gold"),
         const CartProductQuality(name: "14K Gold"),
         const CartProductQuality(name: "22K Gold"),
+        const CartProductQuality(name: "28K Gold"),
+        const CartProductQuality(name: "20K Gold"),
+        const CartProductQuality(name: "24K Gold"),
+        const CartProductQuality(name: "32K Gold"),
       ],
       cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
     ),
@@ -73,6 +77,25 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     ),
   );
 
+  List<PaymentCondition> paymentConditionList = [
+    PaymentCondition(id: "1", title: "7 days"),
+    PaymentCondition(id: "2", title: "15 days"),
+    PaymentCondition(id: "3", title: "30 days"),
+    PaymentCondition(id: "4", title: "45 days"),
+    PaymentCondition(id: "5", title: "60 days"),
+  ];
+
+  PaymentCondition? selectedPaymentCondition;
+
+  bool isReadMoreDetailsOpen = false;
+
+  TextEditingController variationController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
+
+  FocusNode paymentConditionFocusNode = FocusNode();
+  FocusNode variationFocusNode = FocusNode();
+  FocusNode noteFocusNode = FocusNode();
+
   MyBagBloc() : super(MyBagInitial()) {
     on<InitialMyBagEvent>(_onInitialMyBagEvent);
     on<MyBagChangeProductQuality>(_onMyBagChangeProductQuality);
@@ -81,6 +104,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagSelectAllProductChangedEvent>(_onMyBagSelectAllProductChangedEvent);
     on<MyBagSelectProductChangedEvent>(_onMyBagSelectProductChangedEvent);
     on<ShowFullProductDetailsEvent>(_onShowFullProductDetailsEvent);
+    on<MyBagPaymentConditionChangedEvent>(_onMyBagPaymentConditionChangedEvent);
+    on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
   }
 
   void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {
@@ -138,5 +163,16 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(MyBagReloadState());
     showMoreDetails = !showMoreDetails;
     emit(ShowFullProductDetailsState());
+  }
+
+  void _onMyBagPaymentConditionChangedEvent(MyBagPaymentConditionChangedEvent event, Emitter<MyBagState> emit) {
+    emit(MyBagReloadState());
+    selectedPaymentCondition = event.paymentCondition;
+    emit(MyBagPaymentConditionChangedState(paymentCondition: selectedPaymentCondition!));
+  }
+
+  void _onMyBagToggleReadMoreDetailsEvent(MyBagToggleReadMoreDetailsEvent event, Emitter<MyBagState> emit) {
+    isReadMoreDetailsOpen = !isReadMoreDetailsOpen;
+    emit(MyBagToggleReadMoreDetailsState(isReadMoreDetailsOpen));
   }
 }

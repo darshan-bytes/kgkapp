@@ -37,7 +37,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 24.h),
-                _buildContinueShoppingButton(),
+                _buildContinueShoppingButton(context),
               ],
             ),
           ),
@@ -62,9 +62,12 @@ class OrderConfirmationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContinueShoppingButton() {
+  Widget _buildContinueShoppingButton(BuildContext context) {
     return SmartButton(
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(DashboardBloc.homeIndex));
+        context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
+      },
       title: APPStrings.continueShopping.tr,
     );
   }

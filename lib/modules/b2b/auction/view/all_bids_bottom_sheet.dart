@@ -11,6 +11,7 @@ class AllBidsBottomSheet extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 608.h),
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 18.w),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: style.whiteColor,
@@ -20,11 +21,12 @@ class AllBidsBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(height: 24.h),
-            _buildAppBar(style),
+            _buildAppBar(style, context),
+            SizedBox(height: 10.h),
             Flexible(
               child: ListView.separated(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 18.w),
                 itemBuilder: (context, index) {
                   return _buildResetBidsItem(
                       labelText: bloc.recentBidList[index]['date_time'],
@@ -43,13 +45,26 @@ class AllBidsBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(AuctionScreenStyle style) {
-    return SmartAppBar(
-      isBack: false,
-      appBarHeight: AppConst.defaultAppBarHeight,
-      isBorder: false,
-      backgroundColor: style.whiteColor,
-      title: APPStrings.allBids.tr,
+  Widget _buildAppBar(AuctionScreenStyle style, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SmartText(
+          APPStrings.allBids.tr,
+          style: style.allBidsTitleStyle,
+        ),
+        InkWell(
+          onTap: () {
+            context.pop();
+          },
+          child: SmartImage(
+            path: AppImages.icCross,
+            height: 24.w,
+            width: 24.w,
+            color: style.primaryColor,
+          ),
+        ),
+      ],
     );
   }
 

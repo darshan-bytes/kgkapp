@@ -193,6 +193,7 @@ class TabBarStyle {
   final Color indicatorColor;
   final Color backgroundColor;
   final Color borderColor;
+  final Color boxShadowColor;
 
   TabBarStyle({
     required this.labelStyle,
@@ -200,6 +201,7 @@ class TabBarStyle {
     required this.indicatorColor,
     required this.backgroundColor,
     required this.borderColor,
+    required this.boxShadowColor,
   });
 }
 
@@ -435,6 +437,7 @@ class SmartDropDownStyle {
   final Color unSelectedBorderColor;
   final TextStyle titleTextStyle;
   final TextStyle labelStyle;
+  final TextStyle selectedTitleTextStyle;
 
   SmartDropDownStyle({
     required this.backgroundColor,
@@ -443,6 +446,7 @@ class SmartDropDownStyle {
     required this.unSelectedBorderColor,
     required this.titleTextStyle,
     required this.labelStyle,
+    required this.selectedTitleTextStyle,
   });
 }
 
@@ -786,6 +790,11 @@ class MyBagScreenStyle {
   final TextStyle itemSelectedStyle;
   final TextStyle totalAmountStyle;
   final TextStyle diamondPurityStyle;
+  final Color bottomNavBarShadowColor;
+  final TextStyle bottomBarTotalTextStyle;
+  final TextStyle bottomBarTotalAmountTextStyle;
+  final TextStyle bottomBarMoreLessTextStyle;
+  final TextStyle textInfoValueStyle;
 
   MyBagScreenStyle({
     required this.backgroundColor,
@@ -793,6 +802,11 @@ class MyBagScreenStyle {
     required this.itemSelectedStyle,
     required this.totalAmountStyle,
     required this.diamondPurityStyle,
+    required this.bottomNavBarShadowColor,
+    required this.bottomBarTotalTextStyle,
+    required this.bottomBarTotalAmountTextStyle,
+    required this.bottomBarMoreLessTextStyle,
+    required this.textInfoValueStyle,
   });
 }
 
