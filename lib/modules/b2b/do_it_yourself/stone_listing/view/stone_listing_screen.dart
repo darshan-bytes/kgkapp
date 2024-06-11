@@ -1,19 +1,19 @@
 import 'package:kgk/kgk.dart';
 
-class DiamondListingScreen extends StatelessWidget {
-  const DiamondListingScreen({super.key});
+class StoneListingScreen extends StatelessWidget {
+  const StoneListingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final DiamondListingBloc diamondListingBloc = BlocProvider.of<DiamondListingBloc>(context);
+    final StoneListingBloc diamondListingBloc = BlocProvider.of<StoneListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
-        child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+        child: BlocBuilder<StoneListingBloc, StoneListingState>(
           builder: (context, state) {
             return SmartAppBar(
-              title: diamondListingBloc.diamondListingAppbarTitle,
+              title: diamondListingBloc.stoneListingAppbarTitle,
               onFilter: () {},
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
@@ -22,17 +22,17 @@ class DiamondListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: BlocBuilder<DiamondListingBloc, DiamondListingState>(builder: (context, state) {
+      bottomNavigationBar: BlocBuilder<StoneListingBloc, StoneListingState>(builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            BlocBuilder<DiamondListingBloc, DiamondListingState>(builder: (context, state) {
+            BlocBuilder<StoneListingBloc, StoneListingState>(builder: (context, state) {
               return SmartPagination(
                 pageNumbers: diamondListingBloc.pageNumbers,
                 currentPage: diamondListingBloc.selectedPageNumber,
                 onPageChanged: (int index, String newValue) {
-                  diamondListingBloc.add(DiamondProductChangePageNumberEvent(newValue));
+                  diamondListingBloc.add(StoneProductChangePageNumberEvent(newValue));
                 },
               );
             }),
@@ -59,7 +59,7 @@ class DiamondListingScreen extends StatelessWidget {
           ],
         );
       }),
-      body: SingleChildScrollView(child: BlocBuilder<DiamondListingBloc, DiamondListingState>(
+      body: SingleChildScrollView(child: BlocBuilder<StoneListingBloc, StoneListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -84,26 +84,26 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectionDiamond(DiamondListingBloc diamondListingBloc) {
+  Widget _buildSelectionDiamond(StoneListingBloc diamondListingBloc) {
     return Row(
       children: [
         Expanded(
           child: SelectionButton(
-            isSelected: diamondListingBloc.isIndividual,
+            isSelected: diamondListingBloc.isInitialToggle,
             title: diamondListingBloc.tabOneTitle,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
             onTap: () {
-              diamondListingBloc.add(const DiamondChangeTypeEvent(true));
+              diamondListingBloc.add(const StoneChangeTypeEvent(true));
             },
           ),
         ),
         Expanded(
           child: SelectionButton(
-            isSelected: !diamondListingBloc.isIndividual,
+            isSelected: !diamondListingBloc.isInitialToggle,
             title: diamondListingBloc.tabTwoTitle,
             borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
             onTap: () {
-              diamondListingBloc.add(const DiamondChangeTypeEvent(false));
+              diamondListingBloc.add(const StoneChangeTypeEvent(false));
             },
           ),
         ),
@@ -111,7 +111,7 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, StoneListingBloc diamondListingBloc) {
     return SizedBox(
       height: 48.h,
       child: Row(
@@ -134,7 +134,7 @@ class DiamondListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const ChangeListingTypeEvent(true));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent(true));
                 },
               ),
               SelectionButton(
@@ -150,7 +150,7 @@ class DiamondListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const ChangeListingTypeEvent(false));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent(false));
                 },
               ),
               SizedBox(width: 16.w),
@@ -172,10 +172,10 @@ class DiamondListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, DiamondListingBloc diamondListingBloc) {
-    return BlocBuilder<DiamondListingBloc, DiamondListingState>(
+  Widget _buildProductList(DiamondListingStyle style, StoneListingBloc diamondListingBloc) {
+    return BlocBuilder<StoneListingBloc, StoneListingState>(
       builder: (context, state) {
-        if (state is LoadingState) {
+        if (state is StoneLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
         if (diamondListingBloc.productList.isEmpty) {
@@ -192,7 +192,7 @@ class DiamondListingScreen extends StatelessWidget {
                     onTap: () {
                       if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
                         context
-                            .pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            .pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
                         context.pushNamed(AppRoutes.diamondInfoPopupPage,
                             arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});

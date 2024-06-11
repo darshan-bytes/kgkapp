@@ -25,16 +25,10 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
 
   CompleteProductBloc() : super(CompleteProductInitial()) {
-    on<CompleteProductImageChangeEvent>(_onCompleteProductImageChangeEvent);
     on<CompleteProductCompareToggle>(_onCompleteProductCompareToggle);
     on<ProductRingDetailsToggleEvent>(_onProductRingDetailsToggleEvent);
     on<CompleteProductDiamondDetailsToggleEvent>(_onCompleteProductDiamondDetailsToggleEvent);
     on<CompleteProductGemstoneDetailsToggleEvent>(_onCompleteProductGemstoneDetailsToggleEvent);
-  }
-
-  void _onCompleteProductImageChangeEvent(CompleteProductImageChangeEvent event, Emitter<CompleteProductState> emit) {
-    current = event.index;
-    emit(CompleteProductImagePageChangeState(current));
   }
 
   void _onCompleteProductCompareToggle(CompleteProductCompareToggle event, Emitter<CompleteProductState> emit) {

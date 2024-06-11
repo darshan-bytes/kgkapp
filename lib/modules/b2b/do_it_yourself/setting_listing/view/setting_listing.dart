@@ -141,7 +141,7 @@ class SettingListingScreen extends StatelessWidget {
       DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
       builder: (context, state) {
-        if (state is LoadingState) {
+        if (state is StoneLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
         if (settingListingBloc.productList.isEmpty) {

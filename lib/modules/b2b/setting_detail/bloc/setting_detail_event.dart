@@ -18,15 +18,6 @@ class SettingDiamondDetailsToggleEvent extends SettingDetailEvent {
   List<Object> get props => [];
 }
 
-class SettingImagePageChangeEvent extends SettingDetailEvent {
-  final int index;
-
-  const SettingImagePageChangeEvent({required this.index});
-
-  @override
-  List<Object> get props => [index];
-}
-
 final class MetalCustomizationChangeEvent extends SettingDetailEvent {
   final int index;
 

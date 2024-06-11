@@ -41,19 +41,12 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
   SettingDetailBloc() : super(SettingDetailInitial()) {
     on<SettingToggleEvent>(onOpenCloseSetting);
     on<SettingDiamondDetailsToggleEvent>(_onSettingDiamondDetailsToggleEvent);
-    on<SettingImagePageChangeEvent>(_onRingImagePageChangeEvent);
     on<MetalCustomizationChangeEvent>(_onMetalCustomizationChangeEvent);
   }
 
   void onOpenCloseSetting(SettingToggleEvent event, emit) async {
     isSettingOpen = !isSettingOpen;
     emit(SettingToggleState(isSettingOpen));
-  }
-
-  void _onRingImagePageChangeEvent(SettingImagePageChangeEvent event, Emitter<SettingDetailState> emit) {
-    current = event.index;
-    emit(SettingImagePageChangeState());
-    emit(SettingDetailInitial());
   }
 
   void _onMetalCustomizationChangeEvent(MetalCustomizationChangeEvent event, Emitter<SettingDetailState> emit) {

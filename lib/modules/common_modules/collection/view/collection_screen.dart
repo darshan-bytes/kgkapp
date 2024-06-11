@@ -62,10 +62,10 @@ class CollectionScreen extends StatelessWidget {
                                   context.pushNamed(AppRoutes.productListGridPage,
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
                                 } else if (index == 1) {
-                                  context.pushNamed(AppRoutes.diamondListingPage,
+                                  context.pushNamed(AppRoutes.stoneListingPage,
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
                                 } else if (index == 2) {
-                                  context.pushNamed(AppRoutes.diamondListingPage,
+                                  context.pushNamed(AppRoutes.stoneListingPage,
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForGemstones});
                                 }
                               },

@@ -27,15 +27,6 @@ class CompleteProductRingDetailsToggleState extends CompleteProductState {
   List<Object> get props => [isRingDetailsOpen];
 }
 
-class CompleteProductImagePageChangeState extends CompleteProductState {
-  final int index;
-
-  const CompleteProductImagePageChangeState(this.index);
-
-  @override
-  List<Object> get props => [index];
-}
-
 class CompleteProductDiamondDetailsToggleState extends CompleteProductState {
   final bool isDiamondDetailsOpen;
 

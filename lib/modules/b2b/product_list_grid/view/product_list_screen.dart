@@ -158,7 +158,7 @@ class ProductListScreen extends StatelessWidget {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                           RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
                       } else {
-                        context.pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                       }
                     },
                   );
@@ -183,7 +183,7 @@ class ProductListScreen extends StatelessWidget {
                       RoutesData.isPageFor: bloc.screenIdentifier
                     });
                   } else {
-                    context.pushNamed(AppRoutes.diamondDetailPage);
+                    context.pushNamed(AppRoutes.stoneDetailPage);
                   }
                 },
                 productDetails: bloc.productList[index],

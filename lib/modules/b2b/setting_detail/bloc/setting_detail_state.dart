@@ -27,11 +27,6 @@ final class SettingDiamondToggleState extends SettingDetailState {
   List<Object> get props => [isDiamondDetailsOpen];
 }
 
-final class SettingImagePageChangeState extends SettingDetailState {
-  @override
-  List<Object> get props => [];
-}
-
 final class MetalCustomizationChangeState extends SettingDetailState {
   final int index;
   final int previousIndex;
