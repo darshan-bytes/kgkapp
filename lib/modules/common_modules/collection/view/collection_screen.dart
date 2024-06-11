@@ -66,7 +66,7 @@ class CollectionScreen extends StatelessWidget {
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
                                 } else if (index == 2) {
                                   context.pushNamed(AppRoutes.stoneListingPage,
-                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForGemstones});
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
                                 }
                               },
                               child: Container(
