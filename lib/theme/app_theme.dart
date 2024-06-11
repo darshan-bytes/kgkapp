@@ -127,6 +127,12 @@ abstract class AppTheme {
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
 
   ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
+
+  OrderScreenStyle get orderScreenStyle;
+
+  SmartTabBarStyle get smartTabBarStyle;
+
+  StatusBadgeStyle get statusBadgeStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1096,5 +1102,43 @@ class ShowDoubleActionDialogStyle {
     required this.titleStyle,
     required this.contentStyle,
     required this.okButtonStyle,
+  });
+}
+
+class OrderScreenStyle {
+  OrderScreenStyle();
+}
+
+class SmartTabBarStyle {
+  final TextStyle selectedTabTextStyle;
+  final TextStyle unselectedTabTextStyle;
+  final Color primaryColor;
+  final Color tabDividerColor;
+  final Color labelColor;
+  final Color unselectedLabelColor;
+
+  SmartTabBarStyle({
+    required this.selectedTabTextStyle,
+    required this.unselectedTabTextStyle,
+    required this.primaryColor,
+    required this.tabDividerColor,
+    required this.labelColor,
+    required this.unselectedLabelColor,
+  });
+}
+
+class StatusBadgeStyle {
+  final Color inProgressBackgroundColor;
+  final Color inProgressTextColor;
+  final Color activeBackgroundColor;
+  final Color activeTextColor;
+  final TextStyle statusTextStyle;
+
+  StatusBadgeStyle({
+    required this.inProgressBackgroundColor,
+    required this.inProgressTextColor,
+    required this.activeBackgroundColor,
+    required this.activeTextColor,
+    required this.statusTextStyle,
   });
 }

@@ -10,6 +10,8 @@ class SmartDropDown<T> extends StatelessWidget {
   final String? labelText;
   final Axis scrollDirection;
   final FocusNode? focusNode;
+  final BorderRadiusGeometry? borderRadius;
+  final BoxBorder? border;
 
   const SmartDropDown({
     super.key,
@@ -22,6 +24,8 @@ class SmartDropDown<T> extends StatelessWidget {
     this.labelText,
     this.scrollDirection = Axis.vertical,
     this.focusNode,
+    this.borderRadius,
+    this.border,
   });
 
   @override
@@ -59,10 +63,11 @@ class SmartDropDown<T> extends StatelessWidget {
             height: buttonHeight ?? 48.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.r),
-              border: Border.all(
-                color: textFieldStyle.enabledTextFieldBorderColor,
-              ),
+              borderRadius: borderRadius ?? BorderRadius.circular(4.r),
+              border: border ??
+                  Border.all(
+                    color: textFieldStyle.enabledTextFieldBorderColor,
+                  ),
             ),
             child: Row(
               children: [
