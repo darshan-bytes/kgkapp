@@ -29,6 +29,7 @@ class AppRoutes {
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
   static const auctionPage = '/auctionPage';
+  static const orderPage = '/orderPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -230,6 +231,15 @@ class AppRoutes {
           builder: (context) => OrderConfirmationScreen(
             orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
           ),
+          settings: settings,
+        );
+
+      case orderPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
+            return const OrderScreen();
+          },
           settings: settings,
         );
 

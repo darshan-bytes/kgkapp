@@ -288,5 +288,15 @@
   "total_value_after_discount": "Total value after discount",
   "continue": "Continue",
   "precious": "Precious",
-  "semi_precious": "Semi Precious"
+  "semi_precious": "Semi Precious",
+  "my_orders": "My orders",
+  "search_order": "Search order",
+  "order_id": "Order Id",
+  "order_status": "Status",
+  "ordered_on": "Ordered on",
+  "total_amount": "Total amount",
+  "items": "Items",
+  "qty": "Qty",
+  "in_progress": "In Progress",
+  "active": "Active"
 }
