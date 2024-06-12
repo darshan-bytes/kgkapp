@@ -45,7 +45,7 @@ class SmartDropDown<T> extends StatelessWidget {
         InkWell(
           focusNode: focusNode,
           onTap: () {
-            showModalBottomSheet(
+            Utils.showSmartModalBottomSheet(
                 context: context,
                 isScrollControlled: scrollDirection == Axis.horizontal,
                 shape: RoundedRectangleBorder(
@@ -119,8 +119,8 @@ class SmartDropDownView<T> extends StatelessWidget {
         decoration: BoxDecoration(
           color: style.backgroundColor,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24.r),
-            topRight: Radius.circular(24.r),
+            topLeft: Radius.circular(6.r),
+            topRight: Radius.circular(6.r),
           ),
         ),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),

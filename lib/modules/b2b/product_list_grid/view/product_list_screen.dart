@@ -38,7 +38,7 @@ class ProductListScreen extends StatelessWidget {
               ),
               FilterBottomActionBar(
                 onFilterTap: () {
-                  showModalBottomSheet(
+                  Utils.showSmartModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     useSafeArea: true,
@@ -48,7 +48,7 @@ class ProductListScreen extends StatelessWidget {
                   );
                 },
                 onSortTap: () {
-                  showModalBottomSheet(
+                  Utils.showSmartModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     useSafeArea: true,
@@ -155,8 +155,8 @@ class ProductListScreen extends StatelessWidget {
                     isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productForRing,
                     onTap: () {
                       if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
                       } else {
                         context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                       }

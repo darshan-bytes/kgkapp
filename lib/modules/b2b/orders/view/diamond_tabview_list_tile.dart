@@ -108,13 +108,11 @@ class DiamondTabView extends StatelessWidget {
 
   void _showOrderDetailPopup(BuildContext context) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
-      ),
-      builder: (context) => SizedBox(
-        height: 220.h,
+    Utils.showSmartModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            height: 220.h,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -126,9 +124,8 @@ class DiamondTabView extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      enableDrag: false,
-    );
+          );
+        });
   }
 
   Widget _buildPopupOption(

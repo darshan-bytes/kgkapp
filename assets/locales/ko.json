@@ -299,6 +299,7 @@
   "qty": "Qty",
   "in_progress": "In Progress",
   "active": "Active",
+  "remove_lot": "Remove lot",
   "track_product": "Track product",
   "view_timeline": "View timeline",
   "cancel_order": "Cancel order"

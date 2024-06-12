@@ -18,7 +18,7 @@ class MyBagDiamondItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).myBagDiamondItemStyle;
+    final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     DiamondClarityChart chart = productDetails.diamondClarityChart ?? DiamondClarityChart();
     return GestureDetector(
       onTap: onTap,

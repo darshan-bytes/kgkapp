@@ -366,6 +366,7 @@ class APPStrings {
   static const String qty = 'Qty';
   static const String inProgress = 'in_Progress';
   static const String active = 'active';
+  static const String removeLot = 'remove_lot';
 
   //order details popup
   static const String trackProduct = 'track_product';
