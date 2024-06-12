@@ -354,4 +354,16 @@ class APPStrings {
   static const String originalRatePerCarat = 'original_rate_per_carat';
   static const String totalRequestedDiscount = 'total_requested_discount';
   static const String totalValueAfterDiscount = 'total_value_after_discount';
+
+  //my order screen
+  static const String myOrders = 'my_orders';
+  static const String searchOrder = 'search_order';
+  static const String orderId = 'order_id';
+  static const String orderStatus = 'order_status';
+  static const String orderedOn = 'ordered_on';
+  static const String totalAmount = 'total_amount';
+  static const String items = 'items';
+  static const String qty = 'Qty';
+  static const String inProgress = 'in_Progress';
+  static const String active = 'active';
 }

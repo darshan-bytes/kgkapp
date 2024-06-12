@@ -35,6 +35,7 @@ class BlocGenerator {
       BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
+      BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
     ];
   }
 }

@@ -635,4 +635,26 @@ class LightModeTheme extends AppTheme {
         contentStyle: interRegularTextStyle,
         okButtonStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
       );
+
+  @override
+  OrderScreenStyle get orderScreenStyle => OrderScreenStyle();
+
+  @override
+  SmartTabBarStyle get smartTabBarStyle => SmartTabBarStyle(
+        selectedTabTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
+        unselectedTabTextStyle: interMediumBoldTextStyle,
+        primaryColor: colors.primary,
+        tabDividerColor: colors.colorD3DAE0,
+        labelColor: colors.color303538,
+        unselectedLabelColor: colors.color8C8C8C,
+      );
+
+  @override
+  StatusBadgeStyle get statusBadgeStyle => StatusBadgeStyle(
+        activeBackgroundColor: colors.colorEBFFE7,
+        activeTextColor: colors.color50B83C,
+        inProgressBackgroundColor: colors.colorFFF2E7,
+        inProgressTextColor: colors.colorF49342,
+        statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+      );
 }

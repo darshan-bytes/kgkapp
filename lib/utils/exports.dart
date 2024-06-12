@@ -196,6 +196,16 @@ export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
-
+export 'package:kgk/modules/b2b/orders/view/order_screen.dart';
+export 'package:kgk/modules/b2b/orders/bloc/orders_bloc.dart';
+export 'package:kgk/widgets/smart_tab_bar.dart';
+export 'package:kgk/modules/b2b/orders/model/my_order_details_model.dart';
+export 'package:kgk/widgets/my_order_item.dart';
+export 'package:kgk/widgets/smart_status_badge.dart';
+export 'package:kgk/modules/b2b/orders/view/order_list_builder.dart';
+export 'package:kgk/modules/b2b/orders/view/diamond_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/orders/view/gemstone_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/orders/view/jewellery_tabview_list_tile.dart';
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';
+export 'package:kgk/modules/b2b/orders/model/order_stone_type_model.dart';

@@ -25,6 +25,15 @@ class ProfileScreen extends StatelessWidget {
                   context.pushNamed(AppRoutes.paymentPage);
                 },
                 child: const Text('Payment Screen')),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                context.pushNamed(AppRoutes.orderPage);
+              },
+              child: const Text('Order Screen'),
+            ),
           ],
         ),
       ),
