@@ -438,7 +438,6 @@ class MyBagScreen extends StatelessWidget {
   }
 
   void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc) {
-    final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     Utils.showSmartModalBottomSheet(
         context: context,
         isScrollControlled: true,

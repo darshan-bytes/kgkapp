@@ -637,9 +637,6 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  OrderScreenStyle get orderScreenStyle => OrderScreenStyle();
-
-  @override
   SmartTabBarStyle get smartTabBarStyle => SmartTabBarStyle(
         selectedTabTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
         unselectedTabTextStyle: interMediumBoldTextStyle,
@@ -662,5 +659,15 @@ class LightModeTheme extends AppTheme {
   OrderPopupStyle get orderPopupStyle => OrderPopupStyle(
         optionTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         cancelTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      );
+
+  @override
+  OrderDetailScreenStyle get orderDetailScreenStyle => OrderDetailScreenStyle(
+        detailsTileColor: colors.colorF7F9FA,
+        orderIdStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
+        orderDateStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        orderTotalStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp),
+        orderItemLabelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        orderItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
       );
 }

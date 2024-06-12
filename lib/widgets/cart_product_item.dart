@@ -24,6 +24,7 @@ class CartProductItem extends StatelessWidget {
   final Function(CartProductQuantity)? onQuantityChanged;
   final bool isSelectedProduct;
   final Function(bool?)? onChangedCheckbox;
+  final bool isCheckboxShow;
 
   const CartProductItem({
     super.key,
@@ -49,7 +50,8 @@ class CartProductItem extends StatelessWidget {
     this.onQualityChanged,
     this.onQuantityChanged,
     this.isSelectedProduct = false,
-    required this.onChangedCheckbox,
+    this.onChangedCheckbox,
+    this.isCheckboxShow = true,
   });
 
   @override
@@ -128,19 +130,20 @@ class CartProductItem extends StatelessWidget {
             fit: fit,
           ),
         ),
-        Positioned(
-            top: 8.h,
-            left: 8.w,
-            child: SmartCheckbox(
-              height: 24.w,
-              width: 24.w,
-              value: isSelectedProduct,
-              onChanged: (bool? newValue) {
-                if (onChangedCheckbox != null) {
-                  onChangedCheckbox!(newValue);
-                }
-              },
-            )),
+        if (isCheckboxShow)
+          Positioned(
+              top: 8.h,
+              left: 8.w,
+              child: SmartCheckbox(
+                height: 24.w,
+                width: 24.w,
+                value: isSelectedProduct,
+                onChanged: (bool? newValue) {
+                  if (onChangedCheckbox != null) {
+                    onChangedCheckbox!(newValue);
+                  }
+                },
+              )),
       ],
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:kgk/kgk.dart';
 
 class DiamondTabView extends StatelessWidget {
@@ -65,8 +64,8 @@ class DiamondTabView extends StatelessWidget {
             builder: (context, state) {
               return OrderListBuilder(
                 ordersList: ordersBloc.filteredDiamondOrdersList,
-                onTapMenuButton: (value) {
-                  _showOrderDetailPopup(context);
+                onTap: (p0) {
+                  context.pushNamed(AppRoutes.orderDetailsPage);
                 },
               );
             },
@@ -103,47 +102,6 @@ class DiamondTabView extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  void _showOrderDetailPopup(BuildContext context) {
-    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
-    Utils.showSmartModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: 220.h,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
-              _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
-              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {}),
-            ],
-          ),
-        ),
-          );
-        });
-  }
-
-  Widget _buildPopupOption(
-    BuildContext context, {
-    required String text,
-    required TextStyle style,
-    EdgeInsets? padding,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 56.h,
-        width: context.width,
-        alignment: Alignment.centerLeft,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
-        child: SmartText(text, style: style),
-      ),
     );
   }
 }
