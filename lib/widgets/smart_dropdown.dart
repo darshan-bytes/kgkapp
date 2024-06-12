@@ -48,6 +48,9 @@ class SmartDropDown<T> extends StatelessWidget {
             Utils.showSmartModalBottomSheet(
                 context: context,
                 isScrollControlled: scrollDirection == Axis.horizontal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
+                ),
                 builder: (context) {
                   return SmartDropDownView(
                     scrollDirection: scrollDirection,

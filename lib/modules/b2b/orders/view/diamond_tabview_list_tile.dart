@@ -19,7 +19,7 @@ class DiamondTabView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
+                        height: 48.w,
                         onValueChanges: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         onFieldSubmitted: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         hintText: APPStrings.searchOrder.tr,

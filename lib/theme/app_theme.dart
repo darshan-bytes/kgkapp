@@ -132,6 +132,8 @@ abstract class AppTheme {
 
   StatusBadgeStyle get statusBadgeStyle;
 
+  OrderPopupStyle get orderPopupStyle;
+
   OrderDetailScreenStyle get orderDetailScreenStyle;
 }
 
@@ -1139,6 +1141,15 @@ class StatusBadgeStyle {
   });
 }
 
+class OrderPopupStyle {
+  final TextStyle optionTextStyle;
+  final TextStyle cancelTextStyle;
+
+  OrderPopupStyle({
+    required this.optionTextStyle,
+    required this.cancelTextStyle,
+  });
+}
 class OrderDetailScreenStyle {
   final Color detailsTileColor;
   final TextStyle orderIdStyle;

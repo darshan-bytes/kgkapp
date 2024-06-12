@@ -656,6 +656,12 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  OrderPopupStyle get orderPopupStyle => OrderPopupStyle(
+        optionTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+        cancelTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      );
+
+  @override
   OrderDetailScreenStyle get orderDetailScreenStyle => OrderDetailScreenStyle(
         detailsTileColor: colors.colorF7F9FA,
         orderIdStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),

@@ -373,4 +373,9 @@ class APPStrings {
   static const String contactInfo = 'contact_info';
   static const String billingAddress = 'billing_address';
   static const String shippingAddress = 'shipping_address';
+
+  //order details popup
+  static const String trackProduct = 'track_product';
+  static const String viewTimeline = 'view_timeline';
+  static const String cancelOrder = 'cancel_order';
 }

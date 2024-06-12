@@ -11,17 +11,17 @@ class OrderDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.myOrders.tr),
       bottomNavigationBar: _buildBottomNavigationBar(orderDetailBloc),
-      body: _getBody(orderDetailBloc, style),
+      body: _getBody(orderDetailBloc, style, context),
     );
   }
 
-  Widget _getBody(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style) {
+  Widget _getBody(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style, BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOrderDetailsInfoCard(style),
+            _buildOrderDetailsInfoCard(style, context),
             SizedBox(height: 24.h),
             _buildOrderCreaterDetailsInfoCard(style),
             SizedBox(height: 32.h),
@@ -34,7 +34,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style) {
+  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context) {
     return Container(
       color: style.detailsTileColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
@@ -62,7 +62,9 @@ class OrderDetailScreen extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  _showOrderDetailPopup(context);
+                },
                 child: const SmartImage(
                   path: AppImages.icMenu,
                 ),
@@ -289,6 +291,47 @@ class OrderDetailScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _showOrderDetailPopup(BuildContext context) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
+    Utils.showSmartModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            height: 220.h,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
+                  _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
+                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {}),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsets? padding,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: Alignment.centerLeft,
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
+      ),
     );
   }
 }
