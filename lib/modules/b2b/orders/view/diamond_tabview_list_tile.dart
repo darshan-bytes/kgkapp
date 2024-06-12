@@ -43,7 +43,7 @@ class DiamondTabView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    _buildStoneDropDownField(ordersBloc, context),
+                    _buildStoneDropDownField(ordersBloc, style),
                   ],
                 ),
               ),
@@ -70,8 +70,7 @@ class DiamondTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildStoneDropDownField(OrdersBloc ordersBloc, BuildContext context) {
-    final style = AppTheme.of(context).filterBottomActionBarStyle;
+  Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
     return BlocBuilder<OrdersBloc, OrdersState>(
       buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
       builder: (context, state) {
