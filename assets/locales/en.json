@@ -298,5 +298,9 @@
   "items": "Items",
   "qty": "Qty",
   "in_progress": "In Progress",
-  "active": "Active"
+  "active": "Active",
+  "created_by": "Created by",
+  "contact_info": "Contact Info",
+  "billing_address": "Billing Address",
+  "shipping_address": "Shipping Address"
 }

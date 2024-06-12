@@ -128,11 +128,11 @@ abstract class AppTheme {
 
   ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
 
-  OrderScreenStyle get orderScreenStyle;
-
   SmartTabBarStyle get smartTabBarStyle;
 
   StatusBadgeStyle get statusBadgeStyle;
+
+  OrderDetailScreenStyle get orderDetailScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1105,10 +1105,6 @@ class ShowDoubleActionDialogStyle {
   });
 }
 
-class OrderScreenStyle {
-  OrderScreenStyle();
-}
-
 class SmartTabBarStyle {
   final TextStyle selectedTabTextStyle;
   final TextStyle unselectedTabTextStyle;
@@ -1140,5 +1136,23 @@ class StatusBadgeStyle {
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
+  });
+}
+
+class OrderDetailScreenStyle {
+  final Color detailsTileColor;
+  final TextStyle orderIdStyle;
+  final TextStyle orderDateStyle;
+  final TextStyle orderTotalStyle;
+  final TextStyle orderItemLabelStyle;
+  final TextStyle orderItemValueStyle;
+
+  OrderDetailScreenStyle({
+    required this.detailsTileColor,
+    required this.orderIdStyle,
+    required this.orderDateStyle,
+    required this.orderTotalStyle,
+    required this.orderItemLabelStyle,
+    required this.orderItemValueStyle,
   });
 }
