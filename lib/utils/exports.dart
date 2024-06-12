@@ -194,6 +194,7 @@ export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
+export 'package:kgk/widgets/order_cancel_bottom_sheet.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:kgk/modules/b2b/orders/view/order_screen.dart';

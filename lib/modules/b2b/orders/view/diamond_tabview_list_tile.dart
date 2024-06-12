@@ -54,7 +54,9 @@ class DiamondTabView extends StatelessWidget {
                 imageWidth: 24.5.w,
                 isSelected: false,
                 image: AppImages.icMenu,
-                onTap: () {},
+                onTap: () {
+                  _showOrderCancelPopup(context);
+                },
               ),
             ],
           ),
@@ -98,5 +100,9 @@ class DiamondTabView extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _showOrderCancelPopup(BuildContext context) {
+    Utils.showSmartModalBottomSheet(context: context, isScrollControlled: true, builder: (context) => const OrderCancelBottomSheet());
   }
 }
