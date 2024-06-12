@@ -367,4 +367,10 @@ class APPStrings {
   static const String inProgress = 'in_Progress';
   static const String active = 'active';
   static const String removeLot = 'remove_lot';
+
+  // my order details screen
+  static const String createdBy = 'created_by';
+  static const String contactInfo = 'contact_info';
+  static const String billingAddress = 'billing_address';
+  static const String shippingAddress = 'shipping_address';
 }
