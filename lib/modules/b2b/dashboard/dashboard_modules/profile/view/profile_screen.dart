@@ -34,6 +34,15 @@ class ProfileScreen extends StatelessWidget {
               },
               child: const Text('Order Screen'),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            SmartText(
+              'Auction List Screen',
+              onTap: () async {
+                context.pushNamed(AppRoutes.auctionListingPage);
+              },
+            ),
           ],
         ),
       ),

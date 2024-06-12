@@ -306,5 +306,14 @@
   "created_by": "Created by",
   "contact_info": "Contact Info",
   "billing_address": "Billing Address",
-  "shipping_address": "Shipping Address"
+  "shipping_address": "Shipping Address",
+  "on_going": "On going",
+  "winner": "Winner",
+  "lost": "Lost",
+  "auctions": "Auctions",
+  "search_auction": "Search auction",
+  "sku_no": "SKU no",
+  "type": "Type",
+  "bid_amount": "Bid amount",
+  "bid_placed_on": "Bid placed on"
 }

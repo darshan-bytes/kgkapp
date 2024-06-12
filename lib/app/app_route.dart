@@ -31,6 +31,7 @@ class AppRoutes {
   static const auctionPage = '/auctionPage';
   static const orderPage = '/orderPage';
   static const orderDetailsPage = '/orderDetailsPage';
+  static const auctionListingPage = '/auctionListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -249,6 +250,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<OrderDetailBloc>(context).add(InitialOrderDetailEvent());
             return const OrderDetailScreen();
+          },
+          settings: settings,
+        );
+
+      case auctionListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<AuctionListingBloc>(context).add(InitialAuctionListingEvent());
+            return const AuctionListingScreen();
           },
           settings: settings,
         );
