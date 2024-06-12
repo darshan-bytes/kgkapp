@@ -366,4 +366,9 @@ class APPStrings {
   static const String qty = 'Qty';
   static const String inProgress = 'in_Progress';
   static const String active = 'active';
+
+  //order details popup
+  static const String trackProduct = 'track_product';
+  static const String viewTimeline = 'view_timeline';
+  static const String cancelOrder = 'cancel_order';
 }

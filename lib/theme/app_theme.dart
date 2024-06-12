@@ -133,6 +133,8 @@ abstract class AppTheme {
   SmartTabBarStyle get smartTabBarStyle;
 
   StatusBadgeStyle get statusBadgeStyle;
+
+  OrderPopupStyle get orderPopupStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1140,5 +1142,15 @@ class StatusBadgeStyle {
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
+  });
+}
+
+class OrderPopupStyle {
+  final TextStyle optionTextStyle;
+  final TextStyle cancelTextStyle;
+
+  OrderPopupStyle({
+    required this.optionTextStyle,
+    required this.cancelTextStyle,
   });
 }

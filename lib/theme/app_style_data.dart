@@ -657,4 +657,10 @@ class LightModeTheme extends AppTheme {
         inProgressTextColor: colors.colorF49342,
         statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       );
+
+  @override
+  OrderPopupStyle get orderPopupStyle => OrderPopupStyle(
+        optionTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+        cancelTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      );
 }

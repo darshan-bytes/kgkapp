@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kgk/kgk.dart';
 
 class DiamondTabView extends StatelessWidget {
@@ -19,7 +20,7 @@ class DiamondTabView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
+                        height: 48.w,
                         onValueChanges: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         onFieldSubmitted: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         hintText: APPStrings.searchOrder.tr,
@@ -62,7 +63,12 @@ class DiamondTabView extends StatelessWidget {
           BlocBuilder<OrdersBloc, OrdersState>(
             buildWhen: (previous, current) => current is FilterDiamondOrdersState,
             builder: (context, state) {
-              return OrderListBuilder(ordersList: ordersBloc.filteredDiamondOrdersList);
+              return OrderListBuilder(
+                ordersList: ordersBloc.filteredDiamondOrdersList,
+                onTapMenuButton: (value) {
+                  _showOrderDetailPopup(context);
+                },
+              );
             },
           ),
         ],
@@ -97,6 +103,50 @@ class DiamondTabView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showOrderDetailPopup(BuildContext context) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
+      ),
+      builder: (context) => SizedBox(
+        height: 220.h,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
+              _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
+              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {}),
+            ],
+          ),
+        ),
+      ),
+      enableDrag: false,
+    );
+  }
+
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsets? padding,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: Alignment.centerLeft,
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
+      ),
     );
   }
 }

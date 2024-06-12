@@ -298,5 +298,8 @@
   "items": "Items",
   "qty": "Qty",
   "in_progress": "In Progress",
-  "active": "Active"
+  "active": "Active",
+  "track_product": "Track product",
+  "view_timeline": "View timeline",
+  "cancel_order": "Cancel order"
 }
