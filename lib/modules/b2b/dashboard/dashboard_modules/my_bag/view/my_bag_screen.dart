@@ -223,6 +223,9 @@ class MyBagScreen extends StatelessWidget {
         if (product.isDiamondProduct) {
           return MyBagDiamondItem(
             onTap: () {},
+            onTapMenuButton: () {
+              handleDiamondMenuButtonTap(context, index, bloc);
+            },
             productDetails: product,
             margin: EdgeInsets.only(bottom: 17.h),
           );
@@ -430,6 +433,53 @@ class MyBagScreen extends StatelessWidget {
             style: style.textInfoValueStyle,
           ),
         ],
+      ),
+    );
+  }
+
+  void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc) {
+    final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
+    Utils.showSmartModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (BuildContext context) {
+          return buildDiamondMenuPopUp(context, index, bloc);
+        });
+  }
+
+  Widget buildDiamondMenuPopUp(BuildContext context, int index, MyBagBloc bloc) {
+    final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildRowButton(style, () {
+            //TODO: Add to wishlist functionality
+            context.pop();
+          }, APPStrings.moveToWishlist.tr, AppImages.icHeart),
+          Divider(indent: 16.w, endIndent: 16.w),
+          buildRowButton(style, () {
+            bloc.add(MyBagRemoveProductEvent(index: index));
+            context.pop();
+          }, APPStrings.removeLot.tr, AppImages.icRemove),
+        ],
+      ),
+    );
+  }
+
+  Widget buildRowButton(MyBagDiamondItemStyle style, GestureTapCallback? onTap, String title, String iconPath) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16.w),
+        child: Row(
+          children: [
+            SmartImage(path: iconPath, height: 24.w, width: 24.w),
+            SizedBox(width: 8.w),
+            SmartText(title, style: style.subTitleStyle),
+          ],
+        ),
       ),
     );
   }

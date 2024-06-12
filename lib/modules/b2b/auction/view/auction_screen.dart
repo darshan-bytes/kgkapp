@@ -250,7 +250,7 @@ class AuctionScreen extends StatelessWidget {
                         if (bloc.recentBidList.isNotEmpty && bloc.recentBidList.length > 4)
                           InkWell(
                             onTap: () async {
-                              await showModalBottomSheet(
+                              await Utils.showSmartModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
                                 useSafeArea: true,
