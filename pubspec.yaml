@@ -78,6 +78,9 @@ dependencies:
   #For Permission Handle
   permission_handler: ^11.3.1
 
+  #For Easy Stepper
+  easy_stepper: ^0.8.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

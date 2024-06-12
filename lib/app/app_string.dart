@@ -373,4 +373,7 @@ class APPStrings {
   static const String contactInfo = 'contact_info';
   static const String billingAddress = 'billing_address';
   static const String shippingAddress = 'shipping_address';
+
+  // Track order screen
+  static const String trackProduct = 'track_product';
 }

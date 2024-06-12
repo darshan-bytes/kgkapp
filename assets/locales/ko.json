@@ -300,9 +300,9 @@
   "in_progress": "In Progress",
   "active": "Active",
   "remove_lot": "Remove lot",
-  "active": "Active",
   "created_by": "Created by",
   "contact_info": "Contact Info",
   "billing_address": "Billing Address",
-  "shipping_address": "Shipping Address"
+  "shipping_address": "Shipping Address",
+  "track_product": "Track product"
 }

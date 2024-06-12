@@ -133,6 +133,8 @@ abstract class AppTheme {
   StatusBadgeStyle get statusBadgeStyle;
 
   OrderDetailScreenStyle get orderDetailScreenStyle;
+
+  TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1154,5 +1156,25 @@ class OrderDetailScreenStyle {
     required this.orderTotalStyle,
     required this.orderItemLabelStyle,
     required this.orderItemValueStyle,
+  });
+}
+
+class TrackOrderBottomSheetStyle {
+  final Color backgroundColor;
+  final Color orderInfoBackgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle orderIdStyle;
+  final TextStyle imageSubTitleStyle;
+  final TextStyle imageTitleStyle;
+  final TextStyle quantityStyle;
+
+  TrackOrderBottomSheetStyle({
+    required this.backgroundColor,
+    required this.orderInfoBackgroundColor,
+    required this.titleStyle,
+    required this.orderIdStyle,
+    required this.imageSubTitleStyle,
+    required this.imageTitleStyle,
+    required this.quantityStyle,
   });
 }

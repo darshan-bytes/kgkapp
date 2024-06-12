@@ -664,4 +664,15 @@ class LightModeTheme extends AppTheme {
         orderItemLabelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         orderItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
       );
+
+  @override
+  TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle => TrackOrderBottomSheetStyle(
+        backgroundColor: colors.white,
+        orderInfoBackgroundColor: colors.colorF7F9FA,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        orderIdStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        imageSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        imageTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        quantityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      );
 }
