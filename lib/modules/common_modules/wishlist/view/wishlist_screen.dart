@@ -30,7 +30,7 @@ class WishlistScreen extends StatelessWidget {
       //     ),
       //     FilterBottomActionBar(
       //       onFilterTap: () {
-      //         showModalBottomSheet(
+      //         Utils.showSmartModalBottomSheet(
       //           context: context,
       //           isScrollControlled: true,
       //           useSafeArea: true,
@@ -40,7 +40,7 @@ class WishlistScreen extends StatelessWidget {
       //         );
       //       },
       //       onSortTap: () {
-      //         showModalBottomSheet(
+      //         Utils.showSmartModalBottomSheet(
       //           context: context,
       //           isScrollControlled: true,
       //           useSafeArea: true,

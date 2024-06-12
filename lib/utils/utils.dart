@@ -105,4 +105,52 @@ class Utils {
       },
     );
   }
+
+  static Future<T?> showSmartModalBottomSheet<T>({
+    required BuildContext context,
+    required WidgetBuilder builder,
+    Color? backgroundColor,
+    String? barrierLabel,
+    double? elevation,
+    ShapeBorder? shape,
+    Clip? clipBehavior,
+    BoxConstraints? constraints,
+    Color? barrierColor,
+    bool isScrollControlled = false,
+    double scrollControlDisabledMaxHeightRatio = AppConst.defaultScrollControlDisabledMaxHeightRatio,
+    bool useRootNavigator = false,
+    bool isDismissible = true,
+    bool enableDrag = true,
+    bool? showDragHandle,
+    bool useSafeArea = false,
+    RouteSettings? routeSettings,
+    AnimationController? transitionAnimationController,
+    Offset? anchorPoint,
+    AnimationStyle? sheetAnimationStyle,
+  }) {
+    return showModalBottomSheet<T>(
+      context: context,
+      builder: builder,
+      backgroundColor: backgroundColor,
+      barrierLabel: barrierLabel,
+      elevation: elevation,
+      shape: shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
+          ),
+      clipBehavior: clipBehavior,
+      constraints: constraints,
+      barrierColor: barrierColor,
+      isScrollControlled: isScrollControlled,
+      useRootNavigator: useRootNavigator,
+      isDismissible: isDismissible,
+      enableDrag: enableDrag,
+      showDragHandle: showDragHandle,
+      useSafeArea: useSafeArea,
+      routeSettings: routeSettings,
+      transitionAnimationController: transitionAnimationController,
+      anchorPoint: anchorPoint,
+      sheetAnimationStyle: sheetAnimationStyle,
+    );
+  }
 }
