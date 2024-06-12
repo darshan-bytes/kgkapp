@@ -128,13 +128,15 @@ abstract class AppTheme {
 
   ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
 
-  OrderScreenStyle get orderScreenStyle;
-
   SmartTabBarStyle get smartTabBarStyle;
 
   StatusBadgeStyle get statusBadgeStyle;
 
   OrderCancelPopupStyle get orderCancelPopupStyle;
+
+  OrderPopupStyle get orderPopupStyle;
+
+  OrderDetailScreenStyle get orderDetailScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1107,10 +1109,6 @@ class ShowDoubleActionDialogStyle {
   });
 }
 
-class OrderScreenStyle {
-  OrderScreenStyle();
-}
-
 class SmartTabBarStyle {
   final TextStyle selectedTabTextStyle;
   final TextStyle unselectedTabTextStyle;
@@ -1147,8 +1145,49 @@ class StatusBadgeStyle {
 
 class OrderCancelPopupStyle {
   final Color primaryColor;
+  final Color refundBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle refundTitleStyle;
+  final TextStyle amountTitleStyle;
+  final TextStyle cancelReasonTitleStyle;
 
   OrderCancelPopupStyle({
     required this.primaryColor,
+    required this.refundBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.refundTitleStyle,
+    required this.amountTitleStyle,
+    required this.cancelReasonTitleStyle,
+  });
+}
+
+class OrderPopupStyle {
+  final TextStyle optionTextStyle;
+  final TextStyle cancelTextStyle;
+
+  OrderPopupStyle({
+    required this.optionTextStyle,
+    required this.cancelTextStyle,
+  });
+}
+class OrderDetailScreenStyle {
+  final Color detailsTileColor;
+  final TextStyle orderIdStyle;
+  final TextStyle orderDateStyle;
+  final TextStyle orderTotalStyle;
+  final TextStyle orderItemLabelStyle;
+  final TextStyle orderItemValueStyle;
+
+  OrderDetailScreenStyle({
+    required this.detailsTileColor,
+    required this.orderIdStyle,
+    required this.orderDateStyle,
+    required this.orderTotalStyle,
+    required this.orderItemLabelStyle,
+    required this.orderItemValueStyle,
   });
 }

@@ -299,5 +299,19 @@
   "qty": "Qty",
   "in_progress": "In Progress",
   "active": "Active",
-  "remove_lot": "Remove lot"
+  "remove_lot": "Remove lot",
+  "track_product": "Track product",
+  "view_timeline": "View timeline",
+  "cancel_order": "Cancel order",
+  "created_by": "Created by",
+  "contact_info": "Contact Info",
+  "billing_address": "Billing Address",
+  "shipping_address": "Shipping Address",
+  "are_you_sure": "Are you sure?",
+  "order_will_be_cancelled_x": "Order #{#} will be cancelled",
+  "refund_amount": "Refund amount",
+  "refund_to": "Refund to",
+  "cancellation_reason": "Cancellation reason",
+  "save": "Save",
+  "add_reason": "Add Reason"
 }

@@ -99,4 +99,7 @@ class AppImages {
   static const String icProductCertificate = 'assets/images/ic_product_certificate.svg';
   static const String icRotate3D = 'assets/images/ic_rotate_3d.svg';
   static const String icRemove = 'assets/images/ic_remove.svg';
+
+  //Order cancel
+  static const String icVisa = 'assets/images/ic_visa.svg';
 }

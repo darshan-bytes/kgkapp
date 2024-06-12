@@ -19,7 +19,7 @@ class GemstoneTabView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
+                        height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
                         controller: ordersBloc.gemstoneSearchController,
                         onValueChanges: (value) => ordersBloc.add(const FilterGemstoneOrdersEvent()),

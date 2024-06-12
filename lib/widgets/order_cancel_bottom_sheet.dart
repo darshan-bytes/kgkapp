@@ -6,37 +6,145 @@ class OrderCancelBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrderCancelPopupStyle style = AppTheme.of(context).orderCancelPopupStyle;
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
+    final OrderDetailBloc orderDetailBloc = BlocProvider.of<OrderDetailBloc>(context);
+    return Container(
+      decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 553.h,
-                child: Column(
-                  children: [],
-                ),
-              ),
-              Positioned(
-                top: 16.w,
-                right: 16.w,
-                child: InkWell(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: SmartImage(
-                    path: AppImages.icCross,
-                    height: 24.w,
-                    width: 24.w,
-                    color: style.primaryColor,
+              Stack(
+                children: [
+                  Container(
+                    height: 490.w,
+                    decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
+                    padding: EdgeInsets.all(18.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SmartText(
+                          APPStrings.areYouSure.tr,
+                          style: style.headerTitleStyle,
+                        ),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        SmartText(
+                          APPStrings.orderWillBeCancelledX.tr.interpolate(['14567']),
+                          style: style.subTitleStyle,
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Container(
+                          height: 148.w,
+                          width: context.width,
+                          padding: EdgeInsets.all(14.w),
+                          decoration: BoxDecoration(color: style.refundBgColor, borderRadius: BorderRadius.all(Radius.circular(6.r))),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SmartText(
+                                APPStrings.refundAmount.tr,
+                                style: style.refundTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 6.w,
+                              ),
+                              SmartText(
+                                "\$1,12,500.00",
+                                style: style.amountTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 10.w,
+                              ),
+                              SmartText(
+                                APPStrings.refundTo.tr,
+                                style: style.refundTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 6.w,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SmartImage(path: AppImages.icVisa, height: 24.w, width: 38.w),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  SmartText(
+                                    "**** **** **** 1234",
+                                    style: style.amountTitleStyle,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        SmartText(
+                          APPStrings.cancellationReason.tr,
+                          style: style.cancelReasonTitleStyle,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                          buildWhen: (previous, current) => current is OrderCancellationReasonsChangeState,
+                          builder: (context, state) {
+                            return SmartDropDown<CancellationReasonModel>(
+                              selectedItem: orderDetailBloc.selectedReason,
+                              items: orderDetailBloc.cancellationReasonsList
+                                  .map((e) => SmartDropDownItem<CancellationReasonModel>(value: e, title: e.name ?? ''))
+                                  .toList(),
+                              hintText: APPStrings.cancellationReason.tr,
+                              onChanged: (newValue) {
+                                if (newValue == null) return;
+                                orderDetailBloc.add(OrderCancellationReasonsEvent(newValue));
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SmartTextField(
+                          hintText: APPStrings.addReason.tr,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const Spacer(),
+                        SmartButton(onTap: () {}, title: APPStrings.save.tr)
+                      ],
+                    ),
                   ),
-                ),
-              )
+                  Positioned(
+                    top: 16.w,
+                    right: 16.w,
+                    child: InkWell(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: SmartImage(
+                        path: AppImages.icCross,
+                        height: 24.w,
+                        width: 24.w,
+                        color: style.primaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

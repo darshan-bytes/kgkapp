@@ -19,7 +19,7 @@ class DiamondTabView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
+                        height: 48.w,
                         onValueChanges: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         onFieldSubmitted: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         hintText: APPStrings.searchOrder.tr,
@@ -54,9 +54,7 @@ class DiamondTabView extends StatelessWidget {
                 imageWidth: 24.5.w,
                 isSelected: false,
                 image: AppImages.icMenu,
-                onTap: () {
-                  _showOrderCancelPopup(context);
-                },
+                onTap: () {},
               ),
             ],
           ),
@@ -64,7 +62,12 @@ class DiamondTabView extends StatelessWidget {
           BlocBuilder<OrdersBloc, OrdersState>(
             buildWhen: (previous, current) => current is FilterDiamondOrdersState,
             builder: (context, state) {
-              return OrderListBuilder(ordersList: ordersBloc.filteredDiamondOrdersList);
+              return OrderListBuilder(
+                ordersList: ordersBloc.filteredDiamondOrdersList,
+                onTap: (p0) {
+                  context.pushNamed(AppRoutes.orderDetailsPage);
+                },
+              );
             },
           ),
         ],
@@ -100,9 +103,5 @@ class DiamondTabView extends StatelessWidget {
         );
       },
     );
-  }
-
-  void _showOrderCancelPopup(BuildContext context) {
-    Utils.showSmartModalBottomSheet(context: context, isScrollControlled: true, builder: (context) => const OrderCancelBottomSheet());
   }
 }

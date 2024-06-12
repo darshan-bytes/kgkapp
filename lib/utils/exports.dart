@@ -210,3 +210,6 @@ export 'package:kgk/modules/b2b/orders/view/jewellery_tabview_list_tile.dart';
 export '../../../widgets/smart_rich_text.dart';
 export '../kgk.dart';
 export 'package:kgk/modules/b2b/orders/model/order_stone_type_model.dart';
+export 'package:kgk/modules/b2b/order_details/view/order_details_screen.dart';
+export 'package:kgk/modules/b2b/order_details/bloc/order_details_bloc.dart';
+export 'package:kgk/modules/b2b/order_details/model/cancellation_reason_model.dart';

@@ -12,26 +12,22 @@ class OrderScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.0.w),
-          child: BlocBuilder<OrdersBloc, OrdersState>(
-            builder: (context, state) {
-              return Column(
-                children: [
-                  SizedBox(height: 17.0.h),
-                  Expanded(
-                    child: SmartTabBar(
-                      length: ordersBloc.tabs.length,
-                      onTabInitialized: (tabController) {
-                        // Here TabController is initialized
-                        ordersBloc.tabController = tabController;
-                      },
-                      onTapTab: (int index) => ordersBloc.add(const ChangeOrderTabsEvent()),
-                      tabs: ordersBloc.tabs,
-                      tabBarView: _buildTabBarView(ordersBloc),
-                    ),
-                  ),
-                ],
-              );
-            },
+          child: Column(
+            children: [
+              SizedBox(height: 17.0.h),
+              Expanded(
+                child: SmartTabBar(
+                  length: ordersBloc.tabs.length,
+                  onTabInitialized: (tabController) {
+                    // Here TabController is initialized
+                    ordersBloc.tabController = tabController;
+                  },
+                  onTapTab: (int index) => ordersBloc.add(const ChangeOrderTabsEvent()),
+                  tabs: ordersBloc.tabs,
+                  tabBarView: _buildTabBarView(ordersBloc),
+                ),
+              ),
+            ],
           ),
         ),
       ),

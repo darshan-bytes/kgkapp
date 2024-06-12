@@ -367,4 +367,25 @@ class APPStrings {
   static const String inProgress = 'in_Progress';
   static const String active = 'active';
   static const String removeLot = 'remove_lot';
+
+  // my order details screen
+  static const String createdBy = 'created_by';
+  static const String contactInfo = 'contact_info';
+  static const String billingAddress = 'billing_address';
+  static const String shippingAddress = 'shipping_address';
+
+  //order details popup
+  static const String trackProduct = 'track_product';
+  static const String viewTimeline = 'view_timeline';
+  static const String cancelOrder = 'cancel_order';
+
+  //order cancel popup
+  static const String areYouSure = 'are_you_sure';
+  static const String orderWillBeCancelledX = 'order_will_be_cancelled_x';
+  static const String cancelOrderDesc = 'cancel_order_desc';
+  static const String refundAmount = 'refund_amount';
+  static const String refundTo = 'refund_to';
+  static const String save = 'save';
+  static const String cancellationReason = 'cancellation_reason';
+  static const String addReason = 'add_reason';
 }
