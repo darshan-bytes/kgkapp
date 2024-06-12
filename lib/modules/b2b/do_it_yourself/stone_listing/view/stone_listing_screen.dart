@@ -38,7 +38,7 @@ class StoneListingScreen extends StatelessWidget {
             }),
             FilterBottomActionBar(
               onFilterTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -48,7 +48,7 @@ class StoneListingScreen extends StatelessWidget {
                 );
               },
               onSortTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -229,7 +229,7 @@ class StoneListingScreen extends StatelessWidget {
                           onTapImageViewer: () => printWrapped("onTapImageViewer"),
                           onTapUSA: () => printWrapped("onTapUSA"),
                           onTapMenuButton: () {
-                            showModalBottomSheet(
+                            Utils.showSmartModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               useSafeArea: true,

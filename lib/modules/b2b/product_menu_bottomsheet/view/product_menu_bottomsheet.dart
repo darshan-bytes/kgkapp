@@ -149,16 +149,10 @@ class ProductMenuBottomSheet extends StatelessWidget {
         SmartButton(
             onTap: () {
               context.pop();
-              showModalBottomSheet(
+              Utils.showSmartModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 useSafeArea: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.w),
-                    topRight: Radius.circular(6.w),
-                  ),
-                ),
                 builder: (context) => QuotationRequestConfirmation(
                   onContinueShopping: () {
                     context.pop();

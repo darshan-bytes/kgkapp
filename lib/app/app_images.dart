@@ -98,4 +98,5 @@ class AppImages {
   static const String icImageThin = 'assets/images/ic_image_thin.svg';
   static const String icProductCertificate = 'assets/images/ic_product_certificate.svg';
   static const String icRotate3D = 'assets/images/ic_rotate_3d.svg';
+  static const String icRemove = 'assets/images/ic_remove.svg';
 }
