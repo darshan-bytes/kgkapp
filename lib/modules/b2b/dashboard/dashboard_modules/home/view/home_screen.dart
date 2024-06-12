@@ -31,12 +31,6 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.auctionPage);
           },
         ),
-      SmartText(
-          'Order Screen',
-          onTap: () async {
-            context.pushNamed(AppRoutes.orderPage);
-          },
-          optionalPadding:const EdgeInsets.all(20) ,)
       ]),
     );
   }
