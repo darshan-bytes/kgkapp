@@ -18,7 +18,7 @@ class OrderConfirmationScreen extends StatelessWidget {
       ),
       body: SafeArea(
           child: Center(
-        child: SingleChildScrollView(
+        child: SmartSingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(17.w),
             child: Column(
@@ -65,7 +65,7 @@ class OrderConfirmationScreen extends StatelessWidget {
   Widget _buildContinueShoppingButton(BuildContext context) {
     return SmartButton(
       onTap: () {
-        BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(DashboardBloc.homeIndex));
+        BlocProvider.of<DashboardBloc>(context).add(DashboardChangeTabEvent(DashboardBloc.homeIndex, context: context));
         context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
       },
       title: APPStrings.continueShopping.tr,

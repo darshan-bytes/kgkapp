@@ -17,7 +17,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   List<ProductDetails> originalOrdersDetailsList = _generateOrdersDetailsList();
   List<CancellationReasonModel> cancellationReasonsList = _generateCancellationReasonsList();
 
-  CancellationReasonModel selectedReason = CancellationReasonModel();
+  CancellationReasonModel? selectedReason;
 
   OrderDetailBloc() : super(OrderDetailInitial()) {
     on<InitialOrderDetailEvent>(_onInitialOrderDetailEvent);
@@ -109,17 +109,28 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
 
   static List<CancellationReasonModel> _generateCancellationReasonsList() {
     return List.generate(
-      8,
-      (index) => CancellationReasonModel(
-        id: index,
-        name: "Reason ${index + 1}",
-      ),
+      3,
+      (index) {
+        if (index == 2) {
+          return CancellationReasonModel(
+            id: index,
+            name: "Other",
+          );
+        } else {
+          return CancellationReasonModel(
+            id: index,
+            name: "Reason ${index + 1}",
+          );
+        }
+      },
     );
   }
 
   FutureOr<void> _onOrderCancellationReasonsChange(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) {
     emit(OrderDetailReloadState());
     selectedReason = event.cancellationReasonModel;
-    emit(OrderCancellationReasonsChangeState());
+    if (selectedReason != null) {
+      emit(OrderCancellationReasonsChangeState(selectedReason!));
+    }
   }
 }

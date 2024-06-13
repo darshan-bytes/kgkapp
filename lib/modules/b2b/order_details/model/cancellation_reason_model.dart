@@ -1,6 +1,11 @@
-class CancellationReasonModel {
-  int? id;
-  String? name;
+import 'package:kgk/kgk.dart';
 
-  CancellationReasonModel({this.id, this.name});
+class CancellationReasonModel extends Equatable {
+  final int? id;
+  final String? name;
+
+  const CancellationReasonModel({required this.id, required this.name});
+
+  @override
+  List<Object?> get props => [id, name];
 }

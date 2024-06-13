@@ -17,7 +17,7 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _getBody(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style, BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: SmartSingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

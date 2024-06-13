@@ -57,7 +57,7 @@ class SettingListingScreen extends StatelessWidget {
           ],
         );
       }),
-      body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
+      body: SmartSingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(

@@ -54,6 +54,9 @@ final class FilterOrdersState extends OrderDetailState {
 }
 
 final class OrderCancellationReasonsChangeState extends OrderDetailState {
+  final CancellationReasonModel cancellationReasonModel;
+
+  const OrderCancellationReasonsChangeState(this.cancellationReasonModel);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [cancellationReasonModel];
 }

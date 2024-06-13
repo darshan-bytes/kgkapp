@@ -137,6 +137,12 @@ abstract class AppTheme {
   OrderPopupStyle get orderPopupStyle;
 
   OrderDetailScreenStyle get orderDetailScreenStyle;
+
+  AuctionListItemStyle get auctionListItemStyle;
+
+  ProfileScreenStyle get profilePageScreenStyle;
+
+  SmartOptionTileStyle get smartOptionTileStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1133,6 +1139,8 @@ class StatusBadgeStyle {
   final Color activeBackgroundColor;
   final Color activeTextColor;
   final TextStyle statusTextStyle;
+  final Color lostBackgroundColor;
+  final Color lostTextColor;
 
   StatusBadgeStyle({
     required this.inProgressBackgroundColor,
@@ -1140,11 +1148,14 @@ class StatusBadgeStyle {
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
+    required this.lostBackgroundColor,
+    required this.lostTextColor,
   });
 }
 
 class OrderCancelPopupStyle {
   final Color primaryColor;
+  final Color crossColor;
   final Color refundBgColor;
   final Color whiteColor;
   final TextStyle headerTitleStyle;
@@ -1155,6 +1166,7 @@ class OrderCancelPopupStyle {
 
   OrderCancelPopupStyle({
     required this.primaryColor,
+    required this.crossColor,
     required this.refundBgColor,
     required this.whiteColor,
     required this.headerTitleStyle,
@@ -1174,6 +1186,7 @@ class OrderPopupStyle {
     required this.cancelTextStyle,
   });
 }
+
 class OrderDetailScreenStyle {
   final Color detailsTileColor;
   final TextStyle orderIdStyle;
@@ -1189,5 +1202,62 @@ class OrderDetailScreenStyle {
     required this.orderTotalStyle,
     required this.orderItemLabelStyle,
     required this.orderItemValueStyle,
+  });
+}
+
+class AuctionListItemStyle {
+  final Color borderColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final TextStyle productNameStyle;
+
+  AuctionListItemStyle({
+    required this.borderColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.valueStyle,
+    required this.productNameStyle,
+  });
+}
+
+class ProfileScreenStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final Color dividerColor;
+  final Color arrowRightColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle expandTitleStyle;
+  final TextStyle fontTextStyle;
+  final TextStyle logoutTextStyle;
+
+  ProfileScreenStyle(
+      {required this.backgroundColor,
+      required this.primaryColor,
+      required this.dividerColor,
+      required this.arrowRightColor,
+      required this.titleStyle,
+      required this.subTitleStyle,
+      required this.subTextStyle,
+      required this.listTitleStyle,
+      required this.expandTitleStyle,
+      required this.fontTextStyle,
+      required this.logoutTextStyle});
+}
+
+class SmartOptionTileStyle {
+  final Color arrowRightColor;
+  final Color trasparentColor;
+  final TextStyle titleStyle;
+  final TextStyle subTextStyle;
+
+  SmartOptionTileStyle({
+    required this.arrowRightColor,
+    required this.trasparentColor,
+    required this.titleStyle,
+    required this.subTextStyle,
   });
 }

@@ -15,7 +15,7 @@ class CompleteProductScreen extends StatelessWidget {
         },
         onFilter: () {},
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

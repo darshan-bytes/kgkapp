@@ -653,11 +653,14 @@ class LightModeTheme extends AppTheme {
         inProgressBackgroundColor: colors.colorFFF2E7,
         inProgressTextColor: colors.colorF49342,
         statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        lostBackgroundColor: colors.colorFCE1E1,
+        lostTextColor: colors.colorE83535,
       );
 
   @override
   OrderCancelPopupStyle get orderCancelPopupStyle => OrderCancelPopupStyle(
       primaryColor: colors.primary,
+      crossColor: colors.color8C8C8C,
       headerTitleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
       subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       refundTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
@@ -680,5 +683,39 @@ class LightModeTheme extends AppTheme {
         orderTotalStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp),
         orderItemLabelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         orderItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+      );
+
+  @override
+  AuctionListItemStyle get auctionListItemStyle => AuctionListItemStyle(
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        productNameStyle: interMediumBoldTextStyle,
+      );
+
+  @override
+  ProfileScreenStyle get profilePageScreenStyle => ProfileScreenStyle(
+        backgroundColor: colors.white,
+        primaryColor: colors.primary,
+        dividerColor: colors.colorF7F9FA,
+        arrowRightColor: colors.color8C8C8C,
+        titleStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 20.sp,
+        ),
+        subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        listTitleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+        expandTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        fontTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+        logoutTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      );
+
+  @override
+  SmartOptionTileStyle get smartOptionTileStyle => SmartOptionTileStyle(
+        arrowRightColor: colors.color8C8C8C,
+        trasparentColor: colors.transparent,
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
 }

@@ -24,7 +24,7 @@ class ImagePickDialogSheet extends StatelessWidget {
           children: [
             _buildAppBar(context, style),
             Flexible(
-              child: SingleChildScrollView(
+              child: SmartSingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(

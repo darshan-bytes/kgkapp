@@ -60,7 +60,7 @@ class ProductListScreen extends StatelessWidget {
           );
         },
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
           child: SafeArea(
               child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 17.w),

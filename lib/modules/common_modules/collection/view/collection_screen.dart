@@ -14,7 +14,7 @@ class CollectionScreen extends StatelessWidget {
         },
         onFilter: () {},
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: Column(children: [
           Container(
             width: context.width,

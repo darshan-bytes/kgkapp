@@ -10,7 +10,7 @@ class AddressListScreen extends StatelessWidget {
     return Scaffold(
         appBar: SmartAppBar(title: APPStrings.checkout.tr),
         body: SafeArea(
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
