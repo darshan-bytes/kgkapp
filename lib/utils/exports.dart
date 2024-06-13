@@ -130,6 +130,7 @@ export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profile_list_model.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
@@ -194,6 +195,7 @@ export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
+export 'package:kgk/widgets/smart_option_tile.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:kgk/modules/b2b/orders/view/order_screen.dart';

@@ -681,4 +681,28 @@ class LightModeTheme extends AppTheme {
         valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         productNameStyle: interMediumBoldTextStyle,
       );
+
+  @override
+  ProfileScreenStyle get profilePageScreenStyle => ProfileScreenStyle(
+        backgroundColor: colors.white,
+        primaryColor: colors.primary,
+        dividerColor: colors.colorF7F9FA,
+        arrowRightColor: colors.color8C8C8C,
+        titleStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 20.sp,
+        ),
+        subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        listTitleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+        expandTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        fontTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+        logoutTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      );
+
+  @override
+  SmartOptionTileStyle get smartOptionTileStyle => SmartOptionTileStyle(
+        arrowRightColor: colors.color8C8C8C,
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      );
 }
