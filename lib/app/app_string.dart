@@ -367,6 +367,9 @@ class APPStrings {
   static const String inProgress = 'in_Progress';
   static const String active = 'active';
   static const String removeLot = 'remove_lot';
+  static const String onGoing = 'on_going';
+  static const String winner = 'winner';
+  static const String lost = 'lost';
 
   // my order details screen
   static const String createdBy = 'created_by';
@@ -378,4 +381,12 @@ class APPStrings {
   static const String trackProduct = 'track_product';
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
+
+  // Auction List
+  static const String auctions = 'auctions';
+  static const String searchAuction = 'search_auction';
+  static const String skuNo = 'sku_no';
+  static const String type = 'type';
+  static const String bidAmount = 'bid_amount';
+  static const String bidPlacedOn = 'bid_placed_on';
 }

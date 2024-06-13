@@ -17,16 +17,21 @@ class StatusBadge extends StatelessWidget {
     final backgroundColor = _getBackgroundColor(currentStatus, style);
     final textColor = _getTextColor(currentStatus, style);
 
-    return Container(
-      height: height,
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: SmartText(
-        statusText.tr,
-        style: style.statusTextStyle.copyWith(color: textColor),
+    return FittedBox(
+      child: Container(
+        height: height,
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(height != null ? (height! / 2) : 12.r),
+        ),
+        child: Center(
+          child: SmartText(
+            statusText.tr,
+            style: style.statusTextStyle.copyWith(color: textColor),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
     );
   }
@@ -37,6 +42,12 @@ class StatusBadge extends StatelessWidget {
         return OrderStatus.inProgress.value;
       case OrderStatus.active:
         return OrderStatus.active.value;
+      case OrderStatus.winner:
+        return OrderStatus.winner.value;
+      case OrderStatus.lost:
+        return OrderStatus.lost.value;
+      case OrderStatus.onGoing:
+        return OrderStatus.onGoing.value;
     }
   }
 
@@ -46,6 +57,12 @@ class StatusBadge extends StatelessWidget {
         return style.inProgressBackgroundColor;
       case OrderStatus.active:
         return style.activeBackgroundColor;
+      case OrderStatus.onGoing:
+        return style.inProgressBackgroundColor;
+      case OrderStatus.winner:
+        return style.activeBackgroundColor;
+      case OrderStatus.lost:
+        return style.lostBackgroundColor;
     }
   }
 
@@ -55,6 +72,12 @@ class StatusBadge extends StatelessWidget {
         return style.inProgressTextColor;
       case OrderStatus.active:
         return style.activeTextColor;
+      case OrderStatus.onGoing:
+        return style.inProgressTextColor;
+      case OrderStatus.winner:
+        return style.activeTextColor;
+      case OrderStatus.lost:
+        return style.lostTextColor;
     }
   }
 }
