@@ -297,6 +297,8 @@ class LightModeTheme extends AppTheme {
         closeButtonBackgroundColor: colors.white,
         closeButtonStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.primary),
         selectedImageColor: colors.primary,
+        advancedFilterBackgroundColor: colors.colorD3DAE0,
+        advancedFilterTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override
@@ -601,6 +603,7 @@ class LightModeTheme extends AppTheme {
         myBidBackgroundColor: colors.color9DCAE0,
         textFieldBorderColor: colors.colorD3DAE0,
         boxShadowColor: colors.black,
+        compareCountBGColor: colors.color4885A3,
       );
 
   @override

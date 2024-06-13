@@ -339,4 +339,5 @@ class APPStrings {
   static const String diamondDetails = 'diamond_details';
   static const String productDetails = 'product_details';
   static const String strContinue = 'continue';
+  static const String advanceFilters = 'advance_filters';
 }

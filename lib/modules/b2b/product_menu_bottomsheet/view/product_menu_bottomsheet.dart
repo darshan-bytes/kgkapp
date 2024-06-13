@@ -94,11 +94,14 @@ class ProductMenuBottomSheet extends StatelessWidget {
 
   Widget _buildProductDetailsItem(String title, String quantity, String amount, ProductMenuBottomSheetStyle style) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: SmartText(title, style: style.diamondTitleStyle)),
+        Expanded(flex: 2, child: SmartText(title, style: style.diamondTitleStyle)),
         SizedBox(width: 17.w),
         Expanded(
+          flex: 3,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Expanded(child: SmartText(quantity, style: style.diamondValueStyle, textAlign: TextAlign.end)),
@@ -144,7 +147,11 @@ class ProductMenuBottomSheet extends StatelessWidget {
   Widget _buildButtons(BuildContext context) {
     return Column(
       children: [
-        SmartButton(onTap: () {}, title: APPStrings.addToBag.tr),
+        SmartButton(
+          onTap: () {},
+          title: APPStrings.addToBag.tr,
+          prefixImage: AppImages.icShoppingBag,
+        ),
         SizedBox(height: 8.h),
         SmartButton(
             onTap: () {

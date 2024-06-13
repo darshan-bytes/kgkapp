@@ -63,22 +63,22 @@ class SmartBottomNavigationBar extends StatelessWidget {
                     height: 24.w,
                     width: 24.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(50.r),
                     ),
                     child: SmartImage(
                       path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(12),
+                      imageBorderRadius: BorderRadius.circular(50.r),
                     )),
                 activeIcon: Container(
                     height: 24.w,
                     width: 24.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(50.r),
                       border: Border.all(color: style.indicatorColor, width: 1.w),
                     ),
                     child: SmartImage(
                       path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(12.r),
+                      imageBorderRadius: BorderRadius.circular(50.r),
                     )),
                 label: APPStrings.profile.tr,
               ),

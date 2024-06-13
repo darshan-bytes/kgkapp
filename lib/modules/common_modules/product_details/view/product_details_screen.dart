@@ -154,7 +154,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   context.pushNamed(AppRoutes.compareProductPage);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: colors(context).primary,
+                  backgroundColor: style.ratingGlowColor,
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                 ),
