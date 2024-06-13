@@ -86,7 +86,7 @@ class ProductListScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]), style: style.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -155,8 +155,8 @@ class ProductListScreen extends StatelessWidget {
                     isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productForRing,
                     onTap: () {
                       if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
                       } else {
                         context.pushNamed(AppRoutes.diamondDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                       }

@@ -21,6 +21,7 @@ class AuctionScreen extends StatelessWidget {
           _productDetail(context, bloc, style),
         ],
       ),
+      floatingActionButton: _buildCompareButton(bloc, style),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: _buildBottomNavigationBar(bloc, context, style),
@@ -514,6 +515,43 @@ class AuctionScreen extends StatelessWidget {
             ),
           );
         }
+      },
+    );
+  }
+
+  Widget _buildCompareButton(AuctionBloc auctionBloc, AuctionScreenStyle style) {
+    return BlocBuilder<AuctionBloc, AuctionState>(
+      buildWhen: (previous, current) => current is AuctionProductCompareToggleState,
+      builder: (context, state) {
+        return auctionBloc.isCompare
+            ? ElevatedButton(
+                onPressed: () {
+                  context.pushNamed(AppRoutes.compareProductPage);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: style.primaryColor,
+                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SmartText(APPStrings.compare.tr, style: AppTheme.of(context).primaryButtonStyle.titleStyle),
+                    SizedBox(width: 16.w),
+                    Container(
+                      height: 24.w,
+                      width: 24.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: style.compareCountBGColor,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                      child: SmartText('3', style: AppTheme.of(context).primaryButtonStyle.titleStyle),
+                    )
+                  ],
+                ),
+              )
+            : const SizedBox();
       },
     );
   }

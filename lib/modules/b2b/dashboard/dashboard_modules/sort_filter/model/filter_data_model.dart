@@ -4,11 +4,13 @@ class FilterData {
   String? name;
   String? code;
   List<SecondaryFilterData>? secondaryFilterData;
+  bool? isAdvanceFilter;
 
   FilterData({
     this.name,
     this.code,
     this.secondaryFilterData,
+    this.isAdvanceFilter,
   });
 
   @override

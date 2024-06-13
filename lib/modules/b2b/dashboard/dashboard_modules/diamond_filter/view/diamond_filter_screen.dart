@@ -29,12 +29,9 @@ class DiamondFilterScreen extends StatelessWidget {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(width: 134.w, child: _buildFilterList(context, diamondFilterBloc, style)),
               Expanded(
-                flex: 1,
-                child: _buildFilterList(context, diamondFilterBloc, style),
-              ),
-              Expanded(
-                flex: 2,
+                // flex: 3,
                 child: Container(
                   padding: EdgeInsets.all(16.w),
                   color: style.backgroundColor,
@@ -45,7 +42,7 @@ class DiamondFilterScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           SmartTextField.search(
-                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData.name]),
+                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData.name?.toLowerCase()]),
                             controller: diamondFilterBloc.searchController,
                             enabledBorderRadius: 8.r,
                           ),
@@ -63,40 +60,42 @@ class DiamondFilterScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          border: Border(
-            top: BorderSide(
-              color: style.itemBorderColor,
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          decoration: BoxDecoration(
+            color: style.backgroundColor,
+            border: Border(
+              top: BorderSide(
+                color: style.itemBorderColor,
+              ),
             ),
           ),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: SmartButton(
-                activeBackgroundColor: style.closeButtonBackgroundColor,
-                titleStyle: style.closeButtonStyle,
-                title: APPStrings.close.tr,
-                onTap: () {
-                  context.pop();
-                },
+          child: Row(
+            children: [
+              Expanded(
+                child: SmartButton(
+                  activeBackgroundColor: style.closeButtonBackgroundColor,
+                  titleStyle: style.closeButtonStyle,
+                  title: APPStrings.close.tr,
+                  onTap: () {
+                    context.pop();
+                  },
+                ),
               ),
-            ),
-            SizedBox(width: 16.w),
-            Expanded(
-              child: SmartButton(
-                title: APPStrings.apply.tr,
-                onTap: () {
-                  diamondFilterBloc.add(const ApplyDiamondFilterDataEvent());
-                  onApply();
-                  context.pop();
-                },
+              SizedBox(width: 16.w),
+              Expanded(
+                child: SmartButton(
+                  title: APPStrings.apply.tr,
+                  onTap: () {
+                    diamondFilterBloc.add(const ApplyDiamondFilterDataEvent());
+                    onApply();
+                    context.pop();
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -114,14 +113,17 @@ class DiamondFilterScreen extends StatelessWidget {
             builder: (context, state) {
               final filterData = diamondFilterBloc.filterData[index];
               bool isSelected = diamondFilterBloc.selectedFilterData == filterData;
+              bool isAdvanceFilter = filterData.isAdvanceFilter ?? false;
               return InkWell(
-                onTap: () {
-                  diamondFilterBloc.add(SelectDiamondFilterDataEvent(filterData: filterData));
-                },
+                onTap: isAdvanceFilter
+                    ? null
+                    : () {
+                        diamondFilterBloc.add(SelectDiamondFilterDataEvent(filterData: filterData));
+                      },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
-                    color: isSelected ? style.selectedBackgroundColor : null,
+                    color: isAdvanceFilter ? style.advancedFilterBackgroundColor : (isSelected ? style.selectedBackgroundColor : null),
                     border: Border(
                       bottom: BorderSide(
                         color: style.itemBorderColor,
@@ -130,7 +132,7 @@ class DiamondFilterScreen extends StatelessWidget {
                   ),
                   child: SmartText(
                     filterData.name,
-                    style: isSelected ? style.selectedTitleStyle : style.titleStyle,
+                    style: isAdvanceFilter ? style.advancedFilterTitleStyle : (isSelected ? style.selectedTitleStyle : style.titleStyle),
                   ),
                 ),
               );
@@ -166,7 +168,7 @@ class DiamondFilterScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        if (secondaryFilterData.image.isNotNullNorEmpty)
+                        if (secondaryFilterData.image.isNotNullNorEmpty) ...[
                           Padding(
                             padding: EdgeInsets.all(4.w),
                             child: SmartImage(
@@ -175,21 +177,16 @@ class DiamondFilterScreen extends StatelessWidget {
                               width: 24.w,
                               color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
                             ),
-                          )
-                        else
-                          SmartCheckbox(
-                              value: secondaryFilterData.isSelected,
-                              onChanged: () {
-                                handleOnChange(diamondFilterBloc, secondaryFilterData);
-                              }),
-                        SizedBox(width: 8.w),
+                          ),
+                          SizedBox(width: 8.w),
+                        ],
                         Expanded(
                           child: SmartText(
                             secondaryFilterData.name,
                             style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
                           ),
                         ),
-                        if (secondaryFilterData.isSelected && secondaryFilterData.image.isNotNullNorEmpty)
+                        if (secondaryFilterData.isSelected)
                           SmartImage(
                             path: AppImages.icCheck,
                             height: 16.w,

@@ -6,8 +6,7 @@ class SettingListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final SettingListingBloc settingListingBloc =
-        BlocProvider.of<SettingListingBloc>(context);
+    final SettingListingBloc settingListingBloc = BlocProvider.of<SettingListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
@@ -23,8 +22,7 @@ class SettingListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: BlocBuilder<SettingListingBloc, SettingListingState>(
-          builder: (context, state) {
+      bottomNavigationBar: BlocBuilder<SettingListingBloc, SettingListingState>(builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
@@ -33,8 +31,7 @@ class SettingListingScreen extends StatelessWidget {
               pageNumbers: settingListingBloc.pageNumbers,
               currentPage: settingListingBloc.selectedPageNumber,
               onPageChanged: (int index, String newValue) {
-                settingListingBloc
-                    .add(SettingProductChangePageNumberEvent(newValue));
+                settingListingBloc.add(SettingProductChangePageNumberEvent(newValue));
               },
             ),
             FilterBottomActionBar(
@@ -60,8 +57,7 @@ class SettingListingScreen extends StatelessWidget {
           ],
         );
       }),
-      body: SingleChildScrollView(
-          child: BlocBuilder<SettingListingBloc, SettingListingState>(
+      body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -69,8 +65,7 @@ class SettingListingScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 16.h),
-                const DiyProgressWidget(
-                    padding: EdgeInsets.zero, selectedStep: 2),
+                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
                 SizedBox(height: 24.h),
                 _buildProductFilterCount(style, settingListingBloc),
                 SizedBox(height: 24.h),
@@ -84,15 +79,13 @@ class SettingListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(
-      DiamondListingStyle style, SettingListingBloc settingListingBloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return SizedBox(
       height: 48.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24"]),
-              style: style.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -109,8 +102,7 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
-                    settingListingBloc
-                        .add(const SettingChangeListingTypeEvent(true));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent(true));
                   },
                 ),
                 SelectionButton(
@@ -125,8 +117,7 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
-                    settingListingBloc
-                        .add(const SettingChangeListingTypeEvent(false));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent(false));
                   },
                 ),
               ],
@@ -137,8 +128,7 @@ class SettingListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(
-      DiamondListingStyle style, SettingListingBloc settingListingBloc) {
+  Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
       builder: (context, state) {
         if (state is LoadingState) {
@@ -151,8 +141,7 @@ class SettingListingScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items: settingListingBloc.productList
-                        .map((ProductDetails productDetails) {
+                    items: settingListingBloc.productList.map((ProductDetails productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     onEyeTap: () {},
