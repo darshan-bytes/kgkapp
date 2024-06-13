@@ -23,13 +23,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.myOrder.tr,
           subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.orderPage);
+          }),
       ProfileListModel(
           image: AppImages.icActions,
           title: APPStrings.auctions.tr,
           subTitle: APPStrings.listOfAuctionsYouAppliedTo.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.auctionListingPage);
+          }),
       ProfileListModel(
           image: AppImages.icInquiries,
           title: APPStrings.myInquiries.tr,

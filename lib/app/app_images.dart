@@ -102,6 +102,9 @@ class AppImages {
   static const String icRotate3D = 'assets/images/ic_rotate_3d.svg';
   static const String icRemove = 'assets/images/ic_remove.svg';
 
+  //Order cancel
+  static const String icVisa = 'assets/images/ic_visa.svg';
+
   //Profile Page Screen
   static const String icEditProfile = 'assets/images/ic_edit_profile.svg';
   static const String icMyOrders = 'assets/images/ic_my_order.svg';

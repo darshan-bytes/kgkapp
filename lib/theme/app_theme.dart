@@ -132,6 +132,8 @@ abstract class AppTheme {
 
   StatusBadgeStyle get statusBadgeStyle;
 
+  OrderCancelPopupStyle get orderCancelPopupStyle;
+
   OrderPopupStyle get orderPopupStyle;
 
   OrderDetailScreenStyle get orderDetailScreenStyle;
@@ -1151,6 +1153,30 @@ class StatusBadgeStyle {
   });
 }
 
+class OrderCancelPopupStyle {
+  final Color primaryColor;
+  final Color crossColor;
+  final Color refundBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle refundTitleStyle;
+  final TextStyle amountTitleStyle;
+  final TextStyle cancelReasonTitleStyle;
+
+  OrderCancelPopupStyle({
+    required this.primaryColor,
+    required this.crossColor,
+    required this.refundBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.refundTitleStyle,
+    required this.amountTitleStyle,
+    required this.cancelReasonTitleStyle,
+  });
+}
+
 class OrderPopupStyle {
   final TextStyle optionTextStyle;
   final TextStyle cancelTextStyle;
@@ -1224,11 +1250,13 @@ class ProfileScreenStyle {
 
 class SmartOptionTileStyle {
   final Color arrowRightColor;
+  final Color trasparentColor;
   final TextStyle titleStyle;
   final TextStyle subTextStyle;
 
   SmartOptionTileStyle({
     required this.arrowRightColor,
+    required this.trasparentColor,
     required this.titleStyle,
     required this.subTextStyle,
   });

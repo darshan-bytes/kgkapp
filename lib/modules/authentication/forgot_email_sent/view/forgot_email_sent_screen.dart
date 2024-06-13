@@ -16,7 +16,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
         builder: (context, state) {
-          return SingleChildScrollView(
+          return SmartSingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(

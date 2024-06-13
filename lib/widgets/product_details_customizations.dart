@@ -18,7 +18,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
       children: [
         SmartText(productCustomization.name, style: style.settingSelectionTitleStyle),
         SizedBox(height: 8.h),
-        SingleChildScrollView(
+        SmartSingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

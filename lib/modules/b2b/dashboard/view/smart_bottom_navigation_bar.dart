@@ -34,7 +34,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
             backgroundColor: style.backgroundColor,
             currentIndex: dashboardBloc.currentIndex,
             onTap: (int index) {
-              dashboardBloc.add(DashboardChangeTabEvent(index));
+              dashboardBloc.add(DashboardChangeTabEvent(index, context: context));
             },
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: style.labelStyle,

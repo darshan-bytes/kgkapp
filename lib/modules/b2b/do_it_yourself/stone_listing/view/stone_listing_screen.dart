@@ -59,7 +59,7 @@ class StoneListingScreen extends StatelessWidget {
           ],
         );
       }),
-      body: SingleChildScrollView(child: BlocBuilder<StoneListingBloc, StoneListingState>(
+      body: SmartSingleChildScrollView(child: BlocBuilder<StoneListingBloc, StoneListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(

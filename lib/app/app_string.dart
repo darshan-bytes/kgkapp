@@ -382,6 +382,16 @@ class APPStrings {
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
+  //order cancel popup
+  static const String areYouSure = 'are_you_sure';
+  static const String orderWillBeCancelledX = 'order_will_be_cancelled_x';
+  static const String cancelOrderDesc = 'cancel_order_desc';
+  static const String refundAmount = 'refund_amount';
+  static const String refundTo = 'refund_to';
+  static const String save = 'save';
+  static const String cancellationReason = 'cancellation_reason';
+  static const String addReason = 'add_reason';
+
   // Auction List
   static const String auctions = 'auctions';
   static const String searchAuction = 'search_auction';

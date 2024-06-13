@@ -24,7 +24,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
           SizedBox(height: 8.h),
           _buildAppBar(context, style),
           Flexible(
-            child: SingleChildScrollView(
+            child: SmartSingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: BlocBuilder<MyBagBloc, MyBagState>(

@@ -6,8 +6,12 @@ sealed class ProfileEvent extends Equatable {
 }
 
 final class InitialProfileListEvent extends ProfileEvent {
+  final BuildContext context;
+
+  const InitialProfileListEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ToggleProfileListEvent extends ProfileEvent {

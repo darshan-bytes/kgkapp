@@ -19,7 +19,8 @@ class SmartOptionTile extends StatelessWidget {
           profileListModel.onTap!();
         }
       },
-      child: Padding(
+      child: Container(
+        color: style.trasparentColor,
         padding: EdgeInsets.symmetric(vertical: 16.0.h),
         child: Column(
           children: [

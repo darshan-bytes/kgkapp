@@ -8,7 +8,7 @@ class DiamondTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
-    return SingleChildScrollView(
+    return SmartSingleChildScrollView(
       child: Column(
         children: [
           SizedBox(height: 16.0.h),

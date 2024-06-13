@@ -17,7 +17,7 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _getBody(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style, BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: SmartSingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -298,6 +298,9 @@ class OrderDetailScreen extends StatelessWidget {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
         context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        ),
         builder: (context) {
           return SizedBox(
             height: 220.h,
@@ -308,7 +311,16 @@ class OrderDetailScreen extends StatelessWidget {
                 children: [
                   _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
                   _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
-                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {}),
+                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                    context.pop();
+                    Utils.showSmartModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                        ),
+                        builder: (context) => const OrderCancelBottomSheet());
+                  }),
                 ],
               ),
             ),
