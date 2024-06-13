@@ -132,9 +132,13 @@ abstract class AppTheme {
 
   StatusBadgeStyle get statusBadgeStyle;
 
+  OrderPopupStyle get orderPopupStyle;
+
   OrderDetailScreenStyle get orderDetailScreenStyle;
 
   TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
+  
+  AuctionListItemStyle get auctionListItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1131,6 +1135,8 @@ class StatusBadgeStyle {
   final Color activeBackgroundColor;
   final Color activeTextColor;
   final TextStyle statusTextStyle;
+  final Color lostBackgroundColor;
+  final Color lostTextColor;
 
   StatusBadgeStyle({
     required this.inProgressBackgroundColor,
@@ -1138,6 +1144,18 @@ class StatusBadgeStyle {
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
+    required this.lostBackgroundColor,
+    required this.lostTextColor,
+  });
+}
+
+class OrderPopupStyle {
+  final TextStyle optionTextStyle;
+  final TextStyle cancelTextStyle;
+
+  OrderPopupStyle({
+    required this.optionTextStyle,
+    required this.cancelTextStyle,
   });
 }
 
@@ -1176,5 +1194,20 @@ class TrackOrderBottomSheetStyle {
     required this.imageSubTitleStyle,
     required this.imageTitleStyle,
     required this.quantityStyle,
-  });
+     });
+}
+class AuctionListItemStyle {
+  final Color borderColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final TextStyle productNameStyle;
+
+  AuctionListItemStyle({
+    required this.borderColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.valueStyle,
+    required this.productNameStyle,
+     });
 }

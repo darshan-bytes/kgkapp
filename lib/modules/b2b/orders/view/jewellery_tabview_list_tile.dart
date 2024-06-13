@@ -19,7 +19,7 @@ class JewelleryTabView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
+                        height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
                         controller: ordersBloc.jewellerySearchController,
                         onValueChanges: (value) => ordersBloc.add(const FilterJewelleryOrdersEvent()),

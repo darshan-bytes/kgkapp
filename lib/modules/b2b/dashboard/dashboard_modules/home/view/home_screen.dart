@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/order_details/view/track_order_bottomsheet.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,18 +24,6 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(
           height: 20,
-        ),
-        SmartText(
-          'Auction',
-          onTap: () async {
-            // context.pushNamed(AppRoutes.auctionPage);
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              useSafeArea: true,
-              builder: (context) => TrackOrderBottomSheet(),
-            );
-          },
         ),
       ]),
     );

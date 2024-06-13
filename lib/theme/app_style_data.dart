@@ -653,6 +653,14 @@ class LightModeTheme extends AppTheme {
         inProgressBackgroundColor: colors.colorFFF2E7,
         inProgressTextColor: colors.colorF49342,
         statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        lostBackgroundColor: colors.colorFCE1E1,
+        lostTextColor: colors.colorE83535,
+      );
+
+  @override
+  OrderPopupStyle get orderPopupStyle => OrderPopupStyle(
+        optionTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+        cancelTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
       );
 
   @override
@@ -674,5 +682,14 @@ class LightModeTheme extends AppTheme {
         imageSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         imageTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         quantityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        );
+        
+   @override
+  AuctionListItemStyle get auctionListItemStyle => AuctionListItemStyle(
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        productNameStyle: interMediumBoldTextStyle,
       );
 }
