@@ -137,6 +137,10 @@ abstract class AppTheme {
   OrderDetailScreenStyle get orderDetailScreenStyle;
 
   AuctionListItemStyle get auctionListItemStyle;
+
+  ProfileScreenStyle get profilePageScreenStyle;
+
+  SmartOptionTileStyle get smartOptionTileStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1188,5 +1192,44 @@ class AuctionListItemStyle {
     required this.titleStyle,
     required this.valueStyle,
     required this.productNameStyle,
+  });
+}
+
+class ProfileScreenStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final Color dividerColor;
+  final Color arrowRightColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle expandTitleStyle;
+  final TextStyle fontTextStyle;
+  final TextStyle logoutTextStyle;
+
+  ProfileScreenStyle(
+      {required this.backgroundColor,
+      required this.primaryColor,
+      required this.dividerColor,
+      required this.arrowRightColor,
+      required this.titleStyle,
+      required this.subTitleStyle,
+      required this.subTextStyle,
+      required this.listTitleStyle,
+      required this.expandTitleStyle,
+      required this.fontTextStyle,
+      required this.logoutTextStyle});
+}
+
+class SmartOptionTileStyle {
+  final Color arrowRightColor;
+  final TextStyle titleStyle;
+  final TextStyle subTextStyle;
+
+  SmartOptionTileStyle({
+    required this.arrowRightColor,
+    required this.titleStyle,
+    required this.subTextStyle,
   });
 }
