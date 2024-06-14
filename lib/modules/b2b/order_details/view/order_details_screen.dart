@@ -21,20 +21,20 @@ class OrderDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOrderDetailsInfoCard(style, context),
+            _buildOrderDetailsInfoCard(style, context, orderDetailBloc),
             SizedBox(height: 24.h),
             _buildOrderCreaterDetailsInfoCard(style),
             SizedBox(height: 32.h),
             _buildSearchTextField(orderDetailBloc),
             SizedBox(height: 24.h),
-            _buildOrderList(orderDetailBloc),
+            _buildOrderList(orderDetailBloc, style),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context) {
+  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context, OrderDetailBloc orderDetailBloc) {
     return Container(
       color: style.detailsTileColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
@@ -61,13 +61,11 @@ class OrderDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
+              SmartImage(
+                path: AppImages.icMenu,
                 onTap: () {
-                  _showOrderDetailPopup(context);
+                  _showOrderDetailPopup(context, orderDetailBloc);
                 },
-                child: const SmartImage(
-                  path: AppImages.icMenu,
-                ),
               ),
             ],
           ),
@@ -146,7 +144,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderList(OrderDetailBloc orderDetailBloc) {
+  Widget _buildOrderList(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
       buildWhen: (previous, current) =>
           current is OrderDetailProductQualityChangedState ||
@@ -181,6 +179,7 @@ class OrderDetailScreen extends StatelessWidget {
               onQuantityChanged: (CartProductQuantity value) {
                 orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
               },
+              priceTextStyle: style.priceTextStyle,
             );
           },
           separatorBuilder: (context, index) => SizedBox(height: 24.h),
@@ -294,7 +293,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  void _showOrderDetailPopup(BuildContext context) {
+  void _showOrderDetailPopup(BuildContext context, OrderDetailBloc orderDetailBloc) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
         context: context,
@@ -302,7 +301,11 @@ class OrderDetailScreen extends StatelessWidget {
           borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
         ),
         builder: (context) {
-          return SizedBox(
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+              color: orderPopupStyle.whiteColor,
+            ),
             height: 220.h,
             child: Center(
               child: Column(
@@ -310,8 +313,9 @@ class OrderDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                      context.pop();
-                      Utils.showSmartModalBottomSheet(
+                    context.pop();
+                    orderDetailBloc.selectedReason = null;
+                    Utils.showSmartModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       useSafeArea: true,
@@ -324,15 +328,20 @@ class OrderDetailScreen extends StatelessWidget {
                   _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                     context.popAndPushNamed(AppRoutes.orderTimelinePage);
                   }),
-                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () async {
                     context.pop();
-                    Utils.showSmartModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-                        ),
-                        builder: (context) => const OrderCancelBottomSheet());
+
+                    var result = await Utils.showSmartModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                      ),
+                      builder: (context) => const OrderCancelBottomSheet(),
+                    );
+                    if (result != null && result == true) {
+                      orderDetailBloc.add(OrderCancelResetEvent());
+                    }
                   }),
                 ],
               ),

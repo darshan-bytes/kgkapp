@@ -285,7 +285,10 @@ class AuctionScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         return _buildResetBidsItem(
-                            labelText: bloc.recentBidList[index]['date_time'], value: bloc.recentBidList[index]['price'], style: style);
+                            isMyBid: bloc.isMyBidPlaced && index == 2 ? true : false,
+                            labelText: bloc.recentBidList[index]['date_time'],
+                            value: bloc.recentBidList[index]['price'],
+                            style: style);
                       },
                       separatorBuilder: (context, index) => SizedBox(height: 16.h),
                       itemCount: bloc.recentBidList.length > 5 ? 5 : bloc.recentBidList.length,

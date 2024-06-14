@@ -20,7 +20,7 @@ class SmartOptionTile extends StatelessWidget {
         }
       },
       child: Container(
-        color: style.trasparentColor,
+        color: style.transparentColor,
         padding: EdgeInsets.symmetric(vertical: 16.0.h),
         child: Column(
           children: [

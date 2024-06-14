@@ -64,7 +64,7 @@ class DiamondTabView extends StatelessWidget {
             builder: (context, state) {
               return OrderListBuilder(
                 ordersList: ordersBloc.filteredDiamondOrdersList,
-                onTap: (p0) {
+                onTap: (index) {
                   context.pushNamed(AppRoutes.orderDetailsPage);
                 },
               );

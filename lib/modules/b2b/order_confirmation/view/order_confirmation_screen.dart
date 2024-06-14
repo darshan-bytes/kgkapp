@@ -16,6 +16,7 @@ class OrderConfirmationScreen extends StatelessWidget {
         onFavorite: () {},
         onNotification: () {},
       ),
+      bottomNavigationBar: SafeArea(child: SizedBox(height: 72.h)),
       body: SafeArea(
           child: Center(
         child: SmartSingleChildScrollView(

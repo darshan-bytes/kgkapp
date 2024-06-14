@@ -28,6 +28,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     on<ChangeOrderDetailPageNumberEvent>(_onPageNumberChanged);
     on<FilterOrdersEvent>(_onFilterOrdersEvent);
     on<OrderCancellationReasonsEvent>(_onOrderCancellationReasonsChange);
+    on<OrderCancelResetEvent>(_onOrderCancelReset);
   }
 
   void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
@@ -79,6 +80,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
 
   void clearData() {
     orderSearchController.clear();
+    selectedReason = null;
     filteredOrdersDetailsList = _generateOrdersDetailsList();
   }
 
@@ -127,11 +129,17 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     );
   }
 
-  FutureOr<void> _onOrderCancellationReasonsChange(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) {
+  Future<void> _onOrderCancellationReasonsChange(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) async {
     emit(OrderDetailReloadState());
     selectedReason = event.cancellationReasonModel;
     if (selectedReason != null) {
       emit(OrderCancellationReasonsChangeState(selectedReason!));
     }
+  }
+
+  void _onOrderCancelReset(OrderCancelResetEvent event, Emitter<OrderDetailState> emit) {
+    emit(OrderDetailReloadState());
+    selectedReason = null;
+    emit(OrderDetailInitial());
   }
 }
