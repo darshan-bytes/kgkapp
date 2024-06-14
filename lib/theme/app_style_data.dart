@@ -694,9 +694,9 @@ class LightModeTheme extends AppTheme {
         imageSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         imageTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         quantityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
-        );
-        
-   @override
+      );
+
+  @override
   AuctionListItemStyle get auctionListItemStyle => AuctionListItemStyle(
         borderColor: colors.colorD3DAE0,
         primaryColor: colors.primary,
@@ -739,5 +739,13 @@ class LightModeTheme extends AppTheme {
         timeStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         dateTagStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         dateTagBorderColor: colors.colorD3DAE0,
+      );
+
+  @override
+  SmartTileLineStepperStyle get smartTileLineStepperStyle => SmartTileLineStepperStyle(
+        completedIndicatorColor: colors.color50B83C,
+        upcomingIndicatorColor: colors.color8C8C8C,
+        titleStyle: interSemiBoldTextStyle,
+        subtitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
 }

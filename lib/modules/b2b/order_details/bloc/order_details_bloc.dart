@@ -11,6 +11,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   // Dropdown and selection variables
   final List<String> pageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
   String selectedPageNumber = '01';
+  int currentTrackOrderIndex = 2;
 
   // Orders lists
   List<ProductDetails> filteredOrdersDetailsList = _generateOrdersDetailsList();

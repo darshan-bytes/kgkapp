@@ -7,23 +7,35 @@ class TrackOrderBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderDetailBloc orderDetailBloc = BlocProvider.of<OrderDetailBloc>(context);
     final TrackOrderBottomSheetStyle style = AppTheme.of(context).trackOrderBottomSheetStyle;
+    final SmartTileLineStepperStyle smartTileLineStepperStyle = AppTheme.of(context).smartTileLineStepperStyle;
 
-    return Container(
-      color: style.backgroundColor,
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 16.h),
-                _buildAppBar(context, style),
-                SizedBox(height: 24.h),
-                _buildOrderDetailsInfoCard(style),
-                CustomStepper()
-              ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 580.h),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.r),
+            topRight: Radius.circular(16.r),
+          ),
+          color: style.backgroundColor,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 16.h),
+                  _buildAppBar(context, style),
+                  SizedBox(height: 24.h),
+                  _buildOrderDetailsInfoCard(style),
+                  SizedBox(height: 24.h),
+                  _buildTrackOrderView(orderDetailBloc, smartTileLineStepperStyle),
+                  SizedBox(height: 16.h),
+                ],
+              ),
             ),
           ),
         ),
@@ -37,13 +49,11 @@ class TrackOrderBottomSheet extends StatelessWidget {
       children: [
         SmartText(APPStrings.trackProduct.tr, style: style.titleStyle),
         SizedBox(width: 8.w),
-        InkWell(
+        SmartImage(
+          path: AppImages.icCross,
           onTap: () {
             context.pop();
           },
-          child: const SmartImage(
-            path: AppImages.icCross,
-          ),
         ),
       ],
     );
@@ -51,7 +61,10 @@ class TrackOrderBottomSheet extends StatelessWidget {
 
   Widget _buildOrderDetailsInfoCard(TrackOrderBottomSheetStyle style) {
     return Container(
-      color: style.orderInfoBackgroundColor,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.r),
+        color: style.orderInfoBackgroundColor,
+      ),
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,150 +114,30 @@ class TrackOrderBottomSheet extends StatelessWidget {
       ),
     );
   }
-}
 
-class CustomStepper extends StatefulWidget {
-  const CustomStepper({super.key});
-
-  @override
-  State<CustomStepper> createState() => _CustomStepperState();
-}
-
-class _CustomStepperState extends State<CustomStepper> {
-  int _currentStep = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildStep(
-          index: 0,
-          title: 'Step 1 title',
-          content: 'Content for Step 1',
+  Widget _buildTrackOrderView(OrderDetailBloc orderDetailBloc, SmartTileLineStepperStyle smartTileLineStepperStyle) {
+    return SmartTileLineStepper(
+      currentStep: orderDetailBloc.currentTrackOrderIndex,
+      steps: [
+        SmartStep(
+            title: 'Order placed',
+            content: SmartText("Order placed from customer\n23/03/2023", style: smartTileLineStepperStyle.subtitleStyle)),
+        SmartStep(
+          title: 'Product ready to dispatch',
+          content: SmartText(
+            "Shipped and ready for pickup\n24/03/2023",
+            style: smartTileLineStepperStyle.subtitleStyle,
+          ),
         ),
-        // _buildStep(
-        //   index: 1,
-        //   title: 'Step 2 title',
-        //   content: 'Content for Step 2',
-        // ),
-        // _buildStep(
-        //   index: 2,
-        //   title: 'Step 3 title',
-        //   content: 'Content for Step 3',
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     TextButton(
-        //       onPressed: _currentStep > 0 ? () => setState(() => _currentStep--) : null,
-        //       child: const Text('Previous'),
-        //     ),
-        //     TextButton(
-        //       onPressed: _currentStep < 2 ? () => setState(() => _currentStep++) : null,
-        //       child: const Text('Next'),
-        //     ),
-        //   ],
-        // ),
-      ],
-    );
-  }
-
-  Widget _buildStep({required int index, required String title, required String content}) {
-    bool isCompleted = index < _currentStep;
-    bool isActive = index == _currentStep;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
-                _buildStepIndicator(isActive, isCompleted),
-                if (index < 2) _buildStepConnector(isCompleted),
-              ],
-            ),
-            SizedBox(width: 16.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(content),
-              ],
-            )
-          ],
+        SmartStep(
+          title: 'Arrived at Mumbai facility',
+          content: SmartText('Shipment is arrived at Mumbai facility\n25/03/2023', style: smartTileLineStepperStyle.subtitleStyle),
+        ),
+        SmartStep(
+          title: 'Out for delivery',
+          content: SmartText('Delivery person is out for delivery\n26/03/2023', style: smartTileLineStepperStyle.subtitleStyle),
         ),
       ],
     );
-  }
-
-  Widget _buildStepIndicator(bool isActive, bool isCompleted) {
-    if (isCompleted) {
-      return Container(
-        height: 12,
-        width: 12,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.green,
-        ),
-      );
-    } else if (isActive) {
-      return Container(
-        height: 12,
-        width: 12,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue,
-        ),
-      );
-    } else {
-      return Container(
-        height: 12,
-        width: 12,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.grey,
-        ),
-      );
-    }
-  }
-
-  Widget _buildStepConnector(bool isCompleted) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0.h),
-      child: CustomPaint(
-        size: Size(1, 60.h), // Adjust the height as needed
-        painter: DottedLinePainter(color: isCompleted ? Colors.green : Colors.grey),
-      ),
-    );
-  }
-}
-
-class DottedLinePainter extends CustomPainter {
-  final Color color;
-
-  DottedLinePainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    double dashWidth = 5.0, dashSpace = 5.0;
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.0;
-    double startY = 0;
-    while (startY < size.height) {
-      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), paint);
-      startY += dashWidth + dashSpace;
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

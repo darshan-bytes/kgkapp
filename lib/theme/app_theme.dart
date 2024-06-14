@@ -139,7 +139,7 @@ abstract class AppTheme {
   OrderDetailScreenStyle get orderDetailScreenStyle;
 
   TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
-  
+
   AuctionListItemStyle get auctionListItemStyle;
 
   ProfileScreenStyle get profilePageScreenStyle;
@@ -147,6 +147,8 @@ abstract class AppTheme {
   SmartOptionTileStyle get smartOptionTileStyle;
 
   OrderTimelineStyle get orderTimelineStyle;
+  
+  SmartTileLineStepperStyle get smartTileLineStepperStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1226,8 +1228,9 @@ class TrackOrderBottomSheetStyle {
     required this.imageSubTitleStyle,
     required this.imageTitleStyle,
     required this.quantityStyle,
-     });
+  });
 }
+
 class AuctionListItemStyle {
   final Color borderColor;
   final Color primaryColor;
@@ -1241,7 +1244,21 @@ class AuctionListItemStyle {
     required this.titleStyle,
     required this.valueStyle,
     required this.productNameStyle,
-     });
+  });
+}
+
+class SmartTileLineStepperStyle {
+  final Color completedIndicatorColor;
+  final Color upcomingIndicatorColor;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+
+  SmartTileLineStepperStyle({
+    required this.completedIndicatorColor,
+    required this.upcomingIndicatorColor,
+    required this.titleStyle,
+    required this.subtitleStyle,
+  });
 }
 
 class ProfileScreenStyle {
