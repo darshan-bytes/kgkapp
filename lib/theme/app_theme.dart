@@ -147,8 +147,10 @@ abstract class AppTheme {
   SmartOptionTileStyle get smartOptionTileStyle;
 
   OrderTimelineStyle get orderTimelineStyle;
-  
+
   SmartTileLineStepperStyle get smartTileLineStepperStyle;
+
+  LogoutPopupStyle get logoutPopupStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1319,5 +1321,19 @@ class OrderTimelineStyle {
     required this.timeStyle,
     required this.dateTagStyle,
     required this.dateTagBorderColor,
+  });
+}
+
+class LogoutPopupStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color whiteColor;
+  final TextStyle cancelTextStyle;
+
+  LogoutPopupStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.whiteColor,
+    required this.cancelTextStyle,
   });
 }
