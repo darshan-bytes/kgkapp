@@ -9,11 +9,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   FocusNode firstNameFocusNode = FocusNode();
   FocusNode lastNameFocusNode = FocusNode();
   FocusNode emailFocusNode = FocusNode();
   FocusNode contactNumberFocusNode = FocusNode();
+  FocusNode currentPasswordFocusNode = FocusNode();
+  FocusNode newPasswordFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
 
   List<ProfileListModel> profileActionList = [];
 
@@ -73,7 +79,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.changePassword.tr,
           subTitle: APPStrings.changeYourExistingPassword.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: event.context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+              ),
+              builder: (context) => const ChangePasswordBottomSheet(),
+            );
+          }),
       ProfileListModel(
           image: AppImages.icPreferences,
           title: APPStrings.preferences.tr,
