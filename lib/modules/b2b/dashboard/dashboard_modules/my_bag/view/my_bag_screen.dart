@@ -30,108 +30,113 @@ class MyBagScreen extends StatelessWidget {
   }
 
   Widget buildBottomNavBar(MyBagBloc myBagBloc, MyBagScreenStyle style, BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: style.bottomNavBarShadowColor,
-            offset: const Offset(0, -8),
-            blurRadius: 24.r,
-          ),
-        ],
-      ),
-      child: BlocBuilder<MyBagBloc, MyBagState>(
-        buildWhen: (_, current) => current is MyBagToggleReadMoreDetailsState,
-        builder: (context, state) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AnimatedSize(
-                duration: const Duration(milliseconds: 200),
-                child: myBagBloc.isReadMoreDetailsOpen
-                    ? Column(
-                        children: [
-                          BlocBuilder<MyBagBloc, MyBagState>(
-                            buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
-                            builder: (context, state) {
-                              return SmartDropDown(
-                                focusNode: myBagBloc.paymentConditionFocusNode,
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    myBagBloc.variationFocusNode.requestFocus();
-                                    myBagBloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
-                                  }
-                                },
-                                items:
-                                    myBagBloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
-                                selectedItem: myBagBloc.selectedPaymentCondition,
-                                hintText: APPStrings.paymentCondition.tr,
-                                labelText: APPStrings.paymentCondition.tr,
-                              );
-                            },
-                          ),
-                          SizedBox(height: 24.h),
-                          SmartTextField(
-                            suffixText: APPStrings.percentage,
-                            labelText: APPStrings.plusMinus,
-                            hintText: APPStrings.plusMinus,
-                            controller: myBagBloc.variationController,
-                            focusNode: myBagBloc.variationFocusNode,
-                            nextFocus: myBagBloc.noteFocusNode,
-                            textInputFormatter: [DoubleInputFormatter()],
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                          ),
-                          SizedBox(height: 24.h),
-                          SmartTextField(
-                            labelText: APPStrings.commentQuestion.tr,
-                            hintText: APPStrings.commentQuestion.tr,
-                            controller: myBagBloc.noteController,
-                            focusNode: myBagBloc.noteFocusNode,
-                            maxLines: 3,
-                            textInputAction: TextInputAction.done,
-                          ),
-                          SizedBox(height: 24.h),
-                          const Divider(),
-                          SizedBox(height: 24.h),
-                        ],
-                      )
-                    : const SizedBox(),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text: APPStrings.total.tr,
-                        style: style.bottomBarTotalTextStyle,
-                        children: [
-                          WidgetSpan(child: SizedBox(width: 8.w)),
-                          TextSpan(
-                            text: '\$35,700.00',
-                            style: style.bottomBarTotalAmountTextStyle,
-                          ),
-                        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
+        decoration: BoxDecoration(
+          color: style.backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: style.bottomNavBarShadowColor,
+              offset: const Offset(0, -8),
+              blurRadius: 24.r,
+            ),
+          ],
+        ),
+        child: BlocBuilder<MyBagBloc, MyBagState>(
+          buildWhen: (_, current) => current is MyBagToggleReadMoreDetailsState,
+          builder: (context, state) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 200),
+                  child: myBagBloc.isReadMoreDetailsOpen
+                      ? Column(
+                          children: [
+                            BlocBuilder<MyBagBloc, MyBagState>(
+                              buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+                              builder: (context, state) {
+                                return SmartDropDown(
+                                  focusNode: myBagBloc.paymentConditionFocusNode,
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      myBagBloc.variationFocusNode.requestFocus();
+                                      myBagBloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
+                                    }
+                                  },
+                                  items:
+                                      myBagBloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
+                                  selectedItem: myBagBloc.selectedPaymentCondition,
+                                  hintText: APPStrings.paymentCondition.tr,
+                                  labelText: APPStrings.paymentCondition.tr,
+                                );
+                              },
+                            ),
+                            SizedBox(height: 24.h),
+                            SmartTextField(
+                              suffixText: APPStrings.percentage,
+                              labelText: APPStrings.plusMinus,
+                              hintText: APPStrings.plusMinus,
+                              controller: myBagBloc.variationController,
+                              focusNode: myBagBloc.variationFocusNode,
+                              nextFocus: myBagBloc.noteFocusNode,
+                              textInputFormatter: [DoubleInputFormatter()],
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                            ),
+                            SizedBox(height: 24.h),
+                            SmartTextField(
+                              labelText: APPStrings.commentQuestion.tr,
+                              hintText: APPStrings.commentQuestion.tr,
+                              controller: myBagBloc.noteController,
+                              focusNode: myBagBloc.noteFocusNode,
+                              maxLines: 3,
+                              textInputAction: TextInputAction.done,
+                            ),
+                            SizedBox(height: 24.h),
+                            const Divider(),
+                            SizedBox(height: 24.h),
+                          ],
+                        )
+                      : const SizedBox(),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          text: APPStrings.total.tr,
+                          style: style.bottomBarTotalTextStyle,
+                          children: [
+                            WidgetSpan(child: SizedBox(width: 8.w)),
+                            TextSpan(
+                              text: '\$35,700.00',
+                              style: style.bottomBarTotalAmountTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SmartText(
-                    onTap: () {
-                      myBagBloc.add(const MyBagToggleReadMoreDetailsEvent());
-                    },
-                    myBagBloc.isReadMoreDetailsOpen ? APPStrings.readLess.tr : APPStrings.moreDetails.tr,
-                    style: style.bottomBarMoreLessTextStyle,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              buildCheckoutButton(context),
-            ],
-          );
-        },
+                    SmartText(
+                      onTap: () {
+                        myBagBloc.add(const MyBagToggleReadMoreDetailsEvent());
+                      },
+                      myBagBloc.isReadMoreDetailsOpen ? APPStrings.readLess.tr : APPStrings.moreDetails.tr,
+                      style: style.bottomBarMoreLessTextStyle,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                buildCheckoutButton(context),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

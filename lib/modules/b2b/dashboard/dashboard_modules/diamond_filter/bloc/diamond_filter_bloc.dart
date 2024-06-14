@@ -99,6 +99,11 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
       ],
     ),
     FilterData(
+      name: APPStrings.advanceFilters.tr,
+      code: 'advanceFilters',
+      isAdvanceFilter: true,
+    ),
+    FilterData(
       name: 'Table',
       code: 'table',
       secondaryFilterData: [

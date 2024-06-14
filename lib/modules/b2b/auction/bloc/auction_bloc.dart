@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'auction_event.dart';
+
 part 'auction_state.dart';
 
 class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
@@ -61,13 +62,17 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   }
 
   void _onInitEvent(AuctionInitialEvent event, Emitter<AuctionState> emit) async {
+    emit(const AuctionReloadState());
     resetData();
+    emit(AuctionInitial());
   }
 
   void resetData() {
     _timer?.cancel();
     bidAmountController.clear();
+    isCompare = false;
     auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
+    isMyBidPlaced = false;
     add(const AuctionStartTimerEvent());
   }
 

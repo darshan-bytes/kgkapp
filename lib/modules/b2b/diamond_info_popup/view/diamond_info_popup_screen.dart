@@ -119,18 +119,36 @@ class DiamondInfoPopupScreen extends StatelessWidget {
             scrollPhysics: const NeverScrollableScrollPhysics(),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(right: 8.w),
-          height: 24.w,
-          width: 24.w,
-          child: InkWell(
-            onTap: () => bloc.controller.nextPage(),
-            child: const Center(
-              child: SmartImage(
-                path: AppImages.icArrowRight,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 8.w),
+              height: 24.w,
+              width: 24.w,
+              child: InkWell(
+                onTap: () => bloc.controller.previousPage(),
+                child: const Center(
+                  child: SmartImage(
+                    path: AppImages.icArrowLeft,
+                  ),
+                ),
               ),
             ),
-          ),
+            Container(
+              margin: EdgeInsets.only(right: 8.w),
+              height: 24.w,
+              width: 24.w,
+              child: InkWell(
+                onTap: () => bloc.controller.nextPage(),
+                child: const Center(
+                  child: SmartImage(
+                    path: AppImages.icArrowRight,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
