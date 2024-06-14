@@ -1233,6 +1233,7 @@ class ProfileScreenStyle {
   final TextStyle expandTitleStyle;
   final TextStyle fontTextStyle;
   final TextStyle logoutTextStyle;
+  final TextStyle bottomTitleStyle;
 
   ProfileScreenStyle(
       {required this.backgroundColor,
@@ -1245,7 +1246,8 @@ class ProfileScreenStyle {
       required this.listTitleStyle,
       required this.expandTitleStyle,
       required this.fontTextStyle,
-      required this.logoutTextStyle});
+      required this.logoutTextStyle,
+      required this.bottomTitleStyle});
 }
 
 class SmartOptionTileStyle {
