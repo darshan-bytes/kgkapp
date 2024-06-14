@@ -227,3 +227,4 @@ export 'package:kgk/widgets/auction_list_item.dart';
 export 'package:kgk/modules/b2b/auction_listing/view/auction_listing_screen.dart';
 export 'package:kgk/modules/b2b/order_details/view/track_order_bottomsheet.dart';
 export 'package:kgk/widgets/smart_stepper.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/edit_profile_bottom_sheet.dart';

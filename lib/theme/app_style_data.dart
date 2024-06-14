@@ -707,20 +707,20 @@ class LightModeTheme extends AppTheme {
 
   @override
   ProfileScreenStyle get profilePageScreenStyle => ProfileScreenStyle(
-        backgroundColor: colors.white,
-        primaryColor: colors.primary,
-        dividerColor: colors.colorF7F9FA,
-        arrowRightColor: colors.color8C8C8C,
-        titleStyle: interMediumBoldTextStyle.copyWith(
-          fontSize: 20.sp,
-        ),
-        subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
-        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        listTitleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
-        expandTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
-        fontTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
-        logoutTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
-      );
+      backgroundColor: colors.white,
+      primaryColor: colors.primary,
+      dividerColor: colors.colorF7F9FA,
+      arrowRightColor: colors.color8C8C8C,
+      titleStyle: interMediumBoldTextStyle.copyWith(
+        fontSize: 20.sp,
+      ),
+      subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+      subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      listTitleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+      expandTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      fontTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+      logoutTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+      bottomTitleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp));
 
   @override
   SmartOptionTileStyle get smartOptionTileStyle => SmartOptionTileStyle(

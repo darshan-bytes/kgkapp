@@ -350,5 +350,6 @@
   "today": "Today",
   "yesterday": "Yesterday",
   "logout_ask": "Logout?",
-  "logout_msg": "You’ll be logged out of the system."
+  "logout_msg": "You’ll be logged out of the system.",
+  "edit_profile": "Edit Profile"
 }

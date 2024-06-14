@@ -5,6 +5,16 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController contactNumberController = TextEditingController();
+
+  FocusNode firstNameFocusNode = FocusNode();
+  FocusNode lastNameFocusNode = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode contactNumberFocusNode = FocusNode();
+
   List<ProfileListModel> profileActionList = [];
 
   List<ProfileListModel> profileChildrenList = [];

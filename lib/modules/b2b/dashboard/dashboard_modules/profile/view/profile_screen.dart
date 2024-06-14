@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
         onNotification: () {},
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: SmartSingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                       path: 'https://i.ibb.co/GWFG9GF/Frame-1410088735.png',
                       height: 73.h,
                       width: 73.w,
-                      imageBorderRadius: BorderRadius.circular(38.r),
+                      imageBorderRadius: BorderRadius.circular(50.r),
                     ),
                     SizedBox(width: 12.w),
                     Expanded(
@@ -45,7 +45,15 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SmartImage(path: AppImages.icEditProfile, onTap: () {}),
+                    SmartImage(
+                        path: AppImages.icEditProfile,
+                        onTap: () {
+                          Utils.showSmartModalBottomSheet(
+                              context: context,
+                              useSafeArea: true,
+                              isScrollControlled: true,
+                              builder: (context) => const EditProfileBottomSheet());
+                        }),
                   ],
                 ),
               ),
