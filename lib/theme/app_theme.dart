@@ -500,6 +500,8 @@ class FilterStyle {
   final Color closeButtonBackgroundColor;
   final TextStyle closeButtonStyle;
   final Color selectedImageColor;
+  final TextStyle advancedFilterTitleStyle;
+  final Color advancedFilterBackgroundColor;
 
   FilterStyle({
     required this.backgroundColor,
@@ -513,6 +515,8 @@ class FilterStyle {
     required this.closeButtonBackgroundColor,
     required this.closeButtonStyle,
     required this.selectedImageColor,
+    required this.advancedFilterBackgroundColor,
+    required this.advancedFilterTitleStyle,
   });
 }
 
@@ -1060,6 +1064,7 @@ class AuctionScreenStyle {
   final Color myBidBackgroundColor;
   final Color textFieldBorderColor;
   final Color boxShadowColor;
+  final Color compareCountBGColor;
 
   AuctionScreenStyle({
     required this.bidPriceLableStyle,
@@ -1076,6 +1081,7 @@ class AuctionScreenStyle {
     required this.myBidBackgroundColor,
     required this.textFieldBorderColor,
     required this.boxShadowColor,
+    required this.compareCountBGColor,
   });
 }
 

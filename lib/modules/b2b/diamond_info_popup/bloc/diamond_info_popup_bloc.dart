@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'diamond_info_popup_event.dart';
+
 part 'diamond_info_popup_state.dart';
 
 class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupState> {
@@ -64,7 +65,7 @@ class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupS
     keyToSymbol: "Crystal surface",
     reportComments: "NA",
     rap: "\$35,500.00",
-    discount: "-30.00 %",
+    discount: "-30.00%",
     pricePerCrt: "\$24,850.00",
     amount: "\$1,24,995.50",
   );

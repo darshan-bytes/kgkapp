@@ -42,9 +42,6 @@ class AppThemes {
         primaryColor: appColor.primary,
         scaffoldBackgroundColor: Colors.white,
         dividerTheme: DividerThemeData(color: appColor.colorD3DAE0, space: 1.h),
-        scrollbarTheme: ScrollbarThemeData(
-          trackColor: WidgetStateProperty.all(Colors.blue), // Change the track color here
-        ),
         colorScheme: ColorScheme.fromSeed(seedColor: appColor.primary),
         textSelectionTheme: const TextSelectionThemeData(
             //TODO: will update this.
