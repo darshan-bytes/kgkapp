@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/change_password_bottom_sheet.dart';
 
 part 'profile_event.dart';
 
@@ -85,6 +84,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               context: event.context,
               isScrollControlled: true,
               useSafeArea: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+              ),
               builder: (context) => const ChangePasswordBottomSheet(),
             );
           }),

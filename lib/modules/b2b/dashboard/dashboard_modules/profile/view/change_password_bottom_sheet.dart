@@ -14,8 +14,8 @@ class ChangePasswordBottomSheet extends StatelessWidget {
           decoration: BoxDecoration(
             color: style.backgroundColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(6.r),
-              topRight: Radius.circular(6.r),
+              topLeft: Radius.circular(12.r),
+              topRight: Radius.circular(12.r),
             ),
           ),
           child: Column(
