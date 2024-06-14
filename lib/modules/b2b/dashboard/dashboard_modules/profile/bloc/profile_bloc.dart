@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/change_password_bottom_sheet.dart';
 
 part 'profile_event.dart';
 
@@ -9,11 +10,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   FocusNode firstNameFocusNode = FocusNode();
   FocusNode lastNameFocusNode = FocusNode();
   FocusNode emailFocusNode = FocusNode();
   FocusNode contactNumberFocusNode = FocusNode();
+  FocusNode currentPasswordFocusNode = FocusNode();
+  FocusNode newPasswordFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
 
   List<ProfileListModel> profileActionList = [];
 
@@ -73,7 +80,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.changePassword.tr,
           subTitle: APPStrings.changeYourExistingPassword.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: event.context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => const ChangePasswordBottomSheet(),
+            );
+          }),
       ProfileListModel(
           image: AppImages.icPreferences,
           title: APPStrings.preferences.tr,
