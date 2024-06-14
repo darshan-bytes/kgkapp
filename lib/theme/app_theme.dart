@@ -143,6 +143,8 @@ abstract class AppTheme {
   ProfileScreenStyle get profilePageScreenStyle;
 
   SmartOptionTileStyle get smartOptionTileStyle;
+
+  OrderTimelineStyle get orderTimelineStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1261,5 +1263,25 @@ class SmartOptionTileStyle {
     required this.trasparentColor,
     required this.titleStyle,
     required this.subTextStyle,
+  });
+}
+
+class OrderTimelineStyle {
+  final Color backgroundColor;
+  final Color whiteColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle timeStyle;
+  final TextStyle dateTagStyle;
+  final Color dateTagBorderColor;
+
+  OrderTimelineStyle({
+    required this.backgroundColor,
+    required this.whiteColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.timeStyle,
+    required this.dateTagStyle,
+    required this.dateTagBorderColor,
   });
 }

@@ -25,6 +25,7 @@ export 'package:flutter_rating_bar/flutter_rating_bar.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
+export 'package:intl/intl.dart' hide TextDirection;
 export 'package:image_picker/image_picker.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_const.dart';
@@ -42,6 +43,7 @@ export 'package:kgk/data/network/client/api_service.dart';
 export 'package:kgk/data/network/client/connectivity_manager.dart';
 export 'package:kgk/data/network/model/error_model.dart';
 export 'package:kgk/enums/enums.dart';
+export 'package:kgk/extension_methods/date_time.dart';
 export 'package:kgk/extension_methods/list.dart';
 export 'package:kgk/extension_methods/string.dart';
 export 'package:kgk/interface/api_provider.dart';
@@ -79,6 +81,7 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/cate
 
 //model
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/model/categories_model.dart';
+export 'package:kgk/modules/b2b/order_timeline/model/order_timeline_data_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/my_bag/model/payment_condition_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/diamond_filter/bloc/diamond_filter_bloc.dart';
@@ -134,6 +137,7 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profil
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
+export 'package:kgk/modules/b2b/order_timeline/bloc/order_timeline_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
@@ -150,6 +154,7 @@ export 'package:kgk/modules/common_modules/splash/bloc/splash_bloc.dart';
 export 'package:kgk/modules/common_modules/splash/view/splash_screen.dart';
 export 'package:kgk/modules/common_modules/wishlist/bloc/wishlist_bloc.dart';
 export 'package:kgk/modules/common_modules/wishlist/view/wishlist_screen.dart';
+export 'package:kgk/modules/b2b/order_timeline/view/order_timeline_screen.dart';
 export 'package:kgk/theme/app_colors.dart';
 export 'package:kgk/theme/app_style_data.dart';
 export 'package:kgk/theme/app_theme.dart';

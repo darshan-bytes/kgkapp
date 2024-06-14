@@ -47,8 +47,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SmartImage(
                         path: AppImages.icEditProfile,
-                        onTap: () async {
-                          await Utils.showSmartModalBottomSheet(
+                        onTap: () {
+                          Utils.showSmartModalBottomSheet(
                               context: context,
                               useSafeArea: true,
                               isScrollControlled: true,

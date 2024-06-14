@@ -425,5 +425,8 @@ class APPStrings {
   static const String labCreatedDiamonds = 'lab_created_diamonds';
   static const String metals = 'metals';
   static const String ringSizer = 'ring_sizer';
+  static const String orderTimeline = 'order_timeline';
+  static const String today = 'today';
+  static const String yesterday = 'yesterday';
   static const String editProfile = 'edit_profile';
 }

@@ -232,7 +232,7 @@
   "laser_inclusion": "Laser inclusion",
   "lower_half": "Lower half",
   "star_length": "Star length",
-  "girdle_percentage": "Girdle%",
+  "girdle_percentage": "Girdle %",
   "color_grading": "Color grading",
   "clarity_grading": "Clarity grading",
   "black_table": "Black table",
@@ -346,5 +346,8 @@
   "lab_created_diamonds": "Lab created diamonds",
   "metals": "Metals",
   "ring_sizer": "Ring sizer",
+  "order_timeline": "Order timeline",
+  "today": "Today",
+  "yesterday": "Yesterday",
   "edit_profile": "Edit Profile"
 }

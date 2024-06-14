@@ -152,12 +152,14 @@ class EditProfileBottomSheet extends StatelessWidget {
   Widget _buildSaveButton(BuildContext context) {
     return SmartButton(
       title: APPStrings.save.tr,
-      onTap: () {},
+      onTap: () {
+        context.pop();
+      },
     );
   }
 
-  Future<void> _showImagePickDialog(BuildContext context) async {
-    await Utils.showSmartModalBottomSheet(
+  void _showImagePickDialog(BuildContext context) {
+    Utils.showSmartModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -166,8 +168,6 @@ class EditProfileBottomSheet extends StatelessWidget {
           onTapSource: (ImageSource imageSource) {},
         );
       },
-    ).then(
-      (value) {},
     );
   }
 }
