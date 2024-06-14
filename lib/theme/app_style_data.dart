@@ -686,6 +686,17 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle => TrackOrderBottomSheetStyle(
+        backgroundColor: colors.white,
+        orderInfoBackgroundColor: colors.colorF7F9FA,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        orderIdStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        imageSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        imageTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        quantityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      );
+
+  @override
   AuctionListItemStyle get auctionListItemStyle => AuctionListItemStyle(
         borderColor: colors.colorD3DAE0,
         primaryColor: colors.primary,
@@ -728,5 +739,21 @@ class LightModeTheme extends AppTheme {
         timeStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         dateTagStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         dateTagBorderColor: colors.colorD3DAE0,
+      );
+
+  @override
+  SmartTileLineStepperStyle get smartTileLineStepperStyle => SmartTileLineStepperStyle(
+        completedIndicatorColor: colors.color50B83C,
+        upcomingIndicatorColor: colors.color8C8C8C,
+        titleStyle: interSemiBoldTextStyle,
+        subtitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      );
+
+  @override
+  LogoutPopupStyle get logoutPopupStyle => LogoutPopupStyle(
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        whiteColor: colors.white,
+        cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
       );
 }

@@ -164,7 +164,7 @@ class EditProfileBottomSheet extends StatelessWidget {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (context) {
-        return ImagePickDialogSheet(
+        return SmartImagePickDialogSheet(
           onTapSource: (ImageSource imageSource) {},
         );
       },

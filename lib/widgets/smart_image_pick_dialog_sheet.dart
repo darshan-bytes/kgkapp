@@ -1,9 +1,9 @@
 import 'package:kgk/kgk.dart';
 
-class ImagePickDialogSheet extends StatelessWidget {
+class SmartImagePickDialogSheet extends StatelessWidget {
   final Function(ImageSource) onTapSource;
 
-  const ImagePickDialogSheet({super.key, required this.onTapSource});
+  const SmartImagePickDialogSheet({super.key, required this.onTapSource});
 
   @override
   Widget build(BuildContext context) {

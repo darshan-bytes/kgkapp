@@ -138,6 +138,8 @@ abstract class AppTheme {
 
   OrderDetailScreenStyle get orderDetailScreenStyle;
 
+  TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
+
   AuctionListItemStyle get auctionListItemStyle;
 
   ProfileScreenStyle get profilePageScreenStyle;
@@ -145,6 +147,10 @@ abstract class AppTheme {
   SmartOptionTileStyle get smartOptionTileStyle;
 
   OrderTimelineStyle get orderTimelineStyle;
+
+  SmartTileLineStepperStyle get smartTileLineStepperStyle;
+
+  LogoutPopupStyle get logoutPopupStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1207,6 +1213,26 @@ class OrderDetailScreenStyle {
   });
 }
 
+class TrackOrderBottomSheetStyle {
+  final Color backgroundColor;
+  final Color orderInfoBackgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle orderIdStyle;
+  final TextStyle imageSubTitleStyle;
+  final TextStyle imageTitleStyle;
+  final TextStyle quantityStyle;
+
+  TrackOrderBottomSheetStyle({
+    required this.backgroundColor,
+    required this.orderInfoBackgroundColor,
+    required this.titleStyle,
+    required this.orderIdStyle,
+    required this.imageSubTitleStyle,
+    required this.imageTitleStyle,
+    required this.quantityStyle,
+  });
+}
+
 class AuctionListItemStyle {
   final Color borderColor;
   final Color primaryColor;
@@ -1220,6 +1246,20 @@ class AuctionListItemStyle {
     required this.titleStyle,
     required this.valueStyle,
     required this.productNameStyle,
+  });
+}
+
+class SmartTileLineStepperStyle {
+  final Color completedIndicatorColor;
+  final Color upcomingIndicatorColor;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+
+  SmartTileLineStepperStyle({
+    required this.completedIndicatorColor,
+    required this.upcomingIndicatorColor,
+    required this.titleStyle,
+    required this.subtitleStyle,
   });
 }
 
@@ -1283,5 +1323,19 @@ class OrderTimelineStyle {
     required this.timeStyle,
     required this.dateTagStyle,
     required this.dateTagBorderColor,
+  });
+}
+
+class LogoutPopupStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color whiteColor;
+  final TextStyle cancelTextStyle;
+
+  LogoutPopupStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.whiteColor,
+    required this.cancelTextStyle,
   });
 }
