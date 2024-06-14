@@ -50,7 +50,7 @@ class WishlistScreen extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: BlocBuilder<WishlistBloc, WishlistState>(
           buildWhen: (previous, current) => current is WishlistDataFetchedState,
           builder: (context, state) {

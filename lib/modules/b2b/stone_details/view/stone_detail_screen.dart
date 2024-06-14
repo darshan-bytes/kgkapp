@@ -14,7 +14,7 @@ class StoneDetailScreen extends StatelessWidget {
         },
         onFilter: () {},
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: BlocBuilder<StoneDetailBloc, StoneDetailState>(
           builder: (context, state) {
             return Column(

@@ -384,6 +384,16 @@ class APPStrings {
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
+  //order cancel popup
+  static const String areYouSure = 'are_you_sure';
+  static const String orderWillBeCancelledX = 'order_will_be_cancelled_x';
+  static const String cancelOrderDesc = 'cancel_order_desc';
+  static const String refundAmount = 'refund_amount';
+  static const String refundTo = 'refund_to';
+  static const String save = 'save';
+  static const String cancellationReason = 'cancellation_reason';
+  static const String addReason = 'add_reason';
+
   // Auction List
   static const String auctions = 'auctions';
   static const String searchAuction = 'search_auction';
@@ -391,4 +401,33 @@ class APPStrings {
   static const String type = 'type';
   static const String bidAmount = 'bid_amount';
   static const String bidPlacedOn = 'bid_placed_on';
+
+  //Profile Page Screen
+  static const String myAccount = 'my_account';
+  static const String myOrder = 'my_orders';
+  static const String listOfAllTheOrdersYouPlaced = 'list_of_all_the_orders_you_placed';
+  static const String listOfAuctionsYouAppliedTo = 'list_of_auctions_you_applied_to';
+  static const String myInquiries = 'my_inquiries';
+  static const String yourSubmittedInquiries = 'your_submitted_inquiries';
+  static const String newsFeed = 'news_feed';
+  static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
+  static const String findAStore = 'find_a_store';
+  static const String searchYourNearbyStores = 'search_your_nearby_stores';
+  static const String savedAddress = 'saved_address';
+  static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
+  static const String changePassword = 'change_password';
+  static const String changeYourExistingPassword = 'change_your_existing_password';
+  static const String preferences = 'preferences';
+  static const String defaultCountryLanguageAndCurrency = 'default_country_language_and_currency';
+  static const String aboutUs = 'about_us';
+  static const String education = 'education';
+  static const String policies = 'policies';
+  static const String logout = 'logout';
+  static const String deleteAccount = 'delete_account';
+  static const String labCreatedDiamonds = 'lab_created_diamonds';
+  static const String metals = 'metals';
+  static const String ringSizer = 'ring_sizer';
+  static const String orderTimeline = 'order_timeline';
+  static const String today = 'today';
+  static const String yesterday = 'yesterday';
 }

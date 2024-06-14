@@ -17,7 +17,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 17.w),
-        child: SingleChildScrollView(
+        child: SmartSingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

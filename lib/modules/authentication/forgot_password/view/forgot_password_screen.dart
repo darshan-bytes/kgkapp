@@ -35,7 +35,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
+                  child: SmartSingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 17.w),
                       child: Column(

@@ -15,6 +15,9 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   // Orders lists
   List<ProductDetails> filteredOrdersDetailsList = _generateOrdersDetailsList();
   List<ProductDetails> originalOrdersDetailsList = _generateOrdersDetailsList();
+  List<CancellationReasonModel> cancellationReasonsList = _generateCancellationReasonsList();
+
+  CancellationReasonModel? selectedReason;
 
   OrderDetailBloc() : super(OrderDetailInitial()) {
     on<InitialOrderDetailEvent>(_onInitialOrderDetailEvent);
@@ -23,6 +26,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     on<OrderDetailRemoveProductEvent>(_onOrderDetailRemoveProduct);
     on<ChangeOrderDetailPageNumberEvent>(_onPageNumberChanged);
     on<FilterOrdersEvent>(_onFilterOrdersEvent);
+    on<OrderCancellationReasonsEvent>(_onOrderCancellationReasonsChange);
   }
 
   void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
@@ -101,5 +105,32 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
         cartProductQuantity: List.generate(99, (i) => CartProductQuantity(name: "$i")),
       ),
     );
+  }
+
+  static List<CancellationReasonModel> _generateCancellationReasonsList() {
+    return List.generate(
+      3,
+      (index) {
+        if (index == 2) {
+          return CancellationReasonModel(
+            id: index,
+            name: "Other",
+          );
+        } else {
+          return CancellationReasonModel(
+            id: index,
+            name: "Reason ${index + 1}",
+          );
+        }
+      },
+    );
+  }
+
+  FutureOr<void> _onOrderCancellationReasonsChange(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) {
+    emit(OrderDetailReloadState());
+    selectedReason = event.cancellationReasonModel;
+    if (selectedReason != null) {
+      emit(OrderCancellationReasonsChangeState(selectedReason!));
+    }
   }
 }

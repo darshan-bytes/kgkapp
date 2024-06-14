@@ -14,7 +14,7 @@ class SignUpScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         isBorder: false,
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: BlocBuilder<SignUpBloc, SignUpState>(
           buildWhen: (previous, current) => current is SignUpChangeAccountTypeState,
           builder: (context, state) {

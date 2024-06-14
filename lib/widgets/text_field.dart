@@ -183,8 +183,8 @@ class SmartTextFieldState extends State<SmartTextField> {
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
               onTapOutside: (p) {
-                FocusScope.of(context).unfocus();
                 if (widget.onTapOutside != null) {
+                  FocusScope.of(context).unfocus();
                   widget.onTapOutside!(p);
                 }
               },

@@ -144,7 +144,7 @@ class MyBagScreen extends StatelessWidget {
           if (bloc.myBagProductList.isEmpty) {
             return Center(child: SmartText(APPStrings.myBagEmpty.tr));
           }
-          return SingleChildScrollView(
+          return SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -337,7 +337,7 @@ class MyBagScreen extends StatelessWidget {
         Scrollbar(
           controller: bloc.scrollController,
           thumbVisibility: true,
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             controller: bloc.scrollController,
             scrollDirection: Axis.horizontal,
             child: Padding(

@@ -6,7 +6,7 @@ class AllNotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).allNotificationViewStyle;
-    return SingleChildScrollView(
+    return SmartSingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [

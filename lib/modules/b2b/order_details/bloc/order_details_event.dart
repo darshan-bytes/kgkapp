@@ -53,3 +53,12 @@ final class FilterOrdersEvent extends OrderDetailEvent {
   @override
   List<Object> get props => [];
 }
+
+class OrderCancellationReasonsEvent extends OrderDetailEvent {
+  final CancellationReasonModel cancellationReasonModel;
+
+  const OrderCancellationReasonsEvent(this.cancellationReasonModel);
+
+  @override
+  List<Object> get props => [cancellationReasonModel];
+}

@@ -78,8 +78,8 @@ dependencies:
   #For Permission Handle
   permission_handler: ^11.3.1
 
-  #For Easy Stepper
-  easy_stepper: ^0.8.5
+  #For Date Time Conversion
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

@@ -132,6 +132,8 @@ abstract class AppTheme {
 
   StatusBadgeStyle get statusBadgeStyle;
 
+  OrderCancelPopupStyle get orderCancelPopupStyle;
+
   OrderPopupStyle get orderPopupStyle;
 
   OrderDetailScreenStyle get orderDetailScreenStyle;
@@ -139,6 +141,12 @@ abstract class AppTheme {
   TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
   
   AuctionListItemStyle get auctionListItemStyle;
+
+  ProfileScreenStyle get profilePageScreenStyle;
+
+  SmartOptionTileStyle get smartOptionTileStyle;
+
+  OrderTimelineStyle get orderTimelineStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1149,6 +1157,30 @@ class StatusBadgeStyle {
   });
 }
 
+class OrderCancelPopupStyle {
+  final Color primaryColor;
+  final Color crossColor;
+  final Color refundBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle refundTitleStyle;
+  final TextStyle amountTitleStyle;
+  final TextStyle cancelReasonTitleStyle;
+
+  OrderCancelPopupStyle({
+    required this.primaryColor,
+    required this.crossColor,
+    required this.refundBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.refundTitleStyle,
+    required this.amountTitleStyle,
+    required this.cancelReasonTitleStyle,
+  });
+}
+
 class OrderPopupStyle {
   final TextStyle optionTextStyle;
   final TextStyle cancelTextStyle;
@@ -1210,4 +1242,65 @@ class AuctionListItemStyle {
     required this.valueStyle,
     required this.productNameStyle,
      });
+}
+
+class ProfileScreenStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final Color dividerColor;
+  final Color arrowRightColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle expandTitleStyle;
+  final TextStyle fontTextStyle;
+  final TextStyle logoutTextStyle;
+
+  ProfileScreenStyle(
+      {required this.backgroundColor,
+      required this.primaryColor,
+      required this.dividerColor,
+      required this.arrowRightColor,
+      required this.titleStyle,
+      required this.subTitleStyle,
+      required this.subTextStyle,
+      required this.listTitleStyle,
+      required this.expandTitleStyle,
+      required this.fontTextStyle,
+      required this.logoutTextStyle});
+}
+
+class SmartOptionTileStyle {
+  final Color arrowRightColor;
+  final Color trasparentColor;
+  final TextStyle titleStyle;
+  final TextStyle subTextStyle;
+
+  SmartOptionTileStyle({
+    required this.arrowRightColor,
+    required this.trasparentColor,
+    required this.titleStyle,
+    required this.subTextStyle,
+  });
+}
+
+class OrderTimelineStyle {
+  final Color backgroundColor;
+  final Color whiteColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle timeStyle;
+  final TextStyle dateTagStyle;
+  final Color dateTagBorderColor;
+
+  OrderTimelineStyle({
+    required this.backgroundColor,
+    required this.whiteColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.timeStyle,
+    required this.dateTagStyle,
+    required this.dateTagBorderColor,
+  });
 }

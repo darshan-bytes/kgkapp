@@ -374,11 +374,11 @@ class AuctionScreen extends StatelessWidget {
           style: myBagScreenStyle.productsTitleStyle,
         ),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
+        SmartSingleChildScrollView(
           child: Scrollbar(
             controller: bloc.scrollController,
             thumbVisibility: true,
-            child: SingleChildScrollView(
+            child: SmartSingleChildScrollView(
               scrollDirection: Axis.horizontal,
               controller: bloc.scrollController,
               child: Wrap(
