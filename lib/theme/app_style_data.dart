@@ -718,4 +718,15 @@ class LightModeTheme extends AppTheme {
         titleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
         subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
+
+  @override
+  OrderTimelineStyle get orderTimelineStyle => OrderTimelineStyle(
+        whiteColor: colors.white,
+        backgroundColor: colors.colorF7F9FA,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        timeStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        dateTagStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        dateTagBorderColor: colors.colorD3DAE0,
+      );
 }

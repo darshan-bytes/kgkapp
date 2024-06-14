@@ -310,7 +310,9 @@ class OrderDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
-                  _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {}),
+                  _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                    context.popAndPushNamed(AppRoutes.orderTimelinePage);
+                  }),
                   _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                     context.pop();
                     Utils.showSmartModalBottomSheet(
