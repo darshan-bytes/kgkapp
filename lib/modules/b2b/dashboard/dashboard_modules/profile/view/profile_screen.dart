@@ -55,13 +55,10 @@ class ProfileScreen extends StatelessWidget {
                 style: style.subTitleStyle,
                 optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 16.h),
-                child: _buildAccountList(style, bloc),
-              ),
+              _buildAccountList(style, bloc),
               Divider(color: style.dividerColor, thickness: 8.h),
               _buildExpandList(style, bloc),
-              _buildPopupList(style, bloc),
+              _buildPopupList(context, style, bloc),
             ],
           ),
         ),
@@ -74,6 +71,7 @@ class ProfileScreen extends StatelessWidget {
       return ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
+          padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 16.h),
           primary: false,
           itemBuilder: (context, index) {
             return SmartOptionTile(
@@ -146,32 +144,100 @@ class ProfileScreen extends StatelessWidget {
     });
   }
 
-  Widget _buildPopupList(ProfileScreenStyle style, ProfileBloc bloc) {
+  Widget _buildPopupList(BuildContext context, ProfileScreenStyle style, ProfileBloc bloc) {
     return Container(
       color: style.dividerColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w),
       child: Column(
         children: [
-          _buildPopupItem(title: APPStrings.logout.tr, onTap: () {}, image: AppImages.icLogout, textStyle: style.logoutTextStyle),
-          Divider(height: 16.h),
+          _buildPopupItem(
+              title: APPStrings.logout.tr,
+              onTap: () {
+                _buildLogoutPopup(context);
+              },
+              image: AppImages.icLogout,
+              textStyle: style.logoutTextStyle),
+          const Divider(),
           _buildPopupItem(
               title: APPStrings.deleteAccount.tr, onTap: () {}, image: AppImages.icDeleteAccount, textStyle: style.fontTextStyle),
+          SizedBox(
+            height: 10.h,
+          )
         ],
       ),
     );
   }
 
   Widget _buildPopupItem({required String title, required String image, required TextStyle textStyle, required VoidCallback onTap}) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0.h),
+      child: Container(
+        height: 66.h,
+        alignment: Alignment.center,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartImage(path: image),
             SizedBox(width: 12.h),
             SmartText(title, style: textStyle),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _buildLogoutPopup(BuildContext context) {
+    final style = AppTheme.of(context).logoutPopupStyle;
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => Container(
+        height: 190.h,
+        width: context.width,
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SmartText(APPStrings.logoutAsk.tr, style: style.titleStyle),
+            SizedBox(
+              height: 6.h,
+            ),
+            SmartText(APPStrings.logoutMsg.tr, style: style.subTitleStyle),
+            SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
+              height: 48.w,
+              width: context.width,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SmartButton(
+                      onTap: () {
+                        context.pop();
+                      },
+                      title: APPStrings.cancel.tr,
+                      activeBackgroundColor: style.whiteColor,
+                      titleStyle: style.cancelTextStyle,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Expanded(
+                      child: SmartButton(
+                    onTap: () {
+                      context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
+                    },
+                    title: APPStrings.logout.tr,
+                  )),
+                ],
+              ),
+            )
           ],
         ),
       ),

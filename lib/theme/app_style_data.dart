@@ -748,4 +748,12 @@ class LightModeTheme extends AppTheme {
         titleStyle: interSemiBoldTextStyle,
         subtitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
+
+  @override
+  LogoutPopupStyle get logoutPopupStyle => LogoutPopupStyle(
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        whiteColor: colors.white,
+        cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
+      );
 }

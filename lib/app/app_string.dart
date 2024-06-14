@@ -377,10 +377,8 @@ class APPStrings {
   static const String billingAddress = 'billing_address';
   static const String shippingAddress = 'shipping_address';
 
-  // Track order screen
-  static const String trackProduct = 'track_product';
-
   //order details popup
+  static const String trackProduct = 'track_product';
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
@@ -430,4 +428,6 @@ class APPStrings {
   static const String orderTimeline = 'order_timeline';
   static const String today = 'today';
   static const String yesterday = 'yesterday';
+  static const String logoutAsk = 'logout_ask';
+  static const String logoutMsg = 'logout_msg';
 }
