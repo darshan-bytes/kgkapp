@@ -432,4 +432,6 @@ class APPStrings {
   static const String logoutMsg = 'logout_msg';
   static const String editProfile = 'edit_profile';
   static const String advanceFilters = 'advance_filters';
+  static const String currentPassword = 'current_password';
+  static const String confirm = 'confirm';
 }

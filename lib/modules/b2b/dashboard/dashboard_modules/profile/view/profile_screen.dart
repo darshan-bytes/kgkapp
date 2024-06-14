@@ -52,6 +52,9 @@ class ProfileScreen extends StatelessWidget {
                               context: context,
                               useSafeArea: true,
                               isScrollControlled: true,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+                              ),
                               builder: (context) => const EditProfileBottomSheet());
                         }),
                   ],

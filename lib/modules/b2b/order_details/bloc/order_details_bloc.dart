@@ -28,7 +28,6 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     on<ChangeOrderDetailPageNumberEvent>(_onPageNumberChanged);
     on<FilterOrdersEvent>(_onFilterOrdersEvent);
     on<OrderCancellationReasonsEvent>(_onOrderCancellationReasonsChange);
-    on<OrderCancelResetEvent>(_onOrderCancelReset);
   }
 
   void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
@@ -135,11 +134,5 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     if (selectedReason != null) {
       emit(OrderCancellationReasonsChangeState(selectedReason!));
     }
-  }
-
-  void _onOrderCancelReset(OrderCancelResetEvent event, Emitter<OrderDetailState> emit) {
-    emit(OrderDetailReloadState());
-    selectedReason = null;
-    emit(OrderDetailInitial());
   }
 }

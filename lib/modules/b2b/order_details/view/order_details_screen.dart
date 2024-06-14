@@ -21,7 +21,7 @@ class OrderDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOrderDetailsInfoCard(style, context, orderDetailBloc),
+            _buildOrderDetailsInfoCard(style, context),
             SizedBox(height: 24.h),
             _buildOrderCreaterDetailsInfoCard(style),
             SizedBox(height: 32.h),
@@ -34,7 +34,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context, OrderDetailBloc orderDetailBloc) {
+  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context) {
     return Container(
       color: style.detailsTileColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
@@ -64,7 +64,7 @@ class OrderDetailScreen extends StatelessWidget {
               SmartImage(
                 path: AppImages.icMenu,
                 onTap: () {
-                  _showOrderDetailPopup(context, orderDetailBloc);
+                  _showOrderDetailPopup(context);
                 },
               ),
             ],
@@ -293,7 +293,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  void _showOrderDetailPopup(BuildContext context, OrderDetailBloc orderDetailBloc) {
+  void _showOrderDetailPopup(BuildContext context) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
         context: context,
@@ -314,7 +314,6 @@ class OrderDetailScreen extends StatelessWidget {
                 children: [
                   _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                     context.pop();
-                    orderDetailBloc.selectedReason = null;
                     Utils.showSmartModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -328,10 +327,9 @@ class OrderDetailScreen extends StatelessWidget {
                   _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                     context.popAndPushNamed(AppRoutes.orderTimelinePage);
                   }),
-                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () async {
+                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                     context.pop();
-
-                    var result = await Utils.showSmartModalBottomSheet(
+                    Utils.showSmartModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       shape: RoundedRectangleBorder(
@@ -339,9 +337,6 @@ class OrderDetailScreen extends StatelessWidget {
                       ),
                       builder: (context) => const OrderCancelBottomSheet(),
                     );
-                    if (result != null && result == true) {
-                      orderDetailBloc.add(OrderCancelResetEvent());
-                    }
                   }),
                 ],
               ),

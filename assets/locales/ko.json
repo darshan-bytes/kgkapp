@@ -352,5 +352,7 @@
   "logout_ask": "Logout?",
   "logout_msg": "You’ll be logged out of the system.",
   "edit_profile": "Edit Profile",
-  "advance_filters": "Advance filters"
+  "advance_filters": "Advance filters",
+  "current_password": "Current Password",
+  "confirm": "Confirm"
 }
