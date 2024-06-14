@@ -36,7 +36,7 @@ class SettingListingScreen extends StatelessWidget {
             ),
             FilterBottomActionBar(
               onFilterTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -46,7 +46,7 @@ class SettingListingScreen extends StatelessWidget {
                 );
               },
               onSortTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -57,7 +57,7 @@ class SettingListingScreen extends StatelessWidget {
           ],
         );
       }),
-      body: SingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
+      body: SmartSingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
         builder: (context, state) {
           return SafeArea(
               child: Padding(
@@ -131,7 +131,7 @@ class SettingListingScreen extends StatelessWidget {
   Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
       builder: (context, state) {
-        if (state is LoadingState) {
+        if (state is StoneLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
         if (settingListingBloc.productList.isEmpty) {

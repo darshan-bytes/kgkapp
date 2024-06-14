@@ -117,16 +117,16 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _buildActions() {
     final List<Widget> actions = [];
     if (onScan != null) {
-      actions.add(_buildIconButton(onScan!, AppImages.icHeart, 24));
+      actions.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24));
     }
     if (onFilter != null) {
-      actions.add(_buildIconButton(onFilter!, AppImages.icSearch, 24));
+      actions.add(_buildIconButton(onFilter!, AppImages.icSearch, size: 24));
     }
     if (onFavorite != null) {
-      actions.add(_buildIconButton(onFavorite!, AppImages.icHeart, 24));
+      actions.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24));
     }
     if (onNotification != null) {
-      actions.add(_buildIconButton(onNotification!, AppImages.icNotification, 24));
+      actions.add(_buildIconButton(onNotification!, AppImages.icNotification));
     }
     if (this.actions != null) {
       actions.add(SizedBox(width: 17.w));
@@ -136,19 +136,19 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     return actions;
   }
 
-  Widget _buildIconButton(VoidCallback onTap, String assetPath, double size) {
+  Widget _buildIconButton(VoidCallback onTap, String assetPath, {double? size}) {
     return Padding(
       padding: EdgeInsets.only(left: 20.w),
       child: InkWell(
         onTap: onTap,
         child: SizedBox(
-          height: size.w,
-          width: size.w,
+          height: size?.w,
+          width: size?.w,
           child: Center(
             child: SmartImage(
               path: assetPath,
-              height: size,
-              width: size,
+              height: size?.w,
+              width: size?.w,
             ),
           ),
         ),

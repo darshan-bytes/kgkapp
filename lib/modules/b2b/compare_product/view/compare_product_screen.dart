@@ -11,13 +11,13 @@ class CompareProductScreen extends StatelessWidget {
         appBar: SmartAppBar(
           title: APPStrings.compareProduct.tr,
         ),
-        body: SingleChildScrollView(
+        body: SmartSingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Stack(
             children: [
               Padding(
                 padding: EdgeInsets.all(14.w),
-                child: SingleChildScrollView(
+                child: SmartSingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [

@@ -22,8 +22,8 @@ class BlocGenerator {
       BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
       BlocProvider<SettingDetailBloc>(create: (_) => SettingDetailBloc()),
-      BlocProvider<DiamondDetailBloc>(create: (_) => DiamondDetailBloc()),
-      BlocProvider<DiamondListingBloc>(create: (_) => DiamondListingBloc()),
+      BlocProvider<StoneDetailBloc>(create: (_) => StoneDetailBloc()),
+      BlocProvider<StoneListingBloc>(create: (_) => StoneListingBloc()),
       BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc()),
       BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
@@ -35,6 +35,9 @@ class BlocGenerator {
       BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
+      BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
+      BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
+      BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
     ];
   }
 }

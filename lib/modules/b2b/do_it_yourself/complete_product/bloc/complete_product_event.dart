@@ -4,15 +4,6 @@ sealed class CompleteProductEvent extends Equatable {
   const CompleteProductEvent();
 }
 
-final class CompleteProductImageChangeEvent extends CompleteProductEvent {
-  final int index;
-
-  const CompleteProductImageChangeEvent(this.index);
-
-  @override
-  List<Object> get props => [index];
-}
-
 final class CompleteProductCompareToggle extends CompleteProductEvent {
   final bool isCompare;
 

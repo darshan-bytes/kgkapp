@@ -38,8 +38,14 @@ class SmartTextField extends StatefulWidget {
   final bool autofocus;
   final TapRegionCallback? onTapOutside;
   final VoidCallback? onEditingComplete;
-
+  final String? suffixText;
+  final BorderRadius? borderRadius;
   final bool isSearch;
+  final InputBorder? customEnabledBorder;
+  final InputBorder? customDisabledBorder;
+  final InputBorder? customFocusedBorder;
+  final InputBorder? customErrorBorder;
+  final InputBorder? customFocusedErrorBorder;
 
   const SmartTextField({
     super.key,
@@ -80,7 +86,16 @@ class SmartTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTapOutside,
     this.onEditingComplete,
-  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+    this.borderRadius,
+    this.customEnabledBorder,
+    this.customDisabledBorder,
+    this.customFocusedBorder,
+    this.customErrorBorder,
+    this.customFocusedErrorBorder,
+    this.suffixText,
+  })  : labelText = labelText != null
+            ? '$labelText${isRequired == true ? ' *' : ''}'
+            : null,
         isSearch = false;
 
   const SmartTextField.search({
@@ -122,7 +137,16 @@ class SmartTextField extends StatefulWidget {
     this.onTapOutside,
     this.onEditingComplete,
     this.prefixIcon,
-  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
+    this.borderRadius,
+    this.customEnabledBorder,
+    this.customDisabledBorder,
+    this.customFocusedBorder,
+    this.customErrorBorder,
+    this.customFocusedErrorBorder,
+    this.suffixText,
+  })  : labelText = labelText != null
+            ? '$labelText${isRequired == true ? ' *' : ''}'
+            : null,
         isSearch = true;
 
   @override
@@ -159,8 +183,8 @@ class SmartTextFieldState extends State<SmartTextField> {
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
               onTapOutside: (p) {
-                FocusScope.of(context).unfocus();
                 if (widget.onTapOutside != null) {
+                  FocusScope.of(context).unfocus();
                   widget.onTapOutside!(p);
                 }
               },
@@ -173,37 +197,60 @@ class SmartTextFieldState extends State<SmartTextField> {
               cursorColor: style.blackColor,
               controller: widget.controller,
               decoration: InputDecoration(
+                  suffixText: widget.suffixText,
                   errorMaxLines: 6,
                   counterText: '',
                   filled: true,
                   errorStyle: style.errorStyle.merge(widget.errorStyle),
                   fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ?? EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
-                  disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                      borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor)),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4.r)),
-                    borderSide: BorderSide(
-                      color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: style.focusedTextFieldBorderColor,
+                  contentPadding: widget.contentPadding ??
+                      EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
+                  disabledBorder: widget.customDisabledBorder ??
+                      OutlineInputBorder(
+                        borderRadius: widget.borderRadius ??
+                            BorderRadius.all(Radius.circular(4.r)),
+                        borderSide: BorderSide(
+                            color: widget.disabledBorderColor ??
+                                style.disabledTextFieldBorderColor),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4.r))),
-                  errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: BorderRadius.all(Radius.circular(4.r))),
-                  focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: style.errorBorderColor), borderRadius: BorderRadius.all(Radius.circular(4.r))),
+                  enabledBorder: widget.customEnabledBorder ??
+                      OutlineInputBorder(
+                        borderRadius: widget.borderRadius ??
+                            BorderRadius.all(Radius.circular(
+                                widget.enabledBorderRadius ?? 4.r)),
+                        borderSide: BorderSide(
+                          color: widget.enabledBorderColor ??
+                              style.enabledTextFieldBorderColor,
+                        ),
+                      ),
+                  focusedBorder: widget.customFocusedBorder ??
+                      OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: style.focusedTextFieldBorderColor,
+                        ),
+                        borderRadius: widget.borderRadius ??
+                            BorderRadius.all(Radius.circular(4.r)),
+                      ),
+                  errorBorder: widget.customErrorBorder ??
+                      OutlineInputBorder(
+                        borderSide: BorderSide(color: style.errorBorderColor),
+                        borderRadius: widget.borderRadius ??
+                            BorderRadius.all(Radius.circular(4.r)),
+                      ),
+                  focusedErrorBorder: widget.customFocusedErrorBorder ??
+                      OutlineInputBorder(
+                        borderSide: BorderSide(color: style.errorBorderColor),
+                        borderRadius: widget.borderRadius ??
+                            BorderRadius.all(Radius.circular(4.r)),
+                      ),
                   hintText: widget.hintText,
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
                   prefixIcon: widget.isSearch
                       ? FittedBox(
                           child: Container(
-                            margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
+                            margin: EdgeInsets.only(
+                                left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
                             padding: EdgeInsets.zero,
                             child: SmartImage(
                               path: AppImages.icSearch,
@@ -228,7 +275,8 @@ class SmartTextFieldState extends State<SmartTextField> {
                               onPressed: _toggle,
                             )
                           : null)),
-              obscureText: widget.obscured && _passwordVisible ? false : widget.obscured,
+              obscureText:
+                  widget.obscured && _passwordVisible ? false : widget.obscured,
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               autocorrect: false,

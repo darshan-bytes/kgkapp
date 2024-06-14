@@ -14,7 +14,7 @@ class CollectionScreen extends StatelessWidget {
         },
         onFilter: () {},
       ),
-      body: SingleChildScrollView(
+      body: SmartSingleChildScrollView(
         child: Column(children: [
           Container(
             width: context.width,
@@ -62,8 +62,11 @@ class CollectionScreen extends StatelessWidget {
                                   context.pushNamed(AppRoutes.productListGridPage,
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
                                 } else if (index == 1) {
-                                  context.pushNamed(AppRoutes.diamondListingPage,
+                                  context.pushNamed(AppRoutes.stoneListingPage,
                                       arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+                                } else if (index == 2) {
+                                  context.pushNamed(AppRoutes.stoneListingPage,
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
                                 }
                               },
                               child: Container(

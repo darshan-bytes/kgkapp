@@ -19,3 +19,16 @@ enum ProductCustomizationType {
 
   const ProductCustomizationType(this.value);
 }
+
+enum OrderStatus {
+  inProgress('in_progress'),
+  active('active'),
+  onGoing('on_going'),
+  winner('winner'),
+  lost('lost'),
+  ;
+
+  final String value;
+
+  const OrderStatus(this.value);
+}

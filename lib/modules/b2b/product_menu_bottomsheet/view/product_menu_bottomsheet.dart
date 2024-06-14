@@ -24,7 +24,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
           SizedBox(height: 8.h),
           _buildAppBar(context, style),
           Flexible(
-            child: SingleChildScrollView(
+            child: SmartSingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: BlocBuilder<MyBagBloc, MyBagState>(
@@ -156,16 +156,10 @@ class ProductMenuBottomSheet extends StatelessWidget {
         SmartButton(
             onTap: () {
               context.pop();
-              showModalBottomSheet(
+              Utils.showSmartModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 useSafeArea: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.w),
-                    topRight: Radius.circular(6.w),
-                  ),
-                ),
                 builder: (context) => QuotationRequestConfirmation(
                   onContinueShopping: () {
                     context.pop();

@@ -127,6 +127,30 @@ abstract class AppTheme {
   QuotationRequestConfirmationStyle get quotationRequestConfirmationStyle;
 
   ShowDoubleActionDialogStyle get showDoubleActionDialogStyle;
+
+  SmartTabBarStyle get smartTabBarStyle;
+
+  StatusBadgeStyle get statusBadgeStyle;
+
+  OrderCancelPopupStyle get orderCancelPopupStyle;
+
+  OrderPopupStyle get orderPopupStyle;
+
+  OrderDetailScreenStyle get orderDetailScreenStyle;
+
+  TrackOrderBottomSheetStyle get trackOrderBottomSheetStyle;
+
+  AuctionListItemStyle get auctionListItemStyle;
+
+  ProfileScreenStyle get profilePageScreenStyle;
+
+  SmartOptionTileStyle get smartOptionTileStyle;
+
+  OrderTimelineStyle get orderTimelineStyle;
+
+  SmartTileLineStepperStyle get smartTileLineStepperStyle;
+
+  LogoutPopupStyle get logoutPopupStyle;
 }
 
 class PrimaryButtonStyle {
@@ -193,6 +217,7 @@ class TabBarStyle {
   final Color indicatorColor;
   final Color backgroundColor;
   final Color borderColor;
+  final Color boxShadowColor;
 
   TabBarStyle({
     required this.labelStyle,
@@ -200,6 +225,7 @@ class TabBarStyle {
     required this.indicatorColor,
     required this.backgroundColor,
     required this.borderColor,
+    required this.boxShadowColor,
   });
 }
 
@@ -435,6 +461,7 @@ class SmartDropDownStyle {
   final Color unSelectedBorderColor;
   final TextStyle titleTextStyle;
   final TextStyle labelStyle;
+  final TextStyle selectedTitleTextStyle;
 
   SmartDropDownStyle({
     required this.backgroundColor,
@@ -443,6 +470,7 @@ class SmartDropDownStyle {
     required this.unSelectedBorderColor,
     required this.titleTextStyle,
     required this.labelStyle,
+    required this.selectedTitleTextStyle,
   });
 }
 
@@ -790,6 +818,11 @@ class MyBagScreenStyle {
   final TextStyle itemSelectedStyle;
   final TextStyle totalAmountStyle;
   final TextStyle diamondPurityStyle;
+  final Color bottomNavBarShadowColor;
+  final TextStyle bottomBarTotalTextStyle;
+  final TextStyle bottomBarTotalAmountTextStyle;
+  final TextStyle bottomBarMoreLessTextStyle;
+  final TextStyle textInfoValueStyle;
 
   MyBagScreenStyle({
     required this.backgroundColor,
@@ -797,6 +830,11 @@ class MyBagScreenStyle {
     required this.itemSelectedStyle,
     required this.totalAmountStyle,
     required this.diamondPurityStyle,
+    required this.bottomNavBarShadowColor,
+    required this.bottomBarTotalTextStyle,
+    required this.bottomBarTotalAmountTextStyle,
+    required this.bottomBarMoreLessTextStyle,
+    required this.textInfoValueStyle,
   });
 }
 
@@ -1088,5 +1126,222 @@ class ShowDoubleActionDialogStyle {
     required this.titleStyle,
     required this.contentStyle,
     required this.okButtonStyle,
+  });
+}
+
+class SmartTabBarStyle {
+  final TextStyle selectedTabTextStyle;
+  final TextStyle unselectedTabTextStyle;
+  final Color primaryColor;
+  final Color tabDividerColor;
+  final Color labelColor;
+  final Color unselectedLabelColor;
+
+  SmartTabBarStyle({
+    required this.selectedTabTextStyle,
+    required this.unselectedTabTextStyle,
+    required this.primaryColor,
+    required this.tabDividerColor,
+    required this.labelColor,
+    required this.unselectedLabelColor,
+  });
+}
+
+class StatusBadgeStyle {
+  final Color inProgressBackgroundColor;
+  final Color inProgressTextColor;
+  final Color activeBackgroundColor;
+  final Color activeTextColor;
+  final TextStyle statusTextStyle;
+  final Color lostBackgroundColor;
+  final Color lostTextColor;
+
+  StatusBadgeStyle({
+    required this.inProgressBackgroundColor,
+    required this.inProgressTextColor,
+    required this.activeBackgroundColor,
+    required this.activeTextColor,
+    required this.statusTextStyle,
+    required this.lostBackgroundColor,
+    required this.lostTextColor,
+  });
+}
+
+class OrderCancelPopupStyle {
+  final Color primaryColor;
+  final Color crossColor;
+  final Color refundBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle refundTitleStyle;
+  final TextStyle amountTitleStyle;
+  final TextStyle cancelReasonTitleStyle;
+
+  OrderCancelPopupStyle({
+    required this.primaryColor,
+    required this.crossColor,
+    required this.refundBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.refundTitleStyle,
+    required this.amountTitleStyle,
+    required this.cancelReasonTitleStyle,
+  });
+}
+
+class OrderPopupStyle {
+  final TextStyle optionTextStyle;
+  final TextStyle cancelTextStyle;
+
+  OrderPopupStyle({
+    required this.optionTextStyle,
+    required this.cancelTextStyle,
+  });
+}
+
+class OrderDetailScreenStyle {
+  final Color detailsTileColor;
+  final TextStyle orderIdStyle;
+  final TextStyle orderDateStyle;
+  final TextStyle orderTotalStyle;
+  final TextStyle orderItemLabelStyle;
+  final TextStyle orderItemValueStyle;
+
+  OrderDetailScreenStyle({
+    required this.detailsTileColor,
+    required this.orderIdStyle,
+    required this.orderDateStyle,
+    required this.orderTotalStyle,
+    required this.orderItemLabelStyle,
+    required this.orderItemValueStyle,
+  });
+}
+
+class TrackOrderBottomSheetStyle {
+  final Color backgroundColor;
+  final Color orderInfoBackgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle orderIdStyle;
+  final TextStyle imageSubTitleStyle;
+  final TextStyle imageTitleStyle;
+  final TextStyle quantityStyle;
+
+  TrackOrderBottomSheetStyle({
+    required this.backgroundColor,
+    required this.orderInfoBackgroundColor,
+    required this.titleStyle,
+    required this.orderIdStyle,
+    required this.imageSubTitleStyle,
+    required this.imageTitleStyle,
+    required this.quantityStyle,
+  });
+}
+
+class AuctionListItemStyle {
+  final Color borderColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final TextStyle productNameStyle;
+
+  AuctionListItemStyle({
+    required this.borderColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.valueStyle,
+    required this.productNameStyle,
+  });
+}
+
+class SmartTileLineStepperStyle {
+  final Color completedIndicatorColor;
+  final Color upcomingIndicatorColor;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+
+  SmartTileLineStepperStyle({
+    required this.completedIndicatorColor,
+    required this.upcomingIndicatorColor,
+    required this.titleStyle,
+    required this.subtitleStyle,
+  });
+}
+
+class ProfileScreenStyle {
+  final Color backgroundColor;
+  final Color primaryColor;
+  final Color dividerColor;
+  final Color arrowRightColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle expandTitleStyle;
+  final TextStyle fontTextStyle;
+  final TextStyle logoutTextStyle;
+  final TextStyle bottomTitleStyle;
+
+  ProfileScreenStyle(
+      {required this.backgroundColor,
+      required this.primaryColor,
+      required this.dividerColor,
+      required this.arrowRightColor,
+      required this.titleStyle,
+      required this.subTitleStyle,
+      required this.subTextStyle,
+      required this.listTitleStyle,
+      required this.expandTitleStyle,
+      required this.fontTextStyle,
+      required this.logoutTextStyle,
+      required this.bottomTitleStyle});
+}
+
+class SmartOptionTileStyle {
+  final Color arrowRightColor;
+  final Color trasparentColor;
+  final TextStyle titleStyle;
+  final TextStyle subTextStyle;
+
+  SmartOptionTileStyle({
+    required this.arrowRightColor,
+    required this.trasparentColor,
+    required this.titleStyle,
+    required this.subTextStyle,
+  });
+}
+
+class OrderTimelineStyle {
+  final Color backgroundColor;
+  final Color whiteColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle timeStyle;
+  final TextStyle dateTagStyle;
+  final Color dateTagBorderColor;
+
+  OrderTimelineStyle({
+    required this.backgroundColor,
+    required this.whiteColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.timeStyle,
+    required this.dateTagStyle,
+    required this.dateTagBorderColor,
+  });
+}
+
+class LogoutPopupStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color whiteColor;
+  final TextStyle cancelTextStyle;
+
+  LogoutPopupStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.whiteColor,
+    required this.cancelTextStyle,
   });
 }

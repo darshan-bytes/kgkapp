@@ -112,7 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
-                            BlocProvider.of<DashboardBloc>(context).add(const DashboardChangeTabEvent(2));
+                            BlocProvider.of<DashboardBloc>(context).add(DashboardChangeTabEvent(2, context: context));
                             context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
                           },
                         ),
@@ -183,7 +183,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget getScaffoldBody(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: SmartSingleChildScrollView(
         child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
@@ -269,7 +269,8 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds ||
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
@@ -298,7 +299,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
           _buildSuggestedProductList(productDetailsBloc, style),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.diamondForGemstones) ...[
+              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 32.h),
             _buildRecentlyViewedProductList(productDetailsBloc, style),
           ]
@@ -538,7 +539,7 @@ class ProductDetailsScreen extends StatelessWidget {
         Scrollbar(
           controller: productDetailsBloc.youMayLikeScrollController,
           thumbVisibility: true,
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             controller: productDetailsBloc.youMayLikeScrollController,
             scrollDirection: Axis.horizontal,
             child: Wrap(
@@ -571,7 +572,7 @@ class ProductDetailsScreen extends StatelessWidget {
         Scrollbar(
           controller: productDetailsBloc.recentViewScrollController,
           thumbVisibility: true,
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             scrollDirection: Axis.horizontal,
             controller: productDetailsBloc.recentViewScrollController,
             child: Wrap(

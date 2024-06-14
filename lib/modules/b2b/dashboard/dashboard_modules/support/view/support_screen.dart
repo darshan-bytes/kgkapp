@@ -13,7 +13,7 @@ class SupportScreen extends StatelessWidget {
             SmartText(
               'Diamond Filter',
               onTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
@@ -30,16 +30,10 @@ class SupportScreen extends StatelessWidget {
             SmartText(
               'Quotation Request Confirmation',
               onTap: () {
-                showModalBottomSheet(
+                Utils.showSmartModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(6.w),
-                      topRight: Radius.circular(6.w),
-                    ),
-                  ),
                   builder: (context) => QuotationRequestConfirmation(
                     onContinueShopping: () {
                       context.pop();

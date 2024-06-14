@@ -15,7 +15,7 @@ class WriteReviewScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -173,12 +173,12 @@ class WriteReviewScreen extends StatelessWidget {
   }
 
   Future<void> _showImagePickDialog(BuildContext context, WriteReviewBloc bloc) async {
-    await showModalBottomSheet(
+    await Utils.showSmartModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (context) {
-        return ImagePickDialogSheet(
+        return SmartImagePickDialogSheet(
           onTapSource: (ImageSource imageSource) {
             bloc.add(PickImageEvent(imageSource: imageSource));
           },

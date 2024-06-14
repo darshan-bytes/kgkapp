@@ -31,7 +31,6 @@ class DiamondFilterScreen extends StatelessWidget {
             children: [
               SizedBox(width: 134.w, child: _buildFilterList(context, diamondFilterBloc, style)),
               Expanded(
-                // flex: 3,
                 child: Container(
                   padding: EdgeInsets.all(16.w),
                   color: style.backgroundColor,
@@ -111,7 +110,7 @@ class DiamondFilterScreen extends StatelessWidget {
           return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
             buildWhen: (previous, current) => current is DiamondFilterDataSelectedState,
             builder: (context, state) {
-              final filterData = diamondFilterBloc.filterData[index];
+              final FilterData filterData = diamondFilterBloc.filterData[index];
               bool isSelected = diamondFilterBloc.selectedFilterData == filterData;
               bool isAdvanceFilter = filterData.isAdvanceFilter ?? false;
               return InkWell(

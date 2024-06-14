@@ -10,7 +10,7 @@ class AddressListScreen extends StatelessWidget {
     return Scaffold(
         appBar: SmartAppBar(title: APPStrings.checkout.tr),
         body: SafeArea(
-          child: SingleChildScrollView(
+          child: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -48,9 +48,44 @@ class AddressListScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildIsBillingAddressSameAsSelected(addressListBloc, style),
-                      SizedBox(
-                        height: 24.h,
-                      ),
+
+                      /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
+                      /*SmartExpansionTile(
+                        key: addressListBloc.productsListExpansionKey,
+                        initiallyExpanded: addressListBloc.isProductListExpanded,
+                        title: SmartText(APPStrings.productX.tr.interpolate([addressListBloc.productList.length]),
+                            style: style.nProductsTitleStyle),
+                        trailing: BlocBuilder<AddressListBloc, AddressListState>(
+                          buildWhen: (previous, current) => current is ChangeProductListExpansionState,
+                          builder: (context, state) {
+                            return SmartImage(
+                                path: addressListBloc.isProductListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
+                                width: 24,
+                                height: 24,
+                                color: style.arrowColor);
+                          },
+                        ),
+                        onExpansionChanged: (isExpanded) {
+                          addressListBloc.add(const ChangeProductListExpansionEvent());
+                        },
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            child: SmartGridView(
+                                items: addressListBloc.productList.map((ProductDetails productDetails) {
+                              return ProductGridItem(
+                                productDetails: productDetails,
+                                onEyeTap: () {},
+                                onFavTap: () {},
+                                onTap: () {
+                                  context.pushNamed(AppRoutes.diamondDetailPage,
+                                      arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondDetailForDefault});
+                                },
+                              );
+                            }).toList()),
+                          ),
+                        ],
+                      ),*/
                     ],
                   ),
                 ),

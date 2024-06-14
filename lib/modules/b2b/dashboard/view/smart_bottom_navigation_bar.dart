@@ -14,12 +14,15 @@ class SmartBottomNavigationBar extends StatelessWidget {
     Widget child = Container(
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        border: Border(
-          top: BorderSide(
-            color: style.borderColor,
-            width: 1,
+        border: Border(top: BorderSide(color: style.borderColor, width: 1.w)),
+        boxShadow: [
+          BoxShadow(
+            color: style.boxShadowColor,
+            blurRadius: 16.r,
+            spreadRadius: 0.r,
+            offset: const Offset(0, -2),
           ),
-        ),
+        ],
       ),
       child: BlocBuilder<DashboardBloc, DashboardState>(
         buildWhen: (previous, current) {
@@ -31,7 +34,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
             backgroundColor: style.backgroundColor,
             currentIndex: dashboardBloc.currentIndex,
             onTap: (int index) {
-              dashboardBloc.add(DashboardChangeTabEvent(index));
+              dashboardBloc.add(DashboardChangeTabEvent(index, context: context));
             },
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: style.labelStyle,

@@ -13,9 +13,9 @@ class AppRoutes {
   static const notificationPage = '/notificationPage';
   static const collectionPage = '/collectionPage';
   static const productListGridPage = '/productListGridPage';
-  static const diamondDetailPage = '/diamondDetailPage';
+  static const stoneDetailPage = '/stoneDetailPage';
   static const settingDetailPage = '/settingDetailPage';
-  static const diamondListingPage = '/diamondListingPage';
+  static const stoneListingPage = '/stoneListingPage';
   static const settingListingPage = '/settingListingPage';
   static const completeProductPage = '/completeProductPage';
   static const productDetailsPage = '/productDetailsPage';
@@ -29,6 +29,10 @@ class AppRoutes {
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
   static const productMenuBottomSheet = '/productMenuBottomSheet';
   static const auctionPage = '/auctionPage';
+  static const orderPage = '/orderPage';
+  static const orderDetailsPage = '/orderDetailsPage';
+  static const auctionListingPage = '/auctionListingPage';
+  static const orderTimelinePage = '/orderTimelinePage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -110,11 +114,11 @@ class AppRoutes {
           settings: settings,
         );
 
-      case diamondDetailPage:
+      case stoneDetailPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DiamondDetailBloc>(context).add(DiamondDetailInitialEvent(context: context));
-            return const DiamondDetailScreen();
+            BlocProvider.of<StoneDetailBloc>(context).add(StoneDetailInitialEvent(context: context));
+            return const StoneDetailScreen();
           },
           settings: settings,
         );
@@ -125,11 +129,11 @@ class AppRoutes {
           settings: settings,
         );
 
-      case diamondListingPage:
+      case stoneListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DiamondListingBloc>(context).add(GetDiamondProductListEvent(context));
-            return const DiamondListingScreen();
+            BlocProvider.of<StoneListingBloc>(context).add(GetStoneProductListEvent(context));
+            return const StoneListingScreen();
           },
           settings: settings,
         );
@@ -233,6 +237,44 @@ class AppRoutes {
           settings: settings,
         );
 
+      case orderPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
+            return const OrderScreen();
+          },
+          settings: settings,
+        );
+
+      case orderDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrderDetailBloc>(context).add(InitialOrderDetailEvent());
+            return const OrderDetailScreen();
+          },
+          settings: settings,
+        );
+
+      case auctionListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<AuctionListingBloc>(context).add(InitialAuctionListingEvent());
+            return const AuctionListingScreen();
+          },
+          settings: settings,
+        );
+
+      case orderTimelinePage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<OrderTimelineBloc>(
+              create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
+              child: const OrderTimelineScreen(),
+            );
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -264,7 +306,7 @@ enum RoutesData {
 enum ScreenIdentifier {
   diamondForDIY,
   diamondForDefault,
-  diamondForGemstones,
+  productForGemstones,
   productForDiamonds,
   productForRing,
 }

@@ -128,7 +128,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   ProductDetailsBloc() : super(ProductDetailsInitialState()) {
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
-    on<OnProductImageChangeEvent>(_onOnProductImageChange);
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
     on<ProductCustomizationChangeEvent>(_onOnProductCustomizationChange);
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
@@ -163,7 +162,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           originalPrice: "\$ 5,000.00",
         ),
       );
-    } else if (screenIdentifier == ScreenIdentifier.diamondForGemstones) {
+    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
@@ -183,8 +182,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         (index) => ProductDetails(
           diamond: "1.5 gram",
           gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
-          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          imageUrl: 'https://i.ibb.co/RQQGX6J/image-7.png',
+          name: "Diamond Vine Ring in 18k Rose Gold",
           originalPrice: "\$ 5,000.00",
         ),
       );
@@ -194,14 +193,18 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         (index) => ProductDetails(
           diamond: "1.5 gram",
           gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/477f41r/Group-1410089379.png',
-          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+          imageUrl: 'https://i.ibb.co/s1Xyxy7/image-7.png',
+          name: "Diamond Vine Ring in 18k Rose Gold",
           originalPrice: "\$ 5,000.00",
         ),
       );
     }
 
-    productName = screenIdentifier == ScreenIdentifier.productForRing ? '14k Gold Engagement Ring' : '1.01 Carat Round Diamond';
+    productName = screenIdentifier == ScreenIdentifier.productForRing
+        ? '14k Gold Engagement Ring'
+        : screenIdentifier == ScreenIdentifier.productForGemstones
+            ? '0.35 Carat Super Premium Oval Moissanite'
+            : '1.01 Carat Round Diamond';
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
@@ -237,11 +240,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
-  }
-
-  void _onOnProductImageChange(OnProductImageChangeEvent event, Emitter<ProductDetailsState> emit) {
-    current = event.index;
-    emit(ProductImagePageChangeState(current));
   }
 
   void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {

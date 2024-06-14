@@ -1,9 +1,12 @@
 /// This class is a Dart class that contains a bunch of static strings that are used throughout the app
 /// Here we have defined all the strings of keys
 class APPStrings {
+  /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
   static const String languageKo = 'ko';
+  static const String plusMinus = '+/-';
+  static const String percentage = '%';
 
   static const String welcomeBack = 'welcome_back';
   static const String pleaseEnterEmailPass = 'please_enter_email_pass';
@@ -87,7 +90,7 @@ class APPStrings {
   static const String previous = 'previous';
   static const String next = 'next';
   static const String precious = 'precious';
-  static const String semi_precious = 'semi_precious';
+  static const String semiPrecious = 'semi_precious';
 
   //Product item
   static const String addToBag = 'add_to_bag';
@@ -339,5 +342,94 @@ class APPStrings {
   static const String diamondDetails = 'diamond_details';
   static const String productDetails = 'product_details';
   static const String strContinue = 'continue';
+  static const String paymentCondition = 'payment_condition';
+  static const String commentQuestion = 'comment_question';
+  static const String totalStones = 'total_stones';
+  static const String origTotalDiscount = 'orig_total_discount';
+  static const String contactEmail = 'contact_email';
+  static const String contactPhone = 'contact_phone';
+  static const String totalPriceAfterDiscount = 'total_price_after_discount';
+  static const String totalWeight = 'total_weight';
+  static const String avgPricePerCarat = 'avg_price_per_carat';
+  static const String originalRatePerCarat = 'original_rate_per_carat';
+  static const String totalRequestedDiscount = 'total_requested_discount';
+  static const String totalValueAfterDiscount = 'total_value_after_discount';
+
+  //my order screen
+  static const String myOrders = 'my_orders';
+  static const String searchOrder = 'search_order';
+  static const String orderId = 'order_id';
+  static const String orderStatus = 'order_status';
+  static const String orderedOn = 'ordered_on';
+  static const String totalAmount = 'total_amount';
+  static const String items = 'items';
+  static const String qty = 'Qty';
+  static const String inProgress = 'in_Progress';
+  static const String active = 'active';
+  static const String removeLot = 'remove_lot';
+  static const String onGoing = 'on_going';
+  static const String winner = 'winner';
+  static const String lost = 'lost';
+
+  // my order details screen
+  static const String createdBy = 'created_by';
+  static const String contactInfo = 'contact_info';
+  static const String billingAddress = 'billing_address';
+  static const String shippingAddress = 'shipping_address';
+
+  //order details popup
+  static const String trackProduct = 'track_product';
+  static const String viewTimeline = 'view_timeline';
+  static const String cancelOrder = 'cancel_order';
+
+  //order cancel popup
+  static const String areYouSure = 'are_you_sure';
+  static const String orderWillBeCancelledX = 'order_will_be_cancelled_x';
+  static const String cancelOrderDesc = 'cancel_order_desc';
+  static const String refundAmount = 'refund_amount';
+  static const String refundTo = 'refund_to';
+  static const String save = 'save';
+  static const String cancellationReason = 'cancellation_reason';
+  static const String addReason = 'add_reason';
+
+  // Auction List
+  static const String auctions = 'auctions';
+  static const String searchAuction = 'search_auction';
+  static const String skuNo = 'sku_no';
+  static const String type = 'type';
+  static const String bidAmount = 'bid_amount';
+  static const String bidPlacedOn = 'bid_placed_on';
+
+  //Profile Page Screen
+  static const String myAccount = 'my_account';
+  static const String myOrder = 'my_orders';
+  static const String listOfAllTheOrdersYouPlaced = 'list_of_all_the_orders_you_placed';
+  static const String listOfAuctionsYouAppliedTo = 'list_of_auctions_you_applied_to';
+  static const String myInquiries = 'my_inquiries';
+  static const String yourSubmittedInquiries = 'your_submitted_inquiries';
+  static const String newsFeed = 'news_feed';
+  static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
+  static const String findAStore = 'find_a_store';
+  static const String searchYourNearbyStores = 'search_your_nearby_stores';
+  static const String savedAddress = 'saved_address';
+  static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
+  static const String changePassword = 'change_password';
+  static const String changeYourExistingPassword = 'change_your_existing_password';
+  static const String preferences = 'preferences';
+  static const String defaultCountryLanguageAndCurrency = 'default_country_language_and_currency';
+  static const String aboutUs = 'about_us';
+  static const String education = 'education';
+  static const String policies = 'policies';
+  static const String logout = 'logout';
+  static const String deleteAccount = 'delete_account';
+  static const String labCreatedDiamonds = 'lab_created_diamonds';
+  static const String metals = 'metals';
+  static const String ringSizer = 'ring_sizer';
+  static const String orderTimeline = 'order_timeline';
+  static const String today = 'today';
+  static const String yesterday = 'yesterday';
+  static const String logoutAsk = 'logout_ask';
+  static const String logoutMsg = 'logout_msg';
+  static const String editProfile = 'edit_profile';
   static const String advanceFilters = 'advance_filters';
 }

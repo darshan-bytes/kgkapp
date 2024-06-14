@@ -5,7 +5,7 @@ part 'setting_listing_event.dart';
 part 'setting_listing_state.dart';
 
 class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> {
-  bool isIndividual = true;
+  bool isInitialToggle = true;
   bool isGrid = true;
   List<ProductDetails> productList = [];
 

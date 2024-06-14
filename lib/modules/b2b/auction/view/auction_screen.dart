@@ -251,7 +251,7 @@ class AuctionScreen extends StatelessWidget {
                         if (bloc.recentBidList.isNotEmpty && bloc.recentBidList.length > 4)
                           InkWell(
                             onTap: () async {
-                              await showModalBottomSheet(
+                              await Utils.showSmartModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
                                 useSafeArea: true,
@@ -375,11 +375,11 @@ class AuctionScreen extends StatelessWidget {
           style: myBagScreenStyle.productsTitleStyle,
         ),
         SizedBox(height: 16.h),
-        SingleChildScrollView(
+        SmartSingleChildScrollView(
           child: Scrollbar(
             controller: bloc.scrollController,
             thumbVisibility: true,
-            child: SingleChildScrollView(
+            child: SmartSingleChildScrollView(
               scrollDirection: Axis.horizontal,
               controller: bloc.scrollController,
               child: Wrap(
