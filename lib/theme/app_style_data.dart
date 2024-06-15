@@ -761,4 +761,12 @@ class LightModeTheme extends AppTheme {
         whiteColor: colors.white,
         cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
       );
+
+  @override
+  PresentationGridItemStyle get presentationGridItemStyle => PresentationGridItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+      );
 }

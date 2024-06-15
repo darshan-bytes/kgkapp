@@ -151,6 +151,8 @@ abstract class AppTheme {
   SmartTileLineStepperStyle get smartTileLineStepperStyle;
 
   LogoutPopupStyle get logoutPopupStyle;
+
+  PresentationGridItemStyle get presentationGridItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1347,5 +1349,19 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class PresentationGridItemStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  PresentationGridItemStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
   });
 }
