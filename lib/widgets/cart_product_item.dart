@@ -25,34 +25,35 @@ class CartProductItem extends StatelessWidget {
   final bool isSelectedProduct;
   final Function(bool?)? onChangedCheckbox;
   final bool isCheckboxShow;
+  final TextStyle? priceTextStyle;
 
-  const CartProductItem({
-    super.key,
-    required this.productDetails,
-    this.boxHeight,
-    this.boxWidth,
-    this.imageHeight,
-    this.imageWidth,
-    this.onTap,
-    this.fit = BoxFit.cover,
-    this.onFavTap,
-    this.onAddToBagTap,
-    this.onEyeTap,
-    this.onRemoveTap,
-    this.onMoveToWishListTap,
-    this.isFavourite = false,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
-    this.selectedQuantity,
-    this.selectedQuality,
-    required this.qualityOptionsList,
-    required this.quantityOptionsList,
-    this.onQualityChanged,
-    this.onQuantityChanged,
-    this.isSelectedProduct = false,
-    this.onChangedCheckbox,
-    this.isCheckboxShow = true,
-  });
+  const CartProductItem(
+      {super.key,
+      required this.productDetails,
+      this.boxHeight,
+      this.boxWidth,
+      this.imageHeight,
+      this.imageWidth,
+      this.onTap,
+      this.fit = BoxFit.cover,
+      this.onFavTap,
+      this.onAddToBagTap,
+      this.onEyeTap,
+      this.onRemoveTap,
+      this.onMoveToWishListTap,
+      this.isFavourite = false,
+      this.padding = EdgeInsets.zero,
+      this.margin = EdgeInsets.zero,
+      this.selectedQuantity,
+      this.selectedQuality,
+      required this.qualityOptionsList,
+      required this.quantityOptionsList,
+      this.onQualityChanged,
+      this.onQuantityChanged,
+      this.isSelectedProduct = false,
+      this.onChangedCheckbox,
+      this.isCheckboxShow = true,
+      this.priceTextStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +248,7 @@ class CartProductItem extends StatelessWidget {
             productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: style.priceTextStyle,
+            style: priceTextStyle ?? style.priceTextStyle,
           ),
         ),
         if (productDetails.offerPrice.isNotNullNorEmpty) ...[

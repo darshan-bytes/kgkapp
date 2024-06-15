@@ -59,7 +59,17 @@ class GemstoneTabView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          OrderListBuilder(ordersList: ordersBloc.filteredGemstoneOrdersList),
+          BlocBuilder<OrdersBloc, OrdersState>(
+            buildWhen: (previous, current) => current is FilterGemstoneOrdersState,
+            builder: (context, state) {
+              return OrderListBuilder(
+                ordersList: ordersBloc.filteredGemstoneOrdersList,
+                onTap: (index) {
+                  context.pushNamed(AppRoutes.orderDetailsPage);
+                },
+              );
+            },
+          ),
         ],
       ),
     );

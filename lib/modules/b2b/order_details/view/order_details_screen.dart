@@ -27,7 +27,7 @@ class OrderDetailScreen extends StatelessWidget {
             SizedBox(height: 32.h),
             _buildSearchTextField(orderDetailBloc),
             SizedBox(height: 24.h),
-            _buildOrderList(orderDetailBloc),
+            _buildOrderList(orderDetailBloc, style),
           ],
         ),
       ),
@@ -61,13 +61,11 @@ class OrderDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
+              SmartImage(
+                path: AppImages.icMenu,
                 onTap: () {
                   _showOrderDetailPopup(context);
                 },
-                child: const SmartImage(
-                  path: AppImages.icMenu,
-                ),
               ),
             ],
           ),
@@ -146,7 +144,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderList(OrderDetailBloc orderDetailBloc) {
+  Widget _buildOrderList(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
       buildWhen: (previous, current) =>
           current is OrderDetailProductQualityChangedState ||
@@ -181,6 +179,7 @@ class OrderDetailScreen extends StatelessWidget {
               onQuantityChanged: (CartProductQuantity value) {
                 orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
               },
+              priceTextStyle: style.priceTextStyle,
             );
           },
           separatorBuilder: (context, index) => SizedBox(height: 24.h),
@@ -302,7 +301,11 @@ class OrderDetailScreen extends StatelessWidget {
           borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
         ),
         builder: (context) {
-          return SizedBox(
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+              color: orderPopupStyle.whiteColor,
+            ),
             height: 220.h,
             child: Center(
               child: Column(
@@ -310,8 +313,8 @@ class OrderDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                      context.pop();
-                      Utils.showSmartModalBottomSheet(
+                    context.pop();
+                    Utils.showSmartModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       useSafeArea: true,
@@ -327,12 +330,13 @@ class OrderDetailScreen extends StatelessWidget {
                   _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                     context.pop();
                     Utils.showSmartModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-                        ),
-                        builder: (context) => const OrderCancelBottomSheet());
+                      context: context,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                      ),
+                      builder: (context) => const OrderCancelBottomSheet(),
+                    );
                   }),
                 ],
               ),

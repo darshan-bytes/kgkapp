@@ -1194,10 +1194,12 @@ class OrderCancelPopupStyle {
 class OrderPopupStyle {
   final TextStyle optionTextStyle;
   final TextStyle cancelTextStyle;
+  final Color whiteColor;
 
   OrderPopupStyle({
     required this.optionTextStyle,
     required this.cancelTextStyle,
+    required this.whiteColor,
   });
 }
 
@@ -1208,6 +1210,7 @@ class OrderDetailScreenStyle {
   final TextStyle orderTotalStyle;
   final TextStyle orderItemLabelStyle;
   final TextStyle orderItemValueStyle;
+  final TextStyle priceTextStyle;
 
   OrderDetailScreenStyle({
     required this.detailsTileColor,
@@ -1216,6 +1219,7 @@ class OrderDetailScreenStyle {
     required this.orderTotalStyle,
     required this.orderItemLabelStyle,
     required this.orderItemValueStyle,
+    required this.priceTextStyle,
   });
 }
 
@@ -1300,13 +1304,13 @@ class ProfileScreenStyle {
 
 class SmartOptionTileStyle {
   final Color arrowRightColor;
-  final Color trasparentColor;
+  final Color transparentColor;
   final TextStyle titleStyle;
   final TextStyle subTextStyle;
 
   SmartOptionTileStyle({
     required this.arrowRightColor,
-    required this.trasparentColor,
+    required this.transparentColor,
     required this.titleStyle,
     required this.subTextStyle,
   });

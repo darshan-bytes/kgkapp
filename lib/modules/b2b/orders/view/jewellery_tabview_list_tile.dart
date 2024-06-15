@@ -59,7 +59,17 @@ class JewelleryTabView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          OrderListBuilder(ordersList: ordersBloc.filteredJewelleryOrdersList),
+          BlocBuilder<OrdersBloc, OrdersState>(
+            buildWhen: (previous, current) => current is FilterJewelleryOrdersState,
+            builder: (context, state) {
+              return OrderListBuilder(
+                ordersList: ordersBloc.filteredJewelleryOrdersList,
+                onTap: (index) {
+                  context.pushNamed(AppRoutes.orderDetailsPage);
+                },
+              );
+            },
+          ),
         ],
       ),
     );

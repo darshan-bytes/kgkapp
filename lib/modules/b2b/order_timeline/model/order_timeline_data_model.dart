@@ -6,7 +6,7 @@ class OrderTimelineDataModel {
   String? description;
   String? date;
   String? time;
-  String? dateTime;
+  String dateTime;
 
   OrderTimelineDataModel({
     this.id,
@@ -14,7 +14,7 @@ class OrderTimelineDataModel {
     this.description,
     this.date,
     this.time,
-    this.dateTime,
+    required this.dateTime,
   });
 
   @override
@@ -38,6 +38,6 @@ class OrderTimelineDataModel {
 
 extension OrderTimelineDataModelExt on OrderTimelineDataModel {
   DateTime get dateTimeObject {
-    return DateTime.parse(dateTime!);
+    return DateTime.parse(dateTime);
   }
 }

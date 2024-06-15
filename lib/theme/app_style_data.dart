@@ -676,6 +676,7 @@ class LightModeTheme extends AppTheme {
   OrderPopupStyle get orderPopupStyle => OrderPopupStyle(
         optionTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         cancelTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.colorE83535),
+        whiteColor: colors.white,
       );
 
   @override
@@ -686,6 +687,7 @@ class LightModeTheme extends AppTheme {
         orderTotalStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp),
         orderItemLabelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         orderItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        priceTextStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
       );
 
   @override
@@ -728,7 +730,7 @@ class LightModeTheme extends AppTheme {
   @override
   SmartOptionTileStyle get smartOptionTileStyle => SmartOptionTileStyle(
         arrowRightColor: colors.color8C8C8C,
-        trasparentColor: colors.transparent,
+        transparentColor: colors.transparent,
         titleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
         subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
