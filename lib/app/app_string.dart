@@ -434,4 +434,11 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+
+  //Support screen
+  static const String makeAnInquiry = 'make_an_inquiry';
+  static const String repliesWithin24Hours = 'replies_within_24_hours';
+  static const String call = 'call';
+  static const String openingHoursSupport = 'opening_hours_support';
+  static const String frequentlyAskedQuestion = "frequently_asked_questions";
 }

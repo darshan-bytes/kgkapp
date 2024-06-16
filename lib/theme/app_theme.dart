@@ -151,6 +151,8 @@ abstract class AppTheme {
   SmartTileLineStepperStyle get smartTileLineStepperStyle;
 
   LogoutPopupStyle get logoutPopupStyle;
+
+  SupportScreenStyle get supportScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1347,5 +1349,17 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class SupportScreenStyle {
+  final TextStyle frequentlyAskedQuestionStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+
+  SupportScreenStyle({
+    required this.frequentlyAskedQuestionStyle,
+    required this.questionStyle,
+    required this.answerStyle,
   });
 }
