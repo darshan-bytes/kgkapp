@@ -80,6 +80,8 @@ export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/qr_code_scan_login/view/qr_scanner_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/make_inquiry/model/inquiry_type_model.dart';
+export 'package:kgk/modules/b2b/make_inquiry/model/product_model.dart';
 
 //model
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/model/categories_model.dart';
@@ -133,6 +135,8 @@ export 'package:kgk/modules/b2b/setting_detail/bloc/setting_detail_bloc.dart';
 export 'package:kgk/modules/b2b/setting_detail/view/setting_detail_screen.dart';
 export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
+export 'package:kgk/modules/b2b/make_inquiry/view/make_inquiry_screen.dart';
+export 'package:kgk/modules/b2b/make_inquiry/bloc/make_inquiry_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profile_list_model.dart';

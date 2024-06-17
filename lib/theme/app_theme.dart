@@ -152,6 +152,8 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  MakeInquiryStyle get makeInquiryStyle;
+
   QrScannerStyle get qrScannerStyle;
 }
 
@@ -1349,6 +1351,16 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class MakeInquiryStyle {
+  final TextStyle titleStyle;
+  final Color whiteColor;
+
+  MakeInquiryStyle({
+    required this.titleStyle,
+    required this.whiteColor,
   });
 }
 

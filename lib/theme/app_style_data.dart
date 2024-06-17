@@ -767,4 +767,8 @@ class LightModeTheme extends AppTheme {
         titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         overLayColor: colors.black.withOpacity(0.5),
       );
+
+  @override
+  MakeInquiryStyle get makeInquiryStyle =>
+      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
 }
