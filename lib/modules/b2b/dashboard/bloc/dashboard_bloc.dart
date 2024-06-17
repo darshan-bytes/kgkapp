@@ -20,6 +20,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     const CategoriesScreen(),
     const MyBagScreen(),
     const SupportScreen(),
+    // Todo For B2B company screen navigation
+    // const CompanyScreen(),
     const ProfileScreen(),
   ];
 
@@ -30,6 +32,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     BlocProvider.of<CategoriesBloc>(getNavigatorKeyContext),
     BlocProvider.of<MyBagBloc>(getNavigatorKeyContext),
     BlocProvider.of<SupportBloc>(getNavigatorKeyContext),
+    // Todo For B2B company screen navigation
+    // BlocProvider.of<CompanyBloc>(getNavigatorKeyContext),
     BlocProvider.of<ProfileBloc>(getNavigatorKeyContext),
   ];
 
@@ -50,6 +54,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         case myBagIndex:
           blocList[currentIndex].add(InitialMyBagEvent());
           break;
+        // Todo For B2B company screen navigation
+        // Todo change to companyIndex
+        // case supportIndex:
+        //   blocList[currentIndex].add(InitialCompanyListEvent(context: event.context));
+        //   break;
         case profileIndex:
           blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
           break;

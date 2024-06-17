@@ -153,6 +153,8 @@ abstract class AppTheme {
   LogoutPopupStyle get logoutPopupStyle;
 
   QrScannerStyle get qrScannerStyle;
+
+  CompanyScreenStyle get companyScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1359,5 +1361,17 @@ class QrScannerStyle {
   QrScannerStyle({
     required this.titleStyle,
     required this.overLayColor,
+  });
+}
+
+class CompanyScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle textStyle;
+  final Color primaryColor;
+
+  CompanyScreenStyle({
+    required this.titleStyle,
+    required this.textStyle,
+    required this.primaryColor,
   });
 }

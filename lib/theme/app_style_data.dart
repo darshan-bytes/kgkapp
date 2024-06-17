@@ -767,4 +767,10 @@ class LightModeTheme extends AppTheme {
         titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         overLayColor: colors.black.withOpacity(0.5),
       );
+
+  @override
+  CompanyScreenStyle get companyScreenStyle => CompanyScreenStyle(
+      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+      textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+      primaryColor: colors.primary);
 }

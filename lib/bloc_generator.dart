@@ -13,6 +13,7 @@ class BlocGenerator {
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
+      BlocProvider<CompanyBloc>(create: (_) => CompanyBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),

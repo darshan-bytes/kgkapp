@@ -123,4 +123,7 @@ class AppImages {
   static const String icDeleteAccount = 'assets/images/ic_delete.svg';
   static const String icEditImage = 'assets/images/ic_edit_image.svg';
   static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
+
+  //Company Screen
+  static const String icGreenCheck = 'assets/images/ic_green_check.svg';
 }
