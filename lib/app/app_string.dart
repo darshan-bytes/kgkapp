@@ -434,4 +434,8 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+
+  //Make an inquiry
+  static const String makeAnInquiry = 'make_an_inquiry';
+  static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
 }

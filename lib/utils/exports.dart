@@ -26,6 +26,7 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:hive/hive.dart';
 export 'package:intl/intl.dart' hide TextDirection;
+export 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:kgk/app/app_bloc/app_bloc.dart';
 export 'package:kgk/app/app_const.dart';
@@ -76,6 +77,7 @@ export 'package:kgk/modules/b2b/auction/view/all_bids_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/auction/view/auction_screen.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/qr_code_scan_login/view/qr_scanner_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
 
@@ -138,6 +140,7 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profil
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/b2b/order_timeline/bloc/order_timeline_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/qr_code_scan_login/bloc/qr_code_scan_login_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';

@@ -33,6 +33,7 @@ class AppRoutes {
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
+  static const qrScannerPage = '/qrScannerPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -270,6 +271,17 @@ class AppRoutes {
             return BlocProvider<OrderTimelineBloc>(
               create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
               child: const OrderTimelineScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case qrScannerPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<QrCodeScanLoginBloc>(
+              create: (context) => QrCodeScanLoginBloc(),
+              child: const QrScannerScreen(),
             );
           },
           settings: settings,

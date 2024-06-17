@@ -151,6 +151,8 @@ abstract class AppTheme {
   SmartTileLineStepperStyle get smartTileLineStepperStyle;
 
   LogoutPopupStyle get logoutPopupStyle;
+
+  QrScannerStyle get qrScannerStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1347,5 +1349,15 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class QrScannerStyle {
+  final TextStyle titleStyle;
+  final Color overLayColor;
+
+  QrScannerStyle({
+    required this.titleStyle,
+    required this.overLayColor,
   });
 }
