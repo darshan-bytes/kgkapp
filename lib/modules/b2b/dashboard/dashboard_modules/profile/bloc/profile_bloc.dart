@@ -96,6 +96,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icPreferences,
+          title: APPStrings.preferences.tr,
+          subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.notificationSettingsPage);
+          }),
     ];
     profileChildrenList = [
       ProfileListModel(image: AppImages.icAboutUs, title: APPStrings.aboutUs.tr, onTap: () {}),

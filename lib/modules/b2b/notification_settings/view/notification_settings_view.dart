@@ -1,20 +1,25 @@
 import 'package:kgk/kgk.dart';
 
-class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+class NotificationSettingsView extends StatelessWidget {
+  const NotificationSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 24.h),
-        _commonItemWidget(context,
-            title: APPStrings.announcements.tr, desc: APPStrings.notifyMeForEveryAnnouncement.tr, onSwitchChange: (val) {}),
-        _commonItemWidget(context,
-            title: APPStrings.fileSharedBySalesman.tr, desc: APPStrings.shareBySalesmanDesc.tr, onSwitchChange: (val) {}),
-        _commonItemWidget(context,
-            title: APPStrings.orderStatusUpdate.tr, desc: APPStrings.changeInOrderStatus.tr, onSwitchChange: (val) {}),
-      ],
+    return Scaffold(
+      appBar: SmartAppBar(
+        title: APPStrings.notification.tr,
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 24.h),
+          _commonItemWidget(context,
+              title: APPStrings.announcements.tr, desc: APPStrings.notifyMeForEveryAnnouncement.tr, onSwitchChange: (val) {}),
+          _commonItemWidget(context,
+              title: APPStrings.fileSharedBySalesman.tr, desc: APPStrings.shareBySalesmanDesc.tr, onSwitchChange: (val) {}),
+          _commonItemWidget(context,
+              title: APPStrings.orderStatusUpdate.tr, desc: APPStrings.changeInOrderStatus.tr, onSwitchChange: (val) {}),
+        ],
+      ),
     );
   }
 

@@ -15,7 +15,9 @@ class ProfileScreen extends StatelessWidget {
           context.pushNamed(AppRoutes.qrScannerPage);
         },
         onFavorite: () {},
-        onNotification: () {},
+        onNotification: () {
+          context.pushNamed(AppRoutes.notificationPage);
+        },
       ),
       body: SafeArea(
         child: SmartSingleChildScrollView(
