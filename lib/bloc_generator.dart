@@ -39,6 +39,7 @@ class BlocGenerator {
       BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
+      BlocProvider<SearchResultBloc>(create: (_) => SearchResultBloc()),
     ];
   }
 }

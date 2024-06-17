@@ -440,4 +440,6 @@ class APPStrings {
   static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
   static const String popularSearches = 'popular_searches';
   static const String recentSearches = 'recent_searches';
+  static const String searchResult = 'search_result';
+  static const String resultFoundFor = 'result_found_for';
 }

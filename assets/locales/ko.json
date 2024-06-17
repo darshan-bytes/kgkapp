@@ -357,6 +357,8 @@
   "confirm": "Confirm",
   "make_an_inquiry": "Make an Inquiry",
   "to_log_in_to_site_with_qr": "To log in to www.kgk.com, scan the QR code displayed there.",
-  "popular_searches": "Popular Searches",
-  "recent_searches": "Recent Searches"
+  "popular_searches": "Popular searches",
+  "recent_searches": "Recent Searches",
+  "search_result": "Search results",
+  "result_found_for": "results found for"
 }

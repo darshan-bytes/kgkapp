@@ -35,6 +35,7 @@ class AppRoutes {
   static const orderTimelinePage = '/orderTimelinePage';
   static const qrScannerPage = '/qrScannerPage';
   static const searchPage = '/searchPage';
+  static const searchResultPage = '/searchResultPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -291,8 +292,19 @@ class AppRoutes {
       case searchPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
-            return const SearchScreen();
+            return BlocProvider<SearchBloc>(
+              create: (context) => SearchBloc()..add(InitialSearchEvent()),
+              child: const SearchScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case searchResultPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchResultBloc>(context).add(InitialSearchResultEvent(context: context));
+            return const SearchResultScreen();
           },
           settings: settings,
         );
@@ -323,6 +335,7 @@ enum RoutesData {
   isCustomisationPage,
   addressDetails,
   isPageFor,
+  searchResultData,
 }
 
 enum ScreenIdentifier {

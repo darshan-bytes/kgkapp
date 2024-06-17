@@ -155,6 +155,8 @@ abstract class AppTheme {
   QrScannerStyle get qrScannerStyle;
 
   SearchScreenStyle get searchScreenStyle;
+
+  SearchResultScreenStyle get searchResultScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1373,5 +1375,19 @@ class SearchScreenStyle {
   SearchScreenStyle({
     required this.titleStyle,
     required this.searchItemStyle,
+  });
+}
+
+class SearchResultScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle appbarTextStyle;
+  final TextStyle foundItemStyle;
+
+  SearchResultScreenStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.appbarTextStyle,
+    required this.foundItemStyle,
   });
 }
