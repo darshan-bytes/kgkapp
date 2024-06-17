@@ -761,4 +761,10 @@ class LightModeTheme extends AppTheme {
         whiteColor: colors.white,
         cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
       );
+
+  @override
+  QrScannerStyle get qrScannerStyle => QrScannerStyle(
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        overLayColor: colors.black.withOpacity(0.5),
+      );
 }
