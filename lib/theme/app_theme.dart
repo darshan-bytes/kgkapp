@@ -151,6 +151,8 @@ abstract class AppTheme {
   SmartTileLineStepperStyle get smartTileLineStepperStyle;
 
   LogoutPopupStyle get logoutPopupStyle;
+
+  SearchScreenStyle get searchScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -246,12 +248,14 @@ class CustomAppBarStyle {
   final Color borderColor;
   final TextStyle titleStyle;
   final Color transparentColor;
+  final TextStyle searchBarTextStyle;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
     required this.transparentColor,
+    required this.searchBarTextStyle,
   });
 }
 
@@ -1347,5 +1351,15 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class SearchScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle searchItemStyle;
+
+  SearchScreenStyle({
+    required this.titleStyle,
+    required this.searchItemStyle,
   });
 }

@@ -151,6 +151,7 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
         borderColor: colors.colorD3DAE0,
         transparentColor: colors.transparent,
+        searchBarTextStyle: interRegularTextStyle,
       );
 
   @override
@@ -760,5 +761,11 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         whiteColor: colors.white,
         cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
+      );
+
+  @override
+  SearchScreenStyle get searchScreenStyle => SearchScreenStyle(
+        titleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        searchItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
       );
 }

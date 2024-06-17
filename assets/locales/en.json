@@ -354,5 +354,7 @@
   "edit_profile": "Edit Profile",
   "advance_filters": "Advance filters",
   "current_password": "Current Password",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "popular_searches": "Popular Searches",
+  "recent_searches": "Recent Searches"
 }

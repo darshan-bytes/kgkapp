@@ -33,6 +33,7 @@ class AppRoutes {
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
+  static const searchPage = '/searchPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -271,6 +272,15 @@ class AppRoutes {
               create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
               child: const OrderTimelineScreen(),
             );
+          },
+          settings: settings,
+        );
+
+      case searchPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
+            return const SearchScreen();
           },
           settings: settings,
         );

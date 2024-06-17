@@ -434,4 +434,6 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String popularSearches = 'popular_searches';
+  static const String recentSearches = 'recent_searches';
 }

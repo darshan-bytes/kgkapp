@@ -122,4 +122,7 @@ class AppImages {
   static const String icLogout = 'assets/images/ic_log_out.svg';
   static const String icDeleteAccount = 'assets/images/ic_delete.svg';
   static const String icEditImage = 'assets/images/ic_edit_image.svg';
+  static const String icArrowLeftAppbar = 'assets/images/ic_arrow_left_appbar.svg';
+  static const String icSearchThin = 'assets/images/ic_search_thin.svg';
+  static const String icArrowUpLeft = 'assets/images/ic_arrow_up_left.svg';
 }
