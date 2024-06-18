@@ -96,7 +96,7 @@ class MyBagScreen extends StatelessWidget {
                               controller: myBagBloc.noteController,
                               focusNode: myBagBloc.noteFocusNode,
                               maxLines: 3,
-                              textInputAction: TextInputAction.done,
+                              textInputAction: TextInputAction.newline,
                             ),
                             SizedBox(height: 24.h),
                             const Divider(),

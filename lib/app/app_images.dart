@@ -125,4 +125,7 @@ class AppImages {
   static const String icArrowLeftAppbar = 'assets/images/ic_arrow_left_appbar.svg';
   static const String icSearchThin = 'assets/images/ic_search_thin.svg';
   static const String icArrowUpLeft = 'assets/images/ic_arrow_up_left.svg';
+  static const String icNote = 'assets/images/ic_note.svg';
+  static const String icContactUs = 'assets/images/ic_contact_us.svg';
+  static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
 }

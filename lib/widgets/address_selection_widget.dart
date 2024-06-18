@@ -31,51 +31,47 @@ class AddressSelectionWidget extends StatelessWidget {
               onTap?.call();
             },
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
         ],
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SmartText(address.fullName, style: style.addressNameStyle),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               SmartText(address.fullAddress, style: style.fullAddressStyle),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               SmartText(address.contactNumber, style: style.contactNumberStyle),
             ],
           ),
         ),
         if (onEdit != null) ...[
-          const SizedBox(width: 8),
-          InkWell(
-            borderRadius: BorderRadius.circular(24),
+          SizedBox(width: 8.w),
+          SmartImage(
+            path: AppImages.icEditPrimary,
+            height: 30.w,
+            width: 30.w,
+            padding: EdgeInsets.all(4.w),
+            inkwellBorderRadius: BorderRadius.circular(24.r),
             onTap: onEdit,
-            child: Container(
-              height: 30,
-              width: 30,
-              padding: const EdgeInsets.all(4),
-              child: const SmartImage(path: AppImages.icEditPrimary),
-            ),
           ),
         ],
         if (onDelete != null) ...[
-          const SizedBox(width: 8),
-          InkWell(
-            borderRadius: BorderRadius.circular(24),
+          SizedBox(width: 8.w),
+          SmartImage(
+            path: AppImages.icCross,
+            height: 30.w,
+            width: 30.w,
+            padding: EdgeInsets.all(4.w),
+            inkwellBorderRadius: BorderRadius.circular(24.r),
             onTap: onDelete,
-            child: Container(
-              height: 30,
-              width: 30,
-              padding: const EdgeInsets.all(4),
-              child: const SmartImage(path: AppImages.icCross),
-            ),
           ),
         ],
       ],
     );
     return onTap != null
         ? InkWell(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             onTap: onTap,
             child: child,
           )

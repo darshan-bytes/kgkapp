@@ -42,9 +42,7 @@ class StoneListingScreen extends StatelessWidget {
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
+                  builder: (context) => DiamondFilterScreen(onApply: () {}),
                 );
               },
               onSortTap: () {

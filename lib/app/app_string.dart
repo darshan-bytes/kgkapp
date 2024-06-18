@@ -436,4 +436,16 @@ class APPStrings {
   static const String confirm = 'confirm';
   static const String popularSearches = 'popular_searches';
   static const String recentSearches = 'recent_searches';
+
+  //Support screen
+  static const String makeAnInquiry = 'make_an_inquiry';
+  static const String repliesWithin24Hours = 'replies_within_24_hours';
+  static const String call = 'call';
+  static const String openingHoursSupport = 'opening_hours_support';
+  static const String frequentlyAskedQuestion = "frequently_asked_questions";
+  static const String contactUs = "contact_us";
+  static const String getInTouchWithUs = "get_in_touch_with_us";
+
+  //Make an inquiry
+  static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
 }

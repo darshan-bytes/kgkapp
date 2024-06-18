@@ -50,6 +50,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         case myBagIndex:
           blocList[currentIndex].add(InitialMyBagEvent());
           break;
+        case supportIndex:
+          blocList[currentIndex].add(SupportInitialEvent());
+          break;
         case profileIndex:
           blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
           break;
