@@ -788,4 +788,14 @@ class LightModeTheme extends AppTheme {
       titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
       textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
       primaryColor: colors.primary);
+
+  @override
+  FAQStyle get faqStyle => FAQStyle(
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subtitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        questionStyle: interMediumBoldTextStyle,
+        answerStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        contactDescriptionStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        contactDetailsStyle: interMediumBoldTextStyle,
+      );
 }

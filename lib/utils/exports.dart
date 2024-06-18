@@ -240,3 +240,5 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/model/faq_mo
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/bloc/company_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/model/company_list_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/view/company_screen.dart';
+export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
+export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';

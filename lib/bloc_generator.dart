@@ -40,6 +40,7 @@ class BlocGenerator {
       BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
+      BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
     ];
   }
 }

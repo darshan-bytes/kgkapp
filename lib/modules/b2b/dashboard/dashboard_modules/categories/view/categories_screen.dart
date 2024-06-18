@@ -10,12 +10,21 @@ class CategoriesScreen extends StatelessWidget {
         body: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          child: Center(
-            child: GestureDetector(
-                onTap: () {
-                  context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-                },
-                child: const SmartText('GemStone')),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+                  },
+                  child: const SmartText('GemStone')),
+              const SizedBox(height: 20),
+              GestureDetector(
+                  onTap: () {
+                    context.pushNamed(AppRoutes.faqPage);
+                  },
+                  child: const SmartText('FAQ')),
+            ],
           ),
         ),
       ),

@@ -180,7 +180,7 @@ class APPStrings {
   static const String state = 'state';
   static const String postalCode = 'postal_code';
   static const String phoneNumber = 'phone_number';
-  static const String saveAddress = 'save_address';
+  static const String savedAddress = 'saved_address';
   static const String search = 'search';
   static const String startTypingToSearch = 'start_typing_to_search';
 
@@ -412,7 +412,6 @@ class APPStrings {
   static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
   static const String findAStore = 'find_a_store';
   static const String searchYourNearbyStores = 'search_your_nearby_stores';
-  static const String savedAddress = 'saved_address';
   static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
   static const String changePassword = 'change_password';
   static const String changeYourExistingPassword = 'change_your_existing_password';
@@ -446,10 +445,16 @@ class APPStrings {
   static const String frequentlyAskedQuestion = "frequently_asked_questions";
   static const String contactUs = "contact_us";
   static const String getInTouchWithUs = "get_in_touch_with_us";
-
-  //Make an inquiry
   static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
-
-  // Company
   static const String selectACompany = 'select_a_company';
+
+  static const String business = 'business';
+  static const String generalQuestions = 'general_questions';
+  static const String faqs = 'faqs';
+  static const String stillNeedHelp = 'still_need_help';
+  static const String byPhone = 'by_phone';
+  static const String byEmail = 'by_email';
+  static const String questionOrQueriesGetInTouch = 'question_or_queries_get_in_touch';
+  static const String findYourNearestXStore = 'find_your_nearest_X_store';
+  static const String storeDirectory = 'store_directory';
 }

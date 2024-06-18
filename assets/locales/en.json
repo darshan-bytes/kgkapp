@@ -131,7 +131,6 @@
   "state": "State",
   "postal_code": "ZIP code",
   "phone_number": "Phone number",
-  "save_address": "Save Address",
   "search": "Search",
   "start_typing_to_search": "Start typing to search",
   "metal_type": "Metal type",
@@ -327,7 +326,7 @@
   "list_of_all_the_orders_you_placed": "List of all the orders you placed",
   "list_of_auctions_you_applied_to": "List of auctions you applied to",
   "my_inquiries": "My inquiries",
-  "your_submitted_inquiries": "Your submitted inquiries",
+  "your_submitted_inquiries": "Make Inquiry , FAQ, Contact us",
   "news_feed": "News feed",
   "create_and_see_news_feeds": "Create and see news feeds",
   "find_a_store": "Find a store",
@@ -366,5 +365,14 @@
   "notification_settings": "Notification Settings",
   "make_inquiry_faq_contact_us": "Make Inquiry, FAQ, Contact us",
   "change_notification_settings": "Change notification settings",
-  "select_a_company": "Select a company"
+  "select_a_company": "Select a company",
+  "business": "Business",
+  "general_questions": "General questions",
+  "faqs": "FAQs",
+  "still_need_help": "Still need help?",
+  "by_phone": "By phone",
+  "by_email": "By email",
+  "question_or_queries_get_in_touch": "Question or queries? Get in touch",
+  "find_your_nearest_X_store": "Find your nearest {#} store",
+  "store_directory": "Store directory"
 }
