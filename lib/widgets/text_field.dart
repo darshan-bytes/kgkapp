@@ -93,9 +93,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
-  })  : labelText = labelText != null
-            ? '$labelText${isRequired == true ? ' *' : ''}'
-            : null,
+  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = false;
 
   const SmartTextField.search({
@@ -144,9 +142,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
-  })  : labelText = labelText != null
-            ? '$labelText${isRequired == true ? ' *' : ''}'
-            : null,
+  })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = true;
 
   @override
@@ -178,7 +174,7 @@ class SmartTextFieldState extends State<SmartTextField> {
             SizedBox(height: 8.h),
           ],
           SizedBox(
-            height: widget.height ?? (widget.isSearch ? 40.w : 48.w),
+            height: widget.height ?? ((widget.maxLines ?? 0) > 1 ? null : (widget.isSearch ? 40.w : 48.w)),
             child: TextFormField(
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
@@ -203,24 +199,17 @@ class SmartTextFieldState extends State<SmartTextField> {
                   filled: true,
                   errorStyle: style.errorStyle.merge(widget.errorStyle),
                   fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ??
-                      EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
+                  contentPadding: widget.contentPadding ?? EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
                   disabledBorder: widget.customDisabledBorder ??
                       OutlineInputBorder(
-                        borderRadius: widget.borderRadius ??
-                            BorderRadius.all(Radius.circular(4.r)),
-                        borderSide: BorderSide(
-                            color: widget.disabledBorderColor ??
-                                style.disabledTextFieldBorderColor),
+                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
+                        borderSide: BorderSide(color: widget.disabledBorderColor ?? style.disabledTextFieldBorderColor),
                       ),
                   enabledBorder: widget.customEnabledBorder ??
                       OutlineInputBorder(
-                        borderRadius: widget.borderRadius ??
-                            BorderRadius.all(Radius.circular(
-                                widget.enabledBorderRadius ?? 4.r)),
+                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.enabledBorderRadius ?? 4.r)),
                         borderSide: BorderSide(
-                          color: widget.enabledBorderColor ??
-                              style.enabledTextFieldBorderColor,
+                          color: widget.enabledBorderColor ?? style.enabledTextFieldBorderColor,
                         ),
                       ),
                   focusedBorder: widget.customFocusedBorder ??
@@ -228,20 +217,17 @@ class SmartTextFieldState extends State<SmartTextField> {
                         borderSide: BorderSide(
                           color: style.focusedTextFieldBorderColor,
                         ),
-                        borderRadius: widget.borderRadius ??
-                            BorderRadius.all(Radius.circular(4.r)),
+                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
                   errorBorder: widget.customErrorBorder ??
                       OutlineInputBorder(
                         borderSide: BorderSide(color: style.errorBorderColor),
-                        borderRadius: widget.borderRadius ??
-                            BorderRadius.all(Radius.circular(4.r)),
+                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
                   focusedErrorBorder: widget.customFocusedErrorBorder ??
                       OutlineInputBorder(
                         borderSide: BorderSide(color: style.errorBorderColor),
-                        borderRadius: widget.borderRadius ??
-                            BorderRadius.all(Radius.circular(4.r)),
+                        borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
                   hintText: widget.hintText,
                   errorText: widget.errorText,
@@ -249,8 +235,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                   prefixIcon: widget.isSearch
                       ? FittedBox(
                           child: Container(
-                            margin: EdgeInsets.only(
-                                left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
+                            margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
                             padding: EdgeInsets.zero,
                             child: SmartImage(
                               path: AppImages.icSearch,
@@ -275,8 +260,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                               onPressed: _toggle,
                             )
                           : null)),
-              obscureText:
-                  widget.obscured && _passwordVisible ? false : widget.obscured,
+              obscureText: widget.obscured && _passwordVisible ? false : widget.obscured,
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               autocorrect: false,
