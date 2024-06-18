@@ -136,6 +136,8 @@ export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/view/pdd_listing_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/bloc/pdd_listing_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profile_list_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';

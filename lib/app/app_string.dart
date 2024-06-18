@@ -452,4 +452,8 @@ class APPStrings {
 
   // Company
   static const String selectACompany = 'select_a_company';
+
+  //Presentations
+  static const String presentations = 'presentations';
+  static const String searchPresentation = 'search_presentation';
 }
