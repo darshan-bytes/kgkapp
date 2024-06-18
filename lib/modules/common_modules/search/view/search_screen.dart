@@ -62,11 +62,13 @@ class SearchScreen extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  SmartText(
+                  Expanded(
+                      child: SmartText(
                     searchList[index],
                     style: style.searchItemStyle,
-                  ),
-                  const Spacer(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   const SmartImage(path: AppImages.icArrowUpLeft),
                 ],
               ),

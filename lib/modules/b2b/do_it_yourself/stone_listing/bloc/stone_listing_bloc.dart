@@ -90,13 +90,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   void _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) {
+    emit(StoneProductReloadState());
     isInitialToggle = event.isInitialToggle;
     emit(StoneChangeTypeState(isInitialToggle));
   }
 
   void _onChangeListingTypeEvent(StoneChangeListingTypeEvent event, Emitter<StoneListingState> emit) {
-    isGrid = event.isGrid;
-    emit(StoneChangeListingTypeState(event.isGrid));
+    emit(StoneProductReloadState());
+    isGrid = !isGrid;
+    emit(StoneChangeListingTypeState());
   }
 
   void _onPageNumberChanged(StoneProductChangePageNumberEvent event, Emitter<StoneListingState> emit) {

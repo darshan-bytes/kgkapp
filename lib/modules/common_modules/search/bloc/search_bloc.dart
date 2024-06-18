@@ -40,12 +40,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       'Diamond Rounds',
     ];
 
-    List.generate(15, (index) {
+    List.generate(20, (index) {
       List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
       List<String> imageList = [
         "https://i.ibb.co/5jmqMcF/image-18654.png",
         "https://i.ibb.co/vBG9fzy/image-18655.png",
-        "https://i.ibb.co/nD1jpfD/image-224.png",
+        "https://i.ibb.co/9wyrwGQ/Image.png",
+        "https://i.ibb.co/D4kHrXY/image-18652.jpg"
       ];
       searchByCategoryList.add(
         AuctionListModel(
