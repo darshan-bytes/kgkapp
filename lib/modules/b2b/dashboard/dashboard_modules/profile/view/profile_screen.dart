@@ -74,6 +74,13 @@ class ProfileScreen extends StatelessWidget {
               ),
               _buildAccountList(style, bloc),
               Divider(color: style.dividerColor, thickness: 8.h),
+              SmartText(
+                APPStrings.adminSection.tr,
+                style: style.subTitleStyle,
+                optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
+              ),
+              _buildAdminList(style, bloc),
+              Divider(color: style.dividerColor, thickness: 8.h),
               _buildExpandList(style, bloc),
               _buildPopupList(context, style, bloc),
             ],
@@ -97,6 +104,24 @@ class ProfileScreen extends StatelessWidget {
           },
           separatorBuilder: (context, index) => const Divider(),
           itemCount: bloc.profileActionList.length);
+    });
+  }
+
+  Widget _buildAdminList(ProfileScreenStyle style, ProfileBloc bloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+      return ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 16.h),
+          primary: false,
+          itemBuilder: (context, index) {
+            return SmartOptionTile(
+              leadingImageColor: style.arrowRightColor,
+              profileListModel: bloc.profileAdminList[index],
+            );
+          },
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: bloc.profileAdminList.length);
     });
   }
 

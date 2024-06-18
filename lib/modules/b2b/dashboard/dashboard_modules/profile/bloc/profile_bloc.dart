@@ -25,6 +25,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   List<ProfileListModel> profileChildrenList = [];
 
+  List<ProfileListModel> profileAdminList = [];
+
   bool isExpandedList = false;
 
   ProfileBloc() : super(ProfileInitialState()) {
@@ -54,6 +56,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           image: AppImages.icInquiries,
           title: APPStrings.support.tr,
           subTitle: APPStrings.makeInquiryFaqContactUs.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icWatchlist,
+          title: APPStrings.watchlist.tr,
+          subTitle: APPStrings.listOfProductsAddedToWatchlist.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icExhibition,
+          title: APPStrings.exhibition.tr,
+          subTitle: APPStrings.listOfExhibitionsOfKGK.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icActivityLog,
+          title: APPStrings.activityLog.tr,
+          subTitle: APPStrings.getLogOnTheAccount.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {}),
       ProfileListModel(
@@ -105,6 +125,39 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             event.context.pushNamed(AppRoutes.notificationSettingsPage);
           }),
     ];
+    profileAdminList = [
+      ProfileListModel(
+          image: AppImages.icMyOrders,
+          title: APPStrings.orderManagement.tr,
+          subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icProfileCalendar,
+          title: APPStrings.calendar.tr,
+          subTitle: APPStrings.meetingsTasksAllInOnePlace.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icMessages,
+          title: APPStrings.messages.tr,
+          subTitle: APPStrings.conversationsYouAreHaving.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icMasters,
+          title: APPStrings.masters.tr,
+          subTitle: APPStrings.masterDataOfUserAndNewsLetter.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icStore,
+          title: APPStrings.dashboard.tr,
+          subTitle: APPStrings.listOfDashboard.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
+    ];
+
     profileChildrenList = [
       ProfileListModel(
           image: AppImages.icAboutUs,

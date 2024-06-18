@@ -366,5 +366,21 @@
   "notification_settings": "Notification Settings",
   "make_inquiry_faq_contact_us": "Make Inquiry, FAQ, Contact us",
   "change_notification_settings": "Change notification settings",
-  "select_a_company": "Select a company"
+  "select_a_company": "Select a company",
+  "admin_section": "Admin Section",
+  "order_management": "Order management",
+  "calendar": "Calendar",
+  "meetings_tasks_all_in_one_place": "Meetings, Tasks all in one place",
+  "messages": "Messages",
+  "conversations_you_are_having": "Conversations you are having",
+  "masters": "Masters",
+  "master_data_of_user_and_newsletter": "Master data of user and newsletter",
+  "dashboard": "Dashboard",
+  "list_of_dashboard": "List od dashboard",
+  "watchlist": "Watchlist",
+  "list_of_products_added_to_watchlist": "List of products added to watchlist",
+  "exhibition": "Exhibition",
+  "list_of_exhibitions_of_KGK": "List of exhibitions of KGK",
+  "activity_log": "Activity Log",
+  "get_log_on_the_account": "Get log on the account"
 }
