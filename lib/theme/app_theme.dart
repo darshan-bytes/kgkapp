@@ -159,6 +159,8 @@ abstract class AppTheme {
   SwitchStyle get switchStyle;
 
   CompanyScreenStyle get companyScreenStyle;
+
+  FAQStyle get faqStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1407,5 +1409,23 @@ class SwitchStyle {
     required this.activeTrackColor,
     required this.inactiveTrackColor,
     required this.inactiveThumbColor,
+  });
+}
+
+class FAQStyle {
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+  final TextStyle contactDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  FAQStyle({
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+    required this.contactDescriptionStyle,
+    required this.contactDetailsStyle,
   });
 }

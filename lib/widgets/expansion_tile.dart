@@ -4,20 +4,20 @@ const Duration _kExpand = Duration(milliseconds: 200);
 
 class SmartExpansionTile extends StatefulWidget {
   const SmartExpansionTile({
-    required Key key,
+    super.key,
     this.leading,
     required this.title,
     this.backgroundColor,
-    required this.onExpansionChanged,
+    this.onExpansionChanged,
     this.children = const <Widget>[],
     this.trailing,
     this.initiallyExpanded = false,
-    this.trailingCollapsedIconVisible = false,
-  }) : super(key: key);
+    this.trailingCollapsedIconVisible = true,
+  });
 
   final Widget? leading;
   final Widget title;
-  final ValueChanged<bool> onExpansionChanged;
+  final ValueChanged<bool>? onExpansionChanged;
   final List<Widget> children;
   final Color? backgroundColor;
   final Widget? trailing;
@@ -89,18 +89,17 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
         }
         PageStorage.of(context).writeState(context, _isExpanded);
       });
-      widget.onExpansionChanged(_isExpanded);
+      widget.onExpansionChanged?.call(_isExpanded);
     }
   }
 
-  Widget _buildTrailing() {
+  Widget? _buildTrailing() {
     if (widget.trailing != null) {
-      return widget.trailing ?? const SizedBox();
-    } else if (widget.trailingCollapsedIconVisible && widget.trailing == null) {
+      return widget.trailing;
+    } else if (widget.trailingCollapsedIconVisible) {
       return _isExpanded ? const SmartImage(path: AppImages.icArrowUp) : const SmartImage(path: AppImages.icArrowDown);
-    } else {
-      return const SizedBox();
     }
+    return null;
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {

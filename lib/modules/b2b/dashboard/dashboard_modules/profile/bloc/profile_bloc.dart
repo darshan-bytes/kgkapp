@@ -70,7 +70,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: () {}),
       ProfileListModel(
           image: AppImages.icMapPin,
-          title: APPStrings.saveAddress.tr,
+          title: APPStrings.savedAddress.tr,
           subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {}),
