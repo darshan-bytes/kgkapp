@@ -12,30 +12,20 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: SmartSingleChildScrollView(
         physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w),
-              child: SmartTextField(
-                hintText: APPStrings.searchNotification.tr,
-                hintStyle: style.searchHintStyle,
-                maxLines: 1,
-                prefixIcon: Container(
-                  alignment: Alignment.center,
-                  width: 16.w,
-                  child: SmartImage(
-                    path: AppImages.icSearch,
-                    height: 16.w,
-                    width: 16.w,
-                  ),
-                ),
-              ),
+            SmartTextField.search(
+              hintText: APPStrings.searchNotification.tr,
+              hintStyle: style.searchHintStyle,
+              maxLines: 1,
+              height: 48.w,
+              contentPadding: EdgeInsets.only(top: 4.h, left: 1.w, right: 1.w),
             ),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
               separatorBuilder: (context, index) {
                 return Divider(
                   height: 1.h,
@@ -100,3 +90,4 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 }
+

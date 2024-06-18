@@ -14,7 +14,9 @@ class ProfileScreen extends StatelessWidget {
         onScan: () {
           context.pushNamed(AppRoutes.qrScannerPage);
         },
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onNotification: () {
           context.pushNamed(AppRoutes.notificationPage);
         },

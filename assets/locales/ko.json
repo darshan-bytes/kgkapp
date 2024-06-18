@@ -363,5 +363,8 @@
   "get_in_touch_with_us": "Get in touch with us",
   "make_an_inquiry": "Make an Inquiry",
   "to_log_in_to_site_with_qr": "To log in to www.kgk.com, scan the QR code displayed there.",
+  "notification_settings": "Notification Settings",
+  "make_inquiry_faq_contact_us": "Make Inquiry, FAQ, Contact us",
+  "change_notification_settings": "Change notification settings",
   "select_a_company": "Select a company"
 }
