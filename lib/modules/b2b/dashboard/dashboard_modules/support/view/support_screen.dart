@@ -41,7 +41,6 @@ class SupportScreen extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return SmartOptionTile(
-          imageSize: 24,
           profileListModel: supportBloc.supportActionList[index],
         );
       },

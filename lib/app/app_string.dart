@@ -441,4 +441,6 @@ class APPStrings {
   static const String call = 'call';
   static const String openingHoursSupport = 'opening_hours_support';
   static const String frequentlyAskedQuestion = "frequently_asked_questions";
+  static const String contactUs = "contact_us";
+  static const String getInTouchWithUs = "get_in_touch_with_us";
 }

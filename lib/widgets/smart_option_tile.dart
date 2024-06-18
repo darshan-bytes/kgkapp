@@ -25,11 +25,16 @@ class SmartOptionTile extends StatelessWidget {
         child: Column(
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SmartImage(
-                path: profileListModel.image ?? '',
-                height: imageSize,
-                width: imageSize,
-                fit: BoxFit.fill,
+              Container(
+                height: imageSize ?? 24.w,
+                width: imageSize ?? 24.w,
+                alignment: Alignment.center,
+                child: SmartImage(
+                  path: profileListModel.image ?? '',
+                  height: imageSize ?? 24.w,
+                  width: imageSize ?? 24.w,
+                  fit: BoxFit.contain,
+                ),
               ),
               SizedBox(
                 width: 12.w,

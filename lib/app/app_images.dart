@@ -122,4 +122,6 @@ class AppImages {
   static const String icLogout = 'assets/images/ic_log_out.svg';
   static const String icDeleteAccount = 'assets/images/ic_delete.svg';
   static const String icEditImage = 'assets/images/ic_edit_image.svg';
+  static const String icNote = 'assets/images/ic_note.svg';
+  static const String icContactUs = 'assets/images/ic_contact_us.svg';
 }

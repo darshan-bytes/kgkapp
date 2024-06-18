@@ -15,7 +15,7 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
   void _onInitialSupportListEvent(SupportInitialEvent event, Emitter<SupportState> emit) {
     supportActionList = [
       ProfileListModel(
-        image: AppImages.icFile,
+        image: AppImages.icNote,
         title: APPStrings.makeAnInquiry.tr,
         subTitle: APPStrings.repliesWithin24Hours.tr,
         trailingIcon: AppImages.icArrowRight,
@@ -24,6 +24,12 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
         image: AppImages.icPhone,
         title: APPStrings.call.tr,
         subTitle: APPStrings.repliesWithin24Hours.tr,
+        trailingIcon: AppImages.icArrowRight,
+      ),
+      ProfileListModel(
+        image: AppImages.icContactUs,
+        title: APPStrings.contactUs.tr,
+        subTitle: APPStrings.getInTouchWithUs.tr,
         trailingIcon: AppImages.icArrowRight,
       ),
     ];
