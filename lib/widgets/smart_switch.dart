@@ -19,6 +19,7 @@ class SmartSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = AppTheme.of(context).switchStyle;
     return Container(
       alignment: Alignment.center,
       height: height,
@@ -28,7 +29,9 @@ class SmartSwitch extends StatelessWidget {
         child: Switch(
           onChanged: onSwitchChange,
           value: value,
-          thumbColor: WidgetStateProperty.all(thumbColor),
+          thumbColor: WidgetStateProperty.all(style.thumbColor),
+          activeTrackColor: style.activeTrackColor,
+          inactiveTrackColor: style.inactiveTrackColor,
         ),
       ),
     );

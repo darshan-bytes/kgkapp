@@ -156,6 +156,8 @@ abstract class AppTheme {
 
   QrScannerStyle get qrScannerStyle;
 
+  SwitchStyle get switchStyle;
+
   CompanyScreenStyle get companyScreenStyle;
 }
 
@@ -1389,5 +1391,21 @@ class CompanyScreenStyle {
     required this.titleStyle,
     required this.textStyle,
     required this.primaryColor,
+  });
+}
+
+class SwitchStyle {
+  final Color trackColor;
+  final Color thumbColor;
+  final Color activeTrackColor;
+  final Color inactiveTrackColor;
+  final Color inactiveThumbColor;
+
+  SwitchStyle({
+    required this.trackColor,
+    required this.thumbColor,
+    required this.activeTrackColor,
+    required this.inactiveTrackColor,
+    required this.inactiveThumbColor,
   });
 }

@@ -128,4 +128,5 @@ class AppImages {
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
+  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 }

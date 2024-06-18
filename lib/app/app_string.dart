@@ -50,6 +50,7 @@ class APPStrings {
 
   // Notifications
   static const String notification = 'notification';
+  static const String notificationSettings = 'notification_settings';
   static const String allNotification = 'all_notification';
   static const String settings = 'settings';
 
@@ -434,6 +435,8 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
+  static const String changeNotificationSettings = 'change_notification_settings';
 
   //Support screen
   static const String makeAnInquiry = 'make_an_inquiry';
