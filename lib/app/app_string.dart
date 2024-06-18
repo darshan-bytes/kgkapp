@@ -446,4 +446,7 @@ class APPStrings {
 
   //Make an inquiry
   static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
+
+  // Company
+  static const String selectACompany = 'select_a_company';
 }

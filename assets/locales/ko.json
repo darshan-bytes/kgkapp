@@ -355,12 +355,13 @@
   "advance_filters": "Advance filters",
   "current_password": "Current Password",
   "confirm": "Confirm",
-  "make_an_inquiry": "Make an inquiry",
   "replies_within_24_hours": "Replies within 24 hours",
   "call": "Call",
   "opening_hours_support": "Monday – Friday 9 AM – 5 PM",
   "frequently_asked_questions": "Frequently asked questions",
   "contact_us": "Contact us",
   "get_in_touch_with_us": "Get in touch with us",
-  "to_log_in_to_site_with_qr": "To log in to www.kgk.com, scan the QR code displayed there."
+  "make_an_inquiry": "Make an Inquiry",
+  "to_log_in_to_site_with_qr": "To log in to www.kgk.com, scan the QR code displayed there.",
+  "select_a_company": "Select a company"
 }

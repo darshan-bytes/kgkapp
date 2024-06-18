@@ -237,3 +237,6 @@ export 'package:kgk/widgets/smart_stepper.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/edit_profile_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/change_password_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/model/faq_model.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/bloc/company_bloc.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/model/company_list_model.dart';
+export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/view/company_screen.dart';
