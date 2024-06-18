@@ -23,7 +23,7 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
       ProfileListModel(
         image: AppImages.icPhone,
         title: APPStrings.call.tr,
-        subTitle: APPStrings.repliesWithin24Hours.tr,
+        subTitle: "Monday – Friday 9 AM – 5 PM",
         trailingIcon: AppImages.icArrowRight,
       ),
       ProfileListModel(

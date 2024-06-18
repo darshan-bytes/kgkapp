@@ -12,7 +12,9 @@ class SupportScreen extends StatelessWidget {
           isBack: false,
           leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
           onScan: () {},
-          onFavorite: () {},
+          onFavorite: () {
+            context.pushNamed(AppRoutes.wishListPage);
+          },
           onNotification: () {},
         ),
         body: SingleChildScrollView(
