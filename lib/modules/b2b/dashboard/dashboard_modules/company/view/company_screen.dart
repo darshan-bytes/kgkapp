@@ -19,7 +19,7 @@ class CompanyScreen extends StatelessWidget {
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: SmartSingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

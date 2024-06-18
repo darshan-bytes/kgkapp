@@ -12,6 +12,7 @@ class SmartExpansionTile extends StatefulWidget {
     this.children = const <Widget>[],
     this.trailing,
     this.initiallyExpanded = false,
+    this.trailingCollapsedIconVisible = false,
   }) : super(key: key);
 
   final Widget? leading;
@@ -21,6 +22,7 @@ class SmartExpansionTile extends StatefulWidget {
   final Color? backgroundColor;
   final Widget? trailing;
   final bool? initiallyExpanded;
+  final bool trailingCollapsedIconVisible;
 
   @override
   SmartExpansionTileState createState() => SmartExpansionTileState();
@@ -91,9 +93,18 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
     }
   }
 
+  Widget _buildTrailing() {
+    if (widget.trailing != null) {
+      return widget.trailing ?? const SizedBox();
+    } else if (widget.trailingCollapsedIconVisible && widget.trailing == null) {
+      return _isExpanded ? const SmartImage(path: AppImages.icArrowUp) : const SmartImage(path: AppImages.icArrowDown);
+    } else {
+      return const SizedBox();
+    }
+  }
+
   Widget _buildChildren(BuildContext context, Widget? child) {
     final Color titleColor = _headerColor!.evaluate(_easeInAnimation!)!;
-
     return Container(
       decoration: BoxDecoration(
         color: _backgroundColor?.evaluate(_easeOutAnimation!) ?? Colors.transparent,
@@ -111,7 +122,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: titleColor),
                 child: widget.title,
               ),
-              trailing: widget.trailing,
+              trailing: _buildTrailing(),
             ),
           ),
           ClipRect(

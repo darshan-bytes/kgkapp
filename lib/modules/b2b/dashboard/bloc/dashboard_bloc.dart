@@ -59,6 +59,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         // case supportIndex:
         //   blocList[currentIndex].add(InitialCompanyListEvent(context: event.context));
         //   break;
+        case supportIndex:
+          blocList[currentIndex].add(SupportInitialEvent());
+          break;
         case profileIndex:
           blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
           break;
