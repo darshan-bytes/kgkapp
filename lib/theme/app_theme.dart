@@ -152,9 +152,13 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  SearchScreenStyle get searchScreenStyle;
+
   SupportScreenStyle get supportScreenStyle;
 
   QrScannerStyle get qrScannerStyle;
+
+  SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
 
   SwitchStyle get switchStyle;
 
@@ -256,12 +260,14 @@ class CustomAppBarStyle {
   final Color borderColor;
   final TextStyle titleStyle;
   final Color transparentColor;
+  final TextStyle searchBarTextStyle;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
     required this.transparentColor,
+    required this.searchBarTextStyle,
   });
 }
 
@@ -1362,6 +1368,24 @@ class LogoutPopupStyle {
   });
 }
 
+class SearchScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle searchItemStyle;
+  final TextStyle searchByCategoryStyle;
+  final Color searchByCategoryColor;
+  final Color searchByCategoryItemBorderColor;
+  final Color whiteColor;
+
+  SearchScreenStyle({
+    required this.titleStyle,
+    required this.searchItemStyle,
+    required this.searchByCategoryStyle,
+    required this.searchByCategoryColor,
+    required this.searchByCategoryItemBorderColor,
+    required this.whiteColor,
+  });
+}
+
 class SupportScreenStyle {
   final TextStyle frequentlyAskedQuestionStyle;
   final TextStyle questionStyle;
@@ -1382,6 +1406,13 @@ class QrScannerStyle {
     required this.titleStyle,
     required this.overLayColor,
   });
+}
+
+class SmartImageTitleColumnStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
 }
 
 class CompanyScreenStyle {

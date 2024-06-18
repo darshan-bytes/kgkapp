@@ -434,6 +434,8 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String popularSearches = 'popular_searches';
+  static const String recentSearches = 'recent_searches';
   static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
   static const String changeNotificationSettings = 'change_notification_settings';
 
@@ -441,11 +443,11 @@ class APPStrings {
   static const String makeAnInquiry = 'make_an_inquiry';
   static const String repliesWithin24Hours = 'replies_within_24_hours';
   static const String call = 'call';
-  static const String openingHoursSupport = 'opening_hours_support';
   static const String frequentlyAskedQuestion = "frequently_asked_questions";
   static const String contactUs = "contact_us";
   static const String getInTouchWithUs = "get_in_touch_with_us";
   static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
+  static const String searchByCategory = "search_by_category";
   static const String selectACompany = 'select_a_company';
 
   static const String business = 'business';

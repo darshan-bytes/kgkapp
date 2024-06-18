@@ -25,6 +25,12 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
+        SmartText(
+          'Search screen',
+          onTap: () {
+            context.pushNamed(AppRoutes.searchPage);
+          },
+        ),
       ]),
     );
   }

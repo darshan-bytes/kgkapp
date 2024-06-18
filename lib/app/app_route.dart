@@ -33,6 +33,7 @@ class AppRoutes {
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
+  static const searchPage = '/searchPage';
   static const qrScannerPage = '/qrScannerPage';
   static const notificationSettingsPage = '/notificationSettingsPage';
   static const cmsWebViewPage = '/cmsWebViewPage';
@@ -275,6 +276,15 @@ class AppRoutes {
               create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
               child: const OrderTimelineScreen(),
             );
+          },
+          settings: settings,
+        );
+
+      case searchPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
+            return const SearchScreen();
           },
           settings: settings,
         );
