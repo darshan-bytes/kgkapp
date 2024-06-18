@@ -23,7 +23,7 @@ class SmartImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? child;
-    if (path.isNullOrEmpty) {
+    if (path.isNullOrEmpty || !path.contains('/')) {
       child = Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(borderRadius: imageBorderRadius),

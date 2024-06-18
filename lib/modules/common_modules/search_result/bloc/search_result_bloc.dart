@@ -14,7 +14,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   // The selected number of pages, initialized to the first item
   String selectedPageNumber = '01';
 
-  String? appbarTitle;
+  String appbarTitle = '';
 
   SearchResultBloc() : super(SearchResultInitialState()) {
     on<InitialSearchResultEvent>(_onInitialSearchResultEvent);

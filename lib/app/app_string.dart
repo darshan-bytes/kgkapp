@@ -442,4 +442,7 @@ class APPStrings {
   static const String recentSearches = 'recent_searches';
   static const String searchResult = 'search_result';
   static const String resultFoundFor = 'result_found_for';
+  static const String searchResultNotFoundDesc = 'search_result_not_found_desc';
+  static const String needHelp = 'need_help';
+  static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
 }

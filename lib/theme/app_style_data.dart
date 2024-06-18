@@ -782,4 +782,14 @@ class LightModeTheme extends AppTheme {
         appbarTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
         foundItemStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
       );
+
+  @override
+  SearchResultNotFoundStyle get searchResultNotFoundStyle => SearchResultNotFoundStyle(
+        needHelpStyle: interMediumBoldTextStyle,
+        needHelpTitleStyle: interRegularTextStyle,
+        phoneNumberStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 22.sp),
+        subTitleStyle: interRegularTextStyle,
+        needHelpColor: colors.colorF7F9FA,
+      );
 }

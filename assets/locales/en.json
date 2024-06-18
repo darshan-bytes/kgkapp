@@ -360,5 +360,8 @@
   "popular_searches": "Popular searches",
   "recent_searches": "Recent Searches",
   "search_result": "Search results",
-  "result_found_for": "results found for"
+  "result_found_for": "results found for",
+  "search_result_not_found_desc": "Try searching another term or adjust your spelling for better results.",
+  "need_help": "Need help?",
+  "reach_out_to_our_customer_service": "Reach out to our customer service"
 }

@@ -36,6 +36,7 @@ class AppRoutes {
   static const qrScannerPage = '/qrScannerPage';
   static const searchPage = '/searchPage';
   static const searchResultPage = '/searchResultPage';
+  static const searchResultNotFoundPage = '/searchResultNotFoundPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -305,6 +306,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<SearchResultBloc>(context).add(InitialSearchResultEvent(context: context));
             return const SearchResultScreen();
+          },
+          settings: settings,
+        );
+
+      case searchResultNotFoundPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchResultNotFoundBloc>(context).add(InitialSearchResultNotFoundEvent(context: context));
+            return const SearchResultNotFoundScreen();
           },
           settings: settings,
         );

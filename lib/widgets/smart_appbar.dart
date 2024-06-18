@@ -19,6 +19,8 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? optionalEndSpacing;
   final EdgeInsets? padding;
   final bool isSearchBar;
+  final VoidCallback? onTapSuffixIconWithSearchBar;
+  final TextEditingController? searchController;
 
   SmartAppBar({
     super.key,
@@ -40,6 +42,8 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.child,
     this.optionalEndSpacing,
     this.isSearchBar = false,
+    this.onTapSuffixIconWithSearchBar,
+    this.searchController,
   });
 
   final double height = AppBar().preferredSize.height;
@@ -102,10 +106,15 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 40.w,
             hintText: APPStrings.search.tr,
             onTapOutside: (event) {},
+            controller: searchController,
             borderRadius: BorderRadius.all(Radius.circular(6.r)),
             style: style.searchBarTextStyle,
             suffixIcon: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (onTapSuffixIconWithSearchBar != null) {
+                  onTapSuffixIconWithSearchBar!();
+                }
+              },
               child: FittedBox(
                 child: Container(
                   margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),

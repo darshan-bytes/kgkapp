@@ -157,6 +157,8 @@ abstract class AppTheme {
   SearchScreenStyle get searchScreenStyle;
 
   SearchResultScreenStyle get searchResultScreenStyle;
+
+  SearchResultNotFoundStyle get searchResultNotFoundStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1389,5 +1391,23 @@ class SearchResultScreenStyle {
     required this.subTitleStyle,
     required this.appbarTextStyle,
     required this.foundItemStyle,
+  });
+}
+
+class SearchResultNotFoundStyle {
+  final TextStyle needHelpStyle;
+  final TextStyle needHelpTitleStyle;
+  final TextStyle phoneNumberStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color needHelpColor;
+
+  SearchResultNotFoundStyle({
+    required this.needHelpStyle,
+    required this.needHelpTitleStyle,
+    required this.phoneNumberStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.needHelpColor,
   });
 }
