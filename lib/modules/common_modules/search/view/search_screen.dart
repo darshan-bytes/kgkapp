@@ -12,6 +12,7 @@ class SearchScreen extends StatelessWidget {
         isSearchBar: true,
       ),
       body: _getBody(searchBloc, style: style),
+      bottomNavigationBar: _buildSearchByCategory(searchBloc, style),
     );
   }
 
@@ -26,7 +27,9 @@ class SearchScreen extends StatelessWidget {
               child: Column(
                 children: [
                   searchItemBuilder(title: APPStrings.popularSearches.tr, searchList: searchBloc.popularSearchList, style: style),
+                  SizedBox(height: 24.h),
                   searchItemBuilder(title: APPStrings.recentSearches.tr, searchList: searchBloc.recentSearchList, style: style),
+                  SizedBox(height: 24.h),
                 ],
               ),
             ),
@@ -37,6 +40,9 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget searchItemBuilder({required String title, required List<String> searchList, required SearchScreenStyle style}) {
+    if (searchList.isEmpty) {
+      return const SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,6 +74,42 @@ class SearchScreen extends StatelessWidget {
           },
           separatorBuilder: (context, index) {
             return SizedBox(height: 16.h);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSearchByCategory(SearchBloc searchBloc, SearchScreenStyle style) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BlocBuilder<SearchBloc, SearchState>(
+          buildWhen: (_, current) => current is SearchInitial || current is SearchReloadState,
+          builder: (context, state) {
+            return SmartHorizontalItemBuilder(
+              backgroundColor: style.searchByCategoryColor,
+              itemCount: searchBloc.searchByCategoryList.length,
+              title: APPStrings.searchByCategory.tr,
+              titleStyle: style.searchByCategoryStyle,
+              titleOptionalPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+              listPadding: EdgeInsets.only(bottom: 16.h),
+              itemBetweenSpace: 16.w,
+              itemBuilder: (context, index) {
+                AuctionListModel item = searchBloc.searchByCategoryList[index];
+                return SmartImageTitleColumn(
+                  title: item.name ?? '',
+                  imageSize: 80.w,
+                  padding: index == 0 ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+                  imageBorderRadius: BorderRadius.circular(40.r),
+                  imageColor: style.whiteColor,
+                  fit: BoxFit.contain,
+                  imageBorder: Border.all(color: style.searchByCategoryItemBorderColor, width: 1.w),
+                  imageUrl: item.imageUrl ?? '',
+                );
+              },
+            );
           },
         ),
       ],
