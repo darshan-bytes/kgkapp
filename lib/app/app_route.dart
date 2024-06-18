@@ -35,6 +35,7 @@ class AppRoutes {
   static const orderTimelinePage = '/orderTimelinePage';
   static const qrScannerPage = '/qrScannerPage';
   static const notificationSettingsPage = '/notificationSettingsPage';
+  static const cmsWebViewPage = '/cmsWebViewPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -65,7 +66,7 @@ class AppRoutes {
       case categoriesPage:
         return MaterialPageRoute(
           builder: (_) => const CategoriesScreen(),
-          settings: const RouteSettings(name: categoriesPage),
+          settings: settings,
         );
 
       case dashboardPage:
@@ -299,6 +300,16 @@ class AppRoutes {
           settings: settings,
         );
 
+      case cmsWebViewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<CmsWebViewBloc>(
+              create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
+              child: const CmsWebViewScreen(),
+            );
+          },
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }
@@ -325,6 +336,7 @@ enum RoutesData {
   isCustomisationPage,
   addressDetails,
   isPageFor,
+  cmsPageData,
 }
 
 enum ScreenIdentifier {
