@@ -167,30 +167,28 @@ class DiamondFilterScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        if (secondaryFilterData.image.isNotNullNorEmpty) ...[
-                          Padding(
-                            padding: EdgeInsets.all(4.w),
-                            child: SmartImage(
-                              path: secondaryFilterData.image ?? '',
-                              height: 24.w,
-                              width: 24.w,
-                              color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                        ],
+                        secondaryFilterData.image.isNotNullNorEmpty
+                            ? Padding(
+                                padding: EdgeInsets.all(4.w),
+                                child: SmartImage(
+                                  path: secondaryFilterData.image ?? '',
+                                  height: 24.w,
+                                  width: 24.w,
+                                  color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
+                                ),
+                              )
+                            : SmartCheckbox(
+                                value: secondaryFilterData.isSelected,
+                                onChanged: () {
+                                  handleOnChange(diamondFilterBloc, secondaryFilterData);
+                                }),
+                        SizedBox(width: 8.w),
                         Expanded(
                           child: SmartText(
                             secondaryFilterData.name,
                             style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
                           ),
                         ),
-                        if (secondaryFilterData.isSelected)
-                          SmartImage(
-                            path: AppImages.icCheck,
-                            height: 16.w,
-                            width: 16.w,
-                          ),
                       ],
                     ),
                   ),
