@@ -29,7 +29,7 @@ class GetReadyScreen extends StatelessWidget {
                         style: style.skipTextStyle,
                         onTap: () {
                           BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
-                          context.pushNamedAndRemoveUntil(AppRoutes.dashboardPage, (route) => false);
+                          context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
                         },
                         textAlign: TextAlign.end,
                       ),

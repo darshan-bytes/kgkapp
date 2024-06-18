@@ -1,10 +1,10 @@
 import 'package:kgk/kgk.dart';
 
-part 'dashboard_event.dart';
+part 'landing_event.dart';
 
-part 'dashboard_state.dart';
+part 'landing_state.dart';
 
-class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+class LandingBloc extends Bloc<LandingEvent, LandingState> {
   UserType userType = UserType.b2cUser;
   static const int homeIndex = 0;
   static const int categoriesIndex = 1;
@@ -26,12 +26,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   /// actions on the screen based on the current index
   List<Bloc> blocList = [];
 
-  DashboardBloc() : super(DashboardInitialState()) {
-    on<DashboardInitialEvent>(_onDashboardInitialEvent);
-    on<DashboardChangeTabEvent>(_onDashboardChangeTabEvent);
+  LandingBloc() : super(LandingInitialState()) {
+    on<LandingInitialEvent>(_onLandingInitialEvent);
+    on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
   }
 
-  void _onDashboardInitialEvent(DashboardInitialEvent event, Emitter<DashboardState> emit) {
+  void _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     switch (userType) {
       case UserType.b2cUser:
@@ -41,7 +41,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         _initializeB2BUser(event.context);
         break;
     }
-    emit(DashboardLoadedState(userType: userType, pages: pages, blocList: blocList));
+    emit(LandingLoadedState(userType: userType, pages: pages, blocList: blocList));
   }
 
   void _initializeB2CUser(BuildContext context) {
@@ -140,12 +140,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     ];
   }
 
-  ///[_onDashboardChangeTabEvent] is a method that is called when the [DashboardChangeTabEvent] is dispatched
+  ///[_onLandingChangeTabEvent] is a method that is called when the [LandingChangeTabEvent] is dispatched
   /// to the bloc and it changes  the current index of the bottom navigation bar and emits the
-  /// [DashboardChangeTabState] with the new index to the UI.
-  void _onDashboardChangeTabEvent(
-    DashboardChangeTabEvent event,
-    Emitter<DashboardState> emit,
+  /// [LandingChangeTabState] with the new index to the UI.
+  void _onLandingChangeTabEvent(
+    LandingChangeTabEvent event,
+    Emitter<LandingState> emit,
   ) {
     if (currentIndex != event.index) {
       currentIndex = event.index;
@@ -176,7 +176,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             break;
         }
       }
-      emit(DashboardChangeTabState(event.index));
+      emit(LandingChangeTabState(event.index));
     }
   }
 }

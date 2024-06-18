@@ -15,7 +15,7 @@ class BlocGenerator {
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<CompanyBloc>(create: (_) => CompanyBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
-      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
+      BlocProvider<LandingBloc>(create: (_) => LandingBloc()),
       BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),

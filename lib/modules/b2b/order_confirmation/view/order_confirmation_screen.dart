@@ -68,8 +68,8 @@ class OrderConfirmationScreen extends StatelessWidget {
   Widget _buildContinueShoppingButton(BuildContext context) {
     return SmartButton(
       onTap: () {
-        BlocProvider.of<DashboardBloc>(context).add(DashboardChangeTabEvent(DashboardBloc.homeIndex, context: context));
-        context.popUntil((route) => route.settings.name == AppRoutes.dashboardPage);
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+        context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
       },
       title: APPStrings.continueShopping.tr,
     );

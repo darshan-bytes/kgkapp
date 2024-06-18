@@ -487,4 +487,7 @@ class APPStrings {
   // Preferences
   static const String language = 'language';
   static const String currency = 'currency';
+
+  //Compared to
+  static const String comparedToX = 'compared_to_X';
 }

@@ -6,7 +6,7 @@ class AppRoutes {
   static const signInPage = '/signInPage';
   static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
-  static const dashboardPage = '/tabBarPage';
+  static const landingPage = '/landingPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
@@ -75,11 +75,11 @@ class AppRoutes {
           settings: settings,
         );
 
-      case dashboardPage:
+      case landingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<DashboardBloc>(context).add(DashboardInitialEvent(context: context));
-            return const DashboardScreen();
+            BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
+            return const LandingScreen();
           },
           settings: settings,
         );

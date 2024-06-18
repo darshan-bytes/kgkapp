@@ -280,7 +280,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                       child: SmartButton(
                     onTap: () {
-                      BlocProvider.of<DashboardBloc>(context).add(DashboardChangeTabEvent(DashboardBloc.homeIndex, context: context));
+                      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
                       context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
                     },
                     title: APPStrings.logout.tr,
