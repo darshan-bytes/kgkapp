@@ -128,4 +128,8 @@ class AppImages {
   static const String icNote = 'assets/images/ic_note.svg';
   static const String icContactUs = 'assets/images/ic_contact_us.svg';
   static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
+
+  //Company Screen
+  static const String icGreenCheck = 'assets/images/ic_green_check.svg';
+  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 }

@@ -159,6 +159,12 @@ abstract class AppTheme {
   QrScannerStyle get qrScannerStyle;
 
   SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
+
+  SwitchStyle get switchStyle;
+
+  CompanyScreenStyle get companyScreenStyle;
+
+  FAQStyle get faqStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1407,4 +1413,50 @@ class SmartImageTitleColumnStyle {
   final TextStyle subTitleStyle;
 
   SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
+}
+
+class CompanyScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle textStyle;
+  final Color primaryColor;
+
+  CompanyScreenStyle({
+    required this.titleStyle,
+    required this.textStyle,
+    required this.primaryColor,
+  });
+}
+
+class SwitchStyle {
+  final Color trackColor;
+  final Color thumbColor;
+  final Color activeTrackColor;
+  final Color inactiveTrackColor;
+  final Color inactiveThumbColor;
+
+  SwitchStyle({
+    required this.trackColor,
+    required this.thumbColor,
+    required this.activeTrackColor,
+    required this.inactiveTrackColor,
+    required this.inactiveThumbColor,
+  });
+}
+
+class FAQStyle {
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+  final TextStyle contactDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  FAQStyle({
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+    required this.contactDescriptionStyle,
+    required this.contactDetailsStyle,
+  });
 }

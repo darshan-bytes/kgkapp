@@ -37,6 +37,7 @@ class AppRoutes {
   static const qrScannerPage = '/qrScannerPage';
   static const notificationSettingsPage = '/notificationSettingsPage';
   static const cmsWebViewPage = '/cmsWebViewPage';
+  static const faqPage = '/faqPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -317,6 +318,15 @@ class AppRoutes {
               create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
               child: const CmsWebViewScreen(),
             );
+          },
+          settings: settings,
+        );
+
+      case faqPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
+            return const FaqScreen();
           },
           settings: settings,
         );

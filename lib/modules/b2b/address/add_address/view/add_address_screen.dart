@@ -73,7 +73,7 @@ class AddAddressScreen extends StatelessWidget {
             onTap: () {
               bloc.add(SaveAddressEvent(context));
             },
-            title: APPStrings.saveAddress.tr,
+            title: APPStrings.savedAddress.tr,
           ),
           SizedBox(height: 24.h),
         ]));

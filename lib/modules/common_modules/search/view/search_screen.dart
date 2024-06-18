@@ -57,9 +57,7 @@ class SearchScreen extends StatelessWidget {
           itemCount: searchList.length > 5 ? 5 : searchList.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {
-                // context.pushNamed(AppRoutes.searchResultPage, arguments: searchList[index]);
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   SmartText(

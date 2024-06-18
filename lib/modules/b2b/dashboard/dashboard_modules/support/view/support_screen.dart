@@ -58,8 +58,6 @@ class SupportScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final FAQ faq = supportBloc.faqs[index];
         return SmartExpansionTile(
-          key: PageStorageKey<FAQ>(supportBloc.faqs[index]),
-          trailingCollapsedIconVisible: true,
           title: SmartText(
             faq.question,
             style: style.questionStyle,
