@@ -153,6 +153,8 @@ abstract class AppTheme {
   LogoutPopupStyle get logoutPopupStyle;
 
   SupportScreenStyle get supportScreenStyle;
+
+  QrScannerStyle get qrScannerStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1309,12 +1311,14 @@ class SmartOptionTileStyle {
   final Color transparentColor;
   final TextStyle titleStyle;
   final TextStyle subTextStyle;
+  final Color primaryColor;
 
   SmartOptionTileStyle({
     required this.arrowRightColor,
     required this.transparentColor,
     required this.titleStyle,
     required this.subTextStyle,
+    required this.primaryColor,
   });
 }
 
@@ -1361,5 +1365,15 @@ class SupportScreenStyle {
     required this.frequentlyAskedQuestionStyle,
     required this.questionStyle,
     required this.answerStyle,
+  });
+}
+
+class QrScannerStyle {
+  final TextStyle titleStyle;
+  final Color overLayColor;
+
+  QrScannerStyle({
+    required this.titleStyle,
+    required this.overLayColor,
   });
 }

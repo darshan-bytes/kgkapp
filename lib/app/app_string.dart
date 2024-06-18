@@ -443,4 +443,7 @@ class APPStrings {
   static const String frequentlyAskedQuestion = "frequently_asked_questions";
   static const String contactUs = "contact_us";
   static const String getInTouchWithUs = "get_in_touch_with_us";
+
+  //Make an inquiry
+  static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
 }

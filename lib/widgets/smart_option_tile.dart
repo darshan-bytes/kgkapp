@@ -33,6 +33,7 @@ class SmartOptionTile extends StatelessWidget {
                   path: profileListModel.image ?? '',
                   height: imageSize ?? 24.w,
                   width: imageSize ?? 24.w,
+                  color: style.primaryColor,
                   fit: BoxFit.contain,
                 ),
               ),

@@ -96,9 +96,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icPreferences,
+          title: APPStrings.preferences.tr,
+          subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.notificationSettingsPage);
+          }),
     ];
     profileChildrenList = [
-      ProfileListModel(image: AppImages.icAboutUs, title: APPStrings.aboutUs.tr, onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icAboutUs,
+          title: APPStrings.aboutUs.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: 'https://www.kgkgroup.com/story-of-kgk/',
+                title: APPStrings.aboutUs.tr,
+              )
+            });
+          }),
       ProfileListModel(
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
@@ -106,33 +124,82 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           profileChildrenList: [
             ProfileListModel(
               title: APPStrings.diamond.tr,
-              onTap: () {},
+              onTap: () {
+                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(
+                    url: 'https://www.kgkgroup.com/diamond-operations/',
+                    title: APPStrings.diamond.tr,
+                  )
+                });
+              },
             ),
             ProfileListModel(
               title: APPStrings.labCreatedDiamonds.tr,
-              onTap: () {},
+              onTap: () {
+                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(
+                    url: 'https://kgkgroup.com/',
+                    title: APPStrings.labCreatedDiamonds.tr,
+                  )
+                });
+              },
             ),
             ProfileListModel(
               title: APPStrings.gemstone.tr,
-              onTap: () {},
+              onTap: () {
+                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(
+                    url: 'https://www.kgkgroup.com/gemstones/',
+                    title: APPStrings.gemstone.tr,
+                  )
+                });
+              },
             ),
             ProfileListModel(
               title: APPStrings.metals.tr,
-              onTap: () {},
+              onTap: () {
+                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(
+                    url: 'https://www.kgkgroup.com/metals/',
+                    title: APPStrings.metals.tr,
+                  )
+                });
+              },
             ),
             ProfileListModel(
               title: APPStrings.ringSizer.tr,
-              onTap: () {},
+              onTap: () {
+                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                  RoutesData.cmsPageData: CmsWebViewDataModel(
+                    url: 'https://www.kgkgroup.com/ring-sizer/',
+                    title: APPStrings.ringSizer.tr,
+                  )
+                });
+              },
             ),
           ],
           onTap: () {}),
-      ProfileListModel(image: AppImages.icPolicies, title: APPStrings.policies.tr, onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icPolicies,
+          title: APPStrings.policies.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: 'https://www.kgkgroup.com/privacy-policy/',
+                title: APPStrings.policies.tr,
+              )
+            });
+          }),
     ];
   }
 
   void _onToggleProfileListEvent(ToggleProfileListEvent event, Emitter<ProfileState> emit) {
     emit(ProfileReloadState());
-    profileChildrenList[event.index].isSubListExpanded = !profileChildrenList[event.index].isSubListExpanded;
-    emit(const ToggleProfileState());
+    if (profileChildrenList[event.index].profileChildrenList.isNotNullNorEmpty) {
+      profileChildrenList[event.index].isSubListExpanded = !profileChildrenList[event.index].isSubListExpanded;
+      emit(const ToggleProfileState());
+    } else {
+      profileChildrenList[event.index].onTap?.call();
+    }
   }
 }

@@ -733,6 +733,7 @@ class LightModeTheme extends AppTheme {
         transparentColor: colors.transparent,
         titleStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
         subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        primaryColor: colors.primary,
       );
 
   @override
@@ -767,4 +768,10 @@ class LightModeTheme extends AppTheme {
       frequentlyAskedQuestionStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
       questionStyle: interMediumBoldTextStyle,
       answerStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C));
+
+  @override
+  QrScannerStyle get qrScannerStyle => QrScannerStyle(
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        overLayColor: colors.black.withOpacity(0.5),
+      );
 }
