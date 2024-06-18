@@ -36,6 +36,9 @@ class AppRoutes {
   static const qrScannerPage = '/qrScannerPage';
   static const searchPage = '/searchPage';
   static const searchResultPage = '/searchResultPage';
+  static const notificationSettingsPage = '/notificationSettingsPage';
+  static const cmsWebViewPage = '/cmsWebViewPage';
+  static const faqPage = '/faqPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -66,7 +69,7 @@ class AppRoutes {
       case categoriesPage:
         return MaterialPageRoute(
           builder: (_) => const CategoriesScreen(),
-          settings: const RouteSettings(name: categoriesPage),
+          settings: settings,
         );
 
       case dashboardPage:
@@ -278,23 +281,21 @@ class AppRoutes {
           settings: settings,
         );
 
+      case searchPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
+            return const SearchScreen();
+          },
+          settings: settings,
+        );
+
       case qrScannerPage:
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<QrCodeScanLoginBloc>(
               create: (context) => QrCodeScanLoginBloc(),
               child: const QrScannerScreen(),
-            );
-          },
-          settings: settings,
-        );
-
-      case searchPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<SearchBloc>(
-              create: (context) => SearchBloc()..add(InitialSearchEvent()),
-              child: const SearchScreen(),
             );
           },
           settings: settings,
@@ -309,6 +310,36 @@ class AppRoutes {
           settings: settings,
         );
 
+      case notificationSettingsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<NotificationSettingsBloc>(
+              create: (context) => NotificationSettingsBloc(),
+              child: const NotificationSettingsView(),
+            );
+          },
+          settings: settings,
+        );
+
+      case cmsWebViewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<CmsWebViewBloc>(
+              create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
+              child: const CmsWebViewScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case faqPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
+            return const FaqScreen();
+          },
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }
@@ -336,6 +367,7 @@ enum RoutesData {
   addressDetails,
   isPageFor,
   searchResultData,
+  cmsPageData,
 }
 
 enum ScreenIdentifier {

@@ -13,6 +13,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   //Recent Search
   List<String> recentSearchList = [];
 
+  // Search by category  + Here use random model for demo
+  List<AuctionListModel> searchByCategoryList = [];
+
   SearchBloc() : super(SearchInitial()) {
     on<SearchEvent>(_onInitialSearchEvent);
   }
@@ -36,6 +39,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       'Diamond Bracelet  ',
       'Diamond Rounds',
     ];
+
+    List.generate(15, (index) {
+      List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
+      List<String> imageList = [
+        "https://i.ibb.co/5jmqMcF/image-18654.png",
+        "https://i.ibb.co/vBG9fzy/image-18655.png",
+        "https://i.ibb.co/nD1jpfD/image-224.png",
+      ];
+      searchByCategoryList.add(
+        AuctionListModel(
+          id: index.toString(),
+          name: nameList[Random().nextInt(nameList.length)],
+          imageUrl: imageList[Random().nextInt(imageList.length)],
+        ),
+      );
+    });
 
     emit(SearchInitial());
   }

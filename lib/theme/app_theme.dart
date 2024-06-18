@@ -157,6 +157,16 @@ abstract class AppTheme {
   SearchScreenStyle get searchScreenStyle;
 
   SearchResultScreenStyle get searchResultScreenStyle;
+
+  SupportScreenStyle get supportScreenStyle;
+
+  SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
+
+  SwitchStyle get switchStyle;
+
+  CompanyScreenStyle get companyScreenStyle;
+
+  FAQStyle get faqStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1315,12 +1325,14 @@ class SmartOptionTileStyle {
   final Color transparentColor;
   final TextStyle titleStyle;
   final TextStyle subTextStyle;
+  final Color primaryColor;
 
   SmartOptionTileStyle({
     required this.arrowRightColor,
     required this.transparentColor,
     required this.titleStyle,
     required this.subTextStyle,
+    required this.primaryColor,
   });
 }
 
@@ -1358,6 +1370,36 @@ class LogoutPopupStyle {
   });
 }
 
+class SearchScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle searchItemStyle;
+  final TextStyle searchByCategoryStyle;
+  final Color searchByCategoryColor;
+  final Color searchByCategoryItemBorderColor;
+  final Color whiteColor;
+
+  SearchScreenStyle({
+    required this.titleStyle,
+    required this.searchItemStyle,
+    required this.searchByCategoryStyle,
+    required this.searchByCategoryColor,
+    required this.searchByCategoryItemBorderColor,
+    required this.whiteColor,
+  });
+}
+
+class SupportScreenStyle {
+  final TextStyle frequentlyAskedQuestionStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+
+  SupportScreenStyle({
+    required this.frequentlyAskedQuestionStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+  });
+}
+
 class QrScannerStyle {
   final TextStyle titleStyle;
   final Color overLayColor;
@@ -1365,16 +1407,6 @@ class QrScannerStyle {
   QrScannerStyle({
     required this.titleStyle,
     required this.overLayColor,
-  });
-}
-
-class SearchScreenStyle {
-  final TextStyle titleStyle;
-  final TextStyle searchItemStyle;
-
-  SearchScreenStyle({
-    required this.titleStyle,
-    required this.searchItemStyle,
   });
 }
 
@@ -1389,5 +1421,58 @@ class SearchResultScreenStyle {
     required this.subTitleStyle,
     required this.appbarTextStyle,
     required this.foundItemStyle,
+  });
+}
+
+class SmartImageTitleColumnStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
+}
+
+class CompanyScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle textStyle;
+  final Color primaryColor;
+
+  CompanyScreenStyle({
+    required this.titleStyle,
+    required this.textStyle,
+    required this.primaryColor,
+  });
+}
+
+class SwitchStyle {
+  final Color trackColor;
+  final Color thumbColor;
+  final Color activeTrackColor;
+  final Color inactiveTrackColor;
+  final Color inactiveThumbColor;
+
+  SwitchStyle({
+    required this.trackColor,
+    required this.thumbColor,
+    required this.activeTrackColor,
+    required this.inactiveTrackColor,
+    required this.inactiveThumbColor,
+  });
+}
+
+class FAQStyle {
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+  final TextStyle contactDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  FAQStyle({
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+    required this.contactDescriptionStyle,
+    required this.contactDetailsStyle,
   });
 }

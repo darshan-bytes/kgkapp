@@ -148,7 +148,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (onScan != null) actionsList.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24));
     if (onFilter != null) actionsList.add(_buildIconButton(onFilter!, AppImages.icSearch, size: 24));
     if (onFavorite != null) actionsList.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24));
-    if (onNotification != null) actionsList.add(_buildIconButton(onNotification!, AppImages.icNotification));
+    if (onNotification != null) actionsList.add(_buildIconButton(onNotification!, AppImages.icNotification, size: 24));
     if (actions != null) actionsList.add(SizedBox(width: 17.w));
     actionsList.addAll(actions ?? []);
     actionsList.add(SizedBox(width: optionalEndSpacing ?? 17.w));

@@ -14,7 +14,9 @@ class OrderConfirmationScreen extends StatelessWidget {
         leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
         onFilter: () {},
         onFavorite: () {},
-        onNotification: () {},
+        onNotification: () {
+          context.pushNamed(AppRoutes.notificationPage);
+        },
       ),
       bottomNavigationBar: SafeArea(child: SizedBox(height: 72.h)),
       body: SafeArea(
