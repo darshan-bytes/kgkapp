@@ -167,6 +167,8 @@ abstract class AppTheme {
   CompanyScreenStyle get companyScreenStyle;
 
   FAQStyle get faqStyle;
+
+  PreferencesStyle get preferencesStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1474,5 +1476,13 @@ class FAQStyle {
     required this.answerStyle,
     required this.contactDescriptionStyle,
     required this.contactDetailsStyle,
+  });
+}
+
+class PreferencesStyle {
+  final TextStyle titleStyle;
+
+  PreferencesStyle({
+    required this.titleStyle,
   });
 }
