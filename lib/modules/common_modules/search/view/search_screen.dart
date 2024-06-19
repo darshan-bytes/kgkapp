@@ -57,14 +57,18 @@ class SearchScreen extends StatelessWidget {
           itemCount: searchList.length > 5 ? 5 : searchList.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(AppRoutes.searchResultPage, arguments: {RoutesData.searchResultData: searchList[index]});
+              },
               child: Row(
                 children: [
-                  SmartText(
+                  Expanded(
+                      child: SmartText(
                     searchList[index],
                     style: style.searchItemStyle,
-                  ),
-                  const Spacer(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   const SmartImage(path: AppImages.icArrowUpLeft),
                 ],
               ),

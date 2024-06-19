@@ -20,10 +20,6 @@ final class ReloadProductState extends ProductListState {
 }
 
 final class ProductChangeListingTypeState extends ProductListState {
-  final bool isGrid;
-
-  const ProductChangeListingTypeState(this.isGrid);
-
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }

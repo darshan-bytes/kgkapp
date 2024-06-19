@@ -152,11 +152,13 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  QrScannerStyle get qrScannerStyle;
+
   SearchScreenStyle get searchScreenStyle;
 
-  SupportScreenStyle get supportScreenStyle;
+  SearchResultScreenStyle get searchResultScreenStyle;
 
-  QrScannerStyle get qrScannerStyle;
+  SupportScreenStyle get supportScreenStyle;
 
   SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
 
@@ -1407,6 +1409,20 @@ class QrScannerStyle {
   QrScannerStyle({
     required this.titleStyle,
     required this.overLayColor,
+  });
+}
+
+class SearchResultScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle appbarTextStyle;
+  final TextStyle foundItemStyle;
+
+  SearchResultScreenStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.appbarTextStyle,
+    required this.foundItemStyle,
   });
 }
 

@@ -33,8 +33,9 @@ class AppRoutes {
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
-  static const searchPage = '/searchPage';
   static const qrScannerPage = '/qrScannerPage';
+  static const searchPage = '/searchPage';
+  static const searchResultPage = '/searchResultPage';
   static const notificationSettingsPage = '/notificationSettingsPage';
   static const cmsWebViewPage = '/cmsWebViewPage';
   static const faqPage = '/faqPage';
@@ -301,6 +302,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case searchResultPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchResultBloc>(context).add(InitialSearchResultEvent(context: context));
+            return const SearchResultScreen();
+          },
+          settings: settings,
+        );
+
       case notificationSettingsPage:
         return MaterialPageRoute(
           builder: (context) {
@@ -367,6 +377,7 @@ enum RoutesData {
   isCustomisationPage,
   addressDetails,
   isPageFor,
+  searchResultData,
   cmsPageData,
 }
 

@@ -354,6 +354,8 @@
   "advance_filters": "Advance filters",
   "current_password": "Current Password",
   "confirm": "Confirm",
+  "search_result": "Search results",
+  "result_found_for": "results found for ",
   "popular_searches": "Popular searches",
   "recent_searches": "Recent searches",
   "replies_within_24_hours": "Replies within 24 hours",
