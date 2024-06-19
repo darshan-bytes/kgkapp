@@ -24,7 +24,7 @@ class SupportScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 8.h),
-                _buildSupportActionSection(supportBloc),
+                _buildSupportActionSection(supportBloc, context),
                 const Divider(),
                 SizedBox(height: 32.h),
                 SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
@@ -36,13 +36,15 @@ class SupportScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildSupportActionSection(SupportBloc supportBloc) {
+  Widget _buildSupportActionSection(SupportBloc supportBloc, BuildContext context) {
+    final SmartOptionTileStyle smartOptionTileStyle = AppTheme.of(context).smartOptionTileStyle;
     return ListView.separated(
       itemCount: supportBloc.supportActionList.length,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return SmartOptionTile(
+          leadingImageColor: smartOptionTileStyle.primaryColor,
           profileListModel: supportBloc.supportActionList[index],
         );
       },
