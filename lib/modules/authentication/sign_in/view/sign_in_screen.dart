@@ -97,7 +97,7 @@ class SignInScreen extends StatelessWidget {
   Widget _buildLoginButton(BuildContext context) {
     return SmartButton(
       onTap: () {
-        context.pushNamedAndRemoveUntil(AppRoutes.dashboardPage, (route) => false);
+        context.pushNamed(AppRoutes.userTypeSelection);
       },
       title: APPStrings.login.tr,
     );

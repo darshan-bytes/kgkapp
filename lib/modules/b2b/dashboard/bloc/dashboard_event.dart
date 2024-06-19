@@ -5,6 +5,15 @@ sealed class DashboardEvent extends Equatable {
   const DashboardEvent();
 }
 
+final class DashboardInitialEvent extends DashboardEvent {
+  final BuildContext context;
+
+  const DashboardInitialEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
 ///[DashboardChangeTabEvent] is a class that is dispatched to the bloc when the user changes the tab in the bottom navigation bar
 final class DashboardChangeTabEvent extends DashboardEvent {
   final int index;

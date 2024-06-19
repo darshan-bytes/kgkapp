@@ -5,10 +5,25 @@ sealed class DashboardState extends Equatable {
   const DashboardState();
 }
 
-///[DashboardInitial] is a class that is emitted by the bloc when the screen is loaded for the first time
-final class DashboardInitial extends DashboardState {
+///[DashboardInitialState] is a class that is emitted by the bloc when the screen is loaded for the first time
+final class DashboardInitialState extends DashboardState {
   @override
   List<Object> get props => [];
+}
+
+final class DashboardLoadedState extends DashboardState {
+  final UserType userType;
+  final List<Widget> pages;
+  final List<Bloc> blocList;
+
+  const DashboardLoadedState({
+    required this.userType,
+    required this.pages,
+    required this.blocList,
+  });
+
+  @override
+  List<Object> get props => [userType, pages, blocList];
 }
 
 ///[DashboardChangeTabState] is a class that is emitted by the bloc when the user changes the

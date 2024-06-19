@@ -44,3 +44,12 @@ final class AppLoadingState extends AppState {
   @override
   List<Object> get props => [isLoading];
 }
+
+final class UserTypeState extends AppState {
+  final UserType userType;
+
+  const UserTypeState(this.userType);
+
+  @override
+  List<Object> get props => [userType];
+}
