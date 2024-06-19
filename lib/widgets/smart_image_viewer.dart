@@ -8,6 +8,8 @@ class SmartImage extends StatelessWidget {
   final BorderRadiusGeometry? imageBorderRadius;
   final Color? color;
   final GestureTapCallback? onTap;
+  final EdgeInsetsGeometry? padding;
+  final BorderRadius? inkwellBorderRadius;
 
   const SmartImage({
     super.key,
@@ -18,6 +20,8 @@ class SmartImage extends StatelessWidget {
     this.imageBorderRadius,
     this.color,
     this.onTap,
+    this.padding,
+    this.inkwellBorderRadius,
   });
 
   @override
@@ -25,6 +29,9 @@ class SmartImage extends StatelessWidget {
     Widget? child;
     if (path.isNullOrEmpty || !path.contains('/')) {
       child = Container(
+        height: height,
+        width: width,
+        padding: padding,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(borderRadius: imageBorderRadius),
         child: Image.asset(
@@ -40,6 +47,9 @@ class SmartImage extends StatelessWidget {
       switch (path.imageType) {
         case ImageType.svg:
           child = Container(
+            height: height,
+            width: width,
+            padding: padding,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: imageBorderRadius),
             child: SvgPicture.asset(
@@ -52,6 +62,9 @@ class SmartImage extends StatelessWidget {
           );
         case ImageType.asset:
           child = Container(
+            height: height,
+            width: width,
+            padding: padding,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: imageBorderRadius),
             child: Image.asset(
@@ -63,6 +76,9 @@ class SmartImage extends StatelessWidget {
           );
         case ImageType.file:
           child = Container(
+            height: height,
+            width: width,
+            padding: padding,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: imageBorderRadius),
             child: Image.file(
@@ -74,6 +90,9 @@ class SmartImage extends StatelessWidget {
           );
         case ImageType.network:
           child = Container(
+            height: height,
+            width: width,
+            padding: padding,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: imageBorderRadius),
             child: path.isSvgUrl
@@ -108,6 +127,9 @@ class SmartImage extends StatelessWidget {
           );
         default:
           child = Container(
+            height: height,
+            width: width,
+            padding: padding,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: imageBorderRadius),
             child: Image.asset(
@@ -123,6 +145,7 @@ class SmartImage extends StatelessWidget {
     return onTap != null
         ? InkWell(
             onTap: onTap,
+            borderRadius: inkwellBorderRadius,
             child: child,
           )
         : child;

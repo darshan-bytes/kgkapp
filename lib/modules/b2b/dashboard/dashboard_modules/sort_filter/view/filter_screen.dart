@@ -1,4 +1,3 @@
-
 import 'package:kgk/kgk.dart';
 
 class FilterScreen extends StatelessWidget {
@@ -154,7 +153,7 @@ class FilterScreen extends StatelessWidget {
                 final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
                 return InkWell(
                   onTap: () {
-                    filterBloc.add(SelectSecondaryFilterDataEvent(secondaryFilterData: secondaryFilterData));
+                    handleOnChange(filterBloc, secondaryFilterData);
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
@@ -165,18 +164,18 @@ class FilterScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
+                        SmartCheckbox(
+                            value: secondaryFilterData.isSelected,
+                            onChanged: () {
+                              handleOnChange(filterBloc, secondaryFilterData);
+                            }),
+                        SizedBox(width: 8.w),
                         Expanded(
                           child: SmartText(
                             secondaryFilterData.name,
                             style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
                           ),
                         ),
-                        if (secondaryFilterData.isSelected)
-                          SmartImage(
-                            path: AppImages.icCheck,
-                            height: 16.w,
-                            width: 16.w,
-                          ),
                       ],
                     ),
                   ),
@@ -187,5 +186,16 @@ class FilterScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  ///[handleOnChange] Handles the change event for a secondary filter data item.
+  ///
+  /// This function is called when a secondary filter data item is selected or deselected.
+  /// It dispatches a `SelectSecondaryFilterDataEvent` with the selected `secondaryFilterData`.
+  /// Parameters:
+  /// - `filterBloc`: the bloc that manages the state of the filter.
+  /// - `secondaryFilterData`: the secondary filter data item that was selected or deselected.
+  void handleOnChange(SortFilterBloc filterBloc, SecondaryFilterData secondaryFilterData) {
+    filterBloc.add(SelectSecondaryFilterDataEvent(secondaryFilterData: secondaryFilterData));
   }
 }

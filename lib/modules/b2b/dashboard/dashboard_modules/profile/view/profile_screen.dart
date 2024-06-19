@@ -14,8 +14,12 @@ class ProfileScreen extends StatelessWidget {
         onScan: () {
           context.pushNamed(AppRoutes.qrScannerPage);
         },
-        onFavorite: () {},
-        onNotification: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
+        onNotification: () {
+          context.pushNamed(AppRoutes.notificationPage);
+        },
       ),
       body: SafeArea(
         child: SmartSingleChildScrollView(
@@ -244,6 +248,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                       child: SmartButton(
                     onTap: () {
+                      BlocProvider.of<DashboardBloc>(context).add(DashboardChangeTabEvent(DashboardBloc.homeIndex, context: context));
                       context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
                     },
                     title: APPStrings.logout.tr,

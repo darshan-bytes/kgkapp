@@ -42,7 +42,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
                         SizedBox(height: 16.h),
                         _buildButtons(context),
                         SizedBox(height: 16.h),
-                        _buildActionGrid(style),
+                        _buildActionGrid(style, context),
                         SizedBox(height: 16.h),
                       ],
                     );
@@ -172,13 +172,25 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActionGrid(ProductMenuBottomSheetStyle style) {
+  Widget _buildActionGrid(ProductMenuBottomSheetStyle style, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildActionItem(AppImages.icComment, APPStrings.discuss.tr, () {}, style),
         _buildActionItem(AppImages.icMeeting, APPStrings.meeting.tr, () {}, style),
-        _buildActionItem(AppImages.icFile, APPStrings.quotation.tr, () {}, style),
+        _buildActionItem(AppImages.icFile, APPStrings.quotation.tr, () {
+          context.pop();
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (context) => QuotationRequestConfirmation(
+              onContinueShopping: () {
+                context.pop();
+              },
+            ),
+          );
+        }, style),
         _buildActionItem(AppImages.icExport, APPStrings.export.tr, () {}, style),
         _buildActionItem(AppImages.icMoreHorizontal, APPStrings.more.tr, () {}, style),
       ],

@@ -209,11 +209,6 @@ class CompleteProductScreen extends StatelessWidget {
               'Ring details',
               style: style.detailsHeaderStyle,
             ),
-            trailing: Icon(
-              completeProductBloc.isRingDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-              size: 24.w,
-              color: style.ratingGlowColor,
-            ),
             onExpansionChanged: (value) {
               completeProductBloc.add(ProductRingDetailsToggleEvent(isRingDetailsOpen: !completeProductBloc.isRingDetailsOpen));
             },

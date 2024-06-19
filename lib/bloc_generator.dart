@@ -13,6 +13,7 @@ class BlocGenerator {
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<MyBagBloc>(create: (_) => MyBagBloc()),
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
+      BlocProvider<CompanyBloc>(create: (_) => CompanyBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
@@ -41,6 +42,8 @@ class BlocGenerator {
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
       BlocProvider<SearchResultBloc>(create: (_) => SearchResultBloc()),
       BlocProvider<SearchResultNotFoundBloc>(create: (_) => SearchResultNotFoundBloc()),
+      BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
+      BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
     ];
   }
 }

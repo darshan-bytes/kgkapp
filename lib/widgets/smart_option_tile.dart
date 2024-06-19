@@ -29,7 +29,8 @@ class SmartOptionTile extends StatelessWidget {
                 path: profileListModel.image ?? '',
                 height: imageSize ?? 24.w,
                 width: imageSize ?? 24.w,
-                fit: BoxFit.fill,
+                color: style.primaryColor,
+                fit: BoxFit.contain,
               ),
               SizedBox(
                 width: 12.w,

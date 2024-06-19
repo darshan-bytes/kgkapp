@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+7
+version: 1.0.0+8
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -83,6 +83,9 @@ dependencies:
 
   #For Qr Code Scanner
   mobile_scanner: ^5.1.1
+
+  #For Webview
+  webview_flutter: ^4.8.0
 
 dev_dependencies:
   flutter_test:
