@@ -31,12 +31,8 @@ final class StoneChangeTypeState extends StoneListingState {
 }
 
 class StoneChangeListingTypeState extends StoneListingState {
-  final bool isGrid;
-
-  const StoneChangeListingTypeState(this.isGrid);
-
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }
 
 final class StoneProductChangePageNumberState extends StoneListingState {
@@ -48,4 +44,3 @@ final class StoneProductReloadState extends StoneListingState {
   @override
   List<Object> get props => [];
 }
-

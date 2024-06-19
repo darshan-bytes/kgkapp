@@ -102,7 +102,7 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent(true));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent());
                   },
                 ),
                 SelectionButton(
@@ -117,7 +117,7 @@ class SettingListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: style.listBorderColor,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent(false));
+                    settingListingBloc.add(const SettingChangeListingTypeEvent());
                   },
                 ),
               ],
