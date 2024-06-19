@@ -79,6 +79,9 @@ class DiamondTabView extends StatelessWidget {
     return BlocBuilder<OrdersBloc, OrdersState>(
       buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
       builder: (context, state) {
+        if(state is ChangeOrdersStoneTypeState){
+          print(state.selectedStoneType);
+        }
         return SizedBox(
           width: 120.w,
           child: SmartDropDown<OrderStoneTypeModel>(

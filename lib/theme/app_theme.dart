@@ -171,6 +171,7 @@ abstract class AppTheme {
   FAQStyle get faqStyle;
 
   PreferencesStyle get preferencesStyle;
+  ShippingAddressStyle get shippingAddressStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1496,5 +1497,27 @@ class PreferencesStyle {
 
   PreferencesStyle({
     required this.titleStyle,
+  });
+}
+
+class ShippingAddressStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color whiteColor;
+  final Color dividerColor;
+  final TextStyle cancelTextStyle;
+  final TextStyle saveTextStyle;
+  final TextStyle defaultTextStyle;
+  final Color defaultBgColor;
+
+  ShippingAddressStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.whiteColor,
+    required this.dividerColor,
+    required this.cancelTextStyle,
+    required this.saveTextStyle,
+    required this.defaultTextStyle,
+    required this.defaultBgColor,
   });
 }

@@ -37,6 +37,7 @@ class BlocGenerator {
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
+      BlocProvider<ShippingAddressBloc>(create: (_) => ShippingAddressBloc()),
       BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),

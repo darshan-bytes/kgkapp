@@ -1,4 +1,7 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/shipping_address/bloc/shipping_address_bloc.dart';
+import 'package:kgk/modules/b2b/shipping_address/bloc/shipping_address_event.dart';
+import 'package:kgk/modules/b2b/shipping_address/view/shipping_address.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -30,6 +33,7 @@ class AppRoutes {
   static const productMenuBottomSheet = '/productMenuBottomSheet';
   static const auctionPage = '/auctionPage';
   static const orderPage = '/orderPage';
+  static const shippingAddressPage = '/shippingAddressPage';
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
@@ -47,7 +51,8 @@ class AppRoutes {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
     switch (settings.name) {
       case initialRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen(), settings: settings);
+        return MaterialPageRoute(
+            builder: (_) => const SplashScreen(), settings: settings);
 
       case getReadyPage:
         return MaterialPageRoute(
@@ -93,7 +98,8 @@ class AppRoutes {
       case resetPasswordPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ResetPasswordBloc>(context).add(const ResetPasswordInitialEvent());
+            BlocProvider.of<ResetPasswordBloc>(context)
+                .add(const ResetPasswordInitialEvent());
             return const ResetPasswordScreen();
           },
           settings: settings,
@@ -120,7 +126,8 @@ class AppRoutes {
       case productListGridPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ProductListBloc>(context).add(InitialProductListEvent(context));
+            BlocProvider.of<ProductListBloc>(context)
+                .add(InitialProductListEvent(context));
             return const ProductListScreen();
           },
           settings: settings,
@@ -129,7 +136,8 @@ class AppRoutes {
       case stoneDetailPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<StoneDetailBloc>(context).add(StoneDetailInitialEvent(context: context));
+            BlocProvider.of<StoneDetailBloc>(context)
+                .add(StoneDetailInitialEvent(context: context));
             return const StoneDetailScreen();
           },
           settings: settings,
@@ -144,7 +152,8 @@ class AppRoutes {
       case stoneListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<StoneListingBloc>(context).add(GetStoneProductListEvent(context));
+            BlocProvider.of<StoneListingBloc>(context)
+                .add(GetStoneProductListEvent(context));
             return const StoneListingScreen();
           },
           settings: settings,
@@ -153,7 +162,8 @@ class AppRoutes {
       case settingListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SettingListingBloc>(context).add(const GetSettingProductListEvent());
+            BlocProvider.of<SettingListingBloc>(context)
+                .add(const GetSettingProductListEvent());
             return const SettingListingScreen();
           },
           settings: settings,
@@ -174,7 +184,8 @@ class AppRoutes {
       case addressListPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
+            BlocProvider.of<AddressListBloc>(context)
+                .add(const LoadAddressListEvent());
             return const AddressListScreen();
           },
           settings: settings,
@@ -183,7 +194,8 @@ class AppRoutes {
       case wishListPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
+            BlocProvider.of<WishlistBloc>(context)
+                .add(const InitialWishlistEvent());
             return const WishlistScreen();
           },
           settings: settings,
@@ -204,7 +216,8 @@ class AppRoutes {
       case productDetailsPage:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<ProductDetailsBloc>(
-            create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
+            create: (_) =>
+                ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
             lazy: false,
             child: const ProductDetailsScreen(),
           ),
@@ -226,7 +239,8 @@ class AppRoutes {
       case auctionPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            BlocProvider.of<AuctionBloc>(context)
+                .add(const AuctionInitialEvent());
             return const AuctionScreen();
           },
           settings: settings,
@@ -235,7 +249,8 @@ class AppRoutes {
       case writeReviewPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
+            BlocProvider.of<WriteReviewBloc>(context)
+                .add(const WriteReviewInitialEvent());
             return const WriteReviewScreen();
           },
           settings: settings,
@@ -252,8 +267,19 @@ class AppRoutes {
       case orderPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
+            BlocProvider.of<OrdersBloc>(context)
+                .add(OrdersInitialEvent(context));
             return const OrderScreen();
+          },
+          settings: settings,
+        );
+
+      case shippingAddressPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ShippingAddressBloc>(context)
+                .add(ShippingAddressInitialEvent(context));
+            return const ShippingAddress();
           },
           settings: settings,
         );
@@ -261,7 +287,8 @@ class AppRoutes {
       case orderDetailsPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<OrderDetailBloc>(context).add(InitialOrderDetailEvent());
+            BlocProvider.of<OrderDetailBloc>(context)
+                .add(InitialOrderDetailEvent());
             return const OrderDetailScreen();
           },
           settings: settings,
@@ -270,7 +297,8 @@ class AppRoutes {
       case auctionListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionListingBloc>(context).add(InitialAuctionListingEvent());
+            BlocProvider.of<AuctionListingBloc>(context)
+                .add(InitialAuctionListingEvent());
             return const AuctionListingScreen();
           },
           settings: settings,
@@ -280,7 +308,8 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<OrderTimelineBloc>(
-              create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
+              create: (context) =>
+                  OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
               child: const OrderTimelineScreen(),
             );
           },
@@ -409,31 +438,43 @@ enum ScreenIdentifier {
 }
 
 extension RoutesDataExtension on BuildContext {
-  Map<RoutesData, dynamic>? get routesData => ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
+  Map<RoutesData, dynamic>? get routesData =>
+      ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
 
-  Future<dynamic> pushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+  Future<dynamic> pushNamed(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.pushNamed(this, routeName, arguments: arguments);
   }
 
-  Future<dynamic> pushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
+  Future<dynamic> pushNamedOfContext(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
     return await Navigator.of(this).pushNamed(routeName, arguments: arguments);
   }
 
-  Future<dynamic> popAndPushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.popAndPushNamed(this, routeName, arguments: arguments);
-  }
-
-  Future<dynamic> popAndPushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.of(this).popAndPushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> pushNamedAndRemoveUntil(String routeName, RoutePredicate predicate, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate, arguments: arguments);
-  }
-
-  Future<dynamic> pushNamedAndRemoveUntilOfContext(String routeName, RoutePredicate predicate,
+  Future<dynamic> popAndPushNamed(String routeName,
       {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+    return await Navigator.popAndPushNamed(this, routeName,
+        arguments: arguments);
+  }
+
+  Future<dynamic> popAndPushNamedOfContext(String routeName,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this)
+        .popAndPushNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntil(
+      String routeName, RoutePredicate predicate,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.pushNamedAndRemoveUntil(this, routeName, predicate,
+        arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntilOfContext(
+      String routeName, RoutePredicate predicate,
+      {Map<RoutesData, dynamic>? arguments}) async {
+    return await Navigator.of(this)
+        .pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
   dynamic popUntil(RoutePredicate predicate) async {

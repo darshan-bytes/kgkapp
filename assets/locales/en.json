@@ -56,7 +56,8 @@
   "diamond": "Diamond",
   "gemstone": "Gemstone",
   "jewellery": "Jewellery",
-  "add": "+ Add",
+  "add": "Add",
+  "plus_add": "+ Add",
   "country": "Country",
   "previous": "Previous",
   "next": "Next",
@@ -401,5 +402,6 @@
   "list_of_exhibitions_of_KGK": "List of exhibitions of KGK",
   "activity_log": "Activity Log",
   "get_log_on_the_account": "Get log on the account",
-  "compared_to_X": "Compared to {#}"
+  "compared_to_X": "Compared to {#}",
+  "default": "Default"
 }

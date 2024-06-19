@@ -140,4 +140,11 @@ class AppImages {
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
+
+
+
+  //shipping address screen
+  static const String icPlusBlue = 'assets/images/ic_plus_blue.svg';
+  static const String icEditAddress = 'assets/images/ic_edit_address.svg';
+  static const String icCancelAddress = 'assets/images/ic_cancel.svg';
 }
