@@ -238,7 +238,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                             margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
                             padding: EdgeInsets.zero,
                             child: SmartImage(
-                              path: AppImages.icSearch,
+                              path: AppImages.icSearchThin,
                               height: 16.w,
                               width: 16.w,
                             ),

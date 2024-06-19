@@ -42,9 +42,7 @@ class StoneListingScreen extends StatelessWidget {
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
+                  builder: (context) => DiamondFilterScreen(onApply: () {}),
                 );
               },
               onSortTap: () {
@@ -134,7 +132,7 @@ class StoneListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeListingTypeEvent(true));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent());
                 },
               ),
               SelectionButton(
@@ -150,7 +148,7 @@ class StoneListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeListingTypeEvent(false));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent());
                 },
               ),
               SizedBox(width: 16.w),

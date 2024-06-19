@@ -16,17 +16,17 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   InquiryTypeModel? selectedInquiryType;
 
   List<InquiryTypeModel> inquiryTypeList = [
-    InquiryTypeModel(id: 1, name: 'Bulk Order Discount'),
-    InquiryTypeModel(id: 2, name: 'Complaint'),
-    InquiryTypeModel(id: 3, name: 'Suggestion'),
+    const InquiryTypeModel(id: 1, name: 'Bulk Order Discount'),
+    const InquiryTypeModel(id: 2, name: 'Complaint'),
+    const InquiryTypeModel(id: 3, name: 'Suggestion'),
   ];
 
   ProductModel? selectedProduct;
 
   List<ProductModel> productList = [
-    ProductModel(id: 1, name: 'SKUC097973'),
-    ProductModel(id: 2, name: 'SKUC097944'),
-    ProductModel(id: 3, name: 'SKUC097955'),
+    const ProductModel(id: 1, name: 'SKUC097973'),
+    const ProductModel(id: 2, name: 'SKUC097944'),
+    const ProductModel(id: 3, name: 'SKUC097955'),
   ];
 
   MakeInquiryBloc() : super(MakeInquiryInitial()) {

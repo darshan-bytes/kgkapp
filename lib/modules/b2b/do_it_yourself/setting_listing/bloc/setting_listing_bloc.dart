@@ -42,8 +42,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   }
 
   void _onChangeListingTypeEvent(SettingChangeListingTypeEvent event, Emitter<SettingListingState> emit) {
-    isGrid = event.isGrid;
-    emit(SettingChangeListingTypeState(event.isGrid));
+    emit(const SettingProductReloadState());
+    isGrid = !isGrid;
+    emit(SettingChangeListingTypeState());
   }
 
   void _onPageNumberChanged(SettingProductChangePageNumberEvent event, Emitter<SettingListingState> emit) {

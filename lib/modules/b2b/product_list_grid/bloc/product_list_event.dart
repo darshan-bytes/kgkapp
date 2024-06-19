@@ -23,10 +23,8 @@ class ChangePageNumberEvent extends ProductListEvent {
 }
 
 class ProductChangeListingTypeEvent extends ProductListEvent {
-  final bool isGrid;
-
-  const ProductChangeListingTypeEvent(this.isGrid);
+  const ProductChangeListingTypeEvent();
 
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }

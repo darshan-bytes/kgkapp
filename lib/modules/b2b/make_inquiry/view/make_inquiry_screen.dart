@@ -47,7 +47,7 @@ class MakeInquiryScreen extends StatelessWidget {
                 builder: (context, state) {
                   return SmartDropDown<InquiryTypeModel>(
                     selectedItem: bloc.selectedInquiryType,
-                    items: bloc.inquiryTypeList.map((e) => SmartDropDownItem<InquiryTypeModel>(value: e, title: e.name ?? '')).toList(),
+                    items: bloc.inquiryTypeList.map((e) => SmartDropDownItem<InquiryTypeModel>(value: e, title: e.name)).toList(),
                     hintText: APPStrings.inquiryType.tr,
                     onChanged: (newValue) {
                       if (newValue == null) return;
@@ -71,7 +71,7 @@ class MakeInquiryScreen extends StatelessWidget {
                 builder: (context, state) {
                   return SmartDropDown<ProductModel>(
                     selectedItem: bloc.selectedProduct,
-                    items: bloc.productList.map((e) => SmartDropDownItem<ProductModel>(value: e, title: e.name ?? '')).toList(),
+                    items: bloc.productList.map((e) => SmartDropDownItem<ProductModel>(value: e, title: e.name)).toList(),
                     hintText: APPStrings.selectProduct.tr,
                     onChanged: (newValue) {
                       if (newValue == null) return;
