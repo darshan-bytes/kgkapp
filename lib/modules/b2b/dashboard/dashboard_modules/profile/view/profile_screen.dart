@@ -133,51 +133,58 @@ class ProfileScreen extends StatelessWidget {
         shrinkWrap: true,
         primary: false,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(left: 17.w, top: 16.h, right: 17.w),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SmartImage(
-                  path: bloc.profileChildrenList[index].image ?? '',
-                ),
-                SizedBox(width: 12.h),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SmartText(
-                        bloc.profileChildrenList[index].title,
-                        style: style.expandTitleStyle,
-                        onTap: () {
-                          bloc.add(ToggleProfileListEvent(index: index));
-                        },
-                      ),
-                      if (bloc.profileChildrenList[index].profileChildrenList.isNotNullNorEmpty) SizedBox(height: 8.h),
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 200),
-                        child: bloc.profileChildrenList[index].isSubListExpanded
-                            ? ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                primary: false,
-                                itemCount: bloc.profileChildrenList[index].profileChildrenList?.length ?? 0,
-                                itemBuilder: (context, childIndex) {
-                                  return SmartText(
-                                    bloc.profileChildrenList[index].profileChildrenList?[childIndex].title,
-                                    style: style.expandTitleStyle,
-                                    onTap: bloc.profileChildrenList[index].profileChildrenList?[childIndex].onTap,
-                                  );
-                                },
-                                separatorBuilder: (context, index) => SizedBox(height: 8.h),
-                              )
-                            : const SizedBox(),
-                      ),
-                    ],
+          return GestureDetector(
+            onTap: () {
+              bloc.add(ToggleProfileListEvent(index: index));
+            },
+            child: Padding(
+              padding: EdgeInsets.only(left: 17.w, top: 16.h, right: 17.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SmartImage(
+                    path: bloc.profileChildrenList[index].image ?? '',
                   ),
-                ),
-              ],
+                  SizedBox(width: 12.h),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SmartText(
+                          bloc.profileChildrenList[index].title,
+                          style: style.expandTitleStyle,
+                        ),
+                        if (bloc.profileChildrenList[index].profileChildrenList.isNotNullNorEmpty) SizedBox(height: 8.h),
+                        AnimatedSize(
+                          duration: const Duration(milliseconds: 200),
+                          child: bloc.profileChildrenList[index].isSubListExpanded
+                              ? ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  itemCount: bloc.profileChildrenList[index].profileChildrenList?.length ?? 0,
+                                  itemBuilder: (context, childIndex) {
+                                    return SmartText(
+                                      bloc.profileChildrenList[index].profileChildrenList?[childIndex].title,
+                                      style: style.expandTitleStyle,
+                                      onTap: bloc.profileChildrenList[index].profileChildrenList?[childIndex].onTap,
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) => SizedBox(height: 8.h),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (bloc.profileChildrenList[index].profileChildrenList.isNotNullNorEmpty)
+                    SmartImage(
+                      color: style.arrowRightColor,
+                      path: bloc.profileChildrenList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
+                    )
+                ],
+              ),
             ),
           );
         },
