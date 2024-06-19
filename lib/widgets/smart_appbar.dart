@@ -18,6 +18,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isBorder;
   final double? optionalEndSpacing;
   final EdgeInsets? padding;
+  final bool isSearchBar;
 
   SmartAppBar({
     super.key,
@@ -38,6 +39,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onNotification,
     this.child,
     this.optionalEndSpacing,
+    this.isSearchBar = false,
   });
 
   final double height = AppBar().preferredSize.height;
@@ -55,26 +57,20 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       title: _buildTitle(style, context),
       actions: _buildActions(),
-      shape: isBorder ? Border(bottom: BorderSide(color: style.borderColor)) : null,
+      shape: isBorder ? Border(bottom: BorderSide(color: isSearchBar ? style.transparentColor : style.borderColor)) : null,
     );
   }
 
   Widget leadingIcon(BuildContext context, CustomAppBarStyle style) {
-    if (!isBack && leadingImage.isNotNullNorEmpty) {
+    if (!isBack && leadingImage?.isNotEmpty == true) {
       return SmartImage(
-        path: leadingImage ?? '',
+        path: leadingImage!,
         height: 40.w,
         width: 40.w,
       );
     } else if (isBack) {
       return GestureDetector(
-        onTap: () {
-          if (onBack != null) {
-            onBack!();
-          } else {
-            context.pop();
-          }
-        },
+        onTap: onBack ?? () => context.pop(),
         child: Container(
           padding: EdgeInsets.only(left: 17.w),
           height: 72.w,
@@ -82,7 +78,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: style.transparentColor,
           child: Center(
             child: SmartImage(
-              path: AppImages.icBack,
+              path: isSearchBar ? AppImages.icArrowLeftAppbar : AppImages.icBack,
               height: 24.w,
               width: 24.w,
             ),
@@ -94,46 +90,69 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
   }
 
-  Widget _buildTitle(CustomAppBarStyle style, context) {
-    return Row(
-      mainAxisAlignment: isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
-        if (!isBack) SizedBox(width: 17.w),
-        leadingIcon(context, style),
-        if (isBack || leadingImage.isNotNullNorEmpty) SizedBox(width: 6.w),
-        if (title != null)
+  Widget _buildTitle(CustomAppBarStyle style, BuildContext context) {
+    if (isSearchBar) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          leadingIcon(context, style),
+          SizedBox(width: 12.w),
           Expanded(
-            child: SmartText(
-              textAlign: isCenter ? TextAlign.center : TextAlign.start,
-              title!,
-              style: titleStyle ?? style.titleStyle,
-              overflow: TextOverflow.ellipsis,
+              child: SmartTextField(
+            height: 40.w,
+            hintText: APPStrings.search.tr,
+            onTapOutside: (event) {},
+            borderRadius: BorderRadius.all(Radius.circular(6.r)),
+            style: style.searchBarTextStyle,
+            suffixIcon: GestureDetector(
+              onTap: () {},
+              child: FittedBox(
+                child: Container(
+                  margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
+                  padding: EdgeInsets.zero,
+                  child: SmartImage(
+                    path: AppImages.icSearchThin,
+                    height: 16.w,
+                    width: 16.w,
+                  ),
+                ),
+              ),
             ),
-          ),
-      ],
-    );
+            contentPadding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+          )),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
+        children: [
+          if (!isBack) SizedBox(width: 17.w),
+          leadingIcon(context, style),
+          if (isBack || leadingImage?.isNotEmpty == true) SizedBox(width: 6.w),
+          if (title != null)
+            Expanded(
+              child: SmartText(
+                textAlign: isCenter ? TextAlign.center : TextAlign.start,
+                title!,
+                style: titleStyle ?? style.titleStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+      );
+    }
   }
 
   List<Widget> _buildActions() {
-    final List<Widget> actions = [];
-    if (onScan != null) {
-      actions.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24.w));
-    }
-    if (onFilter != null) {
-      actions.add(_buildIconButton(onFilter!, AppImages.icSearch, size: 24.w));
-    }
-    if (onFavorite != null) {
-      actions.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24.w));
-    }
-    if (onNotification != null) {
-      actions.add(_buildIconButton(onNotification!, AppImages.icNotification, size: 24.w));
-    }
-    if (this.actions != null) {
-      actions.add(SizedBox(width: 17.w));
-    }
-    actions.addAll(this.actions ?? []);
-    actions.add(SizedBox(width: optionalEndSpacing ?? 17.w));
-    return actions;
+    final List<Widget> actionsList = [];
+    if (onScan != null) actionsList.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24));
+    if (onFilter != null) actionsList.add(_buildIconButton(onFilter!, AppImages.icSearch, size: 24));
+    if (onFavorite != null) actionsList.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24));
+    if (onNotification != null) actionsList.add(_buildIconButton(onNotification!, AppImages.icNotification, size: 24));
+    if (actions != null) actionsList.add(SizedBox(width: 17.w));
+    actionsList.addAll(actions ?? []);
+    actionsList.add(SizedBox(width: optionalEndSpacing ?? 17.w));
+    return actionsList;
   }
 
   Widget _buildIconButton(VoidCallback onTap, String assetPath, {double? size}) {

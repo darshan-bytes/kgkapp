@@ -81,6 +81,8 @@ export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/qr_code_scan_login/view/qr_scanner_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/modules/b2b/make_inquiry/model/inquiry_type_model.dart';
+export 'package:kgk/modules/b2b/make_inquiry/model/product_model.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/bloc/cms_web_view_bloc.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 
@@ -120,6 +122,9 @@ export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/bloc/stone_listing_
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/view/stone_listing_screen.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/diamond_clarity_chart.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/product_details.dart';
+export 'package:kgk/modules/b2b/preferences/model/country_model.dart';
+export 'package:kgk/modules/b2b/preferences/model/language_model.dart';
+export 'package:kgk/modules/b2b/preferences/model/currency_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/bloc/setting_listing_bloc.dart';
 export 'package:kgk/modules/b2b/notification/view/notification_screen.dart';
 export 'package:kgk/modules/b2b/notification_settings/view/notification_settings_view.dart';
@@ -134,11 +139,15 @@ export 'package:kgk/modules/b2b/setting_detail/bloc/setting_detail_bloc.dart';
 export 'package:kgk/modules/b2b/setting_detail/view/setting_detail_screen.dart';
 export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
+export 'package:kgk/modules/b2b/make_inquiry/view/make_inquiry_screen.dart';
+export 'package:kgk/modules/b2b/make_inquiry/bloc/make_inquiry_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/model/profile_list_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';
+export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
+export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
@@ -236,7 +245,17 @@ export 'package:kgk/modules/b2b/order_details/view/track_order_bottomsheet.dart'
 export 'package:kgk/widgets/smart_stepper.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/edit_profile_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/profile/view/change_password_bottom_sheet.dart';
+export 'package:kgk/modules/common_modules/search/view/search_screen.dart';
+export 'package:kgk/modules/common_modules/search/bloc/search_bloc.dart';
+export 'package:kgk/modules/common_modules/search_result/bloc/search_result_bloc.dart';
+export 'package:kgk/modules/common_modules/search_result/view/search_result_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/model/faq_model.dart';
+export 'package:kgk/widgets/smart_horizontal_item_builder.dart';
+export 'package:kgk/widgets/smart_image_title_column.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/bloc/company_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/model/company_list_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/view/company_screen.dart';
+export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
+export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
+export 'package:kgk/modules/user_type_selection.dart';
+export 'package:kgk/modules/b2b/dashboard/model/bottom_navigation_bar_data_model.dart';

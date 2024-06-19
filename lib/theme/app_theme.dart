@@ -152,13 +152,25 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
-  SupportScreenStyle get supportScreenStyle;
+  MakeInquiryStyle get makeInquiryStyle;
 
   QrScannerStyle get qrScannerStyle;
+
+  SearchScreenStyle get searchScreenStyle;
+
+  SearchResultScreenStyle get searchResultScreenStyle;
+
+  SupportScreenStyle get supportScreenStyle;
+
+  SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
 
   SwitchStyle get switchStyle;
 
   CompanyScreenStyle get companyScreenStyle;
+
+  FAQStyle get faqStyle;
+
+  PreferencesStyle get preferencesStyle;
 }
 
 class PrimaryButtonStyle {
@@ -254,12 +266,14 @@ class CustomAppBarStyle {
   final Color borderColor;
   final TextStyle titleStyle;
   final Color transparentColor;
+  final TextStyle searchBarTextStyle;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
     required this.transparentColor,
+    required this.searchBarTextStyle,
   });
 }
 
@@ -1360,6 +1374,34 @@ class LogoutPopupStyle {
   });
 }
 
+class MakeInquiryStyle {
+  final TextStyle titleStyle;
+  final Color whiteColor;
+
+  MakeInquiryStyle({
+    required this.titleStyle,
+    required this.whiteColor,
+  });
+}
+
+class SearchScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle searchItemStyle;
+  final TextStyle searchByCategoryStyle;
+  final Color searchByCategoryColor;
+  final Color searchByCategoryItemBorderColor;
+  final Color whiteColor;
+
+  SearchScreenStyle({
+    required this.titleStyle,
+    required this.searchItemStyle,
+    required this.searchByCategoryStyle,
+    required this.searchByCategoryColor,
+    required this.searchByCategoryItemBorderColor,
+    required this.whiteColor,
+  });
+}
+
 class SupportScreenStyle {
   final TextStyle frequentlyAskedQuestionStyle;
   final TextStyle questionStyle;
@@ -1380,6 +1422,27 @@ class QrScannerStyle {
     required this.titleStyle,
     required this.overLayColor,
   });
+}
+
+class SearchResultScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle appbarTextStyle;
+  final TextStyle foundItemStyle;
+
+  SearchResultScreenStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.appbarTextStyle,
+    required this.foundItemStyle,
+  });
+}
+
+class SmartImageTitleColumnStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
 }
 
 class CompanyScreenStyle {
@@ -1407,5 +1470,31 @@ class SwitchStyle {
     required this.activeTrackColor,
     required this.inactiveTrackColor,
     required this.inactiveThumbColor,
+  });
+}
+
+class FAQStyle {
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+  final TextStyle contactDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  FAQStyle({
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+    required this.contactDescriptionStyle,
+    required this.contactDetailsStyle,
+  });
+}
+
+class PreferencesStyle {
+  final TextStyle titleStyle;
+
+  PreferencesStyle({
+    required this.titleStyle,
   });
 }

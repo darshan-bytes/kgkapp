@@ -103,7 +103,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonBorderColor: style.listBorderColor,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                       onTap: () {
-                        bloc.add(const ProductChangeListingTypeEvent(true));
+                        bloc.add(const ProductChangeListingTypeEvent());
                       },
                     ),
                     SelectionButton(
@@ -118,7 +118,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonBorderColor: style.listBorderColor,
                       borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                       onTap: () {
-                        bloc.add(const ProductChangeListingTypeEvent(false));
+                        bloc.add(const ProductChangeListingTypeEvent());
                       },
                     ),
                   ],

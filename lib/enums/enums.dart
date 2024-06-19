@@ -32,3 +32,8 @@ enum OrderStatus {
 
   const OrderStatus(this.value);
 }
+
+enum UserType {
+  b2cUser,
+  b2bUser,
+}

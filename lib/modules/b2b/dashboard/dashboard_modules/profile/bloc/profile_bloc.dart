@@ -57,7 +57,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.support.tr,
           subTitle: APPStrings.makeInquiryFaqContactUs.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.makeInquiryPage);
+          }),
       ProfileListModel(
           image: AppImages.icWatchlist,
           title: APPStrings.watchlist.tr,
@@ -90,7 +92,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: () {}),
       ProfileListModel(
           image: AppImages.icMapPin,
-          title: APPStrings.saveAddress.tr,
+          title: APPStrings.savedAddress.tr,
           subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {}),
@@ -115,7 +117,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.preferences.tr,
           subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.preferencesPage);
+          }),
       ProfileListModel(
           image: AppImages.icNotificationSettings,
           title: APPStrings.notificationSettings.tr,
