@@ -253,3 +253,5 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/model/compan
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/view/company_screen.dart';
 export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
+export 'package:kgk/modules/user_type_selection.dart';
+export 'package:kgk/modules/b2b/dashboard/model/bottom_navigation_bar_data_model.dart';

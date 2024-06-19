@@ -9,7 +9,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardBloc dashboardBloc = context.read<DashboardBloc>();
+    final DashboardBloc dashboardBloc = BlocProvider.of<DashboardBloc>(context);
     final TabBarStyle style = AppTheme.of(context).tabBarStyle;
     Widget child = Container(
       decoration: BoxDecoration(
@@ -25,9 +25,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
         ],
       ),
       child: BlocBuilder<DashboardBloc, DashboardState>(
-        buildWhen: (previous, current) {
-          return current is DashboardChangeTabState;
-        },
+        buildWhen: (previous, current) => current is DashboardChangeTabState || current is DashboardLoadedState,
         builder: (context, state) {
           return BottomNavigationBar(
             elevation: 0,
@@ -39,53 +37,20 @@ class SmartBottomNavigationBar extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: style.labelStyle,
             unselectedLabelStyle: style.unselectedLabelStyle,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppImages.icHome),
-                activeIcon: SvgPicture.asset(AppImages.icHomeActive),
-                label: APPStrings.home.tr,
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppImages.icCategories),
-                activeIcon: SvgPicture.asset(AppImages.icCategoriesActive),
-                label: APPStrings.categories.tr,
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppImages.icShoppingBag),
-                activeIcon: SvgPicture.asset(AppImages.icShoppingBagActive),
-                label: APPStrings.myBag.tr,
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppImages.icSupport),
-                activeIcon: SvgPicture.asset(AppImages.icSupportActive),
-                label: APPStrings.support.tr,
-              ),
-              //TODO: Replace the image URL with the actual image URL
-              BottomNavigationBarItem(
-                icon: Container(
-                    height: 24.w,
-                    width: 24.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.r),
-                    ),
-                    child: SmartImage(
-                      path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(50.r),
-                    )),
-                activeIcon: Container(
-                    height: 24.w,
-                    width: 24.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.r),
-                      border: Border.all(color: style.indicatorColor, width: 1.w),
-                    ),
-                    child: SmartImage(
-                      path: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                      imageBorderRadius: BorderRadius.circular(50.r),
-                    )),
-                label: APPStrings.profile.tr,
-              ),
-            ],
+            items: dashboardBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
+              if (model.isProfile) {
+                return BottomNavigationBarItem(
+                  icon: _buildProfileIcon(style, false, model.icon),
+                  activeIcon: _buildProfileIcon(style, true, model.icon),
+                  label: model.label,
+                );
+              }
+              return BottomNavigationBarItem(
+                icon: SmartImage(path: model.icon),
+                activeIcon: SmartImage(path: model.activeIcon),
+                label: model.label,
+              );
+            }).toList(),
           );
         },
       ),
@@ -101,5 +66,15 @@ class SmartBottomNavigationBar extends StatelessWidget {
               highlightColor: Colors.transparent,
             ),
             child: child);
+  }
+
+  Widget _buildProfileIcon(TabBarStyle style, bool isActive, String iconPath) {
+    return SmartImage(
+      path: iconPath,
+      imageBorderRadius: BorderRadius.circular(50.r),
+      border: isActive ? Border.all(color: style.indicatorColor, width: 1.w) : null,
+      height: 24.w,
+      width: 24.w,
+    );
   }
 }
