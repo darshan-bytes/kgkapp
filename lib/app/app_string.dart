@@ -434,6 +434,10 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String fullName = 'full_name';
+  static const String comment = 'comment';
+  static const String inquiryType = 'inquiry_type';
+  static const String selectProduct = 'select_product';
 
   //Make an inquiry
   static const String makeAnInquiry = 'make_an_inquiry';

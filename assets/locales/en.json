@@ -364,7 +364,11 @@
   "contact_us": "Contact us",
   "get_in_touch_with_us": "Get in touch with us",
   "search_by_category": "Search by category",
-  "make_an_inquiry": "Make an Inquiry",
+  "make_an_inquiry": "Make an inquiry",
+  "full_name": "Full Name",
+  "comment": "Comment",
+  "inquiry_type": "Inquiry Type",
+  "select_product": "Select Product",
   "to_log_in_to_site_with_qr": "To log in to www.kgk.com, scan the QR code displayed there.",
   "notification_settings": "Notification Settings",
   "make_inquiry_faq_contact_us": "Make Inquiry, FAQ, Contact us",
@@ -381,5 +385,4 @@
   "store_directory": "Store directory",
   "language": "Language",
   "currency": "Currency"
-
 }

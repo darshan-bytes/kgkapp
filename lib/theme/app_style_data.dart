@@ -828,4 +828,8 @@ class LightModeTheme extends AppTheme {
   PreferencesStyle get preferencesStyle => PreferencesStyle(
         titleStyle: interRegularTextStyle,
       );
+
+  @override
+  MakeInquiryStyle get makeInquiryStyle =>
+      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
 }

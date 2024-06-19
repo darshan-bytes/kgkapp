@@ -44,6 +44,7 @@ class BlocGenerator {
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
+      BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
     ];
   }
 }
