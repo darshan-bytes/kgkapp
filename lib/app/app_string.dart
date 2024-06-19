@@ -490,4 +490,9 @@ class APPStrings {
 
   //Compared to
   static const String comparedToX = 'compared_to_X';
+
+    // Edit Shipping Address
+  static const String editAddress = "edit_address";
+  static const String markedAsDefault = "marked_default";
+  
 }

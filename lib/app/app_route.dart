@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/edit_shipping_addres/view/edit_shipping_address_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -42,6 +43,7 @@ class AppRoutes {
   static const faqPage = '/faqPage';
   static const preferencesPage = '/preferencesPage';
   static const userTypeSelection = '/userTypeSelection';
+  static const editShippingAddress = "/editShippingAddress";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -169,6 +171,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const AddAddressScreen(),
           settings: settings,
+        );
+
+      case editShippingAddress:
+      return MaterialPageRoute(
+        builder: (_) => const EditShippingAddressScreen(),
+        settings: settings,
         );
 
       case addressListPage:

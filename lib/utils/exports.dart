@@ -259,3 +259,5 @@ export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
 export 'package:kgk/modules/user_type_selection.dart';
 export 'package:kgk/modules/b2b/landing/model/bottom_navigation_bar_data_model.dart';
+export 'package:kgk/modules/b2b/edit_shipping_addres/bloc/edit_shipping_address_bloc.dart';
+export 'package:kgk/modules/b2b/edit_shipping_addres/view/edit_shipping_address_screen.dart';
