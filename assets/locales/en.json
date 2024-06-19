@@ -376,5 +376,8 @@
   "by_email": "By email",
   "question_or_queries_get_in_touch": "Question or queries? Get in touch",
   "find_your_nearest_X_store": "Find your nearest {#} store",
-  "store_directory": "Store directory"
+  "store_directory": "Store directory",
+  "language": "Language",
+  "currency": "Currency"
+
 }

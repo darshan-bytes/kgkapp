@@ -815,4 +815,9 @@ class LightModeTheme extends AppTheme {
         contactDescriptionStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         contactDetailsStyle: interMediumBoldTextStyle,
       );
+
+  @override
+  PreferencesStyle get preferencesStyle => PreferencesStyle(
+        titleStyle: interRegularTextStyle,
+      );
 }

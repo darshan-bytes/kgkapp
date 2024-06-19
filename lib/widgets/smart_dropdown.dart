@@ -113,17 +113,17 @@ class SmartDropDownView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SmartDropDownStyle style = AppTheme.of(context).smartDropDownStyle;
-    Widget child = SafeArea(
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(6.r),
-            topRight: Radius.circular(6.r),
-          ),
+    Widget child = Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: style.backgroundColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(6.r),
+          topRight: Radius.circular(6.r),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+      child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
