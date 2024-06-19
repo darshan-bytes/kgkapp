@@ -130,8 +130,14 @@ class AppImages {
   static const String icArrowUpLeft = 'assets/images/ic_arrow_up_left.svg';
   static const String icNote = 'assets/images/ic_note.svg';
   static const String icContactUs = 'assets/images/ic_contact_us.svg';
+  static const String icMasters = 'assets/images/ic_masters.svg';
+  static const String icMessages = 'assets/images/ic_messages.svg';
+  static const String icProfileCalendar = 'assets/images/ic_profile_calendar.svg';
+  static const String icWatchlist = 'assets/images/ic_watchlist.svg';
+  static const String icExhibition = 'assets/images/ic_exhibition.svg';
+  static const String icActivityLog = 'assets/images/ic_activity_log.svg';
+  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
-  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 }
