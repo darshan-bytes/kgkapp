@@ -26,7 +26,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   void getRouteData(BuildContext context) async {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
-      appbarTitle = data[RoutesData.searchResultData];
+      appbarTitle = data[RoutesData.searchResultData] ?? '';
     }
   }
 
@@ -54,8 +54,8 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
 
   void _onChangeListingTypeEvent(SearchResultChangeListingTypeEvent event, Emitter<SearchResultState> emit) {
     emit(SearchResultReloadState());
-    isGrid = event.isGrid;
-    emit(SearchResultChangeListingTypeState(event.isGrid));
+    isGrid = !isGrid;
+    emit(SearchResultChangeListingTypeState());
   }
 
   void _onPageNumberChanged(SearchResultProductChangePageNumberEvent event, Emitter<SearchResultState> emit) {

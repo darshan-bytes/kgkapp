@@ -24,12 +24,10 @@ final class GetSearchResultProductListEvent extends SearchResultEvent {
 }
 
 final class SearchResultChangeListingTypeEvent extends SearchResultEvent {
-  final bool isGrid;
-
-  const SearchResultChangeListingTypeEvent(this.isGrid);
+  const SearchResultChangeListingTypeEvent();
 
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }
 
 final class SearchResultProductChangePageNumberEvent extends SearchResultEvent {

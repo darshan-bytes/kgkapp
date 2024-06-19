@@ -28,17 +28,20 @@ class SearchResultScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   SmartText(APPStrings.searchResult.tr, style: style.titleStyle),
                   SizedBox(height: 6.h),
-                  Row(
-                    children: [
-                      SmartText("120", style: style.foundItemStyle),
-                      SizedBox(width: 5.w),
-                      Flexible(
-                        child: SmartText(APPStrings.resultFoundFor.tr, style: style.subTitleStyle),
-                      ),
-                      SizedBox(width: 5.w),
-                      SmartText("''${searchResultBloc.appbarTitle}''", style: style.appbarTextStyle),
-                    ],
-                  ),
+                  SmartRichText(spans: [
+                    SmartTextSpan(
+                      text: "120 ",
+                      style: style.foundItemStyle,
+                    ),
+                    SmartTextSpan(
+                      text: APPStrings.resultFoundFor.tr,
+                      style: style.subTitleStyle,
+                    ),
+                    SmartTextSpan(
+                      text: "''${searchResultBloc.appbarTitle}''",
+                      style: style.appbarTextStyle,
+                    ),
+                  ]),
                   SizedBox(height: 24.h),
                   _buildProductFilterCount(diamondListingStyle, searchResultBloc),
                   SizedBox(height: 24.h),
@@ -75,7 +78,7 @@ class SearchResultScreen extends StatelessWidget {
                   unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
-                    searchResultBloc.add(const SearchResultChangeListingTypeEvent(true));
+                    searchResultBloc.add(const SearchResultChangeListingTypeEvent());
                   },
                 ),
                 SelectionButton(
@@ -90,7 +93,7 @@ class SearchResultScreen extends StatelessWidget {
                   unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
-                    searchResultBloc.add(const SearchResultChangeListingTypeEvent(false));
+                    searchResultBloc.add(const SearchResultChangeListingTypeEvent());
                   },
                 ),
               ],
@@ -128,6 +131,9 @@ class SearchResultScreen extends StatelessWidget {
             );
           } else {
             return ListView.builder(
+              itemCount: searchResultBloc.productList.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => ProductListItem(
                 margin: EdgeInsets.only(bottom: 17.h),
                 onEyeTap: () {},
@@ -135,9 +141,6 @@ class SearchResultScreen extends StatelessWidget {
                 onAddToBagTap: () {},
                 productDetails: searchResultBloc.productList[index],
               ),
-              itemCount: searchResultBloc.productList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
             );
           }
         }

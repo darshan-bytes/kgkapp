@@ -11,13 +11,6 @@ final class SearchResultInitialState extends SearchResultState {}
 
 final class SearchResultReloadState extends SearchResultState {}
 
-final class SearchResultChangeListingTypeState extends SearchResultState {
-  final bool isGrid;
-
-  const SearchResultChangeListingTypeState(this.isGrid);
-
-  @override
-  List<Object> get props => [isGrid];
-}
+final class SearchResultChangeListingTypeState extends SearchResultState {}
 
 final class SearchResultProductChangePageNumberState extends SearchResultState {}

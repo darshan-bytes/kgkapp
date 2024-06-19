@@ -80,7 +80,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
     emit(ReloadProductState());
-    isGrid = event.isGrid;
-    emit(ProductChangeListingTypeState(event.isGrid));
+    isGrid = !isGrid;
+    emit(ProductChangeListingTypeState());
   }
 }
