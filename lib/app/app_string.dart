@@ -466,4 +466,8 @@ class APPStrings {
   static const String questionOrQueriesGetInTouch = 'question_or_queries_get_in_touch';
   static const String findYourNearestXStore = 'find_your_nearest_X_store';
   static const String storeDirectory = 'store_directory';
+
+  // Preferences
+  static const String language = 'language';
+  static const String currency = 'currency';
 }

@@ -40,6 +40,7 @@ class AppRoutes {
   static const notificationSettingsPage = '/notificationSettingsPage';
   static const cmsWebViewPage = '/cmsWebViewPage';
   static const faqPage = '/faqPage';
+  static const preferencesPage = '/preferencesPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -350,6 +351,16 @@ class AppRoutes {
           },
           settings: settings,
         );
+
+      case preferencesPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
+            return const PreferencesScreen();
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }

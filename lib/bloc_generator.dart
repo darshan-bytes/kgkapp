@@ -44,6 +44,7 @@ class BlocGenerator {
       BlocProvider<SearchResultNotFoundBloc>(create: (_) => SearchResultNotFoundBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
+      BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
     ];
   }
 }
