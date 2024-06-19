@@ -36,7 +36,6 @@ class AppRoutes {
   static const qrScannerPage = '/qrScannerPage';
   static const searchPage = '/searchPage';
   static const searchResultPage = '/searchResultPage';
-  static const searchResultNotFoundPage = '/searchResultNotFoundPage';
   static const notificationSettingsPage = '/notificationSettingsPage';
   static const cmsWebViewPage = '/cmsWebViewPage';
   static const faqPage = '/faqPage';
@@ -312,14 +311,14 @@ class AppRoutes {
           settings: settings,
         );
 
-      case searchResultNotFoundPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SearchResultNotFoundBloc>(context).add(InitialSearchResultNotFoundEvent(context: context));
-            return const SearchResultNotFoundScreen();
-          },
-          settings: settings,
-        );
+      // case searchResultNotFoundPage:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       BlocProvider.of<SearchResultNotFoundBloc>(context).add(InitialSearchResultNotFoundEvent(context: context));
+      //       return const SearchResultNotFoundScreen();
+      //     },
+      //     settings: settings,
+      //   );
 
       case notificationSettingsPage:
         return MaterialPageRoute(
@@ -389,6 +388,7 @@ enum RoutesData {
   isPageFor,
   searchResultData,
   cmsPageData,
+  isNoDataFound,
 }
 
 enum ScreenIdentifier {

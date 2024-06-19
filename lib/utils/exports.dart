@@ -245,8 +245,6 @@ export 'package:kgk/modules/common_modules/search/view/search_screen.dart';
 export 'package:kgk/modules/common_modules/search/bloc/search_bloc.dart';
 export 'package:kgk/modules/common_modules/search_result/bloc/search_result_bloc.dart';
 export 'package:kgk/modules/common_modules/search_result/view/search_result_screen.dart';
-export 'package:kgk/modules/common_modules/search_result_not_found/view/search_result_not_found_screen.dart';
-export 'package:kgk/modules/common_modules/search_result_not_found/bloc/search_result_not_found_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/model/faq_model.dart';
 export 'package:kgk/widgets/smart_horizontal_item_builder.dart';
 export 'package:kgk/widgets/smart_image_title_column.dart';

@@ -383,5 +383,11 @@
   "find_your_nearest_X_store": "Find your nearest {#} store",
   "store_directory": "Store directory",
   "language": "Language",
-  "currency": "Currency"
+  "currency": "Currency",
+  "newly_launched": "Newly launched",
+  "explore_newly_launched_products": "Explore newly launched products",
+  "explore_now": "Explore now",
+  "explore_our_digital_jewellery_catalog": "Explore Our Digital Jewellery Catalog",
+  "browse_our_digital_jewelry_catalog": "Browse Our Digital Jewelry Catalog: Discover exquisite designs and fine craftsmanship at your fingertips.",
+  "view_now": "View now"
 }

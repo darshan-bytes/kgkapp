@@ -41,7 +41,6 @@ class BlocGenerator {
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
       BlocProvider<SearchResultBloc>(create: (_) => SearchResultBloc()),
-      BlocProvider<SearchResultNotFoundBloc>(create: (_) => SearchResultNotFoundBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),

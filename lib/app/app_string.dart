@@ -467,7 +467,12 @@ class APPStrings {
   static const String findYourNearestXStore = 'find_your_nearest_X_store';
   static const String storeDirectory = 'store_directory';
 
-  // Preferences
   static const String language = 'language';
   static const String currency = 'currency';
+  static const String newlyLaunched = 'newly_launched';
+  static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
+  static const String exploreNow = 'explore_now';
+  static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
+  static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
+  static const String viewNow = 'view_now';
 }

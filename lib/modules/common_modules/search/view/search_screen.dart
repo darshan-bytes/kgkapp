@@ -12,9 +12,10 @@ class SearchScreen extends StatelessWidget {
         isSearchBar: true,
         searchController: searchBloc.searchController,
         onTapSuffixIconWithSearchBar: () {
-          if (searchBloc.searchController.text.isNotEmpty) {
-            context.pushNamed(AppRoutes.searchResultNotFoundPage, arguments: {
+          if (searchBloc.searchController.text.trim().isNotEmpty) {
+            context.pushNamed(AppRoutes.searchResultPage, arguments: {
               RoutesData.searchResultData: searchBloc.searchController.text,
+              RoutesData.isNoDataFound: true,
             });
           }
         },
