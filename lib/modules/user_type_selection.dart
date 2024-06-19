@@ -36,6 +36,6 @@ class UserTypeSelection extends StatelessWidget {
 
   void handleUserTypeSelection(UserType userType, BuildContext context) {
     BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(userType));
-    context.pushNamedAndRemoveUntil(AppRoutes.dashboardPage, (route) => false);
+    context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
   }
 }

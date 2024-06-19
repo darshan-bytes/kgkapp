@@ -9,7 +9,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardBloc dashboardBloc = BlocProvider.of<DashboardBloc>(context);
+    final LandingBloc landingBloc = BlocProvider.of<LandingBloc>(context);
     final TabBarStyle style = AppTheme.of(context).tabBarStyle;
     Widget child = Container(
       decoration: BoxDecoration(
@@ -24,20 +24,20 @@ class SmartBottomNavigationBar extends StatelessWidget {
           ),
         ],
       ),
-      child: BlocBuilder<DashboardBloc, DashboardState>(
-        buildWhen: (previous, current) => current is DashboardChangeTabState || current is DashboardLoadedState,
+      child: BlocBuilder<LandingBloc, LandingState>(
+        buildWhen: (previous, current) => current is LandingChangeTabState || current is LandingLoadedState,
         builder: (context, state) {
           return BottomNavigationBar(
             elevation: 0,
             backgroundColor: style.backgroundColor,
-            currentIndex: dashboardBloc.currentIndex,
+            currentIndex: landingBloc.currentIndex,
             onTap: (int index) {
-              dashboardBloc.add(DashboardChangeTabEvent(index, context: context));
+              landingBloc.add(LandingChangeTabEvent(index, context: context));
             },
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: style.labelStyle,
             unselectedLabelStyle: style.unselectedLabelStyle,
-            items: dashboardBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
+            items: landingBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
               if (model.isProfile) {
                 return BottomNavigationBarItem(
                   icon: _buildProfileIcon(style, false, model.icon),
