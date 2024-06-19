@@ -40,6 +40,7 @@ class AppRoutes {
   static const cmsWebViewPage = '/cmsWebViewPage';
   static const faqPage = '/faqPage';
   static const preferencesPage = '/preferencesPage';
+  static const userTypeSelection = '/userTypeSelection';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -75,7 +76,10 @@ class AppRoutes {
 
       case dashboardPage:
         return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
+          builder: (context) {
+            BlocProvider.of<DashboardBloc>(context).add(DashboardInitialEvent(context: context));
+            return const DashboardScreen();
+          },
           settings: settings,
         );
 
@@ -351,6 +355,11 @@ class AppRoutes {
           settings: settings,
         );
 
+      case userTypeSelection:
+        return MaterialPageRoute(
+          builder: (_) => const UserTypeSelection(),
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }
