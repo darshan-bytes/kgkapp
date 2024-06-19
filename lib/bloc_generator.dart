@@ -45,6 +45,7 @@ class BlocGenerator {
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
+      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
     ];
   }
 }

@@ -802,17 +802,19 @@ class LightModeTheme extends AppTheme {
 
   @override
   SwitchStyle get switchStyle => SwitchStyle(
-      activeTrackColor: colors.primary,
-      inactiveTrackColor: colors.color8C8C8C,
-      thumbColor: colors.white,
-      trackColor: colors.colorD3DAE0,
-      inactiveThumbColor: colors.primary);
+        activeTrackColor: colors.primary,
+        inactiveTrackColor: colors.color8C8C8C,
+        thumbColor: colors.white,
+        trackColor: colors.colorD3DAE0,
+        inactiveThumbColor: colors.primary,
+      );
 
   @override
   CompanyScreenStyle get companyScreenStyle => CompanyScreenStyle(
-      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
-      textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
-      primaryColor: colors.primary);
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+        textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+        primaryColor: colors.primary,
+      );
 
   @override
   FAQStyle get faqStyle => FAQStyle(
@@ -830,6 +832,17 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  MakeInquiryStyle get makeInquiryStyle =>
-      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
+  MakeInquiryStyle get makeInquiryStyle => MakeInquiryStyle(
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        whiteColor: colors.white,
+      );
+
+  @override
+  DashboardStyle get dashboardStyle => DashboardStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        comparedToTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        negativeAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.colorE83535),
+        positiveAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color50B83C),
+      );
 }

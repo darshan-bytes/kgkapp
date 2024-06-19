@@ -159,7 +159,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.dashboard.tr,
           subTitle: APPStrings.listOfDashboard.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.dashboardPage);
+          }),
     ];
 
     profileChildrenList = [
