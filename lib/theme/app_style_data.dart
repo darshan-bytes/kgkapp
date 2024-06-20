@@ -770,6 +770,25 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         appbarTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
         foundItemStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        needHelpStyle: interMediumBoldTextStyle,
+        needHelpTitleStyle: interRegularTextStyle,
+        phoneNumberStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        needHelpColor: colors.colorF7F9FA,
+        shopDiamondsByShapeTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+        newlyLaunchedBackgroundColor: colors.colorF7F9FA,
+        exploreDigitalCatalogBackgroundColor: colors.colorFFF6EE,
+        whiteColor: colors.white,
+      );
+
+  @override
+  SearchResultNotFoundStyle get searchResultNotFoundStyle => SearchResultNotFoundStyle(
+        needHelpStyle: interMediumBoldTextStyle,
+        needHelpTitleStyle: interRegularTextStyle,
+        phoneNumberStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 22.sp),
+        subTitleStyle: interRegularTextStyle,
+        needHelpColor: colors.colorF7F9FA,
+        shopDiamondsByShapeTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
       );
 
   @override

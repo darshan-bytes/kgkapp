@@ -10,7 +10,7 @@ class DiamondFilterScreen extends StatelessWidget {
     final FilterStyle style = AppTheme.of(context).filterStyle;
     final DiamondFilterBloc diamondFilterBloc = BlocProvider.of<DiamondFilterBloc>(context);
     return Scaffold(
-      backgroundColor: style.subFilterBackgroundColor,
+      backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
         isBack: false,
         title: APPStrings.filters.tr,
@@ -27,7 +27,7 @@ class DiamondFilterScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is DiamondFilterDataLoadedState,
         builder: (context, state) {
           return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(width: 134.w, child: _buildFilterList(context, diamondFilterBloc, style)),
               Expanded(
@@ -35,7 +35,7 @@ class DiamondFilterScreen extends StatelessWidget {
                   padding: EdgeInsets.all(16.w),
                   color: style.backgroundColor,
                   child: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-                    buildWhen: (previous, current) => current is DiamondFilterDataSelectedState,
+                    buildWhen: (previous, current) => current is DiamondFilterDataLoadedState || current is DiamondFilterDataSelectedState,
                     builder: (context, state) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

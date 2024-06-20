@@ -10,7 +10,7 @@ class FilterScreen extends StatelessWidget {
     final FilterStyle style = AppTheme.of(context).filterStyle;
     final SortFilterBloc filterBloc = BlocProvider.of<SortFilterBloc>(context);
     return Scaffold(
-      backgroundColor: style.subFilterBackgroundColor,
+      backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
         isBack: false,
         title: APPStrings.filters.tr,
@@ -25,7 +25,7 @@ class FilterScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               flex: 1,

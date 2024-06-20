@@ -359,6 +359,9 @@
   "inquiry_type": "Inquiry Type",
   "select_product": "Select Product",
   "search_result": "Search results",
+  "search_result_not_found_desc": "Try searching another term or adjust your spelling for better results.",
+  "need_help": "Need help?",
+  "reach_out_to_our_customer_service": "Reach out to our customer service",
   "result_found_for": "results found for ",
   "popular_searches": "Popular searches",
   "recent_searches": "Recent searches",
@@ -403,5 +406,11 @@
   "get_log_on_the_account": "Get log on the account",
   "compared_to_X": "Compared to {#}",
   "concept_no_x": "Concept no {#}",
-  "drop_us_a_note": "Drop us a note and we’ll get back to you as quickly as possible."
+  "drop_us_a_note": "Drop us a note and we’ll get back to you as quickly as possible.",
+  "newly_launched": "Newly launched",
+  "explore_newly_launched_products": "Explore newly launched products",
+  "explore_now": "Explore now",
+  "explore_our_digital_jewellery_catalog": "Explore Our Digital Jewellery Catalog",
+  "browse_our_digital_jewelry_catalog": "Browse Our Digital Jewelry Catalog: Discover exquisite designs and fine craftsmanship at your fingertips.",
+  "view_now": "View now"
 }

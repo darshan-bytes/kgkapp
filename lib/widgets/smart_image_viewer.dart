@@ -29,7 +29,7 @@ class SmartImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? child;
-    if (path.isNullOrEmpty) {
+    if (path.isNullOrEmpty || !path.contains('/')) {
       child = Container(
         height: height,
         width: width,

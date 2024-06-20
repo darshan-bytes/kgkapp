@@ -72,7 +72,7 @@ extension StringExtensions on String {
   }
 
   ImageType get imageType {
-    if (RegExp(r'^http').hasMatch(this)) {
+    if (startsWith('http')) {
       return ImageType.network;
     } else if (toLowerCase().endsWith('.svg')) {
       return ImageType.svg;

@@ -7,6 +7,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   final EdgeInsets padding;
   final double itemBetweenSpace;
   final CrossAxisAlignment crossAxisAlignment;
+  final CrossAxisAlignment mainAxisAlignment;
   final String? title;
   final TextStyle? titleStyle;
   final EdgeInsets titleOptionalPadding;
@@ -18,6 +19,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
     this.listPadding = EdgeInsets.zero,
     this.itemBetweenSpace = 16,
     this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = CrossAxisAlignment.start,
     required this.itemCount,
     required this.itemBuilder,
     this.title,
@@ -35,7 +37,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
       color: backgroundColor,
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: crossAxisAlignment,
           children: [
             if (title.isNotNullNorEmpty) ...[
               SmartText(title, style: titleStyle, optionalPadding: titleOptionalPadding),
@@ -46,7 +48,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
               child: Padding(
                 padding: listPadding,
                 child: Row(
-                  crossAxisAlignment: crossAxisAlignment,
+                  crossAxisAlignment: mainAxisAlignment,
                   children: List.generate(itemCount, (index) {
                     return Padding(
                       padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : itemBetweenSpace.w),

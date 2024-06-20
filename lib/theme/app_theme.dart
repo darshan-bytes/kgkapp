@@ -160,6 +160,8 @@ abstract class AppTheme {
 
   SearchResultScreenStyle get searchResultScreenStyle;
 
+  SearchResultNotFoundStyle get searchResultNotFoundStyle;
+
   SupportScreenStyle get supportScreenStyle;
 
   SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
@@ -1435,12 +1437,48 @@ class SearchResultScreenStyle {
   final TextStyle subTitleStyle;
   final TextStyle appbarTextStyle;
   final TextStyle foundItemStyle;
+  final TextStyle needHelpStyle;
+  final TextStyle needHelpTitleStyle;
+  final TextStyle phoneNumberStyle;
+  final Color needHelpColor;
+  final TextStyle shopDiamondsByShapeTitleStyle;
+  final Color newlyLaunchedBackgroundColor;
+  final Color exploreDigitalCatalogBackgroundColor;
+  final Color whiteColor;
 
   SearchResultScreenStyle({
     required this.titleStyle,
     required this.subTitleStyle,
     required this.appbarTextStyle,
     required this.foundItemStyle,
+    required this.needHelpStyle,
+    required this.needHelpTitleStyle,
+    required this.phoneNumberStyle,
+    required this.needHelpColor,
+    required this.shopDiamondsByShapeTitleStyle,
+    required this.newlyLaunchedBackgroundColor,
+    required this.exploreDigitalCatalogBackgroundColor,
+    required this.whiteColor,
+  });
+}
+
+class SearchResultNotFoundStyle {
+  final TextStyle needHelpStyle;
+  final TextStyle needHelpTitleStyle;
+  final TextStyle phoneNumberStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color needHelpColor;
+  final TextStyle shopDiamondsByShapeTitleStyle;
+
+  SearchResultNotFoundStyle({
+    required this.needHelpStyle,
+    required this.needHelpTitleStyle,
+    required this.phoneNumberStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.needHelpColor,
+    required this.shopDiamondsByShapeTitleStyle,
   });
 }
 

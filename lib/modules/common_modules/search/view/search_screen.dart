@@ -10,6 +10,15 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         isSearchBar: true,
+        searchController: searchBloc.searchController,
+        onTapSuffixIconWithSearchBar: () {
+          if (searchBloc.searchController.text.trim().isNotEmpty) {
+            context.pushNamed(AppRoutes.searchResultPage, arguments: {
+              RoutesData.searchResultData: searchBloc.searchController.text,
+              RoutesData.isNoDataFound: true,
+            });
+          }
+        },
       ),
       body: _getBody(searchBloc, style: style),
       bottomNavigationBar: _buildSearchByCategory(searchBloc, style),

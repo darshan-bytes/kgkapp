@@ -446,6 +446,9 @@ class APPStrings {
   static const String recentSearches = 'recent_searches';
   static const String searchResult = 'search_result';
   static const String resultFoundFor = 'result_found_for';
+  static const String searchResultNotFoundDesc = 'search_result_not_found_desc';
+  static const String needHelp = 'need_help';
+  static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
   static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
   static const String changeNotificationSettings = 'change_notification_settings';
   static const String adminSection = 'admin_section';
@@ -484,7 +487,6 @@ class APPStrings {
   static const String findYourNearestXStore = 'find_your_nearest_X_store';
   static const String storeDirectory = 'store_directory';
 
-  // Preferences
   static const String language = 'language';
   static const String currency = 'currency';
 
@@ -496,4 +498,10 @@ class APPStrings {
 
   //Concept
   static const String conceptNoX = 'concept_no_x';
+  static const String newlyLaunched = 'newly_launched';
+  static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
+  static const String exploreNow = 'explore_now';
+  static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
+  static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
+  static const String viewNow = 'view_now';
 }

@@ -70,6 +70,7 @@ class AppImages {
   static const String icMail = 'assets/images/ic_mail.svg';
   static const String icArrowRight = 'assets/images/ic_arrow_right.svg';
   static const String icArrowLeft = 'assets/images/ic_arrow_left.svg';
+  static const String icRight = 'assets/images/ic_right.svg';
 
   // diamond listing
   static const String icGrid = 'assets/images/ic_grid.svg';

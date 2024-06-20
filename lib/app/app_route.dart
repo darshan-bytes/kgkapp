@@ -418,6 +418,7 @@ enum RoutesData {
   isPageFor,
   searchResultData,
   cmsPageData,
+  isNoDataFound,
 }
 
 enum ScreenIdentifier {

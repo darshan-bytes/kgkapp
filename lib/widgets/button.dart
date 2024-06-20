@@ -17,6 +17,7 @@ class SmartButton extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final String? prefixImage;
+  final String? suffixImage;
   final Color? activeImageColor;
   final Color? disableImageColor;
   final double? imageSize;
@@ -40,6 +41,7 @@ class SmartButton extends StatelessWidget {
     this.margin,
     this.disableTitleStyle,
     this.prefixImage,
+    this.suffixImage,
     this.activeImageColor,
     this.disableImageColor,
     this.imageSize,
@@ -78,27 +80,38 @@ class SmartButton extends StatelessWidget {
         height: height ?? 48.w,
         width: width ?? double.infinity,
         padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-        child: prefixImage.isNotNullNorEmpty
+        child: prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty
             ? Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SmartImage(
-                      path: prefixImage!,
-                      height: imageSize ?? 24.w,
-                      width: imageSize ?? 24.w,
-                      color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
+                    if (prefixImage.isNotNullNorEmpty) ...[
+                      SmartImage(
+                        path: prefixImage!,
+                        height: imageSize ?? 24.w,
+                        width: imageSize ?? 24.w,
+                        color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
+                      ),
+                      SizedBox(width: 8.w),
+                    ],
+                    SmartText(
                       title,
                       style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
                     ),
+                    if (suffixImage.isNotNullNorEmpty) ...[
+                      SizedBox(width: 8.w),
+                      SmartImage(
+                        path: suffixImage!,
+                        height: imageSize ?? 24.w,
+                        width: imageSize ?? 24.w,
+                        color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
+                      ),
+                    ]
                   ],
                 ),
               )
             : Center(
-                child: Text(
+                child: SmartText(
                   title,
                   textAlign: TextAlign.center,
                   style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),

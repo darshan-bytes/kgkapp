@@ -26,6 +26,8 @@ class SmartImageTitleColumn extends StatelessWidget {
   final BorderRadiusGeometry? imageBorderRadius;
   final Color? imageColor;
   final BoxBorder? imageBorder;
+  final TextAlign titleTextAlign;
+  final TextAlign subTitleTextAlign;
 
   const SmartImageTitleColumn({
     super.key,
@@ -54,6 +56,8 @@ class SmartImageTitleColumn extends StatelessWidget {
     this.imageColor,
     this.imageBorder,
     this.subTitleTopSpacing,
+    this.titleTextAlign = TextAlign.center,
+    this.subTitleTextAlign = TextAlign.center,
   });
 
   @override
@@ -81,6 +85,7 @@ class SmartImageTitleColumn extends StatelessWidget {
               style: style.titleStyle.merge(titleStyle),
               maxLines: titleMaxLines ?? 2,
               overflow: TextOverflow.ellipsis,
+              textAlign: titleTextAlign,
             ),
             if (subTitle.isNotNullNorEmpty) ...[
               SizedBox(height: subTitleTopSpacing ?? 8.h),
@@ -89,6 +94,7 @@ class SmartImageTitleColumn extends StatelessWidget {
                 style: style.subTitleStyle.merge(subTitleStyle),
                 maxLines: subTitleMaxLines ?? 2,
                 overflow: TextOverflow.ellipsis,
+                textAlign: subTitleTextAlign,
               ),
             ],
           ],

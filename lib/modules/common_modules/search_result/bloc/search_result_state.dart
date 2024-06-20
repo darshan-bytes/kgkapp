@@ -9,8 +9,8 @@ sealed class SearchResultState extends Equatable {
 
 final class SearchResultInitialState extends SearchResultState {}
 
+final class SearchResultLoadedState extends SearchResultState {}
+
 final class SearchResultReloadState extends SearchResultState {}
 
 final class SearchResultChangeListingTypeState extends SearchResultState {}
-
-final class SearchResultProductChangePageNumberState extends SearchResultState {}

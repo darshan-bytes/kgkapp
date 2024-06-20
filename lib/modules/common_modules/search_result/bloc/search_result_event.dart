@@ -29,12 +29,3 @@ final class SearchResultChangeListingTypeEvent extends SearchResultEvent {
   @override
   List<Object> get props => [];
 }
-
-final class SearchResultProductChangePageNumberEvent extends SearchResultEvent {
-  final String pageNumber;
-
-  const SearchResultProductChangePageNumberEvent(this.pageNumber);
-
-  @override
-  List<Object> get props => [pageNumber];
-}

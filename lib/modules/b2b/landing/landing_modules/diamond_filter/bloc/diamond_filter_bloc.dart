@@ -179,8 +179,11 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
 
   void _onLoadDiamondFilterDataEvent(LoadDiamondFilterDataEvent event, Emitter<DiamondFilterState> emit) {
     secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData ?? [];
+    selectedFilterData = filterData.first;
+
     searchController.addListener(searchChange);
     emit(DiamondFilterDataLoadedState(filterData));
+    emit(DiamondFilterDataSelectedState(selectedFilterData));
   }
 
   void _onSelectDiamondFilterDataEvent(SelectDiamondFilterDataEvent event, Emitter<DiamondFilterState> emit) {
