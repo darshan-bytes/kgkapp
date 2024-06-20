@@ -467,5 +467,8 @@
   "approvedOn": "Approved on",
   "ordered_by": "Ordered by",
   "no_auctions_found": "No auctions found",
-  "no_data_found": "No data found"
+  "no_data_found": "No data found",
+  "concepts": "Concepts",
+  "search_concept": "Search concept",
+  "no_concept_found": "No concept found"
 }

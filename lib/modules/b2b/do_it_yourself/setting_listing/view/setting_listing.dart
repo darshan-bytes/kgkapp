@@ -14,7 +14,7 @@ class SettingListingScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: settingListingBloc.settingListingAppbarTitle,
-              onFilter: () {},
+              onSearch: () {},
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
@@ -27,13 +27,6 @@ class SettingListingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SmartPagination(
-              pageNumbers: settingListingBloc.pageNumbers,
-              currentPage: settingListingBloc.selectedPageNumber,
-              onPageChanged: (int index, String newValue) {
-                settingListingBloc.add(SettingProductChangePageNumberEvent(newValue));
-              },
-            ),
             FilterBottomActionBar(
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(

@@ -8,7 +8,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? appBarHeight;
   final VoidCallback? onBack;
   final VoidCallback? onScan;
-  final VoidCallback? onFilter;
+  final VoidCallback? onSearch;
   final VoidCallback? onFavorite;
   final VoidCallback? onNotification;
   final Widget? child;
@@ -28,7 +28,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingImage,
     this.actions,
     this.backgroundColor,
-    this.onFilter,
+    this.onSearch,
     this.onScan,
     this.onFavorite,
     this.titleStyle,
@@ -155,7 +155,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _buildActions() {
     final List<Widget> actionsList = [];
     if (onScan != null) actionsList.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24));
-    if (onFilter != null) actionsList.add(_buildIconButton(onFilter!, AppImages.icSearch, size: 24));
+    if (onSearch != null) actionsList.add(_buildIconButton(onSearch!, AppImages.icSearch, size: 24));
     if (onFavorite != null) actionsList.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24));
     if (onNotification != null) actionsList.add(_buildIconButton(onNotification!, AppImages.icNotification, size: 24));
     if (actions != null) actionsList.add(SizedBox(width: 17.w));

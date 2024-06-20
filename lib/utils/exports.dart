@@ -214,7 +214,6 @@ export 'package:kgk/widgets/smart_dropdown.dart';
 export 'package:kgk/widgets/smart_dropdown_form_field.dart';
 export 'package:kgk/widgets/smart_grid_view.dart';
 export 'package:kgk/widgets/smart_image_viewer.dart';
-export 'package:kgk/widgets/smart_pagination.dart';
 export 'package:kgk/widgets/smart_rating_bar.dart';
 export 'package:kgk/widgets/smart_switch.dart';
 export 'package:kgk/widgets/smart_text.dart';
@@ -273,3 +272,5 @@ export 'package:kgk/modules/common_modules/b2b_listing_module/view/b2b_listing_i
 export 'package:kgk/modules/common_modules/b2b_listing_module/listing_field/b2b_listing_field_factory.dart';
 export 'package:kgk/widgets/no_data_found_widget.dart';
 export 'package:kgk/app/date_formatter.dart';
+export 'package:kgk/modules/b2b/concept_list/bloc/concept_list_bloc.dart';
+export 'package:kgk/modules/b2b/concept_list/view/concept_list_screen.dart';

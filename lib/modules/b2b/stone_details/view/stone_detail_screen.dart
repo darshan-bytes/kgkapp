@@ -12,7 +12,7 @@ class StoneDetailScreen extends StatelessWidget {
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
-        onFilter: () {},
+        onSearch: () {},
       ),
       body: SmartSingleChildScrollView(
         child: BlocBuilder<StoneDetailBloc, StoneDetailState>(
