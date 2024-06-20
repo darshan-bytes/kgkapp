@@ -94,7 +94,7 @@ class SmartButton extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                     ],
-                    Text(
+                    SmartText(
                       title,
                       style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
                     ),
@@ -111,7 +111,7 @@ class SmartButton extends StatelessWidget {
                 ),
               )
             : Center(
-                child: Text(
+                child: SmartText(
                   title,
                   textAlign: TextAlign.center,
                   style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),

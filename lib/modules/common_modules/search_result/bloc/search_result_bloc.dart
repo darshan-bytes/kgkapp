@@ -18,7 +18,6 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     on<InitialSearchResultEvent>(_onInitialSearchResultEvent);
     on<GetSearchResultProductListEvent>(_onGetSearchResultProductListEvent);
     on<SearchResultChangeListingTypeEvent>(_onChangeListingTypeEvent);
-    //https://i.ibb.co/nQVVDJM/image-255.png
   }
 
   void getRouteData(BuildContext context) async {

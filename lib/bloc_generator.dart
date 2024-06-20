@@ -15,7 +15,7 @@ class BlocGenerator {
       BlocProvider<SupportBloc>(create: (_) => SupportBloc()),
       BlocProvider<CompanyBloc>(create: (_) => CompanyBloc()),
       BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
-      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
+      BlocProvider<LandingBloc>(create: (_) => LandingBloc()),
       BlocProvider<ForgotPasswordBloc>(create: (_) => ForgotPasswordBloc()),
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
@@ -34,7 +34,7 @@ class BlocGenerator {
       BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
       BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
-      BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()),
+      BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
       BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
@@ -44,6 +44,9 @@ class BlocGenerator {
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
+      BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
+      BlocProvider<ContactUsBloc>(create: (_) => ContactUsBloc()),
+      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
     ];
   }
 }

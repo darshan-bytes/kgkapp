@@ -152,6 +152,8 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  MakeInquiryStyle get makeInquiryStyle;
+
   QrScannerStyle get qrScannerStyle;
 
   SearchScreenStyle get searchScreenStyle;
@@ -171,6 +173,12 @@ abstract class AppTheme {
   FAQStyle get faqStyle;
 
   PreferencesStyle get preferencesStyle;
+
+  DashboardStyle get dashboardStyle;
+
+  ContactUsStyle get contactUsStyle;
+
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1374,6 +1382,16 @@ class LogoutPopupStyle {
   });
 }
 
+class MakeInquiryStyle {
+  final TextStyle titleStyle;
+  final Color whiteColor;
+
+  MakeInquiryStyle({
+    required this.titleStyle,
+    required this.whiteColor,
+  });
+}
+
 class SearchScreenStyle {
   final TextStyle titleStyle;
   final TextStyle searchItemStyle;
@@ -1523,4 +1541,48 @@ class PreferencesStyle {
   PreferencesStyle({
     required this.titleStyle,
   });
+}
+
+class ContactUsStyle {
+  final TextStyle headerTitleStyle;
+  final TextStyle messageStyle;
+  final TextStyle titleStyle;
+  final TextStyle subHeaderTitleStyle;
+  final TextStyle subMessageStyle;
+  final TextStyle subMessageDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  ContactUsStyle({
+    required this.headerTitleStyle,
+    required this.messageStyle,
+    required this.titleStyle,
+    required this.subHeaderTitleStyle,
+    required this.subMessageStyle,
+    required this.subMessageDescriptionStyle,
+    required this.contactDetailsStyle,
+  });
+}
+
+class DashboardStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle positiveAmountStyle;
+  final TextStyle negativeAmountStyle;
+  final TextStyle comparedToTextStyle;
+
+  DashboardStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.positiveAmountStyle,
+    required this.negativeAmountStyle,
+    required this.comparedToTextStyle,
+  });
+}
+
+class ConceptInfoPopupScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+  final Color iconColor;
+
+  ConceptInfoPopupScreenStyle({required this.titleStyle, required this.detailsTextStyle, required this.iconColor});
 }

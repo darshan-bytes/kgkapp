@@ -434,6 +434,10 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String fullName = 'full_name';
+  static const String comment = 'comment';
+  static const String inquiryType = 'inquiry_type';
+  static const String selectProduct = 'select_product';
 
   //Make an inquiry
   static const String makeAnInquiry = 'make_an_inquiry';
@@ -447,6 +451,22 @@ class APPStrings {
   static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
   static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
   static const String changeNotificationSettings = 'change_notification_settings';
+  static const String adminSection = 'admin_section';
+  static const String orderManagement = 'order_management';
+  static const String calendar = 'calendar';
+  static const String meetingsTasksAllInOnePlace = 'meetings_tasks_all_in_one_place';
+  static const String messages = 'messages';
+  static const String conversationsYouAreHaving = 'conversations_you_are_having';
+  static const String masters = 'masters';
+  static const String masterDataOfUserAndNewsLetter = 'master_data_of_user_and_newsletter';
+  static const String dashboard = 'dashboard';
+  static const String listOfDashboard = 'list_of_dashboard';
+  static const String watchlist = 'watchlist';
+  static const String listOfProductsAddedToWatchlist = 'list_of_products_added_to_watchlist';
+  static const String exhibition = 'exhibition';
+  static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
+  static const String activityLog = 'activity_log';
+  static const String getLogOnTheAccount = 'get_log_on_the_account';
 
   //Support screen
   static const String repliesWithin24Hours = 'replies_within_24_hours';
@@ -469,6 +489,15 @@ class APPStrings {
 
   static const String language = 'language';
   static const String currency = 'currency';
+
+  //Compared to
+  static const String comparedToX = 'compared_to_X';
+
+  //Contact us
+  static const String dropUsANote = 'drop_us_a_note';
+
+  //Concept
+  static const String conceptNoX = 'concept_no_x';
   static const String newlyLaunched = 'newly_launched';
   static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
   static const String exploreNow = 'explore_now';

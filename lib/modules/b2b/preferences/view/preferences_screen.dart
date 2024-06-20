@@ -29,7 +29,7 @@ class PreferencesScreen extends StatelessWidget {
                 builder: (context, state) {
                   return SmartDropDown<CountryModel>(
                     selectedItem: bloc.selectedCountry,
-                    items: bloc.countryList.map((e) => SmartDropDownItem<CountryModel>(value: e, title: e.name ?? '')).toList(),
+                    items: bloc.countryList.map((e) => SmartDropDownItem<CountryModel>(value: e, title: e.name)).toList(),
                     hintText: APPStrings.country.tr,
                     onChanged: (newValue) {
                       if (newValue == null) return;
@@ -53,7 +53,7 @@ class PreferencesScreen extends StatelessWidget {
                 builder: (context, state) {
                   return SmartDropDown<LanguageModel>(
                     selectedItem: bloc.selectedLanguage,
-                    items: bloc.languageList.map((e) => SmartDropDownItem<LanguageModel>(value: e, title: e.name ?? '')).toList(),
+                    items: bloc.languageList.map((e) => SmartDropDownItem<LanguageModel>(value: e, title: e.name)).toList(),
                     hintText: APPStrings.language.tr,
                     onChanged: (newValue) {
                       if (newValue == null) return;
@@ -77,7 +77,7 @@ class PreferencesScreen extends StatelessWidget {
                 builder: (context, state) {
                   return SmartDropDown<CurrencyModel>(
                     selectedItem: bloc.selectedCurrency,
-                    items: bloc.currencyList.map((e) => SmartDropDownItem<CurrencyModel>(value: e, title: e.name ?? '')).toList(),
+                    items: bloc.currencyList.map((e) => SmartDropDownItem<CurrencyModel>(value: e, title: e.name)).toList(),
                     hintText: APPStrings.currency.tr,
                     onChanged: (newValue) {
                       if (newValue == null) return;

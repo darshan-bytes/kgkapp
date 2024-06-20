@@ -847,4 +847,35 @@ class LightModeTheme extends AppTheme {
   PreferencesStyle get preferencesStyle => PreferencesStyle(
         titleStyle: interRegularTextStyle,
       );
+
+  @override
+  MakeInquiryStyle get makeInquiryStyle =>
+      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
+
+  @override
+  ContactUsStyle get contactUsStyle => ContactUsStyle(
+        headerTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        messageStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        subHeaderTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subMessageStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        subMessageDescriptionStyle: interRegularTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+        contactDetailsStyle: interMediumBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+      );
+
+  @override
+  DashboardStyle get dashboardStyle => DashboardStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        comparedToTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        negativeAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.colorE83535),
+        positiveAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color50B83C),
+      );
+
+  @override
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle => ConceptInfoPopupScreenStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        iconColor: colors.color303538,
+      );
 }
