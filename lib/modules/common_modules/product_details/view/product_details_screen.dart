@@ -281,7 +281,9 @@ class ProductDetailsScreen extends StatelessWidget {
             email: 'enquiry.diaind@kgkmail.com',
             phone: '+91 - 1234567830',
           ),
-          SizedBox(height: 32.h),
+          SizedBox(height: 24.h),
+          const Divider(),
+          SizedBox(height: 24.h),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             const ProductReviewsDetails(),
             SizedBox(height: 32.h),

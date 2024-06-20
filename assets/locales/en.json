@@ -299,7 +299,7 @@
   "in_progress": "In Progress",
   "active": "Active",
   "remove_lot": "Remove lot",
-  "track_product": "Track product",
+  "track_order": "Track order",
   "view_timeline": "View timeline",
   "cancel_order": "Cancel order",
   "created_by": "Created by",
@@ -345,7 +345,7 @@
   "lab_created_diamonds": "Lab created diamonds",
   "metals": "Metals",
   "ring_sizer": "Ring sizer",
-  "order_timeline": "Order timeline",
+  "order_timeline": "Order Timeline",
   "today": "Today",
   "yesterday": "Yesterday",
   "logout_ask": "Logout?",
@@ -412,5 +412,7 @@
   "explore_now": "Explore now",
   "explore_our_digital_jewellery_catalog": "Explore Our Digital Jewellery Catalog",
   "browse_our_digital_jewelry_catalog": "Browse Our Digital Jewelry Catalog: Discover exquisite designs and fine craftsmanship at your fingertips.",
-  "view_now": "View now"
+  "view_now": "View now",
+  "no_auctions_found": "No auctions found",
+  "no_data_found": "No data found"
 }
