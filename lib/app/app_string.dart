@@ -490,4 +490,7 @@ class APPStrings {
 
   //Compared to
   static const String comparedToX = 'compared_to_X';
+
+  //Contact us
+  static const String dropUsANote = 'drop_us_a_note';
 }

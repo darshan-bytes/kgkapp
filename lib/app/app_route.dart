@@ -42,6 +42,7 @@ class AppRoutes {
   static const faqPage = '/faqPage';
   static const preferencesPage = '/preferencesPage';
   static const userTypeSelection = '/userTypeSelection';
+  static const contactUsPage = '/contactUsPage';
   static const dashboardPage = '/dashboardPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -369,6 +370,15 @@ class AppRoutes {
       case userTypeSelection:
         return MaterialPageRoute(
           builder: (_) => const UserTypeSelection(),
+          settings: settings,
+        );
+
+      case contactUsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
+            return const ContactUsScreen();
+          },
           settings: settings,
         );
 

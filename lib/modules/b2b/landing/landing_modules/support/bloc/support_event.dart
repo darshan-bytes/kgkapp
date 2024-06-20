@@ -5,6 +5,10 @@ sealed class SupportEvent extends Equatable {
 }
 
 final class SupportInitialEvent extends SupportEvent {
+  final BuildContext context;
+
+  const SupportInitialEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }

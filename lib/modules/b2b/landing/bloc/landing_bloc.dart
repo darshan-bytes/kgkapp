@@ -155,7 +155,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
             blocList[currentIndex].add(InitialMyBagEvent());
             break;
           case supportIndex:
-            blocList[currentIndex].add(SupportInitialEvent());
+            blocList[currentIndex].add(SupportInitialEvent(context: event.context));
             break;
           case profileIndex:
             blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
