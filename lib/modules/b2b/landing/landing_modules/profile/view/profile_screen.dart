@@ -47,7 +47,11 @@ class ProfileScreen extends StatelessWidget {
                           SizedBox(height: 1.h),
                           SmartText('+1 (323) 654 - 8542', style: style.subTextStyle),
                           SizedBox(height: 1.h),
-                          SmartText('someone@example.com', style: style.subTextStyle)
+                          InkWell(
+                              onTap: () {
+                                context.pushNamed(AppRoutes.pddListingPage);
+                              },
+                              child: SmartText('someone@example.com', style: style.subTextStyle))
                         ],
                       ),
                     ),

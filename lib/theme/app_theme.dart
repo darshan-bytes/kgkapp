@@ -180,6 +180,8 @@ abstract class AppTheme {
 
   ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 
+  PddListingItemStyle get pddListingItemStyle;
+
   NoDataFoundStyle get noDataFoundStyle;
 }
 
@@ -1604,5 +1606,13 @@ class NoDataFoundStyle {
   NoDataFoundStyle({
     required this.titleStyle,
     required this.subTitleStyle,
+  });
+}
+
+class PddListingItemStyle {
+  final Color borderColor;
+
+  PddListingItemStyle({
+    required this.borderColor,
   });
 }

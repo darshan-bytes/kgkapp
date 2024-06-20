@@ -47,6 +47,7 @@ class BlocGenerator {
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
       BlocProvider<ContactUsBloc>(create: (_) => ContactUsBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
+      BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
     ];
   }
 }

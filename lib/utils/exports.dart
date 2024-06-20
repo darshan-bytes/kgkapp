@@ -144,6 +144,8 @@ export 'package:kgk/modules/b2b/contact_us/view/contact_us_screen.dart';
 export 'package:kgk/modules/b2b/make_inquiry/bloc/make_inquiry_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/view/pdd_listing_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/bloc/pdd_listing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/profile/model/profile_list_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';
@@ -266,5 +268,8 @@ export 'package:kgk/modules/b2b/dashboard/model/dashboard_date_range_data_model.
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/model/dashboard_statistics_data_model.dart';
 export 'package:kgk/modules/b2b/concept/view/concept_info_popup_screen.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/model/b2b_listing_data_model.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/view/b2b_listing_item.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/listing_field/b2b_listing_field_factory.dart';
 export 'package:kgk/widgets/no_data_found_widget.dart';
 export 'package:kgk/app/date_formatter.dart';
