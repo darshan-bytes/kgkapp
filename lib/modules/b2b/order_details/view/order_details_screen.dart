@@ -190,30 +190,12 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(OrderDetailBloc orderDetailBloc) {
     return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          BlocBuilder<OrdersBloc, OrdersState>(
-            buildWhen: (previous, current) => current is ChangeOrderDetailPageNumberState,
-            builder: (context, state) {
-              return SmartPagination(
-                pageNumbers: orderDetailBloc.pageNumbers,
-                currentPage: orderDetailBloc.selectedPageNumber,
-                onPageChanged: (int index, String newValue) {
-                  orderDetailBloc.add(ChangeOrderDetailPageNumberEvent(newValue));
-                },
-              );
-            },
-          ),
-          SelectionButton(
-            borderRadius: BorderRadius.zero,
-            isSelected: false,
-            onTap: () {},
-            image: AppImages.icFilter,
-            title: APPStrings.filter.tr,
-          ),
-        ],
+      child: SelectionButton(
+        borderRadius: BorderRadius.zero,
+        isSelected: false,
+        onTap: () {},
+        image: AppImages.icFilter,
+        title: APPStrings.filter.tr,
       ),
     );
   }
@@ -312,7 +294,7 @@ class OrderDetailScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildPopupOption(context, text: APPStrings.trackProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                  _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                     context.pop();
                     Utils.showSmartModalBottomSheet(
                       context: context,

@@ -379,7 +379,7 @@ class APPStrings {
   static const String shippingAddress = 'shipping_address';
 
   //order details popup
-  static const String trackProduct = 'track_product';
+  static const String trackOrder = 'track_order';
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
@@ -504,4 +504,7 @@ class APPStrings {
   static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
   static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
   static const String viewNow = 'view_now';
+
+  static const String noAuctionsFound = 'no_auctions_found';
+  static const String noDataFound = 'no_data_found';
 }

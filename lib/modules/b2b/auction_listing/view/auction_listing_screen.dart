@@ -45,19 +45,23 @@ class AuctionListingScreen extends StatelessWidget {
     return BlocBuilder<AuctionListingBloc, AuctionListingState>(
       buildWhen: (previous, current) => current is FilterAuctionsState || current is AuctionListingReloadState,
       builder: (context, state) {
-        return ListView.separated(
-          itemCount: auctionListingBloc.filteredAuctionList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            AuctionListModel auctionListModel = auctionListingBloc.filteredAuctionList[index];
-            return AuctionListItem(
-              onTap: () => context.pushNamed(AppRoutes.auctionPage),
-              auctionListModel: auctionListModel,
-              stoneTypeImage: AppImages.icRingThin,
-            );
-          },
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
-        );
+        if (auctionListingBloc.filteredAuctionList.isEmpty) {
+          return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
+        } else {
+          return ListView.separated(
+            itemCount: auctionListingBloc.filteredAuctionList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              AuctionListModel auctionListModel = auctionListingBloc.filteredAuctionList[index];
+              return AuctionListItem(
+                onTap: () => context.pushNamed(AppRoutes.auctionPage),
+                auctionListModel: auctionListModel,
+                stoneTypeImage: AppImages.icRingThin,
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          );
+        }
       },
     );
   }

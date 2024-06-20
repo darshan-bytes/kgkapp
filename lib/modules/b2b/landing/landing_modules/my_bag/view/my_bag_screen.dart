@@ -179,11 +179,28 @@ class MyBagScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SmartText(
-            APPStrings.productX.tr.interpolate([bloc.myBagProductList.length.toString()]),
-            style: style.productsTitleStyle,
+          Row(
+            children: [
+              Expanded(
+                child: SmartText(
+                  APPStrings.productX.tr.interpolate([bloc.myBagProductList.length.toString()]),
+                  style: style.productsTitleStyle,
+                ),
+              ),
+              SelectionButton(
+                width: 48.w,
+                imageHeight: 24.5.w,
+                imageWidth: 24.5.w,
+                isSelected: true,
+                selectedButtonColor: style.backgroundColor,
+                selectedButtonBorderColor: style.menuBorderColor,
+                selectedButtonIconColor: style.menuIconColor,
+                image: AppImages.icMenu,
+                onTap: () {},
+              ),
+            ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 16.h),
           Row(
             children: [
               Expanded(

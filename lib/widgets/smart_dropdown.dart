@@ -201,7 +201,10 @@ class SmartDropDownView<T> extends StatelessWidget {
                 child: child,
               ),
             )
-          : child,
+          : Padding(
+              padding: EdgeInsets.only(right: 10.w),
+              child: child,
+            ),
     );
   }
 }
