@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/edit_shipping_addres/view/edit_shipping_address_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';

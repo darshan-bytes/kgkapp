@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/edit_shipping_addres/bloc/edit_shipping_address_bloc.dart';
 
 class EditShippingAddressScreen extends StatelessWidget {
   const EditShippingAddressScreen({super.key});
@@ -181,7 +180,7 @@ Widget _buildFirstNameField(EditShippingAddressBloc bloc) {
       buildWhen: (previous, current) => current is EditShippingAddressChangeAddressSameState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 22.h),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 22.h),
           child: SmartCheckbox(
             height: 24.w,
             width: 24.w,
