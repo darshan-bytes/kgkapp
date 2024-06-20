@@ -490,4 +490,7 @@ class APPStrings {
 
   //Compared to
   static const String comparedToX = 'compared_to_X';
+
+  //Concept
+  static const String conceptNoX = 'concept_no_x';
 }
