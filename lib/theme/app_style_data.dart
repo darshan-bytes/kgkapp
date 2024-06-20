@@ -852,4 +852,11 @@ class LightModeTheme extends AppTheme {
         negativeAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.colorE83535),
         positiveAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color50B83C),
       );
+
+  @override
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle => ConceptInfoPopupScreenStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        iconColor: colors.color303538,
+      );
 }

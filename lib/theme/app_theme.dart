@@ -175,6 +175,8 @@ abstract class AppTheme {
   DashboardStyle get dashboardStyle;
 
   ContactUsStyle get contactUsStyle;
+
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1537,4 +1539,12 @@ class DashboardStyle {
     required this.negativeAmountStyle,
     required this.comparedToTextStyle,
   });
+}
+
+class ConceptInfoPopupScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+  final Color iconColor;
+
+  ConceptInfoPopupScreenStyle({required this.titleStyle, required this.detailsTextStyle, required this.iconColor});
 }

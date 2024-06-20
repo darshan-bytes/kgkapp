@@ -24,6 +24,30 @@ class CategoriesScreen extends StatelessWidget {
                     context.pushNamed(AppRoutes.faqPage);
                   },
                   child: const SmartText('FAQ')),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => const ConceptInfoPopupScreen(
+                      imageList: [
+                        "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
+                        "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
+                        "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
+                        "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
+                        "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
+                        "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
+                      ],
+                      conceptNo: '14567',
+                      conceptDesc:
+                          'A jewellery collection inspired by the moon\'s allure. Rings, necklaces, and earrings that capture its luminous beauty.',
+                    ),
+                  );
+                },
+                child: const SmartText('Concept info popup'),
+              ),
             ],
           ),
         ),

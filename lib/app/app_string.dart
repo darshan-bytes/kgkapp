@@ -493,4 +493,7 @@ class APPStrings {
 
   //Contact us
   static const String dropUsANote = 'drop_us_a_note';
+
+  //Concept
+  static const String conceptNoX = 'concept_no_x';
 }
