@@ -42,6 +42,7 @@ class AppRoutes {
   static const faqPage = '/faqPage';
   static const preferencesPage = '/preferencesPage';
   static const userTypeSelection = '/userTypeSelection';
+  static const dashboardPage = '/dashboardPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -368,6 +369,15 @@ class AppRoutes {
       case userTypeSelection:
         return MaterialPageRoute(
           builder: (_) => const UserTypeSelection(),
+          settings: settings,
+        );
+
+      case dashboardPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
+            return const DashboardScreen();
+          },
           settings: settings,
         );
       default:

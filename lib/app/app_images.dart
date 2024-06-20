@@ -140,4 +140,6 @@ class AppImages {
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
+  static const String icUp = 'assets/images/ic_up.svg';
+  static const String icDown = 'assets/images/ic_down.svg';
 }

@@ -171,6 +171,8 @@ abstract class AppTheme {
   FAQStyle get faqStyle;
 
   PreferencesStyle get preferencesStyle;
+
+  DashboardStyle get dashboardStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1496,5 +1498,21 @@ class PreferencesStyle {
 
   PreferencesStyle({
     required this.titleStyle,
+  });
+}
+
+class DashboardStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle positiveAmountStyle;
+  final TextStyle negativeAmountStyle;
+  final TextStyle comparedToTextStyle;
+
+  DashboardStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.positiveAmountStyle,
+    required this.negativeAmountStyle,
+    required this.comparedToTextStyle,
   });
 }
