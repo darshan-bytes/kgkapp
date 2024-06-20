@@ -33,6 +33,7 @@ class B2BListingItem extends StatelessWidget {
   final B2BCustomListingDataModel listingItemModel;
   final B2BListingType type;
   final Function()? onTap;
+  final Function()? onTapMenuButton;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final double? gridSpacing;
@@ -45,6 +46,7 @@ class B2BListingItem extends StatelessWidget {
     required this.listingItemModel,
     required this.type,
     this.onTap,
+    this.onTapMenuButton,
     this.padding,
     this.margin = EdgeInsets.zero,
     this.gridSpacing,
@@ -59,21 +61,36 @@ class B2BListingItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: padding ?? EdgeInsets.all(16.0.w),
-        margin: margin,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.0.r),
-          border: Border.all(color: style.borderColor),
-        ),
-        child: SmartGridView(
-          items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel)
-              .map((field) => _buildDetailItem(field, context, style))
-              .toList(),
-          columns: columns,
-          spacing: 0.0.w,
-          runSpacing: gridRunSpacing ?? 16.0.h,
-        ),
+      child: Stack(
+        children: [
+          Container(
+            padding: padding ?? EdgeInsets.all(16.0.w),
+            margin: margin,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0.r),
+              border: Border.all(color: style.borderColor),
+            ),
+            child: SmartGridView(
+              items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel)
+                  .map((field) => _buildDetailItem(field, context, style))
+                  .toList(),
+              columns: columns,
+              spacing: 0.0.w,
+              runSpacing: gridRunSpacing ?? 16.0.h,
+            ),
+          ),
+          if (onTapMenuButton != null)
+            Positioned(
+              top: 14.h,
+              right: 14.w,
+              child: SmartImage(
+                path: AppImages.icMoreHorizontal,
+                onTap: onTapMenuButton,
+                padding: EdgeInsets.all(4.w),
+                inkwellBorderRadius: BorderRadius.circular(4.0.r),
+              ),
+            ),
+        ],
       ),
     );
   }

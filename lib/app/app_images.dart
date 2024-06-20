@@ -26,6 +26,8 @@ class AppImages {
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
   static const String icSplashLogo = 'assets/images/ic_splash_logo.png';
+  static const String icCompanyBottomNavbar = 'assets/images/ic_company_bottom_navbar.svg';
+  static const String icCompanyActive = 'assets/images/ic_company_active.svg';
 
   // appbar icon assets
   static const String icBack = 'assets/images/ic_back.svg';
@@ -68,6 +70,7 @@ class AppImages {
   static const String icMail = 'assets/images/ic_mail.svg';
   static const String icArrowRight = 'assets/images/ic_arrow_right.svg';
   static const String icArrowLeft = 'assets/images/ic_arrow_left.svg';
+  static const String icRight = 'assets/images/ic_right.svg';
 
   // diamond listing
   static const String icGrid = 'assets/images/ic_grid.svg';
@@ -122,11 +125,22 @@ class AppImages {
   static const String icLogout = 'assets/images/ic_log_out.svg';
   static const String icDeleteAccount = 'assets/images/ic_delete.svg';
   static const String icEditImage = 'assets/images/ic_edit_image.svg';
+  static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
+  static const String icArrowLeftAppbar = 'assets/images/ic_arrow_left_appbar.svg';
+  static const String icSearchThin = 'assets/images/ic_search_thin.svg';
+  static const String icArrowUpLeft = 'assets/images/ic_arrow_up_left.svg';
   static const String icNote = 'assets/images/ic_note.svg';
   static const String icContactUs = 'assets/images/ic_contact_us.svg';
-  static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
+  static const String icMasters = 'assets/images/ic_masters.svg';
+  static const String icMessages = 'assets/images/ic_messages.svg';
+  static const String icProfileCalendar = 'assets/images/ic_profile_calendar.svg';
+  static const String icWatchlist = 'assets/images/ic_watchlist.svg';
+  static const String icExhibition = 'assets/images/ic_exhibition.svg';
+  static const String icActivityLog = 'assets/images/ic_activity_log.svg';
+  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
-  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
+  static const String icUp = 'assets/images/ic_up.svg';
+  static const String icDown = 'assets/images/ic_down.svg';
 }

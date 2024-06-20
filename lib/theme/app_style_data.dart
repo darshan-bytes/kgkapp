@@ -151,6 +151,7 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
         borderColor: colors.colorD3DAE0,
         transparentColor: colors.transparent,
+        searchBarTextStyle: interRegularTextStyle,
       );
 
   @override
@@ -764,6 +765,43 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  SearchResultScreenStyle get searchResultScreenStyle => SearchResultScreenStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        appbarTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
+        foundItemStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        needHelpStyle: interMediumBoldTextStyle,
+        needHelpTitleStyle: interRegularTextStyle,
+        phoneNumberStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        needHelpColor: colors.colorF7F9FA,
+        shopDiamondsByShapeTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+        newlyLaunchedBackgroundColor: colors.colorF7F9FA,
+        exploreDigitalCatalogBackgroundColor: colors.colorFFF6EE,
+        whiteColor: colors.white,
+      );
+
+  @override
+  SearchResultNotFoundStyle get searchResultNotFoundStyle => SearchResultNotFoundStyle(
+        needHelpStyle: interMediumBoldTextStyle,
+        needHelpTitleStyle: interRegularTextStyle,
+        phoneNumberStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 22.sp),
+        subTitleStyle: interRegularTextStyle,
+        needHelpColor: colors.colorF7F9FA,
+        shopDiamondsByShapeTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+      );
+
+  @override
+  SearchScreenStyle get searchScreenStyle => SearchScreenStyle(
+        titleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        searchItemStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        searchByCategoryColor: colors.colorF7F9FA,
+        searchByCategoryItemBorderColor: colors.colorD3DAE0,
+        searchByCategoryStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        whiteColor: colors.white,
+      );
+
+  @override
   SupportScreenStyle get supportScreenStyle => SupportScreenStyle(
       frequentlyAskedQuestionStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
       questionStyle: interMediumBoldTextStyle,
@@ -773,6 +811,12 @@ class LightModeTheme extends AppTheme {
   QrScannerStyle get qrScannerStyle => QrScannerStyle(
         titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         overLayColor: colors.black.withOpacity(0.5),
+      );
+
+  @override
+  SmartImageTitleColumnStyle get smartImageTitleColumnStyle => SmartImageTitleColumnStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
       );
 
   @override
@@ -788,6 +832,52 @@ class LightModeTheme extends AppTheme {
       titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
       textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
       primaryColor: colors.primary);
+
+  @override
+  FAQStyle get faqStyle => FAQStyle(
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subtitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        questionStyle: interMediumBoldTextStyle,
+        answerStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        contactDescriptionStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        contactDetailsStyle: interMediumBoldTextStyle,
+      );
+
+  @override
+  PreferencesStyle get preferencesStyle => PreferencesStyle(
+        titleStyle: interRegularTextStyle,
+      );
+
+  @override
+  MakeInquiryStyle get makeInquiryStyle =>
+      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
+
+  @override
+  ContactUsStyle get contactUsStyle => ContactUsStyle(
+        headerTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        messageStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        subHeaderTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subMessageStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        subMessageDescriptionStyle: interRegularTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+        contactDetailsStyle: interMediumBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+      );
+
+  @override
+  DashboardStyle get dashboardStyle => DashboardStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        comparedToTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        negativeAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.colorE83535),
+        positiveAmountStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color50B83C),
+      );
+
+  @override
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle => ConceptInfoPopupScreenStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        iconColor: colors.color303538,
+      );
 
   @override
   PddListingItemStyle get pddListingItemStyle => PddListingItemStyle(

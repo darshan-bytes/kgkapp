@@ -15,12 +15,10 @@ class GetSettingProductListEvent extends SettingListingEvent {
 }
 
 class SettingChangeListingTypeEvent extends SettingListingEvent {
-  final bool isGrid;
-
-  const SettingChangeListingTypeEvent(this.isGrid);
+  const SettingChangeListingTypeEvent();
 
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }
 
 class SettingProductChangePageNumberEvent extends SettingListingEvent {

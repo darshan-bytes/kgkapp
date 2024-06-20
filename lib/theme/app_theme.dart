@@ -152,13 +152,33 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
-  SupportScreenStyle get supportScreenStyle;
+  MakeInquiryStyle get makeInquiryStyle;
 
   QrScannerStyle get qrScannerStyle;
+
+  SearchScreenStyle get searchScreenStyle;
+
+  SearchResultScreenStyle get searchResultScreenStyle;
+
+  SearchResultNotFoundStyle get searchResultNotFoundStyle;
+
+  SupportScreenStyle get supportScreenStyle;
+
+  SmartImageTitleColumnStyle get smartImageTitleColumnStyle;
 
   SwitchStyle get switchStyle;
 
   CompanyScreenStyle get companyScreenStyle;
+
+  FAQStyle get faqStyle;
+
+  PreferencesStyle get preferencesStyle;
+
+  DashboardStyle get dashboardStyle;
+
+  ContactUsStyle get contactUsStyle;
+
+  ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 
   PddListingItemStyle get pddListingItemStyle;
 }
@@ -256,12 +276,14 @@ class CustomAppBarStyle {
   final Color borderColor;
   final TextStyle titleStyle;
   final Color transparentColor;
+  final TextStyle searchBarTextStyle;
 
   CustomAppBarStyle({
     required this.backgroundColor,
     required this.titleStyle,
     required this.borderColor,
     required this.transparentColor,
+    required this.searchBarTextStyle,
   });
 }
 
@@ -1362,6 +1384,34 @@ class LogoutPopupStyle {
   });
 }
 
+class MakeInquiryStyle {
+  final TextStyle titleStyle;
+  final Color whiteColor;
+
+  MakeInquiryStyle({
+    required this.titleStyle,
+    required this.whiteColor,
+  });
+}
+
+class SearchScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle searchItemStyle;
+  final TextStyle searchByCategoryStyle;
+  final Color searchByCategoryColor;
+  final Color searchByCategoryItemBorderColor;
+  final Color whiteColor;
+
+  SearchScreenStyle({
+    required this.titleStyle,
+    required this.searchItemStyle,
+    required this.searchByCategoryStyle,
+    required this.searchByCategoryColor,
+    required this.searchByCategoryItemBorderColor,
+    required this.whiteColor,
+  });
+}
+
 class SupportScreenStyle {
   final TextStyle frequentlyAskedQuestionStyle;
   final TextStyle questionStyle;
@@ -1382,6 +1432,63 @@ class QrScannerStyle {
     required this.titleStyle,
     required this.overLayColor,
   });
+}
+
+class SearchResultScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle appbarTextStyle;
+  final TextStyle foundItemStyle;
+  final TextStyle needHelpStyle;
+  final TextStyle needHelpTitleStyle;
+  final TextStyle phoneNumberStyle;
+  final Color needHelpColor;
+  final TextStyle shopDiamondsByShapeTitleStyle;
+  final Color newlyLaunchedBackgroundColor;
+  final Color exploreDigitalCatalogBackgroundColor;
+  final Color whiteColor;
+
+  SearchResultScreenStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.appbarTextStyle,
+    required this.foundItemStyle,
+    required this.needHelpStyle,
+    required this.needHelpTitleStyle,
+    required this.phoneNumberStyle,
+    required this.needHelpColor,
+    required this.shopDiamondsByShapeTitleStyle,
+    required this.newlyLaunchedBackgroundColor,
+    required this.exploreDigitalCatalogBackgroundColor,
+    required this.whiteColor,
+  });
+}
+
+class SearchResultNotFoundStyle {
+  final TextStyle needHelpStyle;
+  final TextStyle needHelpTitleStyle;
+  final TextStyle phoneNumberStyle;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color needHelpColor;
+  final TextStyle shopDiamondsByShapeTitleStyle;
+
+  SearchResultNotFoundStyle({
+    required this.needHelpStyle,
+    required this.needHelpTitleStyle,
+    required this.phoneNumberStyle,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.needHelpColor,
+    required this.shopDiamondsByShapeTitleStyle,
+  });
+}
+
+class SmartImageTitleColumnStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
 }
 
 class CompanyScreenStyle {
@@ -1410,6 +1517,76 @@ class SwitchStyle {
     required this.inactiveTrackColor,
     required this.inactiveThumbColor,
   });
+}
+
+class FAQStyle {
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle questionStyle;
+  final TextStyle answerStyle;
+  final TextStyle contactDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  FAQStyle({
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.questionStyle,
+    required this.answerStyle,
+    required this.contactDescriptionStyle,
+    required this.contactDetailsStyle,
+  });
+}
+
+class PreferencesStyle {
+  final TextStyle titleStyle;
+
+  PreferencesStyle({
+    required this.titleStyle,
+  });
+}
+
+class ContactUsStyle {
+  final TextStyle headerTitleStyle;
+  final TextStyle messageStyle;
+  final TextStyle titleStyle;
+  final TextStyle subHeaderTitleStyle;
+  final TextStyle subMessageStyle;
+  final TextStyle subMessageDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  ContactUsStyle({
+    required this.headerTitleStyle,
+    required this.messageStyle,
+    required this.titleStyle,
+    required this.subHeaderTitleStyle,
+    required this.subMessageStyle,
+    required this.subMessageDescriptionStyle,
+    required this.contactDetailsStyle,
+  });
+}
+
+class DashboardStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle positiveAmountStyle;
+  final TextStyle negativeAmountStyle;
+  final TextStyle comparedToTextStyle;
+
+  DashboardStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.positiveAmountStyle,
+    required this.negativeAmountStyle,
+    required this.comparedToTextStyle,
+  });
+}
+
+class ConceptInfoPopupScreenStyle {
+  final TextStyle titleStyle;
+  final TextStyle detailsTextStyle;
+  final Color iconColor;
+
+  ConceptInfoPopupScreenStyle({required this.titleStyle, required this.detailsTextStyle, required this.iconColor});
 }
 
 class PddListingItemStyle {

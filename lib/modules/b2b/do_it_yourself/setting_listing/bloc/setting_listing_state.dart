@@ -22,12 +22,8 @@ final class SettingLoadingState extends SettingListingState {
 }
 
 class SettingChangeListingTypeState extends SettingListingState {
-  final bool isGrid;
-
-  const SettingChangeListingTypeState(this.isGrid);
-
   @override
-  List<Object> get props => [isGrid];
+  List<Object> get props => [];
 }
 
 final class SettingProductChangePageNumberState extends SettingListingState {

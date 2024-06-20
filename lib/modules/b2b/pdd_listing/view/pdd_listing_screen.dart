@@ -6,25 +6,29 @@ class PddListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 100.w,
-          ),
-          B2BListingItem(
-            type: B2BListingType.conceptListingType,
-            listingItemModel: B2BCustomListingDataModel(
-              conceptNumber: '123',
-              conceptName: 'Concept Name',
-              presentation: '2',
-              status: OrderStatus.inProgress,
-              assignToImageUrl: '',
-              market: 'Market',
-              marketFlagImageUrl: '',
-              createdBy: 'Created By',
+      body: Padding(
+        padding: EdgeInsets.all(16.0.w),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100.w,
             ),
-          ),
-        ],
+            B2BListingItem(
+              type: B2BListingType.conceptListingType,
+              onTapMenuButton: () {},
+              listingItemModel: B2BCustomListingDataModel(
+                strConceptNumber: '123',
+                strConceptName: 'Concept Name',
+                strPresentation: '2',
+                status: OrderStatus.inProgress,
+                strAssignToImageUrl: '',
+                strMarket: 'Market',
+                strMarketFlagImageUrl: '',
+                strCreatedBy: 'Created By',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
