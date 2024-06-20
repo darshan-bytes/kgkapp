@@ -263,3 +263,4 @@ export 'package:kgk/modules/b2b/dashboard/view/dashboard_screen.dart';
 export 'package:kgk/modules/b2b/dashboard/model/dashboard_date_range_data_model.dart';
 export 'package:kgk/modules/b2b/dashboard/bloc/dashboard_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/model/dashboard_statistics_data_model.dart';
+export 'package:kgk/modules/b2b/concept/view/concept_info_popup_screen.dart';
