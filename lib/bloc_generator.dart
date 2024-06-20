@@ -47,6 +47,7 @@ class BlocGenerator {
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
       BlocProvider<EditShippingAddressBloc>(create: (_) => EditShippingAddressBloc()),
+      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
     ];
   }
 }
