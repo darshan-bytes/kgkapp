@@ -4,8 +4,8 @@ sealed class EditShippingAddressEvent extends Equatable {
   const EditShippingAddressEvent();
 }
 
-final class EditShippingAddressAddressChangeEvent extends EditShippingAddressEvent {
-  const EditShippingAddressAddressChangeEvent();
+final class EditShippingAddressChangeEvent extends EditShippingAddressEvent {
+  const EditShippingAddressChangeEvent();
 
   @override
   List<Object> get props => [];

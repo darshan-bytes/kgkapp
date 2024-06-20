@@ -16,7 +16,7 @@ class EditShippingAddressScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16.0),
+               SizedBox(height: 16.0.h),
               generateAddressForm(bloc, countryPickerStyle, context),
             ],
           ),
@@ -180,7 +180,7 @@ Widget _buildFirstNameField(EditShippingAddressBloc bloc) {
       buildWhen: (previous, current) => current is EditShippingAddressChangeAddressSameState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 22.h),
+          padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 22.h),
           child: SmartCheckbox(
             height: 24.w,
             width: 24.w,

@@ -65,7 +65,7 @@ class EditShippingAddressBloc extends Bloc<EditShippingAddressEvent, EditShippin
 
   EditShippingAddressBloc() : super(const EditShippingAddressInitial()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
-    on<EditShippingAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
+    on<EditShippingAddressChangeEvent>(_onChangeShippingAndBillingAddress);
     on<EditShippingAddressAddressSameEvent>(_onChangeShippingAddressSame);
     on<EditShippingAddressChangeCountryEvent>(_onChangeCountry);
     on<EditShippingAddressChangeCityEvent>(_onChangeCity);
@@ -73,7 +73,7 @@ class EditShippingAddressBloc extends Bloc<EditShippingAddressEvent, EditShippin
     on<SaveEditShippingAddressEvent>(_onSaveEditShippingAddressEvent);
   }
 
-  void _onChangeShippingAndBillingAddress(EditShippingAddressAddressChangeEvent event, Emitter<EditShippingAddressState> emit) {
+  void _onChangeShippingAndBillingAddress(EditShippingAddressChangeEvent event, Emitter<EditShippingAddressState> emit) {
     emit(EditShippingAddressReloadState());
     isShippingAndBillingAddressFilled = !isShippingAndBillingAddressFilled;
     emit(const EditShippingAddressChangeAddressState());
