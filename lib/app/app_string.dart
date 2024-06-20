@@ -379,7 +379,7 @@ class APPStrings {
   static const String shippingAddress = 'shipping_address';
 
   //order details popup
-  static const String trackProduct = 'track_product';
+  static const String trackOrder = 'track_order';
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
@@ -576,4 +576,6 @@ class APPStrings {
   static const String addedOn = 'added_on';
   static const String purchaseOrder = 'purchase_order';
   static const String orderedBy = 'ordered_by';
+  static const String noAuctionsFound = 'no_auctions_found';
+  static const String noDataFound = 'no_data_found';
 }

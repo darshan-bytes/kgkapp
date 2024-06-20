@@ -437,6 +437,8 @@ class LightModeTheme extends AppTheme {
         bottomBarTotalAmountTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         bottomBarMoreLessTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         textInfoValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        menuBorderColor: colors.colorD3DAE0,
+        menuIconColor: colors.primary,
       );
 
   @override
@@ -882,5 +884,11 @@ class LightModeTheme extends AppTheme {
   @override
   PddListingItemStyle get pddListingItemStyle => PddListingItemStyle(
         borderColor: colors.colorD3DAE0,
+      );
+
+  @override
+  NoDataFoundStyle get noDataFoundStyle => NoDataFoundStyle(
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       );
 }

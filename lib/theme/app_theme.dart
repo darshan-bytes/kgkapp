@@ -181,6 +181,8 @@ abstract class AppTheme {
   ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 
   PddListingItemStyle get pddListingItemStyle;
+
+  NoDataFoundStyle get noDataFoundStyle;
 }
 
 class PrimaryButtonStyle {
@@ -855,6 +857,8 @@ class MyBagScreenStyle {
   final TextStyle bottomBarTotalAmountTextStyle;
   final TextStyle bottomBarMoreLessTextStyle;
   final TextStyle textInfoValueStyle;
+  final Color menuBorderColor;
+  final Color menuIconColor;
 
   MyBagScreenStyle({
     required this.backgroundColor,
@@ -867,6 +871,8 @@ class MyBagScreenStyle {
     required this.bottomBarTotalAmountTextStyle,
     required this.bottomBarMoreLessTextStyle,
     required this.textInfoValueStyle,
+    required this.menuBorderColor,
+    required this.menuIconColor,
   });
 }
 
@@ -1586,7 +1592,21 @@ class ConceptInfoPopupScreenStyle {
   final TextStyle detailsTextStyle;
   final Color iconColor;
 
-  ConceptInfoPopupScreenStyle({required this.titleStyle, required this.detailsTextStyle, required this.iconColor});
+  ConceptInfoPopupScreenStyle({
+    required this.titleStyle,
+    required this.detailsTextStyle,
+    required this.iconColor,
+  });
+}
+
+class NoDataFoundStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  NoDataFoundStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+  });
 }
 
 class PddListingItemStyle {
