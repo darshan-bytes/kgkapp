@@ -14,7 +14,9 @@ class StoneListingScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: diamondListingBloc.stoneListingAppbarTitle,
-              onFilter: () {},
+              onFilter: () {
+                context.pushNamed(AppRoutes.searchPage);
+              },
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },

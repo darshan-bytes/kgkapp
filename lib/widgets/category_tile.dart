@@ -35,7 +35,7 @@ class CategoryTile extends StatelessWidget {
                   style: categoryTileStyle.labelStyle,
                 ),
                 SizedBox(
-                  width: 10.w,
+                  width: 4.w,
                 ),
                 Icon(
                   isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,

@@ -3,8 +3,16 @@ import 'package:kgk/kgk.dart';
 class SelectedCategoryDetails extends StatelessWidget {
   final ArrowPosition arrowPosition;
   final List<String> productsDetailsList;
+  final ScrollController scrollController;
+  final void Function(dynamic) onProductSelected;
 
-  const SelectedCategoryDetails({super.key, required this.arrowPosition, required this.productsDetailsList});
+  const SelectedCategoryDetails({
+    super.key,
+    required this.arrowPosition,
+    required this.productsDetailsList,
+    required this.scrollController,
+    required this.onProductSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,36 +44,45 @@ class SelectedCategoryDetails extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
             height: 260.w,
             alignment: Alignment.center,
             color: categoryTileStyle.backgroundColor,
-            child: ListView.builder(
-                itemCount: productsDetailsList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
-                          child: SmartText(
-                            productsDetailsList[index],
-                            style: categoryTileStyle.detailStyle,
-                          ),
+            child: Scrollbar(
+              trackVisibility: true,
+              thumbVisibility: true,
+              controller: scrollController,
+              child: ListView.builder(
+                  itemCount: productsDetailsList.length,
+                  shrinkWrap: true,
+                  controller: scrollController,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => onProductSelected(productsDetailsList[index]),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
+                              child: SmartText(
+                                productsDetailsList[index],
+                                style: categoryTileStyle.detailStyle,
+                              ),
+                            ),
+                            if (index != productsDetailsList.length - 1)
+                              Container(
+                                height: 0.8.h,
+                                color: categoryTileStyle.dividerLineColor,
+                              )
+                          ],
                         ),
-                        if (index != 4)
-                          Container(
-                            height: 0.8.h,
-                            color: categoryTileStyle.dividerLineColor,
-                          )
-                      ],
-                    ),
-                  );
-                }),
+                      ),
+                    );
+                  }),
+            ),
           ),
         ],
       ),

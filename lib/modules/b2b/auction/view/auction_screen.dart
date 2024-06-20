@@ -10,7 +10,9 @@ class AuctionScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: '1.01 Carat Round Diamond',
-        onFavorite: () {},
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
       ),
       body: ListView(
         controller: bloc.listScrollController,

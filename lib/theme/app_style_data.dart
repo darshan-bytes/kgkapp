@@ -169,7 +169,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
-      backgroundColor: colors.colorF7F9FA,
+      backgroundColor: colors.colorC5DEEB.withOpacity(0.38),
       dividerLineColor: colors.colorD3DAE0,
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp));

@@ -10,13 +10,15 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   int? selectedItemIndex;
   ArrowPosition arrowPosition = ArrowPosition.rightTop;
 
+  ScrollController scrollController = ScrollController();
+
   List<CategoriesModel> categories = [
     CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
   ];
 
@@ -24,9 +26,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     'Collection',
     'Best Selling',
     'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
-  ];
+    'Occasion Offer', 'Deals'];
 
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
