@@ -242,3 +242,6 @@ export 'package:kgk/modules/b2b/dashboard/dashboard_modules/support/model/faq_mo
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/bloc/company_bloc.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/model/company_list_model.dart';
 export 'package:kgk/modules/b2b/dashboard/dashboard_modules/company/view/company_screen.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/model/b2b_listing_data_model.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/view/b2b_listing_item.dart';
+export 'package:kgk/modules/common_modules/b2b_listing_module/listing_field/b2b_listing_field_factory.dart';

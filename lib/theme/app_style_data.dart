@@ -788,4 +788,9 @@ class LightModeTheme extends AppTheme {
       titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
       textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
       primaryColor: colors.primary);
+
+  @override
+  PddListingItemStyle get pddListingItemStyle => PddListingItemStyle(
+        borderColor: colors.colorD3DAE0,
+      );
 }

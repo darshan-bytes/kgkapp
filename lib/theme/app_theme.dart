@@ -159,6 +159,8 @@ abstract class AppTheme {
   SwitchStyle get switchStyle;
 
   CompanyScreenStyle get companyScreenStyle;
+
+  PddListingItemStyle get pddListingItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1407,5 +1409,13 @@ class SwitchStyle {
     required this.activeTrackColor,
     required this.inactiveTrackColor,
     required this.inactiveThumbColor,
+  });
+}
+
+class PddListingItemStyle {
+  final Color borderColor;
+
+  PddListingItemStyle({
+    required this.borderColor,
   });
 }
