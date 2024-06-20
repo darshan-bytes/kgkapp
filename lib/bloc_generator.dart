@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/edit_shipping_addres/bloc/edit_shipping_address_bloc.dart';
 
 class BlocGenerator {
   static List<BlocProvider> generateBlocList() {
@@ -47,7 +46,6 @@ class BlocGenerator {
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
       BlocProvider<EditShippingAddressBloc>(create: (_) => EditShippingAddressBloc()),
-      BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
     ];
   }
 }
