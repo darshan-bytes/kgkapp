@@ -174,6 +174,8 @@ abstract class AppTheme {
 
   DashboardStyle get dashboardStyle;
 
+  ContactUsStyle get contactUsStyle;
+
   ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
 }
 
@@ -1500,6 +1502,26 @@ class PreferencesStyle {
 
   PreferencesStyle({
     required this.titleStyle,
+  });
+}
+
+class ContactUsStyle {
+  final TextStyle headerTitleStyle;
+  final TextStyle messageStyle;
+  final TextStyle titleStyle;
+  final TextStyle subHeaderTitleStyle;
+  final TextStyle subMessageStyle;
+  final TextStyle subMessageDescriptionStyle;
+  final TextStyle contactDetailsStyle;
+
+  ContactUsStyle({
+    required this.headerTitleStyle,
+    required this.messageStyle,
+    required this.titleStyle,
+    required this.subHeaderTitleStyle,
+    required this.subMessageStyle,
+    required this.subMessageDescriptionStyle,
+    required this.contactDetailsStyle,
   });
 }
 

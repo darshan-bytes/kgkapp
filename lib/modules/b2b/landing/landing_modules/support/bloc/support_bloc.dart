@@ -15,23 +15,27 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
   void _onInitialSupportListEvent(SupportInitialEvent event, Emitter<SupportState> emit) {
     supportActionList = [
       ProfileListModel(
-        image: AppImages.icNote,
-        title: APPStrings.makeAnInquiry.tr,
-        subTitle: APPStrings.repliesWithin24Hours.tr,
-        trailingIcon: AppImages.icArrowRight,
-      ),
+          image: AppImages.icNote,
+          title: APPStrings.makeAnInquiry.tr,
+          subTitle: APPStrings.repliesWithin24Hours.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.makeInquiryPage);
+          }),
       ProfileListModel(
-        image: AppImages.icPhone,
-        title: APPStrings.call.tr,
-        subTitle: "Monday – Friday 9 AM – 5 PM",
-        trailingIcon: AppImages.icArrowRight,
-      ),
+          image: AppImages.icPhone,
+          title: APPStrings.call.tr,
+          subTitle: "Monday – Friday 9 AM – 5 PM",
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {}),
       ProfileListModel(
-        image: AppImages.icContactUs,
-        title: APPStrings.contactUs.tr,
-        subTitle: APPStrings.getInTouchWithUs.tr,
-        trailingIcon: AppImages.icArrowRight,
-      ),
+          image: AppImages.icContactUs,
+          title: APPStrings.contactUs.tr,
+          subTitle: APPStrings.getInTouchWithUs.tr,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.contactUsPage);
+          }),
     ];
 
     faqs = [

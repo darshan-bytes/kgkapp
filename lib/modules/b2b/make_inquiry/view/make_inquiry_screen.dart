@@ -24,69 +24,17 @@ class MakeInquiryScreen extends StatelessWidget {
                 width: context.width,
                 fit: BoxFit.cover,
               ),
-              SizedBox(
-                height: 14.h,
-              ),
+              SizedBox(height: 14.h),
               _buildFullNameField(bloc),
-              SizedBox(
-                height: 14.h,
-              ),
+              SizedBox(height: 14.h),
               _buildEmailField(bloc),
-              SizedBox(
-                height: 14.h,
-              ),
-              SmartText(
-                APPStrings.inquiryType.tr,
-                style: style.titleStyle,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
-                buildWhen: (previous, current) => current is ToggleMakeInquiryState || current is MakeInquiryReloadState,
-                builder: (context, state) {
-                  return SmartDropDown<InquiryTypeModel>(
-                    selectedItem: bloc.selectedInquiryType,
-                    items: bloc.inquiryTypeList.map((e) => SmartDropDownItem<InquiryTypeModel>(value: e, title: e.name)).toList(),
-                    hintText: APPStrings.inquiryType.tr,
-                    onChanged: (newValue) {
-                      if (newValue == null) return;
-                      bloc.add(ChangeInquiryTypeEvent(inquiryTypeModel: newValue));
-                    },
-                  );
-                },
-              ),
-              SizedBox(
-                height: 14.h,
-              ),
-              SmartText(
-                APPStrings.selectProduct.tr,
-                style: style.titleStyle,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
-                buildWhen: (previous, current) => current is ToggleProductState || current is MakeInquiryReloadState,
-                builder: (context, state) {
-                  return SmartDropDown<ProductModel>(
-                    selectedItem: bloc.selectedProduct,
-                    items: bloc.productList.map((e) => SmartDropDownItem<ProductModel>(value: e, title: e.name)).toList(),
-                    hintText: APPStrings.selectProduct.tr,
-                    onChanged: (newValue) {
-                      if (newValue == null) return;
-                      bloc.add(ChangeSelectProductEvent(productModel: newValue));
-                    },
-                  );
-                },
-              ),
-              SizedBox(
-                height: 14.h,
-              ),
+              SizedBox(height: 14.h),
+              _buildInquiryTypeDropdown(bloc),
+              SizedBox(height: 14.h),
+              _buildProductDropdown(bloc),
+              SizedBox(height: 14.h),
               _buildCommentField(bloc),
-              SizedBox(
-                height: 18.h,
-              ),
+              SizedBox(height: 18.h),
               SmartButton(
                   onTap: () {
                     context.pop();
@@ -131,6 +79,42 @@ class MakeInquiryScreen extends StatelessWidget {
       keyboardType: TextInputType.name,
       maxLines: 3,
       textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  Widget _buildProductDropdown(MakeInquiryBloc bloc) {
+    return BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
+      buildWhen: (previous, current) => current is ToggleProductState || current is MakeInquiryReloadState,
+      builder: (context, state) {
+        return SmartDropDown<ProductModel>(
+          selectedItem: bloc.selectedProduct,
+          items: bloc.productList.map((e) => SmartDropDownItem<ProductModel>(value: e, title: e.name)).toList(),
+          hintText: APPStrings.selectProduct.tr,
+          labelText: APPStrings.selectProduct.tr,
+          onChanged: (newValue) {
+            if (newValue == null) return;
+            bloc.add(ChangeSelectProductEvent(productModel: newValue));
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildInquiryTypeDropdown(MakeInquiryBloc bloc) {
+    return BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
+      buildWhen: (previous, current) => current is ToggleMakeInquiryState || current is MakeInquiryReloadState,
+      builder: (context, state) {
+        return SmartDropDown<InquiryTypeModel>(
+          selectedItem: bloc.selectedInquiryType,
+          items: bloc.inquiryTypeList.map((e) => SmartDropDownItem<InquiryTypeModel>(value: e, title: e.name)).toList(),
+          hintText: APPStrings.inquiryType.tr,
+          labelText: APPStrings.inquiryType.tr,
+          onChanged: (newValue) {
+            if (newValue == null) return;
+            bloc.add(ChangeInquiryTypeEvent(inquiryTypeModel: newValue));
+          },
+        );
+      },
     );
   }
 }

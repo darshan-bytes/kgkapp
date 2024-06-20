@@ -802,19 +802,17 @@ class LightModeTheme extends AppTheme {
 
   @override
   SwitchStyle get switchStyle => SwitchStyle(
-        activeTrackColor: colors.primary,
-        inactiveTrackColor: colors.color8C8C8C,
-        thumbColor: colors.white,
-        trackColor: colors.colorD3DAE0,
-        inactiveThumbColor: colors.primary,
-      );
+      activeTrackColor: colors.primary,
+      inactiveTrackColor: colors.color8C8C8C,
+      thumbColor: colors.white,
+      trackColor: colors.colorD3DAE0,
+      inactiveThumbColor: colors.primary);
 
   @override
   CompanyScreenStyle get companyScreenStyle => CompanyScreenStyle(
-        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
-        textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
-        primaryColor: colors.primary,
-      );
+      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
+      textStyle: interRegularTextStyle.copyWith(fontSize: 18.sp),
+      primaryColor: colors.primary);
 
   @override
   FAQStyle get faqStyle => FAQStyle(
@@ -832,9 +830,18 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  MakeInquiryStyle get makeInquiryStyle => MakeInquiryStyle(
-        titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
-        whiteColor: colors.white,
+  MakeInquiryStyle get makeInquiryStyle =>
+      MakeInquiryStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538), whiteColor: colors.white);
+
+  @override
+  ContactUsStyle get contactUsStyle => ContactUsStyle(
+        headerTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        messageStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp),
+        subHeaderTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subMessageStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        subMessageDescriptionStyle: interRegularTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+        contactDetailsStyle: interMediumBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
       );
 
   @override

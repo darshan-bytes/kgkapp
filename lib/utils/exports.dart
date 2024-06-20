@@ -81,8 +81,8 @@ export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart
 export 'package:kgk/modules/b2b/landing/landing_modules/qr_code_scan_login/view/qr_scanner_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categories_bloc.dart';
-export 'package:kgk/modules/b2b/make_inquiry/model/inquiry_type_model.dart';
-export 'package:kgk/modules/b2b/make_inquiry/model/product_model.dart';
+export 'package:kgk/model/inquiry_type_model.dart';
+export 'package:kgk/model/product_model.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/bloc/cms_web_view_bloc.dart';
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 
@@ -140,6 +140,7 @@ export 'package:kgk/modules/b2b/setting_detail/view/setting_detail_screen.dart';
 export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/b2b/make_inquiry/view/make_inquiry_screen.dart';
+export 'package:kgk/modules/b2b/contact_us/view/contact_us_screen.dart';
 export 'package:kgk/modules/b2b/make_inquiry/bloc/make_inquiry_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
@@ -154,6 +155,7 @@ export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
 export 'package:kgk/modules/b2b/order_timeline/bloc/order_timeline_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/qr_code_scan_login/bloc/qr_code_scan_login_bloc.dart';
 export 'package:kgk/modules/b2b/notification_settings/bloc/notification_settings_bloc.dart';
+export 'package:kgk/modules/b2b/contact_us/bloc/contact_us_bloc.dart';
 
 //screen
 export 'package:kgk/modules/common_modules/get_ready/view/get_ready_screen.dart';
