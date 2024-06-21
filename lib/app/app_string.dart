@@ -586,4 +586,7 @@ class APPStrings {
 
   static const String presentations = 'presentations';
   static const String searchPresentation = 'search_presentation';
+
+  //Edit Address
+  static const String editAddress = 'edit_address';
 }

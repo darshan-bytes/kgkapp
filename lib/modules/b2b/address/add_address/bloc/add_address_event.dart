@@ -4,6 +4,15 @@ sealed class AddAddressEvent extends Equatable {
   const AddAddressEvent();
 }
 
+final class AddAddressInitialEvent extends AddAddressEvent {
+  final BuildContext context;
+
+  const AddAddressInitialEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
 final class AddAddressAddressChangeEvent extends AddAddressEvent {
   const AddAddressAddressChangeEvent();
 
