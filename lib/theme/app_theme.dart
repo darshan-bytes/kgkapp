@@ -152,6 +152,8 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  PresentationGridItemStyle get presentationGridItemStyle;
+
   MakeInquiryStyle get makeInquiryStyle;
 
   QrScannerStyle get qrScannerStyle;
@@ -1387,6 +1389,20 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class PresentationGridItemStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  PresentationGridItemStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
   });
 }
 
