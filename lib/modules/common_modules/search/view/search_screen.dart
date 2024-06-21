@@ -113,7 +113,7 @@ class SearchScreen extends StatelessWidget {
                   title: item.name ?? '',
                   imageSize: 80.w,
                   padding: index == 0 ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
-                  imageBorderRadius: BorderRadius.circular(40.r),
+                  imageBorderRadius: BorderRadius.circular(50.r),
                   imageColor: style.whiteColor,
                   fit: BoxFit.contain,
                   imageBorder: Border.all(color: style.searchByCategoryItemBorderColor, width: 1.w),

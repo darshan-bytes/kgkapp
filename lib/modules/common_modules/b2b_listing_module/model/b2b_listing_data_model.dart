@@ -150,5 +150,6 @@ class B2BCustomListingDataModel {
     this.strOrderedBy,
     this.strOrderedByImageUrl,
     this.strSalesmanImageUrl,
+    this.strCreatedByImageUrl,
   });
 }
