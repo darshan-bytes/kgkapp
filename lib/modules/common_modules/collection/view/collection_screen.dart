@@ -12,7 +12,9 @@ class CollectionScreen extends StatelessWidget {
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
-        onFilter: () {},
+        onFilter: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
       ),
       body: SmartSingleChildScrollView(
         child: Column(children: [

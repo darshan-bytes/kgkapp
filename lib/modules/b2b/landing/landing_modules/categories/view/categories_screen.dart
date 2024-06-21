@@ -5,52 +5,61 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-                  },
-                  child: const SmartText('GemStone')),
-              const SizedBox(height: 20),
-              GestureDetector(
-                  onTap: () {
-                    context.pushNamed(AppRoutes.faqPage);
-                  },
-                  child: const SmartText('FAQ')),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    useSafeArea: true,
-                    builder: (context) => const ConceptInfoPopupScreen(
-                      imageList: [
-                        "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
-                        "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
-                        "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
-                        "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
-                        "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
-                        "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
-                      ],
-                      conceptNo: '14567',
-                      conceptDesc:
-                          'A jewellery collection inspired by the moon\'s allure. Rings, necklaces, and earrings that capture its luminous beauty.',
+    final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
+    return Scaffold(
+      appBar: SmartAppBar(
+        isBack: false,
+        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+        onFilter: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
+        onNotification: () {
+          context.pushNamed(AppRoutes.notificationPage);
+        },
+      ),
+      body: BlocBuilder<CategoriesBloc, CategoriesState>(
+        buildWhen: (_, current) => current is CategoriesSelected,
+        builder: (context, state) {
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
+            child: ListView.builder(
+              itemCount: (categoriesBloc.categories.length / 3).ceil(), // Calculate the number of rows needed
+              itemBuilder: (context, index) {
+                final startIndex = index * 3;
+                final endIndex = startIndex + 3;
+                final sublist = categoriesBloc.categories
+                    .sublist(startIndex, endIndex > categoriesBloc.categories.length ? categoriesBloc.categories.length : endIndex);
+                return Column(
+                  children: [
+                    CategoryRow(
+                      categories: sublist,
+                      rowIndex: index,
+                      selectedIndex: (categoriesBloc.selectedRowIndex ?? -1) == index ? (categoriesBloc.selectedItemIndex ?? -1) : -1,
+                      onCategorySelected: (itemIndex) {
+                        categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex));
+                      },
                     ),
-                  );
-                },
-                child: const SmartText('Concept info popup'),
-              ),
-            ],
-          ),
-        ),
+                    if (categoriesBloc.selectedRowIndex == index)
+                      SelectedCategoryDetails(
+                        arrowPosition: categoriesBloc.arrowPosition,
+                        productsDetailsList: categoriesBloc.productsDetailsList,
+                        scrollController: categoriesBloc.scrollController,
+                        onProductSelected: (value) {
+                          if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Gemstone') {
+                            context.pushNamed(AppRoutes.stoneListingPage,
+                                arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+                          }
+                        },
+                      ),
+                  ],
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

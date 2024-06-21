@@ -23,7 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   List<ProfileListModel> profileActionList = [];
 
-  List<ProfileListModel> profileChildrenList = [];
+  List<ProfileListModel> profileCMSList = [];
 
   List<ProfileListModel> profileAdminList = [];
 
@@ -162,7 +162,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           }),
     ];
 
-    profileChildrenList = [
+    profileCMSList = [
       ProfileListModel(
           image: AppImages.icAboutUs,
           title: APPStrings.aboutUs.tr,
@@ -178,7 +178,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
           isSubListExpanded: false,
-          profileChildrenList: [
+          profileSubList: [
             ProfileListModel(
               title: APPStrings.diamonds.tr,
               onTap: () {
@@ -237,6 +237,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ],
           onTap: () {}),
       ProfileListModel(
+          image: AppImages.icSupport,
+          title: APPStrings.faqs.tr,
+          isSubListExpanded: false,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.faqPage);
+          }),
+      ProfileListModel(
           image: AppImages.icPolicies,
           title: APPStrings.policies.tr,
           onTap: () {
@@ -252,11 +259,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   void _onToggleProfileListEvent(ToggleProfileListEvent event, Emitter<ProfileState> emit) {
     emit(ProfileReloadState());
-    if (profileChildrenList[event.index].profileChildrenList.isNotNullNorEmpty) {
-      profileChildrenList[event.index].isSubListExpanded = !profileChildrenList[event.index].isSubListExpanded;
+    if (profileCMSList[event.index].profileSubList.isNotNullNorEmpty) {
+      profileCMSList[event.index].isSubListExpanded = !profileCMSList[event.index].isSubListExpanded;
       emit(const ToggleProfileState());
     } else {
-      profileChildrenList[event.index].onTap?.call();
+      profileCMSList[event.index].onTap?.call();
     }
   }
 }

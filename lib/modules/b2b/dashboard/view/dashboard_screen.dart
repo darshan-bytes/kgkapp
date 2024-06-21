@@ -10,7 +10,9 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.dashboard.tr,
-        onFilter: () {},
+        onFilter: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
