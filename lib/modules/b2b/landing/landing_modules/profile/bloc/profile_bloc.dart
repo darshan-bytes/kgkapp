@@ -180,12 +180,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           isSubListExpanded: false,
           profileChildrenList: [
             ProfileListModel(
-              title: APPStrings.diamond.tr,
+              title: APPStrings.diamonds.tr,
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: 'https://www.kgkgroup.com/diamond-operations/',
-                    title: APPStrings.diamond.tr,
+                    title: APPStrings.diamonds.tr,
                   )
                 });
               },
