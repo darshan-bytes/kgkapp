@@ -171,7 +171,11 @@ class AppRoutes {
 
       case addAddressPage:
         return MaterialPageRoute(
-          builder: (_) => const AddAddressScreen(),
+          builder: (context) {
+            BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
+
+            return const AddAddressScreen();
+          },
           settings: settings,
         );
 
@@ -442,6 +446,7 @@ enum RoutesData {
   searchResultData,
   cmsPageData,
   isNoDataFound,
+  addressId
 }
 
 enum ScreenIdentifier {

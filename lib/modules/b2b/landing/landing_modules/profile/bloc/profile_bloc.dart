@@ -93,7 +93,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.savedAddress.tr,
           subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressId: "0"});
+          }),
       ProfileListModel(
           image: AppImages.icLock,
           title: APPStrings.changePassword.tr,
