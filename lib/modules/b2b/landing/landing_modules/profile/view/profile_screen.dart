@@ -128,22 +128,28 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildExpandList(ProfileScreenStyle style, ProfileBloc bloc) {
     return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
       return ListView.builder(
-        padding: EdgeInsets.only(bottom: 16.h),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         primary: false,
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        itemCount: bloc.profileCMSList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               bloc.add(ToggleProfileListEvent(index: index));
             },
-            child: Padding(
-              padding: EdgeInsets.only(left: 17.w, top: 16.h, right: 17.w),
+            child: Container(
+              color: style.transparentColor,
+              padding: EdgeInsets.only(
+                left: 17.w,
+                top: index != 0 ? 16.h : 0,
+                right: 17.w,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SmartImage(
-                    path: bloc.profileChildrenList[index].image ?? '',
+                    path: bloc.profileCMSList[index].image ?? '',
                   ),
                   SizedBox(width: 12.h),
                   Expanded(
@@ -152,23 +158,23 @@ class ProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SmartText(
-                          bloc.profileChildrenList[index].title,
+                          bloc.profileCMSList[index].title,
                           style: style.expandTitleStyle,
                         ),
-                        if (bloc.profileChildrenList[index].profileChildrenList.isNotNullNorEmpty) SizedBox(height: 8.h),
+                        if (bloc.profileCMSList[index].isSubListExpanded) SizedBox(height: 8.h),
                         AnimatedSize(
                           duration: const Duration(milliseconds: 200),
-                          child: bloc.profileChildrenList[index].isSubListExpanded
+                          child: bloc.profileCMSList[index].isSubListExpanded
                               ? ListView.separated(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   primary: false,
-                                  itemCount: bloc.profileChildrenList[index].profileChildrenList?.length ?? 0,
+                                  itemCount: bloc.profileCMSList[index].profileSubList?.length ?? 0,
                                   itemBuilder: (context, childIndex) {
                                     return SmartText(
-                                      bloc.profileChildrenList[index].profileChildrenList?[childIndex].title,
+                                      bloc.profileCMSList[index].profileSubList?[childIndex].title,
                                       style: style.expandTitleStyle,
-                                      onTap: bloc.profileChildrenList[index].profileChildrenList?[childIndex].onTap,
+                                      onTap: bloc.profileCMSList[index].profileSubList?[childIndex].onTap,
                                     );
                                   },
                                   separatorBuilder: (context, index) => SizedBox(height: 8.h),
@@ -178,17 +184,16 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (bloc.profileChildrenList[index].profileChildrenList.isNotNullNorEmpty)
+                  if (bloc.profileCMSList[index].profileSubList.isNotNullNorEmpty)
                     SmartImage(
                       color: style.arrowRightColor,
-                      path: bloc.profileChildrenList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
+                      path: bloc.profileCMSList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
                     )
                 ],
               ),
             ),
           );
         },
-        itemCount: bloc.profileChildrenList.length,
       );
     });
   }

@@ -1314,6 +1314,7 @@ class ProfileScreenStyle {
   final Color primaryColor;
   final Color dividerColor;
   final Color arrowRightColor;
+  final Color transparentColor;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle subTextStyle;
@@ -1328,6 +1329,7 @@ class ProfileScreenStyle {
       required this.primaryColor,
       required this.dividerColor,
       required this.arrowRightColor,
+      required this.transparentColor,
       required this.titleStyle,
       required this.subTitleStyle,
       required this.subTextStyle,

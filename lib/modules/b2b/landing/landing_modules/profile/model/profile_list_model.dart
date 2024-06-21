@@ -6,7 +6,7 @@ class ProfileListModel {
   String? subTitle;
   String? trailingIcon;
   VoidCallback? onTap;
-  List<ProfileListModel>? profileChildrenList = [];
+  List<ProfileListModel>? profileSubList = [];
   bool isSubListExpanded = false;
 
   ProfileListModel({
@@ -15,7 +15,7 @@ class ProfileListModel {
     this.subTitle,
     this.trailingIcon,
     this.onTap,
-    this.profileChildrenList,
+    this.profileSubList,
     this.isSubListExpanded = false,
   });
 
@@ -28,10 +28,10 @@ class ProfileListModel {
         other.subTitle == subTitle &&
         other.trailingIcon == trailingIcon &&
         other.onTap == onTap &&
-        other.profileChildrenList == profileChildrenList;
+        other.profileSubList == profileSubList;
   }
 
   @override
   int get hashCode =>
-      image.hashCode ^ title.hashCode ^ subTitle.hashCode ^ trailingIcon.hashCode ^ onTap.hashCode ^ profileChildrenList.hashCode;
+      image.hashCode ^ title.hashCode ^ subTitle.hashCode ^ trailingIcon.hashCode ^ onTap.hashCode ^ profileSubList.hashCode;
 }

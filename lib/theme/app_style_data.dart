@@ -718,6 +718,7 @@ class LightModeTheme extends AppTheme {
       backgroundColor: colors.white,
       primaryColor: colors.primary,
       dividerColor: colors.colorF7F9FA,
+      transparentColor: colors.transparent,
       arrowRightColor: colors.color8C8C8C,
       titleStyle: interMediumBoldTextStyle.copyWith(
         fontSize: 20.sp,
