@@ -14,7 +14,9 @@ class StoneListingScreen extends StatelessWidget {
           builder: (context, state) {
             return SmartAppBar(
               title: diamondListingBloc.stoneListingAppbarTitle,
-              onSearch: () {},
+              onSearch: () {
+                context.pushNamed(AppRoutes.searchPage);
+              },
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
@@ -218,7 +220,16 @@ class StoneListingScreen extends StatelessWidget {
                           },
                           isSelectedBackground: (index % 2 != 0),
                           onTap: () {
-                            context.pushNamed(AppRoutes.diamondInfoPopupPage);
+                            if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
+                              context.pushNamed(AppRoutes.stoneDetailPage,
+                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                              context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            } else {
+                              context.pushNamed(AppRoutes.productDetailsPage,
+                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            }
                           },
                           productDetails: ProductDetails(
                             productInfoClarityChat: ProductInfoClarityChat(

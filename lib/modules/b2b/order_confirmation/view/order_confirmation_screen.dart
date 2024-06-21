@@ -12,8 +12,12 @@ class OrderConfirmationScreen extends StatelessWidget {
       appBar: SmartAppBar(
         isBack: false,
         leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
-        onSearch: () {},
-        onFavorite: () {},
+        onSearch: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
         onNotification: () {
           context.pushNamed(AppRoutes.notificationPage);
         },

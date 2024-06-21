@@ -9,7 +9,7 @@ class B2BItemField {
   final String? value;
   final OrderStatus? orderStatus;
   final String? imageUrl;
-  final double imageSize;
+  final double? imageSize;
   final bool isCircleImage;
   final bool isCircleWithValue;
   final bool isOnlyImageView;
@@ -19,7 +19,7 @@ class B2BItemField {
     this.value,
     this.orderStatus,
     this.imageUrl,
-    this.imageSize = 24.0,
+    this.imageSize,
     this.isCircleImage = true,
     this.isCircleWithValue = false,
     this.isOnlyImageView = false,
@@ -172,10 +172,10 @@ class B2BListingItem extends StatelessWidget {
             padding: EdgeInsets.only(right: 4.w),
             child: SmartImage(
               path: field.imageUrl!,
-              height: field.imageSize.w,
-              width: field.imageSize.w,
+              height: field.imageSize ?? 24.w,
+              width: field.imageSize ?? 24.w,
               fit: BoxFit.contain,
-              imageBorderRadius: field.isCircleImage ? BorderRadius.circular((field.imageSize.w / 2).r) : null,
+              imageBorderRadius: field.isCircleImage ? BorderRadius.circular(((field.imageSize ?? 24.w) / 2).r) : null,
             ),
           ),
         Flexible(

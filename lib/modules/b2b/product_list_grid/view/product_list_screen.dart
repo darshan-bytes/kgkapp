@@ -17,7 +17,9 @@ class ProductListScreen extends StatelessWidget {
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
-              onSearch: () {},
+              onSearch: () {
+                context.pushNamed(AppRoutes.searchPage);
+              },
             );
           },
         ),

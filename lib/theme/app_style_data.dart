@@ -169,7 +169,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
-      backgroundColor: colors.colorF7F9FA,
+      backgroundColor: colors.colorC5DEEB.withOpacity(0.38),
       dividerLineColor: colors.colorD3DAE0,
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp));
@@ -718,6 +718,7 @@ class LightModeTheme extends AppTheme {
       backgroundColor: colors.white,
       primaryColor: colors.primary,
       dividerColor: colors.colorF7F9FA,
+      transparentColor: colors.transparent,
       arrowRightColor: colors.color8C8C8C,
       titleStyle: interMediumBoldTextStyle.copyWith(
         fontSize: 20.sp,
@@ -764,6 +765,14 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         whiteColor: colors.white,
         cancelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color34415F),
+      );
+
+  @override
+  PresentationGridItemStyle get presentationGridItemStyle => PresentationGridItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
       );
 
   @override

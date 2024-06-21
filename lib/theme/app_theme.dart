@@ -152,6 +152,8 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  PresentationGridItemStyle get presentationGridItemStyle;
+
   MakeInquiryStyle get makeInquiryStyle;
 
   QrScannerStyle get qrScannerStyle;
@@ -1316,6 +1318,7 @@ class ProfileScreenStyle {
   final Color primaryColor;
   final Color dividerColor;
   final Color arrowRightColor;
+  final Color transparentColor;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle subTextStyle;
@@ -1330,6 +1333,7 @@ class ProfileScreenStyle {
       required this.primaryColor,
       required this.dividerColor,
       required this.arrowRightColor,
+      required this.transparentColor,
       required this.titleStyle,
       required this.subTitleStyle,
       required this.subTextStyle,
@@ -1387,6 +1391,20 @@ class LogoutPopupStyle {
     required this.subTitleStyle,
     required this.whiteColor,
     required this.cancelTextStyle,
+  });
+}
+
+class PresentationGridItemStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  PresentationGridItemStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
   });
 }
 

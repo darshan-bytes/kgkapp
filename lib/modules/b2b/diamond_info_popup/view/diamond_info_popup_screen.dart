@@ -11,8 +11,12 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.diamonds.tr,
-        onSearch: () {},
-        onFavorite: () {},
+        onSearch: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
       body: Padding(
