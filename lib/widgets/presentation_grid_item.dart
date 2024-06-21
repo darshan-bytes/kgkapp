@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class PresentationGridItem extends StatelessWidget {
+  final B2BCustomListingDataModel b2bCustomListingDataModel;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Color? backgroundColor;
@@ -12,6 +13,7 @@ class PresentationGridItem extends StatelessWidget {
 
   const PresentationGridItem({
     super.key,
+    required this.b2bCustomListingDataModel,
     this.padding,
     this.margin,
     this.backgroundColor,
@@ -25,7 +27,6 @@ class PresentationGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PresentationGridItemStyle style = AppTheme.of(context).presentationGridItemStyle;
-
     return Container(
       margin: margin,
       padding: padding,
@@ -43,7 +44,15 @@ class PresentationGridItem extends StatelessWidget {
               _buildDetails(style),
             ],
           ),
-          _buildStatusBadge(),
+          if (b2bCustomListingDataModel.status != null)
+            Positioned(
+              left: 16.w,
+              top: 16.w,
+              child: StatusBadge(
+                currentStatus: b2bCustomListingDataModel.status!,
+                height: statusBadgeHeight ?? 32.h,
+              ),
+            ),
         ],
       ),
     );
@@ -51,8 +60,8 @@ class PresentationGridItem extends StatelessWidget {
 
   Widget _buildImage() {
     return SmartImage(
-      path: "",
-      height: imageHeight ?? 224.w,
+      path: b2bCustomListingDataModel.strPresentationImageUrl ?? '',
+      height: imageHeight ?? 224.h,
       width: double.infinity,
       fit: BoxFit.fill,
     );
@@ -64,28 +73,33 @@ class PresentationGridItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(
-            "Presentation Number",
-            style: titleStyle ?? style.titleStyle,
-          ),
-          SizedBox(height: 4.h),
+          if (b2bCustomListingDataModel.strPresentationNumber.isNotNullNorEmpty) ...[
+            SmartText(
+              b2bCustomListingDataModel.strPresentationNumber,
+              style: titleStyle ?? style.titleStyle,
+            ),
+            SizedBox(height: 4.h),
+          ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                flex: 2,
-                child: SmartText(
-                  "Concept name",
-                  style: subTitleStyle ?? style.subTitleStyle,
+              if (b2bCustomListingDataModel.strConceptName.isNotNullNorEmpty)
+                Flexible(
+                  flex: 2,
+                  child: SmartText(
+                    getConceptName(),
+                    style: subTitleStyle ?? style.subTitleStyle,
+                  ),
                 ),
-              ),
               SizedBox(width: 8.w),
-              Flexible(
+              if (b2bCustomListingDataModel.strCreatedOn.isNotNullNorEmpty)
+                Flexible(
                   flex: 1,
                   child: SmartText(
-                    "24/03/2023",
+                    b2bCustomListingDataModel.strCreatedOn,
                     style: subTitleStyle ?? style.subTitleStyle,
-                  )),
+                  ),
+                ),
             ],
           )
         ],
@@ -93,14 +107,11 @@ class PresentationGridItem extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge() {
-    return Positioned(
-      left: 16.w,
-      top: 16.w,
-      child: StatusBadge(
-        currentStatus: OrderStatus.inProgress,
-        height: statusBadgeHeight ?? 32.h,
-      ),
-    );
+  String getConceptName() {
+    if (b2bCustomListingDataModel.strConceptNumber.isNotNullNorEmpty) {
+      return '${b2bCustomListingDataModel.strConceptNumber} - ${b2bCustomListingDataModel.strConceptName}';
+    } else {
+      return b2bCustomListingDataModel.strConceptName.toString();
+    }
   }
 }

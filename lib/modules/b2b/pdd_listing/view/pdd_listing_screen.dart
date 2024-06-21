@@ -9,6 +9,7 @@ class PddListingScreen extends StatelessWidget {
     final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.presentations.tr),
+      bottomNavigationBar: _buildBottomNavigationBar(pddListingBloc, context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -76,21 +77,48 @@ class PddListingScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 24.h),
                   Expanded(
-                      child: ListView.separated(
-                    itemCount: pddListingBloc.filteredPresentationList.length,
-                    itemBuilder: (context, index) {
-                      return B2BListingItem(
-                        type: B2BListingType.presentationListingType,
-                        listingItemModel: pddListingBloc.filteredPresentationList[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  )),
+                    child: ListView.separated(
+                      itemCount: pddListingBloc.filteredPresentationList.length,
+                      itemBuilder: (context, index) {
+                        if (pddListingBloc.isGrid) {
+                          return PresentationGridItem(b2bCustomListingDataModel: pddListingBloc.filteredPresentationList[index]);
+                        } else {
+                          return B2BListingItem(
+                            type: B2BListingType.presentationListingType,
+                            listingItemModel: pddListingBloc.filteredPresentationList[index],
+                          );
+                        }
+                      },
+                      separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                    ),
+                  ),
+                  SizedBox(height: 24.h),
                 ],
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(PddListingBloc pddListingBloc, BuildContext context) {
+    return SafeArea(
+      child: SelectionButton(
+        borderRadius: BorderRadius.zero,
+        isSelected: false,
+        onTap: () {
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (context) => FilterScreen(
+              onApply: () {},
+            ),
+          );
+        },
+        image: AppImages.icFilter,
+        title: APPStrings.filter.tr,
       ),
     );
   }
