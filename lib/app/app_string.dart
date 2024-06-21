@@ -505,6 +505,77 @@ class APPStrings {
   static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
   static const String viewNow = 'view_now';
 
+  //Concept Listing type
+  static const String conceptNumber = 'concept_number';
+  static const String presentation = 'presentation';
+  static const String conceptName = 'concept_name';
+  static const String status = 'status';
+  static const String assignTo = 'assign_to';
+  static const String market = 'market';
+  static const String createdOn = 'created_on';
+
+  //Presentation type
+  static const String presentationNumber = 'presentation_number';
+  static const String approvedBy = 'approved_by';
+  static const String project = 'project';
+
+  //Project Listing type
+  static const String projectNumber = 'project_number';
+  static const String projectName = 'project_name';
+  static const String design = 'design';
+  static const String holdStatus = 'hold_status';
+  static const String customer = 'customer';
+
+  //Design brief type
+  static const String dbfNumber = 'dbf_number';
+  static const String subJewelleryType = 'sub_jewellery_type';
+  static const String jewelleryType = 'jewellery_type';
+
+  //Design Listing type
+  static const String version = 'version';
+  static const String designNumber = 'design_number';
+  static const String salesman = 'salesman';
+  static const String stylesStatus = 'styles_status';
+  static const String designApproval = 'design_approval';
+
+  //Style Listing type
+  static const String styleNumber = 'style_number';
+  static const String stoneCardLocked = 'stone_card_locked';
+  static const String exclusive = 'exclusive';
+  static const String exclusiveCustomer = 'exclusive_customer';
+
+  //Monitoring Dbf Type
+  static const String designCreation = 'design_creation';
+  static const String revisedDate = 'revised_date';
+  static const String dbfApproval = 'dbf_approval';
+  static const String designer = 'designer';
+  static const String approvedOn = "approved_on";
+
+  //Watchlist type
+  static const String name = 'name';
+  static const String from = 'from';
+  static const String to = 'to';
+  static const String remainingTime = 'remaining_time';
+  static const String numberOfProduct = 'number_of_product';
+
+  //Exhibition DetailPage Products Type
+  static const String itemsSold = 'items_sold';
+  static const String orderReceived = 'order_received';
+  static const String totalSell = 'total_sell';
+  static const String leads = 'leads';
+  static const String averageOrderValue = 'average_order_value';
+
+  //Remaining B2B Listing Type
+  static const String quality = 'quality';
+  static const String orderOn = 'order_on';
+  static const String customerName = 'customer_name';
+  static const String mobileNumber = 'mobile_number';
+  static const String salesOrder = 'sales_order';
+  static const String orderName = 'order_name';
+  static const String companyRepresentative = 'company_representative';
+  static const String addedOn = 'added_on';
+  static const String purchaseOrder = 'purchase_order';
+  static const String orderedBy = 'ordered_by';
   static const String noAuctionsFound = 'no_auctions_found';
   static const String noDataFound = 'no_data_found';
 }

@@ -152,6 +152,8 @@ abstract class AppTheme {
 
   LogoutPopupStyle get logoutPopupStyle;
 
+  PresentationGridItemStyle get presentationGridItemStyle;
+
   MakeInquiryStyle get makeInquiryStyle;
 
   QrScannerStyle get qrScannerStyle;
@@ -179,6 +181,8 @@ abstract class AppTheme {
   ContactUsStyle get contactUsStyle;
 
   ConceptInfoPopupScreenStyle get conceptInfoPopupScreenStyle;
+
+  PddListingItemStyle get pddListingItemStyle;
 
   NoDataFoundStyle get noDataFoundStyle;
 }
@@ -1390,6 +1394,20 @@ class LogoutPopupStyle {
   });
 }
 
+class PresentationGridItemStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  PresentationGridItemStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
+  });
+}
+
 class MakeInquiryStyle {
   final TextStyle titleStyle;
   final Color whiteColor;
@@ -1606,5 +1624,13 @@ class NoDataFoundStyle {
   NoDataFoundStyle({
     required this.titleStyle,
     required this.subTitleStyle,
+  });
+}
+
+class PddListingItemStyle {
+  final Color borderColor;
+
+  PddListingItemStyle({
+    required this.borderColor,
   });
 }

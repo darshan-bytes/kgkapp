@@ -768,6 +768,14 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  PresentationGridItemStyle get presentationGridItemStyle => PresentationGridItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+      );
+
+  @override
   SearchResultScreenStyle get searchResultScreenStyle => SearchResultScreenStyle(
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
         subTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
@@ -880,6 +888,11 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
         detailsTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         iconColor: colors.color303538,
+      );
+
+  @override
+  PddListingItemStyle get pddListingItemStyle => PddListingItemStyle(
+        borderColor: colors.colorD3DAE0,
       );
 
   @override
