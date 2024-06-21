@@ -5,56 +5,43 @@ part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
-  static const int homeIndex = 0;
-  static const int categoriesIndex = 1;
-  static const int myBagIndex = 2;
-  static const int supportIndex = 3;
-  static const int profileIndex = 4;
+  List<DashboardDateRangeDataModel> dateRangeList = [];
+  DashboardDateRangeDataModel? selectedDateRange;
 
-  ///[currentIndex] is used to keep track of the current index of the bottom navigation bar
-  int currentIndex = 0;
-
-  ///[pages] is a list of widgets that will be displayed on the screen based on the current index
-  final List<Widget> pages = [
-    const HomeScreen(),
-    const CategoriesScreen(),
-    const MyBagScreen(),
-    const SupportScreen(),
-    const ProfileScreen(),
-  ];
-
-  ///[blocList] is a list of blocs that are used in the bottom navigation bar and used for performing
-  /// actions on the screen based on the current index
-  final List<Bloc> blocList = [
-    BlocProvider.of<HomeBloc>(getNavigatorKeyContext),
-    BlocProvider.of<CategoriesBloc>(getNavigatorKeyContext),
-    BlocProvider.of<MyBagBloc>(getNavigatorKeyContext),
-    BlocProvider.of<SupportBloc>(getNavigatorKeyContext),
-    BlocProvider.of<ProfileBloc>(getNavigatorKeyContext),
-  ];
+  List<DashboardStatisticsDataModel> statisticsList = [];
 
   DashboardBloc() : super(DashboardInitial()) {
-    on<DashboardChangeTabEvent>(_onDashboardChangeTabEvent);
+    on<DashboardInitialEvent>(_onDashboardInitialEvent);
+    on<DashboardDateRangeChangeEvent>(_onDashboardDateRangeChangeEvent);
   }
 
-  ///[_onDashboardChangeTabEvent] is a method that is called when the [DashboardChangeTabEvent] is dispatched
-  /// to the bloc and it changes  the current index of the bottom navigation bar and emits the
-  /// [DashboardChangeTabState] with the new index to the UI.
-  void _onDashboardChangeTabEvent(
-    DashboardChangeTabEvent event,
-    Emitter<DashboardState> emit,
-  ) {
-    if (currentIndex != event.index) {
-      currentIndex = event.index;
-      switch (event.index) {
-        case myBagIndex:
-          blocList[currentIndex].add(InitialMyBagEvent());
-          break;
-        case profileIndex:
-          blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
-          break;
-      }
-      emit(DashboardChangeTabState(event.index));
-    }
+  void _onDashboardInitialEvent(DashboardInitialEvent event, Emitter<DashboardState> emit) {
+    emit(const DashboardReloadState());
+    dateRangeList = [
+      DashboardDateRangeDataModel(title: 'Today', id: 1),
+      DashboardDateRangeDataModel(title: 'Yesterday', id: 2),
+      DashboardDateRangeDataModel(title: 'Last 7 days', id: 3),
+      DashboardDateRangeDataModel(title: 'Last 30 days', id: 4),
+      DashboardDateRangeDataModel(title: 'This month', id: 5),
+      DashboardDateRangeDataModel(title: 'Last month', id: 6),
+      DashboardDateRangeDataModel(title: 'Last 1 year', id: 7),
+    ];
+    selectedDateRange = dateRangeList.first;
+
+    statisticsList = [
+      DashboardStatisticsDataModel(
+          title: 'Total purchase', value: '\$83,000.00', subTitle: '+\$1,000.00 today', variation: '12%', isNegative: true),
+      DashboardStatisticsDataModel(title: 'Orders received', value: '4587', subTitle: '+124 today', variation: '6%', isNegative: true),
+      DashboardStatisticsDataModel(title: 'Total sell', value: '\$97,451.00', subTitle: '+\$1,578.00 today', variation: '5%'),
+      DashboardStatisticsDataModel(title: 'Lead conversion', value: '654', subTitle: '+8 today', variation: '2%'),
+      DashboardStatisticsDataModel(title: 'Total due amount', value: '\$30,547.00', subTitle: '+\$1,985.00 today', variation: '6%'),
+    ];
+    emit(const DashboardLoadedState());
+  }
+
+  void _onDashboardDateRangeChangeEvent(DashboardDateRangeChangeEvent event, Emitter<DashboardState> emit) {
+    emit(const DashboardReloadState());
+    selectedDateRange = event.dateRange;
+    emit(const DashboardDateRangeChangeState());
   }
 }

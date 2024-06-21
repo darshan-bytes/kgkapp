@@ -6,7 +6,7 @@ class AppRoutes {
   static const signInPage = '/signInPage';
   static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
-  static const dashboardPage = '/tabBarPage';
+  static const landingPage = '/landingPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
@@ -33,6 +33,18 @@ class AppRoutes {
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
   static const orderTimelinePage = '/orderTimelinePage';
+  static const makeInquiryPage = '/makeInquiryPage';
+  static const qrScannerPage = '/qrScannerPage';
+  static const searchPage = '/searchPage';
+  static const searchResultPage = '/searchResultPage';
+  static const notificationSettingsPage = '/notificationSettingsPage';
+  static const cmsWebViewPage = '/cmsWebViewPage';
+  static const faqPage = '/faqPage';
+  static const preferencesPage = '/preferencesPage';
+  static const userTypeSelection = '/userTypeSelection';
+  static const contactUsPage = '/contactUsPage';
+  static const dashboardPage = '/dashboardPage';
+  static const pddListingPage = '/pddListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -63,12 +75,15 @@ class AppRoutes {
       case categoriesPage:
         return MaterialPageRoute(
           builder: (_) => const CategoriesScreen(),
-          settings: const RouteSettings(name: categoriesPage),
+          settings: settings,
         );
 
-      case dashboardPage:
+      case landingPage:
         return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
+          builder: (context) {
+            BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
+            return const LandingScreen();
+          },
           settings: settings,
         );
 
@@ -275,6 +290,118 @@ class AppRoutes {
           settings: settings,
         );
 
+      case makeInquiryPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
+            return const MakeInquiryScreen();
+          },
+          settings: settings,
+        );
+
+      case searchPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
+            return const SearchScreen();
+          },
+          settings: settings,
+        );
+
+      case qrScannerPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<QrCodeScanLoginBloc>(
+              create: (context) => QrCodeScanLoginBloc(),
+              child: const QrScannerScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case searchResultPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SearchResultBloc>(context).add(InitialSearchResultEvent(context: context));
+            return const SearchResultScreen();
+          },
+          settings: settings,
+        );
+
+      case notificationSettingsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<NotificationSettingsBloc>(
+              create: (context) => NotificationSettingsBloc(),
+              child: const NotificationSettingsView(),
+            );
+          },
+          settings: settings,
+        );
+
+      case cmsWebViewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<CmsWebViewBloc>(
+              create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
+              child: const CmsWebViewScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case faqPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
+            return const FaqScreen();
+          },
+          settings: settings,
+        );
+
+      case preferencesPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
+            return const PreferencesScreen();
+          },
+          settings: settings,
+        );
+
+      case userTypeSelection:
+        return MaterialPageRoute(
+          builder: (_) => const UserTypeSelection(),
+          settings: settings,
+        );
+
+      case contactUsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
+            return const ContactUsScreen();
+          },
+          settings: settings,
+        );
+
+      case dashboardPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
+            return const DashboardScreen();
+          },
+          settings: settings,
+        );
+
+      case pddListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<PddListingBloc>(
+              create: (context) => PddListingBloc(),
+              child: const PddListingScreen(),
+            );
+          },
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }
@@ -301,6 +428,9 @@ enum RoutesData {
   isCustomisationPage,
   addressDetails,
   isPageFor,
+  searchResultData,
+  cmsPageData,
+  isNoDataFound,
 }
 
 enum ScreenIdentifier {

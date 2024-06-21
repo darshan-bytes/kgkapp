@@ -23,40 +23,23 @@ class StoneListingScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BlocBuilder<StoneListingBloc, StoneListingState>(builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            BlocBuilder<StoneListingBloc, StoneListingState>(builder: (context, state) {
-              return SmartPagination(
-                pageNumbers: diamondListingBloc.pageNumbers,
-                currentPage: diamondListingBloc.selectedPageNumber,
-                onPageChanged: (int index, String newValue) {
-                  diamondListingBloc.add(StoneProductChangePageNumberEvent(newValue));
-                },
-              );
-            }),
-            FilterBottomActionBar(
-              onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
-              },
-              onSortTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  builder: (context) => const SortScreen(),
-                );
-              },
-            ),
-          ],
+        return FilterBottomActionBar(
+          onFilterTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => DiamondFilterScreen(onApply: () {}),
+            );
+          },
+          onSortTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => const SortScreen(),
+            );
+          },
         );
       }),
       body: SmartSingleChildScrollView(child: BlocBuilder<StoneListingBloc, StoneListingState>(
@@ -75,7 +58,6 @@ class StoneListingScreen extends StatelessWidget {
                 _buildProductFilterCount(style, diamondListingBloc),
                 SizedBox(height: 24.h),
                 _buildProductList(style, diamondListingBloc),
-                SizedBox(height: 7.h),
               ],
             ),
           ));
@@ -134,7 +116,7 @@ class StoneListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeListingTypeEvent(true));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent());
                 },
               ),
               SelectionButton(
@@ -150,7 +132,7 @@ class StoneListingScreen extends StatelessWidget {
                 unselectedButtonBorderColor: style.listBorderColor,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeListingTypeEvent(false));
+                  diamondListingBloc.add(const StoneChangeListingTypeEvent());
                 },
               ),
               SizedBox(width: 16.w),
@@ -205,9 +187,7 @@ class StoneListingScreen extends StatelessWidget {
                     onFavTap: () {},
                   );
                 }).toList()),
-                SizedBox(
-                  height: 17.h,
-                )
+                SizedBox(height: 17.h)
               ],
             );
           } else {

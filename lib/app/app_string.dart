@@ -50,6 +50,7 @@ class APPStrings {
 
   // Notifications
   static const String notification = 'notification';
+  static const String notificationSettings = 'notification_settings';
   static const String allNotification = 'all_notification';
   static const String settings = 'settings';
 
@@ -179,7 +180,7 @@ class APPStrings {
   static const String state = 'state';
   static const String postalCode = 'postal_code';
   static const String phoneNumber = 'phone_number';
-  static const String saveAddress = 'save_address';
+  static const String savedAddress = 'saved_address';
   static const String search = 'search';
   static const String startTypingToSearch = 'start_typing_to_search';
 
@@ -378,7 +379,7 @@ class APPStrings {
   static const String shippingAddress = 'shipping_address';
 
   //order details popup
-  static const String trackProduct = 'track_product';
+  static const String trackOrder = 'track_order';
   static const String viewTimeline = 'view_timeline';
   static const String cancelOrder = 'cancel_order';
 
@@ -411,7 +412,6 @@ class APPStrings {
   static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
   static const String findAStore = 'find_a_store';
   static const String searchYourNearbyStores = 'search_your_nearby_stores';
-  static const String savedAddress = 'saved_address';
   static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
   static const String changePassword = 'change_password';
   static const String changeYourExistingPassword = 'change_your_existing_password';
@@ -434,4 +434,148 @@ class APPStrings {
   static const String advanceFilters = 'advance_filters';
   static const String currentPassword = 'current_password';
   static const String confirm = 'confirm';
+  static const String fullName = 'full_name';
+  static const String comment = 'comment';
+  static const String inquiryType = 'inquiry_type';
+  static const String selectProduct = 'select_product';
+
+  //Make an inquiry
+  static const String makeAnInquiry = 'make_an_inquiry';
+  static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
+  static const String popularSearches = 'popular_searches';
+  static const String recentSearches = 'recent_searches';
+  static const String searchResult = 'search_result';
+  static const String resultFoundFor = 'result_found_for';
+  static const String searchResultNotFoundDesc = 'search_result_not_found_desc';
+  static const String needHelp = 'need_help';
+  static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
+  static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
+  static const String changeNotificationSettings = 'change_notification_settings';
+  static const String adminSection = 'admin_section';
+  static const String orderManagement = 'order_management';
+  static const String calendar = 'calendar';
+  static const String meetingsTasksAllInOnePlace = 'meetings_tasks_all_in_one_place';
+  static const String messages = 'messages';
+  static const String conversationsYouAreHaving = 'conversations_you_are_having';
+  static const String masters = 'masters';
+  static const String masterDataOfUserAndNewsLetter = 'master_data_of_user_and_newsletter';
+  static const String dashboard = 'dashboard';
+  static const String listOfDashboard = 'list_of_dashboard';
+  static const String watchlist = 'watchlist';
+  static const String listOfProductsAddedToWatchlist = 'list_of_products_added_to_watchlist';
+  static const String exhibition = 'exhibition';
+  static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
+  static const String activityLog = 'activity_log';
+  static const String getLogOnTheAccount = 'get_log_on_the_account';
+
+  //Support screen
+  static const String repliesWithin24Hours = 'replies_within_24_hours';
+  static const String call = 'call';
+  static const String frequentlyAskedQuestion = "frequently_asked_questions";
+  static const String contactUs = "contact_us";
+  static const String getInTouchWithUs = "get_in_touch_with_us";
+  static const String searchByCategory = "search_by_category";
+  static const String selectACompany = 'select_a_company';
+
+  static const String business = 'business';
+  static const String generalQuestions = 'general_questions';
+  static const String faqs = 'faqs';
+  static const String stillNeedHelp = 'still_need_help';
+  static const String byPhone = 'by_phone';
+  static const String byEmail = 'by_email';
+  static const String questionOrQueriesGetInTouch = 'question_or_queries_get_in_touch';
+  static const String findYourNearestXStore = 'find_your_nearest_X_store';
+  static const String storeDirectory = 'store_directory';
+
+  static const String language = 'language';
+  static const String currency = 'currency';
+
+  //Compared to
+  static const String comparedToX = 'compared_to_X';
+
+  //Contact us
+  static const String dropUsANote = 'drop_us_a_note';
+
+  //Concept
+  static const String conceptNoX = 'concept_no_x';
+  static const String newlyLaunched = 'newly_launched';
+  static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
+  static const String exploreNow = 'explore_now';
+  static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
+  static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
+  static const String viewNow = 'view_now';
+
+  //Concept Listing type
+  static const String conceptNumber = 'concept_number';
+  static const String presentation = 'presentation';
+  static const String conceptName = 'concept_name';
+  static const String status = 'status';
+  static const String assignTo = 'assign_to';
+  static const String market = 'market';
+  static const String createdOn = 'created_on';
+
+  //Presentation type
+  static const String presentationNumber = 'presentation_number';
+  static const String approvedBy = 'approved_by';
+  static const String project = 'project';
+
+  //Project Listing type
+  static const String projectNumber = 'project_number';
+  static const String projectName = 'project_name';
+  static const String design = 'design';
+  static const String holdStatus = 'hold_status';
+  static const String customer = 'customer';
+
+  //Design brief type
+  static const String dbfNumber = 'dbf_number';
+  static const String subJewelleryType = 'sub_jewellery_type';
+  static const String jewelleryType = 'jewellery_type';
+
+  //Design Listing type
+  static const String version = 'version';
+  static const String designNumber = 'design_number';
+  static const String salesman = 'salesman';
+  static const String stylesStatus = 'styles_status';
+  static const String designApproval = 'design_approval';
+
+  //Style Listing type
+  static const String styleNumber = 'style_number';
+  static const String stoneCardLocked = 'stone_card_locked';
+  static const String exclusive = 'exclusive';
+  static const String exclusiveCustomer = 'exclusive_customer';
+
+  //Monitoring Dbf Type
+  static const String designCreation = 'design_creation';
+  static const String revisedDate = 'revised_date';
+  static const String dbfApproval = 'dbf_approval';
+  static const String designer = 'designer';
+  static const String approvedOn = "approved_on";
+
+  //Watchlist type
+  static const String name = 'name';
+  static const String from = 'from';
+  static const String to = 'to';
+  static const String remainingTime = 'remaining_time';
+  static const String numberOfProduct = 'number_of_product';
+
+  //Exhibition DetailPage Products Type
+  static const String itemsSold = 'items_sold';
+  static const String orderReceived = 'order_received';
+  static const String totalSell = 'total_sell';
+  static const String leads = 'leads';
+  static const String averageOrderValue = 'average_order_value';
+
+  //Remaining B2B Listing Type
+  static const String quality = 'quality';
+  static const String orderOn = 'order_on';
+  static const String customerName = 'customer_name';
+  static const String mobileNumber = 'mobile_number';
+  static const String salesOrder = 'sales_order';
+  static const String orderName = 'order_name';
+  static const String companyRepresentative = 'company_representative';
+  static const String addedOn = 'added_on';
+  static const String purchaseOrder = 'purchase_order';
+  static const String orderedBy = 'ordered_by';
+  static const String noAuctionsFound = 'no_auctions_found';
+  static const String noDataFound = 'no_data_found';
 }

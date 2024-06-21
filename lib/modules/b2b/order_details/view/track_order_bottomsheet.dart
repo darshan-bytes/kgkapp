@@ -47,7 +47,7 @@ class TrackOrderBottomSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(APPStrings.trackProduct.tr, style: style.titleStyle),
+        SmartText(APPStrings.trackOrder.tr, style: style.titleStyle),
         SizedBox(width: 8.w),
         SmartImage(
           path: AppImages.icCross,

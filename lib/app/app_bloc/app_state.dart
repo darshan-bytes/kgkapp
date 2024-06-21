@@ -35,3 +35,21 @@ final class LanguageState extends AppState {
   @override
   List<Object> get props => [locale];
 }
+
+final class AppLoadingState extends AppState {
+  final bool isLoading;
+
+  const AppLoadingState(this.isLoading);
+
+  @override
+  List<Object> get props => [isLoading];
+}
+
+final class UserTypeState extends AppState {
+  final UserType userType;
+
+  const UserTypeState(this.userType);
+
+  @override
+  List<Object> get props => [userType];
+}

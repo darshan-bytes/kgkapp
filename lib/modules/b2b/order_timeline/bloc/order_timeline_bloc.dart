@@ -47,7 +47,7 @@ class OrderTimelineBloc extends Bloc<OrderTimelineEvent, OrderTimelineState> {
           ? date = APPStrings.today.tr
           : ((timelineList[index].dateTimeObject.isYesterday)
               ? date = APPStrings.yesterday.tr
-              : date = timelineList[index].dateTimeObject.formatDateWithSuffix);
+              : date = timelineList[index].dateTimeObject.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYY));
     }
 
     return (isDisplayData, date);

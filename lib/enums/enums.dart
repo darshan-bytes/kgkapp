@@ -32,3 +32,32 @@ enum OrderStatus {
 
   const OrderStatus(this.value);
 }
+
+enum UserType {
+  b2cUser,
+  b2bUser,
+}
+
+/// [B2BListingType] -  Representing various listing types of B2B Listing.
+enum B2BListingType {
+  conceptListingType,
+  presentationType,
+  presentationListingType,
+  projectListingType,
+  designBriefsType,
+  designListingType,
+  stylesListingType,
+  monitoringPresentationListingType,
+  monitoringPresentationGridType,
+  monitoringDbfType,
+  monitoringDesignsType,
+  monitoringStylesType,
+  watchlistType,
+  exhibitionDetailPageProductsType,
+  exhibitionDetailPageOrdersType,
+  retailerOrderListingJewelleryType,
+  retailerOrderListingDiamondType,
+  userListingType,
+  newsletterSubscribersType,
+  manufacturerOrderListingType,
+}

@@ -2,12 +2,18 @@ import 'package:kgk/kgk.dart';
 
 class SmartOptionTile extends StatelessWidget {
   final ProfileListModel profileListModel;
+  final Color? leadingImageColor;
+  final TextStyle? titleStyle;
+  final TextStyle? subTitleStyle;
   final double? imageSize;
 
   const SmartOptionTile({
     super.key,
     required this.profileListModel,
     this.imageSize,
+    this.leadingImageColor,
+    this.titleStyle,
+    this.subTitleStyle,
   });
 
   @override
@@ -29,7 +35,8 @@ class SmartOptionTile extends StatelessWidget {
                 path: profileListModel.image ?? '',
                 height: imageSize ?? 24.w,
                 width: imageSize ?? 24.w,
-                fit: BoxFit.fill,
+                color: leadingImageColor,
+                fit: BoxFit.contain,
               ),
               SizedBox(
                 width: 12.w,
@@ -41,7 +48,7 @@ class SmartOptionTile extends StatelessWidget {
                     if (profileListModel.title.isNotNullNorEmpty)
                       SmartText(
                         profileListModel.title,
-                        style: style.titleStyle,
+                        style: style.titleStyle.merge(titleStyle),
                       ),
                     if (profileListModel.title.isNotNullNorEmpty && profileListModel.subTitle.isNotNullNorEmpty)
                       SizedBox(
@@ -50,7 +57,7 @@ class SmartOptionTile extends StatelessWidget {
                     if (profileListModel.subTitle.isNotNullNorEmpty)
                       SmartText(
                         profileListModel.subTitle,
-                        style: style.subTextStyle,
+                        style: style.subTextStyle.merge(subTitleStyle),
                       ),
                   ],
                 ),

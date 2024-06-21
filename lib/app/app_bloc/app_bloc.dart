@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'app_event.dart';
+
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
@@ -11,11 +12,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ThemeData? themeData;
   Locale locale = const Locale(APPStrings.languageEn);
 
+  bool isLoading = false;
+
+  UserType userType = UserType.b2cUser;
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
     on<ConnectivityChangedEvent>(_onConnectivityChangedEvent);
     on<LanguageChangedEvent>(_onLanguageChangedEvent);
+    on<SetAppLoadingEvent>(_onSetLoadingEvent);
+    on<SetUserTypeEvent>(_onSetUserTypeEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -89,5 +96,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       languageSwitch = true;
     }
     emit(LanguageState(locale));
+  }
+
+  void _onSetLoadingEvent(SetAppLoadingEvent event, Emitter<AppState> emit) {
+    isLoading = event.isLoading;
+    emit(AppLoadingState(isLoading));
+  }
+
+  void _onSetUserTypeEvent(SetUserTypeEvent event, Emitter<AppState> emit) {
+    userType = event.userType;
+    emit(UserTypeState(userType));
   }
 }

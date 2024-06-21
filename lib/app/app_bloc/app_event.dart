@@ -35,3 +35,21 @@ class LanguageChangedEvent extends AppEvent {
   @override
   List<Object> get props => [languageCode];
 }
+
+class SetAppLoadingEvent extends AppEvent {
+  final bool isLoading;
+
+  const SetAppLoadingEvent(this.isLoading);
+
+  @override
+  List<Object> get props => [isLoading];
+}
+
+class SetUserTypeEvent extends AppEvent {
+  final UserType userType;
+
+  const SetUserTypeEvent(this.userType);
+
+  @override
+  List<Object> get props => [userType];
+}

@@ -73,16 +73,19 @@ class PresentationGridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
+                flex: 2,
                 child: SmartText(
                   "Concept name",
                   style: subTitleStyle ?? style.subTitleStyle,
                 ),
               ),
               SizedBox(width: 8.w),
-              SmartText(
-                "24/03/2023",
-                style: subTitleStyle ?? style.subTitleStyle,
-              ),
+              Flexible(
+                  flex: 1,
+                  child: SmartText(
+                    "24/03/2023",
+                    style: subTitleStyle ?? style.subTitleStyle,
+                  )),
             ],
           )
         ],
