@@ -8,15 +8,7 @@ class DashboardScreen extends StatelessWidget {
     final DashboardBloc dashboardBloc = BlocProvider.of<DashboardBloc>(context);
     final DashboardStyle style = AppTheme.of(context).dashboardStyle;
     return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.dashboard.tr,
-        onFilter: () {
-          context.pushNamed(AppRoutes.searchPage);
-        },
-        onFavorite: () {
-          context.pushNamed(AppRoutes.wishListPage);
-        },
-      ),
+      appBar: SmartAppBar(title: APPStrings.dashboard.tr),
       body: SafeArea(
         child: BlocBuilder<DashboardBloc, DashboardState>(
           buildWhen: (previous, current) => current is DashboardLoadedState,

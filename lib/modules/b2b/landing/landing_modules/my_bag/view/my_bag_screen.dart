@@ -16,7 +16,7 @@ class MyBagScreen extends StatelessWidget {
             return SmartAppBar(
               title: APPStrings.myBag.tr,
               isBack: false,
-              onFilter: () {
+              onSearch: () {
                 context.pushNamed(AppRoutes.searchPage);
               },
               onFavorite: () {

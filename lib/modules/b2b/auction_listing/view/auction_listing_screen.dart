@@ -72,18 +72,6 @@ class AuctionListingScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BlocBuilder<AuctionListingBloc, AuctionListingState>(
-            buildWhen: (previous, current) => current is ChangeAuctionListingPageNumberState,
-            builder: (context, state) {
-              return SmartPagination(
-                pageNumbers: auctionListingBloc.pageNumbers,
-                currentPage: auctionListingBloc.selectedPageNumber,
-                onPageChanged: (int index, String newValue) {
-                  auctionListingBloc.add(ChangeAuctionListingPageNumberEvent(newValue));
-                },
-              );
-            },
-          ),
           SelectionButton(
             borderRadius: BorderRadius.zero,
             isSelected: false,

@@ -578,4 +578,9 @@ class APPStrings {
   static const String orderedBy = 'ordered_by';
   static const String noAuctionsFound = 'no_auctions_found';
   static const String noDataFound = 'no_data_found';
+
+  //Concepts
+  static const String concepts = 'concepts';
+  static const String searchConcept = 'search_concept';
+  static const String noConceptFound = 'no_concept_found';
 }

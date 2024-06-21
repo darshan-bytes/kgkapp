@@ -12,7 +12,7 @@ class CollectionScreen extends StatelessWidget {
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
-        onFilter: () {
+        onSearch: () {
           context.pushNamed(AppRoutes.searchPage);
         },
       ),

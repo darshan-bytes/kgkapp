@@ -22,6 +22,15 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.searchPage);
           },
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        SmartText(
+          'Concept List',
+          onTap: () {
+            context.pushNamed(AppRoutes.conceptListPage);
+          },
+        ),
       ]),
     );
   }
