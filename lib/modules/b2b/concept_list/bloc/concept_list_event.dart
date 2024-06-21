@@ -17,3 +17,12 @@ final class ConceptListSearchEvent extends ConceptListEvent {
   @override
   List<Object> get props => [];
 }
+
+final class ConceptListLoadMoreEvent extends ConceptListEvent {
+  final int currentPage;
+
+  const ConceptListLoadMoreEvent(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}

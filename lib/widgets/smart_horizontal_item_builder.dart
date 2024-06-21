@@ -13,6 +13,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   final EdgeInsets titleOptionalPadding;
   final double spacingBetweenTitleAndItems;
   final Color? backgroundColor;
+  final ScrollController? scrollController;
 
   const SmartHorizontalItemBuilder({
     super.key,
@@ -28,6 +29,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.backgroundColor,
     this.titleOptionalPadding = EdgeInsets.zero,
+    this.scrollController,
   });
 
   @override
@@ -45,6 +47,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
             ],
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+              controller: scrollController,
               child: Padding(
                 padding: listPadding,
                 child: Row(
