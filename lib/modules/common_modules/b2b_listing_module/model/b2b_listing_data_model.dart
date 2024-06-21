@@ -90,6 +90,7 @@ class B2BCustomListingDataModel {
     this.strMarket,
     this.strMarketFlagImageUrl,
     this.strCreatedBy,
+    this.strCreatedByImageUrl,
     this.strCreatedOn,
     this.strPresentationNumber,
     this.strProject,
@@ -151,7 +152,6 @@ class B2BCustomListingDataModel {
     this.strOrderedBy,
     this.strOrderedByImageUrl,
     this.strSalesmanImageUrl,
-    this.strCreatedByImageUrl,
     this.strPresentationImageUrl,
   });
 }

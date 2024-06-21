@@ -17,18 +17,18 @@ class HomeScreen extends StatelessWidget {
           height: 20,
         ),
         SmartText(
-          'DIY',
+          'Search screen',
           onTap: () {
-            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
+            context.pushNamed(AppRoutes.searchPage);
           },
         ),
         const SizedBox(
           height: 20,
         ),
         SmartText(
-          'Search screen',
+          'Concept List',
           onTap: () {
-            context.pushNamed(AppRoutes.searchPage);
+            context.pushNamed(AppRoutes.conceptListPage);
           },
         ),
       ]),

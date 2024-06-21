@@ -48,18 +48,6 @@ class OrderScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BlocBuilder<OrdersBloc, OrdersState>(
-            buildWhen: (previous, current) => current is ChangeOrdersPageNumberState,
-            builder: (context, state) {
-              return SmartPagination(
-                pageNumbers: ordersBloc.pageNumbers,
-                currentPage: ordersBloc.selectedPageNumber,
-                onPageChanged: (int index, String newValue) {
-                  ordersBloc.add(ChangeOrdersPageNumberEvent(newValue));
-                },
-              );
-            },
-          ),
           SelectionButton(
             borderRadius: BorderRadius.zero,
             isSelected: false,

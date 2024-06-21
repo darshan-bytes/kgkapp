@@ -167,7 +167,7 @@ class SearchResultScreen extends StatelessWidget {
         builder: (context, state) {
           return SmartAppBar(
             title: searchResultBloc.appbarTitle,
-            onFilter: () {
+            onSearch: () {
               context.pushNamed(AppRoutes.searchPage);
             },
             onFavorite: () {

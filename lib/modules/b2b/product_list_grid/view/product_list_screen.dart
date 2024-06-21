@@ -17,7 +17,9 @@ class ProductListScreen extends StatelessWidget {
               onFavorite: () {
                 context.pushNamed(AppRoutes.wishListPage);
               },
-              onFilter: () {},
+              onSearch: () {
+                context.pushNamed(AppRoutes.searchPage);
+              },
             );
           },
         ),
@@ -29,13 +31,6 @@ class ProductListScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SmartPagination(
-                pageNumbers: bloc.pageNumbers,
-                currentPage: bloc.selectedPageNumber,
-                onPageChanged: (int index, String newValue) {
-                  bloc.add(ChangePageNumberEvent(newValue));
-                },
-              ),
               FilterBottomActionBar(
                 onFilterTap: () {
                   Utils.showSmartModalBottomSheet(

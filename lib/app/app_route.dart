@@ -45,6 +45,7 @@ class AppRoutes {
   static const contactUsPage = '/contactUsPage';
   static const dashboardPage = '/dashboardPage';
   static const pddListingPage = '/pddListingPage';
+  static const conceptListPage = '/conceptListPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -400,6 +401,15 @@ class AppRoutes {
               create: (context) => PddListingBloc(),
               child: const PddListingScreen(),
             );
+          },
+          settings: settings,
+        );
+
+      case conceptListPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ConceptListBloc>(context).add(const ConceptListInitialEvent());
+            return const ConceptListScreen();
           },
           settings: settings,
         );

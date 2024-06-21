@@ -45,8 +45,8 @@
   "enter_account_details": "Enter your account details and get started",
   "select_account_type": "Select Account Type",
   "individual": "Individual",
-  "first_name": "First name",
-  "last_name": "Last name",
+  "first_name": "First Name",
+  "last_name": "Last Name",
   "contact_number": "Contact Number",
   "password": "Password",
   "company": "Company",
@@ -467,5 +467,8 @@
   "approvedOn": "Approved on",
   "ordered_by": "Ordered by",
   "no_auctions_found": "No auctions found",
-  "no_data_found": "No data found"
+  "no_data_found": "No data found",
+  "concepts": "Concepts",
+  "search_concept": "Search concept",
+  "no_concept_found": "No concept found"
 }

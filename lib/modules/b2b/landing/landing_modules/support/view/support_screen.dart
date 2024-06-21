@@ -15,7 +15,9 @@ class SupportScreen extends StatelessWidget {
           onFavorite: () {
             context.pushNamed(AppRoutes.wishListPage);
           },
-          onNotification: () {},
+          onNotification: () {
+            context.pushNamed(AppRoutes.notificationPage);
+          },
         ),
         body: SingleChildScrollView(
           child: Padding(
