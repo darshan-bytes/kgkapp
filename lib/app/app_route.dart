@@ -396,6 +396,7 @@ class AppRoutes {
       case pddListingPage:
         return MaterialPageRoute(
           builder: (context) {
+            BlocProvider.of<PddListingBloc>(context).add(InitialPddListingEvent(context: context));
             return BlocProvider<PddListingBloc>(
               create: (context) => PddListingBloc(),
               child: const PddListingScreen(),

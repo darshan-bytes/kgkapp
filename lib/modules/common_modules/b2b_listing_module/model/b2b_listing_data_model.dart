@@ -75,6 +75,7 @@ class B2BCustomListingDataModel {
   String? strApprovedOn;
   String? strOrderedBy;
   String? strOrderedByImageUrl;
+  String? strPresentationImageUrl;
 
   B2BCustomListingDataModel({
     this.id,
@@ -151,5 +152,6 @@ class B2BCustomListingDataModel {
     this.strOrderedBy,
     this.strOrderedByImageUrl,
     this.strSalesmanImageUrl,
+    this.strPresentationImageUrl,
   });
 }
