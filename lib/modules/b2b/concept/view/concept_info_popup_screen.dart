@@ -1,11 +1,18 @@
 import 'package:kgk/kgk.dart';
 
 class ConceptInfoPopupScreen extends StatelessWidget {
-  const ConceptInfoPopupScreen({super.key, required this.imageList, required this.conceptNo, required this.conceptDesc});
-
   final List<String> imageList;
   final String conceptNo;
   final String conceptDesc;
+
+  ConceptInfoPopupScreen({
+    super.key,
+    required this.imageList,
+    required this.conceptNo,
+    required this.conceptDesc,
+  });
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +39,24 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                     style: style.detailsTextStyle,
                   ),
                   SizedBox(height: 16.h),
-                  SmartHorizontalItemBuilder(
-                      itemCount: imageList.length,
-                      listPadding: EdgeInsets.only(bottom: 16.h),
-                      itemBetweenSpace: 16.w,
-                      itemBuilder: (context, index) {
-                        return SmartImage(
-                          path: imageList[index],
-                          height: 64.h,
-                          width: 102.w,
-                          imageBorderRadius: BorderRadius.circular(4.r),
-                        );
-                      }),
+                  if (imageList.isNotEmpty)
+                    Scrollbar(
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      child: SmartHorizontalItemBuilder(
+                          scrollController: _scrollController,
+                          itemCount: imageList.length,
+                          listPadding: EdgeInsets.only(bottom: 16.h),
+                          itemBetweenSpace: 16.w,
+                          itemBuilder: (context, index) {
+                            return SmartImage(
+                              path: imageList[index],
+                              height: 64.h,
+                              width: 102.w,
+                              imageBorderRadius: BorderRadius.circular(4.r),
+                            );
+                          }),
+                    ),
                 ],
               ),
             ),

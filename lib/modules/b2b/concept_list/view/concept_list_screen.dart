@@ -9,11 +9,12 @@ class ConceptListScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.concepts.tr),
       body: SafeArea(
-        child: SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 24.h),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SizedBox(height: 24.h),
               SmartTextField(
                 controller: conceptListBloc.searchController,
                 hintText: APPStrings.searchConcept.tr,
@@ -24,25 +25,61 @@ class ConceptListScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24.h),
-              BlocBuilder<ConceptListBloc, ConceptListState>(
-                buildWhen: (previous, current) => current is ConceptListLoadedState,
-                builder: (context, state) {
-                  if (conceptListBloc.conceptList.isEmpty) {
-                    return NoDataFoundWidget(text: APPStrings.noConceptFound.tr);
-                  }
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: conceptListBloc.conceptList.length,
-                    itemBuilder: (context, index) {
-                      return B2BListingItem(
-                        type: B2BListingType.conceptListingType,
-                        listingItemModel: conceptListBloc.conceptList[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  );
-                },
+              Expanded(
+                child: BlocBuilder<ConceptListBloc, ConceptListState>(
+                  buildWhen: (previous, current) => current is ConceptListLoadedState || current is ConceptListLoadedMoreState,
+                  builder: (context, state) {
+                    if (conceptListBloc.conceptList.isEmpty) {
+                      return NoDataFoundWidget(text: APPStrings.noConceptFound.tr);
+                    }
+                    return ListView.separated(
+                      padding: EdgeInsets.only(bottom: 24.h),
+                      controller: conceptListBloc.paginationScrollController.scrollController,
+                      shrinkWrap: true,
+                      itemCount: conceptListBloc.conceptList.length,
+                      itemBuilder: (context, index) {
+                        return BlocBuilder<ConceptListBloc, ConceptListState>(
+                          buildWhen: (previous, current) => current is ConceptListLoadingMoreState || current is ConceptListLoadedMoreState,
+                          builder: (context, state) {
+                            return Column(
+                              children: [
+                                B2BListingItem(
+                                  onTap: () {
+                                    Utils.showSmartModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return ConceptInfoPopupScreen(
+                                            imageList: const [
+                                              "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
+                                              "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
+                                              "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
+                                              "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
+                                              "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
+                                              "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
+                                            ],
+                                            conceptNo: conceptListBloc.conceptList[index].strConceptNumber ?? '',
+                                            conceptDesc:
+                                                'A jewellery collection inspired by the moon\'s allure. Rings, necklaces, and earrings that capture its luminous beauty.',
+                                          );
+                                        });
+                                  },
+                                  type: B2BListingType.conceptListingType,
+                                  listingItemModel: conceptListBloc.conceptList[index],
+                                ),
+                                if (state is ConceptListLoadingMoreState && index == conceptListBloc.conceptList.length - 1)
+                                  Padding(
+                                    padding: EdgeInsets.all(16.w),
+                                    child: const CircularProgressIndicator(),
+                                  ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                    );
+                  },
+                ),
               ),
             ],
           ),
