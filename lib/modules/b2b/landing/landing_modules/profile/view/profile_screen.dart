@@ -65,7 +65,18 @@ class ProfileScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
                               ),
-                              builder: (context) => const EditProfileBottomSheet());
+                              builder: (context) => LayoutBuilder(
+                                    builder: (context, _) {
+                                      return AnimatedPadding(
+                                          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                          duration: const Duration(milliseconds: 50),
+                                          curve: Curves.easeOut,
+                                          child: Container(
+                                            constraints: BoxConstraints(maxHeight: context.height, minHeight: 660.h),
+                                            child: const EditProfileBottomSheet(),
+                                          ));
+                                    },
+                                  ));
                         }),
                   ],
                 ),
