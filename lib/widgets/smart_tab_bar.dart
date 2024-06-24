@@ -68,10 +68,12 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     final SmartTabBarStyle style = AppTheme.of(context).smartTabBarStyle;
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           color: widget.tabBarColor,
           child: TabBar(
+              physics: widget.physics,
               isScrollable: widget.isScrollable,
               onTap: widget.onTapTab,
               controller: _tabController,
@@ -91,13 +93,13 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
               )),
         ),
         if (widget.tabBetweenView != null) widget.tabBetweenView!,
-        Expanded(
-          child: TabBarView(
-            physics: widget.physics,
-            controller: _tabController,
-            children: widget.tabBarView,
-          ),
-        ),
+        Flexible(
+            fit: FlexFit.loose,
+            child: TabBarView(
+              physics: widget.physics,
+              controller: _tabController,
+              children: widget.tabBarView,
+            )),
       ],
     );
   }

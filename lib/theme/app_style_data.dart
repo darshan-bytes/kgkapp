@@ -900,4 +900,23 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       );
+
+  @override
+  HomeScreenStyle get homeScreenStyle => HomeScreenStyle(
+        primaryColor: colors.primary,
+        whiteColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        bannerTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        shopGemstoneBgColor: colors.colorF7F9FA,
+        viewAllCollectionsBgColor: colors.black.withOpacity(0.3),
+        viewAllCollectionsTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp, color: colors.white),
+        createOwnSignatureTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, color: colors.white),
+        createOwnSignatureSubTitleStyle: interRegularTextStyle.copyWith(color: colors.white),
+        getInspiredTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp, color: colors.color111620),
+        shopGemstoneTitleStyle: interRegularTextStyle,
+        stepTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
+        stepValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
+        textStyleColor: colors.color303538,
+        dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
+      );
 }

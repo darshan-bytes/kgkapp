@@ -185,6 +185,8 @@ abstract class AppTheme {
   PddListingItemStyle get pddListingItemStyle;
 
   NoDataFoundStyle get noDataFoundStyle;
+
+  HomeScreenStyle get homeScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1632,5 +1634,41 @@ class PddListingItemStyle {
 
   PddListingItemStyle({
     required this.borderColor,
+  });
+}
+
+class HomeScreenStyle {
+  final Color primaryColor;
+  final Color whiteColor;
+  final Color borderColor;
+  final Color viewAllCollectionsBgColor;
+  final Color shopGemstoneBgColor;
+  final Color textStyleColor;
+  final TextStyle bannerTitleStyle;
+  final TextStyle shopGemstoneTitleStyle;
+  final TextStyle viewAllCollectionsTextStyle;
+  final TextStyle createOwnSignatureTitleStyle;
+  final TextStyle createOwnSignatureSubTitleStyle;
+  final TextStyle stepTextStyle;
+  final TextStyle stepValueStyle;
+  final TextStyle getInspiredTitleStyle;
+  final TextStyle dropDownTextStyle;
+
+  HomeScreenStyle({
+    required this.primaryColor,
+    required this.whiteColor,
+    required this.borderColor,
+    required this.bannerTitleStyle,
+    required this.shopGemstoneBgColor,
+    required this.viewAllCollectionsBgColor,
+    required this.viewAllCollectionsTextStyle,
+    required this.shopGemstoneTitleStyle,
+    required this.createOwnSignatureTitleStyle,
+    required this.createOwnSignatureSubTitleStyle,
+    required this.stepTextStyle,
+    required this.stepValueStyle,
+    required this.getInspiredTitleStyle,
+    required this.textStyleColor,
+    required this.dropDownTextStyle,
   });
 }

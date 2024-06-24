@@ -84,6 +84,7 @@ class PddListingScreen extends StatelessWidget {
                           return PresentationGridItem(b2bCustomListingDataModel: pddListingBloc.filteredPresentationList[index]);
                         } else {
                           return B2BListingItem(
+                            onTapMenuButton: () {},
                             type: B2BListingType.presentationListingType,
                             listingItemModel: pddListingBloc.filteredPresentationList[index],
                           );
