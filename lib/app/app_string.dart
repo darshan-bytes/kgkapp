@@ -604,4 +604,6 @@ class APPStrings {
   //Project Listing
   static const String projects = 'projects';
   static const String searchProjects = 'search_projects';
+
+  static const String designBriefs = 'design_briefs';
 }

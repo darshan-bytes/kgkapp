@@ -46,6 +46,7 @@ class BlocGenerator {
       BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),
       BlocProvider<SavedAddressBloc>(create: (_) => SavedAddressBloc()),
       BlocProvider<ProjectListingBloc>(create: (_) => ProjectListingBloc()),
+      BlocProvider<DesignBriefsBloc>(create: (_) => DesignBriefsBloc()),
     ];
   }
 }

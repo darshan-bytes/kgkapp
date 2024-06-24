@@ -289,3 +289,5 @@ export 'package:kgk/modules/common_modules/address/saved_address/view/saved_addr
 export 'package:kgk/widgets/saved_address_widget.dart';
 export 'package:kgk/modules/b2b/project_listing/bloc/project_listing_bloc.dart';
 export 'package:kgk/modules/b2b/project_listing/view/project_listing_screen.dart';
+export 'package:kgk/modules/b2b/design_briefs/bloc/design_briefs_bloc.dart';
+export 'package:kgk/modules/b2b/design_briefs/view/design_briefs_screen.dart';
