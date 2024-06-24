@@ -31,6 +31,15 @@ class HomeScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.conceptListPage);
           },
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        SmartText(
+          'Monitoring',
+          onTap: () {
+            context.pushNamed(AppRoutes.monitoringPage);
+          },
+        ),
       ]),
     );
   }

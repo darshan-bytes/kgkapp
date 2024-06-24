@@ -590,4 +590,12 @@ class APPStrings {
   //Edit Address
   static const String editAddress = 'edit_address';
   static const String noDiamondProductFound = 'no_diamond_product_found';
+
+  //Monitoring
+  static const String monitoring = 'monitoring';
+  static const String dbf = 'dbf';
+  static const String designs = 'designs';
+  static const String styles = 'styles';
+  static const String searchX = 'search_x';
+  static const String noPresentationFound = 'no_presentation_found';
 }

@@ -46,6 +46,7 @@ class AppRoutes {
   static const dashboardPage = '/dashboardPage';
   static const pddListingPage = '/pddListingPage';
   static const conceptListPage = '/conceptListPage';
+  static const monitoringPage = '/monitoringPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -429,6 +430,18 @@ class AppRoutes {
           },
           settings: settings,
         );
+
+      case monitoringPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MonitoringBloc>(
+              create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
+              child: const MonitoringScreen(),
+            );
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
