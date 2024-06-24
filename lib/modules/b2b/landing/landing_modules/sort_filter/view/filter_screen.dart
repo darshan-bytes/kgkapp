@@ -166,7 +166,7 @@ class FilterScreen extends StatelessWidget {
                       children: [
                         SmartCheckbox(
                             value: secondaryFilterData.isSelected,
-                            onChanged: () {
+                            onChanged: (value) {
                               handleOnChange(filterBloc, secondaryFilterData);
                             }),
                         SizedBox(width: 8.w),

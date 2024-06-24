@@ -43,7 +43,8 @@ class BlocGenerator {
       BlocProvider<ContactUsBloc>(create: (_) => ContactUsBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
-      BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc())
+      BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),
+      BlocProvider<SavedAddressBloc>(create: (_) => SavedAddressBloc()),
     ];
   }
 }

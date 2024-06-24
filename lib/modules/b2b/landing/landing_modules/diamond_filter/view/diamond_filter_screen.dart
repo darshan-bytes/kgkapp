@@ -179,7 +179,7 @@ class DiamondFilterScreen extends StatelessWidget {
                               )
                             : SmartCheckbox(
                                 value: secondaryFilterData.isSelected,
-                                onChanged: () {
+                                onChanged: (value) {
                                   handleOnChange(diamondFilterBloc, secondaryFilterData);
                                 }),
                         SizedBox(width: 8.w),

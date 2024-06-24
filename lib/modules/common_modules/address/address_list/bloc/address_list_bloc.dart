@@ -30,6 +30,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       state: "Delhi",
       country: "India",
       zipCode: "110001",
+      isDefaultShipping: true,
     ),
     AddressDetails(
       firstName: "Rahul",
@@ -41,6 +42,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       state: "Maharashtra",
       country: "India",
       zipCode: "400001",
+      isDefaultBilling: true,
     ),
   ];
 
