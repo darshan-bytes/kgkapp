@@ -45,6 +45,7 @@ class BlocGenerator {
       BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
       BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),
       BlocProvider<SavedAddressBloc>(create: (_) => SavedAddressBloc()),
+      BlocProvider<ProjectListingBloc>(create: (_) => ProjectListingBloc()),
     ];
   }
 }

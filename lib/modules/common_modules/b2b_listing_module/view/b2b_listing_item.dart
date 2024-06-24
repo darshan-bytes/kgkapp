@@ -166,6 +166,7 @@ class B2BListingItem extends StatelessWidget {
   Widget _buildValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (field.imageUrl != null)
           Padding(
@@ -189,14 +190,16 @@ class B2BListingItem extends StatelessWidget {
 
   Widget _buildCircleWithValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     return Container(
-      padding: EdgeInsets.all(6.0.w),
+      width: 24.w,
+      height: 24.w,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(color: style.borderColor, width: 1.5.w),
         shape: BoxShape.circle,
       ),
       child: SmartText(
         field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
-        style: auctionListItemStyle.valueStyle,
+        style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
       ),
     );
   }
