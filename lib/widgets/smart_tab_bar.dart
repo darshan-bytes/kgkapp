@@ -99,13 +99,12 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
               )),
         ),
         if (widget.tabBetweenView != null) widget.tabBetweenView!,
-        Flexible(
-            fit: FlexFit.loose,
+        Expanded(
             child: TabBarView(
-              physics: widget.physics,
-              controller: _tabController,
-              children: widget.tabBarView,
-            )),
+          physics: widget.physics,
+          controller: _tabController,
+          children: widget.tabBarView,
+        )),
       ],
     );
   }

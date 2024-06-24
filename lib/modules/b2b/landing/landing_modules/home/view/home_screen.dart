@@ -236,22 +236,25 @@ class HomeScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
       child: SizedBox(
-        // height: 650.h,
+        height: 650.h,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartText(APPStrings.kgkCouture.tr, style: style.bannerTitleStyle),
-            SmartTabBar(
-              length: homeBloc.tabs.length,
-              onTabInitialized: (tabController) {
-                homeBloc.tabController = tabController;
-              },
-              tabBetweenView: SizedBox(height: 16.h),
-              onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
-              tabs: homeBloc.tabs,
-              tabBarView: _buildTabBarViews(homeBloc),
-            ),
+            Flexible(
+              child: SmartTabBar(
+                labelPadding: EdgeInsets.zero,
+                length: homeBloc.tabs.length,
+                onTabInitialized: (tabController) {
+                  homeBloc.tabController = tabController;
+                },
+                tabBetweenView: SizedBox(height: 16.h),
+                onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
+                tabs: homeBloc.tabs,
+                tabBarView: _buildTabBarViews(homeBloc),
+              ),
+            )
           ],
         ),
       ),
