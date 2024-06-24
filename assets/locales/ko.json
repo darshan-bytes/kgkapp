@@ -472,5 +472,12 @@
   "search_concept": "Search concept",
   "no_concept_found": "No concept found",
   "edit_address": "Edit Address",
-  "no_diamond_product_found": "No diamond product found"
+  "monitoring": "Monitoring",
+  "dbf": "DBF",
+  "designs": "Designs",
+  "styles": "Styles",
+  "search_x": "Search {#}",
+  "no_diamond_product_found": "No diamond product found",
+  "approved_on": "Approved on",
+  "no_presentation_found": "No presentation found"
 }
