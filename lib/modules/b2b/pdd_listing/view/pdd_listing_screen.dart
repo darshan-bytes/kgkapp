@@ -111,8 +111,6 @@ class PddListingScreen extends StatelessWidget {
         onTap: () {
           Utils.showSmartModalBottomSheet(
             context: context,
-            isScrollControlled: true,
-            useSafeArea: true,
             builder: (context) => FilterScreen(
               onApply: () {},
             ),

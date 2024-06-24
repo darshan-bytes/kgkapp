@@ -43,11 +43,6 @@ final class OrderDetailProductRemovedState extends OrderDetailState {
   List<Object> get props => [index];
 }
 
-final class ChangeOrderDetailPageNumberState extends OrderDetailState {
-  @override
-  List<Object> get props => [];
-}
-
 final class FilterOrdersState extends OrderDetailState {
   @override
   List<Object> get props => [];
@@ -57,6 +52,7 @@ final class OrderCancellationReasonsChangeState extends OrderDetailState {
   final CancellationReasonModel cancellationReasonModel;
 
   const OrderCancellationReasonsChangeState(this.cancellationReasonModel);
+
   @override
   List<Object> get props => [cancellationReasonModel];
 }

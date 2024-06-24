@@ -14,8 +14,8 @@ final class SettingListingInitial extends SettingListingState {
   List<Object> get props => [];
 }
 
-final class SettingLoadingState extends SettingListingState {
-  const SettingLoadingState();
+final class SettingLoadedState extends SettingListingState {
+  const SettingLoadedState();
 
   @override
   List<Object> get props => [];
@@ -26,14 +26,25 @@ class SettingChangeListingTypeState extends SettingListingState {
   List<Object> get props => [];
 }
 
-final class SettingProductChangePageNumberState extends SettingListingState {
-  @override
-  List<Object> get props => [];
-}
-
 final class SettingProductReloadState extends SettingListingState {
   const SettingProductReloadState();
 
   @override
   List<Object> get props => [];
+}
+
+final class SettingLoadingMoreState extends SettingListingState {
+  const SettingLoadingMoreState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SettingProductLoadedMoreState extends SettingListingState {
+  final int currentPage;
+
+  const SettingProductLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

@@ -7,25 +7,27 @@ sealed class SettingListingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetSettingProductListEvent extends SettingListingEvent {
-  const GetSettingProductListEvent();
+final class GetSettingProductListEvent extends SettingListingEvent {
+  final BuildContext context;
+
+  const GetSettingProductListEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
-class SettingChangeListingTypeEvent extends SettingListingEvent {
+final class SettingChangeListingTypeEvent extends SettingListingEvent {
   const SettingChangeListingTypeEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class SettingProductChangePageNumberEvent extends SettingListingEvent {
-  final String pageNumber;
+final class LoadMoreSettingProductListEvent extends SettingListingEvent {
+  final int currentPage;
 
-  const SettingProductChangePageNumberEvent(this.pageNumber);
+  const LoadMoreSettingProductListEvent(this.currentPage);
 
   @override
-  List<Object> get props => [pageNumber];
+  List<Object> get props => [currentPage];
 }

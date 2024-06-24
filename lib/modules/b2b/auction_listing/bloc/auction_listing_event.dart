@@ -5,22 +5,17 @@ sealed class AuctionListingEvent extends Equatable {
 }
 
 final class InitialAuctionListingEvent extends AuctionListingEvent {
-  @override
-  List<Object> get props => [];
-}
-
-final class FilterAuctionsEvent extends AuctionListingEvent {
-  const FilterAuctionsEvent();
+  const InitialAuctionListingEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class ChangeAuctionListingPageNumberEvent extends AuctionListingEvent {
-  final String pageNumber;
+final class AuctionListLoadMoreEvent extends AuctionListingEvent {
+  final int currentPage;
 
-  const ChangeAuctionListingPageNumberEvent(this.pageNumber);
+  const AuctionListLoadMoreEvent(this.currentPage);
 
   @override
-  List<Object> get props => [pageNumber];
+  List<Object> get props => [currentPage];
 }

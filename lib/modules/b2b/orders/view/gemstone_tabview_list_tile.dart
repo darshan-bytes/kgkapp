@@ -70,6 +70,7 @@ class GemstoneTabView extends StatelessWidget {
               );
             },
           ),
+          SizedBox(height: 17.0.h),
         ],
       ),
     );

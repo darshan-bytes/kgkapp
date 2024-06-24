@@ -8,9 +8,6 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   // controllers
   final TextEditingController orderSearchController = TextEditingController();
 
-  // Dropdown and selection variables
-  final List<String> pageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-  String selectedPageNumber = '01';
   int currentTrackOrderIndex = 2;
 
   // Orders lists
@@ -25,7 +22,6 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     on<OrderDetailChangeProductQuality>(_onOrderDetailChangeProductQuality);
     on<OrderDetailChangeProductQuantity>(_onOrderDetailChangeProductQuantity);
     on<OrderDetailRemoveProductEvent>(_onOrderDetailRemoveProduct);
-    on<ChangeOrderDetailPageNumberEvent>(_onPageNumberChanged);
     on<FilterOrdersEvent>(_onFilterOrdersEvent);
     on<OrderCancellationReasonsEvent>(_onOrderCancellationReasonsChange);
   }
@@ -69,12 +65,6 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
       filteredOrdersDetailsList = originalOrdersDetailsList;
     }
     emit(FilterOrdersState());
-  }
-
-  void _onPageNumberChanged(ChangeOrderDetailPageNumberEvent event, Emitter<OrderDetailState> emit) {
-    emit(OrderDetailReloadState());
-    selectedPageNumber = event.pageNumber;
-    emit(ChangeOrderDetailPageNumberState());
   }
 
   void clearData() {

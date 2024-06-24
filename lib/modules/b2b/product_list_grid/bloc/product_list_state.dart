@@ -9,12 +9,14 @@ final class ProductListInitial extends ProductListState {
   List<Object> get props => [];
 }
 
-final class ChangePageNumberState extends ProductListState {
+final class ReloadProductState extends ProductListState {
   @override
   List<Object> get props => [];
 }
 
-final class ReloadProductState extends ProductListState {
+final class ProductListLoadedState extends ProductListState {
+  const ProductListLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -22,4 +24,18 @@ final class ReloadProductState extends ProductListState {
 final class ProductChangeListingTypeState extends ProductListState {
   @override
   List<Object> get props => [];
+}
+
+final class ProductListLoadingMoreState extends ProductListState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductListLoadedMoreState extends ProductListState {
+  final int currentPage;
+
+  const ProductListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

@@ -5,7 +5,9 @@ part 'add_address_event.dart';
 part 'add_address_state.dart';
 
 class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
-  String addAddressAppbarTitle = "Checkout";
+  bool isEditAddress = false;
+
+  String addAddressAppbarTitle = "";
   bool isShippingAndBillingAddressFilled = false;
   bool isShippingAddressSame = true;
   late Country selectedCountry;
@@ -67,6 +69,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   AddAddressBloc() : super(const AddAddressInitial()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+    on<AddAddressInitialEvent>(_onInitAddAddressEvent);
     on<AddAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
     on<AddAddressAddressSameEvent>(_onChangeShippingAddressSame);
     on<AddAddressChangeCountryEvent>(_onChangeCountry);
@@ -75,9 +78,47 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     on<SaveAddressEvent>(_onSaveAddressEvent);
   }
 
+  void getScreenIdentifier(BuildContext context) {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    String? addressId = data?[RoutesData.addressId];
+    isEditAddress = addressId != null;
+  }
+
+  void _onInitAddAddressEvent(AddAddressInitialEvent event, Emitter<AddAddressState> emit) {
+    emit(AddAddressReloadState());
+    getScreenIdentifier(event.context);
+
+    addAddressAppbarTitle = isEditAddress ? APPStrings.editAddress.tr : APPStrings.checkout.tr;
+
+    if (!isEditAddress) {
+      firstNameController.clear();
+      lastNameController.clear();
+      streetAddressController.clear();
+      apartmentController.clear();
+      zipCodeController.clear();
+      phoneController.clear();
+      selectedCity = null;
+      selectedState = null;
+      selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+    } else {
+      firstNameController.text = "Gautam";
+      lastNameController.text = "Singhania";
+      streetAddressController.text = "431 School House Road";
+      selectedCity = arrCity.first;
+      selectedState = arrState.first;
+      selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+      zipCodeController.text = "46802";
+      phoneController.text = "+91-850-427-9498";
+    }
+
+    emit(const AddAddressInitial());
+  }
+
   void _onChangeShippingAndBillingAddress(AddAddressAddressChangeEvent event, Emitter<AddAddressState> emit) {
     emit(AddAddressReloadState());
+
     isShippingAndBillingAddressFilled = !isShippingAndBillingAddressFilled;
+
     emit(const AddAddressChangeAddressState());
   }
 

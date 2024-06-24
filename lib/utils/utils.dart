@@ -20,7 +20,6 @@ class Utils {
     showCountryPicker(
       context: context,
       showPhoneCode: false,
-      useSafeArea: true,
       countryListTheme: CountryListThemeData(
         flagSize: 25.w,
         backgroundColor: countryPickerStyle.backgroundColor,
@@ -116,13 +115,13 @@ class Utils {
     Clip? clipBehavior,
     BoxConstraints? constraints,
     Color? barrierColor,
-    bool isScrollControlled = false,
+    bool isScrollControlled = true,
     double scrollControlDisabledMaxHeightRatio = AppConst.defaultScrollControlDisabledMaxHeightRatio,
     bool useRootNavigator = false,
     bool isDismissible = true,
     bool enableDrag = true,
     bool? showDragHandle,
-    bool useSafeArea = false,
+    bool useSafeArea = true,
     RouteSettings? routeSettings,
     AnimationController? transitionAnimationController,
     Offset? anchorPoint,

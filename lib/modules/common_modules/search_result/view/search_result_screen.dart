@@ -16,55 +16,60 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildBody(DiamondListingStyle diamondListingStyle, SearchResultScreenStyle style, SearchResultBloc searchResultBloc) {
-    return SmartSingleChildScrollView(
-      child: BlocBuilder<SearchResultBloc, SearchResultState>(
-        buildWhen: (_, current) => current is SearchResultLoadedState,
-        builder: (context, state) {
+    return BlocBuilder<SearchResultBloc, SearchResultState>(
+      buildWhen: (_, current) => current is SearchResultLoadedState,
+      builder: (context, state) {
+        if (state is SearchResultLoadedState) {
           return SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: 24.h),
-                      SmartText(APPStrings.searchResult.tr, style: style.titleStyle),
-                      SizedBox(height: 6.h),
-                      SmartRichText(
-                        spans: [
-                          SmartTextSpan(text: searchResultBloc.productList.length.toString(), style: style.foundItemStyle),
-                          SmartTextSpan(text: APPStrings.resultFoundFor.tr, style: style.subTitleStyle),
-                          SmartTextSpan(text: "''${searchResultBloc.appbarTitle}''", style: style.appbarTextStyle),
+            child: SmartSingleChildScrollView(
+              controller: searchResultBloc.paginationScrollController.scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 17.w),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 24.h),
+                        SmartText(APPStrings.searchResult.tr, style: style.titleStyle),
+                        SizedBox(height: 6.h),
+                        SmartRichText(
+                          spans: [
+                            SmartTextSpan(text: searchResultBloc.productList.length.toString(), style: style.foundItemStyle),
+                            SmartTextSpan(text: APPStrings.resultFoundFor.tr, style: style.subTitleStyle),
+                            SmartTextSpan(text: "''${searchResultBloc.appbarTitle}''", style: style.appbarTextStyle),
+                          ],
+                        ),
+                        if (searchResultBloc.productList.isNotNullNorEmpty) ...[
+                          SizedBox(height: 24.h),
+                          _buildProductFilterCount(diamondListingStyle, searchResultBloc),
+                          SizedBox(height: 24.h),
+                          _buildProductList(searchResultBloc),
+                        ] else ...[
+                          SizedBox(height: 12.h),
+                          SmartText(APPStrings.searchResultNotFoundDesc.tr, style: style.subTitleStyle),
+                          SizedBox(height: 24.h),
+                          _buildNeedHelpSection(style),
+                          SizedBox(height: 40.h),
+                          _buildShopDiamondsByShapeList(searchResultBloc, style),
                         ],
-                      ),
-                      if (searchResultBloc.productList.isNotNullNorEmpty) ...[
-                        SizedBox(height: 24.h),
-                        _buildProductFilterCount(diamondListingStyle, searchResultBloc),
-                        SizedBox(height: 24.h),
-                        _buildProductList(searchResultBloc),
-                      ] else ...[
-                        SizedBox(height: 12.h),
-                        SmartText(APPStrings.searchResultNotFoundDesc.tr, style: style.subTitleStyle),
-                        SizedBox(height: 24.h),
-                        _buildNeedHelpSection(style),
-                        SizedBox(height: 40.h),
-                        _buildShopDiamondsByShapeList(searchResultBloc, style),
                       ],
-                    ],
+                    ),
                   ),
-                ),
-                if (searchResultBloc.productList.isEmpty) ...[
-                  _buildNewlyLaunchedItems(searchResultBloc, style),
-                  _buildExploreDigitalCatalogue(style),
-                ]
-              ],
+                  if (searchResultBloc.productList.isEmpty) ...[
+                    _buildNewlyLaunchedItems(searchResultBloc, style),
+                    _buildExploreDigitalCatalogue(style),
+                  ]
+                ],
+              ),
             ),
           );
-        },
-      ),
+        } else {
+          return const SmartCircularProgressIndicator();
+        }
+      },
     );
   }
 
@@ -124,38 +129,47 @@ class SearchResultScreen extends StatelessWidget {
 
   Widget _buildProductList(SearchResultBloc searchResultBloc) {
     return BlocBuilder<SearchResultBloc, SearchResultState>(
-      buildWhen: (_, current) => current is SearchResultChangeListingTypeState,
+      buildWhen: (_, current) => current is SearchResultLoadedMoreState || current is SearchResultLoadingMoreState,
       builder: (context, state) {
-        if (searchResultBloc.isGrid) {
-          return Column(
-            children: [
-              SmartGridView(
-                  items: searchResultBloc.productList.map((ProductDetails productDetails) {
-                return ProductGridItem(
-                  productDetails: productDetails,
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  onTap: () {},
-                  onAddToBagTap: () {},
-                );
-              }).toList()),
-              SizedBox(height: 17.h)
-            ],
-          );
-        } else {
-          return ListView.builder(
-            itemCount: searchResultBloc.productList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => ProductListItem(
-              margin: EdgeInsets.only(bottom: 17.h),
-              onEyeTap: () {},
-              onFavTap: () {},
-              onAddToBagTap: () {},
-              productDetails: searchResultBloc.productList[index],
+        return Column(
+          children: [
+            BlocBuilder<SearchResultBloc, SearchResultState>(
+              buildWhen: (_, current) =>
+                  current is SearchResultChangeListingTypeState ||
+                  current is SearchResultLoadedState ||
+                  current is SearchResultLoadedMoreState,
+              builder: (context, state) {
+                if (searchResultBloc.isGrid) {
+                  return SmartGridView(
+                      items: searchResultBloc.productList.map((ProductDetails productDetails) {
+                    return ProductGridItem(
+                      productDetails: productDetails,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onTap: () {},
+                      onAddToBagTap: () {},
+                    );
+                  }).toList());
+                } else {
+                  return ListView.separated(
+                    itemCount: searchResultBloc.productList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => ProductListItem(
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onAddToBagTap: () {},
+                      productDetails: searchResultBloc.productList[index],
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(height: 17.h),
+                  );
+                }
+              },
             ),
-          );
-        }
+            if (state is SearchResultLoadingMoreState) const SmartCircularProgressIndicator(),
+            SizedBox(height: 17.h)
+          ],
+        );
       },
     );
   }
@@ -184,8 +198,6 @@ class SearchResultScreen extends StatelessWidget {
       onFilterTap: () {
         Utils.showSmartModalBottomSheet(
           context: context,
-          isScrollControlled: true,
-          useSafeArea: true,
           builder: (context) => FilterScreen(
             onApply: () {},
           ),
@@ -194,8 +206,6 @@ class SearchResultScreen extends StatelessWidget {
       onSortTap: () {
         Utils.showSmartModalBottomSheet(
           context: context,
-          isScrollControlled: true,
-          useSafeArea: true,
           builder: (context) => const SortScreen(),
         );
       },

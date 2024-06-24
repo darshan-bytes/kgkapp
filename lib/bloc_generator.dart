@@ -20,12 +20,9 @@ class BlocGenerator {
       BlocProvider<ResetPasswordBloc>(create: (_) => ResetPasswordBloc()),
       BlocProvider<ForgotEmailSentBloc>(create: (_) => ForgotEmailSentBloc()),
       BlocProvider<CollectionBloc>(create: (_) => CollectionBloc()),
-      BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
       BlocProvider<SortFilterBloc>(create: (_) => SortFilterBloc()),
       BlocProvider<SettingDetailBloc>(create: (_) => SettingDetailBloc()),
-      BlocProvider<StoneDetailBloc>(create: (_) => StoneDetailBloc()),
       BlocProvider<StoneListingBloc>(create: (_) => StoneListingBloc()),
-      BlocProvider<SettingListingBloc>(create: (_) => SettingListingBloc()),
       BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
       BlocProvider<AddAddressBloc>(create: (_) => AddAddressBloc()),
@@ -37,10 +34,8 @@ class BlocGenerator {
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
-      BlocProvider<OrderDetailBloc>(create: (_) => OrderDetailBloc()),
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
-      BlocProvider<SearchResultBloc>(create: (_) => SearchResultBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
@@ -49,6 +44,7 @@ class BlocGenerator {
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
       BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),
+      BlocProvider<SavedAddressBloc>(create: (_) => SavedAddressBloc()),
     ];
   }
 }

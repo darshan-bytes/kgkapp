@@ -14,10 +14,19 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   String appbarTitle = '';
   bool isNoDataFound = false;
 
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
   SearchResultBloc() : super(SearchResultInitialState()) {
     on<InitialSearchResultEvent>(_onInitialSearchResultEvent);
     on<GetSearchResultProductListEvent>(_onGetSearchResultProductListEvent);
     on<SearchResultChangeListingTypeEvent>(_onChangeListingTypeEvent);
+    on<LoadMoreSearchResultEvent>(_onLoadMoreSearchResultEvent);
+  }
+
+  @override
+  Future<void> close() {
+    paginationScrollController.dispose();
+    return super.close();
   }
 
   void getRouteData(BuildContext context) async {
@@ -29,14 +38,19 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   }
 
   void _onInitialSearchResultEvent(InitialSearchResultEvent event, Emitter<SearchResultState> emit) {
-    emit(SearchResultReloadState());
+    emit(const SearchResultReloadState());
     isGrid = true;
     getRouteData(event.context);
     add(const GetSearchResultProductListEvent());
   }
 
   void _onGetSearchResultProductListEvent(GetSearchResultProductListEvent event, Emitter<SearchResultState> emit) async {
-    emit(SearchResultReloadState());
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(LoadMoreSearchResultEvent(currentPage));
+      },
+    );
+
     productList.clear();
     shopDiamondsByShapeList.clear();
     newlyLaunchedItems.clear();
@@ -51,6 +65,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
                 ),
               ));
     } else {
+      paginationScrollController.isPageLoaded.complete(true);
       List.generate(20, (index) {
         List<String> nameList = ["Round", "Oval", "Cushion", "Pear", "Pendant"];
         List<String> imageList = [
@@ -76,12 +91,28 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
                 ),
               ));
     }
-    emit(SearchResultLoadedState());
+    emit(const SearchResultLoadedState());
   }
 
   void _onChangeListingTypeEvent(SearchResultChangeListingTypeEvent event, Emitter<SearchResultState> emit) {
-    emit(SearchResultReloadState());
+    emit(const SearchResultReloadState());
     isGrid = !isGrid;
-    emit(SearchResultChangeListingTypeState());
+    emit(const SearchResultChangeListingTypeState());
+  }
+
+  Future<void> _onLoadMoreSearchResultEvent(LoadMoreSearchResultEvent event, Emitter<SearchResultState> emit) async {
+    emit(const SearchResultLoadingMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+    List.generate(
+        20,
+        (index) => productList.add(
+              ProductDetails(
+                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                name: "Diamond Vine Ring in 18k Rose Gold",
+                originalPrice: '\$5,000.00',
+              ),
+            ));
+    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    emit(SearchResultLoadedMoreState(event.currentPage + 1));
   }
 }

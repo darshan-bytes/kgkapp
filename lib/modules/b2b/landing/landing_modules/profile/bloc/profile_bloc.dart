@@ -93,7 +93,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.savedAddress.tr,
           subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.savedAddressPage);
+          }),
       ProfileListModel(
           image: AppImages.icLock,
           title: APPStrings.changePassword.tr,
@@ -102,8 +104,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: () {
             Utils.showSmartModalBottomSheet(
               context: event.context,
-              isScrollControlled: true,
-              useSafeArea: true,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
               ),

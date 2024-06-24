@@ -19,6 +19,8 @@ class SmartTabBar extends StatefulWidget {
   final TabBarIndicatorSize? indicatorSize;
   final double? indicatorHeight;
   final Color? dividerColor;
+  final TabAlignment? tabAlignment;
+  final EdgeInsetsGeometry? padding;
 
   const SmartTabBar({
     super.key,
@@ -40,6 +42,8 @@ class SmartTabBar extends StatefulWidget {
     this.indicatorSize,
     this.indicatorHeight,
     this.dividerColor,
+    this.tabAlignment,
+    this.padding,
   });
 
   @override
@@ -72,9 +76,11 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
       children: [
         Container(
           color: widget.tabBarColor,
+          padding: widget.padding ?? EdgeInsets.zero,
           child: TabBar(
               physics: widget.physics,
               isScrollable: widget.isScrollable,
+              tabAlignment: widget.tabAlignment,
               onTap: widget.onTapTab,
               controller: _tabController,
               tabs: widget.tabs,

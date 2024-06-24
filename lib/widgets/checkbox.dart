@@ -3,7 +3,7 @@ import 'package:kgk/kgk.dart';
 class SmartCheckbox extends StatelessWidget {
   final String? label;
   final bool value;
-  final Function onChanged;
+  final Function(bool?) onChanged;
   final TextStyle? labelStyle;
   final double? height;
   final double? width;

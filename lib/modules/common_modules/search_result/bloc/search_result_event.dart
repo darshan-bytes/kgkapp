@@ -29,3 +29,12 @@ final class SearchResultChangeListingTypeEvent extends SearchResultEvent {
   @override
   List<Object> get props => [];
 }
+
+final class LoadMoreSearchResultEvent extends SearchResultEvent {
+  final int currentPage;
+
+  const LoadMoreSearchResultEvent(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}

@@ -187,6 +187,8 @@ abstract class AppTheme {
   NoDataFoundStyle get noDataFoundStyle;
 
   HomeScreenStyle get homeScreenStyle;
+
+  SavedAddressStyle get savedAddressStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1670,5 +1672,23 @@ class HomeScreenStyle {
     required this.getInspiredTitleStyle,
     required this.textStyleColor,
     required this.dropDownTextStyle,
+  });
+}
+
+class SavedAddressStyle {
+  final TextStyle titleStyle;
+  final TextStyle addressNameStyle;
+  final TextStyle addressLineStyle;
+  final Color borderColor;
+  final Color whiteColor;
+  final Color primaryColor;
+
+  SavedAddressStyle({
+    required this.titleStyle,
+    required this.addressNameStyle,
+    required this.addressLineStyle,
+    required this.borderColor,
+    required this.whiteColor,
+    required this.primaryColor,
   });
 }

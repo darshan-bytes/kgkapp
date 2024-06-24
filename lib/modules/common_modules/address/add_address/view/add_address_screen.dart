@@ -10,18 +10,34 @@ class AddAddressScreen extends StatelessWidget {
     final AddAddressBloc bloc = BlocProvider.of<AddAddressBloc>(context);
     return Scaffold(
       backgroundColor: style.backgroundColor,
-      appBar: SmartAppBar(title: APPStrings.checkout.tr),
-      body: SafeArea(
-        child: SmartSingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const CheckoutHeaderProgressbar(),
-              _buildIsBillingAddressSameAsSelected(bloc, style),
-              generateAddressForm(bloc, countryPickerStyle, context),
-            ],
-          ),
+      appBar: PreferredSize(
+        preferredSize: AppConst.appBarHeight,
+        child: BlocBuilder<AddAddressBloc, AddAddressState>(
+          buildWhen: (previous, current) => current is AddAddressReloadState,
+          builder: (context, state) {
+            return SmartAppBar(
+              title: !bloc.isEditAddress ? APPStrings.checkout.tr : APPStrings.editAddress.tr,
+            );
+          },
         ),
+      ),
+      body: SafeArea(
+        child: BlocBuilder<AddAddressBloc, AddAddressState>(
+            buildWhen: (previous, current) => current is AddAddressInitial,
+            builder: (context, state) {
+              return SmartSingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (!bloc.isEditAddress) ...[
+                      const CheckoutHeaderProgressbar(),
+                      _buildIsBillingAddressSameAsSelected(bloc, style),
+                    ],
+                    generateAddressForm(bloc, countryPickerStyle, context),
+                  ],
+                ),
+              );
+            }),
       ),
     );
   }
@@ -37,7 +53,9 @@ class AddAddressScreen extends StatelessWidget {
             width: 24.w,
             value: bloc.isShippingAddressSame,
             onChanged: (value) {
-              bloc.add(AddAddressAddressSameEvent(value));
+              if (value != null) {
+                bloc.add(AddAddressAddressSameEvent(value));
+              }
             },
             label: APPStrings.billingAddressSame.tr,
             labelStyle: style.isSameAddressStyle,
@@ -49,7 +67,7 @@ class AddAddressScreen extends StatelessWidget {
 
   Widget generateAddressForm(AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.w),
+        padding: !bloc.isEditAddress ? EdgeInsets.symmetric(horizontal: 17.w) : EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
         child: Column(children: [
           _buildFirstNameField(bloc),
           SizedBox(height: 24.h),

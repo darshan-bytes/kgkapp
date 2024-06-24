@@ -255,8 +255,6 @@ class AuctionScreen extends StatelessWidget {
                             onTap: () async {
                               await Utils.showSmartModalBottomSheet(
                                 context: context,
-                                isScrollControlled: true,
-                                useSafeArea: true,
                                 builder: (context) => const AllBidsBottomSheet(),
                               );
                             },
