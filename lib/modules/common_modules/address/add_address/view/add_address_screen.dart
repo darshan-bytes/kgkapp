@@ -53,7 +53,9 @@ class AddAddressScreen extends StatelessWidget {
             width: 24.w,
             value: bloc.isShippingAddressSame,
             onChanged: (value) {
-              bloc.add(AddAddressAddressSameEvent(value));
+              if (value != null) {
+                bloc.add(AddAddressAddressSameEvent(value));
+              }
             },
             label: APPStrings.billingAddressSame.tr,
             labelStyle: style.isSameAddressStyle,

@@ -47,6 +47,7 @@ class AppRoutes {
   static const pddListingPage = '/pddListingPage';
   static const conceptListPage = '/conceptListPage';
   static const monitoringPage = '/monitoringPage';
+  static const savedAddressPage = '/savedAddressPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -442,6 +443,14 @@ class AppRoutes {
           settings: settings,
         );
 
+      case savedAddressPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
+            return const SavedAddressScreen();
+          },
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }

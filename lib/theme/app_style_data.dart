@@ -900,4 +900,14 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       );
+
+  @override
+  SavedAddressStyle get savedAddressStyle => SavedAddressStyle(
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        addressNameStyle: interMediumBoldTextStyle,
+        addressLineStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        borderColor: colors.colorD3DAE0,
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+      );
 }

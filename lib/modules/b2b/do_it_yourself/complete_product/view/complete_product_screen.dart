@@ -274,7 +274,9 @@ class CompleteProductScreen extends StatelessWidget {
         return SmartCheckbox(
           value: completeProductBloc.isCompare,
           onChanged: (value) {
-            completeProductBloc.add(CompleteProductCompareToggle(value));
+            if (value != null) {
+              completeProductBloc.add(CompleteProductCompareToggle(value));
+            }
           },
           label: APPStrings.compareProduct.tr,
         );
