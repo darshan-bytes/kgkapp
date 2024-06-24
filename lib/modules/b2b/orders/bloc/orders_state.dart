@@ -2,16 +2,21 @@ part of 'orders_bloc.dart';
 
 sealed class OrdersState extends Equatable {
   const OrdersState();
+}
+
+final class OrdersInitial extends OrdersState {
+  const OrdersInitial();
 
   @override
   List<Object> get props => [];
 }
 
-final class OrdersInitial extends OrdersState {}
+final class OrdersReloadState extends OrdersState {
+  const OrdersReloadState();
 
-final class OrdersReloadState extends OrdersState {}
-
-final class ChangeOrdersPageNumberState extends OrdersState {}
+  @override
+  List<Object> get props => [];
+}
 
 final class ChangeOrdersStoneTypeState extends OrdersState {
   final OrderStoneTypeModel selectedStoneType;
@@ -22,10 +27,30 @@ final class ChangeOrdersStoneTypeState extends OrdersState {
   List<Object> get props => [selectedStoneType];
 }
 
-final class FilterDiamondOrdersState extends OrdersState {}
+final class FilterDiamondOrdersState extends OrdersState {
+  const FilterDiamondOrdersState();
 
-final class FilterGemstoneOrdersState extends OrdersState {}
+  @override
+  List<Object> get props => [];
+}
 
-final class FilterJewelleryOrdersState extends OrdersState {}
+final class FilterGemstoneOrdersState extends OrdersState {
+  const FilterGemstoneOrdersState();
 
-final class ChangeOrderTabsState extends OrdersState {}
+  @override
+  List<Object> get props => [];
+}
+
+final class FilterJewelleryOrdersState extends OrdersState {
+  const FilterJewelleryOrdersState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ChangeOrderTabsState extends OrdersState {
+  const ChangeOrderTabsState();
+
+  @override
+  List<Object> get props => [];
+}

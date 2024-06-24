@@ -14,8 +14,8 @@ final class StoneListingInitial extends StoneListingState {
   List<Object> get props => [];
 }
 
-final class StoneLoadingState extends StoneListingState {
-  const StoneLoadingState();
+final class StoneProductLoadedState extends StoneListingState {
+  const StoneProductLoadedState();
 
   @override
   List<Object> get props => [];
@@ -35,12 +35,21 @@ class StoneChangeListingTypeState extends StoneListingState {
   List<Object> get props => [];
 }
 
-final class StoneProductChangePageNumberState extends StoneListingState {
+final class StoneProductReloadState extends StoneListingState {
   @override
   List<Object> get props => [];
 }
 
-final class StoneProductReloadState extends StoneListingState {
+final class StoneListLoadingMoreState extends StoneListingState {
   @override
   List<Object> get props => [];
+}
+
+final class StoneListLoadedMoreState extends StoneListingState {
+  final int currentPage;
+
+  const StoneListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

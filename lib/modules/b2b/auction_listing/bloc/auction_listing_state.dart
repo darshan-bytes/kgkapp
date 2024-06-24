@@ -14,12 +14,25 @@ final class AuctionListingReloadState extends AuctionListingState {
   List<Object> get props => [];
 }
 
-final class ChangeAuctionListingPageNumberState extends AuctionListingState {
+final class AuctionListingLoadedState extends AuctionListingState {
+  const AuctionListingLoadedState();
+
   @override
   List<Object> get props => [];
 }
 
-final class FilterAuctionsState extends AuctionListingState {
+final class AuctionListLoadingMoreState extends AuctionListingState {
+  const AuctionListLoadingMoreState();
+
   @override
   List<Object> get props => [];
+}
+
+final class AuctionListLoadedMoreState extends AuctionListingState {
+  final int currentPage;
+
+  const AuctionListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

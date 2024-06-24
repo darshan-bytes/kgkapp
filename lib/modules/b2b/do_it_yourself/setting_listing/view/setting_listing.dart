@@ -24,148 +24,154 @@ class SettingListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: BlocBuilder<SettingListingBloc, SettingListingState>(builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FilterBottomActionBar(
-              onFilterTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
-                  ),
-                );
-              },
-              onSortTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  builder: (context) => const SortScreen(),
-                );
-              },
+      bottomNavigationBar: FilterBottomActionBar(
+        onFilterTap: () {
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            builder: (context) => FilterScreen(
+              onApply: () {},
             ),
-          ],
-        );
-      }),
-      body: SmartSingleChildScrollView(child: BlocBuilder<SettingListingBloc, SettingListingState>(
-        builder: (context, state) {
-          return SafeArea(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Column(
-              children: [
-                SizedBox(height: 16.h),
-                const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
-                SizedBox(height: 24.h),
-                _buildProductFilterCount(style, settingListingBloc),
-                SizedBox(height: 24.h),
-                _buildProductList(style, settingListingBloc),
-                SizedBox(height: 7.h),
-              ],
-            ),
-          ));
+          );
         },
-      )),
+        onSortTap: () {
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            builder: (context) => const SortScreen(),
+          );
+        },
+      ),
+      body: BlocBuilder<SettingListingBloc, SettingListingState>(
+        buildWhen: (_, current) => current is SettingLoadedState,
+        builder: (context, state) {
+          if (state is SettingLoadedState) {
+            return SafeArea(
+                child: SmartSingleChildScrollView(
+              controller: settingListingBloc.paginationScrollController.scrollController,
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
+                  SizedBox(height: 24.h),
+                  _buildProductFilterCount(style, settingListingBloc),
+                  SizedBox(height: 24.h),
+                  _buildProductList(style, settingListingBloc),
+                  SizedBox(height: 7.h),
+                ],
+              ),
+            ));
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 
   Widget _buildProductFilterCount(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
-    return SizedBox(
-      height: 48.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: settingListingBloc.isGrid,
-                  image: AppImages.icGrid,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent());
-                  },
+    return BlocBuilder<SettingListingBloc, SettingListingState>(
+      buildWhen: (_, current) => current is SettingChangeListingTypeState,
+      builder: (context, state) {
+        return SizedBox(
+          height: 48.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SelectionButton(
+                      width: 48.w,
+                      isSelected: settingListingBloc.isGrid,
+                      image: AppImages.icGrid,
+                      selectedButtonColor: style.gridBackgroundColor,
+                      selectedButtonBorderColor: style.gridBorderColor,
+                      selectedButtonIconColor: style.gridIconColor,
+                      unselectedButtonIconColor: style.listIconColor,
+                      unselectedButtonColor: style.listBackgroundColor,
+                      unselectedButtonBorderColor: style.listBorderColor,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                      onTap: () {
+                        settingListingBloc.add(const SettingChangeListingTypeEvent());
+                      },
+                    ),
+                    SelectionButton(
+                      width: 48.w,
+                      isSelected: !settingListingBloc.isGrid,
+                      image: AppImages.icList,
+                      selectedButtonColor: style.gridBackgroundColor,
+                      selectedButtonBorderColor: style.gridBorderColor,
+                      selectedButtonIconColor: style.gridIconColor,
+                      unselectedButtonIconColor: style.listIconColor,
+                      unselectedButtonColor: style.listBackgroundColor,
+                      unselectedButtonBorderColor: style.listBorderColor,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      onTap: () {
+                        settingListingBloc.add(const SettingChangeListingTypeEvent());
+                      },
+                    ),
+                  ],
                 ),
-                SelectionButton(
-                  width: 48.w,
-                  isSelected: !settingListingBloc.isGrid,
-                  image: AppImages.icList,
-                  selectedButtonColor: style.gridBackgroundColor,
-                  selectedButtonBorderColor: style.gridBorderColor,
-                  selectedButtonIconColor: style.gridIconColor,
-                  unselectedButtonIconColor: style.listIconColor,
-                  unselectedButtonColor: style.listBackgroundColor,
-                  unselectedButtonBorderColor: style.listBorderColor,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-                  onTap: () {
-                    settingListingBloc.add(const SettingChangeListingTypeEvent());
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget _buildProductList(DiamondListingStyle style, SettingListingBloc settingListingBloc) {
     return BlocBuilder<SettingListingBloc, SettingListingState>(
+      buildWhen: (_, current) => current is SettingLoadingMoreState || current is SettingProductLoadedMoreState,
       builder: (context, state) {
-        if (state is StoneLoadingState) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (settingListingBloc.productList.isEmpty) {
-          return const Center(child: SmartText(APPStrings.emptyProducts));
-        } else {
-          if (settingListingBloc.isGrid) {
-            return Column(
-              children: [
-                SmartGridView(
-                    items: settingListingBloc.productList.map((ProductDetails productDetails) {
-                  return ProductGridItem(
-                    productDetails: productDetails,
-                    onEyeTap: () {},
-                    onFavTap: () {},
-                    onTap: () {
-                      context.pushNamed(AppRoutes.settingDetailPage);
-                    },
-                  );
-                }).toList()),
-                SizedBox(
-                  height: 17.h,
-                )
-              ],
-            );
-          } else {
-            return ListView.builder(
-              itemBuilder: (context, index) => ProductListItem(
-                margin: EdgeInsets.only(bottom: 17.h),
-                onEyeTap: () {},
-                onFavTap: () {},
-                onAddToBagTap: () {},
-                productDetails: settingListingBloc.productList[index],
-              ),
-              itemCount: settingListingBloc.productList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-            );
-          }
-        }
+        return Column(
+          children: [
+            BlocBuilder<SettingListingBloc, SettingListingState>(
+              buildWhen: (_, current) =>
+                  current is SettingLoadedState || current is SettingProductLoadedMoreState || current is SettingChangeListingTypeState,
+              builder: (context, state) {
+                if (settingListingBloc.productList.isEmpty) {
+                  return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
+                } else {
+                  if (settingListingBloc.isGrid) {
+                    return Column(
+                      children: [
+                        SmartGridView(
+                            items: settingListingBloc.productList.map((ProductDetails productDetails) {
+                          return ProductGridItem(
+                            productDetails: productDetails,
+                            onEyeTap: () {},
+                            onFavTap: () {},
+                            onTap: () {
+                              context.pushNamed(AppRoutes.settingDetailPage);
+                            },
+                          );
+                        }).toList()),
+                      ],
+                    );
+                  } else {
+                    return ListView.separated(
+                      itemBuilder: (context, index) => ProductListItem(
+                        onEyeTap: () {},
+                        onFavTap: () {},
+                        onAddToBagTap: () {},
+                        productDetails: settingListingBloc.productList[index],
+                      ),
+                      itemCount: settingListingBloc.productList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) => SizedBox(height: 17.h),
+                    );
+                  }
+                }
+              },
+            ),
+            if (state is SettingLoadingMoreState) const SmartCircularProgressIndicator(),
+            SizedBox(height: 16.h),
+          ],
+        );
       },
     );
   }

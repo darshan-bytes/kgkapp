@@ -11,9 +11,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final TextEditingController gemstoneSearchController = TextEditingController();
   final TextEditingController jewellerySearchController = TextEditingController();
 
-  // Dropdown and selection variables
-  final List<String> pageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-  String selectedPageNumber = '01';
   OrderStoneTypeModel? selectedStoneType;
 
   // Tabs
@@ -42,9 +39,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     const OrderStoneTypeModel(name: "Jewellery"),
   ];
 
-  OrdersBloc() : super(OrdersInitial()) {
+  OrdersBloc() : super(const OrdersInitial()) {
     on<OrdersInitialEvent>(_onInitOrdersEvent);
-    on<ChangeOrdersPageNumberEvent>(_onPageNumberChanged);
     on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
     on<FilterDiamondOrdersEvent>(_onFilterDiamondOrdersEvent);
     on<FilterGemstoneOrdersEvent>(_onFilterGemstoneOrdersEvent);
@@ -53,19 +49,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   void _onInitOrdersEvent(OrdersInitialEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     clearData();
-    emit(OrdersInitial());
-  }
-
-  void _onPageNumberChanged(ChangeOrdersPageNumberEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
-    selectedPageNumber = event.pageNumber;
-    emit(ChangeOrdersPageNumberState());
+    emit(const OrdersInitial());
   }
 
   void _onChangeStoneType(ChangeOrdersStoneTypeEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     selectedStoneType = event.selectedStoneType;
     if (selectedStoneType != null) {
       emit(ChangeOrdersStoneTypeState(selectedStoneType!));
@@ -73,7 +63,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   void _onFilterDiamondOrdersEvent(FilterDiamondOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     if (diamondSearchController.text.isNotEmpty) {
       filteredDiamondOrdersList = originalDiamondOrdersList
           .where(
@@ -82,11 +72,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     } else {
       filteredDiamondOrdersList = originalDiamondOrdersList;
     }
-    emit(FilterDiamondOrdersState());
+    emit(const FilterDiamondOrdersState());
   }
 
   void _onFilterGemstoneOrdersEvent(FilterGemstoneOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     if (gemstoneSearchController.text.isNotEmpty) {
       filteredGemstoneOrdersList = originalGemstoneOrdersList
           .where(
@@ -95,11 +85,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     } else {
       filteredGemstoneOrdersList = originalGemstoneOrdersList;
     }
-    emit(FilterGemstoneOrdersState());
+    emit(const FilterGemstoneOrdersState());
   }
 
   void _onFilterJewelleryOrdersEvent(FilterJewelleryOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     if (jewellerySearchController.text.isNotEmpty) {
       filteredJewelleryOrdersList = originalJewelleryOrdersList
           .where(
@@ -108,11 +98,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     } else {
       filteredJewelleryOrdersList = originalJewelleryOrdersList;
     }
-    emit(FilterJewelleryOrdersState());
+    emit(const FilterJewelleryOrdersState());
   }
 
   void _onChangeTabEvent(ChangeOrderTabsEvent event, Emitter<OrdersState> emit) {
-    emit(OrdersReloadState());
+    emit(const OrdersReloadState());
     switch (tabController.index) {
       case 0:
         gemstoneSearchController.clear();
@@ -133,7 +123,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         filteredGemstoneOrdersList = originalGemstoneOrdersList;
         break;
     }
-    emit(ChangeOrderTabsState());
+    emit(const ChangeOrderTabsState());
   }
 
   void clearData() {

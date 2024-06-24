@@ -124,8 +124,10 @@ class AppRoutes {
       case productListGridPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ProductListBloc>(context).add(InitialProductListEvent(context));
-            return const ProductListScreen();
+            return BlocProvider<ProductListBloc>(
+              create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
+              child: const ProductListScreen(),
+            );
           },
           settings: settings,
         );
@@ -133,8 +135,10 @@ class AppRoutes {
       case stoneDetailPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<StoneDetailBloc>(context).add(StoneDetailInitialEvent(context: context));
-            return const StoneDetailScreen();
+            return BlocProvider<StoneDetailBloc>(
+              create: (context) => StoneDetailBloc()..add(StoneDetailInitialEvent(context: context)),
+              child: const StoneDetailScreen(),
+            );
           },
           settings: settings,
         );
@@ -148,8 +152,10 @@ class AppRoutes {
       case stoneListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<StoneListingBloc>(context).add(GetStoneProductListEvent(context));
-            return const StoneListingScreen();
+            return BlocProvider<StoneListingBloc>(
+              create: (context) => StoneListingBloc()..add(GetStoneProductListEvent(context)),
+              child: const StoneListingScreen(),
+            );
           },
           settings: settings,
         );
@@ -157,8 +163,10 @@ class AppRoutes {
       case settingListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SettingListingBloc>(context).add(const GetSettingProductListEvent());
-            return const SettingListingScreen();
+            return BlocProvider<SettingListingBloc>(
+              create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
+              child: const SettingListingScreen(),
+            );
           },
           settings: settings,
         );
@@ -269,8 +277,10 @@ class AppRoutes {
       case orderDetailsPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<OrderDetailBloc>(context).add(InitialOrderDetailEvent());
-            return const OrderDetailScreen();
+            return BlocProvider<OrderDetailBloc>(
+              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent()),
+              child: const OrderDetailScreen(),
+            );
           },
           settings: settings,
         );
@@ -278,7 +288,7 @@ class AppRoutes {
       case auctionListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionListingBloc>(context).add(InitialAuctionListingEvent());
+            BlocProvider.of<AuctionListingBloc>(context).add(const InitialAuctionListingEvent());
             return const AuctionListingScreen();
           },
           settings: settings,
@@ -327,8 +337,10 @@ class AppRoutes {
       case searchResultPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SearchResultBloc>(context).add(InitialSearchResultEvent(context: context));
-            return const SearchResultScreen();
+            return BlocProvider<SearchResultBloc>(
+              create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
+              child: const SearchResultScreen(),
+            );
           },
           settings: settings,
         );

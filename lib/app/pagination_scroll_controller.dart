@@ -9,7 +9,12 @@ class SmartPaginationScrollController {
   int currentPage = 1;
   double boundaryOffset = 0.5;
   Completer<bool> isPageLoaded = Completer<bool>();
+  ValueNotifier<bool> canScrollToTop = ValueNotifier(false);
   late Function(int currentPage) loadAction;
+
+  void scrollToTop() {
+    scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+  }
 
   /// Initializes the scroll controller and sets the load action.
   /// Optionally, an init action can be provided.
@@ -33,6 +38,11 @@ class SmartPaginationScrollController {
   /// Listens to scroll events and triggers the load action when the scroll position
   /// reaches a certain boundary. It also manages the loading state and the current page.
   void scrollListener() {
+    if (scrollController.offset > 0) {
+      canScrollToTop.value = true;
+    } else {
+      canScrollToTop.value = false;
+    }
     if (!stopLoading) {
       if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
         isLoading = true;

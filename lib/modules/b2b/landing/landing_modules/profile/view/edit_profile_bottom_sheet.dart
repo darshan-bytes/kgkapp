@@ -161,8 +161,6 @@ class EditProfileBottomSheet extends StatelessWidget {
   void _showImagePickDialog(BuildContext context) {
     Utils.showSmartModalBottomSheet(
       context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
       builder: (context) {
         return SmartImagePickDialogSheet(
           onTapSource: (ImageSource imageSource) {},

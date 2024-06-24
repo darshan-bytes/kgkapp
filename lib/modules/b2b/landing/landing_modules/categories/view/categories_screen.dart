@@ -51,6 +51,9 @@ class CategoriesScreen extends StatelessWidget {
                           if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Gemstone') {
                             context.pushNamed(AppRoutes.stoneListingPage,
                                 arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Do It \nYourself') {
+                            context
+                                .pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
                           }
                         },
                       ),

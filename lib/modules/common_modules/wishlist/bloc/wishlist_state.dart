@@ -19,7 +19,16 @@ final class WishlistDataFetchedState extends WishlistState {
   List<Object> get props => [];
 }
 
-final class ChangeWishlistPageNumberState extends WishlistState {
+final class WishlistLoadingMoreState extends WishlistState {
   @override
   List<Object> get props => [];
+}
+
+final class WishlistLoadedMoreState extends WishlistState {
+  final int currentPage;
+
+  const WishlistLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

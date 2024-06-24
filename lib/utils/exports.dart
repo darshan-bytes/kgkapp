@@ -276,3 +276,5 @@ export 'package:kgk/app/date_formatter.dart';
 export 'package:kgk/modules/b2b/concept_list/bloc/concept_list_bloc.dart';
 export 'package:kgk/modules/b2b/concept_list/view/concept_list_screen.dart';
 export 'package:kgk/app/pagination_scroll_controller.dart';
+export 'package:kgk/widgets/smart_scroll_to_top_fab.dart';
+export 'package:kgk/widgets/smart_circular_progress_indicator.dart';

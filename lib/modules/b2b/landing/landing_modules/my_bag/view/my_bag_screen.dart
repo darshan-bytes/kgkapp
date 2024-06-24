@@ -464,8 +464,6 @@ class MyBagScreen extends StatelessWidget {
   void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc) {
     Utils.showSmartModalBottomSheet(
         context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
         builder: (BuildContext context) {
           return buildDiamondMenuPopUp(context, index, bloc);
         });

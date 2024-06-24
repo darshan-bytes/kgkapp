@@ -8,25 +8,23 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   // For Product List view
   bool isGrid = true;
 
-  // check user come form ring or diamond
-  bool fromRing = true;
-
   String appbarTitle = APPStrings.ring.tr;
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
 
   List<ProductDetails> productList = [];
-
-  // List of numbers for the dropdown
-  List<String> pageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-
-  // The selected number of pages, initialized to the first item
-  String selectedPageNumber = '01';
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
-    on<ChangePageNumberEvent>(onPageNumberChanged);
+    on<ProductListLoadMoreEvent>(_onProductListLoadMoreEvent);
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
+  }
+
+  @override
+  Future<void> close() {
+    paginationScrollController.dispose();
+    return super.close();
   }
 
   void getRouteData(BuildContext context) async {
@@ -38,6 +36,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     emit(ReloadProductState());
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(ProductListLoadMoreEvent(currentPage));
+      },
+    );
     isGrid = true;
     getRouteData(event.context);
 
@@ -53,7 +56,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 discountPercentage: "You have saved 10%",
                 offerPrice: '\$3,000.00',
               )));
-      emit(ProductListInitial());
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamond.tr;
       productList.clear();
@@ -68,14 +70,38 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                   originalPrice: "\$3,000.00",
                 ),
               ));
-      emit(ProductListInitial());
     }
+    emit(const ProductListLoadedState());
   }
 
-  void onPageNumberChanged(ChangePageNumberEvent event, Emitter<ProductListState> emit) {
-    emit(ReloadProductState());
-    selectedPageNumber = event.pageNumber;
-    emit(ChangePageNumberState());
+  Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
+    emit(ProductListLoadingMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      List.generate(
+          10,
+          (index) => productList.add(ProductDetails(
+                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                name: "Diamond Vine Ring in 18k Rose Gold",
+                originalPrice: '\$5,000.00',
+                discountPercentage: "You have saved 10%",
+                offerPrice: '\$3,000.00',
+              )));
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                  diamond: "2.5 crt",
+                  gram: "1.5 grms",
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
+                  name: "2.00 Carat H VS1 Excellent Cut Round Setting",
+                  originalPrice: "\$3,000.00",
+                ),
+              ));
+    }
+    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    emit(ProductListLoadedMoreState(event.currentPage + 1));
   }
 
   void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {

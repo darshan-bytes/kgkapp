@@ -158,8 +158,6 @@ class ProductMenuBottomSheet extends StatelessWidget {
               context.pop();
               Utils.showSmartModalBottomSheet(
                 context: context,
-                isScrollControlled: true,
-                useSafeArea: true,
                 builder: (context) => QuotationRequestConfirmation(
                   onContinueShopping: () {
                     context.pop();
@@ -182,8 +180,6 @@ class ProductMenuBottomSheet extends StatelessWidget {
           context.pop();
           Utils.showSmartModalBottomSheet(
             context: context,
-            isScrollControlled: true,
-            useSafeArea: true,
             builder: (context) => QuotationRequestConfirmation(
               onContinueShopping: () {
                 context.pop();
