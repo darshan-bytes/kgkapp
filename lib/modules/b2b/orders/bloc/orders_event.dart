@@ -2,9 +2,6 @@ part of 'orders_bloc.dart';
 
 sealed class OrdersEvent extends Equatable {
   const OrdersEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 final class OrdersInitialEvent extends OrdersEvent {
@@ -14,15 +11,6 @@ final class OrdersInitialEvent extends OrdersEvent {
 
   @override
   List<Object> get props => [context];
-}
-
-class ChangeOrdersPageNumberEvent extends OrdersEvent {
-  final String pageNumber;
-
-  const ChangeOrdersPageNumberEvent(this.pageNumber);
-
-  @override
-  List<Object> get props => [pageNumber];
 }
 
 final class ChangeOrdersStoneTypeEvent extends OrdersEvent {

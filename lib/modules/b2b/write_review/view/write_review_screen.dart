@@ -175,8 +175,6 @@ class WriteReviewScreen extends StatelessWidget {
   Future<void> _showImagePickDialog(BuildContext context, WriteReviewBloc bloc) async {
     await Utils.showSmartModalBottomSheet(
       context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
       builder: (context) {
         return SmartImagePickDialogSheet(
           onTapSource: (ImageSource imageSource) {

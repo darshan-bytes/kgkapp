@@ -14,19 +14,21 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
 
-  // List of numbers for the dropdown
-  List<String> pageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-
-  // The selected number of pages, initialized to the first item
-  String selectedPageNumber = '01';
-
   String stoneListingAppbarTitle = "DIY";
+
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   StoneListingBloc() : super(const StoneListingInitial()) {
     on<GetStoneProductListEvent>(_onGetStoneProductListEvent);
     on<StoneChangeTypeEvent>(_onStoneChangeTypeEvent);
     on<StoneChangeListingTypeEvent>(_onChangeListingTypeEvent);
-    on<StoneProductChangePageNumberEvent>(_onPageNumberChanged);
+    on<StoneListLoadMoreEvent>(_onStoneListLoadMoreEvent);
+  }
+
+  @override
+  Future<void> close() {
+    paginationScrollController.dispose();
+    return super.close();
   }
 
   void getScreenIdentifier(BuildContext context) {
@@ -35,7 +37,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
-    emit(const StoneLoadingState());
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(StoneListLoadMoreEvent(currentPage));
+      },
+    );
     getScreenIdentifier(event.context);
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
       stoneListingAppbarTitle = APPStrings.diy.tr;
@@ -86,7 +92,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
               ));
     }
 
-    emit(const StoneListingInitial());
+    emit(const StoneProductLoadedState());
   }
 
   void _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) {
@@ -101,9 +107,48 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     emit(StoneChangeListingTypeState());
   }
 
-  void _onPageNumberChanged(StoneProductChangePageNumberEvent event, Emitter<StoneListingState> emit) {
-    emit(StoneProductReloadState());
-    selectedPageNumber = event.pageNumber;
-    emit(StoneProductChangePageNumberState());
+  Future<void> _onStoneListLoadMoreEvent(StoneListLoadMoreEvent event, Emitter<StoneListingState> emit) async {
+    emit(StoneListLoadingMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                  diamond: "2.5 crt",
+                  gram: "1.5 grms",
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
+                  name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+                  originalPrice: "\$3,000.00",
+                  discountPercentage: "Save UP TO 10%",
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                  diamond: "1.5 gram",
+                  gram: "1.5 gram",
+                  imageUrl:
+                      index % 2 == 0 ? "https://i.ibb.co/477f41r/Group-1410089379.png" : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",
+                  name: "0.35 Carat Super Premium Oval Moissanite",
+                  originalPrice: "\$1,600 .00",
+                ),
+              ));
+    } else {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                    diamond: "2.5 crt",
+                    gram: "1.5 grms",
+                    imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
+                    name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+                    originalPrice: "\$3,000.00"),
+              ));
+    }
+    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    emit(StoneListLoadedMoreState(event.currentPage + 1));
   }
 }

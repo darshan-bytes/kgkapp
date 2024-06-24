@@ -1,3 +1,3 @@
-library blocBase;
+library kgk;
 
 export 'utils/exports.dart';

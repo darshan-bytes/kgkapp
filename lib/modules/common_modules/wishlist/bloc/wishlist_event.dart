@@ -11,11 +11,11 @@ class InitialWishlistEvent extends WishlistEvent {
   List<Object> get props => [];
 }
 
-class ChangeWishlistPageNumberEvent extends WishlistEvent {
-  final String pageNumber;
+class LoadMoreWishlistEvent extends WishlistEvent {
+  final int currentPage;
 
-  const ChangeWishlistPageNumberEvent(this.pageNumber);
+  const LoadMoreWishlistEvent(this.currentPage);
 
   @override
-  List<Object> get props => [pageNumber];
+  List<Object> get props => [currentPage];
 }

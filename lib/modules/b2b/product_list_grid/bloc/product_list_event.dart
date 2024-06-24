@@ -13,18 +13,18 @@ final class InitialProductListEvent extends ProductListEvent {
   List<Object> get props => [context];
 }
 
-class ChangePageNumberEvent extends ProductListEvent {
-  final String pageNumber;
-
-  const ChangePageNumberEvent(this.pageNumber);
-
-  @override
-  List<Object> get props => [pageNumber];
-}
-
-class ProductChangeListingTypeEvent extends ProductListEvent {
+final class ProductChangeListingTypeEvent extends ProductListEvent {
   const ProductChangeListingTypeEvent();
 
   @override
   List<Object> get props => [];
+}
+
+final class ProductListLoadMoreEvent extends ProductListEvent {
+  final int currentPage;
+
+  const ProductListLoadMoreEvent(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

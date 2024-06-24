@@ -589,4 +589,5 @@ class APPStrings {
 
   //Edit Address
   static const String editAddress = 'edit_address';
+  static const String noDiamondProductFound = 'no_diamond_product_found';
 }

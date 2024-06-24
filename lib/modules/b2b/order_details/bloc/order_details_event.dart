@@ -38,15 +38,6 @@ final class OrderDetailRemoveProductEvent extends OrderDetailEvent {
   List<Object> get props => [index];
 }
 
-class ChangeOrderDetailPageNumberEvent extends OrderDetailEvent {
-  final String pageNumber;
-
-  const ChangeOrderDetailPageNumberEvent(this.pageNumber);
-
-  @override
-  List<Object> get props => [pageNumber];
-}
-
 final class FilterOrdersEvent extends OrderDetailEvent {
   const FilterOrdersEvent();
 

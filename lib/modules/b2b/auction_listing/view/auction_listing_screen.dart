@@ -16,17 +16,27 @@ class AuctionListingScreen extends StatelessWidget {
 
   Widget _getBody(AuctionListingBloc auctionListingBloc) {
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.0.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 24.h),
-            _buildSearchTextField(auctionListingBloc),
-            SizedBox(height: 24.h),
-            Expanded(child: _buildAuctionList(auctionListingBloc)),
-          ],
-        ),
+      child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
+        buildWhen: (previous, current) => current is AuctionListingLoadedState,
+        builder: (context, state) {
+          if (state is AuctionListingLoadedState) {
+            return SmartSingleChildScrollView(
+              controller: auctionListingBloc.paginationScrollController.scrollController,
+              padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 24.h),
+                  _buildSearchTextField(auctionListingBloc),
+                  SizedBox(height: 24.h),
+                  _buildAuctionList(auctionListingBloc),
+                ],
+              ),
+            );
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
       ),
     );
   }
@@ -34,8 +44,6 @@ class AuctionListingScreen extends StatelessWidget {
   Widget _buildSearchTextField(AuctionListingBloc auctionListingBloc) {
     return SmartTextField.search(
       height: 48.h,
-      onValueChanges: (value) => auctionListingBloc.add(const FilterAuctionsEvent()),
-      onFieldSubmitted: (value) => auctionListingBloc.add(const FilterAuctionsEvent()),
       hintText: APPStrings.searchAuction.tr,
       controller: auctionListingBloc.auctionSearchController,
     );
@@ -43,25 +51,37 @@ class AuctionListingScreen extends StatelessWidget {
 
   Widget _buildAuctionList(AuctionListingBloc auctionListingBloc) {
     return BlocBuilder<AuctionListingBloc, AuctionListingState>(
-      buildWhen: (previous, current) => current is FilterAuctionsState || current is AuctionListingReloadState,
+      buildWhen: (previous, current) => current is AuctionListLoadedMoreState || current is AuctionListLoadingMoreState,
       builder: (context, state) {
-        if (auctionListingBloc.filteredAuctionList.isEmpty) {
-          return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
-        } else {
-          return ListView.separated(
-            itemCount: auctionListingBloc.filteredAuctionList.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              AuctionListModel auctionListModel = auctionListingBloc.filteredAuctionList[index];
-              return AuctionListItem(
-                onTap: () => context.pushNamed(AppRoutes.auctionPage),
-                auctionListModel: auctionListModel,
-                stoneTypeImage: AppImages.icRingThin,
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(height: 16.h),
-          );
-        }
+        return Column(
+          children: [
+            BlocBuilder<AuctionListingBloc, AuctionListingState>(
+              buildWhen: (previous, current) => current is AuctionListLoadedMoreState,
+              builder: (context, state) {
+                if (auctionListingBloc.auctionList.isEmpty) {
+                  return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
+                } else {
+                  return ListView.separated(
+                    itemCount: auctionListingBloc.auctionList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
+                      return AuctionListItem(
+                        onTap: () => context.pushNamed(AppRoutes.auctionPage),
+                        auctionListModel: auctionListModel,
+                        stoneTypeImage: AppImages.icRingThin,
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                  );
+                }
+              },
+            ),
+            if (state is AuctionListLoadingMoreState) const SmartCircularProgressIndicator(),
+            SizedBox(height: 17.h),
+          ],
+        );
       },
     );
   }

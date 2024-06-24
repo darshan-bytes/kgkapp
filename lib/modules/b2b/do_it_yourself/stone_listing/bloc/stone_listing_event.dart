@@ -32,11 +32,11 @@ class StoneChangeListingTypeEvent extends StoneListingEvent {
   List<Object> get props => [];
 }
 
-class StoneProductChangePageNumberEvent extends StoneListingEvent {
-  final String pageNumber;
+class StoneListLoadMoreEvent extends StoneListingEvent {
+  final int currentPage;
 
-  const StoneProductChangePageNumberEvent(this.pageNumber);
+  const StoneListLoadMoreEvent(this.currentPage);
 
   @override
-  List<Object> get props => [pageNumber];
+  List<Object> get props => [currentPage];
 }

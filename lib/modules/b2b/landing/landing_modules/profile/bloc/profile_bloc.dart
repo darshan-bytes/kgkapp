@@ -104,8 +104,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: () {
             Utils.showSmartModalBottomSheet(
               context: event.context,
-              isScrollControlled: true,
-              useSafeArea: true,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
               ),
