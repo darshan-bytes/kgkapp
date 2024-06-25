@@ -287,5 +287,7 @@ export 'package:kgk/widgets/smart_circular_progress_indicator.dart';
 export 'package:kgk/modules/common_modules/address/saved_address/bloc/saved_address_bloc.dart';
 export 'package:kgk/modules/common_modules/address/saved_address/view/saved_address_screen.dart';
 export 'package:kgk/widgets/saved_address_widget.dart';
+export 'package:kgk/modules/common_modules/address/shipping_address/bloc/shipping_address_bloc.dart';
+export 'package:kgk/modules/common_modules/address/shipping_address/view/shipping_address_screen.dart';
 export 'package:kgk/modules/b2b/project_listing/bloc/project_listing_bloc.dart';
 export 'package:kgk/modules/b2b/project_listing/view/project_listing_screen.dart';

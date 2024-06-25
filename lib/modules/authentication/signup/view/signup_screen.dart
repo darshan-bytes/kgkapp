@@ -282,7 +282,7 @@ class SignUpScreen extends StatelessWidget {
             if (!signUpBloc.isIndividual && signUpBloc.contactNumberControllers.length < 2) ...[
               SizedBox(height: 8.h),
               SmartText(
-                APPStrings.add.tr,
+                APPStrings.plusAdd.tr,
                 style: AppTheme.of(context).textFieldStyle.textStyle,
                 onTap: () {
                   signUpBloc.add(const SignupAddContactEvent());

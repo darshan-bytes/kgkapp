@@ -21,6 +21,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   AddressDetails? selectedAddress;
   List<AddressDetails> addressList = [
     AddressDetails(
+      id: 1,
       firstName: "Gautam",
       lastName: "Singhania",
       contactNumber: "+91-850-427-9498",
@@ -33,6 +34,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       isDefaultShipping: true,
     ),
     AddressDetails(
+      id: 2,
       firstName: "Rahul",
       lastName: "Sharma",
       contactNumber: "+91-850-427-9498",
@@ -79,12 +81,13 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     emit(const DeleteAddressState());
   }
 
-  void _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) {
-    //TODO: Implement edit address
+  Future<void> _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) async {
+    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressId: addressList[event.index].id?.toString()});
   }
 
   Future<void> _onAddNewAddressEvent(AddNewAddressEvent event, Emitter<AddressListState> emit) async {
-    final Map<RoutesData, dynamic>? result = await event.context.pushNamed(AppRoutes.addAddressPage);
+    final Map<RoutesData, dynamic>? result =
+        await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isFromCheckout: true});
     if (result != null && result.containsKey(RoutesData.addressDetails) && result[RoutesData.addressDetails] is AddressDetails) {
       AddressDetails addressDetails = result[RoutesData.addressDetails];
       addressList.add(addressDetails);

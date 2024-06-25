@@ -70,6 +70,30 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                   originalPrice: "\$3,000.00",
                 ),
               ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      List.generate(
+          20,
+          (index) => productList.add(
+                ProductDetails(
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                  name: "Diamond Vine Ring in 18k Rose Gold",
+                  originalPrice: '\$5,000.00',
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      List.generate(
+          20,
+          (index) => productList.add(
+                ProductDetails(
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
+                  name: "Diamond Vine Ring in 18k Yellow Gold",
+                  originalPrice: '\$5,000.00',
+                ),
+              ));
     }
     emit(const ProductListLoadedState());
   }
@@ -97,6 +121,26 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
                   name: "2.00 Carat H VS1 Excellent Cut Round Setting",
                   originalPrice: "\$3,000.00",
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                  name: "Diamond Vine Ring in 18k Rose Gold",
+                  originalPrice: '\$5,000.00',
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+      List.generate(
+          10,
+          (index) => productList.add(
+                ProductDetails(
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
+                  name: "Diamond Vine Ring in 18k Yellow Gold",
+                  originalPrice: '\$5,000.00',
                 ),
               ));
     }

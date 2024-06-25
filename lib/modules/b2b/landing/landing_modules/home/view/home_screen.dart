@@ -444,25 +444,28 @@ class HomeScreen extends StatelessWidget {
             optionalPadding: EdgeInsets.only(left: 17.w),
           ),
           SizedBox(height: 4.h),
-          Scrollbar(
-            controller: homeBloc.dealOfTheDayScrollController,
-            thumbVisibility: true,
-            child: SmartSingleChildScrollView(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: Scrollbar(
               controller: homeBloc.dealOfTheDayScrollController,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: 12.w,
-                runSpacing: 12.2.h,
-                children: homeBloc.dealOfTheDayList.map((product) {
-                  return ProductGridItem(
-                    productDetails: product,
-                    onEyeTap: () {},
-                    onFavTap: () {},
-                    onTap: () {},
-                  );
-                }).toList(),
+              thumbVisibility: true,
+              child: SmartSingleChildScrollView(
+                controller: homeBloc.dealOfTheDayScrollController,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 12.w,
+                  runSpacing: 12.2.h,
+                  children: homeBloc.dealOfTheDayList.map((product) {
+                    return ProductGridItem(
+                      productDetails: product,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onTap: () {},
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
@@ -527,25 +530,28 @@ class HomeScreen extends StatelessWidget {
             optionalPadding: EdgeInsets.only(left: 17.w),
           ),
           SizedBox(height: 4.h),
-          Scrollbar(
-            controller: homeBloc.recentlyViewedScrollController,
-            thumbVisibility: true,
-            child: SmartSingleChildScrollView(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: Scrollbar(
               controller: homeBloc.recentlyViewedScrollController,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: 12.w,
-                runSpacing: 12.2.h,
-                children: homeBloc.recentlyViewList.map((product) {
-                  return ProductGridItem(
-                    productDetails: product,
-                    onEyeTap: () {},
-                    onFavTap: () {},
-                    onTap: () {},
-                  );
-                }).toList(),
+              thumbVisibility: true,
+              child: SmartSingleChildScrollView(
+                controller: homeBloc.recentlyViewedScrollController,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 12.w,
+                  runSpacing: 12.2.h,
+                  children: homeBloc.recentlyViewList.map((product) {
+                    return ProductGridItem(
+                      productDetails: product,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onTap: () {},
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),

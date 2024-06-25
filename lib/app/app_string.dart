@@ -84,7 +84,7 @@ class APPStrings {
   static const String diamond = 'diamond';
   static const String gemstone = 'gemstone';
   static const String jewellery = 'jewellery';
-  static const String add = 'add';
+  static const String plusAdd = 'plus_add';
   static const String country = 'country';
 
   //product list grid
@@ -621,6 +621,10 @@ class APPStrings {
   static const String selectJewellery = 'select_jewellery';
   static const String customiseViewPrice = "customise_view_price";
   static const String getStarted = 'get_started';
+  static const String txtDefault = 'default';
+  static const String add = 'add';
+  static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
+  static const String productLibrary = 'product_library';
 
   //Project Listing
   static const String projects = 'projects';
