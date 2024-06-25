@@ -48,6 +48,7 @@ class AppRoutes {
   static const conceptListPage = '/conceptListPage';
   static const monitoringPage = '/monitoringPage';
   static const savedAddressPage = '/savedAddressPage';
+  static const shippingAddressPage = '/shippingAddressPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -451,6 +452,16 @@ class AppRoutes {
           },
           settings: settings,
         );
+
+      case shippingAddressPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
+            return const ShippingAddressScreen();
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -480,7 +491,9 @@ enum RoutesData {
   searchResultData,
   cmsPageData,
   isNoDataFound,
-  addressId
+  addressId,
+  isShippingAddress,
+  isFromCheckout,
 }
 
 enum ScreenIdentifier {

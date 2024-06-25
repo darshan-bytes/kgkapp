@@ -16,7 +16,11 @@ class AddAddressScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is AddAddressReloadState,
           builder: (context, state) {
             return SmartAppBar(
-              title: !bloc.isEditAddress ? APPStrings.checkout.tr : APPStrings.editAddress.tr,
+              title: bloc.isFromCheckout
+                  ? APPStrings.checkout.tr
+                  : bloc.isEditAddress
+                      ? APPStrings.editAddress.tr
+                      : APPStrings.addAddress.tr,
             );
           },
         ),
@@ -29,7 +33,7 @@ class AddAddressScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (!bloc.isEditAddress) ...[
+                    if (bloc.isFromCheckout) ...[
                       const CheckoutHeaderProgressbar(),
                       _buildIsBillingAddressSameAsSelected(bloc, style),
                     ],
@@ -67,7 +71,7 @@ class AddAddressScreen extends StatelessWidget {
 
   Widget generateAddressForm(AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context) {
     return Padding(
-        padding: !bloc.isEditAddress ? EdgeInsets.symmetric(horizontal: 17.w) : EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+        padding: bloc.isFromCheckout ? EdgeInsets.symmetric(horizontal: 17.w) : EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
         child: Column(children: [
           _buildFirstNameField(bloc),
           SizedBox(height: 24.h),
@@ -91,9 +95,9 @@ class AddAddressScreen extends StatelessWidget {
             onTap: () {
               bloc.add(SaveAddressEvent(context));
             },
-            title: APPStrings.savedAddress.tr,
+            title: APPStrings.save.tr,
           ),
-          SizedBox(height: 24.h),
+          if (bloc.isFromCheckout) SizedBox(height: 24.h),
         ]));
   }
 

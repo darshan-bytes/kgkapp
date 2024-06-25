@@ -56,7 +56,7 @@
   "diamond": "Diamond",
   "gemstone": "Gemstone",
   "jewellery": "Jewellery",
-  "add": "+ Add",
+  "plus_add": "+ Add",
   "country": "Country",
   "previous": "Previous",
   "next": "Next",
@@ -500,5 +500,7 @@
   "select_stone": "Select stone",
   "select_jewellery": "Select Jewellery",
   "customise_view_price": "Customise & view price",
-  "get_started": "Get started"
+  "get_started": "Get started",
+  "default": "Default",
+  "add": "Add"
 }

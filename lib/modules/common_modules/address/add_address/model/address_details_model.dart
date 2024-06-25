@@ -1,4 +1,5 @@
 class AddressDetails {
+  int? id;
   String? firstName;
   String? lastName;
   String? contactNumber;
@@ -12,6 +13,7 @@ class AddressDetails {
   bool? isDefaultBilling;
 
   AddressDetails({
+    this.id,
     this.firstName,
     this.lastName,
     this.contactNumber,
@@ -25,44 +27,18 @@ class AddressDetails {
     this.isDefaultBilling = false,
   });
 
-  AddressDetails.fromJson(Map<String, dynamic> json) {
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    contactNumber = json['contact_number'];
-    addressLine1 = json['address_line1'];
-    addressLine2 = json['address_line2'];
-    city = json['city'];
-    state = json['state'];
-    country = json['country'];
-    zipCode = json['zipCode'];
-    isDefaultShipping = json['is_default_shipping'];
-    isDefaultBilling = json['is_default_billing'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['address_line1'] = addressLine1;
-    data['address_line2'] = addressLine2;
-    data['city'] = city;
-    data['state'] = state;
-    data['country'] = country;
-    data['zipCode'] = zipCode;
-    data['first_name'] = firstName;
-    data['is_default_shipping'] = isDefaultShipping;
-    data['is_default_billing'] = isDefaultBilling;
-    return data;
-  }
-
   @override
   String toString() {
-    return 'AddressDetails{addressLine1: $addressLine1, addressLine2: $addressLine2, city: $city, state: $state, country: $country, zipCode: $zipCode, isDefaultShipping: $isDefaultShipping, isDefaultBilling: $isDefaultBilling}';
+    return 'AddressDetails{id:$id, firstName: $firstName, lastName: $lastName, contactNumber: $contactNumber, addressLine1: $addressLine1, addressLine2: $addressLine2, city: $city, state: $state, country: $country, zipCode: $zipCode, isDefaultShipping: $isDefaultShipping, isDefaultBilling: $isDefaultBilling}';
   }
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
     return other is AddressDetails &&
+        other.id == id &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.contactNumber == contactNumber &&
         other.addressLine1 == addressLine1 &&
         other.addressLine2 == addressLine2 &&
         other.city == city &&
@@ -75,7 +51,11 @@ class AddressDetails {
 
   @override
   int get hashCode {
-    return addressLine1.hashCode ^
+    return id.hashCode ^
+        firstName.hashCode ^
+        lastName.hashCode ^
+        contactNumber.hashCode ^
+        addressLine1.hashCode ^
         addressLine2.hashCode ^
         city.hashCode ^
         state.hashCode ^
