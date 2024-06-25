@@ -145,4 +145,8 @@ class AppImages {
   static const String icDown = 'assets/images/ic_down.svg';
 
   static const String icEditAddress = 'assets/images/ic_edit_address.svg';
+  static const String icPrimaryBgLine = 'assets/images/ic_primary_bg_line.svg';
+  static const String icCustomizeThin = 'assets/images/ic_customize_thin.svg';
+  static const String icHomeDiamondRingThin = 'assets/images/ic_home_diamond_ring_thin.svg';
+  static const String icHomeRing = 'assets/images/ic_home_ring.svg';
 }

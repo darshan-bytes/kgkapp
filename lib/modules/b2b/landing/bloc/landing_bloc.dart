@@ -151,6 +151,9 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       currentIndex = event.index;
       if (userType == UserType.b2cUser) {
         switch (event.index) {
+          case homeIndex:
+            blocList[currentIndex].add(HomeInitialEvent(context: event.context));
+            break;
           case myBagIndex:
             blocList[currentIndex].add(InitialMyBagEvent());
             break;
@@ -163,6 +166,9 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         }
       } else if (userType == UserType.b2bUser) {
         switch (event.index) {
+          case homeIndex:
+            blocList[currentIndex].add(HomeInitialEvent(context: event.context));
+            break;
           case myBagIndex:
             blocList[currentIndex].add(InitialMyBagEvent());
             break;
