@@ -7,6 +7,7 @@ part 'categories_state.dart';
 enum ArrowPosition { leftTop, centerTop, rightTop }
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
+  UserType userType = UserType.b2cUser;
   int? selectedRowIndex;
   int? selectedItemIndex;
   ArrowPosition arrowPosition = ArrowPosition.rightTop;
@@ -27,6 +28,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
+    on<CategoriesInitialEvent>(onCategoriesInitialEvent);
   }
 
   void onCategoriesSelectedEvent(CategoriesSelectedEvent event, Emitter<CategoriesState> emit) {
@@ -49,5 +51,24 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     }
 
     emit(CategoriesSelected());
+  }
+
+  void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    if (userType == UserType.b2bUser) {
+      categories.clear();
+      categories.addAll([
+        CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Digital \nCatalogue', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'Monitoring', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+      ]);
+    }
+    emit(CategoriesReloaded());
   }
 }

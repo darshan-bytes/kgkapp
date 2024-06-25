@@ -21,8 +21,11 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     return super.close();
   }
 
-  void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) {
+  void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) async {
     emit(ConceptListReloadState());
+
+    await Future.delayed(const Duration(seconds: 5));
+
     searchController.clear();
     paginationScrollController.init(
       loadAction: (int currentPage) async {

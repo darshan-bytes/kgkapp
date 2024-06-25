@@ -74,11 +74,14 @@ class AppRoutes {
             BlocProvider.of<SignUpBloc>(context).add(const SignUpResetEvent());
             return const SignUpScreen();
           },
-          settings: settings,
+          settings: settings, //CategoriesInitialEvent
         );
       case categoriesPage:
         return MaterialPageRoute(
-          builder: (_) => const CategoriesScreen(),
+          builder: (context) {
+            BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
+            return const CategoriesScreen();
+          },
           settings: settings,
         );
 

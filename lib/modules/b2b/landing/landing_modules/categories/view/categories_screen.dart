@@ -6,6 +6,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
+    categoriesBloc.add(CategoriesInitialEvent(context: context));
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
@@ -54,6 +55,8 @@ class CategoriesScreen extends StatelessWidget {
                           } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Do It \nYourself') {
                             context
                                 .pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
+                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Monitoring') {
+                            context.pushNamed(AppRoutes.monitoringPage);
                           } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'PDD') {
                             context.pushNamed(AppRoutes.conceptListPage);
                           }

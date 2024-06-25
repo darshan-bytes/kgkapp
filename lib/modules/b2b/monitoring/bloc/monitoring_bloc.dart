@@ -4,15 +4,36 @@ part 'monitoring_event.dart';
 
 part 'monitoring_state.dart';
 
+enum MonitoringTab {
+  presentations,
+  dbf,
+  designs,
+  styles,
+}
+
 class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   late TabController tabController;
-  final TextEditingController searchController = TextEditingController();
+  final TextEditingController presentationsSearchController = TextEditingController();
+  final TextEditingController dbfSearchController = TextEditingController();
+  final TextEditingController designSearchController = TextEditingController();
+  final TextEditingController stylesSearchController = TextEditingController();
+
   List<B2BCustomListingDataModel> presentationList = [];
-  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  List<B2BCustomListingDataModel> dbfList = [];
+  List<B2BCustomListingDataModel> designsList = [];
+  List<B2BCustomListingDataModel> stylesList = [];
+
+  SmartPaginationScrollController presentationsScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController dbfScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController designsScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController stylesScrollController = SmartPaginationScrollController();
 
   @override
   Future<void> close() {
-    paginationScrollController.dispose();
+    presentationsScrollController.dispose();
+    dbfScrollController.dispose();
+    designsScrollController.dispose();
+    stylesScrollController.dispose();
     return super.close();
   }
 
@@ -34,14 +55,39 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   void _onInitialEvent(MonitoringInitialEvent event, Emitter<MonitoringState> emit) {
     emit(MonitoringReloadState());
 
-    paginationScrollController.init(
+    // Initialize scroll controllers with their respective load actions
+    presentationsScrollController.init(
+      tag: "presentationsScrollController",
       loadAction: (int currentPage) async {
-        add(MonitoringListingLoadMoreEvent(currentPage: currentPage));
+        printWrapped("presentationsScrollController currentPage==>>  $currentPage");
+        add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.presentations));
       },
     );
 
+    dbfScrollController.init(
+      tag: "dbfScrollController",
+      loadAction: (int currentPage) async {
+        add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.dbf));
+      },
+    );
+
+    designsScrollController.init(
+      tag: "designsScrollController",
+      loadAction: (int currentPage) async {
+        add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.designs));
+      },
+    );
+
+    stylesScrollController.init(
+      tag: "stylesScrollController",
+      loadAction: (int currentPage) async {
+        add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.styles));
+      },
+    );
+
+    // Initialize data lists
     presentationList = List.generate(
-      20,
+      6,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strPresentationNumber: '1254875',
@@ -58,56 +104,282 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       ),
     );
 
-    emit(MonitoringListLoadedState());
+    dbfList = List.generate(
+      6,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        strDbfNumber: "1234543",
+        designCreationStatus: OrderStatus.active,
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        designApprovalStatus: OrderStatus.active,
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        dbfApprovalStatus: OrderStatus.active,
+        strRevisedDate: "24/03/2023",
+        holdStatus: OrderStatus.active,
+      ),
+    );
+
+    designsList = List.generate(
+      6,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        status: OrderStatus.active,
+        strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+        strDesignNumber: "DERS28MOVR",
+        strDbfNumber: "1234574",
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strApprovedBy: "John Samanta",
+        strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strApprovedOn: "24/03/2023",
+      ),
+    );
+
+    stylesList = List.generate(
+      6,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        status: OrderStatus.active,
+        strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+        strStyleNumber: "DWBFM4Q-108636",
+        strDesignNumber: "DERS28MOVR",
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strApprovedBy: "John Samanta",
+        strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strApprovedOn: "24/03/2023",
+      ),
+    );
+
+    emit(const MonitoringListLoadedState());
   }
 
   void _onTabChangedEvent(MonitoringOnTabChangedEvent event, Emitter<MonitoringState> emit) {
     emit(MonitoringReloadState());
-    printWrapped("tabController.index: ${tabController.index}");
-    switch (tabController.index) {
-      case 0:
-
-        /// Presentations
+    final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
+    switch (currentTab) {
+      case MonitoringTab.presentations:
+        // Presentations logic
         break;
-      case 1:
-
-        /// DBF
+      case MonitoringTab.dbf:
+        // DBF logic
         break;
-      case 2:
-
-        /// Designs
+      case MonitoringTab.designs:
+        // Designs logic
         break;
-      case 3:
-
-        /// Styles
+      case MonitoringTab.styles:
+        // Styles logic
         break;
     }
     emit(MonitoringOnTabChangedState());
+    // setCurrentScrollController(emit);
   }
 
   Future<void> _onListingLoadMoreEvent(MonitoringListingLoadMoreEvent event, Emitter<MonitoringState> emit) async {
-    emit(MonitoringLoadingMoreState());
+    emit(MonitoringLoadingMoreState(event.listType));
     await Future.delayed(const Duration(seconds: 2));
-    presentationList.addAll(
-      List.generate(
-        10,
-        (index) => B2BCustomListingDataModel(
-          id: index.toString(),
-          strPresentationNumber: ((paginationScrollController.currentPage * 10) + index + 1).toString(),
-          status: OrderStatus.inProgress,
-          strConceptNumber: "PRJ-171604",
-          strSalesman: "John Samanta",
-          strSalesmanImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          strDesigner: "Jenny Wilson",
-          strDesignerImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
-          strCreatedOn: '23/03/2023',
-          strApprovedBy: "John Samanta",
-          strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          strApprovedOn: "23/03/2023",
-        ),
+
+    List<B2BCustomListingDataModel> newDataList = [];
+    // int currentPage;
+
+    switch (event.listType) {
+      case MonitoringTab.presentations:
+        newDataList = generatePresentationData(event.currentPage);
+        presentationList.addAll(newDataList);
+        presentationsScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case MonitoringTab.dbf:
+        newDataList = generateDbfData(event.currentPage);
+        dbfList.addAll(newDataList);
+        dbfScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case MonitoringTab.designs:
+        newDataList = generateDesignsData(event.currentPage);
+        designsList.addAll(newDataList);
+        designsScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case MonitoringTab.styles:
+        newDataList = generateStylesData(event.currentPage);
+        stylesList.addAll(newDataList);
+        stylesScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+    }
+
+    emit(MonitoringListLoadedMoreState(event.currentPage + 1, event.listType));
+  }
+
+  // Method to generate presentation data
+  List<B2BCustomListingDataModel> generatePresentationData(int currentPage) {
+    return List.generate(
+      4,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        strPresentationNumber: ((currentPage * 10) + index + 1).toString(),
+        status: OrderStatus.inProgress,
+        strConceptNumber: "PRJ-171604",
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strDesigner: "Jenny Wilson",
+        strDesignerImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strCreatedOn: '23/03/2023',
+        strApprovedBy: "John Samanta",
+        strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strApprovedOn: "23/03/2023",
       ),
     );
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-    emit(MonitoringListLoadedMoreState(event.currentPage + 1));
+  }
+
+// Method to generate dbf data
+  List<B2BCustomListingDataModel> generateDbfData(int currentPage) {
+    return List.generate(
+      4,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        strDbfNumber: "1234543",
+        designCreationStatus: OrderStatus.active,
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        designApprovalStatus: OrderStatus.active,
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        dbfApprovalStatus: OrderStatus.active,
+        strRevisedDate: "24/03/2023",
+        holdStatus: OrderStatus.active,
+      ),
+    );
+  }
+
+// Method to generate designs data
+  List<B2BCustomListingDataModel> generateDesignsData(int currentPage) {
+    return List.generate(
+      4,
+      (index) => B2BCustomListingDataModel(
+          id: index.toString(),
+          status: OrderStatus.active,
+          strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+          strDesignNumber: "DERS28MOVR",
+          strDbfNumber: "1234574",
+          strCustomer: "Alex Williams",
+          strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+          strSalesman: "John Samanta",
+          strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+          strApprovedBy: "John Samanta",
+          strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+          strApprovedOn: "24/03/2023"),
+    );
+  }
+
+// Method to generate styles data
+  List<B2BCustomListingDataModel> generateStylesData(int currentPage) {
+    return List.generate(
+      4,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        status: OrderStatus.active,
+        strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+        strStyleNumber: "DWBFM4Q-108636",
+        strDesignNumber: "DERS28MOVR",
+        strCustomer: "Alex Williams",
+        strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strSalesman: "John Samanta",
+        strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strApprovedBy: "John Samanta",
+        strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+        strApprovedOn: "24/03/2023",
+      ),
+    );
+  }
+
+  SmartPaginationScrollController get currentController {
+    final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
+    switch (currentTab) {
+      case MonitoringTab.presentations:
+        return presentationsScrollController;
+      case MonitoringTab.dbf:
+        return dbfScrollController;
+      case MonitoringTab.designs:
+        return designsScrollController;
+      case MonitoringTab.styles:
+        return stylesScrollController;
+    }
+  }
+
+  // Getter for the current list based on the selected tab
+  List<B2BCustomListingDataModel> get currentList {
+    final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
+    switch (currentTab) {
+      case MonitoringTab.presentations:
+        return presentationList;
+      case MonitoringTab.dbf:
+        return dbfList;
+      case MonitoringTab.designs:
+        return designsList;
+      case MonitoringTab.styles:
+        return stylesList;
+      default:
+        return presentationList; // Default case
+    }
+  }
+
+  // Getter for the listing type based on the selected tab
+  B2BListingType get currentListingType {
+    final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
+    switch (currentTab) {
+      case MonitoringTab.presentations:
+        return B2BListingType.monitoringPresentationGridType;
+      case MonitoringTab.dbf:
+        return B2BListingType.monitoringDbfType;
+      case MonitoringTab.designs:
+        return B2BListingType.monitoringDesignsType;
+      case MonitoringTab.styles:
+        return B2BListingType.monitoringStylesType;
+      default:
+        return B2BListingType.monitoringPresentationGridType; // Default case
+    }
+  }
+
+  // Method to build the list view widget based on the selected tab
+  Widget buildListView(BuildContext context) {
+    return Expanded(
+      child: BlocBuilder<MonitoringBloc, MonitoringState>(
+        buildWhen: (previous, current) =>
+            current is MonitoringListLoadedState || current is MonitoringOnTabChangedState || current is MonitoringListLoadedMoreState,
+        builder: (context, state) {
+          if (currentList.isEmpty) {
+            return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr); // Adjust text based on the selected tab if necessary
+          }
+
+          return ListView.separated(
+            itemCount: currentList.length,
+            controller: currentController.scrollController,
+            itemBuilder: (context, index) {
+              return BlocBuilder<MonitoringBloc, MonitoringState>(
+                buildWhen: (previous, current) => current is MonitoringLoadingMoreState || current is MonitoringListLoadedMoreState,
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      B2BListingItem(
+                        onTap: () {},
+                        onTapMenuButton: () {},
+                        type: currentListingType,
+                        listingItemModel: currentList[index],
+                      ),
+                      if (state is MonitoringLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
+                    ],
+                  );
+                },
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          );
+        },
+      ),
+    );
   }
 }
