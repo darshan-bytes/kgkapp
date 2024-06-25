@@ -43,7 +43,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
           children: [
             if (title.isNotNullNorEmpty) ...[
               SmartText(title, style: titleStyle, optionalPadding: titleOptionalPadding),
-              SizedBox(height: spacingBetweenTitleAndItems.h),
+              SizedBox(height: spacingBetweenTitleAndItems),
             ],
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -52,12 +52,15 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
                 padding: listPadding,
                 child: Row(
                   crossAxisAlignment: mainAxisAlignment,
-                  children: List.generate(itemCount, (index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : itemBetweenSpace.w),
-                      child: itemBuilder(context, index),
-                    );
-                  }),
+                  children: List.generate(
+                    itemCount,
+                    (index) {
+                      return Padding(
+                        padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : itemBetweenSpace),
+                        child: itemBuilder(context, index),
+                      );
+                    },
+                  ),
                 ),
               ),
             )

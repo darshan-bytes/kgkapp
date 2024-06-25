@@ -601,6 +601,27 @@ class APPStrings {
   static const String addNew = 'add_new';
   static const String sameAsShipping = 'same_as_shipping';
 
+  // Home Screen
+  static const String shopDiamonds = 'shop_diamonds';
+  static const String shopGemstones = 'shop_gemstones';
+  static const String topSellingCategories = 'top_selling_categories';
+  static const String kgkCouture = 'kgk_couture';
+  static const String viewAllCollections = 'view_all_collections';
+  static const String luminous = "luminous";
+  static const String elan = "elan";
+  static const String huse = "huse";
+  static const String mirage = "mirage";
+  static const String dealOfTheDay = "deal_of_the_day";
+  static const String getInspired = "get_inspired";
+  static const String shopByStyle = "shop_by_style";
+  static const String createOwnSignaturePiece = "create_own_signature_piece";
+  static const String personaliseJewellery = 'personalise_jewellery';
+  static const String stepX = 'step_x';
+  static const String selectStone = 'select_stone';
+  static const String selectJewellery = 'select_jewellery';
+  static const String customiseViewPrice = "customise_view_price";
+  static const String getStarted = 'get_started';
+
   //Project Listing
   static const String projects = 'projects';
   static const String searchProjects = 'search_projects';
