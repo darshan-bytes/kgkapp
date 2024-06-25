@@ -929,14 +929,4 @@ class LightModeTheme extends AppTheme {
         textStyleColor: colors.color303538,
         dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
       );
-
-  @override
-  SavedAddressStyle get savedAddressStyle => SavedAddressStyle(
-        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
-        addressNameStyle: interMediumBoldTextStyle,
-        addressLineStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-        borderColor: colors.colorD3DAE0,
-        whiteColor: colors.white,
-        primaryColor: colors.primary,
-      );
 }

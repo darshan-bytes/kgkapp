@@ -23,8 +23,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<AuctionListModel> topSellingCategoriesList = _generateTopSellingCategoriesList();
 
   //KGK Couture tabs with Controller
-  late TabController tabController;
-  final List<Widget> tabs = <Widget>[
+  late TabController kgkCoutureTabController;
+  final List<Widget> kgkCoutureTabs = <Widget>[
     Tab(text: APPStrings.luminous.tr),
     Tab(text: APPStrings.elan.tr),
     Tab(text: APPStrings.huse.tr),
@@ -33,8 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<ProductDetails> luminousTabViewList = _generateTabViewList();
 
   //Create Your Own Signature piece
-  OrderStoneTypeModel? selectedStep1StoneType;
-  OrderStoneTypeModel? selectedStep2RingType;
+  OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Diamond");
+  OrderStoneTypeModel selectedStep2RingType = const OrderStoneTypeModel(name: "Ring");
 
   final List<OrderStoneTypeModel> arrStoneType = [
     const OrderStoneTypeModel(name: "Regular"),
@@ -70,8 +70,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeInitialEvent>(_onHomeInitialEvent);
     on<HomeJewelleryImagePageChangeEvent>(_onHomeJewelleryImagePageChangeEvent);
     on<ChangeHomeTabsEvent>(_onChangeHomeTabsEvent);
-    on<ChangeHomeStep1StoneTypeEvent>(_onChangeHomeStep1StoneTypeEvent);
-    on<ChangeHomeStep2StoneTypeEvent>(_onChangeHomeStep2StoneTypeEvent);
+    on<HomeSelectStoneChangeTypeEvent>(_onChangeHomeStep1StoneTypeEvent);
+    on<HomeSelectJewelleryChangeTypeEvent>(_onChangeHomeStep2StoneTypeEvent);
   }
 
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) {
@@ -84,31 +84,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeJewelleryImagePageChangeState());
   }
 
+  //Perform Tab Changes With Tab Controller
   void _onChangeHomeTabsEvent(ChangeHomeTabsEvent event, Emitter<HomeState> emit) {
     emit(HomeReloadState());
-    switch (tabController.index) {
+    switch (kgkCoutureTabController.index) {
       case 0:
+        //Luminous
         break;
       case 1:
+        //Elan
         break;
       case 2:
+        //Huse
         break;
       case 3:
+        //Mirage
         break;
     }
     emit(HomeChangeTabsState());
   }
 
-  void _onChangeHomeStep1StoneTypeEvent(ChangeHomeStep1StoneTypeEvent event, Emitter<HomeState> emit) {
+  void _onChangeHomeStep1StoneTypeEvent(HomeSelectStoneChangeTypeEvent event, Emitter<HomeState> emit) {
     emit(HomeReloadState());
     selectedStep1StoneType = event.selectedStep1StoneType;
-    emit(HomeStep1StoneTypeChangeState());
+    emit(HomeSelectStoneTypeChangeState());
   }
 
-  void _onChangeHomeStep2StoneTypeEvent(ChangeHomeStep2StoneTypeEvent event, Emitter<HomeState> emit) {
+  void _onChangeHomeStep2StoneTypeEvent(HomeSelectJewelleryChangeTypeEvent event, Emitter<HomeState> emit) {
     emit(HomeReloadState());
     selectedStep2RingType = event.selectedStep2RingType;
-    emit(HomeStep2StoneTypeChangeState());
+    emit(HomeSelectJewelleryTypeChangeState());
   }
 
   //For Jewellery List
@@ -133,9 +138,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   static List<AuctionListModel> _generateEngagementList() {
     List<String> imageList = [
       "https://i.ibb.co/P5w4MHq/Banner.png",
-      "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
       "https://i.ibb.co/P5w4MHq/Banner.png",
-      "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
+      "https://i.ibb.co/P5w4MHq/Banner.png",
+      "https://i.ibb.co/P5w4MHq/Banner.png",
       "https://i.ibb.co/P5w4MHq/Banner.png",
     ];
     return List.generate(

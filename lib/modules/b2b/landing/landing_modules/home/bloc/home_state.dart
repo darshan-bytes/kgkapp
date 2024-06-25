@@ -24,12 +24,12 @@ final class HomeChangeTabsState extends HomeState {
   List<Object> get props => [];
 }
 
-final class HomeStep1StoneTypeChangeState extends HomeState {
+final class HomeSelectStoneTypeChangeState extends HomeState {
   @override
   List<Object> get props => [];
 }
 
-final class HomeStep2StoneTypeChangeState extends HomeState {
+final class HomeSelectJewelleryTypeChangeState extends HomeState {
   @override
   List<Object> get props => [];
 }

@@ -23,9 +23,9 @@ class HomeScreen extends StatelessWidget {
             _buildEngagementImageSlider(homeBloc),
             _buildShopDiamondSection(homeBloc, style),
             _buildShopGemstoneSection(homeBloc, style),
-            _buildTopSellingCategories(homeBloc, style),
-            _buildViewAllCollectionsSection(style),
-            _buildKGKCoutureTabBarSection(homeBloc, style),
+            _buildTopSellingCategories(homeBloc, style, context),
+            _buildViewAllCollectionsSection(style, context),
+            _buildKGKCoutureTabBarSection(homeBloc, style, context),
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
             _buildDealOfTheDaySection(homeBloc, style),
             _buildGetInspiredSection(homeBloc, style),
@@ -47,6 +47,9 @@ class HomeScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.jewelleryList[index];
         return SmartImageTitleColumn(
+          onTap: () {
+            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+          },
           imageUrl: item.imageUrl ?? '',
           title: item.name ?? '',
           imageSize: 80.w,
@@ -134,6 +137,9 @@ class HomeScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopDiamondsList[index];
         return SmartImageTitleColumn(
+          onTap: () {
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+          },
           width: 72.w,
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
@@ -165,6 +171,9 @@ class HomeScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopGemstonesList[index];
         return SmartImageTitleColumn(
+          onTap: () {
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+          },
           width: 72.w,
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
@@ -181,7 +190,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 12.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -192,13 +201,21 @@ class HomeScreen extends StatelessWidget {
             spacing: 12.w,
             runSpacing: 12.h,
             items: homeBloc.topSellingCategoriesList
-                .map((AuctionListModel field) => SmartImage(height: 132.w, path: field.imageUrl ?? '', fit: BoxFit.contain))
+                .map((AuctionListModel field) => SmartImage(
+                      height: 132.w,
+                      path: field.imageUrl ?? '',
+                      fit: BoxFit.contain,
+                      onTap: () {
+                        context
+                            .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                      },
+                    ))
                 .toList())
       ]),
     );
   }
 
-  Widget _buildViewAllCollectionsSection(HomeScreenStyle style) {
+  Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 32.h),
       child: Stack(
@@ -215,7 +232,9 @@ class HomeScreen extends StatelessWidget {
             left: 0.w,
             right: 0.w,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(AppRoutes.collectionPage);
+              },
               child: Container(
                 height: 60.h,
                 color: style.viewAllCollectionsBgColor,
@@ -232,7 +251,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
       child: SizedBox(
@@ -245,14 +264,14 @@ class HomeScreen extends StatelessWidget {
             Flexible(
               child: SmartTabBar(
                 labelPadding: EdgeInsets.zero,
-                length: homeBloc.tabs.length,
+                length: homeBloc.kgkCoutureTabs.length,
                 onTabInitialized: (tabController) {
-                  homeBloc.tabController = tabController;
+                  homeBloc.kgkCoutureTabController = tabController;
                 },
                 tabBetweenView: SizedBox(height: 16.h),
                 onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
-                tabs: homeBloc.tabs,
-                tabBarView: _buildTabBarViews(homeBloc),
+                tabs: homeBloc.kgkCoutureTabs,
+                tabBarView: _buildTabBarViews(homeBloc, context),
               ),
             )
           ],
@@ -261,8 +280,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTabBarViews(HomeBloc homeBloc) {
-    return List.generate(homeBloc.tabs.length, (index) {
+  List<Widget> _buildTabBarViews(HomeBloc homeBloc, BuildContext context) {
+    return List.generate(homeBloc.kgkCoutureTabs.length, (index) {
       return SmartGridView(
         items: List.generate(
           homeBloc.luminousTabViewList.length > 4
@@ -274,7 +293,12 @@ class HomeScreen extends StatelessWidget {
             productDetails: homeBloc.luminousTabViewList[index],
             onEyeTap: () {},
             onFavTap: () {},
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.productId: homeBloc.luminousTabViewList[index].productId ?? '',
+                RoutesData.isPageFor: ScreenIdentifier.productForRing
+              });
+            },
           ),
         ),
       );
@@ -284,8 +308,8 @@ class HomeScreen extends StatelessWidget {
   Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Stack(
       children: [
-        SmartImage(
-          path: AppImages.icPrimaryBg,
+        Container(
+          color: style.primaryColor,
           width: context.width,
           height: 535.h,
         ),
@@ -317,7 +341,8 @@ class HomeScreen extends StatelessWidget {
                   color: style.whiteColor,
                   padding: EdgeInsets.all(24.w),
                   child: BlocBuilder<HomeBloc, HomeState>(
-                    buildWhen: (previous, current) => current is HomeStep1StoneTypeChangeState || current is HomeStep2StoneTypeChangeState,
+                    buildWhen: (previous, current) =>
+                        current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -366,7 +391,7 @@ class HomeScreen extends StatelessWidget {
       }).toList(),
       onChanged: (type) {
         if (type != null) {
-          homeBloc.add(ChangeHomeStep1StoneTypeEvent(selectedStep1StoneType: type));
+          homeBloc.add(HomeSelectStoneChangeTypeEvent(selectedStep1StoneType: type));
         }
       },
       selectedItem: homeBloc.selectedStep1StoneType,
@@ -388,7 +413,7 @@ class HomeScreen extends StatelessWidget {
       }).toList(),
       onChanged: (type) {
         if (type != null) {
-          homeBloc.add(ChangeHomeStep2StoneTypeEvent(selectedStep2RingType: type));
+          homeBloc.add(HomeSelectJewelleryChangeTypeEvent(selectedStep2RingType: type));
         }
       },
       selectedItem: homeBloc.selectedStep2RingType,

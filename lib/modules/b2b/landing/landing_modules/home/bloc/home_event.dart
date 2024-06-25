@@ -29,19 +29,19 @@ final class ChangeHomeTabsEvent extends HomeEvent {
   List<Object> get props => [];
 }
 
-final class ChangeHomeStep1StoneTypeEvent extends HomeEvent {
+final class HomeSelectStoneChangeTypeEvent extends HomeEvent {
   final OrderStoneTypeModel selectedStep1StoneType;
 
-  const ChangeHomeStep1StoneTypeEvent({required this.selectedStep1StoneType});
+  const HomeSelectStoneChangeTypeEvent({required this.selectedStep1StoneType});
 
   @override
   List<Object> get props => [selectedStep1StoneType];
 }
 
-final class ChangeHomeStep2StoneTypeEvent extends HomeEvent {
+final class HomeSelectJewelleryChangeTypeEvent extends HomeEvent {
   final OrderStoneTypeModel selectedStep2RingType;
 
-  const ChangeHomeStep2StoneTypeEvent({required this.selectedStep2RingType});
+  const HomeSelectJewelleryChangeTypeEvent({required this.selectedStep2RingType});
 
   @override
   List<Object> get props => [selectedStep2RingType];
