@@ -902,6 +902,16 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  SavedAddressStyle get savedAddressStyle => SavedAddressStyle(
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        addressNameStyle: interMediumBoldTextStyle,
+        addressLineStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        borderColor: colors.colorD3DAE0,
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+      );
+
+  @override
   HomeScreenStyle get homeScreenStyle => HomeScreenStyle(
         primaryColor: colors.primary,
         whiteColor: colors.white,

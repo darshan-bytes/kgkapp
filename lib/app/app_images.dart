@@ -143,6 +143,8 @@ class AppImages {
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
   static const String icUp = 'assets/images/ic_up.svg';
   static const String icDown = 'assets/images/ic_down.svg';
+
+  static const String icEditAddress = 'assets/images/ic_edit_address.svg';
   static const String icPrimaryBg = 'assets/images/ic_primary_bg.svg';
   static const String icPrimaryBgLine = 'assets/images/ic_primary_bg_line.svg';
   static const String icCustomizeThin = 'assets/images/ic_customize_thin.svg';
