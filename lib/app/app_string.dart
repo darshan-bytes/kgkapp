@@ -624,4 +624,7 @@ class APPStrings {
 
   static const String txtDefault = 'default';
   static const String add = 'add';
+
+  // Product Library
+  static const String productLibrary = 'product_library';
 }

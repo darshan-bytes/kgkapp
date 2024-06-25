@@ -502,6 +502,8 @@ enum ScreenIdentifier {
   productForGemstones,
   productForDiamonds,
   productForRing,
+  productForLibraryGrey,
+  productForLibraryPlatinum
 }
 
 extension RoutesDataExtension on BuildContext {
