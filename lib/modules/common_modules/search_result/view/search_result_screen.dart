@@ -232,7 +232,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildShopDiamondsByShapeList(SearchResultBloc bloc, SearchResultScreenStyle style) {
     return SmartHorizontalItemBuilder(
       itemCount: bloc.shopDiamondsByShapeList.length,
-      title: APPStrings.searchByCategory.tr,
+      title: APPStrings.shopDiamondsByShape.tr,
       crossAxisAlignment: CrossAxisAlignment.center,
       titleStyle: style.shopDiamondsByShapeTitleStyle,
       titleOptionalPadding: EdgeInsets.symmetric(vertical: 16.h),
