@@ -626,4 +626,7 @@ class APPStrings {
   static const String add = 'add';
 
   static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
+
+  // Product Library
+  static const String productLibrary = 'product_library';
 }
