@@ -56,7 +56,7 @@
   "diamond": "Diamond",
   "gemstone": "Gemstone",
   "jewellery": "Jewellery",
-  "add": "+ Add",
+  "plus_add": "+ Add",
   "country": "Country",
   "previous": "Previous",
   "next": "Next",
@@ -500,5 +500,7 @@
   "approved_on": "Approved on",
   "no_presentation_found": "No presentation found",
   "add_new": "Add New",
-  "same_as_shipping": "Same as shipping"
+  "same_as_shipping": "Same as shipping",
+  "default": "Default",
+  "add": "Add"
 }

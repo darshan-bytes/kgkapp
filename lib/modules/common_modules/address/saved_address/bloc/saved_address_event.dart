@@ -19,3 +19,23 @@ final class SavedAddressChangeBillingAddressSameEvent extends SavedAddressEvent 
   @override
   List<Object> get props => [value];
 }
+
+final class SavedAddressChangeShippingAddressEvent extends SavedAddressEvent {
+  final bool isShipping;
+  final BuildContext context;
+
+  const SavedAddressChangeShippingAddressEvent(this.context, {this.isShipping = false});
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SavedAddressAddNewAddressEvent extends SavedAddressEvent {
+  final BuildContext context;
+  final bool isShipping;
+
+  const SavedAddressAddNewAddressEvent(this.context, {this.isShipping = false});
+
+  @override
+  List<Object> get props => [context, isShipping];
+}

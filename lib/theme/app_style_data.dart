@@ -561,6 +561,8 @@ class LightModeTheme extends AppTheme {
         addressNameStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         fullAddressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         contactNumberStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        defaultTagStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color383230),
+        defaultTagColor: colors.colorC5DEEB,
       );
 
   @override
@@ -909,6 +911,12 @@ class LightModeTheme extends AppTheme {
         borderColor: colors.colorD3DAE0,
         whiteColor: colors.white,
         primaryColor: colors.primary,
+        boxShadow: BoxShadow(
+          color: colors.black.withOpacity(0.2),
+          offset: const Offset(0, 2),
+          blurRadius: 8.r,
+          spreadRadius: 0,
+        ),
       );
 
   @override

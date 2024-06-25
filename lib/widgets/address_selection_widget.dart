@@ -6,6 +6,7 @@ class AddressSelectionWidget extends StatelessWidget {
   final GestureTapCallback? onTap;
   final GestureTapCallback? onEdit;
   final GestureTapCallback? onDelete;
+  final bool isDefault;
 
   const AddressSelectionWidget({
     super.key,
@@ -14,6 +15,7 @@ class AddressSelectionWidget extends StatelessWidget {
     this.onTap,
     this.onEdit,
     this.onDelete,
+    this.isDefault = false,
   });
 
   @override
@@ -35,13 +37,24 @@ class AddressSelectionWidget extends StatelessWidget {
         ],
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmartText(address.fullName, style: style.addressNameStyle),
               SizedBox(height: 4.h),
               SmartText(address.fullAddress, style: style.fullAddressStyle),
               SizedBox(height: 12.h),
               SmartText(address.contactNumber, style: style.contactNumberStyle),
+              if (isDefault) ...[
+                SizedBox(height: 8.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: style.defaultTagColor,
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: SmartText(APPStrings.txtDefault.tr, style: style.defaultTagStyle),
+                ),
+              ],
             ],
           ),
         ),

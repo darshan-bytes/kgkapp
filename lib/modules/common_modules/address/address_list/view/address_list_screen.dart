@@ -135,7 +135,7 @@ class AddressListScreen extends StatelessWidget {
                   },
                   groupValue: addressListBloc.selectedAddress,
                   onEdit: () {
-                    addressListBloc.add(EditAddressEvent(index));
+                    addressListBloc.add(EditAddressEvent(index, context));
                   },
                   onDelete: () {
                     addressListBloc.add(DeleteAddressEvent(index));

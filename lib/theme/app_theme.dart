@@ -1032,11 +1032,15 @@ class AddressSelectionStyle {
   final TextStyle addressNameStyle;
   final TextStyle fullAddressStyle;
   final TextStyle contactNumberStyle;
+  final TextStyle defaultTagStyle;
+  final Color defaultTagColor;
 
   AddressSelectionStyle({
     required this.addressNameStyle,
     required this.fullAddressStyle,
     required this.contactNumberStyle,
+    required this.defaultTagStyle,
+    required this.defaultTagColor,
   });
 }
 
@@ -1646,6 +1650,7 @@ class SavedAddressStyle {
   final Color borderColor;
   final Color whiteColor;
   final Color primaryColor;
+  final BoxShadow boxShadow;
 
   SavedAddressStyle({
     required this.titleStyle,
@@ -1654,6 +1659,7 @@ class SavedAddressStyle {
     required this.borderColor,
     required this.whiteColor,
     required this.primaryColor,
+    required this.boxShadow,
   });
 }
 

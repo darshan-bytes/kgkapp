@@ -10,6 +10,8 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   SavedAddressBloc() : super(const SavedAddressInitial()) {
     on<SavedAddressInitialEvent>(_onSavedAddressInitialEvent);
     on<SavedAddressChangeBillingAddressSameEvent>(_onSavedAddressChangeBillingAddressSameEvent);
+    on<SavedAddressChangeShippingAddressEvent>(_onSavedAddressChangeShippingAddressEvent);
+    on<SavedAddressAddNewAddressEvent>(_onSavedAddressAddNewAddressEvent);
   }
 
   AddressDetails? get defaultShippingAddress => addressList.firstWhereOrNull((element) => element.isDefaultShipping == true);
@@ -52,5 +54,18 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   void _onSavedAddressChangeBillingAddressSameEvent(SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) {
     //TODO: Handle on change billing address same as shipping address
     /// Api call to set billing address same as shipping address
+  }
+
+  Future<void> _onSavedAddressChangeShippingAddressEvent(
+      SavedAddressChangeShippingAddressEvent event, Emitter<SavedAddressState> emit) async {
+    Map<RoutesData, dynamic>? result =
+        await event.context.pushNamed(AppRoutes.shippingAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
+    if (result != null) {
+      //TODO: Handle changes
+    }
+  }
+
+  Future<void> _onSavedAddressAddNewAddressEvent(SavedAddressAddNewAddressEvent event, Emitter<SavedAddressState> emit) async {
+    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
   }
 }
