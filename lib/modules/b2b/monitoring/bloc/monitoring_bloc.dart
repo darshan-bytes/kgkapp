@@ -8,6 +8,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   late TabController tabController;
   final TextEditingController searchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
+  List<B2BCustomListingDataModel> stylesList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   @override
@@ -58,6 +59,24 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       ),
     );
 
+    stylesList = List.generate(
+      20,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        strDesignListingImageUrl: 'https://i.ibb.co/Rhgz539/image-224.png',
+        status: OrderStatus.active,
+        strStyleNumber: 'DWBFM4Q-108636',
+        strDesignNumber: 'DERS28MOVR',
+        strCustomer: 'Alex Williams',
+        strCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+        strSalesman: 'John Samanta',
+        strSalesmanImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+        strApprovedBy: 'John Samanta',
+        strApprovedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+        strApprovedOn: '24/03/2023',
+      ),
+    );
+
     emit(MonitoringListLoadedState());
   }
 
@@ -104,6 +123,26 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
           strApprovedBy: "John Samanta",
           strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
           strApprovedOn: "23/03/2023",
+        ),
+      ),
+    );
+
+    stylesList.addAll(
+      List.generate(
+        10,
+        (index) => B2BCustomListingDataModel(
+          id: index.toString(),
+          strDesignListingImageUrl: 'https://i.ibb.co/Rhgz539/image-224.png',
+          status: OrderStatus.active,
+          strStyleNumber: 'DWBFM4Q-108636',
+          strDesignNumber: 'DERS28MOVR',
+          strCustomer: 'Alex Williams',
+          strCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+          strSalesman: 'John Samanta',
+          strSalesmanImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+          strApprovedBy: 'John Samanta',
+          strApprovedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+          strApprovedOn: '24/03/2023',
         ),
       ),
     );

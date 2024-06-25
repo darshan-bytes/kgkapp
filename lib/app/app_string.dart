@@ -600,4 +600,6 @@ class APPStrings {
   static const String noPresentationFound = 'no_presentation_found';
   static const String addNew = 'add_new';
   static const String sameAsShipping = 'same_as_shipping';
+  static const String searchStyles = 'search_styles';
+  static const String noStyleFound = 'no_style_found';
 }

@@ -481,5 +481,7 @@
   "approved_on": "Approved on",
   "no_presentation_found": "No presentation found",
   "add_new": "Add New",
-  "same_as_shipping": "Same as shipping"
+  "same_as_shipping": "Same as shipping",
+  "search_styles": "Search styles",
+  "no_style_found": "No style found"
 }
