@@ -9,22 +9,23 @@ final class ProjectListingInitial extends ProjectListingState {
   List<Object> get props => [];
 }
 
-final class ProjectListingReloadState extends ProjectListingState {
-  @override
-  List<Object> get props => [];
-}
-
 final class ProjectListingLoadedState extends ProjectListingState {
   @override
   List<Object> get props => [];
 }
 
-final class ProjectListingChangeListingTypeState extends ProjectListingState {
+final class ProjectListLoadingMoreState extends ProjectListingState {
+  const ProjectListLoadingMoreState();
+
   @override
   List<Object> get props => [];
 }
 
-final class FilterProjectState extends ProjectListingState {
+final class ProjectListLoadedMoreState extends ProjectListingState {
+  final int currentPage;
+
+  const ProjectListLoadedMoreState(this.currentPage);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [currentPage];
 }

@@ -502,5 +502,6 @@
   "customise_view_price": "Customise & view price",
   "get_started": "Get started",
   "projects": "Projects",
-  "search_projects": "Search projects"
+  "search_projects": "Search projects",
+  "no_projects_found": "No projects found"
 }

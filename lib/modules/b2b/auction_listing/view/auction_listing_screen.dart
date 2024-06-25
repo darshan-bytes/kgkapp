@@ -55,29 +55,23 @@ class AuctionListingScreen extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            BlocBuilder<AuctionListingBloc, AuctionListingState>(
-              buildWhen: (previous, current) => current is AuctionListLoadedMoreState,
-              builder: (context, state) {
-                if (auctionListingBloc.auctionList.isEmpty) {
-                  return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
-                } else {
-                  return ListView.separated(
-                    itemCount: auctionListingBloc.auctionList.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
-                      return AuctionListItem(
-                        onTap: () => context.pushNamed(AppRoutes.auctionPage),
-                        auctionListModel: auctionListModel,
-                        stoneTypeImage: AppImages.icRingThin,
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
+            if (auctionListingBloc.auctionList.isEmpty)
+              NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr)
+            else
+              ListView.separated(
+                itemCount: auctionListingBloc.auctionList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
+                  return AuctionListItem(
+                    onTap: () => context.pushNamed(AppRoutes.auctionPage),
+                    auctionListModel: auctionListModel,
+                    stoneTypeImage: AppImages.icRingThin,
                   );
-                }
-              },
-            ),
+                },
+                separatorBuilder: (context, index) => SizedBox(height: 16.h),
+              ),
             if (state is AuctionListLoadingMoreState) const SmartCircularProgressIndicator(),
             SizedBox(height: 17.h),
           ],
