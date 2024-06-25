@@ -475,7 +475,7 @@
   "shop_gemstones": "Shop Gemstones",
   "top_selling_categories": "Top selling categories",
   "kgk_couture": "KGK Couture",
-  "view_all_collections": "View All collections",
+  "view_all_collections": "View All Collections",
   "luminous": "Luminous",
   "elan": "Elan",
   "huse": "Huse",
@@ -503,5 +503,6 @@
   "same_as_shipping": "Same as shipping",
   "default": "Default",
   "add": "Add",
+  "shop_diamonds_by_shape": "Shop diamonds by shape",
   "product_library": "Product library"
 }
