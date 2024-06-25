@@ -17,11 +17,8 @@ class SavedAddressScreen extends StatelessWidget {
     return BlocBuilder<SavedAddressBloc, SavedAddressState>(
       buildWhen: (previous, current) => current is SavedAddressLoadedState,
       builder: (context, state) {
-        return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.w,
-            vertical: 25.h,
-          ),
+        return SmartSingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
