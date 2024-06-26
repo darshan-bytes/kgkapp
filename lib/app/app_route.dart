@@ -52,6 +52,7 @@ class AppRoutes {
   static const projectListingPage = '/projectListingPage';
   static const designBriefsPage = '/designBriefsPage';
   static const designListingPage = '/designListingPage';
+  static const stylesListingPage = '/stylesListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -488,6 +489,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
             return const DesignListingScreen();
+          },
+          settings: settings,
+        );
+
+      case stylesListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
+            return const StylesListingScreen();
           },
           settings: settings,
         );

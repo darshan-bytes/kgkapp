@@ -510,5 +510,6 @@
   "no_projects_found": "No projects found",
   "design_briefs": "Design briefs",
   "no_design_briefs_found": "No design briefs found for project",
-  "no_designs_found": "No designs found"
+  "no_designs_found": "No designs found",
+  "no_styles_found": "No styles found"
 }

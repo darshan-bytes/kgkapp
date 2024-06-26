@@ -149,4 +149,8 @@ class AppImages {
   static const String icCustomizeThin = 'assets/images/ic_customize_thin.svg';
   static const String icHomeDiamondRingThin = 'assets/images/ic_home_diamond_ring_thin.svg';
   static const String icHomeRing = 'assets/images/ic_home_ring.svg';
+
+  //Styles Listing Screen
+  static const String icStylesLock = 'assets/images/ic_styles_lock.svg';
+  static const String icStylesUnLock = 'assets/images/ic_styles_unlock.svg';
 }
