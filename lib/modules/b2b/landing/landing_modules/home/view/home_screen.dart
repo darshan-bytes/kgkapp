@@ -100,10 +100,10 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildImageIndicator(HomeBloc homeBloc,
       {required List itemList,
-      CarouselController? carouselController,
-      required int currentIndex,
-      required BuildContext context,
-      VoidCallback? onTap}) {
+        CarouselController? carouselController,
+        required int currentIndex,
+        required BuildContext context,
+        VoidCallback? onTap}) {
     final ImageCarouselStyle style = AppTheme.of(context).imageCarouselStyle;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -202,14 +202,14 @@ class HomeScreen extends StatelessWidget {
             runSpacing: 12.h,
             items: homeBloc.topSellingCategoriesList
                 .map((AuctionListModel field) => SmartImage(
-                      height: 132.w,
-                      path: field.imageUrl ?? '',
-                      fit: BoxFit.contain,
-                      onTap: () {
-                        context
-                            .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-                      },
-                    ))
+              height: 132.w,
+              path: field.imageUrl ?? '',
+              fit: BoxFit.contain,
+              onTap: () {
+                context
+                    .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+              },
+            ))
                 .toList())
       ]),
     );
@@ -287,9 +287,9 @@ class HomeScreen extends StatelessWidget {
           homeBloc.luminousTabViewList.length > 4
               ? 4
               : (homeBloc.luminousTabViewList.length % 2 == 0
-                  ? homeBloc.luminousTabViewList.length
-                  : homeBloc.luminousTabViewList.length - 1),
-          (index) => ProductGridItem(
+              ? homeBloc.luminousTabViewList.length
+              : homeBloc.luminousTabViewList.length - 1),
+              (index) => ProductGridItem(
             productDetails: homeBloc.luminousTabViewList[index],
             onEyeTap: () {},
             onFavTap: () {},
@@ -342,7 +342,7 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.all(24.w),
                   child: BlocBuilder<HomeBloc, HomeState>(
                     buildWhen: (previous, current) =>
-                        current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
+                    current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -486,11 +486,11 @@ class HomeScreen extends StatelessWidget {
             runSpacing: 24.h,
             items: homeBloc.getInspiredList
                 .map((AuctionListModel field) => SmartImageTitleColumn(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
-                      title: field.name ?? '',
-                      titleStyle: style.getInspiredTitleStyle,
-                    ))
+              crossAxisAlignment: CrossAxisAlignment.start,
+              topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+              title: field.name ?? '',
+              titleStyle: style.getInspiredTitleStyle,
+            ))
                 .toList())
       ]),
     );
@@ -508,11 +508,11 @@ class HomeScreen extends StatelessWidget {
             runSpacing: 24.h,
             items: homeBloc.shopByStyleList
                 .map((AuctionListModel field) => SmartImageTitleColumn(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
-                      title: field.name ?? '',
-                      titleStyle: style.getInspiredTitleStyle,
-                    ))
+              crossAxisAlignment: CrossAxisAlignment.start,
+              topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+              title: field.name ?? '',
+              titleStyle: style.getInspiredTitleStyle,
+            ))
                 .toList())
       ]),
     );

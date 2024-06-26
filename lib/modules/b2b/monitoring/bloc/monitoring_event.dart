@@ -32,3 +32,12 @@ class MonitoringListingLoadMoreEvent extends MonitoringEvent {
   @override
   List<Object> get props => [currentPage, listType];
 }
+
+class MonitoringSelectedDesignerEvent extends MonitoringEvent {
+  final DesignerListModel designer;
+
+  const MonitoringSelectedDesignerEvent({required this.designer});
+
+  @override
+  List<Object> get props => [designer];
+}

@@ -17,11 +17,16 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   final TextEditingController dbfSearchController = TextEditingController();
   final TextEditingController designSearchController = TextEditingController();
   final TextEditingController stylesSearchController = TextEditingController();
+  final TextEditingController searchDesignersController = TextEditingController();
+
+  final FocusNode searchDesignersFocusNode = FocusNode();
 
   List<B2BCustomListingDataModel> presentationList = [];
   List<B2BCustomListingDataModel> dbfList = [];
   List<B2BCustomListingDataModel> designsList = [];
   List<B2BCustomListingDataModel> stylesList = [];
+
+  List<DesignerListModel> designerList = [];
 
   SmartPaginationScrollController presentationsScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController dbfScrollController = SmartPaginationScrollController();
@@ -50,6 +55,16 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     on<MonitoringInitialEvent>(_onInitialEvent);
     on<MonitoringOnTabChangedEvent>(_onTabChangedEvent);
     on<MonitoringListingLoadMoreEvent>(_onListingLoadMoreEvent);
+    on<MonitoringSelectedDesignerEvent>(_onSelectedDesignerEvent);
+  }
+
+  void _onSelectedDesignerEvent(MonitoringSelectedDesignerEvent event, Emitter<MonitoringState> emit) {
+    emit(MonitoringReloadState());
+    final int index = designerList.indexWhere((element) => element == event.designer);
+    if (index != -1) {
+      designerList[index].isSelected = !designerList[index].isSelected;
+      emit(MonitoringSelectedDesignerState(designerList[index]));
+    }
   }
 
   void _onInitialEvent(MonitoringInitialEvent event, Emitter<MonitoringState> emit) {
@@ -59,7 +74,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     presentationsScrollController.init(
       tag: "presentationsScrollController",
       loadAction: (int currentPage) async {
-        printWrapped("presentationsScrollController currentPage==>>  $currentPage");
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.presentations));
       },
     );
@@ -156,6 +170,11 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
         strApprovedOn: "24/03/2023",
       ),
     );
+
+    designerList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/729SGNK/Ellipse-10.png", isSelected: true));
+    designerList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
+    designerList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
+    designerList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
 
     emit(const MonitoringListLoadedState());
   }
@@ -275,7 +294,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     );
   }
 
-// Method to generate styles data
+  // Method to generate styles data
   List<B2BCustomListingDataModel> generateStylesData(int currentPage) {
     return List.generate(
       4,
@@ -345,7 +364,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   }
 
   // Method to build the list view widget based on the selected tab
-  Widget buildListView(BuildContext context) {
+  Widget buildListView(BuildContext context, MonitoringTab currentTab) {
     return Expanded(
       child: BlocBuilder<MonitoringBloc, MonitoringState>(
         buildWhen: (previous, current) =>
@@ -366,9 +385,22 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
                     children: [
                       B2BListingItem(
                         onTap: () {},
-                        onTapMenuButton: () {},
+                        onTapMenuButton: () {
+                          if (currentTab == MonitoringTab.presentations) {
+                            // Handle presentations menu button tap
+                          } else if (currentTab == MonitoringTab.dbf) {
+                            _showDesignerPopupMenu(
+                              context,
+                            );
+                          } else if (currentTab == MonitoringTab.designs) {
+                            // Handle designs menu button tap
+                          } else if (currentTab == MonitoringTab.styles) {
+                            // Handle styles menu button tap
+                          }
+                        },
                         type: currentListingType,
                         listingItemModel: currentList[index],
+                        margin: index == currentList.length - 1 ? EdgeInsets.only(bottom: 20.h) : EdgeInsets.zero,
                       ),
                       if (state is MonitoringLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
                     ],
@@ -380,6 +412,16 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
           );
         },
       ),
+    );
+  }
+
+  void _showDesignerPopupMenu(BuildContext context) {
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+      ),
+      builder: (context) => MonitoringDesignerBottomSheet(monitoringBloc: this),
     );
   }
 }

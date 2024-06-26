@@ -600,6 +600,10 @@ class APPStrings {
   static const String noPresentationFound = 'no_presentation_found';
   static const String addNew = 'add_new';
   static const String sameAsShipping = 'same_as_shipping';
+  static const String noDesignerFound = 'no_designer_found';
+  static const String selectDesigner = 'select_designer';
+  static const String enterDesignerName = 'enter_designer_name';
+  static const String assignDesigner = 'assign_designer';
 
   // Home Screen
   static const String shopDiamonds = 'shop_diamonds';
@@ -621,12 +625,13 @@ class APPStrings {
   static const String selectJewellery = 'select_jewellery';
   static const String customiseViewPrice = "customise_view_price";
   static const String getStarted = 'get_started';
-
   static const String txtDefault = 'default';
   static const String add = 'add';
-
   static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
-
-  // Product Library
   static const String productLibrary = 'product_library';
+
+  //Project Listing
+  static const String projects = 'projects';
+  static const String searchProjects = 'search_projects';
+  static const String noProjectsFound = 'no_projects_found';
 }

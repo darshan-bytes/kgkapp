@@ -30,6 +30,7 @@ class MonitoringLoadingMoreState extends MonitoringState {
 
 class MonitoringListLoadedState extends MonitoringState {
   const MonitoringListLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -52,4 +53,13 @@ class MonitoringScrollControllerChangedState extends MonitoringState {
 
   @override
   List<Object> get props => [smartPaginationScrollController, listType];
+}
+
+class MonitoringSelectedDesignerState extends MonitoringState {
+  final DesignerListModel designer;
+
+  const MonitoringSelectedDesignerState(this.designer);
+
+  @override
+  List<Object> get props => [designer];
 }

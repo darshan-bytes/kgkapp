@@ -48,14 +48,10 @@ class SmartPaginationScrollController {
     if (!stopLoading) {
       try {
         if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
-          print("Tag: $tag");
           isLoading = true;
           isPageLoaded = Completer<bool>();
           loadAction(currentPage).then((value) async {
             bool shouldStop = await isPageLoaded.future;
-            printWrapped('shouldStop: $shouldStop');
-            printWrapped('isAtEnd==>> ${scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset}');
-
             isLoading = false;
             currentPage++;
             boundaryOffset = 1 - 1 / (currentPage * 2);

@@ -504,5 +504,12 @@
   "default": "Default",
   "add": "Add",
   "shop_diamonds_by_shape": "Shop diamonds by shape",
-  "product_library": "Product library"
+  "product_library": "Product library",
+  "projects": "Projects",
+  "search_projects": "Search projects",
+  "no_projects_found": "No projects found",
+  "select_designer": "Select Designer",
+  "enter_designer_name": "Enter Designer Name",
+  "assign_designer": "Assign designer",
+  "no_designer_found": "No Designer Found"
 }

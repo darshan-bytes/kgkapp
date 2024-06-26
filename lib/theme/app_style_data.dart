@@ -937,4 +937,14 @@ class LightModeTheme extends AppTheme {
         textStyleColor: colors.color303538,
         dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
       );
+
+  @override
+  MonitoringScreenStyle get monitoringScreenStyle => MonitoringScreenStyle(
+      whiteColor: colors.white,
+      bottomSheetTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
+      subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      designerNameStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      closeColor: colors.color303538,
+      primaryColor: colors.primary,
+      addressNameStyle: interMediumBoldTextStyle);
 }

@@ -19,11 +19,11 @@ class DesignsTabviewListTile extends StatelessWidget {
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
-                padding: EdgeInsets.all(12.w),
+                padding: EdgeInsets.all(16.w),
               ),
             ),
             SizedBox(height: 24.h),
-            monitoringBloc.buildListView(context),
+            monitoringBloc.buildListView(context, MonitoringTab.designs),
           ],
         ),
       ),

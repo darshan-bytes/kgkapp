@@ -14,17 +14,18 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   ScrollController scrollController = ScrollController();
 
-  List<CategoriesModel> categories = [
-    CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-    CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-    CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-    CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-    CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-  ];
+  List<CategoriesModel> categories = [];
+  List<String> selectedCategoriesList = [];
 
   List<String> productsDetailsList = ['Collection', 'Best Selling', 'Seasonal Offers', 'Occasion Offer', 'Deals'];
+  List<String> pddSubOptionsList = [
+    'Concept Listing',
+    'Presentation Listing',
+    'Project Listing',
+    'Design Listing',
+    'Styles Listing',
+    'Monitoring'
+  ];
 
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
@@ -50,6 +51,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       arrowPosition = ArrowPosition.rightTop;
     }
 
+    selectedCategoriesList.clear();
+    selectedCategoriesList.addAll(event.subList[event.itemIndex].productsDetailsList ?? []);
+
     emit(CategoriesSelected());
   }
 
@@ -58,17 +62,69 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     if (userType == UserType.b2bUser) {
       categories.clear();
       categories.addAll([
-        CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Digital \nCatalogue', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-        CategoriesModel(name: 'Monitoring', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+        CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
+        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Digital \nCatalogue',
+            image: 'https://i.ibb.co/ZWKWks5/Image.png',
+            productsDetailsList: productsDetailsList,
+            isExpanded: false),
+        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList, isExpanded: false),
+      ]);
+    } else {
+      categories.addAll([
+        CategoriesModel(
+          name: 'Natural \nDiamonds',
+          image: 'https://i.ibb.co/HgjT1rt/Image.png',
+        ),
+        CategoriesModel(
+            name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
       ]);
     }
-    emit(CategoriesReloaded());
+    emit(CategoriesFetchData());
+  }
+
+  void navigateBasedOnCategory(BuildContext context, String categoryName, String categorySubName) {
+    switch (categoryName) {
+      case 'Gemstone':
+        context.pushNamed(
+          AppRoutes.stoneListingPage,
+          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones},
+        );
+        break;
+
+      case 'Do It \nYourself':
+        context.pushNamed(
+          AppRoutes.stoneListingPage,
+          arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
+        );
+        break;
+
+      case 'PDD':
+        if (categorySubName == 'Monitoring') {
+          context.pushNamed(AppRoutes.monitoringPage);
+        } else {
+          context.pushNamed(AppRoutes.conceptListPage);
+        }
+        break;
+
+      case 'Project':
+        context.pushNamed(AppRoutes.projectListingPage);
+        break;
+
+      default:
+        // Handle the default case if needed
+        break;
+    }
   }
 }

@@ -49,6 +49,7 @@ class AppRoutes {
   static const monitoringPage = '/monitoringPage';
   static const savedAddressPage = '/savedAddressPage';
   static const shippingAddressPage = '/shippingAddressPage';
+  static const projectListingPage = '/projectListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -461,6 +462,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
             return const ShippingAddressScreen();
+          },
+          settings: settings,
+        );
+
+      case projectListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
+            return const ProjectListingScreen();
           },
           settings: settings,
         );
