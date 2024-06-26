@@ -76,6 +76,7 @@ class B2BCustomListingDataModel {
   String? strOrderedBy;
   String? strOrderedByImageUrl;
   String? strPresentationImageUrl;
+  bool isStoneCardLockedImage;
 
   B2BCustomListingDataModel({
     this.id,
@@ -153,5 +154,6 @@ class B2BCustomListingDataModel {
     this.strOrderedByImageUrl,
     this.strSalesmanImageUrl,
     this.strPresentationImageUrl,
+    this.isStoneCardLockedImage = false,
   });
 }

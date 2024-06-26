@@ -293,6 +293,8 @@ export 'package:kgk/modules/b2b/project_listing/bloc/project_listing_bloc.dart';
 export 'package:kgk/modules/b2b/project_listing/view/project_listing_screen.dart';
 export 'package:kgk/modules/b2b/design_briefs/bloc/design_briefs_bloc.dart';
 export 'package:kgk/modules/b2b/design_briefs/view/design_briefs_screen.dart';
+export 'package:kgk/modules/b2b/styles_listing/bloc/styles_listing_bloc.dart';
+export '../modules/b2b/styles_listing/view/styles_listing_screen.dart';
 export 'package:kgk/modules/b2b/design_listing/bloc/design_listing_bloc.dart';
 export 'package:kgk/modules/b2b/design_listing/view/design_listing_screen.dart';
 export 'package:kgk/modules/b2b/monitoring/view/monitoring_designer_bottom_sheet.dart';
