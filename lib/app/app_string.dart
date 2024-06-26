@@ -621,12 +621,13 @@ class APPStrings {
   static const String selectJewellery = 'select_jewellery';
   static const String customiseViewPrice = "customise_view_price";
   static const String getStarted = 'get_started';
-
   static const String txtDefault = 'default';
   static const String add = 'add';
-
   static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
-
-  // Product Library
   static const String productLibrary = 'product_library';
+
+  //Project Listing
+  static const String projects = 'projects';
+  static const String searchProjects = 'search_projects';
+  static const String noProjectsFound = 'no_projects_found';
 }

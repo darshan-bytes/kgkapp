@@ -166,6 +166,7 @@ class B2BListingItem extends StatelessWidget {
   Widget _buildValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (field.imageUrl != null)
           Padding(

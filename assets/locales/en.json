@@ -504,5 +504,8 @@
   "default": "Default",
   "add": "Add",
   "shop_diamonds_by_shape": "Shop diamonds by shape",
-  "product_library": "Product library"
+  "product_library": "Product library",
+  "projects": "Projects",
+  "search_projects": "Search projects",
+  "no_projects_found": "No projects found"
 }
