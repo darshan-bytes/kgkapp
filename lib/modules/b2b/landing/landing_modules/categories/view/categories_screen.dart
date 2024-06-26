@@ -58,6 +58,8 @@ class CategoriesScreen extends StatelessWidget {
                             context.pushNamed(AppRoutes.conceptListPage);
                           } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Project') {
                             context.pushNamed(AppRoutes.projectListingPage);
+                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Design') {
+                            context.pushNamed(AppRoutes.designListingPage);
                           }
                         },
                       ),

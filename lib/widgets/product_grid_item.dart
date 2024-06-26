@@ -11,6 +11,7 @@ class ProductGridItem extends StatelessWidget {
   final Function()? onAddToBagTap;
   final Function()? onEyeTap;
   final Function()? onCancelTap;
+  final Function()? onCommentTap;
   final bool isFavourite;
   final BoxFit fit;
   final bool isCustomisable;
@@ -42,6 +43,7 @@ class ProductGridItem extends StatelessWidget {
     this.isOutOfStock = false,
     this.prefixImage,
     this.imageSize,
+    this.onCommentTap,
   });
 
   @override
@@ -99,14 +101,7 @@ class ProductGridItem extends StatelessWidget {
         Positioned(
           top: 8,
           right: 8,
-          child: Row(
-            children: [
-              if (isCustomisable && onCancelTap == null)
-                buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-              if (onCancelTap != null)
-                buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
-            ],
-          ),
+          child: _buildTopPositionView(style),
         ),
         Positioned(
           bottom: 8,
@@ -122,6 +117,18 @@ class ProductGridItem extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildTopPositionView(ProductItemStyle style) {
+    if (onCommentTap != null) {
+      return buildIcon(path: AppImages.icMessages, onTap: onCommentTap, style: style);
+    } else if (onCancelTap != null) {
+      return buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent);
+    } else if (isCustomisable) {
+      return buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor);
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {

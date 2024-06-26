@@ -25,6 +25,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
     CategoriesModel(name: 'Project', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
+    CategoriesModel(name: 'Design', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
   ];
 
   List<String> productsDetailsList = ['Collection', 'Best Selling', 'Seasonal Offers', 'Occasion Offer', 'Deals'];
