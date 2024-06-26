@@ -25,6 +25,7 @@ class NoDataFoundWidget extends StatelessWidget {
     final NoDataFoundStyle style = AppTheme.of(context).noDataFoundStyle;
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (imagePath != null) ...[
             SmartImage(
@@ -37,6 +38,7 @@ class NoDataFoundWidget extends StatelessWidget {
           SmartText(
             text ?? APPStrings.noDataFound.tr,
             style: style.titleStyle.merge(textStyle),
+            textAlign: TextAlign.center,
           ),
           if (subText != null) ...[
             SizedBox(height: 8.h),

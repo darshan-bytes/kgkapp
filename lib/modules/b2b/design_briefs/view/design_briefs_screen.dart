@@ -13,42 +13,51 @@ class DesignBriefsScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<DesignBriefsBloc, DesignBriefsState>(
-            buildWhen: (previous, current) => current is DesignBriefsLoadedState || current is FilterDesignBriefsState,
+            buildWhen: (previous, current) => current is DesignBriefsLoadedState,
             builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 24.h),
-                  SmartTextField(
-                    hintText: APPStrings.searchProjects.tr,
-                    controller: designBriefsBloc.designBriefsSearchController,
-                    onValueChanges: (value) => designBriefsBloc.add(const FilterDesignBriefsEvent()),
-                    suffixIcon: SmartImage(
-                      path: AppImages.icSearchThin,
-                      padding: EdgeInsets.all(16.w),
+              if (state is DesignBriefsLoadedState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 24.h),
+                    SmartTextField(
+                      hintText: APPStrings.searchProjects.tr,
+                      controller: designBriefsBloc.designBriefsSearchController,
+                      suffixIcon: SmartImage(
+                        path: AppImages.icSearchThin,
+                        padding: EdgeInsets.all(16.w),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 24.h),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: designBriefsBloc.filteredDesignBriefsList.length,
-                      itemBuilder: (context, index) {
-                        return B2BListingItem(
-                          type: B2BListingType.designBriefsType,
-                          listingItemModel: designBriefsBloc.filteredDesignBriefsList[index],
-                          onTapMenuButton: () {},
-                        );
-                      },
-                      separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                    SizedBox(height: 24.h),
+                    Expanded(
+                      child: _buildDesignBriefsList(designBriefsBloc),
                     ),
-                  ),
-                  SizedBox(height: 24.h),
-                ],
-              );
+                  ],
+                );
+              } else {
+                return const SmartCircularProgressIndicator();
+              }
             },
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildDesignBriefsList(DesignBriefsBloc designBriefsBloc) {
+    if (designBriefsBloc.designBriefsList.isEmpty) {
+      return NoDataFoundWidget(text: APPStrings.noDesignBriefsFound.tr);
+    }
+    return ListView.separated(
+      itemCount: designBriefsBloc.designBriefsList.length,
+      itemBuilder: (context, index) {
+        return B2BListingItem(
+          type: B2BListingType.designBriefsType,
+          listingItemModel: designBriefsBloc.designBriefsList[index],
+          onTapMenuButton: () {},
+        );
+      },
+      separatorBuilder: (context, index) => SizedBox(height: 16.h),
     );
   }
 

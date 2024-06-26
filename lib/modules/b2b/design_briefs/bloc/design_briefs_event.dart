@@ -12,10 +12,3 @@ final class InitialDesignBriefsEvent extends DesignBriefsEvent {
   @override
   List<Object> get props => [context];
 }
-
-final class FilterDesignBriefsEvent extends DesignBriefsEvent {
-  const FilterDesignBriefsEvent();
-
-  @override
-  List<Object> get props => [];
-}

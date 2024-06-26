@@ -7,11 +7,10 @@ part 'design_briefs_state.dart';
 class DesignBriefsBloc extends Bloc<DesignBriefsEvent, DesignBriefsState> {
   final TextEditingController designBriefsSearchController = TextEditingController();
 
-  List<B2BCustomListingDataModel> filteredDesignBriefsList = _generateDesignBriefsList();
+  List<B2BCustomListingDataModel> designBriefsList = [];
 
   DesignBriefsBloc() : super(DesignBriefsInitial()) {
     on<InitialDesignBriefsEvent>(_onInitialDesignBriefsEvent);
-    on<FilterDesignBriefsEvent>(_onFilterDesignBriefsEvent);
   }
 
   void _onInitialDesignBriefsEvent(InitialDesignBriefsEvent event, Emitter<DesignBriefsState> emit) {
@@ -20,17 +19,9 @@ class DesignBriefsBloc extends Bloc<DesignBriefsEvent, DesignBriefsState> {
     emit(DesignBriefsLoadedState());
   }
 
-  void _onFilterDesignBriefsEvent(FilterDesignBriefsEvent event, Emitter<DesignBriefsState> emit) {
-    emit(DesignBriefsReloadState());
-    final searchText = designBriefsSearchController.text.toLowerCase();
-    filteredDesignBriefsList =
-        _generateDesignBriefsList().where((element) => (element.strProjectNumber ?? '').toLowerCase().contains(searchText)).toList();
-    emit(FilterDesignBriefsState());
-  }
-
   void clearData() {
     designBriefsSearchController.clear();
-    filteredDesignBriefsList = _generateDesignBriefsList();
+    designBriefsList = _generateDesignBriefsList();
   }
 
   static List<B2BCustomListingDataModel> _generateDesignBriefsList() {

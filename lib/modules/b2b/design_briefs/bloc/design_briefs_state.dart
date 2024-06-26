@@ -18,8 +18,3 @@ final class DesignBriefsLoadedState extends DesignBriefsState {
   @override
   List<Object> get props => [];
 }
-
-final class FilterDesignBriefsState extends DesignBriefsState {
-  @override
-  List<Object> get props => [];
-}

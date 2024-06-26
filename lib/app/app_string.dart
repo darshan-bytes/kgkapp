@@ -631,4 +631,5 @@ class APPStrings {
   static const String searchProjects = 'search_projects';
   static const String noProjectsFound = 'no_projects_found';
   static const String designBriefs = 'design_briefs';
+  static const String noDesignBriefsFound = 'no_design_briefs_found';
 }

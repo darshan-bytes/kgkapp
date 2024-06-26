@@ -65,6 +65,9 @@ class ProjectListingScreen extends StatelessWidget {
                       type: B2BListingType.projectListingType,
                       listingItemModel: projectItem,
                       onTapMenuButton: () {},
+                      onTap: () {
+                        context.pushNamed(AppRoutes.designBriefsPage);
+                      },
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 16.h),

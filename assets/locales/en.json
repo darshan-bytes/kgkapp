@@ -508,5 +508,6 @@
   "projects": "Projects",
   "search_projects": "Search projects",
   "no_projects_found": "No projects found",
-  "design_briefs": "Design briefs"
+  "design_briefs": "Design briefs",
+  "no_design_briefs_found": "No design briefs found for project"
 }
