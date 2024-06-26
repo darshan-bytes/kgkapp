@@ -49,6 +49,7 @@ class BlocGenerator {
       BlocProvider<ProjectListingBloc>(create: (_) => ProjectListingBloc()),
       BlocProvider<DesignBriefsBloc>(create: (_) => DesignBriefsBloc()),
       BlocProvider<DesignListingBloc>(create: (_) => DesignListingBloc()),
+      BlocProvider<StylesListingBloc>(create: (_) => StylesListingBloc()),
     ];
   }
 }
