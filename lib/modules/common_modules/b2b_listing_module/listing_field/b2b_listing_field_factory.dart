@@ -70,7 +70,6 @@ class B2BListingFieldFactory {
       case B2BListingType.designListingType:
         return [
           B2BItemField(isOnlyImageView: true, imageUrl: model.strDesignListingImageUrl),
-          B2BItemField(label: APPStrings.dbfNumber.tr, value: model.strDbfNumber),
           B2BItemField(label: APPStrings.version.tr, value: model.strVersion, isCircleWithValue: true),
           B2BItemField(label: APPStrings.designNumber.tr, value: model.strDesignNumber),
           B2BItemField(label: APPStrings.salesman.tr, value: model.strSalesman, imageUrl: model.strSalesmanImageUrl),
