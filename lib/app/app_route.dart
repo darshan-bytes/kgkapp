@@ -48,6 +48,7 @@ class AppRoutes {
   static const conceptListPage = '/conceptListPage';
   static const monitoringPage = '/monitoringPage';
   static const savedAddressPage = '/savedAddressPage';
+  static const shippingAddressPage = '/shippingAddressPage';
   static const projectListingPage = '/projectListingPage';
   static const designBriefsPage = '/designBriefsPage';
 
@@ -454,6 +455,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case shippingAddressPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
+            return const ShippingAddressScreen();
+          },
+          settings: settings,
+        );
+
       case projectListingPage:
         return MaterialPageRoute(
           builder: (context) {
@@ -501,7 +511,9 @@ enum RoutesData {
   searchResultData,
   cmsPageData,
   isNoDataFound,
-  addressId
+  addressId,
+  isShippingAddress,
+  isFromCheckout,
 }
 
 enum ScreenIdentifier {
@@ -510,6 +522,8 @@ enum ScreenIdentifier {
   productForGemstones,
   productForDiamonds,
   productForRing,
+  productForLibraryGrey,
+  productForLibraryPlatinum
 }
 
 extension RoutesDataExtension on BuildContext {

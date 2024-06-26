@@ -31,11 +31,12 @@ final class DeleteAddressEvent extends AddressListEvent {
 
 final class EditAddressEvent extends AddressListEvent {
   final int index;
+  final BuildContext context;
 
-  const EditAddressEvent(this.index);
+  const EditAddressEvent(this.index, this.context);
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [index, context];
 }
 
 final class AddNewAddressEvent extends AddressListEvent {

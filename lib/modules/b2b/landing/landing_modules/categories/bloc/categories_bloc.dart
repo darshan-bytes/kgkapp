@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'categories_event.dart';
+
 part 'categories_state.dart';
 
 enum ArrowPosition { leftTop, centerTop, rightTop }
@@ -13,20 +14,20 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ScrollController scrollController = ScrollController();
 
   List<CategoriesModel> categories = [
-    CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(
+      name: 'Natural \nDiamonds',
+      image: 'https://i.ibb.co/HgjT1rt/Image.png',
+    ),
     CategoriesModel(name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
     CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
     CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
     CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
-    CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png'),
+    CategoriesModel(name: 'Project', image: 'https://i.ibb.co/ZWKWks5/Image.png'),
   ];
 
-  List<String> productsDetailsList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer', 'Deals'];
+  List<String> productsDetailsList = ['Collection', 'Best Selling', 'Seasonal Offers', 'Occasion Offer', 'Deals'];
 
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);

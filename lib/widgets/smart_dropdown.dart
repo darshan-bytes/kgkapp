@@ -12,6 +12,8 @@ class SmartDropDown<T> extends StatelessWidget {
   final FocusNode? focusNode;
   final BorderRadiusGeometry? borderRadius;
   final BoxBorder? border;
+  final EdgeInsetsGeometry? contentPadding;
+  final TextStyle? textStyle;
 
   const SmartDropDown({
     super.key,
@@ -26,6 +28,8 @@ class SmartDropDown<T> extends StatelessWidget {
     this.focusNode,
     this.borderRadius,
     this.border,
+    this.contentPadding,
+    this.textStyle,
   });
 
   @override
@@ -64,7 +68,7 @@ class SmartDropDown<T> extends StatelessWidget {
           },
           child: Container(
             height: buttonHeight ?? 48.w,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
               border: border ??
@@ -77,7 +81,7 @@ class SmartDropDown<T> extends StatelessWidget {
                 Expanded(
                   child: SmartText(
                     title ?? hintText ?? APPStrings.select.tr,
-                    style: title.isNotNullNorEmpty ? textFieldStyle.textStyle : textFieldStyle.hintStyle,
+                    style: title.isNotNullNorEmpty ? textFieldStyle.textStyle.merge(textStyle) : textFieldStyle.hintStyle,
                   ),
                 ),
                 const SmartImage(path: AppImages.icArrowDropDown),

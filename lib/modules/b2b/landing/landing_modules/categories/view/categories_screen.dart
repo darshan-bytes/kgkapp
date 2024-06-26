@@ -54,6 +54,10 @@ class CategoriesScreen extends StatelessWidget {
                           } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Do It \nYourself') {
                             context
                                 .pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
+                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'PDD') {
+                            context.pushNamed(AppRoutes.conceptListPage);
+                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Project') {
+                            context.pushNamed(AppRoutes.projectListingPage);
                           }
                         },
                       ),

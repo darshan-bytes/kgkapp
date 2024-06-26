@@ -139,20 +139,35 @@ class ProductListScreen extends StatelessWidget {
               SmartGridView(
                   items: bloc.productList.map((ProductDetails productDetails) {
                 /// If need to  product customization icon then remove onCancel voidCallback
+                bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                    bloc.productList[0] == productDetails;
+                bool isOutOfStock = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                    bloc.productList[0] == productDetails;
+                bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
+                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
+                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
                 return ProductGridItem(
                   productDetails: productDetails,
-                  isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
-                  isOutOfStock: bloc.screenIdentifier == ScreenIdentifier.productForRing && bloc.productList[0] == productDetails,
+                  isCustomisable: isCustomisable,
+                  isOutOfStock: isOutOfStock,
                   onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
                   onEyeTap: () {},
                   onFavTap: () {},
                   prefixImage: AppImages.icShoppingBag,
                   imageSize: 16.w,
-                  isStoneWithPrice: bloc.screenIdentifier != ScreenIdentifier.productForRing,
+                  isStoneWithPrice: isStoneWithPrice,
                   onTap: () {
                     if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                       context.pushNamed(AppRoutes.productDetailsPage,
                           arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
+                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+                      // Navigation to product details page
+                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+                      // Navigation to product details page
                     } else {
                       context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
                     }
@@ -173,6 +188,10 @@ class ProductListScreen extends StatelessWidget {
                     (current is ProductListLoadingMoreState && index == bloc.productList.length - 1) ||
                     current is ProductListLoadedMoreState,
                 builder: (context, state) {
+                  bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                      bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                      bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                      index == 0;
                   return Column(
                     children: [
                       ProductListItem(
@@ -180,13 +199,17 @@ class ProductListScreen extends StatelessWidget {
                         onEyeTap: () {},
                         onFavTap: () {},
                         onAddToBagTap: () {},
-                        isCustomisable: bloc.screenIdentifier == ScreenIdentifier.productForRing && index == 0,
+                        isCustomisable: isCustomisable,
                         onTap: () {
                           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                             context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                               RoutesData.productId: bloc.productList[index].productId ?? '',
                               RoutesData.isPageFor: bloc.screenIdentifier
                             });
+                          } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+                            // Navigation to product details page
+                          } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+                            // Navigation to product details page
                           } else {
                             context.pushNamed(AppRoutes.stoneDetailPage);
                           }

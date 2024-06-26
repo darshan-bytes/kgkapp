@@ -187,6 +187,8 @@ abstract class AppTheme {
   NoDataFoundStyle get noDataFoundStyle;
 
   SavedAddressStyle get savedAddressStyle;
+
+  HomeScreenStyle get homeScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1030,11 +1032,15 @@ class AddressSelectionStyle {
   final TextStyle addressNameStyle;
   final TextStyle fullAddressStyle;
   final TextStyle contactNumberStyle;
+  final TextStyle defaultTagStyle;
+  final Color defaultTagColor;
 
   AddressSelectionStyle({
     required this.addressNameStyle,
     required this.fullAddressStyle,
     required this.contactNumberStyle,
+    required this.defaultTagStyle,
+    required this.defaultTagColor,
   });
 }
 
@@ -1644,6 +1650,7 @@ class SavedAddressStyle {
   final Color borderColor;
   final Color whiteColor;
   final Color primaryColor;
+  final BoxShadow boxShadow;
 
   SavedAddressStyle({
     required this.titleStyle,
@@ -1652,5 +1659,42 @@ class SavedAddressStyle {
     required this.borderColor,
     required this.whiteColor,
     required this.primaryColor,
+    required this.boxShadow,
+  });
+}
+
+class HomeScreenStyle {
+  final Color primaryColor;
+  final Color whiteColor;
+  final Color borderColor;
+  final Color viewAllCollectionsBgColor;
+  final Color shopGemstoneBgColor;
+  final Color textStyleColor;
+  final TextStyle bannerTitleStyle;
+  final TextStyle shopGemstoneTitleStyle;
+  final TextStyle viewAllCollectionsTextStyle;
+  final TextStyle createOwnSignatureTitleStyle;
+  final TextStyle createOwnSignatureSubTitleStyle;
+  final TextStyle stepTextStyle;
+  final TextStyle stepValueStyle;
+  final TextStyle getInspiredTitleStyle;
+  final TextStyle dropDownTextStyle;
+
+  HomeScreenStyle({
+    required this.primaryColor,
+    required this.whiteColor,
+    required this.borderColor,
+    required this.bannerTitleStyle,
+    required this.shopGemstoneBgColor,
+    required this.viewAllCollectionsBgColor,
+    required this.viewAllCollectionsTextStyle,
+    required this.shopGemstoneTitleStyle,
+    required this.createOwnSignatureTitleStyle,
+    required this.createOwnSignatureSubTitleStyle,
+    required this.stepTextStyle,
+    required this.stepValueStyle,
+    required this.getInspiredTitleStyle,
+    required this.textStyleColor,
+    required this.dropDownTextStyle,
   });
 }

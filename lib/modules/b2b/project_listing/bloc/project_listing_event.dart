@@ -13,16 +13,11 @@ final class InitialProjectListingEvent extends ProjectListingEvent {
   List<Object> get props => [context];
 }
 
-final class ProjectChangeListingTypeEvent extends ProjectListingEvent {
-  const ProjectChangeListingTypeEvent();
+final class ProjectListLoadMoreEvent extends ProjectListingEvent {
+  final int currentPage;
+
+  const ProjectListLoadMoreEvent(this.currentPage);
 
   @override
-  List<Object> get props => [];
-}
-
-final class FilterProjectEvent extends ProjectListingEvent {
-  const FilterProjectEvent();
-
-  @override
-  List<Object> get props => [];
+  List<Object> get props => [currentPage];
 }

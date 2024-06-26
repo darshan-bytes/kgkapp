@@ -5,54 +5,558 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SmartText(
-          'View All Collection',
+    final HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
+    final HomeScreenStyle style = AppTheme.of(context).homeScreenStyle;
+    return Scaffold(
+      appBar: SmartAppBar(
+        isBack: false,
+        leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
+        onSearch: () => context.pushNamed(AppRoutes.searchPage),
+        onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
+        onNotification: () => context.pushNamed(AppRoutes.notificationPage),
+      ),
+      body: SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            _buildJewelleryList(homeBloc, style),
+            _buildEngagementImageSlider(homeBloc),
+            _buildShopDiamondSection(homeBloc, style),
+            _buildShopGemstoneSection(homeBloc, style),
+            _buildTopSellingCategories(homeBloc, style, context),
+            _buildViewAllCollectionsSection(style, context),
+            _buildKGKCoutureTabBarSection(homeBloc, style, context),
+            _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
+            _buildDealOfTheDaySection(homeBloc, style),
+            _buildGetInspiredSection(homeBloc, style),
+            _buildShopByStyleSection(homeBloc, style),
+            _buildRecentlyViewedSection(homeBloc, style)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildJewelleryList(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartHorizontalItemBuilder(
+      itemCount: homeBloc.jewelleryList.length,
+      itemBetweenSpace: 16.w,
+      spacingBetweenTitleAndItems: 12.h,
+      titleOptionalPadding: EdgeInsets.only(left: 17.w),
+      padding: EdgeInsets.only(top: 16.h),
+      itemBuilder: (context, index) {
+        final AuctionListModel item = homeBloc.jewelleryList[index];
+        return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.collectionPage);
+            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
           },
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        SmartText(
-          'Search screen',
+          imageUrl: item.imageUrl ?? '',
+          title: item.name ?? '',
+          imageSize: 80.w,
+          margin: EdgeInsets.only(
+            left: index == 0 ? 17.w : 0,
+            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          ),
+          imageBorderRadius: BorderRadius.circular(50.r),
+          fit: BoxFit.contain,
+          imageBorder: Border.all(color: style.borderColor, width: 1.w),
+        );
+      },
+    );
+  }
+
+  Widget _buildEngagementImageSlider(HomeBloc homeBloc) {
+    return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+          child: Column(
+            children: [
+              CarouselSlider(
+                items: homeBloc.engagementList.map((e) => SmartImage(path: e.imageUrl ?? '', fit: BoxFit.fill)).toList(),
+                carouselController: homeBloc.engagementListCarouselController,
+                options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1.5,
+                  aspectRatio: 1,
+                  onPageChanged: (index, reason) => homeBloc.add(HomeJewelleryImagePageChangeEvent(index: index)),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              _buildImageIndicator(
+                homeBloc,
+                context: context,
+                itemList: homeBloc.engagementList,
+                carouselController: homeBloc.engagementListCarouselController,
+                currentIndex: homeBloc.currentCarouselIndex,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildImageIndicator(HomeBloc homeBloc,
+      {required List itemList,
+      CarouselController? carouselController,
+      required int currentIndex,
+      required BuildContext context,
+      VoidCallback? onTap}) {
+    final ImageCarouselStyle style = AppTheme.of(context).imageCarouselStyle;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: itemList.asMap().entries.map((entry) {
+        return GestureDetector(
+          onTap: onTap ?? () => carouselController?.animateToPage(entry.key),
+          child: Container(
+            width: 8.0.w,
+            height: 8.0.w,
+            margin: EdgeInsets.only(right: 6.0.w),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: currentIndex == entry.key ? style.selectedDotColor : style.dotColor,
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartHorizontalItemBuilder(
+      title: APPStrings.shopDiamonds.tr,
+      titleStyle: style.bannerTitleStyle,
+      itemCount: homeBloc.shopDiamondsList.length,
+      itemBetweenSpace: 17.w,
+      spacingBetweenTitleAndItems: 12.h,
+      titleOptionalPadding: EdgeInsets.only(left: 17.w),
+      listPadding: EdgeInsets.only(right: 17.w),
+      padding: EdgeInsets.symmetric(vertical: 32.h),
+      itemBuilder: (context, index) {
+        final AuctionListModel item = homeBloc.shopDiamondsList[index];
+        return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.searchPage);
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
           },
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        SmartText(
-          'Concept List',
+          width: 72.w,
+          title: item.name ?? '',
+          titleStyle: style.shopGemstoneTitleStyle,
+          imageBetweenSpacing: 8.h,
+          margin: EdgeInsets.only(
+            left: index == 0 ? 17.w : 0,
+            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          ),
+          imagePadding: EdgeInsets.all(12.w),
+          titleMaxLines: 1,
+          fit: BoxFit.fill,
+          imageUrl: item.imageUrl ?? '',
+        );
+      },
+    );
+  }
+
+  Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartHorizontalItemBuilder(
+      title: APPStrings.shopGemstones.tr,
+      titleStyle: style.bannerTitleStyle,
+      itemCount: homeBloc.shopGemstonesList.length,
+      backgroundColor: style.shopGemstoneBgColor,
+      itemBetweenSpace: 17.w,
+      spacingBetweenTitleAndItems: 12.h,
+      titleOptionalPadding: EdgeInsets.only(left: 17.w),
+      listPadding: EdgeInsets.only(right: 17.w),
+      padding: EdgeInsets.symmetric(vertical: 32.h),
+      itemBuilder: (context, index) {
+        final AuctionListModel item = homeBloc.shopGemstonesList[index];
+        return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.conceptListPage);
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
           },
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        SmartText(
-          'Monitoring',
-          onTap: () {
-            context.pushNamed(AppRoutes.monitoringPage);
-          },
-        ),
-        SmartText(
-          'Project Listing',
-          onTap: () {
-            context.pushNamed(AppRoutes.projectListingPage);
-          },
-        ),
-        SmartText(
-          ' design briefs',
-          onTap: () {
-            context.pushNamed(AppRoutes.designBriefsPage);
-          },
-        ),
+          width: 72.w,
+          title: item.name ?? '',
+          titleStyle: style.shopGemstoneTitleStyle,
+          imageBetweenSpacing: 8.h,
+          margin: EdgeInsets.only(
+            left: index == 0 ? 17.w : 0,
+            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          ),
+          titleMaxLines: 1,
+          fit: BoxFit.fill,
+          imageUrl: item.imageUrl ?? '',
+        );
+      },
+    );
+  }
+
+  Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 12.h),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SmartText(APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
+            columns: 2,
+            spacing: 12.w,
+            runSpacing: 12.h,
+            items: homeBloc.topSellingCategoriesList
+                .map((AuctionListModel field) => SmartImage(
+                      height: 132.w,
+                      path: field.imageUrl ?? '',
+                      fit: BoxFit.contain,
+                      onTap: () {
+                        context
+                            .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                      },
+                    ))
+                .toList())
       ]),
+    );
+  }
+
+  Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 32.h),
+      child: Stack(
+        children: [
+          SmartImage(
+            path: "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png",
+            height: 396.h,
+            width: double.infinity,
+            fit: BoxFit.fitWidth,
+            onTap: () {},
+          ),
+          Positioned(
+            bottom: 0.w,
+            left: 0.w,
+            right: 0.w,
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(AppRoutes.collectionPage);
+              },
+              child: Container(
+                height: 60.h,
+                color: style.viewAllCollectionsBgColor,
+                alignment: Alignment.center,
+                child: SmartText(
+                  APPStrings.viewAllCollections.tr,
+                  style: style.viewAllCollectionsTextStyle,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      child: SizedBox(
+        height: 650.h,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmartText(APPStrings.kgkCouture.tr, style: style.bannerTitleStyle),
+            Flexible(
+              child: SmartTabBar(
+                labelPadding: EdgeInsets.zero,
+                length: homeBloc.kgkCoutureTabs.length,
+                onTabInitialized: (tabController) {
+                  homeBloc.kgkCoutureTabController = tabController;
+                },
+                tabBetweenView: SizedBox(height: 16.h),
+                onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
+                tabs: homeBloc.kgkCoutureTabs,
+                tabBarView: _buildTabBarViews(homeBloc, context),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildTabBarViews(HomeBloc homeBloc, BuildContext context) {
+    return List.generate(homeBloc.kgkCoutureTabs.length, (index) {
+      return SmartGridView(
+        items: List.generate(
+          homeBloc.luminousTabViewList.length > 4
+              ? 4
+              : (homeBloc.luminousTabViewList.length % 2 == 0
+                  ? homeBloc.luminousTabViewList.length
+                  : homeBloc.luminousTabViewList.length - 1),
+          (index) => ProductGridItem(
+            productDetails: homeBloc.luminousTabViewList[index],
+            onEyeTap: () {},
+            onFavTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.productId: homeBloc.luminousTabViewList[index].productId ?? '',
+                RoutesData.isPageFor: ScreenIdentifier.productForRing
+              });
+            },
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          color: style.primaryColor,
+          width: context.width,
+          height: 535.h,
+        ),
+        const Positioned(
+          top: 0,
+          right: 0,
+          child: SmartImage(path: AppImages.icPrimaryBgLine),
+        ),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SmartText(APPStrings.createOwnSignaturePiece.tr, style: style.createOwnSignatureTitleStyle),
+                SizedBox(height: 8.h),
+                SmartText(APPStrings.personaliseJewellery.tr, style: style.createOwnSignatureSubTitleStyle),
+                SizedBox(height: 24.h),
+                _buildOwnSignaturePieceSteps(
+                    AppImages.icHomeRing, APPStrings.stepX.tr.interpolate(["1"]), APPStrings.selectStone.tr, style),
+                SizedBox(height: 24.h),
+                _buildOwnSignaturePieceSteps(
+                    AppImages.icHomeDiamondRingThin, APPStrings.stepX.tr.interpolate(["2"]), APPStrings.selectJewellery.tr, style),
+                SizedBox(height: 24.h),
+                _buildOwnSignaturePieceSteps(
+                    AppImages.icCustomizeThin, APPStrings.stepX.tr.interpolate(["3"]), APPStrings.customiseViewPrice.tr, style),
+                SizedBox(height: 24.h),
+                Container(
+                  color: style.whiteColor,
+                  padding: EdgeInsets.all(24.w),
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    buildWhen: (previous, current) =>
+                        current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              SmartText(APPStrings.stepX.tr.interpolate(["1"]),
+                                  style: style.stepTextStyle.copyWith(color: style.textStyleColor)),
+                              SizedBox(width: 19.w),
+                              Flexible(child: _buildStep1DropDownField(homeBloc, style))
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.symmetric(vertical: 12.h), child: const Divider()),
+                          Row(
+                            children: [
+                              SmartText(APPStrings.stepX.tr.interpolate(["2"]),
+                                  style: style.stepTextStyle.copyWith(color: style.textStyleColor)),
+                              SizedBox(width: 19.w),
+                              Expanded(child: _buildStep2DropDownField(homeBloc, style))
+                            ],
+                          ),
+                          SizedBox(height: 12.h),
+                          SmartButton(onTap: () {}, title: APPStrings.getStarted.tr)
+                        ],
+                      );
+                    },
+                  ),
+                )
+              ],
+            ))
+      ],
+    );
+  }
+
+  Widget _buildStep1DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartDropDown<OrderStoneTypeModel>(
+      contentPadding: EdgeInsets.zero,
+      buttonHeight: 40.h,
+      textStyle: style.dropDownTextStyle,
+      border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
+      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+      items: homeBloc.arrStoneType.map((OrderStoneTypeModel type) {
+        return SmartDropDownItem<OrderStoneTypeModel>(
+          value: type,
+          title: type.name,
+        );
+      }).toList(),
+      onChanged: (type) {
+        if (type != null) {
+          homeBloc.add(HomeSelectStoneChangeTypeEvent(selectedStep1StoneType: type));
+        }
+      },
+      selectedItem: homeBloc.selectedStep1StoneType,
+    );
+  }
+
+  Widget _buildStep2DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartDropDown<OrderStoneTypeModel>(
+      contentPadding: EdgeInsets.zero,
+      buttonHeight: 40.h,
+      textStyle: style.dropDownTextStyle,
+      border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
+      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+      items: homeBloc.arrRingType.map((OrderStoneTypeModel type) {
+        return SmartDropDownItem<OrderStoneTypeModel>(
+          value: type,
+          title: type.name,
+        );
+      }).toList(),
+      onChanged: (type) {
+        if (type != null) {
+          homeBloc.add(HomeSelectJewelleryChangeTypeEvent(selectedStep2RingType: type));
+        }
+      },
+      selectedItem: homeBloc.selectedStep2RingType,
+    );
+  }
+
+  Widget _buildOwnSignaturePieceSteps(String image, String steps, String title, HomeScreenStyle style) {
+    return Row(
+      children: [
+        SmartImage(path: image, color: style.whiteColor),
+        SizedBox(width: 16.w),
+        SmartText(steps, style: style.stepTextStyle),
+        SizedBox(width: 8.w),
+        Expanded(child: SmartText(title, style: style.stepValueStyle)),
+      ],
+    );
+  }
+
+  Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SmartText(
+            APPStrings.dealOfTheDay.tr,
+            style: style.bannerTitleStyle,
+            optionalPadding: EdgeInsets.only(left: 17.w),
+          ),
+          SizedBox(height: 4.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: Scrollbar(
+              controller: homeBloc.dealOfTheDayScrollController,
+              thumbVisibility: true,
+              child: SmartSingleChildScrollView(
+                controller: homeBloc.dealOfTheDayScrollController,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 12.w,
+                  runSpacing: 12.2.h,
+                  children: homeBloc.dealOfTheDayList.map((product) {
+                    return ProductGridItem(
+                      productDetails: product,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onTap: () {},
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
+            columns: 2,
+            spacing: 12.w,
+            runSpacing: 24.h,
+            items: homeBloc.getInspiredList
+                .map((AuctionListModel field) => SmartImageTitleColumn(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+                      title: field.name ?? '',
+                      titleStyle: style.getInspiredTitleStyle,
+                    ))
+                .toList())
+      ]),
+    );
+  }
+
+  Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SmartText(APPStrings.shopByStyle.tr, style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
+            columns: 2,
+            spacing: 12.w,
+            runSpacing: 24.h,
+            items: homeBloc.shopByStyleList
+                .map((AuctionListModel field) => SmartImageTitleColumn(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+                      title: field.name ?? '',
+                      titleStyle: style.getInspiredTitleStyle,
+                    ))
+                .toList())
+      ]),
+    );
+  }
+
+  Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SmartText(
+            APPStrings.recentlyViewed.tr,
+            style: style.bannerTitleStyle,
+            optionalPadding: EdgeInsets.only(left: 17.w),
+          ),
+          SizedBox(height: 4.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: Scrollbar(
+              controller: homeBloc.recentlyViewedScrollController,
+              thumbVisibility: true,
+              child: SmartSingleChildScrollView(
+                controller: homeBloc.recentlyViewedScrollController,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 12.w,
+                  runSpacing: 12.2.h,
+                  children: homeBloc.recentlyViewList.map((product) {
+                    return ProductGridItem(
+                      productDetails: product,
+                      onEyeTap: () {},
+                      onFavTap: () {},
+                      onTap: () {},
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

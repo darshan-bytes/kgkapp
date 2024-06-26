@@ -6,6 +6,7 @@ part 'add_address_state.dart';
 
 class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   bool isEditAddress = false;
+  bool isFromCheckout = false;
 
   String addAddressAppbarTitle = "";
   bool isShippingAndBillingAddressFilled = false;
@@ -82,6 +83,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     Map<RoutesData, dynamic>? data = context.routesData;
     String? addressId = data?[RoutesData.addressId];
     isEditAddress = addressId != null;
+    isFromCheckout = data?[RoutesData.isFromCheckout] ?? false;
   }
 
   void _onInitAddAddressEvent(AddAddressInitialEvent event, Emitter<AddAddressState> emit) {
