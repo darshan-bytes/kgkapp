@@ -133,7 +133,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           title: APPStrings.orderManagement.tr,
           subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.stylesListingPage);
+          }),
       ProfileListModel(
           image: AppImages.icProfileCalendar,
           title: APPStrings.calendar.tr,
