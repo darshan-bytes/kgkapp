@@ -511,5 +511,9 @@
   "design_briefs": "Design briefs",
   "no_design_briefs_found": "No design briefs found for project",
   "no_designs_found": "No designs found",
-  "no_styles_found": "No styles found"
+  "no_styles_found": "No styles found",
+  "select_designer": "Select Designer",
+  "enter_designer_name": "Enter Designer Name",
+  "assign_designer": "Assign designer",
+  "no_designer_found": "No Designer Found"
 }

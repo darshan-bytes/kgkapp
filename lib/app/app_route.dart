@@ -82,7 +82,10 @@ class AppRoutes {
         );
       case categoriesPage:
         return MaterialPageRoute(
-          builder: (_) => const CategoriesScreen(),
+          builder: (context) {
+            BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
+            return const CategoriesScreen();
+          },
           settings: settings,
         );
 

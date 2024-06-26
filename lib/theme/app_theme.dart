@@ -189,6 +189,8 @@ abstract class AppTheme {
   SavedAddressStyle get savedAddressStyle;
 
   HomeScreenStyle get homeScreenStyle;
+
+  MonitoringScreenStyle get monitoringScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1696,5 +1698,25 @@ class HomeScreenStyle {
     required this.getInspiredTitleStyle,
     required this.textStyleColor,
     required this.dropDownTextStyle,
+  });
+}
+
+class MonitoringScreenStyle {
+  final TextStyle bottomSheetTitleStyle;
+  final Color whiteColor;
+  final TextStyle subTitleStyle;
+  final TextStyle designerNameStyle;
+  final Color closeColor;
+  final Color primaryColor;
+  final TextStyle addressNameStyle;
+
+  MonitoringScreenStyle({
+    required this.bottomSheetTitleStyle,
+    required this.whiteColor,
+    required this.subTitleStyle,
+    required this.designerNameStyle,
+    required this.closeColor,
+    required this.primaryColor,
+    required this.addressNameStyle,
   });
 }

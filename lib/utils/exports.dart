@@ -297,3 +297,5 @@ export 'package:kgk/modules/b2b/styles_listing/bloc/styles_listing_bloc.dart';
 export '../modules/b2b/styles_listing/view/styles_listing_screen.dart';
 export 'package:kgk/modules/b2b/design_listing/bloc/design_listing_bloc.dart';
 export 'package:kgk/modules/b2b/design_listing/view/design_listing_screen.dart';
+export 'package:kgk/modules/b2b/monitoring/view/monitoring_designer_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/monitoring/model/designer_list_model.dart';

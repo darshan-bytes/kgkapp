@@ -600,6 +600,10 @@ class APPStrings {
   static const String noPresentationFound = 'no_presentation_found';
   static const String addNew = 'add_new';
   static const String sameAsShipping = 'same_as_shipping';
+  static const String noDesignerFound = 'no_designer_found';
+  static const String selectDesigner = 'select_designer';
+  static const String enterDesignerName = 'enter_designer_name';
+  static const String assignDesigner = 'assign_designer';
 
   // Home Screen
   static const String shopDiamonds = 'shop_diamonds';
