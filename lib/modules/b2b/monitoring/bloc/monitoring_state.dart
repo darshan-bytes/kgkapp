@@ -45,15 +45,7 @@ class MonitoringListLoadedMoreState extends MonitoringState {
   List<Object> get props => [currentPage, listType];
 }
 
-class MonitoringScrollControllerChangedState extends MonitoringState {
-  final SmartPaginationScrollController smartPaginationScrollController;
-  final MonitoringTab listType;
 
-  const MonitoringScrollControllerChangedState(this.smartPaginationScrollController, this.listType);
-
-  @override
-  List<Object> get props => [smartPaginationScrollController, listType];
-}
 
 class MonitoringSelectedDesignerState extends MonitoringState {
   final DesignerListModel designer;

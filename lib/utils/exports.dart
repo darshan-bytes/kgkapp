@@ -291,5 +291,9 @@ export 'package:kgk/modules/common_modules/address/shipping_address/bloc/shippin
 export 'package:kgk/modules/common_modules/address/shipping_address/view/shipping_address_screen.dart';
 export 'package:kgk/modules/b2b/project_listing/bloc/project_listing_bloc.dart';
 export 'package:kgk/modules/b2b/project_listing/view/project_listing_screen.dart';
+export 'package:kgk/modules/b2b/design_briefs/bloc/design_briefs_bloc.dart';
+export 'package:kgk/modules/b2b/design_briefs/view/design_briefs_screen.dart';
+export 'package:kgk/modules/b2b/design_listing/bloc/design_listing_bloc.dart';
+export 'package:kgk/modules/b2b/design_listing/view/design_listing_screen.dart';
 export 'package:kgk/modules/b2b/monitoring/view/monitoring_designer_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/monitoring/model/designer_list_model.dart';

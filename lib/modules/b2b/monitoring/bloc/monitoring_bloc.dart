@@ -197,7 +197,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
         break;
     }
     emit(MonitoringOnTabChangedState());
-    // setCurrentScrollController(emit);
   }
 
   Future<void> _onListingLoadMoreEvent(MonitoringListingLoadMoreEvent event, Emitter<MonitoringState> emit) async {
@@ -205,7 +204,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     await Future.delayed(const Duration(seconds: 2));
 
     List<B2BCustomListingDataModel> newDataList = [];
-    // int currentPage;
 
     switch (event.listType) {
       case MonitoringTab.presentations:

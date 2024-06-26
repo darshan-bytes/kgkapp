@@ -61,7 +61,6 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
             path: AppImages.icSearchThin,
             padding: EdgeInsets.all(12.w),
           ),
-          keyboardType: TextInputType.visiblePassword,
           focusNode: bloc.searchDesignersFocusNode,
           textInputAction: TextInputAction.done),
     );
@@ -77,16 +76,14 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
             APPStrings.assignDesigner.tr,
             style: style.bottomSheetTitleStyle,
           ),
-          InkWell(
+          SmartImage(
+            path: AppImages.icCross,
+            height: 24.w,
+            width: 24.w,
+            color: style.closeColor,
             onTap: () {
               context.pop();
             },
-            child: SmartImage(
-              path: AppImages.icCross,
-              height: 24.w,
-              width: 24.w,
-              color: style.closeColor,
-            ),
           ),
         ],
       ),
@@ -113,7 +110,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
                 onTap: () {
                   bloc.add(MonitoringSelectedDesignerEvent(designer: bloc.designerList[index]));
                 },
-                child: Container(
+                child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 12.w),
                   child: Row(
                     children: [
@@ -164,6 +161,9 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
                 titleStyle: style.addressNameStyle,
                 activeImageColor: style.primaryColor,
               ),
+            ),
+            SizedBox(
+              width: 16.w,
             ),
             Expanded(
               child: SmartButton(
