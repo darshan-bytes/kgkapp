@@ -10,6 +10,10 @@ class ProjectListingScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.projects.tr),
       bottomNavigationBar: _buildBottomNavigationBar(projectListingBloc, context),
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: projectListingBloc.paginationScrollController.canScrollToTop,
+        onTap: projectListingBloc.paginationScrollController.scrollToTop,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
