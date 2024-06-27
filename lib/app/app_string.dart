@@ -633,9 +633,11 @@ class APPStrings {
   static const String noDesignBriefsFound = 'no_design_briefs_found';
   static const String noDesignsFound = 'no_designs_found';
 
+  // Presentation Preview
+  static const String approve = 'approve';
+
   //Styles Listing
   static const String noStylesFound = 'no_styles_found';
-
   static const String sharePresentation = 'share_presentation';
   static const String qrCode = 'qr_code';
   static const String whatsapp = 'whatsapp';
@@ -651,6 +653,7 @@ class APPStrings {
   static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
+
   //Project status
   static const String blueInProgress = 'blue_in_progress';
   static const String orangeInProgress = 'orange_in_progress';

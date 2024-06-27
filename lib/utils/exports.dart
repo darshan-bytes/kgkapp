@@ -151,6 +151,8 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';
 export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
 export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
+export 'package:kgk/modules/b2b/pdd_preview/bloc/pdd_preview_bloc.dart';
+export 'package:kgk/modules/b2b/pdd_preview/view/pdd_preview_screen.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';

@@ -160,4 +160,8 @@ class AppImages {
   static const String icFaceBook = 'assets/images/ic_face_book.svg';
   static const String icCopy = 'assets/images/ic_copy.svg';
   static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
+
+  //Presentation
+  static String icAddComment = 'assets/images/ic_add_comment.svg';
+  static String icVersionHistory = 'assets/images/ic_version_history.svg';
 }

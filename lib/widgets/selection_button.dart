@@ -48,6 +48,8 @@ class SelectionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).selectionButtonStyle;
 
+    // This widget is used for both button and icon button in the same way
+    // If selected button is true then the button will be work as primaray button else it will be normal widget
     return InkWell(
       onTap: onTap,
       child: Container(

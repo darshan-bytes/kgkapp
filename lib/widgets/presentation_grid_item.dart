@@ -10,6 +10,7 @@ class PresentationGridItem extends StatelessWidget {
   final TextStyle? subTitleStyle;
   final double? imageHeight;
   final double? statusBadgeHeight;
+  final void Function()? onTap;
 
   const PresentationGridItem({
     super.key,
@@ -22,38 +23,42 @@ class PresentationGridItem extends StatelessWidget {
     this.subTitleStyle,
     this.imageHeight,
     this.statusBadgeHeight,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final PresentationGridItemStyle style = AppTheme.of(context).presentationGridItemStyle;
-    return Container(
-      margin: margin,
-      padding: padding,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? style.backgroundColor,
-        border: Border.all(color: borderColor ?? style.borderColor, width: 1.w),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildImage(),
-              _buildDetails(style),
-            ],
-          ),
-          if (b2bCustomListingDataModel.status != null)
-            Positioned(
-              left: 16.w,
-              top: 16.w,
-              child: SmartStatusBadge(
-                currentStatus: b2bCustomListingDataModel.status!,
-                height: statusBadgeHeight ?? 32.h,
-              ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: margin,
+        padding: padding,
+        decoration: BoxDecoration(
+          color: backgroundColor ?? style.backgroundColor,
+          border: Border.all(color: borderColor ?? style.borderColor, width: 1.w),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildImage(),
+                _buildDetails(style),
+              ],
             ),
-        ],
+            if (b2bCustomListingDataModel.status != null)
+              Positioned(
+                left: 16.w,
+                top: 16.w,
+                child: SmartStatusBadge(
+                  currentStatus: b2bCustomListingDataModel.status!,
+                  height: statusBadgeHeight ?? 32.h,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
