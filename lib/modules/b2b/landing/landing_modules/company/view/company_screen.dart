@@ -40,7 +40,7 @@ class CompanyScreen extends StatelessWidget {
 
   Widget _buildCompanyList(CompanyScreenStyle style, CompanyBloc bloc) {
     return BlocBuilder<CompanyBloc, CompanyState>(builder: (context, state) {
-      return ListView.separated(
+      return ListView.builder(
         itemCount: bloc.companyList.length,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -48,47 +48,51 @@ class CompanyScreen extends StatelessWidget {
         primary: false,
         itemBuilder: (context, index) {
           final CompanyListModel companyListData = bloc.companyList[index];
-          return BlocBuilder<CompanyBloc, CompanyState>(
-            buildWhen: (previous, current) => current is SelectCompanyListState && (current.index == index || current.oldIndex == index),
-            builder: (context, state) {
-              return InkWell(
-                onTap: () {
-                  bloc.add(SelectCompanyListEvent(index));
+          return Column(
+            children: [
+              BlocBuilder<CompanyBloc, CompanyState>(
+                buildWhen: (previous, current) => current is SelectCompanyListState,
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: () {
+                      bloc.add(SelectCompanyListEvent(index));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 16.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SmartImage(
+                            path: bloc.companyList[index].image ?? '',
+                            height: 40.w,
+                            width: 40.w,
+                          ),
+                          SizedBox(width: 12.0.w),
+                          Expanded(
+                            child: SmartText(
+                              bloc.companyList[index].title,
+                              style: style.textStyle,
+                            ),
+                          ),
+                          if (bloc.selectData == companyListData)
+                            SmartImage(
+                              path: AppImages.icGreenCheck,
+                              height: 24.w,
+                              width: 24.w,
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 16.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SmartImage(
-                        path: bloc.companyList[index].image ?? '',
-                        height: 40.w,
-                        width: 40.w,
-                      ),
-                      SizedBox(width: 12.0.w),
-                      Expanded(
-                        child: SmartText(
-                          bloc.companyList[index].title,
-                          style: style.textStyle,
-                        ),
-                      ),
-                      if (bloc.selectData == companyListData)
-                        SmartImage(
-                          path: AppImages.icGreenCheck,
-                          height: 24.w,
-                          width: 24.w,
-                        ),
-                    ],
-                  ),
-                ),
-              );
-            },
+              ),
+              Divider(
+                indent: 16.w,
+                endIndent: 16.w,
+              ), // Add divider between items
+            ],
           );
         },
-        separatorBuilder: (context, index) => Divider(
-          indent: 16.w,
-          endIndent: 16.w,
-        ),
       );
     });
   }
