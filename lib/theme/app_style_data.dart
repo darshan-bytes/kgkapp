@@ -947,4 +947,15 @@ class LightModeTheme extends AppTheme {
       closeColor: colors.color303538,
       primaryColor: colors.primary,
       addressNameStyle: interMediumBoldTextStyle);
+
+  @override
+  SharePresentationStyle get sharePresentationStyle => SharePresentationStyle(
+        backgroundColor: colors.white,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        iconButtonTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
+        userListTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        userNamesTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        closeIconColor: colors.color303538,
+      );
 }

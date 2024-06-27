@@ -112,8 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
-                            BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(2, context: context));
-                            context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                            //TODO: Add to bag functionality
                           },
                         ),
                       ),

@@ -1,0 +1,19 @@
+<svg fill="none" height="56" viewBox="0 0 56 56" width="56" xmlns="http://www.w3.org/2000/svg">
+    <rect fill="#F8F8F8" height="56" rx="28" width="56" />
+    <path d="M23.3337 18.6672H18.667V23.3339" stroke="#303538" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="1.5" />
+    <path d="M32.6683 18.6672H37.335V23.3339" stroke="#303538" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="1.5" />
+    <path d="M32.6683 37.3315H37.335V32.6649" stroke="#303538" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="1.5" />
+    <path d="M23.3337 37.3315H18.667V32.6649" stroke="#303538" stroke-linecap="round"
+        stroke-linejoin="round" stroke-width="1.5" />
+    <rect height="4.66667" stroke="#303538" stroke-linecap="round" stroke-linejoin="round"
+        stroke-width="1.5" width="4.66667" x="22.167" y="22.1672" />
+    <rect height="4.66667" stroke="#303538" stroke-linecap="round" stroke-linejoin="round"
+        stroke-width="1.5" width="4.66667" x="29.167" y="22.1672" />
+    <rect height="4.66667" stroke="#303538" stroke-linecap="round" stroke-linejoin="round"
+        stroke-width="1.5" width="4.66667" x="22.167" y="29.1672" />
+    <rect height="4.66667" stroke="#303538" stroke-linecap="round" stroke-linejoin="round"
+        stroke-width="1.5" width="4.66667" x="29.167" y="29.1672" />
+</svg>
