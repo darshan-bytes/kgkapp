@@ -633,4 +633,7 @@ class APPStrings {
   static const String designBriefs = 'design_briefs';
   static const String noDesignBriefsFound = 'no_design_briefs_found';
   static const String noDesignsFound = 'no_designs_found';
+
+  // Presentation Preview
+  static const String approve = 'approve';
 }

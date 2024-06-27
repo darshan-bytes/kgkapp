@@ -14,10 +14,11 @@ final class InitialPddListingEvent extends PddListingEvent {
 }
 
 final class PresentationChangeListingTypeEvent extends PddListingEvent {
-  const PresentationChangeListingTypeEvent();
+  final bool isGrid;
+  const PresentationChangeListingTypeEvent({required this.isGrid});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isGrid];
 }
 
 final class FilterPresentationEvent extends PddListingEvent {
@@ -25,4 +26,14 @@ final class FilterPresentationEvent extends PddListingEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class NavigateToPddPreviewEvent extends PddListingEvent {
+  final int index;
+  final BuildContext context;
+
+  const NavigateToPddPreviewEvent({required this.index, required this.context});
+
+  @override
+  List<Object> get props => [index, context];
 }
