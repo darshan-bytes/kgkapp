@@ -4,7 +4,7 @@ class MyOrderDetailsModel {
   String? id;
   String? orderId;
   String? orderDate;
-  OrderStatus orderStatus;
+  ProjectStatus orderStatus;
   String? orderTotal;
   String? orderItems;
   String? orderQuantity;
@@ -12,7 +12,7 @@ class MyOrderDetailsModel {
   MyOrderDetailsModel({
     this.id,
     this.orderId,
-    this.orderStatus = OrderStatus.inProgress,
+    this.orderStatus = ProjectStatus.orangeInProgress,
     this.orderDate,
     this.orderTotal,
     this.orderItems,

@@ -658,11 +658,13 @@ class LightModeTheme extends AppTheme {
   StatusBadgeStyle get statusBadgeStyle => StatusBadgeStyle(
         activeBackgroundColor: colors.colorEBFFE7,
         activeTextColor: colors.color50B83C,
-        inProgressBackgroundColor: colors.colorFFF2E7,
-        inProgressTextColor: colors.colorF49342,
+        orangeInProgressBackgroundColor: colors.colorFFF2E7,
+        orangeInProgressTextColor: colors.colorF49342,
         statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         lostBackgroundColor: colors.colorFCE1E1,
         lostTextColor: colors.colorE83535,
+        blueInProgressBackgroundColor: colors.colorDFF2FF,
+        blueInProgressTextColor: colors.color006FBB,
       );
 
   @override

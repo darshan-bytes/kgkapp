@@ -34,7 +34,7 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strStyleNumber: 'DWBFM4Q-108636',
-        status: OrderStatus.inProgress,
+        status: ProjectStatus.blueInProgress,
         strDesignNumber: 'DERS28MOVR',
         strCustomer: 'John Samanta',
         strCustomerImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
@@ -63,7 +63,7 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
         (index) => B2BCustomListingDataModel(
           id: index.toString(),
           strStyleNumber: 'DWBFM4Q-108636',
-          status: OrderStatus.inProgress,
+          status: ProjectStatus.blueInProgress,
           strDesignNumber: 'DERS28MOVR',
           strCustomer: 'John Samanta',
           strCustomerImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
