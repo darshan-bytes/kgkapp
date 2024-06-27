@@ -19,7 +19,7 @@ class DbfTabviewListTile extends StatelessWidget {
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsets.all(14.w),
               ),
             ),
             SizedBox(height: 24.h),

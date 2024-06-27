@@ -443,10 +443,8 @@ class AppRoutes {
       case monitoringPage:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider<MonitoringBloc>(
-              create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
-              child: const MonitoringScreen(),
-            );
+            BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
+            return const MonitoringScreen();
           },
           settings: settings,
         );
