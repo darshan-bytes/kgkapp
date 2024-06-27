@@ -1200,22 +1200,26 @@ class SmartTabBarStyle {
 }
 
 class StatusBadgeStyle {
-  final Color inProgressBackgroundColor;
-  final Color inProgressTextColor;
+  final TextStyle statusTextStyle;
+  final Color orangeInProgressBackgroundColor;
+  final Color orangeInProgressTextColor;
   final Color activeBackgroundColor;
   final Color activeTextColor;
-  final TextStyle statusTextStyle;
   final Color lostBackgroundColor;
   final Color lostTextColor;
+  final Color blueInProgressBackgroundColor;
+  final Color blueInProgressTextColor;
 
   StatusBadgeStyle({
-    required this.inProgressBackgroundColor,
-    required this.inProgressTextColor,
+    required this.orangeInProgressBackgroundColor,
+    required this.orangeInProgressTextColor,
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
     required this.lostBackgroundColor,
     required this.lostTextColor,
+    required this.blueInProgressBackgroundColor,
+    required this.blueInProgressTextColor,
   });
 }
 

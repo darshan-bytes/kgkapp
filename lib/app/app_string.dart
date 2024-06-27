@@ -365,12 +365,7 @@ class APPStrings {
   static const String totalAmount = 'total_amount';
   static const String items = 'items';
   static const String qty = 'Qty';
-  static const String inProgress = 'in_Progress';
-  static const String active = 'active';
   static const String removeLot = 'remove_lot';
-  static const String onGoing = 'on_going';
-  static const String winner = 'winner';
-  static const String lost = 'lost';
 
   // my order details screen
   static const String createdBy = 'created_by';
@@ -656,4 +651,18 @@ class APPStrings {
   static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
+  //Project status
+  static const String blueInProgress = 'blue_in_progress';
+  static const String orangeInProgress = 'orange_in_progress';
+  static const String active = 'active';
+  static const String onGoing = 'on_going';
+  static const String winner = 'winner';
+  static const String lost = 'lost';
+  static const String approved = 'approved';
+  static const String released = 'released';
+  static const String approval = 'approval';
+  static const String styleCreated = 'style_created';
+  static const String onTime = 'on_time';
+  static const String created = 'created';
+  static const String inActive = 'in_active';
 }
