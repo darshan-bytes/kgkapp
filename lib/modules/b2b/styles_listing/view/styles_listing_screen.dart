@@ -62,28 +62,31 @@ class StylesListingScreen extends StatelessWidget {
         if (stylesListingBloc.stylesList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noStylesFound.tr);
         }
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                controller: stylesListingBloc.paginationScrollController.scrollController,
-                itemCount: stylesListingBloc.stylesList.length,
-                physics: const ScrollPhysics(),
-                itemBuilder: (context, index) {
-                  B2BCustomListingDataModel stylesItem = stylesListingBloc.stylesList[index];
-                  return B2BListingItem(
-                    type: B2BListingType.stylesListingType,
-                    listingItemModel: stylesItem,
-                    onTapMenuButton: () {},
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              ),
-            ),
-            if (state is StylesListingLoadedMoreState) const SmartCircularProgressIndicator(),
-            SizedBox(height: 17.h),
-          ],
+        return ListView.separated(
+          padding: EdgeInsets.only(bottom: 24.h),
+          controller: stylesListingBloc.paginationScrollController.scrollController,
+          shrinkWrap: true,
+          itemCount: stylesListingBloc.stylesList.length,
+          itemBuilder: (context, index) {
+            return BlocBuilder<StylesListingBloc, StylesListingState>(
+              buildWhen: (previous, current) => current is StylesListingLoadingMoreState || current is StylesListingLoadedMoreState,
+              builder: (context, state) {
+                B2BCustomListingDataModel stylesItem = stylesListingBloc.stylesList[index];
+                return Column(
+                  children: [
+                    B2BListingItem(
+                      type: B2BListingType.stylesListingType,
+                      listingItemModel: stylesItem,
+                      onTapMenuButton: () {},
+                    ),
+                    if (state is StylesListingLoadingMoreState && index == stylesListingBloc.stylesList.length - 1)
+                      const SmartCircularProgressIndicator(),
+                  ],
+                );
+              },
+            );
+          },
+          separatorBuilder: (context, index) => SizedBox(height: 16.h),
         );
       },
     );
