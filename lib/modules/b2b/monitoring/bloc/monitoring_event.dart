@@ -41,3 +41,12 @@ class MonitoringSelectedDesignerEvent extends MonitoringEvent {
   @override
   List<Object> get props => [designer];
 }
+
+class MonitoringDesignerLoadMoreEvent extends MonitoringEvent {
+  final int currentPage;
+
+  const MonitoringDesignerLoadMoreEvent({required this.currentPage});
+
+  @override
+  List<Object> get props => [currentPage];
+}

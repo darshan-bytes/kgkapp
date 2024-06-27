@@ -144,7 +144,6 @@ class AppImages {
   static const String icUp = 'assets/images/ic_up.svg';
   static const String icDown = 'assets/images/ic_down.svg';
 
-  static const String icEditAddress = 'assets/images/ic_edit_address.svg';
   static const String icPrimaryBgLine = 'assets/images/ic_primary_bg_line.svg';
   static const String icCustomizeThin = 'assets/images/ic_customize_thin.svg';
   static const String icHomeDiamondRingThin = 'assets/images/ic_home_diamond_ring_thin.svg';
@@ -160,4 +159,8 @@ class AppImages {
   static const String icFaceBook = 'assets/images/ic_face_book.svg';
   static const String icCopy = 'assets/images/ic_copy.svg';
   static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
+
+  //Presentation
+  static String icAddComment = 'assets/images/ic_add_comment.svg';
+  static String icVersionHistory = 'assets/images/ic_version_history.svg';
 }

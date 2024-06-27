@@ -1,10 +1,10 @@
 import 'package:kgk/kgk.dart';
 
 part 'faq_event.dart';
-
 part 'faq_state.dart';
 
 class FaqBloc extends Bloc<FaqEvent, FaqState> {
+  final TextEditingController searchController = TextEditingController();
   List<FaqWrapper> faq = [];
 
   FaqBloc() : super(FaqInitial()) {

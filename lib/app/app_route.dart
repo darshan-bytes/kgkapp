@@ -53,6 +53,7 @@ class AppRoutes {
   static const designBriefsPage = '/designBriefsPage';
   static const designListingPage = '/designListingPage';
   static const stylesListingPage = '/stylesListingPage';
+  static const presentationPreviewPage = '/presentationPreviewPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -231,7 +232,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => BlocProvider<ProductDetailsBloc>(
             create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
-            lazy: false,
             child: const ProductDetailsScreen(),
           ),
           settings: settings,
@@ -442,10 +442,8 @@ class AppRoutes {
       case monitoringPage:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider<MonitoringBloc>(
-              create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
-              child: const MonitoringScreen(),
-            );
+            BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
+            return const MonitoringScreen();
           },
           settings: settings,
         );
@@ -504,6 +502,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case presentationPreviewPage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<PddPreviewBloc>(
+            create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
+            child: const PddPreviewScreen(),
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -536,6 +543,7 @@ enum RoutesData {
   addressId,
   isShippingAddress,
   isFromCheckout,
+  presentationId
 }
 
 enum ScreenIdentifier {

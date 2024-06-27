@@ -33,7 +33,7 @@ class PddListingScreen extends StatelessWidget {
                           onValueChanges: (value) => pddListingBloc.add(const FilterPresentationEvent()),
                           suffixIcon: SmartImage(
                             path: AppImages.icSearchThin,
-                            padding: EdgeInsets.all(12.w),
+                            padding: EdgeInsets.all(14.w),
                           ),
                         ),
                       ),
@@ -53,7 +53,7 @@ class PddListingScreen extends StatelessWidget {
                             unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                             onTap: () {
-                              pddListingBloc.add(const PresentationChangeListingTypeEvent());
+                              pddListingBloc.add(const PresentationChangeListingTypeEvent(isGrid: true));
                             },
                           ),
                           SelectionButton(
@@ -68,7 +68,7 @@ class PddListingScreen extends StatelessWidget {
                             unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                             borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                             onTap: () {
-                              pddListingBloc.add(const PresentationChangeListingTypeEvent());
+                              pddListingBloc.add(const PresentationChangeListingTypeEvent(isGrid: false));
                             },
                           ),
                         ],
@@ -81,12 +81,19 @@ class PddListingScreen extends StatelessWidget {
                       itemCount: pddListingBloc.filteredPresentationList.length,
                       itemBuilder: (context, index) {
                         if (pddListingBloc.isGrid) {
-                          return PresentationGridItem(b2bCustomListingDataModel: pddListingBloc.filteredPresentationList[index]);
+                          return PresentationGridItem(
+                              onTap: () {
+                                pddListingBloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                              },
+                              b2bCustomListingDataModel: pddListingBloc.filteredPresentationList[index]);
                         } else {
                           return B2BListingItem(
                             onTapMenuButton: () {},
                             type: B2BListingType.presentationListingType,
                             listingItemModel: pddListingBloc.filteredPresentationList[index],
+                            onTap: () {
+                              pddListingBloc.add(NavigateToPddPreviewEvent(index: index, context: context));
+                            },
                           );
                         }
                       },

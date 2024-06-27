@@ -633,9 +633,11 @@ class APPStrings {
   static const String noDesignBriefsFound = 'no_design_briefs_found';
   static const String noDesignsFound = 'no_designs_found';
 
+  // Presentation Preview
+  static const String approve = 'approve';
+
   //Styles Listing
   static const String noStylesFound = 'no_styles_found';
-
   static const String sharePresentation = 'share_presentation';
   static const String qrCode = 'qr_code';
   static const String whatsapp = 'whatsapp';

@@ -32,6 +32,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   SmartPaginationScrollController dbfScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController designsScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController stylesScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController designerScrollController = SmartPaginationScrollController();
 
   @override
   Future<void> close() {
@@ -39,6 +40,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     dbfScrollController.dispose();
     designsScrollController.dispose();
     stylesScrollController.dispose();
+    designerScrollController.dispose();
     return super.close();
   }
 
@@ -56,20 +58,11 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     on<MonitoringOnTabChangedEvent>(_onTabChangedEvent);
     on<MonitoringListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<MonitoringSelectedDesignerEvent>(_onSelectedDesignerEvent);
-  }
-
-  void _onSelectedDesignerEvent(MonitoringSelectedDesignerEvent event, Emitter<MonitoringState> emit) {
-    emit(MonitoringReloadState());
-    final int index = designerList.indexWhere((element) => element == event.designer);
-    if (index != -1) {
-      designerList[index].isSelected = !designerList[index].isSelected;
-      emit(MonitoringSelectedDesignerState(designerList[index]));
-    }
+    on<MonitoringDesignerLoadMoreEvent>(_onDesignerLoadMoreEvent);
   }
 
   void _onInitialEvent(MonitoringInitialEvent event, Emitter<MonitoringState> emit) {
     emit(MonitoringReloadState());
-
     // Initialize scroll controllers with their respective load actions
     presentationsScrollController.init(
       tag: "presentationsScrollController",
@@ -175,8 +168,40 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     designerList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
     designerList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
     designerList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
+    designerList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
+    designerList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
+    designerList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
 
     emit(const MonitoringListLoadedState());
+  }
+
+  void _onDesignerLoadMoreEvent(MonitoringDesignerLoadMoreEvent event, Emitter<MonitoringState> emit) async {
+    emit(const MonitoringDesignerLoadMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+
+    List<DesignerListModel> dummyList = [];
+
+    dummyList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/729SGNK/Ellipse-10.png"));
+    dummyList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
+    dummyList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
+    dummyList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
+    dummyList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
+    dummyList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
+    dummyList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
+
+    designerList.addAll(dummyList);
+
+    designerScrollController.isPageLoaded.complete(event.currentPage == 3);
+    emit(MonitoringDesignerListLoadedState(event.currentPage + 1));
+  }
+
+  void _onSelectedDesignerEvent(MonitoringSelectedDesignerEvent event, Emitter<MonitoringState> emit) {
+    emit(MonitoringReloadState());
+    final int index = designerList.indexWhere((element) => element == event.designer);
+    if (index != -1) {
+      designerList[index].isSelected = !designerList[index].isSelected;
+      emit(MonitoringSelectedDesignerState(designerList[index]));
+    }
   }
 
   void _onTabChangedEvent(MonitoringOnTabChangedEvent event, Emitter<MonitoringState> emit) {
@@ -387,9 +412,13 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
                           if (currentTab == MonitoringTab.presentations) {
                             // Handle presentations menu button tap
                           } else if (currentTab == MonitoringTab.dbf) {
-                            _showDesignerPopupMenu(
-                              context,
+                            designerScrollController.init(
+                              tag: "designerScrollController",
+                              loadAction: (int currentPage) async {
+                                add(MonitoringDesignerLoadMoreEvent(currentPage: currentPage));
+                              },
                             );
+                            _showDesignerPopupMenu(context);
                           } else if (currentTab == MonitoringTab.designs) {
                             // Handle designs menu button tap
                           } else if (currentTab == MonitoringTab.styles) {
