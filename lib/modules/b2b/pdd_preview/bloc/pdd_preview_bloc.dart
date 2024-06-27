@@ -17,20 +17,15 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
     }
   }
 
-  void clearData() {
-    appbarTitle = '';
-  }
-
-  void _onInitialPddListingEvent(InitialPddPreviewEvent event, Emitter<PddPreviewState> emit) {
+  Future<void> _onInitialPddListingEvent(InitialPddPreviewEvent event, Emitter<PddPreviewState> emit) async {
     emit(PddPreviewReloadState());
-    clearData();
     getRouteData(event.context);
-    _onCmsWebViewInitialEvent();
+    await _onCmsWebViewInitialEvent();
     emit(PddPreviewLoadedState());
   }
 
   Future<void> _onCmsWebViewInitialEvent() async {
-    String webviewUrl = "https://www.kgkgroup.com/";
+    String webviewUrl = AppConst.pddPreviewWebViewURL;
     webViewController = WebViewController()..setJavaScriptMode(JavaScriptMode.unrestricted);
     if (webviewUrl.isNotNullNorEmpty) {
       await webViewController.loadRequest(Uri.parse(webviewUrl));

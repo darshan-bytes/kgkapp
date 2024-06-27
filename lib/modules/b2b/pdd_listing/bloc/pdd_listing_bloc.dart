@@ -43,7 +43,6 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   }
 
   void _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) {
-    emit(PddListingReloadState());
     final presentationNumber = filteredPresentationList[event.index].strPresentationNumber;
     event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {
       RoutesData.presentationId: presentationNumber,

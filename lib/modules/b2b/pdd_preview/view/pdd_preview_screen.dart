@@ -16,7 +16,7 @@ class PddPreviewScreen extends StatelessWidget {
               child: _previewOptions(),
             ),
             const Divider(),
-            Expanded(child: _buildWebView(pddPreviewBloc)),
+            _buildWebView(pddPreviewBloc),
           ],
         ),
       ),
@@ -74,18 +74,20 @@ class PddPreviewScreen extends StatelessWidget {
   }
 
   Widget _buildWebView(PddPreviewBloc pddPreviewBloc) {
-    return SafeArea(
-      child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
-        buildWhen: (previous, current) => current is PddPreviewLoadedState,
-        builder: (context, state) {
-          if (state is PddPreviewLoadedState) {
-            return WebViewWidget(
-              controller: pddPreviewBloc.webViewController,
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+    return Expanded(
+      child: SafeArea(
+        child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
+          buildWhen: (previous, current) => current is PddPreviewLoadedState,
+          builder: (context, state) {
+            if (state is PddPreviewLoadedState) {
+              return WebViewWidget(
+                controller: pddPreviewBloc.webViewController,
+              );
+            } else {
+              return const SmartCircularProgressIndicator();
+            }
+          },
+        ),
       ),
     );
   }

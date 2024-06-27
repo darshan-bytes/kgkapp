@@ -508,7 +508,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => BlocProvider<PddPreviewBloc>(
             create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
-            lazy: false,
             child: const PddPreviewScreen(),
           ),
           settings: settings,
