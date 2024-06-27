@@ -651,6 +651,7 @@ class APPStrings {
   static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
+
   //Project status
   static const String blueInProgress = 'blue_in_progress';
   static const String orangeInProgress = 'orange_in_progress';

@@ -166,17 +166,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     profileCMSList = [
       ProfileListModel(
-          image: AppImages.icAboutUs,
-          title: APPStrings.aboutUs.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-              RoutesData.cmsPageData: CmsWebViewDataModel(
-                url: 'https://www.kgkgroup.com/story-of-kgk/',
-                title: APPStrings.aboutUs.tr,
-              )
-            });
-          }),
-      ProfileListModel(
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
           isSubListExpanded: false,
@@ -238,6 +227,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             ),
           ],
           onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icAboutUs,
+          title: APPStrings.aboutUs.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: 'https://www.kgkgroup.com/story-of-kgk/',
+                title: APPStrings.aboutUs.tr,
+              )
+            });
+          }),
       ProfileListModel(
           image: AppImages.icSupport,
           title: APPStrings.faqs.tr,
