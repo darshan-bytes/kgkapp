@@ -245,17 +245,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
     profileCMSList = [
       ProfileListModel(
-          image: AppImages.icAboutUs,
-          title: APPStrings.aboutUs.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-              RoutesData.cmsPageData: CmsWebViewDataModel(
-                url: 'https://www.kgkgroup.com/story-of-kgk/',
-                title: APPStrings.aboutUs.tr,
-              )
-            });
-          }),
-      ProfileListModel(
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
           isSubListExpanded: false,
@@ -265,7 +254,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: 'https://www.kgkgroup.com/diamond-operations/',
+                    url: AppConst.profileDiamondWebViewURL,
                     title: APPStrings.diamonds.tr,
                   )
                 });
@@ -276,7 +265,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: 'https://kgkgroup.com/',
+                    url: AppConst.profileDiamondWebViewURL,
                     title: APPStrings.labCreatedDiamonds.tr,
                   )
                 });
@@ -287,7 +276,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: 'https://www.kgkgroup.com/gemstones/',
+                    url: AppConst.profileGemstoneWebViewURL,
                     title: APPStrings.gemstone.tr,
                   )
                 });
@@ -298,7 +287,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: 'https://www.kgkgroup.com/metals/',
+                    url: AppConst.profileMetalsWebViewURL,
                     title: APPStrings.metals.tr,
                   )
                 });
@@ -309,7 +298,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               onTap: () {
                 event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
-                    url: 'https://www.kgkgroup.com/ring-sizer/',
+                    url: AppConst.profileRingSizerWebViewURL,
                     title: APPStrings.ringSizer.tr,
                   )
                 });
@@ -317,6 +306,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             ),
           ],
           onTap: () {}),
+      ProfileListModel(
+          image: AppImages.icAboutUs,
+          title: APPStrings.aboutUs.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: AppConst.profileAboutUsWebViewURL,
+                title: APPStrings.aboutUs.tr,
+              )
+            });
+          }),
       ProfileListModel(
           image: AppImages.icSupport,
           title: APPStrings.faqs.tr,
@@ -330,7 +330,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: () {
             event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
               RoutesData.cmsPageData: CmsWebViewDataModel(
-                url: 'https://www.kgkgroup.com/privacy-policy/',
+                url: AppConst.profilePrivacyPolicyWebViewURL,
                 title: APPStrings.policies.tr,
               )
             });

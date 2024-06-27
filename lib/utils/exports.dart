@@ -304,3 +304,4 @@ export 'package:kgk/modules/b2b/monitoring/model/designer_list_model.dart';
 export 'package:kgk/modules/b2b/share_presentation/bloc/share_presentation_bloc.dart';
 export 'package:kgk/modules/b2b/share_presentation/view/share_presentation_screen.dart';
 export 'package:kgk/modules/b2b/share_presentation/model/user_list_model.dart';
+export 'package:kgk/utils/auto_size_text.dart';
