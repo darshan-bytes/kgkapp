@@ -151,6 +151,8 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';
 export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
 export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
+export 'package:kgk/modules/b2b/pdd_preview/bloc/pdd_preview_bloc.dart';
+export 'package:kgk/modules/b2b/pdd_preview/view/pdd_preview_screen.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
@@ -293,5 +295,13 @@ export 'package:kgk/modules/b2b/project_listing/bloc/project_listing_bloc.dart';
 export 'package:kgk/modules/b2b/project_listing/view/project_listing_screen.dart';
 export 'package:kgk/modules/b2b/design_briefs/bloc/design_briefs_bloc.dart';
 export 'package:kgk/modules/b2b/design_briefs/view/design_briefs_screen.dart';
+export 'package:kgk/modules/b2b/styles_listing/bloc/styles_listing_bloc.dart';
+export '../modules/b2b/styles_listing/view/styles_listing_screen.dart';
 export 'package:kgk/modules/b2b/design_listing/bloc/design_listing_bloc.dart';
 export 'package:kgk/modules/b2b/design_listing/view/design_listing_screen.dart';
+export 'package:kgk/modules/b2b/monitoring/view/monitoring_designer_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/monitoring/model/designer_list_model.dart';
+export 'package:kgk/modules/b2b/share_presentation/bloc/share_presentation_bloc.dart';
+export 'package:kgk/modules/b2b/share_presentation/view/share_presentation_screen.dart';
+export 'package:kgk/modules/b2b/share_presentation/model/user_list_model.dart';
+export 'package:kgk/utils/auto_size_text.dart';

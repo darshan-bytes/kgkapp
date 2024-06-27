@@ -224,7 +224,7 @@ class ProductGridItem extends StatelessWidget {
                 title: APPStrings.addToBag.tr,
                 prefixImage: prefixImage,
                 isShadow: false,
-                imageSize: imageSize,
+                imageSize: imageSize ?? 16.w,
               ),
           ],
         ),

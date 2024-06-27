@@ -189,6 +189,10 @@ abstract class AppTheme {
   SavedAddressStyle get savedAddressStyle;
 
   HomeScreenStyle get homeScreenStyle;
+
+  MonitoringScreenStyle get monitoringScreenStyle;
+
+  SharePresentationStyle get sharePresentationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1196,22 +1200,26 @@ class SmartTabBarStyle {
 }
 
 class StatusBadgeStyle {
-  final Color inProgressBackgroundColor;
-  final Color inProgressTextColor;
+  final TextStyle statusTextStyle;
+  final Color orangeInProgressBackgroundColor;
+  final Color orangeInProgressTextColor;
   final Color activeBackgroundColor;
   final Color activeTextColor;
-  final TextStyle statusTextStyle;
   final Color lostBackgroundColor;
   final Color lostTextColor;
+  final Color blueInProgressBackgroundColor;
+  final Color blueInProgressTextColor;
 
   StatusBadgeStyle({
-    required this.inProgressBackgroundColor,
-    required this.inProgressTextColor,
+    required this.orangeInProgressBackgroundColor,
+    required this.orangeInProgressTextColor,
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
     required this.lostBackgroundColor,
     required this.lostTextColor,
+    required this.blueInProgressBackgroundColor,
+    required this.blueInProgressTextColor,
   });
 }
 
@@ -1696,5 +1704,45 @@ class HomeScreenStyle {
     required this.getInspiredTitleStyle,
     required this.textStyleColor,
     required this.dropDownTextStyle,
+  });
+}
+
+class MonitoringScreenStyle {
+  final TextStyle bottomSheetTitleStyle;
+  final Color whiteColor;
+  final TextStyle subTitleStyle;
+  final TextStyle designerNameStyle;
+  final Color closeColor;
+  final Color primaryColor;
+  final TextStyle addressNameStyle;
+
+  MonitoringScreenStyle({
+    required this.bottomSheetTitleStyle,
+    required this.whiteColor,
+    required this.subTitleStyle,
+    required this.designerNameStyle,
+    required this.closeColor,
+    required this.primaryColor,
+    required this.addressNameStyle,
+  });
+}
+
+class SharePresentationStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle iconButtonTextStyle;
+  final TextStyle userListTitleStyle;
+  final TextStyle userNamesTextStyle;
+  final TextStyle userEmailTextStyle;
+  final Color closeIconColor;
+
+  SharePresentationStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.iconButtonTextStyle,
+    required this.userListTitleStyle,
+    required this.userNamesTextStyle,
+    required this.userEmailTextStyle,
+    required this.closeIconColor,
   });
 }

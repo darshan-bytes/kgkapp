@@ -37,6 +37,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: style.labelStyle,
             unselectedLabelStyle: style.unselectedLabelStyle,
+            selectedItemColor: style.labelStyle.color,
             items: landingBloc.bottomNavigationBarDataModel.map((BottomNavigationBarDataModel model) {
               if (model.isProfile) {
                 return BottomNavigationBarItem(

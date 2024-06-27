@@ -93,7 +93,7 @@ class MyOrderItem extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           isOrderStatus
-              ? StatusBadge(currentStatus: OrderStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+              ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
               : SmartText(
                   value.isNullOrEmpty ? APPStrings.dash.tr : value,
                   maxLines: 1,

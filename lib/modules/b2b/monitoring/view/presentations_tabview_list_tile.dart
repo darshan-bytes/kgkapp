@@ -14,48 +14,16 @@ class PresentationsTabviewListTile extends StatelessWidget {
           children: [
             SizedBox(height: 24.h),
             SmartTextField(
-              controller: monitoringBloc.searchController,
+              controller: monitoringBloc.presentationsSearchController,
               hintText: APPStrings.searchX.tr.interpolate([APPStrings.presentation.tr.toLowerCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
-                padding: EdgeInsets.all(12.w),
+                padding: EdgeInsets.all(14.w),
               ),
             ),
             SizedBox(height: 24.h),
-            Expanded(
-                child: BlocBuilder<MonitoringBloc, MonitoringState>(
-              buildWhen: (previous, current) => current is MonitoringListLoadedState || current is MonitoringLoadingMoreState,
-              builder: (context, state) {
-                if (monitoringBloc.presentationList.isEmpty) {
-                  return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr);
-                }
-                return ListView.separated(
-                  itemCount: monitoringBloc.presentationList.length,
-                  controller: monitoringBloc.paginationScrollController.scrollController,
-                  itemBuilder: (context, index) {
-                    return BlocBuilder<MonitoringBloc, MonitoringState>(
-                      buildWhen: (previous, current) => current is MonitoringLoadingMoreState || current is MonitoringListLoadedMoreState,
-                      builder: (context, state) {
-                        return Column(
-                          children: [
-                            B2BListingItem(
-                              onTap: () {},
-                              onTapMenuButton: () {},
-                              type: B2BListingType.monitoringPresentationGridType,
-                              listingItemModel: monitoringBloc.presentationList[index],
-                            ),
-                            if (state is MonitoringLoadingMoreState && index == monitoringBloc.presentationList.length - 1)
-                              const SmartCircularProgressIndicator(),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                );
-              },
-            ))
+            monitoringBloc.buildListView(context, MonitoringTab.presentations),
           ],
         ),
       ),
@@ -69,8 +37,8 @@ class PresentationsTabviewListTile extends StatelessWidget {
         ),
       ),
       floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: monitoringBloc.paginationScrollController.canScrollToTop,
-        onTap: monitoringBloc.paginationScrollController.scrollToTop,
+        canScrollToTop: monitoringBloc.currentController.canScrollToTop,
+        onTap: monitoringBloc.currentController.scrollToTop,
       ),
     );
   }

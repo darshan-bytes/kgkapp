@@ -6,6 +6,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
+    categoriesBloc.add(CategoriesInitialEvent(context: context));
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
@@ -21,7 +22,7 @@ class CategoriesScreen extends StatelessWidget {
         },
       ),
       body: BlocBuilder<CategoriesBloc, CategoriesState>(
-        buildWhen: (_, current) => current is CategoriesSelected,
+        buildWhen: (_, current) => current is CategoriesSelected || current is CategoriesFetchData,
         builder: (context, state) {
           return Container(
             margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
@@ -39,25 +40,22 @@ class CategoriesScreen extends StatelessWidget {
                       rowIndex: index,
                       selectedIndex: (categoriesBloc.selectedRowIndex ?? -1) == index ? (categoriesBloc.selectedItemIndex ?? -1) : -1,
                       onCategorySelected: (itemIndex) {
-                        categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex));
+                        if (sublist[itemIndex].isExpanded) {
+                          categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex, sublist));
+                        } else {
+                          // Implement your logic for when the category is not expanded
+                        }
                       },
                     ),
                     if (categoriesBloc.selectedRowIndex == index)
                       SelectedCategoryDetails(
                         arrowPosition: categoriesBloc.arrowPosition,
-                        productsDetailsList: categoriesBloc.productsDetailsList,
+                        productsDetailsList: categoriesBloc.selectedCategoriesList,
                         scrollController: categoriesBloc.scrollController,
                         onProductSelected: (value) {
-                          if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Gemstone') {
-                            context.pushNamed(AppRoutes.stoneListingPage,
-                                arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Do It \nYourself') {
-                            context
-                                .pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
-                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'PDD') {
-                            context.pushNamed(AppRoutes.conceptListPage);
-                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Project') {
-                            context.pushNamed(AppRoutes.projectListingPage);
+                          final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
+                          if (selectedCategory != null) {
+                            categoriesBloc.navigateBasedOnCategory(context, selectedCategory, value);
                           } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Design') {
                             context.pushNamed(AppRoutes.designListingPage);
                           }

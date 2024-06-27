@@ -6,13 +6,13 @@ class ConceptListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ConceptListBloc conceptListBloc = BlocProvider.of<ConceptListBloc>(context);
-    return BlocBuilder<ConceptListBloc, ConceptListState>(
-      buildWhen: (previous, current) => current is ConceptListLoadedState,
-      builder: (context, state) {
-        if (state is ConceptListLoadedState) {
-          return Scaffold(
-            appBar: SmartAppBar(title: APPStrings.concepts.tr),
-            body: SafeArea(
+    return Scaffold(
+      appBar: SmartAppBar(title: APPStrings.concepts.tr),
+      body: BlocBuilder<ConceptListBloc, ConceptListState>(
+        buildWhen: (previous, current) => current is ConceptListLoadedState,
+        builder: (context, state) {
+          if (state is ConceptListLoadedState) {
+            return SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.h),
                 child: Column(
@@ -23,10 +23,7 @@ class ConceptListScreen extends StatelessWidget {
                       controller: conceptListBloc.searchController,
                       hintText: APPStrings.searchConcept.tr,
                       onFieldSubmitted: (value) => conceptListBloc.add(const ConceptListSearchEvent()),
-                      suffixIcon: SmartImage(
-                        path: AppImages.icSearchThin,
-                        padding: EdgeInsets.all(12.w),
-                      ),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
                     ),
                     SizedBox(height: 24.h),
                     Expanded(
@@ -70,8 +67,17 @@ class ConceptListScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            bottomNavigationBar: SafeArea(
+            );
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
+      ),
+      bottomNavigationBar: BlocBuilder<ConceptListBloc, ConceptListState>(
+        buildWhen: (previous, current) => current is ConceptListLoadedState,
+        builder: (context, state) {
+          if (state is ConceptListLoadedState) {
+            return SafeArea(
               child: SelectionButton(
                 borderRadius: BorderRadius.zero,
                 isSelected: false,
@@ -79,16 +85,15 @@ class ConceptListScreen extends StatelessWidget {
                 image: AppImages.icFilter,
                 title: APPStrings.filter.tr,
               ),
-            ),
-            floatingActionButton: ScrollToTopFAB(
-              canScrollToTop: conceptListBloc.paginationScrollController.canScrollToTop,
-              onTap: conceptListBloc.paginationScrollController.scrollToTop,
-            ),
-          );
-        } else {
-          return const SmartCircularProgressIndicator();
-        }
-      },
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: conceptListBloc.paginationScrollController.canScrollToTop,
+        onTap: conceptListBloc.paginationScrollController.scrollToTop,
+      ),
     );
   }
 

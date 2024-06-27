@@ -229,7 +229,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                         borderSide: BorderSide(color: style.errorBorderColor),
                         borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
-                  hintText: widget.hintText,
+                  hintText: widget.hintText ?? '',
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
                   prefixIcon: widget.isSearch

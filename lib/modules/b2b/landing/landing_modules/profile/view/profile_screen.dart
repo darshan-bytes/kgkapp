@@ -86,12 +86,14 @@ class ProfileScreen extends StatelessWidget {
                 optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
               ),
               _buildAccountList(style, bloc),
-              Divider(color: style.dividerColor, thickness: 8.h),
-              SmartText(
-                APPStrings.adminSection.tr,
-                style: style.subTitleStyle,
-                optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
-              ),
+              if (bloc.userType == UserType.b2bUser) ...[
+                Divider(color: style.dividerColor, thickness: 8.h),
+                SmartText(
+                  APPStrings.adminSection.tr,
+                  style: style.subTitleStyle,
+                  optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
+                ),
+              ],
               _buildAdminList(style, bloc),
               Divider(color: style.dividerColor, thickness: 8.h),
               _buildExpandList(style, bloc),

@@ -86,7 +86,12 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.designNumber.tr, value: model.strDesignNumber),
           B2BItemField(label: APPStrings.customer.tr, value: model.strCustomer, imageUrl: model.strCustomerImageUrl),
           B2BItemField(label: APPStrings.market.tr, value: model.strMarket),
-          B2BItemField(label: APPStrings.stoneCardLocked.tr, value: model.strStoneCardLocked, imageUrl: model.strStoneCardLockedImageUrl),
+          B2BItemField(
+            label: APPStrings.stoneCardLocked.tr,
+            value: model.strStoneCardLocked,
+            imageUrl: model.isStoneCardLockedImage ? AppImages.icStylesUnLock : AppImages.icStylesLock,
+            isCircleImage: false,
+          ),
           B2BItemField(label: APPStrings.exclusive.tr, value: model.strExclusive),
           B2BItemField(
               label: APPStrings.exclusiveCustomer.tr, value: model.strExclusiveCustomer, imageUrl: model.strExclusiveCustomerImageUrl),

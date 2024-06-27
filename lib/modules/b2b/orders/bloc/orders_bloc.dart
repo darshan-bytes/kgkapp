@@ -144,7 +144,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 7}",
-        orderStatus: OrderStatus.inProgress,
+        orderStatus: ProjectStatus.orangeInProgress,
         orderDate: "17/03/23 06:00 PM",
         orderTotal: "\$12,500",
         orderItems: "5",
@@ -159,7 +159,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 3}",
-        orderStatus: OrderStatus.active,
+        orderStatus: ProjectStatus.orangeInProgress,
         orderDate: "17/03/23 06:00 PM",
         orderTotal: "\$12,500",
         orderItems: "5",
@@ -174,7 +174,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 6}",
-        orderStatus: OrderStatus.inProgress,
+        orderStatus: ProjectStatus.orangeInProgress,
         orderDate: "17/03/23 06:00 PM",
         orderTotal: "\$12,500",
         orderItems: "5",
