@@ -90,8 +90,8 @@ class ProductGridItem extends StatelessWidget {
         ),
         if (isOutOfStock)
           Positioned(
-            top: 8,
-            left: 8,
+            top: 8.h,
+            left: 8.w,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
@@ -99,13 +99,13 @@ class ProductGridItem extends StatelessWidget {
             ),
           ),
         Positioned(
-          top: 8,
-          right: 8,
+          top: 8.h,
+          right: 8.w,
           child: _buildTopPositionView(style),
         ),
         Positioned(
-          bottom: 8,
-          right: 8,
+          bottom: 8.h,
+          right: 8.w,
           child: Row(
             children: [
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
@@ -137,7 +137,7 @@ class ProductGridItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(4.r),
             border: Border.all(color: borderColor ?? style.transparentColor)),
         height: 24.w,
         width: 24.w,

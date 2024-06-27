@@ -3,11 +3,15 @@ import 'package:kgk/kgk.dart';
 class SmartStatusBadge extends StatelessWidget {
   final ProjectStatus currentStatus;
   final double? height;
+  final double? borderRadius;
+  final EdgeInsetsGeometry? padding;
 
   const SmartStatusBadge({
     super.key,
     this.currentStatus = ProjectStatus.blueInProgress,
     this.height,
+    this.borderRadius,
+    this.padding,
   });
 
   @override
@@ -20,10 +24,10 @@ class SmartStatusBadge extends StatelessWidget {
     return FittedBox(
       child: Container(
         height: height,
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(height != null ? (height! / 2) : 12.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? (height != null ? (height! / 2).r : 12.r)),
         ),
         child: Center(
           child: SmartText(

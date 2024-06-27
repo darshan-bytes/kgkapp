@@ -56,8 +56,6 @@ class CategoriesScreen extends StatelessWidget {
                           final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
                           if (selectedCategory != null) {
                             categoriesBloc.navigateBasedOnCategory(context, selectedCategory, value);
-                          } else if (sublist[categoriesBloc.selectedItemIndex ?? 0].name == 'Design') {
-                            context.pushNamed(AppRoutes.designListingPage);
                           }
                         },
                       ),

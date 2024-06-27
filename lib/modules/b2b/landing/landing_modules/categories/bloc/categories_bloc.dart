@@ -123,6 +123,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           context.pushNamed(AppRoutes.monitoringPage);
         } else if (categorySubName == 'Styles Listing') {
           context.pushNamed(AppRoutes.stylesListingPage);
+        } else if (categorySubName == 'Design Listing') {
+          context.pushNamed(AppRoutes.designListingPage);
+        } else if (categorySubName == 'Project Listing') {
+          context.pushNamed(AppRoutes.projectListingPage);
+        } else if (categorySubName == 'Presentation Listing') {
+          context.pushNamed(AppRoutes.pddListingPage);
+        } else if (categorySubName == 'Concept Listing') {
+          context.pushNamed(AppRoutes.conceptListPage);
         } else {
           context.pushNamed(AppRoutes.conceptListPage);
         }
