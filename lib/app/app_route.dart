@@ -232,7 +232,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => BlocProvider<ProductDetailsBloc>(
             create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
-            lazy: false,
             child: const ProductDetailsScreen(),
           ),
           settings: settings,

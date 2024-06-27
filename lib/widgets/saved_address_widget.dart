@@ -72,7 +72,7 @@ class SavedAddressWidget extends StatelessWidget {
                 child: SmartButton(
                   onTap: onChange,
                   title: APPStrings.change.tr,
-                  prefixImage: AppImages.icEditAddress,
+                  prefixImage: AppImages.icEditPrimary,
                   imageSize: 24.w,
                   activeBackgroundColor: style.whiteColor,
                   titleStyle: style.addressNameStyle,

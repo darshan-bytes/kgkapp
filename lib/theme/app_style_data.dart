@@ -124,14 +124,8 @@ class LightModeTheme extends AppTheme {
 
   @override
   TabBarStyle get tabBarStyle => TabBarStyle(
-        unselectedLabelStyle: interMediumBoldTextStyle.copyWith(
-          fontSize: 12.sp,
-          color: colors.color8C8C8C,
-        ),
-        labelStyle: interMediumBoldTextStyle.copyWith(
-          fontSize: 12.sp,
-          color: colors.color303538,
-        ),
+        unselectedLabelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
         indicatorColor: colors.primary,
         backgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,

@@ -33,7 +33,7 @@ class PddListingScreen extends StatelessWidget {
                           onValueChanges: (value) => pddListingBloc.add(const FilterPresentationEvent()),
                           suffixIcon: SmartImage(
                             path: AppImages.icSearchThin,
-                            padding: EdgeInsets.all(12.w),
+                            padding: EdgeInsets.all(14.w),
                           ),
                         ),
                       ),
