@@ -640,4 +640,20 @@ class APPStrings {
 
   //Styles Listing
   static const String noStylesFound = 'no_styles_found';
+
+  static const String sharePresentation = 'share_presentation';
+  static const String qrCode = 'qr_code';
+  static const String whatsapp = 'whatsapp';
+  static const String facebook = 'facebook';
+  static const String copyLink = 'copy_link';
+  static const String enterEmailAddress = 'enter_email_address';
+  static const String peopleWithAccess = 'people_with_access';
+  static const String owner = 'owner';
+  static const String editor = 'editor';
+  static const String viewer = 'viewer';
+  static const String generalAccess = 'general_access';
+  static const String anyoneWithTheLink = 'anyone_with_the_link';
+  static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
+  static const String share = 'share';
+  static const String shareCatalogue = 'share_catalogue';
 }

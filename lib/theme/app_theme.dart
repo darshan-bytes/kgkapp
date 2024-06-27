@@ -191,6 +191,8 @@ abstract class AppTheme {
   HomeScreenStyle get homeScreenStyle;
 
   MonitoringScreenStyle get monitoringScreenStyle;
+
+  SharePresentationStyle get sharePresentationStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1718,5 +1720,25 @@ class MonitoringScreenStyle {
     required this.closeColor,
     required this.primaryColor,
     required this.addressNameStyle,
+  });
+}
+
+class SharePresentationStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle iconButtonTextStyle;
+  final TextStyle userListTitleStyle;
+  final TextStyle userNamesTextStyle;
+  final TextStyle userEmailTextStyle;
+  final Color closeIconColor;
+
+  SharePresentationStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.iconButtonTextStyle,
+    required this.userListTitleStyle,
+    required this.userNamesTextStyle,
+    required this.userEmailTextStyle,
+    required this.closeIconColor,
   });
 }

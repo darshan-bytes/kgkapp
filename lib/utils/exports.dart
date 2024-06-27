@@ -299,3 +299,6 @@ export 'package:kgk/modules/b2b/design_listing/bloc/design_listing_bloc.dart';
 export 'package:kgk/modules/b2b/design_listing/view/design_listing_screen.dart';
 export 'package:kgk/modules/b2b/monitoring/view/monitoring_designer_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/monitoring/model/designer_list_model.dart';
+export 'package:kgk/modules/b2b/share_presentation/bloc/share_presentation_bloc.dart';
+export 'package:kgk/modules/b2b/share_presentation/view/share_presentation_screen.dart';
+export 'package:kgk/modules/b2b/share_presentation/model/user_list_model.dart';

@@ -515,5 +515,20 @@
   "select_designer": "Select Designer",
   "enter_designer_name": "Enter Designer Name",
   "assign_designer": "Assign designer",
-  "no_designer_found": "No Designer Found"
+  "no_designer_found": "No Designer Found",
+  "share_presentation": "Share presentation",
+  "qr_code": "QR code",
+  "whatsapp": "Whatsapp",
+  "facebook": "Facebook",
+  "copy_link": "Copy link",
+  "enter_email_address": "Enter email address",
+  "people_with_access": "People with access",
+  "owner": "Owner",
+  "editor": "Editor",
+  "viewer": "Viewer",
+  "general_access": "General access",
+  "anyone_with_the_link": "Anyone with the link",
+  "anyone_with_the_link_desc": "Anyone on the internet with the link can view",
+  "share": "Share",
+  "share_catalogue": "Share catalogue"
 }
