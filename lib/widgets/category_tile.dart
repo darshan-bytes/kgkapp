@@ -37,8 +37,9 @@ class CategoryTile extends StatelessWidget {
                 SizedBox(
                   width: 4.w,
                 ),
-                Icon(
-                  isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                if (category.isExpanded)
+                  Icon(
+                    isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                   size: 16.w,
                 ),
               ],

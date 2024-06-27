@@ -658,11 +658,13 @@ class LightModeTheme extends AppTheme {
   StatusBadgeStyle get statusBadgeStyle => StatusBadgeStyle(
         activeBackgroundColor: colors.colorEBFFE7,
         activeTextColor: colors.color50B83C,
-        inProgressBackgroundColor: colors.colorFFF2E7,
-        inProgressTextColor: colors.colorF49342,
+        orangeInProgressBackgroundColor: colors.colorFFF2E7,
+        orangeInProgressTextColor: colors.colorF49342,
         statusTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         lostBackgroundColor: colors.colorFCE1E1,
         lostTextColor: colors.colorE83535,
+        blueInProgressBackgroundColor: colors.colorDFF2FF,
+        blueInProgressTextColor: colors.color006FBB,
       );
 
   @override
@@ -936,5 +938,26 @@ class LightModeTheme extends AppTheme {
         stepValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
         textStyleColor: colors.color303538,
         dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
+      );
+
+  @override
+  MonitoringScreenStyle get monitoringScreenStyle => MonitoringScreenStyle(
+      whiteColor: colors.white,
+      bottomSheetTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
+      subTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      designerNameStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      closeColor: colors.color303538,
+      primaryColor: colors.primary,
+      addressNameStyle: interMediumBoldTextStyle);
+
+  @override
+  SharePresentationStyle get sharePresentationStyle => SharePresentationStyle(
+        backgroundColor: colors.white,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        iconButtonTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
+        userListTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        userNamesTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        closeIconColor: colors.color303538,
       );
 }

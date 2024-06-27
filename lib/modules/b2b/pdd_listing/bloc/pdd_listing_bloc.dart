@@ -57,7 +57,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         strPresentationNumber: '125487${index + 1}',
         strProject: '1',
         strConceptName: 'Full blue moon',
-        status: OrderStatus.active,
+        status: ProjectStatus.active,
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
         strCreatedOn: '23/03/2023',

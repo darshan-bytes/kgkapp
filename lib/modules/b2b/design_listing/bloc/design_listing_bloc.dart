@@ -71,8 +71,8 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strCreatedOn: '23/03/2023, 10:46',
-        designApprovalStatus: OrderStatus.active,
-        stylesStatus: OrderStatus.onGoing,
+        designApprovalStatus: ProjectStatus.active,
+        stylesStatus: ProjectStatus.onGoing,
       );
     });
   }

@@ -10,6 +10,7 @@ class SmartPaginationScrollController {
   double boundaryOffset = 0.5;
   Completer<bool> isPageLoaded = Completer<bool>();
   ValueNotifier<bool> canScrollToTop = ValueNotifier(false);
+  String? tag;
   late Function(int currentPage) loadAction;
 
   void scrollToTop() {
@@ -21,7 +22,8 @@ class SmartPaginationScrollController {
   ///
   /// [initAction] is a function that is called when the scroll controller is initialized.
   /// [loadAction] is a function that is called when a new page needs to be loaded.
-  void init({Function? initAction, required Function(int currentPage) loadAction}) {
+  void init({Function? initAction, required Function(int currentPage) loadAction, String? tag}) {
+    this.tag = tag;
     if (initAction != null) {
       initAction();
     }
@@ -44,18 +46,22 @@ class SmartPaginationScrollController {
       canScrollToTop.value = false;
     }
     if (!stopLoading) {
-      if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
-        isLoading = true;
-        isPageLoaded = Completer<bool>();
-        loadAction(currentPage).then((value) async {
-          bool shouldStop = await isPageLoaded.future;
-          isLoading = false;
-          currentPage++;
-          boundaryOffset = 1 - 1 / (currentPage * 2);
-          if (shouldStop == true) {
-            stopLoading = true;
-          }
-        });
+      try {
+        if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
+          isLoading = true;
+          isPageLoaded = Completer<bool>();
+          loadAction(currentPage).then((value) async {
+            bool shouldStop = await isPageLoaded.future;
+            isLoading = false;
+            currentPage++;
+            boundaryOffset = 1 - 1 / (currentPage * 2);
+            if (shouldStop == true) {
+              stopLoading = true;
+            }
+          });
+        }
+      } catch (e) {
+        printWrapped('Error: $e');
       }
     }
   }

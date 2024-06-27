@@ -52,7 +52,16 @@ class PresentationGridItem extends StatelessWidget {
               Positioned(
                 left: 16.w,
                 top: 16.w,
-                child: StatusBadge(
+                child: SmartStatusBadge(
+                  currentStatus: b2bCustomListingDataModel.status!,
+                  height: statusBadgeHeight ?? 32.h,
+                ),
+              ),
+            if (b2bCustomListingDataModel.status != null)
+              Positioned(
+                left: 16.w,
+                top: 16.w,
+                child: SmartStatusBadge(
                   currentStatus: b2bCustomListingDataModel.status!,
                   height: statusBadgeHeight ?? 32.h,
                 ),

@@ -25,8 +25,27 @@ class MonitoringListingSearchEvent extends MonitoringEvent {
 
 class MonitoringListingLoadMoreEvent extends MonitoringEvent {
   final int currentPage;
+  final MonitoringTab listType;
 
-  const MonitoringListingLoadMoreEvent({required this.currentPage});
+  const MonitoringListingLoadMoreEvent({required this.currentPage, required this.listType});
+
+  @override
+  List<Object> get props => [currentPage, listType];
+}
+
+class MonitoringSelectedDesignerEvent extends MonitoringEvent {
+  final DesignerListModel designer;
+
+  const MonitoringSelectedDesignerEvent({required this.designer});
+
+  @override
+  List<Object> get props => [designer];
+}
+
+class MonitoringDesignerLoadMoreEvent extends MonitoringEvent {
+  final int currentPage;
+
+  const MonitoringDesignerLoadMoreEvent({required this.currentPage});
 
   @override
   List<Object> get props => [currentPage];

@@ -21,8 +21,11 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     return super.close();
   }
 
-  void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) {
+  void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) async {
     emit(ConceptListReloadState());
+
+    await Future.delayed(const Duration(seconds: 5));
+
     searchController.clear();
     paginationScrollController.init(
       loadAction: (int currentPage) async {
@@ -36,7 +39,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
         strConceptNumber: (index + 1).toString(),
         strPresentation: '1',
         strConceptName: 'Concept Name',
-        status: OrderStatus.inProgress,
+        status: ProjectStatus.blueInProgress,
         strAssignTo: 'Jenny Wilson',
         strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strMarket: 'New York, USA',
@@ -65,7 +68,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
           strConceptNumber: ((paginationScrollController.currentPage * 10) + index + 1).toString(),
           strPresentation: '1',
           strConceptName: 'Concept Name',
-          status: OrderStatus.inProgress,
+          status: ProjectStatus.blueInProgress,
           strAssignTo: 'Jenny Wilson',
           strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
           strMarket: 'New York, USA',

@@ -150,7 +150,18 @@ class AppImages {
   static const String icHomeDiamondRingThin = 'assets/images/ic_home_diamond_ring_thin.svg';
   static const String icHomeRing = 'assets/images/ic_home_ring.svg';
 
-  //Presentation 
+  //Styles Listing Screen
+  static const String icStylesLock = 'assets/images/ic_styles_lock.svg';
+  static const String icStylesUnLock = 'assets/images/ic_styles_unlock.svg';
+
+  //Share Presentation
+  static const String icQrCode = 'assets/images/ic_qr_code.svg';
+  static const String icWhatsapp = 'assets/images/ic_whatsapp.svg';
+  static const String icFaceBook = 'assets/images/ic_face_book.svg';
+  static const String icCopy = 'assets/images/ic_copy.svg';
+  static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
+
+  //Presentation
   static String icAddComment = 'assets/images/ic_add_comment.svg';
   static String icVersionHistory = 'assets/images/ic_version_history.svg';
 }

@@ -365,12 +365,7 @@ class APPStrings {
   static const String totalAmount = 'total_amount';
   static const String items = 'items';
   static const String qty = 'Qty';
-  static const String inProgress = 'in_Progress';
-  static const String active = 'active';
   static const String removeLot = 'remove_lot';
-  static const String onGoing = 'on_going';
-  static const String winner = 'winner';
-  static const String lost = 'lost';
 
   // my order details screen
   static const String createdBy = 'created_by';
@@ -600,6 +595,10 @@ class APPStrings {
   static const String noPresentationFound = 'no_presentation_found';
   static const String addNew = 'add_new';
   static const String sameAsShipping = 'same_as_shipping';
+  static const String noDesignerFound = 'no_designer_found';
+  static const String selectDesigner = 'select_designer';
+  static const String enterDesignerName = 'enter_designer_name';
+  static const String assignDesigner = 'assign_designer';
 
   // Home Screen
   static const String shopDiamonds = 'shop_diamonds';
@@ -636,4 +635,37 @@ class APPStrings {
 
   // Presentation Preview
   static const String approve = 'approve';
+
+  //Styles Listing
+  static const String noStylesFound = 'no_styles_found';
+  static const String sharePresentation = 'share_presentation';
+  static const String qrCode = 'qr_code';
+  static const String whatsapp = 'whatsapp';
+  static const String facebook = 'facebook';
+  static const String copyLink = 'copy_link';
+  static const String enterEmailAddress = 'enter_email_address';
+  static const String peopleWithAccess = 'people_with_access';
+  static const String owner = 'owner';
+  static const String editor = 'editor';
+  static const String viewer = 'viewer';
+  static const String generalAccess = 'general_access';
+  static const String anyoneWithTheLink = 'anyone_with_the_link';
+  static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
+  static const String share = 'share';
+  static const String shareCatalogue = 'share_catalogue';
+
+  //Project status
+  static const String blueInProgress = 'blue_in_progress';
+  static const String orangeInProgress = 'orange_in_progress';
+  static const String active = 'active';
+  static const String onGoing = 'on_going';
+  static const String winner = 'winner';
+  static const String lost = 'lost';
+  static const String approved = 'approved';
+  static const String released = 'released';
+  static const String approval = 'approval';
+  static const String styleCreated = 'style_created';
+  static const String onTime = 'on_time';
+  static const String created = 'created';
+  static const String inActive = 'in_active';
 }

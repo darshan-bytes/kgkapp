@@ -52,6 +52,7 @@ class AppRoutes {
   static const projectListingPage = '/projectListingPage';
   static const designBriefsPage = '/designBriefsPage';
   static const designListingPage = '/designListingPage';
+  static const stylesListingPage = '/stylesListingPage';
   static const presentationPreviewPage = '/presentationPreviewPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -82,7 +83,10 @@ class AppRoutes {
         );
       case categoriesPage:
         return MaterialPageRoute(
-          builder: (_) => const CategoriesScreen(),
+          builder: (context) {
+            BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
+            return const CategoriesScreen();
+          },
           settings: settings,
         );
 
@@ -440,10 +444,8 @@ class AppRoutes {
       case monitoringPage:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider<MonitoringBloc>(
-              create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
-              child: const MonitoringScreen(),
-            );
+            BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
+            return const MonitoringScreen();
           },
           settings: settings,
         );
@@ -489,6 +491,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
             return const DesignListingScreen();
+          },
+          settings: settings,
+        );
+
+      case stylesListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
+            return const StylesListingScreen();
           },
           settings: settings,
         );
