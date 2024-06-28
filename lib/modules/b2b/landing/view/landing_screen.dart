@@ -13,7 +13,13 @@ class LandingScreen extends StatelessWidget {
           return Scaffold(
             body: BlocBuilder<LandingBloc, LandingState>(
               buildWhen: (previous, current) => current is LandingChangeTabState,
-              builder: (context, state) => landingBloc.pages[landingBloc.currentIndex],
+              builder: (context, state) => PopScope(
+                canPop: landingBloc.currentIndex == 0,
+                onPopInvoked: (didPop) {
+                  landingBloc.add(LandingChangeTabEvent(0, context: context));
+                },
+                child: landingBloc.pages[landingBloc.currentIndex],
+              ),
             ),
             bottomNavigationBar: const SmartBottomNavigationBar(),
           );

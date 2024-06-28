@@ -156,7 +156,6 @@ class SettingListingScreen extends StatelessWidget {
                       itemBuilder: (context, index) => ProductListItem(
                         onEyeTap: () {},
                         onFavTap: () {},
-                        // onAddToBagTap: () {},
                         productDetails: settingListingBloc.productList[index],
                       ),
                       itemCount: settingListingBloc.productList.length,

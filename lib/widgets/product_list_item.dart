@@ -122,8 +122,7 @@ class ProductListItem extends StatelessWidget {
   Widget productDetailsSection(ProductItemStyle style, BuildContext context) {
     return Expanded(
       child: Container(
-        color: style.backgroundColor, //style.backgroundColor
-        // height: boxHeight ?? 144.w,
+        color: style.backgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,

@@ -51,7 +51,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        context.pushNamed(AppRoutes.resetPasswordPage);
+                        //TODO: Resend email logic
                       },
                       child: SmartText(
                         APPStrings.resend.tr,

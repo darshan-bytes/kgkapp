@@ -24,6 +24,7 @@ class SmartPaginationScrollController {
   /// [loadAction] is a function that is called when a new page needs to be loaded.
   void init({Function? initAction, required Function(int currentPage) loadAction, String? tag}) {
     this.tag = tag;
+    isPageLoaded = Completer<bool>();
     if (initAction != null) {
       initAction();
     }

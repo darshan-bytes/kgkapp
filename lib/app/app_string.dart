@@ -669,4 +669,10 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+
+  static const String hintEmail = 'hint_email';
+  static const String hintFirstName = 'hint_first_name';
+  static const String hintLastName = 'hint_last_name';
+  static const String hintContactNumber = 'hint_contact_number';
+  static const String hintCompanyName = 'hint_company_name';
 }
