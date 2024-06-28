@@ -668,4 +668,8 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+  static const String rapRate = 'rap_rate';
+  static const String rate = 'rate';
+  static const String discountPercentage = 'discount_percentage';
+  static const String amt = 'amt';
 }

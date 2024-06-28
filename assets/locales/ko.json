@@ -421,7 +421,7 @@
   "assign_to": "Assign To",
   "market": "Market",
   "created_on": "Created on",
-  "presentation_number": "Presentation No.",
+  "presentation_number": "Presentation Number",
   "approved_by": "Approved by",
   "project": "Project",
   "project_number": "Project number",
@@ -539,5 +539,9 @@
   "in_active": "Inactive",
   "blue_in_progress": "In Progress",
   "orange_in_progress": "In Progress",
-  "approve": "Approve"
+  "approve": "Approve",
+  "rap_rate": "Rap rate",
+  "rate": "Rate",
+  "discount_percentage": "Dis %",
+  "amt": "Amt"
 }
