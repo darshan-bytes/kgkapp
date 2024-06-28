@@ -13,24 +13,20 @@ class AppImages {
   static const String icImage = 'assets/images/ic_image.svg';
   static const String icCustomisable = 'assets/images/ic_customisable.svg';
   static const String icCalendar = 'assets/images/ic_calendar.svg';
-  static const String icSuccessPlaceBid =
-      'assets/images/ic_success_place_bid.svg';
+  static const String icSuccessPlaceBid = 'assets/images/ic_success_place_bid.svg';
   static const String icRingThin = 'assets/images/ic_ring_thin.svg';
 
   ///Tab bar icons
   static const String icHome = 'assets/images/ic_home.svg';
   static const String icHomeActive = 'assets/images/ic_home_active.svg';
   static const String icCategories = 'assets/images/ic_categories.svg';
-  static const String icCategoriesActive =
-      'assets/images/ic_categories_active.svg';
+  static const String icCategoriesActive = 'assets/images/ic_categories_active.svg';
   static const String icShoppingBag = 'assets/images/ic_shopping_bag.svg';
-  static const String icShoppingBagActive =
-      'assets/images/ic_shopping_bag_active.svg';
+  static const String icShoppingBagActive = 'assets/images/ic_shopping_bag_active.svg';
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
   static const String icSplashLogo = 'assets/images/ic_splash_logo.png';
-  static const String icCompanyBottomNavbar =
-      'assets/images/ic_company_bottom_navbar.svg';
+  static const String icCompanyBottomNavbar = 'assets/images/ic_company_bottom_navbar.svg';
   static const String icCompanyActive = 'assets/images/ic_company_active.svg';
 
   // appbar icon assets
@@ -58,8 +54,7 @@ class AppImages {
   static const String icCheck = 'assets/images/ic_check.svg';
 
   //product item
-  static const String icProductFavIcon =
-      'assets/images/ic_product_fav_Icon.svg';
+  static const String icProductFavIcon = 'assets/images/ic_product_fav_Icon.svg';
   static const String icAddEye = 'assets/images/ic_add_eye.svg';
   static const String icCancel = 'assets/images/ic_cancle.svg';
   static const String icHeartFill = 'assets/images/ic_heart_fill.svg';
@@ -107,8 +102,7 @@ class AppImages {
   static const String icDNA = 'assets/images/ic_dna.svg';
   static const String icFlagUSA = 'assets/images/ic_flag_usa.svg';
   static const String icImageThin = 'assets/images/ic_image_thin.svg';
-  static const String icProductCertificate =
-      'assets/images/ic_product_certificate.svg';
+  static const String icProductCertificate = 'assets/images/ic_product_certificate.svg';
   static const String icRotate3D = 'assets/images/ic_rotate_3d.svg';
   static const String icRemove = 'assets/images/ic_remove.svg';
 
@@ -131,23 +125,19 @@ class AppImages {
   static const String icLogout = 'assets/images/ic_log_out.svg';
   static const String icDeleteAccount = 'assets/images/ic_delete.svg';
   static const String icEditImage = 'assets/images/ic_edit_image.svg';
-  static const String icQrScannerFrame =
-      'assets/images/ic_qr_scanner_frame.svg';
-  static const String icArrowLeftAppbar =
-      'assets/images/ic_arrow_left_appbar.svg';
+  static const String icQrScannerFrame = 'assets/images/ic_qr_scanner_frame.svg';
+  static const String icArrowLeftAppbar = 'assets/images/ic_arrow_left_appbar.svg';
   static const String icSearchThin = 'assets/images/ic_search_thin.svg';
   static const String icArrowUpLeft = 'assets/images/ic_arrow_up_left.svg';
   static const String icNote = 'assets/images/ic_note.svg';
   static const String icContactUs = 'assets/images/ic_contact_us.svg';
   static const String icMasters = 'assets/images/ic_masters.svg';
   static const String icMessages = 'assets/images/ic_messages.svg';
-  static const String icProfileCalendar =
-      'assets/images/ic_profile_calendar.svg';
+  static const String icProfileCalendar = 'assets/images/ic_profile_calendar.svg';
   static const String icWatchlist = 'assets/images/ic_watchlist.svg';
   static const String icExhibition = 'assets/images/ic_exhibition.svg';
   static const String icActivityLog = 'assets/images/ic_activity_log.svg';
-  static const String icNotificationSettings =
-      'assets/images/ic_notification_settings.png';
+  static const String icNotificationSettings = 'assets/images/ic_notification_settings.png';
 
   //Company Screen
   static const String icGreenCheck = 'assets/images/ic_green_check.svg';
@@ -157,8 +147,7 @@ class AppImages {
   static const String icEditAddress = 'assets/images/ic_edit_address.svg';
   static const String icPrimaryBgLine = 'assets/images/ic_primary_bg_line.svg';
   static const String icCustomizeThin = 'assets/images/ic_customize_thin.svg';
-  static const String icHomeDiamondRingThin =
-      'assets/images/ic_home_diamond_ring_thin.svg';
+  static const String icHomeDiamondRingThin = 'assets/images/ic_home_diamond_ring_thin.svg';
   static const String icHomeRing = 'assets/images/ic_home_ring.svg';
 
   //Styles Listing Screen
@@ -170,8 +159,7 @@ class AppImages {
   static const String icWhatsapp = 'assets/images/ic_whatsapp.svg';
   static const String icFaceBook = 'assets/images/ic_face_book.svg';
   static const String icCopy = 'assets/images/ic_copy.svg';
-  static const String icAnyoneWithLink =
-      'assets/images/ic_anyone_with_link.svg';
+  static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
 
   static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
 }

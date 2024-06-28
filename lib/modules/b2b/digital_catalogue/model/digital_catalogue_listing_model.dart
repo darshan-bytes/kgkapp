@@ -15,9 +15,7 @@ class DigitalCatalogueListingModel {
 
   @override
   bool operator ==(Object other) {
-    return other is DigitalCatalogueListingModel &&
-        other.name == name &&
-        other.id == id;
+    return other is DigitalCatalogueListingModel && other.name == name && other.id == id;
   }
 
   @override

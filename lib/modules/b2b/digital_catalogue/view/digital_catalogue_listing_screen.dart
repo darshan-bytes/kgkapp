@@ -5,8 +5,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DigitalCatalogueBloc digitalCatalogueBloc =
-        BlocProvider.of<DigitalCatalogueBloc>(context);
+    final DigitalCatalogueBloc digitalCatalogueBloc = BlocProvider.of<DigitalCatalogueBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.catalogue.tr,
@@ -20,22 +19,17 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(digitalCatalogueBloc),
       body: SafeArea(
           child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
-              buildWhen: (previous, current) =>
-                  current is DigitalCatalogueLoadedState,
+              buildWhen: (previous, current) => current is DigitalCatalogueLoadedState,
               builder: (context, state) {
                 return Column(
                   children: [
                     SmartTextField(
                       hintText: APPStrings.searchCatalogue.tr,
-                      suffixIcon: SmartImage(
-                          path: AppImages.icSearchThin,
-                          padding: EdgeInsets.all(16.w)),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 24.w, horizontal: 16.w),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+                      padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
                     ),
                     Expanded(
-                      child:
-                          _digitalCatalogueList(digitalCatalogueBloc, context),
+                      child: _digitalCatalogueList(digitalCatalogueBloc, context),
                     ),
                   ],
                 );
@@ -44,15 +38,12 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
   }
 }
 
-Widget _digitalCatalogueList(
-    DigitalCatalogueBloc digitalCatalogueBloc, BuildContext context) {
-  final DigitalCatalogueStyle style =
-      AppTheme.of(context).digitalCatalogueStyle;
+Widget _digitalCatalogueList(DigitalCatalogueBloc digitalCatalogueBloc, BuildContext context) {
+  final DigitalCatalogueStyle style = AppTheme.of(context).digitalCatalogueStyle;
   return ListView.builder(
     itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
     itemBuilder: (context, index) {
-      final DigitalCatalogueListingModel item =
-          digitalCatalogueBloc.digitalCatalogueList[index];
+      final DigitalCatalogueListingModel item = digitalCatalogueBloc.digitalCatalogueList[index];
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.w),
         child: Container(
@@ -86,8 +77,7 @@ Widget _digitalCatalogueList(
                             padding: const EdgeInsets.all(4.0),
                             child: InkWell(
                               onTap: () {},
-                              child: const SmartImage(
-                                  path: AppImages.icMoreVertical),
+                              child: const SmartImage(path: AppImages.icMoreVertical),
                             ),
                           ),
                         ),

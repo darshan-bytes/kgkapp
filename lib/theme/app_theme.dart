@@ -1526,8 +1526,7 @@ class SmartImageTitleColumnStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
 
-  SmartImageTitleColumnStyle(
-      {required this.titleStyle, required this.subTitleStyle});
+  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
 }
 
 class CompanyScreenStyle {

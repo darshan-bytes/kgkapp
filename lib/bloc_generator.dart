@@ -5,8 +5,7 @@ class BlocGenerator {
     return [
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
-      BlocProvider<AppBloc>(
-          create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
+      BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
@@ -32,15 +31,12 @@ class BlocGenerator {
       BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
       BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
-      BlocProvider<DiamondFilterBloc>(
-          create: (_) =>
-              DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
+      BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
       BlocProvider<AuctionListingBloc>(create: (_) => AuctionListingBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
-      BlocProvider<NotificationSettingsBloc>(
-          create: (_) => NotificationSettingsBloc()),
+      BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
