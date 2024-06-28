@@ -8,7 +8,6 @@ class DesignBriefsScreen extends StatelessWidget {
     final DesignBriefsBloc designBriefsBloc = BlocProvider.of<DesignBriefsBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.designBriefs.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(designBriefsBloc, context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -54,29 +53,9 @@ class DesignBriefsScreen extends StatelessWidget {
         return B2BListingItem(
           type: B2BListingType.designBriefsType,
           listingItemModel: designBriefsBloc.designBriefsList[index],
-          onTapMenuButton: () {},
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
-    );
-  }
-
-  Widget _buildBottomNavigationBar(DesignBriefsBloc designBriefsBloc, BuildContext context) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
     );
   }
 }

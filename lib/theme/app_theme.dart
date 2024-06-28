@@ -193,6 +193,8 @@ abstract class AppTheme {
   MonitoringScreenStyle get monitoringScreenStyle;
 
   SharePresentationStyle get sharePresentationStyle;
+
+  DesignListingGridItemStyle get designListingGridItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1744,5 +1746,15 @@ class SharePresentationStyle {
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
     required this.closeIconColor,
+  });
+}
+
+class DesignListingGridItemStyle {
+  final TextStyle dbfNumberTextStyle;
+  final TextStyle salesManTextStyle;
+
+  DesignListingGridItemStyle({
+    required this.dbfNumberTextStyle,
+    required this.salesManTextStyle,
   });
 }

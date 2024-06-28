@@ -954,4 +954,10 @@ class LightModeTheme extends AppTheme {
         userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         closeIconColor: colors.color303538,
       );
+
+  @override
+  DesignListingGridItemStyle get designListingGridItemStyle => DesignListingGridItemStyle(
+        dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        salesManTextStyle: interRegularTextStyle,
+      );
 }

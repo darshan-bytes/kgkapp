@@ -11,6 +11,7 @@ class ProductGridItem extends StatelessWidget {
   final Function()? onAddToBagTap;
   final Function()? onEyeTap;
   final Function()? onCancelTap;
+  final Function()? onCommentTap;
   final bool isFavourite;
   final BoxFit fit;
   final bool isCustomisable;
@@ -42,6 +43,7 @@ class ProductGridItem extends StatelessWidget {
     this.isOutOfStock = false,
     this.prefixImage,
     this.imageSize,
+    this.onCommentTap,
   });
 
   @override
@@ -88,8 +90,8 @@ class ProductGridItem extends StatelessWidget {
         ),
         if (isOutOfStock)
           Positioned(
-            top: 8,
-            left: 8,
+            top: 8.h,
+            left: 8.w,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
@@ -97,20 +99,13 @@ class ProductGridItem extends StatelessWidget {
             ),
           ),
         Positioned(
-          top: 8,
-          right: 8,
-          child: Row(
-            children: [
-              if (isCustomisable && onCancelTap == null)
-                buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-              if (onCancelTap != null)
-                buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent),
-            ],
-          ),
+          top: 8.h,
+          right: 8.w,
+          child: _buildTopPositionView(style),
         ),
         Positioned(
-          bottom: 8,
-          right: 8,
+          bottom: 8.h,
+          right: 8.w,
           child: Row(
             children: [
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
@@ -124,13 +119,25 @@ class ProductGridItem extends StatelessWidget {
     );
   }
 
+  Widget _buildTopPositionView(ProductItemStyle style) {
+    if (onCommentTap != null) {
+      return buildIcon(path: AppImages.icMessages, onTap: onCommentTap, style: style);
+    } else if (onCancelTap != null) {
+      return buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent);
+    } else if (isCustomisable) {
+      return buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor);
+    } else {
+      return const SizedBox();
+    }
+  }
+
   Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(4.r),
             border: Border.all(color: borderColor ?? style.transparentColor)),
         height: 24.w,
         width: 24.w,

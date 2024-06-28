@@ -15,7 +15,8 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   List<B2BCustomListingDataModel> designList = _generateDesignList();
 
   //Pagination controller
-  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController listPaginationScrollController = SmartPaginationScrollController();
 
   DesignListingBloc() : super(DesignListingInitial()) {
     on<InitialDesignListingEvent>(_onInitialDesignListEvent);
@@ -24,11 +25,17 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   }
 
   void _onInitialDesignListEvent(InitialDesignListingEvent event, Emitter<DesignListingState> emit) {
-    paginationScrollController.init(
+    gridPaginationScrollController.init(
       loadAction: (int currentPage) async {
         add(DesignListLoadMoreEvent(currentPage));
       },
     );
+    listPaginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(DesignListLoadMoreEvent(currentPage));
+      },
+    );
+
     clearData();
     emit(DesignListingLoadedState());
   }
@@ -43,8 +50,13 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     emit(const DesignListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     designList.addAll(_generateDesignList());
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-    emit(DesignListLoadedMoreState(event.currentPage + 1));
+    if (isGrid) {
+      gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+      emit(DesignListLoadedMoreState(event.currentPage + 1));
+    } else {
+      listPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+      emit(DesignListLoadedMoreState(event.currentPage + 1));
+    }
   }
 
   void _onDesignChangeListingTypeEvent(DesignChangeListingTypeEvent event, Emitter<DesignListingState> emit) {
@@ -55,7 +67,9 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
 
   @override
   Future<void> close() {
-    paginationScrollController.dispose();
+    designSearchController.dispose();
+    gridPaginationScrollController.dispose();
+    listPaginationScrollController.dispose();
     return super.close();
   }
 
@@ -63,7 +77,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     return List.generate(10, (index) {
       return B2BCustomListingDataModel(
         id: index.toString(),
-        strDesignListingImageUrl: "https://i.ibb.co/Rhgz539/image-224.png",
+        strDesignListingImageUrl: "https://i.ibb.co/zVdCtQr/Image.png",
         strVersion: "3",
         strDesignNumber: 'DERS28MOVR',
         strSalesman: "John Samanta",
@@ -71,8 +85,9 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strCreatedOn: '23/03/2023, 10:46',
-        designApprovalStatus: ProjectStatus.active,
-        stylesStatus: ProjectStatus.onGoing,
+        designApprovalStatus: ProjectStatus.approval,
+        stylesStatus: ProjectStatus.styleCreated,
+        strDbfNumber: 'DBF-000013',
       );
     });
   }
