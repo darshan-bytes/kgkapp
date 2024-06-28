@@ -195,6 +195,8 @@ abstract class AppTheme {
   SharePresentationStyle get sharePresentationStyle;
 
   DesignListingGridItemStyle get designListingGridItemStyle;
+
+  PddVersionHistoryStyle get pddVersionHistoryStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1756,5 +1758,15 @@ class DesignListingGridItemStyle {
   DesignListingGridItemStyle({
     required this.dbfNumberTextStyle,
     required this.salesManTextStyle,
+  });
+}
+
+class PddVersionHistoryStyle {
+  final Color whiteColor;
+  final Color backgroundColor;
+
+  PddVersionHistoryStyle({
+    required this.whiteColor,
+    required this.backgroundColor,
   });
 }

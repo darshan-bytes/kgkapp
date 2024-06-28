@@ -29,12 +29,13 @@ final class SignUpChangeCountryCodeState extends SignUpState {
 }
 
 final class SignUpBusinessTypeChangedState extends SignUpState {
-  final BusinessType? businessType;
+  final int index;
+  final bool isSelected;
 
-  const SignUpBusinessTypeChangedState(this.businessType);
+  const SignUpBusinessTypeChangedState(this.index, this.isSelected);
 
   @override
-  List<Object> get props => businessType != null ? [businessType!] : [];
+  List<Object> get props => [index, isSelected];
 }
 
 final class SignUpChangeCountryState extends SignUpState {

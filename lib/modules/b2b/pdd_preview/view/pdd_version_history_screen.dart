@@ -6,18 +6,18 @@ class PddPreviewHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PddPreviewBloc pddPreviewBloc = BlocProvider.of<PddPreviewBloc>(context);
+    final style = AppTheme.of(context).pddVersionHistoryStyle;
     return Scaffold(
-      backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
+      backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
         title: APPStrings.versionHistory.tr,
-        backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
       ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
             children: [
-              _versionHistoryDropdown(pddPreviewBloc),
+              _versionHistoryDropdown(pddPreviewBloc, style),
               SizedBox(height: 16.h),
               _buildWebView(pddPreviewBloc),
             ],
@@ -27,13 +27,13 @@ class PddPreviewHistoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _versionHistoryDropdown(PddPreviewBloc pddPreviewBloc) {
+  Widget _versionHistoryDropdown(PddPreviewBloc pddPreviewBloc, PddVersionHistoryStyle style) {
     return BlocBuilder<PddPreviewBloc, PddPreviewState>(
       buildWhen: (previous, current) => current is PddPreviewChangePreviewTypeState || current is PddPreviewLoadedState,
       builder: (context, state) {
         return SmartDropDown<PddVersionHistoryModel>(
           selectedItem: pddPreviewBloc.selectedversion,
-          backgroundColor: AppTheme.of(context).colors.white,
+          backgroundColor: style.backgroundColor,
           items: pddPreviewBloc.versionHistoryList.map((PddVersionHistoryModel versions) {
             return SmartDropDownItem<PddVersionHistoryModel>(
               value: versions,

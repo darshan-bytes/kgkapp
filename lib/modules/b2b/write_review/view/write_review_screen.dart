@@ -11,7 +11,7 @@ class WriteReviewScreen extends StatelessWidget {
       appBar: SmartAppBar(
         title: APPStrings.writeAReview.tr,
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
@@ -37,7 +37,7 @@ class WriteReviewScreen extends StatelessWidget {
 
   List<Widget> buildStarsView(WriteReviewScreenStyle style) {
     return [
-      SmartText(APPStrings.stars.tr, style: style.labelStyle),
+      SmartText(APPStrings.rateUs.tr, style: style.labelStyle),
       SizedBox(height: 8.h),
       SmartRatingBar(
         initialRating: 0,
@@ -190,12 +190,13 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar(BuildContext context) {
     return SafeArea(
       child: SmartButton(
         margin: EdgeInsets.all(17.w),
         onTap: () {
           // Add your submit logic here
+          context.pop();
         },
         title: APPStrings.submit.tr,
       ),

@@ -960,4 +960,10 @@ class LightModeTheme extends AppTheme {
         dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         salesManTextStyle: interRegularTextStyle,
       );
+
+  @override
+  PddVersionHistoryStyle get pddVersionHistoryStyle => PddVersionHistoryStyle(
+        whiteColor: colors.white,
+        backgroundColor: colors.colorF7F9FA,
+      );
 }

@@ -36,12 +36,13 @@ final class SignUpChangeCountryEvent extends SignUpEvent {
 }
 
 final class SignUpBusinessTypeChangedEvent extends SignUpEvent {
-  final BusinessType? businessType;
+  final int index;
+  final bool isSelected;
 
-  const SignUpBusinessTypeChangedEvent(this.businessType);
+  const SignUpBusinessTypeChangedEvent(this.isSelected, this.index);
 
   @override
-  List<Object> get props => businessType != null ? [businessType!] : [];
+  List<Object> get props => [isSelected, index];
 }
 
 final class SignupAddContactEvent extends SignUpEvent {

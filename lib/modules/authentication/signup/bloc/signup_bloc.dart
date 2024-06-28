@@ -48,7 +48,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     BusinessType(name: APPStrings.jewellery.tr, code: APPStrings.jewellery),
   ];
 
-  BusinessType? selectedBusinessType;
   List<OfficeLocation> officeLocations = [
     OfficeLocation(name: "India", code: "india"),
     OfficeLocation(name: "United States", code: "us"),
@@ -82,8 +81,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _onSignUpBusinessTypeChangedEvent(SignUpBusinessTypeChangedEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
-    selectedBusinessType = event.businessType;
-    emit(SignUpBusinessTypeChangedState(selectedBusinessType));
+    businessTypes[event.index].isSelected = event.isSelected;
+    emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
   }
 
   void _onSignUpChangeCountryEvent(SignUpChangeCountryEvent event, Emitter<SignUpState> emit) {
@@ -135,7 +134,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       })
     ];
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
-    selectedBusinessType = null;
+    for (BusinessType element in businessTypes) {
+      element.isSelected = false;
+    }
     isIndividual = true;
     emit(SignUpReloadState());
   }
