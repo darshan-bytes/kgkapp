@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
                           ],
                           theme: appBloc.themeData,
                           locale: appBloc.locale,
+                          navigatorObservers: [MyNavigatorObserver()],
                           localizationsDelegates: const [
                             GlobalMaterialLocalizations.delegate,
                             GlobalWidgetsLocalizations.delegate,

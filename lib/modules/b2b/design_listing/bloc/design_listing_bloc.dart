@@ -18,13 +18,14 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController listPaginationScrollController = SmartPaginationScrollController();
 
-  DesignListingBloc() : super(DesignListingInitial()) {
+  DesignListingBloc() : super(const DesignListingInitial()) {
     on<InitialDesignListingEvent>(_onInitialDesignListEvent);
     on<DesignListLoadMoreEvent>(_onDesignListLoadMoreEvent);
     on<DesignChangeListingTypeEvent>(_onDesignChangeListingTypeEvent);
   }
 
   void _onInitialDesignListEvent(InitialDesignListingEvent event, Emitter<DesignListingState> emit) {
+    emit(const DesignListingLoadingState());
     gridPaginationScrollController.init(
       loadAction: (int currentPage) async {
         add(DesignListLoadMoreEvent(currentPage));
@@ -37,13 +38,14 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     );
 
     clearData();
-    emit(DesignListingLoadedState());
+    emit(const DesignListingLoadedState());
   }
 
   void clearData() {
     isGrid = true;
     designSearchController.clear();
-    designList = _generateDesignList();
+    designList.clear();
+    designList.addAll(_generateDesignList());
   }
 
   Future<void> _onDesignListLoadMoreEvent(DesignListLoadMoreEvent event, Emitter<DesignListingState> emit) async {
