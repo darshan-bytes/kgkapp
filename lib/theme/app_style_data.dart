@@ -969,4 +969,14 @@ class LightModeTheme extends AppTheme {
         valueTextStyle: interRegularTextStyle,
         stoneShapeTextStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
       );
+
+  @override
+  FindStoreStyle get findStoreStyle => FindStoreStyle(
+      storeMessageStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      addressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+      useCurrentLocationStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      addressTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      enterAddressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      primaryColor: colors.primary,
+      addressBgColor: colors.colorF7F9FA);
 }

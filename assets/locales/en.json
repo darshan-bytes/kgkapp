@@ -549,5 +549,11 @@
   "hint_first_name": "Jason",
   "hint_last_name": "Smith",
   "hint_contact_number": "1234567830",
-  "hint_company_name": "Abc.Inc"
+  "hint_company_name": "Abc.Inc",
+  "find_store": "Find store",
+  "enter_an_address_or_zip_code_to_find_a_retailer_near_you": "Enter an address or zip code to find a retailer near you.",
+  "enter_address_or_pincode": "Enter address or pincode",
+  "use_current_location": "Use current location",
+  "get_directions": "Get directions",
+  "from_your_location_x": "{#} from your location"
 }
