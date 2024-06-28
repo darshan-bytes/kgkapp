@@ -960,4 +960,12 @@ class LightModeTheme extends AppTheme {
         dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         salesManTextStyle: interRegularTextStyle,
       );
+
+  @override
+  CadLibraryListingItemStyle get cadLibraryListingItemStyle => CadLibraryListingItemStyle(
+        backgroundColor: colors.white,
+        cadNameStyle: interRegularTextStyle,
+        cadBackgroundColor: colors.colorFAFAFA,
+        cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
 }

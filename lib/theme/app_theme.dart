@@ -195,6 +195,8 @@ abstract class AppTheme {
   SharePresentationStyle get sharePresentationStyle;
 
   DesignListingGridItemStyle get designListingGridItemStyle;
+
+  CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1756,5 +1758,19 @@ class DesignListingGridItemStyle {
   DesignListingGridItemStyle({
     required this.dbfNumberTextStyle,
     required this.salesManTextStyle,
+  });
+}
+
+class CadLibraryListingItemStyle {
+  final Color backgroundColor;
+  final Color cadBackgroundColor;
+  final TextStyle cadNameStyle;
+  final TextStyle cadNumberStyle;
+
+  CadLibraryListingItemStyle({
+    required this.backgroundColor,
+    required this.cadBackgroundColor,
+    required this.cadNameStyle,
+    required this.cadNumberStyle,
   });
 }

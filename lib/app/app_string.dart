@@ -668,4 +668,8 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+
+  // CAD Library
+  static const String cadLibrary = 'cad_library';
+  static const String noCadLibraryFound = 'no_cad_library_found';
 }

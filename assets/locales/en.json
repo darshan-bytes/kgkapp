@@ -539,5 +539,7 @@
   "in_active": "Inactive",
   "blue_in_progress": "In Progress",
   "orange_in_progress": "In Progress",
-  "approve": "Approve"
+  "approve": "Approve",
+  "cad_library": "CAD library",
+  "no_cad_library_found": "No CAD library found"
 }
