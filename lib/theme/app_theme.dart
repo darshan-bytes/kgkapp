@@ -196,6 +196,8 @@ abstract class AppTheme {
 
   DesignListingGridItemStyle get designListingGridItemStyle;
 
+  ProductInfoItemStyle get productInfoItemStyle;
+
   FindStoreStyle get findStoreStyle;
 }
 
@@ -1758,6 +1760,20 @@ class DesignListingGridItemStyle {
   DesignListingGridItemStyle({
     required this.dbfNumberTextStyle,
     required this.salesManTextStyle,
+  });
+}
+
+class ProductInfoItemStyle {
+  final TextStyle stoneShapeTextStyle;
+  final TextStyle labelTextStyle;
+  final TextStyle valueTextStyle;
+  final TextStyle moreDetailsTextStyle;
+
+  ProductInfoItemStyle({
+    required this.stoneShapeTextStyle,
+    required this.labelTextStyle,
+    required this.valueTextStyle,
+    required this.moreDetailsTextStyle,
   });
 }
 

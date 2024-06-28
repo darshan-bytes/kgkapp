@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'pdd_listing_event.dart';
+
 part 'pdd_listing_state.dart';
 
 class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
@@ -56,10 +57,10 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         strPresentationNumber: '125487${index + 1}',
         strProject: '1',
         strConceptName: 'Full blue moon',
-        status: ProjectStatus.active,
+        status: index % 2 == 0 ? ProjectStatus.blueInProgress : ProjectStatus.approved,
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        strCreatedOn: '23/03/2023',
+        strCreatedOn: '23/03/2023, 10:46',
         strAssignTo: 'Jenny Wilson',
         strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strApprovedBy: 'John Samanta',

@@ -542,13 +542,14 @@ class LightModeTheme extends AppTheme {
 
   @override
   MyBagDiamondItemStyle get myBagDiamondItemStyle => MyBagDiamondItemStyle(
-      backgroundColor: colors.white,
-      borderColor: colors.colorD3DAE0,
-      headingStyle: interMediumBoldTextStyle,
-      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
-      richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
-      selectedBackgroundColor: colors.colorF7F9FA);
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        headingStyle: interMediumBoldTextStyle,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
+        selectedBackgroundColor: colors.colorF7F9FA,
+      );
 
   @override
   AddressSelectionStyle get addressSelectionStyle => AddressSelectionStyle(
@@ -959,6 +960,14 @@ class LightModeTheme extends AppTheme {
   DesignListingGridItemStyle get designListingGridItemStyle => DesignListingGridItemStyle(
         dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         salesManTextStyle: interRegularTextStyle,
+      );
+
+  @override
+  ProductInfoItemStyle get productInfoItemStyle => ProductInfoItemStyle(
+        moreDetailsTextStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        labelTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        valueTextStyle: interRegularTextStyle,
+        stoneShapeTextStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
       );
 
   @override
