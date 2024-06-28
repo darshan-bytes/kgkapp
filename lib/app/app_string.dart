@@ -169,6 +169,7 @@ class APPStrings {
   static const String youMayAlsoLike = 'you_may_also_like';
   static const String recentlyViewed = 'recently_viewed';
   static const String compare = 'compare';
+  static const String rateUs = 'rate_us';
 
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';

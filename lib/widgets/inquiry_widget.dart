@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class InquiryWidget extends StatelessWidget {
-  const InquiryWidget({super.key, required this.phone, required this.email, this.title, this.description, this.isRightArrow = true});
+  const InquiryWidget({super.key, required this.phone, required this.email, this.title, this.description, this.isRightArrow = false});
 
   final String? title;
   final String? description;
