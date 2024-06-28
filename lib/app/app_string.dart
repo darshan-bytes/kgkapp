@@ -169,6 +169,7 @@ class APPStrings {
   static const String youMayAlsoLike = 'you_may_also_like';
   static const String recentlyViewed = 'recently_viewed';
   static const String compare = 'compare';
+  static const String rateUs = 'rate_us';
 
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';
@@ -672,4 +673,10 @@ class APPStrings {
   static const String rate = 'rate';
   static const String discountPercentage = 'discount_percentage';
   static const String amt = 'amt';
+
+  static const String hintEmail = 'hint_email';
+  static const String hintFirstName = 'hint_first_name';
+  static const String hintLastName = 'hint_last_name';
+  static const String hintContactNumber = 'hint_contact_number';
+  static const String hintCompanyName = 'hint_company_name';
 }

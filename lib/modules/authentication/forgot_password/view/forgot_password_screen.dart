@@ -53,7 +53,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           SmartTextField(
                             controller: forgotPasswordBloc.emailController,
                             labelText: APPStrings.email.tr,
-                            hintText: APPStrings.email.tr,
+                            hintText: APPStrings.hintEmail.tr,
                             labelStyle: style.labelStyle,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,

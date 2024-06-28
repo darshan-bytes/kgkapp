@@ -69,29 +69,34 @@ class StoneListingScreen extends StatelessWidget {
   }
 
   Widget _buildSelectionDiamond(StoneListingBloc diamondListingBloc) {
-    return Row(
-      children: [
-        Expanded(
-          child: SelectionButton(
-            isSelected: diamondListingBloc.isInitialToggle,
-            title: diamondListingBloc.tabOneTitle,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-            onTap: () {
-              diamondListingBloc.add(const StoneChangeTypeEvent(true));
-            },
-          ),
-        ),
-        Expanded(
-          child: SelectionButton(
-            isSelected: !diamondListingBloc.isInitialToggle,
-            title: diamondListingBloc.tabTwoTitle,
-            borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-            onTap: () {
-              diamondListingBloc.add(const StoneChangeTypeEvent(false));
-            },
-          ),
-        ),
-      ],
+    return BlocBuilder<StoneListingBloc, StoneListingState>(
+      buildWhen: (previous, current) => current is StoneChangeTypeState,
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(
+              child: SelectionButton(
+                isSelected: diamondListingBloc.isInitialToggle,
+                title: diamondListingBloc.tabOneTitle,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const StoneChangeTypeEvent(true));
+                },
+              ),
+            ),
+            Expanded(
+              child: SelectionButton(
+                isSelected: !diamondListingBloc.isInitialToggle,
+                title: diamondListingBloc.tabTwoTitle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const StoneChangeTypeEvent(false));
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

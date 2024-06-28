@@ -47,7 +47,7 @@ class ProductListItem extends StatelessWidget {
           color: style.backgroundColor,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             productImageSection(style),
             SizedBox(width: 16.w),
@@ -125,6 +125,8 @@ class ProductListItem extends StatelessWidget {
         color: style.backgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
             SmartText(
               productDetails.name,

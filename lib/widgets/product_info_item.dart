@@ -75,19 +75,15 @@ class ProductInfoItem extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8.w),
-        InkWell(
+        SmartImage(
+          path: AppImages.icMoreHorizontal,
           onTap: () {
             if (onTapMenuButton != null) {
               onTapMenuButton!();
             }
           },
-          child: SizedBox(
-            height: 24.w,
-            width: 24.w,
-            child: const SmartImage(
-              path: AppImages.icMoreHorizontal,
-            ),
-          ),
+          height: 24.w,
+          width: 24.w,
         )
       ],
     );
@@ -163,7 +159,6 @@ class ProductInfoItem extends StatelessWidget {
                       SmartText(
                         showMoreDetails.value ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
                         isAutoSizeText: true,
-                        onTap: () {},
                         style: productInfoItemStyle.moreDetailsTextStyle,
                       ),
                       SizedBox(width: 4.w),
