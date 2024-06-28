@@ -37,7 +37,8 @@ class APPStrings {
   // Forgot Password Screen
   static const String submit = 'submit';
   static const String forgotPasswordDescription = 'forgot_password_description';
-  static const String emailHasBeenSendSuccessfully = 'email_has_been_send_successfully_to_your_email_address';
+  static const String emailHasBeenSendSuccessfully =
+      'email_has_been_send_successfully_to_your_email_address';
   static const String didNotReceivedEmail = 'did_not_received_email';
   static const String resend = 'resend';
 
@@ -59,7 +60,8 @@ class APPStrings {
 
   //Setting
   static const String announcements = 'announcements';
-  static const String notifyMeForEveryAnnouncement = 'notify_me_for_every_announcement';
+  static const String notifyMeForEveryAnnouncement =
+      'notify_me_for_every_announcement';
   static const String fileSharedBySalesman = 'file_shared_by_salesman';
   static const String shareBySalesmanDesc = 'share_by_salesman_desc';
   static const String orderStatusUpdate = 'order_status_update';
@@ -117,10 +119,12 @@ class APPStrings {
   static const String selectDiamond = 'select_diamond';
   static const String reviewsX = 'reviews_x';
   static const String reviews = 'reviews';
-  static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
+  static const String wantToSeeProductPhysically =
+      'want_to_see_product_physically';
   static const String orderSample = 'order_sample';
   static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
-  static const String shippingAcrossAllCountries = 'shipping_across_all_countries';
+  static const String shippingAcrossAllCountries =
+      'shipping_across_all_countries';
   static const String haveAQuestion = 'have_a_question';
   static const String reachoutToOurExpert = 'reachout_to_our_expert';
 
@@ -207,7 +211,8 @@ class APPStrings {
   //order confirmation
   static const String thankYouForYourPurchase = 'thank_you_for_your_purchase';
   static const String yourOrderNumber = 'your_order_number';
-  static const String orderConfirmWithTrackInfo = 'order_confirm_with_track_info';
+  static const String orderConfirmWithTrackInfo =
+      'order_confirm_with_track_info';
   static const String continueShopping = 'continue_shopping';
 
   static const String subTotal = 'sub_total';
@@ -232,7 +237,8 @@ class APPStrings {
   static const String review = 'review';
   static const String images = 'images';
   static const String errorMaximumFiveImages = 'error_maximum_five_images';
-  static const String errorSelectUpToFiveImages = 'error_select_up_to_five_images';
+  static const String errorSelectUpToFiveImages =
+      'error_select_up_to_five_images';
   static const String camera = 'camera';
   static const String gallery = 'gallery';
 
@@ -337,7 +343,8 @@ class APPStrings {
   static const String allBids = 'all_bids';
   static const String myBid = 'my_bid';
   static const String placeBid = 'place_bid';
-  static const String enterBidAmountHigherThanX = 'enter_bid_amount_higher_than_x';
+  static const String enterBidAmountHigherThanX =
+      'enter_bid_amount_higher_than_x';
   static const String yourBidOf = 'your_bid_of';
   static const String hasBeenPlaced = 'has_been_placed';
   static const String diamondDetails = 'diamond_details';
@@ -404,19 +411,24 @@ class APPStrings {
   //Profile Page Screen
   static const String myAccount = 'my_account';
   static const String myOrder = 'my_orders';
-  static const String listOfAllTheOrdersYouPlaced = 'list_of_all_the_orders_you_placed';
-  static const String listOfAuctionsYouAppliedTo = 'list_of_auctions_you_applied_to';
+  static const String listOfAllTheOrdersYouPlaced =
+      'list_of_all_the_orders_you_placed';
+  static const String listOfAuctionsYouAppliedTo =
+      'list_of_auctions_you_applied_to';
   static const String myInquiries = 'my_inquiries';
   static const String yourSubmittedInquiries = 'your_submitted_inquiries';
   static const String newsFeed = 'news_feed';
   static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
   static const String findAStore = 'find_a_store';
   static const String searchYourNearbyStores = 'search_your_nearby_stores';
-  static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
+  static const String listOfAllYourSavedAddresses =
+      'list_of_all_your_saved_addresses';
   static const String changePassword = 'change_password';
-  static const String changeYourExistingPassword = 'change_your_existing_password';
+  static const String changeYourExistingPassword =
+      'change_your_existing_password';
   static const String preferences = 'preferences';
-  static const String defaultCountryLanguageAndCurrency = 'default_country_language_and_currency';
+  static const String defaultCountryLanguageAndCurrency =
+      'default_country_language_and_currency';
   static const String aboutUs = 'about_us';
   static const String education = 'education';
   static const String policies = 'policies';
@@ -448,21 +460,27 @@ class APPStrings {
   static const String resultFoundFor = 'result_found_for';
   static const String searchResultNotFoundDesc = 'search_result_not_found_desc';
   static const String needHelp = 'need_help';
-  static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
+  static const String reachOutToOurCustomerService =
+      "reach_out_to_our_customer_service";
   static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
-  static const String changeNotificationSettings = 'change_notification_settings';
+  static const String changeNotificationSettings =
+      'change_notification_settings';
   static const String adminSection = 'admin_section';
   static const String orderManagement = 'order_management';
   static const String calendar = 'calendar';
-  static const String meetingsTasksAllInOnePlace = 'meetings_tasks_all_in_one_place';
+  static const String meetingsTasksAllInOnePlace =
+      'meetings_tasks_all_in_one_place';
   static const String messages = 'messages';
-  static const String conversationsYouAreHaving = 'conversations_you_are_having';
+  static const String conversationsYouAreHaving =
+      'conversations_you_are_having';
   static const String masters = 'masters';
-  static const String masterDataOfUserAndNewsLetter = 'master_data_of_user_and_newsletter';
+  static const String masterDataOfUserAndNewsLetter =
+      'master_data_of_user_and_newsletter';
   static const String dashboard = 'dashboard';
   static const String listOfDashboard = 'list_of_dashboard';
   static const String watchlist = 'watchlist';
-  static const String listOfProductsAddedToWatchlist = 'list_of_products_added_to_watchlist';
+  static const String listOfProductsAddedToWatchlist =
+      'list_of_products_added_to_watchlist';
   static const String exhibition = 'exhibition';
   static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
   static const String activityLog = 'activity_log';
@@ -483,7 +501,8 @@ class APPStrings {
   static const String stillNeedHelp = 'still_need_help';
   static const String byPhone = 'by_phone';
   static const String byEmail = 'by_email';
-  static const String questionOrQueriesGetInTouch = 'question_or_queries_get_in_touch';
+  static const String questionOrQueriesGetInTouch =
+      'question_or_queries_get_in_touch';
   static const String findYourNearestXStore = 'find_your_nearest_X_store';
   static const String storeDirectory = 'store_directory';
 
@@ -499,10 +518,13 @@ class APPStrings {
   //Concept
   static const String conceptNoX = 'concept_no_x';
   static const String newlyLaunched = 'newly_launched';
-  static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
+  static const String exploreNewlyLaunchedProducts =
+      'explore_newly_launched_products';
   static const String exploreNow = 'explore_now';
-  static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
-  static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
+  static const String exploreOurDigitalJewelleryCatalog =
+      'explore_our_digital_jewellery_catalog';
+  static const String browseOurDigitalJewelryCatalog =
+      'browse_our_digital_jewelry_catalog';
   static const String viewNow = 'view_now';
 
   //Concept Listing type
@@ -656,4 +678,8 @@ class APPStrings {
   static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
+
+  // Digital Catalogue
+  static const String catalogue = 'catalogue';
+  static const String searchCatalogue = 'search_digital_catalogue';
 }

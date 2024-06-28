@@ -193,6 +193,8 @@ abstract class AppTheme {
   MonitoringScreenStyle get monitoringScreenStyle;
 
   SharePresentationStyle get sharePresentationStyle;
+
+  DigitalCatalogueStyle get digitalCatalogueStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1524,7 +1526,8 @@ class SmartImageTitleColumnStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
 
-  SmartImageTitleColumnStyle({required this.titleStyle, required this.subTitleStyle});
+  SmartImageTitleColumnStyle(
+      {required this.titleStyle, required this.subTitleStyle});
 }
 
 class CompanyScreenStyle {
@@ -1740,5 +1743,17 @@ class SharePresentationStyle {
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
     required this.closeIconColor,
+  });
+}
+
+class DigitalCatalogueStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  DigitalCatalogueStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
   });
 }

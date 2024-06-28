@@ -34,7 +34,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ToggleProfileListEvent>(_onToggleProfileListEvent);
   }
 
-  Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
+  Future<void> _onInitialProfileListEvent(
+      InitialProfileListEvent event, Emitter<ProfileState> emit) async {
     profileActionList = [
       ProfileListModel(
           image: AppImages.icMyOrders,
@@ -94,7 +95,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
           trailingIcon: AppImages.icArrowRight,
           onTap: () {
-            event.context.pushNamed(AppRoutes.savedAddressPage);
+            // event.context.pushNamed(AppRoutes.savedAddressPage);
+            event.context.pushNamed(AppRoutes.digitalCataloguePage);
           }),
       ProfileListModel(
           image: AppImages.icLock,
@@ -105,7 +107,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             Utils.showSmartModalBottomSheet(
               context: event.context,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.r),
+                    topRight: Radius.circular(12.r)),
               ),
               builder: (context) => const ChangePasswordBottomSheet(),
             );
@@ -259,10 +263,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ];
   }
 
-  void _onToggleProfileListEvent(ToggleProfileListEvent event, Emitter<ProfileState> emit) {
+  void _onToggleProfileListEvent(
+      ToggleProfileListEvent event, Emitter<ProfileState> emit) {
     emit(ProfileReloadState());
     if (profileCMSList[event.index].profileSubList.isNotNullNorEmpty) {
-      profileCMSList[event.index].isSubListExpanded = !profileCMSList[event.index].isSubListExpanded;
+      profileCMSList[event.index].isSubListExpanded =
+          !profileCMSList[event.index].isSubListExpanded;
       emit(const ToggleProfileState());
     } else {
       profileCMSList[event.index].onTap?.call();

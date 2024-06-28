@@ -530,5 +530,7 @@
   "anyone_with_the_link": "Anyone with the link",
   "anyone_with_the_link_desc": "Anyone on the internet with the link can view",
   "share": "Share",
-  "share_catalogue": "Share catalogue"
+  "share_catalogue": "Share catalogue",
+  "catalogue": "Catalogue",
+  "search_digital_catalogue": "Search catalogue"
 }

@@ -22,6 +22,7 @@ class SmartButton extends StatelessWidget {
   final Color? disableImageColor;
   final double? imageSize;
   final BoxShadow? boxShadow;
+  final double? cornerRadius;
 
   const SmartButton({
     super.key,
@@ -46,6 +47,7 @@ class SmartButton extends StatelessWidget {
     this.disableImageColor,
     this.imageSize,
     this.boxShadow,
+    this.cornerRadius,
   });
 
   @override
@@ -68,7 +70,9 @@ class SmartButton extends StatelessWidget {
           ],
           color: isEnabled
               ? (activeBackgroundColor ?? style.activeBackgroundColor)
-              : (disableBackgroudColor ?? style.disableBackgroundColor), // Change the color when disabled
+              : (disableBackgroudColor ??
+                  style
+                      .disableBackgroundColor), // Change the color when disabled
           borderRadius: borderRadius ?? BorderRadius.circular(4),
           border: borderColor != null
               ? Border.all(
@@ -79,7 +83,8 @@ class SmartButton extends StatelessWidget {
         ),
         height: height ?? 48.w,
         width: width ?? double.infinity,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+        padding:
+            padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         child: prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty
             ? Center(
                 child: Row(
@@ -90,13 +95,17 @@ class SmartButton extends StatelessWidget {
                         path: prefixImage!,
                         height: imageSize ?? 24.w,
                         width: imageSize ?? 24.w,
-                        color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
+                        color: isEnabled
+                            ? (activeImageColor ?? style.activeImageColor)
+                            : (disableImageColor ?? style.disableImageColor),
                       ),
                       SizedBox(width: 8.w),
                     ],
                     SmartText(
                       title,
-                      style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
+                      style: isEnabled
+                          ? style.titleStyle.merge(titleStyle)
+                          : style.disableTitleStyle.merge(disableTitleStyle),
                     ),
                     if (suffixImage.isNotNullNorEmpty) ...[
                       SizedBox(width: 8.w),
@@ -104,7 +113,9 @@ class SmartButton extends StatelessWidget {
                         path: suffixImage!,
                         height: imageSize ?? 24.w,
                         width: imageSize ?? 24.w,
-                        color: isEnabled ? (activeImageColor ?? style.activeImageColor) : (disableImageColor ?? style.disableImageColor),
+                        color: isEnabled
+                            ? (activeImageColor ?? style.activeImageColor)
+                            : (disableImageColor ?? style.disableImageColor),
                       ),
                     ]
                   ],
@@ -114,7 +125,9 @@ class SmartButton extends StatelessWidget {
                 child: SmartText(
                   title,
                   textAlign: TextAlign.center,
-                  style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
+                  style: isEnabled
+                      ? style.titleStyle.merge(titleStyle)
+                      : style.disableTitleStyle.merge(disableTitleStyle),
                 ),
               ),
       ),
