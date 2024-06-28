@@ -229,7 +229,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                         borderSide: BorderSide(color: style.errorBorderColor),
                         borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
-                  hintText: widget.hintText ?? '',
+                  hintText: widget.obscured ? '●●●●●●●●' : widget.hintText ?? '',
                   errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
                   prefixIcon: widget.isSearch
@@ -261,6 +261,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                             )
                           : null)),
               obscureText: widget.obscured && _passwordVisible ? false : widget.obscured,
+              obscuringCharacter: '●',
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               autocorrect: false,

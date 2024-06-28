@@ -142,7 +142,7 @@ class SignUpScreen extends StatelessWidget {
       _buildCompanyLocationField(signUpBloc),
       SizedBox(height: 24.h),
       _buildBusinessType(signUpBloc, context),
-      SizedBox(height: 12.h),
+      SizedBox(height: 24.h),
       const Divider(),
       SizedBox(height: 24.h),
       _buildFirstNameField(signUpBloc),
@@ -164,7 +164,7 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildFirstNameField(SignUpBloc signUpBloc) {
     return SmartTextField(
       labelText: APPStrings.firstName.tr,
-      hintText: APPStrings.firstName.tr,
+      hintText: APPStrings.hintFirstName.tr,
       controller: signUpBloc.firstNameController,
       focusNode: signUpBloc.firstNameFocusNode,
       nextFocus: signUpBloc.lastNameFocusNode,
@@ -176,7 +176,7 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildLastNameField(SignUpBloc signUpBloc) {
     return SmartTextField(
       labelText: APPStrings.lastName.tr,
-      hintText: APPStrings.lastName.tr,
+      hintText: APPStrings.hintLastName.tr,
       controller: signUpBloc.lastNameController,
       focusNode: signUpBloc.lastNameFocusNode,
       nextFocus: signUpBloc.emailFocusNode,
@@ -188,7 +188,7 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildEmailField(SignUpBloc signUpBloc) {
     return SmartTextField(
       labelText: APPStrings.email.tr,
-      hintText: APPStrings.email.tr,
+      hintText: APPStrings.hintEmail.tr,
       controller: signUpBloc.emailController,
       focusNode: signUpBloc.emailFocusNode,
       nextFocus: signUpBloc.contactNumberFocusNode,
@@ -197,6 +197,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildContactNumberField(SignUpBloc signUpBloc, BuildContext context) {
+    final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) => current is SignUpAddRemoveContactState,
       builder: (context, state) {
@@ -211,7 +212,7 @@ class SignUpScreen extends StatelessWidget {
               itemBuilder: (_, index) {
                 return SmartTextField(
                   labelText: index == 0 ? APPStrings.contactNumber.tr : null,
-                  hintText: APPStrings.contactNumber.tr,
+                  hintText: APPStrings.hintContactNumber.tr,
                   controller: signUpBloc.contactNumberControllers[index],
                   focusNode: signUpBloc.contactNumberFocusNodes[index],
                   nextFocus: (index == signUpBloc.contactNumberControllers.length - 1)
@@ -224,8 +225,9 @@ class SignUpScreen extends StatelessWidget {
                     builder: (context, state) {
                       return InkWell(
                         onTap: () {
-                          showCountryPicker(
+                          Utils.showCountryPickerModel(
                             context: context,
+                            countryPickerStyle: countryPickerStyle,
                             showPhoneCode: true,
                             onSelect: (Country country) {
                               signUpBloc.add(SignUpChangeCountryCodeEvent(country: country, index: index));
@@ -323,7 +325,7 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildCompanyNameField(SignUpBloc signUpBloc) {
     return SmartTextField(
       labelText: APPStrings.companyName.tr,
-      hintText: APPStrings.companyName.tr,
+      hintText: APPStrings.hintCompanyName.tr,
       controller: signUpBloc.companyNameController,
       focusNode: signUpBloc.companyNameFocusNode,
       nextFocus: signUpBloc.officeLocationFocusNode,
@@ -374,29 +376,26 @@ class SignUpScreen extends StatelessWidget {
           APPStrings.businessType.tr,
           style: AppTheme.of(context).textFieldStyle.labelStyle,
         ),
-        SizedBox(height: 4.h),
+        SizedBox(height: 12.h),
         Wrap(
           children: List.generate(signUpBloc.businessTypes.length, (index) {
             final BusinessType businessType = signUpBloc.businessTypes[index];
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<SignUpBloc, SignUpState>(
-                  buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
-                  builder: (context, state) {
-                    return SmartRadioButton<BusinessType>(
-                      isToggle: true,
-                      groupValue: signUpBloc.selectedBusinessType,
-                      value: businessType,
-                      onChanged: (val) {
-                        signUpBloc.add(SignUpBusinessTypeChangedEvent(val));
-                      },
-                      label: businessType.name,
-                    );
+            return BlocBuilder<SignUpBloc, SignUpState>(
+              buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
+              builder: (context, state) {
+                return SmartCheckbox.radio(
+                  padding: index != signUpBloc.businessTypes.length - 1 ? EdgeInsets.only(right: 20.w) : EdgeInsets.zero,
+                  value: businessType.isSelected,
+                  onChanged: (val) {
+                    if (val == null) {
+                      return;
+                    }
+                    signUpBloc.add(SignUpBusinessTypeChangedEvent(val, index));
                   },
-                ),
-                if (index != signUpBloc.businessTypes.length - 1) SizedBox(width: 20.w)
-              ],
+                  label: businessType.name,
+                  mainAxisSize: MainAxisSize.min,
+                );
+              },
             );
           }).toList(),
         ),

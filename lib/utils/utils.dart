@@ -15,11 +15,16 @@ class Utils {
     ).show(NavigatorKey.navigatorKey.currentContext!);
   }
 
-  static void showCountryPickerModel(
-      {required BuildContext context, required CountryPickerStyle countryPickerStyle, required Function(Country) onSelect}) {
+  static void showCountryPickerModel({
+    required BuildContext context,
+    required CountryPickerStyle countryPickerStyle,
+    required Function(Country) onSelect,
+    bool showPhoneCode = false,
+  }) {
     showCountryPicker(
       context: context,
-      showPhoneCode: false,
+      showPhoneCode: showPhoneCode,
+      useRootNavigator: true,
       countryListTheme: CountryListThemeData(
         flagSize: 25.w,
         backgroundColor: countryPickerStyle.backgroundColor,
@@ -117,7 +122,7 @@ class Utils {
     Color? barrierColor,
     bool isScrollControlled = true,
     double scrollControlDisabledMaxHeightRatio = AppConst.defaultScrollControlDisabledMaxHeightRatio,
-    bool useRootNavigator = false,
+    bool useRootNavigator = true,
     bool isDismissible = true,
     bool enableDrag = true,
     bool? showDragHandle,

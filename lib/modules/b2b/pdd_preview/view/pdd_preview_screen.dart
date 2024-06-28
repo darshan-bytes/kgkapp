@@ -13,7 +13,7 @@ class PddPreviewScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.all(16.0.w),
-              child: _previewOptions(),
+              child: _previewOptions(context),
             ),
             const Divider(),
             _buildWebView(pddPreviewBloc),
@@ -39,7 +39,7 @@ class PddPreviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _previewOptions() {
+  Widget _previewOptions(BuildContext context) {
     return Row(children: [
       Expanded(
         child: Row(
@@ -61,7 +61,13 @@ class PddPreviewScreen extends StatelessWidget {
               width: 48.w,
               isSelected: false,
               image: AppImages.icShare,
-              onTap: () {},
+              onTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  enableDrag: false,
+                  builder: (context) => const SharePresentationScreen(),
+                );
+              },
             ),
           ],
         ),

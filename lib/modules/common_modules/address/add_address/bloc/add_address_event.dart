@@ -64,3 +64,12 @@ final class SaveAddressEvent extends AddAddressEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class AddAddressChangeCountryCodeEvent extends AddAddressEvent {
+  final Country selectedCountry;
+
+  const AddAddressChangeCountryCodeEvent(this.selectedCountry);
+
+  @override
+  List<Object> get props => [selectedCountry];
+}

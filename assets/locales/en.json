@@ -539,5 +539,11 @@
   "in_active": "Inactive",
   "blue_in_progress": "In Progress",
   "orange_in_progress": "In Progress",
-  "approve": "Approve"
+  "approve": "Approve",
+  "rate_us": "Rate us",
+  "hint_email": "jasons@example.com",
+  "hint_first_name": "Jason",
+  "hint_last_name": "Smith",
+  "hint_contact_number": "1234567830",
+  "hint_company_name": "Abc.Inc"
 }

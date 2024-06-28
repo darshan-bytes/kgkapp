@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'add_address_event.dart';
-
 part 'add_address_state.dart';
 
 class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
@@ -11,7 +10,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   String addAddressAppbarTitle = "";
   bool isShippingAndBillingAddressFilled = false;
   bool isShippingAddressSame = true;
-  late Country selectedCountry;
+  Country? selectedCountry;
   City? selectedCity;
   StateModel? selectedState;
 
@@ -32,21 +31,19 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   FocusNode zipCodeFocusNode = FocusNode();
   FocusNode phoneFocusNode = FocusNode();
 
-  List<Country> selectedCountryCodes = [
-    Country.from(json: {
-      "e164_cc": "91",
-      "iso2_cc": "IN",
-      "e164_sc": 0,
-      "geographic": true,
-      "level": 1,
-      "name": "India",
-      "example": "9123456789",
-      "display_name": "India (IN) [+91]",
-      "full_example_with_plus_sign": "+919123456789",
-      "display_name_no_e164_cc": "India (IN)",
-      "e164_key": "91-IN-0",
-    })
-  ];
+  Country selectedCountryCodes = Country.from(json: {
+    "e164_cc": "91",
+    "iso2_cc": "IN",
+    "e164_sc": 0,
+    "geographic": true,
+    "level": 1,
+    "name": "India",
+    "example": "9123456789",
+    "display_name": "India (IN) [+91]",
+    "full_example_with_plus_sign": "+919123456789",
+    "display_name_no_e164_cc": "India (IN)",
+    "e164_key": "91-IN-0",
+  });
 
   List<City> arrCity = [
     City(name: "Delhi"),
@@ -69,7 +66,6 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   ];
 
   AddAddressBloc() : super(const AddAddressInitial()) {
-    selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
     on<AddAddressInitialEvent>(_onInitAddAddressEvent);
     on<AddAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
     on<AddAddressAddressSameEvent>(_onChangeShippingAddressSame);
@@ -77,6 +73,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     on<AddAddressChangeCityEvent>(_onChangeCity);
     on<AddAddressChangeStateEvent>(_onChangeState);
     on<SaveAddressEvent>(_onSaveAddressEvent);
+    on<AddAddressChangeCountryCodeEvent>(_onAddAddressChangeCountryCodeEvent);
   }
 
   void getScreenIdentifier(BuildContext context) {
@@ -101,16 +98,40 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       phoneController.clear();
       selectedCity = null;
       selectedState = null;
-      selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+      selectedCountry = Country.from(json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      });
     } else {
       firstNameController.text = "Gautam";
       lastNameController.text = "Singhania";
       streetAddressController.text = "431 School House Road";
       selectedCity = arrCity.first;
       selectedState = arrState.first;
-      selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+      selectedCountry = Country.from(json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      });
       zipCodeController.text = "46802";
-      phoneController.text = "+91-850-427-9498";
+      phoneController.text = "8504279498";
     }
 
     emit(const AddAddressInitial());
@@ -133,7 +154,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   void _onChangeCountry(AddAddressChangeCountryEvent event, Emitter<AddAddressState> emit) {
     emit(AddAddressReloadState());
     selectedCountry = event.selectedCountry;
-    emit(AddAddressChangeCountryState(selectedCountry));
+    emit(const AddAddressChangeCountryState());
   }
 
   void _onChangeCity(AddAddressChangeCityEvent event, Emitter<AddAddressState> emit) {
@@ -182,6 +203,24 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     phoneController.clear();
     selectedCity = null;
     selectedState = null;
-    selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+    selectedCountry = Country.from(json: {
+      "e164_cc": "91",
+      "iso2_cc": "IN",
+      "e164_sc": 0,
+      "geographic": true,
+      "level": 1,
+      "name": "India",
+      "example": "9123456789",
+      "display_name": "India (IN) [+91]",
+      "full_example_with_plus_sign": "+919123456789",
+      "display_name_no_e164_cc": "India (IN)",
+      "e164_key": "91-IN-0",
+    });
+  }
+
+  void _onAddAddressChangeCountryCodeEvent(AddAddressChangeCountryCodeEvent event, Emitter<AddAddressState> emit) {
+    emit(AddAddressReloadState());
+    selectedCountryCodes = event.selectedCountry;
+    emit(const AddAddressChangeCountryCodeState());
   }
 }

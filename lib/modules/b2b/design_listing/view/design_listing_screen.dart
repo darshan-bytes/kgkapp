@@ -23,6 +23,7 @@ class DesignListingScreen extends StatelessWidget {
                   children: [
                     _buildSearchTextFieldWithSelectionButton(bloc, context),
                     _buildDesignList(bloc),
+                    SizedBox(height: 16.h),
                   ],
                 );
               } else {
@@ -109,41 +110,51 @@ class DesignListingScreen extends StatelessWidget {
   Widget _buildDesignList(DesignListingBloc bloc) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
       buildWhen: (previous, current) =>
-          current is DesignListLoadedMoreState || current is DesignListLoadingMoreState || current is DesignListingReloadState,
+          current is DesignListLoadedMoreState ||
+          current is DesignListingReloadState ||
+          (bloc.isGrid && current is DesignListLoadingMoreState),
       builder: (context, state) {
         if (bloc.designList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDesignsFound.tr);
         }
         return Expanded(
-          child: Column(
-            children: [
-              Expanded(
-                child: bloc.isGrid
-                    ? SmartSingleChildScrollView(
-                        controller: bloc.gridPaginationScrollController.scrollController,
-                        child: SmartGridView(
-                          items: bloc.designList.map((item) => DesignListingGridItem.designGridItem(designModel: item)).toList(),
-                        ),
-                      )
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        controller: bloc.listPaginationScrollController.scrollController,
-                        itemCount: bloc.designList.length,
-                        physics: const ScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          B2BCustomListingDataModel designItem = bloc.designList[index];
-                          return B2BListingItem(
-                            type: B2BListingType.designListingType,
-                            listingItemModel: designItem,
-                            margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                            onTapMenuButton: () {},
-                          );
-                        },
-                      ),
-              ),
-              if (state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
-            ],
-          ),
+          child: bloc.isGrid
+              ? SmartSingleChildScrollView(
+                  controller: bloc.gridPaginationScrollController.scrollController,
+                  child: SmartGridView(
+                    isLoadingMore: state is DesignListLoadingMoreState,
+                    items: List.generate(bloc.designList.length, (index) {
+                      return DesignListingGridItem.designGridItem(designModel: bloc.designList[index]);
+                    }),
+                    /*items: bloc.designList.map((item) => DesignListingGridItem.designGridItem(designModel: item)).toList(),*/
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  controller: bloc.listPaginationScrollController.scrollController,
+                  itemCount: bloc.designList.length,
+                  physics: const ScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    B2BCustomListingDataModel designItem = bloc.designList[index];
+                    return BlocBuilder<DesignListingBloc, DesignListingState>(
+                      buildWhen: (previous, current) => current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            B2BListingItem(
+                              type: B2BListingType.designListingType,
+                              listingItemModel: designItem,
+                              margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
+                              onTapMenuButton: () {},
+                            ),
+                            if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState)
+                              const SmartCircularProgressIndicator(),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
         );
       },
     );
