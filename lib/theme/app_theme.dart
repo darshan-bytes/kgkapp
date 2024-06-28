@@ -195,6 +195,8 @@ abstract class AppTheme {
   SharePresentationStyle get sharePresentationStyle;
 
   DesignListingGridItemStyle get designListingGridItemStyle;
+
+  FindStoreStyle get findStoreStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1756,5 +1758,25 @@ class DesignListingGridItemStyle {
   DesignListingGridItemStyle({
     required this.dbfNumberTextStyle,
     required this.salesManTextStyle,
+  });
+}
+
+class FindStoreStyle {
+  final TextStyle storeMessageStyle;
+  final TextStyle enterAddressStyle;
+  final TextStyle useCurrentLocationStyle;
+  final TextStyle addressTitleStyle;
+  final TextStyle addressStyle;
+  final Color primaryColor;
+  final Color addressBgColor;
+
+  FindStoreStyle({
+    required this.storeMessageStyle,
+    required this.enterAddressStyle,
+    required this.useCurrentLocationStyle,
+    required this.addressTitleStyle,
+    required this.addressStyle,
+    required this.primaryColor,
+    required this.addressBgColor,
   });
 }

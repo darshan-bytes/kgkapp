@@ -668,4 +668,11 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+
+  //Find store
+  static const String findStore = 'find_store';
+  static const String enterAnAddressOrZipCodeToFindARetailerNearYou = 'enter_an_address_or_zip_code_to_find_a_retailer_near_you';
+  static const String enterAddressOrPincode = 'enter_address_or_pincode';
+  static const String useCurrentLocation = 'use_current_location';
+  static const String getDirections = 'get_directions';
 }

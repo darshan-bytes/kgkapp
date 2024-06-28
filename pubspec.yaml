@@ -87,6 +87,8 @@ dependencies:
   #For Webview
   webview_flutter: ^4.8.0
 
+  google_maps_flutter: ^2.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

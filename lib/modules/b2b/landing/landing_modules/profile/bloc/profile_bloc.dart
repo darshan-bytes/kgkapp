@@ -91,7 +91,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.findAStore.tr,
             subTitle: APPStrings.searchYourNearbyStores.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.findStorePage);
+            }),
         ProfileListModel(
             image: AppImages.icMapPin,
             title: APPStrings.savedAddress.tr,
@@ -202,7 +204,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.findAStore.tr,
             subTitle: APPStrings.searchYourNearbyStores.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.findStorePage);
+            }),
         ProfileListModel(
             image: AppImages.icMapPin,
             title: APPStrings.savedAddress.tr,
@@ -305,7 +309,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               },
             ),
           ],
-          onTap: () {}),
+          onTap: () {
+            event.context.pushNamed(AppRoutes.findStorePage);
+          }),
       ProfileListModel(
           image: AppImages.icAboutUs,
           title: APPStrings.aboutUs.tr,
