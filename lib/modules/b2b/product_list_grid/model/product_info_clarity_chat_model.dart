@@ -19,6 +19,8 @@ class ProductInfoClarityChat {
   String? discount;
   String? perCts;
   String? amount;
+  String? rapRate;
+  String? fluorescence;
 
   ProductInfoClarityChat({
     this.productId,
@@ -41,6 +43,8 @@ class ProductInfoClarityChat {
     this.amount,
     this.depthPercentage,
     this.tablePercentage,
+    this.rapRate,
+    this.fluorescence,
   });
 
   factory ProductInfoClarityChat.fromJson(Map<String, dynamic> json) => ProductInfoClarityChat(
@@ -64,6 +68,8 @@ class ProductInfoClarityChat {
         amount: json["amount"],
         depthPercentage: json["depth_percentage"],
         tablePercentage: json["table_percentage"],
+        rapRate: json["rap_rate"],
+        fluorescence: json["fluorescence"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,5 +93,7 @@ class ProductInfoClarityChat {
         "amount": amount,
         "depth_percentage": depthPercentage,
         "table_percentage": tablePercentage,
+        "rap_rate": rapRate,
+        "fluorescence": fluorescence,
       };
 }
