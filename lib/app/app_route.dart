@@ -515,7 +515,7 @@ class AppRoutes {
       case cadLibraryListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
             return const CadLibraryListingScreen();
           },
           settings: settings,

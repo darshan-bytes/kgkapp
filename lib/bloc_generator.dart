@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/cad_library_listing/bloc/cad_library_listing_bloc.dart';
 
 class BlocGenerator {
   static List<BlocProvider> generateBlocList() {
