@@ -542,13 +542,14 @@ class LightModeTheme extends AppTheme {
 
   @override
   MyBagDiamondItemStyle get myBagDiamondItemStyle => MyBagDiamondItemStyle(
-      backgroundColor: colors.white,
-      borderColor: colors.colorD3DAE0,
-      headingStyle: interMediumBoldTextStyle,
-      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
-      richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
-      selectedBackgroundColor: colors.colorF7F9FA);
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        headingStyle: interMediumBoldTextStyle,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
+        selectedBackgroundColor: colors.colorF7F9FA,
+      );
 
   @override
   AddressSelectionStyle get addressSelectionStyle => AddressSelectionStyle(
@@ -960,6 +961,24 @@ class LightModeTheme extends AppTheme {
         dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         salesManTextStyle: interRegularTextStyle,
       );
+
+  @override
+  ProductInfoItemStyle get productInfoItemStyle => ProductInfoItemStyle(
+        moreDetailsTextStyle: interRegularTextStyle.copyWith(color: colors.primary),
+        labelTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        valueTextStyle: interRegularTextStyle,
+        stoneShapeTextStyle: interSemiBoldTextStyle.copyWith(fontSize: 14.sp),
+      );
+
+  @override
+  FindStoreStyle get findStoreStyle => FindStoreStyle(
+      storeMessageStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      addressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+      useCurrentLocationStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      addressTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+      enterAddressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      primaryColor: colors.primary,
+      addressBgColor: colors.colorF7F9FA);
 
   @override
   PddVersionHistoryStyle get pddVersionHistoryStyle => PddVersionHistoryStyle(

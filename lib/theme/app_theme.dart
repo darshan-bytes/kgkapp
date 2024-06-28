@@ -197,6 +197,10 @@ abstract class AppTheme {
   DesignListingGridItemStyle get designListingGridItemStyle;
 
   PddVersionHistoryStyle get pddVersionHistoryStyle;
+
+  ProductInfoItemStyle get productInfoItemStyle;
+
+  FindStoreStyle get findStoreStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1758,6 +1762,40 @@ class DesignListingGridItemStyle {
   DesignListingGridItemStyle({
     required this.dbfNumberTextStyle,
     required this.salesManTextStyle,
+  });
+}
+
+class ProductInfoItemStyle {
+  final TextStyle stoneShapeTextStyle;
+  final TextStyle labelTextStyle;
+  final TextStyle valueTextStyle;
+  final TextStyle moreDetailsTextStyle;
+
+  ProductInfoItemStyle({
+    required this.stoneShapeTextStyle,
+    required this.labelTextStyle,
+    required this.valueTextStyle,
+    required this.moreDetailsTextStyle,
+  });
+}
+
+class FindStoreStyle {
+  final TextStyle storeMessageStyle;
+  final TextStyle enterAddressStyle;
+  final TextStyle useCurrentLocationStyle;
+  final TextStyle addressTitleStyle;
+  final TextStyle addressStyle;
+  final Color primaryColor;
+  final Color addressBgColor;
+
+  FindStoreStyle({
+    required this.storeMessageStyle,
+    required this.enterAddressStyle,
+    required this.useCurrentLocationStyle,
+    required this.addressTitleStyle,
+    required this.addressStyle,
+    required this.primaryColor,
+    required this.addressBgColor,
   });
 }
 

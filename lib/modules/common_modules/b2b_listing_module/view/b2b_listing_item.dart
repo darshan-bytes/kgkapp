@@ -112,6 +112,7 @@ class B2BListingItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: auctionListItemStyle.titleStyle,
+              isAutoSizeText: true,
             ),
           ),
         SizedBox(width: 8.w),
@@ -141,6 +142,7 @@ class B2BListingItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: auctionListItemStyle.titleStyle,
+              isAutoSizeText: true,
             ),
             SizedBox(height: 4.h),
           ],
@@ -200,6 +202,7 @@ class B2BListingItem extends StatelessWidget {
       child: SmartText(
         field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
         style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
+        isAutoSizeText: true,
       ),
     );
   }
@@ -210,6 +213,7 @@ class B2BListingItem extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: auctionListItemStyle.valueStyle,
+      isAutoSizeText: true,
     );
   }
 }

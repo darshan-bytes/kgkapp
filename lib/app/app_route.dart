@@ -55,6 +55,7 @@ class AppRoutes {
   static const stylesListingPage = '/stylesListingPage';
   static const presentationPreviewPage = '/presentationPreviewPage';
   static const presentationPreviewHistory = '/presentationPreviewHistory';
+  static const findStorePage = '/findStorePage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -508,6 +509,15 @@ class AppRoutes {
             create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewScreen(),
           ),
+          settings: settings,
+        );
+
+      case findStorePage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
+            return const FindStoreScreen();
+          },
           settings: settings,
         );
 
