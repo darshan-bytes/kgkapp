@@ -153,6 +153,8 @@ export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
 export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
 export 'package:kgk/modules/b2b/pdd_preview/bloc/pdd_preview_bloc.dart';
 export 'package:kgk/modules/b2b/pdd_preview/view/pdd_preview_screen.dart';
+export 'package:kgk/modules/b2b/pdd_preview/model/pdd_version_history_model.dart';
+export 'package:kgk/modules/b2b/pdd_preview/view/pdd_version_history_screen.dart';
 
 // bloc
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';

@@ -668,4 +668,5 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+  static const String versionHistory = 'version_history';
 }

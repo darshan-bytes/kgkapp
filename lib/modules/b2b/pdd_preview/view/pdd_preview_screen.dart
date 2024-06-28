@@ -7,13 +7,14 @@ class PddPreviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final PddPreviewBloc pddPreviewBloc = BlocProvider.of<PddPreviewBloc>(context);
     return Scaffold(
+      backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
       appBar: _buildAppBar(pddPreviewBloc),
       body: SafeArea(
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.all(16.0.w),
-              child: _previewOptions(),
+              child: _previewOptions(pddPreviewBloc, context),
             ),
             const Divider(),
             _buildWebView(pddPreviewBloc),
@@ -39,7 +40,7 @@ class PddPreviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _previewOptions() {
+  Widget _previewOptions(PddPreviewBloc pddPreviewBloc, BuildContext context) {
     return Row(children: [
       Expanded(
         child: Row(
@@ -49,7 +50,9 @@ class PddPreviewScreen extends StatelessWidget {
               width: 48.w,
               isSelected: false,
               image: AppImages.icVersionHistory,
-              onTap: () {},
+              onTap: () {
+                pddPreviewBloc.add(NavigateToPddVersionHistoryEvent(context: context));
+              },
             ),
             SelectionButton(
               width: 48.w,

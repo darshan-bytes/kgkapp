@@ -4,10 +4,20 @@ part 'pdd_preview_state.dart';
 
 class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
   String appbarTitle = '';
+
+  //For WebView
   late WebViewController webViewController;
+
+  //For Version History
+  List<PddVersionHistoryModel> versionHistoryList = [];
+
+  //For Selected Version
+  PddVersionHistoryModel? selectedversion;
 
   PddPreviewBloc() : super(InitialPddPreviewState()) {
     on<InitialPddPreviewEvent>(_onInitialPddListingEvent);
+    on<VersionHistoryChangeEvent>(_onVersionHistoryChangeEvent);
+    on<NavigateToPddVersionHistoryEvent>(_onNavigateToPddVersionHistoryEvent);
   }
 
   void getRouteData(BuildContext context) async {
@@ -21,6 +31,12 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
     emit(PddPreviewReloadState());
     getRouteData(event.context);
     await _onCmsWebViewInitialEvent();
+    versionHistoryList = List.generate(
+            10,
+            (index) => PddVersionHistoryModel(
+                historyDateTime: DateFormat(DateFormatter.dateFormatDDMMMYYYY).format(DateTime.now().subtract(Duration(days: index + 1)))))
+        .toList();
+    selectedversion = versionHistoryList.first;
     emit(PddPreviewLoadedState());
   }
 
@@ -30,5 +46,15 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
     if (webviewUrl.isNotNullNorEmpty) {
       await webViewController.loadRequest(Uri.parse(webviewUrl));
     }
+  }
+
+  void _onVersionHistoryChangeEvent(VersionHistoryChangeEvent event, Emitter<PddPreviewState> emit) {
+    emit(PddPreviewReloadState());
+    selectedversion = event.pddVersionHistoryModel;
+    emit(PddPreviewChangePreviewTypeState());
+  }
+
+  void _onNavigateToPddVersionHistoryEvent(NavigateToPddVersionHistoryEvent event, Emitter<PddPreviewState> emit) {
+    event.context.pushNamed(AppRoutes.presentationPreviewHistory);
   }
 }

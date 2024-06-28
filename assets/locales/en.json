@@ -539,5 +539,6 @@
   "in_active": "Inactive",
   "blue_in_progress": "In Progress",
   "orange_in_progress": "In Progress",
-  "approve": "Approve"
+  "approve": "Approve",
+  "version_history": "Version history"
 }

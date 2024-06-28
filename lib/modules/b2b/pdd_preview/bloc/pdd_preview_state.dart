@@ -19,3 +19,8 @@ final class PddPreviewLoadedState extends PddPreviewState {
   @override
   List<Object> get props => [];
 }
+
+final class PddPreviewChangePreviewTypeState extends PddPreviewState {
+  @override
+  List<Object> get props => [];
+}
