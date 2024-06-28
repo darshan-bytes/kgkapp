@@ -679,6 +679,7 @@ class APPStrings {
   static const String hintLastName = 'hint_last_name';
   static const String hintContactNumber = 'hint_contact_number';
   static const String hintCompanyName = 'hint_company_name';
+  static const String versionHistory = 'version_history';
 
   //Find store
   static const String findStore = 'find_store';

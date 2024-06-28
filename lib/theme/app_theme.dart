@@ -196,6 +196,8 @@ abstract class AppTheme {
 
   DesignListingGridItemStyle get designListingGridItemStyle;
 
+  PddVersionHistoryStyle get pddVersionHistoryStyle;
+
   ProductInfoItemStyle get productInfoItemStyle;
 
   FindStoreStyle get findStoreStyle;
@@ -1794,5 +1796,15 @@ class FindStoreStyle {
     required this.addressStyle,
     required this.primaryColor,
     required this.addressBgColor,
+  });
+}
+
+class PddVersionHistoryStyle {
+  final Color whiteColor;
+  final Color backgroundColor;
+
+  PddVersionHistoryStyle({
+    required this.whiteColor,
+    required this.backgroundColor,
   });
 }

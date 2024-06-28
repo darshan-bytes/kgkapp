@@ -1,4 +1,3 @@
-import 'package:kgk/app/app_string.dart';
 import 'package:kgk/kgk.dart';
 
 class FindStoreScreen extends StatelessWidget {

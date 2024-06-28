@@ -979,4 +979,10 @@ class LightModeTheme extends AppTheme {
       enterAddressStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
       primaryColor: colors.primary,
       addressBgColor: colors.colorF7F9FA);
+
+  @override
+  PddVersionHistoryStyle get pddVersionHistoryStyle => PddVersionHistoryStyle(
+        whiteColor: colors.white,
+        backgroundColor: colors.colorF7F9FA,
+      );
 }

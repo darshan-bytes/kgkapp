@@ -555,5 +555,6 @@
   "enter_address_or_pincode": "Enter address or pincode",
   "use_current_location": "Use current location",
   "get_directions": "Get directions",
-  "from_your_location_x": "{#} from your location"
+  "from_your_location_x": "{#} from your location",
+  "version_history": "Version history"
 }

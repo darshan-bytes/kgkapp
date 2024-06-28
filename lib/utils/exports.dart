@@ -206,6 +206,10 @@ export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+export 'package:kgk/modules/b2b/pdd_preview/model/pdd_version_history_model.dart';
+export 'package:kgk/modules/b2b/pdd_preview/view/pdd_version_history_screen.dart';
+
+// bloc
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
 export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
 export 'package:kgk/modules/common_modules/get_ready/bloc/get_ready_bloc.dart';
