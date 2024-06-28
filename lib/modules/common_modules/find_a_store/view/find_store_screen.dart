@@ -1,3 +1,4 @@
+import 'package:kgk/app/app_string.dart';
 import 'package:kgk/kgk.dart';
 
 class FindStoreScreen extends StatelessWidget {
@@ -32,9 +33,7 @@ class FindStoreScreen extends StatelessWidget {
               controller: bloc.addressSearchController,
               labelText: APPStrings.enterAddressOrPincode.tr,
               labelStyle: style.enterAddressStyle,
-              onFieldSubmitted: (value) {
-                // context.read<FindStoreBloc>().add(FindStoreSearchEvent());
-              },
+              onFieldSubmitted: (value) {},
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
                 padding: EdgeInsets.all(14.w),
@@ -110,7 +109,6 @@ class FindStoreScreen extends StatelessWidget {
                                       ),
                                 trailingCollapsedIconVisible: false,
                                 backgroundColor: style.addressBgColor,
-                                //style.addressBgColor
                                 title: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                                   child: Column(
@@ -121,7 +119,8 @@ class FindStoreScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 6.h,
                                       ),
-                                      SmartText("${bloc.addressList[index].storeDistance} from your location", style: style.addressStyle),
+                                      SmartText(APPStrings.fromYourLocationX.tr.interpolate([bloc.addressList[index].storeDistance]),
+                                          style: style.addressStyle),
                                     ],
                                   ),
                                 ),

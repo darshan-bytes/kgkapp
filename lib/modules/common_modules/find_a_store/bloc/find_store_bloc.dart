@@ -17,7 +17,6 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
   );
 
   FindStoreBloc() : super(FindStoreInitial()) {
-    on<FindStoreEvent>((event, emit) {});
     on<FindStoreInitialEvent>(_findStoreInitialEvent);
     on<FindStoreShowFullAddressEvent>(_findStoreShowFullAddressEvent);
   }
@@ -33,6 +32,7 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
         if (i != event.index && addressList[i].isExpanded) {
           oldIndex = i;
           addressList[i].addressDetailsKey.currentState?.collapse();
+          break;
         }
       }
     }

@@ -193,7 +193,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
-
             return const AddAddressScreen();
           },
           settings: settings,

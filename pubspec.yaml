@@ -87,6 +87,7 @@ dependencies:
   #For Webview
   webview_flutter: ^4.8.0
 
+  #For Google Map
   google_maps_flutter: ^2.7.0
 
 dev_dependencies:
