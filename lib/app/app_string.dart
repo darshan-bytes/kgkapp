@@ -660,4 +660,5 @@ class APPStrings {
   // Digital Catalogue
   static const String catalogue = 'catalogue';
   static const String searchCatalogue = 'search_digital_catalogue';
+  static const String xProducts = 'x_products';
 }

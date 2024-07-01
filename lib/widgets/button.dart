@@ -22,7 +22,6 @@ class SmartButton extends StatelessWidget {
   final Color? disableImageColor;
   final double? imageSize;
   final BoxShadow? boxShadow;
-  final double? cornerRadius;
 
   const SmartButton({
     super.key,
@@ -47,7 +46,6 @@ class SmartButton extends StatelessWidget {
     this.disableImageColor,
     this.imageSize,
     this.boxShadow,
-    this.cornerRadius,
   });
 
   @override

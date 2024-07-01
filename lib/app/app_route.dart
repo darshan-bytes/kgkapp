@@ -1,6 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/digital_catalogue/bloc/digital_catalogue_bloc.dart';
-import 'package:kgk/modules/b2b/digital_catalogue/view/digital_catalogue_listing_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';

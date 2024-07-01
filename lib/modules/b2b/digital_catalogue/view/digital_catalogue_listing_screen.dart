@@ -16,7 +16,16 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
           context.pushNamed(AppRoutes.wishListPage);
         },
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(digitalCatalogueBloc),
+      bottomNavigationBar: FilterBottomActionBar(
+        onFilterTap: () {
+          Utils.showSmartModalBottomSheet(
+            context: context,
+            builder: (context) => FilterScreen(
+              onApply: () {},
+            ),
+          );
+        },
+      ),
       body: SafeArea(
           child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
               buildWhen: (previous, current) => current is DigitalCatalogueLoadedState,
@@ -28,111 +37,85 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                       suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
                       padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
                     ),
-                    Expanded(
-                      child: _digitalCatalogueList(digitalCatalogueBloc, context),
-                    ),
+                    _digitalCatalogueList(digitalCatalogueBloc, context),
                   ],
                 );
               })),
     );
   }
-}
 
-Widget _digitalCatalogueList(DigitalCatalogueBloc digitalCatalogueBloc, BuildContext context) {
-  final DigitalCatalogueStyle style = AppTheme.of(context).digitalCatalogueStyle;
-  return ListView.builder(
-    itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
-    itemBuilder: (context, index) {
-      final DigitalCatalogueListingModel item = digitalCatalogueBloc.digitalCatalogueList[index];
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.w),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: style.borderColor, width: 1.w),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Stack(
-                    children: [
-                      SmartImage(
-                        path: item.image ?? "",
-                        height: 200.w,
-                        width: context.width,
+  Widget _digitalCatalogueList(DigitalCatalogueBloc digitalCatalogueBloc, BuildContext context) {
+    final DigitalCatalogueStyle style = AppTheme.of(context).digitalCatalogueStyle;
+    return Expanded(
+      child: ListView.separated(
+        itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            height: 24.h,
+          );
+        },
+        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+        itemBuilder: (context, index) {
+          final DigitalCatalogueListingModel item = digitalCatalogueBloc.digitalCatalogueList[index];
+          return Container(
+            // margin: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.w),
+            decoration: BoxDecoration(
+              border: Border.all(color: style.borderColor, width: 1.w),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Stack(
+                  children: [
+                    SmartImage(
+                      path: item.image ?? "",
+                      height: 200.h,
+                      width: context.width,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16.w),
+                      alignment: Alignment.topRight,
+                      child: SmartImage(
+                        path: AppImages.icMoreVertical,
+                        imageBorderRadius: BorderRadius.circular(4.0.r),
+                        width: 32.w,
+                        height: 32.w,
+                        onTap: () {},
                       ),
-                      Container(
-                        padding: EdgeInsets.all(16.w),
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.w),
-                            color: Colors.white,
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SmartText(
+                        item.name,
+                        style: style.titleStyle,
+                      ),
+                      Row(
+                        children: [
+                          SmartText(
+                            APPStrings.xProducts.tr.interpolate([item.productCount]),
+                            style: style.subTitleStyle,
                           ),
-                          width: 32.w,
-                          height: 32.w,
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: InkWell(
-                              onTap: () {},
-                              child: const SmartImage(path: AppImages.icMoreVertical),
-                            ),
-                          ),
-                        ),
+                          const Spacer(),
+                          SmartText(
+                            item.date,
+                            style: style.subTitleStyle,
+                          )
+                        ],
                       )
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SmartText(
-                          item.name,
-                          style: style.titleStyle,
-                        ),
-                        Row(
-                          children: [
-                            SmartText(
-                              '${item.productCount} Products',
-                              style: style.subTitleStyle,
-                            ),
-                            const Spacer(),
-                            SmartText(
-                              item.date,
-                              style: style.subTitleStyle,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
-
-Widget _buildBottomNavigationBar(DigitalCatalogueBloc digitalCatalogueBloc) {
-  return SafeArea(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        SelectionButton(
-          borderRadius: BorderRadius.zero,
-          isSelected: false,
-          onTap: () {},
-          image: AppImages.icFilter,
-          title: APPStrings.filter.tr,
-        ),
-      ],
-    ),
-  );
+                )
+              ],
+              // ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
