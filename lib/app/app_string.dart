@@ -169,6 +169,7 @@ class APPStrings {
   static const String youMayAlsoLike = 'you_may_also_like';
   static const String recentlyViewed = 'recently_viewed';
   static const String compare = 'compare';
+  static const String rateUs = 'rate_us';
 
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';
@@ -668,6 +669,25 @@ class APPStrings {
   static const String onTime = 'on_time';
   static const String created = 'created';
   static const String inActive = 'in_active';
+  static const String rapRate = 'rap_rate';
+  static const String rate = 'rate';
+  static const String discountPercentage = 'discount_percentage';
+  static const String amt = 'amt';
+
+  static const String hintEmail = 'hint_email';
+  static const String hintFirstName = 'hint_first_name';
+  static const String hintLastName = 'hint_last_name';
+  static const String hintContactNumber = 'hint_contact_number';
+  static const String hintCompanyName = 'hint_company_name';
+  static const String versionHistory = 'version_history';
+
+  //Find store
+  static const String findStore = 'find_store';
+  static const String enterAnAddressOrZipCodeToFindARetailerNearYou = 'enter_an_address_or_zip_code_to_find_a_retailer_near_you';
+  static const String enterAddressOrPincode = 'enter_address_or_pincode';
+  static const String useCurrentLocation = 'use_current_location';
+  static const String getDirections = 'get_directions';
+  static const String fromYourLocationX = 'from_your_location_x';
 
   // CAD Library
   static const String cadLibrary = 'cad_library';

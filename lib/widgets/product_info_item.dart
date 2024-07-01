@@ -32,7 +32,9 @@ class ProductInfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> showMoreDetails = ValueNotifier<bool>(false);
     final style = AppTheme.of(context).myBagDiamondItemStyle;
+    final productInfoItemStyle = AppTheme.of(context).productInfoItemStyle;
     ProductInfoClarityChat chart = productDetails.productInfoClarityChat ?? ProductInfoClarityChat();
     return GestureDetector(
       onTap: onTap,
@@ -47,9 +49,10 @@ class ProductInfoItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSlotFirstWidget(chart, style),
-            _buildSlotSecondWidget(chart, style),
-            _buildSlotThirdWidget(chart, style),
+            _buildProductNameView(chart, style),
+            _buildSlotFirstWidget(chart, style, productInfoItemStyle),
+            _buildSlotSecondWidget(chart, style, productInfoItemStyle),
+            _buildSlotThirdWidget(chart, style, productInfoItemStyle, showMoreDetails),
             _buildSlotFourthWidget(chart, style)
           ],
         ),
@@ -57,121 +60,146 @@ class ProductInfoItem extends StatelessWidget {
     );
   }
 
-  Widget _buildSlotFirstWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
-    return Column(children: [
-      Row(
-        children: [
-          SmartImage(path: productDetails.imageUrl ?? '', height: 32.w, width: 32.w),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: SmartText(
-              chart.productName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: style.headingStyle,
-            ),
-          ),
-          SizedBox(width: 8.w),
-          InkWell(
-              onTap: () {
-                if (onTapMenuButton != null) {
-                  onTapMenuButton!();
-                }
-              },
-              child: SizedBox(
-                  height: 24.w,
-                  width: 24.w,
-                  child: const SmartImage(
-                    path: AppImages.icMoreHorizontal,
-                  )))
-        ],
-      ),
-      SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildDetailColumn(APPStrings.ct.tr, chart.ct, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.shape.tr, chart.shape, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.colour.tr, chart.colour, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.clarity.tr, chart.clarity, style)),
-        ],
-      ),
-      SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildDetailColumn(APPStrings.lotNumber.tr, chart.lotNumber, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.certificateNumber.tr, chart.certificateNumber, style)),
-        ],
-      ),
-      SizedBox(height: 16.h),
-      const Divider(),
-    ]);
-  }
-
-  Widget _buildSlotSecondWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
-    return Column(children: [
-      SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildDetailColumn(APPStrings.lab.tr, chart.lab, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.cut.tr, chart.cut, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.polish.tr, chart.polish, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.symmetry.tr, chart.symmetry, style)),
-        ],
-      ),
-      SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: _buildDetailColumn(APPStrings.flourish.tr, chart.flourish, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.tablePercentage.tr, chart.tablePercentage, style)),
-          Expanded(child: _buildDetailColumn(APPStrings.depthPercentage.tr, chart.depthPercentage, style)),
-          const Expanded(child: SizedBox()),
-        ],
-      ),
-      SizedBox(height: 16.h),
-      const Divider(),
-    ]);
-  }
-
-  Widget _buildSlotThirdWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
-    return Column(
+  Widget _buildProductNameView(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
+    return Row(
       children: [
-        SizedBox(height: 16.h),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: _buildDetailColumn(APPStrings.measurements.tr, chart.measurements, style)),
-            Expanded(child: _buildDetailColumn(APPStrings.rap.tr, chart.rap, style)),
-          ],
+        SmartImage(path: productDetails.imageUrl ?? '', height: 32.w, width: 32.w),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: SmartText(
+            chart.productName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.headingStyle,
+            isAutoSizeText: true,
+          ),
         ),
-        SizedBox(height: 16.h),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style, isDiscount: true)),
-            Expanded(child: _buildDetailColumn(APPStrings.perCts.tr, chart.perCts, style)),
-            Expanded(child: _buildDetailColumn(APPStrings.amount.tr, chart.amount, style)),
-          ],
-        ),
-        SizedBox(height: 16.h),
-        const Divider(),
+        SizedBox(width: 8.w),
+        SmartImage(
+          path: AppImages.icMoreHorizontal,
+          onTap: () {
+            if (onTapMenuButton != null) {
+              onTapMenuButton!();
+            }
+          },
+          height: 24.w,
+          width: 24.w,
+        )
       ],
+    );
+  }
+
+  Widget _buildSlotFirstWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
+    TextStyle shapeTextStyle = productInfoItemStyle.stoneShapeTextStyle;
+    return Column(children: [
+      SizedBox(height: 16.h),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
+          _buildDivider(style),
+          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+          _buildDivider(style),
+          SmartText(
+              "${chart.cut?.substring(0, 2).toUpperCase()}/${chart.polish?.substring(0, 2).toUpperCase()}/${chart.symmetry?.substring(0, 2).toUpperCase()}",
+              isAutoSizeText: true,
+              style: shapeTextStyle),
+          _buildDivider(style),
+          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+          _buildDivider(style),
+          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
+        ],
+      ),
+      SizedBox(height: 16.h),
+      const Divider(),
+      SizedBox(height: 16.h),
+    ]);
+  }
+
+  Widget _buildSlotSecondWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
+    return SmartGridView(runSpacing: 8.h, items: [
+      _buildRowDetailItem(APPStrings.rapRate.tr, chart.rapRate, style, productInfoItemStyle),
+      _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
+      _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
+      _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
+    ]);
+  }
+
+  Widget _buildSlotThirdWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle,
+      ValueNotifier<bool> showMoreDetails) {
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 250),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: showMoreDetails,
+        builder: (context, value, child) {
+          return Column(
+            children: [
+              if (showMoreDetails.value) ...[
+                SizedBox(height: 16.h),
+                const Divider(),
+                SizedBox(height: 16.h),
+                SmartGridView(columns: 3, runSpacing: 8.h, items: [
+                  _buildDetailColumn(APPStrings.lotNo.tr, chart.lotNumber, style, productInfoItemStyle),
+                  _buildDetailColumn(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
+                  _buildDetailColumn(APPStrings.fluorescence.tr, chart.fluorescence, style, productInfoItemStyle),
+                  _buildDetailColumn(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
+                ]),
+              ],
+              InkWell(
+                onTap: () {
+                  showMoreDetails.value = !showMoreDetails.value;
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SmartText(
+                        showMoreDetails.value ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+                        isAutoSizeText: true,
+                        style: productInfoItemStyle.moreDetailsTextStyle,
+                      ),
+                      SizedBox(width: 4.w),
+                      SmartImage(
+                        path: showMoreDetails.value ? AppImages.icArrowUp : AppImages.icArrowDown,
+                        height: 16.h,
+                        width: 16.w,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 
   Widget _buildSlotFourthWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
     return Column(
       children: [
+        const Divider(),
         SizedBox(height: 16.h),
         _buildActionGrid(style),
       ],
     );
   }
 
-  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
+  Widget _buildDivider(MyBagDiamondItemStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 18.12.w),
+      child: Container(
+        height: 20.h,
+        width: 1,
+        color: style.borderColor,
+      ),
+    );
+  }
+
+  Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Container(
       padding: EdgeInsets.only(right: 6.w),
@@ -182,7 +210,8 @@ class ProductInfoItem extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: style.titleStyle,
+            style: productInfoItemStyle.labelTextStyle,
+            isAutoSizeText: true,
           ),
           SizedBox(height: 4.h),
           isTextFormField && value != null
@@ -201,10 +230,37 @@ class ProductInfoItem extends StatelessWidget {
                   value.isNullOrEmpty ? APPStrings.dash.tr : value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: isDiscount ? style.richTextStyle : style.subTitleStyle,
+                  style: isDiscount ? style.richTextStyle : productInfoItemStyle.valueTextStyle,
+                  isAutoSizeText: true,
                 ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRowDetailItem(String title, String? value, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle,
+      {bool isDiscount = false}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SmartText(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: productInfoItemStyle.labelTextStyle,
+          isAutoSizeText: true,
+        ),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: SmartText(
+            value.isNullOrEmpty ? APPStrings.dash.tr : value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: isDiscount ? style.richTextStyle : productInfoItemStyle.valueTextStyle,
+            isAutoSizeText: true,
+          ),
+        ),
+      ],
     );
   }
 

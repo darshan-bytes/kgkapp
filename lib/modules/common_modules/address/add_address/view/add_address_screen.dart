@@ -89,7 +89,7 @@ class AddAddressScreen extends StatelessWidget {
           SizedBox(height: 24.h),
           _buildZipCodeField(bloc),
           SizedBox(height: 24.h),
-          _buildPhoneField(bloc),
+          _buildPhoneField(bloc, context, countryPickerStyle),
           SizedBox(height: 24.h),
           SmartButton(
             onTap: () {
@@ -230,7 +230,7 @@ class AddAddressScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartText(
-                        bloc.selectedCountry.name,
+                        bloc.selectedCountry?.name,
                         style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
@@ -257,13 +257,60 @@ class AddAddressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPhoneField(AddAddressBloc bloc) {
+  Widget _buildPhoneField(AddAddressBloc bloc, BuildContext context, CountryPickerStyle countryPickerStyle) {
     return SmartTextField(
       labelText: APPStrings.phoneNumber.tr,
       hintText: APPStrings.phoneNumber.tr,
       controller: bloc.phoneController,
       focusNode: bloc.phoneFocusNode,
       keyboardType: TextInputType.number,
+      prefixIcon: InkWell(
+        onTap: bloc.isEditAddress
+            ? null
+            : () {
+                Utils.showCountryPickerModel(
+                  context: context,
+                  countryPickerStyle: countryPickerStyle,
+                  showPhoneCode: true,
+                  onSelect: (Country country) {
+                    bloc.add(AddAddressChangeCountryCodeEvent(country));
+                  },
+                );
+              },
+        child: SizedBox(
+          width: 95.w,
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(12.w),
+            margin: EdgeInsets.only(right: 12.w),
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<AddAddressBloc, AddAddressState>(
+                  buildWhen: (previous, current) => current is AddAddressChangeCountryCodeState,
+                  builder: (context, state) {
+                    return SmartText(
+                      '+${bloc.selectedCountryCodes.phoneCode}',
+                      style: AppTheme.of(context).textFieldStyle.textStyle,
+                    );
+                  },
+                ),
+                if (!bloc.isEditAddress) ...[
+                  SizedBox(width: 4.w),
+                  const SmartImage(path: AppImages.icArrowDropDown),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

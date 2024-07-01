@@ -14,6 +14,7 @@ class SmartDropDown<T> extends StatelessWidget {
   final BoxBorder? border;
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? textStyle;
+  final Color? backgroundColor;
 
   const SmartDropDown({
     super.key,
@@ -30,6 +31,7 @@ class SmartDropDown<T> extends StatelessWidget {
     this.border,
     this.contentPadding,
     this.textStyle,
+    this.backgroundColor,
   });
 
   @override
@@ -70,6 +72,7 @@ class SmartDropDown<T> extends StatelessWidget {
             height: buttonHeight ?? 48.w,
             padding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
+              color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
               border: border ??
                   Border.all(

@@ -11,6 +11,9 @@ class SmartCheckbox extends StatelessWidget {
   final Color? checkColor;
   final Color? borderColor;
   final EdgeInsets? padding;
+  final MainAxisSize? mainAxisSize;
+
+  final bool isRadio;
 
   const SmartCheckbox({
     super.key,
@@ -24,12 +27,33 @@ class SmartCheckbox extends StatelessWidget {
     this.checkColor,
     this.borderColor,
     this.padding,
-  });
+    this.mainAxisSize,
+  }) : isRadio = false;
+
+  const SmartCheckbox.radio({
+    super.key,
+    this.label,
+    required this.value,
+    required this.onChanged,
+    this.height,
+    this.width,
+    this.labelStyle,
+    this.activeColor,
+    this.checkColor,
+    this.borderColor,
+    this.padding,
+    this.mainAxisSize,
+  }) : isRadio = true;
 
   @override
   Widget build(BuildContext context) {
     final CheckboxStyle style = AppTheme.of(context).checkboxStyle;
-    return GestureDetector(
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       onTap: () {
         onChanged(!value);
       },
@@ -38,20 +62,27 @@ class SmartCheckbox extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: mainAxisSize ?? MainAxisSize.max,
           children: [
             SizedBox(
               height: height ?? 20.w,
               width: width ?? 20.w,
-              child: Checkbox(
-                activeColor: style.activeColor,
-                checkColor: style.checkColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-                side: BorderSide(color: borderColor ?? style.borderColor),
-                value: value,
-                onChanged: (bool? newValue) {
-                  onChanged(newValue);
-                },
-              ),
+              child: isRadio
+                  ? SmartImage(
+                      path: value ? AppImages.icRadioSelected : AppImages.icRadio,
+                      height: height ?? 20.w,
+                      width: width ?? 20.w,
+                    )
+                  : Checkbox(
+                      activeColor: style.activeColor,
+                      checkColor: style.checkColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
+                      side: BorderSide(color: borderColor ?? style.borderColor),
+                      value: value,
+                      onChanged: (bool? newValue) {
+                        onChanged(newValue);
+                      },
+                    ),
             ),
             SizedBox(width: 6.w),
             if (label != null)
