@@ -203,6 +203,8 @@ abstract class AppTheme {
   ProductInfoItemStyle get productInfoItemStyle;
 
   FindStoreStyle get findStoreStyle;
+
+  CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1820,5 +1822,19 @@ class PddVersionHistoryStyle {
   PddVersionHistoryStyle({
     required this.whiteColor,
     required this.backgroundColor,
+  });
+}
+
+class CadLibraryListingItemStyle {
+  final Color backgroundColor;
+  final Color cadBackgroundColor;
+  final TextStyle cadNameStyle;
+  final TextStyle cadNumberStyle;
+
+  CadLibraryListingItemStyle({
+    required this.backgroundColor,
+    required this.cadBackgroundColor,
+    required this.cadNameStyle,
+    required this.cadNumberStyle,
   });
 }
