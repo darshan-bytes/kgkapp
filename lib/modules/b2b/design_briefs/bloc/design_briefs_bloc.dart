@@ -29,7 +29,7 @@ class DesignBriefsBloc extends Bloc<DesignBriefsEvent, DesignBriefsState> {
       return B2BCustomListingDataModel(
         id: index.toString(),
         strDbfNumber: 'DBF-000012',
-        status: OrderStatus.active,
+        status: ProjectStatus.blueInProgress,
         strJewelleryType: 'Earring',
         strSubJewelleryType: 'Diamond earring',
         strCreatedBy: 'Jenny Wilson',
@@ -37,7 +37,7 @@ class DesignBriefsBloc extends Bloc<DesignBriefsEvent, DesignBriefsState> {
         strCreatedOn: '23/03/2023',
         strAssignTo: 'Jenny Wilson',
         strAssignToImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        holdStatus: OrderStatus.inProgress,
+        holdStatus: ProjectStatus.released,
       );
     });
   }

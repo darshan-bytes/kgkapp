@@ -6,9 +6,7 @@ part 'pdd_listing_state.dart';
 
 class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   bool isGrid = true;
-
   final TextEditingController presentationSearchController = TextEditingController();
-
   List<B2BCustomListingDataModel> filteredPresentationList = _generatePresentationList();
   List<B2BCustomListingDataModel> originalPresentationList = _generatePresentationList();
 
@@ -16,6 +14,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     on<InitialPddListingEvent>(_onInitialPresentationListEvent);
     on<PresentationChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<FilterPresentationEvent>(_onFilterPresentationEvent);
+    on<NavigateToPddPreviewEvent>(_navigateToPreview);
   }
 
   void _onInitialPresentationListEvent(InitialPddListingEvent event, Emitter<PddListingState> emit) {
@@ -26,7 +25,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   void _onChangeListingTypeEvent(PresentationChangeListingTypeEvent event, Emitter<PddListingState> emit) {
     emit(PddListingReloadState());
-    isGrid = !isGrid;
+    isGrid = event.isGrid;
     emit(PddListingChangeListingTypeState());
   }
 
@@ -44,18 +43,24 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     filteredPresentationList = _generatePresentationList();
   }
 
-  // If a presentation grid is required with date information, ensure the `strConceptNumber` fields are filled
+  void _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) {
+    final presentationNumber = filteredPresentationList[event.index].strPresentationNumber;
+    event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {
+      RoutesData.presentationId: presentationNumber,
+    });
+  }
+
   static List<B2BCustomListingDataModel> _generatePresentationList() {
     return List.generate(20, (index) {
       return B2BCustomListingDataModel(
         id: index.toString(),
-        strPresentationNumber: '1254875',
+        strPresentationNumber: '125487${index + 1}',
         strProject: '1',
         strConceptName: 'Full blue moon',
-        status: OrderStatus.active,
+        status: index % 2 == 0 ? ProjectStatus.blueInProgress : ProjectStatus.approved,
         strCreatedBy: 'Jenny Wilson',
         strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        strCreatedOn: '23/03/2023',
+        strCreatedOn: '23/03/2023, 10:46',
         strAssignTo: 'Jenny Wilson',
         strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
         strApprovedBy: 'John Samanta',

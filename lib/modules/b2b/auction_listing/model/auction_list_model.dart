@@ -5,7 +5,7 @@ class AuctionListModel {
   String? name;
   String? imageUrl;
   String? skuNo;
-  OrderStatus orderStatus;
+  ProjectStatus orderStatus;
   String? type;
   String? bidAmount;
   String? bidPlacedOn;
@@ -16,7 +16,7 @@ class AuctionListModel {
     this.imageUrl,
     this.skuNo,
     this.type,
-    this.orderStatus = OrderStatus.onGoing,
+    this.orderStatus = ProjectStatus.onGoing,
     this.bidAmount,
     this.bidPlacedOn,
   });

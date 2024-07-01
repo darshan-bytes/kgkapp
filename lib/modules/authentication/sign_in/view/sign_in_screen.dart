@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
   Widget _buildEmailField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
       labelText: APPStrings.email.tr,
-      hintText: APPStrings.email.tr,
+      hintText: APPStrings.hintEmail.tr,
       labelStyle: style.labelStyle,
       keyboardType: TextInputType.emailAddress,
       onEditingComplete: () {

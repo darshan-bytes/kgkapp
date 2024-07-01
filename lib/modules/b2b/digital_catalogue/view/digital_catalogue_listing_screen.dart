@@ -58,7 +58,6 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final DigitalCatalogueListingModel item = digitalCatalogueBloc.digitalCatalogueList[index];
           return Container(
-            // margin: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.w),
             decoration: BoxDecoration(
               border: Border.all(color: style.borderColor, width: 1.w),
             ),
@@ -111,7 +110,6 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                   ),
                 )
               ],
-              // ),
             ),
           );
         },

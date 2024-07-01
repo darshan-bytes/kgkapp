@@ -45,8 +45,6 @@ class MonitoringListLoadedMoreState extends MonitoringState {
   List<Object> get props => [currentPage, listType];
 }
 
-
-
 class MonitoringSelectedDesignerState extends MonitoringState {
   final DesignerListModel designer;
 
@@ -54,4 +52,20 @@ class MonitoringSelectedDesignerState extends MonitoringState {
 
   @override
   List<Object> get props => [designer];
+}
+
+class MonitoringDesignerLoadMoreState extends MonitoringState {
+  const MonitoringDesignerLoadMoreState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class MonitoringDesignerListLoadedState extends MonitoringState {
+  final int currentPage;
+
+  const MonitoringDesignerListLoadedState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

@@ -20,17 +20,25 @@ enum ProductCustomizationType {
   const ProductCustomizationType(this.value);
 }
 
-enum OrderStatus {
-  inProgress('in_progress'),
+enum ProjectStatus {
+  blueInProgress('blue_in_progress'),
+  orangeInProgress('orange_in_progress'),
   active('active'),
   onGoing('on_going'),
   winner('winner'),
   lost('lost'),
+  approved('approved'),
+  released('released'),
+  approval('approval'),
+  styleCreated('style_created'),
+  onTime('on_time'),
+  created('created'),
+  inActive('in_active'),
   ;
 
   final String value;
 
-  const OrderStatus(this.value);
+  const ProjectStatus(this.value);
 }
 
 enum UserType {

@@ -25,6 +25,8 @@ class ProductListScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: ScrollToTopFAB(
+          canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop),
       bottomNavigationBar: FilterBottomActionBar(
         onFilterTap: () {
           Utils.showSmartModalBottomSheet(

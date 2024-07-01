@@ -23,10 +23,7 @@ class ConceptListScreen extends StatelessWidget {
                       controller: conceptListBloc.searchController,
                       hintText: APPStrings.searchConcept.tr,
                       onFieldSubmitted: (value) => conceptListBloc.add(const ConceptListSearchEvent()),
-                      suffixIcon: SmartImage(
-                        path: AppImages.icSearchThin,
-                        padding: EdgeInsets.all(12.w),
-                      ),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
                     ),
                     SizedBox(height: 24.h),
                     Expanded(

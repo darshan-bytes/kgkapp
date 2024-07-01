@@ -30,7 +30,7 @@ class FilterBottomActionBar extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.zero),
                       unselectedButtonBorderColor: style.transparentColor,
                       onTap: onFilterTap!)),
-            if (onFilterTap != null && onSortTap != null) Container(height: 24, width: 1, color: style.dividerColor),
+            if (onFilterTap != null && onSortTap != null) Container(height: 24.h, width: 1.w, color: style.dividerColor),
             if (onSortTap != null)
               Expanded(
                 child: SelectionButton(

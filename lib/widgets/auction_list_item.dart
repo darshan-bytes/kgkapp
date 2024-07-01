@@ -73,7 +73,7 @@ class AuctionListItem extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         isOrderStatus
-            ? StatusBadge(height: 28.h, currentStatus: OrderStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+            ? SmartStatusBadge(height: 28.h, currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
             : Row(
                 children: [
                   if (stoneTypeImage != null)
