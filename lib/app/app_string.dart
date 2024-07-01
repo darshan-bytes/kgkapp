@@ -655,6 +655,11 @@ class APPStrings {
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
 
+  // Digital Catalogue
+  static const String catalogue = 'catalogue';
+  static const String searchCatalogue = 'search_digital_catalogue';
+  static const String xProducts = 'x_products';
+
   //Project status
   static const String blueInProgress = 'blue_in_progress';
   static const String orangeInProgress = 'orange_in_progress';

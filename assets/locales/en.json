@@ -557,6 +557,9 @@
   "get_directions": "Get directions",
   "from_your_location_x": "{#} from your location",
   "version_history": "Version history",
+  "catalogue": "Catalogue",
+  "search_digital_catalogue": "Search catalogue",
+  "x_products": "{#} Products",
   "cad_library": "CAD library",
   "no_cad_library_found": "No CAD library found"
 }

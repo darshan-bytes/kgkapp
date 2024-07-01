@@ -98,6 +98,14 @@ export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/bloc/stone_listing_
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/view/stone_listing_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categories_bloc.dart';
+export 'package:kgk/model/inquiry_type_model.dart';
+export 'package:kgk/model/product_model.dart';
+export 'package:kgk/modules/common_modules/cms_web_view/bloc/cms_web_view_bloc.dart';
+export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
+export 'package:kgk/modules/b2b/digital_catalogue/bloc/digital_catalogue_bloc.dart';
+export 'package:kgk/modules/b2b/digital_catalogue/view/digital_catalogue_listing_screen.dart';
+
+//model
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/bloc/company_bloc.dart';
@@ -206,6 +214,14 @@ export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/view/pdd_listing_screen.dart';
+export 'package:kgk/modules/b2b/pdd_listing/bloc/pdd_listing_bloc.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/profile/model/profile_list_model.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
+export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_model.dart';
+export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
+export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
+export 'package:kgk/modules/b2b/digital_catalogue/model/digital_catalogue_listing_model.dart';
 export 'package:kgk/modules/b2b/pdd_preview/model/pdd_version_history_model.dart';
 export 'package:kgk/modules/b2b/pdd_preview/view/pdd_version_history_screen.dart';
 

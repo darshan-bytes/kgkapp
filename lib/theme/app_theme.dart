@@ -194,6 +194,8 @@ abstract class AppTheme {
 
   SharePresentationStyle get sharePresentationStyle;
 
+  DigitalCatalogueStyle get digitalCatalogueStyle;
+
   DesignListingGridItemStyle get designListingGridItemStyle;
 
   PddVersionHistoryStyle get pddVersionHistoryStyle;
@@ -1754,6 +1756,18 @@ class SharePresentationStyle {
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
     required this.closeIconColor,
+  });
+}
+
+class DigitalCatalogueStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  DigitalCatalogueStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
   });
 }
 
