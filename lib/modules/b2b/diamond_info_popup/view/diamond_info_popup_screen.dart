@@ -86,19 +86,20 @@ class DiamondInfoPopupScreen extends StatelessWidget {
               const Divider(),
               SizedBox(height: 24.h),
               _buildInquirySection(context),
-              SizedBox(height: 24.h),
-              InkWell(
-                onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
-                },
-                child: Center(
-                  child: SmartText(
-                    APPStrings.viewMoreDetails.tr,
-                    style: style.viewMoreDetailsTextStyle,
-                    optionalPadding: REdgeInsets.symmetric(vertical: 12.h),
-                  ),
-                ),
-              ),
+              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+              // SizedBox(height: 24.h),
+              // InkWell(
+              //   onTap: () {
+              //     context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+              //   },
+              //   child: Center(
+              //     child: SmartText(
+              //       APPStrings.viewMoreDetails.tr,
+              //       style: style.viewMoreDetailsTextStyle,
+              //       optionalPadding: REdgeInsets.symmetric(vertical: 12.h),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 16.h),
             ],
           ),

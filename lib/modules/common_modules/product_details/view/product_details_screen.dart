@@ -204,6 +204,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc, BuildContext context) {
+    printWrapped("productDetailsBloc.screenIdentifier==${productDetailsBloc.screenIdentifier}");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
@@ -268,11 +269,34 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds ||
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+          ],
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
+            SizedBox(height: 24.h),
+            const Divider(),
+            InkWell(
+              onTap: () {
+                context.pushNamed(AppRoutes.diamondInfoPopupPage);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 24.h),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SmartText(
+                        APPStrings.diamondDetails.tr,
+                        style: style.settingSelectionTitleStyle,
+                      ),
+                    ),
+                    SmartImage(path: AppImages.icRight, height: 20.w, width: 20.w),
+                  ],
+                ),
+              ),
+            ),
             const Divider(),
           ],
           SizedBox(height: 24.h),
