@@ -30,8 +30,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<String> librarySubOptionsList = [
     'Product Library - Grey',
     'Product Library MF - Platinum',
-    'Collection',
-    'Best Selling',
+    'Design Library',
+    'CAD Library',
     'Seasonal Offers',
   ];
 
@@ -143,6 +143,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Libraries':
         if (categorySubName == 'Product Library MF - Platinum') {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
+        } else if (categorySubName == 'CAD Library') {
+          context.pushNamed(AppRoutes.cadLibraryListingPage);
         } else {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
         }

@@ -194,6 +194,8 @@ abstract class AppTheme {
 
   SharePresentationStyle get sharePresentationStyle;
 
+  DigitalCatalogueStyle get digitalCatalogueStyle;
+
   DesignListingGridItemStyle get designListingGridItemStyle;
 
   PddVersionHistoryStyle get pddVersionHistoryStyle;
@@ -201,6 +203,8 @@ abstract class AppTheme {
   ProductInfoItemStyle get productInfoItemStyle;
 
   FindStoreStyle get findStoreStyle;
+
+  CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1755,6 +1759,18 @@ class SharePresentationStyle {
   });
 }
 
+class DigitalCatalogueStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+
+  DigitalCatalogueStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
+  });
+}
+
 class DesignListingGridItemStyle {
   final TextStyle dbfNumberTextStyle;
   final TextStyle salesManTextStyle;
@@ -1806,5 +1822,19 @@ class PddVersionHistoryStyle {
   PddVersionHistoryStyle({
     required this.whiteColor,
     required this.backgroundColor,
+  });
+}
+
+class CadLibraryListingItemStyle {
+  final Color backgroundColor;
+  final Color cadBackgroundColor;
+  final TextStyle cadNameStyle;
+  final TextStyle cadNumberStyle;
+
+  CadLibraryListingItemStyle({
+    required this.backgroundColor,
+    required this.cadBackgroundColor,
+    required this.cadNameStyle,
+    required this.cadNumberStyle,
   });
 }

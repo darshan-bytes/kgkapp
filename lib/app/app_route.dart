@@ -53,9 +53,11 @@ class AppRoutes {
   static const designBriefsPage = '/designBriefsPage';
   static const designListingPage = '/designListingPage';
   static const stylesListingPage = '/stylesListingPage';
+  static const digitalCataloguePage = '/digitalCataloguePage';
   static const presentationPreviewPage = '/presentationPreviewPage';
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
+  static const cadLibraryListingPage = '/cadLibraryListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -503,6 +505,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case digitalCataloguePage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
+            return const DigitalCatalogueListingScreen();
+          },
+          settings: settings,
+        );
+
       case presentationPreviewPage:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<PddPreviewBloc>(
@@ -527,6 +538,15 @@ class AppRoutes {
             create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewHistoryScreen(),
           ),
+          settings: settings,
+        );
+
+      case cadLibraryListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
+            return const CadLibraryListingScreen();
+          },
           settings: settings,
         );
 

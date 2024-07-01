@@ -957,6 +957,13 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  DigitalCatalogueStyle get digitalCatalogueStyle => DigitalCatalogueStyle(
+        titleStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        borderColor: colors.colorD3DAE0,
+      );
+
+  @override
   DesignListingGridItemStyle get designListingGridItemStyle => DesignListingGridItemStyle(
         dbfNumberTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         salesManTextStyle: interRegularTextStyle,
@@ -984,5 +991,13 @@ class LightModeTheme extends AppTheme {
   PddVersionHistoryStyle get pddVersionHistoryStyle => PddVersionHistoryStyle(
         whiteColor: colors.white,
         backgroundColor: colors.colorF7F9FA,
+      );
+
+  @override
+  CadLibraryListingItemStyle get cadLibraryListingItemStyle => CadLibraryListingItemStyle(
+        backgroundColor: colors.white,
+        cadNameStyle: interRegularTextStyle,
+        cadBackgroundColor: colors.colorFAFAFA,
+        cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
       );
 }
