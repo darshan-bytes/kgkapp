@@ -169,6 +169,7 @@ class APPStrings {
   static const String youMayAlsoLike = 'you_may_also_like';
   static const String recentlyViewed = 'recently_viewed';
   static const String compare = 'compare';
+  static const String rateUs = 'rate_us';
 
   //Add account
   static const String shippingBillingAddress = 'shipping_billing_address';
@@ -365,12 +366,7 @@ class APPStrings {
   static const String totalAmount = 'total_amount';
   static const String items = 'items';
   static const String qty = 'Qty';
-  static const String inProgress = 'in_Progress';
-  static const String active = 'active';
   static const String removeLot = 'remove_lot';
-  static const String onGoing = 'on_going';
-  static const String winner = 'winner';
-  static const String lost = 'lost';
 
   // my order details screen
   static const String createdBy = 'created_by';
@@ -638,9 +634,11 @@ class APPStrings {
   static const String noDesignBriefsFound = 'no_design_briefs_found';
   static const String noDesignsFound = 'no_designs_found';
 
+  // Presentation Preview
+  static const String approve = 'approve';
+
   //Styles Listing
   static const String noStylesFound = 'no_styles_found';
-
   static const String sharePresentation = 'share_presentation';
   static const String qrCode = 'qr_code';
   static const String whatsapp = 'whatsapp';
@@ -661,4 +659,38 @@ class APPStrings {
   static const String catalogue = 'catalogue';
   static const String searchCatalogue = 'search_digital_catalogue';
   static const String xProducts = 'x_products';
+
+  //Project status
+  static const String blueInProgress = 'blue_in_progress';
+  static const String orangeInProgress = 'orange_in_progress';
+  static const String active = 'active';
+  static const String onGoing = 'on_going';
+  static const String winner = 'winner';
+  static const String lost = 'lost';
+  static const String approved = 'approved';
+  static const String released = 'released';
+  static const String approval = 'approval';
+  static const String styleCreated = 'style_created';
+  static const String onTime = 'on_time';
+  static const String created = 'created';
+  static const String inActive = 'in_active';
+  static const String rapRate = 'rap_rate';
+  static const String rate = 'rate';
+  static const String discountPercentage = 'discount_percentage';
+  static const String amt = 'amt';
+
+  static const String hintEmail = 'hint_email';
+  static const String hintFirstName = 'hint_first_name';
+  static const String hintLastName = 'hint_last_name';
+  static const String hintContactNumber = 'hint_contact_number';
+  static const String hintCompanyName = 'hint_company_name';
+  static const String versionHistory = 'version_history';
+
+  //Find store
+  static const String findStore = 'find_store';
+  static const String enterAnAddressOrZipCodeToFindARetailerNearYou = 'enter_an_address_or_zip_code_to_find_a_retailer_near_you';
+  static const String enterAddressOrPincode = 'enter_address_or_pincode';
+  static const String useCurrentLocation = 'use_current_location';
+  static const String getDirections = 'get_directions';
+  static const String fromYourLocationX = 'from_your_location_x';
 }

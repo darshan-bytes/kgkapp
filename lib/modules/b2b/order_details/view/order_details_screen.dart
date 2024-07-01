@@ -73,7 +73,7 @@ class OrderDetailScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: _buildDetailColumn(APPStrings.orderStatus.tr, OrderStatus.active.value, style, isOrderStatus: true)),
+              Expanded(child: _buildDetailColumn(APPStrings.orderStatus.tr, ProjectStatus.active.value, style, isOrderStatus: true)),
               Expanded(child: _buildDetailColumn(APPStrings.items.tr, "15", style)),
               Expanded(child: _buildDetailColumn(APPStrings.qty.tr, "250  ", style)),
               Expanded(child: _buildDetailColumn(APPStrings.totalAmount.tr, "\$1,12,500", style, totalAmount: true)),
@@ -215,7 +215,7 @@ class OrderDetailScreen extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           isOrderStatus
-              ? StatusBadge(currentStatus: OrderStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+              ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
               : SmartText(
                   value.isNullOrEmpty ? APPStrings.dash.tr : value,
                   maxLines: 1,

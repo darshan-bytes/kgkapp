@@ -145,6 +145,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
     _iconColor
       ?..begin = theme.unselectedWidgetColor
       ..end = theme.colorScheme.primary;
+    _backgroundColor?.begin = widget.backgroundColor;
     _backgroundColor?.end = widget.backgroundColor;
 
     final bool closed = !_isExpanded && (_controller?.isDismissed == true);

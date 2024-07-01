@@ -5,15 +5,12 @@ class DesignListingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DesignListingBloc designListingBloc = BlocProvider.of<DesignListingBloc>(context);
+    final DesignListingBloc bloc = BlocProvider.of<DesignListingBloc>(context);
 
     return Scaffold(
-      appBar: SmartAppBar(title: APPStrings.designs.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(designListingBloc, context),
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: designListingBloc.paginationScrollController.canScrollToTop,
-        onTap: designListingBloc.paginationScrollController.scrollToTop,
-      ),
+      appBar: _buildAppBar(context),
+      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
+      floatingActionButton: _buildFloatingActionButton(bloc),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -24,8 +21,9 @@ class DesignListingScreen extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildSearchTextFieldWithSelectionButton(designListingBloc, context),
-                    Expanded(child: _buildDesignList(designListingBloc)),
+                    _buildSearchTextFieldWithSelectionButton(bloc, context),
+                    _buildDesignList(bloc),
+                    SizedBox(height: 16.h),
                   ],
                 );
               } else {
@@ -38,7 +36,22 @@ class DesignListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchTextFieldWithSelectionButton(DesignListingBloc designListingBloc, BuildContext context) {
+  PreferredSize _buildAppBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: AppConst.appBarHeight,
+      child: SmartAppBar(
+        title: APPStrings.designs.tr,
+        onSearch: () {
+          context.pushNamed(AppRoutes.searchPage);
+        },
+        onFavorite: () {
+          context.pushNamed(AppRoutes.wishListPage);
+        },
+      ),
+    );
+  }
+
+  Widget _buildSearchTextFieldWithSelectionButton(DesignListingBloc bloc, BuildContext context) {
     final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     return BlocBuilder<DesignListingBloc, DesignListingState>(
       buildWhen: (previous, current) => current is DesignChangeListingTypeState,
@@ -48,7 +61,7 @@ class DesignListingScreen extends StatelessWidget {
             Expanded(
               child: SmartTextField(
                 hintText: APPStrings.searchProjects.tr,
-                controller: designListingBloc.designSearchController,
+                controller: bloc.designSearchController,
                 suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
                 padding: EdgeInsets.symmetric(vertical: 24.w),
               ),
@@ -58,7 +71,7 @@ class DesignListingScreen extends StatelessWidget {
               children: [
                 SelectionButton(
                   width: 48.w,
-                  isSelected: designListingBloc.isGrid,
+                  isSelected: bloc.isGrid,
                   image: AppImages.icGrid,
                   selectedButtonColor: diamondListingStyle.gridBackgroundColor,
                   selectedButtonBorderColor: diamondListingStyle.gridBorderColor,
@@ -68,12 +81,12 @@ class DesignListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                   onTap: () {
-                    designListingBloc.add(const DesignChangeListingTypeEvent(isGrid: true));
+                    bloc.add(const DesignChangeListingTypeEvent(isGrid: true));
                   },
                 ),
                 SelectionButton(
                   width: 48.w,
-                  isSelected: !designListingBloc.isGrid,
+                  isSelected: !bloc.isGrid,
                   image: AppImages.icList,
                   selectedButtonColor: diamondListingStyle.gridBackgroundColor,
                   selectedButtonBorderColor: diamondListingStyle.gridBorderColor,
@@ -83,7 +96,7 @@ class DesignListingScreen extends StatelessWidget {
                   unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                   onTap: () {
-                    designListingBloc.add(const DesignChangeListingTypeEvent(isGrid: false));
+                    bloc.add(const DesignChangeListingTypeEvent(isGrid: false));
                   },
                 ),
               ],
@@ -94,50 +107,60 @@ class DesignListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDesignList(DesignListingBloc designListingBloc) {
+  Widget _buildDesignList(DesignListingBloc bloc) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
-      buildWhen: (previous, current) => current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
+      buildWhen: (previous, current) =>
+          current is DesignListLoadedMoreState ||
+          current is DesignListingReloadState ||
+          (bloc.isGrid && current is DesignListLoadingMoreState),
       builder: (context, state) {
-        if (designListingBloc.designList.isEmpty) {
+        if (bloc.designList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDesignsFound.tr);
         }
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                controller: designListingBloc.paginationScrollController.scrollController,
-                itemCount: designListingBloc.designList.length,
-                physics: const ScrollPhysics(),
-                itemBuilder: (context, index) {
-                  B2BCustomListingDataModel designItem = designListingBloc.designList[index];
-                  //appears when there is isGrid
-                  if (designListingBloc.isGrid) {
-                    return B2BListingItem(
-                      type: B2BListingType.designListingType,
-                      listingItemModel: designItem,
-                      margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                      onTapMenuButton: () {},
+        return Expanded(
+          child: bloc.isGrid
+              ? SmartSingleChildScrollView(
+                  controller: bloc.gridPaginationScrollController.scrollController,
+                  child: SmartGridView(
+                    isLoadingMore: state is DesignListLoadingMoreState,
+                    items: List.generate(bloc.designList.length, (index) {
+                      return DesignListingGridItem.designGridItem(designModel: bloc.designList[index]);
+                    }),
+                    /*items: bloc.designList.map((item) => DesignListingGridItem.designGridItem(designModel: item)).toList(),*/
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  controller: bloc.listPaginationScrollController.scrollController,
+                  itemCount: bloc.designList.length,
+                  physics: const ScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    B2BCustomListingDataModel designItem = bloc.designList[index];
+                    return BlocBuilder<DesignListingBloc, DesignListingState>(
+                      buildWhen: (previous, current) => current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            B2BListingItem(
+                              type: B2BListingType.designListingType,
+                              listingItemModel: designItem,
+                              margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
+                              onTapMenuButton: () {},
+                            ),
+                            if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState)
+                              const SmartCircularProgressIndicator(),
+                          ],
+                        );
+                      },
                     );
-                  } else {
-                    return B2BListingItem(
-                      type: B2BListingType.designListingType,
-                      listingItemModel: designItem,
-                      margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                      onTapMenuButton: () {},
-                    );
-                  }
-                },
-              ),
-            ),
-            if (state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
-          ],
+                  },
+                ),
         );
       },
     );
   }
 
-  Widget _buildBottomNavigationBar(DesignListingBloc designListingBloc, BuildContext context) {
+  Widget _buildBottomNavigationBar(DesignListingBloc bloc, BuildContext context) {
     return SafeArea(
       child: SelectionButton(
         borderRadius: BorderRadius.zero,
@@ -153,6 +176,19 @@ class DesignListingScreen extends StatelessWidget {
         image: AppImages.icFilter,
         title: APPStrings.filter.tr,
       ),
+    );
+  }
+
+  Widget _buildFloatingActionButton(DesignListingBloc bloc) {
+    return BlocBuilder<DesignListingBloc, DesignListingState>(
+      buildWhen: (previous, current) => current is DesignChangeListingTypeState,
+      builder: (context, state) {
+        return ScrollToTopFAB(
+          canScrollToTop:
+              bloc.isGrid ? bloc.gridPaginationScrollController.canScrollToTop : bloc.listPaginationScrollController.canScrollToTop,
+          onTap: bloc.isGrid ? bloc.gridPaginationScrollController.scrollToTop : bloc.listPaginationScrollController.scrollToTop,
+        );
+      },
     );
   }
 }

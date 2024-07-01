@@ -27,6 +27,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     'Monitoring'
   ];
 
+  List<String> librarySubOptionsList = [
+    'Product Library - Grey',
+    'Product Library MF - Platinum',
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+  ];
+
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
     on<CategoriesInitialEvent>(onCategoriesInitialEvent);
@@ -66,7 +74,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: librarySubOptionsList),
         CategoriesModel(
             name: 'Digital \nCatalogue',
             image: 'https://i.ibb.co/ZWKWks5/Image.png',
@@ -113,6 +121,16 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'PDD':
         if (categorySubName == 'Monitoring') {
           context.pushNamed(AppRoutes.monitoringPage);
+        } else if (categorySubName == 'Styles Listing') {
+          context.pushNamed(AppRoutes.stylesListingPage);
+        } else if (categorySubName == 'Design Listing') {
+          context.pushNamed(AppRoutes.designListingPage);
+        } else if (categorySubName == 'Project Listing') {
+          context.pushNamed(AppRoutes.projectListingPage);
+        } else if (categorySubName == 'Presentation Listing') {
+          context.pushNamed(AppRoutes.pddListingPage);
+        } else if (categorySubName == 'Concept Listing') {
+          context.pushNamed(AppRoutes.conceptListPage);
         } else {
           context.pushNamed(AppRoutes.conceptListPage);
         }
@@ -120,6 +138,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
       case 'Project':
         context.pushNamed(AppRoutes.projectListingPage);
+        break;
+
+      case 'Libraries':
+        if (categorySubName == 'Product Library MF - Platinum') {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
+        } else {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
+        }
         break;
 
       default:

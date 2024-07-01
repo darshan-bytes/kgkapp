@@ -38,8 +38,9 @@ class SearchResultScreen extends StatelessWidget {
                         SmartRichText(
                           spans: [
                             SmartTextSpan(text: searchResultBloc.productList.length.toString(), style: style.foundItemStyle),
+                            SmartTextSpan(text: " ", style: style.foundItemStyle),
                             SmartTextSpan(text: APPStrings.resultFoundFor.tr, style: style.subTitleStyle),
-                            SmartTextSpan(text: "''${searchResultBloc.appbarTitle}''", style: style.appbarTextStyle),
+                            SmartTextSpan(text: "\" ${searchResultBloc.appbarTitle} \"", style: style.appbarTextStyle),
                           ],
                         ),
                         if (searchResultBloc.productList.isNotNullNorEmpty) ...[
@@ -148,6 +149,8 @@ class SearchResultScreen extends StatelessWidget {
                       onFavTap: () {},
                       onTap: () {},
                       onAddToBagTap: () {},
+                      prefixImage: AppImages.icShoppingBag,
+                      imageSize: 16.w,
                     );
                   }).toList());
                 } else {
@@ -194,19 +197,25 @@ class SearchResultScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(SearchResultBloc searchResultBloc, BuildContext context) {
-    return FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
-      },
-      onSortTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => const SortScreen(),
+    return BlocBuilder<SearchResultBloc, SearchResultState>(
+      buildWhen: (previous, current) => current is SearchResultLoadedState,
+      builder: (context, state) {
+        if (searchResultBloc.productList.isEmpty) return const SizedBox();
+        return FilterBottomActionBar(
+          onFilterTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              builder: (context) => FilterScreen(
+                onApply: () {},
+              ),
+            );
+          },
+          onSortTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              builder: (context) => const SortScreen(),
+            );
+          },
         );
       },
     );
@@ -297,9 +306,9 @@ class SearchResultScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
       child: Column(
         children: [
-          SmartText(APPStrings.exploreOurDigitalJewelleryCatalog.tr, style: style.titleStyle),
+          SmartText(APPStrings.exploreOurDigitalJewelleryCatalog.tr, style: style.titleStyle, textAlign: TextAlign.center),
           SizedBox(height: 16.h),
-          SmartText(APPStrings.browseOurDigitalJewelryCatalog.tr, style: style.needHelpTitleStyle),
+          SmartText(APPStrings.browseOurDigitalJewelryCatalog.tr, style: style.needHelpTitleStyle, textAlign: TextAlign.center),
           SizedBox(height: 32.h),
           SmartButton(
             width: 142.w,

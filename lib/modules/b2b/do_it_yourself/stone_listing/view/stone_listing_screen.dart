@@ -69,29 +69,34 @@ class StoneListingScreen extends StatelessWidget {
   }
 
   Widget _buildSelectionDiamond(StoneListingBloc diamondListingBloc) {
-    return Row(
-      children: [
-        Expanded(
-          child: SelectionButton(
-            isSelected: diamondListingBloc.isInitialToggle,
-            title: diamondListingBloc.tabOneTitle,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-            onTap: () {
-              diamondListingBloc.add(const StoneChangeTypeEvent(true));
-            },
-          ),
-        ),
-        Expanded(
-          child: SelectionButton(
-            isSelected: !diamondListingBloc.isInitialToggle,
-            title: diamondListingBloc.tabTwoTitle,
-            borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-            onTap: () {
-              diamondListingBloc.add(const StoneChangeTypeEvent(false));
-            },
-          ),
-        ),
-      ],
+    return BlocBuilder<StoneListingBloc, StoneListingState>(
+      buildWhen: (previous, current) => current is StoneChangeTypeState,
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(
+              child: SelectionButton(
+                isSelected: diamondListingBloc.isInitialToggle,
+                title: diamondListingBloc.tabOneTitle,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const StoneChangeTypeEvent(true));
+                },
+              ),
+            ),
+            Expanded(
+              child: SelectionButton(
+                isSelected: !diamondListingBloc.isInitialToggle,
+                title: diamondListingBloc.tabTwoTitle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                onTap: () {
+                  diamondListingBloc.add(const StoneChangeTypeEvent(false));
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -241,27 +246,28 @@ class StoneListingScreen extends StatelessWidget {
                           },
                           productDetails: ProductDetails(
                             productInfoClarityChat: ProductInfoClarityChat(
-                              productId: "1",
-                              productName: "1.00 Cts Round Diamond",
-                              ct: "10.04",
-                              shape: "Marquise",
-                              colour: "H",
-                              clarity: "VVS1",
-                              lotNumber: "MBFG716306",
-                              certificateNumber: "230000066395",
-                              measurements: "10.18 x 8.34 x 6.14",
-                              lab: "GIA",
-                              cut: "Excellent",
-                              polish: "Excellent",
-                              symmetry: "Excellent",
-                              flourish: "O",
-                              tablePercentage: "50",
-                              depthPercentage: "50",
-                              rap: "\$35,500.00",
-                              discount: "-30.00",
-                              perCts: "\$24,850.00",
-                              amount: "\$1,24,995.50",
-                            ),
+                                rapRate: "\$35,500.00",
+                                productId: "1",
+                                productName: "1.00 Cts Round Diamond",
+                                ct: "10.04",
+                                shape: "Marquise",
+                                colour: "H",
+                                clarity: "VVS1",
+                                lotNumber: "MBFG716306",
+                                certificateNumber: "230000066395",
+                                measurements: "10.18 x 8.34 x 6.14",
+                                lab: "GIA",
+                                cut: "Excellent",
+                                polish: "Excellent",
+                                symmetry: "Excellent",
+                                flourish: "O",
+                                tablePercentage: "50",
+                                depthPercentage: "50",
+                                rap: "\$24,850.00",
+                                discount: "-30.00",
+                                perCts: "\$24,850.00",
+                                amount: "\$1,24,995.50",
+                                fluorescence: '0'),
                             productId: "1",
                             diamond: "1.5 gram",
                             gram: "1.5 gram",

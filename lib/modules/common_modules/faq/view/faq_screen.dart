@@ -19,6 +19,11 @@ class FaqScreen extends StatelessWidget {
                 SizedBox(height: 24.h),
                 SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
                 SizedBox(height: 24.h),
+                SmartTextField(
+                  controller: faqBloc.searchController,
+                  suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
+                ),
+                SizedBox(height: 16.h),
                 BlocBuilder<FaqBloc, FaqState>(
                   buildWhen: (previous, current) => current is FaqLoadedState,
                   builder: (context, state) {

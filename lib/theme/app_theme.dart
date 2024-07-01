@@ -195,6 +195,14 @@ abstract class AppTheme {
   SharePresentationStyle get sharePresentationStyle;
 
   DigitalCatalogueStyle get digitalCatalogueStyle;
+
+  DesignListingGridItemStyle get designListingGridItemStyle;
+
+  PddVersionHistoryStyle get pddVersionHistoryStyle;
+
+  ProductInfoItemStyle get productInfoItemStyle;
+
+  FindStoreStyle get findStoreStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1202,22 +1210,26 @@ class SmartTabBarStyle {
 }
 
 class StatusBadgeStyle {
-  final Color inProgressBackgroundColor;
-  final Color inProgressTextColor;
+  final TextStyle statusTextStyle;
+  final Color orangeInProgressBackgroundColor;
+  final Color orangeInProgressTextColor;
   final Color activeBackgroundColor;
   final Color activeTextColor;
-  final TextStyle statusTextStyle;
   final Color lostBackgroundColor;
   final Color lostTextColor;
+  final Color blueInProgressBackgroundColor;
+  final Color blueInProgressTextColor;
 
   StatusBadgeStyle({
-    required this.inProgressBackgroundColor,
-    required this.inProgressTextColor,
+    required this.orangeInProgressBackgroundColor,
+    required this.orangeInProgressTextColor,
     required this.activeBackgroundColor,
     required this.activeTextColor,
     required this.statusTextStyle,
     required this.lostBackgroundColor,
     required this.lostTextColor,
+    required this.blueInProgressBackgroundColor,
+    required this.blueInProgressTextColor,
   });
 }
 
@@ -1754,5 +1766,59 @@ class DigitalCatalogueStyle {
     required this.titleStyle,
     required this.subTitleStyle,
     required this.borderColor,
+  });
+}
+
+class DesignListingGridItemStyle {
+  final TextStyle dbfNumberTextStyle;
+  final TextStyle salesManTextStyle;
+
+  DesignListingGridItemStyle({
+    required this.dbfNumberTextStyle,
+    required this.salesManTextStyle,
+  });
+}
+
+class ProductInfoItemStyle {
+  final TextStyle stoneShapeTextStyle;
+  final TextStyle labelTextStyle;
+  final TextStyle valueTextStyle;
+  final TextStyle moreDetailsTextStyle;
+
+  ProductInfoItemStyle({
+    required this.stoneShapeTextStyle,
+    required this.labelTextStyle,
+    required this.valueTextStyle,
+    required this.moreDetailsTextStyle,
+  });
+}
+
+class FindStoreStyle {
+  final TextStyle storeMessageStyle;
+  final TextStyle enterAddressStyle;
+  final TextStyle useCurrentLocationStyle;
+  final TextStyle addressTitleStyle;
+  final TextStyle addressStyle;
+  final Color primaryColor;
+  final Color addressBgColor;
+
+  FindStoreStyle({
+    required this.storeMessageStyle,
+    required this.enterAddressStyle,
+    required this.useCurrentLocationStyle,
+    required this.addressTitleStyle,
+    required this.addressStyle,
+    required this.primaryColor,
+    required this.addressBgColor,
+  });
+}
+
+class PddVersionHistoryStyle {
+  final Color whiteColor;
+  final Color backgroundColor;
+
+  PddVersionHistoryStyle({
+    required this.whiteColor,
+    required this.backgroundColor,
   });
 }

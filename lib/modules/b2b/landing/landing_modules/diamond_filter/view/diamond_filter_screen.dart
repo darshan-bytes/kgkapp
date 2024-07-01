@@ -167,22 +167,24 @@ class DiamondFilterScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        secondaryFilterData.image.isNotNullNorEmpty
-                            ? Padding(
-                                padding: EdgeInsets.all(4.w),
-                                child: SmartImage(
-                                  path: secondaryFilterData.image ?? '',
-                                  height: 24.w,
-                                  width: 24.w,
-                                  color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
-                                ),
-                              )
-                            : SmartCheckbox(
-                                value: secondaryFilterData.isSelected,
-                                onChanged: (value) {
-                                  handleOnChange(diamondFilterBloc, secondaryFilterData);
-                                }),
+                        SmartCheckbox(
+                            value: secondaryFilterData.isSelected,
+                            onChanged: (value) {
+                              handleOnChange(diamondFilterBloc, secondaryFilterData);
+                            }),
                         SizedBox(width: 8.w),
+                        if (secondaryFilterData.image.isNotNullNorEmpty) ...[
+                          Padding(
+                            padding: EdgeInsets.all(4.w),
+                            child: SmartImage(
+                              path: secondaryFilterData.image ?? '',
+                              height: 24.w,
+                              width: 24.w,
+                              color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                        ],
                         Expanded(
                           child: SmartText(
                             secondaryFilterData.name,

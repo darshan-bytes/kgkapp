@@ -7,7 +7,7 @@ import 'package:kgk/kgk.dart';
 class B2BItemField {
   final String? label;
   final String? value;
-  final OrderStatus? orderStatus;
+  final ProjectStatus? orderStatus;
   final String? imageUrl;
   final double? imageSize;
   final bool isCircleImage;
@@ -112,12 +112,13 @@ class B2BListingItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: auctionListItemStyle.titleStyle,
+              isAutoSizeText: true,
             ),
           ),
         SizedBox(width: 8.w),
         Expanded(
           child: field.orderStatus != null
-              ? StatusBadge(
+              ? SmartStatusBadge(
                   height: 22.h,
                   currentStatus: field.orderStatus!,
                 )
@@ -141,6 +142,7 @@ class B2BListingItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: auctionListItemStyle.titleStyle,
+              isAutoSizeText: true,
             ),
             SizedBox(height: 4.h),
           ],
@@ -153,8 +155,8 @@ class B2BListingItem extends StatelessWidget {
               imageBorderRadius: BorderRadius.circular(4.r),
             )
           else if (field.orderStatus != null)
-            StatusBadge(
-              currentStatus: OrderStatus.values.firstWhere((element) => element == field.orderStatus),
+            SmartStatusBadge(
+              currentStatus: ProjectStatus.values.firstWhere((element) => element == field.orderStatus),
             )
           else
             _buildValue(field, auctionListItemStyle, style),
@@ -200,6 +202,7 @@ class B2BListingItem extends StatelessWidget {
       child: SmartText(
         field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
         style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
+        isAutoSizeText: true,
       ),
     );
   }
@@ -210,6 +213,7 @@ class B2BListingItem extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: auctionListItemStyle.valueStyle,
+      isAutoSizeText: true,
     );
   }
 }
