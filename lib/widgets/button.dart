@@ -96,6 +96,7 @@ class SmartButton extends StatelessWidget {
                     ],
                     SmartText(
                       title,
+                      textAlign: TextAlign.center,
                       style: isEnabled ? style.titleStyle.merge(titleStyle) : style.disableTitleStyle.merge(disableTitleStyle),
                     ),
                     if (suffixImage.isNotNullNorEmpty) ...[

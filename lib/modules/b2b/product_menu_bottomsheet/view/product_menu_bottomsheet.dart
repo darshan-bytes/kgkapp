@@ -153,19 +153,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
           prefixImage: AppImages.icShoppingBag,
         ),
         SizedBox(height: 8.h),
-        SmartButton(
-            onTap: () {
-              context.pop();
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => QuotationRequestConfirmation(
-                  onContinueShopping: () {
-                    context.pop();
-                  },
-                ),
-              );
-            },
-            title: APPStrings.buyNow.tr),
+        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr),
       ],
     );
   }
