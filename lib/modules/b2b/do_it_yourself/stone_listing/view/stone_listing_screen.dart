@@ -214,6 +214,10 @@ class StoneListingScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
                       ? ProductListItem(
+                          onTap: () {
+                            context.pushNamed(AppRoutes.stoneDetailPage,
+                                arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                          },
                           onEyeTap: () {},
                           onFavTap: () {},
                           onAddToBagTap: () {},

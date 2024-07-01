@@ -25,6 +25,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
         ],
       ),
       child: BlocBuilder<LandingBloc, LandingState>(
+        bloc: landingBloc,
         buildWhen: (previous, current) => current is LandingChangeTabState || current is LandingLoadedState,
         builder: (context, state) {
           return BottomNavigationBar(

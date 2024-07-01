@@ -20,7 +20,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   String subTotalAmount = "\$90,000.00";
 
   List<ProductDetails> myBagProductList = List.generate(
-    8,
+    9,
     (index) => ProductDetails(
       diamondClarityChart: DiamondClarityChart(
         ct: "10.04",
@@ -44,11 +44,15 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         yourRate: "\$15,0600.00",
         yourValue: "\$24,850.00",
       ),
-      isDiamondProduct: index % 2 == 0,
+      isDiamondProduct: index < 6,
       productId: index.toString(),
       diamond: "2.5 crt",
       gram: "1.5 grms",
-      imageUrl: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
+      imageUrl: index < 3
+          ? "https://i.ibb.co/8xM4BxQ/image-7.png"
+          : index < 6
+              ? "https://i.ibb.co/yBHHpVV/image-419.png"
+              : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
       originalPrice: "\$3,000.00",
       productQuality: const CartProductQuality(name: "18K Gold"),

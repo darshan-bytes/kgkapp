@@ -95,7 +95,9 @@ class CompleteProductScreen extends StatelessWidget {
           _compareWidget(completeProductBloc),
           Divider(height: 40.h),
           ProductSelectedSettings(
-            onTap: () {},
+            onTap: () {
+              context.popUntilOfContext((route) => route.settings.name == AppRoutes.stoneListingPage);
+            },
             selectedSettings: SelectedSettings(
               name: '2.00 Carat H VS1 Excellent Cut Round Diamond',
               price: '\$2,680.00',
@@ -106,7 +108,9 @@ class CompleteProductScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           ProductSelectedSettings(
-            onTap: () {},
+            onTap: () {
+              context.popUntilOfContext((route) => route.settings.name == AppRoutes.settingListingPage);
+            },
             selectedSettings: SelectedSettings(
               name: '14k White & Rose gold Engagement Ring ',
               price: '\$1,360.00',

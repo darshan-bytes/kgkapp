@@ -27,7 +27,6 @@ class MyBagScreen extends StatelessWidget {
         ),
       ),
       body: _getBody(myBagBloc, style),
-      bottomNavigationBar: buildBottomNavBar(myBagBloc, style, context),
     );
   }
 
@@ -435,6 +434,45 @@ class MyBagScreen extends StatelessWidget {
               SizedBox(width: 12.w),
               _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
             ],
+          ),
+          SizedBox(height: 24.h),
+          BlocBuilder<MyBagBloc, MyBagState>(
+            buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+            builder: (context, state) {
+              return SmartDropDown(
+                focusNode: bloc.paymentConditionFocusNode,
+                onChanged: (value) {
+                  if (value != null) {
+                    bloc.variationFocusNode.requestFocus();
+                    bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
+                  }
+                },
+                items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
+                selectedItem: bloc.selectedPaymentCondition,
+                hintText: APPStrings.paymentCondition.tr,
+                labelText: APPStrings.paymentCondition.tr,
+              );
+            },
+          ),
+          SizedBox(height: 24.h),
+          SmartTextField(
+            suffixText: APPStrings.percentage,
+            labelText: APPStrings.plusMinus,
+            hintText: APPStrings.plusMinus,
+            controller: bloc.variationController,
+            focusNode: bloc.variationFocusNode,
+            nextFocus: bloc.noteFocusNode,
+            textInputFormatter: [DoubleInputFormatter()],
+            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+          ),
+          SizedBox(height: 24.h),
+          SmartTextField(
+            labelText: APPStrings.commentQuestion.tr,
+            hintText: APPStrings.commentQuestion.tr,
+            controller: bloc.noteController,
+            focusNode: bloc.noteFocusNode,
+            maxLines: 3,
+            textInputAction: TextInputAction.newline,
           ),
         ],
       ),
