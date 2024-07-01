@@ -688,4 +688,8 @@ class APPStrings {
   static const String useCurrentLocation = 'use_current_location';
   static const String getDirections = 'get_directions';
   static const String fromYourLocationX = 'from_your_location_x';
+
+  // CAD Library
+  static const String cadLibrary = 'cad_library';
+  static const String noCadLibraryFound = 'no_cad_library_found';
 }

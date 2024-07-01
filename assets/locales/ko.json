@@ -556,5 +556,7 @@
   "use_current_location": "Use current location",
   "get_directions": "Get directions",
   "from_your_location_x": "{#} from your location",
-  "version_history": "Version history"
+  "version_history": "Version history",
+  "cad_library": "CAD library",
+  "no_cad_library_found": "No CAD library found"
 }
