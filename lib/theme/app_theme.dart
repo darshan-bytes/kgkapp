@@ -209,6 +209,8 @@ abstract class AppTheme {
   EditWatchlistStyle get editWatchlistStyle;
 
   DurationPickerStyle get durationPickerStyle;
+
+  DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1878,5 +1880,25 @@ class DurationPickerStyle {
     required this.backgroundColor,
     required this.titleStyle,
     required this.subTitleStyle,
+  });
+}
+
+class DesignLibraryFeedbackStyle {
+  final Color listBackgroundColor;
+  final TextStyle idStyle;
+  final TextStyle designNameStyle;
+  final TextStyle daysAgoStyle;
+  final TextStyle designMessageStyle;
+  final Color whiteColor;
+  final Color addCommentButtonBgColor;
+
+  DesignLibraryFeedbackStyle({
+    required this.listBackgroundColor,
+    required this.idStyle,
+    required this.designNameStyle,
+    required this.daysAgoStyle,
+    required this.designMessageStyle,
+    required this.whiteColor,
+    required this.addCommentButtonBgColor,
   });
 }

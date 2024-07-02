@@ -312,3 +312,6 @@ export 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:webview_flutter/webview_flutter.dart';
+export 'package:kgk/modules/b2b/design_library_feedback/model/design_library_feedback_model.dart';
+export 'package:kgk/modules/b2b/design_library_feedback/bloc/design_library_feedback_bloc.dart';
+export 'package:kgk/modules/b2b/design_library_feedback/view/design_library_feedback_screen.dart';

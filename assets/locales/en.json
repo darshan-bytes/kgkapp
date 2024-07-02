@@ -572,5 +572,6 @@
   "select_duration": "Select duration",
   "days": "Days",
   "hours": "Hours",
-  "minutes": "Minutes"
+  "minutes": "Minutes",
+  "add_a_comment": "Add a comment"
 }

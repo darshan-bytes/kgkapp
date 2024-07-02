@@ -167,4 +167,7 @@ class AppImages {
   static String icVersionHistory = 'assets/images/ic_version_history.svg';
 
   static String icClock = 'assets/images/ic_clock.svg';
+
+  //Send Comment
+  static String icSendComment = 'assets/images/ic_send_comment.svg';
 }

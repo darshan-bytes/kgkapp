@@ -713,4 +713,7 @@ class APPStrings {
   static const String days = 'days';
   static const String hours = 'hours';
   static const String minutes = 'minutes';
+
+  // Design Library
+  static const String addAComment = 'add_a_comment';
 }
