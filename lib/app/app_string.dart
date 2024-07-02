@@ -655,6 +655,11 @@ class APPStrings {
   static const String share = 'share';
   static const String shareCatalogue = 'share_catalogue';
 
+  // Digital Catalogue
+  static const String catalogue = 'catalogue';
+  static const String searchCatalogue = 'search_digital_catalogue';
+  static const String xProducts = 'x_products';
+
   //Project status
   static const String blueInProgress = 'blue_in_progress';
   static const String orangeInProgress = 'orange_in_progress';
@@ -688,6 +693,37 @@ class APPStrings {
   static const String useCurrentLocation = 'use_current_location';
   static const String getDirections = 'get_directions';
   static const String fromYourLocationX = 'from_your_location_x';
+
+  // CAD Library
+  static const String cadLibrary = 'cad_library';
+  static const String noCadLibraryFound = 'no_cad_library_found';
+
+  //Edit watchlist
+  //Create watchlist
+  static const String createWatchlist = 'create_watchlist';
+  static const String editWatchlist = 'edit_watchlist';
+  static const String watchListDesc = 'watch_list_desc';
+  static const String theProductWillBeRemovedWhenTheTimeIsUp = 'the_product_will_be_removed_when_the_time_is_up';
+  static const String hintWatchlistName = 'hint_watchlist_name';
+  static const String duration = 'duration';
+  static const String mins = 'mins';
+
+  // Duration Picker
+  static const String selectDuration = 'select_duration';
+  static const String days = 'days';
+  static const String hours = 'hours';
+  static const String minutes = 'minutes';
+
+  // Design Library
+  static const String addAComment = 'add_a_comment';
+
+  // Exhibitions
+  static const String exhibitions = 'exhibitions';
+
+  //All Review Screen
+  static const String allReviews = 'all_reviews';
+
+  static const String hintPromoCode = 'hint_promo_code';
 
   //Diamond Landing
   static const String shopNaturalDiamonds = 'shop_natural_diamonds';

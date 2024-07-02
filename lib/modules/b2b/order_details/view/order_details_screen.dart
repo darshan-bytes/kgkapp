@@ -301,7 +301,10 @@ class OrderDetailScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
                       ),
-                      builder: (context) => const TrackOrderBottomSheet(),
+                      builder: (context) => BlocProvider<OrderDetailBloc>(
+                        create: (context) => OrderDetailBloc(),
+                        child: const TrackOrderBottomSheet(),
+                      ),
                     );
                   }),
                   _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
@@ -314,7 +317,12 @@ class OrderDetailScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
                       ),
-                      builder: (context) => const OrderCancelBottomSheet(),
+                      builder: (context) {
+                        return BlocProvider<OrderDetailBloc>(
+                          create: (context) => OrderDetailBloc(),
+                          child: const OrderCancelBottomSheet(),
+                        );
+                      },
                     );
                   }),
                 ],

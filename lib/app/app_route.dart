@@ -53,9 +53,15 @@ class AppRoutes {
   static const designBriefsPage = '/designBriefsPage';
   static const designListingPage = '/designListingPage';
   static const stylesListingPage = '/stylesListingPage';
+  static const digitalCataloguePage = '/digitalCataloguePage';
   static const presentationPreviewPage = '/presentationPreviewPage';
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
+  static const cadLibraryListingPage = '/cadLibraryListingPage';
+  static const exhibitionDetailsOrdersPage = '/exhibitionDetailsOrders';
+  static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
+  static const exhibitionListingPage = '/exhibitionListingPage';
+  static const allReviewPage = '/allReviewPage';
   static const stonesLandingPage = '/stonesLandingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -504,6 +510,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case digitalCataloguePage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
+            return const DigitalCatalogueListingScreen();
+          },
+          settings: settings,
+        );
+
       case presentationPreviewPage:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<PddPreviewBloc>(
@@ -529,6 +544,49 @@ class AppRoutes {
             child: const PddPreviewHistoryScreen(),
           ),
           settings: settings,
+        );
+
+      case cadLibraryListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
+            return const CadLibraryListingScreen();
+          },
+          settings: settings,
+        );
+      case exhibitionDetailsOrdersPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionDetailsOrdersBloc>(context).add(const ExhibitionDetailsOrdersInitialEvent());
+            return const ExhibitionDetailsOrdersScreen();
+          },
+          settings: settings,
+        );
+
+      case designLibraryFeedbackPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
+            return const DesignLibraryFeedbackScreen();
+          },
+          settings: settings,
+        );
+
+      case allReviewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<AllReviewBloc>(context).add(AllReviewInitialEvent(context));
+            return const AllReviewScreen();
+          },
+          settings: settings,
+        );
+
+      case exhibitionListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
+            return const ExhibitionListingScreen();
+          },
         );
 
       case stonesLandingPage:

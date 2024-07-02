@@ -30,8 +30,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<String> librarySubOptionsList = [
     'Product Library - Grey',
     'Product Library MF - Platinum',
-    'Collection',
-    'Best Selling',
+    'Design Library',
+    'CAD Library',
     'Seasonal Offers',
   ];
 
@@ -67,8 +67,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    categories.clear();
     if (userType == UserType.b2bUser) {
-      categories.clear();
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
@@ -86,10 +86,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       ]);
     } else {
       categories.addAll([
-        CategoriesModel(
-          name: 'Natural \nDiamonds',
-          image: 'https://i.ibb.co/HgjT1rt/Image.png',
-        ),
+        CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(
             name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
@@ -112,10 +109,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         break;
 
       case 'Do It \nYourself':
-        context.pushNamed(
-          AppRoutes.stoneListingPage,
-          arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
-        );
+        if (categorySubName == 'Seasonal Offers') {
+          context.pushNamed(AppRoutes.exhibitionDetailsOrdersPage);
+        } else {
+          context.pushNamed(
+            AppRoutes.stoneListingPage,
+            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
+          );
+        }
         break;
 
       case 'PDD':
@@ -143,6 +144,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Libraries':
         if (categorySubName == 'Product Library MF - Platinum') {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
+        } else if (categorySubName == 'CAD Library') {
+          context.pushNamed(AppRoutes.cadLibraryListingPage);
         } else {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
         }

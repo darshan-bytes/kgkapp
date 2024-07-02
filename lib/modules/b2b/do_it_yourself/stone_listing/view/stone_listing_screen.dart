@@ -190,8 +190,11 @@ class StoneListingScreen extends StatelessWidget {
                         context
                             .pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                        context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                        //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                        // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                        //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else {
                         context.pushNamed(AppRoutes.productDetailsPage,
                             arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
@@ -214,6 +217,10 @@ class StoneListingScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
                       ? ProductListItem(
+                          onTap: () {
+                            context.pushNamed(AppRoutes.stoneDetailPage,
+                                arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                          },
                           onEyeTap: () {},
                           onFavTap: () {},
                           onAddToBagTap: () {},
@@ -237,8 +244,11 @@ class StoneListingScreen extends StatelessWidget {
                               context.pushNamed(AppRoutes.stoneDetailPage,
                                   arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                             } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                              context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                              context.pushNamed(AppRoutes.productDetailsPage,
+                                  arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                              // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                              //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                             } else {
                               context.pushNamed(AppRoutes.productDetailsPage,
                                   arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});

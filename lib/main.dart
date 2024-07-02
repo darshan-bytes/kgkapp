@@ -1,6 +1,5 @@
 import 'package:kgk/kgk.dart';
 
-// main file
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager().init();
@@ -19,60 +18,64 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return ScreenUtilInit(
-        designSize: AppConst.designSize,
-        builder: (context, child) {
-          return MultiBlocProvider(
-            providers: BlocGenerator.generateBlocList(),
-            child: BlocBuilder<AppBloc, AppState>(
-              builder: (context, appState) {
-                AppBloc appBloc = BlocProvider.of<AppBloc>(context);
-                return MediaQuery.withNoTextScaling(
-                  child: MaterialApp(
-                    home: AnnotatedRegion<SystemUiOverlayStyle>(
+      designSize: AppConst.designSize,
+      builder: (context, child) {
+        return MultiBlocProvider(
+          providers: BlocGenerator.generateBlocList(),
+          child: BlocBuilder<AppBloc, AppState>(
+            builder: (context, appState) {
+              AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+              return MediaQuery.withNoTextScaling(
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: AppRoutes.generateRoute,
+                  initialRoute: AppRoutes.initialRoute,
+                  title: APPStrings.appName,
+                  navigatorKey: NavigatorKey.navigatorKey,
+                  supportedLocales: const [
+                    Locale(APPStrings.languageEn, ''), // English
+                    Locale(APPStrings.languageKo, '')
+                  ],
+                  theme: appBloc.themeData,
+                  locale: appBloc.locale,
+                  builder: (context, widget) {
+                    return AnnotatedRegion<SystemUiOverlayStyle>(
                       value: SystemUiOverlayStyle.light,
-                      child: Stack(children: [
-                        MaterialApp(
-                          debugShowCheckedModeBanner: false,
-                          onGenerateRoute: AppRoutes.generateRoute,
-                          initialRoute: AppRoutes.initialRoute,
-                          title: APPStrings.appName,
-                          navigatorKey: NavigatorKey.navigatorKey,
-                          supportedLocales: const [
-                            Locale(APPStrings.languageEn, ''), // English
-                            Locale(APPStrings.languageKo, '')
-                          ],
-                          theme: appBloc.themeData,
-                          locale: appBloc.locale,
-                          navigatorObservers: [MyNavigatorObserver()],
-                          localizationsDelegates: const [
-                            GlobalMaterialLocalizations.delegate,
-                            GlobalWidgetsLocalizations.delegate,
-                            GlobalCupertinoLocalizations.delegate,
-                            AppLocalizations.delegate,
-                            CountryLocalizations.delegate,
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 55, right: 50),
-                            child: const Banner(
-                              message: "25-June-24+9",
-                              location: BannerLocation.bottomStart,
+                      child: Stack(
+                        children: [
+                          if (widget != null) widget,
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 55, right: 50),
+                              child: const Banner(
+                                message: "1-Jul-24+10",
+                                location: BannerLocation.bottomStart,
+                              ),
                             ),
                           ),
-                        ),
-                        if (appState is ConnectivityState && !appState.isConnected)
-                          NoInternetScreen(
-                            theme: appBloc.themeData ?? appBloc.appThemes.light(),
-                          )
-                      ]),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        });
+                          if (appState is ConnectivityState && !appState.isConnected)
+                            NoInternetScreen(
+                              theme: appBloc.themeData ?? appBloc.appThemes.light(),
+                            )
+                        ],
+                      ),
+                    );
+                  },
+                  navigatorObservers: [MyNavigatorObserver()],
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    AppLocalizations.delegate,
+                    CountryLocalizations.delegate,
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }

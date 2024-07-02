@@ -1,13 +1,13 @@
 import 'package:kgk/kgk.dart';
 
 class FilterBottomActionBar extends StatelessWidget {
-  final VoidCallback onFilterTap;
-  final VoidCallback onSortTap;
+  final VoidCallback? onFilterTap;
+  final VoidCallback? onSortTap;
 
   const FilterBottomActionBar({
     super.key,
-    required this.onFilterTap,
-    required this.onSortTap,
+    this.onFilterTap,
+    this.onSortTap,
   });
 
   @override
@@ -20,17 +20,19 @@ class FilterBottomActionBar extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(
-                child: SelectionButton(
-                    isSelected: false,
-                    image: AppImages.icFilter,
-                    title: APPStrings.filter.tr,
-                    iconBetweenSpace: 6,
-                    borderRadius: const BorderRadius.all(Radius.zero),
-                    unselectedButtonBorderColor: style.transparentColor,
-                    onTap: onFilterTap)),
-            Container(height: 24, width: 1, color: style.dividerColor),
-            Expanded(
+            if (onFilterTap != null)
+              Expanded(
+                  child: SelectionButton(
+                      isSelected: false,
+                      image: AppImages.icFilter,
+                      title: APPStrings.filter.tr,
+                      iconBetweenSpace: 6,
+                      borderRadius: const BorderRadius.all(Radius.zero),
+                      unselectedButtonBorderColor: style.transparentColor,
+                      onTap: onFilterTap!)),
+            if (onFilterTap != null && onSortTap != null) Container(height: 24.h, width: 1.w, color: style.dividerColor),
+            if (onSortTap != null)
+              Expanded(
                 child: SelectionButton(
                     isSelected: false,
                     image: AppImages.icSort,
@@ -38,7 +40,8 @@ class FilterBottomActionBar extends StatelessWidget {
                     iconBetweenSpace: 6,
                     borderRadius: const BorderRadius.all(Radius.zero),
                     unselectedButtonBorderColor: style.transparentColor,
-                    onTap: onSortTap)),
+                    onTap: onSortTap!),
+              )
           ],
         ),
       ),
