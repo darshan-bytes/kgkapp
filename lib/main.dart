@@ -1,6 +1,5 @@
 import 'package:kgk/kgk.dart';
 
-// main file
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager().init();
@@ -19,15 +18,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return ScreenUtilInit(
-        designSize: AppConst.designSize,
-        builder: (context, child) {
-          return MultiBlocProvider(
-            providers: BlocGenerator.generateBlocList(),
-            child: BlocBuilder<AppBloc, AppState>(
-              builder: (context, appState) {
-                AppBloc appBloc = BlocProvider.of<AppBloc>(context);
-                return MediaQuery.withNoTextScaling(
-                  child: MaterialApp(
+      designSize: AppConst.designSize,
+      builder: (context, child) {
+        return MultiBlocProvider(
+          providers: BlocGenerator.generateBlocList(),
+          child: BlocBuilder<AppBloc, AppState>(
+            builder: (context, appState) {
+              AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+              return MediaQuery.withNoTextScaling(
+                child: MaterialApp(
                   debugShowCheckedModeBanner: false,
                   onGenerateRoute: AppRoutes.generateRoute,
                   initialRoute: AppRoutes.initialRoute,
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                             child: Container(
                               padding: const EdgeInsets.only(top: 55, right: 50),
                               child: const Banner(
-                                message: "25-June-24+9",
+                                message: "1-Jul-24+10",
                                 location: BannerLocation.bottomStart,
                               ),
                             ),
@@ -72,10 +71,10 @@ class _MyAppState extends State<MyApp> {
                     CountryLocalizations.delegate,
                   ],
                 ),
-                );
-              },
-            ),
-          );
+              );
+            },
+          ),
+        );
       },
     );
   }
