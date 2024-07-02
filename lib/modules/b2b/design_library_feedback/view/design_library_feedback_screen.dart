@@ -9,21 +9,18 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
     DesignLibraryFeedbackBloc bloc = BlocProvider.of<DesignLibraryFeedbackBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
-        title: "DERS28MOVR",
+        title: bloc.appBarTitle,
       ),
       body: SmartSingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 18.w),
-        child: Column(
-          children: [
-            _buildBody(context, style, bloc),
-          ],
-        ),
+        child: _buildBody(context, style, bloc),
       ),
       bottomNavigationBar: BlocBuilder<DesignLibraryFeedbackBloc, DesignLibraryFeedbackState>(
         buildWhen: (previous, current) => current is DesignLibraryShowAddCommentState,
         builder: (context, state) {
-          return SafeArea(
-            bottom: bloc.showAddComment,
+          return bloc.showAddComment
+              ? SafeArea(
+                  bottom: bloc.showAddComment,
             child: Container(
               color: style.whiteColor,
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
@@ -31,33 +28,31 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Visibility(
-                    visible: bloc.showAddComment,
-                    child: Stack(
-                      children: [
-                        SmartTextField(
-                          labelText: APPStrings.addAComment.tr,
-                          controller: bloc.feedbackController,
-                          focusNode: bloc.feedbackFocusNode,
-                          maxLines: 3,
-                          textInputAction: TextInputAction.newline,
+                        Stack(
+                          children: [
+                            SmartTextField(
+                              labelText: APPStrings.addAComment.tr,
+                              controller: bloc.feedbackController,
+                              focusNode: bloc.feedbackFocusNode,
+                              maxLines: 3,
+                              textInputAction: TextInputAction.newline,
+                            ),
+                            Positioned(
+                              right: 14.w,
+                              top: 86.w,
+                              child: SmartImage(
+                                height: 24.w,
+                                width: 24.w,
+                                path: AppImages.icSendComment,
+                              ),
+                            )
+                          ],
                         ),
-                        Positioned(
-                          right: 14.w,
-                          top: 86.w,
-                          child: SmartImage(
-                            height: 24.w,
-                            width: 24.w,
-                            path: AppImages.icSendComment,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
-          );
+                )
+              : const SizedBox.shrink();
         },
       ),
     );
@@ -87,9 +82,8 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => _buildListItem(context, style, bloc.feedbackList[index]),
-                separatorBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: const Divider(),
+                separatorBuilder: (context, index) => Divider(
+                  height: 32.h,
                 ),
               );
             },

@@ -1,8 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 class MyNavigatorObserver extends NavigatorObserver {
-  bool _keyboardVisible = false;
-
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
@@ -40,9 +38,6 @@ class MyNavigatorObserver extends NavigatorObserver {
   }
 
   void hideKeyboard() {
-    _keyboardVisible = MediaQuery.of(getNavigatorKeyContext).viewInsets.bottom > 0;
-    if (_keyboardVisible) {
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
-    }
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 }

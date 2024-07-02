@@ -9,6 +9,7 @@ class DesignLibraryFeedbackBloc extends Bloc<DesignLibraryFeedbackEvent, DesignL
   TextEditingController feedbackController = TextEditingController();
   FocusNode feedbackFocusNode = FocusNode();
   bool showAddComment = false;
+  String appBarTitle = "DERS28MOVR";
 
   DesignLibraryFeedbackBloc() : super(DesignLibraryFeedbackInitial()) {
     on<InitialDesignLibraryFeedbackEvent>(_onInitialDesignLibraryFeedbackEvent);

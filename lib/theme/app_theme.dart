@@ -206,23 +206,33 @@ abstract class AppTheme {
 
   CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 
+  EditWatchlistStyle get editWatchlistStyle;
+
+  DurationPickerStyle get durationPickerStyle;
+
   DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
 }
 
 class PrimaryButtonStyle {
   final Color activeBackgroundColor;
+  final Color activeWhiteBackgroundColor;
   final Color disableBackgroundColor;
   final TextStyle titleStyle;
+  final TextStyle titleWhiteStyle;
   final TextStyle disableTitleStyle;
   final Color activeImageColor;
+  final Color activeWhiteImageColor;
   final Color disableImageColor;
 
   PrimaryButtonStyle({
     required this.activeBackgroundColor,
+    required this.activeWhiteBackgroundColor,
     required this.disableBackgroundColor,
     required this.titleStyle,
+    required this.titleWhiteStyle,
     required this.disableTitleStyle,
     required this.activeImageColor,
+    required this.activeWhiteImageColor,
     required this.disableImageColor,
   });
 }
@@ -1838,6 +1848,38 @@ class CadLibraryListingItemStyle {
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+  });
+}
+
+class EditWatchlistStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle timeDurationStyle;
+  final TextStyle timeDurationValueStyle;
+  final TextStyle timeDurationDescStyle;
+  final Color durationBackgroundColor;
+
+  EditWatchlistStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.timeDurationStyle,
+    required this.timeDurationValueStyle,
+    required this.timeDurationDescStyle,
+    required this.durationBackgroundColor,
+  });
+}
+
+class DurationPickerStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  DurationPickerStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
   });
 }
 

@@ -698,6 +698,22 @@ class APPStrings {
   static const String cadLibrary = 'cad_library';
   static const String noCadLibraryFound = 'no_cad_library_found';
 
+  //Edit watchlist
+  //Create watchlist
+  static const String createWatchlist = 'create_watchlist';
+  static const String editWatchlist = 'edit_watchlist';
+  static const String watchListDesc = 'watch_list_desc';
+  static const String theProductWillBeRemovedWhenTheTimeIsUp = 'the_product_will_be_removed_when_the_time_is_up';
+  static const String hintWatchlistName = 'hint_watchlist_name';
+  static const String duration = 'duration';
+  static const String mins = 'mins';
+
+  // Duration Picker
+  static const String selectDuration = 'select_duration';
+  static const String days = 'days';
+  static const String hours = 'hours';
+  static const String minutes = 'minutes';
+
   // Design Library
   static const String addAComment = 'add_a_comment';
 }

@@ -131,7 +131,6 @@ class DesignListingScreen extends StatelessWidget {
                         },
                       );
                     }),
-                    /*items: bloc.designList.map((item) => DesignListingGridItem.designGridItem(designModel: item)).toList(),*/
                   ),
                 )
               : ListView.builder(
@@ -151,7 +150,9 @@ class DesignListingScreen extends StatelessWidget {
                               listingItemModel: designItem,
                               margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
                               onTapMenuButton: () {},
-                              onTap: () {},
+                              onTap: () {
+                                context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                              },
                             ),
                             if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState)
                               const SmartCircularProgressIndicator(),
