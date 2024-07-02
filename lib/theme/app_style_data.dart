@@ -74,17 +74,14 @@ class LightModeTheme extends AppTheme {
 
   @override
   PrimaryButtonStyle get primaryButtonStyle => PrimaryButtonStyle(
-        titleStyle: interMediumBoldTextStyle.copyWith(
-          color: colors.white,
-          fontSize: 16.sp,
-        ),
+        titleStyle: interMediumBoldTextStyle.copyWith(color: colors.white),
+        titleWhiteStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
         activeBackgroundColor: colors.primary,
+        activeWhiteBackgroundColor: colors.white,
         disableBackgroundColor: colors.colorF7F9FA,
-        disableTitleStyle: interMediumBoldTextStyle.copyWith(
-          color: colors.color8C8C8C,
-          fontSize: 16.sp,
-        ),
+        disableTitleStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
         activeImageColor: colors.white,
+        activeWhiteImageColor: colors.primary,
         disableImageColor: colors.color8C8C8C,
       );
 
@@ -999,5 +996,23 @@ class LightModeTheme extends AppTheme {
         cadNameStyle: interRegularTextStyle,
         cadBackgroundColor: colors.colorFAFAFA,
         cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
+
+  @override
+  EditWatchlistStyle get editWatchlistStyle => EditWatchlistStyle(
+        backgroundColor: colors.white,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle,
+        timeDurationStyle: interMediumBoldTextStyle,
+        timeDurationValueStyle: interSemiBoldTextStyle,
+        timeDurationDescStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        durationBackgroundColor: colors.colorF7F9FA,
+      );
+
+  @override
+  DurationPickerStyle get durationPickerStyle => DurationPickerStyle(
+        backgroundColor: colors.white,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle,
       );
 }
