@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_screen.dart';
 
 class LightModeTheme extends AppTheme {
   final AppColor initColors;
@@ -999,5 +1000,14 @@ class LightModeTheme extends AppTheme {
         cadNameStyle: interRegularTextStyle,
         cadBackgroundColor: colors.colorFAFAFA,
         cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
+
+  @override
+  ExhibitionDetailsOrdersStyle get exhibitionDetailsOrdersStyle => ExhibitionDetailsOrdersStyle(
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        productNameStyle: interMediumBoldTextStyle,
       );
 }

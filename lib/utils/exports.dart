@@ -318,3 +318,6 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:kgk/modules/b2b/cad_library_listing/bloc/cad_library_listing_bloc.dart';
 export '../modules/b2b/cad_library_listing/view/cad_library_listing_screen.dart';
 export 'package:kgk/widgets/cad_library_list_item.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_orders_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/model/exhibition_details_orders_model.dart';

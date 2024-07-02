@@ -205,6 +205,8 @@ abstract class AppTheme {
   FindStoreStyle get findStoreStyle;
 
   CadLibraryListingItemStyle get cadLibraryListingItemStyle;
+
+  ExhibitionDetailsOrdersStyle get exhibitionDetailsOrdersStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1836,5 +1838,21 @@ class CadLibraryListingItemStyle {
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+  });
+}
+
+class ExhibitionDetailsOrdersStyle {
+  final Color borderColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final TextStyle productNameStyle;
+
+  ExhibitionDetailsOrdersStyle({
+    required this.borderColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.valueStyle,
+    required this.productNameStyle,
   });
 }
