@@ -44,6 +44,9 @@ class CategoriesScreen extends StatelessWidget {
                           categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex, sublist));
                         } else {
                           // Implement your logic for when the category is not expanded
+                          if (sublist[itemIndex].name == "Digital \nCatalogue") {
+                            context.pushNamed(AppRoutes.digitalCataloguePage);
+                          }
                         }
                       },
                     ),
