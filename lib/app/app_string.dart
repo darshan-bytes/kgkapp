@@ -688,4 +688,23 @@ class APPStrings {
   static const String useCurrentLocation = 'use_current_location';
   static const String getDirections = 'get_directions';
   static const String fromYourLocationX = 'from_your_location_x';
+
+  //Diamond Landing
+  static const String shopNaturalDiamonds = 'shop_natural_diamonds';
+  static const String shopLabDiamonds = 'shop_lab_diamonds';
+  static const String startWithAGemstone = 'start_with_a_gemstone';
+  static const String startWithASetting = "start_with_a_setting";
+  static const String originOfDiamonds = 'origin_of_diamonds';
+  static const String startWithANaturalDiamond = "start_with_a_natural_diamond";
+  static const String startWithALabDiamond = "start_with_a_lab_diamond";
+  static const String diamondFAQs = "diamond_faqs";
+  static const String gemstonesFAQs = "gemstones_faqs";
+  static const String shopByGemstones = 'shop_by_gemstones';
+  static const String aboutOurDiamonds = 'about_our_diamonds';
+  static const String aboutOurGemstones = 'about_our_gemstones';
+  static const String learnMore = 'learn_more';
+  static const String shopByMetal = 'shop_by_metal';
+  static const String or = 'or';
+  static const String startWithSetting = 'start_with_setting';
+  static const String startWithDiamond = 'start_with_diamond';
 }

@@ -52,6 +52,7 @@ class BlocGenerator {
       BlocProvider<StylesListingBloc>(create: (_) => StylesListingBloc()),
       BlocProvider<MonitoringBloc>(create: (_) => MonitoringBloc()),
       BlocProvider<FindStoreBloc>(create: (_) => FindStoreBloc()),
+      BlocProvider<StonesLandingBloc>(create: (_) => StonesLandingBloc()),
     ];
   }
 }

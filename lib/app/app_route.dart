@@ -56,6 +56,7 @@ class AppRoutes {
   static const presentationPreviewPage = '/presentationPreviewPage';
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
+  static const stonesLandingPage = '/stonesLandingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -530,6 +531,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case stonesLandingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
+            return const StonesLandingScreen();
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -572,7 +582,10 @@ enum ScreenIdentifier {
   productForDiamonds,
   productForRing,
   productForLibraryGrey,
-  productForLibraryPlatinum
+  productForLibraryPlatinum,
+  landingForDiamonds,
+  landingForJewellery,
+  landingForGemstones,
 }
 
 extension RoutesDataExtension on BuildContext {

@@ -556,5 +556,22 @@
   "use_current_location": "Use current location",
   "get_directions": "Get directions",
   "from_your_location_x": "{#} from your location",
-  "version_history": "Version history"
+  "version_history": "Version history",
+  "shop_natural_diamonds": "Shop natural diamonds",
+  "shop_lab_diamonds": "Shop lab diamonds",
+  "start_with_a_gemstone": "Start with a gemstone",
+  "start_with_a_setting": "Start with a setting",
+  "origin_of_diamonds": "Origins of diamonds",
+  "start_with_a_natural_diamond": "Start with a natural diamond",
+  "start_with_a_lab_diamond": "Start with a lab diamond",
+  "diamond_faqs": "Diamond FAQs",
+  "shop_by_gemstones": "Shop by gemstones",
+  "about_our_diamonds": "About our diamonds",
+  "about_our_gemstones": "About our gemstones",
+  "learn_more": "Learn more",
+  "gemstones_faqs": "Gemstones FAQs",
+  "shop_by_metal": "Shop by metal",
+  "or": "Or",
+  "start_with_setting": "Start with setting",
+  "start_with_diamond": "Start with diamond"
 }

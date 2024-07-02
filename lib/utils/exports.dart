@@ -299,3 +299,16 @@ export 'package:kgk/modules/common_modules/find_a_store/bloc/find_store_bloc.dar
 export 'package:kgk/modules/common_modules/find_a_store/view/find_store_screen.dart';
 export 'package:kgk/modules/common_modules/find_a_store/model/address_model.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:kgk/modules/b2b/diamond_landing/bloc/stones_landing_bloc.dart';
+export 'package:kgk/modules/b2b/diamond_landing/view/stones_landing_screen.dart';
+export 'package:kgk/widgets/stones_banner_view.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/about_stone_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/crafted_for_your_special_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/design_your_own_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/get_inspired_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/shop_stone_by_shape_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/stone_banner_view.dart';
+export 'package:kgk/modules/b2b/diamond_landing/components/stone_faqs_section.dart';
+export 'package:kgk/modules/b2b/diamond_landing/view/diamond_landing_screen.dart';
+export 'package:kgk/modules/b2b/diamond_landing/view/gemstone_landing_screen.dart';
+export 'package:kgk/modules/b2b/diamond_landing/view/jewellery_landing_screen.dart';

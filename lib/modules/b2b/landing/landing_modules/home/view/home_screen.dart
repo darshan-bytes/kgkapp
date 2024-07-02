@@ -52,7 +52,8 @@ class HomeScreen extends StatelessWidget {
           },
           imageUrl: item.imageUrl ?? '',
           title: item.name ?? '',
-          imageSize: 80.w,
+          imageWidth: 80.w,
+          imageHeight: 80.w,
           margin: EdgeInsets.only(
             left: index == 0 ? 17.w : 0,
             right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
