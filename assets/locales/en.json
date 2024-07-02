@@ -573,5 +573,7 @@
   "days": "Days",
   "hours": "Hours",
   "minutes": "Minutes",
-  "add_a_comment": "Add a comment"
+  "add_a_comment": "Add a comment",
+  "all_reviews": "All reviews",
+  "hint_promo_code": "Enter promo code"
 }

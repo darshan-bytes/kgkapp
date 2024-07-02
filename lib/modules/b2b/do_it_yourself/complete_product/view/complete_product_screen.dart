@@ -127,18 +127,27 @@ class CompleteProductScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h),
-          RichText(
-            text: TextSpan(
-              text: APPStrings.buyingInBulk.tr,
-              style: style.productTypeStyle,
-              children: [
-                WidgetSpan(child: SizedBox(width: 12.w)),
-                TextSpan(
-                  text: APPStrings.askForQuotation.tr,
-                  style: style.detailsHeaderStyle,
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              SmartText(APPStrings.buyingInBulk.tr, style: style.productTypeStyle),
+              SizedBox(width: 12.w),
+              SmartButton(
+                title: APPStrings.askForQuotation.tr,
+                width: 170.w,
+                height: 40.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                onTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    builder: (context) => QuotationRequestConfirmation(
+                      onContinueShopping: () {
+                        context.pop();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           SizedBox(height: 8.h),
           SmartText(APPStrings.approxPriceNote.tr, style: style.productTypeStyle),

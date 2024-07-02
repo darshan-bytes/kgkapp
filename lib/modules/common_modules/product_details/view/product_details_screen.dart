@@ -314,12 +314,16 @@ class ProductDetailsScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               primary: false,
-              itemCount: 4,
-              itemBuilder: (context, index) => const ProductCustomerReviewWidget(),
+              itemCount: productDetailsBloc.reviewList.length > 5 ? 5 : productDetailsBloc.reviewList.length,
+              itemBuilder: (context, index) => ProductCustomerReviewWidget(reviewDataModel: productDetailsBloc.reviewList[index]),
               separatorBuilder: (_, __) => Divider(height: 32.h),
             ),
-            SizedBox(height: 16.h),
-            SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle),
+            if (productDetailsBloc.reviewList.length > 5) ...[
+              SizedBox(height: 16.h),
+              SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
+                context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: productDetailsBloc.productDetails?.productId});
+              }),
+            ],
             SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(productDetailsBloc, style),

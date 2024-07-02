@@ -716,4 +716,9 @@ class APPStrings {
 
   // Design Library
   static const String addAComment = 'add_a_comment';
+
+  //All Review Screen
+  static const String allReviews = 'all_reviews';
+
+  static const String hintPromoCode = 'hint_promo_code';
 }

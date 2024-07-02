@@ -6,7 +6,6 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
-    categoriesBloc.add(CategoriesInitialEvent(context: context));
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
