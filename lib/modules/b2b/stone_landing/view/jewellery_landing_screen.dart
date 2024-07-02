@@ -107,7 +107,6 @@ class JewelleryLandingScreen extends StatelessWidget {
             left: index == 0 ? 17.w : 0,
             right: index == bloc.shopByMetalList.length - 1 ? 17.w : 0,
           ),
-          // imagePadding: EdgeInsets.all(12.w),
           titleMaxLines: 1,
           imageUrl: item.imageUrl ?? '',
         );

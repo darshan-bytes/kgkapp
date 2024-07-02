@@ -5,7 +5,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
   final EdgeInsets listPadding;
   final EdgeInsets padding;
-  final double itemBetweenSpace;
+  final double? itemBetweenSpace;
   final CrossAxisAlignment crossAxisAlignment;
   final CrossAxisAlignment mainAxisAlignment;
   final String? title;
@@ -19,7 +19,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   const SmartHorizontalItemBuilder(
       {super.key,
       this.listPadding = EdgeInsets.zero,
-      this.itemBetweenSpace = 16,
+      this.itemBetweenSpace,
       this.crossAxisAlignment = CrossAxisAlignment.start,
       this.mainAxisAlignment = CrossAxisAlignment.start,
       required this.itemCount,
@@ -58,7 +58,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
                     itemCount,
                     (index) {
                       return Padding(
-                        padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : itemBetweenSpace),
+                        padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
                         child: itemBuilder(context, index),
                       );
                     },
