@@ -37,9 +37,7 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: _ordersListing(exhibitionDetailsOrdersBloc, context),
-                    ),
+                    _ordersListing(exhibitionDetailsOrdersBloc, context),
                   ],
                 );
               })),
@@ -48,19 +46,21 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
 
   Widget _ordersListing(ExhibitionDetailsOrdersBloc exhibitionDetailsOrdersBloc, BuildContext context) {
     final style = AppTheme.of(context).exhibitionDetailsOrdersStyle;
-    return ListView.separated(
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final item = exhibitionDetailsOrdersBloc.exhibitionOrders[index];
-          return _orderItem(item, style);
-        },
-        separatorBuilder: (context, index) {
-          return SizedBox(
-            height: 16.h,
-          );
-        },
-        padding: EdgeInsets.only(top: 8.w, left: 16.w, right: 16.w),
-        itemCount: exhibitionDetailsOrdersBloc.exhibitionOrders.length);
+    return Expanded(
+      child: ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final item = exhibitionDetailsOrdersBloc.exhibitionOrders[index];
+            return _orderItem(item, style);
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(
+              height: 16.h,
+            );
+          },
+          padding: EdgeInsets.only(top: 8.w, left: 16.w, right: 16.w),
+          itemCount: exhibitionDetailsOrdersBloc.exhibitionOrders.length),
+    );
   }
 
   Widget _orderItem(ExhibitionDetailsOrdersModel item, ExhibitionDetailsOrdersStyle style) {
