@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
