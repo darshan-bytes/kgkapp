@@ -131,25 +131,17 @@ Widget _buildDetailColumn(String title, String? value, ExhibitionDetailsOrdersSt
       Row(
         children: [
           if (image != null)
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.only(right: 4.w),
-                child: SmartImage(
-                  path: image,
-                  height: 24.w,
-                  width: 24.w,
-                ),
-              ),
+            SmartImage(
+              padding: EdgeInsets.only(right: 4.w),
+              path: image,
+              height: 24.w,
+              width: 24.w,
             ),
-          Flexible(
-            flex: 5,
-            fit: FlexFit.tight,
-            child: SmartText(
-              value.isNullOrEmpty ? APPStrings.dash.tr : value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: style.valueStyle,
-            ),
+          SmartText(
+            value.isNullOrEmpty ? APPStrings.dash.tr : value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.valueStyle,
           ),
         ],
       ),
