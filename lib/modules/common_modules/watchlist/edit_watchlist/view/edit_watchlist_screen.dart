@@ -93,9 +93,19 @@ class EditWatchlistScreen extends StatelessWidget {
                           SizedBox(height: 32.h),
                           Row(
                             children: [
-                              Expanded(child: SmartButton.white(onTap: () {}, title: APPStrings.cancel.tr)),
+                              Expanded(
+                                  child: SmartButton.white(
+                                      onTap: () {
+                                        context.pop();
+                                      },
+                                      title: APPStrings.cancel.tr)),
                               SizedBox(width: 16.w),
-                              Expanded(child: SmartButton(onTap: () {}, title: APPStrings.save.tr)),
+                              Expanded(
+                                  child: SmartButton(
+                                      onTap: () {
+                                        context.pop();
+                                      },
+                                      title: APPStrings.save.tr)),
                             ],
                           ),
                           SizedBox(height: 16.h),

@@ -707,6 +707,8 @@ class APPStrings {
   static const String hintWatchlistName = 'hint_watchlist_name';
   static const String duration = 'duration';
   static const String mins = 'mins';
+  static const String searchWatchlist = 'search_watchlist';
+  static const String noWatchlistFound = 'no_watchlist_found';
 
   // Duration Picker
   static const String selectDuration = 'select_duration';
@@ -724,4 +726,5 @@ class APPStrings {
   static const String allReviews = 'all_reviews';
 
   static const String hintPromoCode = 'hint_promo_code';
+  static const String create = 'create';
 }

@@ -576,5 +576,8 @@
   "add_a_comment": "Add a comment",
   "exhibitions": "Exhibitions",
   "all_reviews": "All reviews",
-  "hint_promo_code": "Enter promo code"
+  "hint_promo_code": "Enter promo code",
+  "no_watchlist_found": "No watchlist found",
+  "search_watchlist": "Search watchlist",
+  "create": "Create"
 }

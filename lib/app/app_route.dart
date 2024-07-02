@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/watchlist/bloc/watchlist_bloc.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -62,6 +63,7 @@ class AppRoutes {
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
+  static const watchListPage = '/watchListPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -567,6 +569,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
             return const DesignLibraryFeedbackScreen();
+          },
+          settings: settings,
+        );
+
+      case watchListPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent());
+            return const WatchlistScreen();
           },
           settings: settings,
         );
