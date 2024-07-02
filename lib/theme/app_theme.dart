@@ -211,6 +211,8 @@ abstract class AppTheme {
   DurationPickerStyle get durationPickerStyle;
 
   DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
+
+  ExhibitionListingItemStyle get exhibitionListingItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1900,5 +1902,33 @@ class DesignLibraryFeedbackStyle {
     required this.designMessageStyle,
     required this.whiteColor,
     required this.addCommentButtonBgColor,
+  });
+}
+
+class ExhibitionListingItemStyle {
+  final Color backgroundColor;
+  final Color textBackgroundColor;
+  final Color borderColor;
+  final Color iconColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle listTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle listAuthorStyle;
+  final TextStyle listSubTitleStyle;
+  final TextStyle listStatusStyle;
+
+  ExhibitionListingItemStyle({
+    required this.backgroundColor,
+    required this.textBackgroundColor,
+    required this.borderColor,
+    required this.iconColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.listTextStyle,
+    required this.listTitleStyle,
+    required this.listAuthorStyle,
+    required this.listSubTitleStyle,
+    required this.listStatusStyle,
   });
 }

@@ -717,6 +717,9 @@ class APPStrings {
   // Design Library
   static const String addAComment = 'add_a_comment';
 
+  // Exhibitions
+  static const String exhibitions = 'exhibitions';
+
   //All Review Screen
   static const String allReviews = 'all_reviews';
 

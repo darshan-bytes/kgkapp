@@ -319,3 +319,6 @@ export 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:webview_flutter/webview_flutter.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/bloc/exhibition_listing_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_model.dart';

@@ -82,7 +82,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.exhibition.tr,
             subTitle: APPStrings.listOfExhibitionsOfKGK.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.exhibitionListingPage);
+            }),
         ProfileListModel(
             image: AppImages.icActivityLog,
             title: APPStrings.activityLog.tr,
