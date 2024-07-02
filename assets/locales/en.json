@@ -561,5 +561,6 @@
   "search_digital_catalogue": "Search catalogue",
   "x_products": "{#} Products",
   "cad_library": "CAD library",
-  "no_cad_library_found": "No CAD library found"
+  "no_cad_library_found": "No CAD library found",
+  "add_a_comment": "Add a comment"
 }

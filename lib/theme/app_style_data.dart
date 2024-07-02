@@ -1000,4 +1000,15 @@ class LightModeTheme extends AppTheme {
         cadBackgroundColor: colors.colorFAFAFA,
         cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
       );
+
+  @override
+  DesignLibraryFeedbackStyle get designLibraryFeedbackStyle => DesignLibraryFeedbackStyle(
+        idStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        designNameStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        daysAgoStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        designMessageStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        listBackgroundColor: colors.colorF7F9FA,
+        whiteColor: colors.white,
+        addCommentButtonBgColor: colors.colorF7F9FA,
+      );
 }

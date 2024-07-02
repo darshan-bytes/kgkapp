@@ -164,4 +164,7 @@ class AppImages {
   //Presentation
   static String icAddComment = 'assets/images/ic_add_comment.svg';
   static String icVersionHistory = 'assets/images/ic_version_history.svg';
+
+  //Send Comment
+  static String icSendComment = 'assets/images/ic_send_comment.svg';
 }

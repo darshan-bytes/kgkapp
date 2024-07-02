@@ -697,4 +697,7 @@ class APPStrings {
   // CAD Library
   static const String cadLibrary = 'cad_library';
   static const String noCadLibraryFound = 'no_cad_library_found';
+
+  // Design Library
+  static const String addAComment = 'add_a_comment';
 }

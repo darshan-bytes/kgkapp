@@ -205,6 +205,8 @@ abstract class AppTheme {
   FindStoreStyle get findStoreStyle;
 
   CadLibraryListingItemStyle get cadLibraryListingItemStyle;
+
+  DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1836,5 +1838,25 @@ class CadLibraryListingItemStyle {
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+  });
+}
+
+class DesignLibraryFeedbackStyle {
+  final Color listBackgroundColor;
+  final TextStyle idStyle;
+  final TextStyle designNameStyle;
+  final TextStyle daysAgoStyle;
+  final TextStyle designMessageStyle;
+  final Color whiteColor;
+  final Color addCommentButtonBgColor;
+
+  DesignLibraryFeedbackStyle({
+    required this.listBackgroundColor,
+    required this.idStyle,
+    required this.designNameStyle,
+    required this.daysAgoStyle,
+    required this.designMessageStyle,
+    required this.whiteColor,
+    required this.addCommentButtonBgColor,
   });
 }
