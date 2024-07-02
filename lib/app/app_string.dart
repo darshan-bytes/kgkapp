@@ -719,4 +719,9 @@ class APPStrings {
 
   // Exhibitions
   static const String exhibitions = 'exhibitions';
+
+  //All Review Screen
+  static const String allReviews = 'all_reviews';
+
+  static const String hintPromoCode = 'hint_promo_code';
 }

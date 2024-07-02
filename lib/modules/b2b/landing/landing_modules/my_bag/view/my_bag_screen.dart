@@ -220,8 +220,10 @@ class MyBagScreen extends StatelessWidget {
               SmartText("\$35,700.00", style: style.totalAmountStyle),
             ],
           ),
-          SizedBox(height: 16.h),
-          buildCheckoutButton(context),
+          // Commented below code for: Feedback - 30=> Bottom checkout is not needed as we have fixed checkout button is available.
+          // We discussed yesterday regarding that also remove it from the top too.
+          // SizedBox(height: 16.h),
+          // buildCheckoutButton(context),
           SizedBox(height: 24.h),
           const Divider()
         ],

@@ -126,6 +126,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     ),
   );
 
+  List<ReviewDataModel> reviewList = [];
+
   ProductDetailsBloc() : super(ProductDetailsInitialState()) {
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
     on<ToggleCompareProductEvent>(_onToggleCompareProduct);
@@ -234,7 +236,28 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       originalPrice: '\$1600.00',
       discountPercentage: '(3% OFF)',
     );
-    emit(ProductDetailsLoadedState(productDetails!));
+
+    reviewList = List.generate(
+      6,
+      (index) => ReviewDataModel(
+        id: index,
+        userName: 'Esther Howard',
+        date: '01/05/23',
+        rating: 4,
+        title: 'Gorgeous and more gorgeous',
+        review:
+            'I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone.',
+        images: [
+          'https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png',
+          'https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
+          'https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png',
+          'https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
+        ],
+      ),
+    );
+    if (productDetails != null) {
+      emit(ProductDetailsLoadedState(productDetails!));
+    }
   }
 
   void getScreenIdentifier(BuildContext context) {
