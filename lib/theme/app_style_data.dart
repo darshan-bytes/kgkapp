@@ -1026,4 +1026,26 @@ class LightModeTheme extends AppTheme {
         whiteColor: colors.white,
         addCommentButtonBgColor: colors.colorF7F9FA,
       );
+
+  @override
+  ExhibitionListingItemStyle get exhibitionListingItemStyle => ExhibitionListingItemStyle(
+        backgroundColor: colors.white,
+        textBackgroundColor: colors.colorF1F7F9,
+        borderColor: colors.colorD3DAE0,
+        iconColor: colors.color083458,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 12.sp,
+        ),
+        listTextStyle: eBGaramondRegularTextStyle.copyWith(
+          fontSize: 28.sp,
+        ),
+        listTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        listAuthorStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        listSubTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 12.sp,
+          color: colors.color8C8C8C,
+        ),
+        listStatusStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+      );
 }

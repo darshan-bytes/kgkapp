@@ -59,6 +59,7 @@ class AppRoutes {
   static const findStorePage = '/findStorePage';
   static const cadLibraryListingPage = '/cadLibraryListingPage';
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
+  static const exhibitionListingPage = '/exhibitionListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -558,6 +559,14 @@ class AppRoutes {
             return const DesignLibraryFeedbackScreen();
           },
           settings: settings,
+        );
+
+      case exhibitionListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
+            return const ExhibitionListingScreen();
+          },
         );
 
       default:

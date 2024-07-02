@@ -56,6 +56,7 @@ class BlocGenerator {
       BlocProvider<CadLibraryListingBloc>(create: (_) => CadLibraryListingBloc()),
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
       BlocProvider<DesignLibraryFeedbackBloc>(create: (_) => DesignLibraryFeedbackBloc()),
+      BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),
     ];
   }
 }
