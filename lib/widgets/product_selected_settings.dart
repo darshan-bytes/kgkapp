@@ -25,7 +25,7 @@ class ProductSelectedSettings extends StatelessWidget {
         SizedBox(width: 12.w),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SmartText(selectedSettings.name, style: style.titleStyle),
@@ -34,9 +34,11 @@ class ProductSelectedSettings extends StatelessWidget {
               SizedBox(height: 4.h),
               SmartText(selectedSettings.price, style: style.titleStyle),
               SizedBox(height: 12.h),
-              SmartText(
-                APPStrings.change.tr,
-                style: style.changeTextStyle,
+              SmartButton(
+                title: APPStrings.change.tr,
+                width: 100.w,
+                height: 40.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
                 onTap: () {
                   onTap();
                 },

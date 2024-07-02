@@ -124,9 +124,13 @@ class DesignListingScreen extends StatelessWidget {
                   child: SmartGridView(
                     isLoadingMore: state is DesignListLoadingMoreState,
                     items: List.generate(bloc.designList.length, (index) {
-                      return DesignListingGridItem.designGridItem(designModel: bloc.designList[index]);
+                      return DesignListingGridItem.designGridItem(
+                        designModel: bloc.designList[index],
+                        onTap: () {
+                          context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                        },
+                      );
                     }),
-                    /*items: bloc.designList.map((item) => DesignListingGridItem.designGridItem(designModel: item)).toList(),*/
                   ),
                 )
               : ListView.builder(
@@ -146,6 +150,9 @@ class DesignListingScreen extends StatelessWidget {
                               listingItemModel: designItem,
                               margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
                               onTapMenuButton: () {},
+                              onTap: () {
+                                context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                              },
                             ),
                             if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState)
                               const SmartCircularProgressIndicator(),

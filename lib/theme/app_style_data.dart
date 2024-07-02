@@ -75,17 +75,14 @@ class LightModeTheme extends AppTheme {
 
   @override
   PrimaryButtonStyle get primaryButtonStyle => PrimaryButtonStyle(
-        titleStyle: interMediumBoldTextStyle.copyWith(
-          color: colors.white,
-          fontSize: 16.sp,
-        ),
+        titleStyle: interMediumBoldTextStyle.copyWith(color: colors.white),
+        titleWhiteStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
         activeBackgroundColor: colors.primary,
+        activeWhiteBackgroundColor: colors.white,
         disableBackgroundColor: colors.colorF7F9FA,
-        disableTitleStyle: interMediumBoldTextStyle.copyWith(
-          color: colors.color8C8C8C,
-          fontSize: 16.sp,
-        ),
+        disableTitleStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
         activeImageColor: colors.white,
+        activeWhiteImageColor: colors.primary,
         disableImageColor: colors.color8C8C8C,
       );
 
@@ -1009,5 +1006,55 @@ class LightModeTheme extends AppTheme {
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         productNameStyle: interMediumBoldTextStyle,
+      );
+
+  EditWatchlistStyle get editWatchlistStyle => EditWatchlistStyle(
+        backgroundColor: colors.white,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle,
+        timeDurationStyle: interMediumBoldTextStyle,
+        timeDurationValueStyle: interSemiBoldTextStyle,
+        timeDurationDescStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        durationBackgroundColor: colors.colorF7F9FA,
+      );
+
+  @override
+  DurationPickerStyle get durationPickerStyle => DurationPickerStyle(
+        backgroundColor: colors.white,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        subTitleStyle: interRegularTextStyle,
+      );
+
+  @override
+  DesignLibraryFeedbackStyle get designLibraryFeedbackStyle => DesignLibraryFeedbackStyle(
+        idStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        designNameStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        daysAgoStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        designMessageStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        listBackgroundColor: colors.colorF7F9FA,
+        whiteColor: colors.white,
+        addCommentButtonBgColor: colors.colorF7F9FA,
+      );
+
+  @override
+  ExhibitionListingItemStyle get exhibitionListingItemStyle => ExhibitionListingItemStyle(
+        backgroundColor: colors.white,
+        textBackgroundColor: colors.colorF1F7F9,
+        borderColor: colors.colorD3DAE0,
+        iconColor: colors.color083458,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 12.sp,
+        ),
+        listTextStyle: eBGaramondRegularTextStyle.copyWith(
+          fontSize: 28.sp,
+        ),
+        listTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        listAuthorStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        listSubTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 12.sp,
+          color: colors.color8C8C8C,
+        ),
+        listStatusStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       );
 }

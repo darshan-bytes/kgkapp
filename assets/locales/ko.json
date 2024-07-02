@@ -559,5 +559,20 @@
   "search_digital_catalogue": "Search catalogue",
   "x_products": "{#} Products",
   "cad_library": "CAD library",
-  "no_cad_library_found": "No CAD library found"
+  "no_cad_library_found": "No CAD library found",
+  "create_watchlist": "Create watchlist",
+  "edit_watchlist": "Edit watchlist",
+  "watch_list_desc": "You’ll get notify by system notification as well as to your mail.",
+  "the_product_will_be_removed_when_the_time_is_up": "The product will be removed when the time is up.",
+  "hint_watchlist_name": "Watchlist name",
+  "duration": "Duration",
+  "mins": "Mins",
+  "select_duration": "Select duration",
+  "days": "Days",
+  "hours": "Hours",
+  "minutes": "Minutes",
+  "add_a_comment": "Add a comment",
+  "exhibitions": "Exhibitions",
+  "all_reviews": "All reviews",
+  "hint_promo_code": "Enter promo code"
 }

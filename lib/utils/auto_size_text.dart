@@ -1,3 +1,6 @@
+//TODO: Need to update this file to the latest version of the package and remove the deprecated code
+// ignore_for_file: deprecated_member_use
+
 import 'package:kgk/kgk.dart';
 
 /// Flutter widget that automatically resizes text to fit perfectly within its

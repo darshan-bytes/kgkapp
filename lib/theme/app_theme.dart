@@ -207,22 +207,36 @@ abstract class AppTheme {
   CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 
   ExhibitionDetailsOrdersStyle get exhibitionDetailsOrdersStyle;
+
+  EditWatchlistStyle get editWatchlistStyle;
+
+  DurationPickerStyle get durationPickerStyle;
+
+  DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
+
+  ExhibitionListingItemStyle get exhibitionListingItemStyle;
 }
 
 class PrimaryButtonStyle {
   final Color activeBackgroundColor;
+  final Color activeWhiteBackgroundColor;
   final Color disableBackgroundColor;
   final TextStyle titleStyle;
+  final TextStyle titleWhiteStyle;
   final TextStyle disableTitleStyle;
   final Color activeImageColor;
+  final Color activeWhiteImageColor;
   final Color disableImageColor;
 
   PrimaryButtonStyle({
     required this.activeBackgroundColor,
+    required this.activeWhiteBackgroundColor,
     required this.disableBackgroundColor,
     required this.titleStyle,
+    required this.titleWhiteStyle,
     required this.disableTitleStyle,
     required this.activeImageColor,
+    required this.activeWhiteImageColor,
     required this.disableImageColor,
   });
 }
@@ -1854,5 +1868,85 @@ class ExhibitionDetailsOrdersStyle {
     required this.titleStyle,
     required this.valueStyle,
     required this.productNameStyle,
+  });
+}
+
+class EditWatchlistStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle timeDurationStyle;
+  final TextStyle timeDurationValueStyle;
+  final TextStyle timeDurationDescStyle;
+  final Color durationBackgroundColor;
+
+  EditWatchlistStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.timeDurationStyle,
+    required this.timeDurationValueStyle,
+    required this.timeDurationDescStyle,
+    required this.durationBackgroundColor,
+  });
+}
+
+class DurationPickerStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+
+  DurationPickerStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+  });
+}
+
+class DesignLibraryFeedbackStyle {
+  final Color listBackgroundColor;
+  final TextStyle idStyle;
+  final TextStyle designNameStyle;
+  final TextStyle daysAgoStyle;
+  final TextStyle designMessageStyle;
+  final Color whiteColor;
+  final Color addCommentButtonBgColor;
+
+  DesignLibraryFeedbackStyle({
+    required this.listBackgroundColor,
+    required this.idStyle,
+    required this.designNameStyle,
+    required this.daysAgoStyle,
+    required this.designMessageStyle,
+    required this.whiteColor,
+    required this.addCommentButtonBgColor,
+  });
+}
+
+class ExhibitionListingItemStyle {
+  final Color backgroundColor;
+  final Color textBackgroundColor;
+  final Color borderColor;
+  final Color iconColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle listTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle listAuthorStyle;
+  final TextStyle listSubTitleStyle;
+  final TextStyle listStatusStyle;
+
+  ExhibitionListingItemStyle({
+    required this.backgroundColor,
+    required this.textBackgroundColor,
+    required this.borderColor,
+    required this.iconColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.listTextStyle,
+    required this.listTitleStyle,
+    required this.listAuthorStyle,
+    required this.listSubTitleStyle,
+    required this.listStatusStyle,
   });
 }

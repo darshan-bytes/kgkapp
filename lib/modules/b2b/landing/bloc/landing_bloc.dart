@@ -154,6 +154,9 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
           case homeIndex:
             blocList[currentIndex].add(HomeInitialEvent(context: event.context));
             break;
+          case categoriesIndex:
+            blocList[currentIndex].add(CategoriesInitialEvent(context: event.context));
+            break;
           case myBagIndex:
             blocList[currentIndex].add(InitialMyBagEvent());
             break;
@@ -168,6 +171,9 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         switch (event.index) {
           case homeIndex:
             blocList[currentIndex].add(HomeInitialEvent(context: event.context));
+            break;
+          case categoriesIndex:
+            blocList[currentIndex].add(CategoriesInitialEvent(context: event.context));
             break;
           case myBagIndex:
             blocList[currentIndex].add(InitialMyBagEvent());

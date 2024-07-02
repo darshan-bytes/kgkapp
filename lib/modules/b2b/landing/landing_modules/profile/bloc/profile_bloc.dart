@@ -67,13 +67,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.watchlist.tr,
             subTitle: APPStrings.listOfProductsAddedToWatchlist.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: event.context,
+                enableDrag: false,
+                builder: (context) {
+                  BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent());
+                  return const EditWatchlistScreen();
+                },
+              );
+            }),
         ProfileListModel(
             image: AppImages.icExhibition,
             title: APPStrings.exhibition.tr,
             subTitle: APPStrings.listOfExhibitionsOfKGK.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.exhibitionListingPage);
+            }),
         ProfileListModel(
             image: AppImages.icActivityLog,
             title: APPStrings.activityLog.tr,

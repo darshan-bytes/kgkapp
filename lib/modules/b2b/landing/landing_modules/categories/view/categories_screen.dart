@@ -6,7 +6,6 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = BlocProvider.of<CategoriesBloc>(context);
-    categoriesBloc.add(CategoriesInitialEvent(context: context));
     return Scaffold(
       appBar: SmartAppBar(
         isBack: false,
@@ -44,6 +43,9 @@ class CategoriesScreen extends StatelessWidget {
                           categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex, sublist));
                         } else {
                           // Implement your logic for when the category is not expanded
+                          if (sublist[itemIndex].name == "Digital \nCatalogue") {
+                            context.pushNamed(AppRoutes.digitalCataloguePage);
+                          }
                         }
                       },
                     ),

@@ -48,7 +48,7 @@ class OrderSummary extends StatelessWidget {
           SizedBox(height: 16.h),
           if (isPromoCodeApplied) ...[
             const Divider(),
-            _buildPromoCodeSection(style),
+            _buildPromoCodeSection(style, context),
             const Divider(),
           ],
           SizedBox(height: 16.h),
@@ -76,14 +76,20 @@ class OrderSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildPromoCodeSection(OrderSummaryStyle style) {
+  Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 18.h),
       child: Row(
         children: [
           Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
           SizedBox(width: 17.w),
-          SmartText(APPStrings.apply.tr, style: totalStyle ?? style.totalPriceStyle)
+          SmartText(
+            APPStrings.apply.tr,
+            style: totalStyle ?? style.totalPriceStyle,
+            onTap: () {
+              Utils.showSmartModalBottomSheet(context: context, builder: (context) => const ApplyPromoCodeBottomSheet());
+            },
+          )
         ],
       ),
     );

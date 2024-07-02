@@ -204,6 +204,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc, BuildContext context) {
+    printWrapped("productDetailsBloc.screenIdentifier==${productDetailsBloc.screenIdentifier}");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
@@ -268,11 +269,34 @@ class ProductDetailsScreen extends StatelessWidget {
             _gemstoneDetails(productDetailsBloc, style),
             const Divider(),
           ],
-          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds ||
-              productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
             _diamondDetails(productDetailsBloc, style),
+            const Divider(),
+          ],
+          if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
+            SizedBox(height: 24.h),
+            const Divider(),
+            InkWell(
+              onTap: () {
+                context.pushNamed(AppRoutes.diamondInfoPopupPage);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 24.h),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SmartText(
+                        APPStrings.diamondDetails.tr,
+                        style: style.settingSelectionTitleStyle,
+                      ),
+                    ),
+                    SmartImage(path: AppImages.icRight, height: 20.w, width: 20.w),
+                  ],
+                ),
+              ),
+            ),
             const Divider(),
           ],
           SizedBox(height: 24.h),
@@ -290,12 +314,16 @@ class ProductDetailsScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               primary: false,
-              itemCount: 4,
-              itemBuilder: (context, index) => const ProductCustomerReviewWidget(),
+              itemCount: productDetailsBloc.reviewList.length > 5 ? 5 : productDetailsBloc.reviewList.length,
+              itemBuilder: (context, index) => ProductCustomerReviewWidget(reviewDataModel: productDetailsBloc.reviewList[index]),
               separatorBuilder: (_, __) => Divider(height: 32.h),
             ),
-            SizedBox(height: 16.h),
-            SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle),
+            if (productDetailsBloc.reviewList.length > 5) ...[
+              SizedBox(height: 16.h),
+              SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
+                context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: productDetailsBloc.productDetails?.productId});
+              }),
+            ],
             SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(productDetailsBloc, style),

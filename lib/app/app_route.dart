@@ -60,6 +60,9 @@ class AppRoutes {
   static const findStorePage = '/findStorePage';
   static const cadLibraryListingPage = '/cadLibraryListingPage';
   static const exhibitionDetailsOrdersPage = '/exhibitionDetailsOrders';
+  static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
+  static const exhibitionListingPage = '/exhibitionListingPage';
+  static const allReviewPage = '/allReviewPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -558,6 +561,32 @@ class AppRoutes {
             return const ExhibitionDetailsOrdersScreen();
           },
           settings: settings,
+        );
+
+      case designLibraryFeedbackPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
+            return const DesignLibraryFeedbackScreen();
+          },
+          settings: settings,
+        );
+
+      case allReviewPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<AllReviewBloc>(context).add(AllReviewInitialEvent(context));
+            return const AllReviewScreen();
+          },
+          settings: settings,
+        );
+
+      case exhibitionListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
+            return const ExhibitionListingScreen();
+          },
         );
 
       default:
