@@ -58,6 +58,7 @@ class AppRoutes {
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
   static const cadLibraryListingPage = '/cadLibraryListingPage';
+  static const exhibitionDetailsOrdersPage = '/exhibitionDetailsOrders';
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
@@ -549,6 +550,14 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
             return const CadLibraryListingScreen();
+          },
+          settings: settings,
+        );
+      case exhibitionDetailsOrdersPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionDetailsOrdersBloc>(context).add(const ExhibitionDetailsOrdersInitialEvent());
+            return const ExhibitionDetailsOrdersScreen();
           },
           settings: settings,
         );

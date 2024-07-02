@@ -109,10 +109,14 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         break;
 
       case 'Do It \nYourself':
-        context.pushNamed(
-          AppRoutes.stoneListingPage,
-          arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
-        );
+        if (categorySubName == 'Seasonal Offers') {
+          context.pushNamed(AppRoutes.exhibitionDetailsOrdersPage);
+        } else {
+          context.pushNamed(
+            AppRoutes.stoneListingPage,
+            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
+          );
+        }
         break;
 
       case 'PDD':

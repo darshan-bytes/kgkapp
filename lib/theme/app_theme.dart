@@ -206,6 +206,8 @@ abstract class AppTheme {
 
   CadLibraryListingItemStyle get cadLibraryListingItemStyle;
 
+  ExhibitionDetailsOrdersStyle get exhibitionDetailsOrdersStyle;
+
   EditWatchlistStyle get editWatchlistStyle;
 
   DurationPickerStyle get durationPickerStyle;
@@ -1850,6 +1852,22 @@ class CadLibraryListingItemStyle {
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+  });
+}
+
+class ExhibitionDetailsOrdersStyle {
+  final Color borderColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final TextStyle productNameStyle;
+
+  ExhibitionDetailsOrdersStyle({
+    required this.borderColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.valueStyle,
+    required this.productNameStyle,
   });
 }
 

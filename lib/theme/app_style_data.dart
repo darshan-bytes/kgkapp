@@ -999,6 +999,14 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  ExhibitionDetailsOrdersStyle get exhibitionDetailsOrdersStyle => ExhibitionDetailsOrdersStyle(
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        valueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        productNameStyle: interMediumBoldTextStyle,
+      );
+
   EditWatchlistStyle get editWatchlistStyle => EditWatchlistStyle(
         backgroundColor: colors.white,
         titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
