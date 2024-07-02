@@ -315,3 +315,6 @@ export 'package:webview_flutter/webview_flutter.dart';
 export 'package:kgk/modules/b2b/design_library_feedback/model/design_library_feedback_model.dart';
 export 'package:kgk/modules/b2b/design_library_feedback/bloc/design_library_feedback_bloc.dart';
 export 'package:kgk/modules/b2b/design_library_feedback/view/design_library_feedback_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/bloc/exhibition_listing_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_model.dart';
