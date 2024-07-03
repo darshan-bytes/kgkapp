@@ -40,6 +40,7 @@ class AppThemes {
     colorDFF2FF: Color(0xFFDFF2FF),
     colorF1F7F9: Color(0xFFF1F7F9),
     colorEAE0D6: Color(0xFFEAE0D6),
+    colorE2E2F0: Color(0xFFE2E2F0),
   );
 
   ThemeData light({MaterialColor? theme}) {
@@ -112,43 +113,44 @@ class AppColor {
   final Color color006FBB;
   final Color colorF1F7F9;
   final Color colorEAE0D6;
+  final Color colorE2E2F0;
 
-  const AppColor({
-    required this.primary,
-    required this.white,
-    required this.colorF65D3C,
-    required this.color303538,
-    required this.colorD3DAE0,
-    required this.colorF7F9FA,
-    required this.color8C8C8C,
-    required this.color083458,
-    required this.colorECF4F9,
-    required this.color111620,
-    required this.colorC5DEEB,
-    required this.color50B83C,
-    required this.colorFAFAFA,
-    required this.color424445,
-    required this.transparent,
-    required this.color8C98A8,
-    required this.colorF8F8F8,
-    required this.color4885A3,
-    required this.colorDDECF4,
-    required this.color64636D,
-    required this.color9DCAE0,
-    required this.black,
-    required this.colorFFF2E7,
-    required this.colorF49342,
-    required this.colorEBFFE7,
-    required this.colorE83535,
-    required this.colorFCE1E1,
-    required this.color34415F,
-    required this.colorFFF6EE,
-    required this.color383230,
-    required this.colorDFF2FF,
-    required this.color006FBB,
-    required this.colorF1F7F9,
-    required this.colorEAE0D6,
-  });
+  const AppColor(
+      {required this.primary,
+      required this.white,
+      required this.colorF65D3C,
+      required this.color303538,
+      required this.colorD3DAE0,
+      required this.colorF7F9FA,
+      required this.color8C8C8C,
+      required this.color083458,
+      required this.colorECF4F9,
+      required this.color111620,
+      required this.colorC5DEEB,
+      required this.color50B83C,
+      required this.colorFAFAFA,
+      required this.color424445,
+      required this.transparent,
+      required this.color8C98A8,
+      required this.colorF8F8F8,
+      required this.color4885A3,
+      required this.colorDDECF4,
+      required this.color64636D,
+      required this.color9DCAE0,
+      required this.black,
+      required this.colorFFF2E7,
+      required this.colorF49342,
+      required this.colorEBFFE7,
+      required this.colorE83535,
+      required this.colorFCE1E1,
+      required this.color34415F,
+      required this.colorFFF6EE,
+      required this.color383230,
+      required this.colorDFF2FF,
+      required this.color006FBB,
+      required this.colorF1F7F9,
+      required this.colorEAE0D6,
+      required this.colorE2E2F0});
 }
 
 extension ThemeDataExtensions on ThemeData {

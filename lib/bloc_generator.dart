@@ -61,6 +61,7 @@ class BlocGenerator {
       BlocProvider<AllReviewBloc>(create: (_) => AllReviewBloc()),
       BlocProvider<StonesLandingBloc>(create: (_) => StonesLandingBloc()),
       BlocProvider<WatchlistBloc>(create: (_) => WatchlistBloc()),
+      BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
     ];
   }
 }

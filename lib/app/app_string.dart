@@ -753,4 +753,8 @@ class APPStrings {
   static const String create = 'create';
 
   static const String selectAndComment = 'select_and_comments';
+
+  // Watchlist
+  static const String addToWatchList = 'add_to_watchlist';
+  static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'select_the_watchlist_you_would_like_product_to_be_added';
 }
