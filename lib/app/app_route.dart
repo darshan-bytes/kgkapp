@@ -63,6 +63,8 @@ class AppRoutes {
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
   static const stonesLandingPage = '/stonesLandingPage';
+  static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
+  static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -594,6 +596,23 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
             return const StonesLandingScreen();
+          },
+          settings: settings,
+        );
+
+      case manufacturerOrderListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(InitialManufacturerOrderListingEvent(context: context));
+            return const ManufacturerOrderListingScreen();
+          },
+          settings: settings,
+        );
+
+      case myOrderTypeSelectionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MyOrderTypeSelection();
           },
           settings: settings,
         );

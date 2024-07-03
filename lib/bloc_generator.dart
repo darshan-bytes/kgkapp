@@ -60,6 +60,7 @@ class BlocGenerator {
       BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),
       BlocProvider<AllReviewBloc>(create: (_) => AllReviewBloc()),
       BlocProvider<StonesLandingBloc>(create: (_) => StonesLandingBloc()),
+      BlocProvider<ManufacturerOrderListingBloc>(create: (_) => ManufacturerOrderListingBloc()),
     ];
   }
 }
