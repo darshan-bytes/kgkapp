@@ -124,6 +124,7 @@ class EditWatchlistScreen extends StatelessWidget {
                   path: AppImages.icCross,
                   width: 24.w,
                   height: 24.w,
+                  color: style.primaryColor,
                   onTap: () {
                     context.pop();
                   },

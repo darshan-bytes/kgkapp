@@ -215,6 +215,8 @@ abstract class AppTheme {
   DesignLibraryFeedbackStyle get designLibraryFeedbackStyle;
 
   ExhibitionListingItemStyle get exhibitionListingItemStyle;
+
+  StonesLandingScreenStyle get stonesLandingScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1873,6 +1875,7 @@ class ExhibitionDetailsOrdersStyle {
 
 class EditWatchlistStyle {
   final Color backgroundColor;
+  final Color primaryColor;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle timeDurationStyle;
@@ -1882,6 +1885,7 @@ class EditWatchlistStyle {
 
   EditWatchlistStyle({
     required this.backgroundColor,
+    required this.primaryColor,
     required this.titleStyle,
     required this.subTitleStyle,
     required this.timeDurationStyle,
@@ -1948,5 +1952,39 @@ class ExhibitionListingItemStyle {
     required this.listAuthorStyle,
     required this.listSubTitleStyle,
     required this.listStatusStyle,
+  });
+}
+
+class StonesLandingScreenStyle {
+  final Color whiteColor;
+  final Color primaryColor;
+  final TextStyle sparkleTitleStyle;
+  final TextStyle sparkleSubTitleStyle;
+  final TextStyle sectionLabelStyle;
+  final TextStyle craftedSectionTitleStyle;
+  final Color originSectionBgColor;
+  final TextStyle originSectionSubTitleStyle;
+  final TextStyle designOwnEarringTextStyle;
+  final Color designYourOwnStoneBgColor;
+  final TextStyle learnMoreTextStyle;
+  final TextStyle newlyLaunchedStyle;
+  final Color newlyLaunchedBackgroundColor;
+  final TextStyle jewelleryCreateOwnSubTitleStyle;
+
+  StonesLandingScreenStyle({
+    required this.whiteColor,
+    required this.primaryColor,
+    required this.sparkleTitleStyle,
+    required this.sparkleSubTitleStyle,
+    required this.sectionLabelStyle,
+    required this.craftedSectionTitleStyle,
+    required this.originSectionBgColor,
+    required this.originSectionSubTitleStyle,
+    required this.designOwnEarringTextStyle,
+    required this.designYourOwnStoneBgColor,
+    required this.learnMoreTextStyle,
+    required this.newlyLaunchedStyle,
+    required this.newlyLaunchedBackgroundColor,
+    required this.jewelleryCreateOwnSubTitleStyle,
   });
 }

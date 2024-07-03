@@ -3,8 +3,8 @@ import 'package:kgk/kgk.dart';
 class SmartGridView extends StatelessWidget {
   final List<Widget> items;
   final int columns;
-  final double spacing;
-  final double runSpacing;
+  final double? spacing;
+  final double? runSpacing;
   final double? height;
   final bool isLoadingMore;
 
@@ -12,8 +12,8 @@ class SmartGridView extends StatelessWidget {
     super.key,
     required this.items,
     this.columns = 2,
-    this.spacing = 12.0,
-    this.runSpacing = 12.0,
+    this.spacing,
+    this.runSpacing,
     this.height,
     this.isLoadingMore = false,
   });
@@ -23,7 +23,7 @@ class SmartGridView extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         double totalWidth = constraints.maxWidth;
-        double itemWidth = (totalWidth - (columns - 1) * spacing) / columns;
+        double itemWidth = (totalWidth - (columns - 1) * (spacing ?? 12.w)) / columns;
         return Column(
           children: [
             Align(
@@ -31,8 +31,8 @@ class SmartGridView extends StatelessWidget {
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
                 alignment: WrapAlignment.start,
-                spacing: spacing,
-                runSpacing: runSpacing,
+                spacing: spacing ?? 12.w,
+                runSpacing: runSpacing ?? 12.h,
                 children: items.map((item) {
                   return SizedBox(
                     height: height,

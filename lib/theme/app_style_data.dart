@@ -1007,6 +1007,7 @@ class LightModeTheme extends AppTheme {
         productNameStyle: interMediumBoldTextStyle,
       );
 
+  @override
   EditWatchlistStyle get editWatchlistStyle => EditWatchlistStyle(
         backgroundColor: colors.white,
         titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
@@ -1015,6 +1016,7 @@ class LightModeTheme extends AppTheme {
         timeDurationValueStyle: interSemiBoldTextStyle,
         timeDurationDescStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         durationBackgroundColor: colors.colorF7F9FA,
+        primaryColor: colors.primary,
       );
 
   @override
@@ -1055,5 +1057,23 @@ class LightModeTheme extends AppTheme {
           color: colors.color8C8C8C,
         ),
         listStatusStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+      );
+
+  @override
+  StonesLandingScreenStyle get stonesLandingScreenStyle => StonesLandingScreenStyle(
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+        sectionLabelStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        sparkleTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        sparkleSubTitleStyle: interRegularTextStyle,
+        craftedSectionTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        originSectionBgColor: colors.colorC5DEEB.withOpacity(0.2),
+        originSectionSubTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        designOwnEarringTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp),
+        designYourOwnStoneBgColor: colors.colorF7F9FA,
+        learnMoreTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
+        newlyLaunchedStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        newlyLaunchedBackgroundColor: colors.colorC5DEEB.withOpacity(0.2),
+        jewelleryCreateOwnSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
       );
 }

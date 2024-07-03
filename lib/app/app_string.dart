@@ -434,6 +434,9 @@ class APPStrings {
   static const String comment = 'comment';
   static const String inquiryType = 'inquiry_type';
   static const String selectProduct = 'select_product';
+  static const String deleteAccountAsk = 'delete_account_ask';
+  static const String deleteAccountDesc = 'delete_account_desc';
+  static const String delete = 'delete';
 
   //Make an inquiry
   static const String makeAnInquiry = 'make_an_inquiry';
@@ -709,6 +712,9 @@ class APPStrings {
   static const String mins = 'mins';
   static const String searchWatchlist = 'search_watchlist';
   static const String noWatchlistFound = 'no_watchlist_found';
+  static const String removeWatchlist = 'remove_watchlist';
+  static const String removeWatchlistName = 'remove_watchlist_name';
+  static const String addedXProductsWillBeRemoved = 'added_x_products_will_be_removed';
 
   // Duration Picker
   static const String selectDuration = 'select_duration';
@@ -724,7 +730,25 @@ class APPStrings {
 
   //All Review Screen
   static const String allReviews = 'all_reviews';
-
   static const String hintPromoCode = 'hint_promo_code';
+
+  //Diamond Landing
+  static const String shopNaturalDiamonds = 'shop_natural_diamonds';
+  static const String shopLabDiamonds = 'shop_lab_diamonds';
+  static const String startWithAGemstone = 'start_with_a_gemstone';
+  static const String startWithASetting = "start_with_a_setting";
+  static const String originOfDiamonds = 'origin_of_diamonds';
+  static const String startWithANaturalDiamond = "start_with_a_natural_diamond";
+  static const String startWithALabDiamond = "start_with_a_lab_diamond";
+  static const String diamondFAQs = "diamond_faqs";
+  static const String gemstonesFAQs = "gemstones_faqs";
+  static const String shopByGemstones = 'shop_by_gemstones';
+  static const String aboutOurDiamonds = 'about_our_diamonds';
+  static const String aboutOurGemstones = 'about_our_gemstones';
+  static const String learnMore = 'learn_more';
+  static const String shopByMetal = 'shop_by_metal';
+  static const String or = 'or';
+  static const String startWithSetting = 'start_with_setting';
+  static const String startWithDiamond = 'start_with_diamond';
   static const String create = 'create';
 }

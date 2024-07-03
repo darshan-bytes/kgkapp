@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/watchlist/bloc/watchlist_bloc.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
@@ -63,6 +62,7 @@ class AppRoutes {
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
+  static const stonesLandingPage = '/stonesLandingPage';
   static const watchListPage = '/watchListPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -599,6 +599,15 @@ class AppRoutes {
           },
         );
 
+      case stonesLandingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
+            return const StonesLandingScreen();
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -641,7 +650,10 @@ enum ScreenIdentifier {
   productForDiamonds,
   productForRing,
   productForLibraryGrey,
-  productForLibraryPlatinum
+  productForLibraryPlatinum,
+  landingForDiamonds,
+  landingForJewellery,
+  landingForGemstones,
 }
 
 extension RoutesDataExtension on BuildContext {

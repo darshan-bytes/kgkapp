@@ -31,13 +31,9 @@ class InquiryWidget extends StatelessWidget {
                 SmartText(description ?? APPStrings.reachoutToOurExpert.tr, style: style.reachOutStyle),
                 SizedBox(height: 12.h),
                 Row(
-                  children: [
-                    const SmartImage(path: AppImages.icPhone),
-                    const SizedBox(width: 8),
-                    SmartText(phone, style: style.phoneStyle)
-                  ],
+                  children: [const SmartImage(path: AppImages.icPhone), SizedBox(width: 8.w), SmartText(phone, style: style.phoneStyle)],
                 ),
-                const SizedBox(height: 14),
+                SizedBox(height: 14.h),
                 Row(
                   children: [
                     const SmartImage(path: AppImages.icMail),

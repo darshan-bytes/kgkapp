@@ -13,7 +13,8 @@ class SmartImageTitleColumn extends StatelessWidget {
   final EdgeInsets? imagePadding;
   final double? imageBetweenSpacing;
   final double? subTitleTopSpacing;
-  final double? imageSize;
+  final double? imageWidth;
+  final double? imageHeight;
   final AlignmentGeometry? alignment;
   final BoxFit? fit;
   final VoidCallback? onTap;
@@ -28,6 +29,7 @@ class SmartImageTitleColumn extends StatelessWidget {
   final BoxBorder? imageBorder;
   final TextAlign titleTextAlign;
   final TextAlign subTitleTextAlign;
+  final EdgeInsets titleOptionalPadding;
 
   const SmartImageTitleColumn({
     super.key,
@@ -50,7 +52,8 @@ class SmartImageTitleColumn extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.titleMaxLines,
     this.subTitleMaxLines,
-    this.imageSize,
+    this.imageWidth,
+    this.imageHeight,
     this.topWidget,
     this.imageBorderRadius,
     this.imageColor,
@@ -58,6 +61,7 @@ class SmartImageTitleColumn extends StatelessWidget {
     this.subTitleTopSpacing,
     this.titleTextAlign = TextAlign.center,
     this.subTitleTextAlign = TextAlign.center,
+    this.titleOptionalPadding = EdgeInsets.zero,
   });
 
   @override
@@ -86,6 +90,7 @@ class SmartImageTitleColumn extends StatelessWidget {
               maxLines: titleMaxLines ?? 2,
               overflow: TextOverflow.ellipsis,
               textAlign: titleTextAlign,
+              optionalPadding: titleOptionalPadding,
             ),
             if (subTitle.isNotNullNorEmpty) ...[
               SizedBox(height: subTitleTopSpacing ?? 8.h),
@@ -115,8 +120,8 @@ class SmartImageTitleColumn extends StatelessWidget {
         ),
         child: SmartImage(
           path: imageUrl!,
-          width: imageSize,
-          height: imageSize,
+          width: imageWidth,
+          height: imageWidth,
           padding: imagePadding,
           fit: fit,
           color: imageColor,

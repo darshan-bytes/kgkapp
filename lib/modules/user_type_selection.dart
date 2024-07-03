@@ -27,6 +27,27 @@ class UserTypeSelection extends StatelessWidget {
                 },
                 title: 'B2B User',
               ),
+              const SizedBox(height: 20),
+              SmartButton(
+                onTap: () {
+                  context.pushNamed(AppRoutes.stonesLandingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.landingForDiamonds});
+                },
+                title: 'Diamond Landing Page',
+              ),
+              const SizedBox(height: 20),
+              SmartButton(
+                onTap: () {
+                  context.pushNamed(AppRoutes.stonesLandingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.landingForGemstones});
+                },
+                title: 'Gemstone Landing Page',
+              ),
+              const SizedBox(height: 20),
+              SmartButton(
+                onTap: () {
+                  context.pushNamed(AppRoutes.stonesLandingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery});
+                },
+                title: 'Jewellery Landing Page',
+              ),
             ],
           ),
         ),
