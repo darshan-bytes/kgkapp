@@ -338,3 +338,6 @@ export 'package:kgk/modules/b2b/stone_landing/components/stone_faqs_section.dart
 export 'package:kgk/modules/b2b/stone_landing/view/gemstone_landing_screen.dart';
 export 'package:kgk/modules/b2b/stone_landing/view/jewellery_landing_screen.dart';
 export 'package:kgk/modules/b2b/stone_landing/view/diamond_landing_screen.dart';
+export 'package:kgk/modules/b2b/watchlist/view/watchlist_screen.dart';
+export 'package:kgk/modules/b2b/watchlist/bloc/watchlist_bloc.dart';
+export 'package:kgk/widgets/conformation_dialog.dart';

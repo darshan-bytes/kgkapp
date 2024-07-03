@@ -1875,6 +1875,7 @@ class ExhibitionDetailsOrdersStyle {
 
 class EditWatchlistStyle {
   final Color backgroundColor;
+  final Color primaryColor;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle timeDurationStyle;
@@ -1884,6 +1885,7 @@ class EditWatchlistStyle {
 
   EditWatchlistStyle({
     required this.backgroundColor,
+    required this.primaryColor,
     required this.titleStyle,
     required this.subTitleStyle,
     required this.timeDurationStyle,

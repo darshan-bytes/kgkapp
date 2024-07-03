@@ -591,5 +591,14 @@
   "shop_by_metal": "Shop by metal",
   "or": "Or",
   "start_with_setting": "Start with setting",
-  "start_with_diamond": "Start with diamond"
+  "start_with_diamond": "Start with diamond",
+  "no_watchlist_found": "No watchlist found",
+  "search_watchlist": "Search watchlist",
+  "create": "Create",
+  "remove_watchlist": "Remove watchlist",
+  "remove_watchlist_name": "Remove watchlist name?",
+  "added_x_products_will_be_removed": "Added {#} products will be removed",
+  "delete_account_ask": "Delete Account?",
+  "delete_account_desc": "Are you sure you want to delete your account?",
+  "delete": "Delete"
 }
