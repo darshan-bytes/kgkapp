@@ -111,7 +111,8 @@ class SearchScreen extends StatelessWidget {
                 AuctionListModel item = searchBloc.searchByCategoryList[index];
                 return SmartImageTitleColumn(
                   title: item.name ?? '',
-                  imageSize: 80.w,
+                  imageHeight: 80.w,
+                  imageWidth: 80.w,
                   padding: index == 0 ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
                   imageBorderRadius: BorderRadius.circular(50.r),
                   imageColor: style.whiteColor,
