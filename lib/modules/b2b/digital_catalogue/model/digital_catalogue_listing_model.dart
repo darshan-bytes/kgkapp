@@ -1,23 +1,48 @@
 class DigitalCatalogueListingModel {
-  String? image;
+  int? id;
   String? name;
+  String? description;
+  String? image;
   String? productCount;
   String? date;
-  int? id;
+  bool isWebView;
+  String? webUrl;
 
   DigitalCatalogueListingModel({
-    this.image,
+    this.id,
     this.name,
+    this.description,
+    this.image,
     this.productCount,
     this.date,
-    this.id,
+    this.isWebView = false,
+    this.webUrl,
   });
 
   @override
   bool operator ==(Object other) {
-    return other is DigitalCatalogueListingModel && other.name == name && other.id == id;
+    if (identical(this, other)) return true;
+
+    return other is DigitalCatalogueListingModel &&
+        other.id == id &&
+        other.name == name &&
+        other.description == description &&
+        other.image == image &&
+        other.productCount == productCount &&
+        other.date == date &&
+        other.isWebView == isWebView &&
+        other.webUrl == webUrl;
   }
 
   @override
-  int get hashCode => name.hashCode ^ id.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        description.hashCode ^
+        image.hashCode ^
+        productCount.hashCode ^
+        date.hashCode ^
+        isWebView.hashCode ^
+        webUrl.hashCode;
+  }
 }

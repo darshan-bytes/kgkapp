@@ -232,11 +232,8 @@ class LightModeTheme extends AppTheme {
         priceTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
         discountTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color50B83C),
         productBackgroundColor: colors.colorFAFAFA,
-        checkedPriceStyle: interRegularTextStyle.copyWith(
-          fontSize: 12.sp,
-          color: colors.color8C8C8C,
-          decoration: TextDecoration.lineThrough,
-        ),
+        checkedPriceStyle:
+            interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C, decoration: TextDecoration.lineThrough),
         borderColor: colors.colorD3DAE0,
         buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12.sp),
         diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12.sp),
@@ -249,6 +246,7 @@ class LightModeTheme extends AppTheme {
         myBagDividerColor: colors.colorD3DAE0,
         outOfStockBackgroundColor: colors.colorDDECF4,
         outOfStockStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        commentSelectedColor: colors.color303538,
       );
 
   @override
@@ -1075,5 +1073,23 @@ class LightModeTheme extends AppTheme {
         newlyLaunchedStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         newlyLaunchedBackgroundColor: colors.colorC5DEEB.withOpacity(0.2),
         jewelleryCreateOwnSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+      );
+
+  @override
+  PreviewCatalogueStyle get previewCatalogueStyle => PreviewCatalogueStyle(
+        backgroundColor: colors.colorF7F9FA,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        stepBorderColor: colors.colorD3DAE0,
+        selectedStepBorderColor: colors.primary,
+        stepTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+        selectedStepTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.primary),
+        whiteColor: colors.white,
+        boxShadow: BoxShadow(
+          color: colors.black.withOpacity(0.1),
+          offset: Offset(0, -4.h),
+          blurRadius: 24.r,
+          spreadRadius: 0,
+        ),
       );
 }

@@ -64,6 +64,7 @@ class AppRoutes {
   static const allReviewPage = '/allReviewPage';
   static const stonesLandingPage = '/stonesLandingPage';
   static const watchListPage = '/watchListPage';
+  static const previewCataloguePage = '/previewCataloguePage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -608,6 +609,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case previewCataloguePage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<PreviewCatalogueBloc>(
+            create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
+            child: const PreviewCatalogueScreen(),
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -640,7 +650,8 @@ enum RoutesData {
   addressId,
   isShippingAddress,
   isFromCheckout,
-  presentationId
+  presentationId,
+  catalogueData,
 }
 
 enum ScreenIdentifier {

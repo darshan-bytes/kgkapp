@@ -600,5 +600,6 @@
   "added_x_products_will_be_removed": "Added {#} products will be removed",
   "delete_account_ask": "Delete Account?",
   "delete_account_desc": "Are you sure you want to delete your account?",
-  "delete": "Delete"
+  "delete": "Delete",
+  "select_and_comments": "Select & comments"
 }

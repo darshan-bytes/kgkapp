@@ -255,7 +255,6 @@ class SharePresentationScreen extends StatelessWidget {
               title: APPStrings.share.tr,
               onTap: () {
                 context.pop();
-                Utils.showMessage("Presentation shared successfully");
               },
             ),
           ),

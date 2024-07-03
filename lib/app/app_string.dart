@@ -751,4 +751,6 @@ class APPStrings {
   static const String startWithSetting = 'start_with_setting';
   static const String startWithDiamond = 'start_with_diamond';
   static const String create = 'create';
+
+  static const String selectAndComment = 'select_and_comments';
 }

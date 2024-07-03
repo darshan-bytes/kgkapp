@@ -11,7 +11,6 @@ class AllBidsBottomSheet extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 608.h),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 18.w),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: style.whiteColor,
@@ -24,18 +23,21 @@ class AllBidsBottomSheet extends StatelessWidget {
             _buildAppBar(style, context),
             SizedBox(height: 10.h),
             Flexible(
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return _buildResetBidsItem(
-                      labelText: bloc.recentBidList[index]['date_time'],
-                      value: bloc.recentBidList[index]['price'],
-                      style: style,
-                      isMyBid: index == 2);
-                },
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: bloc.recentBidList.length,
+              child: Scrollbar(
+                thumbVisibility: true,
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 18.w),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return _buildResetBidsItem(
+                        labelText: bloc.recentBidList[index]['date_time'],
+                        value: bloc.recentBidList[index]['price'],
+                        style: style,
+                        isMyBid: index == 2);
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: bloc.recentBidList.length,
+                ),
               ),
             ),
             SizedBox(height: 24.h),
@@ -46,25 +48,26 @@ class AllBidsBottomSheet extends StatelessWidget {
   }
 
   Widget _buildAppBar(AuctionScreenStyle style, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SmartText(
-          APPStrings.allBids.tr,
-          style: style.allBidsTitleStyle,
-        ),
-        InkWell(
-          onTap: () {
-            context.pop();
-          },
-          child: SmartImage(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 18.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SmartText(
+            APPStrings.allBids.tr,
+            style: style.allBidsTitleStyle,
+          ),
+          SmartImage(
             path: AppImages.icCross,
             height: 24.w,
             width: 24.w,
             color: style.primaryColor,
+            onTap: () {
+              context.pop();
+            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
