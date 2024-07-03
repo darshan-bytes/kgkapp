@@ -217,6 +217,8 @@ abstract class AppTheme {
   ExhibitionListingItemStyle get exhibitionListingItemStyle;
 
   StonesLandingScreenStyle get stonesLandingScreenStyle;
+
+  PreviewCatalogueStyle get previewCatalogueStyle;
 }
 
 class PrimaryButtonStyle {
@@ -508,6 +510,7 @@ class ProductItemStyle {
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
   final TextStyle outOfStockStyle;
+  final Color commentSelectedColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -525,6 +528,7 @@ class ProductItemStyle {
     required this.myBagDividerColor,
     required this.outOfStockBackgroundColor,
     required this.outOfStockStyle,
+    required this.commentSelectedColor,
   });
 }
 
@@ -1986,5 +1990,30 @@ class StonesLandingScreenStyle {
     required this.newlyLaunchedStyle,
     required this.newlyLaunchedBackgroundColor,
     required this.jewelleryCreateOwnSubTitleStyle,
+  });
+}
+
+class PreviewCatalogueStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color stepBorderColor;
+  final Color selectedStepBorderColor;
+  final TextStyle stepTextStyle;
+  final TextStyle selectedStepTextStyle;
+  final Color whiteColor;
+
+  final BoxShadow boxShadow;
+
+  PreviewCatalogueStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.stepBorderColor,
+    required this.selectedStepBorderColor,
+    required this.stepTextStyle,
+    required this.selectedStepTextStyle,
+    required this.whiteColor,
+    required this.boxShadow,
   });
 }

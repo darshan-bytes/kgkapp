@@ -253,6 +253,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
     profileCMSList = [
       ProfileListModel(
+          image: AppImages.icAboutUs,
+          title: APPStrings.aboutUs.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: AppConst.profileAboutUsWebViewURL,
+                title: APPStrings.aboutUs.tr,
+              )
+            });
+          }),
+      ProfileListModel(
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
           isSubListExpanded: false,
@@ -315,17 +326,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ],
           onTap: () {
             event.context.pushNamed(AppRoutes.findStorePage);
-          }),
-      ProfileListModel(
-          image: AppImages.icAboutUs,
-          title: APPStrings.aboutUs.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-              RoutesData.cmsPageData: CmsWebViewDataModel(
-                url: AppConst.profileAboutUsWebViewURL,
-                title: APPStrings.aboutUs.tr,
-              )
-            });
           }),
       ProfileListModel(
           image: AppImages.icSupport,
