@@ -434,6 +434,9 @@ class APPStrings {
   static const String comment = 'comment';
   static const String inquiryType = 'inquiry_type';
   static const String selectProduct = 'select_product';
+  static const String deleteAccountAsk = 'delete_account_ask';
+  static const String deleteAccountDesc = 'delete_account_desc';
+  static const String delete = 'delete';
 
   //Make an inquiry
   static const String makeAnInquiry = 'make_an_inquiry';
@@ -707,6 +710,11 @@ class APPStrings {
   static const String hintWatchlistName = 'hint_watchlist_name';
   static const String duration = 'duration';
   static const String mins = 'mins';
+  static const String searchWatchlist = 'search_watchlist';
+  static const String noWatchlistFound = 'no_watchlist_found';
+  static const String removeWatchlist = 'remove_watchlist';
+  static const String removeWatchlistName = 'remove_watchlist_name';
+  static const String addedXProductsWillBeRemoved = 'added_x_products_will_be_removed';
 
   // Duration Picker
   static const String selectDuration = 'select_duration';
@@ -722,7 +730,6 @@ class APPStrings {
 
   //All Review Screen
   static const String allReviews = 'all_reviews';
-
   static const String hintPromoCode = 'hint_promo_code';
 
   //Diamond Landing
@@ -743,4 +750,15 @@ class APPStrings {
   static const String or = 'or';
   static const String startWithSetting = 'start_with_setting';
   static const String startWithDiamond = 'start_with_diamond';
+  static const String create = 'create';
+
+  static const String selectAndComment = 'select_and_comments';
+
+  // Watchlist
+  static const String addToWatchList = 'add_to_watchlist';
+  static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'select_the_watchlist_you_would_like_product_to_be_added';
+
+  //Design library
+  static const String designLibrary = 'design_library';
+  static const String noDesignLibraryFound = 'no_design_library_found';
 }

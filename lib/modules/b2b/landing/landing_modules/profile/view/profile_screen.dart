@@ -47,11 +47,7 @@ class ProfileScreen extends StatelessWidget {
                           SizedBox(height: 1.h),
                           SmartText('+1 (323) 654 - 8542', style: style.subTextStyle),
                           SizedBox(height: 1.h),
-                          InkWell(
-                              onTap: () {
-                                context.pushNamed(AppRoutes.pddListingPage);
-                              },
-                              child: SmartText('someone@example.com', style: style.subTextStyle))
+                          SmartText('someone@example.com', style: style.subTextStyle)
                         ],
                       ),
                     ),
@@ -228,7 +224,12 @@ class ProfileScreen extends StatelessWidget {
               textStyle: style.logoutTextStyle),
           const Divider(),
           _buildPopupItem(
-              title: APPStrings.deleteAccount.tr, onTap: () {}, image: AppImages.icDeleteAccount, textStyle: style.fontTextStyle),
+              title: APPStrings.deleteAccount.tr,
+              onTap: () {
+                _buildDeletePopup(context);
+              },
+              image: AppImages.icDeleteAccount,
+              textStyle: style.fontTextStyle),
           SizedBox(
             height: 10.h,
           )
@@ -256,60 +257,40 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _buildLogoutPopup(BuildContext context) {
-    final style = AppTheme.of(context).logoutPopupStyle;
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
       ),
-      builder: (context) => Container(
-        height: 190.h,
-        width: context.width,
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SmartText(APPStrings.logoutAsk.tr, style: style.titleStyle),
-            SizedBox(
-              height: 6.h,
-            ),
-            SmartText(APPStrings.logoutMsg.tr, style: style.subTitleStyle),
-            SizedBox(
-              height: 20.h,
-            ),
-            SizedBox(
-              height: 48.w,
-              width: context.width,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SmartButton(
-                      onTap: () {
-                        context.pop();
-                      },
-                      title: APPStrings.cancel.tr,
-                      activeBackgroundColor: style.whiteColor,
-                      titleStyle: style.cancelTextStyle,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Expanded(
-                      child: SmartButton(
-                    onTap: () {
-                      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-                      context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
-                    },
-                    title: APPStrings.logout.tr,
-                  )),
-                ],
-              ),
-            )
-          ],
+        builder: (context) => ConfirmationDialog(
+              title: APPStrings.logoutAsk.tr,
+              message: APPStrings.logoutMsg.tr,
+              onApproved: () {
+                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+                context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
+              },
+              onDenied: () => context.pop(),
+              onApprovedText: APPStrings.logout.tr,
+              onDeniedText: APPStrings.cancel.tr,
+            ));
+  }
+
+  void _buildDeletePopup(BuildContext context) {
+    Utils.showSmartModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
         ),
-      ),
-    );
+        builder: (context) => ConfirmationDialog(
+              title: APPStrings.deleteAccountAsk.tr,
+              message: APPStrings.deleteAccountDesc.tr,
+              onApproved: () {
+                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
+                context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
+              },
+              onDenied: () => context.pop(),
+              onApprovedText: APPStrings.delete.tr,
+              onDeniedText: APPStrings.cancel.tr,
+            ));
   }
 }

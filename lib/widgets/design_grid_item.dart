@@ -94,6 +94,7 @@ class DesignListingGridItem extends StatelessWidget {
   }
 
   Widget productImageSection(double width, ProductItemStyle style) {
+    ProjectStatus? status = ProjectStatus.values.firstWhereOrNull((element) => element == designModel.designApprovalStatus);
     return Stack(
       children: [
         Container(
@@ -108,16 +109,14 @@ class DesignListingGridItem extends StatelessWidget {
             fit: fit,
           ),
         ),
-        if (_viewType == _GridViewType.designGridItem)
+        if (_viewType == _GridViewType.designGridItem && status != null)
           Positioned(
             bottom: 8.w,
             right: 14.w,
             child: SmartStatusBadge(
               borderRadius: 4.0.r,
               padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
-              currentStatus: ProjectStatus.values.firstWhere(
-                (element) => element == designModel.stylesStatus,
-              ),
+              currentStatus: status,
             ),
           )
       ],

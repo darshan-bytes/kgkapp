@@ -17,22 +17,25 @@ class ProductDetails {
   bool isDiamondProduct;
   DiamondClarityChart? diamondClarityChart;
   ProductInfoClarityChat? productInfoClarityChat;
+  bool isOutOfStock;
 
-  ProductDetails(
-      {this.productId,
-      this.name,
-      this.offerPrice,
-      this.originalPrice,
-      this.imageUrl,
-      this.discountPercentage,
-      this.gram,
-      this.diamond,
-      this.productQuality,
-      this.productQuantity,
-      this.cartProductQuality,
-      this.cartProductQuantity,
-      this.isSelectedProduct = false,
-      this.isDiamondProduct = false,
-      this.diamondClarityChart,
-      this.productInfoClarityChat});
+  ProductDetails({
+    this.productId,
+    this.name,
+    this.offerPrice,
+    this.originalPrice,
+    this.imageUrl,
+    this.discountPercentage,
+    this.gram,
+    this.diamond,
+    this.productQuality,
+    this.productQuantity,
+    this.cartProductQuality,
+    this.cartProductQuantity,
+    this.isSelectedProduct = false,
+    this.isDiamondProduct = false,
+    this.diamondClarityChart,
+    this.productInfoClarityChat,
+    this.isOutOfStock = false,
+  });
 }

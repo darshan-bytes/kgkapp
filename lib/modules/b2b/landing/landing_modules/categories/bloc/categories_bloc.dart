@@ -575,7 +575,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return AppRoutes.productListGridPage;
       case 'CAD Library':
         return AppRoutes.cadLibraryListingPage;
-
+      case 'Design Library':
+        return AppRoutes.designLibraryScreen;
       default:
         return defaultAction();
     }
@@ -607,7 +608,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   String? _getDoItYourselfRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
-      case 'Do It \nYourself':
+      case 'Collection':
         return AppRoutes.stoneListingPage;
       default:
         return defaultAction();
@@ -616,7 +617,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
-      case 'Do It \nYourself':
+      case 'Collection':
         return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
       default:
         return null;
