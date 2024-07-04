@@ -5,6 +5,9 @@ part 'orders_event.dart';
 part 'orders_state.dart';
 
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   // controllers
   late TabController tabController;
   final TextEditingController diamondSearchController = TextEditingController();
@@ -50,6 +53,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   void _onInitOrdersEvent(OrdersInitialEvent event, Emitter<OrdersState> emit) {
     emit(const OrdersReloadState());
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     clearData();
     emit(const OrdersInitial());
   }

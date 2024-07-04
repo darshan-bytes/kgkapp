@@ -46,6 +46,7 @@ class SmartTextField extends StatefulWidget {
   final InputBorder? customFocusedBorder;
   final InputBorder? customErrorBorder;
   final InputBorder? customFocusedErrorBorder;
+  final double? prefixIconSize;
 
   const SmartTextField({
     super.key,
@@ -93,6 +94,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.prefixIconSize,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = false;
 
@@ -142,6 +144,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.prefixIconSize,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = true;
 
@@ -239,8 +242,8 @@ class SmartTextFieldState extends State<SmartTextField> {
                             padding: EdgeInsets.zero,
                             child: SmartImage(
                               path: AppImages.icSearchThin,
-                              height: 16.w,
-                              width: 16.w,
+                              height: widget.prefixIconSize ?? 12.w,
+                              width: widget.prefixIconSize ?? 12.w,
                             ),
                           ),
                         )

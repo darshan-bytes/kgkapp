@@ -217,6 +217,10 @@ abstract class AppTheme {
   ExhibitionListingItemStyle get exhibitionListingItemStyle;
 
   StonesLandingScreenStyle get stonesLandingScreenStyle;
+
+  PreviewCatalogueStyle get previewCatalogueStyle;
+
+  WatchListItemStyle get watchListItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -508,6 +512,7 @@ class ProductItemStyle {
   final TextStyle removeBagTextStyle;
   final Color myBagDividerColor;
   final TextStyle outOfStockStyle;
+  final Color commentSelectedColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -525,6 +530,7 @@ class ProductItemStyle {
     required this.myBagDividerColor,
     required this.outOfStockBackgroundColor,
     required this.outOfStockStyle,
+    required this.commentSelectedColor,
   });
 }
 
@@ -959,6 +965,8 @@ class ProductDetailsStyle {
   final TextStyle totalApproxStyle;
   final TextStyle totalApproxSubStyle;
   final TextStyle orderSampleStyle;
+  final TextStyle bottomNavBarSubTitleStyle;
+  final Color whiteColor;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -985,6 +993,8 @@ class ProductDetailsStyle {
     required this.totalApproxStyle,
     required this.totalApproxSubStyle,
     required this.orderSampleStyle,
+    required this.bottomNavBarSubTitleStyle,
+    required this.whiteColor,
   });
 }
 
@@ -1875,6 +1885,7 @@ class ExhibitionDetailsOrdersStyle {
 
 class EditWatchlistStyle {
   final Color backgroundColor;
+  final Color primaryColor;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final TextStyle timeDurationStyle;
@@ -1884,6 +1895,7 @@ class EditWatchlistStyle {
 
   EditWatchlistStyle({
     required this.backgroundColor,
+    required this.primaryColor,
     required this.titleStyle,
     required this.subTitleStyle,
     required this.timeDurationStyle,
@@ -1984,5 +1996,56 @@ class StonesLandingScreenStyle {
     required this.newlyLaunchedStyle,
     required this.newlyLaunchedBackgroundColor,
     required this.jewelleryCreateOwnSubTitleStyle,
+  });
+}
+
+class PreviewCatalogueStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color stepBorderColor;
+  final Color selectedStepBorderColor;
+  final TextStyle stepTextStyle;
+  final TextStyle selectedStepTextStyle;
+  final Color whiteColor;
+
+  final BoxShadow boxShadow;
+
+  PreviewCatalogueStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.stepBorderColor,
+    required this.selectedStepBorderColor,
+    required this.stepTextStyle,
+    required this.selectedStepTextStyle,
+    required this.whiteColor,
+    required this.boxShadow,
+  });
+}
+
+class WatchListItemStyle {
+  final Color backgroundColor;
+  final Color dividerColor;
+  final Color primaryColor;
+  final Color disableBackgroundColor;
+  final Color outOfStockBgColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTextStyle;
+  final TextStyle labelTextStyle;
+
+  WatchListItemStyle({
+    required this.backgroundColor,
+    required this.dividerColor,
+    required this.primaryColor,
+    required this.outOfStockBgColor,
+    required this.disableBackgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.subTextStyle,
+    required this.listTextStyle,
+    required this.labelTextStyle,
   });
 }

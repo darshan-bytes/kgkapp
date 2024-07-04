@@ -9,6 +9,11 @@ final class ManufacturerOrderListingInitial extends ManufacturerOrderListingStat
   List<Object> get props => [];
 }
 
+final class ManufacturerOrderListReloadState extends ManufacturerOrderListingState {
+  @override
+  List<Object> get props => [];
+}
+
 final class ManufacturerOrderListingLoadedState extends ManufacturerOrderListingState {
   @override
   List<Object> get props => [];
@@ -28,4 +33,13 @@ final class ManufacturerOrderListLoadedMoreState extends ManufacturerOrderListin
 
   @override
   List<Object> get props => [currentPage];
+}
+
+final class ManufacturerChangeOrdersTypeState extends ManufacturerOrderListingState {
+  final ManufacturerOrderModel selectedOrderType;
+
+  const ManufacturerChangeOrdersTypeState(this.selectedOrderType);
+
+  @override
+  List<Object> get props => [selectedOrderType];
 }

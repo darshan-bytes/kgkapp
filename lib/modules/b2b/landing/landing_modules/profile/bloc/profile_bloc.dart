@@ -46,7 +46,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
             trailingIcon: AppImages.icArrowRight,
             onTap: () {
-              event.context.pushNamed(AppRoutes.orderPage);
+              event.context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
@@ -68,14 +68,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfProductsAddedToWatchlist.tr,
             trailingIcon: AppImages.icArrowRight,
             onTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: event.context,
-                enableDrag: false,
-                builder: (context) {
-                  BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent());
-                  return const EditWatchlistScreen();
-                },
-              );
+              event.context.pushNamed(AppRoutes.watchListPage);
             }),
         ProfileListModel(
             image: AppImages.icExhibition,
@@ -151,7 +144,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
             trailingIcon: AppImages.icArrowRight,
             onTap: () {
-              event.context.pushNamed(AppRoutes.stylesListingPage);
+              event.context.pushNamed(AppRoutes.manufacturerOrderListingPage);
             }),
         ProfileListModel(
             image: AppImages.icProfileCalendar,
@@ -188,7 +181,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
             trailingIcon: AppImages.icArrowRight,
             onTap: () {
-              event.context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
+              event.context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
@@ -260,6 +253,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
     profileCMSList = [
       ProfileListModel(
+          image: AppImages.icAboutUs,
+          title: APPStrings.aboutUs.tr,
+          onTap: () {
+            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              RoutesData.cmsPageData: CmsWebViewDataModel(
+                url: AppConst.profileAboutUsWebViewURL,
+                title: APPStrings.aboutUs.tr,
+              )
+            });
+          }),
+      ProfileListModel(
           image: AppImages.icEducation,
           title: APPStrings.education.tr,
           isSubListExpanded: false,
@@ -322,17 +326,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ],
           onTap: () {
             event.context.pushNamed(AppRoutes.findStorePage);
-          }),
-      ProfileListModel(
-          image: AppImages.icAboutUs,
-          title: APPStrings.aboutUs.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-              RoutesData.cmsPageData: CmsWebViewDataModel(
-                url: AppConst.profileAboutUsWebViewURL,
-                title: APPStrings.aboutUs.tr,
-              )
-            });
           }),
       ProfileListModel(
           image: AppImages.icSupport,

@@ -18,6 +18,13 @@ class MyOrderTypeSelection extends StatelessWidget {
                 onTap: () {
                   context.pushNamed(AppRoutes.orderPage);
                 },
+                title: 'Normal Order',
+              ),
+              const SizedBox(height: 20),
+              SmartButton(
+                onTap: () {
+                  context.pushNamed(AppRoutes.orderPage);
+                },
                 title: 'Retailer Order',
               ),
               const SizedBox(height: 20),

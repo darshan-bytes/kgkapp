@@ -21,6 +21,7 @@ class ProductGridItem extends StatelessWidget {
   final bool isStoneWithPrice;
   final String? prefixImage;
   final double? imageSize;
+  final bool isCommentSelected;
 
   const ProductGridItem({
     super.key,
@@ -44,6 +45,7 @@ class ProductGridItem extends StatelessWidget {
     this.prefixImage,
     this.imageSize,
     this.onCommentTap,
+    this.isCommentSelected = false,
   });
 
   @override
@@ -121,7 +123,12 @@ class ProductGridItem extends StatelessWidget {
 
   Widget _buildTopPositionView(ProductItemStyle style) {
     if (onCommentTap != null) {
-      return buildIcon(path: AppImages.icMessages, onTap: onCommentTap, style: style);
+      return buildIcon(
+          path: AppImages.icMessages,
+          onTap: onCommentTap,
+          style: style,
+          backgroundColor: isCommentSelected ? style.myBagDividerColor : null,
+          iconColor: isCommentSelected ? style.commentSelectedColor : null);
     } else if (onCancelTap != null) {
       return buildIcon(path: AppImages.icCancel, onTap: onCancelTap, style: style, backgroundColor: Colors.transparent);
     } else if (isCustomisable) {
@@ -131,7 +138,13 @@ class ProductGridItem extends StatelessWidget {
     }
   }
 
-  Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {
+  Widget buildIcon(
+      {required String path,
+      Function()? onTap,
+      required ProductItemStyle style,
+      Color? backgroundColor,
+      Color? borderColor,
+      Color? iconColor}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -147,6 +160,7 @@ class ProductGridItem extends StatelessWidget {
           height: 16.w,
           width: 16.w,
           fit: BoxFit.contain,
+          color: iconColor,
         ),
       ),
     );

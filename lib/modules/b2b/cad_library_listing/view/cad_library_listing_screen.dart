@@ -130,7 +130,8 @@ class CadLibraryListingScreen extends StatelessWidget {
 
   Widget _buildGridView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
     return SmartSingleChildScrollView(
-      controller: bloc.gridPaginationScrollController.scrollController,
+      key: bloc.gridPaginationScrollController.gridKey,
+      controller: bloc.gridPaginationScrollController.controller,
       child: SmartGridView(
         items: bloc.cadList.map((item) => DesignListingGridItem.cadLibrary(designModel: item)).toList(),
         isLoadingMore: state is CadListLoadingMoreState,
@@ -141,15 +142,15 @@ class CadLibraryListingScreen extends StatelessWidget {
   Widget _buildListView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
     return ListView.builder(
       shrinkWrap: true,
-      controller: bloc.listPaginationScrollController.scrollController,
+      key: bloc.gridPaginationScrollController.listKey,
+      controller: bloc.gridPaginationScrollController.controller,
       itemCount: bloc.cadList.length,
-      physics: const ScrollPhysics(),
       itemBuilder: (context, index) {
         return Column(
           children: [
             CadLibraryListItem(
               margin: EdgeInsets.only(bottom: 24.h),
-              b2bCustomListingDataModel: bloc.cadList[index],
+              designModel: bloc.cadList[index],
               onTap: () {},
             ),
             if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
@@ -183,9 +184,8 @@ class CadLibraryListingScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is CadChangeListingTypeState,
       builder: (context, state) {
         return ScrollToTopFAB(
-          canScrollToTop:
-              bloc.isGrid ? bloc.gridPaginationScrollController.canScrollToTop : bloc.listPaginationScrollController.canScrollToTop,
-          onTap: bloc.isGrid ? bloc.gridPaginationScrollController.scrollToTop : bloc.listPaginationScrollController.scrollToTop,
+          canScrollToTop: bloc.gridPaginationScrollController.canScrollToTop,
+          onTap: bloc.gridPaginationScrollController.scrollToTop,
         );
       },
     );

@@ -21,3 +21,12 @@ final class ManufacturerOrderListLoadMoreEvent extends ManufacturerOrderListingE
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ManufacturerChangeOrdersTypeEvent extends ManufacturerOrderListingEvent {
+  final ManufacturerOrderModel selectedOrderType;
+
+  const ManufacturerChangeOrdersTypeEvent(this.selectedOrderType);
+
+  @override
+  List<Object> get props => [selectedOrderType];
+}

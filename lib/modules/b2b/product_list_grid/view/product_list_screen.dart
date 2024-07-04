@@ -157,7 +157,20 @@ class ProductListScreen extends StatelessWidget {
                   isCustomisable: isCustomisable,
                   isOutOfStock: isOutOfStock,
                   onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
-                  onEyeTap: () {},
+                  onEyeTap: () {
+                    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+                      Utils.showSmartModalBottomSheet(
+                        context: context,
+                        enableDrag: false,
+                        useRootNavigator: true,
+                        builder: (context) {
+                          return AddWatchlistScreen(
+                            productDetails: productDetails,
+                          );
+                        },
+                      );
+                    }
+                  },
                   onFavTap: () {},
                   prefixImage: AppImages.icShoppingBag,
                   imageSize: 16.w,

@@ -63,6 +63,9 @@ class AppRoutes {
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
   static const stonesLandingPage = '/stonesLandingPage';
+  static const watchListPage = '/watchListPage';
+  static const previewCataloguePage = '/previewCataloguePage';
+  static const designLibraryScreen = '/designLibraryScreen';
   static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
 
@@ -262,7 +265,7 @@ class AppRoutes {
       case auctionPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
             return const AuctionScreen();
           },
           settings: settings,
@@ -551,7 +554,7 @@ class AppRoutes {
       case cadLibraryListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
             return const CadLibraryListingScreen();
           },
           settings: settings,
@@ -570,6 +573,15 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
             return const DesignLibraryFeedbackScreen();
+          },
+          settings: settings,
+        );
+
+      case watchListPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent());
+            return const WatchlistScreen();
           },
           settings: settings,
         );
@@ -596,6 +608,24 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
             return const StonesLandingScreen();
+          },
+          settings: settings,
+        );
+
+      case previewCataloguePage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<PreviewCatalogueBloc>(
+            create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
+            child: const PreviewCatalogueScreen(),
+          ),
+          settings: settings,
+        );
+
+      case designLibraryScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
+            return const DesignLibraryScreen();
           },
           settings: settings,
         );
@@ -649,7 +679,8 @@ enum RoutesData {
   addressId,
   isShippingAddress,
   isFromCheckout,
-  presentationId
+  presentationId,
+  catalogueData,
 }
 
 enum ScreenIdentifier {

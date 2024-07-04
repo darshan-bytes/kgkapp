@@ -14,24 +14,33 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
   //Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  ManufacturerOrderModel? selectedOrderType;
+
+  // Stone types
+  final List<ManufacturerOrderModel> orderTypeList = [
+    const ManufacturerOrderModel(name: "Regular"),
+    const ManufacturerOrderModel(name: "Special"),
+    const ManufacturerOrderModel(name: "Diamond"),
+    const ManufacturerOrderModel(name: "Gemstone"),
+    const ManufacturerOrderModel(name: "Jewellery"),
+  ];
+
   ManufacturerOrderListingBloc() : super(ManufacturerOrderListingInitial()) {
     on<InitialManufacturerOrderListingEvent>(_onInitialManufacturerOrderListEvent);
     on<ManufacturerOrderListLoadMoreEvent>(_onManufacturerOrderListLoadMoreEvent);
+    on<ManufacturerChangeOrdersTypeEvent>(_onManufacturerChangeOrdersTypeEvent);
   }
 
   void _onInitialManufacturerOrderListEvent(InitialManufacturerOrderListingEvent event, Emitter<ManufacturerOrderListingState> emit) {
+    emit(ManufacturerOrderListReloadState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(ManufacturerOrderListLoadMoreEvent(currentPage));
       },
     );
     clearData();
+    selectedOrderType = orderTypeList.first;
     emit(ManufacturerOrderListingLoadedState());
-  }
-
-  void clearData() {
-    manufacturerOrderSearchController.clear();
-    manufacturerOrderList = _generateManufacturerOrderList();
   }
 
   Future<void> _onManufacturerOrderListLoadMoreEvent(
@@ -39,8 +48,21 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
     emit(const ManufacturerOrderListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     manufacturerOrderList.addAll(_generateManufacturerOrderList());
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    paginationScrollController.isPageLoaded.complete(event.currentPage == 5);
     emit(ManufacturerOrderListLoadedMoreState(event.currentPage + 1));
+  }
+
+  void _onManufacturerChangeOrdersTypeEvent(ManufacturerChangeOrdersTypeEvent event, Emitter<ManufacturerOrderListingState> emit) {
+    emit(ManufacturerOrderListReloadState());
+    selectedOrderType = event.selectedOrderType;
+    if (selectedOrderType != null) {
+      emit(ManufacturerChangeOrdersTypeState(selectedOrderType!));
+    }
+  }
+
+  void clearData() {
+    manufacturerOrderSearchController.clear();
+    manufacturerOrderList = _generateManufacturerOrderList();
   }
 
   @override
@@ -50,19 +72,18 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
   }
 
   static List<B2BCustomListingDataModel> _generateManufacturerOrderList() {
-    return List.generate(10, (index) {
+    return List.generate(15, (index) {
       return B2BCustomListingDataModel(
         id: index.toString(),
-        strProjectNumber: '1254875',
-        strDesign: '1',
-        strProjectName: 'Full blue moon',
-        status: ProjectStatus.blueInProgress,
-        strCustomer: 'Jenny Wilson',
-        strCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        holdStatus: ProjectStatus.released,
-        strCreatedOn: '23/03/2023, 10:46',
-        strCreatedBy: 'Jenny Wilson',
-        strCreatedByImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
+        strOrderId: '#345734',
+        status: ProjectStatus.onTime,
+        strCustomerName: 'Entice',
+        strCustomerNameImageUrl: 'https://i.ibb.co/BCrvsbv/image-466.png',
+        strMobileNumber: '+1 406 555 0120',
+        strItems: '5',
+        strQuality: '40',
+        strOrderOn: '17/03/23 06:00 PM',
+        purchaseOrderStatus: ProjectStatus.created,
       );
     });
   }

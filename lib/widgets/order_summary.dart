@@ -77,20 +77,22 @@ class OrderSummary extends StatelessWidget {
   }
 
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 18.h),
-      child: Row(
-        children: [
-          Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
-          SizedBox(width: 17.w),
-          SmartText(
-            APPStrings.apply.tr,
-            style: totalStyle ?? style.totalPriceStyle,
-            onTap: () {
-              Utils.showSmartModalBottomSheet(context: context, builder: (context) => const ApplyPromoCodeBottomSheet());
-            },
-          )
-        ],
+    return InkWell(
+      onTap: () {
+        Utils.showSmartModalBottomSheet(context: context, builder: (context) => const ApplyPromoCodeBottomSheet());
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 18.h),
+        child: Row(
+          children: [
+            Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
+            SizedBox(width: 17.w),
+            SmartText(
+              APPStrings.apply.tr,
+              style: totalStyle ?? style.totalPriceStyle,
+            )
+          ],
+        ),
       ),
     );
   }

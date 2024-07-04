@@ -5,6 +5,9 @@ part 'cad_library_listing_state.dart';
 part 'cad_library_listing_event.dart';
 
 class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListingState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   //Controller for grid
   bool isGrid = true;
 
@@ -13,7 +16,6 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController listPaginationScrollController = SmartPaginationScrollController();
 
   CadLibraryListingBloc() : super(CadListingInitial()) {
     on<InitialCadListingEvent>(_onInitialCadLibraryListEvent);
@@ -22,12 +24,9 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   }
 
   void _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) {
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     gridPaginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(CadListLoadMoreEvent(currentPage));
-      },
-    );
-    listPaginationScrollController.init(
+      isSecondaryView: true,
       loadAction: (int currentPage) async {
         add(CadListLoadMoreEvent(currentPage));
       },
@@ -46,11 +45,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     emit(const CadListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     cadList.addAll(_generateCadList());
-    if (isGrid) {
-      gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-    } else {
-      listPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-    }
+    gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+
     emit(CadListLoadedMoreState(event.currentPage + 1));
   }
 
@@ -63,7 +59,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   @override
   Future<void> close() {
     gridPaginationScrollController.dispose();
-    listPaginationScrollController.dispose();
+
     return super.close();
   }
 
