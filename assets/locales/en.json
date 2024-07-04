@@ -603,5 +603,7 @@
   "delete_account_ask": "Delete Account?",
   "delete_account_desc": "Are you sure you want to delete your account?",
   "delete": "Delete",
-  "select_and_comments": "Select & comments"
+  "select_and_comments": "Select & comments",
+  "add_to_watchlist": "Add to watchlist",
+  "select_the_watchlist_you_would_like_product_to_be_added": "Select the watchlist you would like product to be added."
 }

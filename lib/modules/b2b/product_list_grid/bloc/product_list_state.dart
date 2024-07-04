@@ -39,3 +39,21 @@ final class ProductListLoadedMoreState extends ProductListState {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class WatchlistChangeNameState extends ProductListState {
+  final WatchlistSelectionModel selectedWatchlist;
+
+  const WatchlistChangeNameState(this.selectedWatchlist);
+
+  @override
+  List<Object> get props => [selectedWatchlist];
+}
+
+final class WatchlistSelectedState extends ProductListState {
+  final WatchlistSelectionModel watchlistSelectionModel;
+
+  const WatchlistSelectedState(this.watchlistSelectionModel);
+
+  @override
+  List<Object> get props => [watchlistSelectionModel];
+}

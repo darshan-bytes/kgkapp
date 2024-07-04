@@ -1092,4 +1092,17 @@ class LightModeTheme extends AppTheme {
           spreadRadius: 0,
         ),
       );
+
+  @override
+  WatchListItemStyle get watchListItemStyle => WatchListItemStyle(
+      backgroundColor: colors.white,
+      dividerColor: colors.colorD3DAE0,
+      primaryColor: colors.primary,
+      disableBackgroundColor: colors.colorF7F9FA,
+      outOfStockBgColor: colors.colorE2E2F0,
+      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+      subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      listTextStyle: interRegularTextStyle,
+      labelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp));
 }

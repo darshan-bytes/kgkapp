@@ -219,6 +219,8 @@ abstract class AppTheme {
   StonesLandingScreenStyle get stonesLandingScreenStyle;
 
   PreviewCatalogueStyle get previewCatalogueStyle;
+
+  WatchListItemStyle get watchListItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2015,5 +2017,31 @@ class PreviewCatalogueStyle {
     required this.selectedStepTextStyle,
     required this.whiteColor,
     required this.boxShadow,
+  });
+}
+
+class WatchListItemStyle {
+  final Color backgroundColor;
+  final Color dividerColor;
+  final Color primaryColor;
+  final Color disableBackgroundColor;
+  final Color outOfStockBgColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+  final TextStyle listTextStyle;
+  final TextStyle labelTextStyle;
+
+  WatchListItemStyle({
+    required this.backgroundColor,
+    required this.dividerColor,
+    required this.primaryColor,
+    required this.outOfStockBgColor,
+    required this.disableBackgroundColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.subTextStyle,
+    required this.listTextStyle,
+    required this.labelTextStyle,
   });
 }
