@@ -148,9 +148,12 @@ class MyBagDiamondItem extends StatelessWidget {
                   child: SmartTextField(
                     height: 32.h,
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                    isEnabled: false,
+                    isEnabled: true,
                     controller: TextEditingController(text: value),
                     disabledBorderColor: style.borderColor,
+                    textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                     style: style.subTitleStyle,
                   ),
                 )

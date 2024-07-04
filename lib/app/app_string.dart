@@ -79,6 +79,7 @@ class APPStrings {
   static const String password = 'password';
   static const String company = 'company';
   static const String companyName = 'company_name';
+  static const String viewDashboard = 'view_dashboard';
   static const String officeLocation = 'office_location';
   static const String businessType = 'business_type';
   static const String diamond = 'diamond';
@@ -194,6 +195,7 @@ class APPStrings {
   static const String myBagEmpty = 'my_bag_empty';
   static const String checkout = 'checkout';
   static const String selectProductItemX = 'select_product_item_x';
+  static const String mostPurchasedDiamonds = "most_purchased_diamonds";
 
   // Compare Product
   static const String metalType = 'metal_type';
@@ -479,6 +481,7 @@ class APPStrings {
   static const String business = 'business';
   static const String generalQuestions = 'general_questions';
   static const String faqs = 'faqs';
+  static const String moreFaq = 'more_faq';
   static const String stillNeedHelp = 'still_need_help';
   static const String byPhone = 'by_phone';
   static const String byEmail = 'by_email';
@@ -628,6 +631,7 @@ class APPStrings {
   static const String add = 'add';
   static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
   static const String productLibrary = 'product_library';
+  static const String shopByBrands = 'shop_by_brands';
 
   //Project Listing
   static const String projects = 'projects';
@@ -757,4 +761,8 @@ class APPStrings {
   // Watchlist
   static const String addToWatchList = 'add_to_watchlist';
   static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'select_the_watchlist_you_would_like_product_to_be_added';
+
+  //Design library
+  static const String designLibrary = 'design_library';
+  static const String noDesignLibraryFound = 'no_design_library_found';
 }

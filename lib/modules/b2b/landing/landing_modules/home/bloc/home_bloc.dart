@@ -16,6 +16,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   //Shop Diamonds List
   final List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
 
+  //Shop Rings List
+  final List<AuctionListModel> shopByBrands = _generateShopByBrands();
+
   //Shop Gemstones List
   final List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
 
@@ -33,13 +36,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<ProductDetails> luminousTabViewList = _generateTabViewList();
 
   //Create Your Own Signature piece
-  OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Diamond");
+  OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Gemstone");
   OrderStoneTypeModel selectedStep2RingType = const OrderStoneTypeModel(name: "Ring");
 
+  //Scroll Controller
+  final ScrollController shopDiamondsScrollController = ScrollController();
+  final ScrollController shopGemstonesScrollController = ScrollController();
+  final ScrollController shopByBrandsScrollController = ScrollController();
+
   final List<OrderStoneTypeModel> arrStoneType = [
-    const OrderStoneTypeModel(name: "Regular"),
-    const OrderStoneTypeModel(name: "Special"),
-    const OrderStoneTypeModel(name: "Diamond"),
     const OrderStoneTypeModel(name: "Gemstone"),
     const OrderStoneTypeModel(name: "Jewellery"),
   ];
@@ -57,7 +62,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<ProductDetails> dealOfTheDayList = _generateTabViewList();
 
   //Get Inspired With Scroll controller
-  final List<AuctionListModel> getInspiredList = _generateShopByStyleList();
+  final List<AuctionListModel> getInspiredList = _generateGetInspireList();
 
   //Shop By Style List
   final List<AuctionListModel> shopByStyleList = _generateShopByStyleList();
@@ -120,16 +125,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   static List<AuctionListModel> _generateJewelleryList() {
     List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
     List<String> imageList = [
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
       "https://i.ibb.co/5jmqMcF/image-18654.png",
       "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
     ];
     return List.generate(
-      20,
+      5,
       (index) => AuctionListModel(
         id: index.toString(),
-        name: nameList[Random().nextInt(nameList.length)],
-        imageUrl: imageList[Random().nextInt(imageList.length)],
+        name: nameList[index],
+        imageUrl: imageList[index],
       ),
     );
   }
@@ -154,27 +161,144 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //For Shop by Style List
   static List<AuctionListModel> _generateShopDiamondList() {
-    List<String> nameList = ["Round", "Oval", "Cushion", "Pear", "Pendant"];
+    List<String> nameList = [
+      "Round",
+      "Oval",
+      "Cushion",
+      "Pear",
+      "Pendant",
+      "Round",
+      "Oval",
+      "Cushion",
+      "Pear",
+      "Pendant",
+      "Round",
+      "Oval",
+      "Cushion",
+      "Pear",
+      "Pendant"
+    ];
     List<String> imageList = [
+      "https://i.ibb.co/8g83JhC/Mask-group.png",
+      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
+      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
+      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
       "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
       "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
       "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
       "https://i.ibb.co/8g83JhC/Mask-group.png",
+      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
+      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
+      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
+      "https://i.ibb.co/8g83JhC/Mask-group.png",
+      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
+      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
     ];
     return List.generate(
-      20,
+      imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
-        name: nameList[Random().nextInt(nameList.length)],
-        imageUrl: imageList[Random().nextInt(imageList.length)],
+        name: nameList[index],
+        imageUrl: imageList[index],
+      ),
+    );
+  }
+
+  static List<AuctionListModel> _generateShopByBrands() {
+    List<String> nameList = [
+      "Martin Flyer",
+      "Entice",
+      "Gregg Ruth",
+      "Avita",
+      "Martin Flyer",
+      "Entice",
+      "Gregg Ruth",
+      "Avita",
+      "Martin Flyer",
+      "Entice",
+      "Gregg Ruth",
+      "Avita",
+      "Martin Flyer",
+      "Entice",
+      "Gregg Ruth",
+      "Avita"
+    ];
+    List<String> imageList = [
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+      "https://i.ibb.co/NNvhL4X/Image111.png",
+      "https://i.ibb.co/r2Rb6y4/Image222.png",
+      "https://i.ibb.co/yFhcvJM/Image333.png",
+    ];
+    return List.generate(
+      nameList.length,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: nameList[index],
+        imageUrl: imageList[index],
       ),
     );
   }
 
   //For Shop gemstones List
   static List<AuctionListModel> _generateShopGemstonesList() {
-    List<String> nameList = ["Emeralds", "Ruby", "Peridot", "Citrine", "Aquamari"];
+    List<String> nameList = [
+      "Emeralds",
+      "Ruby",
+      "Peridot",
+      "Citrine",
+      "Aquamari",
+      "Emeralds",
+      "Ruby",
+      "Peridot",
+      "Citrine",
+      "Aquamari",
+      "Emeralds",
+      "Ruby",
+      "Peridot",
+      "Citrine",
+      "Aquamari",
+      "Emeralds",
+      "Ruby",
+      "Peridot",
+      "Citrine",
+      "Aquamari"
+    ];
     List<String> imageList = [
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/HdDPk1L/Image-1.png",
+      "https://i.ibb.co/dt4GVp5/Image-2.png",
+      "https://i.ibb.co/82W97Cb/Image-3.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/HdDPk1L/Image-1.png",
+      "https://i.ibb.co/dt4GVp5/Image-2.png",
+      "https://i.ibb.co/82W97Cb/Image-3.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/HdDPk1L/Image-1.png",
+      "https://i.ibb.co/dt4GVp5/Image-2.png",
+      "https://i.ibb.co/82W97Cb/Image-3.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/HdDPk1L/Image-1.png",
+      "https://i.ibb.co/dt4GVp5/Image-2.png",
+      "https://i.ibb.co/82W97Cb/Image-3.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
+      "https://i.ibb.co/ym2pkwD/Image.png",
       "https://i.ibb.co/HdDPk1L/Image-1.png",
       "https://i.ibb.co/dt4GVp5/Image-2.png",
       "https://i.ibb.co/82W97Cb/Image-3.png",
@@ -184,8 +308,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       20,
       (index) => AuctionListModel(
         id: index.toString(),
-        name: nameList[Random().nextInt(nameList.length)],
-        imageUrl: imageList[Random().nextInt(imageList.length)],
+        name: nameList[index],
+        imageUrl: imageList[index],
       ),
     );
   }
@@ -219,14 +343,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
+  //For Get Inspired
+  static List<AuctionListModel> _generateGetInspireList() {
+    List<String> titleList = ["Diamonds rings", "Diamonds necklace", "Diamonds earrings", "Diamonds bracelet"];
+    List<String> imageList = [
+      "https://i.ibb.co/30MXHMT/Image5.png",
+      "https://i.ibb.co/yRy2w21/Image1.png",
+      "https://i.ibb.co/dmtHjL6/Image2.png",
+      "https://i.ibb.co/VN2fDKh/Image4.png"
+    ];
+    return List.generate(
+      imageList.length,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: titleList[index],
+        imageUrl: imageList[index],
+      ),
+    );
+  }
+
   //For Shop by Style
   static List<AuctionListModel> _generateShopByStyleList() {
-    List<String> titleList = ["Moissanite rings", "Aquamarine rings", "Peridot", "Morganite rings", "Gemstone jewelry"];
+    List<String> titleList = ["Moissanite rings", "Aquamarine rings", "Morganite rings", "Gemstone jewelry"];
     List<String> imageList = [
       "https://i.ibb.co/zsvLW4N/Image.png",
-      "https://i.ibb.co/syzfTzT/Bracelets.png",
-      "https://i.ibb.co/zsvLW4N/Image.png",
-      "https://i.ibb.co/zsvLW4N/Image.png"
+      "https://i.ibb.co/x1q3y0C/Image11.png",
+      "https://i.ibb.co/G7RH7k4/Image22.png",
+      "https://i.ibb.co/XYsTf4M/Image33.png"
     ];
     return List.generate(
       imageList.length,

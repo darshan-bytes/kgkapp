@@ -71,29 +71,47 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     if (userType == UserType.b2bUser) {
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: librarySubOptionsList),
+        CategoriesModel(
+            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Libraries', image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png', productsDetailsList: librarySubOptionsList),
         CategoriesModel(
             name: 'Digital \nCatalogue',
-            image: 'https://i.ibb.co/ZWKWks5/Image.png',
+            image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
             productsDetailsList: productsDetailsList,
             isExpanded: false),
-        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(
-            name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList, isExpanded: false),
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Orion',
+            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+            productsDetailsList: productsDetailsList,
+            isExpanded: false),
       ]);
     } else {
       categories.addAll([
         CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(
-            name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
+            name: 'Lab-grown \nDiamonds',
+            image: 'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
+            productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'About Us', image: 'https://i.ibb.co/QD2Tw8M/About-Us-Category.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(
+            name: 'Education', image: 'https://i.ibb.co/rFjpN0q/Education-Category.png', productsDetailsList: productsDetailsList),
       ]);
     }
     emit(CategoriesFetchData());
@@ -146,6 +164,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
         } else if (categorySubName == 'CAD Library') {
           context.pushNamed(AppRoutes.cadLibraryListingPage);
+        } else if (categorySubName == 'Design Library') {
+          context.pushNamed(AppRoutes.designLibraryScreen);
         } else {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
         }

@@ -221,6 +221,8 @@ abstract class AppTheme {
   PreviewCatalogueStyle get previewCatalogueStyle;
 
   WatchListItemStyle get watchListItemStyle;
+
+  SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2044,4 +2046,11 @@ class WatchListItemStyle {
     required this.listTextStyle,
     required this.labelTextStyle,
   });
+}
+
+class SmartSuggestionProductListStyle {
+  final TextStyle titleStyle;
+  final TextStyle viewAllStyle;
+
+  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
 }

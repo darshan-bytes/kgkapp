@@ -35,6 +35,15 @@ class CompanyScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        child: SmartButton(
+          title: APPStrings.viewDashboard.tr,
+          onTap: () {
+            context.pushNamed(AppRoutes.dashboardPage);
+          },
+        ),
+      ),
     );
   }
 

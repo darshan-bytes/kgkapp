@@ -369,41 +369,57 @@ class AuctionScreen extends StatelessWidget {
   }
 
   Widget _buildYouMayAlsoLikeSection(AuctionBloc bloc, BuildContext context) {
-    final MyBagScreenStyle myBagScreenStyle = AppTheme.of(context).myBagScreenStyle;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(
-          APPStrings.youMayAlsoLike.tr,
-          style: myBagScreenStyle.productsTitleStyle,
-        ),
-        SizedBox(height: 16.h),
-        SmartSingleChildScrollView(
-          child: Scrollbar(
-            controller: bloc.scrollController,
-            thumbVisibility: true,
-            child: SmartSingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              controller: bloc.scrollController,
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: 12,
-                runSpacing: 12.2,
-                children: bloc.youMayAlisLikeProductList.map((product) {
-                  return ProductGridItem(
-                    margin: EdgeInsets.only(bottom: 17.h),
-                    onEyeTap: () {},
-                    onFavTap: () {},
-                    productDetails: product,
-                    isStoneWithPrice: true,
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+    // final MyBagScreenStyle myBagScreenStyle = AppTheme.of(context).myBagScreenStyle;
+    return SmartSuggestionProductList(
+        title: APPStrings.youMayAlsoLike.tr,
+        onViewAllTap: () {},
+        suggestedProductList: bloc.youMayAlisLikeProductList,
+        onEyeTap: () {},
+        onFavTap: () {},
+        scrollController: bloc.scrollController);
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Row(
+    //       children: [
+    //         SmartText(
+    //           APPStrings.youMayAlsoLike.tr,
+    //           style: myBagScreenStyle.productsTitleStyle,
+    //         ),
+    //         const Spacer(),
+    //         SmartText(
+    //           APPStrings.viewAll.tr,
+    //           optionalPadding: EdgeInsets.only(right: 17.w),
+    //         ),
+    //       ],
+    //     ),
+    //     SizedBox(height: 16.h),
+    //     SmartSingleChildScrollView(
+    //       child: Scrollbar(
+    //         controller: bloc.scrollController,
+    //         thumbVisibility: true,
+    //         child: SmartSingleChildScrollView(
+    //           scrollDirection: Axis.horizontal,
+    //           controller: bloc.scrollController,
+    //           child: Wrap(
+    //             direction: Axis.horizontal,
+    //             spacing: 12,
+    //             runSpacing: 12.2,
+    //             children: bloc.youMayAlisLikeProductList.map((product) {
+    //               return ProductGridItem(
+    //                 margin: EdgeInsets.only(bottom: 17.h),
+    //                 onEyeTap: () {},
+    //                 onFavTap: () {},
+    //                 productDetails: product,
+    //                 isStoneWithPrice: true,
+    //               );
+    //             }).toList(),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 
   Widget _buildResetBidsItem({required String labelText, required String value, required AuctionScreenStyle style, bool isMyBid = false}) {

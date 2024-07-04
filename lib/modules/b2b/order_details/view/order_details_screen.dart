@@ -10,7 +10,6 @@ class OrderDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.myOrders.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(orderDetailBloc),
       body: _getBody(orderDetailBloc, style, context),
     );
   }

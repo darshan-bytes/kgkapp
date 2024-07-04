@@ -31,7 +31,7 @@ class MakeInquiryScreen extends StatelessWidget {
               SizedBox(height: 14.h),
               _buildInquiryTypeDropdown(bloc),
               SizedBox(height: 14.h),
-              _buildProductDropdown(bloc),
+              _buildProductSkuField(bloc),
               SizedBox(height: 14.h),
               _buildCommentField(bloc),
               SizedBox(height: 18.h),
@@ -82,18 +82,71 @@ class MakeInquiryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDropdown(MakeInquiryBloc bloc) {
+  Widget _buildProductSkuField(MakeInquiryBloc bloc) {
     return BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
       buildWhen: (previous, current) => current is ToggleProductState || current is MakeInquiryReloadState,
       builder: (context, state) {
-        return SmartDropDown<ProductModel>(
-          selectedItem: bloc.selectedProduct,
-          items: bloc.productList.map((e) => SmartDropDownItem<ProductModel>(value: e, title: e.name)).toList(),
-          hintText: APPStrings.selectProduct.tr,
-          labelText: APPStrings.selectProduct.tr,
-          onChanged: (newValue) {
-            if (newValue == null) return;
-            bloc.add(ChangeSelectProductEvent(productModel: newValue));
+        return Autocomplete<ProductModel>(
+          optionsBuilder: (TextEditingValue textEditingValue) {
+            if (textEditingValue.text == '') {
+              return const Iterable<ProductModel>.empty();
+            }
+            return bloc.productList.where((ProductModel option) {
+              return option.name.toLowerCase().contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          displayStringForOption: (ProductModel option) => option.name,
+          onSelected: (ProductModel selection) {},
+          fieldViewBuilder:
+              (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+            return SmartTextField(
+              key: bloc.targetKey,
+              controller: textEditingController,
+              focusNode: focusNode,
+              hintText: 'Enter product sku',
+              labelText: 'Enter product sku',
+              textInputAction: TextInputAction.next,
+              onTap: () => bloc.scrollToKey(),
+              onValueChanges: (value) {
+                bloc.scrollToKey();
+              },
+            );
+          },
+          optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<ProductModel> onSelected, Iterable<ProductModel> options) {
+            return Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                elevation: 4.0,
+                child: Container(
+                  width: context.width * 0.8,
+                  constraints: BoxConstraints(
+                    maxHeight: 200.h,
+                  ),
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: bloc.productScrollController,
+                    child: ListView.builder(
+                      controller: bloc.productScrollController,
+                      padding: EdgeInsets.all(8.w),
+                      shrinkWrap: true,
+                      itemCount: options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final ProductModel option = options.elementAt(index);
+                        return GestureDetector(
+                          onTap: () {
+                            onSelected(option);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+                            child: SmartText(option.name),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            );
           },
         );
       },

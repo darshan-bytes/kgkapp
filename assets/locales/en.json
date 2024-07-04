@@ -605,5 +605,11 @@
   "delete": "Delete",
   "select_and_comments": "Select & comments",
   "add_to_watchlist": "Add to watchlist",
-  "select_the_watchlist_you_would_like_product_to_be_added": "Select the watchlist you would like product to be added."
+  "select_the_watchlist_you_would_like_product_to_be_added": "Select the watchlist you would like product to be added.",
+  "design_library": "Design library",
+  "no_design_library_found": "No design library found",
+  "more_faq": "More FAQ",
+  "view_dashboard": "View dashboard",
+  "most_purchased_diamonds": "Most purchased diamonds",
+  "shop_by_brands": "Shop by brands"
 }
