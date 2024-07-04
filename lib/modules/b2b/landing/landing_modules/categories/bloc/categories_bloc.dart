@@ -146,6 +146,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
         } else if (categorySubName == 'CAD Library') {
           context.pushNamed(AppRoutes.cadLibraryListingPage);
+        } else if (categorySubName == 'Design Library') {
+          context.pushNamed(AppRoutes.designLibraryScreen);
         } else {
           context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
         }

@@ -62,6 +62,7 @@ class BlocGenerator {
       BlocProvider<StonesLandingBloc>(create: (_) => StonesLandingBloc()),
       BlocProvider<WatchlistBloc>(create: (_) => WatchlistBloc()),
       BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
+      BlocProvider<DesignLibraryBloc>(create: (_) => DesignLibraryBloc()),
     ];
   }
 }
