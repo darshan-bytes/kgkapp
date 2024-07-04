@@ -757,4 +757,8 @@ class APPStrings {
   // Watchlist
   static const String addToWatchList = 'add_to_watchlist';
   static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'select_the_watchlist_you_would_like_product_to_be_added';
+
+  //Design library
+  static const String designLibrary = 'design_library';
+  static const String noDesignLibraryFound = 'no_design_library_found';
 }

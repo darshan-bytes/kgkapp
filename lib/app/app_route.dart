@@ -65,6 +65,7 @@ class AppRoutes {
   static const stonesLandingPage = '/stonesLandingPage';
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
+  static const designLibraryScreen = '/designLibraryScreen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -615,6 +616,15 @@ class AppRoutes {
             create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
             child: const PreviewCatalogueScreen(),
           ),
+          settings: settings,
+        );
+
+      case designLibraryScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
+            return const DesignLibraryScreen();
+          },
           settings: settings,
         );
 
