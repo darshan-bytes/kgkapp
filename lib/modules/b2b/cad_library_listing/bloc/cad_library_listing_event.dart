@@ -5,8 +5,12 @@ sealed class CadLibraryListingEvent extends Equatable {
 }
 
 final class InitialCadListingEvent extends CadLibraryListingEvent {
+  final BuildContext context;
+
+  const InitialCadListingEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class CadChangeListingTypeEvent extends CadLibraryListingEvent {

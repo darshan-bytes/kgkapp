@@ -5,6 +5,9 @@ part 'product_list_event.dart';
 part 'product_list_state.dart';
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   // For Product List view
   bool isGrid = true;
 
@@ -35,6 +38,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
+    // assigning current userType
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+
     emit(ReloadProductState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {

@@ -143,7 +143,6 @@ class CadLibraryListingScreen extends StatelessWidget {
       shrinkWrap: true,
       controller: bloc.listPaginationScrollController.scrollController,
       itemCount: bloc.cadList.length,
-      physics: const ScrollPhysics(),
       itemBuilder: (context, index) {
         return Column(
           children: [

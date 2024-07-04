@@ -260,7 +260,7 @@ class AppRoutes {
       case auctionPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
             return const AuctionScreen();
           },
           settings: settings,
@@ -549,7 +549,7 @@ class AppRoutes {
       case cadLibraryListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
             return const CadLibraryListingScreen();
           },
           settings: settings,

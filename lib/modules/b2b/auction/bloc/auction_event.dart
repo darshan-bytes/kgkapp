@@ -21,10 +21,12 @@ final class AuctionProductCompareToggleEvent extends AuctionEvent {
 }
 
 final class AuctionInitialEvent extends AuctionEvent {
-  const AuctionInitialEvent();
+  final BuildContext context;
+
+  const AuctionInitialEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class AuctionStartTimerEvent extends AuctionEvent {
