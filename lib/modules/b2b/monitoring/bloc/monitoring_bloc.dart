@@ -151,7 +151,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         status: ProjectStatus.blueInProgress,
-        strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
+        strDesignListingImageUrl: "https://i.ibb.co/zZ6y0w4/image-7-4.png",
         strStyleNumber: "DWBFM4Q-108636",
         strDesignNumber: "DERS28MOVR",
         strCustomer: "Alex Williams",

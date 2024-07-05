@@ -22,6 +22,7 @@ class ProductGridItem extends StatelessWidget {
   final String? prefixImage;
   final double? imageSize;
   final bool isCommentSelected;
+  final String? buttonText;
 
   const ProductGridItem({
     super.key,
@@ -46,6 +47,7 @@ class ProductGridItem extends StatelessWidget {
     this.imageSize,
     this.onCommentTap,
     this.isCommentSelected = false,
+    this.buttonText,
   });
 
   @override
@@ -235,7 +237,7 @@ class ProductGridItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: onAddToBagTap!,
-                title: APPStrings.addToBag.tr,
+                title: buttonText ?? APPStrings.addToBag.tr,
                 prefixImage: prefixImage,
                 isShadow: false,
                 imageSize: imageSize ?? 16.w,

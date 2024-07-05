@@ -468,6 +468,7 @@ class APPStrings {
   static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
   static const String activityLog = 'activity_log';
   static const String getLogOnTheAccount = 'get_log_on_the_account';
+  static const String enterProductSku = 'enter_product_sku';
 
   //Support screen
   static const String repliesWithin24Hours = 'replies_within_24_hours';
@@ -765,4 +766,8 @@ class APPStrings {
   //Design library
   static const String designLibrary = 'design_library';
   static const String noDesignLibraryFound = 'no_design_library_found';
+
+  //Watchlist Detail
+  static const String noOfProducts = 'no_of_products';
+  static const String edit = 'edit';
 }

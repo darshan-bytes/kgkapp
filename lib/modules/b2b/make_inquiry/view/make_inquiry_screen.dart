@@ -88,7 +88,7 @@ class MakeInquiryScreen extends StatelessWidget {
       builder: (context, state) {
         return Autocomplete<ProductModel>(
           optionsBuilder: (TextEditingValue textEditingValue) {
-            if (textEditingValue.text == '') {
+            if (textEditingValue.text.isEmpty) {
               return const Iterable<ProductModel>.empty();
             }
             return bloc.productList.where((ProductModel option) {
@@ -103,8 +103,8 @@ class MakeInquiryScreen extends StatelessWidget {
               key: bloc.targetKey,
               controller: textEditingController,
               focusNode: focusNode,
-              hintText: 'Enter product sku',
-              labelText: 'Enter product sku',
+              hintText: APPStrings.enterProductSku.tr,
+              labelText: APPStrings.enterProductSku.tr,
               textInputAction: TextInputAction.next,
               onTap: () => bloc.scrollToKey(),
               onValueChanges: (value) {
@@ -132,14 +132,12 @@ class MakeInquiryScreen extends StatelessWidget {
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
                         final ProductModel option = options.elementAt(index);
-                        return GestureDetector(
+                        return SmartText(
+                          option.name,
+                          optionalPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
                           onTap: () {
                             onSelected(option);
                           },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
-                            child: SmartText(option.name),
-                          ),
                         );
                       },
                     ),

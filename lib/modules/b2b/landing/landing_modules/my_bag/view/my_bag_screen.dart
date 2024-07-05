@@ -359,51 +359,6 @@ class MyBagScreen extends StatelessWidget {
         onEyeTap: () {},
         onFavTap: () {},
         scrollController: bloc.scrollController);
-    // return Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Row(
-    //       children: [
-    //         SmartText(
-    //           APPStrings.youMayAlsoLike.tr,
-    //           style: style.productsTitleStyle,
-    //           optionalPadding: EdgeInsets.only(left: 17.w),
-    //         ),
-    //         const Spacer(),
-    //         SmartText(
-    //           APPStrings.viewAll.tr,
-    //           optionalPadding: EdgeInsets.only(right: 17.w),
-    //
-    //         ),
-    //       ],
-    //     ),
-    //     SizedBox(height: 16.h),
-    //     Scrollbar(
-    //       controller: bloc.scrollController,
-    //       thumbVisibility: true,
-    //       child: SmartSingleChildScrollView(
-    //         controller: bloc.scrollController,
-    //         scrollDirection: Axis.horizontal,
-    //         child: Padding(
-    //           padding: EdgeInsets.symmetric(horizontal: 17.w),
-    //           child: Wrap(
-    //             direction: Axis.horizontal,
-    //             spacing: 12.w,
-    //             runSpacing: 12.2,
-    //             children: bloc.suggestedProductList.map((product) {
-    //               return ProductGridItem(
-    //                 margin: EdgeInsets.only(bottom: 17.h),
-    //                 onEyeTap: () {},
-    //                 onFavTap: () {},
-    //                 productDetails: product,
-    //               );
-    //             }).toList(),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 
   Widget _buildMostPurchaseProductList(MyBagBloc bloc, MyBagScreenStyle style) {
@@ -414,41 +369,6 @@ class MyBagScreen extends StatelessWidget {
         onEyeTap: () {},
         onFavTap: () {},
         scrollController: bloc.mostPurchaseScrollController);
-    // return Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     SmartText(
-    //       APPStrings.mostPurchasedDiamonds.tr,
-    //       style: style.productsTitleStyle,
-    //       optionalPadding: EdgeInsets.only(left: 17.w),
-    //     ),
-    //     SizedBox(height: 16.h),
-    //     Scrollbar(
-    //       controller: bloc.mostPurchaseScrollController,
-    //       thumbVisibility: true,
-    //       child: SmartSingleChildScrollView(
-    //         controller: bloc.mostPurchaseScrollController,
-    //         scrollDirection: Axis.horizontal,
-    //         child: Padding(
-    //           padding: EdgeInsets.symmetric(horizontal: 17.w),
-    //           child: Wrap(
-    //             direction: Axis.horizontal,
-    //             spacing: 12.w,
-    //             runSpacing: 12.2,
-    //             children: bloc.mostPurchaseProductList.map((product) {
-    //               return ProductGridItem(
-    //                 margin: EdgeInsets.only(bottom: 17.h),
-    //                 onEyeTap: () {},
-    //                 onFavTap: () {},
-    //                 productDetails: product,
-    //               );
-    //             }).toList(),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 
   Widget _buildBagTotalDiamondItemsDetails(MyBagBloc bloc, MyBagScreenStyle style) {

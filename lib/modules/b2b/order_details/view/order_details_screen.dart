@@ -187,18 +187,6 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(OrderDetailBloc orderDetailBloc) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {},
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
-    );
-  }
-
   Widget _buildDetailColumn(String title, String? value, OrderDetailScreenStyle style,
       {bool isOrderStatus = false, bool totalAmount = false}) {
     return Padding(

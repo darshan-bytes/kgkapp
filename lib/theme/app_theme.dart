@@ -222,6 +222,8 @@ abstract class AppTheme {
 
   WatchListItemStyle get watchListItemStyle;
 
+  WatchlistDetailsStyle get watchlistDetailsStyle;
+
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 }
 
@@ -2051,6 +2053,22 @@ class WatchListItemStyle {
     required this.subTextStyle,
     required this.listTextStyle,
     required this.labelTextStyle,
+  });
+}
+
+class WatchlistDetailsStyle {
+  final TextStyle watchlistNameStyle;
+  final TextStyle watchlistTitleStyle;
+  final TextStyle watchlistSubTitleStyle;
+  final Color detailsBackgroundColor;
+  final TextStyle noOfProductsStyle;
+
+  WatchlistDetailsStyle({
+    required this.watchlistNameStyle,
+    required this.watchlistTitleStyle,
+    required this.watchlistSubTitleStyle,
+    required this.detailsBackgroundColor,
+    required this.noOfProductsStyle,
   });
 }
 

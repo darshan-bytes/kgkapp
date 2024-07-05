@@ -3,7 +3,7 @@ import 'package:kgk/kgk.dart';
 class SmartSuggestionProductList extends StatelessWidget {
   final String title;
   final VoidCallback? onViewAllTap;
-  final List<dynamic> suggestedProductList;
+  final List<ProductDetails> suggestedProductList;
   final VoidCallback onEyeTap;
   final VoidCallback onFavTap;
   final bool isPaddingNeeded;

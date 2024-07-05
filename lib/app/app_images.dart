@@ -160,7 +160,7 @@ class AppImages {
   static const String icCopy = 'assets/images/ic_copy.svg';
   static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
 
-  static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static const String icMoreVerticalCircle = 'assets/images/ic_more_vertical_circle.svg';
 
   //Presentation
   static String icAddComment = 'assets/images/ic_add_comment.svg';
@@ -171,4 +171,7 @@ class AppImages {
   //Send Comment
   static String icSendComment = 'assets/images/ic_send_comment.svg';
   static String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
+
+  //ic_more_vertical
+  static String icMoreVertical = 'assets/images/ic_more_vertical.svg';
 }

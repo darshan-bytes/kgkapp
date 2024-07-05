@@ -84,19 +84,17 @@ class PddPreviewScreen extends StatelessWidget {
 
   Widget _buildWebView(PddPreviewBloc pddPreviewBloc) {
     return Expanded(
-      child: SafeArea(
-        child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
-          buildWhen: (previous, current) => current is PddPreviewLoadedState,
-          builder: (context, state) {
-            if (state is PddPreviewLoadedState) {
-              return WebViewWidget(
-                controller: pddPreviewBloc.webViewController,
-              );
-            } else {
-              return const SmartCircularProgressIndicator();
-            }
-          },
-        ),
+      child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
+        buildWhen: (previous, current) => current is PddPreviewLoadedState,
+        builder: (context, state) {
+          if (state is PddPreviewLoadedState) {
+            return WebViewWidget(
+              controller: pddPreviewBloc.webViewController,
+            );
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
       ),
     );
   }

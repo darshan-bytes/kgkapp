@@ -537,42 +537,6 @@ class HomeScreen extends StatelessWidget {
             onEyeTap: () {},
             onFavTap: () {},
             scrollController: homeBloc.recentlyViewedScrollController)
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     SmartText(
-        //       APPStrings.recentlyViewed.tr,
-        //       style: style.bannerTitleStyle,
-        //       optionalPadding: EdgeInsets.only(left: 17.w),
-        //     ),
-        //     SizedBox(height: 4.h),
-        //     Padding(
-        //       padding: EdgeInsets.symmetric(horizontal: 17.w),
-        //       child: Scrollbar(
-        //         controller: homeBloc.recentlyViewedScrollController,
-        //         thumbVisibility: true,
-        //         child: SmartSingleChildScrollView(
-        //           controller: homeBloc.recentlyViewedScrollController,
-        //           scrollDirection: Axis.horizontal,
-        //           padding: EdgeInsets.symmetric(vertical: 12.h),
-        //           child: Wrap(
-        //             direction: Axis.horizontal,
-        //             spacing: 12.w,
-        //             runSpacing: 12.2.h,
-        //             children: homeBloc.recentlyViewList.map((product) {
-        //               return ProductGridItem(
-        //                 productDetails: product,
-        //                 onEyeTap: () {},
-        //                 onFavTap: () {},
-        //                 onTap: () {},
-        //               );
-        //             }).toList(),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
         );
   }
 }
