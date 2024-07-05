@@ -21,6 +21,7 @@ class SmartTabBar extends StatefulWidget {
   final Color? dividerColor;
   final TabAlignment? tabAlignment;
   final EdgeInsetsGeometry? padding;
+  final bool isExpanded;
 
   const SmartTabBar({
     super.key,
@@ -44,6 +45,7 @@ class SmartTabBar extends StatefulWidget {
     this.dividerColor,
     this.tabAlignment,
     this.padding,
+    this.isExpanded = true,
   });
 
   @override
@@ -52,6 +54,7 @@ class SmartTabBar extends StatefulWidget {
 
 class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final ValueNotifier<int> _notifier = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -60,19 +63,28 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
     if (widget.onTabInitialized != null) {
       widget.onTabInitialized!(_tabController);
     }
+
+    _tabController.addListener(_tabListener);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_tabListener);
     _tabController.dispose();
+    _notifier.dispose();
     super.dispose();
+  }
+
+  void _tabListener() {
+    if (_tabController.indexIsChanging) {
+      _notifier.value = _tabController.index;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final SmartTabBarStyle style = AppTheme.of(context).smartTabBarStyle;
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           color: widget.tabBarColor,
@@ -99,12 +111,11 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
               )),
         ),
         if (widget.tabBetweenView != null) widget.tabBetweenView!,
-        Flexible(
-          child: TabBarView(
-            physics: widget.physics,
-            controller: _tabController,
-            children: widget.tabBarView,
-          ),
+        ValueListenableBuilder<int>(
+          valueListenable: _notifier,
+          builder: (context, value, child) {
+            return (widget.isExpanded) ? Expanded(child: widget.tabBarView[value]) : widget.tabBarView[value];
+          },
         ),
       ],
     );

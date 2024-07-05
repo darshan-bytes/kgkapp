@@ -1,17 +1,21 @@
 import 'package:kgk/kgk.dart';
 
-class GemstoneTabView extends StatelessWidget {
-  final OrdersBloc ordersBloc;
+class RetailerDiamondTabView extends StatelessWidget {
+  final RetailerOrderListingBloc retailerOrderListingBloc;
 
-  const GemstoneTabView({super.key, required this.ordersBloc});
+  const RetailerDiamondTabView({super.key, required this.retailerOrderListingBloc});
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
+    final outlineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(color: style.dividerColor),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+    );
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: ordersBloc.currentScrollController.canScrollToTop,
-        onTap: ordersBloc.currentScrollController.scrollToTop,
+        canScrollToTop: retailerOrderListingBloc.currentScrollController.canScrollToTop,
+        onTap: retailerOrderListingBloc.currentScrollController.scrollToTop,
       ),
       body: Column(
         children: [
@@ -25,27 +29,15 @@ class GemstoneTabView extends StatelessWidget {
                       child: SmartTextField.search(
                         height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
-                        controller: ordersBloc.gemstoneSearchController,
+                        controller: retailerOrderListingBloc.diamondSearchController,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        customFocusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customDisabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customFocusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
+                        customFocusedBorder: outlineInputBorder,
+                        customDisabledBorder: outlineInputBorder,
+                        customErrorBorder: outlineInputBorder,
+                        customFocusedErrorBorder: outlineInputBorder,
                       ),
                     ),
-                    _buildStoneDropDownField(ordersBloc, style),
+                    _buildStoneDropDownField(retailerOrderListingBloc, style),
                   ],
                 ),
               ),
@@ -62,16 +54,19 @@ class GemstoneTabView extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           Expanded(
-            child: BlocBuilder<OrdersBloc, OrdersState>(
+            child: BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
               buildWhen: (previous, current) =>
-                  current is OrdersListLoadedState || current is OrdersListLoadedMoreState || current is OrdersLoadingMoreState,
+                  current is RetailerOrderListingListLoadedState ||
+                  current is RetailerOrderListingListLoadedMoreState ||
+                  current is RetailerOrderListingLoadingMoreState,
               builder: (context, state) {
-                if (ordersBloc.gemstoneList.isEmpty) {
+                if (retailerOrderListingBloc.diamondList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
                 }
-                return OrderListBuilder(
-                  currentScrollController: ordersBloc.currentScrollController,
-                  ordersList: ordersBloc.gemstoneList,
+                return RetailerOrderListBuilder(
+                  currentScrollController: retailerOrderListingBloc.currentScrollController,
+                  ordersList: retailerOrderListingBloc.diamondList,
+                  currentListType: B2BListingType.retailerOrderListingDiamondType,
                   onTap: (index) {
                     context.pushNamed(AppRoutes.orderDetailsPage);
                   },
@@ -84,9 +79,9 @@ class GemstoneTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
-    return BlocBuilder<OrdersBloc, OrdersState>(
-      buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
+  Widget _buildStoneDropDownField(RetailerOrderListingBloc retailerOrderListingBloc, FilterBottomActionBarStyle style) {
+    return BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
+      buildWhen: (previous, current) => current is ChangeRetailerOrderStoneTypeState,
       builder: (context, state) {
         return SizedBox(
           width: 120.w,
@@ -96,7 +91,7 @@ class GemstoneTabView extends StatelessWidget {
                 top: BorderSide(color: style.dividerColor),
                 bottom: BorderSide(color: style.dividerColor)),
             borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-            items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
+            items: retailerOrderListingBloc.arrStoneType.map((OrderStoneTypeModel type) {
               return SmartDropDownItem<OrderStoneTypeModel>(
                 value: type,
                 title: type.name,
@@ -104,10 +99,10 @@ class GemstoneTabView extends StatelessWidget {
             }).toList(),
             onChanged: (type) {
               if (type != null) {
-                ordersBloc.add(ChangeOrdersStoneTypeEvent(type));
+                retailerOrderListingBloc.add(ChangeRetailerOrderStoneTypeEvent(type));
               }
             },
-            selectedItem: ordersBloc.selectedStoneType,
+            selectedItem: retailerOrderListingBloc.selectedStoneType,
           ),
         );
       },

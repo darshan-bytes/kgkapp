@@ -8,8 +8,12 @@ class DiamondTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
-    return SmartSingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: ordersBloc.currentScrollController.canScrollToTop,
+        onTap: ordersBloc.currentScrollController.scrollToTop,
+      ),
+      body: Column(
         children: [
           SizedBox(height: 16.0.h),
           Row(
@@ -20,8 +24,6 @@ class DiamondTabView extends StatelessWidget {
                     Expanded(
                       child: SmartTextField.search(
                         height: 48.w,
-                        onValueChanges: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
-                        onFieldSubmitted: (value) => ordersBloc.add(const FilterDiamondOrdersEvent()),
                         hintText: APPStrings.searchOrder.tr,
                         controller: ordersBloc.diamondSearchController,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
@@ -59,18 +61,24 @@ class DiamondTabView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          BlocBuilder<OrdersBloc, OrdersState>(
-            buildWhen: (previous, current) => current is FilterDiamondOrdersState,
-            builder: (context, state) {
-              return OrderListBuilder(
-                ordersList: ordersBloc.filteredDiamondOrdersList,
-                onTap: (index) {
-                  context.pushNamed(AppRoutes.orderDetailsPage);
-                },
-              );
-            },
+          Expanded(
+            child: BlocBuilder<OrdersBloc, OrdersState>(
+              buildWhen: (previous, current) =>
+                  current is OrdersListLoadedState || current is OrdersListLoadedMoreState || current is OrdersLoadingMoreState,
+              builder: (context, state) {
+                if (ordersBloc.diamondList.isEmpty) {
+                  return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
+                }
+                return OrderListBuilder(
+                  currentScrollController: ordersBloc.currentScrollController,
+                  ordersList: ordersBloc.diamondList,
+                  onTap: (index) {
+                    context.pushNamed(AppRoutes.orderDetailsPage);
+                  },
+                );
+              },
+            ),
           ),
-          SizedBox(height: 17.0.h),
         ],
       ),
     );

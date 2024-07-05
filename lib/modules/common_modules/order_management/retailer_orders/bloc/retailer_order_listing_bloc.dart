@@ -1,16 +1,16 @@
 import 'package:kgk/kgk.dart';
 
-part 'orders_event.dart';
+part 'retailer_order_listing_event.dart';
 
-part 'orders_state.dart';
+part 'retailer_order_listing_state.dart';
 
-enum MyOrdersTab {
+enum RetailerOrdersTab {
   diamond,
   gemstone,
   jewellery,
 }
 
-class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
+class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerOrderListingState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
@@ -34,9 +34,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ];
 
   // Orders lists
-  List<MyOrderDetailsModel> diamondList = [];
-  List<MyOrderDetailsModel> gemstoneList = [];
-  List<MyOrderDetailsModel> jewelleryList = [];
+  List<B2BCustomListingDataModel> diamondList = [];
+  List<B2BCustomListingDataModel> gemstoneList = [];
+  List<B2BCustomListingDataModel> jewelleryList = [];
 
   // Stone types
   final List<OrderStoneTypeModel> arrStoneType = [
@@ -47,19 +47,19 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     const OrderStoneTypeModel(name: "Jewellery"),
   ];
 
-  OrdersBloc() : super(const OrdersInitialState()) {
-    on<OrdersInitialEvent>(_onInitOrdersEvent);
-    on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
-    on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
-    on<ChangeOrderTabsEvent>(_onChangeTabEvent);
+  RetailerOrderListingBloc() : super(const RetailerOrderListingInitialState()) {
+    on<RetailerOrderListingInitialEvent>(_onInitOrdersEvent);
+    on<ChangeRetailerOrderStoneTypeEvent>(_onChangeStoneType);
+    on<RetailerOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
+    on<ChangeRetailerOrderTabsEvent>(_onChangeTabEvent);
   }
 
-  void _onInitOrdersEvent(OrdersInitialEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
+  void _onInitOrdersEvent(RetailerOrderListingInitialEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     clearData();
     diamondList = _generateDiamondOrdersList();
-    gemstoneList = _generateGemstoneOrdersList();
+    gemstoneList = _generateDiamondOrdersList();
     jewelleryList = _generateJewelleryOrdersList();
 
     if (diamondScrollController.isInitialised) {
@@ -68,35 +68,35 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     }
     diamondScrollController.init(
       loadAction: (int currentPage) async {
-        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.diamond));
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.diamond));
       },
     );
 
     gemstoneScrollController.init(
       loadAction: (int currentPage) async {
-        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.gemstone));
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.gemstone));
       },
     );
 
     jewelleryScrollController.init(
       loadAction: (int currentPage) async {
-        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.jewellery));
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.jewellery));
       },
     );
 
-    emit(const OrdersListLoadedState());
+    emit(const RetailerOrderListingListLoadedState());
   }
 
-  void _onChangeStoneType(ChangeOrdersStoneTypeEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
+  void _onChangeStoneType(ChangeRetailerOrderStoneTypeEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
     selectedStoneType = event.selectedStoneType;
     if (selectedStoneType != null) {
-      emit(ChangeOrdersStoneTypeState(selectedStoneType!));
+      emit(ChangeRetailerOrderStoneTypeState(selectedStoneType!));
     }
   }
 
-  void _onChangeTabEvent(ChangeOrderTabsEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
+  void _onChangeTabEvent(ChangeRetailerOrderTabsEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
     switch (tabController.index) {
       case 0:
         gemstoneSearchController.clear();
@@ -111,44 +111,44 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         gemstoneSearchController.clear();
         break;
     }
-    emit(const ChangeOrderTabsState());
+    emit(const ChangeRetailerOrderTabsState());
   }
 
-  Future<void> _onListingLoadMoreEvent(MyOrderListingLoadMoreEvent event, Emitter<OrdersState> emit) async {
-    emit(OrdersLoadingMoreState(event.listType));
+  Future<void> _onListingLoadMoreEvent(RetailerOrderListingLoadMoreEvent event, Emitter<RetailerOrderListingState> emit) async {
+    emit(RetailerOrderListingLoadingMoreState(event.listType));
     await Future.delayed(const Duration(seconds: 2));
 
-    List<MyOrderDetailsModel> newDataList = [];
+    List<B2BCustomListingDataModel> newDataList = [];
 
     switch (event.listType) {
-      case MyOrdersTab.diamond:
+      case RetailerOrdersTab.diamond:
         newDataList = _generateDiamondOrdersList();
         diamondList.addAll(newDataList);
         diamondScrollController.isPageLoaded.complete(event.currentPage == 3);
         break;
-      case MyOrdersTab.gemstone:
-        newDataList = _generateGemstoneOrdersList();
+      case RetailerOrdersTab.gemstone:
+        newDataList = _generateDiamondOrdersList();
         gemstoneList.addAll(newDataList);
         gemstoneScrollController.isPageLoaded.complete(event.currentPage == 3);
         break;
-      case MyOrdersTab.jewellery:
+      case RetailerOrdersTab.jewellery:
         newDataList = _generateJewelleryOrdersList();
         jewelleryList.addAll(newDataList);
         jewelleryScrollController.isPageLoaded.complete(event.currentPage == 3);
         break;
     }
 
-    emit(OrdersListLoadedMoreState(event.currentPage + 1, event.listType));
+    emit(RetailerOrderListingListLoadedMoreState(event.currentPage + 1, event.listType));
   }
 
   SmartPaginationScrollController get currentScrollController {
-    final MyOrdersTab currentTab = MyOrdersTab.values[tabController.index];
+    final RetailerOrdersTab currentTab = RetailerOrdersTab.values[tabController.index];
     switch (currentTab) {
-      case MyOrdersTab.diamond:
+      case RetailerOrdersTab.diamond:
         return diamondScrollController;
-      case MyOrdersTab.gemstone:
+      case RetailerOrdersTab.gemstone:
         return gemstoneScrollController;
-      case MyOrdersTab.jewellery:
+      case RetailerOrdersTab.jewellery:
         return jewelleryScrollController;
     }
   }
@@ -170,47 +170,37 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   // Helper methods
-  static List<MyOrderDetailsModel> _generateDiamondOrdersList() {
+  static List<B2BCustomListingDataModel> _generateDiamondOrdersList() {
     return List.generate(
       8,
-      (index) => MyOrderDetailsModel(
+      (index) => B2BCustomListingDataModel(
         id: index.toString(),
-        orderId: "1456${index + 7}",
-        orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
-        orderTotal: "\$12,500",
-        orderItems: "5",
-        orderQuantity: "40",
+        strOrderId: "#34573${index + 2}",
+        status: ProjectStatus.active,
+        strOrderedBy: "Michael Lee",
+        strOrderedByImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
+        strMobileNumber: "+1 406 555 0120",
+        strItems: "15",
+        strTotalAmount: "\$12,500",
+        strOrderOn: "17/03/23 06:00 PM",
       ),
     );
   }
 
-  static List<MyOrderDetailsModel> _generateGemstoneOrdersList() {
+  static List<B2BCustomListingDataModel> _generateJewelleryOrdersList() {
     return List.generate(
       8,
-      (index) => MyOrderDetailsModel(
+      (index) => B2BCustomListingDataModel(
         id: index.toString(),
-        orderId: "1456${index + 3}",
-        orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
-        orderTotal: "\$12,500",
-        orderItems: "5",
-        orderQuantity: "40",
-      ),
-    );
-  }
-
-  static List<MyOrderDetailsModel> _generateJewelleryOrdersList() {
-    return List.generate(
-      8,
-      (index) => MyOrderDetailsModel(
-        id: index.toString(),
-        orderId: "1456${index + 6}",
-        orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
-        orderTotal: "\$12,500",
-        orderItems: "5",
-        orderQuantity: "40",
+        strOrderId: "#34573${index + 2}",
+        orderStatus: ProjectStatus.onTime,
+        strCustomerNameImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+        strCustomerName: 'Dianne Russell',
+        strMobileNumber: "+1 406 555 0120",
+        strItems: "5",
+        strQuality: "40",
+        strOrderOn: "17/03/23 06:00 PM",
+        salesOrderStatus: ProjectStatus.created,
       ),
     );
   }

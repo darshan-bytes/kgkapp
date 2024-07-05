@@ -236,7 +236,7 @@ class SharePresentationScreen extends StatelessWidget {
 
   Widget _buildBottomNavbar(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 17.w, top: 24.h, right: 17.w),
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
       child: Row(
         children: [
           Expanded(

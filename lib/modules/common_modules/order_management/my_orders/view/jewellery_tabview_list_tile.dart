@@ -8,8 +8,12 @@ class JewelleryTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
-    return SmartSingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: ordersBloc.currentScrollController.canScrollToTop,
+        onTap: ordersBloc.currentScrollController.scrollToTop,
+      ),
+      body: Column(
         children: [
           SizedBox(height: 16.0.h),
           Row(
@@ -22,8 +26,6 @@ class JewelleryTabView extends StatelessWidget {
                         height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
                         controller: ordersBloc.jewellerySearchController,
-                        onValueChanges: (value) => ordersBloc.add(const FilterJewelleryOrdersEvent()),
-                        onFieldSubmitted: (value) => ordersBloc.add(const FilterJewelleryOrdersEvent()),
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                         customFocusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: style.dividerColor),
@@ -59,18 +61,24 @@ class JewelleryTabView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          BlocBuilder<OrdersBloc, OrdersState>(
-            buildWhen: (previous, current) => current is FilterJewelleryOrdersState,
-            builder: (context, state) {
-              return OrderListBuilder(
-                ordersList: ordersBloc.filteredJewelleryOrdersList,
-                onTap: (index) {
-                  context.pushNamed(AppRoutes.orderDetailsPage);
-                },
-              );
-            },
+          Expanded(
+            child: BlocBuilder<OrdersBloc, OrdersState>(
+              buildWhen: (previous, current) =>
+                  current is OrdersListLoadedState || current is OrdersListLoadedMoreState || current is OrdersLoadingMoreState,
+              builder: (context, state) {
+                if (ordersBloc.gemstoneList.isEmpty) {
+                  return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
+                }
+                return OrderListBuilder(
+                  currentScrollController: ordersBloc.currentScrollController,
+                  ordersList: ordersBloc.jewelleryList,
+                  onTap: (index) {
+                    context.pushNamed(AppRoutes.orderDetailsPage);
+                  },
+                );
+              },
+            ),
           ),
-          SizedBox(height: 17.0.h),
         ],
       ),
     );
