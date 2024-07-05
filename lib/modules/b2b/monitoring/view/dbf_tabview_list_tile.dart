@@ -15,7 +15,7 @@ class DbfTabviewListTile extends StatelessWidget {
             SizedBox(height: 24.h),
             SmartTextField(
               controller: monitoringBloc.dbfSearchController,
-              hintText: APPStrings.searchX.tr.interpolate([APPStrings.dbf.tr.toLowerCase()]),
+              hintText: APPStrings.searchX.tr.interpolate([APPStrings.dbf.tr.toUpperCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,

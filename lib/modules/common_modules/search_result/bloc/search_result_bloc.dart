@@ -66,18 +66,20 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
               ));
     } else {
       paginationScrollController.isPageLoaded.complete(true);
-      List.generate(20, (index) {
-        List<String> nameList = ["Round", "Oval", "Cushion", "Pear", "Pendant"];
+      List.generate(5, (index) {
+        List<String> nameList = ["Round", "Oval", "Cushion", "Pear", "Emerald"];
         List<String> imageList = [
-          "https://i.ibb.co/yBHp2KB/image-7.png",
-          "https://i.ibb.co/477f41r/Group-1410089379.png",
-          "https://i.ibb.co/sggT4PJ/Group-1410089378.png"
+          "https://i.ibb.co/9TVNqts/1.png",
+          "https://i.ibb.co/5B1LRSk/2.png",
+          "https://i.ibb.co/gFLXVS0/3.png",
+          "https://i.ibb.co/S7q1RKQ/4.png",
+          "https://i.ibb.co/gFLXVS0/3.png",
         ];
         shopDiamondsByShapeList.add(
           AuctionListModel(
             id: index.toString(),
-            name: nameList[Random().nextInt(nameList.length)],
-            imageUrl: imageList[Random().nextInt(imageList.length)],
+            name: nameList[index],
+            imageUrl: imageList[index],
           ),
         );
       });

@@ -421,7 +421,7 @@
   "assign_to": "Assign to",
   "market": "Market",
   "created_on": "Created on",
-  "presentation_number": "Presentation Number",
+  "presentation_number": "Presentation number",
   "approved_by": "Approved by",
   "project": "Project",
   "project_number": "Project number",
@@ -605,5 +605,12 @@
   "no_watchlist_found": "No watchlist found",
   "select_the_watchlist_you_would_like_product_to_be_added": "Select the watchlist you would like product to be added.",
   "design_library": "Design library",
-  "no_design_library_found": "No design library found"
+  "no_design_library_found": "No design library found",
+  "no_of_products": "No of products",
+  "edit": "Edit",
+  "more_faq": "More FAQ",
+  "view_dashboard": "View dashboard",
+  "most_purchased_diamonds": "Most purchased diamonds",
+  "shop_by_brands": "Shop by brands",
+  "enter_product_sku": "Enter Product SKU"
 }

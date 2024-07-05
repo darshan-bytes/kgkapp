@@ -67,7 +67,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     return List.generate(10, (index) {
       return B2BCustomListingDataModel(
         id: index.toString(),
-        strCADLibraryImageUrl: "https://i.ibb.co/LghRtxf/Image.png",
+        strCADLibraryImageUrl: index % 2 == 0 ? "https://i.ibb.co/LghRtxf/Image.png" : "https://i.ibb.co/FVHfPPB/cad.png",
         strCADLibraryNumber: 'CG-0288-23/04',
         strCADLibraryProductName: 'Diamond Vine Ring in 18k Rose Gold',
       );

@@ -571,68 +571,24 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildSuggestedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.youMayAlsoLike.tr, style: style.customerReviewTitleStyle),
-        SizedBox(height: 16.h),
-        Scrollbar(
-          controller: productDetailsBloc.youMayLikeScrollController,
-          thumbVisibility: true,
-          child: SmartSingleChildScrollView(
-            controller: productDetailsBloc.youMayLikeScrollController,
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              direction: Axis.horizontal,
-              spacing: 12.0,
-              runSpacing: 12,
-              children: List.generate(productDetailsBloc.suggestedProductList.length, (index) {
-                ProductDetails product = productDetailsBloc.suggestedProductList[index];
-                return ProductGridItem(
-                  margin: EdgeInsets.only(bottom: 17.h),
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  productDetails: product,
-                  isStoneWithPrice: productDetailsBloc.screenIdentifier == ScreenIdentifier.productForDiamonds,
-                );
-              }),
-            ),
-          ),
-        ),
-      ],
-    );
+    return SmartSuggestionProductList(
+        title: APPStrings.youMayAlsoLike.tr,
+        onViewAllTap: () {},
+        suggestedProductList: productDetailsBloc.suggestedProductList,
+        onEyeTap: () {},
+        onFavTap: () {},
+        isPaddingNeeded: false,
+        scrollController: productDetailsBloc.youMayLikeScrollController);
   }
 
   Widget _buildRecentlyViewedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SmartText(APPStrings.recentlyViewed.tr, style: style.customerReviewTitleStyle),
-        SizedBox(height: 16.h),
-        Scrollbar(
-          controller: productDetailsBloc.recentViewScrollController,
-          thumbVisibility: true,
-          child: SmartSingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            controller: productDetailsBloc.recentViewScrollController,
-            child: Wrap(
-              direction: Axis.horizontal,
-              spacing: 12.0,
-              runSpacing: 12,
-              children: List.generate(productDetailsBloc.recentlyViewedProductList.length, (index) {
-                ProductDetails product = productDetailsBloc.recentlyViewedProductList[index];
-                return ProductGridItem(
-                  margin: EdgeInsets.only(bottom: 17.h),
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  productDetails: product,
-                );
-              }),
-            ),
-          ),
-        ),
-        SizedBox(height: 16.h),
-      ],
-    );
+    return SmartSuggestionProductList(
+        title: APPStrings.recentlyViewed.tr,
+        onViewAllTap: () {},
+        suggestedProductList: productDetailsBloc.recentlyViewedProductList,
+        onEyeTap: () {},
+        onFavTap: () {},
+        isPaddingNeeded: false,
+        scrollController: productDetailsBloc.recentViewScrollController);
   }
 }

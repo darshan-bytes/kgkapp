@@ -20,7 +20,7 @@ class DesignBriefsScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 24.h),
                     SmartTextField(
-                      hintText: APPStrings.searchProjects.tr,
+                      hintText: APPStrings.searchX.tr.interpolate([APPStrings.designs.tr.toLowerCase()]),
                       controller: designBriefsBloc.designBriefsSearchController,
                       suffixIcon: SmartImage(
                         path: AppImages.icSearchThin,

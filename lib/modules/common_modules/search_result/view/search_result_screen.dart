@@ -10,12 +10,12 @@ class SearchResultScreen extends StatelessWidget {
     final SearchResultBloc searchResultBloc = BlocProvider.of<SearchResultBloc>(context);
     return Scaffold(
       appBar: _buildAppBar(searchResultBloc),
-      body: _buildBody(diamondListingStyle, style, searchResultBloc),
-      bottomNavigationBar: _buildBottomNavigationBar(searchResultBloc, context),
+      body: _buildBody(diamondListingStyle, style, searchResultBloc, context),
     );
   }
 
-  Widget _buildBody(DiamondListingStyle diamondListingStyle, SearchResultScreenStyle style, SearchResultBloc searchResultBloc) {
+  Widget _buildBody(
+      DiamondListingStyle diamondListingStyle, SearchResultScreenStyle style, SearchResultBloc searchResultBloc, BuildContext context) {
     return BlocBuilder<SearchResultBloc, SearchResultState>(
       buildWhen: (_, current) => current is SearchResultLoadedState,
       builder: (context, state) {
@@ -53,15 +53,16 @@ class SearchResultScreen extends StatelessWidget {
                           SmartText(APPStrings.searchResultNotFoundDesc.tr, style: style.subTitleStyle),
                           SizedBox(height: 24.h),
                           _buildNeedHelpSection(style),
-                          SizedBox(height: 40.h),
-                          _buildShopDiamondsByShapeList(searchResultBloc, style),
+                          SizedBox(height: 30.h),
+                          _buildShopDiamondsByShapeList(searchResultBloc, style, context),
+                          SizedBox(height: 30.h),
                         ],
                       ],
                     ),
                   ),
                   if (searchResultBloc.productList.isEmpty) ...[
-                    _buildNewlyLaunchedItems(searchResultBloc, style),
-                    _buildExploreDigitalCatalogue(style),
+                    _buildNewlyLaunchedItems(searchResultBloc, style, context),
+                    _buildExploreDigitalCatalogue(style, context),
                   ]
                 ],
               ),
@@ -196,31 +197,6 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(SearchResultBloc searchResultBloc, BuildContext context) {
-    return BlocBuilder<SearchResultBloc, SearchResultState>(
-      buildWhen: (previous, current) => current is SearchResultLoadedState,
-      builder: (context, state) {
-        if (searchResultBloc.productList.isEmpty) return const SizedBox();
-        return FilterBottomActionBar(
-          onFilterTap: () {
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              builder: (context) => FilterScreen(
-                onApply: () {},
-              ),
-            );
-          },
-          onSortTap: () {
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              builder: (context) => const SortScreen(),
-            );
-          },
-        );
-      },
-    );
-  }
-
   Widget _buildNeedHelpSection(SearchResultScreenStyle style) {
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -238,7 +214,7 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShopDiamondsByShapeList(SearchResultBloc bloc, SearchResultScreenStyle style) {
+  Widget _buildShopDiamondsByShapeList(SearchResultBloc bloc, SearchResultScreenStyle style, BuildContext context) {
     return SmartHorizontalItemBuilder(
       itemCount: bloc.shopDiamondsByShapeList.length,
       title: APPStrings.shopDiamondsByShape.tr,
@@ -257,12 +233,15 @@ class SearchResultScreen extends StatelessWidget {
           titleMaxLines: 1,
           fit: BoxFit.contain,
           imageUrl: item.imageUrl ?? '',
+          onTap: () {
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+          },
         );
       },
     );
   }
 
-  Widget _buildNewlyLaunchedItems(SearchResultBloc bloc, SearchResultScreenStyle style) {
+  Widget _buildNewlyLaunchedItems(SearchResultBloc bloc, SearchResultScreenStyle style, BuildContext context) {
     return Container(
       color: style.newlyLaunchedBackgroundColor,
       padding: EdgeInsets.symmetric(
@@ -292,7 +271,9 @@ class SearchResultScreen extends StatelessWidget {
           SizedBox(height: 24.h),
           SmartButton(
             width: 142.w,
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+            },
             title: APPStrings.exploreNow.tr,
           )
         ],
@@ -300,7 +281,7 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildExploreDigitalCatalogue(SearchResultScreenStyle style) {
+  Widget _buildExploreDigitalCatalogue(SearchResultScreenStyle style, BuildContext context) {
     return Container(
       color: style.exploreDigitalCatalogBackgroundColor,
       padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
@@ -312,7 +293,9 @@ class SearchResultScreen extends StatelessWidget {
           SizedBox(height: 32.h),
           SmartButton(
             width: 142.w,
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutes.digitalCataloguePage);
+            },
             title: APPStrings.viewNow.tr,
             suffixImage: AppImages.icRight,
             activeImageColor: style.whiteColor,

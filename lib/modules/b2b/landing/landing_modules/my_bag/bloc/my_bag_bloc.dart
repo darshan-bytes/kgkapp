@@ -11,6 +11,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool selectAllProduct = false;
   int selectedProductCount = 0;
   final ScrollController scrollController = ScrollController();
+  final ScrollController mostPurchaseScrollController = ScrollController();
 
   int get totalProductCount => myBagProductList.length;
 
@@ -81,6 +82,17 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
       name: "2.00 Carat H VS1 Excellent Cut Round Setting",
       originalPrice: "\$3,000.00",
+    ),
+  );
+
+  List<ProductDetails> mostPurchaseProductList = List.generate(
+    8,
+    (index) => ProductDetails(
+      diamond: "1.5 gram",
+      gram: "1.5 gram",
+      imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+      name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+      originalPrice: "\$ 5,000.00",
     ),
   );
 

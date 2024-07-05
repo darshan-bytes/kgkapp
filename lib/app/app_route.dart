@@ -66,6 +66,7 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const watchlistDetailsPage = '/watchlistDetailsPage';
   static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
 
@@ -630,6 +631,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case watchlistDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<WatchlistDetailsBloc>(
+            create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
+            child: const WatchlistDetailsScreen(),
+          ),
+          settings: settings,
+        );
+
       case manufacturerOrderListingPage:
         return MaterialPageRoute(
           builder: (context) {
@@ -681,6 +691,7 @@ enum RoutesData {
   isFromCheckout,
   presentationId,
   catalogueData,
+  watchlistId,
 }
 
 enum ScreenIdentifier {
