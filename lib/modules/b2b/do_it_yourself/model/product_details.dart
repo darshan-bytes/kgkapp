@@ -18,6 +18,8 @@ class ProductDetails {
   DiamondClarityChart? diamondClarityChart;
   ProductInfoClarityChat? productInfoClarityChat;
   bool isOutOfStock;
+  String? company;
+  String? productSku;
 
   ProductDetails({
     this.productId,
@@ -37,5 +39,7 @@ class ProductDetails {
     this.diamondClarityChart,
     this.productInfoClarityChat,
     this.isOutOfStock = false,
+    this.company,
+    this.productSku,
   });
 }

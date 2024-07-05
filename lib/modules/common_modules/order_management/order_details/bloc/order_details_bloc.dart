@@ -5,6 +5,9 @@ part 'order_details_event.dart';
 part 'order_details_state.dart';
 
 class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
+  //ScreenIdentifier
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.orderDetailsForMyOrder;
+
   // controllers
   final TextEditingController orderSearchController = TextEditingController();
 

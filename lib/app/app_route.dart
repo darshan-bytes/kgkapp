@@ -69,6 +69,7 @@ class AppRoutes {
   static const watchlistDetailsPage = '/watchlistDetailsPage';
   static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
+  static const retailerOrderListingPage = '/retailerOrderListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -657,6 +658,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case retailerOrderListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<RetailerOrderListingBloc>(context).add(InitialRetailerOrderListingEvent(context: context));
+            return const RetailerOrderListingScreen();
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -705,6 +715,9 @@ enum ScreenIdentifier {
   landingForDiamonds,
   landingForJewellery,
   landingForGemstones,
+  orderDetailsForMyOrder,
+  orderDetailsForRetailer,
+  orderDetailsForManufacturer,
 }
 
 extension RoutesDataExtension on BuildContext {

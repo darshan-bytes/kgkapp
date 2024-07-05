@@ -35,6 +35,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
           final WatchlistDetailsStyle style = AppTheme.of(context).watchlistDetailsStyle;
           return SmartSingleChildScrollView(
             controller: bloc.paginationScrollController.controller,
+            physics: const ClampingScrollPhysics(),
             child: Column(
               children: [
                 _buildDetailsView(style, bloc),
@@ -168,15 +169,35 @@ class WatchlistDetailsScreen extends StatelessWidget {
         return SmartGridView(
           items: List.generate(
             bloc.productList.length,
-            (index) => ProductGridItem(
-              productDetails: bloc.productList[index],
-              onCancelTap: () {},
-              onFavTap: () {},
-              isFavourite: true,
-              onEyeTap: () {},
-              onAddToBagTap: () {},
-              buttonText: APPStrings.edit.tr,
-            ),
+            (index) {
+              ProductDetails productDetails = bloc.productList[index];
+              return ProductGridItem(
+                isOutOfStock: productDetails.isOutOfStock,
+                productDetails: productDetails,
+                onCancelTap: () {
+                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.remove(productDetails));
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    enableDrag: false,
+                    useRootNavigator: true,
+                    builder: (context) => const AddWatchlistScreen(),
+                  );
+                },
+                onFavTap: () {},
+                isFavourite: true,
+                onEyeTap: () {},
+                onAddToBagTap: () {
+                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.edit(productDetails));
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    enableDrag: false,
+                    useRootNavigator: true,
+                    builder: (context) => const AddWatchlistScreen(),
+                  );
+                },
+                buttonText: APPStrings.edit.tr,
+              );
+            },
           ),
           isLoadingMore: state is WatchlistProductLoadingMore,
         );
