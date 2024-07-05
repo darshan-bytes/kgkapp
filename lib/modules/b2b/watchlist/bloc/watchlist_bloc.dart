@@ -21,6 +21,10 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   }
 
   void _onWatchlistInitialEvent(WatchlistInitialEvent event, Emitter<WatchlistState> emit) async {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     emit(WatchlistReloadState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {

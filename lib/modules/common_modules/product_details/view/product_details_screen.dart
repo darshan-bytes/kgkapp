@@ -215,7 +215,6 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc, BuildContext context) {
-    printWrapped("productDetailsBloc.screenIdentifier==${productDetailsBloc.screenIdentifier}");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(

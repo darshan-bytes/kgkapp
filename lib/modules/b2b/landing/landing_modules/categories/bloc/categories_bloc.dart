@@ -162,6 +162,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    selectedRowIndex = null;
     categories.clear();
     if (userType == UserType.b2bUser) {
       categories.addAll([

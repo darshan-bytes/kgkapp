@@ -614,5 +614,10 @@
   "view_dashboard": "View dashboard",
   "most_purchased_diamonds": "Most purchased diamonds",
   "shop_by_brands": "Shop by brands",
-  "enter_product_sku": "Enter Product SKU"
+  "enter_product_sku": "Enter Product SKU",
+  "notify_when_product_is_in_stock": "Notify when product is in stock",
+  "notify_when_price_drops": "Notify when price drops",
+  "notify_when_discount_applied": "Notify when discount is applied",
+  "remove_product": "Remove product?",
+  "remove_product_desc": "Selected product will be removed from the watchlist"
 }

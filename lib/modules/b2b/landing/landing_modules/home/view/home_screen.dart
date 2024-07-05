@@ -291,31 +291,26 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
-      child: SizedBox(
-        height: 660.h,
+        padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartText(APPStrings.kgkCouture.tr, style: style.bannerTitleStyle),
-            Flexible(
-              child: SmartTabBar(
-                labelPadding: EdgeInsets.zero,
-                length: homeBloc.kgkCoutureTabs.length,
-                onTabInitialized: (tabController) {
-                  homeBloc.kgkCoutureTabController = tabController;
-                },
-                tabBetweenView: SizedBox(height: 16.h),
-                onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
-                tabs: homeBloc.kgkCoutureTabs,
-                tabBarView: _buildTabBarViews(homeBloc, context),
-              ),
-            )
+            SmartTabBar(
+              isExpanded: false,
+              labelPadding: EdgeInsets.zero,
+              length: homeBloc.kgkCoutureTabs.length,
+              onTabInitialized: (tabController) {
+                homeBloc.kgkCoutureTabController = tabController;
+              },
+              tabBetweenView: SizedBox(height: 16.h),
+              onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
+              tabs: homeBloc.kgkCoutureTabs,
+              tabBarView: _buildTabBarViews(homeBloc, context),
+            ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   List<Widget> _buildTabBarViews(HomeBloc homeBloc, BuildContext context) {
@@ -529,14 +524,13 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+        padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
         child: SmartSuggestionProductList(
             title: APPStrings.recentlyViewed.tr,
             onViewAllTap: () {},
             suggestedProductList: homeBloc.recentlyViewList,
             onEyeTap: () {},
             onFavTap: () {},
-            scrollController: homeBloc.recentlyViewedScrollController)
-        );
+            scrollController: homeBloc.recentlyViewedScrollController));
   }
 }

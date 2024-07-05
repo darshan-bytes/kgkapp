@@ -28,21 +28,3 @@ final class ProductListLoadMoreEvent extends ProductListEvent {
   @override
   List<Object> get props => [currentPage];
 }
-
-final class WatchlistChangeNameEvent extends ProductListEvent {
-  final WatchlistSelectionModel selectedWatchlist;
-
-  const WatchlistChangeNameEvent(this.selectedWatchlist);
-
-  @override
-  List<Object> get props => [selectedWatchlist];
-}
-
-class WatchlistCheckEvent extends ProductListEvent {
-  final WatchlistSelectionModel checkWatchlist;
-
-  const WatchlistCheckEvent({required this.checkWatchlist});
-
-  @override
-  List<Object> get props => [checkWatchlist];
-}
