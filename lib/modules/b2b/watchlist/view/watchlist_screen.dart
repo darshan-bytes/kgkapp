@@ -72,7 +72,9 @@ class WatchlistScreen extends StatelessWidget {
               type: B2BListingType.watchlistType,
               listingItemModel: bloc.watchListingList[index],
               margin: EdgeInsets.only(bottom: 16.h),
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchListingList[index].id});
+              },
             ),
             if (state is WatchlistLoadingMoreState && index == bloc.watchListingList.length - 1) const SmartCircularProgressIndicator(),
           ],

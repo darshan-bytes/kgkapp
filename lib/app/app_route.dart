@@ -66,6 +66,7 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const watchlistDetailsPage = '/watchlistDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -628,6 +629,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case watchlistDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<WatchlistDetailsBloc>(
+            create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
+            child: const WatchlistDetailsScreen(),
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -662,6 +672,7 @@ enum RoutesData {
   isFromCheckout,
   presentationId,
   catalogueData,
+  watchlistId,
 }
 
 enum ScreenIdentifier {

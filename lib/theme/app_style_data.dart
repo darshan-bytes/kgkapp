@@ -1097,14 +1097,24 @@ class LightModeTheme extends AppTheme {
 
   @override
   WatchListItemStyle get watchListItemStyle => WatchListItemStyle(
-      backgroundColor: colors.white,
-      dividerColor: colors.colorD3DAE0,
-      primaryColor: colors.primary,
-      disableBackgroundColor: colors.colorF7F9FA,
-      outOfStockBgColor: colors.colorE2E2F0,
-      titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
-      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
-      subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
-      listTextStyle: interRegularTextStyle,
-      labelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp));
+        backgroundColor: colors.white,
+        dividerColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+        disableBackgroundColor: colors.colorF7F9FA,
+        outOfStockBgColor: colors.colorE2E2F0,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        subTextStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        listTextStyle: interRegularTextStyle,
+        labelTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+      );
+
+  @override
+  WatchlistDetailsStyle get watchlistDetailsStyle => WatchlistDetailsStyle(
+        watchlistNameStyle: interMediumBoldTextStyle,
+        watchlistTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        watchlistSubTitleStyle: interRegularTextStyle,
+        detailsBackgroundColor: colors.colorF7F9FA,
+        noOfProductsStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
 }

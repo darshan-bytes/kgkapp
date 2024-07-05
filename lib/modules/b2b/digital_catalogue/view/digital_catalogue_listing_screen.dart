@@ -79,7 +79,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                         padding: EdgeInsets.all(16.w),
                         alignment: Alignment.topRight,
                         child: SmartImage(
-                          path: AppImages.icMoreVertical,
+                          path: AppImages.icMoreVerticalCircle,
                           imageBorderRadius: BorderRadius.circular(4.0.r),
                           width: 32.w,
                           height: 32.w,
