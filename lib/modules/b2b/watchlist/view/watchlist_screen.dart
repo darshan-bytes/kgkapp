@@ -22,7 +22,7 @@ class WatchlistScreen extends StatelessWidget {
           if (state is WatchlistLoadedState) {
             return SmartSingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
-              controller: bloc.paginationScrollController.scrollController,
+              controller: bloc.paginationScrollController.controller,
               child: Column(
                 children: [
                   SmartTextField.search(
