@@ -1124,4 +1124,23 @@ class LightModeTheme extends AppTheme {
         titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         viewAllStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.primary, decoration: TextDecoration.underline),
       );
+
+  @override
+  ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle => ExhibitionDetailsItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        iconColor: colors.color083458,
+        primaryColor: colors.colorF7F9FA,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color083458),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        listTextStyle: interRegularTextStyle,
+        listTitleStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 12.sp,
+          color: colors.color8C8C8C,
+        ),
+        listSubTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 16.sp,
+        ),
+        listStatusStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+      );
 }

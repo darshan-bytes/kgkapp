@@ -107,9 +107,9 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/bloc/setting_list
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/bloc/stone_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/view/stone_listing_screen.dart';
-export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_orders_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_bloc.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/model/exhibition_details_orders_model.dart';
-export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_tabview_list.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/bloc/exhibition_listing_bloc.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
@@ -352,3 +352,5 @@ export 'package:kgk/modules/b2b/watchlist_details/bloc/watchlist_details_bloc.da
 export 'package:kgk/modules/b2b/watchlist_details/view/watchlist_details_screen.dart';
 export 'package:kgk/modules/b2b/watchlist/model/watchlist_details_model.dart';
 export 'package:kgk/modules/b2b/add_to_watchlist/bloc/add_to_watchlist_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_products_tabview_list.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_screen.dart';

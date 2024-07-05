@@ -225,6 +225,8 @@ abstract class AppTheme {
   WatchlistDetailsStyle get watchlistDetailsStyle;
 
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
+
+  ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2077,4 +2079,30 @@ class SmartSuggestionProductListStyle {
   final TextStyle viewAllStyle;
 
   SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
+}
+
+class ExhibitionDetailsItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color iconColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle listTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle listSubTitleStyle;
+  final TextStyle listStatusStyle;
+
+  ExhibitionDetailsItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.iconColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.listTextStyle,
+    required this.listTitleStyle,
+    required this.listSubTitleStyle,
+    required this.listStatusStyle,
+  });
 }

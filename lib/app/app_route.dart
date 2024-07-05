@@ -58,7 +58,6 @@ class AppRoutes {
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
   static const cadLibraryListingPage = '/cadLibraryListingPage';
-  static const exhibitionDetailsOrdersPage = '/exhibitionDetailsOrders';
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
@@ -67,6 +66,7 @@ class AppRoutes {
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
   static const watchlistDetailsPage = '/watchlistDetailsPage';
+  static const exhibitionDetailsPage = '/exhibitionDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -558,14 +558,6 @@ class AppRoutes {
           },
           settings: settings,
         );
-      case exhibitionDetailsOrdersPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ExhibitionDetailsOrdersBloc>(context).add(const ExhibitionDetailsOrdersInitialEvent());
-            return const ExhibitionDetailsOrdersScreen();
-          },
-          settings: settings,
-        );
 
       case designLibraryFeedbackPage:
         return MaterialPageRoute(
@@ -636,6 +628,14 @@ class AppRoutes {
             child: const WatchlistDetailsScreen(),
           ),
           settings: settings,
+        );
+
+      case exhibitionDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ExhibitionDetailsBloc>(context).add(ExhibitionDetailsInitialEvent(context: context));
+            return const ExhibitionDetailsScreen();
+          },
         );
 
       default:
