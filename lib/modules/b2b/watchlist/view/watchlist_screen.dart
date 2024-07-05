@@ -163,18 +163,19 @@ class WatchlistScreen extends StatelessWidget {
   /// Remove Watchlist Popup
   void _buildRemoveWatchlistPopup(BuildContext context) {
     Utils.showSmartModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-        ),
-        builder: (context) => ConfirmationDialog(
-              title: APPStrings.removeWatchlistName.tr,
-              message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([56]),
-              onApproved: () => context.pop(),
-              onDenied: () => context.pop(),
-              onApprovedText: APPStrings.save.tr,
-              onDeniedText: APPStrings.cancel.tr,
-            ));
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.removeWatchlistName.tr,
+        message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([56]),
+        onApproved: () => context.pop(),
+        onDenied: () => context.pop(),
+        onApprovedText: APPStrings.remove.tr,
+        onDeniedText: APPStrings.cancel.tr,
+      ),
+    );
   }
 
   /// Build popup option
