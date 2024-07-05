@@ -473,42 +473,13 @@ class HomeScreen extends StatelessWidget {
   Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style) {
     return Padding(
       padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(
-            APPStrings.dealOfTheDay.tr,
-            style: style.bannerTitleStyle,
-            optionalPadding: EdgeInsets.only(left: 17.w),
-          ),
-          SizedBox(height: 4.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Scrollbar(
-              controller: homeBloc.dealOfTheDayScrollController,
-              thumbVisibility: true,
-              child: SmartSingleChildScrollView(
-                controller: homeBloc.dealOfTheDayScrollController,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 12.w,
-                  runSpacing: 12.2.h,
-                  children: homeBloc.dealOfTheDayList.map((product) {
-                    return ProductGridItem(
-                      productDetails: product,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {},
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: SmartSuggestionProductList(
+          title: APPStrings.dealOfTheDay.tr,
+          onViewAllTap: () {},
+          suggestedProductList: homeBloc.dealOfTheDayList,
+          onEyeTap: () {},
+          onFavTap: () {},
+          scrollController: homeBloc.dealOfTheDayScrollController),
     );
   }
 
@@ -559,42 +530,49 @@ class HomeScreen extends StatelessWidget {
   Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style) {
     return Padding(
       padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(
-            APPStrings.recentlyViewed.tr,
-            style: style.bannerTitleStyle,
-            optionalPadding: EdgeInsets.only(left: 17.w),
-          ),
-          SizedBox(height: 4.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Scrollbar(
-              controller: homeBloc.recentlyViewedScrollController,
-              thumbVisibility: true,
-              child: SmartSingleChildScrollView(
-                controller: homeBloc.recentlyViewedScrollController,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 12.w,
-                  runSpacing: 12.2.h,
-                  children: homeBloc.recentlyViewList.map((product) {
-                    return ProductGridItem(
-                      productDetails: product,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {},
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        child: SmartSuggestionProductList(
+            title: APPStrings.recentlyViewed.tr,
+            onViewAllTap: () {},
+            suggestedProductList: homeBloc.recentlyViewList,
+            onEyeTap: () {},
+            onFavTap: () {},
+            scrollController: homeBloc.recentlyViewedScrollController)
+        // child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     SmartText(
+        //       APPStrings.recentlyViewed.tr,
+        //       style: style.bannerTitleStyle,
+        //       optionalPadding: EdgeInsets.only(left: 17.w),
+        //     ),
+        //     SizedBox(height: 4.h),
+        //     Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: 17.w),
+        //       child: Scrollbar(
+        //         controller: homeBloc.recentlyViewedScrollController,
+        //         thumbVisibility: true,
+        //         child: SmartSingleChildScrollView(
+        //           controller: homeBloc.recentlyViewedScrollController,
+        //           scrollDirection: Axis.horizontal,
+        //           padding: EdgeInsets.symmetric(vertical: 12.h),
+        //           child: Wrap(
+        //             direction: Axis.horizontal,
+        //             spacing: 12.w,
+        //             runSpacing: 12.2.h,
+        //             children: homeBloc.recentlyViewList.map((product) {
+        //               return ProductGridItem(
+        //                 productDetails: product,
+        //                 onEyeTap: () {},
+        //                 onFavTap: () {},
+        //                 onTap: () {},
+        //               );
+        //             }).toList(),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        );
   }
 }

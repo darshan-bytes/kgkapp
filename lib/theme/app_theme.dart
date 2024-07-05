@@ -1776,6 +1776,7 @@ class SharePresentationStyle {
   final TextStyle userListTitleStyle;
   final TextStyle userNamesTextStyle;
   final TextStyle userEmailTextStyle;
+  final TextStyle userRoleStyle;
   final Color closeIconColor;
 
   SharePresentationStyle({
@@ -1785,6 +1786,7 @@ class SharePresentationStyle {
     required this.userListTitleStyle,
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
+    required this.userRoleStyle,
     required this.closeIconColor,
   });
 }

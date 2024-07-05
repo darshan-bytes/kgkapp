@@ -951,6 +951,7 @@ class LightModeTheme extends AppTheme {
         userNamesTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         closeIconColor: colors.color303538,
+        userRoleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override

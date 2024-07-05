@@ -50,7 +50,7 @@ class SmartSuggestionProductList extends StatelessWidget {
             controller: scrollController,
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: isPaddingNeeded ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+              padding: isPaddingNeeded ? EdgeInsets.only(left: 17.w, right: 17.w) : EdgeInsets.zero,
               child: Wrap(
                 direction: Axis.horizontal,
                 spacing: 12.w,

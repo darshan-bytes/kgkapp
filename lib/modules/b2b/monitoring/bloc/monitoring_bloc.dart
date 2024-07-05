@@ -98,7 +98,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strPresentationNumber: '1254875',
-        status: ProjectStatus.active,
+        status: ProjectStatus.approved,
         strConceptNumber: "PRJ-171604",
         strSalesman: "John Samanta",
         strSalesmanImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
@@ -116,15 +116,15 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strDbfNumber: "1234543",
-        designCreationStatus: ProjectStatus.active,
+        designCreationStatus: ProjectStatus.approved,
         strCustomer: "Alex Williams",
         strCustomerImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-        designApprovalStatus: ProjectStatus.active,
+        designApprovalStatus: ProjectStatus.approved,
         strSalesman: "John Samanta",
         strSalesmanImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
-        dbfApprovalStatus: ProjectStatus.active,
+        dbfApprovalStatus: ProjectStatus.approved,
         strRevisedDate: "24/03/2023",
-        holdStatus: ProjectStatus.active,
+        holdStatus: ProjectStatus.released,
       ),
     );
 
@@ -132,7 +132,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       6,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
-        status: ProjectStatus.active,
+        status: ProjectStatus.approved,
         strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
         strDesignNumber: "DERS28MOVR",
         strDbfNumber: "1234574",
@@ -150,7 +150,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       6,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
-        status: ProjectStatus.active,
+        status: ProjectStatus.blueInProgress,
         strDesignListingImageUrl: "https://i.ibb.co/PMTr7Jp/Image.png",
         strStyleNumber: "DWBFM4Q-108636",
         strDesignNumber: "DERS28MOVR",
