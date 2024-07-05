@@ -195,19 +195,24 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: naturalDiamondSubOptionsB2CList),
         CategoriesModel(
             name: 'Lab-grown \nDiamonds',
-            image: 'https://i.ibb.co/ZWKWks5/Image.png',
+            image: 'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
             productsDetailsList: labGrownDiamondSubOptionsB2CList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: gemstonesSubOptionsB2CList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: jewellerySubOptionsB2CList),
         CategoriesModel(
-            name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: doItYourselfSubOptionsB2CList),
+            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: gemstonesSubOptionsB2CList),
+        CategoriesModel(
+            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: jewellerySubOptionsB2CList),
+        CategoriesModel(
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: doItYourselfSubOptionsB2CList),
         CategoriesModel(
           name: 'About Us',
-          image: 'https://i.ibb.co/ZWKWks5/Image.png',
+          image: 'https://i.ibb.co/QD2Tw8M/About-Us-Category.png',
           productsDetailsList: aboutUsSubOptionsB2CList,
           isExpanded: false,
         ),
-        CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: educationSubOptionsB2CList),
+        CategoriesModel(
+            name: 'Education', image: 'https://i.ibb.co/rFjpN0q/Education-Category.png', productsDetailsList: educationSubOptionsB2CList),
       ]);
     }
     emit(CategoriesFetchData());

@@ -109,6 +109,11 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
             controller: searchController,
             borderRadius: BorderRadius.all(Radius.circular(6.r)),
             style: style.searchBarTextStyle,
+            onFieldSubmitted: (value) {
+              if (onTapSuffixIconWithSearchBar != null) {
+                onTapSuffixIconWithSearchBar!();
+              }
+            },
             suffixIcon: GestureDetector(
               onTap: () {
                 if (onTapSuffixIconWithSearchBar != null) {
