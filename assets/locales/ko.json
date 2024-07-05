@@ -617,5 +617,6 @@
   "notify_when_price_drops": "Notify when price drops",
   "notify_when_discount_applied": "Notify when discount is applied",
   "remove_product": "Remove product?",
-  "remove_product_desc": "Selected product will be removed from the watchlist"
+  "remove_product_desc": "Selected product will be removed from the watchlist",
+  "assigned_to": "Assigned to"
 }
