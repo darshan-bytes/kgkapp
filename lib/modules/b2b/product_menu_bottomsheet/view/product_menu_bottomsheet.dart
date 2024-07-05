@@ -22,7 +22,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 8.h),
-          _buildAppBar(context, style),
+          _buildAppBar(context, style, bloc),
           Flexible(
             child: SmartSingleChildScrollView(
               child: Padding(
@@ -56,7 +56,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(BuildContext context, ProductMenuBottomSheetStyle style) {
+  Widget _buildAppBar(BuildContext context, ProductMenuBottomSheetStyle style, MyBagBloc bloc) {
     return SmartAppBar(
       isBack: false,
       appBarHeight: AppConst.defaultAppBarHeight,
@@ -65,6 +65,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
       actions: [
         InkWell(
           onTap: () {
+            bloc.showMoreDetails = false;
             context.pop();
           },
           child: SmartImage(

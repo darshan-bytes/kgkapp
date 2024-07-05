@@ -5,6 +5,9 @@ part 'cad_library_listing_state.dart';
 part 'cad_library_listing_event.dart';
 
 class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListingState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   //Controller for grid
   bool isGrid = true;
 
@@ -21,6 +24,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   }
 
   void _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) {
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     gridPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {

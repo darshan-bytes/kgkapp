@@ -17,7 +17,58 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<CategoriesModel> categories = [];
   List<String> selectedCategoriesList = [];
 
-  List<String> productsDetailsList = ['Collection', 'Best Selling', 'Seasonal Offers', 'Occasion Offer', 'Deals'];
+  //B2C subCategory List
+  List<String> naturalDiamondSubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> labGrownDiamondSubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> gemstonesSubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> jewellerySubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> doItYourselfSubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> aboutUsSubOptionsB2CList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> educationSubOptionsB2CList = [
+    'Diamonds',
+    'Lab created diamonds',
+    'Gemstone',
+    'Metals',
+    'Ring sizer',
+  ];
+
+  //B2B subCategory List
   List<String> pddSubOptionsList = [
     'Concept Listing',
     'Presentation Listing',
@@ -27,12 +78,56 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     'Monitoring'
   ];
 
+  List<String> jewellerySubOptionsB2BList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> diamondSubOptionsB2BList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> gemstoneSubOptionsB2BList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+
   List<String> librarySubOptionsList = [
     'Product Library - Grey',
     'Product Library MF - Platinum',
     'Design Library',
     'CAD Library',
     'Seasonal Offers',
+  ];
+
+  List<String> digitalCatalogueSubOptionsB2BList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> doItYourselfSubOptionsB2BList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
+  ];
+  List<String> orionSubCategoryList = [
+    'Collection',
+    'Best Selling',
+    'Seasonal Offers',
+    'Occasion Offer',
+    'Deals',
   ];
 
   CategoriesBloc() : super(CategoriesInitial()) {
@@ -71,91 +166,474 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     if (userType == UserType.b2bUser) {
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
+        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: jewellerySubOptionsB2BList),
+        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: diamondSubOptionsB2BList),
+        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: gemstoneSubOptionsB2BList),
         CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: librarySubOptionsList),
         CategoriesModel(
             name: 'Digital \nCatalogue',
             image: 'https://i.ibb.co/ZWKWks5/Image.png',
-            productsDetailsList: productsDetailsList,
+            productsDetailsList: digitalCatalogueSubOptionsB2BList,
             isExpanded: false),
-        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(
-            name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList, isExpanded: false),
+            name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: doItYourselfSubOptionsB2BList),
+        CategoriesModel(
+            name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: orionSubCategoryList, isExpanded: false),
       ]);
     } else {
       categories.addAll([
-        CategoriesModel(name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
         CategoriesModel(
-            name: 'Lab-grown \nDiamonds', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'About Us', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: productsDetailsList),
-        CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: productsDetailsList),
+            name: 'Natural \nDiamonds', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: naturalDiamondSubOptionsB2CList),
+        CategoriesModel(
+            name: 'Lab-grown \nDiamonds',
+            image: 'https://i.ibb.co/ZWKWks5/Image.png',
+            productsDetailsList: labGrownDiamondSubOptionsB2CList),
+        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: gemstonesSubOptionsB2CList),
+        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: jewellerySubOptionsB2CList),
+        CategoriesModel(
+            name: 'Do It \nYourself', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: doItYourselfSubOptionsB2CList),
+        CategoriesModel(
+          name: 'About Us',
+          image: 'https://i.ibb.co/ZWKWks5/Image.png',
+          productsDetailsList: aboutUsSubOptionsB2CList,
+          isExpanded: false,
+        ),
+        CategoriesModel(name: 'Education', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: educationSubOptionsB2CList),
       ]);
     }
     emit(CategoriesFetchData());
   }
 
-  void navigateBasedOnCategory(BuildContext context, String categoryName, String categorySubName) {
+  // Navigate based on the selected category and subcategory
+  void navigateBasedOnCategory({required BuildContext context, String? categoryName, String? categorySubName}) {
+    if (categoryName.isNotNullNorEmpty) {
+      String? routeName = _getRouteName(categoryName!, categorySubName);
+      Map<RoutesData, dynamic>? arguments = _getRouteArguments(categoryName, categorySubName);
+
+      if (routeName.isNotNullNorEmpty) {
+        context.pushNamed(routeName!, arguments: arguments);
+      }
+    }
+  }
+
+  // Get route name based on user type and category
+  String? _getRouteName(String categoryName, String? categorySubName) {
+    if (userType == UserType.b2cUser) {
+      return _getRouteNameForB2C(categoryName, categorySubName);
+    } else {
+      return _getRouteNameForB2B(categoryName, categorySubName);
+    }
+  }
+
+  // Get route arguments based on user type and category
+  Map<RoutesData, dynamic>? _getRouteArguments(String categoryName, String? categorySubName) {
+    if (userType == UserType.b2cUser) {
+      return _getRouteArgumentsForB2C(categoryName, categorySubName);
+    } else {
+      return _getRouteArgumentsForB2B(categoryName, categorySubName);
+    }
+  }
+
+  // B2C category route names and arguments
+  String? _getRouteNameForB2C(String categoryName, String? categorySubName) {
     switch (categoryName) {
+      case 'Natural \nDiamonds':
+        return _getNaturalDiamondsRouteNameForB2C(categorySubName);
+      case 'Lab-grown \nDiamonds':
+        return _getLabGrownDiamondsRouteNameForB2C(categorySubName);
       case 'Gemstone':
-        context.pushNamed(
-          AppRoutes.stoneListingPage,
-          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones},
-        );
-        break;
-
+        return _getGemstoneRouteNameForB2C(categorySubName);
+      case 'Jewellery':
+        return _getJewelleryRouteNameForB2C(categorySubName);
       case 'Do It \nYourself':
-        if (categorySubName == 'Seasonal Offers') {
-          context.pushNamed(AppRoutes.exhibitionDetailsOrdersPage);
-        } else {
-          context.pushNamed(
-            AppRoutes.stoneListingPage,
-            arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY},
-          );
-        }
-        break;
+        return _getDoItYourselfRouteNameForB2C(categorySubName);
+      case 'About Us':
+        return _getAboutUsRouteNameForB2C(categorySubName);
+      case 'Education':
+        return _getEducationRouteNameForB2C(categorySubName);
+      default:
+        return defaultAction();
+    }
+  }
 
+  Map<RoutesData, dynamic>? _getRouteArgumentsForB2C(String categoryName, String? categorySubName) {
+    switch (categoryName) {
+      case 'Natural \nDiamonds':
+        return _getNaturalDiamondsRouteArgumentsForB2C(categorySubName);
+      case 'Lab-grown \nDiamonds':
+        return _getLabGrownDiamondsRouteArgumentsForB2C(categorySubName);
+      case 'Gemstone':
+        return _getGemstoneRouteArgumentsForB2C(categorySubName);
+      case 'Jewellery':
+        return _getJewelleryRouteArgumentsForB2C(categorySubName);
+      case 'Do It \nYourself':
+        return _getDoItYourselfRouteArgumentsForB2C(categorySubName);
+      case 'About Us':
+        return _getAboutUsRouteArgumentsForB2C(categorySubName);
+      case 'Education':
+        return _getEducationRouteArgumentsForB2C(categorySubName);
+      default:
+        return defaultAction();
+    }
+  }
+
+  // B2B category route names and arguments
+  String? _getRouteNameForB2B(String categoryName, String? categorySubName) {
+    switch (categoryName) {
       case 'PDD':
-        if (categorySubName == 'Monitoring') {
-          context.pushNamed(AppRoutes.monitoringPage);
-        } else if (categorySubName == 'Styles Listing') {
-          context.pushNamed(AppRoutes.stylesListingPage);
-        } else if (categorySubName == 'Design Listing') {
-          context.pushNamed(AppRoutes.designListingPage);
-        } else if (categorySubName == 'Project Listing') {
-          context.pushNamed(AppRoutes.projectListingPage);
-        } else if (categorySubName == 'Presentation Listing') {
-          context.pushNamed(AppRoutes.pddListingPage);
-        } else if (categorySubName == 'Concept Listing') {
-          context.pushNamed(AppRoutes.conceptListPage);
-        } else {
-          context.pushNamed(AppRoutes.conceptListPage);
-        }
-        break;
-
-      case 'Project':
-        context.pushNamed(AppRoutes.projectListingPage);
-        break;
-
+        return _getPDDRouteNameB2B(categorySubName);
+      case 'Jewellery':
+        return _getJewelleryRouteNameB2B(categorySubName);
+      case 'Diamond':
+        return _getDiamondRouteNameB2B(categorySubName);
+      case 'Gemstone':
+        return _getGemstoneRouteNameB2B(categorySubName);
       case 'Libraries':
-        if (categorySubName == 'Product Library MF - Platinum') {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum});
-        } else if (categorySubName == 'CAD Library') {
-          context.pushNamed(AppRoutes.cadLibraryListingPage);
-        } else if (categorySubName == 'Design Library') {
-          context.pushNamed(AppRoutes.designLibraryScreen);
-        } else {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey});
-        }
-        break;
+        return _getLibrariesRouteNameB2B(categorySubName);
+      case 'Digital \nCatalogue':
+        return _getDigitalCatalogueRouteNameB2B(categorySubName);
+      case 'Do It \nYourself':
+        return _getDoItYourselfRouteNameB2B(categorySubName);
+      case 'Orion':
+        return _getOrionRouteNameB2B(categorySubName);
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getRouteArgumentsForB2B(String categoryName, String? categorySubName) {
+    switch (categoryName) {
+      case 'PDD':
+        return _getPDDRouteArgumentsB2B(categorySubName);
+      case 'Jewellery':
+        return _getJewelleryRouteArgumentsB2B(categorySubName);
+      case 'Diamond':
+        return _getDiamondRouteArgumentsB2B(categorySubName);
+      case 'Gemstone':
+        return _getGemstoneRouteArgumentsB2B(categorySubName);
+      case 'Libraries':
+        return _getLibrariesRouteArgumentsB2B(categorySubName);
+      case 'Digital \nCatalogue':
+        return _getDigitalCatalogueRouteArgumentsB2B(categorySubName);
+      case 'Do It \nYourself':
+        return _getDoItYourselfRouteArgumentsB2B(categorySubName);
+      case 'Orion':
+        return _getOrionRouteArgumentsB2B(categorySubName);
+      default:
+        return defaultAction();
+    }
+  }
+
+  // Additional helper methods to determine the route based on subcategories
+  String? _getNaturalDiamondsRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stoneListingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getNaturalDiamondsRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getLabGrownDiamondsRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stoneListingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getLabGrownDiamondsRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getGemstoneRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stoneListingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getGemstoneRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForGemstones};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String _getJewelleryRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.productListGridPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getJewelleryRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForRing};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getDoItYourselfRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stoneListingPage;
 
       default:
-        // Handle the default case if needed
-        break;
+        return defaultAction();
     }
+  }
+
+  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getAboutUsRouteNameForB2C(String? categorySubName) {
+    return AppRoutes.cmsWebViewPage;
+  }
+
+  Map<RoutesData, dynamic>? _getAboutUsRouteArgumentsForB2C(String? categorySubName) {
+    return {
+      RoutesData.cmsPageData: CmsWebViewDataModel(
+        url: AppConst.profileAboutUsWebViewURL,
+        title: APPStrings.aboutUs.tr,
+      )
+    };
+  }
+
+  String? _getEducationRouteNameForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Diamonds':
+        return AppRoutes.cmsWebViewPage;
+      case 'Lab created diamonds':
+        return AppRoutes.cmsWebViewPage;
+      case 'Gemstone':
+        return AppRoutes.cmsWebViewPage;
+      case 'Metals':
+        return AppRoutes.cmsWebViewPage;
+      case 'Ring sizer':
+        return AppRoutes.cmsWebViewPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getEducationRouteArgumentsForB2C(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Diamonds':
+        return {
+          RoutesData.cmsPageData: CmsWebViewDataModel(
+            url: AppConst.profileDiamondWebViewURL,
+            title: APPStrings.diamonds.tr,
+          )
+        };
+      case 'Lab created diamonds':
+        return {
+          RoutesData.cmsPageData: CmsWebViewDataModel(
+            url: AppConst.profileDiamondWebViewURL,
+            title: APPStrings.labCreatedDiamonds.tr,
+          )
+        };
+      case 'Gemstone':
+        return {
+          RoutesData.cmsPageData: CmsWebViewDataModel(
+            url: AppConst.profileGemstoneWebViewURL,
+            title: APPStrings.gemstone.tr,
+          )
+        };
+      case 'Metals':
+        return {
+          RoutesData.cmsPageData: CmsWebViewDataModel(
+            url: AppConst.profileMetalsWebViewURL,
+            title: APPStrings.metals.tr,
+          )
+        };
+      case 'Ring sizer':
+        return {
+          RoutesData.cmsPageData: CmsWebViewDataModel(
+            url: AppConst.profileRingSizerWebViewURL,
+            title: APPStrings.ringSizer.tr,
+          )
+        };
+      default:
+        return defaultAction();
+    }
+  }
+
+  // B2B sub category routes
+  String? _getPDDRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Monitoring':
+        return AppRoutes.monitoringPage;
+      case 'Styles Listing':
+        return AppRoutes.stylesListingPage;
+      case 'Design Listing':
+        return AppRoutes.designListingPage;
+      case 'Project Listing':
+        return AppRoutes.projectListingPage;
+      case 'Presentation Listing':
+        return AppRoutes.pddListingPage;
+      case 'Concept Listing':
+        return AppRoutes.conceptListPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getPDDRouteArgumentsB2B(String? categorySubName) {
+    return defaultAction();
+  }
+
+  String? _getJewelleryRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stonesLandingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getJewelleryRouteArgumentsB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getDiamondRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stonesLandingPage;
+      default:
+        return AppRoutes.stoneListingPage;
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getDiamondRouteArgumentsB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.landingForDiamonds};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getGemstoneRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stonesLandingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getGemstoneRouteArgumentsB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.landingForGemstones};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getLibrariesRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Product Library - Grey':
+        return AppRoutes.productListGridPage;
+      case 'Product Library MF - Platinum':
+        return AppRoutes.productListGridPage;
+      case 'CAD Library':
+        return AppRoutes.cadLibraryListingPage;
+      case 'Design Library':
+        return AppRoutes.designLibraryScreen;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getLibrariesRouteArgumentsB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Product Library - Grey':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey};
+      case 'Product Library MF - Platinum':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum};
+      default:
+        return defaultAction();
+    }
+  }
+
+  String? _getDigitalCatalogueRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Digital \nCatalogue':
+        return AppRoutes.digitalCataloguePage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getDigitalCatalogueRouteArgumentsB2B(String? categorySubName) {
+    return defaultAction();
+  }
+
+  String? _getDoItYourselfRouteNameB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return AppRoutes.stoneListingPage;
+      default:
+        return defaultAction();
+    }
+  }
+
+  Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName) {
+    switch (categorySubName) {
+      case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+      default:
+        return null;
+    }
+  }
+
+  String? _getOrionRouteNameB2B(String? categorySubName) {
+    return defaultAction();
+  }
+
+  Map<RoutesData, dynamic>? _getOrionRouteArgumentsB2B(String? categorySubName) {
+    return defaultAction();
+  }
+
+  // This function returns the default action for the route
+  defaultAction() {
+    return null;
   }
 }

@@ -5,6 +5,9 @@ part 'my_bag_event.dart';
 part 'my_bag_state.dart';
 
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   bool selectAllProduct = false;
   int selectedProductCount = 0;
   final ScrollController scrollController = ScrollController();
@@ -113,6 +116,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     //TODO: Write code get Data from API
   }
 

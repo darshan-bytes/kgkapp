@@ -5,6 +5,9 @@ part 'product_details_event.dart';
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   String productName = '';
   ProductDetails? productDetails;
   bool isCustomisation = false;
@@ -139,6 +142,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
     emit(ProductDetailsLoadingState());
+    // assigning current userType
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+
     getScreenIdentifier(event.context);
 
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {

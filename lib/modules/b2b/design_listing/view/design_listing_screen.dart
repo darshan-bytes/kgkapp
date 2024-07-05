@@ -137,7 +137,6 @@ class DesignListingScreen extends StatelessWidget {
                   shrinkWrap: true,
                   controller: bloc.listPaginationScrollController.scrollController,
                   itemCount: bloc.designList.length,
-                  physics: const ScrollPhysics(),
                   itemBuilder: (context, index) {
                     B2BCustomListingDataModel designItem = bloc.designList[index];
                     return BlocBuilder<DesignListingBloc, DesignListingState>(

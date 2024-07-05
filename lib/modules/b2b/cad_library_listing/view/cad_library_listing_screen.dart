@@ -145,7 +145,6 @@ class CadLibraryListingScreen extends StatelessWidget {
       key: bloc.gridPaginationScrollController.listKey,
       controller: bloc.gridPaginationScrollController.controller,
       itemCount: bloc.cadList.length,
-      physics: const ScrollPhysics(),
       itemBuilder: (context, index) {
         return Column(
           children: [
