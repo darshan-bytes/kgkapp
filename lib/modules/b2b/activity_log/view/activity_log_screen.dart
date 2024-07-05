@@ -107,7 +107,6 @@ class ActivityLogScreen extends StatelessWidget {
             ),
             color: style.listViewBackgroundColor,
           ),
-          // color: style.listViewBackgroundColor,
           child: ListView.separated(
             separatorBuilder: (context, index) {
               return Container(
