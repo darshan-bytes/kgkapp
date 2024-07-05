@@ -221,6 +221,8 @@ abstract class AppTheme {
   PreviewCatalogueStyle get previewCatalogueStyle;
 
   WatchListItemStyle get watchListItemStyle;
+
+  ActivityLogStyle get activityLogStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2043,5 +2045,27 @@ class WatchListItemStyle {
     required this.subTextStyle,
     required this.listTextStyle,
     required this.labelTextStyle,
+  });
+}
+
+class ActivityLogStyle {
+  final TextStyle storeMessageStyle;
+  final TextStyle textFieldStyle;
+  final Color borderColor;
+  final Color listViewBackgroundColor;
+  final TextStyle titleStyle;
+  final Color dividerColor;
+  final TextStyle subTitleStyle;
+  final TextStyle subTextStyle;
+
+  ActivityLogStyle({
+    required this.storeMessageStyle,
+    required this.textFieldStyle,
+    required this.borderColor,
+    required this.listViewBackgroundColor,
+    required this.titleStyle,
+    required this.dividerColor,
+    required this.subTitleStyle,
+    required this.subTextStyle,
   });
 }

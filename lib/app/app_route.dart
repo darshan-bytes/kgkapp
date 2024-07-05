@@ -66,6 +66,7 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const activityLogScreenPage = '/activityLogScreenPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -627,7 +628,14 @@ class AppRoutes {
           },
           settings: settings,
         );
-
+      case activityLogScreenPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
+            return const ActivityLogScreen();
+          },
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }
