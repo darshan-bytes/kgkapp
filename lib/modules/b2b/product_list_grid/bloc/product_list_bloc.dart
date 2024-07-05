@@ -5,11 +5,13 @@ part 'product_list_event.dart';
 part 'product_list_state.dart';
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   // For Product List view
   bool isGrid = true;
 
   // For Watchlist
-  WatchlistSelectionModel? selectedWatchlistName;
 
   String appbarTitle = APPStrings.ring.tr;
 
@@ -18,25 +20,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   List<ProductDetails> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
-  // For Watchlist
-  List<WatchlistSelectionModel> arrWatchlist = [
-    WatchlistSelectionModel(name: "John Samanta"),
-    WatchlistSelectionModel(name: "Jenny Wilson"),
-    WatchlistSelectionModel(name: "Alex Williams"),
-  ];
-
-  List<WatchlistSelectionModel> arrSelectedWatchlist = [
-    WatchlistSelectionModel(name: "Notify when product is in stock"),
-    WatchlistSelectionModel(name: "Notify when price drops"),
-    WatchlistSelectionModel(name: "Notify when discount is applied"),
-  ];
-
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
     on<ProductListLoadMoreEvent>(_onProductListLoadMoreEvent);
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
-    on<WatchlistChangeNameEvent>(_onChangeWatchList);
-    on<WatchlistCheckEvent>(_onSelectedWatchlistEvent);
   }
 
   @override
@@ -53,6 +40,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
+    // assigning current userType
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+
     emit(ReloadProductState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {
@@ -73,6 +63,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 originalPrice: '\$5,000.00',
                 discountPercentage: "You have saved 10%",
                 offerPrice: '\$3,000.00',
+                company: "Martin Flyer",
+                productSku: "DERS01XXSRR",
+                isOutOfStock: index % 2 == 0,
               )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamond.tr;
@@ -128,6 +121,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 originalPrice: '\$5,000.00',
                 discountPercentage: "You have saved 10%",
                 offerPrice: '\$3,000.00',
+                company: "Martin Flyer",
+                productSku: "DERS01XXSRR",
+                isOutOfStock: index % 2 == 0,
               )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       List.generate(
@@ -170,22 +166,5 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ReloadProductState());
     isGrid = !isGrid;
     emit(ProductChangeListingTypeState());
-  }
-
-  void _onChangeWatchList(WatchlistChangeNameEvent event, Emitter<ProductListState> emit) {
-    emit((ReloadProductState()));
-    selectedWatchlistName = event.selectedWatchlist;
-    if (selectedWatchlistName != null) {
-      emit(WatchlistChangeNameState(selectedWatchlistName!));
-    }
-  }
-
-  void _onSelectedWatchlistEvent(WatchlistCheckEvent event, Emitter<ProductListState> emit) {
-    emit(ReloadProductState());
-    final int index = arrSelectedWatchlist.indexWhere((element) => element == event.checkWatchlist);
-    if (index != -1) {
-      arrSelectedWatchlist[index].isSelected = !arrSelectedWatchlist[index].isSelected;
-      emit(WatchlistSelectedState(arrSelectedWatchlist[index]));
-    }
   }
 }

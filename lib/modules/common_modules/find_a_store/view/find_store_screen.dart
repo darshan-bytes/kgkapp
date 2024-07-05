@@ -44,7 +44,7 @@ class FindStoreScreen extends StatelessWidget {
             Row(
               children: [
                 SmartImage(
-                  path: AppImages.icMapPin,
+                  path: AppImages.icFindStorePin,
                   color: style.primaryColor,
                   height: 24.w,
                   width: 24.w,
@@ -63,7 +63,8 @@ class FindStoreScreen extends StatelessWidget {
             ),
             SmartImage(
               path: "https://i.ibb.co/h1wRHJ3/Map.png",
-              height: 452.h,
+              height: 452.w,
+              width: double.infinity,
             ),
 
             /// When api is ready to use this code will be used

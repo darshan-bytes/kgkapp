@@ -123,9 +123,9 @@ class DesignListingScreen extends StatelessWidget {
                   controller: bloc.gridPaginationScrollController.scrollController,
                   child: SmartGridView(
                     isLoadingMore: state is DesignListLoadingMoreState,
-                    items: List.generate(bloc.designList.length, (index) {
+                    items: List.generate(bloc.designListForGrid.length, (index) {
                       return DesignListingGridItem.designGridItem(
-                        designModel: bloc.designList[index],
+                        designModel: bloc.designListForGrid[index],
                         onTap: () {
                           context.pushNamed(AppRoutes.designLibraryFeedbackPage);
                         },
@@ -137,7 +137,6 @@ class DesignListingScreen extends StatelessWidget {
                   shrinkWrap: true,
                   controller: bloc.listPaginationScrollController.scrollController,
                   itemCount: bloc.designList.length,
-                  physics: const ScrollPhysics(),
                   itemBuilder: (context, index) {
                     B2BCustomListingDataModel designItem = bloc.designList[index];
                     return BlocBuilder<DesignListingBloc, DesignListingState>(

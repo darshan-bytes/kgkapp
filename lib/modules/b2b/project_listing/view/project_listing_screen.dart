@@ -58,7 +58,6 @@ class ProjectListingScreen extends StatelessWidget {
                   shrinkWrap: true,
                   controller: projectListingBloc.paginationScrollController.scrollController,
                   itemCount: projectListingBloc.projectList.length,
-                  physics: const ScrollPhysics(),
                   itemBuilder: (context, index) {
                     B2BCustomListingDataModel projectItem = projectListingBloc.projectList[index];
                     return B2BListingItem(

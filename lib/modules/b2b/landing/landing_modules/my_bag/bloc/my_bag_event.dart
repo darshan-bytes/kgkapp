@@ -5,8 +5,12 @@ sealed class MyBagEvent extends Equatable {
 }
 
 final class InitialMyBagEvent extends MyBagEvent {
+  final BuildContext context;
+
+  const InitialMyBagEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class MyBagChangeProductQuality extends MyBagEvent {

@@ -5,6 +5,9 @@ part 'auction_event.dart';
 part 'auction_state.dart';
 
 class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
+  // Identifies the source of the user: B2B or B2C.
+  UserType userType = UserType.b2cUser;
+
   int current = 0;
   bool isCompare = false;
   bool isMyBidPlaced = false;
@@ -63,6 +66,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
 
   void _onInitEvent(AuctionInitialEvent event, Emitter<AuctionState> emit) async {
     emit(const AuctionReloadState());
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     resetData();
     emit(AuctionInitial());
   }

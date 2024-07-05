@@ -79,6 +79,7 @@ class APPStrings {
   static const String password = 'password';
   static const String company = 'company';
   static const String companyName = 'company_name';
+  static const String viewDashboard = 'view_dashboard';
   static const String officeLocation = 'office_location';
   static const String businessType = 'business_type';
   static const String diamond = 'diamond';
@@ -194,6 +195,7 @@ class APPStrings {
   static const String myBagEmpty = 'my_bag_empty';
   static const String checkout = 'checkout';
   static const String selectProductItemX = 'select_product_item_x';
+  static const String mostPurchasedDiamonds = "most_purchased_diamonds";
 
   // Compare Product
   static const String metalType = 'metal_type';
@@ -466,6 +468,7 @@ class APPStrings {
   static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
   static const String activityLog = 'activity_log';
   static const String getLogOnTheAccount = 'get_log_on_the_account';
+  static const String enterProductSku = 'enter_product_sku';
 
   //Support screen
   static const String repliesWithin24Hours = 'replies_within_24_hours';
@@ -479,6 +482,7 @@ class APPStrings {
   static const String business = 'business';
   static const String generalQuestions = 'general_questions';
   static const String faqs = 'faqs';
+  static const String moreFaq = 'more_faq';
   static const String stillNeedHelp = 'still_need_help';
   static const String byPhone = 'by_phone';
   static const String byEmail = 'by_email';
@@ -628,6 +632,7 @@ class APPStrings {
   static const String add = 'add';
   static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
   static const String productLibrary = 'product_library';
+  static const String shopByBrands = 'shop_by_brands';
 
   //Project Listing
   static const String projects = 'projects';
@@ -766,4 +771,14 @@ class APPStrings {
   static const String exploreChronologicalRecordYourUserActivities = 'explore_chronological_record_your_user_activities';
   static const String module = 'module';
   static const String dateRange = 'date_range';
+
+  //Watchlist Detail
+  static const String noOfProducts = 'no_of_products';
+  static const String edit = 'edit';
+
+  static const String notifyWhenProductIsInStock = 'notify_when_product_is_in_stock';
+  static const String notifyWhenPriceDrops = 'notify_when_price_drops';
+  static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
+  static const String removeProduct = 'remove_product';
+  static const String removeProductDesc = 'remove_product_desc';
 }

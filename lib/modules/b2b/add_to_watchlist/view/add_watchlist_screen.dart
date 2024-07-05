@@ -1,14 +1,12 @@
 import 'package:kgk/kgk.dart';
 
 class AddWatchlistScreen extends StatelessWidget {
-  final ProductDetails? productDetails;
-
-  const AddWatchlistScreen({super.key, this.productDetails});
+  const AddWatchlistScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final WatchListItemStyle style = AppTheme.of(context).watchListItemStyle;
-    final ProductListBloc bloc = BlocProvider.of<ProductListBloc>(context);
+    final AddToWatchlistBloc bloc = BlocProvider.of<AddToWatchlistBloc>(context);
     return SmartSingleChildScrollView(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
@@ -29,34 +27,38 @@ class AddWatchlistScreen extends StatelessWidget {
                   SizedBox(
                     height: 16.h,
                   ),
-                  _buildAppBar(style, context),
+                  _buildAppBar(style, context, bloc),
                   SizedBox(
                     height: 8.h,
                   ),
                   SmartText(
-                    APPStrings.selectTheWatchlistYouWouldLikeProductToBeAdded.tr,
+                    bloc.isEdit
+                        ? APPStrings.watchListDesc.tr
+                        : (bloc.isRemove ? APPStrings.removeProductDesc.tr : APPStrings.selectTheWatchlistYouWouldLikeProductToBeAdded.tr),
                     maxLines: 2,
                     style: style.subTextStyle,
                   ),
                   SizedBox(height: 16.h),
                   _productWatchDetails(style, bloc),
-                  SizedBox(height: 16.h),
-                  _buildWatchlistNameField(bloc),
-                  SizedBox(height: 10.h),
-                  _buildCreateWatchlistButton(context),
-                  SizedBox(height: 16.h),
-                  _buildCheckboxList(
-                    context,
-                    bloc,
-                    style,
-                  ),
+                  if (!bloc.isRemove) ...[
+                    SizedBox(height: 16.h),
+                    if (!bloc.isEdit) ...[
+                      _buildWatchlistNameField(bloc),
+                      SizedBox(height: 10.h),
+                      _buildCreateWatchlistButton(context),
+                      SizedBox(height: 16.h),
+                    ],
+                    _buildCheckboxList(
+                      context,
+                      bloc,
+                      style,
+                    ),
+                  ],
                 ],
               ),
             ),
-            SizedBox(height: 24.h),
-            const Divider(),
-            SizedBox(height: 24.h),
-            _bottomNavigationBar(context),
+            Divider(height: 48.h),
+            _bottomNavigationBar(context, bloc),
             SizedBox(height: 16.h),
           ],
         ),
@@ -64,12 +66,12 @@ class AddWatchlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(WatchListItemStyle style, BuildContext context) {
+  Widget _buildAppBar(WatchListItemStyle style, BuildContext context, AddToWatchlistBloc bloc) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SmartText(
-          APPStrings.addToWatchList.tr,
+          bloc.isEdit ? APPStrings.notificationSettings.tr : (bloc.isRemove ? APPStrings.removeProduct.tr : APPStrings.addToWatchList.tr),
           style: style.titleStyle,
         ),
         SmartImage(
@@ -85,7 +87,7 @@ class AddWatchlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _productWatchDetails(WatchListItemStyle style, ProductListBloc bloc) {
+  Widget _productWatchDetails(WatchListItemStyle style, AddToWatchlistBloc bloc) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -94,7 +96,7 @@ class AddWatchlistScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (productDetails?.isOutOfStock ?? false) ...[
+          if (bloc.productDetails?.isOutOfStock ?? false) ...[
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(
@@ -112,7 +114,7 @@ class AddWatchlistScreen extends StatelessWidget {
           Row(
             children: [
               SmartImage(
-                path: productDetails?.imageUrl ?? '',
+                path: bloc.productDetails?.imageUrl ?? '',
                 width: 48.w,
                 height: 48.h,
                 imageBorderRadius: BorderRadius.circular(6.r),
@@ -123,7 +125,7 @@ class AddWatchlistScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SmartText(
-                      productDetails?.name ?? '',
+                      bloc.productDetails?.name ?? '',
                       maxLines: 2,
                       style: style.subTitleStyle,
                     ),
@@ -131,7 +133,7 @@ class AddWatchlistScreen extends StatelessWidget {
                     Row(
                       children: [
                         SmartText(
-                          'Martin Flyer',
+                          bloc.productDetails?.company,
                           style: style.subTextStyle,
                         ),
                         SmartText(
@@ -139,7 +141,7 @@ class AddWatchlistScreen extends StatelessWidget {
                           style: style.subTextStyle,
                         ),
                         SmartText(
-                          'DERS01XXSRR',
+                          bloc.productDetails?.productSku,
                           style: style.subTextStyle,
                         ),
                       ],
@@ -154,17 +156,17 @@ class AddWatchlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWatchlistNameField(ProductListBloc bloc) {
-    return BlocBuilder<ProductListBloc, ProductListState>(
+  Widget _buildWatchlistNameField(AddToWatchlistBloc bloc) {
+    return BlocBuilder<AddToWatchlistBloc, AddToWatchlistState>(
       buildWhen: (previous, current) => current is WatchlistChangeNameState,
       builder: (context, state) {
-        return SmartDropDown<WatchlistSelectionModel>(
+        return SmartDropDown<WatchlistDetailsModel>(
           hintText: APPStrings.hintWatchlistName.tr,
           labelText: APPStrings.watchlist.tr,
-          items: bloc.arrWatchlist.map((WatchlistSelectionModel watchlist) {
-            return SmartDropDownItem<WatchlistSelectionModel>(
+          items: bloc.arrWatchlist.map((WatchlistDetailsModel watchlist) {
+            return SmartDropDownItem<WatchlistDetailsModel>(
               value: watchlist,
-              title: watchlist.name,
+              title: watchlist.name ?? '',
             );
           }).toList(),
           onChanged: (watchlist) {
@@ -194,9 +196,7 @@ class AddWatchlistScreen extends StatelessWidget {
             context: getNavigatorKeyContext,
             enableDrag: false,
             builder: (context) {
-              return AddWatchlistScreen(
-                productDetails: productDetails,
-              );
+              return const AddWatchlistScreen();
             },
           );
         });
@@ -205,73 +205,75 @@ class AddWatchlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCheckboxList(BuildContext context, ProductListBloc bloc, WatchListItemStyle style) {
-    return BlocBuilder<ProductListBloc, ProductListState>(
-      buildWhen: (previous, current) => current is WatchlistSelectedState,
-      builder: (context, state) {
-        printWrapped(bloc.arrSelectedWatchlist.length.toString());
-        if (bloc.arrSelectedWatchlist.isEmpty) {
-          return NoDataFoundWidget(text: APPStrings.noWatchlistFound.tr); // Adjust text based on the selected tab if necessary
-        }
-        return ListView.builder(
-          itemCount: bloc.arrSelectedWatchlist.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                InkWell(
-                  onTap: () {
-                    bloc.add(WatchlistCheckEvent(checkWatchlist: bloc.arrSelectedWatchlist[index]));
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    child: Row(
-                      children: [
-                        SmartCheckbox(
-                          value: bloc.arrSelectedWatchlist[index].isSelected,
-                          onChanged: (value) {
-                            bloc.add(WatchlistCheckEvent(checkWatchlist: bloc.arrSelectedWatchlist[index]));
-                          },
-                        ),
-                        SizedBox(
-                          width: 8.w,
-                        ),
-                        SmartText(
-                          bloc.arrSelectedWatchlist[index].name,
-                          style: style.listTextStyle,
-                        ),
-                      ],
+  Widget _buildCheckboxList(BuildContext context, AddToWatchlistBloc bloc, WatchListItemStyle style) {
+    return ListView.builder(
+      itemCount: bloc.arrSelectedWatchlist.length,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return BlocBuilder<AddToWatchlistBloc, AddToWatchlistState>(
+            buildWhen: (previous, current) => current is WatchlistSelectedState && current.index == index,
+            builder: (context, state) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      bloc.add(WatchlistCheckEvent(index: index));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      child: Row(
+                        children: [
+                          SmartCheckbox(
+                            value: bloc.arrSelectedWatchlist[index].isSelected,
+                            onChanged: (value) {
+                              bloc.add(WatchlistCheckEvent(index: index));
+                            },
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          SmartText(
+                            bloc.arrSelectedWatchlist[index].name,
+                            style: style.listTextStyle,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
-        );
+                ],
+              );
+            });
       },
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 17.w,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: SmartButton.white(
-              onTap: () {
-                context.pop();
-              },
-              title: APPStrings.cancel.tr,
+  Widget _bottomNavigationBar(BuildContext context, AddToWatchlistBloc bloc) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 17.w),
+        child: Row(
+          children: [
+            Expanded(
+              child: SmartButton.white(
+                onTap: () {
+                  context.pop();
+                },
+                title: APPStrings.cancel.tr,
+              ),
             ),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(child: SmartButton(onTap: () {}, title: APPStrings.add.tr)),
-        ],
+            SizedBox(width: 16.w),
+            Expanded(
+              child: SmartButton(
+                onTap: () {
+                  context.pop();
+                },
+                title: bloc.isEdit ? APPStrings.save.tr : (bloc.isRemove ? APPStrings.remove.tr : APPStrings.add.tr),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

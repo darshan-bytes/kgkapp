@@ -46,6 +46,7 @@ class SmartTextField extends StatefulWidget {
   final InputBorder? customFocusedBorder;
   final InputBorder? customErrorBorder;
   final InputBorder? customFocusedErrorBorder;
+  final GestureTapCallback? onTap;
 
   const SmartTextField({
     super.key,
@@ -93,6 +94,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.onTap,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = false;
 
@@ -142,6 +144,7 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.onTap,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = true;
 
@@ -176,6 +179,7 @@ class SmartTextFieldState extends State<SmartTextField> {
           SizedBox(
             height: widget.height ?? ((widget.maxLines ?? 0) > 1 ? null : (widget.isSearch ? 40.w : 48.w)),
             child: TextFormField(
+              onTap: widget.onTap,
               autofocus: widget.autofocus,
               style: style.textStyle.merge(widget.style),
               onTapOutside: (p) {

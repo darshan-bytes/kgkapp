@@ -223,6 +223,10 @@ abstract class AppTheme {
   WatchListItemStyle get watchListItemStyle;
 
   ActivityLogStyle get activityLogStyle;
+
+  WatchlistDetailsStyle get watchlistDetailsStyle;
+
+  SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -967,6 +971,8 @@ class ProductDetailsStyle {
   final TextStyle totalApproxStyle;
   final TextStyle totalApproxSubStyle;
   final TextStyle orderSampleStyle;
+  final TextStyle bottomNavBarSubTitleStyle;
+  final Color whiteColor;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -993,6 +999,8 @@ class ProductDetailsStyle {
     required this.totalApproxStyle,
     required this.totalApproxSubStyle,
     required this.orderSampleStyle,
+    required this.bottomNavBarSubTitleStyle,
+    required this.whiteColor,
   });
 }
 
@@ -1772,6 +1780,7 @@ class SharePresentationStyle {
   final TextStyle userListTitleStyle;
   final TextStyle userNamesTextStyle;
   final TextStyle userEmailTextStyle;
+  final TextStyle userRoleStyle;
   final Color closeIconColor;
 
   SharePresentationStyle({
@@ -1781,6 +1790,7 @@ class SharePresentationStyle {
     required this.userListTitleStyle,
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
+    required this.userRoleStyle,
     required this.closeIconColor,
   });
 }
@@ -2068,4 +2078,27 @@ class ActivityLogStyle {
     required this.subTitleStyle,
     required this.subTextStyle,
   });
+}
+
+class WatchlistDetailsStyle {
+  final TextStyle watchlistNameStyle;
+  final TextStyle watchlistTitleStyle;
+  final TextStyle watchlistSubTitleStyle;
+  final Color detailsBackgroundColor;
+  final TextStyle noOfProductsStyle;
+
+  WatchlistDetailsStyle({
+    required this.watchlistNameStyle,
+    required this.watchlistTitleStyle,
+    required this.watchlistSubTitleStyle,
+    required this.detailsBackgroundColor,
+    required this.noOfProductsStyle,
+  });
+}
+
+class SmartSuggestionProductListStyle {
+  final TextStyle titleStyle;
+  final TextStyle viewAllStyle;
+
+  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
 }

@@ -67,6 +67,7 @@ class AppRoutes {
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
   static const activityLogScreenPage = '/activityLogScreenPage';
+  static const watchlistDetailsPage = '/watchlistDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -264,7 +265,7 @@ class AppRoutes {
       case auctionPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(const AuctionInitialEvent());
+            BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
             return const AuctionScreen();
           },
           settings: settings,
@@ -553,7 +554,7 @@ class AppRoutes {
       case cadLibraryListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent());
+            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
             return const CadLibraryListingScreen();
           },
           settings: settings,
@@ -636,6 +637,16 @@ class AppRoutes {
           },
           settings: settings,
         );
+
+      case watchlistDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<WatchlistDetailsBloc>(
+            create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
+            child: const WatchlistDetailsScreen(),
+          ),
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -670,6 +681,7 @@ enum RoutesData {
   isFromCheckout,
   presentationId,
   catalogueData,
+  watchlistId,
 }
 
 enum ScreenIdentifier {

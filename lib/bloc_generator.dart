@@ -64,6 +64,7 @@ class BlocGenerator {
       BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
       BlocProvider<DesignLibraryBloc>(create: (_) => DesignLibraryBloc()),
       BlocProvider<ActivityLogBloc>(create: (_) => ActivityLogBloc()),
+      BlocProvider<AddToWatchlistBloc>(create: (_) => AddToWatchlistBloc()),
     ];
   }
 }

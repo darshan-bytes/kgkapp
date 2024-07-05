@@ -47,11 +47,7 @@ class ConfirmationDialog extends StatelessWidget {
                       Expanded(child: SmartButton.white(onTap: onDenied, title: onDeniedText)),
                       SizedBox(width: 16.w),
                       Expanded(
-                          child: SmartButton(
-                              onTap: () {
-                                context.pop();
-                              },
-                              title: onApprovedText)),
+                          child: SmartButton(onTap: onApproved, title: onApprovedText)),
                     ],
                   ),
                   SizedBox(height: 16.h),
