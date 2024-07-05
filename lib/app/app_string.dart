@@ -761,4 +761,8 @@ class APPStrings {
   //Design library
   static const String designLibrary = 'design_library';
   static const String noDesignLibraryFound = 'no_design_library_found';
+
+  //Watchlist Detail
+  static const String noOfProducts = 'no_of_products';
+  static const String edit = 'edit';
 }

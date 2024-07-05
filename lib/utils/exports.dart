@@ -347,3 +347,6 @@ export 'package:kgk/modules/b2b/product_list_grid/model/watchlist_selection_mode
 export 'package:kgk/modules/b2b/product_list_grid/view/add_watchlist_screen.dart';
 export 'package:kgk/modules/b2b/design_library/bloc/design_library_bloc.dart';
 export 'package:kgk/modules/b2b/design_library/view/design_library_screen.dart';
+export 'package:kgk/modules/b2b/watchlist_details/bloc/watchlist_details_bloc.dart';
+export 'package:kgk/modules/b2b/watchlist_details/view/watchlist_details_screen.dart';
+export 'package:kgk/modules/b2b/watchlist/model/watchlist_details_model.dart';
