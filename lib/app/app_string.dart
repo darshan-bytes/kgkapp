@@ -770,4 +770,10 @@ class APPStrings {
   //Watchlist Detail
   static const String noOfProducts = 'no_of_products';
   static const String edit = 'edit';
+
+  static const String notifyWhenProductIsInStock = 'notify_when_product_is_in_stock';
+  static const String notifyWhenPriceDrops = 'notify_when_price_drops';
+  static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
+  static const String removeProduct = 'remove_product';
+  static const String removeProductDesc = 'remove_product_desc';
 }

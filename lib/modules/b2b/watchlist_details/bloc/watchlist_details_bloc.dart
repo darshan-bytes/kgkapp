@@ -64,6 +64,9 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
+        company: index % 2 == 0 ? "Martin Flyer" : "Tiffany & Co.",
+        productSku: index % 2 == 0 ? "ABCD123456" : "ABCD123456XYZ",
+        isOutOfStock: index.remainder(2) == 0,
       ),
     );
   }

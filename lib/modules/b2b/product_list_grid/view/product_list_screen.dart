@@ -159,15 +159,12 @@ class ProductListScreen extends StatelessWidget {
                   onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
                   onEyeTap: () {
                     if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+                      BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails));
                       Utils.showSmartModalBottomSheet(
                         context: context,
                         enableDrag: false,
                         useRootNavigator: true,
-                        builder: (context) {
-                          return AddWatchlistScreen(
-                            productDetails: productDetails,
-                          );
-                        },
+                        builder: (context) => const AddWatchlistScreen(),
                       );
                     }
                   },
