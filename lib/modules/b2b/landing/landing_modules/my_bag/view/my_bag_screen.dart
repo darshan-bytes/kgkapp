@@ -157,7 +157,7 @@ class MyBagScreen extends StatelessWidget {
                 SizedBox(height: 24.h),
                 _buildSelectAllProductBox(bloc, style, context),
                 SizedBox(height: 24.h),
-                _buildMyBagList(bloc),
+                _buildMyBagList(bloc, style),
                 _buildBagTotalDiamondItemsDetails(bloc, style),
                 SizedBox(height: 24.h),
                 _buildOrderSummary(bloc, style, context),
@@ -242,7 +242,7 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMyBagList(MyBagBloc bloc) {
+  Widget _buildMyBagList(MyBagBloc bloc, MyBagScreenStyle style) {
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       itemBuilder: (context, index) {
@@ -251,7 +251,7 @@ class MyBagScreen extends StatelessWidget {
           return MyBagDiamondItem(
             onTap: () {},
             onTapMenuButton: () {
-              handleDiamondMenuButtonTap(context, index, bloc);
+              handleDiamondMenuButtonTap(context, index, bloc, style);
             },
             productDetails: product,
             margin: EdgeInsets.only(bottom: 17.h),
@@ -565,9 +565,10 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc) {
+  void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc, MyBagScreenStyle style) {
     Utils.showSmartModalBottomSheet(
         context: context,
+        backgroundColor: style.backgroundColor,
         builder: (BuildContext context) {
           return buildDiamondMenuPopUp(context, index, bloc);
         });

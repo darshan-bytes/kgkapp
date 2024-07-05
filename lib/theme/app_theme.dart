@@ -967,6 +967,8 @@ class ProductDetailsStyle {
   final TextStyle totalApproxStyle;
   final TextStyle totalApproxSubStyle;
   final TextStyle orderSampleStyle;
+  final TextStyle bottomNavBarSubTitleStyle;
+  final Color whiteColor;
 
   ProductDetailsStyle({
     required this.productTypeStyle,
@@ -993,6 +995,8 @@ class ProductDetailsStyle {
     required this.totalApproxStyle,
     required this.totalApproxSubStyle,
     required this.orderSampleStyle,
+    required this.bottomNavBarSubTitleStyle,
+    required this.whiteColor,
   });
 }
 

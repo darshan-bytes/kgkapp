@@ -43,6 +43,7 @@ class CategoriesScreen extends StatelessWidget {
                           categoriesBloc.add(CategoriesSelectedEvent(index, itemIndex, sublist));
                         } else {
                           // Implement your logic for when the category is not expanded
+                          categoriesBloc.navigateBasedOnCategory(context: context, categoryName: sublist[itemIndex].name);
                           if (sublist[itemIndex].name == "Digital \nCatalogue") {
                             context.pushNamed(AppRoutes.digitalCataloguePage);
                           }
@@ -57,7 +58,8 @@ class CategoriesScreen extends StatelessWidget {
                         onProductSelected: (value) {
                           final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
                           if (selectedCategory != null) {
-                            categoriesBloc.navigateBasedOnCategory(context, selectedCategory, value);
+                            categoriesBloc.navigateBasedOnCategory(
+                                context: context, categoryName: selectedCategory, categorySubName: value);
                           }
                         },
                       ),
