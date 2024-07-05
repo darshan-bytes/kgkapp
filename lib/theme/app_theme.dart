@@ -223,6 +223,8 @@ abstract class AppTheme {
   WatchListItemStyle get watchListItemStyle;
 
   WatchlistDetailsStyle get watchlistDetailsStyle;
+
+  SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1776,6 +1778,7 @@ class SharePresentationStyle {
   final TextStyle userListTitleStyle;
   final TextStyle userNamesTextStyle;
   final TextStyle userEmailTextStyle;
+  final TextStyle userRoleStyle;
   final Color closeIconColor;
 
   SharePresentationStyle({
@@ -1785,6 +1788,7 @@ class SharePresentationStyle {
     required this.userListTitleStyle,
     required this.userNamesTextStyle,
     required this.userEmailTextStyle,
+    required this.userRoleStyle,
     required this.closeIconColor,
   });
 }
@@ -2066,4 +2070,11 @@ class WatchlistDetailsStyle {
     required this.detailsBackgroundColor,
     required this.noOfProductsStyle,
   });
+}
+
+class SmartSuggestionProductListStyle {
+  final TextStyle titleStyle;
+  final TextStyle viewAllStyle;
+
+  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
 }

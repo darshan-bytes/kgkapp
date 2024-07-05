@@ -166,19 +166,27 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     if (userType == UserType.b2bUser) {
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
-        CategoriesModel(name: 'Jewellery', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: jewellerySubOptionsB2BList),
-        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: diamondSubOptionsB2BList),
-        CategoriesModel(name: 'Gemstone', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: gemstoneSubOptionsB2BList),
-        CategoriesModel(name: 'Libraries', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: librarySubOptionsList),
+        CategoriesModel(
+            name: 'Jewellery', image: 'https://i.ibb.co/xXngyKk/Jewellery-Catelogue.png', productsDetailsList: jewellerySubOptionsB2BList),
+        CategoriesModel(name: 'Diamond', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: diamondSubOptionsB2BList),
+        CategoriesModel(
+            name: 'Gemstone', image: 'https://i.ibb.co/w754LRZ/Gemstone-Category.png', productsDetailsList: gemstoneSubOptionsB2BList),
+        CategoriesModel(
+            name: 'Libraries', image: 'https://i.ibb.co/ScfcyDw/Libraries-Category.png', productsDetailsList: librarySubOptionsList),
         CategoriesModel(
             name: 'Digital \nCatalogue',
-            image: 'https://i.ibb.co/ZWKWks5/Image.png',
+            image: 'https://i.ibb.co/7tr0GFf/Digital-Catalogue-Category.png',
             productsDetailsList: digitalCatalogueSubOptionsB2BList,
             isExpanded: false),
         CategoriesModel(
-            name: 'Do It \nYourself', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: doItYourselfSubOptionsB2BList),
+            name: 'Do It \nYourself',
+            image: 'https://i.ibb.co/W3pW5Pw/Do-It-Your-Self-Category.png',
+            productsDetailsList: doItYourselfSubOptionsB2BList),
         CategoriesModel(
-            name: 'Orion', image: 'https://i.ibb.co/ZWKWks5/Image.png', productsDetailsList: orionSubCategoryList, isExpanded: false),
+            name: 'Orion',
+            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+            productsDetailsList: orionSubCategoryList,
+            isExpanded: false),
       ]);
     } else {
       categories.addAll([

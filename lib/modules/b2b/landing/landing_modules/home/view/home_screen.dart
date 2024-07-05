@@ -28,12 +28,45 @@ class HomeScreen extends StatelessWidget {
             _buildKGKCoutureTabBarSection(homeBloc, style, context),
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
             _buildDealOfTheDaySection(homeBloc, style),
+            _buildShopByBrandsSection(homeBloc, style),
             _buildGetInspiredSection(homeBloc, style),
             _buildShopByStyleSection(homeBloc, style),
             _buildRecentlyViewedSection(homeBloc, style)
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildShopByBrandsSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartHorizontalItemBuilder(
+      title: APPStrings.shopByBrands.tr,
+      scrollController: homeBloc.shopByBrandsScrollController,
+      isScrollbarVisible: true,
+      titleStyle: style.bannerTitleStyle,
+      itemCount: homeBloc.shopByBrands.length,
+      itemBetweenSpace: 17.w,
+      spacingBetweenTitleAndItems: 12.h,
+      titleOptionalPadding: EdgeInsets.only(left: 17.w),
+      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
+      padding: EdgeInsets.symmetric(vertical: 22.h),
+      itemBuilder: (context, index) {
+        final AuctionListModel item = homeBloc.shopByBrands[index];
+        return SmartImageTitleColumn(
+          onTap: () {},
+          imageWidth: 72.w,
+          title: item.name ?? '',
+          titleStyle: style.shopGemstoneTitleStyle,
+          imageBetweenSpacing: 8.h,
+          margin: EdgeInsets.only(
+            left: index == 0 ? 17.w : 0,
+            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          ),
+          titleMaxLines: 1,
+          fit: BoxFit.fill,
+          imageUrl: item.imageUrl ?? '',
+        );
+      },
     );
   }
 
@@ -128,13 +161,15 @@ class HomeScreen extends StatelessWidget {
   Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
     return SmartHorizontalItemBuilder(
       title: APPStrings.shopDiamonds.tr,
+      scrollController: homeBloc.shopDiamondsScrollController,
+      isScrollbarVisible: true,
       titleStyle: style.bannerTitleStyle,
       itemCount: homeBloc.shopDiamondsList.length,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
       titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
+      padding: EdgeInsets.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopDiamondsList[index];
         return SmartImageTitleColumn(
@@ -162,13 +197,15 @@ class HomeScreen extends StatelessWidget {
     return SmartHorizontalItemBuilder(
       title: APPStrings.shopGemstones.tr,
       titleStyle: style.bannerTitleStyle,
+      isScrollbarVisible: true,
+      scrollController: homeBloc.shopGemstonesScrollController,
       itemCount: homeBloc.shopGemstonesList.length,
       backgroundColor: style.shopGemstoneBgColor,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
       titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
+      padding: EdgeInsets.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopGemstonesList[index];
         return SmartImageTitleColumn(
@@ -436,42 +473,13 @@ class HomeScreen extends StatelessWidget {
   Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style) {
     return Padding(
       padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(
-            APPStrings.dealOfTheDay.tr,
-            style: style.bannerTitleStyle,
-            optionalPadding: EdgeInsets.only(left: 17.w),
-          ),
-          SizedBox(height: 4.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Scrollbar(
-              controller: homeBloc.dealOfTheDayScrollController,
-              thumbVisibility: true,
-              child: SmartSingleChildScrollView(
-                controller: homeBloc.dealOfTheDayScrollController,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 12.w,
-                  runSpacing: 12.2.h,
-                  children: homeBloc.dealOfTheDayList.map((product) {
-                    return ProductGridItem(
-                      productDetails: product,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {},
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: SmartSuggestionProductList(
+          title: APPStrings.dealOfTheDay.tr,
+          onViewAllTap: () {},
+          suggestedProductList: homeBloc.dealOfTheDayList,
+          onEyeTap: () {},
+          onFavTap: () {},
+          scrollController: homeBloc.dealOfTheDayScrollController),
     );
   }
 
@@ -522,42 +530,13 @@ class HomeScreen extends StatelessWidget {
   Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style) {
     return Padding(
       padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(
-            APPStrings.recentlyViewed.tr,
-            style: style.bannerTitleStyle,
-            optionalPadding: EdgeInsets.only(left: 17.w),
-          ),
-          SizedBox(height: 4.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
-            child: Scrollbar(
-              controller: homeBloc.recentlyViewedScrollController,
-              thumbVisibility: true,
-              child: SmartSingleChildScrollView(
-                controller: homeBloc.recentlyViewedScrollController,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 12.w,
-                  runSpacing: 12.2.h,
-                  children: homeBloc.recentlyViewList.map((product) {
-                    return ProductGridItem(
-                      productDetails: product,
-                      onEyeTap: () {},
-                      onFavTap: () {},
-                      onTap: () {},
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        child: SmartSuggestionProductList(
+            title: APPStrings.recentlyViewed.tr,
+            onViewAllTap: () {},
+            suggestedProductList: homeBloc.recentlyViewList,
+            onEyeTap: () {},
+            onFavTap: () {},
+            scrollController: homeBloc.recentlyViewedScrollController)
+        );
   }
 }

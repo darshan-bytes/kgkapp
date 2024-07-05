@@ -10,7 +10,6 @@ class OrderDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.myOrders.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(orderDetailBloc),
       body: _getBody(orderDetailBloc, style, context),
     );
   }
@@ -185,18 +184,6 @@ class OrderDetailScreen extends StatelessWidget {
           separatorBuilder: (context, index) => SizedBox(height: 24.h),
         );
       },
-    );
-  }
-
-  Widget _buildBottomNavigationBar(OrderDetailBloc orderDetailBloc) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {},
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
     );
   }
 

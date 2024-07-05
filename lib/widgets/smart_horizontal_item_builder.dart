@@ -15,6 +15,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
   final Color? backgroundColor;
   final ScrollController? scrollController;
   final Widget? widgetBetweenTitleAndItems;
+  final bool isScrollbarVisible;
 
   const SmartHorizontalItemBuilder(
       {super.key,
@@ -31,10 +32,30 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
       this.backgroundColor,
       this.titleOptionalPadding = EdgeInsets.zero,
       this.scrollController,
-      this.widgetBetweenTitleAndItems});
+      this.widgetBetweenTitleAndItems,
+      this.isScrollbarVisible = false});
 
   @override
   Widget build(BuildContext context) {
+    Widget child = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      controller: scrollController,
+      child: Padding(
+        padding: listPadding,
+        child: Row(
+          crossAxisAlignment: mainAxisAlignment,
+          children: List.generate(
+            itemCount,
+            (index) {
+              return Padding(
+                padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
+                child: itemBuilder(context, index),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     return Container(
       padding: padding,
       color: backgroundColor,
@@ -47,25 +68,14 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
               SizedBox(height: spacingBetweenTitleAndItems),
             ],
             widgetBetweenTitleAndItems ?? const SizedBox.shrink(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              controller: scrollController,
-              child: Padding(
-                padding: listPadding,
-                child: Row(
-                  crossAxisAlignment: mainAxisAlignment,
-                  children: List.generate(
-                    itemCount,
-                    (index) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
-                        child: itemBuilder(context, index),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            )
+            isScrollbarVisible
+                ? Scrollbar(
+                    controller: scrollController,
+                    trackVisibility: isScrollbarVisible,
+                    thumbVisibility: isScrollbarVisible,
+                    child: child,
+                  )
+                : child
           ],
         ),
       ),

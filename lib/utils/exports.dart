@@ -343,6 +343,7 @@ export 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:webview_flutter/webview_flutter.dart';
+export 'package:kgk/widgets/smart_suggestion_product_list.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/watchlist_selection_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/view/add_watchlist_screen.dart';
 export 'package:kgk/modules/b2b/design_library/bloc/design_library_bloc.dart';

@@ -421,7 +421,7 @@
   "assign_to": "Assign to",
   "market": "Market",
   "created_on": "Created on",
-  "presentation_number": "Presentation Number",
+  "presentation_number": "Presentation number",
   "approved_by": "Approved by",
   "project": "Project",
   "project_number": "Project number",
@@ -516,10 +516,10 @@
   "assign_designer": "Assign designer",
   "no_designer_found": "No Designer Found",
   "share_presentation": "Share presentation",
-  "qr_code": "QR code",
+  "qr_code": "QR Code",
   "whatsapp": "Whatsapp",
   "facebook": "Facebook",
-  "copy_link": "Copy link",
+  "copy_link": "Copy Link",
   "enter_email_address": "Enter email address",
   "people_with_access": "People with access",
   "owner": "Owner",
@@ -609,5 +609,10 @@
   "design_library": "Design library",
   "no_design_library_found": "No design library found",
   "no_of_products": "No of products",
-  "edit": "Edit"
+  "edit": "Edit",
+  "more_faq": "More FAQ",
+  "view_dashboard": "View dashboard",
+  "most_purchased_diamonds": "Most purchased diamonds",
+  "shop_by_brands": "Shop by brands",
+  "enter_product_sku": "Enter Product SKU"
 }

@@ -951,6 +951,7 @@ class LightModeTheme extends AppTheme {
         userNamesTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         userEmailTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         closeIconColor: colors.color303538,
+        userRoleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
       );
 
   @override
@@ -1116,5 +1117,11 @@ class LightModeTheme extends AppTheme {
         watchlistSubTitleStyle: interRegularTextStyle,
         detailsBackgroundColor: colors.colorF7F9FA,
         noOfProductsStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
+
+  @override
+  SmartSuggestionProductListStyle get smartSuggestionProductListStyle => SmartSuggestionProductListStyle(
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
+        viewAllStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.primary, decoration: TextDecoration.underline),
       );
 }

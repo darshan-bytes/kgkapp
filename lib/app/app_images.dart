@@ -170,6 +170,7 @@ class AppImages {
 
   //Send Comment
   static String icSendComment = 'assets/images/ic_send_comment.svg';
+  static String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
 
   //ic_more_vertical
   static String icMoreVertical = 'assets/images/ic_more_vertical.svg';

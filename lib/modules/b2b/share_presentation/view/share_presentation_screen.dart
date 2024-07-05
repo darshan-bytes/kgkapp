@@ -180,7 +180,7 @@ class SharePresentationScreen extends StatelessWidget {
         ),
         if (user.role != null) ...[
           SizedBox(width: 16.w),
-          SmartText(user.role?.roleName ?? '', style: style.userListTitleStyle),
+          SmartText(user.role?.roleName ?? '', style: style.userRoleStyle),
           if (user.role!.isModifiable) ...[
             SizedBox(width: 4.w),
             SmartImage(path: AppImages.icArrowDropDown, height: 16.w, width: 16.w),
