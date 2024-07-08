@@ -66,10 +66,12 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const activityLogScreenPage = '/activityLogScreenPage';
   static const watchlistDetailsPage = '/watchlistDetailsPage';
   static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
   static const retailerOrderListingPage = '/retailerOrderListingPage';
+  static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -631,6 +633,14 @@ class AppRoutes {
           },
           settings: settings,
         );
+      case activityLogScreenPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
+            return const ActivityLogScreen();
+          },
+          settings: settings,
+        );
 
       case watchlistDetailsPage:
         return MaterialPageRoute(
@@ -644,7 +654,7 @@ class AppRoutes {
       case manufacturerOrderListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(InitialManufacturerOrderListingEvent(context: context));
+            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
             return const ManufacturerOrderListingScreen();
           },
           settings: settings,
@@ -663,6 +673,17 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
             return const RetailerOrderListingScreen();
+          },
+          settings: settings,
+        );
+
+      case manufacturerOrderDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<ManufacturerOrderDetailsBloc>(
+              create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+              child: const ManufacturerOrderDetailsScreen(),
+            );
           },
           settings: settings,
         );

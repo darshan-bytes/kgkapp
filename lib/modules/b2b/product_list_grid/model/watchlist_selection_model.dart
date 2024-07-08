@@ -1,5 +1,3 @@
-import 'package:kgk/kgk.dart';
-
 class WatchlistSelectionModel {
   final String name;
   bool isSelected = false;

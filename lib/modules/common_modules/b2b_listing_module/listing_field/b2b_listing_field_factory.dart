@@ -63,7 +63,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.subJewelleryType.tr, value: model.strSubJewelleryType),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignTo.tr, value: model.strAssignTo, imageUrl: model.strAssignToImageUrl),
+          B2BItemField(label: APPStrings.assignedTo.tr, value: model.strAssignTo, imageUrl: model.strAssignToImageUrl),
           B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy),
         ];
 

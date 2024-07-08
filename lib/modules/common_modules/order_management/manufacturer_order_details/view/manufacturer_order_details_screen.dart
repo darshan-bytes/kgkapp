@@ -1,0 +1,382 @@
+import 'package:kgk/kgk.dart';
+
+class ManufacturerOrderDetailsScreen extends StatelessWidget {
+  const ManufacturerOrderDetailsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ManufacturerOrderDetailsBloc bloc = BlocProvider.of<ManufacturerOrderDetailsBloc>(context);
+    return Scaffold(
+      appBar: SmartAppBar(
+        title: APPStrings.orderManagement.tr,
+        onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
+        onNotification: () => context.pushNamed(AppRoutes.notificationPage),
+      ),
+      body: _getBody(context, bloc),
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: bloc.scrollController.canScrollToTop,
+        onTap: bloc.scrollController.scrollToTop,
+      ),
+    );
+  }
+
+  Widget _getBody(BuildContext context, ManufacturerOrderDetailsBloc bloc) {
+    final OrderDetailScreenStyle orderDetailScreenStyle = AppTheme.of(context).orderDetailScreenStyle;
+    return SafeArea(
+      child: BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+        buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState || current is ManufacturerOrderListLoadedState,
+        builder: (context, state) {
+          if (bloc.orderList.isEmpty) {
+            return NoDataFoundWidget(text: APPStrings.noOrderListFound.tr);
+          }
+          return SmartSingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            controller: bloc.scrollController.scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildManufacturerOrderDetailsInfoCard(bloc, context, orderDetailScreenStyle),
+                SizedBox(height: 24.h),
+                _buildManufacturerOrderCreatorDetailsInfoCard(bloc, context, orderDetailScreenStyle),
+                SizedBox(height: 32.h),
+                _buildSearchTextField(bloc),
+                SizedBox(height: 24.h),
+                _buildManufacturerOrderList(bloc, context),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildManufacturerOrderList(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
+    return ListView.builder(
+      itemCount: bloc.orderList.length,
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return _buildManufacturerOrderListItem(bloc, context, index);
+      },
+    );
+  }
+
+  Widget _buildManufacturerOrderListItem(ManufacturerOrderDetailsBloc bloc, BuildContext context, int index) {
+    final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
+    ManufacturerOrderDetailsModel model = bloc.orderList[index];
+    return BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+      buildWhen: (prev, current) => current is ManufacturerOrderLoadingMoreState || current is ManufacturerOrderListLoadedState,
+      builder: (context, state) {
+        return Column(
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                padding: EdgeInsets.all(16.0.w),
+                margin: EdgeInsets.only(bottom: 16.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.r),
+                  color: style.backgroundColor,
+                  border: Border.all(color: style.borderColor),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: SmartText(
+                            model.orderId ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: style.headingStyle,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        InkWell(onTap: () {}, child: const SmartImage(path: AppImages.icMoreHorizontal))
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
+                        Expanded(
+                            child: _buildManufacturerDetailColumn(
+                                APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    const Divider(),
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    const Divider(),
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
+                        Expanded(
+                            child: _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style,
+                                isDiscount: true)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: _buildManufacturerDetailColumn(
+                                APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
+                                isTextFormField: true)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
+                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (state is ManufacturerOrderLoadingMoreState && index == bloc.orderList.length - 1) const SmartCircularProgressIndicator()
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildManufacturerDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
+      {bool isTextFormField = false, bool isDiscount = false}) {
+    return Padding(
+      padding: EdgeInsets.only(right: 6.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SmartText(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.titleStyle,
+          ),
+          SizedBox(height: 4.h),
+          isTextFormField && value != null
+              ? SizedBox(
+                  width: 56.w,
+                  child: SmartTextField(
+                    height: 32.h,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                    isEnabled: true,
+                    controller: TextEditingController(text: value),
+                    disabledBorderColor: style.borderColor,
+                    textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+                    style: style.subTitleStyle,
+                  ),
+                )
+              : SmartText(
+                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: isDiscount ? style.richTextStyle : style.subTitleStyle,
+                ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchTextField(ManufacturerOrderDetailsBloc bloc) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      child: Row(
+        children: [
+          Expanded(
+            child: SmartTextField.search(
+              height: 48.h,
+              onValueChanges: (value) => () {},
+              onFieldSubmitted: (value) => () {},
+              hintText: APPStrings.searchOrder.tr,
+              controller: bloc.searchController,
+            ),
+          ),
+          SizedBox(width: 16.0.w),
+          SelectionButton(
+            width: 48.w,
+            imageHeight: 24.5.w,
+            imageWidth: 24.5.w,
+            isSelected: false,
+            image: AppImages.icMenu,
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildManufacturerOrderDetailsInfoCard(ManufacturerOrderDetailsBloc bloc, BuildContext context, OrderDetailScreenStyle style) {
+    return Container(
+      color: style.detailsTileColor,
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SmartText(
+                      '#14567',
+                      style: style.orderIdStyle,
+                    ),
+                    SizedBox(height: 4.h),
+                    SmartText(
+                      "Ordered on: 17/03/23 10:00 PM",
+                      style: style.orderDateStyle,
+                    )
+                  ],
+                ),
+              ),
+              SmartImage(
+                path: AppImages.icMenu,
+                onTap: () {},
+              ),
+            ],
+          ),
+          SizedBox(height: 14.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: _buildDetailColumn(APPStrings.orderStatus.tr, ProjectStatus.onTime.value, style, isStatus: true)),
+              Expanded(child: _buildDetailColumn(APPStrings.purchaseOrder.tr, ProjectStatus.created.value, style, isStatus: true)),
+              _buildDetailColumn(APPStrings.items.tr, "15", style, crossAxisAlignment: CrossAxisAlignment.start),
+              SizedBox(width: 47.w),
+              _buildDetailColumn(APPStrings.qty.tr, "250", style, crossAxisAlignment: CrossAxisAlignment.end),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildManufacturerOrderCreatorDetailsInfoCard(
+      ManufacturerOrderDetailsBloc bloc, BuildContext context, OrderDetailScreenStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildCreatorDetailItem(
+              title: APPStrings.customerName.tr, iconImage: "https://i.ibb.co/MRrjy5G/image-466.png", value: "Entice", style: style),
+          SizedBox(height: 24.h),
+          _buildCreatorDetailItem(title: APPStrings.mobileNumber.tr, iconImage: AppImages.icPhone, value: "(406) 555-0120", style: style),
+          SizedBox(height: 24.h),
+          _buildCreatorDetailItem(
+              title: APPStrings.billingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
+          SizedBox(height: 12.h),
+          _buildCreatorDetailItem(
+              title: APPStrings.shippingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailColumn(String title, String? value, OrderDetailScreenStyle style,
+      {bool isStatus = false, bool totalAmount = false, CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start}) {
+    return Padding(
+      padding: EdgeInsets.only(right: 6.w),
+      child: Column(
+        crossAxisAlignment: crossAxisAlignment,
+        children: [
+          SmartText(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.orderItemLabelStyle,
+          ),
+          SizedBox(height: 4.h),
+          isStatus
+              ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
+              : SmartText(
+                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
+                ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCreatorDetailItem({String? title, String? value, required OrderDetailScreenStyle style, String? iconImage}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 120.w,
+          child: SmartText(
+            title,
+            style: style.orderItemLabelStyle,
+          ),
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
+        Expanded(
+          child: Row(
+            children: [
+              if (iconImage != null)
+                Padding(
+                  padding: EdgeInsets.only(right: 4.w),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.r),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: SmartImage(
+                        path: iconImage,
+                        fit: BoxFit.fill,
+                        height: 24.w,
+                        width: 24.w,
+                      ),
+                    ),
+                  ),
+                ),
+              if (value != null)
+                Flexible(
+                  child: SmartText(
+                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                    style: style.orderItemValueStyle,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

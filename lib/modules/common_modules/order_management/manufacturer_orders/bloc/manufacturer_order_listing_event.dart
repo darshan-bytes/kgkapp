@@ -5,12 +5,10 @@ sealed class ManufacturerOrderListingEvent extends Equatable {
 }
 
 final class InitialManufacturerOrderListingEvent extends ManufacturerOrderListingEvent {
-  final BuildContext context;
-
-  const InitialManufacturerOrderListingEvent({required this.context});
+  const InitialManufacturerOrderListingEvent();
 
   @override
-  List<Object> get props => [context];
+  List<Object> get props => [];
 }
 
 final class ManufacturerOrderListLoadMoreEvent extends ManufacturerOrderListingEvent {

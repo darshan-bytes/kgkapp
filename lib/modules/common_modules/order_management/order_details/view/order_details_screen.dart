@@ -22,7 +22,7 @@ class OrderDetailScreen extends StatelessWidget {
           children: [
             _buildOrderDetailsInfoCard(style, context),
             SizedBox(height: 24.h),
-            _buildOrderCreaterDetailsInfoCard(style),
+            _buildOrderCreatorDetailsInfoCard(style),
             SizedBox(height: 32.h),
             _buildSearchTextField(orderDetailBloc),
             SizedBox(height: 24.h),
@@ -72,7 +72,7 @@ class OrderDetailScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: _buildDetailColumn(APPStrings.orderStatus.tr, ProjectStatus.active.value, style, isOrderStatus: true)),
+              Expanded(child: _buildDetailColumn(APPStrings.status.tr, ProjectStatus.active.value, style, isOrderStatus: true)),
               Expanded(child: _buildDetailColumn(APPStrings.items.tr, "15", style)),
               Expanded(child: _buildDetailColumn(APPStrings.qty.tr, "250  ", style)),
               Expanded(child: _buildDetailColumn(APPStrings.totalAmount.tr, "\$1,12,500", style, totalAmount: true)),
@@ -83,7 +83,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderCreaterDetailsInfoCard(OrderDetailScreenStyle style) {
+  Widget _buildOrderCreatorDetailsInfoCard(OrderDetailScreenStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.0.w),
       child: Column(

@@ -8,6 +8,10 @@ class GemstoneTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
+    final outlineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(color: style.dividerColor),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+    );
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: ordersBloc.currentScrollController.canScrollToTop,
@@ -27,22 +31,10 @@ class GemstoneTabView extends StatelessWidget {
                         hintText: APPStrings.searchOrder.tr,
                         controller: ordersBloc.gemstoneSearchController,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        customFocusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customDisabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
-                        customFocusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: style.dividerColor),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                        ),
+                        customFocusedBorder: outlineInputBorder,
+                        customDisabledBorder: outlineInputBorder,
+                        customErrorBorder: outlineInputBorder,
+                        customFocusedErrorBorder: outlineInputBorder,
                       ),
                     ),
                     _buildStoneDropDownField(ordersBloc, style),
