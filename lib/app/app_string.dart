@@ -776,4 +776,6 @@ class APPStrings {
   static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
   static const String removeProduct = 'remove_product';
   static const String removeProductDesc = 'remove_product_desc';
+
+  static const String deliveryDate = 'delivery_date';
 }

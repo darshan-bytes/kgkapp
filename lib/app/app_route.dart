@@ -303,7 +303,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<OrderDetailBloc>(
-              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent()),
+              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
               child: const OrderDetailScreen(),
             );
           },

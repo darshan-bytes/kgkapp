@@ -63,6 +63,10 @@ class RetailerDiamondTabView extends StatelessWidget {
                 itemCount: bloc.retailerDiamondOrdersList.length,
                 itemBuilder: (context, index) {
                   return B2BListingItem(
+                    onTap: () {
+                      context.pushNamed(AppRoutes.orderDetailsPage,
+                          arguments: {RoutesData.orderNumber: bloc.retailerDiamondOrdersList[index].id});
+                    },
                     margin: EdgeInsets.only(bottom: 16.0.h),
                     listingItemModel: bloc.retailerDiamondOrdersList[index],
                     type: B2BListingType.retailerOrderListingDiamondType,

@@ -362,3 +362,5 @@ export 'package:kgk/modules/common_modules/order_management/retailer_orders/view
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_gemstone_tab_view.dart';
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_jewellery_tab_view.dart';
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_order_listing_screen.dart';
+export 'package:kgk/modules/common_modules/order_management/order_details/model/order_details_product_model.dart';
+export 'package:kgk/modules/common_modules/order_management/order_details/view/order_details_product_item.dart';
