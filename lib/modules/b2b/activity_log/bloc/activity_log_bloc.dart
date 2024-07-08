@@ -18,7 +18,7 @@ class ActivityLogBloc extends Bloc<ActivityLogEvent, ActivityLogState> {
   void _activityLogInitialEvent(ActivityLogInitialEvent event, Emitter<ActivityLogState> emit) {
     emit(ActivityLogReloadState());
 
-    List<ActivityModel> _getActivities(int index) {
+    List<ActivityModel> getActivities(int index) {
       return List.generate(index + 1, (index) {
         return ActivityModel(
           id: index.toString(),
@@ -31,7 +31,7 @@ class ActivityLogBloc extends Bloc<ActivityLogEvent, ActivityLogState> {
     activityLogList = List.generate(
       3,
       (index) {
-        return ActivityLogModel(id: index.toString(), logDate: "16 Aug 2023", activities: _getActivities(index));
+        return ActivityLogModel(id: index.toString(), logDate: "16 Aug 2023", activities: getActivities(index));
       },
     );
     emit(const ActivityLogLoadedState());
