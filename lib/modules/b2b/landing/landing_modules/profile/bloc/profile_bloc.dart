@@ -83,7 +83,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.activityLog.tr,
             subTitle: APPStrings.getLogOnTheAccount.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.activityLogScreenPage);
+            }),
         ProfileListModel(
             image: AppImages.icNewsFeed,
             title: APPStrings.newsFeed.tr,

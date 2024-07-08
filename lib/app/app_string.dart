@@ -514,6 +514,7 @@ class APPStrings {
   static const String conceptName = 'concept_name';
   static const String status = 'status';
   static const String assignTo = 'assign_to';
+  static const String assignedTo = 'assigned_to';
   static const String market = 'market';
   static const String createdOn = 'created_on';
 
@@ -766,6 +767,11 @@ class APPStrings {
   //Design library
   static const String designLibrary = 'design_library';
   static const String noDesignLibraryFound = 'no_design_library_found';
+
+  // Activity Log
+  static const String exploreChronologicalRecordYourUserActivities = 'explore_chronological_record_your_user_activities';
+  static const String module = 'module';
+  static const String dateRange = 'date_range';
 
   //Watchlist Detail
   static const String noOfProducts = 'no_of_products';
