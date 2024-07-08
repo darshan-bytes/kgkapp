@@ -120,16 +120,16 @@ class ActivityLogScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: activityLog.activities?.length ?? 0,
             itemBuilder: (context, index) {
-              final ActivityModel activity = activityLog.activities?[index] ?? ActivityModel();
+              final ActivityModel? activity = activityLog.activities?[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SmartText(
-                    activity.time,
+                    activity?.time,
                     style: style.subTitleStyle,
                   ),
                   SmartText(
-                    activity.activity,
+                    activity?.activity,
                     style: style.subTextStyle,
                   ),
                 ],

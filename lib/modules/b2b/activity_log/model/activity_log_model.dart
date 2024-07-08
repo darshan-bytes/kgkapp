@@ -3,7 +3,7 @@ import 'package:kgk/kgk.dart';
 class ActivityLogModel {
   String? id;
   String? logDate;
-  List<ActivityModel>? activities;
+  List<ActivityModel>? activities = [];
 
   ActivityLogModel({
     this.id,
