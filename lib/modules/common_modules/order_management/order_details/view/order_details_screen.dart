@@ -5,31 +5,41 @@ class OrderDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OrderDetailBloc orderDetailBloc = BlocProvider.of<OrderDetailBloc>(context);
+    final OrderDetailBloc bloc = BlocProvider.of<OrderDetailBloc>(context);
     final OrderDetailScreenStyle style = AppTheme.of(context).orderDetailScreenStyle;
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.myOrders.tr),
-      body: _getBody(orderDetailBloc, style, context),
+      body: _getBody(bloc, style, context),
     );
   }
 
-  Widget _getBody(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style, BuildContext context) {
-    return SafeArea(
-      child: SmartSingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildOrderDetailsInfoCard(style, context),
-            SizedBox(height: 24.h),
-            _buildOrderCreatorDetailsInfoCard(style),
-            SizedBox(height: 32.h),
-            _buildSearchTextField(orderDetailBloc),
-            SizedBox(height: 24.h),
-            _buildOrderList(orderDetailBloc, style),
-          ],
-        ),
-      ),
+  Widget _getBody(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
+    return BlocBuilder<OrderDetailBloc, OrderDetailState>(
+      buildWhen: (previous, current) => current is OrderDetailsLoadedState,
+      builder: (context, state) {
+        if (state is OrderDetailsLoadedState) {
+          return SafeArea(
+            child: SmartSingleChildScrollView(
+              controller: bloc.paginationScrollController.controller,
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildOrderDetailsInfoCard(style, context),
+                  SizedBox(height: 24.h),
+                  _buildOrderCreatorDetailsInfoCard(style),
+                  SizedBox(height: 32.h),
+                  _buildSearchTextField(bloc),
+                  SizedBox(height: 24.h),
+                  _buildOrderList(bloc, style),
+                ],
+              ),
+            ),
+          );
+        }
+        return const SmartCircularProgressIndicator();
+      },
     );
   }
 
@@ -110,172 +120,82 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchTextField(OrderDetailBloc orderDetailBloc) {
-    return BlocBuilder<OrderDetailBloc, OrderDetailState>(
-      buildWhen: (previous, current) => current is OrderDetailReloadState,
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.0.w),
-          child: Row(
-            children: [
-              Expanded(
-                child: SmartTextField.search(
-                  height: 48.h,
-                  onValueChanges: (value) => orderDetailBloc.add(const FilterOrdersEvent()),
-                  onFieldSubmitted: (value) => orderDetailBloc.add(const FilterOrdersEvent()),
-                  hintText: APPStrings.searchOrder.tr,
-                  controller: orderDetailBloc.orderSearchController,
-                ),
-              ),
-              SizedBox(width: 16.0.w),
-              SelectionButton(
-                width: 48.w,
-                imageHeight: 24.5.w,
-                imageWidth: 24.5.w,
-                isSelected: false,
-                image: AppImages.icMenu,
-                onTap: () {},
-              ),
-            ],
+  Widget _buildSearchTextField(OrderDetailBloc bloc) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      child: Row(
+        children: [
+          Expanded(
+            child: SmartTextField.search(
+              height: 48.h,
+              hintText: APPStrings.searchOrder.tr,
+              controller: bloc.orderSearchController,
+            ),
           ),
-        );
-      },
+          SizedBox(width: 16.0.w),
+          SelectionButton(
+            width: 48.w,
+            imageHeight: 24.5.w,
+            imageWidth: 24.5.w,
+            isSelected: false,
+            image: AppImages.icMenu,
+            onTap: () {},
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildOrderList(OrderDetailBloc orderDetailBloc, OrderDetailScreenStyle style) {
+  Widget _buildOrderList(OrderDetailBloc bloc, OrderDetailScreenStyle style) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
       buildWhen: (previous, current) =>
-          current is OrderDetailProductQualityChangedState ||
-          current is OrderDetailProductQuantityChangedState ||
           current is OrderDetailProductRemovedState ||
-          current is FilterOrdersState ||
-          current is OrderDetailReloadState,
+          current is OrderDetailsLoadedState ||
+          current is OrderDetailsLoadingMoreProductsState ||
+          current is OrderDetailsLoadedMoreProductsState,
       builder: (context, state) {
         return ListView.separated(
-          itemCount: orderDetailBloc.filteredOrdersDetailsList.length,
+          itemCount: bloc.productListLength,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
-            ProductDetails product = orderDetailBloc.filteredOrdersDetailsList[index];
-            switch (orderDetailBloc.screenIdentifier) {
-              case ScreenIdentifier.orderDetailsForMyOrder:
-                return CartProductItem(
-                  boxHeight: 72.w,
-                  boxWidth: 72.w,
-                  isCheckboxShow: false,
-                  selectedQuality: product.productQuality,
-                  selectedQuantity: product.productQuantity,
-                  onRemoveTap: () {
-                    orderDetailBloc.add(OrderDetailRemoveProductEvent(index: index));
-                  },
-                  onMoveToWishListTap: () {},
-                  productDetails: product,
-                  qualityOptionsList: product.cartProductQuality ?? [],
-                  quantityOptionsList: product.cartProductQuantity ?? [],
-                  onQualityChanged: (CartProductQuality value) {
-                    orderDetailBloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                  },
-                  onQuantityChanged: (CartProductQuantity value) {
-                    orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                  },
-                  priceTextStyle: style.priceTextStyle,
-                );
-
-              case ScreenIdentifier.orderDetailsForRetailer:
-                ProductInfoItem(
-                    onTap360View: () => printWrapped("onTap360View"),
-                    onTapDNA: () => printWrapped("onTapDNA"),
-                    onTapCertificate: () => printWrapped("onTapCertificate"),
-                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
-                    onTapUSA: () => printWrapped("onTapUSA"),
-                    onTapMenuButton: () {
-                      Utils.showSmartModalBottomSheet(
-                        context: context,
-                        builder: (context) => const ProductMenuBottomSheet(),
-                      );
-                    },
-                    isSelectedBackground: (index % 2 != 0),
-                    onTap: () {
-                      context.pushNamed(AppRoutes.productDetailsPage,
-                          arguments: {RoutesData.isPageFor: ScreenIdentifier.orderDetailsForRetailer});
-                    },
-                    productDetails: ProductDetails(
-                      productInfoClarityChat: ProductInfoClarityChat(
-                          rapRate: "\$35,500.00",
-                          productId: "1",
-                          productName: "1.00 Cts Round Diamond",
-                          ct: "10.04",
-                          shape: "Marquise",
-                          colour: "H",
-                          clarity: "VVS1",
-                          lotNumber: "MBFG716306",
-                          certificateNumber: "230000066395",
-                          measurements: "10.18 x 8.34 x 6.14",
-                          lab: "GIA",
-                          cut: "Excellent",
-                          polish: "Excellent",
-                          symmetry: "Excellent",
-                          flourish: "O",
-                          tablePercentage: "50",
-                          depthPercentage: "50",
-                          rap: "\$24,850.00",
-                          discount: "-30.00",
-                          perCts: "\$24,850.00",
-                          amount: "\$1,24,995.50",
-                          fluorescence: '0'),
-                      productId: "1",
-                      diamond: "1.5 gram",
-                      gram: "1.5 gram",
-                      imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
-                    ));
-
-              case ScreenIdentifier.orderDetailsForManufacturer:
-                return CartProductItem(
-                  boxHeight: 72.w,
-                  boxWidth: 72.w,
-                  isCheckboxShow: false,
-                  selectedQuality: product.productQuality,
-                  selectedQuantity: product.productQuantity,
-                  onRemoveTap: () {
-                    orderDetailBloc.add(OrderDetailRemoveProductEvent(index: index));
-                  },
-                  onMoveToWishListTap: () {},
-                  productDetails: product,
-                  qualityOptionsList: product.cartProductQuality ?? [],
-                  quantityOptionsList: product.cartProductQuantity ?? [],
-                  onQualityChanged: (CartProductQuality value) {
-                    orderDetailBloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                  },
-                  onQuantityChanged: (CartProductQuantity value) {
-                    orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                  },
-                  priceTextStyle: style.priceTextStyle,
-                );
-              default:
-                break;
+            late ProductDetails product;
+            if (bloc.userType == UserType.b2cUser) {
+              product = bloc.orderProductList[index];
             }
-            return CartProductItem(
-              boxHeight: 72.w,
-              boxWidth: 72.w,
-              isCheckboxShow: false,
-              selectedQuality: product.productQuality,
-              selectedQuantity: product.productQuantity,
-              onRemoveTap: () {
-                orderDetailBloc.add(OrderDetailRemoveProductEvent(index: index));
-              },
-              onMoveToWishListTap: () {},
-              productDetails: product,
-              qualityOptionsList: product.cartProductQuality ?? [],
-              quantityOptionsList: product.cartProductQuantity ?? [],
-              onQualityChanged: (CartProductQuality value) {
-                orderDetailBloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-              },
-              onQuantityChanged: (CartProductQuantity value) {
-                orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-              },
-              priceTextStyle: style.priceTextStyle,
+            return Column(
+              children: [
+                (bloc.userType == UserType.b2cUser)
+                    ? CartProductItem(
+                        boxHeight: 72.w,
+                        boxWidth: 72.w,
+                        isCheckboxShow: false,
+                        selectedQuality: product.productQuality,
+                        selectedQuantity: product.productQuantity,
+                        onRemoveTap: () {
+                          bloc.add(OrderDetailRemoveProductEvent(index: index));
+                        },
+                        onMoveToWishListTap: () {},
+                        productDetails: product,
+                        qualityOptionsList: product.cartProductQuality ?? [],
+                        quantityOptionsList: product.cartProductQuantity ?? [],
+                        onQualityChanged: (CartProductQuality value) {
+                          bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
+                        },
+                        onQuantityChanged: (CartProductQuantity value) {
+                          bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
+                        },
+                        priceTextStyle: style.priceTextStyle,
+                      )
+                    : OrderDetailsProductItem(
+                        productDetails: bloc.orderProductDetailsList[index],
+                        onTap: () {},
+                        onTapMenuButton: () {},
+                      ),
+                if (state is OrderDetailsLoadingMoreProductsState && index == bloc.productListLength - 1)
+                  const SmartCircularProgressIndicator(),
+              ],
             );
           },
           separatorBuilder: (context, index) => SizedBox(height: 24.h),

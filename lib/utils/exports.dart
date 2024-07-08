@@ -369,3 +369,5 @@ export 'package:kgk/modules/common_modules/order_management/manufacturer_order_d
 export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/view/manufacturer_order_details_screen.dart';
 export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/model/manufacturer_order_details_model.dart';
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_list_builder.dart';
+export 'package:kgk/modules/common_modules/order_management/order_details/model/order_details_product_model.dart';
+export 'package:kgk/modules/common_modules/order_management/order_details/view/order_details_product_item.dart';

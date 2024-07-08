@@ -5,11 +5,22 @@ sealed class OrderDetailState extends Equatable {
 }
 
 final class OrderDetailInitial extends OrderDetailState {
+  const OrderDetailInitial();
+
   @override
   List<Object> get props => [];
 }
 
 final class OrderDetailReloadState extends OrderDetailState {
+  const OrderDetailReloadState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class OrderDetailsLoadedState extends OrderDetailState {
+  const OrderDetailsLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -43,11 +54,6 @@ final class OrderDetailProductRemovedState extends OrderDetailState {
   List<Object> get props => [index];
 }
 
-final class FilterOrdersState extends OrderDetailState {
-  @override
-  List<Object> get props => [];
-}
-
 final class OrderCancellationReasonsChangeState extends OrderDetailState {
   final CancellationReasonModel cancellationReasonModel;
 
@@ -55,4 +61,20 @@ final class OrderCancellationReasonsChangeState extends OrderDetailState {
 
   @override
   List<Object> get props => [cancellationReasonModel];
+}
+
+final class OrderDetailsLoadingMoreProductsState extends OrderDetailState {
+  const OrderDetailsLoadingMoreProductsState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class OrderDetailsLoadedMoreProductsState extends OrderDetailState {
+  final int currentPage;
+
+  const OrderDetailsLoadedMoreProductsState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

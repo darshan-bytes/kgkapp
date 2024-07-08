@@ -785,4 +785,6 @@ class APPStrings {
 
   // Order Management
   static const String noOrderListFound = 'no_order_list_found';
+
+  static const String deliveryDate = 'delivery_date';
 }

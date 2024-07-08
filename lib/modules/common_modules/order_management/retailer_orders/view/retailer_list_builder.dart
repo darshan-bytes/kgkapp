@@ -29,6 +29,9 @@ class RetailerOrderListBuilder extends StatelessWidget {
             return Column(
               children: [
                 B2BListingItem(
+                  onTap: () {
+                    onTap?.call(index);
+                  },
                   margin:
                       EdgeInsets.only(bottom: (state is RetailerOrderListingLoadingMoreState && index == ordersList.length - 1) ? 0 : 16.h),
                   listingItemModel: ordersList[index],

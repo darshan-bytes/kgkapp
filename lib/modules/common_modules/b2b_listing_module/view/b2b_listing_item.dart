@@ -57,7 +57,7 @@ class B2BListingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).pddListingItemStyle;
+    final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
 
     return GestureDetector(
       onTap: onTap,

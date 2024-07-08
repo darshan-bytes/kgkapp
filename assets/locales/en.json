@@ -624,5 +624,6 @@
   "module": "Module",
   "date_range": "Date range",
   "assigned_to": "Assigned to",
-  "no_order_list_found": "No Order list found"
+  "no_order_list_found": "No Order list found",
+  "delivery_date": "Delivery Date"
 }

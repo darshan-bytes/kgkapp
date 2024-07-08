@@ -5,8 +5,12 @@ sealed class OrderDetailEvent extends Equatable {
 }
 
 final class InitialOrderDetailEvent extends OrderDetailEvent {
+  final BuildContext context;
+
+  const InitialOrderDetailEvent(this.context);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class OrderDetailChangeProductQuality extends OrderDetailEvent {
@@ -38,13 +42,6 @@ final class OrderDetailRemoveProductEvent extends OrderDetailEvent {
   List<Object> get props => [index];
 }
 
-final class FilterOrdersEvent extends OrderDetailEvent {
-  const FilterOrdersEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
 class OrderCancellationReasonsEvent extends OrderDetailEvent {
   final CancellationReasonModel cancellationReasonModel;
 
@@ -52,4 +49,13 @@ class OrderCancellationReasonsEvent extends OrderDetailEvent {
 
   @override
   List<Object> get props => [cancellationReasonModel];
+}
+
+final class OrderDetailsLoadMoreProductsEvent extends OrderDetailEvent {
+  final int currentPage;
+
+  const OrderDetailsLoadMoreProductsEvent(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }
