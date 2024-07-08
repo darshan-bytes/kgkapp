@@ -4,6 +4,12 @@ part 'retailer_order_listing_event.dart';
 
 part 'retailer_order_listing_state.dart';
 
+enum RetailerOrdersTab {
+  diamond,
+  gemstone,
+  jewellery,
+}
+
 class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerOrderListingState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -14,12 +20,11 @@ class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerO
   final TextEditingController gemstoneSearchController = TextEditingController();
   final TextEditingController jewellerySearchController = TextEditingController();
 
-  RetailerOrderModel? selectedStoneType;
+  OrderStoneTypeModel? selectedStoneType;
 
-  // Pagination Scroll controller
-  SmartPaginationScrollController retailerDiamondScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController retailerGemstoneScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController retailerJewelleryScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController diamondScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController gemstoneScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController jewelleryScrollController = SmartPaginationScrollController();
 
   // Tabs
   final List<Widget> tabs = <Widget>[
@@ -29,42 +34,69 @@ class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerO
   ];
 
   // Orders lists
-  List<B2BCustomListingDataModel> retailerDiamondOrdersList = _generateDiamondOrdersList();
-  List<B2BCustomListingDataModel> retailerGemstoneOrdersList = _generateGemstoneOrdersList();
-  List<B2BCustomListingDataModel> retailerJewelleryOrdersList = _generateJewelleryOrdersList();
+  List<B2BCustomListingDataModel> diamondList = [];
+  List<B2BCustomListingDataModel> gemstoneList = [];
+  List<B2BCustomListingDataModel> jewelleryList = [];
 
   // Stone types
-  final List<RetailerOrderModel> arrStoneType = [
-    const RetailerOrderModel(name: "Regular"),
-    const RetailerOrderModel(name: "Special"),
-    const RetailerOrderModel(name: "Diamond"),
-    const RetailerOrderModel(name: "Gemstone"),
-    const RetailerOrderModel(name: "Jewellery"),
+  final List<OrderStoneTypeModel> arrStoneType = [
+    const OrderStoneTypeModel(name: "Regular"),
+    const OrderStoneTypeModel(name: "Special"),
+    const OrderStoneTypeModel(name: "Diamond"),
+    const OrderStoneTypeModel(name: "Gemstone"),
+    const OrderStoneTypeModel(name: "Jewellery"),
   ];
 
-  RetailerOrderListingBloc() : super(RetailerOrderListingInitialState()) {
-    on<InitialRetailerOrderListingEvent>(_onInitRetailerOrdersListingEvent);
-    on<RetailerChangeOrdersTypeEvent>(_onChangeOrderType);
-    on<RetailerChangeOrderTabsEvent>(_onChangeTabEvent);
+  RetailerOrderListingBloc() : super(const RetailerOrderListingInitialState()) {
+    on<RetailerOrderListingInitialEvent>(_onInitOrdersEvent);
+    on<ChangeRetailerOrderStoneTypeEvent>(_onChangeStoneType);
+    on<RetailerOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
+    on<ChangeRetailerOrderTabsEvent>(_onChangeTabEvent);
   }
 
-  void _onInitRetailerOrdersListingEvent(InitialRetailerOrderListingEvent event, Emitter<RetailerOrderListingState> emit) {
-    emit(const RetailerOrderListReloadState());
+  void _onInitOrdersEvent(RetailerOrderListingInitialEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     clearData();
-    emit(const RetailerOrderListingLoadedState());
+    diamondList = _generateDiamondOrdersList();
+    gemstoneList = _generateDiamondOrdersList();
+    jewelleryList = _generateJewelleryOrdersList();
+
+    if (diamondScrollController.isInitialised) {
+      diamondScrollController.dispose();
+      diamondScrollController = SmartPaginationScrollController();
+    }
+    diamondScrollController.init(
+      loadAction: (int currentPage) async {
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.diamond));
+      },
+    );
+
+    gemstoneScrollController.init(
+      loadAction: (int currentPage) async {
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.gemstone));
+      },
+    );
+
+    jewelleryScrollController.init(
+      loadAction: (int currentPage) async {
+        add(RetailerOrderListingLoadMoreEvent(currentPage: currentPage, listType: RetailerOrdersTab.jewellery));
+      },
+    );
+
+    emit(const RetailerOrderListingListLoadedState());
   }
 
-  void _onChangeOrderType(RetailerChangeOrdersTypeEvent event, Emitter<RetailerOrderListingState> emit) {
-    emit(const RetailerOrderListReloadState());
-    selectedStoneType = event.selectedOrderType;
+  void _onChangeStoneType(ChangeRetailerOrderStoneTypeEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
+    selectedStoneType = event.selectedStoneType;
     if (selectedStoneType != null) {
-      emit(RetailerChangeOrdersTypeState(selectedStoneType!));
+      emit(ChangeRetailerOrderStoneTypeState(selectedStoneType!));
     }
   }
 
-  void _onChangeTabEvent(RetailerChangeOrderTabsEvent event, Emitter<RetailerOrderListingState> emit) {
-    emit(const RetailerOrderListReloadState());
+  void _onChangeTabEvent(ChangeRetailerOrderTabsEvent event, Emitter<RetailerOrderListingState> emit) {
+    emit(const RetailerOrderListingReloadState());
     switch (tabController.index) {
       case 0:
         gemstoneSearchController.clear();
@@ -79,7 +111,46 @@ class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerO
         gemstoneSearchController.clear();
         break;
     }
-    emit(const RetailerChangeOrderTabsState());
+    emit(const ChangeRetailerOrderTabsState());
+  }
+
+  Future<void> _onListingLoadMoreEvent(RetailerOrderListingLoadMoreEvent event, Emitter<RetailerOrderListingState> emit) async {
+    emit(RetailerOrderListingLoadingMoreState(event.listType));
+    await Future.delayed(const Duration(seconds: 2));
+
+    List<B2BCustomListingDataModel> newDataList = [];
+
+    switch (event.listType) {
+      case RetailerOrdersTab.diamond:
+        newDataList = _generateDiamondOrdersList();
+        diamondList.addAll(newDataList);
+        diamondScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case RetailerOrdersTab.gemstone:
+        newDataList = _generateDiamondOrdersList();
+        gemstoneList.addAll(newDataList);
+        gemstoneScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case RetailerOrdersTab.jewellery:
+        newDataList = _generateJewelleryOrdersList();
+        jewelleryList.addAll(newDataList);
+        jewelleryScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+    }
+
+    emit(RetailerOrderListingListLoadedMoreState(event.currentPage + 1, event.listType));
+  }
+
+  SmartPaginationScrollController get currentScrollController {
+    final RetailerOrdersTab currentTab = RetailerOrdersTab.values[tabController.index];
+    switch (currentTab) {
+      case RetailerOrdersTab.diamond:
+        return diamondScrollController;
+      case RetailerOrdersTab.gemstone:
+        return gemstoneScrollController;
+      case RetailerOrdersTab.jewellery:
+        return jewelleryScrollController;
+    }
   }
 
   void clearData() {
@@ -90,25 +161,16 @@ class RetailerOrderListingBloc extends Bloc<RetailerOrderListingEvent, RetailerO
     selectedStoneType = null;
   }
 
-  // Helper methods
-  static List<B2BCustomListingDataModel> _generateDiamondOrdersList() {
-    return List.generate(
-      8,
-      (index) => B2BCustomListingDataModel(
-        id: index.toString(),
-        strOrderId: "#34573${index + 2}",
-        status: ProjectStatus.active,
-        strOrderedBy: "Michael Lee",
-        strOrderedByImageUrl: "https://i.ibb.co/hy6pH4g/Frame-3977.png",
-        strMobileNumber: "+1 406 555 0120",
-        strItems: "15",
-        strTotalAmount: "\$12,500",
-        strOrderOn: "17/03/23 06:00 PM",
-      ),
-    );
+  @override
+  Future<void> close() {
+    diamondScrollController.dispose();
+    gemstoneScrollController.dispose();
+    jewelleryScrollController.dispose();
+    return super.close();
   }
 
-  static List<B2BCustomListingDataModel> _generateGemstoneOrdersList() {
+  // Helper methods
+  static List<B2BCustomListingDataModel> _generateDiamondOrdersList() {
     return List.generate(
       8,
       (index) => B2BCustomListingDataModel(

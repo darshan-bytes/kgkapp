@@ -33,6 +33,12 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
 
   void _onInitialManufacturerOrderListEvent(InitialManufacturerOrderListingEvent event, Emitter<ManufacturerOrderListingState> emit) {
     emit(ManufacturerOrderListReloadState());
+
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
+
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(ManufacturerOrderListLoadMoreEvent(currentPage));

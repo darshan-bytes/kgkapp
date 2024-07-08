@@ -4,36 +4,37 @@ sealed class RetailerOrderListingEvent extends Equatable {
   const RetailerOrderListingEvent();
 }
 
-final class InitialRetailerOrderListingEvent extends RetailerOrderListingEvent {
+final class RetailerOrderListingInitialEvent extends RetailerOrderListingEvent {
   final BuildContext context;
 
-  const InitialRetailerOrderListingEvent({required this.context});
+  const RetailerOrderListingInitialEvent({required this.context});
 
   @override
   List<Object> get props => [context];
 }
 
-final class RetailerOrderListLoadMoreEvent extends RetailerOrderListingEvent {
-  final int currentPage;
+final class ChangeRetailerOrderStoneTypeEvent extends RetailerOrderListingEvent {
+  final OrderStoneTypeModel selectedStoneType;
 
-  const RetailerOrderListLoadMoreEvent(this.currentPage);
-
-  @override
-  List<Object> get props => [currentPage];
-}
-
-final class RetailerChangeOrdersTypeEvent extends RetailerOrderListingEvent {
-  final RetailerOrderModel selectedOrderType;
-
-  const RetailerChangeOrdersTypeEvent(this.selectedOrderType);
+  const ChangeRetailerOrderStoneTypeEvent(this.selectedStoneType);
 
   @override
-  List<Object> get props => [selectedOrderType];
+  List<Object> get props => [selectedStoneType];
 }
 
-final class RetailerChangeOrderTabsEvent extends RetailerOrderListingEvent {
-  const RetailerChangeOrderTabsEvent();
+final class ChangeRetailerOrderTabsEvent extends RetailerOrderListingEvent {
+  const ChangeRetailerOrderTabsEvent();
 
   @override
   List<Object> get props => [];
+}
+
+final class RetailerOrderListingLoadMoreEvent extends RetailerOrderListingEvent {
+  final int currentPage;
+  final RetailerOrdersTab listType;
+
+  const RetailerOrderListingLoadMoreEvent({required this.currentPage, required this.listType});
+
+  @override
+  List<Object> get props => [currentPage, listType];
 }

@@ -71,7 +71,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
             isScrollbarVisible
                 ? Scrollbar(
                     controller: scrollController,
-                    trackVisibility: isScrollbarVisible,
+                    trackVisibility: false,
                     thumbVisibility: isScrollbarVisible,
                     child: child,
                   )

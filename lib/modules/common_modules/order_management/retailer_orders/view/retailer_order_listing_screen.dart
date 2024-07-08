@@ -5,10 +5,10 @@ class RetailerOrderListingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RetailerOrderListingBloc bloc = BlocProvider.of<RetailerOrderListingBloc>(context);
+    final RetailerOrderListingBloc retailerOrderListingBloc = BlocProvider.of<RetailerOrderListingBloc>(context);
     return Scaffold(
-      appBar: SmartAppBar(title: APPStrings.myOrders.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(bloc),
+      appBar: SmartAppBar(title: APPStrings.orderManagement.tr),
+      bottomNavigationBar: _buildBottomNavigationBar(retailerOrderListingBloc),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.0.w),
@@ -17,14 +17,14 @@ class RetailerOrderListingScreen extends StatelessWidget {
               SizedBox(height: 17.0.h),
               Expanded(
                 child: SmartTabBar(
-                  length: bloc.tabs.length,
+                  length: retailerOrderListingBloc.tabs.length,
                   onTabInitialized: (tabController) {
                     // Here TabController is initialized
-                    bloc.tabController = tabController;
+                    retailerOrderListingBloc.tabController = tabController;
                   },
-                  onTapTab: (int index) => bloc.add(const RetailerChangeOrderTabsEvent()),
-                  tabs: bloc.tabs,
-                  tabBarView: _buildTabBarView(bloc),
+                  onTapTab: (int index) => retailerOrderListingBloc.add(const ChangeRetailerOrderTabsEvent()),
+                  tabs: retailerOrderListingBloc.tabs,
+                  tabBarView: _buildTabBarView(retailerOrderListingBloc),
                 ),
               ),
             ],
@@ -34,15 +34,15 @@ class RetailerOrderListingScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTabBarView(RetailerOrderListingBloc bloc) {
+  List<Widget> _buildTabBarView(RetailerOrderListingBloc retailerOrderListingBloc) {
     return [
-      RetailerDiamondTabView(bloc: bloc),
-      RetailerGemstoneTabView(bloc: bloc),
-      RetailerJewelleryTabView(bloc: bloc),
+      RetailerDiamondTabView(retailerOrderListingBloc: retailerOrderListingBloc),
+      RetailerGemstoneTabView(retailerOrderListingBloc: retailerOrderListingBloc),
+      RetailerJewelleryTabView(retailerOrderListingBloc: retailerOrderListingBloc),
     ];
   }
 
-  Widget _buildBottomNavigationBar(RetailerOrderListingBloc bloc) {
+  Widget _buildBottomNavigationBar(RetailerOrderListingBloc retailerOrderListingBloc) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
