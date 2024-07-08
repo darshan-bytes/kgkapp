@@ -65,7 +65,12 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const activityLogScreenPage = '/activityLogScreenPage';
   static const watchlistDetailsPage = '/watchlistDetailsPage';
+  static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
+  static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
+  static const retailerOrderListingPage = '/retailerOrderListingPage';
+  static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
   static const exhibitionDetailsPage = '/exhibitionDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -300,7 +305,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<OrderDetailBloc>(
-              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent()),
+              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
               child: const OrderDetailScreen(),
             );
           },
@@ -620,6 +625,14 @@ class AppRoutes {
           },
           settings: settings,
         );
+      case activityLogScreenPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
+            return const ActivityLogScreen();
+          },
+          settings: settings,
+        );
 
       case watchlistDetailsPage:
         return MaterialPageRoute(
@@ -630,10 +643,47 @@ class AppRoutes {
           settings: settings,
         );
 
+      case manufacturerOrderListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
+            return const ManufacturerOrderListingScreen();
+          },
+          settings: settings,
+        );
+
+      case myOrderTypeSelectionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MyOrderTypeSelection();
+          },
+          settings: settings,
+        );
+
+      case retailerOrderListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
+            return const RetailerOrderListingScreen();
+          },
+          settings: settings,
+        );
+
+      case manufacturerOrderDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<ManufacturerOrderDetailsBloc>(
+              create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+              child: const ManufacturerOrderDetailsScreen(),
+            );
+          },
+          settings: settings,
+        );
+
       case exhibitionDetailsPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ExhibitionDetailsBloc>(context).add(ExhibitionDetailsInitialEvent(context: context));
+            BlocProvider.of<ExhibitionDetailsBloc>(context).add(const ExhibitionDetailsInitialEvent());
             return const ExhibitionDetailsScreen();
           },
         );
@@ -686,6 +736,9 @@ enum ScreenIdentifier {
   landingForDiamonds,
   landingForJewellery,
   landingForGemstones,
+  orderDetailsForMyOrder,
+  orderDetailsForRetailer,
+  orderDetailsForManufacturer,
 }
 
 extension RoutesDataExtension on BuildContext {

@@ -7,24 +7,18 @@ class ExhibitionDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExhibitionDetailsBloc bloc = BlocProvider.of<ExhibitionDetailsBloc>(context);
     final ExhibitionDetailsItemStyle style = AppTheme.of(context).exhibitionDetailsItemStyle;
-    return Scaffold(
-      appBar: _buildAppBar(bloc, context),
-      floatingActionButton: _buildFloatingActionButton(bloc),
-      bottomNavigationBar: BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-        buildWhen: (previous, current) => current is ChangeExhibitionTabsState,
-        builder: (context, state) {
-          return bloc.currentIndex == 0 ? _buildBottomNavigationBar(bloc, context) : const SizedBox();
-        },
-      ),
-      body: SafeArea(
-        child: BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-          buildWhen: (previous, current) =>
-              current is ExhibitionDetailsLoadedState ||
-              current is ExhibitionChangeListingTypeState ||
-              current is ChangeExhibitionTabsState,
-          builder: (context, state) {
-            if (state is ExhibitionDetailsLoadedState || state is ChangeExhibitionTabsState || state is ExhibitionChangeListingTypeState) {
-              return SmartSingleChildScrollView(
+
+    return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
+      buildWhen: (previous, current) =>
+          current is ExhibitionDetailsLoadedState || current is ExhibitionChangeListingTypeState || current is ChangeExhibitionTabsState,
+      builder: (context, state) {
+        if (state is ExhibitionDetailsLoadedState || state is ChangeExhibitionTabsState || state is ExhibitionChangeListingTypeState) {
+          return Scaffold(
+            appBar: _buildAppBar(bloc, context),
+            floatingActionButton: _buildFloatingActionButton(bloc),
+            bottomNavigationBar: bloc.currentIndex == 0 ? _buildBottomNavigationBar(bloc, context) : const SizedBox(),
+            body: SafeArea(
+              child: SmartSingleChildScrollView(
                 controller: bloc.scrollController,
                 child: Column(
                   children: [
@@ -45,13 +39,13 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            } else {
-              return const SmartCircularProgressIndicator();
-            }
-          },
-        ),
-      ),
+              ),
+            ),
+          );
+        } else {
+          return const SmartCircularProgressIndicator();
+        }
+      },
     );
   }
 
@@ -185,9 +179,8 @@ class ExhibitionDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         if (bloc.currentIndex == 0) {
           return ScrollToTopFAB(
-            canScrollToTop:
-                bloc.isGrid ? bloc.gridPaginationScrollController.canScrollToTop : bloc.listPaginationScrollController.canScrollToTop,
-            onTap: bloc.isGrid ? bloc.gridPaginationScrollController.scrollToTop : bloc.listPaginationScrollController.scrollToTop,
+            canScrollToTop: bloc.productPaginationScrollController.canScrollToTop,
+            onTap: bloc.productPaginationScrollController.scrollToTop,
           );
         } else {
           return ScrollToTopFAB(

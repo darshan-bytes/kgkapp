@@ -1126,6 +1126,18 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  ActivityLogStyle get activityLogStyle => ActivityLogStyle(
+        storeMessageStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        textFieldStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+        borderColor: colors.color424445,
+        dividerColor: colors.colorD3DAE0,
+        listViewBackgroundColor: colors.colorF7F9FA,
+        titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp),
+        subTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        subTextStyle: interRegularTextStyle,
+      );
+
+  @override
   ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle => ExhibitionDetailsItemStyle(
         backgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,

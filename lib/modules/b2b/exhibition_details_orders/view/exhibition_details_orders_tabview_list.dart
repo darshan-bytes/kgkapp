@@ -52,7 +52,6 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
         }
         return ListView.separated(
           padding: EdgeInsets.only(top: 8.w, left: 16.w, right: 16.w),
-          controller: ScrollController(),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: bloc.exhibitionOrdersList.length,

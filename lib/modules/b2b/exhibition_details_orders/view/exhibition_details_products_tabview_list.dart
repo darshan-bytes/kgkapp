@@ -8,7 +8,6 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ExhibitionDetailsItemStyle style = AppTheme.of(context).exhibitionDetailsItemStyle;
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0.w),
       child: Column(
@@ -215,38 +214,33 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   }
 
   Widget _buildGridView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state, BuildContext context) {
-    return SmartSingleChildScrollView(
-        key: bloc.gridPaginationScrollController.gridKey,
-        controller: ScrollController(),
-        physics: const NeverScrollableScrollPhysics(),
-        child: SmartGridView(
-          items: bloc.productList.map((ProductDetails productDetails) {
-            return ProductGridItem(
-              productDetails: productDetails,
-              isOutOfStock: false,
-              onEyeTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  enableDrag: false,
-                  useRootNavigator: true,
-                  builder: (context) {
-                    return const AddWatchlistScreen();
-                  },
-                );
+    return SmartGridView(
+      items: bloc.productList.map((ProductDetails productDetails) {
+        return ProductGridItem(
+          productDetails: productDetails,
+          isOutOfStock: false,
+          onEyeTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              enableDrag: false,
+              useRootNavigator: true,
+              builder: (context) {
+                return const AddWatchlistScreen();
               },
-              onFavTap: () {},
-              onTap: () {},
             );
-          }).toList(),
-          isLoadingMore: state is ExhibitionListingLoadingMoreState,
-        ));
+          },
+          onFavTap: () {},
+          onTap: () {},
+        );
+      }).toList(),
+      isLoadingMore: state is ExhibitionListingLoadingMoreState,
+    );
   }
 
   Widget _buildListView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state) {
     return ListView.builder(
-      key: bloc.listPaginationScrollController.listKey,
+      key: bloc.productPaginationScrollController.listKey,
       shrinkWrap: true,
-      controller: ScrollController(),
       itemCount: bloc.productList.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {

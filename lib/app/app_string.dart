@@ -514,6 +514,7 @@ class APPStrings {
   static const String conceptName = 'concept_name';
   static const String status = 'status';
   static const String assignTo = 'assign_to';
+  static const String assignedTo = 'assigned_to';
   static const String market = 'market';
   static const String createdOn = 'created_on';
 
@@ -767,6 +768,11 @@ class APPStrings {
   static const String designLibrary = 'design_library';
   static const String noDesignLibraryFound = 'no_design_library_found';
 
+  // Activity Log
+  static const String exploreChronologicalRecordYourUserActivities = 'explore_chronological_record_your_user_activities';
+  static const String module = 'module';
+  static const String dateRange = 'date_range';
+
   //Watchlist Detail
   static const String noOfProducts = 'no_of_products';
   static const String edit = 'edit';
@@ -776,6 +782,11 @@ class APPStrings {
   static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
   static const String removeProduct = 'remove_product';
   static const String removeProductDesc = 'remove_product_desc';
+
+  // Order Management
+  static const String noOrderListFound = 'no_order_list_found';
+
+  static const String deliveryDate = 'delivery_date';
 
   static const String orders = 'orders';
   static const String products = 'products';

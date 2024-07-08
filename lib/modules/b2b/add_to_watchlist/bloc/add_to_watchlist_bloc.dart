@@ -46,9 +46,9 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       emit(const AddToWatchlistReloadState());
       productDetails = event.productDetails;
       selectedWatchlistName = null;
-      arrSelectedWatchlist.forEach((element) {
+      for (WatchlistSelectionModel element in _arrSelectedWatchlist) {
         element.isSelected = false;
-      });
+      }
       emit(const AddToWatchlistLoadedState());
     }
   }

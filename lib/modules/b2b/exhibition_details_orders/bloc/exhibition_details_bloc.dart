@@ -16,13 +16,14 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     Tab(text: APPStrings.orders.tr),
   ];
 
-  List<ExhibitionDetailsOrdersModel> exhibitionOrdersList = _generateExhibitionOrdersList();
+  List<ExhibitionDetailsOrdersModel> exhibitionOrdersList = [];
 
-  List<ProductDetails> productList = _generateProductList();
+  List<ProductDetails> productList = [];
 
   SmartPaginationScrollController orderScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController listPaginationScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController productPaginationScrollController = SmartPaginationScrollController();
+
+  final GlobalKey targetKey = GlobalKey();
 
   ExhibitionDetailsBloc() : super(const ExhibitionDetailsInitialsState()) {
     on<ExhibitionDetailsInitialEvent>(_onInitialEvent);
@@ -32,10 +33,14 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   }
 
   void _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) {
+    emit(const ExhibitionDetailsReloadState());
     appbarTitle = APPStrings.exhibition.tr;
     isGrid = true;
+    productList.clear();
+    exhibitionOrdersList.clear();
     _initScrollControllers();
-    clearData();
+    productList.addAll(_generateProductList());
+    exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
     emit(const ExhibitionDetailsLoadedState());
   }
 
@@ -48,49 +53,33 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   void _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) {
     emit(const ExhibitionDetailsReloadState());
     isGrid = event.isGrid;
+    productPaginationScrollController.onViewChange(!isGrid);
     emit(const ExhibitionChangeListingTypeState());
-  }
-
-  void clearData() {
-    isGrid = true;
-    productList = _generateProductList();
-    exhibitionOrdersList = _generateExhibitionOrdersList();
   }
 
   Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
     emit(const ExhibitionListingLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
-    productList.addAll(_generateProductList());
-    exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
+    _pageChanged(event);
     emit(ExhibitionListingLoadedMoreState(event.currentPage + 1));
+  }
+
+  void _pageChanged(ExhibitionListingLoadMoreEvent event) {
     if (currentIndex == 0) {
-      if (isGrid) {
-        return gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-      } else {
-        return listPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-      }
+      productList.addAll(_generateProductList());
+      productPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     } else {
-      return orderScrollController.isPageLoaded.complete(event.currentPage == 3);
+      exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
+      orderScrollController.isPageLoaded.complete(event.currentPage == 3);
     }
   }
 
   void _initScrollControllers() {
-    if (gridPaginationScrollController.isInitialised) {
-      gridPaginationScrollController.dispose();
-      gridPaginationScrollController = SmartPaginationScrollController();
+    if (productPaginationScrollController.isInitialised) {
+      productPaginationScrollController.dispose();
+      productPaginationScrollController = SmartPaginationScrollController();
     }
-    gridPaginationScrollController.init(
-      isSecondaryView: true,
-      loadAction: (int currentPage) async {
-        add(ExhibitionListingLoadMoreEvent(currentPage));
-      },
-    );
-
-    if (listPaginationScrollController.isInitialised) {
-      listPaginationScrollController.dispose();
-      listPaginationScrollController = SmartPaginationScrollController();
-    }
-    listPaginationScrollController.init(
+    productPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
         add(ExhibitionListingLoadMoreEvent(currentPage));
@@ -110,8 +99,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   @override
   Future<void> close() {
-    gridPaginationScrollController.dispose();
-    listPaginationScrollController.dispose();
+    productPaginationScrollController.dispose();
     orderScrollController.dispose();
     return super.close();
   }
@@ -128,7 +116,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   static List<ExhibitionDetailsOrdersModel> _generateExhibitionOrdersList() {
     return List.generate(
-      8,
+      10,
       (index) => ExhibitionDetailsOrdersModel(
           approvedBy: "John Samanta",
           approvedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
@@ -144,9 +132,9 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   ScrollController get scrollController {
     if (currentIndex == 0) {
       if (isGrid) {
-        return gridPaginationScrollController.scrollController;
+        return productPaginationScrollController.scrollController;
       } else {
-        return listPaginationScrollController.scrollController;
+        return productPaginationScrollController.secondaryScrollController;
       }
     } else {
       return orderScrollController.scrollController;

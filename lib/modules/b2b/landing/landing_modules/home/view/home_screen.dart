@@ -339,19 +339,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          color: style.primaryColor,
-          width: context.width,
-          height: 535.h,
-        ),
-        const Positioned(
-          top: 0,
-          right: 0,
-          child: SmartImage(path: AppImages.icPrimaryBgLine),
-        ),
-        Padding(
+    return Container(
+      color: style.primaryColor,
+      width: context.width,
+      child: Stack(
+        children: [
+          const SmartImage(
+            path: AppImages.icPrimaryBgLine,
+          ),
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -404,8 +400,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                 )
               ],
-            ))
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

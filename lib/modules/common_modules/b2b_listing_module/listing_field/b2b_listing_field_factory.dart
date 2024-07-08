@@ -63,7 +63,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.subJewelleryType.tr, value: model.strSubJewelleryType),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignTo.tr, value: model.strAssignTo, imageUrl: model.strAssignToImageUrl),
+          B2BItemField(label: APPStrings.assignedTo.tr, value: model.strAssignTo, imageUrl: model.strAssignToImageUrl),
           B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy),
         ];
 
@@ -183,8 +183,8 @@ class B2BListingFieldFactory {
       case B2BListingType.retailerOrderListingJewelleryType:
         return [
           B2BItemField(label: APPStrings.orderId.tr, value: model.strOrderId),
-          B2BItemField(label: APPStrings.orderStatus.tr, orderStatus: model.status),
-          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName),
+          B2BItemField(label: APPStrings.orderStatus.tr, orderStatus: model.orderStatus),
+          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerNameImageUrl),
           B2BItemField(label: APPStrings.mobileNumber.tr, value: model.strMobileNumber),
           B2BItemField(label: APPStrings.items.tr, value: model.strItems),
           B2BItemField(label: APPStrings.quality.tr, value: model.strQuality),
@@ -219,7 +219,7 @@ class B2BListingFieldFactory {
         return [
           B2BItemField(label: APPStrings.orderId.tr, value: model.strOrderId),
           B2BItemField(label: APPStrings.orderStatus.tr, orderStatus: model.status),
-          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerImageUrl),
+          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerNameImageUrl),
           B2BItemField(label: APPStrings.mobileNumber.tr, value: model.strMobileNumber),
           B2BItemField(label: APPStrings.items.tr, value: model.strItems),
           B2BItemField(label: APPStrings.quality.tr, value: model.strQuality),
