@@ -514,6 +514,7 @@ class APPStrings {
   static const String conceptName = 'concept_name';
   static const String status = 'status';
   static const String assignTo = 'assign_to';
+  static const String assignedTo = 'assigned_to';
   static const String market = 'market';
   static const String createdOn = 'created_on';
 

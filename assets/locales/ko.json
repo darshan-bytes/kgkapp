@@ -620,5 +620,6 @@
   "remove_product_desc": "Selected product will be removed from the watchlist",
   "explore_chronological_record_your_user_activities": "Explore a chronological record of your user activities.",
   "module": "Module",
-  "date_range": "Date range"
+  "date_range": "Date range",
+  "assigned_to": "Assigned to"
 }
