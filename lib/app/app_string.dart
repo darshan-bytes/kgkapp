@@ -768,6 +768,11 @@ class APPStrings {
   static const String designLibrary = 'design_library';
   static const String noDesignLibraryFound = 'no_design_library_found';
 
+  // Activity Log
+  static const String exploreChronologicalRecordYourUserActivities = 'explore_chronological_record_your_user_activities';
+  static const String module = 'module';
+  static const String dateRange = 'date_range';
+
   //Watchlist Detail
   static const String noOfProducts = 'no_of_products';
   static const String edit = 'edit';
