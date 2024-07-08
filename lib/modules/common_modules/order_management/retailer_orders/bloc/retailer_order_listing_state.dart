@@ -5,52 +5,57 @@ sealed class RetailerOrderListingState extends Equatable {
 }
 
 final class RetailerOrderListingInitialState extends RetailerOrderListingState {
-  @override
-  List<Object> get props => [];
-}
-
-final class RetailerOrderListReloadState extends RetailerOrderListingState {
-  const RetailerOrderListReloadState();
+  const RetailerOrderListingInitialState();
 
   @override
   List<Object> get props => [];
 }
 
-final class RetailerOrderListingLoadedState extends RetailerOrderListingState {
-  const RetailerOrderListingLoadedState();
+final class RetailerOrderListingReloadState extends RetailerOrderListingState {
+  const RetailerOrderListingReloadState();
 
   @override
   List<Object> get props => [];
 }
 
-final class RetailerOrderListLoadingMoreState extends RetailerOrderListingState {
-  const RetailerOrderListLoadingMoreState();
+final class ChangeRetailerOrderStoneTypeState extends RetailerOrderListingState {
+  final OrderStoneTypeModel selectedStoneType;
+
+  const ChangeRetailerOrderStoneTypeState(this.selectedStoneType);
+
+  @override
+  List<Object> get props => [selectedStoneType];
+}
+
+final class ChangeRetailerOrderTabsState extends RetailerOrderListingState {
+  const ChangeRetailerOrderTabsState();
 
   @override
   List<Object> get props => [];
 }
 
-final class RetailerOrderListLoadedMoreState extends RetailerOrderListingState {
+class RetailerOrderListingLoadingMoreState extends RetailerOrderListingState {
+  final RetailerOrdersTab listType;
+
+  const RetailerOrderListingLoadingMoreState(this.listType);
+
+  @override
+  List<Object> get props => [listType];
+}
+
+class RetailerOrderListingListLoadedState extends RetailerOrderListingState {
+  const RetailerOrderListingListLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RetailerOrderListingListLoadedMoreState extends RetailerOrderListingState {
   final int currentPage;
+  final RetailerOrdersTab listType;
 
-  const RetailerOrderListLoadedMoreState(this.currentPage);
-
-  @override
-  List<Object> get props => [currentPage];
-}
-
-final class RetailerChangeOrdersTypeState extends RetailerOrderListingState {
-  final RetailerOrderModel selectedOrderType;
-
-  const RetailerChangeOrdersTypeState(this.selectedOrderType);
+  const RetailerOrderListingListLoadedMoreState(this.currentPage, this.listType);
 
   @override
-  List<Object> get props => [selectedOrderType];
-}
-
-final class RetailerChangeOrderTabsState extends RetailerOrderListingState {
-  const RetailerChangeOrderTabsState();
-
-  @override
-  List<Object> get props => [];
+  List<Object> get props => [currentPage, listType];
 }

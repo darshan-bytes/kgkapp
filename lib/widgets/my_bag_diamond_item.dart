@@ -147,6 +147,7 @@ class MyBagDiamondItem extends StatelessWidget {
                   width: 56.w,
                   child: SmartTextField(
                     height: 32.h,
+                    cursorHeight: 16.h,
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                     isEnabled: true,
                     controller: TextEditingController(text: value),

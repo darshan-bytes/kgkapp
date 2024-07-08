@@ -4,8 +4,8 @@ sealed class OrdersState extends Equatable {
   const OrdersState();
 }
 
-final class OrdersInitial extends OrdersState {
-  const OrdersInitial();
+final class OrdersInitialState extends OrdersState {
+  const OrdersInitialState();
 
   @override
   List<Object> get props => [];
@@ -27,30 +27,35 @@ final class ChangeOrdersStoneTypeState extends OrdersState {
   List<Object> get props => [selectedStoneType];
 }
 
-final class FilterDiamondOrdersState extends OrdersState {
-  const FilterDiamondOrdersState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class FilterGemstoneOrdersState extends OrdersState {
-  const FilterGemstoneOrdersState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class FilterJewelleryOrdersState extends OrdersState {
-  const FilterJewelleryOrdersState();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class ChangeOrderTabsState extends OrdersState {
   const ChangeOrderTabsState();
 
   @override
   List<Object> get props => [];
+}
+
+class OrdersLoadingMoreState extends OrdersState {
+  final MyOrdersTab listType;
+
+  const OrdersLoadingMoreState(this.listType);
+
+  @override
+  List<Object> get props => [listType];
+}
+
+class OrdersListLoadedState extends OrdersState {
+  const OrdersListLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class OrdersListLoadedMoreState extends OrdersState {
+  final int currentPage;
+  final MyOrdersTab listType;
+
+  const OrdersListLoadedMoreState(this.currentPage, this.listType);
+
+  @override
+  List<Object> get props => [currentPage, listType];
 }

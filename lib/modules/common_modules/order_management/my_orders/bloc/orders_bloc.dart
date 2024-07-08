@@ -4,6 +4,12 @@ part 'orders_event.dart';
 
 part 'orders_state.dart';
 
+enum MyOrdersTab {
+  diamond,
+  gemstone,
+  jewellery,
+}
+
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -16,6 +22,10 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   OrderStoneTypeModel? selectedStoneType;
 
+  SmartPaginationScrollController diamondScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController gemstoneScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController jewelleryScrollController = SmartPaginationScrollController();
+
   // Tabs
   final List<Widget> tabs = <Widget>[
     Tab(text: APPStrings.diamond.tr),
@@ -24,14 +34,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ];
 
   // Orders lists
-  List<MyOrderDetailsModel> filteredDiamondOrdersList = _generateDiamondOrdersList();
-  List<MyOrderDetailsModel> originalDiamondOrdersList = _generateDiamondOrdersList();
-
-  List<MyOrderDetailsModel> filteredGemstoneOrdersList = _generateGemstoneOrdersList();
-  List<MyOrderDetailsModel> originalGemstoneOrdersList = _generateGemstoneOrdersList();
-
-  List<MyOrderDetailsModel> filteredJewelleryOrdersList = _generateJewelleryOrdersList();
-  List<MyOrderDetailsModel> originalJewelleryOrdersList = _generateJewelleryOrdersList();
+  List<MyOrderDetailsModel> diamondList = [];
+  List<MyOrderDetailsModel> gemstoneList = [];
+  List<MyOrderDetailsModel> jewelleryList = [];
 
   // Stone types
   final List<OrderStoneTypeModel> arrStoneType = [
@@ -42,12 +47,10 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     const OrderStoneTypeModel(name: "Jewellery"),
   ];
 
-  OrdersBloc() : super(const OrdersInitial()) {
+  OrdersBloc() : super(const OrdersInitialState()) {
     on<OrdersInitialEvent>(_onInitOrdersEvent);
     on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
-    on<FilterDiamondOrdersEvent>(_onFilterDiamondOrdersEvent);
-    on<FilterGemstoneOrdersEvent>(_onFilterGemstoneOrdersEvent);
-    on<FilterJewelleryOrdersEvent>(_onFilterJewelleryOrdersEvent);
+    on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<ChangeOrderTabsEvent>(_onChangeTabEvent);
   }
 
@@ -55,7 +58,33 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     emit(const OrdersReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     clearData();
-    emit(const OrdersInitial());
+    diamondList = _generateDiamondOrdersList();
+    gemstoneList = _generateGemstoneOrdersList();
+    jewelleryList = _generateJewelleryOrdersList();
+
+    if (diamondScrollController.isInitialised) {
+      diamondScrollController.dispose();
+      diamondScrollController = SmartPaginationScrollController();
+    }
+    diamondScrollController.init(
+      loadAction: (int currentPage) async {
+        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.diamond));
+      },
+    );
+
+    gemstoneScrollController.init(
+      loadAction: (int currentPage) async {
+        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.gemstone));
+      },
+    );
+
+    jewelleryScrollController.init(
+      loadAction: (int currentPage) async {
+        add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.jewellery));
+      },
+    );
+
+    emit(const OrdersListLoadedState());
   }
 
   void _onChangeStoneType(ChangeOrdersStoneTypeEvent event, Emitter<OrdersState> emit) {
@@ -66,68 +95,62 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     }
   }
 
-  void _onFilterDiamondOrdersEvent(FilterDiamondOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
-    if (diamondSearchController.text.isNotEmpty) {
-      filteredDiamondOrdersList = originalDiamondOrdersList
-          .where(
-              (MyOrderDetailsModel element) => (element.orderId ?? '').toLowerCase().contains(diamondSearchController.text.toLowerCase()))
-          .toList();
-    } else {
-      filteredDiamondOrdersList = originalDiamondOrdersList;
-    }
-    emit(const FilterDiamondOrdersState());
-  }
-
-  void _onFilterGemstoneOrdersEvent(FilterGemstoneOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
-    if (gemstoneSearchController.text.isNotEmpty) {
-      filteredGemstoneOrdersList = originalGemstoneOrdersList
-          .where(
-              (MyOrderDetailsModel element) => (element.orderId ?? '').toLowerCase().contains(gemstoneSearchController.text.toLowerCase()))
-          .toList();
-    } else {
-      filteredGemstoneOrdersList = originalGemstoneOrdersList;
-    }
-    emit(const FilterGemstoneOrdersState());
-  }
-
-  void _onFilterJewelleryOrdersEvent(FilterJewelleryOrdersEvent event, Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
-    if (jewellerySearchController.text.isNotEmpty) {
-      filteredJewelleryOrdersList = originalJewelleryOrdersList
-          .where(
-              (MyOrderDetailsModel element) => (element.orderId ?? '').toLowerCase().contains(jewellerySearchController.text.toLowerCase()))
-          .toList();
-    } else {
-      filteredJewelleryOrdersList = originalJewelleryOrdersList;
-    }
-    emit(const FilterJewelleryOrdersState());
-  }
-
   void _onChangeTabEvent(ChangeOrderTabsEvent event, Emitter<OrdersState> emit) {
     emit(const OrdersReloadState());
     switch (tabController.index) {
       case 0:
         gemstoneSearchController.clear();
         jewellerySearchController.clear();
-        filteredGemstoneOrdersList = originalGemstoneOrdersList;
-        filteredJewelleryOrdersList = originalJewelleryOrdersList;
         break;
       case 1:
         jewellerySearchController.clear();
         diamondSearchController.clear();
-        filteredDiamondOrdersList = originalDiamondOrdersList;
-        filteredJewelleryOrdersList = originalJewelleryOrdersList;
         break;
       case 2:
         diamondSearchController.clear();
         gemstoneSearchController.clear();
-        filteredDiamondOrdersList = originalDiamondOrdersList;
-        filteredGemstoneOrdersList = originalGemstoneOrdersList;
         break;
     }
     emit(const ChangeOrderTabsState());
+  }
+
+  Future<void> _onListingLoadMoreEvent(MyOrderListingLoadMoreEvent event, Emitter<OrdersState> emit) async {
+    emit(OrdersLoadingMoreState(event.listType));
+    await Future.delayed(const Duration(seconds: 2));
+
+    List<MyOrderDetailsModel> newDataList = [];
+
+    switch (event.listType) {
+      case MyOrdersTab.diamond:
+        newDataList = _generateDiamondOrdersList();
+        diamondList.addAll(newDataList);
+        diamondScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case MyOrdersTab.gemstone:
+        newDataList = _generateGemstoneOrdersList();
+        gemstoneList.addAll(newDataList);
+        gemstoneScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+      case MyOrdersTab.jewellery:
+        newDataList = _generateJewelleryOrdersList();
+        jewelleryList.addAll(newDataList);
+        jewelleryScrollController.isPageLoaded.complete(event.currentPage == 3);
+        break;
+    }
+
+    emit(OrdersListLoadedMoreState(event.currentPage + 1, event.listType));
+  }
+
+  SmartPaginationScrollController get currentScrollController {
+    final MyOrdersTab currentTab = MyOrdersTab.values[tabController.index];
+    switch (currentTab) {
+      case MyOrdersTab.diamond:
+        return diamondScrollController;
+      case MyOrdersTab.gemstone:
+        return gemstoneScrollController;
+      case MyOrdersTab.jewellery:
+        return jewelleryScrollController;
+    }
   }
 
   void clearData() {
@@ -136,9 +159,14 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     jewellerySearchController.clear();
     tabController.animateTo(0);
     selectedStoneType = null;
-    filteredDiamondOrdersList = originalDiamondOrdersList;
-    filteredGemstoneOrdersList = originalGemstoneOrdersList;
-    filteredJewelleryOrdersList = originalJewelleryOrdersList;
+  }
+
+  @override
+  Future<void> close() {
+    diamondScrollController.dispose();
+    gemstoneScrollController.dispose();
+    jewelleryScrollController.dispose();
+    return super.close();
   }
 
   // Helper methods

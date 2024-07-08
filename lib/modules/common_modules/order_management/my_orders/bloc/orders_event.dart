@@ -22,30 +22,19 @@ final class ChangeOrdersStoneTypeEvent extends OrdersEvent {
   List<Object> get props => [selectedStoneType];
 }
 
-final class FilterDiamondOrdersEvent extends OrdersEvent {
-  const FilterDiamondOrdersEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class FilterGemstoneOrdersEvent extends OrdersEvent {
-  const FilterGemstoneOrdersEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class FilterJewelleryOrdersEvent extends OrdersEvent {
-  const FilterJewelleryOrdersEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class ChangeOrderTabsEvent extends OrdersEvent {
   const ChangeOrderTabsEvent();
 
   @override
   List<Object> get props => [];
+}
+
+class MyOrderListingLoadMoreEvent extends OrdersEvent {
+  final int currentPage;
+  final MyOrdersTab listType;
+
+  const MyOrderListingLoadMoreEvent({required this.currentPage, required this.listType});
+
+  @override
+  List<Object> get props => [currentPage, listType];
 }

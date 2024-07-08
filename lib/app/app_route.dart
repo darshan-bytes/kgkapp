@@ -671,7 +671,7 @@ class AppRoutes {
       case retailerOrderListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<RetailerOrderListingBloc>(context).add(InitialRetailerOrderListingEvent(context: context));
+            BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
             return const RetailerOrderListingScreen();
           },
           settings: settings,
