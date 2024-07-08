@@ -782,4 +782,7 @@ class APPStrings {
   static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
   static const String removeProduct = 'remove_product';
   static const String removeProductDesc = 'remove_product_desc';
+
+  // Order Management
+  static const String noOrderListFound = 'no_order_list_found';
 }

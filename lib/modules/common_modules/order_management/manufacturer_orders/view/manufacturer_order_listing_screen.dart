@@ -44,6 +44,11 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
 
   Widget _buildSearchTextField(ManufacturerOrderListingBloc bloc, BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
+    final BorderRadius borderRadius = BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r));
+    final OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(color: style.dividerColor),
+      borderRadius: borderRadius,
+    );
     return Row(
       children: [
         Expanded(
@@ -56,23 +61,11 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 24.w),
                   hintText: APPStrings.searchOrder.tr,
                   controller: bloc.manufacturerOrderSearchController,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  customFocusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: style.dividerColor),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  ),
-                  customDisabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: style.dividerColor),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  ),
-                  customErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: style.dividerColor),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  ),
-                  customFocusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: style.dividerColor),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-                  ),
+                  borderRadius: borderRadius,
+                  customFocusedBorder: outlineInputBorder,
+                  customDisabledBorder: outlineInputBorder,
+                  customErrorBorder: outlineInputBorder,
+                  customFocusedErrorBorder: outlineInputBorder,
                 ),
               ),
               _buildOrderDropDownField(bloc, style),
@@ -116,7 +109,9 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
                         type: B2BListingType.manufacturerOrderListingType,
                         listingItemModel: orderItem,
                         onTapMenuButton: () {},
-                        onTap: () {},
+                        onTap: () {
+                          context.pushNamed(AppRoutes.manufacturerOrderDetailsPage);
+                        },
                       ),
                       if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)
                         const SmartCircularProgressIndicator(),
@@ -160,21 +155,15 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ManufacturerOrderListingBloc bloc, BuildContext context) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {
-          Utils.showSmartModalBottomSheet(
+    return SafeArea(child: FilterBottomActionBar(
+      onFilterTap: () {
+        Utils.showSmartModalBottomSheet(
             context: context,
             builder: (context) => FilterScreen(
               onApply: () {},
             ),
           );
         },
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
-    );
+    ));
   }
 }

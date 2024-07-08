@@ -365,3 +365,6 @@ export 'package:kgk/modules/common_modules/order_management/retailer_orders/view
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_gemstone_tab_view.dart';
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_jewellery_tab_view.dart';
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_order_listing_screen.dart';
+export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/bloc/manufacturer_order_details_bloc.dart';
+export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/view/manufacturer_order_details_screen.dart';
+export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/model/manufacturer_order_details_model.dart';
