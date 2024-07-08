@@ -159,6 +159,103 @@ class OrderDetailScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
             ProductDetails product = orderDetailBloc.filteredOrdersDetailsList[index];
+            switch (orderDetailBloc.screenIdentifier) {
+              case ScreenIdentifier.orderDetailsForMyOrder:
+                return CartProductItem(
+                  boxHeight: 72.w,
+                  boxWidth: 72.w,
+                  isCheckboxShow: false,
+                  selectedQuality: product.productQuality,
+                  selectedQuantity: product.productQuantity,
+                  onRemoveTap: () {
+                    orderDetailBloc.add(OrderDetailRemoveProductEvent(index: index));
+                  },
+                  onMoveToWishListTap: () {},
+                  productDetails: product,
+                  qualityOptionsList: product.cartProductQuality ?? [],
+                  quantityOptionsList: product.cartProductQuantity ?? [],
+                  onQualityChanged: (CartProductQuality value) {
+                    orderDetailBloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
+                  },
+                  onQuantityChanged: (CartProductQuantity value) {
+                    orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
+                  },
+                  priceTextStyle: style.priceTextStyle,
+                );
+
+              case ScreenIdentifier.orderDetailsForRetailer:
+                ProductInfoItem(
+                    onTap360View: () => printWrapped("onTap360View"),
+                    onTapDNA: () => printWrapped("onTapDNA"),
+                    onTapCertificate: () => printWrapped("onTapCertificate"),
+                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                    onTapUSA: () => printWrapped("onTapUSA"),
+                    onTapMenuButton: () {
+                      Utils.showSmartModalBottomSheet(
+                        context: context,
+                        builder: (context) => const ProductMenuBottomSheet(),
+                      );
+                    },
+                    isSelectedBackground: (index % 2 != 0),
+                    onTap: () {
+                      context.pushNamed(AppRoutes.productDetailsPage,
+                          arguments: {RoutesData.isPageFor: ScreenIdentifier.orderDetailsForRetailer});
+                    },
+                    productDetails: ProductDetails(
+                      productInfoClarityChat: ProductInfoClarityChat(
+                          rapRate: "\$35,500.00",
+                          productId: "1",
+                          productName: "1.00 Cts Round Diamond",
+                          ct: "10.04",
+                          shape: "Marquise",
+                          colour: "H",
+                          clarity: "VVS1",
+                          lotNumber: "MBFG716306",
+                          certificateNumber: "230000066395",
+                          measurements: "10.18 x 8.34 x 6.14",
+                          lab: "GIA",
+                          cut: "Excellent",
+                          polish: "Excellent",
+                          symmetry: "Excellent",
+                          flourish: "O",
+                          tablePercentage: "50",
+                          depthPercentage: "50",
+                          rap: "\$24,850.00",
+                          discount: "-30.00",
+                          perCts: "\$24,850.00",
+                          amount: "\$1,24,995.50",
+                          fluorescence: '0'),
+                      productId: "1",
+                      diamond: "1.5 gram",
+                      gram: "1.5 gram",
+                      imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
+                    ));
+
+              case ScreenIdentifier.orderDetailsForManufacturer:
+                return CartProductItem(
+                  boxHeight: 72.w,
+                  boxWidth: 72.w,
+                  isCheckboxShow: false,
+                  selectedQuality: product.productQuality,
+                  selectedQuantity: product.productQuantity,
+                  onRemoveTap: () {
+                    orderDetailBloc.add(OrderDetailRemoveProductEvent(index: index));
+                  },
+                  onMoveToWishListTap: () {},
+                  productDetails: product,
+                  qualityOptionsList: product.cartProductQuality ?? [],
+                  quantityOptionsList: product.cartProductQuantity ?? [],
+                  onQualityChanged: (CartProductQuality value) {
+                    orderDetailBloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
+                  },
+                  onQuantityChanged: (CartProductQuantity value) {
+                    orderDetailBloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
+                  },
+                  priceTextStyle: style.priceTextStyle,
+                );
+              default:
+                break;
+            }
             return CartProductItem(
               boxHeight: 72.w,
               boxWidth: 72.w,

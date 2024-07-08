@@ -356,3 +356,9 @@ export 'package:kgk/modules/common_modules/order_management/manufacturer_orders/
 export 'package:kgk/modules/common_modules/order_management/manufacturer_orders/view/manufacturer_order_listing_screen.dart';
 export 'package:kgk/modules/common_modules/my_order_type_selection.dart';
 export 'package:kgk/modules/common_modules/order_management/manufacturer_orders/model/manufacturer_order_model.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/bloc/retailer_order_listing_bloc.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/model/retailer_order_model.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_diamond_tab_view.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_gemstone_tab_view.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_jewellery_tab_view.dart';
+export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_order_listing_screen.dart';

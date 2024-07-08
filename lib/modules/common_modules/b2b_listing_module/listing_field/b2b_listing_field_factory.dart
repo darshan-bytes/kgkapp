@@ -183,8 +183,8 @@ class B2BListingFieldFactory {
       case B2BListingType.retailerOrderListingJewelleryType:
         return [
           B2BItemField(label: APPStrings.orderId.tr, value: model.strOrderId),
-          B2BItemField(label: APPStrings.orderStatus.tr, orderStatus: model.status),
-          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName),
+          B2BItemField(label: APPStrings.orderStatus.tr, orderStatus: model.orderStatus),
+          B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerNameImageUrl),
           B2BItemField(label: APPStrings.mobileNumber.tr, value: model.strMobileNumber),
           B2BItemField(label: APPStrings.items.tr, value: model.strItems),
           B2BItemField(label: APPStrings.quality.tr, value: model.strQuality),
