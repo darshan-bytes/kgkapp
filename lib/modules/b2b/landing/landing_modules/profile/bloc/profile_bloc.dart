@@ -165,7 +165,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.masters.tr,
             subTitle: APPStrings.masterDataOfUserAndNewsLetter.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.userMasterListingPage);
+            }),
         ProfileListModel(
             image: AppImages.icStore,
             title: APPStrings.dashboard.tr,

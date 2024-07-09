@@ -787,4 +787,9 @@ class APPStrings {
   static const String noOrderListFound = 'no_order_list_found';
 
   static const String deliveryDate = 'delivery_date';
+
+  //User master
+  static const String userMaster = 'user_master';
+  static const String noUserFound = 'no_user_found';
+  static const String searchUser = 'search_user';
 }

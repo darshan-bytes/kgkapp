@@ -172,7 +172,7 @@ class B2BListingItem extends StatelessWidget {
       children: [
         if (field.imageUrl != null)
           Padding(
-            padding: EdgeInsets.only(right: 4.w),
+            padding: EdgeInsets.only(right: 8.w),
             child: SmartImage(
               path: field.imageUrl!,
               height: field.imageSize ?? 24.w,
