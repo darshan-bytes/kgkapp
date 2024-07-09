@@ -90,6 +90,10 @@ dependencies:
   #For Google Map
   google_maps_flutter: ^2.7.0
 
+  #For Range Sliders
+  syncfusion_flutter_sliders: ^26.1.40
+  syncfusion_flutter_core: ^26.1.40
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

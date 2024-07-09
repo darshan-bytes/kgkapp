@@ -639,7 +639,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   String? _getOrionRouteNameB2B(String? categorySubName) {
-    return defaultAction();
+    return AppRoutes.orionPage;
   }
 
   Map<RoutesData, dynamic>? _getOrionRouteArgumentsB2B(String? categorySubName) {

@@ -628,5 +628,8 @@
   "delivery_date": "Delivery Date",
   "user_master": "User Master",
   "no_user_found": "No user found",
-  "search_user": "Search user"
+  "search_user": "Search user",
+  "orion": "Orion",
+  "select_diamond_shape": "Select diamond shape",
+  "preferred_price_range": "Preferred price range"
 }

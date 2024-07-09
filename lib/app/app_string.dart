@@ -792,4 +792,9 @@ class APPStrings {
   static const String userMaster = 'user_master';
   static const String noUserFound = 'no_user_found';
   static const String searchUser = 'search_user';
+
+  //Orion
+  static const String orion = 'orion';
+  static const String selectDiamondShape = 'select_diamond_shape';
+  static const String preferredPriceRange = 'preferred_price_range';
 }

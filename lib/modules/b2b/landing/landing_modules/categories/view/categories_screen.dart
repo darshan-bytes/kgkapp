@@ -26,6 +26,7 @@ class CategoriesScreen extends StatelessWidget {
           return Container(
             margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
             child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
               itemCount: (categoriesBloc.categories.length / 3).ceil(), // Calculate the number of rows needed
               itemBuilder: (context, index) {
                 final startIndex = index * 3;
