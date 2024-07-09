@@ -39,6 +39,7 @@ class SmartTextField extends StatefulWidget {
   final TapRegionCallback? onTapOutside;
   final VoidCallback? onEditingComplete;
   final String? suffixText;
+  final String? prefixText;
   final BorderRadius? borderRadius;
   final bool isSearch;
   final InputBorder? customEnabledBorder;
@@ -49,6 +50,7 @@ class SmartTextField extends StatefulWidget {
   final GestureTapCallback? onTap;
   final double? prefixIconSize;
   final double? cursorHeight;
+  final TextAlign? textAlign;
 
   const SmartTextField({
     super.key,
@@ -96,9 +98,11 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.prefixText,
     this.onTap,
     this.prefixIconSize,
     this.cursorHeight,
+    this.textAlign,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = false;
 
@@ -148,9 +152,11 @@ class SmartTextField extends StatefulWidget {
     this.customErrorBorder,
     this.customFocusedErrorBorder,
     this.suffixText,
+    this.prefixText,
     this.onTap,
     this.prefixIconSize,
     this.cursorHeight,
+    this.textAlign,
   })  : labelText = labelText != null ? '$labelText${isRequired == true ? ' *' : ''}' : null,
         isSearch = true;
 
@@ -196,6 +202,8 @@ class SmartTextFieldState extends State<SmartTextField> {
               },
               textCapitalization: widget.textCapitalization,
               maxLength: widget.maxLength,
+              textAlign: widget.textAlign ?? TextAlign.start,
+              expands: widget.expand ?? false,
               readOnly: widget.readOnly,
               maxLines: widget.maxLines ?? 1,
               focusNode: widget.focusNode,
@@ -205,6 +213,9 @@ class SmartTextFieldState extends State<SmartTextField> {
               cursorHeight: widget.cursorHeight,
               decoration: InputDecoration(
                   suffixText: widget.suffixText,
+                  prefixText: widget.prefixText,
+                  prefixStyle: style.textStyle.merge(widget.style),
+                  suffixStyle: style.textStyle.merge(widget.style),
                   errorMaxLines: 6,
                   counterText: '',
                   filled: true,

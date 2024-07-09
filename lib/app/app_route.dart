@@ -73,6 +73,7 @@ class AppRoutes {
   static const retailerOrderListingPage = '/retailerOrderListingPage';
   static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
   static const userMasterListingPage = '/userMasterListingPage';
+  static const orionPage = '/orionPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -649,6 +650,15 @@ class AppRoutes {
             create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
             child: const WatchlistDetailsScreen(),
           ),
+          settings: settings,
+        );
+
+      case orionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+            return const OrionScreen();
+          },
           settings: settings,
         );
 

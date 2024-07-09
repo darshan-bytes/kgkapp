@@ -374,3 +374,7 @@ export 'package:kgk/modules/common_modules/order_management/order_details/view/o
 export 'package:kgk/modules/b2b/user_master/model/user_location_model.dart';
 export 'package:kgk/modules/b2b/user_master/bloc/user_master_listing_bloc.dart';
 export 'package:kgk/modules/b2b/user_master/view/user_master_listing_screen.dart';
+export 'package:kgk/modules/b2b/orion/bloc/orion_bloc.dart';
+export 'package:kgk/modules/b2b/orion/view/orion_screen.dart';
+export 'package:syncfusion_flutter_sliders/sliders.dart';
+export 'package:kgk/modules/b2b/orion/model/orion_diamond_properties_data_model.dart';
