@@ -371,6 +371,14 @@ export 'package:kgk/modules/common_modules/order_management/manufacturer_order_d
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_list_builder.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/model/order_details_product_model.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/view/order_details_product_item.dart';
+export 'package:kgk/modules/b2b/messages/bloc/messages_bloc.dart';
+export 'package:kgk/modules/b2b/messages/view/messages_screen.dart';
+export 'package:kgk/modules/b2b/messages/view/favourite_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/messages/view/inbox_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/messages/view/sent_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/messages/view/trash_tabview_tile_list_tile.dart';
+export 'package:kgk/modules/b2b/messages/view/draft_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/messages/model/messages_model.dart';
 export 'package:kgk/modules/b2b/user_master/model/user_location_model.dart';
 export 'package:kgk/modules/b2b/user_master/bloc/user_master_listing_bloc.dart';
 export 'package:kgk/modules/b2b/user_master/view/user_master_listing_screen.dart';

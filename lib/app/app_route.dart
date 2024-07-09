@@ -74,6 +74,7 @@ class AppRoutes {
   static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
   static const userMasterListingPage = '/userMasterListingPage';
   static const orionPage = '/orionPage';
+  static const messagesPage = '/messagesPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -704,6 +705,17 @@ class AppRoutes {
           builder: (context) {
             BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
             return const UserMasterListingScreen();
+          },
+          settings: settings,
+        );
+
+      case messagesPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MessagesBloc>(
+              create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
+              child: const MessagesScreen(),
+            );
           },
           settings: settings,
         );

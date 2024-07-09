@@ -54,6 +54,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
           controller: bloc.searchDesignersController,
           labelText: APPStrings.enterDesignerName.tr,
           hintText: APPStrings.enterDesignerName.tr,
+          onTapOutside: (p) {},
           suffixIcon: SmartImage(
             path: AppImages.icSearchThin,
             padding: EdgeInsets.all(12.w),

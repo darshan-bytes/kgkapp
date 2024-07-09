@@ -1153,4 +1153,13 @@ class LightModeTheme extends AppTheme {
         selectedPropertyStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         propertyStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
       );
+
+  @override
+  MessagesStyle get messagesStyle => MessagesStyle(
+        primaryColor: colors.primary,
+        color8C8C8C: colors.color8C8C8C,
+        userNameStyle: interRegularTextStyle,
+        messagesStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        timeAgoStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      );
 }

@@ -229,6 +229,8 @@ abstract class AppTheme {
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 
   OrionStyle get orionStyle;
+
+  MessagesStyle get messagesStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2137,5 +2139,21 @@ class OrionStyle {
     required this.propertySelectionSubtitleStyle,
     required this.selectedPropertyStyle,
     required this.propertyStyle,
+  });
+}
+
+class MessagesStyle {
+  final TextStyle userNameStyle;
+  final TextStyle timeAgoStyle;
+  final TextStyle messagesStyle;
+  final Color primaryColor;
+  final Color color8C8C8C;
+
+  MessagesStyle({
+    required this.userNameStyle,
+    required this.timeAgoStyle,
+    required this.messagesStyle,
+    required this.primaryColor,
+    required this.color8C8C8C,
   });
 }
