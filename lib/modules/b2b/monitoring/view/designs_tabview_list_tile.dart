@@ -17,6 +17,7 @@ class DesignsTabviewListTile extends StatelessWidget {
               controller: monitoringBloc.designSearchController,
               hintText: APPStrings.searchX.tr.interpolate([APPStrings.designs.tr.toLowerCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
+              onTapOutside: (p) {},
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
                 padding: EdgeInsets.all(14.w),

@@ -785,7 +785,6 @@ class APPStrings {
 
   // Order Management
   static const String noOrderListFound = 'no_order_list_found';
-
   static const String deliveryDate = 'delivery_date';
 
   //User master
@@ -797,4 +796,12 @@ class APPStrings {
   static const String orion = 'orion';
   static const String selectDiamondShape = 'select_diamond_shape';
   static const String preferredPriceRange = 'preferred_price_range';
+
+  // Messages
+  static const String noMessageFound = 'no_message_found';
+  static const String inbox = 'inbox';
+  static const String sent = 'sent';
+  static const String draft = 'draft';
+  static const String trash = 'trash';
+  static const String favourite = 'favourite';
 }
