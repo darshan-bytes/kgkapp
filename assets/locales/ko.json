@@ -623,5 +623,8 @@
   "date_range": "Date range",
   "assigned_to": "Assigned to",
   "no_order_list_found": "No Order list found",
-  "delivery_date": "Delivery Date"
+  "delivery_date": "Delivery Date",
+  "user_master": "User Master",
+  "no_user_found": "No user found",
+  "search_user": "Search user"
 }
