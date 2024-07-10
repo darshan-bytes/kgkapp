@@ -632,10 +632,11 @@
   "preferred_price_range": "Preferred price range",
   "inbox": "Inbox",
   "sent": "Sent",
-  "draft": "Draft",
   "trash": "Trash",
   "favourite": "Favourite",
   "no_message_found": "No message found",
+  "to_X": "To {#}",
+  "me": "Me",
   "orders": "Orders",
   "products": "Products"
 }

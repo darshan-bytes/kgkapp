@@ -58,6 +58,9 @@ class FaqScreen extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, faqIndex) {
+            if (faqBloc.faq[index].faqs == null && faqBloc.faq[index].faqs![faqIndex].question.isNullOrEmpty) {
+              return const SizedBox.shrink();
+            }
             final FAQ faq = faqBloc.faq[index].faqs![faqIndex];
             return SmartExpansionTile(
               title: SmartText(

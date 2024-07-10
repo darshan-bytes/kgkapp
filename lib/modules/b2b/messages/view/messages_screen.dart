@@ -25,7 +25,7 @@ class MessagesScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 17.0.w),
                 isScrollable: true,
                 tabAlignment: TabAlignment.center,
-                labelPadding: EdgeInsets.symmetric(horizontal: 12.5.w),
+                labelPadding: EdgeInsets.symmetric(horizontal: 20.5.w),
                 onTapTab: (int index) {
                   bloc.add(MessagesTabChangeEvent(index: index));
                 },

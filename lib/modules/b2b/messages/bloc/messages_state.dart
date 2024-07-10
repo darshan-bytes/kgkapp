@@ -58,3 +58,12 @@ final class MessagesOnTabChangedState extends MessagesState {
   @override
   List<Object> get props => [];
 }
+
+final class MessagesFavouriteToggleState extends MessagesState {
+  final String id;
+
+  const MessagesFavouriteToggleState({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}

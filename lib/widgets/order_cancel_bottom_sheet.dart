@@ -98,7 +98,8 @@ class OrderCancelBottomSheet extends StatelessWidget {
                             height: 10.h,
                           ),
                           BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                            buildWhen: (previous, current) => current is OrderCancellationReasonsChangeState,
+                            buildWhen: (previous, current) =>
+                                current is OrderCancellationReasonsChangeState || current is OrderDetailsLoadedState,
                             builder: (context, state) {
                               return SmartDropDown<CancellationReasonModel>(
                                 selectedItem: orderDetailBloc.selectedReason,
