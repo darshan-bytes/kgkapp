@@ -91,7 +91,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.newsFeed.tr,
             subTitle: APPStrings.createAndSeeNewsFeeds.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.newsletterPage);
+            }),
         ProfileListModel(
             image: AppImages.icStore,
             title: APPStrings.findAStore.tr,

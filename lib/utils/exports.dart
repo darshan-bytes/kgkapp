@@ -371,3 +371,9 @@ export 'package:kgk/modules/common_modules/order_management/manufacturer_order_d
 export 'package:kgk/modules/common_modules/order_management/retailer_orders/view/retailer_list_builder.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/model/order_details_product_model.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/view/order_details_product_item.dart';
+export 'package:kgk/modules/b2b/newsletter/bloc/newsletter_bloc.dart';
+export 'package:kgk/modules/b2b/newsletter/view/newsletter_categories_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/newsletter/view/newsletter_subscribers_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/newsletter/view/newsletter_template_tabview_list_tile.dart';
+export 'package:kgk/modules/b2b/newsletter/view/newsletter_screen.dart';
+export 'package:kgk/modules/b2b/newsletter/model/template_list_model.dart';

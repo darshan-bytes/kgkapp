@@ -623,5 +623,11 @@
   "date_range": "Date range",
   "assigned_to": "Assigned to",
   "no_order_list_found": "No Order list found",
-  "delivery_date": "Delivery Date"
+  "delivery_date": "Delivery Date",
+  "template": "Template",
+  "subscribers": "Subscribers",
+  "newsletter": "Newsletter",
+  "search_subscribers": "Search subscribers",
+  "search_category": "Search category",
+  "search_template": "Search template"
 }

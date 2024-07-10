@@ -1,18 +1,18 @@
 import 'package:kgk/kgk.dart';
 
-class RetailerOrderListingScreen extends StatelessWidget {
-  const RetailerOrderListingScreen({super.key});
+class NewsletterScreen extends StatelessWidget {
+  const NewsletterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final RetailerOrderListingBloc retailerOrderListingBloc = BlocProvider.of<RetailerOrderListingBloc>(context);
+    final NewsletterBloc bloc = BlocProvider.of<NewsletterBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
-        title: APPStrings.orderManagement.tr,
+        title: APPStrings.newsletter.tr,
         onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(retailerOrderListingBloc),
+      bottomNavigationBar: _buildBottomNavigationBar(bloc),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.0.w),
@@ -21,14 +21,16 @@ class RetailerOrderListingScreen extends StatelessWidget {
               SizedBox(height: 17.0.h),
               Expanded(
                 child: SmartTabBar(
-                  length: retailerOrderListingBloc.tabs.length,
+                  labelPadding: EdgeInsets.zero,
+                  indicatorHeight: 4.0.h,
+                  length: bloc.tabs.length,
                   onTabInitialized: (tabController) {
                     // Here TabController is initialized
-                    retailerOrderListingBloc.tabController = tabController;
+                    bloc.tabController = tabController;
                   },
-                  onTapTab: (int index) => retailerOrderListingBloc.add(const ChangeRetailerOrderTabsEvent()),
-                  tabs: retailerOrderListingBloc.tabs,
-                  tabBarView: _buildTabBarView(retailerOrderListingBloc),
+                  onTapTab: (int index) => bloc.add(const ChangeNewsletterTabsEvent()),
+                  tabs: bloc.tabs,
+                  tabBarView: _buildTabBarView(bloc),
                 ),
               ),
             ],
@@ -38,15 +40,15 @@ class RetailerOrderListingScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTabBarView(RetailerOrderListingBloc retailerOrderListingBloc) {
+  List<Widget> _buildTabBarView(NewsletterBloc bloc) {
     return [
-      RetailerDiamondTabView(retailerOrderListingBloc: retailerOrderListingBloc),
-      RetailerGemstoneTabView(retailerOrderListingBloc: retailerOrderListingBloc),
-      RetailerJewelleryTabView(retailerOrderListingBloc: retailerOrderListingBloc),
+      NewsletterTemplateTabView(bloc: bloc),
+      NewsletterCategoriesTabView(bloc: bloc),
+      NewsletterSubscriberTabView(bloc: bloc),
     ];
   }
 
-  Widget _buildBottomNavigationBar(RetailerOrderListingBloc retailerOrderListingBloc) {
+  Widget _buildBottomNavigationBar(NewsletterBloc bloc) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,

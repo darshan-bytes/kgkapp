@@ -787,4 +787,13 @@ class APPStrings {
   static const String noOrderListFound = 'no_order_list_found';
 
   static const String deliveryDate = 'delivery_date';
+
+  // Newsletter
+  static const String newsletter = 'newsletter';
+  static const String template = "template";
+  static const String subscribers = "subscribers";
+
+  static const String searchSubscribers = 'search_subscribers';
+  static const String searchCategory = "search_category";
+  static const String searchTemplate = "search_template";
 }
