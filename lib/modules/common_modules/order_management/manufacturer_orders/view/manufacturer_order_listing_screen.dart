@@ -14,9 +14,14 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: bloc.paginationScrollController.canScrollToTop,
-        onTap: bloc.paginationScrollController.scrollToTop,
+      floatingActionButton: BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
+        buildWhen: (previous, current) => current is ManufacturerOrderListingLoadedState,
+        builder: (context, state) {
+          return ScrollToTopFAB(
+            canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+            onTap: bloc.paginationScrollController.scrollToTop,
+          );
+        },
       ),
       body: SafeArea(
         child: Padding(
@@ -158,12 +163,12 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
     return SafeArea(child: FilterBottomActionBar(
       onFilterTap: () {
         Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
+          context: context,
+          builder: (context) => FilterScreen(
+            onApply: () {},
+          ),
+        );
+      },
     ));
   }
 }
