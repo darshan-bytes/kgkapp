@@ -751,6 +751,7 @@ class LightModeTheme extends AppTheme {
   SmartTileLineStepperStyle get smartTileLineStepperStyle => SmartTileLineStepperStyle(
         completedIndicatorColor: colors.color50B83C,
         upcomingIndicatorColor: colors.color8C8C8C,
+        upcomingColor: colors.color4885A3,
         titleStyle: interSemiBoldTextStyle,
         subtitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       );
@@ -1165,4 +1166,26 @@ class LightModeTheme extends AppTheme {
         messageDetailTitleStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
         messageDetailToUserNameStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
       );
+
+  @override
+  ReturnOrderStyle get returnOrderStyle => ReturnOrderStyle(
+        orderInfoBackgroundColor: colors.colorF7F9FA,
+        crossColor: colors.color8C8C8C,
+        whiteColor: colors.white,
+        titleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp),
+        orderIdStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        imageSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        imageTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        quantityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        cancelReasonTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
+      );
+
+  @override
+  ConfirmCancelPopupStyle get confirmCancelPopupStyle => ConfirmCancelPopupStyle(
+      detailBgColor: colors.colorF7F9FA,
+      whiteColor: colors.white,
+      headerTitleStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+      subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+      itemsTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      qtyTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp));
 }

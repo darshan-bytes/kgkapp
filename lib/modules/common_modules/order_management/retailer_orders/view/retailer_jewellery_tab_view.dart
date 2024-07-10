@@ -68,8 +68,10 @@ class RetailerJewelleryTabView extends StatelessWidget {
                   ordersList: retailerOrderListingBloc.jewelleryList,
                   currentListType: B2BListingType.retailerOrderListingJewelleryType,
                   onTap: (index) {
-                    context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
-                        arguments: {RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id});
+                    context.pushNamed(AppRoutes.manufacturerOrderDetailsPage, arguments: {
+                      RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id,
+                      RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
+                    });
                   },
                 );
               },

@@ -11,11 +11,17 @@ class SmartStep {
 class SmartTileLineStepper extends StatefulWidget {
   final int currentStep;
   final List<SmartStep> steps;
+  final Color? activeColor;
+  final Color? completedColor;
+  final Color? upcomingColor;
 
   const SmartTileLineStepper({
     super.key,
     required this.currentStep,
     required this.steps,
+    this.activeColor,
+    this.completedColor,
+    this.upcomingColor,
   });
 
   @override
@@ -64,6 +70,9 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
               isActive: isActive,
               isCompleted: isCompleted,
               isUpcoming: isUpcoming,
+              activeColor: widget.activeColor,
+              completedColor: widget.completedColor,
+              upcomingColor: widget.upcomingColor,
               index: index,
               showDivider: index < (widget.steps.length - 1),
               stepItem: step),
@@ -72,16 +81,20 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
     );
   }
 
-  Widget _buildSmartStep(
-      {required bool isActive,
-      required bool isCompleted,
-      required bool isUpcoming,
-      required String title,
-      required Widget content,
-      required bool showDivider,
-      required int index,
-      required SmartTileLineStepperStyle style,
-      required SmartStep stepItem}) {
+  Widget _buildSmartStep({
+    required bool isActive,
+    required bool isCompleted,
+    required bool isUpcoming,
+    required String title,
+    required Widget content,
+    required bool showDivider,
+    required int index,
+    required SmartTileLineStepperStyle style,
+    required SmartStep stepItem,
+    Color? activeColor,
+    Color? completedColor,
+    Color? upcomingColor,
+  }) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +102,8 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildIcon(isActive, isCompleted, isUpcoming, style),
+              _buildIcon(isActive, isCompleted, isUpcoming, style,
+                  activeColor: activeColor, completedColor: completedColor, upcomingColor: upcomingColor),
               if (showDivider) _buildDivider(style),
             ],
           ),

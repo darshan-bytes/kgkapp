@@ -636,5 +636,8 @@
   "favourite": "Favourite",
   "no_message_found": "No message found",
   "to_X": "To {#}",
-  "me": "Me"
+  "me": "Me",
+  "return_product": "Return Product",
+  "xReturn": "Return",
+  "im_sure": "I'm Sure"
 }

@@ -805,4 +805,8 @@ class APPStrings {
   static const String favourite = 'favourite';
   static const String toX = 'to_X';
   static const String me = 'Me';
+
+  static const String returnProduct = 'return_product';
+  static const String xReturn = 'xReturn';
+  static const String imSure = 'im_sure';
 }

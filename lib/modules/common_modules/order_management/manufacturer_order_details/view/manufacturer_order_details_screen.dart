@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kgk/kgk.dart';
 
 class ManufacturerOrderDetailsScreen extends StatelessWidget {
@@ -264,7 +266,9 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
               ),
               SmartImage(
                 path: AppImages.icMenu,
-                onTap: () {},
+                onTap: () {
+                  _showManufacturerOrderDetailPopup(context, bloc);
+                },
               ),
             ],
           ),
@@ -378,6 +382,98 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _showManufacturerOrderDetailPopup(BuildContext context, ManufacturerOrderDetailsBloc bloc) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                _showTrackBottomSheet(context, bloc);
+              }),
+              _buildPopupOption(context, text: APPStrings.orderTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                context.popAndPushNamed(AppRoutes.orderTimelinePage);
+              }),
+              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                _showCancelBottomSheet(context, bloc);
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showTrackBottomSheet(BuildContext context, ManufacturerOrderDetailsBloc bloc) {
+    context.pop();
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => BlocProvider<ManufacturerOrderDetailsBloc>(
+        create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+        child: const TrackManufacturerOrderBottomSheet(),
+      ),
+    );
+  }
+
+  void _showCancelBottomSheet(BuildContext context, ManufacturerOrderDetailsBloc bloc) {
+    context.pop();
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return BlocProvider<ManufacturerOrderDetailsBloc>(
+          create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+          child: _getCancelOrderScreen(bloc),
+        );
+      },
+    );
+  }
+
+  Widget _getCancelOrderScreen(ManufacturerOrderDetailsBloc bloc) {
+    if (bloc.screenIdentifier == ScreenIdentifier.cancelOrderForRetailer) {
+      return const RetailerOrderCancelBottomSheet();
+    } else if ((bloc.screenIdentifier == ScreenIdentifier.cancelOrderForManufacturer)) {
+      return const ConfirmCancellationBottomSheet();
+    }
+    return const RetailerOrderCancelBottomSheet();
+  }
+
+  Widget _buildPopupOption(
+    BuildContext context, {
+    required String text,
+    required TextStyle style,
+    EdgeInsets? padding,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 56.h,
+        width: context.width,
+        alignment: Alignment.centerLeft,
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        child: SmartText(text, style: style),
+      ),
     );
   }
 }

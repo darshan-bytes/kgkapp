@@ -231,6 +231,10 @@ abstract class AppTheme {
   OrionStyle get orionStyle;
 
   MessagesStyle get messagesStyle;
+
+  ReturnOrderStyle get returnOrderStyle;
+
+  ConfirmCancelPopupStyle get confirmCancelPopupStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1368,12 +1372,14 @@ class AuctionListItemStyle {
 class SmartTileLineStepperStyle {
   final Color completedIndicatorColor;
   final Color upcomingIndicatorColor;
+  final Color upcomingColor;
   final TextStyle titleStyle;
   final TextStyle subtitleStyle;
 
   SmartTileLineStepperStyle({
     required this.completedIndicatorColor,
     required this.upcomingIndicatorColor,
+    required this.upcomingColor,
     required this.titleStyle,
     required this.subtitleStyle,
   });
@@ -2161,5 +2167,46 @@ class MessagesStyle {
     required this.messageDetailTitleStyle,
     required this.messageDetailToUserNameStyle,
     required this.messageDetailFullMessageStyle,
+  });
+}
+
+class ReturnOrderStyle {
+  final Color orderInfoBackgroundColor;
+  final Color crossColor;
+  final Color whiteColor;
+  final TextStyle titleStyle;
+  final TextStyle orderIdStyle;
+  final TextStyle imageSubTitleStyle;
+  final TextStyle imageTitleStyle;
+  final TextStyle quantityStyle;
+  final TextStyle cancelReasonTitleStyle;
+
+  ReturnOrderStyle(
+      {required this.orderInfoBackgroundColor,
+      required this.crossColor,
+      required this.whiteColor,
+      required this.titleStyle,
+      required this.orderIdStyle,
+      required this.imageSubTitleStyle,
+      required this.imageTitleStyle,
+      required this.quantityStyle,
+      required this.cancelReasonTitleStyle});
+}
+
+class ConfirmCancelPopupStyle {
+  final Color detailBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle itemsTitleStyle;
+  final TextStyle qtyTitleStyle;
+
+  ConfirmCancelPopupStyle({
+    required this.detailBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.itemsTitleStyle,
+    required this.qtyTitleStyle,
   });
 }
