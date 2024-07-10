@@ -7,31 +7,13 @@ class ProductCustomizationOptions {
   List<ProductCustomizationOptionValues>? values;
   ProductCustomizationOptionValues? selectedValue;
 
-  ProductCustomizationOptions({this.id, this.name, this.type, this.values, this.selectedValue});
-
-  ProductCustomizationOptions.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    type = json['type'];
-    if (json['values'] != null) {
-      values = [];
-      json['values'].forEach((v) {
-        values?.add(ProductCustomizationOptionValues.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['type'] = type;
-    if (values != null) {
-      data['values'] = values?.map((v) => v.toJson()).toList();
-    }
-    data['selectedValue'] = selectedValue?.toJson();
-    return data;
-  }
+  ProductCustomizationOptions({
+    this.id,
+    this.name,
+    this.type,
+    this.values,
+    this.selectedValue,
+  });
 }
 
 extension ProductCustomizationOptionsExtension on ProductCustomizationOptions {
@@ -43,33 +25,25 @@ class ProductCustomizationOptionValues {
   String? id;
   String? value;
   String? image;
+  int availableProductCount;
 
   ProductCustomizationOptionValues({
     this.id,
     this.value,
     this.image,
+    this.availableProductCount = 0,
   });
-
-  ProductCustomizationOptionValues.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    value = json['value'];
-    image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['value'] = value;
-    data['image'] = image;
-    return data;
-  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProductCustomizationOptionValues && other.id == id && other.value == value && other.image == image;
+    return other is ProductCustomizationOptionValues &&
+        other.id == id &&
+        other.value == value &&
+        other.image == image &&
+        other.availableProductCount == availableProductCount;
   }
 
   @override
-  int get hashCode => id.hashCode ^ value.hashCode ^ image.hashCode;
+  int get hashCode => id.hashCode ^ value.hashCode ^ image.hashCode ^ availableProductCount.hashCode;
 }

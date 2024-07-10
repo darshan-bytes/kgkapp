@@ -53,7 +53,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   ];
 
   MonitoringBloc() : super(MonitoringInitialState()) {
-    on<MonitoringEvent>((event, emit) {});
     on<MonitoringInitialEvent>(_onInitialEvent);
     on<MonitoringOnTabChangedEvent>(_onTabChangedEvent);
     on<MonitoringListingLoadMoreEvent>(_onListingLoadMoreEvent);
@@ -66,28 +65,28 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     // Initialize scroll controllers with their respective load actions
     presentationsScrollController.init(
       tag: "presentationsScrollController",
-      loadAction: (int currentPage) async {
+      loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.presentations));
       },
     );
 
     dbfScrollController.init(
       tag: "dbfScrollController",
-      loadAction: (int currentPage) async {
+      loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.dbf));
       },
     );
 
     designsScrollController.init(
       tag: "designsScrollController",
-      loadAction: (int currentPage) async {
+      loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.designs));
       },
     );
 
     stylesScrollController.init(
       tag: "stylesScrollController",
-      loadAction: (int currentPage) async {
+      loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.styles));
       },
     );

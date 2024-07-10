@@ -626,6 +626,18 @@
   "assigned_to": "Assigned to",
   "no_order_list_found": "No Order list found",
   "delivery_date": "Delivery Date",
+  "user_master": "User Master",
+  "no_user_found": "No user found",
+  "search_user": "Search user",
+  "orion": "Orion",
+  "select_diamond_shape": "Select diamond shape",
+  "preferred_price_range": "Preferred price range",
+  "inbox": "Inbox",
+  "sent": "Sent",
+  "draft": "Draft",
+  "trash": "Trash",
+  "favourite": "Favourite",
+  "no_message_found": "No message found",
   "orders": "Orders",
   "products": "Products"
 }

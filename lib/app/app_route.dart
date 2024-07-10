@@ -71,6 +71,9 @@ class AppRoutes {
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
   static const retailerOrderListingPage = '/retailerOrderListingPage';
   static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
+  static const userMasterListingPage = '/userMasterListingPage';
+  static const orionPage = '/orionPage';
+  static const messagesPage = '/messagesPage';
   static const exhibitionDetailsPage = '/exhibitionDetailsPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -643,6 +646,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case orionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+            return const OrionScreen();
+          },
+          settings: settings,
+        );
+
       case manufacturerOrderListingPage:
         return MaterialPageRoute(
           builder: (context) {
@@ -675,6 +687,26 @@ class AppRoutes {
             return BlocProvider<ManufacturerOrderDetailsBloc>(
               create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
               child: const ManufacturerOrderDetailsScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case userMasterListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
+            return const UserMasterListingScreen();
+          },
+          settings: settings,
+        );
+
+      case messagesPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MessagesBloc>(
+              create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
+              child: const MessagesScreen(),
             );
           },
           settings: settings,

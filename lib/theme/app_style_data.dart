@@ -1138,6 +1138,32 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  OrionStyle get orionStyle => OrionStyle(
+        selectionTitleStyle: interMediumBoldTextStyle,
+        diamondSelectionTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        selectedDiamondSelectionTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
+        diamondSelectionValueStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        selectedDiamondSelectionValueStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C),
+        selectedDiamondSelectionBackgroundColor: colors.primary.withOpacity(0.1),
+        rangeSliderTrackColor: colors.color303538,
+        sliderThumbBorderColor: colors.colorD3DAE0,
+        sliderThumbColor: colors.white,
+        selectDiamondTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+        propertySelectionSubtitleStyle: interRegularTextStyle,
+        selectedPropertyStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
+        propertyStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+      );
+
+  @override
+  MessagesStyle get messagesStyle => MessagesStyle(
+        primaryColor: colors.primary,
+        color8C8C8C: colors.color8C8C8C,
+        userNameStyle: interRegularTextStyle,
+        messagesStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        timeAgoStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+      );
+
+  @override
   ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle => ExhibitionDetailsItemStyle(
         backgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,

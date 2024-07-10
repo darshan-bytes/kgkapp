@@ -186,7 +186,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                   child: SmartTextField(
                     height: 32.h,
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                    isEnabled: true,
+                    isEnabled: false,
+                    cursorHeight: 16.h,
                     controller: TextEditingController(text: value),
                     disabledBorderColor: style.borderColor,
                     textInputFormatter: [FilteringTextInputFormatter.digitsOnly],

@@ -36,8 +36,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ToggleProfileListEvent>(_onToggleProfileListEvent);
   }
 
-  Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
+  void _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    profileActionList.clear();
     if (userType == UserType.b2bUser) {
       profileActionList = [
         ProfileListModel(
@@ -159,13 +160,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.messages.tr,
             subTitle: APPStrings.conversationsYouAreHaving.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.messagesPage);
+            }),
         ProfileListModel(
             image: AppImages.icMasters,
             title: APPStrings.masters.tr,
             subTitle: APPStrings.masterDataOfUserAndNewsLetter.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              event.context.pushNamed(AppRoutes.userMasterListingPage);
+            }),
         ProfileListModel(
             image: AppImages.icStore,
             title: APPStrings.dashboard.tr,

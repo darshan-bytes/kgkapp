@@ -228,6 +228,10 @@ abstract class AppTheme {
 
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 
+  OrionStyle get orionStyle;
+
+  MessagesStyle get messagesStyle;
+
   ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle;
 }
 
@@ -2102,7 +2106,58 @@ class SmartSuggestionProductListStyle {
   final TextStyle titleStyle;
   final TextStyle viewAllStyle;
 
-  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
+  SmartSuggestionProductListStyle({
+    required this.titleStyle,
+    required this.viewAllStyle,
+  });
+}
+
+class OrionStyle {
+  final TextStyle selectionTitleStyle;
+  final TextStyle diamondSelectionTitleStyle;
+  final TextStyle selectedDiamondSelectionTitleStyle;
+  final TextStyle diamondSelectionValueStyle;
+  final TextStyle selectedDiamondSelectionValueStyle;
+  final Color selectedDiamondSelectionBackgroundColor;
+  final Color rangeSliderTrackColor;
+  final Color sliderThumbColor;
+  final Color sliderThumbBorderColor;
+  final TextStyle selectDiamondTitleStyle;
+  final TextStyle propertySelectionSubtitleStyle;
+  final TextStyle selectedPropertyStyle;
+  final TextStyle propertyStyle;
+
+  OrionStyle({
+    required this.selectionTitleStyle,
+    required this.diamondSelectionTitleStyle,
+    required this.selectedDiamondSelectionTitleStyle,
+    required this.diamondSelectionValueStyle,
+    required this.selectedDiamondSelectionValueStyle,
+    required this.selectedDiamondSelectionBackgroundColor,
+    required this.rangeSliderTrackColor,
+    required this.sliderThumbColor,
+    required this.sliderThumbBorderColor,
+    required this.selectDiamondTitleStyle,
+    required this.propertySelectionSubtitleStyle,
+    required this.selectedPropertyStyle,
+    required this.propertyStyle,
+  });
+}
+
+class MessagesStyle {
+  final TextStyle userNameStyle;
+  final TextStyle timeAgoStyle;
+  final TextStyle messagesStyle;
+  final Color primaryColor;
+  final Color color8C8C8C;
+
+  MessagesStyle({
+    required this.userNameStyle,
+    required this.timeAgoStyle,
+    required this.messagesStyle,
+    required this.primaryColor,
+    required this.color8C8C8C,
+  });
 }
 
 class ExhibitionDetailsItemStyle {

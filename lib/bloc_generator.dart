@@ -67,6 +67,8 @@ class BlocGenerator {
       BlocProvider<AddToWatchlistBloc>(create: (_) => AddToWatchlistBloc()),
       BlocProvider<ManufacturerOrderListingBloc>(create: (_) => ManufacturerOrderListingBloc()),
       BlocProvider<RetailerOrderListingBloc>(create: (_) => RetailerOrderListingBloc()),
+      BlocProvider<UserMasterListingBloc>(create: (_) => UserMasterListingBloc()),
+      BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
     ];
   }
 }

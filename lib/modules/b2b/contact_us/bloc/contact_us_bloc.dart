@@ -29,7 +29,6 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   ];
 
   ContactUsBloc() : super(ContactUsInitial()) {
-    on<ContactUsEvent>((event, emit) {});
     on<ContactUsInitialEvent>(_onContactUsInitialEvent);
     on<ContactUsChangeInquiryTypeEvent>(_onChangeInquiryTypeEvent);
     on<ContactUsChangeSelectProductEvent>(_onChangeSelectProductEvent);
