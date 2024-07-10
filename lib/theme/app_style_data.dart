@@ -1165,4 +1165,16 @@ class LightModeTheme extends AppTheme {
         messageDetailTitleStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
         messageDetailToUserNameStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
       );
+
+  @override
+  TaskDetailsStyle get taskDetailsStyle => TaskDetailsStyle(
+        headerBgColor: colors.colorF7F9FA,
+        headerTitleStyle: interMediumBoldTextStyle,
+        headerSubTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12.sp),
+        userNameStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        whiteColor: colors.white,
+        statusStyle: interRegularTextStyle,
+        activeColor: colors.color006FBB,
+        disableColor: colors.colorC5DEEB,
+      );
 }

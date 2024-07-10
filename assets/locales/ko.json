@@ -636,5 +636,10 @@
   "favourite": "Favourite",
   "no_message_found": "No message found",
   "to_X": "To {#}",
-  "me": "Me"
+  "me": "Me",
+  "priority": "Priority",
+  "start_date": "Start Date",
+  "due_date": "Due Date",
+  "description": "Description",
+  "assign_from": "Assign From"
 }
