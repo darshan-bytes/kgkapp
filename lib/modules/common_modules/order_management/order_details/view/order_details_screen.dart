@@ -323,7 +323,7 @@ class OrderDetailScreen extends StatelessWidget {
                       ),
                       builder: (context) {
                         return BlocProvider<OrderDetailBloc>(
-                          create: (context) => OrderDetailBloc(),
+                          create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
                           child: const OrderCancelBottomSheet(),
                         );
                       },

@@ -632,12 +632,11 @@
   "orion": "Orion",
   "select_diamond_shape": "Select diamond shape",
   "preferred_price_range": "Preferred price range",
-  "search_user": "Search user",
-  "delivery_date": "Delivery Date",
   "inbox": "Inbox",
   "sent": "Sent",
-  "draft": "Draft",
   "trash": "Trash",
   "favourite": "Favourite",
-  "no_message_found": "No message found"
+  "no_message_found": "No message found",
+  "to_X": "To {#}",
+  "me": "Me"
 }

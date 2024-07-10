@@ -75,6 +75,7 @@ class AppRoutes {
   static const userMasterListingPage = '/userMasterListingPage';
   static const orionPage = '/orionPage';
   static const messagesPage = '/messagesPage';
+  static const messagesDetailPage = '/messagesDetailPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -720,6 +721,17 @@ class AppRoutes {
           settings: settings,
         );
 
+      case messagesDetailPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MessageDetailBloc>(
+              create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
+              child: const MessageDetailScreen(),
+            );
+          },
+          settings: settings,
+        );
+
       default:
         return _errorRoute();
     }
@@ -755,6 +767,7 @@ enum RoutesData {
   presentationId,
   catalogueData,
   watchlistId,
+  messageModel,
 }
 
 enum ScreenIdentifier {
