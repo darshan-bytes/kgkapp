@@ -34,6 +34,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   }
 
   void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
+    emit(const OrderDetailReloadState());
     //TODO: Write code get Data from API
     appBloc = BlocProvider.of<AppBloc>(event.context);
     userType = appBloc.userType;

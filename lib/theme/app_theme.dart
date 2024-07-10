@@ -2148,6 +2148,9 @@ class MessagesStyle {
   final TextStyle messagesStyle;
   final Color primaryColor;
   final Color color8C8C8C;
+  final TextStyle messageDetailTitleStyle;
+  final TextStyle messageDetailToUserNameStyle;
+  final TextStyle messageDetailFullMessageStyle;
 
   MessagesStyle({
     required this.userNameStyle,
@@ -2155,5 +2158,8 @@ class MessagesStyle {
     required this.messagesStyle,
     required this.primaryColor,
     required this.color8C8C8C,
+    required this.messageDetailTitleStyle,
+    required this.messageDetailToUserNameStyle,
+    required this.messageDetailFullMessageStyle,
   });
 }

@@ -801,7 +801,8 @@ class APPStrings {
   static const String noMessageFound = 'no_message_found';
   static const String inbox = 'inbox';
   static const String sent = 'sent';
-  static const String draft = 'draft';
   static const String trash = 'trash';
   static const String favourite = 'favourite';
+  static const String toX = 'to_X';
+  static const String me = 'Me';
 }

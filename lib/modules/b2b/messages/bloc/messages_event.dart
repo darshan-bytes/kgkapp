@@ -31,3 +31,13 @@ class MessagesTabChangeEvent extends MessagesEvent {
   @override
   List<Object> get props => [index];
 }
+
+class MessagesFavouriteToggleEvent extends MessagesEvent {
+  final String id;
+  final int index;
+
+  const MessagesFavouriteToggleEvent({required this.id, required this.index});
+
+  @override
+  List<Object> get props => [id, index];
+}
