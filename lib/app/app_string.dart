@@ -785,6 +785,7 @@ class APPStrings {
 
   // Order Management
   static const String noOrderListFound = 'no_order_list_found';
+
   static const String deliveryDate = 'delivery_date';
 
   //User master
@@ -810,4 +811,9 @@ class APPStrings {
   static const String dueDate = 'due_date';
   static const String description = 'description';
   static const String assignFrom = 'assign_from';
+
+  static const String orders = 'orders';
+  static const String products = 'products';
+  static const String ordersReceived = 'orders_received';
+  static const String avgOrderValue = 'avg_order_value';
 }

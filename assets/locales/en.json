@@ -643,5 +643,9 @@
   "start_date": "Start Date",
   "due_date": "Due Date",
   "description": "Description",
-  "assign_from": "Assign From"
+  "assign_from": "Assign From",
+  "orders": "Orders",
+  "products": "Products",
+  "orders_received": "Orders Received",
+  "avg_order_value": "Avg order value"
 }

@@ -107,9 +107,9 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/bloc/setting_list
 export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_listing.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/bloc/stone_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/view/stone_listing_screen.dart';
-export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_orders_bloc.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_bloc.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/model/exhibition_details_orders_model.dart';
-export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_screen.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_tabview_list.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/bloc/exhibition_listing_bloc.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
@@ -388,3 +388,5 @@ export 'package:kgk/modules/b2b/orion/model/orion_diamond_properties_data_model.
 export 'package:kgk/modules/b2b/message_detail/bloc/message_detail_bloc.dart';
 export 'package:kgk/modules/b2b/message_detail/view/message_detail_screen.dart';
 export 'package:kgk/widgets/task_details_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_products_tabview_list.dart';
+export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_screen.dart';
