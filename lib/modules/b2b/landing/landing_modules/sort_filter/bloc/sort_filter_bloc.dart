@@ -126,6 +126,33 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
         SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
       ],
     ),
+    FilterData(
+      name: APPStrings.status.tr,
+      code: APPStrings.status.tr,
+      secondaryFilterData: [
+        SecondaryFilterData(name: APPStrings.blueInProgress.tr, code: APPStrings.blueInProgress.tr),
+        SecondaryFilterData(name: APPStrings.approved.tr, code: APPStrings.approved.tr),
+        SecondaryFilterData(name: APPStrings.pending.tr, code: APPStrings.pending.tr),
+      ],
+    ),
+    FilterData(
+      name: APPStrings.createdBy.tr,
+      code: APPStrings.status.tr.toLowerCase(),
+      secondaryFilterData: [
+        SecondaryFilterData(name: 'Jenny Wilson', code: 'jenny wilson'),
+        SecondaryFilterData(name: 'John Samanta', code: 'john samanta'),
+        SecondaryFilterData(name: 'Alex Williams', code: 'alex williams'),
+      ],
+    ),
+    FilterData(
+      name: APPStrings.createdOn.tr,
+      code: APPStrings.createdOn.tr.toLowerCase(),
+      secondaryFilterData: [
+        SecondaryFilterData(name: "24/03/2023", code: "24/03/2023"),
+        SecondaryFilterData(name: "25/03/2023", code: "25/03/2023"),
+        SecondaryFilterData(name: "26/03/2023", code: "26/03/2023"),
+      ],
+    ),
   ];
 
   late FilterData selectedFilterData;

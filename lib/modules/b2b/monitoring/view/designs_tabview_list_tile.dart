@@ -32,7 +32,14 @@ class DesignsTabviewListTile extends StatelessWidget {
         child: SelectionButton(
           borderRadius: BorderRadius.zero,
           isSelected: false,
-          onTap: () {},
+          onTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              builder: (context) => FilterScreen(
+                onApply: () {},
+              ),
+            );
+          },
           image: AppImages.icFilter,
           title: APPStrings.filter.tr,
         ),

@@ -134,7 +134,7 @@ class JewelleryLandingScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           StonesBannerView(
-            backgroundImagePath: "https://i.ibb.co/1J2wWPr/Image-4.png",
+            backgroundImagePath: "https://i.ibb.co/FVJDbvp/Image323.png",
             bannerTitleText: "Design your own necklace",
             bannerSubTitleText: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
             bannerTitleStyle: style.designOwnEarringTextStyle,

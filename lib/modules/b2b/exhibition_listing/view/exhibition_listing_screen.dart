@@ -239,7 +239,7 @@ class ExhibitionListingScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final ExhibitionListingModel item = bloc.exhibitionNameListing[index];
         return Container(
-          margin: EdgeInsets.only(bottom: 40.0.h),
+          margin: EdgeInsets.only(bottom: 24.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -248,29 +248,30 @@ class ExhibitionListingScreen extends StatelessWidget {
                 style: style.listTextStyle,
               ),
               ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: bloc.exhibitionSubList.length,
+                separatorBuilder: (context, subIndex) => const Divider(),
+                itemCount: bloc.exhibitionNameListing[index].exhibitionSubList?.length ?? 0,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 primary: false,
-                itemBuilder: (context, index) {
+                itemBuilder: (context, subIndex) {
+                  ExhibitionSubListingModel item = bloc.exhibitionNameListing[index].exhibitionSubList![subIndex];
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SmartText(
-                          bloc.exhibitionSubList[index].name,
+                          item.name ?? '',
                           maxLines: 2,
                           style: style.listTitleStyle,
                         ),
                         SizedBox(height: 8.h),
                         SmartText(
-                          bloc.exhibitionSubList[index].author,
+                          item.author,
                           style: style.listAuthorStyle,
                         ),
                         SizedBox(height: 12.h),
-                        if (bloc.exhibitionSubList[index].status != null) _buildStatusBadge(style, bloc.exhibitionSubList[index].status!),
+                        if (item.status != null) _buildStatusBadge(style, item.status!),
                       ],
                     ),
                   );
@@ -291,7 +292,7 @@ class ExhibitionListingScreen extends StatelessWidget {
         border: Border.all(color: style.borderColor, width: 1.w),
       ),
       child: SmartText(
-        status.tr,
+        status,
         style: style.listStatusStyle,
         textAlign: TextAlign.center,
       ),

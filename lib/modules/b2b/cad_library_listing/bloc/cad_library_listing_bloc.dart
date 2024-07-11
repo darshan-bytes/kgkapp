@@ -14,6 +14,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   //List of cad library
   List<B2BCustomListingDataModel> cadList = _generateCadList();
 
+  final TextEditingController cadLibrarySearchController = TextEditingController();
+
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
 
