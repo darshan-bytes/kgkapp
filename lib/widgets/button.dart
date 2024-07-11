@@ -48,7 +48,8 @@ class SmartButton extends StatelessWidget {
     this.disableImageColor,
     this.imageSize,
     this.boxShadow,
-  }) : isWhite = false;
+    this.isWhite = false,
+  });
 
   const SmartButton.white({
     super.key,

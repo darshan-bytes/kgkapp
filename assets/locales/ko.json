@@ -651,5 +651,10 @@
   "im_sure": "I'm Sure",
   "search_design": "Search design",
   "search_cad": "Search CAD",
-  "pending": "Pending"
+  "pending": "Pending",
+  "day": "Day",
+  "week": "Week",
+  "month": "Month",
+  "year": "Year",
+  "view_colon": "View:"
 }

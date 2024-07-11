@@ -6,9 +6,8 @@ abstract class DateFormatter {
   static const String timeFormat24H = "hh:mm";
   static const String timeFormat12H = "hh:mm a";
   static const String dateFormatYYYYMMDD = "yyyy-MM-dd";
-  static const String dateFormatE = "E, MMM dd";
-  static const String dateFormatYYYYMMDDTHMMSSZ = "yyyy-MM-ddTHH:mm:ssZ";
-  static const String dateFormatMMMDYYYYHMM = "MMM d, yyyy  hh:mm a";
   static const String dateFormatDDMMYYYY = "dd/MM/yyyy";
   static const String dateFormatDDMMMYYYY = "dd MMM, yyyy";
+  static const String dateFormatYYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
+  static const String dateFormatDDMMMYYYYHHMMA = "dd MMM, yyyy - hh:mm a";
 }

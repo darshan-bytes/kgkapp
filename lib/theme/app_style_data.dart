@@ -1219,4 +1219,18 @@ class LightModeTheme extends AppTheme {
       subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       itemsTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
       qtyTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp));
+
+  @override
+  CalendarStyle get calendarStyle => CalendarStyle(
+        borderColor: colors.colorD3DAE0,
+        primary: colors.primary,
+        calendarViewChangeButtonStyle: TextStyle(fontSize: 12.sp),
+        cellBorderColor: colors.colorF7F9FA,
+        meetEventCellBackgroundColor: colors.colorC5DEEB,
+        taskEventCellBackgroundColor: colors.colorF7F9FA,
+        meetEventTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
+        currentMonthHeaderStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
+        dropDownArrowColor: colors.color8C8C8C,
+        viewAllStyle: interRegularTextStyle,
+      );
 }

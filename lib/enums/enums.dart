@@ -69,3 +69,14 @@ enum B2BListingType {
   newsletterSubscribersType,
   manufacturerOrderListingType,
 }
+
+enum CalenderEventType {
+  meeting('meeting'),
+  task('task'),
+  undefined('undefined'),
+  ;
+
+  const CalenderEventType(this.value);
+
+  final String value;
+}

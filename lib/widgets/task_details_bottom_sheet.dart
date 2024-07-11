@@ -1,7 +1,9 @@
 import 'package:kgk/kgk.dart';
 
 class TaskDetailsBottomSheet extends StatelessWidget {
-  const TaskDetailsBottomSheet({super.key});
+  final CalendarData calendarData;
+
+  const TaskDetailsBottomSheet({super.key, required this.calendarData});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: 620.w),
       child: SafeArea(
         child: SmartSingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -46,9 +49,9 @@ class TaskDetailsBottomSheet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SmartText("Moodboard Changes", style: style.headerTitleStyle),
+                  SmartText(calendarData.title, style: style.headerTitleStyle),
                   SizedBox(height: 4.h),
-                  SmartText("Category Name", style: style.headerSubTitleStyle),
+                  SmartText(calendarData.categoryName, style: style.headerSubTitleStyle),
                 ],
               ),
               const Spacer(),
@@ -94,7 +97,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(width: 8.w),
-            SmartText("Active", style: style.statusStyle),
+            SmartText(calendarData.status, style: style.statusStyle),
           ],
         ),
       ],
@@ -113,7 +116,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
             _buildPriorityIndicator(style.disableColor),
             _buildPriorityIndicator(style.disableColor),
             SizedBox(width: 8.w),
-            SmartText("Low", style: style.statusStyle),
+            SmartText(calendarData.priority, style: style.statusStyle),
           ],
         ),
       ],
@@ -141,32 +144,31 @@ class TaskDetailsBottomSheet extends StatelessWidget {
         children: [
           Row(
             children: [
-              _detailWidget(title: APPStrings.startDate.tr, subTitle: "23 Mar, 2023", style: style),
+              _detailWidget(title: APPStrings.startDate.tr, subTitle: calendarData.start?.changeDateFormat() ?? '', style: style),
               SizedBox(width: 32.w),
-              _detailWidget(title: APPStrings.dueDate.tr, subTitle: "23 Mar, 2023", style: style),
+              _detailWidget(title: APPStrings.dueDate.tr, subTitle: calendarData.end?.changeDateFormat() ?? '', style: style),
             ],
           ),
           _detailWidget(
             title: APPStrings.assignTo.tr,
-            subTitle: "Jason Smith",
+            subTitle: calendarData.assignedTo ?? '',
             style: style,
-            profileImg: "https://i.ibb.co/SJDj2Pj/Frame-3977.png",
+            profileImg: calendarData.assignedToImage,
           ),
           _detailWidget(
             title: APPStrings.description.tr,
-            subTitle:
-                'Lorem ipsum dolor sit amet consectetur. At velit in morbi integer. Nullam suspendisse pulvinar aliquet lacus morbi accumsan. Egestas enim consectetur convallis ut egestas. Volutpat ultrices ullamcorper hendrerit risus',
+            subTitle: calendarData.description ?? '',
             style: style,
           ),
           _detailWidget(
             title: APPStrings.assignFrom.tr,
-            subTitle: 'Jason Smith',
+            subTitle: calendarData.assignedBy ?? '',
             style: style,
-            profileImg: "https://i.ibb.co/SJDj2Pj/Frame-3977.png",
+            profileImg: calendarData.assignedByImage,
           ),
           _detailWidget(
             title: APPStrings.createdOn.tr,
-            subTitle: "23 Mar, 2023 - 10:00PM",
+            subTitle: calendarData.createdDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ?? '',
             style: style,
           )
         ],

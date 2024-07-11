@@ -823,4 +823,15 @@ class APPStrings {
   static const String searchDesign = 'search_design';
   static const String searchCAD = 'search_cad';
   static const String pending = 'pending';
+
+  static const String day = 'day';
+  static const String week = 'week';
+  static const String month = 'month';
+  static const String year = 'year';
+
+  static const String viewColon = 'view_colon';
+
+  static const String all = 'all';
+  static const String tasks = 'tasks';
+  static const String meetings = 'meetings';
 }
