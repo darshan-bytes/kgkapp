@@ -23,7 +23,9 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   SmartPaginationScrollController orderScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController productPaginationScrollController = SmartPaginationScrollController();
 
-  final GlobalKey targetKey = GlobalKey();
+  final GlobalKey tabBarKey = GlobalKey();
+
+  ValueNotifier<bool> canScrollToTop = ValueNotifier<bool>(false);
 
   ExhibitionDetailsBloc() : super(const ExhibitionDetailsInitialsState()) {
     on<ExhibitionDetailsInitialEvent>(_onInitialEvent);
@@ -46,25 +48,29 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   void _onChangeTabEvent(ChangeExhibitionTabsEvent event, Emitter<ExhibitionDetailsState> emit) {
     emit(const ExhibitionDetailsReloadState());
+    scrollController.removeListener(scrollToTopListener);
     currentIndex = tabController.index;
+    scrollController.addListener(scrollToTopListener);
     emit(const ChangeExhibitionTabsState());
   }
 
   void _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) {
     emit(const ExhibitionDetailsReloadState());
+    scrollController.removeListener(scrollToTopListener);
     isGrid = event.isGrid;
     productPaginationScrollController.onViewChange(!isGrid);
+    scrollController.addListener(scrollToTopListener);
     emit(const ExhibitionChangeListingTypeState());
   }
 
   Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
     emit(const ExhibitionListingLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
-    _pageChanged(event);
+    _loadMoreData(event);
     emit(ExhibitionListingLoadedMoreState(event.currentPage + 1));
   }
 
-  void _pageChanged(ExhibitionListingLoadMoreEvent event) {
+  void _loadMoreData(ExhibitionListingLoadMoreEvent event) {
     if (currentIndex == 0) {
       productList.addAll(_generateProductList());
       productPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
@@ -86,6 +92,10 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       },
     );
 
+    if (isGrid) {
+      productPaginationScrollController.controller.addListener(scrollToTopListener);
+    }
+
     if (orderScrollController.isInitialised) {
       orderScrollController.dispose();
       orderScrollController = SmartPaginationScrollController();
@@ -99,6 +109,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   @override
   Future<void> close() {
+    scrollController.removeListener(scrollToTopListener);
     productPaginationScrollController.dispose();
     orderScrollController.dispose();
     return super.close();
@@ -138,6 +149,27 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       }
     } else {
       return orderScrollController.scrollController;
+    }
+  }
+
+  void scrollToKey() {
+    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      Scrollable.ensureVisible(
+        tabBarKey.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void scrollToTopListener() {
+    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      Offset position = renderBox.localToGlobal(Offset.zero);
+      canScrollToTop.value = position.dy < 50.h;
+    } else {
+      canScrollToTop.value = false;
     }
   }
 }

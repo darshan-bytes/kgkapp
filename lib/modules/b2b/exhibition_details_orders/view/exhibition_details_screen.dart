@@ -27,6 +27,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                       height: 24.h,
                     ),
                     SmartTabBar(
+                      key: bloc.tabBarKey,
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       isExpanded: false,
                       length: bloc.tabs.length,
@@ -177,17 +178,10 @@ class ExhibitionDetailsScreen extends StatelessWidget {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
       buildWhen: (previous, current) => current is ExhibitionChangeListingTypeState || current is ChangeExhibitionTabsState,
       builder: (context, state) {
-        if (bloc.currentIndex == 0) {
-          return ScrollToTopFAB(
-            canScrollToTop: bloc.productPaginationScrollController.canScrollToTop,
-            onTap: bloc.productPaginationScrollController.scrollToTop,
-          );
-        } else {
-          return ScrollToTopFAB(
-            canScrollToTop: bloc.orderScrollController.canScrollToTop,
-            onTap: bloc.orderScrollController.scrollToTop,
-          );
-        }
+        return ScrollToTopFAB(
+          canScrollToTop: bloc.canScrollToTop,
+          onTap: bloc.scrollToKey,
+        );
       },
     );
   }

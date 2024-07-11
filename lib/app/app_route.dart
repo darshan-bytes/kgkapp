@@ -727,8 +727,10 @@ class AppRoutes {
       case exhibitionDetailsPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ExhibitionDetailsBloc>(context).add(const ExhibitionDetailsInitialEvent());
-            return const ExhibitionDetailsScreen();
+            return BlocProvider<ExhibitionDetailsBloc>(
+              create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+              child: const ExhibitionDetailsScreen(),
+            );
           },
         );
 
