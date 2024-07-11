@@ -10,12 +10,6 @@ class FindStoreScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.findStore.tr,
-        onSearch: () {
-          context.pushNamed(AppRoutes.searchPage);
-        },
-        onFavorite: () {
-          context.pushNamed(AppRoutes.wishListPage);
-        },
       ),
       body: SmartSingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),

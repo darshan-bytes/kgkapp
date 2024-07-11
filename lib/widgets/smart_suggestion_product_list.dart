@@ -39,6 +39,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                 APPStrings.viewAll.tr,
                 optionalPadding: isPaddingNeeded ? EdgeInsets.only(right: 17.w) : EdgeInsets.zero,
                 style: style.viewAllStyle,
+                onTap: onViewAllTap,
               ),
           ],
         ),
