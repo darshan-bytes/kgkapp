@@ -239,6 +239,8 @@ abstract class AppTheme {
   ReturnOrderStyle get returnOrderStyle;
 
   ConfirmCancelPopupStyle get confirmCancelPopupStyle;
+
+  CalendarStyle get calendarStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2260,5 +2262,31 @@ class ConfirmCancelPopupStyle {
     required this.subTitleStyle,
     required this.itemsTitleStyle,
     required this.qtyTitleStyle,
+  });
+}
+
+class CalendarStyle {
+  final Color borderColor;
+  final Color primary;
+  final TextStyle calendarViewChangeButtonStyle;
+  final Color cellBorderColor;
+  final Color meetEventCellBackgroundColor;
+  final Color taskEventCellBackgroundColor;
+  final TextStyle meetEventTextStyle;
+  final TextStyle currentMonthHeaderStyle;
+  final Color dropDownArrowColor;
+  final TextStyle viewAllStyle;
+
+  CalendarStyle({
+    required this.borderColor,
+    required this.primary,
+    required this.calendarViewChangeButtonStyle,
+    required this.cellBorderColor,
+    required this.meetEventCellBackgroundColor,
+    required this.taskEventCellBackgroundColor,
+    required this.meetEventTextStyle,
+    required this.currentMonthHeaderStyle,
+    required this.dropDownArrowColor,
+    required this.viewAllStyle,
   });
 }

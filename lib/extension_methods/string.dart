@@ -82,4 +82,17 @@ extension StringExtensions on String {
       return ImageType.file;
     }
   }
+
+  DateTime? stringToDateTime({String? inputDateFormat}) {
+    if (inputDateFormat != null) {
+      return DateFormat(inputDateFormat).parse(this).toLocal();
+    } else {
+      return DateTime.tryParse(this)?.toLocal();
+    }
+  }
+
+  String changeDateFormat(
+      {String inputDateFormat = DateFormatter.dateFormatYYYYMMDDHHMMSS, String outputDateFormat = DateFormatter.dateFormatDDMMMYYYY}) {
+    return DateFormat(outputDateFormat).format(DateFormat(inputDateFormat).parse(this));
+  }
 }

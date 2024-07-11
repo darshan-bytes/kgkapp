@@ -76,6 +76,7 @@ class AppRoutes {
   static const messagesPage = '/messagesPage';
   static const messagesDetailPage = '/messagesDetailPage';
   static const exhibitionDetailsPage = '/exhibitionDetailsPage';
+  static const calendarPage = '/calendarPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -708,6 +709,17 @@ class AppRoutes {
             return BlocProvider<MessagesBloc>(
               create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
               child: const MessagesScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case calendarPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<CalendarBloc>(
+              create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
+              child: const CalendarScreen(),
             );
           },
           settings: settings,

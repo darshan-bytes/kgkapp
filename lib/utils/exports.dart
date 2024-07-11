@@ -339,7 +339,7 @@ export 'package:kgk/widgets/smart_text.dart';
 export 'package:kgk/widgets/stones_banner_view.dart';
 export 'package:kgk/widgets/text_field.dart';
 export 'package:kgk/widgets/triangle_clipper.dart';
-export 'package:mobile_scanner/mobile_scanner.dart';
+export 'package:mobile_scanner/mobile_scanner.dart' hide CalendarEvent;
 export 'package:permission_handler/permission_handler.dart';
 export 'package:readmore/readmore.dart';
 export 'package:webview_flutter/webview_flutter.dart';
@@ -393,3 +393,9 @@ export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_detail
 export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/view/retailer_order_cancel_bottom_sheet.dart';
 export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/view/track_manufacturer_order_bottom_sheet.dart';
 export 'package:kgk/modules/common_modules/order_management/manufacturer_order_details/view/confirm_cancellation_bottom_sheet.dart';
+export 'package:kgk/modules/b2b/calendar/bloc/calendar_bloc.dart';
+export 'package:kgk/modules/b2b/calendar/view/calendar_screen.dart';
+export 'package:syncfusion_flutter_calendar/calendar.dart';
+export 'package:kgk/modules/b2b/calendar/model/calendar_data_model.dart';
+export 'package:kgk/modules/b2b/calendar/model/calendar_event_type_model.dart';
+export 'package:kgk/widgets/month_picker.dart';
