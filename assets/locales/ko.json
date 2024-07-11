@@ -648,5 +648,8 @@
   "avg_order_value": "Avg order value",
   "return_product": "Return Product",
   "xReturn": "Return",
-  "im_sure": "I'm Sure"
+  "im_sure": "I'm Sure",
+  "search_design": "Search design",
+  "search_cad": "Search CAD",
+  "pending": "Pending"
 }

@@ -164,9 +164,9 @@ class MyBagScreen extends StatelessWidget {
                 SizedBox(height: 32.h),
                 _buildInquirySection(bloc, style),
                 SizedBox(height: 24.h),
-                _buildSuggestedProductList(bloc, style),
+                _buildSuggestedProductList(bloc, style, context),
                 SizedBox(height: 24.h),
-                _buildMostPurchaseProductList(bloc, style)
+                _buildMostPurchaseProductList(bloc, style, context)
               ],
             ),
           );
@@ -351,20 +351,24 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style) {
+  Widget _buildSuggestedProductList(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     return SmartSuggestionProductList(
         title: APPStrings.youMayAlsoLike.tr,
-        onViewAllTap: () {},
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        },
         suggestedProductList: bloc.suggestedProductList,
         onEyeTap: () {},
         onFavTap: () {},
         scrollController: bloc.scrollController);
   }
 
-  Widget _buildMostPurchaseProductList(MyBagBloc bloc, MyBagScreenStyle style) {
+  Widget _buildMostPurchaseProductList(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     return SmartSuggestionProductList(
         title: APPStrings.mostPurchasedDiamonds.tr,
-        onViewAllTap: () {},
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+        },
         suggestedProductList: bloc.mostPurchaseProductList,
         onEyeTap: () {},
         onFavTap: () {},

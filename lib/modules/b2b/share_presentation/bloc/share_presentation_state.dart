@@ -31,3 +31,28 @@ final class SharePresentationLoadedState extends SharePresentationState {
   @override
   List<Object> get props => [];
 }
+
+final class SharePresentationReloadState extends SharePresentationState {
+  const SharePresentationReloadState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ChangeUserAccessTypeState extends SharePresentationState {
+  final UserAccessType selectedUserAccessType;
+
+  const ChangeUserAccessTypeState(this.selectedUserAccessType);
+
+  @override
+  List<Object> get props => [selectedUserAccessType];
+}
+
+final class ChangeGeneralAccessTypeState extends SharePresentationState {
+  final UserAccessType selectedGeneralAccessType;
+
+  const ChangeGeneralAccessTypeState(this.selectedGeneralAccessType);
+
+  @override
+  List<Object> get props => [selectedGeneralAccessType];
+}

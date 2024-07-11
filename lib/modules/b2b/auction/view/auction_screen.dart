@@ -370,8 +370,11 @@ class AuctionScreen extends StatelessWidget {
 
   Widget _buildYouMayAlsoLikeSection(AuctionBloc bloc, BuildContext context) {
     return SmartSuggestionProductList(
+        isPaddingNeeded: false,
         title: APPStrings.youMayAlsoLike.tr,
-        onViewAllTap: () {},
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+        },
         suggestedProductList: bloc.youMayAlisLikeProductList,
         onEyeTap: () {},
         onFavTap: () {},

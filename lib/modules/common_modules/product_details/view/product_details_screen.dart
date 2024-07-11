@@ -336,11 +336,11 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
             SizedBox(height: 32.h),
           ],
-          _buildSuggestedProductList(productDetailsBloc, style),
+          _buildSuggestedProductList(productDetailsBloc, style, context),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing ||
               productDetailsBloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 32.h),
-            _buildRecentlyViewedProductList(productDetailsBloc, style),
+            _buildRecentlyViewedProductList(productDetailsBloc, style, context),
           ]
         ],
       ),
@@ -569,10 +569,12 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSuggestedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
+  Widget _buildSuggestedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style, BuildContext context) {
     return SmartSuggestionProductList(
         title: APPStrings.youMayAlsoLike.tr,
-        onViewAllTap: () {},
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        },
         suggestedProductList: productDetailsBloc.suggestedProductList,
         onEyeTap: () {},
         onFavTap: () {},
@@ -580,10 +582,12 @@ class ProductDetailsScreen extends StatelessWidget {
         scrollController: productDetailsBloc.youMayLikeScrollController);
   }
 
-  Widget _buildRecentlyViewedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style) {
+  Widget _buildRecentlyViewedProductList(ProductDetailsBloc productDetailsBloc, ProductDetailsStyle style, BuildContext context) {
     return SmartSuggestionProductList(
         title: APPStrings.recentlyViewed.tr,
-        onViewAllTap: () {},
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        },
         suggestedProductList: productDetailsBloc.recentlyViewedProductList,
         onEyeTap: () {},
         onFavTap: () {},

@@ -78,35 +78,33 @@ class PresentationGridItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (b2bCustomListingDataModel.strPresentationNumber.isNotNullNorEmpty) ...[
-            SmartText(
-              b2bCustomListingDataModel.strPresentationNumber,
-              style: titleStyle ?? style.titleStyle,
-            ),
-            SizedBox(height: 4.h),
-          ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (b2bCustomListingDataModel.strConceptName.isNotNullNorEmpty)
-                Flexible(
-                  flex: 2,
-                  child: SmartText(
-                    getConceptName(),
-                    style: subTitleStyle ?? style.subTitleStyle,
-                  ),
+              if (b2bCustomListingDataModel.strPresentationNumber.isNotNullNorEmpty) ...[
+                SmartText(
+                  b2bCustomListingDataModel.strPresentationNumber,
+                  style: titleStyle ?? style.titleStyle,
                 ),
-              SizedBox(width: 8.w),
-              if (b2bCustomListingDataModel.strCreatedOn.isNotNullNorEmpty)
-                Flexible(
-                  flex: 1,
-                  child: SmartText(
-                    b2bCustomListingDataModel.strCreatedOn,
-                    style: subTitleStyle ?? style.subTitleStyle,
+                SizedBox(width: 8.w),
+                if (b2bCustomListingDataModel.strCreatedOn.isNotNullNorEmpty)
+                  Flexible(
+                    flex: 1,
+                    child: SmartText(
+                      b2bCustomListingDataModel.strCreatedOn,
+                      style: subTitleStyle ?? style.subTitleStyle,
+                    ),
                   ),
-                ),
+              ],
             ],
-          )
+          ),
+          if (b2bCustomListingDataModel.strConceptName.isNotNullNorEmpty) ...[
+            SizedBox(height: 4.h),
+            SmartText(
+              getConceptName(),
+              style: subTitleStyle ?? style.subTitleStyle,
+            )
+          ]
         ],
       ),
     );
