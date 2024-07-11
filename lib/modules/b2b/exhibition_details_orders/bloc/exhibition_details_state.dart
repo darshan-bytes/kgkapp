@@ -25,8 +25,8 @@ final class ExhibitionDetailsLoadedState extends ExhibitionDetailsState {
   List<Object> get props => [];
 }
 
-final class ChangeExhibitionTabsState extends ExhibitionDetailsState {
-  const ChangeExhibitionTabsState();
+final class ExhibitionChangeTabsState extends ExhibitionDetailsState {
+  const ExhibitionChangeTabsState();
 
   @override
   List<Object> get props => [];

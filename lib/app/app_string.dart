@@ -806,7 +806,14 @@ class APPStrings {
   static const String favourite = 'favourite';
   static const String toX = 'to_X';
   static const String me = 'Me';
+  static const String priority = 'priority';
+  static const String startDate = 'start_date';
+  static const String dueDate = 'due_date';
+  static const String description = 'description';
+  static const String assignFrom = 'assign_from';
 
   static const String orders = 'orders';
   static const String products = 'products';
+  static const String ordersReceived = 'orders_received';
+  static const String avgOrderValue = 'avg_order_value';
 }

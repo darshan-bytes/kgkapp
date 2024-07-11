@@ -17,7 +17,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           _buildProductDisplay(bloc, style),
           SizedBox(height: 24.h),
           SmartText(
-            '100 products',
+            APPStrings.xProducts.tr.interpolate(["100"]),
             style: style.listStatusStyle,
           ),
           SizedBox(height: 24.h),
@@ -48,7 +48,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Items sold',
+                      APPStrings.itemsSold.tr,
                       style: style.listTitleStyle,
                     ),
                     SizedBox(height: 4.h),
@@ -62,7 +62,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Orders received',
+                      APPStrings.ordersReceived.tr,
                       style: style.listTitleStyle,
                     ),
                     SizedBox(height: 4.h),
@@ -82,7 +82,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Total sell',
+                      APPStrings.totalSell.tr,
                       style: style.listTitleStyle,
                     ),
                     SizedBox(height: 4.h),
@@ -96,7 +96,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Avg order value',
+                      APPStrings.avgOrderValue.tr,
                       style: style.listTitleStyle,
                     ),
                     SizedBox(height: 4.h),
@@ -116,7 +116,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Leads',
+                      APPStrings.leads.tr,
                       style: style.listTitleStyle,
                     ),
                     SizedBox(height: 4.h),

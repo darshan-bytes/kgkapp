@@ -232,6 +232,8 @@ abstract class AppTheme {
 
   MessagesStyle get messagesStyle;
 
+  TaskDetailsStyle get taskDetailsStyle;
+
   ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle;
 }
 
@@ -2163,6 +2165,28 @@ class MessagesStyle {
     required this.messageDetailTitleStyle,
     required this.messageDetailToUserNameStyle,
     required this.messageDetailFullMessageStyle,
+  });
+}
+
+class TaskDetailsStyle {
+  final Color whiteColor;
+  final Color headerBgColor;
+  final Color activeColor;
+  final Color disableColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle headerSubTitleStyle;
+  final TextStyle statusStyle;
+  final TextStyle userNameStyle;
+
+  TaskDetailsStyle({
+    required this.whiteColor,
+    required this.headerBgColor,
+    required this.activeColor,
+    required this.disableColor,
+    required this.headerTitleStyle,
+    required this.headerSubTitleStyle,
+    required this.statusStyle,
+    required this.userNameStyle,
   });
 }
 

@@ -10,9 +10,9 @@ class ExhibitionDetailsScreen extends StatelessWidget {
 
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
       buildWhen: (previous, current) =>
-          current is ExhibitionDetailsLoadedState || current is ExhibitionChangeListingTypeState || current is ChangeExhibitionTabsState,
+          current is ExhibitionDetailsLoadedState || current is ExhibitionChangeListingTypeState || current is ExhibitionChangeTabsState,
       builder: (context, state) {
-        if (state is ExhibitionDetailsLoadedState || state is ChangeExhibitionTabsState || state is ExhibitionChangeListingTypeState) {
+        if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState || state is ExhibitionChangeListingTypeState) {
           return Scaffold(
             appBar: _buildAppBar(bloc, context),
             floatingActionButton: _buildFloatingActionButton(bloc),
@@ -34,7 +34,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                       onTabInitialized: (tabController) {
                         bloc.tabController = tabController;
                       },
-                      onTapTab: (int index) => bloc.add(const ChangeExhibitionTabsEvent()),
+                      onTapTab: (int index) => bloc.add(const ExhibitionChangeTabsEvent()),
                       tabs: bloc.tabs,
                       tabBarView: _buildTabBarView(bloc),
                     ),
@@ -53,12 +53,8 @@ class ExhibitionDetailsScreen extends StatelessWidget {
   SmartAppBar _buildAppBar(ExhibitionDetailsBloc bloc, BuildContext context) {
     return SmartAppBar(
       title: bloc.appbarTitle,
-      onSearch: () {
-        context.pushNamed(AppRoutes.searchPage);
-      },
-      onFavorite: () {
-        context.pushNamed(AppRoutes.wishListPage);
-      },
+      onSearch: () => context.pushNamed(AppRoutes.searchPage),
+      onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
     );
   }
 
@@ -176,7 +172,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
 
   Widget _buildFloatingActionButton(ExhibitionDetailsBloc bloc) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) => current is ExhibitionChangeListingTypeState || current is ChangeExhibitionTabsState,
+      buildWhen: (previous, current) => current is ExhibitionChangeListingTypeState || current is ExhibitionChangeTabsState,
       builder: (context, state) {
         return ScrollToTopFAB(
           canScrollToTop: bloc.canScrollToTop,

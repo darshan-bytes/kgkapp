@@ -387,5 +387,6 @@ export 'package:syncfusion_flutter_sliders/sliders.dart';
 export 'package:kgk/modules/b2b/orion/model/orion_diamond_properties_data_model.dart';
 export 'package:kgk/modules/b2b/message_detail/bloc/message_detail_bloc.dart';
 export 'package:kgk/modules/b2b/message_detail/view/message_detail_screen.dart';
+export 'package:kgk/widgets/task_details_bottom_sheet.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_products_tabview_list.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_screen.dart';

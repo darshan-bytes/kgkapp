@@ -29,7 +29,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   ExhibitionDetailsBloc() : super(const ExhibitionDetailsInitialsState()) {
     on<ExhibitionDetailsInitialEvent>(_onInitialEvent);
-    on<ChangeExhibitionTabsEvent>(_onChangeTabEvent);
+    on<ExhibitionChangeTabsEvent>(_onChangeTabEvent);
     on<ExhibitionListingLoadMoreEvent>(_onExhibitionListingLoadMoreEvent);
     on<ExhibitionChangeListingTypeEvent>(_onExhibitionChangeListingTypeEvent);
   }
@@ -38,20 +38,18 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     emit(const ExhibitionDetailsReloadState());
     appbarTitle = APPStrings.exhibition.tr;
     isGrid = true;
-    productList.clear();
-    exhibitionOrdersList.clear();
     _initScrollControllers();
     productList.addAll(_generateProductList());
     exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
     emit(const ExhibitionDetailsLoadedState());
   }
 
-  void _onChangeTabEvent(ChangeExhibitionTabsEvent event, Emitter<ExhibitionDetailsState> emit) {
+  void _onChangeTabEvent(ExhibitionChangeTabsEvent event, Emitter<ExhibitionDetailsState> emit) {
     emit(const ExhibitionDetailsReloadState());
     scrollController.removeListener(scrollToTopListener);
     currentIndex = tabController.index;
     scrollController.addListener(scrollToTopListener);
-    emit(const ChangeExhibitionTabsState());
+    emit(const ExhibitionChangeTabsState());
   }
 
   void _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) {

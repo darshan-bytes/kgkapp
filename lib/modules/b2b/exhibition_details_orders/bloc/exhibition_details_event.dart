@@ -11,8 +11,8 @@ final class ExhibitionDetailsInitialEvent extends ExhibitionDetailsEvent {
   List<Object> get props => [];
 }
 
-final class ChangeExhibitionTabsEvent extends ExhibitionDetailsEvent {
-  const ChangeExhibitionTabsEvent();
+final class ExhibitionChangeTabsEvent extends ExhibitionDetailsEvent {
+  const ExhibitionChangeTabsEvent();
 
   @override
   List<Object> get props => [];

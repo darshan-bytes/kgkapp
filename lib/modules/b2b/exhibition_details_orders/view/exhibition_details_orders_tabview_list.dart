@@ -65,11 +65,7 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
               ],
             );
           },
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              height: 16.h,
-            );
-          },
+          separatorBuilder: (context, index) => SizedBox(height: 16.h),
         );
       },
     );
