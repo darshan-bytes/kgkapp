@@ -154,7 +154,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             title: APPStrings.calendar.tr,
             subTitle: APPStrings.meetingsTasksAllInOnePlace.tr,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: event.context,
+                enableDrag: false,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+                ),
+                builder: (context) => const TaskDetailsBottomSheet(),
+              );
+            }),
         ProfileListModel(
             image: AppImages.icMessages,
             title: APPStrings.messages.tr,
