@@ -816,4 +816,8 @@ class APPStrings {
   static const String products = 'products';
   static const String ordersReceived = 'orders_received';
   static const String avgOrderValue = 'avg_order_value';
+
+  static const String returnProduct = 'return_product';
+  static const String xReturn = 'xReturn';
+  static const String imSure = 'im_sure';
 }

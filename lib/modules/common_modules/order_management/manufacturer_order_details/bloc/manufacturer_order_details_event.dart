@@ -21,3 +21,12 @@ class ManufacturerOrderDetailsLoadMoreEvent extends ManufacturerOrderDetailsEven
   @override
   List<Object> get props => [currentPage];
 }
+
+class ManufacturerOrderCancellationReasonsEvent extends ManufacturerOrderDetailsEvent {
+  final CancellationReasonModel cancellationReasonModel;
+
+  const ManufacturerOrderCancellationReasonsEvent(this.cancellationReasonModel);
+
+  @override
+  List<Object> get props => [cancellationReasonModel];
+}

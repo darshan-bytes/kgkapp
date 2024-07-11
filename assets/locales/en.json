@@ -647,5 +647,8 @@
   "orders": "Orders",
   "products": "Products",
   "orders_received": "Orders Received",
-  "avg_order_value": "Avg order value"
+  "avg_order_value": "Avg order value",
+  "return_product": "Return Product",
+  "xReturn": "Return",
+  "im_sure": "I'm Sure"
 }

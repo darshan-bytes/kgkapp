@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key});
@@ -26,7 +27,7 @@ class OrderDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildOrderDetailsInfoCard(style, context),
+                  _buildOrderDetailsInfoCard(bloc, style, context),
                   SizedBox(height: 24.h),
                   _buildOrderCreatorDetailsInfoCard(style),
                   SizedBox(height: 32.h),
@@ -43,7 +44,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderDetailsInfoCard(OrderDetailScreenStyle style, BuildContext context) {
+  Widget _buildOrderDetailsInfoCard(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
     return Container(
       color: style.detailsTileColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
@@ -73,7 +74,7 @@ class OrderDetailScreen extends StatelessWidget {
               SmartImage(
                 path: AppImages.icMenu,
                 onTap: () {
-                  _showOrderDetailPopup(context);
+                  _showOrderDetailPopup(bloc, context);
                 },
               ),
             ],
@@ -279,61 +280,90 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  void _showOrderDetailPopup(BuildContext context) {
+  void _showOrderDetailPopup(OrderDetailBloc bloc, BuildContext context) {
     OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-        ),
-        builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-              color: orderPopupStyle.whiteColor,
-            ),
-            height: 220.h,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                    context.pop();
-                    Utils.showSmartModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-                      ),
-                      builder: (context) => BlocProvider<OrderDetailBloc>(
-                        create: (context) => OrderDetailBloc(),
-                        child: const TrackOrderBottomSheet(),
-                      ),
-                    );
-                  }),
-                  _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                    context.popAndPushNamed(AppRoutes.orderTimelinePage);
-                  }),
-                  _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
-                    context.pop();
-                    Utils.showSmartModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-                      ),
-                      builder: (context) {
-                        return BlocProvider<OrderDetailBloc>(
-                          create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
-                          child: const OrderCancelBottomSheet(),
-                        );
-                      },
-                    );
-                  }),
-                ],
-              ),
-            ),
-          );
-        });
+      context: context,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+            color: orderPopupStyle.whiteColor,
+          ),
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                _showTrackOrderBottomSheet(bloc, context);
+              }),
+              if (bloc.userType == UserType.b2bUser) ...{
+                _buildPopupOption(context, text: APPStrings.returnProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                  _showReturnProductBottomSheet(bloc, context);
+                }),
+              } else ...{
+                _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                  context.popAndPushNamed(AppRoutes.orderTimelinePage);
+                }),
+              },
+              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                _showOrderCancelBottomSheet(bloc, context);
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showTrackOrderBottomSheet(OrderDetailBloc bloc, BuildContext context) {
+    context.pop();
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => BlocProvider<OrderDetailBloc>(
+        create: (context) => OrderDetailBloc(),
+        child: const TrackOrderBottomSheet(),
+      ),
+    );
+  }
+
+  void _showReturnProductBottomSheet(OrderDetailBloc bloc, BuildContext context) {
+    context.pop();
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return BlocProvider<OrderDetailBloc>(
+          create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
+          child: const ReturnOrderProductBottomSheet(),
+        );
+      },
+    );
+  }
+
+  void _showOrderCancelBottomSheet(OrderDetailBloc bloc, BuildContext context) {
+    context.pop();
+    Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return BlocProvider<OrderDetailBloc>(
+          create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
+          child: const OrderCancelBottomSheet(),
+        );
+      },
+    );
   }
 
   Widget _buildPopupOption(

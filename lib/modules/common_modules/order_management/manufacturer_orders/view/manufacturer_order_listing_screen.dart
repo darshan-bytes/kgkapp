@@ -115,7 +115,8 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
                         listingItemModel: orderItem,
                         onTapMenuButton: () {},
                         onTap: () {
-                          context.pushNamed(AppRoutes.manufacturerOrderDetailsPage);
+                          context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
+                              arguments: {RoutesData.isPageFor: ScreenIdentifier.cancelOrderForManufacturer});
                         },
                       ),
                       if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)

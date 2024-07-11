@@ -7,11 +7,26 @@ part 'manufacturer_order_details_state.dart';
 class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, ManufacturerOrderDetailsState> {
   TextEditingController searchController = TextEditingController();
   List<ManufacturerOrderDetailsModel> orderList = [];
+  List<CancellationReasonModel> cancellationReasonsList = [];
   SmartPaginationScrollController scrollController = SmartPaginationScrollController();
+
+  int currentTrackOrderIndex = 2;
+
+  CancellationReasonModel? selectedReason;
+
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.cancelOrderForRetailer;
 
   ManufacturerOrderDetailsBloc() : super(ManufacturerOrderDetailsInitial()) {
     on<ManufacturerOrderDetailsInitialEvent>(_manufacturerOrderDetailsInitialEvent);
     on<ManufacturerOrderDetailsLoadMoreEvent>(_manufacturerOrderDetailsLoadMoreEvent);
+    on<ManufacturerOrderCancellationReasonsEvent>(_onManufacturerOrderCancellationReasonsChange);
+  }
+
+  void getRouteData(BuildContext context) async {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    if (data != null) {
+      screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.cancelOrderForRetailer;
+    }
   }
 
   @override
@@ -59,6 +74,8 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
       },
     );
 
+    getRouteData(event.context);
+
     emit(ManufacturerOrderReloadState());
     orderList = List.generate(
         10,
@@ -82,6 +99,35 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
               orderProductYourValue: "\$24,850.00",
             ));
 
+    cancellationReasonsList = _generateCancellationReasonsList();
     emit(ManufacturerOrderDataFetchedState());
+  }
+
+  Future<void> _onManufacturerOrderCancellationReasonsChange(
+      ManufacturerOrderCancellationReasonsEvent event, Emitter<ManufacturerOrderDetailsState> emit) async {
+    emit(ManufacturerOrderReloadState());
+    selectedReason = event.cancellationReasonModel;
+    if (selectedReason != null) {
+      emit(ManufacturerCancellationReasonsChangeState(selectedReason!));
+    }
+  }
+
+  List<CancellationReasonModel> _generateCancellationReasonsList() {
+    return List.generate(
+      3,
+      (index) {
+        if (index == 2) {
+          return CancellationReasonModel(
+            id: index,
+            name: "Other",
+          );
+        } else {
+          return CancellationReasonModel(
+            id: index,
+            name: "Reason ${index + 1}",
+          );
+        }
+      },
+    );
   }
 }
