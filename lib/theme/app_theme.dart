@@ -232,6 +232,10 @@ abstract class AppTheme {
 
   MessagesStyle get messagesStyle;
 
+  TaskDetailsStyle get taskDetailsStyle;
+
+  ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle;
+
   ReturnOrderStyle get returnOrderStyle;
 
   ConfirmCancelPopupStyle get confirmCancelPopupStyle;
@@ -2167,6 +2171,54 @@ class MessagesStyle {
     required this.messageDetailTitleStyle,
     required this.messageDetailToUserNameStyle,
     required this.messageDetailFullMessageStyle,
+  });
+}
+
+class TaskDetailsStyle {
+  final Color whiteColor;
+  final Color headerBgColor;
+  final Color activeColor;
+  final Color disableColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle headerSubTitleStyle;
+  final TextStyle statusStyle;
+  final TextStyle userNameStyle;
+
+  TaskDetailsStyle({
+    required this.whiteColor,
+    required this.headerBgColor,
+    required this.activeColor,
+    required this.disableColor,
+    required this.headerTitleStyle,
+    required this.headerSubTitleStyle,
+    required this.statusStyle,
+    required this.userNameStyle,
+  });
+}
+
+class ExhibitionDetailsItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color iconColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle listTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle listSubTitleStyle;
+  final TextStyle listStatusStyle;
+
+  ExhibitionDetailsItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.iconColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.listTextStyle,
+    required this.listTitleStyle,
+    required this.listSubTitleStyle,
+    required this.listStatusStyle,
   });
 }
 

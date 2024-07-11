@@ -1168,6 +1168,37 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  TaskDetailsStyle get taskDetailsStyle => TaskDetailsStyle(
+        headerBgColor: colors.colorF7F9FA,
+        headerTitleStyle: interMediumBoldTextStyle,
+        headerSubTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12.sp),
+        userNameStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        whiteColor: colors.white,
+        statusStyle: interRegularTextStyle,
+        activeColor: colors.color006FBB,
+        disableColor: colors.colorC5DEEB,
+      );
+
+  @override
+  ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle => ExhibitionDetailsItemStyle(
+        backgroundColor: colors.white,
+        borderColor: colors.colorD3DAE0,
+        iconColor: colors.color083458,
+        primaryColor: colors.colorF7F9FA,
+        titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color083458),
+        subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        listTextStyle: interRegularTextStyle,
+        listTitleStyle: interMediumBoldTextStyle.copyWith(
+          fontSize: 12.sp,
+          color: colors.color8C8C8C,
+        ),
+        listSubTitleStyle: interRegularTextStyle.copyWith(
+          fontSize: 16.sp,
+        ),
+        listStatusStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+      );
+
+  @override
   ReturnOrderStyle get returnOrderStyle => ReturnOrderStyle(
         orderInfoBackgroundColor: colors.colorF7F9FA,
         crossColor: colors.color8C8C8C,
