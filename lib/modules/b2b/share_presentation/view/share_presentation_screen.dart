@@ -22,65 +22,35 @@ class SharePresentationScreen extends StatelessWidget {
             bloc = BlocProvider.of<SharePresentationBloc>(context);
             return Container(
               constraints: BoxConstraints(maxHeight: 775.h),
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
               decoration: BoxDecoration(
                 color: style.backgroundColor,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
               ),
               child: SafeArea(
-                child: SmartSingleChildScrollView(
-                  child: Stack(
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  BlocBuilder<SharePresentationBloc, SharePresentationState>(
-                                    buildWhen: (previous, current) => current is SharePresentationTitleLoadedState,
-                                    builder: (context, state) {
-                                      if (state is SharePresentationTitleLoadedState) {
-                                        return SmartText(state.title, style: style.titleStyle);
-                                      }
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  _buildShareButtonsRow(bloc, style),
-                                  SizedBox(height: 24.h),
-                                  _buildEmailTextField(bloc, context),
-                                  SizedBox(height: 24.h),
-                                  ..._buildPeopleWithAccess(bloc, style),
-                                  SizedBox(height: 24.h),
-                                  ..._buildGeneralShareRow(bloc, style),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Divider(),
-                          _buildBottomNavbar(bloc, style, context),
-                        ],
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildSharePresentationTitleSection(style),
+                        _buildScrollableWidgetList(bloc, style, context),
+                        _buildBottomStaticSection(bloc, style, context)
+                      ],
+                    ),
+                    Positioned(
+                      top: 16.h,
+                      right: 16.w,
+                      child: SmartImage(
+                        path: AppImages.icCross,
+                        height: 24.w,
+                        width: 24.w,
+                        color: style.closeIconColor,
+                        onTap: () {
+                          context.pop();
+                        },
                       ),
-                      Positioned(
-                        top: 16.h,
-                        right: 16.w,
-                        child: SmartImage(
-                          path: AppImages.icCross,
-                          height: 24.w,
-                          width: 24.w,
-                          color: style.closeIconColor,
-                          onTap: () {
-                            context.pop();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -88,6 +58,59 @@ class SharePresentationScreen extends StatelessWidget {
             return const SizedBox.shrink();
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildSharePresentationTitleSection(SharePresentationStyle style) {
+    return BlocBuilder<SharePresentationBloc, SharePresentationState>(
+      buildWhen: (previous, current) => current is SharePresentationTitleLoadedState,
+      builder: (context, state) {
+        if (state is SharePresentationTitleLoadedState) {
+          return SmartText(
+            state.title,
+            style: style.titleStyle,
+            optionalPadding: EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w, bottom: 17.h),
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget _buildScrollableWidgetList(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildShareButtonsRow(bloc, style),
+              SizedBox(height: 24.h),
+              _buildEmailTextField(bloc, context),
+              SizedBox(height: 24.h),
+              ..._buildPeopleWithAccess(bloc, style),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomStaticSection(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 17.w,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ..._buildGeneralShareRow(bloc, style),
+          const Divider(),
+          _buildBottomNavbar(bloc, style, context),
+        ],
       ),
     );
   }
@@ -129,6 +152,8 @@ class SharePresentationScreen extends StatelessWidget {
     return SmartTextField(
       controller: bloc.emailController,
       labelText: APPStrings.enterEmailAddress.tr,
+      onTapOutside: (event) {},
+      textInputAction: TextInputAction.done,
     );
   }
 
@@ -136,27 +161,25 @@ class SharePresentationScreen extends StatelessWidget {
     return [
       SmartText(APPStrings.peopleWithAccess.tr, style: style.userListTitleStyle),
       SizedBox(height: 14.h),
-      Flexible(
-        child: BlocBuilder<SharePresentationBloc, SharePresentationState>(
-          bloc: bloc,
-          buildWhen: (previous, current) => current is SharePresentationLoadedState || current is SharePresentationLoadingState,
-          builder: (context, state) {
-            if (state is SharePresentationLoadedState) {
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: bloc.userList.length,
-                itemBuilder: (context, index) {
-                  final UserListModel user = bloc.userList[index];
-                  return _buildUserWidget(user, style, bloc);
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              );
-            } else {
-              return const SmartCircularProgressIndicator();
-            }
-          },
-        ),
+      BlocBuilder<SharePresentationBloc, SharePresentationState>(
+        bloc: bloc,
+        buildWhen: (previous, current) => current is SharePresentationLoadedState || current is SharePresentationLoadingState,
+        builder: (context, state) {
+          if (state is SharePresentationLoadedState) {
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: bloc.userList.length,
+              itemBuilder: (context, index) {
+                final UserListModel user = bloc.userList[index];
+                return _buildUserWidget(user, style, bloc);
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+            );
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
       )
     ];
   }
@@ -180,11 +203,7 @@ class SharePresentationScreen extends StatelessWidget {
         ),
         if (user.role != null) ...[
           SizedBox(width: 16.w),
-          SmartText(user.role?.roleName ?? '', style: style.userRoleStyle),
-          if (user.role!.isModifiable) ...[
-            SizedBox(width: 4.w),
-            SmartImage(path: AppImages.icArrowDropDown, height: 16.w, width: 16.w),
-          ]
+          _buildPeopleAccessDropDownField(bloc, user),
         ],
       ],
     );
@@ -192,10 +211,12 @@ class SharePresentationScreen extends StatelessWidget {
 
   List<Widget> _buildGeneralShareRow(SharePresentationBloc bloc, SharePresentationStyle style) {
     return [
+      SizedBox(height: 24.h),
       SmartText(APPStrings.generalAccess.tr, style: style.userListTitleStyle),
       SizedBox(height: 16.h),
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SmartImage(
             path: AppImages.icAnyoneWithLink,
@@ -205,6 +226,7 @@ class SharePresentationScreen extends StatelessWidget {
           ),
           SizedBox(width: 12.w),
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -222,21 +244,16 @@ class SharePresentationScreen extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          Row(
-            children: [
-              SmartText(APPStrings.viewer.tr, style: style.userListTitleStyle),
-              SizedBox(width: 4.w),
-              SmartImage(path: AppImages.icArrowDropDown, height: 16.w, width: 16.w),
-            ],
-          ),
+          _buildGeneralAccessDropDownField(bloc)
         ],
-      )
+      ),
+      SizedBox(height: 24.h),
     ];
   }
 
   Widget _buildBottomNavbar(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+      padding: EdgeInsets.symmetric(vertical: 24.h),
       child: Row(
         children: [
           Expanded(
@@ -260,6 +277,58 @@ class SharePresentationScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPeopleAccessDropDownField(SharePresentationBloc bloc, UserListModel user) {
+    return BlocBuilder<SharePresentationBloc, SharePresentationState>(
+      buildWhen: (previous, current) => current is ChangeUserAccessTypeState,
+      builder: (context, state) {
+        return SmartDropDown<UserAccessType>(
+          contentPadding: EdgeInsets.zero,
+          isIcArrowDropDown: user.role!.isModifiable,
+          isExpanded: false,
+          border: const Border(top: BorderSide.none),
+          items: bloc.arrPeopleAccessType.map((UserAccessType type) {
+            return SmartDropDownItem<UserAccessType>(
+              value: type,
+              title: type.accessType ?? APPStrings.select.tr,
+            );
+          }).toList(),
+          onChanged: (type) {
+            if (type != null) {
+              bloc.add(ChangeUserAccessTypeEvent(type, user));
+            }
+          },
+          selectedItem: user.userAccessType,
+        );
+      },
+    );
+  }
+
+  Widget _buildGeneralAccessDropDownField(SharePresentationBloc bloc) {
+    return BlocBuilder<SharePresentationBloc, SharePresentationState>(
+      buildWhen: (previous, current) => current is ChangeGeneralAccessTypeState,
+      builder: (context, state) {
+        return SmartDropDown<UserAccessType>(
+          isIcArrowDropDown: true,
+          isExpanded: false,
+          contentPadding: EdgeInsets.zero,
+          border: const Border(top: BorderSide.none),
+          items: bloc.arrGeneralAccessType.map((UserAccessType type) {
+            return SmartDropDownItem<UserAccessType>(
+              value: type,
+              title: type.accessType ?? APPStrings.select.tr,
+            );
+          }).toList(),
+          onChanged: (type) {
+            if (type != null) {
+              bloc.add(ChangeGeneralAccessTypeEvent(type));
+            }
+          },
+          selectedItem: bloc.selectedGeneralAccessType,
+        );
+      },
     );
   }
 }

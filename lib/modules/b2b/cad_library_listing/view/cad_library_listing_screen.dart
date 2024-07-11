@@ -22,7 +22,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 24.h),
                     _buildCadFilterCount(cadLibraryListingBloc, context),
-                    SizedBox(height: 24.h),
+                    _buildSearchTextField(cadLibraryListingBloc),
                     _buildCadList(cadLibraryListingBloc),
                     SizedBox(height: 16.h),
                   ],
@@ -46,6 +46,17 @@ class CadLibraryListingScreen extends StatelessWidget {
       onFavorite: () {
         context.pushNamed(AppRoutes.wishListPage);
       },
+    );
+  }
+
+  Widget _buildSearchTextField(CadLibraryListingBloc bloc) {
+    return SmartTextField(
+      hintText: APPStrings.searchCAD.tr,
+      controller: bloc.cadLibrarySearchController,
+      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+      padding: EdgeInsets.symmetric(vertical: 16.w),
+      textInputAction: TextInputAction.search,
+      onTapOutside: (event) {},
     );
   }
 

@@ -152,11 +152,20 @@ class ProductListScreen extends StatelessWidget {
                 bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
                     bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
                     bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
+
+                Function()? getAddToBagTap(ProductListBloc bloc) {
+                  return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
+                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
+                      ? () {}
+                      : null;
+                }
+
                 return ProductGridItem(
                   productDetails: productDetails,
                   isCustomisable: isCustomisable,
                   isOutOfStock: isOutOfStock,
-                  onAddToBagTap: bloc.screenIdentifier == ScreenIdentifier.productForRing ? () {} : null,
+                  onAddToBagTap: getAddToBagTap(bloc),
                   onEyeTap: () {
                     if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
                       BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails));

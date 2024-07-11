@@ -820,4 +820,7 @@ class APPStrings {
   static const String returnProduct = 'return_product';
   static const String xReturn = 'xReturn';
   static const String imSure = 'im_sure';
+  static const String searchDesign = 'search_design';
+  static const String searchCAD = 'search_cad';
+  static const String pending = 'pending';
 }

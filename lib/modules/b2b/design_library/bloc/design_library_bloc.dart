@@ -8,6 +8,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   bool isGrid = true;
   List<B2BCustomListingDataModel> designLibraryList = [];
 
+  final TextEditingController designSearchController = TextEditingController();
+
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   DesignLibraryBloc() : super(const DesignLibraryInitial()) {

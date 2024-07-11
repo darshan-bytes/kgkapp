@@ -15,6 +15,8 @@ class SmartDropDown<T> extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? textStyle;
   final Color? backgroundColor;
+  final bool isIcArrowDropDown;
+  final bool isExpanded;
 
   const SmartDropDown({
     super.key,
@@ -32,6 +34,8 @@ class SmartDropDown<T> extends StatelessWidget {
     this.contentPadding,
     this.textStyle,
     this.backgroundColor,
+    this.isIcArrowDropDown = true,
+    this.isExpanded = true,
   });
 
   @override
@@ -39,7 +43,7 @@ class SmartDropDown<T> extends StatelessWidget {
     final TextFieldStyle textFieldStyle = AppTheme.of(context).textFieldStyle;
     String? title = items.firstWhereOrNull((element) => element.value == selectedItem)?.title;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: isExpanded ? CrossAxisAlignment.stretch : CrossAxisAlignment.start,
       children: [
         if (labelText != null) ...[
           SmartText(
@@ -69,7 +73,7 @@ class SmartDropDown<T> extends StatelessWidget {
                 });
           },
           child: Container(
-            height: buttonHeight ?? 48.w,
+            height: !isExpanded ? null : buttonHeight ?? 48.w,
             padding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: backgroundColor,
@@ -79,21 +83,40 @@ class SmartDropDown<T> extends StatelessWidget {
                     color: textFieldStyle.enabledTextFieldBorderColor,
                   ),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SmartText(
-                    title ?? hintText ?? APPStrings.select.tr,
-                    style: title.isNotNullNorEmpty ? textFieldStyle.textStyle.merge(textStyle) : textFieldStyle.hintStyle,
-                  ),
-                ),
-                const SmartImage(path: AppImages.icArrowDropDown),
-              ],
-            ),
+            child: _getTitleView(textFieldStyle: textFieldStyle, isIcArrowDropDown: isIcArrowDropDown, title: title, hintText: hintText),
           ),
         ),
       ],
     );
+  }
+
+  Widget _getTitleView({String? title, String? hintText, required TextFieldStyle textFieldStyle, required bool isIcArrowDropDown}) {
+    if (isExpanded) {
+      return Row(
+        children: [
+          Expanded(
+            child: SmartText(
+              isAutoSizeText: true,
+              title ?? hintText ?? APPStrings.select.tr,
+              style: title.isNotNullNorEmpty ? textFieldStyle.textStyle.merge(textStyle) : textFieldStyle.hintStyle,
+            ),
+          ),
+          if (isIcArrowDropDown) const SmartImage(path: AppImages.icArrowDropDown),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SmartText(
+            title ?? hintText ?? APPStrings.select.tr,
+            style: title.isNotNullNorEmpty ? textFieldStyle.textStyle.merge(textStyle) : textFieldStyle.hintStyle,
+          ),
+          SizedBox(width: 2.w),
+          if (isIcArrowDropDown) const SmartImage(path: AppImages.icArrowDropDown),
+        ],
+      );
+    }
   }
 }
 

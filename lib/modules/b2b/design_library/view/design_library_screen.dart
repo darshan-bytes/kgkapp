@@ -29,7 +29,7 @@ class DesignLibraryScreen extends StatelessWidget {
               return Column(
                 children: [
                   _buildFilterCount(bloc, context),
-                  SizedBox(height: 24.h),
+                  _buildSearchTextField(bloc),
                   _buildList(bloc),
                 ],
               );
@@ -95,6 +95,17 @@ class DesignLibraryScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildSearchTextField(DesignLibraryBloc bloc) {
+    return SmartTextField(
+      hintText: APPStrings.searchDesign.tr,
+      controller: bloc.designSearchController,
+      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+      padding: EdgeInsets.symmetric(vertical: 16.w),
+      textInputAction: TextInputAction.search,
+      onTapOutside: (event) {},
     );
   }
 

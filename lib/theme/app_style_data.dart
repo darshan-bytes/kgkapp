@@ -1123,7 +1123,7 @@ class LightModeTheme extends AppTheme {
   @override
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle => SmartSuggestionProductListStyle(
         titleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
-        viewAllStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.primary, decoration: TextDecoration.underline),
+        viewAllStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.primary),
       );
 
   @override

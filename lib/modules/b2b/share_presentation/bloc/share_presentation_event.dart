@@ -13,3 +13,22 @@ final class SharePresentationInitialEvent extends SharePresentationEvent {
   @override
   List<Object> get props => [isPresentation];
 }
+
+final class ChangeUserAccessTypeEvent extends SharePresentationEvent {
+  final UserAccessType selectedUserAccessType;
+  final UserListModel user;
+
+  const ChangeUserAccessTypeEvent(this.selectedUserAccessType, this.user);
+
+  @override
+  List<Object> get props => [selectedUserAccessType, user];
+}
+
+final class ChangeGeneralAccessTypeEvent extends SharePresentationEvent {
+  final UserAccessType selectedGeneralAccessType;
+
+  const ChangeGeneralAccessTypeEvent(this.selectedGeneralAccessType);
+
+  @override
+  List<Object> get props => [selectedGeneralAccessType];
+}
