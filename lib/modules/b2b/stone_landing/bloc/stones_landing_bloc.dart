@@ -110,7 +110,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/syzfTzT/Bracelets.png",
       "https://i.ibb.co/zsvLW4N/Image.png",
-      "https://i.ibb.co/zsvLW4N/Image.png"
+      "https://i.ibb.co/syzfTzT/Bracelets.png"
     ];
     return List.generate(
       imageList.length,

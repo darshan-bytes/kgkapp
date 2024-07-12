@@ -67,7 +67,7 @@ class DiamondLandingScreen extends StatelessWidget {
           firstBannerButtonCallback: () {},
           secondBannerTitle: "Design your own necklace",
           secondBannerDescription: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
-          secondBannerBackgroundImagePath: "https://i.ibb.co/1J2wWPr/Image-4.png",
+          secondBannerBackgroundImagePath: "https://i.ibb.co/FVJDbvp/Image323.png",
           secondBannerButtonTitle: APPStrings.getStarted.tr,
           secondBannerButtonCallback: () {},
         ),

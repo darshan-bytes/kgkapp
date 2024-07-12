@@ -19,7 +19,11 @@ class PreviewCatalogueScreen extends StatelessWidget {
       child: BlocBuilder<PreviewCatalogueBloc, PreviewCatalogueState>(
         buildWhen: (previous, current) => current is PreviewCatalogueLoadedState,
         builder: (context, state) {
-          return SmartAppBar(title: bloc.title);
+          return SmartAppBar(
+            title: bloc.title,
+            onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
+            onSearch: () => context.pushNamed(AppRoutes.allReviewPage),
+          );
         },
       ),
     );

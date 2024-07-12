@@ -15,45 +15,48 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 18.w),
         child: _buildBody(context, style, bloc),
       ),
-      bottomNavigationBar: BlocBuilder<DesignLibraryFeedbackBloc, DesignLibraryFeedbackState>(
-        buildWhen: (previous, current) => current is DesignLibraryShowAddCommentState,
-        builder: (context, state) {
-          return bloc.showAddComment
-              ? SafeArea(
-                  bottom: bloc.showAddComment,
-            child: Container(
-              color: style.whiteColor,
-              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                        Stack(
-                          children: [
-                            SmartTextField(
-                              labelText: APPStrings.addAComment.tr,
-                              controller: bloc.feedbackController,
-                              focusNode: bloc.feedbackFocusNode,
-                              maxLines: 3,
-                              textInputAction: TextInputAction.newline,
-                            ),
-                            Positioned(
-                              right: 14.w,
-                              top: 86.w,
-                              child: SmartImage(
-                                height: 24.w,
-                                width: 24.w,
-                                path: AppImages.icSendComment,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: BlocBuilder<DesignLibraryFeedbackBloc, DesignLibraryFeedbackState>(
+          buildWhen: (previous, current) => current is DesignLibraryShowAddCommentState,
+          builder: (context, state) {
+            return bloc.showAddComment
+                ? SafeArea(
+                    bottom: bloc.showAddComment,
+                    child: Container(
+                      color: style.whiteColor,
+                      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Stack(
+                            children: [
+                              SmartTextField(
+                                labelText: APPStrings.addAComment.tr,
+                                controller: bloc.feedbackController,
+                                focusNode: bloc.feedbackFocusNode,
+                                maxLines: 3,
+                                textInputAction: TextInputAction.newline,
                               ),
-                            )
-                          ],
-                        ),
-                ],
-              ),
-            ),
-                )
-              : const SizedBox.shrink();
-        },
+                              Positioned(
+                                right: 14.w,
+                                top: 86.w,
+                                child: SmartImage(
+                                  height: 24.w,
+                                  width: 24.w,
+                                  path: AppImages.icSendComment,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
