@@ -25,6 +25,10 @@ class StoneListingScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: diamondListingBloc.paginationScrollController.canScrollToTop,
+        onTap: diamondListingBloc.paginationScrollController.scrollToTop,
+      ),
       bottomNavigationBar: FilterBottomActionBar(
         onFilterTap: () {
           Utils.showSmartModalBottomSheet(
@@ -223,7 +227,6 @@ class StoneListingScreen extends StatelessWidget {
                           },
                           onEyeTap: () {},
                           onFavTap: () {},
-                          onAddToBagTap: () {},
                           productDetails: diamondListingBloc.productList[index],
                         )
                       : ProductInfoItem(

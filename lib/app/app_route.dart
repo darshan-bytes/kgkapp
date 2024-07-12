@@ -77,6 +77,7 @@ class AppRoutes {
   static const messagesDetailPage = '/messagesDetailPage';
   static const exhibitionDetailsPage = '/exhibitionDetailsPage';
   static const calendarPage = '/calendarPage';
+  static const presentationPage = '/presentationPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -746,6 +747,14 @@ class AppRoutes {
           },
         );
 
+      case presentationPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
+            return const PresentationScreen();
+          },
+        );
+
       default:
         return _errorRoute();
     }
@@ -782,6 +791,7 @@ enum RoutesData {
   catalogueData,
   watchlistId,
   messageModel,
+  conceptId
 }
 
 enum ScreenIdentifier {

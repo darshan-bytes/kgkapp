@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class RetailerOrderListBuilder extends StatelessWidget {
   final void Function(int)? onTap;
-  final void Function(int)? onTapMenuButton;
+  final Function(int)? onTapMenuButton;
   final List<B2BCustomListingDataModel> ordersList;
   final SmartPaginationScrollController currentScrollController;
   final B2BListingType currentListType;
@@ -32,6 +32,7 @@ class RetailerOrderListBuilder extends StatelessWidget {
                   onTap: () {
                     onTap?.call(index);
                   },
+                  onTapMenuButton: onTapMenuButton != null ? () => onTapMenuButton!(index) : null,
                   margin:
                       EdgeInsets.only(bottom: (state is RetailerOrderListingLoadingMoreState && index == ordersList.length - 1) ? 0 : 16.h),
                   listingItemModel: ordersList[index],

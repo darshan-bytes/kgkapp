@@ -7,6 +7,7 @@ class ShopStoneByShapeSection extends StatelessWidget {
   final HomeScreenStyle homeScreenStyle;
   final StonesLandingScreenStyle style;
   final Widget? widgetBetweenTitleAndItems;
+  final ScrollController? scrollController;
 
   const ShopStoneByShapeSection({
     super.key,
@@ -16,6 +17,7 @@ class ShopStoneByShapeSection extends StatelessWidget {
     required this.homeScreenStyle,
     required this.style,
     this.widgetBetweenTitleAndItems,
+    this.scrollController,
   });
 
   @override
@@ -23,6 +25,8 @@ class ShopStoneByShapeSection extends StatelessWidget {
     return SmartHorizontalItemBuilder(
       title: title,
       titleStyle: style.sectionLabelStyle,
+      scrollController: scrollController,
+      isScrollbarVisible: scrollController != null,
       widgetBetweenTitleAndItems: widgetBetweenTitleAndItems,
       itemCount: itemList.length,
       itemBetweenSpace: 17.w,
@@ -38,10 +42,7 @@ class ShopStoneByShapeSection extends StatelessWidget {
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == itemList.length - 1 ? 17.w : 0,
-          ),
+          margin: EdgeInsets.only(left: index == 0 ? 17.w : 0, right: index == itemList.length - 1 ? 17.w : 0, bottom: 10.h),
           imagePadding: EdgeInsets.all(12.w),
           titleMaxLines: 1,
           imageUrl: item.imageUrl ?? '',

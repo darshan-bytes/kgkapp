@@ -31,6 +31,7 @@ class GemstoneLandingScreen extends StatelessWidget {
           onTap: (context, item) {},
           homeScreenStyle: homeScreenStyle,
           style: style,
+          scrollController: bloc.shopGemstonesScrollController,
         ),
         CraftedForYourSpecialMomentSection(
           style: style,

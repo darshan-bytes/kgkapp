@@ -34,6 +34,7 @@ class B2BListingItem extends StatelessWidget {
   final B2BListingType type;
   final Function()? onTap;
   final Function()? onTapMenuButton;
+  final Function()? onTapCircleWithText;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final double? gridSpacing;
@@ -53,6 +54,7 @@ class B2BListingItem extends StatelessWidget {
     this.gridRunSpacing,
     this.columns = 2,
     this.isListingView = false,
+    this.onTapCircleWithText,
   });
 
   @override
@@ -191,20 +193,22 @@ class B2BListingItem extends StatelessWidget {
   }
 
   Widget _buildCircleWithValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
-    return Container(
-      width: 24.w,
-      height: 24.w,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        border: Border.all(color: style.borderColor, width: 1.5.w),
-        shape: BoxShape.circle,
-      ),
-      child: SmartText(
-        field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
-        style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
-        isAutoSizeText: true,
-      ),
-    );
+    return GestureDetector(
+        onTap: onTapCircleWithText,
+        child: Container(
+          width: 24.w,
+          height: 24.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(color: style.borderColor, width: 1.5.w),
+            shape: BoxShape.circle,
+          ),
+          child: SmartText(
+            field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
+            style: auctionListItemStyle.valueStyle.copyWith(fontSize: 12.0.sp),
+            isAutoSizeText: true,
+          ),
+        ));
   }
 
   Widget _buildTextValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle) {
