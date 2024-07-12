@@ -100,7 +100,12 @@ class B2BListingItem extends StatelessWidget {
   }
 
   Widget _buildDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
-    return isListingView && columns == 1 ? _buildRowDetailItem(field, context, style) : B2BColumnDetailItem(field: field);
+    return isListingView && columns == 1
+        ? _buildRowDetailItem(field, context, style)
+        : B2BColumnDetailItem(
+            field: field,
+            onTapCircleWithText: onTapCircleWithText,
+          );
   }
 
   Widget _buildRowDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
@@ -141,8 +146,13 @@ class B2BListingItem extends StatelessWidget {
 
 class B2BColumnDetailItem extends StatelessWidget {
   final B2BItemField field;
+  final Function()? onTapCircleWithText;
 
-  const B2BColumnDetailItem({super.key, required this.field});
+  const B2BColumnDetailItem({
+    super.key,
+    required this.field,
+    this.onTapCircleWithText,
+  });
 
   @override
   Widget build(BuildContext context) {
