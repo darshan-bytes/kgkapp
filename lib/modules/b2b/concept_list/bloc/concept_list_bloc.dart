@@ -24,7 +24,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
   void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) async {
     emit(ConceptListReloadState());
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
 
     searchController.clear();
     paginationScrollController.init(

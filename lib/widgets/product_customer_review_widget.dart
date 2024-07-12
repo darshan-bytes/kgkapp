@@ -45,6 +45,8 @@ class ProductCustomerReviewWidget extends StatelessWidget {
           trimCollapsedText: APPStrings.readMore.tr,
           trimExpandedText: APPStrings.readLess.tr,
           style: style.createdDateStyle,
+          moreStyle: style.readMoreStyle,
+          lessStyle: style.readMoreStyle,
         ),
         if (reviewDataModel.images != null && reviewDataModel.images!.isNotEmpty) ...[
           SizedBox(height: 12.h),

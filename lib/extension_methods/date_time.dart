@@ -56,4 +56,12 @@ extension DateTimeExt on DateTime {
 
     return '$day$suffix $month $year';
   }
+
+  String get monthNameShort {
+    return DateFormat.MMM().format(this);
+  }
+
+  String get monthNameFull {
+    return DateFormat.MMMM().format(this);
+  }
 }

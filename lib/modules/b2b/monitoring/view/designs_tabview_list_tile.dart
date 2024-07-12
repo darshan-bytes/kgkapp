@@ -17,6 +17,7 @@ class DesignsTabviewListTile extends StatelessWidget {
               controller: monitoringBloc.designSearchController,
               hintText: APPStrings.searchX.tr.interpolate([APPStrings.designs.tr.toLowerCase()]),
               onFieldSubmitted: (value) => monitoringBloc.add(MonitoringListingSearchEvent()),
+              onTapOutside: (p) {},
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
                 padding: EdgeInsets.all(14.w),
@@ -31,7 +32,14 @@ class DesignsTabviewListTile extends StatelessWidget {
         child: SelectionButton(
           borderRadius: BorderRadius.zero,
           isSelected: false,
-          onTap: () {},
+          onTap: () {
+            Utils.showSmartModalBottomSheet(
+              context: context,
+              builder: (context) => FilterScreen(
+                onApply: () {},
+              ),
+            );
+          },
           image: AppImages.icFilter,
           title: APPStrings.filter.tr,
         ),

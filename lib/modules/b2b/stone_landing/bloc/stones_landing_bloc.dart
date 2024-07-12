@@ -12,6 +12,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   String appbarTitle = APPStrings.diamond.tr;
 
   // Shop Diamonds List
+  final ScrollController shopDiamondsScrollController = ScrollController();
   final List<AuctionListModel> shopDiamondsByStyleList = _generateShopDiamondList();
 
   // Origin of Diamonds List
@@ -24,18 +25,20 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   final List<FAQ> diamondFAQS = _generateDiamondFAQS();
 
   // Gemstone FAQs List
-  final List<FAQ> gemstoneFAQS = _generateDiamondFAQS();
+  final List<FAQ> gemstoneFAQS = _generateGemstoneFAQS();
 
   // Shop Gemstones List
+  final ScrollController shopGemstonesScrollController = ScrollController();
   final List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
 
   // Shop by Style List
-  final List<AuctionListModel> shopByStyleList = _generateGetInspiredList();
+  final List<AuctionListModel> shopByStyleList = _generateGetInspiredList(isGemstone: true);
 
   // Newly Launched Items List
   final List<ProductDetails> newlyLaunchedItemsList = _generateNewlyLaunchedList();
 
   // Shop by Metal List
+  final ScrollController shopByMetalScrollController = ScrollController();
   final List<AuctionListModel> shopByMetalList = _generateShopByMetalList();
 
   // Top Selling Categories List
@@ -104,20 +107,26 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   // Generate Get Inspired List
-  static List<AuctionListModel> _generateGetInspiredList() {
+  static List<AuctionListModel> _generateGetInspiredList({bool isGemstone = false}) {
     List<String> titleList = ["Diamonds rings", "Diamonds necklace", "Diamonds earrings", "Diamonds bracelet"];
     List<String> imageList = [
       "https://i.ibb.co/zsvLW4N/Image.png",
       "https://i.ibb.co/syzfTzT/Bracelets.png",
       "https://i.ibb.co/zsvLW4N/Image.png",
-      "https://i.ibb.co/zsvLW4N/Image.png"
+      "https://i.ibb.co/syzfTzT/Bracelets.png"
+    ];
+    List<String> shopByStyleImage = [
+      "https://i.ibb.co/zsvLW4N/Image.png",
+      "https://i.ibb.co/x1q3y0C/Image11.png",
+      "https://i.ibb.co/G7RH7k4/Image22.png",
+      "https://i.ibb.co/XYsTf4M/Image33.png"
     ];
     return List.generate(
       imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
         name: titleList[index],
-        imageUrl: imageList[index],
+        imageUrl: isGemstone ? shopByStyleImage[index] : imageList[index],
       ),
     );
   }
@@ -150,24 +159,60 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               "Real diamonds, whether they are formed naturally or in the lab, will likely have some internal flaws. You can also "
               "perform the fog test by breathing on the diamond, as real diamonds disperse heat quickly and will not fog up for more "
               "than a few short seconds. If you have a mounted diamond, you can take it to a jeweler who can examine it with a loupe, "
-              "microscope, or diamond tester, which uses electrical conductivity to differentiate between real and fake diamonds. Learn more in our guide."),
+              "microscope, or diamond tester, which uses electrical conductivity to differentiate between real and fake diamonds. "
+              "Learn more in our guide."),
       FAQ(
-          question: "What types of diamonds and gemstones do you offer?",
+          question: "How are diamonds made?",
           answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
               "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
       FAQ(
-          question: "How can I determine the quality and authenticity of the jewelry I purchase?",
+          question: "What are the 4Cs of diamonds?",
           answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
               "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
       FAQ(
-        question: "What types of diamonds and gemstones do you offer?",
-        answer:
-            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+        question: "What are the different kinds of diamond shapes?",
+        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       ),
       FAQ(
-        question: "How can I determine the quality and authenticity of the jewelry I purchase?",
-        answer:
-            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+        question: "Which diamonds are the most popular?",
+        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+            "ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
+      FAQ(
+        question: "What jewelry looks best with diamonds?",
+        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal,"
+            " diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
+    ];
+  }
+
+  // Generate Gemstone FAQs
+  static List<FAQ> _generateGemstoneFAQS() {
+    return [
+      FAQ(
+          question: "What is a gemstone?",
+          answer: "A gemstone is a mineral or rock that is cut and polished for use in jewelry or other decorative items."
+              "There are hundreds of types of gemstones, but the most common are diamonds, rubies, emeralds, sapphires, and pearls. "
+              "Gemstones are formed deep within the Earth's crust under extreme heat and pressure. "
+              "They are found in a variety of locations around the world, including mines, riverbeds, and volcanic areas."),
+      FAQ(
+          question: "What is the rarest gemstone?",
+          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+      FAQ(
+          question: "What are the different kinds of diamond shapes?",
+          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+      FAQ(
+        question: "Which diamonds are the most popular?",
+        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
+            "diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
+      ),
+      FAQ(
+        question: "What jewelry looks best with diamonds?",
+        answer: "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, "
+            "diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
       )
     ];
   }

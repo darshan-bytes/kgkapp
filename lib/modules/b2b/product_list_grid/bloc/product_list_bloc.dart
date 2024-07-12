@@ -68,7 +68,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 isOutOfStock: index % 2 == 0,
               )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
-      appbarTitle = APPStrings.diamond.tr;
+      appbarTitle = APPStrings.diamonds.tr;
       productList.clear();
       List.generate(
           20,

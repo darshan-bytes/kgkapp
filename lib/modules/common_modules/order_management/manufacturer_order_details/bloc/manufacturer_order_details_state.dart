@@ -32,3 +32,12 @@ final class ManufacturerOrderListLoadedState extends ManufacturerOrderDetailsSta
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ManufacturerCancellationReasonsChangeState extends ManufacturerOrderDetailsState {
+  final CancellationReasonModel cancellationReasonModel;
+
+  const ManufacturerCancellationReasonsChangeState(this.cancellationReasonModel);
+
+  @override
+  List<Object> get props => [cancellationReasonModel];
+}

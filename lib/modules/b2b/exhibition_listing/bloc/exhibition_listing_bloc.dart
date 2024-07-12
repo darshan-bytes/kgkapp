@@ -9,7 +9,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
 
   List<ExhibitionListingModel> exhibitionNameListing = [];
 
-  List<ExhibitionListingModel> exhibitionSubList = _generateSubList();
+  List<ExhibitionSubListingModel> exhibitionSubList = _generateSubList();
 
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
     on<InitialExhibitionListingEvent>(_onInitialExhibitionListingEvent);
@@ -36,23 +36,34 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
       ),
       ExhibitionListingModel(
         title: 'Exhibitions in Ahmedabad',
-        exhibitionSubList: _generateSubList(),
+        exhibitionSubList: _generateUpcomingSubList(),
       ),
       ExhibitionListingModel(
         title: 'Exhibitions in Vadodara',
-        exhibitionSubList: _generateSubList(),
+        exhibitionSubList: _generateUpcomingSubList(),
       ),
     ];
 
     emit(ExhibitionListingLoadedState());
   }
 
-  static List<ExhibitionListingModel> _generateSubList() {
+  static List<ExhibitionSubListingModel> _generateSubList() {
     return List.generate(4, (index) {
-      return ExhibitionListingModel(
+      return ExhibitionSubListingModel(
         name: 'Engagement Rings Collections',
         author: 'by Martin Flyer',
         status: 'Ongoing',
+        id: index.toString(),
+      );
+    });
+  }
+
+  static List<ExhibitionSubListingModel> _generateUpcomingSubList() {
+    return List.generate(4, (index) {
+      return ExhibitionSubListingModel(
+        name: 'Engagement Rings Collections $index',
+        author: 'by Martin Flyer',
+        status: 'Upcoming',
         id: index.toString(),
       );
     });

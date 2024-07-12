@@ -54,7 +54,6 @@ class BlocGenerator {
       BlocProvider<MonitoringBloc>(create: (_) => MonitoringBloc()),
       BlocProvider<FindStoreBloc>(create: (_) => FindStoreBloc()),
       BlocProvider<CadLibraryListingBloc>(create: (_) => CadLibraryListingBloc()),
-      BlocProvider<ExhibitionDetailsOrdersBloc>(create: (_) => ExhibitionDetailsOrdersBloc()),
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
       BlocProvider<DesignLibraryFeedbackBloc>(create: (_) => DesignLibraryFeedbackBloc()),
       BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),
@@ -67,6 +66,9 @@ class BlocGenerator {
       BlocProvider<AddToWatchlistBloc>(create: (_) => AddToWatchlistBloc()),
       BlocProvider<ManufacturerOrderListingBloc>(create: (_) => ManufacturerOrderListingBloc()),
       BlocProvider<RetailerOrderListingBloc>(create: (_) => RetailerOrderListingBloc()),
+      BlocProvider<UserMasterListingBloc>(create: (_) => UserMasterListingBloc()),
+      BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
+      BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
     ];
   }

@@ -148,13 +148,9 @@ class ProductMenuBottomSheet extends StatelessWidget {
   Widget _buildButtons(BuildContext context) {
     return Column(
       children: [
-        SmartButton(
-          onTap: () {},
-          title: APPStrings.addToBag.tr,
-          prefixImage: AppImages.icShoppingBag,
-        ),
+        SmartButton(onTap: () {}, title: APPStrings.addToBag.tr.toLowerCase().capitalizeFirst, prefixImage: AppImages.icShoppingBag),
         SizedBox(height: 8.h),
-        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr),
+        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr.toLowerCase().capitalizeFirst),
       ],
     );
   }

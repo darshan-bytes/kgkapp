@@ -68,8 +68,10 @@ class RetailerGemstoneTabView extends StatelessWidget {
                   ordersList: retailerOrderListingBloc.gemstoneList,
                   currentListType: B2BListingType.retailerOrderListingDiamondType,
                   onTap: (index) {
-                    context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
-                        arguments: {RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id});
+                    context.pushNamed(AppRoutes.manufacturerOrderDetailsPage, arguments: {
+                      RoutesData.orderNumber: retailerOrderListingBloc.diamondList[index].id,
+                      RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
+                    });
                   },
                 );
               },

@@ -228,6 +228,20 @@ abstract class AppTheme {
 
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
 
+  OrionStyle get orionStyle;
+
+  MessagesStyle get messagesStyle;
+
+  TaskDetailsStyle get taskDetailsStyle;
+
+  ExhibitionDetailsItemStyle get exhibitionDetailsItemStyle;
+
+  ReturnOrderStyle get returnOrderStyle;
+
+  ConfirmCancelPopupStyle get confirmCancelPopupStyle;
+
+  CalendarStyle get calendarStyle;
+
   NewsletterScreenStyle get newsletterScreenStyle;
 }
 
@@ -1011,13 +1025,14 @@ class ReviewDetailsStyle {
   final Color dotColor;
   final TextStyle createdDateStyle;
   final TextStyle titleStyle;
+  final TextStyle readMoreStyle;
 
-  ReviewDetailsStyle({
-    required this.userNameStyle,
-    required this.dotColor,
-    required this.createdDateStyle,
-    required this.titleStyle,
-  });
+  ReviewDetailsStyle(
+      {required this.userNameStyle,
+      required this.dotColor,
+      required this.createdDateStyle,
+      required this.titleStyle,
+      required this.readMoreStyle});
 }
 
 class OrderConfirmationStyle {
@@ -1366,12 +1381,14 @@ class AuctionListItemStyle {
 class SmartTileLineStepperStyle {
   final Color completedIndicatorColor;
   final Color upcomingIndicatorColor;
+  final Color upcomingColor;
   final TextStyle titleStyle;
   final TextStyle subtitleStyle;
 
   SmartTileLineStepperStyle({
     required this.completedIndicatorColor,
     required this.upcomingIndicatorColor,
+    required this.upcomingColor,
     required this.titleStyle,
     required this.subtitleStyle,
   });
@@ -2102,7 +2119,179 @@ class SmartSuggestionProductListStyle {
   final TextStyle titleStyle;
   final TextStyle viewAllStyle;
 
-  SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
+  SmartSuggestionProductListStyle({
+    required this.titleStyle,
+    required this.viewAllStyle,
+  });
+}
+
+class OrionStyle {
+  final TextStyle selectionTitleStyle;
+  final TextStyle diamondSelectionTitleStyle;
+  final TextStyle selectedDiamondSelectionTitleStyle;
+  final TextStyle diamondSelectionValueStyle;
+  final TextStyle selectedDiamondSelectionValueStyle;
+  final Color selectedDiamondSelectionBackgroundColor;
+  final Color rangeSliderTrackColor;
+  final Color sliderThumbColor;
+  final Color sliderThumbBorderColor;
+  final TextStyle selectDiamondTitleStyle;
+  final TextStyle propertySelectionSubtitleStyle;
+  final TextStyle selectedPropertyStyle;
+  final TextStyle propertyStyle;
+
+  OrionStyle({
+    required this.selectionTitleStyle,
+    required this.diamondSelectionTitleStyle,
+    required this.selectedDiamondSelectionTitleStyle,
+    required this.diamondSelectionValueStyle,
+    required this.selectedDiamondSelectionValueStyle,
+    required this.selectedDiamondSelectionBackgroundColor,
+    required this.rangeSliderTrackColor,
+    required this.sliderThumbColor,
+    required this.sliderThumbBorderColor,
+    required this.selectDiamondTitleStyle,
+    required this.propertySelectionSubtitleStyle,
+    required this.selectedPropertyStyle,
+    required this.propertyStyle,
+  });
+}
+
+class MessagesStyle {
+  final TextStyle userNameStyle;
+  final TextStyle timeAgoStyle;
+  final TextStyle messagesStyle;
+  final Color primaryColor;
+  final Color color8C8C8C;
+  final TextStyle messageDetailTitleStyle;
+  final TextStyle messageDetailToUserNameStyle;
+  final TextStyle messageDetailFullMessageStyle;
+
+  MessagesStyle({
+    required this.userNameStyle,
+    required this.timeAgoStyle,
+    required this.messagesStyle,
+    required this.primaryColor,
+    required this.color8C8C8C,
+    required this.messageDetailTitleStyle,
+    required this.messageDetailToUserNameStyle,
+    required this.messageDetailFullMessageStyle,
+  });
+}
+
+class TaskDetailsStyle {
+  final Color whiteColor;
+  final Color headerBgColor;
+  final Color activeColor;
+  final Color disableColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle headerSubTitleStyle;
+  final TextStyle statusStyle;
+  final TextStyle userNameStyle;
+
+  TaskDetailsStyle({
+    required this.whiteColor,
+    required this.headerBgColor,
+    required this.activeColor,
+    required this.disableColor,
+    required this.headerTitleStyle,
+    required this.headerSubTitleStyle,
+    required this.statusStyle,
+    required this.userNameStyle,
+  });
+}
+
+class ExhibitionDetailsItemStyle {
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color iconColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle listTextStyle;
+  final TextStyle listTitleStyle;
+  final TextStyle listSubTitleStyle;
+  final TextStyle listStatusStyle;
+
+  ExhibitionDetailsItemStyle({
+    required this.backgroundColor,
+    required this.borderColor,
+    required this.iconColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.listTextStyle,
+    required this.listTitleStyle,
+    required this.listSubTitleStyle,
+    required this.listStatusStyle,
+  });
+}
+
+class ReturnOrderStyle {
+  final Color orderInfoBackgroundColor;
+  final Color crossColor;
+  final Color whiteColor;
+  final TextStyle titleStyle;
+  final TextStyle orderIdStyle;
+  final TextStyle imageSubTitleStyle;
+  final TextStyle imageTitleStyle;
+  final TextStyle quantityStyle;
+  final TextStyle cancelReasonTitleStyle;
+
+  ReturnOrderStyle(
+      {required this.orderInfoBackgroundColor,
+      required this.crossColor,
+      required this.whiteColor,
+      required this.titleStyle,
+      required this.orderIdStyle,
+      required this.imageSubTitleStyle,
+      required this.imageTitleStyle,
+      required this.quantityStyle,
+      required this.cancelReasonTitleStyle});
+}
+
+class ConfirmCancelPopupStyle {
+  final Color detailBgColor;
+  final Color whiteColor;
+  final TextStyle headerTitleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle itemsTitleStyle;
+  final TextStyle qtyTitleStyle;
+
+  ConfirmCancelPopupStyle({
+    required this.detailBgColor,
+    required this.whiteColor,
+    required this.headerTitleStyle,
+    required this.subTitleStyle,
+    required this.itemsTitleStyle,
+    required this.qtyTitleStyle,
+  });
+}
+
+class CalendarStyle {
+  final Color borderColor;
+  final Color primary;
+  final TextStyle calendarViewChangeButtonStyle;
+  final Color cellBorderColor;
+  final Color meetEventCellBackgroundColor;
+  final Color taskEventCellBackgroundColor;
+  final TextStyle meetEventTextStyle;
+  final TextStyle currentMonthHeaderStyle;
+  final Color dropDownArrowColor;
+  final TextStyle viewAllStyle;
+
+  CalendarStyle({
+    required this.borderColor,
+    required this.primary,
+    required this.calendarViewChangeButtonStyle,
+    required this.cellBorderColor,
+    required this.meetEventCellBackgroundColor,
+    required this.taskEventCellBackgroundColor,
+    required this.meetEventTextStyle,
+    required this.currentMonthHeaderStyle,
+    required this.dropDownArrowColor,
+    required this.viewAllStyle,
+  });
 }
 
 class NewsletterScreenStyle {

@@ -788,6 +788,54 @@ class APPStrings {
 
   static const String deliveryDate = 'delivery_date';
 
+  //User master
+  static const String userMaster = 'user_master';
+  static const String noUserFound = 'no_user_found';
+  static const String searchUser = 'search_user';
+
+  //Orion
+  static const String orion = 'orion';
+  static const String selectDiamondShape = 'select_diamond_shape';
+  static const String preferredPriceRange = 'preferred_price_range';
+
+  // Messages
+  static const String noMessageFound = 'no_message_found';
+  static const String inbox = 'inbox';
+  static const String sent = 'sent';
+  static const String trash = 'trash';
+  static const String favourite = 'favourite';
+  static const String toX = 'to_X';
+  static const String me = 'Me';
+  static const String priority = 'priority';
+  static const String startDate = 'start_date';
+  static const String dueDate = 'due_date';
+  static const String description = 'description';
+  static const String assignFrom = 'assign_from';
+
+  static const String orders = 'orders';
+  static const String products = 'products';
+  static const String ordersReceived = 'orders_received';
+  static const String avgOrderValue = 'avg_order_value';
+
+  static const String returnProduct = 'return_product';
+  static const String xReturn = 'xReturn';
+  static const String imSure = 'im_sure';
+  static const String searchDesign = 'search_design';
+  static const String searchCAD = 'search_cad';
+  static const String pending = 'pending';
+
+  static const String day = 'day';
+  static const String week = 'week';
+  static const String month = 'month';
+  static const String year = 'year';
+
+  static const String viewColon = 'view_colon';
+
+  static const String all = 'all';
+  static const String tasks = 'tasks';
+  static const String meetings = 'meetings';
+  static const String sku = 'sku';
+
   // Newsletter
   static const String newsletter = 'newsletter';
   static const String template = "template";

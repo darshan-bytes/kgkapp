@@ -45,6 +45,8 @@ class FilterScreen extends StatelessWidget {
                         SmartTextField.search(
                           hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData.name?.toLowerCase()]),
                           controller: filterBloc.searchController,
+                          textInputAction: TextInputAction.search,
+                          onTapOutside: (event) {},
                         ),
                         SizedBox(height: 4.h),
                         Expanded(

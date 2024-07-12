@@ -88,6 +88,8 @@ class JewelleryLandingScreen extends StatelessWidget {
       title: APPStrings.shopByMetal.tr,
       titleStyle: style.sectionLabelStyle,
       itemCount: bloc.shopByMetalList.length,
+      scrollController: bloc.shopByMetalScrollController,
+      isScrollbarVisible: true,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
       titleOptionalPadding: EdgeInsets.only(left: 17.w),
@@ -106,6 +108,7 @@ class JewelleryLandingScreen extends StatelessWidget {
           margin: EdgeInsets.only(
             left: index == 0 ? 17.w : 0,
             right: index == bloc.shopByMetalList.length - 1 ? 17.w : 0,
+            bottom: 10.h,
           ),
           titleMaxLines: 1,
           imageUrl: item.imageUrl ?? '',
@@ -134,7 +137,7 @@ class JewelleryLandingScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           StonesBannerView(
-            backgroundImagePath: "https://i.ibb.co/1J2wWPr/Image-4.png",
+            backgroundImagePath: "https://i.ibb.co/FVJDbvp/Image323.png",
             bannerTitleText: "Design your own necklace",
             bannerSubTitleText: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
             bannerTitleStyle: style.designOwnEarringTextStyle,

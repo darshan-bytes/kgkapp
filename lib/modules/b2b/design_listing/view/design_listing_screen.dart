@@ -60,10 +60,12 @@ class DesignListingScreen extends StatelessWidget {
           children: [
             Expanded(
               child: SmartTextField(
-                hintText: APPStrings.searchProjects.tr,
+                hintText: APPStrings.searchDesign.tr,
                 controller: bloc.designSearchController,
                 suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
                 padding: EdgeInsets.symmetric(vertical: 24.w),
+                onTapOutside: (val) {},
+                textInputAction: TextInputAction.search,
               ),
             ),
             SizedBox(width: 16.w),

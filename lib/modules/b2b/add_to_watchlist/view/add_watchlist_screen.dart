@@ -57,7 +57,7 @@ class AddWatchlistScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(height: 48.h),
+            if (bloc.isRemove) SizedBox(height: 32.h),
             _bottomNavigationBar(context, bloc),
             SizedBox(height: 16.h),
           ],

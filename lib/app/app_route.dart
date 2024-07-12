@@ -58,7 +58,6 @@ class AppRoutes {
   static const presentationPreviewHistory = '/presentationPreviewHistory';
   static const findStorePage = '/findStorePage';
   static const cadLibraryListingPage = '/cadLibraryListingPage';
-  static const exhibitionDetailsOrdersPage = '/exhibitionDetailsOrders';
   static const designLibraryFeedbackPage = '/designLibraryFeedbackPage';
   static const exhibitionListingPage = '/exhibitionListingPage';
   static const allReviewPage = '/allReviewPage';
@@ -72,6 +71,13 @@ class AppRoutes {
   static const myOrderTypeSelectionPage = '/myOrderTypeSelectionPage';
   static const retailerOrderListingPage = '/retailerOrderListingPage';
   static const manufacturerOrderDetailsPage = '/manufacturerOrderDetailsPage';
+  static const userMasterListingPage = '/userMasterListingPage';
+  static const orionPage = '/orionPage';
+  static const messagesPage = '/messagesPage';
+  static const messagesDetailPage = '/messagesDetailPage';
+  static const exhibitionDetailsPage = '/exhibitionDetailsPage';
+  static const calendarPage = '/calendarPage';
+  static const presentationPage = '/presentationPage';
   static const newsletterPage = '/newsletterPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -564,14 +570,6 @@ class AppRoutes {
           },
           settings: settings,
         );
-      case exhibitionDetailsOrdersPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ExhibitionDetailsOrdersBloc>(context).add(const ExhibitionDetailsOrdersInitialEvent());
-            return const ExhibitionDetailsOrdersScreen();
-          },
-          settings: settings,
-        );
 
       case designLibraryFeedbackPage:
         return MaterialPageRoute(
@@ -652,6 +650,15 @@ class AppRoutes {
           settings: settings,
         );
 
+      case orionPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+            return const OrionScreen();
+          },
+          settings: settings,
+        );
+
       case manufacturerOrderListingPage:
         return MaterialPageRoute(
           builder: (context) {
@@ -698,6 +705,66 @@ class AppRoutes {
           settings: settings,
         );
 
+      case userMasterListingPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
+            return const UserMasterListingScreen();
+          },
+          settings: settings,
+        );
+
+      case messagesPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MessagesBloc>(
+              create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
+              child: const MessagesScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case calendarPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<CalendarBloc>(
+              create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
+              child: const CalendarScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case messagesDetailPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<MessageDetailBloc>(
+              create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
+              child: const MessageDetailScreen(),
+            );
+          },
+          settings: settings,
+        );
+
+      case exhibitionDetailsPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<ExhibitionDetailsBloc>(
+              create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+              child: const ExhibitionDetailsScreen(),
+            );
+          },
+        );
+
+      case presentationPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
+            return const PresentationScreen();
+          },
+        );
+
       default:
         return _errorRoute();
     }
@@ -733,6 +800,8 @@ enum RoutesData {
   presentationId,
   catalogueData,
   watchlistId,
+  messageModel,
+  conceptId
 }
 
 enum ScreenIdentifier {
@@ -749,6 +818,8 @@ enum ScreenIdentifier {
   orderDetailsForMyOrder,
   orderDetailsForRetailer,
   orderDetailsForManufacturer,
+  cancelOrderForRetailer,
+  cancelOrderForManufacturer,
 }
 
 extension RoutesDataExtension on BuildContext {

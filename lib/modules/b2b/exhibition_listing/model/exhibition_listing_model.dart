@@ -10,7 +10,7 @@ class ExhibitionListingModel {
   String? time;
   String? location;
   String? status;
-  List<ExhibitionListingModel>? exhibitionSubList = [];
+  List<ExhibitionSubListingModel>? exhibitionSubList = [];
   VoidCallback? onTap;
 
   ExhibitionListingModel({
@@ -25,5 +25,19 @@ class ExhibitionListingModel {
     this.status,
     this.exhibitionSubList,
     this.onTap,
+  });
+}
+
+class ExhibitionSubListingModel {
+  String? id;
+  String? name;
+  String? author;
+  String? status;
+
+  ExhibitionSubListingModel({
+    this.id,
+    this.name,
+    this.author,
+    this.status,
   });
 }

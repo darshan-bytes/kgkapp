@@ -37,7 +37,6 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   ];
 
   MakeInquiryBloc() : super(MakeInquiryInitial()) {
-    on<MakeInquiryEvent>((event, emit) {});
     on<MakeInquiryInitialEvent>(_onMakeInquiryInitialEvent);
     on<ChangeInquiryTypeEvent>(_onChangeInquiryTypeEvent);
     on<ChangeSelectProductEvent>(_onChangeSelectProductEvent);

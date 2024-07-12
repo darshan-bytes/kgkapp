@@ -27,11 +27,11 @@ class HomeScreen extends StatelessWidget {
             _buildViewAllCollectionsSection(style, context),
             _buildKGKCoutureTabBarSection(homeBloc, style, context),
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
-            _buildDealOfTheDaySection(homeBloc, style),
+            _buildDealOfTheDaySection(homeBloc, style, context),
             _buildShopByBrandsSection(homeBloc, style),
             _buildGetInspiredSection(homeBloc, style),
             _buildShopByStyleSection(homeBloc, style),
-            _buildRecentlyViewedSection(homeBloc, style)
+            _buildRecentlyViewedSection(homeBloc, style, context)
           ],
         ),
       ),
@@ -343,6 +343,7 @@ class HomeScreen extends StatelessWidget {
       color: style.primaryColor,
       width: context.width,
       child: Stack(
+        alignment: Alignment.topRight,
         children: [
           const SmartImage(
             path: AppImages.icPrimaryBgLine,
@@ -463,12 +464,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
       child: SmartSuggestionProductList(
           title: APPStrings.dealOfTheDay.tr,
-          onViewAllTap: () {},
+          onViewAllTap: () {
+            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+          },
           suggestedProductList: homeBloc.dealOfTheDayList,
           onEyeTap: () {},
           onFavTap: () {},
@@ -520,15 +523,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-        child: SmartSuggestionProductList(
-            title: APPStrings.recentlyViewed.tr,
-            onViewAllTap: () {},
-            suggestedProductList: homeBloc.recentlyViewList,
-            onEyeTap: () {},
-            onFavTap: () {},
-            scrollController: homeBloc.recentlyViewedScrollController));
+      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      child: SmartSuggestionProductList(
+        title: APPStrings.recentlyViewed.tr,
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        },
+        suggestedProductList: homeBloc.recentlyViewList,
+        onEyeTap: () {},
+        onFavTap: () {},
+        scrollController: homeBloc.recentlyViewedScrollController,
+      ),
+    );
   }
 }

@@ -1,0 +1,36 @@
+part of 'presentation_bloc.dart';
+
+sealed class PresentationState extends Equatable {
+  const PresentationState();
+}
+
+final class PresentationInitial extends PresentationState {
+  @override
+  List<Object> get props => [];
+}
+
+final class PresentationListReloadState extends PresentationState {
+  @override
+  List<Object> get props => [];
+}
+
+final class PresentationLoadedState extends PresentationState {
+  @override
+  List<Object> get props => [];
+}
+
+final class PresentationListLoadingMoreState extends PresentationState {
+  const PresentationListLoadingMoreState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class PresentationListLoadedMoreState extends PresentationState {
+  final int currentPage;
+
+  const PresentationListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}

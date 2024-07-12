@@ -1,0 +1,173 @@
+import 'package:kgk/kgk.dart';
+
+part 'exhibition_details_event.dart';
+
+part 'exhibition_details_state.dart';
+
+class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetailsState> {
+  String appbarTitle = '';
+  int currentIndex = 0;
+  bool isGrid = true;
+
+  late TabController tabController;
+
+  final List<Widget> tabs = <Widget>[
+    Tab(text: APPStrings.products.tr),
+    Tab(text: APPStrings.orders.tr),
+  ];
+
+  List<ExhibitionDetailsOrdersModel> exhibitionOrdersList = [];
+
+  List<ProductDetails> productList = [];
+
+  SmartPaginationScrollController orderScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController productPaginationScrollController = SmartPaginationScrollController();
+
+  final GlobalKey tabBarKey = GlobalKey();
+
+  ValueNotifier<bool> canScrollToTop = ValueNotifier<bool>(false);
+
+  ExhibitionDetailsBloc() : super(const ExhibitionDetailsInitialsState()) {
+    on<ExhibitionDetailsInitialEvent>(_onInitialEvent);
+    on<ExhibitionChangeTabsEvent>(_onChangeTabEvent);
+    on<ExhibitionListingLoadMoreEvent>(_onExhibitionListingLoadMoreEvent);
+    on<ExhibitionChangeListingTypeEvent>(_onExhibitionChangeListingTypeEvent);
+  }
+
+  void _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) {
+    emit(const ExhibitionDetailsReloadState());
+    appbarTitle = APPStrings.exhibition.tr;
+    isGrid = true;
+    _initScrollControllers();
+    productList.addAll(_generateProductList());
+    exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
+    emit(const ExhibitionDetailsLoadedState());
+  }
+
+  void _onChangeTabEvent(ExhibitionChangeTabsEvent event, Emitter<ExhibitionDetailsState> emit) {
+    emit(const ExhibitionDetailsReloadState());
+    scrollController.removeListener(scrollToTopListener);
+    currentIndex = tabController.index;
+    scrollController.addListener(scrollToTopListener);
+    emit(const ExhibitionChangeTabsState());
+  }
+
+  void _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) {
+    emit(const ExhibitionDetailsReloadState());
+    scrollController.removeListener(scrollToTopListener);
+    isGrid = event.isGrid;
+    productPaginationScrollController.onViewChange(!isGrid);
+    scrollController.addListener(scrollToTopListener);
+    emit(const ExhibitionChangeListingTypeState());
+  }
+
+  Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    emit(const ExhibitionListingLoadingMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+    _loadMoreData(event);
+    emit(ExhibitionListingLoadedMoreState(event.currentPage + 1));
+  }
+
+  void _loadMoreData(ExhibitionListingLoadMoreEvent event) {
+    if (currentIndex == 0) {
+      productList.addAll(_generateProductList());
+      productPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    } else {
+      exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
+      orderScrollController.isPageLoaded.complete(event.currentPage == 3);
+    }
+  }
+
+  void _initScrollControllers() {
+    if (productPaginationScrollController.isInitialised) {
+      productPaginationScrollController.dispose();
+      productPaginationScrollController = SmartPaginationScrollController();
+    }
+    productPaginationScrollController.init(
+      isSecondaryView: true,
+      loadAction: (int currentPage) async {
+        add(ExhibitionListingLoadMoreEvent(currentPage));
+      },
+    );
+
+    if (isGrid) {
+      productPaginationScrollController.controller.addListener(scrollToTopListener);
+    }
+
+    if (orderScrollController.isInitialised) {
+      orderScrollController.dispose();
+      orderScrollController = SmartPaginationScrollController();
+    }
+    orderScrollController.init(
+      loadAction: (int currentPage) async {
+        add(ExhibitionListingLoadMoreEvent(currentPage));
+      },
+    );
+  }
+
+  @override
+  Future<void> close() {
+    scrollController.removeListener(scrollToTopListener);
+    productPaginationScrollController.dispose();
+    orderScrollController.dispose();
+    return super.close();
+  }
+
+  static List<ProductDetails> _generateProductList() {
+    return List.generate(10, (index) {
+      return ProductDetails(
+        imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+        name: "Diamond Vine Ring in 18k Rose Gold",
+        originalPrice: '\$5,000.00',
+      );
+    });
+  }
+
+  static List<ExhibitionDetailsOrdersModel> _generateExhibitionOrdersList() {
+    return List.generate(
+      10,
+      (index) => ExhibitionDetailsOrdersModel(
+          approvedBy: "John Samanta",
+          approvedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+          items: '5',
+          totalAmount: '\$35,700',
+          market: "New York, USA",
+          marketImageUrl: AppImages.icFlagUSA,
+          orderName: "Dianne Russell",
+          id: index + 1),
+    );
+  }
+
+  ScrollController get scrollController {
+    if (currentIndex == 0) {
+      if (isGrid) {
+        return productPaginationScrollController.scrollController;
+      } else {
+        return productPaginationScrollController.secondaryScrollController;
+      }
+    } else {
+      return orderScrollController.scrollController;
+    }
+  }
+
+  void scrollToKey() {
+    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      Scrollable.ensureVisible(
+        tabBarKey.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void scrollToTopListener() {
+    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      Offset position = renderBox.localToGlobal(Offset.zero);
+      canScrollToTop.value = position.dy < 50.h;
+    } else {
+      canScrollToTop.value = false;
+    }
+  }
+}
