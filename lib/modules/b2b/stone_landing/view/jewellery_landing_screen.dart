@@ -88,6 +88,8 @@ class JewelleryLandingScreen extends StatelessWidget {
       title: APPStrings.shopByMetal.tr,
       titleStyle: style.sectionLabelStyle,
       itemCount: bloc.shopByMetalList.length,
+      scrollController: bloc.shopByMetalScrollController,
+      isScrollbarVisible: true,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
       titleOptionalPadding: EdgeInsets.only(left: 17.w),
@@ -106,6 +108,7 @@ class JewelleryLandingScreen extends StatelessWidget {
           margin: EdgeInsets.only(
             left: index == 0 ? 17.w : 0,
             right: index == bloc.shopByMetalList.length - 1 ? 17.w : 0,
+            bottom: 10.h,
           ),
           titleMaxLines: 1,
           imageUrl: item.imageUrl ?? '',

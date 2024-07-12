@@ -24,7 +24,7 @@ class OrderDetailsProductItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    buildDetailsColumn(style, APPStrings.skuNo.tr, productDetails.sku, isExpanded: true),
+                    buildDetailsColumn(style, APPStrings.sku.tr, productDetails.sku, isExpanded: true),
                     SizedBox(width: 24.w),
                     buildDetailsColumn(style, APPStrings.status.tr, '-',
                         isStatus: true, status: productDetails.orderStatus, isExpanded: true),

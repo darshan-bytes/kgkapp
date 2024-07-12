@@ -343,6 +343,7 @@ class HomeScreen extends StatelessWidget {
       color: style.primaryColor,
       width: context.width,
       child: Stack(
+        alignment: Alignment.topRight,
         children: [
           const SmartImage(
             path: AppImages.icPrimaryBgLine,
@@ -524,15 +525,17 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-        child: SmartSuggestionProductList(
-            title: APPStrings.recentlyViewed.tr,
-            onViewAllTap: () {
-              context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-            },
-            suggestedProductList: homeBloc.recentlyViewList,
-            onEyeTap: () {},
-            onFavTap: () {},
-            scrollController: homeBloc.recentlyViewedScrollController));
+      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      child: SmartSuggestionProductList(
+        title: APPStrings.recentlyViewed.tr,
+        onViewAllTap: () {
+          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        },
+        suggestedProductList: homeBloc.recentlyViewList,
+        onEyeTap: () {},
+        onFavTap: () {},
+        scrollController: homeBloc.recentlyViewedScrollController,
+      ),
+    );
   }
 }

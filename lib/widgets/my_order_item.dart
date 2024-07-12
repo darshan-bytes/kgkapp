@@ -43,7 +43,7 @@ class MyOrderItem extends StatelessWidget {
                         child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: _buildDetailColumn(APPStrings.orderStatus.tr, model.orderStatus.value, style, isOrderStatus: true)),
+                        Expanded(child: _buildDetailColumn(APPStrings.status.tr, model.orderStatus.value, style, isOrderStatus: true)),
                         InkWell(
                             onTap: () {
                               if (onTapMenuButton != null) {

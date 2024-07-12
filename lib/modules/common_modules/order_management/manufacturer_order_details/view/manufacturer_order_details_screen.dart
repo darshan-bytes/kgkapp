@@ -42,6 +42,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                 _buildSearchTextField(bloc),
                 SizedBox(height: 24.h),
                 _buildManufacturerOrderList(bloc, context),
+                // _buildOrderTotalDiamondItemsDetails(bloc, context)
               ],
             ),
           );
@@ -474,4 +475,81 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
+// TODO: Below commented code is required so don't remove
+// Widget _buildOrderTotalDiamondItemsDetails(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
+//   MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
+//   return Padding(
+//     padding: EdgeInsets.symmetric(horizontal: 17.w),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.stretch,
+//       children: [
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
+//             SizedBox(width: 12.w),
+//             _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
+//           ],
+//         ),
+//         SizedBox(height: 12.h),
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
+//             SizedBox(width: 12.w),
+//             _buildTextInfoColumn(APPStrings.totalWeight.tr, '20.120', style),
+//           ],
+//         ),
+//         SizedBox(height: 12.h),
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _buildTextInfoColumn(APPStrings.contactEmail.tr, 'jasons@example.com', style),
+//             SizedBox(width: 12.w),
+//             _buildTextInfoColumn(APPStrings.contactPhone.tr, '66362389', style),
+//           ],
+//         ),
+//         SizedBox(height: 12.h),
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38', style),
+//             SizedBox(width: 12.w),
+//             _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
+//           ],
+//         ),
+//         SizedBox(height: 12.h),
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
+//             SizedBox(width: 12.w),
+//             _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
+//           ],
+//         ),
+//       ],
+//     ),
+//   );
+// }
+//
+// Widget _buildTextInfoColumn(String title, String value, MyBagScreenStyle style) {
+//   return Expanded(
+//     child: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         SmartText(
+//           title,
+//           style: style.bottomBarTotalTextStyle,
+//         ),
+//         SizedBox(height: 8.h),
+//         SmartText(
+//           value,
+//           style: style.textInfoValueStyle,
+//         ),
+//       ],
+//     ),
+//   );
+// }
 }

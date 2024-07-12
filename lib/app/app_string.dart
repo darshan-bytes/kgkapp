@@ -834,4 +834,5 @@ class APPStrings {
   static const String all = 'all';
   static const String tasks = 'tasks';
   static const String meetings = 'meetings';
+  static const String sku = 'sku';
 }

@@ -31,6 +31,7 @@ class DiamondLandingScreen extends StatelessWidget {
           onTap: (context, item) {},
           homeScreenStyle: homeScreenStyle,
           style: style,
+          scrollController: bloc.shopDiamondsScrollController,
         ),
         CraftedForYourSpecialMomentSection(
           style: style,

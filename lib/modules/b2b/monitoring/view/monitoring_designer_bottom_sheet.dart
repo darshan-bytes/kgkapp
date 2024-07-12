@@ -56,7 +56,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
           onTapOutside: (p) {},
           suffixIcon: SmartImage(
             path: AppImages.icSearchThin,
-            padding: EdgeInsets.all(12.w),
+            padding: EdgeInsets.all(14.w),
           ),
           focusNode: bloc.searchDesignersFocusNode,
           textInputAction: TextInputAction.done),

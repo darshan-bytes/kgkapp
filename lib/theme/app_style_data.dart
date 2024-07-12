@@ -516,6 +516,7 @@ class LightModeTheme extends AppTheme {
         dotColor: colors.color4885A3,
         createdDateStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         titleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        readMoreStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.primary),
       );
 
   @override

@@ -1023,13 +1023,14 @@ class ReviewDetailsStyle {
   final Color dotColor;
   final TextStyle createdDateStyle;
   final TextStyle titleStyle;
+  final TextStyle readMoreStyle;
 
-  ReviewDetailsStyle({
-    required this.userNameStyle,
-    required this.dotColor,
-    required this.createdDateStyle,
-    required this.titleStyle,
-  });
+  ReviewDetailsStyle(
+      {required this.userNameStyle,
+      required this.dotColor,
+      required this.createdDateStyle,
+      required this.titleStyle,
+      required this.readMoreStyle});
 }
 
 class OrderConfirmationStyle {

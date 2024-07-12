@@ -399,3 +399,5 @@ export 'package:syncfusion_flutter_calendar/calendar.dart';
 export 'package:kgk/modules/b2b/calendar/model/calendar_data_model.dart';
 export 'package:kgk/modules/b2b/calendar/model/calendar_event_type_model.dart';
 export 'package:kgk/widgets/month_picker.dart';
+export 'package:kgk/modules/b2b/presentation/bloc/presentation_bloc.dart';
+export 'package:kgk/modules/b2b/presentation/view/presentation_screen.dart';

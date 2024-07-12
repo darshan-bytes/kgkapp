@@ -29,6 +29,13 @@ extension StringExtensions on String {
     return split(' ').map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
   }
 
+  String get capitalizeFirst {
+    if (isEmpty) {
+      return this;
+    }
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+
   String get getInitials {
     if (trim().isEmpty) {
       return '';
