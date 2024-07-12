@@ -6,6 +6,7 @@ class NewsletterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NewsletterBloc bloc = BlocProvider.of<NewsletterBloc>(context);
+
     return Scaffold(
       appBar: SmartAppBar(
         title: APPStrings.newsletter.tr,

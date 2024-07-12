@@ -796,4 +796,5 @@ class APPStrings {
   static const String searchSubscribers = 'search_subscribers';
   static const String searchCategory = "search_category";
   static const String searchTemplate = "search_template";
+  static const String validity = "validity";
 }

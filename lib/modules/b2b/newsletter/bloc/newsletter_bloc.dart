@@ -52,25 +52,28 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
       templateScrollController.dispose();
       templateScrollController = SmartPaginationScrollController();
     }
-    if (categoryScrollController.isInitialised) {
-      categoryScrollController.dispose();
-      categoryScrollController = SmartPaginationScrollController();
-    }
-    if (subscribersScrollController.isInitialised) {
-      subscribersScrollController.dispose();
-      subscribersScrollController = SmartPaginationScrollController();
-    }
+
     templateScrollController.init(
       loadAction: (int currentPage) async {
         add(NewsletterListingLoadMoreEvent(currentPage: currentPage, listType: NewsletterTab.template));
       },
     );
 
+    if (categoryScrollController.isInitialised) {
+      categoryScrollController.dispose();
+      categoryScrollController = SmartPaginationScrollController();
+    }
+
     categoryScrollController.init(
       loadAction: (int currentPage) async {
         add(NewsletterListingLoadMoreEvent(currentPage: currentPage, listType: NewsletterTab.categories));
       },
     );
+
+    if (subscribersScrollController.isInitialised) {
+      subscribersScrollController.dispose();
+      subscribersScrollController = SmartPaginationScrollController();
+    }
 
     subscribersScrollController.init(
       loadAction: (int currentPage) async {

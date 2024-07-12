@@ -1136,4 +1136,7 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         subTextStyle: interRegularTextStyle,
       );
+
+  @override
+  NewsletterScreenStyle get newsletterScreenStyle => NewsletterScreenStyle(labelStyle: interSemiBoldTextStyle);
 }

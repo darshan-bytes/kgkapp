@@ -227,6 +227,8 @@ abstract class AppTheme {
   WatchlistDetailsStyle get watchlistDetailsStyle;
 
   SmartSuggestionProductListStyle get smartSuggestionProductListStyle;
+
+  NewsletterScreenStyle get newsletterScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2101,4 +2103,10 @@ class SmartSuggestionProductListStyle {
   final TextStyle viewAllStyle;
 
   SmartSuggestionProductListStyle({required this.titleStyle, required this.viewAllStyle});
+}
+
+class NewsletterScreenStyle {
+  final TextStyle labelStyle;
+
+  NewsletterScreenStyle({required this.labelStyle});
 }
