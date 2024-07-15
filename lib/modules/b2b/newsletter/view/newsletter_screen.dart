@@ -31,7 +31,7 @@ class NewsletterScreen extends StatelessWidget {
                   },
                   onTapTab: (int index) => bloc.add(const ChangeNewsletterTabsEvent()),
                   tabs: bloc.tabs,
-                  tabBarView: _buildTabBarView(bloc),
+                  tabBarView: bloc.buildTabBarView(bloc),
                 ),
               ),
             ],
@@ -39,14 +39,6 @@ class NewsletterScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<Widget> _buildTabBarView(NewsletterBloc bloc) {
-    return [
-      NewsletterTemplateTabView(bloc: bloc),
-      NewsletterCategoriesTabView(bloc: bloc),
-      NewsletterSubscriberTabView(bloc: bloc),
-    ];
   }
 
   Widget _buildBottomNavigationBar(NewsletterBloc bloc) {

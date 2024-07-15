@@ -34,6 +34,15 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
   List<B2BCustomListingDataModel> categoryList = [];
   List<B2BCustomListingDataModel> subscribersList = [];
 
+  //Newsletter tab bar view
+  List<Widget> buildTabBarView(NewsletterBloc bloc) {
+    return [
+      NewsletterTemplateTabView(bloc: bloc),
+      NewsletterCategoriesTabView(bloc: bloc),
+      NewsletterSubscriberTabView(bloc: bloc),
+    ];
+  }
+
   NewsletterBloc() : super(const NewsletterInitialState()) {
     on<NewsletterInitialEvent>(_onInitNewsletterEvent);
     on<NewsletterListingLoadMoreEvent>(_onListingLoadMoreEvent);
