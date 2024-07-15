@@ -80,6 +80,9 @@ class B2BCustomListingDataModel {
   String? strCADLibraryNumber;
   String? strCADLibraryProductName;
   String? strCADLibraryImageUrl;
+  String? strCountry;
+  String? strCountryImageUrl;
+  String? strValidity;
 
   B2BCustomListingDataModel({
     this.id,
@@ -161,5 +164,8 @@ class B2BCustomListingDataModel {
     this.strCADLibraryNumber,
     this.strCADLibraryProductName,
     this.strCADLibraryImageUrl,
+    this.strCountry,
+    this.strCountryImageUrl,
+    this.strValidity,
   });
 }

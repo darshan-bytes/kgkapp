@@ -13,6 +13,7 @@ class B2BItemField {
   final bool isCircleImage;
   final bool isCircleWithValue;
   final bool isOnlyImageView;
+  final double? gridSpacing;
 
   B2BItemField({
     this.label,
@@ -23,6 +24,7 @@ class B2BItemField {
     this.isCircleImage = true,
     this.isCircleWithValue = false,
     this.isOnlyImageView = false,
+    this.gridSpacing,
   });
 }
 
@@ -98,7 +100,12 @@ class B2BListingItem extends StatelessWidget {
   }
 
   Widget _buildDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
-    return isListingView && columns == 1 ? _buildRowDetailItem(field, context, style) : _buildColumnDetailItem(field, context, style);
+    return isListingView && columns == 1
+        ? _buildRowDetailItem(field, context, style)
+        : B2BColumnDetailItem(
+            field: field,
+            onTapCircleWithText: onTapCircleWithText,
+          );
   }
 
   Widget _buildRowDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
@@ -124,17 +131,36 @@ class B2BListingItem extends StatelessWidget {
                   height: 22.h,
                   currentStatus: field.orderStatus!,
                 )
-              : _buildValue(field, auctionListItemStyle, style),
+              : SmartText(
+                  field.value.isNotNullNorEmpty ? field.value! : APPStrings.dash.tr,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: auctionListItemStyle.valueStyle,
+                  isAutoSizeText: true,
+                ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildColumnDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
+class B2BColumnDetailItem extends StatelessWidget {
+  final B2BItemField field;
+  final Function()? onTapCircleWithText;
+
+  const B2BColumnDetailItem({
+    super.key,
+    required this.field,
+    this.onTapCircleWithText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
     final auctionListItemStyle = AppTheme.of(context).auctionListItemStyle;
 
     return Container(
-      margin: EdgeInsets.only(right: gridSpacing ?? 16.w),
+      margin: EdgeInsets.only(right: field.gridSpacing ?? 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

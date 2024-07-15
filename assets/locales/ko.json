@@ -657,5 +657,12 @@
   "month": "Month",
   "year": "Year",
   "view_colon": "View:",
-  "sku": "SKU"
+  "sku": "SKU",
+  "template": "Template",
+  "subscribers": "Subscribers",
+  "newsletter": "Newsletter",
+  "search_subscribers": "Search subscribers",
+  "search_category": "Search category",
+  "search_template": "Search template",
+  "validity": "Validity"
 }

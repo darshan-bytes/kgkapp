@@ -241,6 +241,8 @@ abstract class AppTheme {
   ConfirmCancelPopupStyle get confirmCancelPopupStyle;
 
   CalendarStyle get calendarStyle;
+
+  NewsletterScreenStyle get newsletterScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2290,4 +2292,10 @@ class CalendarStyle {
     required this.dropDownArrowColor,
     required this.viewAllStyle,
   });
+}
+
+class NewsletterScreenStyle {
+  final TextStyle labelStyle;
+
+  NewsletterScreenStyle({required this.labelStyle});
 }

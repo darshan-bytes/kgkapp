@@ -69,6 +69,7 @@ class BlocGenerator {
       BlocProvider<UserMasterListingBloc>(create: (_) => UserMasterListingBloc()),
       BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
       BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
+      BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
     ];
   }
 }

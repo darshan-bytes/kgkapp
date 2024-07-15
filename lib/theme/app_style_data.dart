@@ -1234,4 +1234,7 @@ class LightModeTheme extends AppTheme {
         dropDownArrowColor: colors.color8C8C8C,
         viewAllStyle: interRegularTextStyle,
       );
+
+  @override
+  NewsletterScreenStyle get newsletterScreenStyle => NewsletterScreenStyle(labelStyle: interSemiBoldTextStyle);
 }

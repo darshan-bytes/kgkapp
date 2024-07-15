@@ -835,4 +835,14 @@ class APPStrings {
   static const String tasks = 'tasks';
   static const String meetings = 'meetings';
   static const String sku = 'sku';
+
+  // Newsletter
+  static const String newsletter = 'newsletter';
+  static const String template = "template";
+  static const String subscribers = "subscribers";
+
+  static const String searchSubscribers = 'search_subscribers';
+  static const String searchCategory = "search_category";
+  static const String searchTemplate = "search_template";
+  static const String validity = "validity";
 }
