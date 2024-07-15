@@ -96,6 +96,7 @@ dependencies:
   #For Calendar
   syncfusion_flutter_calendar: ^26.1.41
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

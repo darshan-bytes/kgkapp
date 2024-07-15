@@ -40,6 +40,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     emit(const CalendarReloadState());
     calendarView = event.calendarView;
     calendarController.view = calendarView;
+    selectedMonth = DateTime.now();
     emit(const CalendarViewChangeState());
   }
 

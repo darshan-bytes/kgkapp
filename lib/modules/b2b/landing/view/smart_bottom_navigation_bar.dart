@@ -44,13 +44,13 @@ class SmartBottomNavigationBar extends StatelessWidget {
                 return BottomNavigationBarItem(
                   icon: _buildProfileIcon(style, false, model.icon),
                   activeIcon: _buildProfileIcon(style, true, model.icon),
-                  label: model.label,
+                  label: model.label.tr,
                 );
               }
               return BottomNavigationBarItem(
                 icon: SmartImage(path: model.icon),
                 activeIcon: SmartImage(path: model.activeIcon),
-                label: model.label,
+                label: model.label.tr,
               );
             }).toList(),
           );

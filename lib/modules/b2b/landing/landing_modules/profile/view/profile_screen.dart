@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              bloc.add(ToggleProfileListEvent(index: index));
+              bloc.add(ToggleProfileListEvent(index: index, context: context));
             },
             child: Container(
               color: style.transparentColor,
@@ -185,7 +185,11 @@ class ProfileScreen extends StatelessWidget {
                                     return SmartText(
                                       bloc.profileCMSList[index].profileSubList?[childIndex].title,
                                       style: style.expandTitleStyle,
-                                      onTap: bloc.profileCMSList[index].profileSubList?[childIndex].onTap,
+                                      onTap: bloc.profileCMSList[index].profileSubList?[childIndex].onTap != null
+                                          ? () {
+                                              bloc.profileCMSList[index].profileSubList?[childIndex].onTap!(context);
+                                            }
+                                          : null,
                                     );
                                   },
                                   separatorBuilder: (context, index) => SizedBox(height: 8.h),
@@ -258,10 +262,10 @@ class ProfileScreen extends StatelessWidget {
 
   void _buildLogoutPopup(BuildContext context) {
     Utils.showSmartModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-      ),
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        ),
         builder: (context) => ConfirmationDialog(
               title: APPStrings.logoutAsk.tr,
               message: APPStrings.logoutMsg.tr,

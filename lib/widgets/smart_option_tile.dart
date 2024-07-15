@@ -22,7 +22,7 @@ class SmartOptionTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (profileListModel.onTap != null) {
-          profileListModel.onTap!();
+          profileListModel.onTap!(context);
         }
       },
       child: Container(
@@ -47,7 +47,7 @@ class SmartOptionTile extends StatelessWidget {
                   children: [
                     if (profileListModel.title.isNotNullNorEmpty)
                       SmartText(
-                        profileListModel.title,
+                        profileListModel.title!.tr,
                         style: style.titleStyle.merge(titleStyle),
                       ),
                     if (profileListModel.title.isNotNullNorEmpty && profileListModel.subTitle.isNotNullNorEmpty)
@@ -56,7 +56,7 @@ class SmartOptionTile extends StatelessWidget {
                       ),
                     if (profileListModel.subTitle.isNotNullNorEmpty)
                       SmartText(
-                        profileListModel.subTitle,
+                        profileListModel.subTitle!.tr,
                         style: style.subTextStyle.merge(subTitleStyle),
                       ),
                   ],

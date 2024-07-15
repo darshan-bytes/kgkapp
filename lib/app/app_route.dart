@@ -457,8 +457,10 @@ class AppRoutes {
       case conceptListPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<ConceptListBloc>(context).add(const ConceptListInitialEvent());
-            return const ConceptListScreen();
+            return BlocProvider<ConceptListBloc>(
+              create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
+              child: const ConceptListScreen(),
+            );
           },
           settings: settings,
         );

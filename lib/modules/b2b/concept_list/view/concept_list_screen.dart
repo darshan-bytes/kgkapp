@@ -34,6 +34,7 @@ class ConceptListScreen extends StatelessWidget {
                             return NoDataFoundWidget(text: APPStrings.noConceptFound.tr);
                           }
                           return ListView.separated(
+                            physics: const ClampingScrollPhysics(),
                             padding: EdgeInsets.only(bottom: 24.h),
                             controller: conceptListBloc.paginationScrollController.scrollController,
                             shrinkWrap: true,
@@ -81,20 +82,23 @@ class ConceptListScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is ConceptListLoadedState,
         builder: (context, state) {
           if (state is ConceptListLoadedState) {
-            return SafeArea(
-              child: SelectionButton(
-                borderRadius: BorderRadius.zero,
-                isSelected: false,
-                onTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    builder: (context) => FilterScreen(
-                      onApply: () {},
-                    ),
-                  );
-                },
-                image: AppImages.icFilter,
-                title: APPStrings.filter.tr,
+            return ScrollToHideWidget(
+              controller: conceptListBloc.paginationScrollController.scrollController,
+              child: SafeArea(
+                child: SelectionButton(
+                  borderRadius: BorderRadius.zero,
+                  isSelected: false,
+                  onTap: () {
+                    Utils.showSmartModalBottomSheet(
+                      context: context,
+                      builder: (context) => FilterScreen(
+                        onApply: () {},
+                      ),
+                    );
+                  },
+                  image: AppImages.icFilter,
+                  title: APPStrings.filter.tr,
+                ),
               ),
             );
           }

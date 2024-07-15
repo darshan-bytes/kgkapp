@@ -16,9 +16,10 @@ final class InitialProfileListEvent extends ProfileEvent {
 
 final class ToggleProfileListEvent extends ProfileEvent {
   final int index;
+  final BuildContext context;
 
-  const ToggleProfileListEvent({required this.index});
+  const ToggleProfileListEvent({required this.index, required this.context});
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [index, context];
 }
