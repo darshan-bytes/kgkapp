@@ -6,7 +6,7 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserType userType = UserType.b2bUser;
-
+  late AppBloc appBloc;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -37,86 +37,87 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) {
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    appBloc = BlocProvider.of<AppBloc>(event.context);
+    userType = appBloc.userType;
     profileActionList.clear();
     if (userType == UserType.b2bUser) {
       profileActionList = [
         ProfileListModel(
             image: AppImages.icMyOrders,
-            title: APPStrings.myOrder.tr,
-            subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
+            title: APPStrings.myOrder,
+            subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
-            title: APPStrings.auctions.tr,
-            subTitle: APPStrings.listOfAuctionsYouAppliedTo.tr,
+            title: APPStrings.auctions,
+            subTitle: APPStrings.listOfAuctionsYouAppliedTo,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.auctionListingPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.auctionListingPage);
             }),
         ProfileListModel(
             image: AppImages.icInquiries,
-            title: APPStrings.myInquiries.tr,
-            subTitle: APPStrings.yourSubmittedInquiries.tr,
+            title: APPStrings.myInquiries,
+            subTitle: APPStrings.yourSubmittedInquiries,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: (context) {}),
         ProfileListModel(
             image: AppImages.icWatchlist,
-            title: APPStrings.watchlist.tr,
-            subTitle: APPStrings.listOfProductsAddedToWatchlist.tr,
+            title: APPStrings.watchlist,
+            subTitle: APPStrings.listOfProductsAddedToWatchlist,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.watchListPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.watchListPage);
             }),
         ProfileListModel(
             image: AppImages.icExhibition,
-            title: APPStrings.exhibition.tr,
-            subTitle: APPStrings.listOfExhibitionsOfKGK.tr,
+            title: APPStrings.exhibition,
+            subTitle: APPStrings.listOfExhibitionsOfKGK,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.exhibitionListingPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.exhibitionListingPage);
             }),
         ProfileListModel(
             image: AppImages.icActivityLog,
-            title: APPStrings.activityLog.tr,
-            subTitle: APPStrings.getLogOnTheAccount.tr,
+            title: APPStrings.activityLog,
+            subTitle: APPStrings.getLogOnTheAccount,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.activityLogScreenPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.activityLogScreenPage);
             }),
         ProfileListModel(
             image: AppImages.icNewsFeed,
-            title: APPStrings.newsFeed.tr,
-            subTitle: APPStrings.createAndSeeNewsFeeds.tr,
+            title: APPStrings.newsFeed,
+            subTitle: APPStrings.createAndSeeNewsFeeds,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.newsletterPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.newsletterPage);
             }),
         ProfileListModel(
             image: AppImages.icStore,
-            title: APPStrings.findAStore.tr,
-            subTitle: APPStrings.searchYourNearbyStores.tr,
+            title: APPStrings.findAStore,
+            subTitle: APPStrings.searchYourNearbyStores,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.findStorePage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.findStorePage);
             }),
         ProfileListModel(
             image: AppImages.icMapPin,
-            title: APPStrings.savedAddress.tr,
-            subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
+            title: APPStrings.savedAddress,
+            subTitle: APPStrings.listOfAllYourSavedAddresses,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.savedAddressPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.savedAddressPage);
             }),
         ProfileListModel(
             image: AppImages.icLock,
-            title: APPStrings.changePassword.tr,
-            subTitle: APPStrings.changeYourExistingPassword.tr,
+            title: APPStrings.changePassword,
+            subTitle: APPStrings.changeYourExistingPassword,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
+            onTap: (context) {
               Utils.showSmartModalBottomSheet(
                 context: event.context,
                 shape: RoundedRectangleBorder(
@@ -127,116 +128,116 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             }),
         ProfileListModel(
             image: AppImages.icPreferences,
-            title: APPStrings.preferences.tr,
-            subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
+            title: APPStrings.preferences,
+            subTitle: APPStrings.defaultCountryLanguageAndCurrency,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.preferencesPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.preferencesPage);
             }),
         ProfileListModel(
             image: AppImages.icNotificationSettings,
-            title: APPStrings.notificationSettings.tr,
-            subTitle: APPStrings.changeNotificationSettings.tr,
+            title: APPStrings.notificationSettings,
+            subTitle: APPStrings.changeNotificationSettings,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.notificationSettingsPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.notificationSettingsPage);
             }),
       ];
       profileAdminList = [
         ProfileListModel(
             image: AppImages.icMyOrders,
-            title: APPStrings.orderManagement.tr,
-            subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
+            title: APPStrings.orderManagement,
+            subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.manufacturerOrderListingPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.manufacturerOrderListingPage);
             }),
         ProfileListModel(
           image: AppImages.icProfileCalendar,
-          title: APPStrings.calendar.tr,
-          subTitle: APPStrings.meetingsTasksAllInOnePlace.tr,
+          title: APPStrings.calendar,
+          subTitle: APPStrings.meetingsTasksAllInOnePlace,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.calendarPage);
+          onTap: (context) {
+            context.pushNamed(AppRoutes.calendarPage);
           },
         ),
         ProfileListModel(
             image: AppImages.icMessages,
-            title: APPStrings.messages.tr,
-            subTitle: APPStrings.conversationsYouAreHaving.tr,
+            title: APPStrings.messages,
+            subTitle: APPStrings.conversationsYouAreHaving,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.messagesPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.messagesPage);
             }),
         ProfileListModel(
             image: AppImages.icMasters,
-            title: APPStrings.masters.tr,
-            subTitle: APPStrings.masterDataOfUserAndNewsLetter.tr,
+            title: APPStrings.masters,
+            subTitle: APPStrings.masterDataOfUserAndNewsLetter,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.userMasterListingPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.userMasterListingPage);
             }),
         ProfileListModel(
             image: AppImages.icStore,
-            title: APPStrings.dashboard.tr,
-            subTitle: APPStrings.listOfDashboard.tr,
+            title: APPStrings.dashboard,
+            subTitle: APPStrings.listOfDashboard,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.dashboardPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.dashboardPage);
             }),
       ];
     } else {
       profileActionList = [
         ProfileListModel(
             image: AppImages.icMyOrders,
-            title: APPStrings.myOrder.tr,
-            subTitle: APPStrings.listOfAllTheOrdersYouPlaced.tr,
+            title: APPStrings.myOrder,
+            subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.orderPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
-            title: APPStrings.auctions.tr,
-            subTitle: APPStrings.listOfAuctionsYouAppliedTo.tr,
+            title: APPStrings.auctions,
+            subTitle: APPStrings.listOfAuctionsYouAppliedTo,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.auctionListingPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.auctionListingPage);
             }),
         ProfileListModel(
             image: AppImages.icInquiries,
-            title: APPStrings.myInquiries.tr,
-            subTitle: APPStrings.yourSubmittedInquiries.tr,
+            title: APPStrings.myInquiries,
+            subTitle: APPStrings.yourSubmittedInquiries,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: (context) {}),
         ProfileListModel(
             image: AppImages.icNewsFeed,
-            title: APPStrings.newsFeed.tr,
-            subTitle: APPStrings.createAndSeeNewsFeeds.tr,
+            title: APPStrings.newsFeed,
+            subTitle: APPStrings.createAndSeeNewsFeeds,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {}),
+            onTap: (context) {}),
         ProfileListModel(
             image: AppImages.icStore,
-            title: APPStrings.findAStore.tr,
-            subTitle: APPStrings.searchYourNearbyStores.tr,
+            title: APPStrings.findAStore,
+            subTitle: APPStrings.searchYourNearbyStores,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.findStorePage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.findStorePage);
             }),
         ProfileListModel(
             image: AppImages.icMapPin,
-            title: APPStrings.savedAddress.tr,
-            subTitle: APPStrings.listOfAllYourSavedAddresses.tr,
+            title: APPStrings.savedAddress,
+            subTitle: APPStrings.listOfAllYourSavedAddresses,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.savedAddressPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.savedAddressPage);
             }),
         ProfileListModel(
             image: AppImages.icLock,
-            title: APPStrings.changePassword.tr,
-            subTitle: APPStrings.changeYourExistingPassword.tr,
+            title: APPStrings.changePassword,
+            subTitle: APPStrings.changeYourExistingPassword,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
+            onTap: (context) {
               Utils.showSmartModalBottomSheet(
                 context: event.context,
                 shape: RoundedRectangleBorder(
@@ -247,113 +248,113 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             }),
         ProfileListModel(
             image: AppImages.icPreferences,
-            title: APPStrings.preferences.tr,
-            subTitle: APPStrings.defaultCountryLanguageAndCurrency.tr,
+            title: APPStrings.preferences,
+            subTitle: APPStrings.defaultCountryLanguageAndCurrency,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.preferencesPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.preferencesPage);
             }),
         ProfileListModel(
             image: AppImages.icNotificationSettings,
-            title: APPStrings.notificationSettings.tr,
-            subTitle: APPStrings.changeNotificationSettings.tr,
+            title: APPStrings.notificationSettings,
+            subTitle: APPStrings.changeNotificationSettings,
             trailingIcon: AppImages.icArrowRight,
-            onTap: () {
-              event.context.pushNamed(AppRoutes.notificationSettingsPage);
+            onTap: (context) {
+              context.pushNamed(AppRoutes.notificationSettingsPage);
             }),
       ];
     }
     profileCMSList = [
       ProfileListModel(
           image: AppImages.icAboutUs,
-          title: APPStrings.aboutUs.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+          title: APPStrings.aboutUs,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
               RoutesData.cmsPageData: CmsWebViewDataModel(
                 url: AppConst.profileAboutUsWebViewURL,
-                title: APPStrings.aboutUs.tr,
+                title: APPStrings.aboutUs,
               )
             });
           }),
       ProfileListModel(
           image: AppImages.icEducation,
-          title: APPStrings.education.tr,
+          title: APPStrings.education,
           isSubListExpanded: false,
           profileSubList: [
             ProfileListModel(
-              title: APPStrings.diamonds.tr,
-              onTap: () {
-                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              title: APPStrings.diamonds,
+              onTap: (context) {
+                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: AppConst.profileDiamondWebViewURL,
-                    title: APPStrings.diamonds.tr,
+                    title: APPStrings.diamonds,
                   )
                 });
               },
             ),
             ProfileListModel(
-              title: APPStrings.labCreatedDiamonds.tr,
-              onTap: () {
-                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              title: APPStrings.labCreatedDiamonds,
+              onTap: (context) {
+                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: AppConst.profileDiamondWebViewURL,
-                    title: APPStrings.labCreatedDiamonds.tr,
+                    title: APPStrings.labCreatedDiamonds,
                   )
                 });
               },
             ),
             ProfileListModel(
-              title: APPStrings.gemstone.tr,
-              onTap: () {
-                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              title: APPStrings.gemstone,
+              onTap: (context) {
+                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: AppConst.profileGemstoneWebViewURL,
-                    title: APPStrings.gemstone.tr,
+                    title: APPStrings.gemstone,
                   )
                 });
               },
             ),
             ProfileListModel(
-              title: APPStrings.metals.tr,
-              onTap: () {
-                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              title: APPStrings.metals,
+              onTap: (context) {
+                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: AppConst.profileMetalsWebViewURL,
-                    title: APPStrings.metals.tr,
+                    title: APPStrings.metals,
                   )
                 });
               },
             ),
             ProfileListModel(
-              title: APPStrings.ringSizer.tr,
-              onTap: () {
-                event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+              title: APPStrings.ringSizer,
+              onTap: (context) {
+                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
                   RoutesData.cmsPageData: CmsWebViewDataModel(
                     url: AppConst.profileRingSizerWebViewURL,
-                    title: APPStrings.ringSizer.tr,
+                    title: APPStrings.ringSizer,
                   )
                 });
               },
             ),
           ],
-          onTap: () {
-            event.context.pushNamed(AppRoutes.findStorePage);
+          onTap: (context) {
+            context.pushNamed(AppRoutes.findStorePage);
           }),
       ProfileListModel(
           image: AppImages.icSupport,
-          title: APPStrings.faqs.tr,
+          title: APPStrings.faqs,
           isSubListExpanded: false,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.faqPage);
+          onTap: (context) {
+            context.pushNamed(AppRoutes.faqPage);
           }),
       ProfileListModel(
           image: AppImages.icPolicies,
-          title: APPStrings.policies.tr,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+          title: APPStrings.policies,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
               RoutesData.cmsPageData: CmsWebViewDataModel(
                 url: AppConst.profilePrivacyPolicyWebViewURL,
-                title: APPStrings.policies.tr,
+                title: APPStrings.policies,
               )
             });
           }),
@@ -366,7 +367,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       profileCMSList[event.index].isSubListExpanded = !profileCMSList[event.index].isSubListExpanded;
       emit(const ToggleProfileState());
     } else {
-      profileCMSList[event.index].onTap?.call();
+      profileCMSList[event.index].onTap?.call(event.context);
     }
   }
 }

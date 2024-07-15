@@ -5,7 +5,9 @@ class ProfileListModel {
   String? title;
   String? subTitle;
   String? trailingIcon;
-  VoidCallback? onTap;
+
+  // VoidCallback? onTap;
+  Function(BuildContext)? onTap;
   List<ProfileListModel>? profileSubList = [];
   bool isSubListExpanded = false;
 

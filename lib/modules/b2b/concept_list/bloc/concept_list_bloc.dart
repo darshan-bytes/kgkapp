@@ -23,9 +23,10 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
 
   void _onConceptListInitialEvent(ConceptListInitialEvent event, Emitter<ConceptListState> emit) async {
     emit(ConceptListReloadState());
-
-    await Future.delayed(const Duration(seconds: 2));
-
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     searchController.clear();
     paginationScrollController.init(
       loadAction: (int currentPage) async {

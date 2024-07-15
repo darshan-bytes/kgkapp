@@ -19,23 +19,25 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
           title: APPStrings.makeAnInquiry.tr,
           subTitle: APPStrings.repliesWithin24Hours.tr,
           trailingIcon: AppImages.icArrowRight,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.makeInquiryPage);
+          onTap: (context) {
+            context.pushNamed(AppRoutes.makeInquiryPage);
           }),
       ProfileListModel(
-          image: AppImages.icPhone,
-          title: APPStrings.call.tr,
-          subTitle: "Monday – Friday 9 AM – 5 PM",
-          trailingIcon: AppImages.icArrowRight,
-          onTap: () {}),
+        image: AppImages.icPhone,
+        title: APPStrings.call.tr,
+        subTitle: "Monday – Friday 9 AM – 5 PM",
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {},
+      ),
       ProfileListModel(
-          image: AppImages.icContactUs,
-          title: APPStrings.contactUs.tr,
-          subTitle: APPStrings.getInTouchWithUs.tr,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: () {
-            event.context.pushNamed(AppRoutes.contactUsPage);
-          }),
+        image: AppImages.icContactUs,
+        title: APPStrings.contactUs.tr,
+        subTitle: APPStrings.getInTouchWithUs.tr,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.contactUsPage);
+        },
+      ),
     ];
 
     faqs = [

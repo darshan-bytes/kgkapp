@@ -26,12 +26,17 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   /// actions on the screen based on the current index
   List<Bloc> blocList = [];
 
+  bool _isInitialized = false;
+
   LandingBloc() : super(LandingInitialState()) {
     on<LandingInitialEvent>(_onLandingInitialEvent);
     on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
   }
 
   void _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) {
+    if (_isInitialized) {
+      return;
+    }
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     switch (userType) {
       case UserType.b2cUser:
@@ -42,6 +47,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         break;
     }
     emit(LandingLoadedState(userType: userType, pages: pages, blocList: blocList));
+    _isInitialized = true;
   }
 
   void _initializeB2CUser(BuildContext context) {
@@ -66,27 +72,27 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: AppImages.icHome,
         activeIcon: AppImages.icHomeActive,
-        label: APPStrings.home.tr,
+        label: APPStrings.home,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icCategories,
         activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.categories.tr,
+        label: APPStrings.categories,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
-        label: APPStrings.myBag.tr,
+        label: APPStrings.myBag,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icSupport,
         activeIcon: AppImages.icSupportActive,
-        label: APPStrings.support.tr,
+        label: APPStrings.support,
       ),
       BottomNavigationBarDataModel(
         icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
         activeIcon: "",
-        label: APPStrings.profile.tr,
+        label: APPStrings.profile,
         isProfile: true,
       ),
     ];
@@ -114,27 +120,27 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: AppImages.icHome,
         activeIcon: AppImages.icHomeActive,
-        label: APPStrings.home.tr,
+        label: APPStrings.home,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icCategories,
         activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.categories.tr,
+        label: APPStrings.categories,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
-        label: APPStrings.myBag.tr,
+        label: APPStrings.myBag,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icCompanyBottomNavbar,
         activeIcon: AppImages.icCompanyActive,
-        label: APPStrings.company.tr,
+        label: APPStrings.company,
       ),
       BottomNavigationBarDataModel(
         icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
         activeIcon: "",
-        label: APPStrings.profile.tr,
+        label: APPStrings.profile,
         isProfile: true,
       ),
     ];

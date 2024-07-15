@@ -407,3 +407,6 @@ export 'package:kgk/modules/b2b/newsletter/view/newsletter_subscribers_tabview_l
 export 'package:kgk/modules/b2b/newsletter/view/newsletter_template_tabview_list_tile.dart';
 export 'package:kgk/modules/b2b/newsletter/view/newsletter_screen.dart';
 export 'package:kgk/modules/b2b/newsletter/model/template_list_model.dart';
+export 'package:flutter/rendering.dart';
+export 'package:kgk/widgets/scroll_to_hide/scroll_to_hide_controller.dart';
+export 'package:kgk/widgets/scroll_to_hide/scroll_to_hide_widget.dart';

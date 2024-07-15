@@ -35,7 +35,7 @@ class SmartText extends StatelessWidget {
     Widget child;
     if (isAutoSizeText) {
       child = AutoSizeText(
-        _text ?? '',
+        (_text ?? '').tr,
         style: ((color != null || fontWeight != null || decoration != null))
             ? style.merge(TextStyle(color: color, fontWeight: fontWeight, decoration: decoration))
             : style,
@@ -45,7 +45,7 @@ class SmartText extends StatelessWidget {
       );
     } else {
       child = Text(
-        _text ?? '',
+        (_text ?? '').tr,
         style: ((color != null || fontWeight != null || decoration != null))
             ? style.merge(TextStyle(color: color, fontWeight: fontWeight, decoration: decoration))
             : style,
