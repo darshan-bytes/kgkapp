@@ -28,7 +28,7 @@ class EditProfileBottomSheet extends StatelessWidget {
             SizedBox(height: 24.h),
             _buildProfileImageSection(style, context),
             SizedBox(height: 24.h),
-            ...generateProfileForm(bloc),
+            ...generateProfileForm(bloc, context),
             SizedBox(height: 24.h),
             _buildSaveButton(context, bloc),
           ],
@@ -92,7 +92,7 @@ class EditProfileBottomSheet extends StatelessWidget {
     );
   }
 
-  List<Widget> generateProfileForm(ProfileBloc profileBloc) {
+  List<Widget> generateProfileForm(ProfileBloc profileBloc, BuildContext context) {
     return <Widget>[
       _buildFirstNameField(profileBloc),
       SizedBox(height: 24.h),
@@ -100,7 +100,7 @@ class EditProfileBottomSheet extends StatelessWidget {
       SizedBox(height: 24.h),
       _buildEmailField(profileBloc),
       SizedBox(height: 24.h),
-      _buildContactNumberField(profileBloc),
+      _buildContactNumberField(profileBloc, context),
     ];
   }
 
@@ -139,13 +139,39 @@ class EditProfileBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildContactNumberField(ProfileBloc profileBloc) {
+  Widget _buildContactNumberField(ProfileBloc profileBloc, BuildContext context) {
     return SmartTextField(
       labelText: APPStrings.contactNumber.tr,
       hintText: APPStrings.contactNumber.tr,
       controller: profileBloc.contactNumberController,
       focusNode: profileBloc.contactNumberFocusNode,
       keyboardType: TextInputType.phone,
+      prefixIcon: SizedBox(
+        width: 95.w,
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(12.w),
+          margin: EdgeInsets.only(right: 12.w),
+          decoration: BoxDecoration(
+            border: Border(
+              right: BorderSide(
+                color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+              ),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartText(
+                '+91',
+                style: AppTheme.of(context).textFieldStyle.textStyle,
+              ),
+              // SizedBox(width: 4.w),
+              // const SmartImage(path: AppImages.icArrowDropDown),
+            ],
+          ),
+        ),
+      ),
       onTap: () {
         profileBloc.scrollController.animateTo(
           profileBloc.scrollController.position.maxScrollExtent,
