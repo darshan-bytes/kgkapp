@@ -270,6 +270,7 @@ class ProfileScreen extends StatelessWidget {
               title: APPStrings.logoutAsk.tr,
               message: APPStrings.logoutMsg.tr,
               onApproved: () {
+                BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
                 BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
                 context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
               },

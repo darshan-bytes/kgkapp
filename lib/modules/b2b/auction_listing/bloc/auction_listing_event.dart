@@ -19,3 +19,10 @@ final class AuctionListLoadMoreEvent extends AuctionListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class AuctionListPullToRefreshEvent extends AuctionListingEvent {
+  const AuctionListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

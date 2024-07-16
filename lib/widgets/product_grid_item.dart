@@ -147,8 +147,9 @@ class ProductGridItem extends StatelessWidget {
       Color? backgroundColor,
       Color? borderColor,
       Color? iconColor}) {
-    return GestureDetector(
+    return Bounceable(
       onTap: onTap,
+      scaleFactor: 0.5,
       child: Container(
         decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,

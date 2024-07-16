@@ -79,7 +79,7 @@ class SmartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).primaryButtonStyle;
-    return GestureDetector(
+    return Bounceable(
       onTap: isEnabled && !isLoading ? onTap : null,
       child: Container(
         margin: margin,

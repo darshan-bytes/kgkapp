@@ -47,6 +47,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final double height = AppBar().preferredSize.height;
+  final AppBloc appBloc = AppBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -163,10 +164,10 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (onScan != null) actionsList.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24));
     if (onSearch != null) actionsList.add(_buildIconButton(onSearch!, AppImages.icSearch, size: 24));
     if (onFavorite != null) actionsList.add(_buildIconButton(onFavorite!, AppImages.icHeart, size: 24));
-    if (onNotification != null) actionsList.add(_buildIconButton(onNotification!, AppImages.icNotification, size: 24));
+    if (onNotification != null) actionsList.add(_getNotificationIcon());
     if (actions != null) actionsList.add(SizedBox(width: 17.w));
     actionsList.addAll(actions ?? []);
-    actionsList.add(SizedBox(width: optionalEndSpacing ?? 17.w));
+    actionsList.add(SizedBox(width: optionalEndSpacing ?? (appBloc.notificationCount > 99 ? 27.w : 17.w)));
     return actionsList;
   }
 
@@ -188,6 +189,17 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+  }
+
+  Widget _getNotificationIcon() {
+    Widget item = _buildIconButton(onNotification!, AppImages.icNotification, size: 24);
+    if (appBloc.notificationCount > 0) {
+      item = Badge.count(
+        count: appBloc.notificationCount,
+        child: item,
+      );
+    }
+    return item;
   }
 
   @override

@@ -48,7 +48,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
                 );
               }
               return BottomNavigationBarItem(
-                icon: SmartImage(path: model.icon),
+                icon: _getBottomNavigationBarIcon(model),
                 activeIcon: SmartImage(path: model.activeIcon),
                 label: model.label.tr,
               );
@@ -78,5 +78,16 @@ class SmartBottomNavigationBar extends StatelessWidget {
       height: 24.w,
       width: 24.w,
     );
+  }
+
+  Widget _getBottomNavigationBarIcon(BottomNavigationBarDataModel model) {
+    Widget item = SmartImage(path: model.icon);
+    if (model.notificationCount > 0) {
+      item = Badge.count(
+        count: model.notificationCount,
+        child: item,
+      );
+    }
+    return item;
   }
 }
