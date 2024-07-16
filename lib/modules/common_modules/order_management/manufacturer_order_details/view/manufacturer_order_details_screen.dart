@@ -13,52 +13,53 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
       body: _getBody(context, bloc),
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: bloc.scrollController.canScrollToTop,
-        onTap: bloc.scrollController.scrollToTop,
-      ),
     );
   }
 
   Widget _getBody(BuildContext context, ManufacturerOrderDetailsBloc bloc) {
     final OrderDetailScreenStyle orderDetailScreenStyle = AppTheme.of(context).orderDetailScreenStyle;
     return SafeArea(
-      child: BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
-        buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState || current is ManufacturerOrderListLoadedState,
-        builder: (context, state) {
-          if (bloc.orderList.isEmpty) {
-            return NoDataFoundWidget(text: APPStrings.noOrderListFound.tr);
-          }
-          return SmartSingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            controller: bloc.scrollController.scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildManufacturerOrderDetailsInfoCard(bloc, context, orderDetailScreenStyle),
-                SizedBox(height: 24.h),
-                _buildManufacturerOrderCreatorDetailsInfoCard(bloc, context, orderDetailScreenStyle),
-                SizedBox(height: 32.h),
-                _buildSearchTextField(bloc),
-                SizedBox(height: 24.h),
-                _buildManufacturerOrderList(bloc, context),
-                // _buildOrderTotalDiamondItemsDetails(bloc, context)
-              ],
-            ),
-          );
-        },
+      child: SmartSingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildManufacturerOrderDetailsInfoCard(bloc, context, orderDetailScreenStyle),
+            SizedBox(height: 24.h),
+            _buildManufacturerOrderCreatorDetailsInfoCard(bloc, context, orderDetailScreenStyle),
+            SizedBox(height: 32.h),
+            _buildSearchTextField(bloc),
+            SizedBox(height: 24.h),
+            _buildManufacturerOrderList(bloc, context),
+            SizedBox(height: 16.h),
+            _buildOrderTotalDiamondItemsDetails(bloc, context),
+            SizedBox(height: 24.h),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildManufacturerOrderList(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
-    return ListView.builder(
-      itemCount: bloc.orderList.length,
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return _buildManufacturerOrderListItem(bloc, context, index);
+    return BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+      buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState,
+      builder: (context, state) {
+        if (state is ManufacturerOrderDataFetchedState) {
+          if (bloc.orderList.isEmpty) {
+            return NoDataFoundWidget(text: APPStrings.noOrderListFound.tr);
+          }
+          return ListView.builder(
+            itemCount: bloc.orderList.length,
+            padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return _buildManufacturerOrderListItem(bloc, context, index);
+            },
+          );
+        }
+        return const SizedBox.shrink();
       },
     );
   }
@@ -66,104 +67,92 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildManufacturerOrderListItem(ManufacturerOrderDetailsBloc bloc, BuildContext context, int index) {
     final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     ManufacturerOrderDetailsModel model = bloc.orderList[index];
-    return BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
-      buildWhen: (prev, current) => current is ManufacturerOrderLoadingMoreState || current is ManufacturerOrderListLoadedState,
-      builder: (context, state) {
-        return Column(
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.all(16.0.w),
+        margin: EdgeInsets.only(bottom: 16.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
+          color: style.backgroundColor,
+          border: Border.all(color: style.borderColor),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.all(16.0.w),
-                margin: EdgeInsets.only(bottom: 16.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.r),
-                  color: style.backgroundColor,
-                  border: Border.all(color: style.borderColor),
+            Row(
+              children: [
+                SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: SmartText(
+                    model.orderId ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: style.headingStyle,
+                  ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: SmartText(
-                            model.orderId ?? '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: style.headingStyle,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        InkWell(onTap: () {}, child: const SmartImage(path: AppImages.icMoreHorizontal))
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
-                        Expanded(
-                            child: _buildManufacturerDetailColumn(
-                                APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    const Divider(),
-                    SizedBox(height: 16.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    const Divider(),
-                    SizedBox(height: 16.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
-                        Expanded(
-                            child: _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style,
-                                isDiscount: true)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            child: _buildManufacturerDetailColumn(
-                                APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
-                                isTextFormField: true)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
-                        Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+                SizedBox(width: 8.w),
+                SmartImage(path: AppImages.icMoreHorizontal, onTap: () {})
+              ],
             ),
-            if (state is ManufacturerOrderLoadingMoreState && index == bloc.orderList.length - 1) const SmartCircularProgressIndicator()
+            SizedBox(height: 16.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
+                Expanded(
+                    child:
+                        _buildManufacturerDetailColumn(APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            const Divider(),
+            SizedBox(height: 16.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            const Divider(),
+            SizedBox(height: 16.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
+                Expanded(
+                    child:
+                        _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style, isDiscount: true)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: _buildManufacturerDetailColumn(APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
+                        isTextFormField: true)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
+                Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
+              ],
+            ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -458,13 +447,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     return const RetailerOrderCancelBottomSheet();
   }
 
-  Widget _buildPopupOption(
-    BuildContext context, {
-    required String text,
-    required TextStyle style,
-    EdgeInsets? padding,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildPopupOption(BuildContext context,
+      {required String text, required TextStyle style, EdgeInsets? padding, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -477,80 +461,66 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     );
   }
 
-// TODO: Below commented code is required so don't remove
-// Widget _buildOrderTotalDiamondItemsDetails(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
-//   MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
-//   return Padding(
-//     padding: EdgeInsets.symmetric(horizontal: 17.w),
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.stretch,
-//       children: [
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
-//             SizedBox(width: 12.w),
-//             _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
-//           ],
-//         ),
-//         SizedBox(height: 12.h),
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
-//             SizedBox(width: 12.w),
-//             _buildTextInfoColumn(APPStrings.totalWeight.tr, '20.120', style),
-//           ],
-//         ),
-//         SizedBox(height: 12.h),
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _buildTextInfoColumn(APPStrings.contactEmail.tr, 'jasons@example.com', style),
-//             SizedBox(width: 12.w),
-//             _buildTextInfoColumn(APPStrings.contactPhone.tr, '66362389', style),
-//           ],
-//         ),
-//         SizedBox(height: 12.h),
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38', style),
-//             SizedBox(width: 12.w),
-//             _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
-//           ],
-//         ),
-//         SizedBox(height: 12.h),
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
-//             SizedBox(width: 12.w),
-//             _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
-//           ],
-//         ),
-//       ],
-//     ),
-//   );
-// }
-//
-// Widget _buildTextInfoColumn(String title, String value, MyBagScreenStyle style) {
-//   return Expanded(
-//     child: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         SmartText(
-//           title,
-//           style: style.bottomBarTotalTextStyle,
-//         ),
-//         SizedBox(height: 8.h),
-//         SmartText(
-//           value,
-//           style: style.textInfoValueStyle,
-//         ),
-//       ],
-//     ),
-//   );
-// }
+  Widget _buildOrderTotalDiamondItemsDetails(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
+    MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.totalWeight.tr, '20.120', style),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style, isExpanded: false),
+          SizedBox(height: 12.h),
+          _buildTextInfoColumn(APPStrings.commentQuestion.tr, 'Lorem ipsum dolor sit amet consectetur.', style, isExpanded: false),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextInfoColumn(String title, String value, MyBagScreenStyle style, {bool isExpanded = true}) {
+    Widget view = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SmartText(
+          title,
+          style: style.bottomBarTotalTextStyle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: 8.h),
+        SmartText(
+          value,
+          style: style.textInfoValueStyle,
+        ),
+      ],
+    );
+    return isExpanded ? Expanded(child: view) : view;
+  }
 }

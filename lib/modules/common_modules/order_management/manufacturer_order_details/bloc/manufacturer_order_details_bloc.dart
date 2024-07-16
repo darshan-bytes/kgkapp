@@ -8,7 +8,6 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
   TextEditingController searchController = TextEditingController();
   List<ManufacturerOrderDetailsModel> orderList = [];
   List<CancellationReasonModel> cancellationReasonsList = [];
-  SmartPaginationScrollController scrollController = SmartPaginationScrollController();
 
   int currentTrackOrderIndex = 2;
 
@@ -18,7 +17,6 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
 
   ManufacturerOrderDetailsBloc() : super(ManufacturerOrderDetailsInitial()) {
     on<ManufacturerOrderDetailsInitialEvent>(_manufacturerOrderDetailsInitialEvent);
-    on<ManufacturerOrderDetailsLoadMoreEvent>(_manufacturerOrderDetailsLoadMoreEvent);
     on<ManufacturerOrderCancellationReasonsEvent>(_onManufacturerOrderCancellationReasonsChange);
   }
 
@@ -29,56 +27,13 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
     }
   }
 
-  @override
-  Future<void> close() {
-    scrollController.dispose();
-    return super.close();
-  }
-
-  Future<void> _manufacturerOrderDetailsLoadMoreEvent(
-      ManufacturerOrderDetailsLoadMoreEvent event, Emitter<ManufacturerOrderDetailsState> emit) async {
-    emit(ManufacturerOrderLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-
-    orderList.addAll(List.generate(
-        6,
-        (index) => ManufacturerOrderDetailsModel(
-              id: index.toString(),
-              orderId: "MBFG716306",
-              orderProductShape: "Marquise",
-              orderProductImage: 'https://i.ibb.co/yfdTjFL/Frame-1410089200.png',
-              orderProductCertificateNumber: "230000066395",
-              orderProductMeasurements: "10.18 x 8.34 x 6.14",
-              orderProductLab: "GIA",
-              orderProductCt: "10.04",
-              orderProductColour: "H",
-              orderProductClarity: "VVS1",
-              orderProductCut: "Excellent",
-              orderProductRap: "\$35,500.00",
-              orderProductDiscount: "-30.00",
-              orderProductKgkAmount: "\$24,850.00",
-              orderProductYourPercentage: "40",
-              orderProductYourRate: "\$15,0600.00",
-              orderProductYourValue: "\$24,850.00",
-            )));
-
-    scrollController.isPageLoaded.complete(event.currentPage == 3);
-    emit(ManufacturerOrderListLoadedState(event.currentPage + 1));
-  }
-
   Future<void> _manufacturerOrderDetailsInitialEvent(
       ManufacturerOrderDetailsInitialEvent event, Emitter<ManufacturerOrderDetailsState> emit) async {
-    scrollController.init(
-      loadAction: (int currentPage) async {
-        add(ManufacturerOrderDetailsLoadMoreEvent(currentPage: currentPage));
-      },
-    );
-
     getRouteData(event.context);
 
     emit(ManufacturerOrderReloadState());
     orderList = List.generate(
-        10,
+        4,
         (index) => ManufacturerOrderDetailsModel(
               id: index.toString(),
               orderId: "MBFG716306",

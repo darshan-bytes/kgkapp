@@ -13,15 +13,6 @@ class ManufacturerOrderDetailsInitialEvent extends ManufacturerOrderDetailsEvent
   List<Object> get props => [];
 }
 
-class ManufacturerOrderDetailsLoadMoreEvent extends ManufacturerOrderDetailsEvent {
-  final int currentPage;
-
-  const ManufacturerOrderDetailsLoadMoreEvent({required this.currentPage});
-
-  @override
-  List<Object> get props => [currentPage];
-}
-
 class ManufacturerOrderCancellationReasonsEvent extends ManufacturerOrderDetailsEvent {
   final CancellationReasonModel cancellationReasonModel;
 

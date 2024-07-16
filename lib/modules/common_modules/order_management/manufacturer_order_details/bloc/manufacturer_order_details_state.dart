@@ -19,11 +19,6 @@ final class ManufacturerOrderDataFetchedState extends ManufacturerOrderDetailsSt
   List<Object> get props => [];
 }
 
-final class ManufacturerOrderLoadingMoreState extends ManufacturerOrderDetailsState {
-  @override
-  List<Object> get props => [];
-}
-
 final class ManufacturerOrderListLoadedState extends ManufacturerOrderDetailsState {
   final int currentPage;
 
