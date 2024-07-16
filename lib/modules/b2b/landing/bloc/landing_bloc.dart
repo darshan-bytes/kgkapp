@@ -31,6 +31,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   LandingBloc() : super(LandingInitialState()) {
     on<LandingInitialEvent>(_onLandingInitialEvent);
     on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
+    on<LandingLogoutEvent>(_onLandingLogoutEvent);
   }
 
   void _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) {
@@ -83,6 +84,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.myBag,
+        notificationCount: 2,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icSupport,
@@ -131,6 +133,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.myBag,
+        notificationCount: 2,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icCompanyBottomNavbar,
@@ -196,5 +199,9 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       }
       emit(LandingChangeTabState(event.index));
     }
+  }
+
+  void _onLandingLogoutEvent(LandingLogoutEvent event, Emitter<LandingState> emit) {
+    _isInitialized = false;
   }
 }

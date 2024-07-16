@@ -16,6 +16,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   UserType userType = UserType.b2cUser;
 
+  int notificationCount = 1;
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);

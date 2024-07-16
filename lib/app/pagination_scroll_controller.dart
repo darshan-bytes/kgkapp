@@ -28,6 +28,12 @@ class SmartPaginationScrollController {
     controller.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 
+  void pullToRefresh() {
+    isPageLoaded = Completer<bool>();
+    currentPage = 1;
+    // stopLoading = false;
+  }
+
   /// Initializes the scroll controller and sets the load action.
   /// Optionally, an init action can be provided.
   ///

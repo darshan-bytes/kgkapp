@@ -9,7 +9,16 @@ class AuctionListingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.auctions.tr),
-      bottomNavigationBar: _buildBottomNavigationBar(auctionListingBloc),
+      bottomNavigationBar: _buildBottomNavigationBar(auctionListingBloc, context),
+      floatingActionButton: BlocBuilder<PresentationBloc, PresentationState>(
+        buildWhen: (previous, current) => current is PresentationLoadedState,
+        builder: (context, state) {
+          return ScrollToTopFAB(
+            canScrollToTop: auctionListingBloc.paginationScrollController.canScrollToTop,
+            onTap: auctionListingBloc.paginationScrollController.scrollToTop,
+          );
+        },
+      ),
       body: _getBody(auctionListingBloc),
     );
   }
@@ -17,10 +26,16 @@ class AuctionListingScreen extends StatelessWidget {
   Widget _getBody(AuctionListingBloc auctionListingBloc) {
     return SafeArea(
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
-        buildWhen: (previous, current) => current is AuctionListingLoadedState,
+        buildWhen: (previous, current) => current is AuctionListingLoadedState || current is AuctionListingReloadingState,
         builder: (context, state) {
-          if (state is AuctionListingLoadedState) {
+          if (state is AuctionListingLoadedState || state is AuctionListingReloadingState) {
             return SmartSingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              onRefresh: () async {
+                //TODO: inprogress pull to refresh logic
+                // auctionListingBloc.add(const AuctionListPullToRefreshEvent());
+                // await auctionListingBloc.refreshCompleter.future;
+              },
               controller: auctionListingBloc.paginationScrollController.scrollController,
               padding: EdgeInsets.symmetric(horizontal: 17.0.w),
               child: Column(
@@ -80,7 +95,7 @@ class AuctionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(AuctionListingBloc auctionListingBloc) {
+  Widget _buildBottomNavigationBar(AuctionListingBloc auctionListingBloc, BuildContext context) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -89,7 +104,14 @@ class AuctionListingScreen extends StatelessWidget {
           SelectionButton(
             borderRadius: BorderRadius.zero,
             isSelected: false,
-            onTap: () {},
+            onTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
             image: AppImages.icFilter,
             title: APPStrings.filter.tr,
           ),

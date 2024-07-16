@@ -12,6 +12,7 @@ class SmartSingleChildScrollView extends StatelessWidget {
   final Clip clipBehavior;
   final String? restorationId;
   final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
+  final RefreshCallback? onRefresh;
 
   const SmartSingleChildScrollView({
     super.key,
@@ -26,27 +27,42 @@ class SmartSingleChildScrollView extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.restorationId,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.onRefresh,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget view = SingleChildScrollView(
+      controller: controller,
+      scrollDirection: scrollDirection ?? Axis.vertical,
+      physics: physics,
+      reverse: reverse,
+      padding: padding,
+      primary: primary,
+      dragStartBehavior: dragStartBehavior,
+      clipBehavior: clipBehavior,
+      restorationId: restorationId,
+      keyboardDismissBehavior: keyboardDismissBehavior,
+      child: child,
+    );
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: SingleChildScrollView(
-        controller: controller,
-        scrollDirection: scrollDirection ?? Axis.vertical,
-        physics: physics,
-        reverse: reverse,
-        padding: padding,
-        primary: primary,
-        dragStartBehavior: dragStartBehavior,
-        clipBehavior: clipBehavior,
-        restorationId: restorationId,
-        keyboardDismissBehavior: keyboardDismissBehavior,
-        child: child,
-      ),
+      child: _getRefreshIndicatorView(view: view),
     );
+  }
+
+  Widget _getRefreshIndicatorView({required Widget view}) {
+    if (onRefresh != null) {
+      return RefreshIndicator.adaptive(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+        displacement: 10,
+        onRefresh: onRefresh!,
+        child: view,
+      );
+    }
+    return view;
   }
 }

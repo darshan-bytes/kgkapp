@@ -10,13 +10,19 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   List<AuctionListModel> auctionList = [];
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  Completer<void> refreshCompleter = Completer<void>();
 
   AuctionListingBloc() : super(AuctionListingInitialState()) {
     on<InitialAuctionListingEvent>(_onInitialAuctionListingEvent);
     on<AuctionListLoadMoreEvent>(_onAuctionListLoadMoreEvent);
+    on<AuctionListPullToRefreshEvent>(_onAuctionListPullToRefresh);
   }
 
   void _onInitialAuctionListingEvent(InitialAuctionListingEvent event, Emitter<AuctionListingState> emit) {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(AuctionListLoadMoreEvent(currentPage));
@@ -63,5 +69,31 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
     );
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(AuctionListLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onAuctionListPullToRefresh(AuctionListPullToRefreshEvent event, Emitter<AuctionListingState> emit) async {
+    if (!refreshCompleter.isCompleted) {
+      return;
+    }
+    refreshCompleter = Completer<void>();
+    emit(const AuctionListingReloadingState());
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 5));
+    auctionList = List.generate(
+      10,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        imageUrl: "https://i.ibb.co/Rhgz539/image-224.png",
+        name: "Diamond Vine Ring in 18k Gold",
+        skuNo: "DERC03RDA",
+        orderStatus: index == 0 ? ProjectStatus.onGoing : ProjectStatus.winner,
+        bidAmount: "\$5000.00",
+        bidPlacedOn: "23/03/2023, 10:46",
+        type: "Jewellery",
+      ),
+    );
+
+    refreshCompleter.complete();
+    emit(const AuctionListingLoadedState());
   }
 }

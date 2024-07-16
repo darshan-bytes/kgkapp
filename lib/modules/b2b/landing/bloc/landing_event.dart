@@ -24,3 +24,11 @@ final class LandingChangeTabEvent extends LandingEvent {
   @override
   List<Object> get props => [index, context];
 }
+
+///[LandingLogoutEvent] is a class that is dispatched to the bloc when the user logs out
+final class LandingLogoutEvent extends LandingEvent {
+  const LandingLogoutEvent();
+
+  @override
+  List<Object> get props => [];
+}

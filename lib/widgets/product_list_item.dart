@@ -99,8 +99,9 @@ class ProductListItem extends StatelessWidget {
   }
 
   Widget buildIcon({required String path, Function()? onTap, required ProductItemStyle style, Color? backgroundColor, Color? borderColor}) {
-    return GestureDetector(
+    return Bounceable(
       onTap: onTap,
+      scaleFactor: 0.6,
       child: Container(
         decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,

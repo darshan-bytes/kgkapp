@@ -19,7 +19,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   final List<AuctionListModel> originOfDiamondsList = _generateShopDiamondList(isForCountry: true);
 
   // Get Inspired List
-  final List<AuctionListModel> getInspiredList = _generateGetInspiredList();
+  final List<AuctionListModel> getInspiredList = _generateGetInspiredList(isForDiamond: true);
 
   // Diamond FAQs List
   final List<FAQ> diamondFAQS = _generateDiamondFAQS();
@@ -107,7 +107,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   // Generate Get Inspired List
-  static List<AuctionListModel> _generateGetInspiredList({bool isGemstone = false}) {
+  static List<AuctionListModel> _generateGetInspiredList({bool isGemstone = false, bool isForDiamond = false}) {
     List<String> titleList = ["Diamonds rings", "Diamonds necklace", "Diamonds earrings", "Diamonds bracelet"];
     List<String> imageList = [
       "https://i.ibb.co/zsvLW4N/Image.png",
@@ -121,12 +121,23 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       "https://i.ibb.co/G7RH7k4/Image22.png",
       "https://i.ibb.co/XYsTf4M/Image33.png"
     ];
+
+    List<String> diamondImageList = [
+      "https://i.ibb.co/30MXHMT/Image5.png",
+      "https://i.ibb.co/yRy2w21/Image1.png",
+      "https://i.ibb.co/dmtHjL6/Image2.png",
+      "https://i.ibb.co/VN2fDKh/Image4.png"
+    ];
     return List.generate(
       imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
         name: titleList[index],
-        imageUrl: isGemstone ? shopByStyleImage[index] : imageList[index],
+        imageUrl: isForDiamond
+            ? diamondImageList[index]
+            : isGemstone
+                ? shopByStyleImage[index]
+                : imageList[index],
       ),
     );
   }
@@ -198,6 +209,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               "They are found in a variety of locations around the world, including mines, riverbeds, and volcanic areas."),
       FAQ(
           question: "What is the rarest gemstone?",
+          answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
+              "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
+      FAQ(
+          question: "How are gemstones cut?",
           answer: "We provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, "
               "ring heads, settings, and more to create a unique and personalized piece of jewelry."),
       FAQ(
