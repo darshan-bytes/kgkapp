@@ -168,7 +168,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.itemsSold.tr, value: model.strItemSold),
           B2BItemField(label: APPStrings.orderReceived.tr, value: model.strOrdersReceived),
           B2BItemField(label: APPStrings.totalSell.tr, value: model.strTotalSell),
-          B2BItemField(label: APPStrings.averageOrderValue.tr, value: model.strAverageOrderValue),
+          B2BItemField(label: APPStrings.avgOrderValue.tr, value: model.strAverageOrderValue),
           B2BItemField(label: APPStrings.leads.tr, value: model.strLeads),
         ];
       case B2BListingType.exhibitionDetailPageOrdersType:
@@ -204,7 +204,10 @@ class B2BListingFieldFactory {
       case B2BListingType.userListingType:
         return [
           B2BItemField(label: APPStrings.name.tr, value: model.strName, imageUrl: model.strNameImageUrl),
-          B2BItemField(label: APPStrings.businessType.tr, value: model.strBusinessType, imageUrl: model.strBusinessTypeImageUrl),
+          B2BItemField(
+              label: APPStrings.businessType.tr.toLowerCase().capitalizeFirst,
+              value: model.strBusinessType,
+              imageUrl: model.strBusinessTypeImageUrl),
           B2BItemField(label: APPStrings.companyRepresentative.tr, value: model.strCompanyRepresentative),
           B2BItemField(label: APPStrings.market.tr, value: model.strMarket, imageUrl: model.strMarketFlagImageUrl, isCircleImage: false),
           B2BItemField(label: APPStrings.email.tr, value: model.strEmail),

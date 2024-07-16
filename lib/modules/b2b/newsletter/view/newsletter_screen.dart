@@ -13,7 +13,7 @@ class NewsletterScreen extends StatelessWidget {
         onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(bloc),
+      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.0.w),
@@ -41,7 +41,7 @@ class NewsletterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(NewsletterBloc bloc) {
+  Widget _buildBottomNavigationBar(NewsletterBloc bloc, BuildContext context) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -50,7 +50,14 @@ class NewsletterScreen extends StatelessWidget {
           SelectionButton(
             borderRadius: BorderRadius.zero,
             isSelected: false,
-            onTap: () {},
+            onTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
             image: AppImages.icFilter,
             title: APPStrings.filter.tr,
           ),

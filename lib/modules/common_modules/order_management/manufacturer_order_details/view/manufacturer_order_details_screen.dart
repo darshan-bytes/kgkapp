@@ -405,7 +405,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
               _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                 _showTrackBottomSheet(context, bloc);
               }),
-              _buildPopupOption(context, text: APPStrings.orderTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+              _buildPopupOption(context,
+                  text: APPStrings.orderTimeline.tr.toLowerCase().capitalizeFirst, style: orderPopupStyle.optionTextStyle, onTap: () {
                 context.popAndPushNamed(AppRoutes.orderTimelinePage);
               }),
               _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {

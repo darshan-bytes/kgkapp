@@ -150,7 +150,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
             ],
           ),
           _detailWidget(
-            title: APPStrings.assignTo.tr,
+            title: APPStrings.assignTo.tr.toUpperCamelCase,
             subTitle: calendarData.assignedTo ?? '',
             style: style,
             profileImg: calendarData.assignedToImage,

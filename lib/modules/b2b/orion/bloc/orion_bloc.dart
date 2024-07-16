@@ -40,8 +40,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   ///Event Handlers
   void _onOrionInitialEvent(OrionInitialEvent event, Emitter<OrionState> emit) {
-    minPriceController.text = values.start.toStringAsFixed(0);
-    maxPriceController.text = values.end.toStringAsFixed(0);
+    minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}';
+    maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}';
     _initDiamondShapeList();
     _initDiamondPropertiesList();
     emit(const OrionLoadedState());
@@ -50,8 +50,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   void _onOrionPriceRangeChangedEvent(OrionPriceRangeChangedEvent event, Emitter<OrionState> emit) {
     emit(const OrionReloadedState());
     values = event.values;
-    minPriceController.text = values.start.toStringAsFixed(0);
-    maxPriceController.text = values.end.toStringAsFixed(0);
+    minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}';
+    maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}';
     emit(const OrionPriceRangeChangedState());
   }
 
@@ -102,7 +102,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
         id: 1,
         title: 'Cut',
         propertiesList: [
-          OrionPropertiesDetails(id: 1, title: 'Excellent', subTitle: 'Very sparkly Excellent'),
+          OrionPropertiesDetails(id: 1, title: 'Excellent', subTitle: 'Very sparkly'),
           OrionPropertiesDetails(id: 2, title: 'Very Good', subTitle: 'Very sparkly Good'),
           OrionPropertiesDetails(id: 3, title: 'Good', subTitle: 'Sparkly Good'),
           OrionPropertiesDetails(id: 4, title: 'Fair', subTitle: 'Very sparkly Fair'),
@@ -119,6 +119,11 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
           OrionPropertiesDetails(id: 3, title: 'F', subTitle: 'Colorless'),
           OrionPropertiesDetails(id: 4, title: 'G', subTitle: 'Colorless'),
           OrionPropertiesDetails(id: 5, title: 'H', subTitle: 'Colorless'),
+          OrionPropertiesDetails(id: 6, title: 'I', subTitle: 'Colorless'),
+          OrionPropertiesDetails(id: 7, title: 'J', subTitle: 'Colorless'),
+          OrionPropertiesDetails(id: 8, title: 'K', subTitle: 'Colorless'),
+          OrionPropertiesDetails(id: 9, title: 'L', subTitle: 'Colorless'),
+          OrionPropertiesDetails(id: 10, title: 'M', subTitle: 'Colorless'),
         ],
       ),
       OrionDiamondPropertiesDataModel(
@@ -169,7 +174,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       }
       add(OrionPriceRangeChangedEvent(values, isFromTextField: true, isMin: true)); // Trigger an event to update the price range.
     } else {
-      minPriceController.text = values.start.toStringAsFixed(0); // Reset the text field if the value is out of range.
+      minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
     }
   }
 
@@ -196,7 +201,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       }
       add(OrionPriceRangeChangedEvent(values, isFromTextField: true, isMin: false)); // Trigger an event to update the price range.
     } else {
-      maxPriceController.text = values.end.toStringAsFixed(0); // Reset the text field if the value is out of range.
+      maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
     }
   }
 }

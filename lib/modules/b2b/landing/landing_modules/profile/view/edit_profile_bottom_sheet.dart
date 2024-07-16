@@ -9,7 +9,8 @@ class EditProfileBottomSheet extends StatelessWidget {
     final ProfileBloc bloc = BlocProvider.of<ProfileBloc>(context);
 
     return SmartSingleChildScrollView(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      physics: const ClampingScrollPhysics(),
+      controller: bloc.scrollController,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 24.h),
         decoration: BoxDecoration(
@@ -29,7 +30,7 @@ class EditProfileBottomSheet extends StatelessWidget {
             SizedBox(height: 24.h),
             ...generateProfileForm(bloc),
             SizedBox(height: 24.h),
-            _buildSaveButton(context),
+            _buildSaveButton(context, bloc),
           ],
         ),
       ),
@@ -145,12 +146,20 @@ class EditProfileBottomSheet extends StatelessWidget {
       controller: profileBloc.contactNumberController,
       focusNode: profileBloc.contactNumberFocusNode,
       keyboardType: TextInputType.phone,
+      onTap: () {
+        profileBloc.scrollController.animateTo(
+          profileBloc.scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeOut,
+        );
+      },
       textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
     );
   }
 
-  Widget _buildSaveButton(BuildContext context) {
+  Widget _buildSaveButton(BuildContext context, ProfileBloc bloc) {
     return SmartButton(
+      key: bloc.saveBtnKey,
       title: APPStrings.save.tr,
       onTap: () {
         context.pop();

@@ -30,6 +30,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   List<ProfileListModel> profileAdminList = [];
 
   bool isExpandedList = false;
+  GlobalKey<ScaffoldState> saveBtnKey = GlobalKey<ScaffoldState>();
+  final scrollController = ScrollController();
 
   ProfileBloc() : super(ProfileInitialState()) {
     on<InitialProfileListEvent>(_onInitialProfileListEvent);

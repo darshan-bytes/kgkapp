@@ -95,6 +95,7 @@ class UserMasterListingScreen extends StatelessWidget {
                               bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
                           type: B2BListingType.userListingType,
                           listingItemModel: userItem,
+                          gridSpacing: 10.w,
                           onTapMenuButton: () {},
                           onTap: () {},
                         ),

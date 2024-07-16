@@ -108,7 +108,6 @@ export 'package:kgk/modules/b2b/do_it_yourself/setting_listing/view/setting_list
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/bloc/stone_listing_bloc.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/view/stone_listing_screen.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/bloc/exhibition_details_bloc.dart';
-export 'package:kgk/modules/b2b/exhibition_details_orders/model/exhibition_details_orders_model.dart';
 export 'package:kgk/modules/b2b/exhibition_details_orders/view/exhibition_details_orders_tabview_list.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/bloc/exhibition_listing_bloc.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_model.dart';
