@@ -31,107 +31,16 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   }
 
   Widget _buildProductDisplay(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.r),
-        border: Border.all(color: style.borderColor),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      APPStrings.itemsSold.tr,
-                      style: style.listTitleStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '25',
-                      style: style.listSubTitleStyle,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      APPStrings.ordersReceived.tr,
-                      style: style.listTitleStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '15',
-                      style: style.listSubTitleStyle,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      APPStrings.totalSell.tr,
-                      style: style.listTitleStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '\$30,000.00',
-                      style: style.listSubTitleStyle,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      APPStrings.avgOrderValue.tr,
-                      style: style.listTitleStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '\$2,500.00',
-                      style: style.listSubTitleStyle,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      APPStrings.leads.tr,
-                      style: style.listTitleStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '10',
-                      style: style.listSubTitleStyle,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+    return B2BListingItem(
+        listingItemModel: B2BCustomListingDataModel(
+          id: "1",
+          strItemSold: '25',
+          strOrdersReceived: '15',
+          strTotalSell: '\$30,000.00',
+          strAverageOrderValue: '\$2,500.00',
+          strLeads: '10',
         ),
-      ),
-    );
+        type: B2BListingType.exhibitionDetailPageProductsType);
   }
 
   Widget _buildExhibitionFilterCount(ExhibitionDetailsBloc bloc, BuildContext context) {

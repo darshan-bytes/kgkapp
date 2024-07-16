@@ -16,7 +16,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     Tab(text: APPStrings.orders.tr),
   ];
 
-  List<ExhibitionDetailsOrdersModel> exhibitionOrdersList = [];
+  List<B2BCustomListingDataModel> exhibitionOrdersList = [];
 
   List<ProductDetails> productList = [];
 
@@ -36,7 +36,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   void _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) {
     emit(const ExhibitionDetailsReloadState());
-    appbarTitle = APPStrings.exhibition.tr;
+    appbarTitle = 'Sparkling Splendour: The Jewellery Spectacle';
     isGrid = true;
     _initScrollControllers();
     productList.addAll(_generateProductList());
@@ -123,18 +123,19 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     });
   }
 
-  static List<ExhibitionDetailsOrdersModel> _generateExhibitionOrdersList() {
+  static List<B2BCustomListingDataModel> _generateExhibitionOrdersList() {
     return List.generate(
       10,
-      (index) => ExhibitionDetailsOrdersModel(
-          approvedBy: "John Samanta",
-          approvedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          items: '5',
-          totalAmount: '\$35,700',
-          market: "New York, USA",
-          marketImageUrl: AppImages.icFlagUSA,
-          orderName: "Dianne Russell",
-          id: index + 1),
+      (index) => B2BCustomListingDataModel(
+          strApprovedBy: "John Samanta",
+          strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
+          strItems: '5',
+          strTotalAmount: '\$35,700',
+          strMarket: "New York, USA",
+          strMarketFlagImageUrl: AppImages.icFlagUSA,
+          strOrderName: "Dianne Russell",
+          strOrderId: "ORD00${index + 1}",
+          id: "${index + 1}"),
     );
   }
 

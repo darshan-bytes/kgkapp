@@ -128,8 +128,6 @@ class OrionScreen extends StatelessWidget {
                       width: 98.w,
                       child: SmartTextField(
                         height: 40.h,
-                        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                        prefixText: '\$',
                         textAlign: TextAlign.center,
                         controller: bloc.minPriceController,
                         keyboardType: TextInputType.number,
@@ -144,8 +142,6 @@ class OrionScreen extends StatelessWidget {
                       width: 98.w,
                       child: SmartTextField(
                         height: 40.h,
-                        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                        prefixText: '\$',
                         textAlign: TextAlign.center,
                         controller: bloc.maxPriceController,
                         keyboardType: TextInputType.number,
@@ -228,16 +224,22 @@ class OrionScreen extends StatelessWidget {
             SmartHorizontalItemBuilder(
               itemCount: diamondProperties.propertiesList!.length,
               scrollController: bloc.diamondPropertiesListController[index],
-              itemBetweenSpace: 40.w,
+              itemBetweenSpace: 20.w,
               isScrollbarVisible: true,
               itemBuilder: (context, propertiesIndex) {
                 final OrionPropertiesDetails properties = diamondProperties.propertiesList![propertiesIndex];
                 final bool isSelected = diamondProperties.selectedProperties == properties;
-                return SmartText(
-                  properties.title,
-                  style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+                return GestureDetector(
                   onTap: () => bloc.add(OrionDiamondPropertiesChangedEvent(index, propertiesIndex)),
-                  optionalPadding: EdgeInsets.only(bottom: 18.h),
+                  child: Container(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: SmartText(
+                      properties.title,
+                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+                      optionalPadding: EdgeInsets.only(bottom: 18.h),
+                    ),
+                  ),
                 );
               },
             ),

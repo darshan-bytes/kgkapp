@@ -76,7 +76,7 @@ class B2BListingItem extends StatelessWidget {
             ),
             child: SmartGridView(
               items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel)
-                  .map((field) => _buildDetailItem(field, context, style))
+                  .map((field) => _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w))
                   .toList(),
               columns: columns,
               spacing: 0.0.w,
@@ -99,12 +99,13 @@ class B2BListingItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style) {
+  Widget _buildDetailItem(B2BItemField field, BuildContext context, PddListingItemStyle style, double gridSpacing) {
     return isListingView && columns == 1
         ? _buildRowDetailItem(field, context, style)
         : B2BColumnDetailItem(
             field: field,
             onTapCircleWithText: onTapCircleWithText,
+            gridSpacing: gridSpacing,
           );
   }
 
@@ -147,20 +148,21 @@ class B2BListingItem extends StatelessWidget {
 class B2BColumnDetailItem extends StatelessWidget {
   final B2BItemField field;
   final Function()? onTapCircleWithText;
+  final double? gridSpacing;
 
   const B2BColumnDetailItem({
     super.key,
     required this.field,
     this.onTapCircleWithText,
+    this.gridSpacing,
   });
 
   @override
   Widget build(BuildContext context) {
     final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
     final auctionListItemStyle = AppTheme.of(context).auctionListItemStyle;
-
     return Container(
-      margin: EdgeInsets.only(right: field.gridSpacing ?? 16.w),
+      margin: EdgeInsets.only(right: gridSpacing ?? 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

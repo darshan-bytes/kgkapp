@@ -567,7 +567,6 @@ class APPStrings {
   static const String orderReceived = 'order_received';
   static const String totalSell = 'total_sell';
   static const String leads = 'leads';
-  static const String averageOrderValue = 'average_order_value';
 
   //Remaining B2B Listing Type
   static const String quality = 'quality';

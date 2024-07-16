@@ -43,7 +43,6 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
   }
 
   Widget _ordersListing(ExhibitionDetailsBloc exhibitionDetailsOrdersBloc, BuildContext context) {
-    final style = AppTheme.of(context).exhibitionDetailsOrdersStyle;
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
       buildWhen: (previous, current) => current is ExhibitionListingLoadedMoreState || current is ExhibitionListingLoadingMoreState,
       builder: (context, state) {
@@ -59,7 +58,11 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
             final item = exhibitionDetailsOrdersBloc.exhibitionOrdersList[index];
             return Column(
               children: [
-                _orderItem(item, style),
+                B2BListingItem(
+                  listingItemModel: item,
+                  type: B2BListingType.exhibitionDetailPageOrdersType,
+                  onTapMenuButton: () {},
+                ),
                 if (state is ExhibitionListingLoadingMoreState && index == bloc.exhibitionOrdersList.length - 1)
                   const SmartCircularProgressIndicator(),
               ],
@@ -70,89 +73,4 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
       },
     );
   }
-
-  Widget _orderItem(ExhibitionDetailsOrdersModel item, ExhibitionDetailsOrdersStyle style) {
-    return Stack(
-      children: [
-        Container(
-          padding: EdgeInsets.all(16.w),
-          margin: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4.r),
-            border: Border.all(color: style.borderColor),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildDetailColumn(APPStrings.orderId.tr, item.id.toString(), style)),
-                  Expanded(child: _buildDetailColumn(APPStrings.orderName.tr, item.orderName, style)),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildDetailColumn(APPStrings.market.tr, item.market, style, image: item.marketImageUrl)),
-                  Expanded(child: _buildDetailColumn(APPStrings.items.tr, item.items, style)),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildDetailColumn(APPStrings.totalAmount.tr, item.totalAmount, style)),
-                  Expanded(child: _buildDetailColumn(APPStrings.approvedBy.tr, item.approvedBy, style, image: item.approvedByImageUrl)),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 14.h,
-          right: 14.w,
-          child: SmartImage(
-            path: AppImages.icMoreHorizontal,
-            onTap: () {},
-            padding: EdgeInsets.all(4.w),
-            inkwellBorderRadius: BorderRadius.circular(4.0.r),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-Widget _buildDetailColumn(String title, String? value, ExhibitionDetailsOrdersStyle style, {String? image}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      SmartText(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: style.titleStyle,
-      ),
-      SizedBox(height: 4.h),
-      Row(
-        children: [
-          if (image != null)
-            SmartImage(
-              padding: EdgeInsets.only(right: 4.w),
-              path: image,
-              height: 24.w,
-              width: 24.w,
-            ),
-          SmartText(
-            value.isNullOrEmpty ? APPStrings.dash.tr : value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.valueStyle,
-          ),
-        ],
-      ),
-    ],
-  );
 }
