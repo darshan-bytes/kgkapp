@@ -48,8 +48,8 @@ class SmartBottomNavigationBar extends StatelessWidget {
                 );
               }
               return BottomNavigationBarItem(
-                icon: _getBottomNavigationBarIcon(model),
-                activeIcon: SmartImage(path: model.activeIcon),
+                icon: _getBottomNavigationBarIcon(model, landingBloc),
+                activeIcon: _getBottomNavigationBarIcon(model, landingBloc, isActiveIcon: true),
                 label: model.label.tr,
               );
             }).toList(),
@@ -80,13 +80,10 @@ class SmartBottomNavigationBar extends StatelessWidget {
     );
   }
 
-  Widget _getBottomNavigationBarIcon(BottomNavigationBarDataModel model) {
-    Widget item = SmartImage(path: model.icon);
+  Widget _getBottomNavigationBarIcon(BottomNavigationBarDataModel model, LandingBloc bloc, {bool isActiveIcon = false}) {
+    Widget item = SmartImage(path: isActiveIcon ? model.activeIcon : model.icon);
     if (model.notificationCount > 0) {
-      item = Badge.count(
-        count: model.notificationCount,
-        child: item,
-      );
+      item = Badge.count(count: model.notificationCount, child: item);
     }
     return item;
   }
