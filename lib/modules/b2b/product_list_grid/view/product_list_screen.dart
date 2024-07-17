@@ -139,62 +139,74 @@ class ProductListScreen extends StatelessWidget {
           return Column(
             children: [
               SmartGridView(
+                  additionalWidgets: [
+                    (
+                      index: 13,
+                      child: SmartImage(
+                        path: "https://i.ibb.co/3dynkYb/Frame-1410088928.png",
+                        fit: BoxFit.fitWidth,
+                        padding: EdgeInsets.symmetric(vertical: 32.h),
+                      )
+                    ),
+                  ],
                   items: bloc.productList.map((ProductDetails productDetails) {
-                /// If need to  product customization icon then remove onCancel voidCallback
-                bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                    bloc.productList[0] == productDetails;
-                bool isOutOfStock = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                    bloc.productList[0] == productDetails;
-                bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
-                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
-                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
+                    /// If need to  product customization icon then remove onCancel voidCallback
+                    bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                        bloc.productList[0] == productDetails;
+                    bool isOutOfStock = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                        bloc.productList[0] == productDetails;
+                    bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
+                        bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
+                        bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
 
-                Function()? getAddToBagTap(ProductListBloc bloc) {
-                  return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
-                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
-                      ? () {}
-                      : null;
-                }
+                    Function()? getAddToBagTap(ProductListBloc bloc) {
+                      return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
+                              bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+                              bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
+                          ? () {}
+                          : null;
+                    }
 
-                return ProductGridItem(
-                  productDetails: productDetails,
-                  isCustomisable: isCustomisable,
-                  isOutOfStock: isOutOfStock,
-                  onAddToBagTap: getAddToBagTap(bloc),
-                  onEyeTap: () {
-                    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                      BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails));
-                      Utils.showSmartModalBottomSheet(
-                        context: context,
-                        enableDrag: false,
-                        useRootNavigator: true,
-                        builder: (context) => const AddWatchlistScreen(),
-                      );
-                    }
-                  },
-                  onFavTap: () {},
-                  prefixImage: AppImages.icShoppingBag,
-                  imageSize: 16.w,
-                  isStoneWithPrice: isStoneWithPrice,
-                  onTap: () {
-                    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                      context.pushNamed(AppRoutes.productDetailsPage,
-                          arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
-                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-                      // Navigation to product details page
-                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-                      // Navigation to product details page
-                    } else {
-                      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
-                    }
-                  },
-                );
-              }).toList()),
+                    return ProductGridItem(
+                      productDetails: productDetails,
+                      isCustomisable: isCustomisable,
+                      isOutOfStock: isOutOfStock,
+                      onAddToBagTap: getAddToBagTap(bloc),
+                      onEyeTap: () {
+                        if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+                          BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails));
+                          Utils.showSmartModalBottomSheet(
+                            context: context,
+                            enableDrag: false,
+                            useRootNavigator: true,
+                            builder: (context) => const AddWatchlistScreen(),
+                          );
+                        }
+                      },
+                      onFavTap: () {},
+                      prefixImage: AppImages.icShoppingBag,
+                      imageSize: 16.w,
+                      isStoneWithPrice: isStoneWithPrice,
+                      onTap: () {
+                        if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+                          context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                            RoutesData.productId: productDetails.productId ?? '',
+                            RoutesData.isPageFor: bloc.screenIdentifier
+                          });
+                        } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+                          // Navigation to product details page
+                        } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+                          // Navigation to product details page
+                        } else {
+                          context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
+                        }
+                      },
+                    );
+                  }).toList()),
               if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
               SizedBox(
                 height: 17.h,
