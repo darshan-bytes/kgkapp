@@ -76,7 +76,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
                 ),
               ));
     } else {
-      stoneListingAppbarTitle = APPStrings.diamond.tr;
+      stoneListingAppbarTitle = APPStrings.diamonds.tr;
       productList.clear();
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;

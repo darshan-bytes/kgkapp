@@ -117,6 +117,7 @@ class TrackOrderBottomSheet extends StatelessWidget {
 
   Widget _buildTrackOrderView(OrderDetailBloc orderDetailBloc, SmartTileLineStepperStyle smartTileLineStepperStyle) {
     return SmartTileLineStepper(
+      upcomingColor: smartTileLineStepperStyle.upcomingColor,
       currentStep: orderDetailBloc.currentTrackOrderIndex,
       steps: [
         SmartStep(

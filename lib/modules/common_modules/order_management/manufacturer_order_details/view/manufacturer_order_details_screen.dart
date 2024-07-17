@@ -481,7 +481,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
-              SizedBox(width: 12.w),
+              SizedBox(width: 6.w),
               _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
             ],
           ),
