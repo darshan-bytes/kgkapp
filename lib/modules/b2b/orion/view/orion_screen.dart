@@ -43,55 +43,53 @@ class OrionScreen extends StatelessWidget {
   }
 
   Widget _buildDiamondShapeList(OrionBloc bloc, OrionStyle style) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 192.h),
-      child: SmartHorizontalItemBuilder(
-        title: APPStrings.selectDiamondShape.tr,
-        titleStyle: style.selectionTitleStyle,
-        spacingBetweenTitleAndItems: 16.h,
-        scrollController: bloc.diamondShapeListController,
-        itemBetweenSpace: 16.w,
-        isScrollbarVisible: true,
-        itemCount: bloc.diamondShapeList.length,
-        itemBuilder: (context, index) {
-          return BlocBuilder<OrionBloc, OrionState>(
-            buildWhen: (previous, current) =>
-                previous != current && current is OrionDiamondShapeChangedState && (current.newIndex == index || current.oldIndex == index),
-            builder: (context, state) {
-              ProductCustomizationOptionValues value = bloc.diamondShapeList[index];
-              bool isSelected = bloc.selectedDiamondShape == value;
-              return InkWell(
-                borderRadius: BorderRadius.circular(8.w),
-                onTap: () {
-                  bloc.add(OrionDiamondShapeChangedEvent(index));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(6.w),
-                  decoration: BoxDecoration(
-                    color: isSelected ? style.selectedDiamondSelectionBackgroundColor : null,
-                    borderRadius: BorderRadius.circular(8.w),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SmartImage(path: value.image ?? '', height: 48.h, width: 48.w),
-                      SizedBox(height: 8.h),
-                      SmartText(value.value,
-                          style: isSelected ? style.selectedDiamondSelectionTitleStyle : style.diamondSelectionTitleStyle,
-                          textAlign: TextAlign.center),
-                      SizedBox(height: 4.h),
-                      SmartText(value.availableProductCount.toString(),
-                          style: isSelected ? style.selectedDiamondSelectionValueStyle : style.diamondSelectionValueStyle,
-                          textAlign: TextAlign.center),
-                    ],
-                  ),
+    return SmartHorizontalItemBuilder(
+      title: APPStrings.selectDiamondShape.tr,
+      titleStyle: style.selectionTitleStyle,
+      spacingBetweenTitleAndItems: 16.h,
+      scrollController: bloc.diamondShapeListController,
+      itemBetweenSpace: 16.w,
+      listPadding: EdgeInsets.only(bottom: 12.h),
+      isScrollbarVisible: true,
+      itemCount: bloc.diamondShapeList.length,
+      itemBuilder: (context, index) {
+        return BlocBuilder<OrionBloc, OrionState>(
+          buildWhen: (previous, current) =>
+              previous != current && current is OrionDiamondShapeChangedState && (current.newIndex == index || current.oldIndex == index),
+          builder: (context, state) {
+            ProductCustomizationOptionValues value = bloc.diamondShapeList[index];
+            bool isSelected = bloc.selectedDiamondShape == value;
+            return InkWell(
+              borderRadius: BorderRadius.circular(8.w),
+              onTap: () {
+                bloc.add(OrionDiamondShapeChangedEvent(index));
+              },
+              child: Container(
+                padding: EdgeInsets.all(6.w),
+                decoration: BoxDecoration(
+                  color: isSelected ? style.selectedDiamondSelectionBackgroundColor : null,
+                  borderRadius: BorderRadius.circular(8.w),
                 ),
-              );
-            },
-          );
-        },
-      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SmartImage(path: value.image ?? '', height: 48.h, width: 48.w),
+                    SizedBox(height: 8.h),
+                    SmartText(value.value,
+                        style: isSelected ? style.selectedDiamondSelectionTitleStyle : style.diamondSelectionTitleStyle,
+                        textAlign: TextAlign.center),
+                    SizedBox(height: 4.h),
+                    SmartText(value.availableProductCount.toString(),
+                        style: isSelected ? style.selectedDiamondSelectionValueStyle : style.diamondSelectionValueStyle,
+                        textAlign: TextAlign.center),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -113,7 +111,7 @@ class OrionScreen extends StatelessWidget {
                   min: bloc.minMaxValues.start,
                   max: bloc.minMaxValues.end,
                   interval: 100,
-                  numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0),
+                  numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
                   stepSize: 1,
                   activeColor: style.rangeSliderTrackColor,
                   startThumbIcon: _buildSliderThumb(style),
@@ -124,10 +122,10 @@ class OrionScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 98.w,
+                    IntrinsicWidth(
                       child: SmartTextField(
                         height: 40.h,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
                         textAlign: TextAlign.center,
                         controller: bloc.minPriceController,
                         keyboardType: TextInputType.number,
@@ -138,10 +136,10 @@ class OrionScreen extends StatelessWidget {
                         maxLength: 5,
                       ),
                     ),
-                    SizedBox(
-                      width: 98.w,
+                    IntrinsicWidth(
                       child: SmartTextField(
                         height: 40.h,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
                         textAlign: TextAlign.center,
                         controller: bloc.maxPriceController,
                         keyboardType: TextInputType.number,
@@ -151,7 +149,7 @@ class OrionScreen extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         maxLength: 5,
                       ),
-                    ),
+                    )
                   ],
                 ),
               ],
@@ -181,7 +179,7 @@ class OrionScreen extends StatelessWidget {
       children: [
         SmartText(APPStrings.selectDiamond.tr, style: style.selectDiamondTitleStyle),
         SizedBox(height: 16.h),
-        SmartImage(path: "https://i.ibb.co/jRKtJT6/Chart.png", height: 430.h, width: double.infinity),
+        SmartImage(path: "https://i.ibb.co/jRKtJT6/Chart.png", height: 430.w, width: double.infinity),
       ],
     );
   }

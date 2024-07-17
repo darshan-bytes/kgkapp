@@ -16,14 +16,14 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   /// - start: The minimum value of the range, set to 500.
   /// - end: The maximum value of the range, set to 10000.
   /// These values represent the allowable price range for diamond selection.
-  SfRangeValues minMaxValues = const SfRangeValues(500, 10000);
+  SfRangeValues minMaxValues = const SfRangeValues(500.00, 10000.00);
 
   /// Represents the selected range values for the price filter.
   ///
   /// This `SfRangeValues` instance holds the initial minimum and maximum values
   /// for the price range slider used in the UI. It is set with a start value of 500
   /// and an end value of 10000, defining the default price range for filtering.
-  SfRangeValues values = const SfRangeValues(500, 10000);
+  SfRangeValues values = const SfRangeValues(500.00, 10000.00);
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
 
@@ -40,8 +40,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   ///Event Handlers
   void _onOrionInitialEvent(OrionInitialEvent event, Emitter<OrionState> emit) {
-    minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}';
-    maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}';
+    minPriceController.text = '\$ ${values.start.toStringAsFixed(2)}';
+    maxPriceController.text = '\$ ${values.end.toStringAsFixed(2)}';
     _initDiamondShapeList();
     _initDiamondPropertiesList();
     emit(const OrionLoadedState());
@@ -50,8 +50,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   void _onOrionPriceRangeChangedEvent(OrionPriceRangeChangedEvent event, Emitter<OrionState> emit) {
     emit(const OrionReloadedState());
     values = event.values;
-    minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}';
-    maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}';
+    minPriceController.text = '\$ ${values.start.toStringAsFixed(2)}';
+    maxPriceController.text = '\$ ${values.end.toStringAsFixed(2)}';
     emit(const OrionPriceRangeChangedState());
   }
 
@@ -103,11 +103,11 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
         title: 'Cut',
         propertiesList: [
           OrionPropertiesDetails(id: 1, title: 'Excellent', subTitle: 'Very sparkly'),
-          OrionPropertiesDetails(id: 2, title: 'Very Good', subTitle: 'Very sparkly Good'),
-          OrionPropertiesDetails(id: 3, title: 'Good', subTitle: 'Sparkly Good'),
-          OrionPropertiesDetails(id: 4, title: 'Fair', subTitle: 'Very sparkly Fair'),
-          OrionPropertiesDetails(id: 5, title: 'Poor', subTitle: 'Sparkly Poor'),
-          OrionPropertiesDetails(id: 6, title: 'Low', subTitle: 'Low Quality'),
+          OrionPropertiesDetails(id: 2, title: 'Very Good', subTitle: 'Sparkly'),
+          OrionPropertiesDetails(id: 3, title: 'Good', subTitle: 'Sparkly'),
+          OrionPropertiesDetails(id: 4, title: 'Fair', subTitle: 'Very sparkly'),
+          OrionPropertiesDetails(id: 5, title: 'Poor', subTitle: 'Sparkly'),
+          OrionPropertiesDetails(id: 6, title: 'Low', subTitle: 'Quality'),
         ],
       ),
       OrionDiamondPropertiesDataModel(
@@ -174,7 +174,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       }
       add(OrionPriceRangeChangedEvent(values, isFromTextField: true, isMin: true)); // Trigger an event to update the price range.
     } else {
-      minPriceController.text = '\$ ${values.start.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
+      minPriceController.text = '\$ ${values.start.toStringAsFixed(2)}'; // Reset the text field if the value is out of range.
     }
   }
 
@@ -201,7 +201,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       }
       add(OrionPriceRangeChangedEvent(values, isFromTextField: true, isMin: false)); // Trigger an event to update the price range.
     } else {
-      maxPriceController.text = '\$ ${values.end.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
+      maxPriceController.text = '\$ ${values.end.toStringAsFixed(2)}'; // Reset the text field if the value is out of range.
     }
   }
 }

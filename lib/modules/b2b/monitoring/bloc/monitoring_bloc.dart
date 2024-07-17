@@ -411,6 +411,10 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
                           if (currentTab == MonitoringTab.presentations) {
                             // Handle presentations menu button tap
                           } else if (currentTab == MonitoringTab.dbf) {
+                            if (designerScrollController.isInitialised) {
+                              designerScrollController.dispose();
+                              designerScrollController = SmartPaginationScrollController();
+                            }
                             designerScrollController.init(
                               tag: "designerScrollController",
                               loadAction: (int currentPage) async {
