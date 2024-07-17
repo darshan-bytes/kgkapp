@@ -10,7 +10,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   List<AuctionListModel> auctionList = [];
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-  Completer<void> refreshCompleter = Completer<void>();
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   AuctionListingBloc() : super(AuctionListingInitialState()) {
     on<InitialAuctionListingEvent>(_onInitialAuctionListingEvent);
@@ -42,6 +42,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
         type: "Jewellery",
       ),
     );
+    refreshCompleter.complete(true);
     emit(const AuctionListingLoadedState());
   }
 
@@ -72,13 +73,9 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   }
 
   Future<void> _onAuctionListPullToRefresh(AuctionListPullToRefreshEvent event, Emitter<AuctionListingState> emit) async {
-    if (!refreshCompleter.isCompleted) {
-      return;
-    }
-    refreshCompleter = Completer<void>();
     emit(const AuctionListingReloadingState());
     paginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 3));
     auctionList = List.generate(
       10,
       (index) => AuctionListModel(
@@ -93,7 +90,17 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
       ),
     );
 
-    refreshCompleter.complete();
+    refreshCompleter.complete(true);
     emit(const AuctionListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const AuctionListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

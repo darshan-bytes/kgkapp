@@ -32,9 +32,7 @@ class AuctionListingScreen extends StatelessWidget {
             return SmartSingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               onRefresh: () async {
-                //TODO: inprogress pull to refresh logic
-                // auctionListingBloc.add(const AuctionListPullToRefreshEvent());
-                // await auctionListingBloc.refreshCompleter.future;
+                await auctionListingBloc.pullToRefresh();
               },
               controller: auctionListingBloc.paginationScrollController.scrollController,
               padding: EdgeInsets.symmetric(horizontal: 17.0.w),
