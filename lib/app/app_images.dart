@@ -42,8 +42,6 @@ class AppImages {
   static const String icFacebook = 'assets/images/ic_facebook.svg';
   static const String icZoho = 'assets/images/ic_zoho.svg';
 
-  static const String icAppicon = 'assets/images/ic_app_icon.svg';
-
   //Authentication
   static const String icUser = 'assets/images/ic_user.svg';
   static const String icCompany = 'assets/images/ic_company.svg';
