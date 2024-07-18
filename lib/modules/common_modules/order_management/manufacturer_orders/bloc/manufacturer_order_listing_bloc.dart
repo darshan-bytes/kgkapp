@@ -25,18 +25,25 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
     const ManufacturerOrderModel(name: "Jewellery"),
   ];
 
-  ManufacturerOrderListingBloc() : super(ManufacturerOrderListingInitial()) {
+  Completer<bool> refreshCompleter = Completer<bool>();
+
+  ManufacturerOrderListingBloc() : super(const ManufacturerOrderListingInitial()) {
     on<InitialManufacturerOrderListingEvent>(_onInitialManufacturerOrderListEvent);
     on<ManufacturerOrderListLoadMoreEvent>(_onManufacturerOrderListLoadMoreEvent);
     on<ManufacturerChangeOrdersTypeEvent>(_onManufacturerChangeOrdersTypeEvent);
+    on<ManufacturerOrderListPullToRefreshEvent>(_onManufacturerOrderListPullToRefreshEvent);
   }
 
   void _onInitialManufacturerOrderListEvent(InitialManufacturerOrderListingEvent event, Emitter<ManufacturerOrderListingState> emit) {
-    emit(ManufacturerOrderListReloadState());
+    emit(const ManufacturerOrderListReloadState());
 
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();
+    }
+
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
     }
 
     paginationScrollController.init(
@@ -46,7 +53,8 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
     );
     clearData();
     selectedOrderType = orderTypeList.first;
-    emit(ManufacturerOrderListingLoadedState());
+    refreshCompleter.complete(true);
+    emit(const ManufacturerOrderListingLoadedState());
   }
 
   Future<void> _onManufacturerOrderListLoadMoreEvent(
@@ -59,11 +67,21 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
   }
 
   void _onManufacturerChangeOrdersTypeEvent(ManufacturerChangeOrdersTypeEvent event, Emitter<ManufacturerOrderListingState> emit) {
-    emit(ManufacturerOrderListReloadState());
+    emit(const ManufacturerOrderListReloadState());
     selectedOrderType = event.selectedOrderType;
     if (selectedOrderType != null) {
       emit(ManufacturerChangeOrdersTypeState(selectedOrderType!));
     }
+  }
+
+  Future<void> _onManufacturerOrderListPullToRefreshEvent(
+      ManufacturerOrderListPullToRefreshEvent event, Emitter<ManufacturerOrderListingState> emit) async {
+    emit(const ManufacturerOrderListReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    paginationScrollController.pullToRefresh();
+    manufacturerOrderList = _generateManufacturerOrderList();
+    refreshCompleter.complete(true);
+    emit(const ManufacturerOrderListingLoadedState());
   }
 
   void clearData() {
@@ -92,5 +110,15 @@ class ManufacturerOrderListingBloc extends Bloc<ManufacturerOrderListingEvent, M
         purchaseOrderStatus: ProjectStatus.created,
       );
     });
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const ManufacturerOrderListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

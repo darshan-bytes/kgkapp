@@ -50,3 +50,12 @@ class MonitoringDesignerLoadMoreEvent extends MonitoringEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class MonitoringListPullToRefreshEvent extends MonitoringEvent {
+  final MonitoringTab listType;
+
+  const MonitoringListPullToRefreshEvent({required this.listType});
+
+  @override
+  List<Object> get props => [listType];
+}

@@ -5,16 +5,22 @@ sealed class MonitoringState extends Equatable {
 }
 
 final class MonitoringInitialState extends MonitoringState {
+  const MonitoringInitialState();
+
   @override
   List<Object> get props => [];
 }
 
 class MonitoringOnTabChangedState extends MonitoringState {
+  const MonitoringOnTabChangedState();
+
   @override
   List<Object> get props => [];
 }
 
 class MonitoringReloadState extends MonitoringState {
+  const MonitoringReloadState();
+
   @override
   List<Object> get props => [];
 }

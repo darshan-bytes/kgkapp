@@ -5,16 +5,22 @@ sealed class ManufacturerOrderListingState extends Equatable {
 }
 
 final class ManufacturerOrderListingInitial extends ManufacturerOrderListingState {
+  const ManufacturerOrderListingInitial();
+
   @override
   List<Object> get props => [];
 }
 
 final class ManufacturerOrderListReloadState extends ManufacturerOrderListingState {
+  const ManufacturerOrderListReloadState();
+
   @override
   List<Object> get props => [];
 }
 
 final class ManufacturerOrderListingLoadedState extends ManufacturerOrderListingState {
+  const ManufacturerOrderListingLoadedState();
+
   @override
   List<Object> get props => [];
 }
