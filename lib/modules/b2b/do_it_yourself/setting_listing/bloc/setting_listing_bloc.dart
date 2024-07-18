@@ -13,13 +13,20 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   SettingListingBloc() : super(const SettingListingInitial()) {
     on<GetSettingProductListEvent>(_onGetSettingProductListEvent);
     on<SettingChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<LoadMoreSettingProductListEvent>(_onLoadMoreSettingProductListEvent);
+    on<SettingListPullToRefreshEvent>(_onSettingListPullToRefresh);
   }
 
   Future<void> _onGetSettingProductListEvent(GetSettingProductListEvent event, Emitter<SettingListingState> emit) async {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(LoadMoreSettingProductListEvent(currentPage));
@@ -38,6 +45,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
                 ),
               ));
     });
+
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
     emit(const SettingLoadedState());
   }
 
@@ -63,5 +74,31 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             ));
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(SettingProductLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onSettingListPullToRefresh(SettingListPullToRefreshEvent event, Emitter<SettingListingState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    productList = List.generate(
+        10,
+        (index) => ProductDetails(
+              diamond: "2.5 crt",
+              gram: "1.5 grms",
+              imageUrl: index % 2 == 0 ? "https://i.ibb.co/CHwFm51/image-7-3.png" : "https://i.ibb.co/PGFbmSy/image-7-2.png",
+              name: "2.00 Carat H VS1 Excellent Cut Round Setting",
+              originalPrice: "\$3,000.00",
+            )).toList();
+    refreshCompleter.complete(true);
+    emit(const SettingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const SettingListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

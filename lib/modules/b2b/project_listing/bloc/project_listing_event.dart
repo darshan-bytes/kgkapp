@@ -21,3 +21,10 @@ final class ProjectListLoadMoreEvent extends ProjectListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ProjectListPullToRefreshEvent extends ProjectListingEvent {
+  const ProjectListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

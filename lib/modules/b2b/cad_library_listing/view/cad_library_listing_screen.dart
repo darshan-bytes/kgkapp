@@ -143,6 +143,9 @@ class CadLibraryListingScreen extends StatelessWidget {
     return SmartSingleChildScrollView(
       key: bloc.gridPaginationScrollController.gridKey,
       controller: bloc.gridPaginationScrollController.controller,
+      onRefresh: () async {
+        await bloc.pullToRefresh();
+      },
       child: SmartGridView(
         items: bloc.cadList.map((item) => DesignListingGridItem.cadLibrary(designModel: item)).toList(),
         isLoadingMore: state is CadListLoadingMoreState,
@@ -151,23 +154,28 @@ class CadLibraryListingScreen extends StatelessWidget {
   }
 
   Widget _buildListView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
-    return ListView.builder(
-      shrinkWrap: true,
-      key: bloc.gridPaginationScrollController.listKey,
-      controller: bloc.gridPaginationScrollController.controller,
-      itemCount: bloc.cadList.length,
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            CadLibraryListItem(
-              margin: EdgeInsets.only(bottom: 24.h),
-              designModel: bloc.cadList[index],
-              onTap: () {},
-            ),
-            if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
-          ],
-        );
+    return RefreshIndicator.adaptive(
+      onRefresh: () async {
+        await bloc.pullToRefresh();
       },
+      child: ListView.builder(
+        shrinkWrap: true,
+        key: bloc.gridPaginationScrollController.listKey,
+        controller: bloc.gridPaginationScrollController.controller,
+        itemCount: bloc.cadList.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              CadLibraryListItem(
+                margin: EdgeInsets.only(bottom: 24.h),
+                designModel: bloc.cadList[index],
+                onTap: () {},
+              ),
+              if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
+            ],
+          );
+        },
+      ),
     );
   }
 

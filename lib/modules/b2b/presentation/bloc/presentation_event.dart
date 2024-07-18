@@ -19,3 +19,10 @@ final class PresentationLoadMoreEvent extends PresentationEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class PresentationPullToRefreshEvent extends PresentationEvent {
+  const PresentationPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -227,6 +227,7 @@ class AddWatchlistScreen extends StatelessWidget {
                         children: [
                           SmartCheckbox(
                             value: bloc.arrSelectedWatchlist[index].isSelected,
+                            spaceBetweenLabelAndCheckbox: 0.w,
                             onChanged: (value) {
                               bloc.add(WatchlistCheckEvent(index: index));
                             },

@@ -41,3 +41,12 @@ class MessagesFavouriteToggleEvent extends MessagesEvent {
   @override
   List<Object> get props => [id, index];
 }
+
+class MessagesPullToRefreshEvent extends MessagesEvent {
+  final MessagesTab listType;
+
+  const MessagesPullToRefreshEvent({required this.listType});
+
+  @override
+  List<Object> get props => [listType];
+}

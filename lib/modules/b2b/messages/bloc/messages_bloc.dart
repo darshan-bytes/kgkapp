@@ -26,6 +26,8 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   SmartPaginationScrollController favouriteScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController trashScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   @override
   Future<void> close() {
     inboxScrollController.dispose();
@@ -48,9 +50,13 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
     on<MessagesLoadMoreEvent>(_onLoadMoreEvent);
     on<MessagesTabChangeEvent>(_onTabChangedEvent);
     on<MessagesFavouriteToggleEvent>(_onFavouriteToggleEvent);
+    on<MessagesPullToRefreshEvent>(_onPullToRefreshEvent);
   }
 
   void _onMessageInitialEvent(MessagesInitialEvent event, Emitter<MessagesState> emit) {
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     inboxScrollController.init(
         tag: "inboxScrollController",
         loadAction: (int currentPage) {
@@ -169,7 +175,7 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
                   toUserName: "Michael Lee",
                   messageDetailsKey: GlobalKey<SmartExpansionTileState>()),
             )));
-
+    refreshCompleter.complete(true);
     emit(const MessagesLoadedState());
   }
 
@@ -227,6 +233,42 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
     emit(MessagesLoadedMoreState(currentPage: event.currentPage + 1, listType: event.listType));
   }
 
+  Future<void> _onPullToRefreshEvent(MessagesPullToRefreshEvent event, Emitter<MessagesState> emit) async {
+    emit(const MessagesReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    switch (event.listType) {
+      case MessagesTab.inbox:
+        inboxScrollController.pullToRefresh();
+        inboxList = generateIndexData();
+        break;
+      case MessagesTab.sent:
+        sentScrollController.pullToRefresh();
+        sentList = generateSentData();
+        break;
+      case MessagesTab.favourite:
+        favouriteScrollController.pullToRefresh();
+        favouriteList = generateFavouriteData();
+        break;
+      case MessagesTab.trash:
+        trashScrollController.pullToRefresh();
+        trashList = generateTrashData();
+        break;
+    }
+    refreshCompleter.complete(true);
+    emit(const MessagesLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    final MessagesTab currentTab = MessagesTab.values[tabController.index];
+    add(MessagesPullToRefreshEvent(listType: currentTab));
+    bool result = await refreshCompleter.future;
+    return result;
+  }
+
   void _onFavouriteToggleEvent(MessagesFavouriteToggleEvent event, Emitter<MessagesState> emit) {
     final MessagesTab tab = MessagesTab.values[tabController.index];
     emit(const MessagesReloadState());
@@ -281,29 +323,34 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
           if (currentList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr); // Adjust text based on the selected tab if necessary
           }
-          return ListView.separated(
-            itemCount: currentList.length,
-            controller: currentController.scrollController,
-            padding: EdgeInsets.only(bottom: 24.h),
-            physics: const ClampingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return BlocBuilder<MessagesBloc, MessagesState>(
-                buildWhen: (previous, current) =>
-                    current is MessagesLoadingMoreState || current is MessagesLoadedMoreState || current is MessagesFavouriteToggleState,
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      _buildListTile(context, currentList[index], index),
-                      if (state is MessagesLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
-                    ],
-                  );
-                },
-              );
+          return SmartRefreshIndicator(
+            onRefresh: () async {
+              await pullToRefresh();
             },
-            separatorBuilder: (context, index) => SizedBox(
-              height: 32.h,
-              child: const Center(
-                child: Divider(),
+            child: ListView.separated(
+              itemCount: currentList.length,
+              controller: currentController.scrollController,
+              padding: EdgeInsets.only(bottom: 24.h),
+              physics: const ClampingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return BlocBuilder<MessagesBloc, MessagesState>(
+                  buildWhen: (previous, current) =>
+                      current is MessagesLoadingMoreState || current is MessagesLoadedMoreState || current is MessagesFavouriteToggleState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        _buildListTile(context, currentList[index], index),
+                        if (state is MessagesLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
+                      ],
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(
+                height: 32.h,
+                child: const Center(
+                  child: Divider(),
+                ),
               ),
             ),
           );

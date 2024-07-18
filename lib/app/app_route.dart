@@ -322,8 +322,10 @@ class AppRoutes {
       case auctionListingPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<AuctionListingBloc>(context).add(const InitialAuctionListingEvent());
-            return const AuctionListingScreen();
+            return BlocProvider<AuctionListingBloc>(
+              create: (_) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
+              child: const AuctionListingScreen(),
+            );
           },
           settings: settings,
         );
@@ -447,7 +449,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<PddListingBloc>(
-              create: (context) => PddListingBloc(),
+              create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
               child: const PddListingScreen(),
             );
           },

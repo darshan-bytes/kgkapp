@@ -12,10 +12,13 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   DesignLibraryBloc() : super(const DesignLibraryInitial()) {
     on<DesignLibraryInitialEvent>(_onDesignLibraryInitialEvent);
     on<DesignLibraryChangeListingTypeEvent>(_onDesignLibraryChangeListingTypeEvent);
     on<DesignLibraryLoadMoreEvent>(_onDesignLibraryLoadMoreEvent);
+    on<DesignLibraryPullToRefreshEvent>(_onDesignLibraryPullToRefresh);
   }
 
   void _onDesignLibraryInitialEvent(DesignLibraryInitialEvent event, Emitter<DesignLibraryState> emit) {
@@ -33,6 +36,9 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
       },
     );
 
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
     designLibraryList.addAll(_generateLibraryList());
     emit(const DesignLibraryLoadedState());
   }
@@ -64,5 +70,23 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
         designApprovalStatus: index % 3 == 0 ? ProjectStatus.styleCreated : null,
       );
     });
+  }
+
+  Future<void> _onDesignLibraryPullToRefresh(DesignLibraryPullToRefreshEvent event, Emitter<DesignLibraryState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    designLibraryList = _generateLibraryList();
+    refreshCompleter.complete(true);
+    emit(const DesignLibraryLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const DesignLibraryPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

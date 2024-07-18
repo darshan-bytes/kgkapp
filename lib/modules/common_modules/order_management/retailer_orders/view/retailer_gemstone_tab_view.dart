@@ -73,6 +73,7 @@ class RetailerGemstoneTabView extends StatelessWidget {
                       RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
                     });
                   },
+                  bloc: retailerOrderListingBloc,
                 );
               },
             ),

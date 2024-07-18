@@ -26,3 +26,10 @@ final class ConceptListLoadMoreEvent extends ConceptListEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ConceptListPullToRefreshEvent extends ConceptListEvent {
+  const ConceptListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

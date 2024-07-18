@@ -49,22 +49,27 @@ class NewsletterTemplateTabView extends StatelessWidget {
             if (bloc.templateList.isEmpty) {
               return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
             }
-            return ListView.builder(
-              itemCount: bloc.templateList.length,
-              controller: bloc.templateScrollController.scrollController,
-              itemBuilder: (context, index) {
-                TemplateListModel templateListModel = bloc.templateList[index];
-
-                return _buildTemplateSubItemList(
-                  templateListModel: templateListModel,
-                  isLastItem: index == bloc.templateList.length - 1 && state is NewsletterLoadingMoreState,
-                  context: context,
-                  padding: EdgeInsets.only(
-                    bottom: (state is NewsletterLoadingMoreState && index == bloc.templateList.length - 1) ? 0 : 24.h,
-                  ),
-                  style: style,
-                );
+            return SmartRefreshIndicator(
+              onRefresh: () async {
+                await bloc.pullToRefresh();
               },
+              child: ListView.builder(
+                itemCount: bloc.templateList.length,
+                controller: bloc.templateScrollController.scrollController,
+                itemBuilder: (context, index) {
+                  TemplateListModel templateListModel = bloc.templateList[index];
+
+                  return _buildTemplateSubItemList(
+                    templateListModel: templateListModel,
+                    isLastItem: index == bloc.templateList.length - 1 && state is NewsletterLoadingMoreState,
+                    context: context,
+                    padding: EdgeInsets.only(
+                      bottom: (state is NewsletterLoadingMoreState && index == bloc.templateList.length - 1) ? 0 : 24.h,
+                    ),
+                    style: style,
+                  );
+                },
+              ),
             );
           }
 

@@ -28,3 +28,10 @@ final class ManufacturerChangeOrdersTypeEvent extends ManufacturerOrderListingEv
   @override
   List<Object> get props => [selectedOrderType];
 }
+
+final class ManufacturerOrderListPullToRefreshEvent extends ManufacturerOrderListingEvent {
+  const ManufacturerOrderListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

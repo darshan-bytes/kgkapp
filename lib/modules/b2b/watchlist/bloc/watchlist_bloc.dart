@@ -8,10 +8,12 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   TextEditingController watchlistSearchController = TextEditingController();
   List<B2BCustomListingDataModel> watchListingList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   WatchlistBloc() : super(WatchlistInitial()) {
     on<WatchlistInitialEvent>(_onWatchlistInitialEvent);
     on<WatchlistLoadMoreEvent>(_onWatchlistLoadMoreEvent);
+    on<WatchlistPullToRefreshEvent>(_onWatchlistPullToRefresh);
   }
 
   @override
@@ -25,13 +27,14 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();
     }
-    emit(WatchlistReloadState());
+    emit(const WatchlistReloadState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(WatchlistLoadMoreEvent(currentPage));
       },
     );
     watchListingList = _generateWatchList();
+    refreshCompleter.complete(true);
     emit(WatchlistLoadedState());
   }
 
@@ -41,6 +44,25 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     watchListingList.addAll(_generateWatchList());
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(WatchlistLoadedMoreState(currentPage: event.currentPage + 1));
+  }
+
+  Future<void> _onWatchlistPullToRefresh(WatchlistPullToRefreshEvent event, Emitter<WatchlistState> emit) async {
+    emit(const WatchlistReloadState());
+    paginationScrollController.pullToRefresh();
+    watchListingList = _generateWatchList();
+    await Future.delayed(const Duration(seconds: 2));
+    refreshCompleter.complete(true);
+    emit(WatchlistLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const WatchlistPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 
   static List<B2BCustomListingDataModel> _generateWatchList() {
