@@ -667,5 +667,7 @@
   "search_subscribers": "KO - Search subscribers",
   "search_category": "KO - Search category",
   "search_template": "KO - Search template",
-  "validity": "KO - Validity"
+  "validity": "KO - Validity",
+  "view_more": "KO - View more",
+  "shop_by_x": "KO - Shop by {#}"
 }

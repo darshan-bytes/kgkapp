@@ -22,13 +22,6 @@ class HomeJewelleryImagePageChangeEvent extends HomeEvent {
   List<Object> get props => [index];
 }
 
-final class ChangeHomeTabsEvent extends HomeEvent {
-  const ChangeHomeTabsEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class HomeSelectStoneChangeTypeEvent extends HomeEvent {
   final OrderStoneTypeModel selectedStep1StoneType;
 
@@ -45,4 +38,22 @@ final class HomeSelectJewelleryChangeTypeEvent extends HomeEvent {
 
   @override
   List<Object> get props => [selectedStep2RingType];
+}
+
+final class HomeKgkCoutureSelectionChangeEvent extends HomeEvent {
+  final int selectedIndex;
+
+  const HomeKgkCoutureSelectionChangeEvent(this.selectedIndex);
+
+  @override
+  List<Object> get props => [selectedIndex];
+}
+
+final class HomeCategoryPageChangeEvent extends HomeEvent {
+  final int index;
+
+  const HomeCategoryPageChangeEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
 }

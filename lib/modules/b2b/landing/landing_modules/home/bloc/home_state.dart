@@ -19,11 +19,6 @@ final class HomeJewelleryImagePageChangeState extends HomeState {
   List<Object> get props => [];
 }
 
-final class HomeChangeTabsState extends HomeState {
-  @override
-  List<Object> get props => [];
-}
-
 final class HomeSelectStoneTypeChangeState extends HomeState {
   @override
   List<Object> get props => [];
@@ -32,4 +27,23 @@ final class HomeSelectStoneTypeChangeState extends HomeState {
 final class HomeSelectJewelleryTypeChangeState extends HomeState {
   @override
   List<Object> get props => [];
+}
+
+final class HomeKgkCoutureSelectionChangeState extends HomeState {
+  final int selectedIndex;
+  final int oldIndex;
+
+  const HomeKgkCoutureSelectionChangeState(this.selectedIndex, this.oldIndex);
+
+  @override
+  List<Object> get props => [selectedIndex, oldIndex];
+}
+
+final class HomeCategoryPageChangeState extends HomeState {
+  final int index;
+
+  const HomeCategoryPageChangeState(this.index);
+
+  @override
+  List<Object> get props => [index];
 }
