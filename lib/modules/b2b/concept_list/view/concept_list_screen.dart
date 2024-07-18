@@ -33,38 +33,43 @@ class ConceptListScreen extends StatelessWidget {
                           if (conceptListBloc.conceptList.isEmpty) {
                             return NoDataFoundWidget(text: APPStrings.noConceptFound.tr);
                           }
-                          return ListView.separated(
-                            physics: const ClampingScrollPhysics(),
-                            padding: EdgeInsets.only(bottom: 24.h),
-                            controller: conceptListBloc.paginationScrollController.scrollController,
-                            shrinkWrap: true,
-                            itemCount: conceptListBloc.conceptList.length,
-                            itemBuilder: (context, index) {
-                              return BlocBuilder<ConceptListBloc, ConceptListState>(
-                                buildWhen: (previous, current) =>
-                                    current is ConceptListLoadingMoreState || current is ConceptListLoadedMoreState,
-                                builder: (context, state) {
-                                  return Column(
-                                    children: [
-                                      B2BListingItem(
-                                        onTap: () {
-                                          showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
-                                        },
-                                        onTapCircleWithText: () {
-                                          context.pushNamed(AppRoutes.presentationPage,
-                                              arguments: {RoutesData.conceptId: conceptListBloc.conceptList[index].id});
-                                        },
-                                        type: B2BListingType.conceptListingType,
-                                        listingItemModel: conceptListBloc.conceptList[index],
-                                      ),
-                                      if (state is ConceptListLoadingMoreState && index == conceptListBloc.conceptList.length - 1)
-                                        const SmartCircularProgressIndicator(),
-                                    ],
-                                  );
-                                },
-                              );
+                          return RefreshIndicator.adaptive(
+                            child: ListView.separated(
+                              physics: const ClampingScrollPhysics(),
+                              padding: EdgeInsets.only(bottom: 24.h),
+                              controller: conceptListBloc.paginationScrollController.scrollController,
+                              shrinkWrap: true,
+                              itemCount: conceptListBloc.conceptList.length,
+                              itemBuilder: (context, index) {
+                                return BlocBuilder<ConceptListBloc, ConceptListState>(
+                                  buildWhen: (previous, current) =>
+                                      current is ConceptListLoadingMoreState || current is ConceptListLoadedMoreState,
+                                  builder: (context, state) {
+                                    return Column(
+                                      children: [
+                                        B2BListingItem(
+                                          onTap: () {
+                                            showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
+                                          },
+                                          onTapCircleWithText: () {
+                                            context.pushNamed(AppRoutes.presentationPage,
+                                                arguments: {RoutesData.conceptId: conceptListBloc.conceptList[index].id});
+                                          },
+                                          type: B2BListingType.conceptListingType,
+                                          listingItemModel: conceptListBloc.conceptList[index],
+                                        ),
+                                        if (state is ConceptListLoadingMoreState && index == conceptListBloc.conceptList.length - 1)
+                                          const SmartCircularProgressIndicator(),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                            ),
+                            onRefresh: () async {
+                              await conceptListBloc.pullToRefresh();
                             },
-                            separatorBuilder: (context, index) => SizedBox(height: 16.h),
                           );
                         },
                       ),

@@ -58,22 +58,27 @@ class ProjectListingScreen extends StatelessWidget {
                 NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr)
               else
                 Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    controller: projectListingBloc.paginationScrollController.scrollController,
-                    itemCount: projectListingBloc.projectList.length,
-                    itemBuilder: (context, index) {
-                      B2BCustomListingDataModel projectItem = projectListingBloc.projectList[index];
-                      return B2BListingItem(
-                        type: B2BListingType.projectListingType,
-                        listingItemModel: projectItem,
-                        onTapMenuButton: () {},
-                        onTap: () {
-                          context.pushNamed(AppRoutes.designBriefsPage);
-                        },
-                      );
+                  child: RefreshIndicator.adaptive(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      controller: projectListingBloc.paginationScrollController.scrollController,
+                      itemCount: projectListingBloc.projectList.length,
+                      itemBuilder: (context, index) {
+                        B2BCustomListingDataModel projectItem = projectListingBloc.projectList[index];
+                        return B2BListingItem(
+                          type: B2BListingType.projectListingType,
+                          listingItemModel: projectItem,
+                          onTapMenuButton: () {},
+                          onTap: () {
+                            context.pushNamed(AppRoutes.designBriefsPage);
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                    ),
+                    onRefresh: () async {
+                      await projectListingBloc.pullToRefresh();
                     },
-                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
                   ),
                 ),
               if (state is ProjectListLoadingMoreState) const SmartCircularProgressIndicator(),

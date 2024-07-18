@@ -14,17 +14,29 @@ class ProjectListingBloc extends Bloc<ProjectListingEvent, ProjectListingState> 
   //Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   ProjectListingBloc() : super(ProjectListingInitial()) {
     on<InitialProjectListingEvent>(_onInitialProjectListEvent);
     on<ProjectListLoadMoreEvent>(_onProjectListLoadMoreEvent);
+    on<ProjectListPullToRefreshEvent>(_onProjectListPullToRefresh);
   }
 
   void _onInitialProjectListEvent(InitialProjectListingEvent event, Emitter<ProjectListingState> emit) {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(ProjectListLoadMoreEvent(currentPage));
       },
     );
+
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
+
     clearData();
     emit(ProjectListingLoadedState());
   }
@@ -64,5 +76,23 @@ class ProjectListingBloc extends Bloc<ProjectListingEvent, ProjectListingState> 
         strCreatedByImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
       );
     });
+  }
+
+  Future<void> _onProjectListPullToRefresh(ProjectListPullToRefreshEvent event, Emitter<ProjectListingState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    projectList = _generateProjectList();
+    refreshCompleter.complete(true);
+    emit(ProjectListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const ProjectListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

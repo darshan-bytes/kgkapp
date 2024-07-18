@@ -75,7 +75,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
   Future<void> _onAuctionListPullToRefresh(AuctionListPullToRefreshEvent event, Emitter<AuctionListingState> emit) async {
     emit(const AuctionListingReloadingState());
     paginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     auctionList = List.generate(
       10,
       (index) => AuctionListModel(
@@ -89,7 +89,6 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
         type: "Jewellery",
       ),
     );
-
     refreshCompleter.complete(true);
     emit(const AuctionListingLoadedState());
   }
