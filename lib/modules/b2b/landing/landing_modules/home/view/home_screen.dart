@@ -22,14 +22,24 @@ class HomeScreen extends StatelessWidget {
             _buildJewelleryList(homeBloc, style),
             _buildEngagementImageSlider(homeBloc),
             _buildShopDiamondSection(homeBloc, style),
-            _buildShopGemstoneSection(homeBloc, style),
+            _buildShopGemstoneSection(homeBloc, style, homeBloc.shopGemstonesList, 72.w, APPStrings.shopGemstones.tr),
+            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList3, const Color.fromRGBO(236, 236, 234, 1),
+                title: "SHOP BY METAL", height: 170.w, fit: BoxFit.fitWidth),
+            _buildShopGemstoneSection(homeBloc, style, homeBloc.shopGemstones2List, 95.w, 'SHOP ENGAGEMENT RING'),
+            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/Y2G1LR2/Latest-Collections1.jpg"),
+            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList2, const Color.fromRGBO(242, 242, 246, 1),
+                title: "Eligance", height: 132.w),
+            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList, const Color.fromRGBO(247, 238, 233, 1),
+                title: "Eligance", height: 132.w),
+            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg"),
             _buildTopSellingCategories(homeBloc, style, context),
-            _buildViewAllCollectionsSection(style, context),
+            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png"),
             _buildKGKCoutureTabBarSection(homeBloc, style, context),
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
             _buildDealOfTheDaySection(homeBloc, style, context),
             _buildShopByBrandsSection(homeBloc, style),
             _buildGetInspiredSection(homeBloc, style),
+            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png"),
             _buildShopByStyleSection(homeBloc, style),
             _buildRecentlyViewedSection(homeBloc, style, context)
           ],
@@ -92,7 +102,7 @@ class HomeScreen extends StatelessWidget {
             right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
           imageBorderRadius: BorderRadius.circular(50.r),
-          fit: BoxFit.contain,
+          fit: BoxFit.fitWidth,
           imageBorder: Border.all(color: style.borderColor, width: 1.w),
         );
       },
@@ -104,16 +114,16 @@ class HomeScreen extends StatelessWidget {
       buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+          padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 12.h),
           child: Column(
             children: [
               CarouselSlider(
-                items: homeBloc.engagementList.map((e) => SmartImage(path: e.imageUrl ?? '', fit: BoxFit.fill)).toList(),
+                items: homeBloc.engagementList.map((e) => SmartImage(path: e.imageUrl ?? '', fit: BoxFit.fitWidth)).toList(),
                 carouselController: homeBloc.engagementListCarouselController,
                 options: CarouselOptions(
                   autoPlay: true,
-                  viewportFraction: 1.5,
-                  aspectRatio: 1,
+                  viewportFraction: 1,
+                  aspectRatio: 2,
                   onPageChanged: (index, reason) => homeBloc.add(HomeJewelleryImagePageChangeEvent(index: index)),
                 ),
               ),
@@ -162,7 +172,7 @@ class HomeScreen extends StatelessWidget {
     return SmartHorizontalItemBuilder(
       title: APPStrings.shopDiamonds.tr,
       scrollController: homeBloc.shopDiamondsScrollController,
-      isScrollbarVisible: true,
+      isScrollbarVisible: false,
       titleStyle: style.bannerTitleStyle,
       itemCount: homeBloc.shopDiamondsList.length,
       itemBetweenSpace: 17.w,
@@ -193,13 +203,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> imgList, double width, String title) {
     return SmartHorizontalItemBuilder(
-      title: APPStrings.shopGemstones.tr,
+      title: title,
       titleStyle: style.bannerTitleStyle,
-      isScrollbarVisible: true,
+      isScrollbarVisible: false,
       scrollController: homeBloc.shopGemstonesScrollController,
-      itemCount: homeBloc.shopGemstonesList.length,
+      itemCount: imgList.length,
+      //homeBloc.shopGemstonesList
       backgroundColor: style.shopGemstoneBgColor,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
@@ -207,12 +218,12 @@ class HomeScreen extends StatelessWidget {
       listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
       padding: EdgeInsets.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
-        final AuctionListModel item = homeBloc.shopGemstonesList[index];
+        final AuctionListModel item = imgList[index];
         return SmartImageTitleColumn(
           onTap: () {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
           },
-          width: 72.w,
+          width: width,
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
@@ -228,9 +239,37 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildTopSellingEligence(
+      HomeBloc homeBloc, HomeScreenStyle style, BuildContext context, List<AuctionListModel> imgList, Color? bgColor,
+      {String? title, double? height, BoxFit? fit}) {
+    return Container(
+      color: bgColor ?? const Color.fromRGBO(247, 238, 233, 1),
+      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        SmartText(title ?? "Eligance", style: style.bannerTitleStyle),
+        SizedBox(height: 16.h),
+        SmartGridView(
+            columns: 2,
+            spacing: 12.w,
+            runSpacing: 12.h,
+            items: imgList
+                .map((AuctionListModel field) => SmartImage(
+                      height: height,
+                      path: field.imageUrl ?? '',
+                      fit: fit ?? BoxFit.fill,
+                      onTap: () {
+                        context
+                            .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                      },
+                    ))
+                .toList())
+      ]),
+    );
+  }
+
   Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 12.h),
+      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -253,14 +292,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext context) {
+  Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext context, String url) {
     return Padding(
-      padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 32.h),
+      padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h),
       child: Stack(
         children: [
           SmartImage(
-            path: "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png",
-            height: 396.h,
+            path: url,
+            height: 396.w,
             width: double.infinity,
             fit: BoxFit.fitWidth,
             onTap: () {},
@@ -479,8 +518,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+  //     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //       SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
+  //       SizedBox(height: 16.h),
+  //       SmartGridView(
+  //           columns: 2,
+  //           spacing: 12.w,
+  //           runSpacing: 24.h,
+  //           items: homeBloc.getInspiredList
+  //               .map((AuctionListModel field) => SmartImageTitleColumn(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+  //                     title: field.name ?? '',
+  //                     titleStyle: style.getInspiredTitleStyle,
+  //                   ))
+  //               .toList())
+  //     ]),
+  //   );
+  // }
+
   Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
-    return Padding(
+    return Container(
+      color: const Color.fromRGBO(242, 230, 224, 1),
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
@@ -488,12 +550,12 @@ class HomeScreen extends StatelessWidget {
         SmartGridView(
             columns: 2,
             spacing: 12.w,
-            runSpacing: 24.h,
+            runSpacing: 12.h,
             items: homeBloc.getInspiredList
                 .map((AuctionListModel field) => SmartImageTitleColumn(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
-                      title: field.name ?? '',
+                      title: '',
                       titleStyle: style.getInspiredTitleStyle,
                     ))
                 .toList())
