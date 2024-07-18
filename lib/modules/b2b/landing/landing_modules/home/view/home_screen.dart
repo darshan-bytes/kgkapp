@@ -21,38 +21,95 @@ class HomeScreen extends StatelessWidget {
           children: [
             _buildJewelleryList(homeBloc, style),
             _buildEngagementImageSlider(homeBloc),
-            _buildHorizontalSlider(homeBloc, style),
-            _buildShopBySpacificCategory(homeBloc, style, context),
-            _buildTrendingView(homeBloc, style),
-            _buildPopularView(homeBloc, style),
             _buildShopDiamondSection(homeBloc, style),
-            _buildShopGemstoneSection(homeBloc, style, homeBloc.shopGemstonesList, 72.w, APPStrings.shopGemstones.tr),
-            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList3, const Color.fromRGBO(236, 236, 234, 1),
-                title: "SHOP BY METAL", height: 170.w, fit: BoxFit.fitWidth),
-            _buildShopGemstoneSection(homeBloc, style, homeBloc.shopGemstones2List, 95.w, 'SHOP ENGAGEMENT RING'),
-            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/Y2G1LR2/Latest-Collections1.jpg"),
-            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList2, const Color.fromRGBO(242, 242, 246, 1),
-                title: "Eligance", height: 132.w),
-            _buildTopSellingEligence(homeBloc, style, context, homeBloc.eliganceList, const Color.fromRGBO(247, 238, 233, 1),
-                title: "Eligance", height: 132.w),
-            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg"),
-            _buildTopSellingCategories(homeBloc, style, context),
-            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png"),
-            _buildKGKCoutureTabBarSection(homeBloc, style, context),
-            _buildCategoryGridPageView(homeBloc, style, context),
-            _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
-            _buildDealOfTheDaySection(homeBloc, style, context),
-            _buildShopByBrandsSection(homeBloc, style),
+            _buildShopGemstoneSection(
+              homeBloc,
+              style,
+              imgList: homeBloc.shopGemstonesList,
+              width: 72.w,
+              title: APPStrings.shopGemstones.tr,
+            ),
+            _buildTopSellingEligence(
+              homeBloc,
+              style,
+              context: context,
+              imgList: homeBloc.eliganceList3,
+              bgColor: const Color.fromRGBO(236, 236, 234, 1),
+              title: "SHOP BY METAL",
+              height: 170.w,
+              fit: BoxFit.fitWidth,
+            ),
+            _buildShopGemstoneSection(
+              homeBloc,
+              style,
+              imgList: homeBloc.shopGemstones2List,
+              width: 95.w,
+              title: 'SHOP ENGAGEMENT RING',
+            ),
             _buildGetInspiredSection(homeBloc, style),
-            _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png"),
+            _buildViewAllCollectionsSection(
+              style,
+              context: context,
+              url: "https://i.ibb.co/Y2G1LR2/Latest-Collections1.jpg",
+            ),
+            _buildTopSellingEligence(
+              homeBloc,
+              style,
+              context: context,
+              imgList: homeBloc.eliganceList2,
+              bgColor: const Color.fromRGBO(242, 242, 246, 1),
+              title: "Eligance",
+              height: 132.w,
+            ),
+            _buildTopSellingEligence(
+              homeBloc,
+              style,
+              context: context,
+              imgList: homeBloc.eliganceList,
+              bgColor: const Color.fromRGBO(247, 238, 233, 1),
+              title: "Eligance",
+              height: 132.w,
+            ),
+            _buildHorizontalSlider(homeBloc, style),
+            _buildShopBySpacificCategory(homeBloc, style, context: context),
+            _buildTrendingView(homeBloc, style),
+            // _buildPopularView(homeBloc, style, "FANCY COLOR DIAMONDS", homeBloc.exploreFancyColorDiamondsList),
+            _buildViewAllCollectionsSection(
+              style,
+              context: context,
+              url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg",
+            ),
+            _buildTopSellingCategories(homeBloc, style, context: context),
+            _buildViewAllCollectionsSection(
+              style,
+              context: context,
+              url: "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png",
+            ),
+            _buildKGKCoutureTabBarSection(homeBloc, style, context: context),
+            _buildCategoryGridPageView(homeBloc, style, context: context),
+            _buildCreateYourOwnSignaturePiece(homeBloc, style, context: context),
+            _buildDealOfTheDaySection(homeBloc, style, context: context),
+            // _buildShopByBrandsSection(homeBloc, style),
+            _buildPopularView(
+              homeBloc,
+              style,
+              title: "Shop By Brands",
+              popularList: homeBloc.shopByBrands,
+            ),
+            _buildViewAllCollectionsSection(
+              style,
+              context: context,
+              url: "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png",
+            ),
             _buildShopByStyleSection(homeBloc, style),
-            _buildRecentlyViewedSection(homeBloc, style, context)
+            _buildRecentlyViewedSection(homeBloc, style, context: context)
           ],
         ),
       ),
     );
   }
 
+  // ignore: unused_element
   Widget _buildShopByBrandsSection(HomeBloc homeBloc, HomeScreenStyle style) {
     return SmartHorizontalItemBuilder(
       title: APPStrings.shopByBrands.tr,
@@ -147,7 +204,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShopBySpacificCategory(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+  Widget _buildShopBySpacificCategory(
+    HomeBloc homeBloc,
+    HomeScreenStyle style, {
+    required BuildContext context,
+  }) {
     return Column(
       children: [
         SizedBox(
@@ -226,16 +287,12 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildTrendingView(HomeBloc homeBloc, HomeScreenStyle style) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        height: 20.h,
-      ),
+      SizedBox(height: 20.h),
       Padding(
         padding: EdgeInsets.only(left: 6.w),
         child: SmartText("Trending Now", style: style.bannerTitleStyle),
       ),
-      SizedBox(
-        height: 20.h,
-      ),
+      SizedBox(height: 20.h),
       SizedBox(
         height: 170.h,
         child: ListView.builder(
@@ -262,17 +319,21 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+      SizedBox(height: 20.h),
     ]);
   }
 
-  Widget _buildPopularView(HomeBloc homeBloc, HomeScreenStyle style) {
+  Widget _buildPopularView(
+    HomeBloc homeBloc,
+    HomeScreenStyle style, {
+    required String title,
+    required List<AuctionListModel> popularList,
+  }) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        height: 20.h,
-      ),
+      SizedBox(height: 20.h),
       Padding(
         padding: EdgeInsets.only(left: 6.w),
-        child: SmartText("Popular Now", style: style.bannerTitleStyle),
+        child: SmartText(title, style: style.bannerTitleStyle),
       ),
       SizedBox(
         height: 20.h,
@@ -281,7 +342,7 @@ class HomeScreen extends StatelessWidget {
         height: 160.h,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: homeBloc.popularList.length,
+          itemCount: popularList.length,
           shrinkWrap: true,
           itemBuilder: (context, index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,43 +350,45 @@ class HomeScreen extends StatelessWidget {
               Container(
                 height: 160.h,
                 width: 130.w,
-                margin: EdgeInsets.only(left: 6.w, right: index == homeBloc.popularList.length - 1 ? 6.w : 0),
+                margin: EdgeInsets.only(left: 6.w, right: index == popularList.length - 1 ? 6.w : 0),
                 child: Stack(
                   children: [
                     SmartImage(
-                        path: homeBloc.popularList[index].imageUrl ?? '',
+                        path: popularList[index].imageUrl ?? '',
                         fit: BoxFit.cover,
                         height: 160.h,
                         imageBorderRadius: BorderRadius.circular(8.r)),
-                    Container(
-                        width: 100.w,
-                        height: 24.h,
-                        margin: EdgeInsets.only(top: 6.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
-                          gradient: LinearGradient(
-                              colors: [
-                                style.primaryColor.withOpacity(0.6),
-                                style.primaryColor.withOpacity(0.9),
-                              ],
-                              begin: const FractionalOffset(0.0, 0.0),
-                              end: const FractionalOffset(1.0, 0.0),
-                              stops: const [0.0, 1.0],
-                              tileMode: TileMode.clamp),
-                        ),
-                        child: Center(
-                          child: SmartText(
-                            homeBloc.popularList[index].name,
-                            style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp, color: Colors.white)),
+                    if (popularList[index].name.isNotNullNorEmpty)
+                      Container(
+                          width: 100.w,
+                          height: 24.h,
+                          margin: EdgeInsets.only(top: 6.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
+                            gradient: LinearGradient(
+                                colors: [
+                                  style.primaryColor.withOpacity(0.6),
+                                  style.primaryColor.withOpacity(0.9),
+                                ],
+                                begin: const FractionalOffset(0.0, 0.0),
+                                end: const FractionalOffset(1.0, 0.0),
+                                stops: const [0.0, 1.0],
+                                tileMode: TileMode.clamp),
                           ),
-                        )),
-                    Positioned(
-                      bottom: 6.h,
-                      left: 6.w,
-                      right: 6.w,
-                      child: SmartText(homeBloc.popularList[index].percentageOff,
-                          style: style.getInspiredTitleStyle.merge(TextStyle(fontSize: 20.sp))),
-                    ),
+                          child: Center(
+                            child: SmartText(
+                              popularList[index].name,
+                              style: style.dropDownTextStyle.merge(TextStyle(fontSize: 12.sp, color: Colors.white)),
+                            ),
+                          )),
+                    if (popularList[index].percentageOff.isNotNullNorEmpty)
+                      Positioned(
+                        bottom: 6.h,
+                        left: 6.w,
+                        right: 6.w,
+                        child: SmartText(popularList[index].percentageOff,
+                            style: style.getInspiredTitleStyle.merge(TextStyle(fontSize: 20.sp))),
+                      ),
                   ],
                 ),
               ),
@@ -333,6 +396,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+      SizedBox(height: 20.h),
     ]);
   }
 }
@@ -355,18 +419,18 @@ Widget _buildHorizontalSlider(HomeBloc homeBloc, HomeScreenStyle style) {
         height: 20.h,
       ),
       SizedBox(
-        height: 170.h,
+        height: 250.h,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: homeBloc.engagementList.length,
+          itemCount: homeBloc.latestCollectionList.length,
           shrinkWrap: true,
           itemBuilder: (context, index) => Container(
-            padding: EdgeInsets.only(left: 6.w, right: index == homeBloc.engagementList.length - 1 ? 6.w : 0),
+            padding: EdgeInsets.only(left: 6.w, right: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
             // Add horizontal padding
-            width: context.width * 0.8,
+            // width: context.width * 0.8,
             child: SmartImage(
-              path: homeBloc.engagementList[index].imageUrl ?? '',
-              fit: BoxFit.cover,
+              path: homeBloc.latestCollectionList[index].imageUrl ?? '',
+              fit: BoxFit.fitHeight,
             ),
           ),
           separatorBuilder: (context, index) => const SizedBox.shrink(),
@@ -437,7 +501,8 @@ Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
   );
 }
 
-Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> imgList, double width, String title) {
+Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style,
+    {required List<AuctionListModel> imgList, required double width, required String title}) {
   return SmartHorizontalItemBuilder(
     title: title,
     titleStyle: style.bannerTitleStyle,
@@ -474,8 +539,15 @@ Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style, List<
 }
 
 Widget _buildTopSellingEligence(
-    HomeBloc homeBloc, HomeScreenStyle style, BuildContext context, List<AuctionListModel> imgList, Color? bgColor,
-    {String? title, double? height, BoxFit? fit}) {
+  HomeBloc homeBloc,
+  HomeScreenStyle style, {
+  required BuildContext context,
+  required List<AuctionListModel> imgList,
+  Color? bgColor,
+  String? title,
+  double? height,
+  BoxFit? fit,
+}) {
   return Container(
     color: bgColor ?? const Color.fromRGBO(247, 238, 233, 1),
     padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
@@ -500,7 +572,7 @@ Widget _buildTopSellingEligence(
   );
 }
 
-Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -524,7 +596,11 @@ Widget _buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, Buil
   );
 }
 
-Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext context, String url) {
+Widget _buildViewAllCollectionsSection(
+  HomeScreenStyle style, {
+  required BuildContext context,
+  required String url,
+}) {
   return Padding(
     padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h),
     child: Stack(
@@ -560,7 +636,7 @@ Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext conte
   );
 }
 
-Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
       padding: EdgeInsets.symmetric(vertical: 32.h),
       child: Column(
@@ -638,7 +714,7 @@ Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, B
       ));
 }
 
-Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
   double imgWidth = (context.width - 46.w) / 3;
   return Column(
@@ -654,8 +730,7 @@ Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, Buil
           homeBloc.categoryPageLength,
           (index) {
             int start = index * HomeBloc.categoryPerPageLength;
-            int end =
-                (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length - 1 : (start + HomeBloc.categoryPerPageLength);
+            int end = (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length : (start + HomeBloc.categoryPerPageLength);
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: SmartGridView(
@@ -705,7 +780,7 @@ Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, Buil
   );
 }
 
-Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Container(
     color: style.primaryColor,
     width: context.width,
@@ -830,7 +905,7 @@ Widget _buildOwnSignaturePieceSteps(String image, String steps, String title, Ho
   );
 }
 
-Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
@@ -881,7 +956,11 @@ Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
           items: homeBloc.getInspiredList
               .map((AuctionListModel field) => SmartImageTitleColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+                    topWidget: SmartImage(
+                      // height: 188.w,
+                      path: field.imageUrl ?? '',
+                      // fit: BoxFit.fitWidth,
+                    ),
                     title: '',
                     titleStyle: style.getInspiredTitleStyle,
                   ))
@@ -912,7 +991,7 @@ Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
   );
 }
 
-Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(

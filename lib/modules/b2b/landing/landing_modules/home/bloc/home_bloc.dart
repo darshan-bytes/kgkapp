@@ -12,10 +12,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   int currentCarouselIndex = 0;
   final CarouselController engagementListCarouselController = CarouselController();
   final List<AuctionListModel> engagementList = _generateEngagementList();
+  final List<AuctionListModel> latestCollectionList = _generateLatestCollection();
 
   final List<AuctionListModel> trendingList = _generateTrendingList();
 
   final List<AuctionListModel> popularList = _generatePopularList();
+  final List<AuctionListModel> exploreFancyColorDiamondsList = _generateFancyColorDiamondsList();
 
   //Shop Diamonds List
   final List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
@@ -199,6 +201,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       "https://i.ibb.co/5cCtJPM/Main-Banner2.jpg",
       "https://i.ibb.co/4sSxLwF/Main-Banner3.jpg",
       "https://i.ibb.co/pz6MHRt/Main-Banner4.jpg"
+    ];
+    return List.generate(
+      imageList.length,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        imageUrl: imageList[index],
+      ),
+    );
+  }
+
+  static List<AuctionListModel> _generateLatestCollection() {
+    List<String> imageList = [
+      // "https://i.ibb.co/P5w4MHq/Banner.png",
+      // "https://i.ibb.co/P5w4MHq/Banner.png",
+      // "https://i.ibb.co/P5w4MHq/Banner.png",
+      // "https://i.ibb.co/P5w4MHq/Banner.png",
+      // "https://i.ibb.co/P5w4MHq/Banner.png",
+      "https://i.ibb.co/1fckq7Y/Single-Banner3.png",
+      "https://i.ibb.co/GJC8rbV/Single-Banner4.png",
+      "https://i.ibb.co/1fckq7Y/Single-Banner3.png",
+      "https://i.ibb.co/GJC8rbV/Single-Banner4.png",
     ];
     return List.generate(
       imageList.length,
@@ -587,81 +610,113 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
+  static List<AuctionListModel> _generateFancyColorDiamondsList() {
+    // List<String> percentageList = ["40% off", "20% off", "30% Off", "10% off"];
+    // List<String> titleList = ["Offer", "Offer", "Offer", "Offer"];
+    List<String> imageList = [
+      "https://i.ibb.co/t2vyNp1/orange-diamond.png",
+      "https://i.ibb.co/wSksxzZ/pink-diamond.png",
+      "https://i.ibb.co/3SN5S8h/purple-diamond.png",
+      "https://i.ibb.co/DrGnpqL/red-diamond.png",
+    ];
+    return List.generate(
+      imageList.length,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        /*name: titleList[index],*/ imageUrl: imageList[index], /*percentageOff: percentageList[index]*/
+      ),
+    );
+  }
+
   static List<AuctionListModel> _generateCategoriesList() {
     List<String> nameList = [
-      "Pendant",
-      "Earrings",
-      "Ring",
-      "Bracelet",
-      "Necklace",
-      "Anklet",
-      "Chain",
-      "Sets",
-      "Studs",
-      "Hoops",
-      "Drop Earrings",
-      "Chandelier Earrings",
-      "Ear Cuffs",
-      "Bangles",
-      "Cuffs",
-      "Charm Bracelets",
-      "Tennis Bracelets",
-      "Beaded Bracelets",
-      "Brooches",
-      "Pins",
-      "Cufflinks",
-      "Body Jewelry",
-      "Belly Chains",
-      "Nose Rings",
-      "Nipple Rings",
-      "Eyebrow Rings",
-      "Tongue Rings",
-      "Tiara",
-      "Headpieces",
-      "Lockets",
-      "Medallions",
-      "Cameos",
-      "Armlets",
-      "Toe Rings",
-      "Toe Rings 1",
+      "PENDANT",
+      "RING",
+      "SETS",
+      "SILVER CHAINS",
+      "MANGALSUTRAS",
+      "NOSE PINS",
+      // "Pendant",
+      // "Earrings",
+      // "Ring",
+      // "Bracelet",
+      // "Necklace",
+      // "Anklet",
+      // "Chain",
+      // "Sets",
+      // "Studs",
+      // "Hoops",
+      // "Drop Earrings",
+      // "Chandelier Earrings",
+      // "Ear Cuffs",
+      // "Bangles",
+      // "Cuffs",
+      // "Charm Bracelets",
+      // "Tennis Bracelets",
+      // "Beaded Bracelets",
+      // "Brooches",
+      // "Pins",
+      // "Cufflinks",
+      // "Body Jewelry",
+      // "Belly Chains",
+      // "Nose Rings",
+      // "Nipple Rings",
+      // "Eyebrow Rings",
+      // "Tongue Rings",
+      // "Tiara",
+      // "Headpieces",
+      // "Lockets",
+      // "Medallions",
+      // "Cameos",
+      // "Armlets",
+      // "Toe Rings",
+      // "Toe Rings 1",
     ];
 
     List<String> imageList = [
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/Wc9ZQRr/Category1.jpg",
+      "https://i.ibb.co/YBPwZ8K/Category2.jpg",
+      "https://i.ibb.co/tL0c3VV/Category3.jpg",
+      "https://i.ibb.co/Lv1RCdc/Category4.jpg",
+      "https://i.ibb.co/8msvLfL/Category5.jpg",
+      "https://i.ibb.co/QdsWS2s/Category6.jpg",
+      "https://i.ibb.co/MC3vvzm/Category7.png",
+      "https://i.ibb.co/ZB1zbvq/Category8.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      // "https://i.ibb.co/1f3SHWg/image-18653.png",
+      // "https://i.ibb.co/5jmqMcF/image-18654.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
+      // "https://i.ibb.co/vBG9fzy/image-18655.png",
     ];
 
     return List.generate(
