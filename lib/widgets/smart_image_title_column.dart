@@ -83,8 +83,9 @@ class SmartImageTitleColumn extends StatelessWidget {
           crossAxisAlignment: crossAxisAlignment,
           children: [
             _buildTopWidgetView(),
-            SizedBox(height: imageBetweenSpacing ?? 8.h),
-            SmartText(
+            if (title.isNotNullNorEmpty) SizedBox(height: imageBetweenSpacing ?? 8.h),
+            if (title.isNotNullNorEmpty)
+              SmartText(
               title,
               style: style.titleStyle.merge(titleStyle),
               maxLines: titleMaxLines ?? 2,

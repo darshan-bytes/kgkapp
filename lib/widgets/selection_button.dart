@@ -10,6 +10,7 @@ class SelectionButton extends StatelessWidget {
   final double? imageHeight;
   final double? imageWidth;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Color? selectedButtonColor;
   final Color? unselectedButtonColor;
   final Color? selectedButtonBorderColor;
@@ -20,6 +21,8 @@ class SelectionButton extends StatelessWidget {
   final TextStyle? unselectedButtonTextStyle;
   final BorderRadiusGeometry? borderRadius;
   final double? iconBetweenSpace;
+  final BoxConstraints? constraints;
+  final double scaleFactor;
 
   const SelectionButton({
     super.key,
@@ -32,6 +35,7 @@ class SelectionButton extends StatelessWidget {
     this.imageHeight,
     this.imageWidth,
     this.padding,
+    this.margin,
     this.selectedButtonColor,
     this.unselectedButtonColor,
     this.selectedButtonBorderColor,
@@ -42,6 +46,8 @@ class SelectionButton extends StatelessWidget {
     this.unselectedButtonTextStyle,
     this.borderRadius,
     this.iconBetweenSpace,
+    this.constraints,
+    this.scaleFactor = 0.8,
   });
 
   @override
@@ -50,12 +56,15 @@ class SelectionButton extends StatelessWidget {
 
     // This widget is used for both button and icon button in the same way
     // If selected button is true then the button will be work as primaray button else it will be normal widget
-    return InkWell(
+    return Bounceable(
+      scaleFactor: scaleFactor,
       onTap: onTap,
       child: Container(
         height: height ?? 48.w,
         width: width,
         padding: padding,
+        margin: margin,
+        constraints: constraints,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? (selectedButtonColor ?? style.selectedButtonColor) : (unselectedButtonColor ?? style.unselectedButtonColor),

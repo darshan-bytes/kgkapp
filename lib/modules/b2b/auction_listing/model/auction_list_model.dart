@@ -9,6 +9,7 @@ class AuctionListModel {
   String? type;
   String? bidAmount;
   String? bidPlacedOn;
+  String? percentageOff;
 
   AuctionListModel({
     this.id,
@@ -19,5 +20,6 @@ class AuctionListModel {
     this.orderStatus = ProjectStatus.onGoing,
     this.bidAmount,
     this.bidPlacedOn,
+    this.percentageOff,
   });
 }
