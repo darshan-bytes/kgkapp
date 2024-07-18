@@ -16,27 +16,33 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   List<B2BCustomListingDataModel> designListForGrid = _generateDesignListForGrid();
 
   //Pagination controller
-  SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController listPaginationScrollController = SmartPaginationScrollController();
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   DesignListingBloc() : super(const DesignListingInitial()) {
     on<InitialDesignListingEvent>(_onInitialDesignListEvent);
     on<DesignListLoadMoreEvent>(_onDesignListLoadMoreEvent);
     on<DesignChangeListingTypeEvent>(_onDesignChangeListingTypeEvent);
+    on<DesignListPullToRefreshEvent>(_onDesignListPullToRefresh);
   }
 
   void _onInitialDesignListEvent(InitialDesignListingEvent event, Emitter<DesignListingState> emit) {
     emit(const DesignListingLoadingState());
-    gridPaginationScrollController.init(
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
+    paginationScrollController.init(
+      isSecondaryView: true,
       loadAction: (int currentPage) async {
         add(DesignListLoadMoreEvent(currentPage));
       },
     );
-    listPaginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(DesignListLoadMoreEvent(currentPage));
-      },
-    );
+
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
 
     clearData();
     emit(const DesignListingLoadedState());
@@ -46,20 +52,18 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     isGrid = true;
     designSearchController.clear();
     designList.clear();
+    designListForGrid.clear();
     designList.addAll(_generateDesignList());
+    designListForGrid.addAll(_generateDesignList());
   }
 
   Future<void> _onDesignListLoadMoreEvent(DesignListLoadMoreEvent event, Emitter<DesignListingState> emit) async {
     emit(const DesignListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     designList.addAll(_generateDesignList());
-    if (isGrid) {
-      gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-      emit(DesignListLoadedMoreState(event.currentPage + 1));
-    } else {
-      listPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-      emit(DesignListLoadedMoreState(event.currentPage + 1));
-    }
+    designListForGrid.addAll(_generateDesignListForGrid());
+    paginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+    emit(DesignListLoadedMoreState(event.currentPage + 1));
   }
 
   void _onDesignChangeListingTypeEvent(DesignChangeListingTypeEvent event, Emitter<DesignListingState> emit) {
@@ -71,8 +75,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   @override
   Future<void> close() {
     designSearchController.dispose();
-    gridPaginationScrollController.dispose();
-    listPaginationScrollController.dispose();
+    paginationScrollController.dispose();
     return super.close();
   }
 
@@ -111,5 +114,24 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
         strDbfNumber: 'DBF-000013',
       );
     });
+  }
+
+  Future<void> _onDesignListPullToRefresh(DesignListPullToRefreshEvent event, Emitter<DesignListingState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    designList = _generateDesignListForGrid();
+    designListForGrid = _generateDesignListForGrid();
+    refreshCompleter.complete(true);
+    emit(const DesignListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const DesignListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

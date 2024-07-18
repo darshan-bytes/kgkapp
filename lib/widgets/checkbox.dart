@@ -12,7 +12,7 @@ class SmartCheckbox extends StatelessWidget {
   final Color? borderColor;
   final EdgeInsets? padding;
   final MainAxisSize? mainAxisSize;
-
+  final double? spaceBetweenLabelAndCheckbox;
   final bool isRadio;
 
   const SmartCheckbox({
@@ -28,6 +28,7 @@ class SmartCheckbox extends StatelessWidget {
     this.borderColor,
     this.padding,
     this.mainAxisSize,
+    this.spaceBetweenLabelAndCheckbox,
   }) : isRadio = false;
 
   const SmartCheckbox.radio({
@@ -43,6 +44,7 @@ class SmartCheckbox extends StatelessWidget {
     this.borderColor,
     this.padding,
     this.mainAxisSize,
+    this.spaceBetweenLabelAndCheckbox,
   }) : isRadio = true;
 
   @override
@@ -84,7 +86,7 @@ class SmartCheckbox extends StatelessWidget {
                       },
                     ),
             ),
-            SizedBox(width: 6.w),
+            SizedBox(width: spaceBetweenLabelAndCheckbox ?? 6.w),
             if (label != null)
               Flexible(
                 child: SmartText(label, style: style.textStyle.merge(labelStyle)),

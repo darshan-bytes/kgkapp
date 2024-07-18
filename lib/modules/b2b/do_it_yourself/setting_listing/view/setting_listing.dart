@@ -47,6 +47,9 @@ class SettingListingScreen extends StatelessWidget {
             return SafeArea(
                 child: SmartSingleChildScrollView(
               controller: settingListingBloc.paginationScrollController.scrollController,
+              onRefresh: () async {
+                await settingListingBloc.pullToRefresh();
+              },
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
                 children: [

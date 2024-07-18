@@ -11,6 +11,7 @@ class NotificationScreen extends StatelessWidget {
         title: APPStrings.notification.tr,
       ),
       body: SmartSingleChildScrollView(
+        onRefresh: () async {},
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
         child: Column(
@@ -90,4 +91,3 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 }
-

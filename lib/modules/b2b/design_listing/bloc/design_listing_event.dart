@@ -30,3 +30,10 @@ final class DesignListLoadMoreEvent extends DesignListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class DesignListPullToRefreshEvent extends DesignListingEvent {
+  const DesignListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

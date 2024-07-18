@@ -52,6 +52,7 @@ class StylesListingScreen extends StatelessWidget {
       controller: stylesListingBloc.searchController,
       suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
       padding: EdgeInsets.symmetric(vertical: 24.w),
+      onTapOutside: (event) {},
     );
   }
 
@@ -62,31 +63,36 @@ class StylesListingScreen extends StatelessWidget {
         if (stylesListingBloc.stylesList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noStylesFound.tr);
         }
-        return ListView.separated(
-          padding: EdgeInsets.only(bottom: 24.h),
-          controller: stylesListingBloc.paginationScrollController.scrollController,
-          shrinkWrap: true,
-          itemCount: stylesListingBloc.stylesList.length,
-          itemBuilder: (context, index) {
-            return BlocBuilder<StylesListingBloc, StylesListingState>(
-              buildWhen: (previous, current) => current is StylesListingLoadingMoreState || current is StylesListingLoadedMoreState,
-              builder: (context, state) {
-                B2BCustomListingDataModel stylesItem = stylesListingBloc.stylesList[index];
-                return Column(
-                  children: [
-                    B2BListingItem(
-                      type: B2BListingType.stylesListingType,
-                      listingItemModel: stylesItem,
-                      onTapMenuButton: () {},
-                    ),
-                    if (state is StylesListingLoadingMoreState && index == stylesListingBloc.stylesList.length - 1)
-                      const SmartCircularProgressIndicator(),
-                  ],
-                );
-              },
-            );
+        return RefreshIndicator.adaptive(
+          child: ListView.separated(
+            padding: EdgeInsets.only(bottom: 24.h),
+            controller: stylesListingBloc.paginationScrollController.scrollController,
+            shrinkWrap: true,
+            itemCount: stylesListingBloc.stylesList.length,
+            itemBuilder: (context, index) {
+              return BlocBuilder<StylesListingBloc, StylesListingState>(
+                buildWhen: (previous, current) => current is StylesListingLoadingMoreState || current is StylesListingLoadedMoreState,
+                builder: (context, state) {
+                  B2BCustomListingDataModel stylesItem = stylesListingBloc.stylesList[index];
+                  return Column(
+                    children: [
+                      B2BListingItem(
+                        type: B2BListingType.stylesListingType,
+                        listingItemModel: stylesItem,
+                        onTapMenuButton: () {},
+                      ),
+                      if (state is StylesListingLoadingMoreState && index == stylesListingBloc.stylesList.length - 1)
+                        const SmartCircularProgressIndicator(),
+                    ],
+                  );
+                },
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          ),
+          onRefresh: () async {
+            await stylesListingBloc.pullToRefresh();
           },
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
         );
       },
     );

@@ -119,45 +119,62 @@ class DesignLibraryScreen extends StatelessWidget {
         if (bloc.designLibraryList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDesignLibraryFound.tr);
         }
-        return _buildListOrGridView(bloc, state);
+        return _buildListOrGridView(bloc, state, context);
       },
     );
   }
 
-  Widget _buildListOrGridView(DesignLibraryBloc bloc, DesignLibraryState state) {
-    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state) : _buildListView(bloc, state));
+  Widget _buildListOrGridView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
+    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state));
   }
 
-  Widget _buildGridView(DesignLibraryBloc bloc, DesignLibraryState state) {
+  Widget _buildGridView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
     return SmartSingleChildScrollView(
       key: bloc.paginationScrollController.gridKey,
       controller: bloc.paginationScrollController.scrollController,
+      onRefresh: () async {
+        await bloc.pullToRefresh();
+      },
       child: SmartGridView(
         items: List.generate(
-            bloc.designLibraryList.length, (index) => DesignListingGridItem.designGridItem(designModel: bloc.designLibraryList[index])),
+          bloc.designLibraryList.length,
+          (index) => DesignListingGridItem.designGridItem(
+            designModel: bloc.designLibraryList[index],
+            onTap: () {
+              context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+            },
+          ),
+        ),
         isLoadingMore: state is DesignLibraryLoadingMoreState,
       ),
     );
   }
 
   Widget _buildListView(DesignLibraryBloc bloc, DesignLibraryState state) {
-    return ListView.builder(
-      key: bloc.paginationScrollController.listKey,
-      shrinkWrap: true,
-      controller: bloc.paginationScrollController.secondaryScrollController,
-      itemCount: bloc.designLibraryList.length,
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            CadLibraryListItem.designListItem(
-              margin: EdgeInsets.only(bottom: 24.h),
-              designModel: bloc.designLibraryList[index],
-              onTap: () {},
-            ),
-            if (state is DesignLibraryLoadingMoreState && index == bloc.designLibraryList.length - 1)
-              const SmartCircularProgressIndicator(),
-          ],
-        );
+    return RefreshIndicator.adaptive(
+      child: ListView.builder(
+        key: bloc.paginationScrollController.listKey,
+        shrinkWrap: true,
+        controller: bloc.paginationScrollController.secondaryScrollController,
+        itemCount: bloc.designLibraryList.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              CadLibraryListItem.designListItem(
+                margin: EdgeInsets.only(bottom: 24.h),
+                designModel: bloc.designLibraryList[index],
+                onTap: () {
+                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                },
+              ),
+              if (state is DesignLibraryLoadingMoreState && index == bloc.designLibraryList.length - 1)
+                const SmartCircularProgressIndicator(),
+            ],
+          );
+        },
+      ),
+      onRefresh: () async {
+        await bloc.pullToRefresh();
       },
     );
   }

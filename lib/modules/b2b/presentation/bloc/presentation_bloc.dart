@@ -14,13 +14,19 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   // Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   PresentationBloc() : super(PresentationInitial()) {
     on<InitialPresentationEvent>(_onInitialPresentationEvent);
     on<PresentationLoadMoreEvent>(_onPresentationLoadMoreEvent);
+    on<PresentationPullToRefreshEvent>(_onPresentationPullToRefreshEvent);
   }
 
   void _onInitialPresentationEvent(InitialPresentationEvent event, Emitter<PresentationState> emit) {
     emit(PresentationListReloadState());
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     presentationList = _generatePresentationList();
 
     if (paginationScrollController.isInitialised) {
@@ -34,6 +40,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       },
     );
     clearData();
+    refreshCompleter.complete(true);
     emit(PresentationLoadedState());
   }
 
@@ -73,5 +80,24 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
         status: ProjectStatus.blueInProgress,
       );
     });
+  }
+
+  Future<void> _onPresentationPullToRefreshEvent(PresentationPullToRefreshEvent event, Emitter<PresentationState> emit) async {
+    emit(PresentationListReloadState());
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    presentationList = _generatePresentationList();
+    refreshCompleter.complete(true);
+    emit(PresentationLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const PresentationPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

@@ -50,6 +50,9 @@ class StoneListingScreen extends StatelessWidget {
             return SafeArea(
                 child: SmartSingleChildScrollView(
               controller: diamondListingBloc.paginationScrollController.scrollController,
+              onRefresh: () async {
+                await diamondListingBloc.pullToRefresh();
+              },
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
                 children: [

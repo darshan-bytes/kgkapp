@@ -15,12 +15,14 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   bool isNoDataFound = false;
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   SearchResultBloc() : super(SearchResultInitialState()) {
     on<InitialSearchResultEvent>(_onInitialSearchResultEvent);
     on<GetSearchResultProductListEvent>(_onGetSearchResultProductListEvent);
     on<SearchResultChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<LoadMoreSearchResultEvent>(_onLoadMoreSearchResultEvent);
+    on<SearchResultPullToRefreshEvent>(_onSearchResultPullToRefreshEvent);
   }
 
   @override
@@ -55,15 +57,14 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     shopDiamondsByShapeList.clear();
     newlyLaunchedItems.clear();
     if (!isNoDataFound) {
-      List.generate(
+      productList = List.generate(
           20,
-          (index) => productList.add(
-                ProductDetails(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                  name: "Diamond Vine Ring in 18k Rose Gold",
-                  originalPrice: '\$5,000.00',
-                ),
+          (index) => ProductDetails(
+                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                name: "Diamond Vine Ring in 18k Rose Gold",
+                originalPrice: '\$5,000.00',
               ));
+      refreshCompleter.complete(true);
     } else {
       paginationScrollController.isPageLoaded.complete(true);
       List.generate(5, (index) {
@@ -93,6 +94,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
                 ),
               ));
     }
+
     emit(const SearchResultLoadedState());
   }
 
@@ -116,5 +118,31 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
             ));
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(SearchResultLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onSearchResultPullToRefreshEvent(SearchResultPullToRefreshEvent event, Emitter<SearchResultState> emit) async {
+    emit(const SearchResultReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    paginationScrollController.pullToRefresh();
+    productList = List.generate(
+        20,
+        (index) => ProductDetails(
+              imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+              name: "Diamond Vine Ring in 18k Rose Gold",
+              originalPrice: '\$5,000.00',
+            ));
+    refreshCompleter.complete(true);
+
+    emit(const SearchResultLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const SearchResultPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

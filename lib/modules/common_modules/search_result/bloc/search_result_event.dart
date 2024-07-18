@@ -38,3 +38,10 @@ final class LoadMoreSearchResultEvent extends SearchResultEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class SearchResultPullToRefreshEvent extends SearchResultEvent {
+  const SearchResultPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

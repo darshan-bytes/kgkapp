@@ -31,3 +31,10 @@ final class LoadMoreSettingProductListEvent extends SettingListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class SettingListPullToRefreshEvent extends SettingListingEvent {
+  const SettingListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -67,6 +67,7 @@ class JewelleryTabView extends StatelessWidget {
                   onTap: (index) {
                     context.pushNamed(AppRoutes.orderDetailsPage);
                   },
+                  bloc: ordersBloc,
                 );
               },
             ),

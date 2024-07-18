@@ -8,11 +8,13 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
   List<B2BCustomListingDataModel> stylesList = [];
   TextEditingController searchController = TextEditingController();
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   StylesListingBloc() : super(StylesListingInitial()) {
     on<StylesListingInitialEvent>(_onStylesListingInitialEvent);
     on<StylesListingSearchEvent>(_onStylesListingSearchEvent);
     on<StylesListingLoadMoreEvent>(_onStylesListingLoadMoreEvent);
+    on<StylesListingPullToRefreshEvent>(_onStylesListingPullToRefresh);
   }
 
   @override
@@ -24,6 +26,10 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
   void _onStylesListingInitialEvent(StylesListingInitialEvent event, Emitter<StylesListingState> emit) {
     emit(StylesListingReloadState());
     searchController.clear();
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(StylesListingLoadMoreEvent(currentPage));
@@ -45,8 +51,11 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
         strExclusiveCustomer: 'Jenny Wilson',
         strExclusiveCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
       ),
-    );
+    ).toList();
 
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
     emit(const StylesListingLoadedState());
   }
 
@@ -78,5 +87,39 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
     );
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(StylesListingLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onStylesListingPullToRefresh(StylesListingPullToRefreshEvent event, Emitter<StylesListingState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    stylesList = List.generate(
+      10,
+      (index) => B2BCustomListingDataModel(
+        id: index.toString(),
+        strStyleNumber: 'DWBFM4Q-108636',
+        status: ProjectStatus.blueInProgress,
+        strDesignNumber: 'DERS28MOVR',
+        strCustomer: 'John Samanta',
+        strCustomerImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
+        strMarket: 'Zone 6',
+        strStoneCardLocked: 'Yes',
+        isStoneCardLockedImage: true,
+        strExclusive: 'Yes',
+        strExclusiveCustomer: 'Jenny Wilson',
+        strExclusiveCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
+      ),
+    ).toList();
+    refreshCompleter.complete(true);
+    emit(const StylesListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const StylesListingPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

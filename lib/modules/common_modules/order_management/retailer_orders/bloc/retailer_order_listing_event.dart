@@ -38,3 +38,12 @@ final class RetailerOrderListingLoadMoreEvent extends RetailerOrderListingEvent 
   @override
   List<Object> get props => [currentPage, listType];
 }
+
+final class RetailerOrderListPullToRefreshEvent extends RetailerOrderListingEvent {
+  final RetailerOrdersTab listType;
+
+  const RetailerOrderListPullToRefreshEvent({required this.listType});
+
+  @override
+  List<Object> get props => [listType];
+}

@@ -17,3 +17,10 @@ final class WatchlistLoadMoreEvent extends WatchlistEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class WatchlistPullToRefreshEvent extends WatchlistEvent {
+  const WatchlistPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

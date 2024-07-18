@@ -28,31 +28,37 @@ class NewsletterSubscriberTabView extends StatelessWidget {
                 if (bloc.subscribersList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
                 }
-                return ListView.builder(
-                  itemCount: bloc.subscribersList.length,
-                  controller: bloc.subscribersScrollController.scrollController,
-                  itemBuilder: (context, index) {
-                    return BlocBuilder<NewsletterBloc, NewsletterState>(
-                      buildWhen: (previous, current) => current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
-                      builder: (context, state) {
-                        B2BCustomListingDataModel item = bloc.subscribersList[index];
-                        return Column(
-                          children: [
-                            B2BListingItem(
-                                columns: 1,
-                                listingItemModel: item,
-                                type: B2BListingType.newsletterSubscribersType,
-                                onTapMenuButton: () {},
-                                onTap: () {},
-                                margin: EdgeInsets.only(
-                                    bottom: (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1) ? 0 : 16.h)),
-                            if (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1)
-                              const SmartCircularProgressIndicator(),
-                          ],
-                        );
-                      },
-                    );
+                return SmartRefreshIndicator(
+                  onRefresh: () async {
+                    await bloc.pullToRefresh();
                   },
+                  child: ListView.builder(
+                    itemCount: bloc.subscribersList.length,
+                    controller: bloc.subscribersScrollController.scrollController,
+                    itemBuilder: (context, index) {
+                      return BlocBuilder<NewsletterBloc, NewsletterState>(
+                        buildWhen: (previous, current) => current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
+                        builder: (context, state) {
+                          B2BCustomListingDataModel item = bloc.subscribersList[index];
+                          return Column(
+                            children: [
+                              B2BListingItem(
+                                  columns: 1,
+                                  listingItemModel: item,
+                                  type: B2BListingType.newsletterSubscribersType,
+                                  onTapMenuButton: () {},
+                                  onTap: () {},
+                                  margin: EdgeInsets.only(
+                                      bottom:
+                                          (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1) ? 0 : 16.h)),
+                              if (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1)
+                                const SmartCircularProgressIndicator(),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
             ),

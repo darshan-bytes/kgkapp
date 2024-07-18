@@ -28,3 +28,19 @@ final class FilterPresentationState extends PddListingState {
   @override
   List<Object> get props => [];
 }
+
+final class PddListLoadedMoreState extends PddListingState {
+  final int currentPage;
+
+  const PddListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}
+
+final class PddListLoadingMoreState extends PddListingState {
+  const PddListLoadingMoreState();
+
+  @override
+  List<Object> get props => [];
+}

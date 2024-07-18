@@ -74,6 +74,7 @@ class RetailerJewelleryTabView extends StatelessWidget {
                       RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
                     });
                   },
+                  bloc: retailerOrderListingBloc,
                 );
               },
             ),

@@ -29,3 +29,12 @@ class NewsletterListingLoadMoreEvent extends NewsletterEvent {
   @override
   List<Object> get props => [currentPage, listType];
 }
+
+class NewsletterListPullToRefreshEvent extends NewsletterEvent {
+  final NewsletterTab listType;
+
+  const NewsletterListPullToRefreshEvent({required this.listType});
+
+  @override
+  List<Object> get props => [listType];
+}

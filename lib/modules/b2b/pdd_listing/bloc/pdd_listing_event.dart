@@ -15,6 +15,7 @@ final class InitialPddListingEvent extends PddListingEvent {
 
 final class PresentationChangeListingTypeEvent extends PddListingEvent {
   final bool isGrid;
+
   const PresentationChangeListingTypeEvent({required this.isGrid});
 
   @override
@@ -36,4 +37,20 @@ final class NavigateToPddPreviewEvent extends PddListingEvent {
 
   @override
   List<Object> get props => [index, context];
+}
+
+final class PddListLoadMoreEvent extends PddListingEvent {
+  final int currentPage;
+
+  const PddListLoadMoreEvent(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}
+
+final class PddListPullToRefreshEvent extends PddListingEvent {
+  const PddListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
 }

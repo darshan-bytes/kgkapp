@@ -28,30 +28,35 @@ class NewsletterCategoriesTabView extends StatelessWidget {
                 if (bloc.categoryList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
                 }
-                return ListView.builder(
-                  itemCount: bloc.categoryList.length,
-                  controller: bloc.categoryScrollController.scrollController,
-                  itemBuilder: (context, index) {
-                    return BlocBuilder<NewsletterBloc, NewsletterState>(
-                      buildWhen: (previous, current) => current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
-                      builder: (context, state) {
-                        B2BCustomListingDataModel item = bloc.categoryList[index];
-                        return Column(
-                          children: [
-                            _buildCategoryItem(
-                                context: context,
-                                listingItemModel: item,
-                                onTapMenuButton: () {},
-                                onTap: () {},
-                                margin: EdgeInsets.only(
-                                    bottom: (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1) ? 0 : 16.h)),
-                            if (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1)
-                              const SmartCircularProgressIndicator(),
-                          ],
-                        );
-                      },
-                    );
+                return SmartRefreshIndicator(
+                  onRefresh: () async {
+                    await bloc.pullToRefresh();
                   },
+                  child: ListView.builder(
+                    itemCount: bloc.categoryList.length,
+                    controller: bloc.categoryScrollController.scrollController,
+                    itemBuilder: (context, index) {
+                      return BlocBuilder<NewsletterBloc, NewsletterState>(
+                        buildWhen: (previous, current) => current is NewsletterListLoadedMoreState || current is NewsletterLoadingMoreState,
+                        builder: (context, state) {
+                          B2BCustomListingDataModel item = bloc.categoryList[index];
+                          return Column(
+                            children: [
+                              _buildCategoryItem(
+                                  context: context,
+                                  listingItemModel: item,
+                                  onTapMenuButton: () {},
+                                  onTap: () {},
+                                  margin: EdgeInsets.only(
+                                      bottom: (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1) ? 0 : 16.h)),
+                              if (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1)
+                                const SmartCircularProgressIndicator(),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
             ),

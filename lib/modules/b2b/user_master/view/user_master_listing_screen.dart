@@ -79,33 +79,38 @@ class UserMasterListingScreen extends StatelessWidget {
           if (bloc.userMasterList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noUserFound.tr);
           }
-          return ListView.builder(
-              shrinkWrap: true,
-              controller: bloc.paginationScrollController.scrollController,
-              itemCount: bloc.userMasterList.length,
-              itemBuilder: (context, index) {
-                B2BCustomListingDataModel userItem = bloc.userMasterList[index];
-                return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-                  buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        B2BListingItem(
-                          margin: EdgeInsets.only(
-                              bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
-                          type: B2BListingType.userListingType,
-                          listingItemModel: userItem,
-                          gridSpacing: 0.w,
-                          onTapMenuButton: () {},
-                          onTap: () {},
-                        ),
-                        if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
-                          const SmartCircularProgressIndicator(),
-                      ],
-                    );
-                  },
-                );
-              });
+          return RefreshIndicator.adaptive(
+            onRefresh: () async {
+              await bloc.pullToRefresh();
+            },
+            child: ListView.builder(
+                shrinkWrap: true,
+                controller: bloc.paginationScrollController.scrollController,
+                itemCount: bloc.userMasterList.length,
+                itemBuilder: (context, index) {
+                  B2BCustomListingDataModel userItem = bloc.userMasterList[index];
+                  return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+                    buildWhen: (previous, current) => current is UserMasterListLoadedMoreState || current is UserMasterListLoadingMoreState,
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          B2BListingItem(
+                            margin: EdgeInsets.only(
+                                bottom: index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState ? 0 : 16.0.h),
+                            type: B2BListingType.userListingType,
+                            listingItemModel: userItem,
+                            gridSpacing: 0.w,
+                            onTapMenuButton: () {},
+                            onTap: () {},
+                          ),
+                          if (index == bloc.userMasterList.length - 1 && state is UserMasterListLoadingMoreState)
+                            const SmartCircularProgressIndicator(),
+                        ],
+                      );
+                    },
+                  );
+                }),
+          );
         },
       ),
     );

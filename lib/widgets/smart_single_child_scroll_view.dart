@@ -58,7 +58,6 @@ class SmartSingleChildScrollView extends StatelessWidget {
     if (onRefresh != null) {
       return RefreshIndicator.adaptive(
         triggerMode: RefreshIndicatorTriggerMode.anywhere,
-        displacement: 10,
         onRefresh: onRefresh!,
         child: view,
       );

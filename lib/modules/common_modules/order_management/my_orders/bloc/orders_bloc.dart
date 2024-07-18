@@ -26,6 +26,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   SmartPaginationScrollController gemstoneScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController jewelleryScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   // Tabs
   final List<Widget> tabs = <Widget>[
     Tab(text: APPStrings.diamond.tr),
@@ -52,11 +54,15 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
     on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<ChangeOrderTabsEvent>(_onChangeTabEvent);
+    on<OrdersListPullToRefreshEvent>(_onListPullToRefreshEvent);
   }
 
   void _onInitOrdersEvent(OrdersInitialEvent event, Emitter<OrdersState> emit) {
     emit(const OrdersReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     clearData();
     diamondList = _generateDiamondOrdersList();
     gemstoneList = _generateGemstoneOrdersList();
@@ -72,18 +78,27 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       },
     );
 
+    if (gemstoneScrollController.isInitialised) {
+      gemstoneScrollController.dispose();
+      gemstoneScrollController = SmartPaginationScrollController();
+    }
     gemstoneScrollController.init(
       loadAction: (int currentPage) async {
         add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.gemstone));
       },
     );
 
+    if (jewelleryScrollController.isInitialised) {
+      jewelleryScrollController.dispose();
+      jewelleryScrollController = SmartPaginationScrollController();
+    }
     jewelleryScrollController.init(
       loadAction: (int currentPage) async {
         add(MyOrderListingLoadMoreEvent(currentPage: currentPage, listType: MyOrdersTab.jewellery));
       },
     );
 
+    refreshCompleter.complete(true);
     emit(const OrdersListLoadedState());
   }
 
@@ -139,6 +154,38 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     }
 
     emit(OrdersListLoadedMoreState(event.currentPage + 1, event.listType));
+  }
+
+  Future<void> _onListPullToRefreshEvent(OrdersListPullToRefreshEvent event, Emitter<OrdersState> emit) async {
+    emit(const OrdersReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    switch (event.listType) {
+      case MyOrdersTab.diamond:
+        diamondScrollController.pullToRefresh();
+        diamondList = _generateDiamondOrdersList();
+        break;
+      case MyOrdersTab.gemstone:
+        gemstoneScrollController.pullToRefresh();
+        gemstoneList = _generateGemstoneOrdersList();
+        break;
+      case MyOrdersTab.jewellery:
+        jewelleryScrollController.pullToRefresh();
+        jewelleryList = _generateJewelleryOrdersList();
+        break;
+    }
+    refreshCompleter.complete(true);
+    emit(const OrdersListLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    final MyOrdersTab currentTab = MyOrdersTab.values[tabController.index];
+    add(OrdersListPullToRefreshEvent(listType: currentTab));
+    bool result = await refreshCompleter.future;
+    return result;
   }
 
   SmartPaginationScrollController get currentScrollController {

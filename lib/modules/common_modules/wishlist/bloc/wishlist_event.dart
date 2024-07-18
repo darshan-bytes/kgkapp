@@ -19,3 +19,10 @@ class LoadMoreWishlistEvent extends WishlistEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class WishlistPullToRefreshEvent extends WishlistEvent {
+  const WishlistPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

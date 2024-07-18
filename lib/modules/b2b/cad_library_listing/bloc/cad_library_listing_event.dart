@@ -30,3 +30,10 @@ final class CadListLoadMoreEvent extends CadLibraryListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class CadListPullToRefreshEvent extends CadLibraryListingEvent {
+  const CadListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

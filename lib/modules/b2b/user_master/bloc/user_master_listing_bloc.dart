@@ -14,6 +14,8 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
   // Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   UserLocationModel? selectedUserLocationType;
 
   // User Location types
@@ -28,6 +30,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     on<InitialUserMasterListingEvent>(_onInitialUserMasterListEvent);
     on<UserMasterListLoadMoreEvent>(_onUserMasterListLoadMoreEvent);
     on<UserMasterChangeLocationTypeEvent>(_onUserMasterChangeLocationTypeEvent);
+    on<UserMasterListingPullToRefreshEvent>(_onUserMasterListingPullToRefreshEvent);
   }
 
   void _onInitialUserMasterListEvent(InitialUserMasterListingEvent event, Emitter<UserMasterListingState> emit) {
@@ -35,11 +38,19 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     clearData();
     userMasterList = _generateUserMasterList();
     selectedUserLocationType = userLocationTypeList.first;
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
         add(UserMasterListLoadMoreEvent(currentPage));
       },
     );
+    refreshCompleter.complete(true);
     emit(UserMasterListingLoadedState());
   }
 
@@ -80,9 +91,28 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
     });
   }
 
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const UserMasterListingPullToRefreshEvent());
+    return refreshCompleter.future;
+  }
+
   @override
   Future<void> close() {
     paginationScrollController.dispose();
     return super.close();
+  }
+
+  Future<void> _onUserMasterListingPullToRefreshEvent(
+      UserMasterListingPullToRefreshEvent event, Emitter<UserMasterListingState> emit) async {
+    emit(UserMasterListReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    paginationScrollController.pullToRefresh();
+    userMasterList = _generateUserMasterList();
+    refreshCompleter.complete(true);
+    emit(UserMasterListingLoadedState());
   }
 }
