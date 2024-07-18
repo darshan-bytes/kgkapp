@@ -10,3 +10,10 @@ final class DigitalCatalogueInitialEvent extends DigitalCatalogueEvent {
   @override
   List<Object> get props => [];
 }
+
+final class DigitalCataloguePullToRefreshEvent extends DigitalCatalogueEvent {
+  const DigitalCataloguePullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

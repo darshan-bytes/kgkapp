@@ -18,7 +18,6 @@ final class WatchlistLoadMoreEvent extends WatchlistEvent {
   List<Object> get props => [currentPage];
 }
 
-//PullToRefreshEvent
 final class WatchlistPullToRefreshEvent extends WatchlistEvent {
   const WatchlistPullToRefreshEvent();
 

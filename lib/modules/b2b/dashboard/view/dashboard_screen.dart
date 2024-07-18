@@ -14,6 +14,7 @@ class DashboardScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is DashboardLoadedState,
           builder: (context, state) {
             return SmartSingleChildScrollView(
+              onRefresh: () async {},
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

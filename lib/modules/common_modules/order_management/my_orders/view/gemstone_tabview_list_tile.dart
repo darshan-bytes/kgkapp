@@ -67,6 +67,7 @@ class GemstoneTabView extends StatelessWidget {
                   onTap: (index) {
                     context.pushNamed(AppRoutes.orderDetailsPage);
                   },
+                  bloc: ordersBloc,
                 );
               },
             ),

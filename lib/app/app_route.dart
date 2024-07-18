@@ -449,7 +449,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider<PddListingBloc>(
-              create: (context) => PddListingBloc(),
+              create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
               child: const PddListingScreen(),
             );
           },

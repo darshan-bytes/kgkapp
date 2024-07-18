@@ -58,32 +58,38 @@ class PresentationScreen extends StatelessWidget {
           if (bloc.presentationList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
           }
-          return ListView.separated(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(vertical: 24.w),
-            controller: bloc.paginationScrollController.scrollController,
-            itemCount: bloc.presentationList.length,
-            itemBuilder: (context, index) {
-              B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
-              return BlocBuilder<PresentationBloc, PresentationState>(
-                buildWhen: (previous, current) => current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      B2BListingItem(
-                        type: B2BListingType.presentationType,
-                        listingItemModel: presentationItem,
-                        onTapMenuButton: () {},
-                        onTap: () {},
-                      ),
-                      if (index == bloc.presentationList.length - 1 && state is PresentationListLoadingMoreState)
-                        const SmartCircularProgressIndicator(),
-                    ],
-                  );
-                },
-              );
+          return SmartRefreshIndicator(
+            onRefresh: () async {
+              await bloc.pullToRefresh();
             },
-            separatorBuilder: (_, __) => SizedBox(height: 16.h),
+            child: ListView.separated(
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 24.w),
+              controller: bloc.paginationScrollController.scrollController,
+              itemCount: bloc.presentationList.length,
+              itemBuilder: (context, index) {
+                B2BCustomListingDataModel presentationItem = bloc.presentationList[index];
+                return BlocBuilder<PresentationBloc, PresentationState>(
+                  buildWhen: (previous, current) =>
+                      current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        B2BListingItem(
+                          type: B2BListingType.presentationType,
+                          listingItemModel: presentationItem,
+                          onTapMenuButton: () {},
+                          onTap: () {},
+                        ),
+                        if (index == bloc.presentationList.length - 1 && state is PresentationListLoadingMoreState)
+                          const SmartCircularProgressIndicator(),
+                      ],
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (_, __) => SizedBox(height: 16.h),
+            ),
           );
         },
       ),

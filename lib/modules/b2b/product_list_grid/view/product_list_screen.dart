@@ -49,6 +49,9 @@ class ProductListScreen extends StatelessWidget {
           if (state is ProductListLoadedState) {
             return SmartSingleChildScrollView(
               controller: bloc.paginationScrollController.scrollController,
+              onRefresh: () async {
+                await bloc.pullToRefresh();
+              },
               child: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 17.w),

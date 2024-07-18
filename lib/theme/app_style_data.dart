@@ -501,7 +501,7 @@ class LightModeTheme extends AppTheme {
         diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         customerReviewTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
         averageRatingStyle: interMediumBoldTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
-        viewAllReviewStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.primary),
+        viewAllReviewStyle: interBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.primary),
         compareCountBGColor: colors.color4885A3,
         totalApproxStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         totalApproxSubStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),

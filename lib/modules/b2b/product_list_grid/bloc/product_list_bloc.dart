@@ -19,11 +19,13 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   List<ProductDetails> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+  Completer<bool> refreshCompleter = Completer<bool>();
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
     on<ProductListLoadMoreEvent>(_onProductListLoadMoreEvent);
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
+    on<ProductListPullToRefreshEvent>(_onProductListPullToRefresh);
   }
 
   @override
@@ -42,6 +44,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
 
     emit(ReloadProductState());
     paginationScrollController.init(
@@ -160,6 +166,73 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
     paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
     emit(ProductListLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onProductListPullToRefresh(ProductListPullToRefreshEvent event, Emitter<ProductListState> emit) async {
+    paginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      appbarTitle = APPStrings.ring.tr;
+      productList.clear();
+      productList = List.generate(
+        20,
+        (index) => ProductDetails(
+          imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+          name: "Diamond Vine Ring in 18k Rose Gold",
+          originalPrice: '\$5,000.00',
+          discountPercentage: "You have saved 10%",
+          offerPrice: '\$3,000.00',
+          company: "Martin Flyer",
+          productSku: "DERS01XXSRR",
+          isOutOfStock: index % 2 == 0,
+        ),
+      ).toList();
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
+      appbarTitle = APPStrings.diamonds.tr;
+      productList.clear();
+      productList = List.generate(
+        20,
+        (index) => ProductDetails(
+          diamond: "2.5 crt",
+          gram: "1.5 grms",
+          imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
+          name: "2.00 Carat H VS1 Excellent Cut Round Setting",
+          originalPrice: "\$3,000.00",
+        ),
+      ).toList();
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      productList = List.generate(
+          20,
+          (index) => ProductDetails(
+                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                name: "Diamond Vine Ring in 18k Rose Gold",
+                originalPrice: '\$5,000.00',
+              )).toList();
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      productList = List.generate(
+          20,
+          (index) => ProductDetails(
+                imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
+                name: "Diamond Vine Ring in 18k Yellow Gold",
+                originalPrice: '\$5,000.00',
+              )).toList();
+    }
+    refreshCompleter.complete(true);
+    emit(const ProductListLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const ProductListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 
   void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {

@@ -7,12 +7,21 @@ part 'digital_catalogue_state.dart';
 class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueState> {
   List<DigitalCatalogueListingModel> digitalCatalogueList = [];
 
+  SmartPaginationScrollController digitalCatalogueScrollController = SmartPaginationScrollController();
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   DigitalCatalogueBloc() : super(DigitalCatalogueIntial()) {
     on<DigitalCatalogueInitialEvent>(_onDashboardInitialEvent);
+    on<DigitalCataloguePullToRefreshEvent>(_digitalCataloguePullToRefresh);
   }
 
   void _onDashboardInitialEvent(DigitalCatalogueInitialEvent event, Emitter<DigitalCatalogueState> emit) {
     emit(const DigitalCatalogueReloadState());
+    digitalCatalogueList.clear();
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
+
     digitalCatalogueList = List.generate(
       20,
       (index) {
@@ -30,7 +39,26 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         );
       },
     );
+    refreshCompleter.complete(true);
 
     emit(const DigitalCatalogueLoadedState());
+  }
+
+  Future<void> _digitalCataloguePullToRefresh(DigitalCataloguePullToRefreshEvent event, Emitter<DigitalCatalogueState> emit) async {
+    digitalCatalogueScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+
+    refreshCompleter.complete(true);
+    emit(const DigitalCatalogueLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const DigitalCataloguePullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

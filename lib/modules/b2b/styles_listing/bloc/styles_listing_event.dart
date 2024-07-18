@@ -26,3 +26,10 @@ final class StylesListingLoadMoreEvent extends StylesListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class StylesListingPullToRefreshEvent extends StylesListingEvent {
+  const StylesListingPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

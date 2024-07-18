@@ -226,15 +226,19 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     currentController.pullToRefresh();
     switch (event.listType) {
       case MonitoringTab.presentations:
+        presentationsScrollController.pullToRefresh();
         presentationList = generatePresentationData(0);
         break;
       case MonitoringTab.dbf:
+        dbfScrollController.pullToRefresh();
         dbfList = generateDbfData(0);
         break;
       case MonitoringTab.designs:
+        designsScrollController.pullToRefresh();
         designsList = generateDesignsData(0);
         break;
       case MonitoringTab.styles:
+        stylesScrollController.pullToRefresh();
         stylesList = generateStylesData(0);
         break;
     }

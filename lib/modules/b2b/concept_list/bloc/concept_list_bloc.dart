@@ -51,7 +51,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
         strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
         strCreatedOn: '23/03/2023, 10:46',
       ),
-    );
+    ).toList();
 
     refreshCompleter.complete(true);
     emit(const ConceptListLoadedState());
@@ -106,7 +106,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
         strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
         strCreatedOn: '23/03/2023, 10:46',
       ),
-    );
+    ).toList();
     refreshCompleter.complete(true);
     emit(const ConceptListLoadedState());
   }

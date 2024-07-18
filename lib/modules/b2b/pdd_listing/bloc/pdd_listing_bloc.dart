@@ -10,15 +10,38 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   List<B2BCustomListingDataModel> filteredPresentationList = _generatePresentationList();
   List<B2BCustomListingDataModel> originalPresentationList = _generatePresentationList();
 
+  //Pagination controller
+  SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
+
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   PddListingBloc() : super(PddListingInitial()) {
     on<InitialPddListingEvent>(_onInitialPresentationListEvent);
     on<PresentationChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<FilterPresentationEvent>(_onFilterPresentationEvent);
     on<NavigateToPddPreviewEvent>(_navigateToPreview);
+    on<PddListLoadMoreEvent>(_onPddListLoadMoreEvent);
+    on<PddListPullToRefreshEvent>(_onPddListPullToRefresh);
   }
 
   void _onInitialPresentationListEvent(InitialPddListingEvent event, Emitter<PddListingState> emit) {
     emit(PddListingReloadState());
+    if (gridPaginationScrollController.isInitialised) {
+      gridPaginationScrollController.dispose();
+      gridPaginationScrollController = SmartPaginationScrollController();
+    }
+    gridPaginationScrollController.init(
+      isSecondaryView: true,
+      loadAction: (int currentPage) async {
+        add(PddListLoadMoreEvent(currentPage));
+      },
+    );
+
+    filteredPresentationList = _generatePresentationList();
+
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
     clearData();
     emit(PddListingLoadedState());
   }
@@ -40,7 +63,6 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   void clearData() {
     isGrid = true;
     presentationSearchController.clear();
-    filteredPresentationList = _generatePresentationList();
   }
 
   void _navigateToPreview(NavigateToPddPreviewEvent event, Emitter<PddListingState> emit) {
@@ -48,6 +70,33 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     event.context.pushNamed(AppRoutes.presentationPreviewPage, arguments: {
       RoutesData.presentationId: presentationNumber,
     });
+  }
+
+  Future<void> _onPddListLoadMoreEvent(PddListLoadMoreEvent event, Emitter<PddListingState> emit) async {
+    emit(const PddListLoadingMoreState());
+    await Future.delayed(const Duration(seconds: 2));
+    filteredPresentationList.addAll(_generatePresentationList());
+    gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+    emit(PddListLoadedMoreState(event.currentPage + 1));
+  }
+
+  Future<void> _onPddListPullToRefresh(PddListPullToRefreshEvent event, Emitter<PddListingState> emit) async {
+    emit(PddListingReloadState());
+    gridPaginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    originalPresentationList = _generatePresentationList();
+    refreshCompleter.complete(true);
+    emit(PddListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const PddListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 
   static List<B2BCustomListingDataModel> _generatePresentationList() {
