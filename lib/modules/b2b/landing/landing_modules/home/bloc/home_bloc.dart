@@ -40,15 +40,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final List<AuctionListModel> eliganceList3 = _generateEligance3List();
 
-  //KGK Couture tabs with Controller
-  late TabController kgkCoutureTabController;
-  final List<Widget> kgkCoutureTabs = <Widget>[
-    Tab(text: APPStrings.luminous.tr),
-    Tab(text: APPStrings.elan.tr),
-    Tab(text: APPStrings.huse.tr),
-    Tab(text: APPStrings.mirage.tr),
+  int kgkCoutureSelectedIndex = 0;
+  List<String> kgkCoutureButtonsTitle = [
+    APPStrings.all,
+    APPStrings.luminous,
+    APPStrings.elan,
+    APPStrings.huse,
+    APPStrings.mirage,
   ];
-  final List<ProductDetails> luminousTabViewList = _generateTabViewList();
+  final List<ProductDetails> luminousProductViewList = _generateTabViewList();
 
   //Create Your Own Signature piece
   OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Gemstone");
@@ -88,15 +88,30 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ScrollController recentlyViewedScrollController = ScrollController();
   final List<ProductDetails> recentlyViewList = _generateTabViewList();
 
+  int currentPageIndex = 0;
+  PageController categoryPageController = PageController();
+
+  final List<AuctionListModel> categoryList = _generateCategoriesList();
+
+  static const int categoryPerPageLength = 6;
+
+  int get categoryPageLength => categoryList.length <= categoryPerPageLength
+      ? 1
+      : categoryList.length % categoryPerPageLength == 0
+          ? (categoryList.length ~/ categoryPerPageLength)
+          : (categoryList.length ~/ categoryPerPageLength) + 1;
+
   HomeBloc() : super(HomeInitial()) {
     on<HomeInitialEvent>(_onHomeInitialEvent);
     on<HomeJewelleryImagePageChangeEvent>(_onHomeJewelleryImagePageChangeEvent);
-    on<ChangeHomeTabsEvent>(_onChangeHomeTabsEvent);
     on<HomeSelectStoneChangeTypeEvent>(_onChangeHomeStep1StoneTypeEvent);
     on<HomeSelectJewelleryChangeTypeEvent>(_onChangeHomeStep2StoneTypeEvent);
+    on<HomeKgkCoutureSelectionChangeEvent>(_onHomeKgkCoutureSelectionChangeEvent);
+    on<HomeCategoryPageChangeEvent>(_onHomeCategoryPageChangeEvent);
   }
 
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) {
+    currentPageIndex = 0;
     emit(HomeInitial());
   }
 
@@ -104,26 +119,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeReloadState());
     currentCarouselIndex = event.index;
     emit(HomeJewelleryImagePageChangeState());
-  }
-
-  //Perform Tab Changes With Tab Controller
-  void _onChangeHomeTabsEvent(ChangeHomeTabsEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
-    switch (kgkCoutureTabController.index) {
-      case 0:
-        //Luminous
-        break;
-      case 1:
-        //Elan
-        break;
-      case 2:
-        //Huse
-        break;
-      case 3:
-        //Mirage
-        break;
-    }
-    emit(HomeChangeTabsState());
   }
 
   void _onChangeHomeStep1StoneTypeEvent(HomeSelectStoneChangeTypeEvent event, Emitter<HomeState> emit) {
@@ -136,6 +131,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeReloadState());
     selectedStep2RingType = event.selectedStep2RingType;
     emit(HomeSelectJewelleryTypeChangeState());
+  }
+
+  void _onHomeKgkCoutureSelectionChangeEvent(HomeKgkCoutureSelectionChangeEvent event, Emitter<HomeState> emit) {
+    emit(HomeReloadState());
+    int old = kgkCoutureSelectedIndex;
+    kgkCoutureSelectedIndex = event.selectedIndex;
+    emit(HomeKgkCoutureSelectionChangeState(kgkCoutureSelectedIndex, old));
+  }
+
+  void _onHomeCategoryPageChangeEvent(HomeCategoryPageChangeEvent event, Emitter<HomeState> emit) {
+    emit(HomeReloadState());
+    currentPageIndex = event.index;
+    emit(HomeCategoryPageChangeState(event.index));
   }
 
   // //For Jewellery List
@@ -576,6 +584,93 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       imageList.length,
       (index) =>
           AuctionListModel(id: index.toString(), name: titleList[index], imageUrl: imageList[index], percentageOff: percentageList[index]),
+    );
+  }
+
+  static List<AuctionListModel> _generateCategoriesList() {
+    List<String> nameList = [
+      "Pendant",
+      "Earrings",
+      "Ring",
+      "Bracelet",
+      "Necklace",
+      "Anklet",
+      "Chain",
+      "Sets",
+      "Studs",
+      "Hoops",
+      "Drop Earrings",
+      "Chandelier Earrings",
+      "Ear Cuffs",
+      "Bangles",
+      "Cuffs",
+      "Charm Bracelets",
+      "Tennis Bracelets",
+      "Beaded Bracelets",
+      "Brooches",
+      "Pins",
+      "Cufflinks",
+      "Body Jewelry",
+      "Belly Chains",
+      "Nose Rings",
+      "Nipple Rings",
+      "Eyebrow Rings",
+      "Tongue Rings",
+      "Tiara",
+      "Headpieces",
+      "Lockets",
+      "Medallions",
+      "Cameos",
+      "Armlets",
+      "Toe Rings",
+      "Toe Rings 1",
+    ];
+
+    List<String> imageList = [
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
+      "https://i.ibb.co/1f3SHWg/image-18653.png",
+      "https://i.ibb.co/5jmqMcF/image-18654.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+      "https://i.ibb.co/vBG9fzy/image-18655.png",
+    ];
+
+    return List.generate(
+      nameList.length,
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: nameList[index],
+        imageUrl: imageList[index],
+      ),
     );
   }
 }

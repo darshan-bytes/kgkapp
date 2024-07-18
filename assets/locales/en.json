@@ -669,5 +669,7 @@
   "search_subscribers": "Search subscribers",
   "search_category": "Search category",
   "search_template": "Search template",
-  "validity": "Validity"
+  "validity": "Validity",
+  "view_more": "View more",
+  "shop_by_x": "Shop by {#}"
 }

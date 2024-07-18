@@ -39,6 +39,7 @@ class HomeScreen extends StatelessWidget {
             _buildTopSellingCategories(homeBloc, style, context),
             _buildViewAllCollectionsSection(style, context, "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png"),
             _buildKGKCoutureTabBarSection(homeBloc, style, context),
+            _buildCategoryGridPageView(homeBloc, style, context),
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context),
             _buildDealOfTheDaySection(homeBloc, style, context),
             _buildShopByBrandsSection(homeBloc, style),
@@ -309,7 +310,7 @@ class HomeScreen extends StatelessWidget {
                               ],
                               begin: const FractionalOffset(0.0, 0.0),
                               end: const FractionalOffset(1.0, 0.0),
-                              stops: [0.0, 1.0],
+                              stops: const [0.0, 1.0],
                               tileMode: TileMode.clamp),
                         ),
                         child: Center(
@@ -561,51 +562,147 @@ Widget _buildViewAllCollectionsSection(HomeScreenStyle style, BuildContext conte
 
 Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
   return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsets.symmetric(vertical: 32.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmartText(APPStrings.kgkCouture.tr, style: style.bannerTitleStyle),
-          SmartTabBar(
-            isExpanded: false,
-            labelPadding: EdgeInsets.zero,
-            length: homeBloc.kgkCoutureTabs.length,
-            onTabInitialized: (tabController) {
-              homeBloc.kgkCoutureTabController = tabController;
-            },
-            tabBetweenView: SizedBox(height: 16.h),
-            onTapTab: (int index) => homeBloc.add(const ChangeHomeTabsEvent()),
-            tabs: homeBloc.kgkCoutureTabs,
-            tabBarView: _buildTabBarViews(homeBloc, context),
+          SmartText(
+            APPStrings.kgkCouture.tr,
+            style: style.bannerTitleStyle,
+            textAlign: TextAlign.center,
           ),
+          SizedBox(height: 16.h),
+          SmartHorizontalItemBuilder(
+            itemCount: homeBloc.kgkCoutureButtonsTitle.length,
+            itemBuilder: (context, index) {
+              return BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (previous, current) =>
+                    current is HomeKgkCoutureSelectionChangeState && (index == current.oldIndex || index == current.selectedIndex),
+                builder: (context, state) {
+                  bool isSelected = index == homeBloc.kgkCoutureSelectedIndex;
+                  return SelectionButton(
+                    constraints: BoxConstraints(minWidth: 50.w),
+                    margin: index == 0
+                        ? EdgeInsets.only(left: 17.w)
+                        : (index == homeBloc.kgkCoutureButtonsTitle.length - 1)
+                            ? EdgeInsets.only(right: 17.w)
+                            : null,
+                    borderRadius: BorderRadius.circular(50.r),
+                    padding: EdgeInsets.symmetric(horizontal: 18.w),
+                    isSelected: isSelected,
+                    onTap: () {
+                      homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index));
+                    },
+                    title: homeBloc.kgkCoutureButtonsTitle[index].tr,
+                  );
+                },
+              );
+            },
+          ),
+          SizedBox(height: 16.h),
+          SmartHorizontalItemBuilder(
+            itemCount: homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length,
+            itemBuilder: (context, index) {
+              return ProductGridItem(
+                margin: index == 0
+                    ? EdgeInsets.only(left: 17.w)
+                    : (index == (homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length) - 1)
+                        ? EdgeInsets.only(right: 17.w)
+                        : EdgeInsets.zero,
+                productDetails: homeBloc.luminousProductViewList[index],
+                onEyeTap: () {},
+                onFavTap: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                    RoutesData.productId: homeBloc.luminousProductViewList[index].productId ?? '',
+                    RoutesData.isPageFor: ScreenIdentifier.productForRing
+                  });
+                },
+              );
+            },
+          ),
+          if (homeBloc.luminousProductViewList.length > 8) ...[
+            SizedBox(height: 16.h),
+            SelectionButton(
+              height: 40.h,
+              width: 120.w,
+              unselectedButtonBorderColor: style.primaryColor,
+              borderRadius: BorderRadius.circular(10.r),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              isSelected: false,
+              onTap: () {},
+              title: APPStrings.viewAll.tr,
+            ),
+          ],
         ],
       ));
 }
 
-List<Widget> _buildTabBarViews(HomeBloc homeBloc, BuildContext context) {
-  return List.generate(homeBloc.kgkCoutureTabs.length, (index) {
-    return SmartGridView(
-      items: List.generate(
-        homeBloc.luminousTabViewList.length > 4
-            ? 4
-            : (homeBloc.luminousTabViewList.length % 2 == 0
-                ? homeBloc.luminousTabViewList.length
-                : homeBloc.luminousTabViewList.length - 1),
-        (index) => ProductGridItem(
-          productDetails: homeBloc.luminousTabViewList[index],
-          onEyeTap: () {},
-          onFavTap: () {},
-          onTap: () {
-            context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-              RoutesData.productId: homeBloc.luminousTabViewList[index].productId ?? '',
-              RoutesData.isPageFor: ScreenIdentifier.productForRing
-            });
+Widget _buildCategoryGridPageView(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
+  final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
+  double imgWidth = (context.width - 46.w) / 3;
+  return Column(
+    children: [
+      SmartText(APPStrings.shopByX.tr.interpolate([APPStrings.categories.tr]), style: style.bannerTitleStyle),
+      SizedBox(height: 16.h),
+      ExpandablePageView(
+        onPageChanged: (index) {
+          homeBloc.add(HomeCategoryPageChangeEvent(index));
+        },
+        controller: homeBloc.categoryPageController,
+        children: List.generate(
+          homeBloc.categoryPageLength,
+          (index) {
+            int start = index * HomeBloc.categoryPerPageLength;
+            int end =
+                (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length - 1 : (start + HomeBloc.categoryPerPageLength);
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: SmartGridView(
+                columns: 3,
+                runSpacing: 10.h,
+                items: homeBloc.categoryList
+                    .sublist(start, end)
+                    .map((AuctionListModel item) => SmartImageTitleColumn(
+                          imageUrl: item.imageUrl ?? '',
+                          title: item.name ?? '',
+                          imageWidth: imgWidth,
+                          imageHeight: imgWidth,
+                          fit: BoxFit.fitWidth,
+                          titleMaxLines: 1,
+                          imageBorder: Border.all(color: style.borderColor, width: 1.w),
+                        ))
+                    .toList(),
+              ),
+            );
           },
         ),
       ),
-    );
-  });
+      SizedBox(height: 16.h),
+      BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) => current is HomeCategoryPageChangeState || current is HomeInitial,
+        builder: (context, state) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              homeBloc.categoryPageLength,
+              (index) {
+                bool isCurrentPage = homeBloc.currentPageIndex == index;
+                return Container(
+                  width: 6.0.w,
+                  height: 6.0.w,
+                  margin: EdgeInsets.symmetric(horizontal: 2.0.w),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: isCurrentPage ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
+                );
+              },
+            ),
+          );
+        },
+      ),
+      SizedBox(height: 16.h),
+    ],
+  );
 }
 
 Widget _buildCreateYourOwnSignaturePiece(HomeBloc homeBloc, HomeScreenStyle style, BuildContext context) {
