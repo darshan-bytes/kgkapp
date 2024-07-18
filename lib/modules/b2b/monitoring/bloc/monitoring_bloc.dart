@@ -52,23 +52,39 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     Tab(text: APPStrings.styles.tr),
   ];
 
-  MonitoringBloc() : super(MonitoringInitialState()) {
+  Completer<bool> refreshCompleter = Completer<bool>();
+
+  MonitoringBloc() : super(const MonitoringInitialState()) {
     on<MonitoringInitialEvent>(_onInitialEvent);
     on<MonitoringOnTabChangedEvent>(_onTabChangedEvent);
     on<MonitoringListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<MonitoringSelectedDesignerEvent>(_onSelectedDesignerEvent);
     on<MonitoringDesignerLoadMoreEvent>(_onDesignerLoadMoreEvent);
+    on<MonitoringListPullToRefreshEvent>(_onMonitoringListPullToRefreshEvent);
   }
 
   void _onInitialEvent(MonitoringInitialEvent event, Emitter<MonitoringState> emit) {
-    emit(MonitoringReloadState());
+    emit(const MonitoringReloadState());
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     // Initialize scroll controllers with their respective load actions
+    if (presentationsScrollController.isInitialised) {
+      presentationsScrollController.dispose();
+      presentationsScrollController = SmartPaginationScrollController();
+    }
+
     presentationsScrollController.init(
       tag: "presentationsScrollController",
       loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.presentations));
       },
     );
+
+    if (dbfScrollController.isInitialised) {
+      dbfScrollController.dispose();
+      dbfScrollController = SmartPaginationScrollController();
+    }
 
     dbfScrollController.init(
       tag: "dbfScrollController",
@@ -77,12 +93,22 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
       },
     );
 
+    if (designsScrollController.isInitialised) {
+      designsScrollController.dispose();
+      designsScrollController = SmartPaginationScrollController();
+    }
+
     designsScrollController.init(
       tag: "designsScrollController",
       loadAction: (int currentPage) {
         add(MonitoringListingLoadMoreEvent(currentPage: currentPage, listType: MonitoringTab.designs));
       },
     );
+
+    if (stylesScrollController.isInitialised) {
+      stylesScrollController.dispose();
+      stylesScrollController = SmartPaginationScrollController();
+    }
 
     stylesScrollController.init(
       tag: "stylesScrollController",
@@ -170,7 +196,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     designerList.add(DesignerListModel(name: "Brooklyn Simmons", image: "https://i.ibb.co/fxCNcfr/Ellipse-9.png"));
     designerList.add(DesignerListModel(name: "Ralph Edwards", image: "https://i.ibb.co/SRqFmPK/Ellipse-91.png"));
     designerList.add(DesignerListModel(name: "Albert Flores", image: "https://i.ibb.co/Cm7hxkk/Ellipse-92.png"));
-
+    refreshCompleter.complete(true);
     emit(const MonitoringListLoadedState());
   }
 
@@ -194,8 +220,34 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     emit(MonitoringDesignerListLoadedState(event.currentPage + 1));
   }
 
+  Future<void> _onMonitoringListPullToRefreshEvent(MonitoringListPullToRefreshEvent event, Emitter<MonitoringState> emit) async {
+    emit(const MonitoringReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    currentController.pullToRefresh();
+    switch (event.listType) {
+      case MonitoringTab.presentations:
+        presentationsScrollController.pullToRefresh();
+        presentationList = generatePresentationData(0);
+        break;
+      case MonitoringTab.dbf:
+        dbfScrollController.pullToRefresh();
+        dbfList = generateDbfData(0);
+        break;
+      case MonitoringTab.designs:
+        designsScrollController.pullToRefresh();
+        designsList = generateDesignsData(0);
+        break;
+      case MonitoringTab.styles:
+        stylesScrollController.pullToRefresh();
+        stylesList = generateStylesData(0);
+        break;
+    }
+    refreshCompleter.complete(true);
+    emit(const MonitoringListLoadedState());
+  }
+
   void _onSelectedDesignerEvent(MonitoringSelectedDesignerEvent event, Emitter<MonitoringState> emit) {
-    emit(MonitoringReloadState());
+    emit(const MonitoringReloadState());
     final int index = designerList.indexWhere((element) => element == event.designer);
     if (index != -1) {
       designerList[index].isSelected = !designerList[index].isSelected;
@@ -204,7 +256,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   }
 
   void _onTabChangedEvent(MonitoringOnTabChangedEvent event, Emitter<MonitoringState> emit) {
-    emit(MonitoringReloadState());
+    emit(const MonitoringReloadState());
     final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
     switch (currentTab) {
       case MonitoringTab.presentations:
@@ -220,7 +272,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
         // Styles logic
         break;
     }
-    emit(MonitoringOnTabChangedState());
+    emit(const MonitoringOnTabChangedState());
   }
 
   Future<void> _onListingLoadMoreEvent(MonitoringListingLoadMoreEvent event, Emitter<MonitoringState> emit) async {
@@ -385,6 +437,17 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     }
   }
 
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    final MonitoringTab currentTab = MonitoringTab.values[tabController.index];
+    add(MonitoringListPullToRefreshEvent(listType: currentTab));
+    bool result = await refreshCompleter.future;
+    return result;
+  }
+
   // Method to build the list view widget based on the selected tab
   Widget buildListView(BuildContext context, MonitoringTab currentTab) {
     return Expanded(
@@ -396,49 +459,54 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
             return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr); // Adjust text based on the selected tab if necessary
           }
 
-          return ListView.separated(
-            itemCount: currentList.length,
-            controller: currentController.scrollController,
-            itemBuilder: (context, index) {
-              return BlocBuilder<MonitoringBloc, MonitoringState>(
-                buildWhen: (previous, current) => current is MonitoringLoadingMoreState || current is MonitoringListLoadedMoreState,
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      B2BListingItem(
-                        onTap: () {},
-                        onTapMenuButton: () {
-                          if (currentTab == MonitoringTab.presentations) {
-                            // Handle presentations menu button tap
-                          } else if (currentTab == MonitoringTab.dbf) {
-                            if (designerScrollController.isInitialised) {
-                              designerScrollController.dispose();
-                              designerScrollController = SmartPaginationScrollController();
-                            }
-                            designerScrollController.init(
-                              tag: "designerScrollController",
-                              loadAction: (int currentPage) async {
-                                add(MonitoringDesignerLoadMoreEvent(currentPage: currentPage));
-                              },
-                            );
-                            _showDesignerPopupMenu(context);
-                          } else if (currentTab == MonitoringTab.designs) {
-                            // Handle designs menu button tap
-                          } else if (currentTab == MonitoringTab.styles) {
-                            // Handle styles menu button tap
-                          }
-                        },
-                        type: currentListingType,
-                        listingItemModel: currentList[index],
-                        margin: index == currentList.length - 1 ? EdgeInsets.only(bottom: 20.h) : EdgeInsets.zero,
-                      ),
-                      if (state is MonitoringLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
-                    ],
-                  );
-                },
-              );
+          return SmartRefreshIndicator(
+            onRefresh: () async {
+              await pullToRefresh();
             },
-            separatorBuilder: (context, index) => SizedBox(height: 16.h),
+            child: ListView.separated(
+              itemCount: currentList.length,
+              controller: currentController.scrollController,
+              itemBuilder: (context, index) {
+                return BlocBuilder<MonitoringBloc, MonitoringState>(
+                  buildWhen: (previous, current) => current is MonitoringLoadingMoreState || current is MonitoringListLoadedMoreState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        B2BListingItem(
+                          onTap: () {},
+                          onTapMenuButton: () {
+                            if (currentTab == MonitoringTab.presentations) {
+                              // Handle presentations menu button tap
+                            } else if (currentTab == MonitoringTab.dbf) {
+                              if (designerScrollController.isInitialised) {
+                                designerScrollController.dispose();
+                                designerScrollController = SmartPaginationScrollController();
+                              }
+                              designerScrollController.init(
+                                tag: "designerScrollController",
+                                loadAction: (int currentPage) async {
+                                  add(MonitoringDesignerLoadMoreEvent(currentPage: currentPage));
+                                },
+                              );
+                              _showDesignerPopupMenu(context);
+                            } else if (currentTab == MonitoringTab.designs) {
+                              // Handle designs menu button tap
+                            } else if (currentTab == MonitoringTab.styles) {
+                              // Handle styles menu button tap
+                            }
+                          },
+                          type: currentListingType,
+                          listingItemModel: currentList[index],
+                          margin: index == currentList.length - 1 ? EdgeInsets.only(bottom: 20.h) : EdgeInsets.zero,
+                        ),
+                        if (state is MonitoringLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
+                      ],
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+            ),
           );
         },
       ),

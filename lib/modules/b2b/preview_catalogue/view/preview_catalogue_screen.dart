@@ -22,7 +22,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
           return SmartAppBar(
             title: bloc.title,
             onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
-            onSearch: () => context.pushNamed(AppRoutes.allReviewPage),
+            onSearch: () => context.pushNamed(AppRoutes.searchPage),
           );
         },
       ),

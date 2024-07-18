@@ -73,6 +73,7 @@ class RetailerDiamondTabView extends StatelessWidget {
                       RoutesData.isPageFor: ScreenIdentifier.cancelOrderForRetailer
                     });
                   },
+                  bloc: retailerOrderListingBloc,
                 );
               },
             ),

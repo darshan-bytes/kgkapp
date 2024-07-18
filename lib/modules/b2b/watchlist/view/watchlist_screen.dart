@@ -21,6 +21,9 @@ class WatchlistScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is WatchlistLoadedState) {
             return SmartSingleChildScrollView(
+              onRefresh: () async {
+                await bloc.pullToRefresh();
+              },
               padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
               controller: bloc.paginationScrollController.controller,
               child: Column(

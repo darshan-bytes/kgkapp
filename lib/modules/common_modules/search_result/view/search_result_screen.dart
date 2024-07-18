@@ -22,6 +22,12 @@ class SearchResultScreen extends StatelessWidget {
         if (state is SearchResultLoadedState) {
           return SafeArea(
             child: SmartSingleChildScrollView(
+              onRefresh: searchResultBloc.productList.isNotEmpty
+                  ? () async {
+                      await searchResultBloc.pullToRefresh();
+                    }
+                  : null,
+              physics: const ClampingScrollPhysics(),
               controller: searchResultBloc.paginationScrollController.scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

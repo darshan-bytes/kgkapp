@@ -28,3 +28,10 @@ final class ProductListLoadMoreEvent extends ProductListEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ProductListPullToRefreshEvent extends ProductListEvent {
+  const ProductListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

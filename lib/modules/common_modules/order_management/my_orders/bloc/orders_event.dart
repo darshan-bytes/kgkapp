@@ -38,3 +38,12 @@ class MyOrderListingLoadMoreEvent extends OrdersEvent {
   @override
   List<Object> get props => [currentPage, listType];
 }
+
+class OrdersListPullToRefreshEvent extends OrdersEvent {
+  final MyOrdersTab listType;
+
+  const OrdersListPullToRefreshEvent({required this.listType});
+
+  @override
+  List<Object> get props => [listType];
+}

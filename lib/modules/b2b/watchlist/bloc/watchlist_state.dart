@@ -26,6 +26,8 @@ final class WatchlistLoadedMoreState extends WatchlistState {
 }
 
 final class WatchlistReloadState extends WatchlistState {
+  const WatchlistReloadState();
+
   @override
   List<Object> get props => [];
 }

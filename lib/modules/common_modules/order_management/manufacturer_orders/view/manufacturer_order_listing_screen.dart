@@ -97,35 +97,40 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
         if (bloc.manufacturerOrderList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
         }
-        return ListView.builder(
-            shrinkWrap: true,
-            controller: bloc.paginationScrollController.scrollController,
-            itemCount: bloc.manufacturerOrderList.length,
-            itemBuilder: (context, index) {
-              B2BCustomListingDataModel orderItem = bloc.manufacturerOrderList[index];
-              return BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
-                buildWhen: (previous, current) =>
-                    current is ManufacturerOrderListLoadedMoreState || current is ManufacturerOrderListLoadingMoreState,
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      B2BListingItem(
-                        margin: EdgeInsets.only(bottom: 16.0.h),
-                        type: B2BListingType.manufacturerOrderListingType,
-                        listingItemModel: orderItem,
-                        onTapMenuButton: () {},
-                        onTap: () {
-                          context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
-                              arguments: {RoutesData.isPageFor: ScreenIdentifier.cancelOrderForManufacturer});
-                        },
-                      ),
-                      if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)
-                        const SmartCircularProgressIndicator(),
-                    ],
-                  );
-                },
-              );
-            });
+        return SmartRefreshIndicator(
+          onRefresh: () async {
+            await bloc.pullToRefresh();
+          },
+          child: ListView.builder(
+              shrinkWrap: true,
+              controller: bloc.paginationScrollController.scrollController,
+              itemCount: bloc.manufacturerOrderList.length,
+              itemBuilder: (context, index) {
+                B2BCustomListingDataModel orderItem = bloc.manufacturerOrderList[index];
+                return BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
+                  buildWhen: (previous, current) =>
+                      current is ManufacturerOrderListLoadedMoreState || current is ManufacturerOrderListLoadingMoreState,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        B2BListingItem(
+                          margin: EdgeInsets.only(bottom: 16.0.h),
+                          type: B2BListingType.manufacturerOrderListingType,
+                          listingItemModel: orderItem,
+                          onTapMenuButton: () {},
+                          onTap: () {
+                            context.pushNamed(AppRoutes.manufacturerOrderDetailsPage,
+                                arguments: {RoutesData.isPageFor: ScreenIdentifier.cancelOrderForManufacturer});
+                          },
+                        ),
+                        if (index == bloc.manufacturerOrderList.length - 1 && state is ManufacturerOrderListLoadingMoreState)
+                          const SmartCircularProgressIndicator(),
+                      ],
+                    );
+                  },
+                );
+              }),
+        );
       },
     );
   }

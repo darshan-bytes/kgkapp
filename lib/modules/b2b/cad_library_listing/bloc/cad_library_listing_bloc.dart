@@ -19,14 +19,21 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   CadLibraryListingBloc() : super(CadListingInitial()) {
     on<InitialCadListingEvent>(_onInitialCadLibraryListEvent);
     on<CadListLoadMoreEvent>(_onCadListLoadMoreEvent);
     on<CadChangeListingTypeEvent>(_onCadChangeListingTypeEvent);
+    on<CadListPullToRefreshEvent>(_onCadListPullToRefresh);
   }
 
   void _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    if (gridPaginationScrollController.isInitialised) {
+      gridPaginationScrollController.dispose();
+      gridPaginationScrollController = SmartPaginationScrollController();
+    }
     gridPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
@@ -34,6 +41,9 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       },
     );
 
+    if (!refreshCompleter.isCompleted) {
+      refreshCompleter.complete(true);
+    }
     clearData();
     emit(CadListingLoadedState());
   }
@@ -74,5 +84,24 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         strCADLibraryProductName: 'Diamond Vine Ring in 18k Rose Gold',
       );
     });
+  }
+
+  Future<void> _onCadListPullToRefresh(CadListPullToRefreshEvent event, Emitter<CadLibraryListingState> emit) async {
+    emit(CadListingReloadState());
+    gridPaginationScrollController.pullToRefresh();
+    await Future.delayed(const Duration(seconds: 1));
+    cadList = _generateCadList();
+    refreshCompleter.complete(true);
+    emit(CadListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const CadListPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
   }
 }

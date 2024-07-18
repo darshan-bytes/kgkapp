@@ -40,3 +40,10 @@ class StoneListLoadMoreEvent extends StoneListingEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+class StoneListPullToRefreshEvent extends StoneListingEvent {
+  const StoneListPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
+}

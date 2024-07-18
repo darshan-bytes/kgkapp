@@ -2,13 +2,13 @@ part of 'user_master_listing_bloc.dart';
 
 sealed class UserMasterListingEvent extends Equatable {
   const UserMasterListingEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class InitialUserMasterListingEvent extends UserMasterListingEvent {
   const InitialUserMasterListingEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class UserMasterListLoadMoreEvent extends UserMasterListingEvent {
@@ -27,4 +27,11 @@ class UserMasterChangeLocationTypeEvent extends UserMasterListingEvent {
 
   @override
   List<Object> get props => [selectedUserLocationType];
+}
+
+final class UserMasterListingPullToRefreshEvent extends UserMasterListingEvent {
+  const UserMasterListingPullToRefreshEvent();
+
+  @override
+  List<Object> get props => [];
 }

@@ -31,7 +31,7 @@ class SmartPaginationScrollController {
   void pullToRefresh() {
     isPageLoaded = Completer<bool>();
     currentPage = 1;
-    // stopLoading = false;
+    stopLoading = false;
   }
 
   /// Initializes the scroll controller and sets the load action.

@@ -34,6 +34,8 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
   List<B2BCustomListingDataModel> categoryList = [];
   List<B2BCustomListingDataModel> subscribersList = [];
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   //Newsletter tab bar view
   List<Widget> buildTabBarView(NewsletterBloc bloc) {
     return [
@@ -47,11 +49,15 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
     on<NewsletterInitialEvent>(_onInitNewsletterEvent);
     on<NewsletterListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<ChangeNewsletterTabsEvent>(_onChangeTabEvent);
+    on<NewsletterListPullToRefreshEvent>(_onListPullToRefreshEvent);
   }
 
   void _onInitNewsletterEvent(NewsletterInitialEvent event, Emitter<NewsletterState> emit) {
     emit(const NewsletterReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     clearData();
     templateList = _generateTemplateNewsletterList();
     categoryList = _generateCategoryNewsletterList();
@@ -90,6 +96,7 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
       },
     );
 
+    refreshCompleter.complete(true);
     emit(const NewsletterListLoadedState());
   }
 
@@ -139,6 +146,38 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
     }
 
     emit(NewsletterListLoadedMoreState(event.currentPage + 1, event.listType));
+  }
+
+  Future<void> _onListPullToRefreshEvent(NewsletterListPullToRefreshEvent event, Emitter<NewsletterState> emit) async {
+    emit(const NewsletterReloadState());
+    await Future.delayed(const Duration(seconds: 2));
+    switch (event.listType) {
+      case NewsletterTab.template:
+        templateScrollController.pullToRefresh();
+        templateList = _generateTemplateNewsletterList();
+        break;
+      case NewsletterTab.categories:
+        categoryScrollController.pullToRefresh();
+        categoryList = _generateCategoryNewsletterList();
+        break;
+      case NewsletterTab.subscribers:
+        subscribersScrollController.pullToRefresh();
+        subscribersList = _generateSubscribersNewsletterList();
+        break;
+    }
+    refreshCompleter.complete(true);
+    emit(const NewsletterListLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    final NewsletterTab currentTab = NewsletterTab.values[tabController.index];
+    add(NewsletterListPullToRefreshEvent(listType: currentTab));
+    bool result = await refreshCompleter.future;
+    return result;
   }
 
   void clearData() {

@@ -112,58 +112,68 @@ class DesignListingScreen extends StatelessWidget {
   Widget _buildDesignList(DesignListingBloc bloc) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
       buildWhen: (previous, current) =>
-          current is DesignListLoadedMoreState ||
-          current is DesignListingReloadState ||
-          (bloc.isGrid && current is DesignListLoadingMoreState),
+          current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
       builder: (context, state) {
-        if (bloc.designList.isEmpty) {
-          return NoDataFoundWidget(text: APPStrings.noDesignsFound.tr);
+        if (bloc.designList.isEmpty || bloc.designListForGrid.isEmpty) {
+          return _buildEmptyState();
         }
-        return Expanded(
-          child: bloc.isGrid
-              ? SmartSingleChildScrollView(
-                  controller: bloc.gridPaginationScrollController.scrollController,
-                  child: SmartGridView(
-                    isLoadingMore: state is DesignListLoadingMoreState,
-                    items: List.generate(bloc.designListForGrid.length, (index) {
-                      return DesignListingGridItem.designGridItem(
-                        designModel: bloc.designListForGrid[index],
-                        onTap: () {
-                          context.pushNamed(AppRoutes.designLibraryFeedbackPage);
-                        },
-                      );
-                    }),
-                  ),
-                )
-              : ListView.builder(
-                  shrinkWrap: true,
-                  controller: bloc.listPaginationScrollController.scrollController,
-                  itemCount: bloc.designList.length,
-                  itemBuilder: (context, index) {
-                    B2BCustomListingDataModel designItem = bloc.designList[index];
-                    return BlocBuilder<DesignListingBloc, DesignListingState>(
-                      buildWhen: (previous, current) => current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
-                      builder: (context, state) {
-                        return Column(
-                          children: [
-                            B2BListingItem(
-                              type: B2BListingType.designListingType,
-                              listingItemModel: designItem,
-                              margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                              onTapMenuButton: () {},
-                              onTap: () {
-                                context.pushNamed(AppRoutes.designLibraryFeedbackPage);
-                              },
-                            ),
-                            if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState)
-                              const SmartCircularProgressIndicator(),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
-        );
+        return _buildListOrGridView(bloc, state);
+      },
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return NoDataFoundWidget(text: APPStrings.noDesignsFound.tr);
+  }
+
+  Widget _buildListOrGridView(DesignListingBloc bloc, DesignListingState state) {
+    return Expanded(
+      child: bloc.isGrid ? _buildGridView(bloc, state) : _buildListView(bloc, state),
+    );
+  }
+
+  Widget _buildGridView(DesignListingBloc bloc, DesignListingState state) {
+    return SmartSingleChildScrollView(
+      key: bloc.paginationScrollController.gridKey,
+      controller: bloc.paginationScrollController.controller,
+      onRefresh: () async {
+        await bloc.pullToRefresh();
+      },
+      child: SmartGridView(
+        isLoadingMore: state is DesignListLoadingMoreState,
+        items: List.generate(bloc.designListForGrid.length,
+            (index) => DesignListingGridItem.designGridItem(designModel: bloc.designListForGrid[index], onTap: () {})),
+      ),
+    );
+  }
+
+  Widget _buildListView(DesignListingBloc bloc, DesignListingState state) {
+    return RefreshIndicator.adaptive(
+      child: ListView.builder(
+        shrinkWrap: true,
+        key: bloc.paginationScrollController.listKey,
+        controller: bloc.paginationScrollController.scrollController,
+        itemCount: bloc.designList.length,
+        itemBuilder: (context, index) {
+          B2BCustomListingDataModel designItem = bloc.designList[index];
+          return Column(
+            children: [
+              B2BListingItem(
+                type: B2BListingType.designListingType,
+                listingItemModel: designItem,
+                margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
+                onTapMenuButton: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                },
+              ),
+              if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
+            ],
+          );
+        },
+      ),
+      onRefresh: () async {
+        await bloc.pullToRefresh();
       },
     );
   }
@@ -192,9 +202,8 @@ class DesignListingScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is DesignChangeListingTypeState,
       builder: (context, state) {
         return ScrollToTopFAB(
-          canScrollToTop:
-              bloc.isGrid ? bloc.gridPaginationScrollController.canScrollToTop : bloc.listPaginationScrollController.canScrollToTop,
-          onTap: bloc.isGrid ? bloc.gridPaginationScrollController.scrollToTop : bloc.listPaginationScrollController.scrollToTop,
+          canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+          onTap: bloc.paginationScrollController.scrollToTop,
         );
       },
     );
