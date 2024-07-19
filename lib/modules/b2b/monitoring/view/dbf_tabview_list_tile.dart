@@ -28,21 +28,27 @@ class DbfTabviewListTile extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: SelectionButton(
-          borderRadius: BorderRadius.zero,
-          isSelected: false,
-          onTap: () {
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              builder: (context) => FilterScreen(
-                onApply: () {},
+      bottomNavigationBar: BlocBuilder<MonitoringBloc, MonitoringState>(
+        buildWhen: (previous, current) => current is MonitoringListLoadedState || current is MonitoringOnTabChangedState,
+        builder: (context, state) {
+          if (state is MonitoringListLoadedState || state is MonitoringOnTabChangedState) {
+            return SafeArea(
+              child: FilterBottomActionBar(
+                controller: monitoringBloc.currentController.controller,
+                onFilterTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    builder: (context) => FilterScreen(
+                      onApply: () {},
+                    ),
+                  );
+                },
               ),
             );
-          },
-          image: AppImages.icFilter,
-          title: APPStrings.filter.tr,
-        ),
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
       ),
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: monitoringBloc.currentController.canScrollToTop,

@@ -419,7 +419,7 @@ class AuctionScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is AuctionPlaceBidState,
       builder: (context, state) {
         if (state is AuctionPlaceBidState) {
-          return const SizedBox();
+          return const SizedBox.shrink();
         } else {
           return Container(
             padding: EdgeInsets.all(16.w),

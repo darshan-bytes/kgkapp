@@ -3,17 +3,20 @@ import 'package:kgk/kgk.dart';
 class FilterBottomActionBar extends StatelessWidget {
   final VoidCallback? onFilterTap;
   final VoidCallback? onSortTap;
+  final ScrollController? controller;
 
   const FilterBottomActionBar({
     super.key,
     this.onFilterTap,
     this.onSortTap,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
-    return SafeArea(
+
+    Widget child = SafeArea(
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: style.borderColor),
@@ -46,5 +49,6 @@ class FilterBottomActionBar extends StatelessWidget {
         ),
       ),
     );
+    return controller != null ? ScrollToHideWidget(controller: controller!, child: child) : child;
   }
 }

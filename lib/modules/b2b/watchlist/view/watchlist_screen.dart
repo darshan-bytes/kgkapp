@@ -87,42 +87,50 @@ class WatchlistScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(WatchlistBloc bloc, BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 16.0.h),
-            child: SmartButton(
-                onTap: () {
-                  BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    enableDrag: false,
-                    builder: (context) {
-                      return const EditWatchlistScreen();
+    return BlocBuilder<WatchlistBloc, WatchlistState>(
+      buildWhen: (previous, current) => current is WatchlistLoadedState,
+      builder: (context, state) {
+        if (state is WatchlistLoadedState) {
+          return SafeArea(
+            child: ScrollToHideWidget(
+              controller: bloc.paginationScrollController.controller,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 16.0.h),
+                    child: SmartButton(
+                        onTap: () {
+                          BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
+                          Utils.showSmartModalBottomSheet(
+                            context: context,
+                            enableDrag: false,
+                            builder: (context) {
+                              return const EditWatchlistScreen();
+                            },
+                          );
+                        },
+                        title: APPStrings.create.tr),
+                  ),
+                  FilterBottomActionBar(
+                    onFilterTap: () {
+                      Utils.showSmartModalBottomSheet(
+                        context: context,
+                        builder: (context) => FilterScreen(
+                          onApply: () {},
+                        ),
+                      );
                     },
-                  );
-                },
-                title: APPStrings.create.tr),
-          ),
-          SelectionButton(
-            borderRadius: BorderRadius.zero,
-            isSelected: false,
-            onTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
-              );
-            },
-            image: AppImages.icFilter,
-            title: APPStrings.filter.tr,
-          ),
-        ],
-      ),
+                  )
+                ],
+              ),
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 

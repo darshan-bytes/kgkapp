@@ -160,6 +160,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(ExhibitionDetailsBloc bloc, BuildContext context) {
     return FilterBottomActionBar(
+      controller: bloc.scrollController,
       onFilterTap: () {
         Utils.showSmartModalBottomSheet(
           context: context,

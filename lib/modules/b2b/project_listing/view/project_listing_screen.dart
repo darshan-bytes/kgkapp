@@ -92,21 +92,27 @@ class ProjectListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ProjectListingBloc projectListingBloc, BuildContext context) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
+    return BlocBuilder<ProjectListingBloc, ProjectListingState>(
+      buildWhen: (previous, current) => current is ProjectListingLoadedState,
+      builder: (context, state) {
+        if (state is ProjectListingLoadedState) {
+          return SafeArea(
+            child: FilterBottomActionBar(
+              controller: projectListingBloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
             ),
           );
-        },
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 }

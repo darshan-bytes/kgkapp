@@ -11,11 +11,18 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
 
   List<ExhibitionSubListingModel> exhibitionSubList = _generateSubList();
 
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
     on<InitialExhibitionListingEvent>(_onInitialExhibitionListingEvent);
   }
 
   void _onInitialExhibitionListingEvent(InitialExhibitionListingEvent event, Emitter<ExhibitionListingState> emit) {
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+      paginationScrollController = SmartPaginationScrollController();
+    }
+    paginationScrollController.init(loadAction: (int currentPage) {});
     exhibitionCatalogueList = List.generate(10, (index) {
       return ExhibitionListingModel(
           image: 'https://i.ibb.co/GdZM7Ht/Rectangle-637.png',

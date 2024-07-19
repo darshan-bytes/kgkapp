@@ -136,7 +136,7 @@ class ProductGridItem extends StatelessWidget {
     } else if (isCustomisable) {
       return buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor);
     } else {
-      return const SizedBox();
+      return const SizedBox.shrink();
     }
   }
 
