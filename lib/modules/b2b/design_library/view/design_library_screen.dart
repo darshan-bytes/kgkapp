@@ -13,7 +13,7 @@ class DesignLibraryScreen extends StatelessWidget {
         onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
       ),
       body: buildBody(bloc, context),
-      bottomNavigationBar: _buildBottomNavigationBar(context),
+      bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
       floatingActionButton: _buildScrollToTopFab(bloc),
     );
   }
@@ -179,21 +179,31 @@ class DesignLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
-      },
-      onSortTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => const SortScreen(),
-        );
+  Widget _buildBottomNavigationBar(BuildContext context, DesignLibraryBloc bloc) {
+    return BlocBuilder<DesignLibraryBloc, DesignLibraryState>(
+      buildWhen: (previous, current) => current is DesignLibraryLoadedState || current is DesignLibraryChangeListingTypeState,
+      builder: (context, state) {
+        if (state is DesignLibraryLoadedState || state is DesignLibraryChangeListingTypeState) {
+          return FilterBottomActionBar(
+            controller: bloc.paginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+            onSortTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => const SortScreen(),
+              );
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }

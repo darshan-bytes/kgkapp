@@ -43,20 +43,19 @@ class OrderScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(OrdersBloc ordersBloc) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SelectionButton(
-            borderRadius: BorderRadius.zero,
-            isSelected: false,
-            onTap: () {},
-            image: AppImages.icFilter,
-            title: APPStrings.filter.tr,
-          ),
-        ],
-      ),
+    return BlocBuilder<OrdersBloc, OrdersState>(
+      buildWhen: (previous, current) => current is OrdersListLoadedState || current is ChangeOrderTabsState,
+      builder: (context, state) {
+        if (state is OrdersListLoadedState || state is ChangeOrderTabsState) {
+          return SafeArea(
+              child: FilterBottomActionBar(
+            controller: ordersBloc.currentScrollController.controller,
+            onFilterTap: () {},
+          ));
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 }

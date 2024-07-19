@@ -21,6 +21,13 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     if (refreshCompleter.isCompleted) {
       refreshCompleter = Completer<bool>();
     }
+    if (digitalCatalogueScrollController.isInitialised) {
+      digitalCatalogueScrollController.dispose();
+      digitalCatalogueScrollController = SmartPaginationScrollController();
+    }
+    digitalCatalogueScrollController.init(
+      loadAction: (int currentPage) async {},
+    );
 
     digitalCatalogueList = List.generate(
       20,

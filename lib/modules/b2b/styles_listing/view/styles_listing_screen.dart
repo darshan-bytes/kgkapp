@@ -96,21 +96,26 @@ class StylesListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(StylesListingBloc stylesListingBloc, BuildContext context) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
+    return BlocBuilder<StylesListingBloc, StylesListingState>(
+      buildWhen: (previous, current) => current is StylesListingLoadedState,
+      builder: (context, state) {
+        if (state is StylesListingLoadedState) {
+          return SafeArea(
+              child: FilterBottomActionBar(
+            controller: stylesListingBloc.paginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+          ));
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 

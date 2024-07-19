@@ -52,6 +52,18 @@ class NewsletterBloc extends Bloc<NewsletterEvent, NewsletterState> {
     on<NewsletterListPullToRefreshEvent>(_onListPullToRefreshEvent);
   }
 
+  SmartPaginationScrollController get currentScrollController {
+    final NewsletterTab currentTab = NewsletterTab.values[tabController.index];
+    switch (currentTab) {
+      case NewsletterTab.template:
+        return templateScrollController;
+      case NewsletterTab.categories:
+        return categoryScrollController;
+      case NewsletterTab.subscribers:
+        return subscribersScrollController;
+    }
+  }
+
   void _onInitNewsletterEvent(NewsletterInitialEvent event, Emitter<NewsletterState> emit) {
     emit(const NewsletterReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;

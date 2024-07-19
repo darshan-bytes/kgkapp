@@ -161,27 +161,37 @@ class PddListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(PddListingBloc pddListingBloc, BuildContext context) {
-    return FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
-      },
-      onSortTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => const SortScreen(),
-        );
+    return BlocBuilder<PddListingBloc, PddListingState>(
+      buildWhen: (previous, current) => current is PddListingLoadedState || current is PddListingChangeListingTypeState,
+      builder: (context, state) {
+        if (state is PddListingLoadedState || state is PddListingChangeListingTypeState) {
+          return FilterBottomActionBar(
+            controller: pddListingBloc.gridPaginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+            onSortTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => const SortScreen(),
+              );
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }
 
   Widget _buildFloatingActionButton(PddListingBloc pddListingBloc) {
     return BlocBuilder<PddListingBloc, PddListingState>(
-      buildWhen: (previous, current) => current is PddListingChangeListingTypeState,
+      buildWhen: (previous, current) => current is PddListingChangeListingTypeState || current is PddListingLoadedState,
       builder: (context, state) {
         return ScrollToTopFAB(
           canScrollToTop: pddListingBloc.gridPaginationScrollController.canScrollToTop,

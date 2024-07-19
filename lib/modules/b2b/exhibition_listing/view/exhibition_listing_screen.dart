@@ -14,17 +14,22 @@ class ExhibitionListingScreen extends StatelessWidget {
         child: BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
           buildWhen: (previous, current) => current is ExhibitionListingLoadedState,
           builder: (context, state) {
-            return SmartSingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildImageAndText(exhibitionListingBloc, style),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  _buildCatalogueExhibitionList(exhibitionListingBloc, style),
-                ],
-              ),
-            );
+            if (state is ExhibitionListingLoadedState) {
+              return SmartSingleChildScrollView(
+                controller: exhibitionListingBloc.paginationScrollController.controller,
+                child: Column(
+                  children: [
+                    _buildImageAndText(exhibitionListingBloc, style),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    _buildCatalogueExhibitionList(exhibitionListingBloc, style),
+                  ],
+                ),
+              );
+            } else {
+              return const SmartCircularProgressIndicator();
+            }
           },
         ),
       ),
@@ -44,14 +49,24 @@ class ExhibitionListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ExhibitionListingBloc bloc, BuildContext context) {
-    return FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
+    return BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
+      buildWhen: (previous, current) => current is ExhibitionListingLoadedState,
+      builder: (context, state) {
+        if (state is ExhibitionListingLoadedState) {
+          return FilterBottomActionBar(
+            controller: bloc.paginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }

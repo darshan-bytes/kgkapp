@@ -91,23 +91,17 @@ class ConceptListScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is ConceptListLoadedState,
         builder: (context, state) {
           if (state is ConceptListLoadedState) {
-            return ScrollToHideWidget(
-              controller: conceptListBloc.paginationScrollController.scrollController,
-              child: SafeArea(
-                child: SelectionButton(
-                  borderRadius: BorderRadius.zero,
-                  isSelected: false,
-                  onTap: () {
-                    Utils.showSmartModalBottomSheet(
-                      context: context,
-                      builder: (context) => FilterScreen(
-                        onApply: () {},
-                      ),
-                    );
-                  },
-                  image: AppImages.icFilter,
-                  title: APPStrings.filter.tr,
-                ),
+            return SafeArea(
+              child: FilterBottomActionBar(
+                controller: conceptListBloc.paginationScrollController.controller,
+                onFilterTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    builder: (context) => FilterScreen(
+                      onApply: () {},
+                    ),
+                  );
+                },
               ),
             );
           }
