@@ -166,15 +166,26 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ManufacturerOrderListingBloc bloc, BuildContext context) {
-    return SafeArea(child: FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
+    return BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
+      buildWhen: (previous, current) => current is ManufacturerOrderListingLoadedState,
+      builder: (context, state) {
+        if (state is ManufacturerOrderListingLoadedState) {
+          return SafeArea(
+              child: FilterBottomActionBar(
+            controller: bloc.paginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+          ));
+        } else {
+          return const SizedBox.shrink();
+        }
       },
-    ));
+    );
   }
 }

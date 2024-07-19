@@ -27,20 +27,30 @@ class ProductListScreen extends StatelessWidget {
       ),
       floatingActionButton: ScrollToTopFAB(
           canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop),
-      bottomNavigationBar: FilterBottomActionBar(
-        onFilterTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
-        onSortTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => const SortScreen(),
-          );
+      bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
+        buildWhen: (previous, current) => current is ProductListLoadedState,
+        builder: (context, state) {
+          if (state is ProductListLoadedState) {
+            return FilterBottomActionBar(
+              controller: bloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+              onSortTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
         },
       ),
       body: BlocBuilder<ProductListBloc, ProductListState>(

@@ -126,7 +126,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                       );
 
                     default:
-                      return const SizedBox();
+                      return const SizedBox.shrink();
                   }
                 },
               );
@@ -186,7 +186,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
         );
       case ProductCustomizationType.other:
       default:
-        return const SizedBox();
+        return const SizedBox.shrink();
     }
   }
 }

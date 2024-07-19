@@ -179,27 +179,32 @@ class DesignListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(DesignListingBloc bloc, BuildContext context) {
-    return SafeArea(
-      child: SelectionButton(
-        borderRadius: BorderRadius.zero,
-        isSelected: false,
-        onTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
-        image: AppImages.icFilter,
-        title: APPStrings.filter.tr,
-      ),
+    return BlocBuilder<DesignListingBloc, DesignListingState>(
+      buildWhen: (previous, current) => current is DesignListingLoadedState || current is DesignChangeListingTypeState,
+      builder: (context, state) {
+        if (state is DesignListingLoadedState || state is DesignChangeListingTypeState) {
+          return SafeArea(
+              child: FilterBottomActionBar(
+            controller: bloc.paginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+          ));
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 
   Widget _buildFloatingActionButton(DesignListingBloc bloc) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
-      buildWhen: (previous, current) => current is DesignChangeListingTypeState,
+      buildWhen: (previous, current) => current is DesignChangeListingTypeState || current is DesignListingLoadedState,
       builder: (context, state) {
         return ScrollToTopFAB(
           canScrollToTop: bloc.paginationScrollController.canScrollToTop,

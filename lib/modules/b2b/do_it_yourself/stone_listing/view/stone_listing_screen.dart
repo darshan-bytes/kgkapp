@@ -29,18 +29,28 @@ class StoneListingScreen extends StatelessWidget {
         canScrollToTop: diamondListingBloc.paginationScrollController.canScrollToTop,
         onTap: diamondListingBloc.paginationScrollController.scrollToTop,
       ),
-      bottomNavigationBar: FilterBottomActionBar(
-        onFilterTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => DiamondFilterScreen(onApply: () {}),
-          );
-        },
-        onSortTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => const SortScreen(),
-          );
+      bottomNavigationBar: BlocBuilder<StoneListingBloc, StoneListingState>(
+        buildWhen: (previous, current) => current is StoneProductLoadedState,
+        builder: (context, state) {
+          if (state is StoneProductLoadedState) {
+            return FilterBottomActionBar(
+              controller: diamondListingBloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => DiamondFilterScreen(onApply: () {}),
+                );
+              },
+              onSortTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
         },
       ),
       body: BlocBuilder<StoneListingBloc, StoneListingState>(

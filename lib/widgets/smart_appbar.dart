@@ -91,7 +91,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       );
     } else {
-      return const SizedBox();
+      return const SizedBox.shrink();
     }
   }
 

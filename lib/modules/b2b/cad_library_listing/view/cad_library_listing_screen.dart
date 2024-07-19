@@ -180,20 +180,30 @@ class CadLibraryListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(CadLibraryListingBloc bloc, BuildContext context) {
-    return FilterBottomActionBar(
-      onFilterTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => FilterScreen(
-            onApply: () {},
-          ),
-        );
-      },
-      onSortTap: () {
-        Utils.showSmartModalBottomSheet(
-          context: context,
-          builder: (context) => const SortScreen(),
-        );
+    return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
+      buildWhen: (previous, current) => current is CadListingLoadedState || current is CadChangeListingTypeState,
+      builder: (context, state) {
+        if (state is CadListingLoadedState || state is CadChangeListingTypeState) {
+          return FilterBottomActionBar(
+            controller: bloc.gridPaginationScrollController.controller,
+            onFilterTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
+              );
+            },
+            onSortTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => const SortScreen(),
+              );
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }

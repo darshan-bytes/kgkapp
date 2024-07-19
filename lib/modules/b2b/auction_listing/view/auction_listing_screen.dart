@@ -94,27 +94,27 @@ class AuctionListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(AuctionListingBloc auctionListingBloc, BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SelectionButton(
-            borderRadius: BorderRadius.zero,
-            isSelected: false,
-            onTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
-              );
-            },
-            image: AppImages.icFilter,
-            title: APPStrings.filter.tr,
-          ),
-        ],
-      ),
+    return BlocBuilder<AuctionListingBloc, AuctionListingState>(
+      buildWhen: (previous, current) => current is AuctionListingLoadedState,
+      builder: (context, state) {
+        if (state is AuctionListingLoadedState) {
+          return SafeArea(
+            child: FilterBottomActionBar(
+              controller: auctionListingBloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 }

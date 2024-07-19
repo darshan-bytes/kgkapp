@@ -97,7 +97,9 @@ class PresentationScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(PresentationBloc bloc, BuildContext context) {
-    return SafeArea(child: FilterBottomActionBar(
+    return SafeArea(
+        child: FilterBottomActionBar(
+      controller: bloc.paginationScrollController.controller,
       onFilterTap: () {
         Utils.showSmartModalBottomSheet(
           context: context,
