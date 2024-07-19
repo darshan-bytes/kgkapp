@@ -16,31 +16,45 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
           context.pushNamed(AppRoutes.wishListPage);
         },
       ),
-      bottomNavigationBar: FilterBottomActionBar(
-        onFilterTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
+      bottomNavigationBar: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
+        buildWhen: (previous, current) => current is DigitalCatalogueLoadedState,
+        builder: (context, state) {
+          if (state is DigitalCatalogueLoadedState) {
+            return FilterBottomActionBar(
+              controller: digitalCatalogueBloc.digitalCatalogueScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
         },
       ),
       body: SafeArea(
           child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
               buildWhen: (previous, current) => current is DigitalCatalogueLoadedState,
               builder: (context, state) {
-                return Column(
-                  children: [
-                    SmartTextField(
-                      hintText: APPStrings.searchCatalogue.tr,
-                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-                      padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
-                      onTapOutside: (event) {},
-                    ),
-                    _digitalCatalogueList(digitalCatalogueBloc, context),
-                  ],
-                );
+                if (state is DigitalCatalogueLoadedState) {
+                  return Column(
+                    children: [
+                      SmartTextField(
+                        hintText: APPStrings.searchCatalogue.tr,
+                        suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+                        padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
+                        onTapOutside: (event) {},
+                      ),
+                      _digitalCatalogueList(digitalCatalogueBloc, context),
+                    ],
+                  );
+                } else {
+                  return const SmartCircularProgressIndicator();
+                }
               })),
     );
   }
@@ -53,6 +67,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
           await digitalCatalogueBloc.pullToRefresh();
         },
         child: ListView.separated(
+          controller: digitalCatalogueBloc.digitalCatalogueScrollController.controller,
           itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
           separatorBuilder: (context, index) {
             return SizedBox(

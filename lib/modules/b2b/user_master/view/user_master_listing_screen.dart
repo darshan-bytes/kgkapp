@@ -147,17 +147,27 @@ class UserMasterListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(UserMasterListingBloc bloc, BuildContext context) {
-    return SafeArea(
-      child: FilterBottomActionBar(
-        onFilterTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
+    return BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+      buildWhen: (previous, current) => current is UserMasterListingLoadedState,
+      builder: (context, state) {
+        if (state is UserMasterListingLoadedState) {
+          return SafeArea(
+            child: FilterBottomActionBar(
+              controller: bloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
             ),
           );
-        },
-      ),
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 }

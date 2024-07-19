@@ -50,7 +50,7 @@ class SearchScreen extends StatelessWidget {
 
   Widget searchItemBuilder({required String title, required List<String> searchList, required SearchScreenStyle style}) {
     if (searchList.isEmpty) {
-      return const SizedBox();
+      return const SizedBox.shrink();
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,6 +25,7 @@ class SettingListingScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: FilterBottomActionBar(
+        controller: settingListingBloc.paginationScrollController.controller,
         onFilterTap: () {
           Utils.showSmartModalBottomSheet(
             context: context,

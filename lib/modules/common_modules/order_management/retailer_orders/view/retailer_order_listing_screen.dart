@@ -47,20 +47,25 @@ class RetailerOrderListingScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(RetailerOrderListingBloc retailerOrderListingBloc) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SelectionButton(
-            borderRadius: BorderRadius.zero,
-            isSelected: false,
-            onTap: () {},
-            image: AppImages.icFilter,
-            title: APPStrings.filter.tr,
-          ),
-        ],
-      ),
+    return BlocBuilder<RetailerOrderListingBloc, RetailerOrderListingState>(
+      buildWhen: (previous, current) =>
+          current is RetailerOrderListingListLoadedState ||
+          current is ChangeRetailerOrderTabsState ||
+          current is ChangeRetailerOrderStoneTypeState,
+      builder: (context, state) {
+        if (state is RetailerOrderListingListLoadedState ||
+            state is ChangeRetailerOrderTabsState ||
+            state is ChangeRetailerOrderStoneTypeState) {
+          return SafeArea(
+            child: FilterBottomActionBar(
+              controller: retailerOrderListingBloc.currentScrollController.controller,
+              onFilterTap: () {},
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 }
