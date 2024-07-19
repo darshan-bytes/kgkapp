@@ -73,8 +73,9 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   }
 
   Future<void> _onDesignLibraryPullToRefresh(DesignLibraryPullToRefreshEvent event, Emitter<DesignLibraryState> emit) async {
-    paginationScrollController.pullToRefresh();
+    emit(const DesignLibraryReloadState());
     await Future.delayed(const Duration(seconds: 1));
+    paginationScrollController.pullToRefresh();
     designLibraryList = _generateLibraryList();
     refreshCompleter.complete(true);
     emit(const DesignLibraryLoadedState());
