@@ -36,7 +36,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
       },
     );
     conceptList = List.generate(
-      20,
+      10,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strConceptNumber: (index + 1).toString(),
@@ -88,8 +88,8 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
   }
 
   Future<void> _onConceptListingPullToRefresh(ConceptListPullToRefreshEvent event, Emitter<ConceptListState> emit) async {
-    paginationScrollController.pullToRefresh();
     await Future.delayed(const Duration(seconds: 1));
+    paginationScrollController.pullToRefresh();
     conceptList = List.generate(
       10,
       (index) => B2BCustomListingDataModel(

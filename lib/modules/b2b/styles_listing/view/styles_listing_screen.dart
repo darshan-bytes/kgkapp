@@ -18,10 +18,7 @@ class StylesListingScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: bloc.paginationScrollController.canScrollToTop,
-        onTap: bloc.paginationScrollController.scrollToTop,
-      ),
+      floatingActionButton: _buildFloatingActionButton(bloc),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -114,6 +111,18 @@ class StylesListingScreen extends StatelessWidget {
         image: AppImages.icFilter,
         title: APPStrings.filter.tr,
       ),
+    );
+  }
+
+  Widget _buildFloatingActionButton(StylesListingBloc stylesListingBloc) {
+    return BlocBuilder<StylesListingBloc, StylesListingState>(
+      buildWhen: (previous, current) => current is StylesListingLoadedState,
+      builder: (context, state) {
+        return ScrollToTopFAB(
+          canScrollToTop: stylesListingBloc.paginationScrollController.canScrollToTop,
+          onTap: stylesListingBloc.paginationScrollController.scrollToTop,
+        );
+      },
     );
   }
 }

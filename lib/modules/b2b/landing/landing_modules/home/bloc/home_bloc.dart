@@ -76,7 +76,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Deal of the day With Scroll controller
   final ScrollController dealOfTheDayScrollController = ScrollController();
-  final List<ProductDetails> dealOfTheDayList = _generateTabViewList();
+  final List<ProductDetails> dealOfTheDayList = _generateTabViewList(isOfferAvailable: true);
 
   //Get Inspired With Scroll controller
   // final List<AuctionListModel> getInspiredList = _generateGetInspireList();
@@ -508,13 +508,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   //For Tab View
-  static List<ProductDetails> _generateTabViewList() {
+  static List<ProductDetails> _generateTabViewList({bool isOfferAvailable = false}) {
     return List.generate(
       20,
       (index) => ProductDetails(
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
+        discountPercentage: isOfferAvailable ? "You have saved 10%" : null,
+        offerPrice: isOfferAvailable ? '\$4,000.00' : null,
       ),
     );
   }
