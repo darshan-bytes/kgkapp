@@ -223,7 +223,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
   Future<void> _onMonitoringListPullToRefreshEvent(MonitoringListPullToRefreshEvent event, Emitter<MonitoringState> emit) async {
     emit(const MonitoringReloadState());
     await Future.delayed(const Duration(seconds: 2));
-    currentController.pullToRefresh();
     switch (event.listType) {
       case MonitoringTab.presentations:
         presentationsScrollController.pullToRefresh();

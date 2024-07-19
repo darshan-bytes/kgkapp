@@ -29,6 +29,11 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
 
   void _onInitialDesignListEvent(InitialDesignListingEvent event, Emitter<DesignListingState> emit) {
     emit(const DesignListingLoadingState());
+
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
+
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();
@@ -40,9 +45,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
       },
     );
 
-    if (!refreshCompleter.isCompleted) {
-      refreshCompleter.complete(true);
-    }
+    refreshCompleter.complete(true);
 
     clearData();
     emit(const DesignListingLoadedState());
@@ -117,8 +120,9 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   }
 
   Future<void> _onDesignListPullToRefresh(DesignListPullToRefreshEvent event, Emitter<DesignListingState> emit) async {
-    paginationScrollController.pullToRefresh();
+    emit(DesignListingReloadState());
     await Future.delayed(const Duration(seconds: 1));
+    paginationScrollController.pullToRefresh();
     designList = _generateDesignListForGrid();
     designListForGrid = _generateDesignListForGrid();
     refreshCompleter.complete(true);

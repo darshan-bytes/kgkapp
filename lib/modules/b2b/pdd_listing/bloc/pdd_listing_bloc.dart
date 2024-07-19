@@ -82,9 +82,9 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   Future<void> _onPddListPullToRefresh(PddListPullToRefreshEvent event, Emitter<PddListingState> emit) async {
     emit(PddListingReloadState());
-    gridPaginationScrollController.pullToRefresh();
     await Future.delayed(const Duration(seconds: 1));
-    originalPresentationList = _generatePresentationList();
+    gridPaginationScrollController.pullToRefresh();
+    filteredPresentationList = _generatePresentationList();
     refreshCompleter.complete(true);
     emit(PddListingLoadedState());
   }

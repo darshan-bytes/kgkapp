@@ -26,6 +26,9 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
   void _onStylesListingInitialEvent(StylesListingInitialEvent event, Emitter<StylesListingState> emit) {
     emit(StylesListingReloadState());
     searchController.clear();
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
       paginationScrollController = SmartPaginationScrollController();
@@ -53,9 +56,7 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
       ),
     ).toList();
 
-    if (!refreshCompleter.isCompleted) {
-      refreshCompleter.complete(true);
-    }
+    refreshCompleter.complete(true);
     emit(const StylesListingLoadedState());
   }
 
@@ -90,9 +91,26 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
   }
 
   Future<void> _onStylesListingPullToRefresh(StylesListingPullToRefreshEvent event, Emitter<StylesListingState> emit) async {
+    emit(StylesListingReloadState());
+    await Future.delayed(const Duration(seconds: 2));
     paginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 1));
-    stylesList = List.generate(
+    stylesList = _generateStylesList();
+    refreshCompleter.complete(true);
+    emit(const StylesListingLoadedState());
+  }
+
+  Future<bool> pullToRefresh() async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(const StylesListingPullToRefreshEvent());
+    bool result = await refreshCompleter.future;
+    return result;
+  }
+
+  List<B2BCustomListingDataModel> _generateStylesList() {
+    return List.generate(
       10,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
@@ -108,18 +126,6 @@ class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {
         strExclusiveCustomer: 'Jenny Wilson',
         strExclusiveCustomerImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
       ),
-    ).toList();
-    refreshCompleter.complete(true);
-    emit(const StylesListingLoadedState());
-  }
-
-  Future<bool> pullToRefresh() async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
-    add(const StylesListingPullToRefreshEvent());
-    bool result = await refreshCompleter.future;
-    return result;
+    );
   }
 }

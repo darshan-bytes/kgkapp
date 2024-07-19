@@ -121,7 +121,7 @@ class PddListingScreen extends StatelessWidget {
         },
         child: ListView.builder(
           shrinkWrap: true,
-          key: bloc.gridPaginationScrollController.listKey,
+          key: bloc.isGrid ? bloc.gridPaginationScrollController.gridKey : bloc.gridPaginationScrollController.listKey,
           controller: bloc.gridPaginationScrollController.controller,
           itemCount: bloc.filteredPresentationList.length,
           itemBuilder: (context, index) {

@@ -165,8 +165,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
-    paginationScrollController.pullToRefresh();
     await Future.delayed(const Duration(seconds: 3));
+    paginationScrollController.pullToRefresh();
     _generateProductList();
     refreshCompleter.complete(true);
     emit(const StoneProductLoadedState());

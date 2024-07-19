@@ -79,8 +79,8 @@ class ProjectListingBloc extends Bloc<ProjectListingEvent, ProjectListingState> 
   }
 
   Future<void> _onProjectListPullToRefresh(ProjectListPullToRefreshEvent event, Emitter<ProjectListingState> emit) async {
-    paginationScrollController.pullToRefresh();
     await Future.delayed(const Duration(seconds: 1));
+    paginationScrollController.pullToRefresh();
     projectList = _generateProjectList();
     refreshCompleter.complete(true);
     emit(ProjectListingLoadedState());

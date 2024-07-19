@@ -36,7 +36,7 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
       },
     );
     conceptList = List.generate(
-      20,
+      10,
       (index) => B2BCustomListingDataModel(
         id: index.toString(),
         strConceptNumber: (index + 1).toString(),
