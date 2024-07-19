@@ -96,6 +96,9 @@ dependencies:
   #For Calendar
   syncfusion_flutter_calendar: ^26.1.41
 
+
+  syncfusion_flutter_charts: ^26.1.41+1
+
   #For Bounce animation
   flutter_bounceable: ^1.1.0
 

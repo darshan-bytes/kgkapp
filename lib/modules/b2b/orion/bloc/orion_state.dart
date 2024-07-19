@@ -42,12 +42,19 @@ final class OrionDiamondShapeChangedState extends OrionState {
   List<Object> get props => [oldIndex, newIndex];
 }
 
-final class OrionDiamondPropertiesChangedState extends OrionState {
+final class OrionDiamondCutChangedState extends OrionState {
   final int diamondPropertiesIndex;
   final int propertiesIndex;
 
-  const OrionDiamondPropertiesChangedState(this.diamondPropertiesIndex, this.propertiesIndex);
+  const OrionDiamondCutChangedState(this.diamondPropertiesIndex, this.propertiesIndex);
 
   @override
   List<Object> get props => [diamondPropertiesIndex, propertiesIndex];
+}
+
+final class OrionDiamondMovedState extends OrionState {
+  const OrionDiamondMovedState();
+
+  @override
+  List<Object> get props => [];
 }
