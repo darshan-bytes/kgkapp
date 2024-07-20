@@ -23,16 +23,18 @@ class OrionScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is OrionLoadedState) {
           return SmartSingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+            padding: EdgeInsets.symmetric(vertical: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildDiamondShapeList(bloc, style),
                 _buildPriceRangeSlide(bloc, style),
                 Divider(height: 80.h),
-                _buildSelectDiamondChart(bloc, style),
+                _buildSelectDiamondChart(context, bloc, style),
                 SizedBox(height: 40.h),
-                _buildDiamondPropertySelectionList(bloc, style),
+                _buildCutSelection(style, bloc),
+                _buildClaritySelection(style, bloc),
+                _buildColorSelection(style, bloc),
               ],
             ),
           );
@@ -52,6 +54,7 @@ class OrionScreen extends StatelessWidget {
       listPadding: EdgeInsets.only(bottom: 12.h),
       isScrollbarVisible: true,
       itemCount: bloc.diamondShapeList.length,
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       itemBuilder: (context, index) {
         return BlocBuilder<OrionBloc, OrionState>(
           buildWhen: (previous, current) =>
@@ -94,69 +97,72 @@ class OrionScreen extends StatelessWidget {
   }
 
   Widget _buildPriceRangeSlide(OrionBloc bloc, OrionStyle style) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SmartText(APPStrings.preferredPriceRange.tr, style: style.selectionTitleStyle),
-        SizedBox(height: 16.h),
-        BlocBuilder<OrionBloc, OrionState>(
-          buildWhen: (previous, current) => previous != current && current is OrionPriceRangeChangedState,
-          builder: (context, state) {
-            return Column(
-              children: [
-                SfRangeSlider(
-                  enableTooltip: true,
-                  values: bloc.values,
-                  min: bloc.minMaxValues.start,
-                  max: bloc.minMaxValues.end,
-                  interval: 100,
-                  numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
-                  stepSize: 1,
-                  activeColor: style.rangeSliderTrackColor,
-                  startThumbIcon: _buildSliderThumb(style),
-                  endThumbIcon: _buildSliderThumb(style),
-                  onChanged: (SfRangeValues values) => bloc.add(OrionPriceRangeChangedEvent(values)),
-                ),
-                SizedBox(height: 6.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IntrinsicWidth(
-                      child: SmartTextField(
-                        height: 40.h,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
-                        textAlign: TextAlign.center,
-                        controller: bloc.minPriceController,
-                        keyboardType: TextInputType.number,
-                        style: style.propertySelectionSubtitleStyle,
-                        onTapOutside: (p) => bloc.add(const OrionPriceRangeEditEvent()),
-                        onEditingComplete: () => bloc.add(const OrionPriceRangeEditEvent()),
-                        textInputAction: TextInputAction.done,
-                        maxLength: 5,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SmartText(APPStrings.preferredPriceRange.tr, style: style.selectionTitleStyle),
+          SizedBox(height: 16.h),
+          BlocBuilder<OrionBloc, OrionState>(
+            buildWhen: (previous, current) => previous != current && current is OrionPriceRangeChangedState,
+            builder: (context, state) {
+              return Column(
+                children: [
+                  SfRangeSlider(
+                    enableTooltip: true,
+                    values: bloc.values,
+                    min: bloc.minMaxValues.start,
+                    max: bloc.minMaxValues.end,
+                    interval: 100,
+                    numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
+                    stepSize: 1,
+                    activeColor: style.rangeSliderTrackColor,
+                    startThumbIcon: _buildSliderThumb(style),
+                    endThumbIcon: _buildSliderThumb(style),
+                    onChanged: (SfRangeValues values) => bloc.add(OrionPriceRangeChangedEvent(values)),
+                  ),
+                  SizedBox(height: 6.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IntrinsicWidth(
+                        child: SmartTextField(
+                          height: 40.h,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                          textAlign: TextAlign.center,
+                          controller: bloc.minPriceController,
+                          keyboardType: TextInputType.number,
+                          style: style.propertySelectionSubtitleStyle,
+                          onTapOutside: (p) => bloc.add(const OrionPriceRangeEditEvent()),
+                          onEditingComplete: () => bloc.add(const OrionPriceRangeEditEvent()),
+                          textInputAction: TextInputAction.done,
+                          maxLength: 5,
+                        ),
                       ),
-                    ),
-                    IntrinsicWidth(
-                      child: SmartTextField(
-                        height: 40.h,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
-                        textAlign: TextAlign.center,
-                        controller: bloc.maxPriceController,
-                        keyboardType: TextInputType.number,
-                        style: style.propertySelectionSubtitleStyle,
-                        onTapOutside: (p) => bloc.add(const OrionPriceRangeEditEvent(isMin: false)),
-                        onEditingComplete: () => bloc.add(const OrionPriceRangeEditEvent(isMin: false)),
-                        textInputAction: TextInputAction.done,
-                        maxLength: 5,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
-      ],
+                      IntrinsicWidth(
+                        child: SmartTextField(
+                          height: 40.h,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                          textAlign: TextAlign.center,
+                          controller: bloc.maxPriceController,
+                          keyboardType: TextInputType.number,
+                          style: style.propertySelectionSubtitleStyle,
+                          onTapOutside: (p) => bloc.add(const OrionPriceRangeEditEvent(isMin: false)),
+                          onEditingComplete: () => bloc.add(const OrionPriceRangeEditEvent(isMin: false)),
+                          textInputAction: TextInputAction.done,
+                          maxLength: 5,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -172,76 +178,263 @@ class OrionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectDiamondChart(OrionBloc bloc, OrionStyle style) {
+  Widget _buildSelectDiamondChart(BuildContext context, OrionBloc bloc, OrionStyle style) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SmartText(APPStrings.selectDiamond.tr, style: style.selectDiamondTitleStyle),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: SmartText(APPStrings.selectDiamond.tr, style: style.selectDiamondTitleStyle),
+        ),
         SizedBox(height: 16.h),
-        SmartImage(path: "https://i.ibb.co/jRKtJT6/Chart.png", height: 430.w, width: double.infinity),
+        BlocBuilder<OrionBloc, OrionState>(
+          buildWhen: (previous, current) => current is OrionDiamondMovedState,
+          builder: (context, state) {
+            return SizedBox(
+              height: 430.w,
+              width: context.width,
+              child: Stack(
+                children: [
+                  SfCartesianChart(
+                    key: bloc.chartKey,
+                    primaryXAxis: NumericAxis(
+                      minimum: 0,
+                      maximum: 40,
+                      interval: 5,
+                      axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        return ChartAxisLabel(
+                          '${details.value.toInt()} ct',
+                          const TextStyle(color: Colors.black),
+                        );
+                      },
+                      axisLine: const AxisLine(width: 0),
+                      majorGridLines: const MajorGridLines(width: 0),
+                    ),
+                    primaryYAxis: NumericAxis(
+                      axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        // Format the label to display as price
+                        return ChartAxisLabel('\$${details.value.toStringAsFixed(2).padRight(0)}', const TextStyle(color: Colors.black));
+                      },
+                      onRendererCreated: (NumericAxisController controller) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Future.delayed(const Duration(milliseconds: 50), () {
+                            bloc.yAxisWidth = controller.axis.paintBounds.width;
+                          });
+                        });
+                      }, // Hide the labels
+                      axisLine: const AxisLine(width: 0), // Hide the y-axis line
+                      majorGridLines: const MajorGridLines(width: 0),
+                    ),
+                    onChartTouchInteractionMove: (tapArgs) {
+                      bloc.add(OrionDiamondChartTouchInteractionMoveEvent(tapArgs: tapArgs));
+                    },
+                    onChartTouchInteractionDown: (tapArgs) {
+                      bloc.add(OrionDiamondChartTouchInteractionDownEvent(tapArgs: tapArgs));
+                    },
+                    onChartTouchInteractionUp: (tapArgs) {
+                      bloc.add(OrionDiamondChartTouchInteractionUpEvent(tapArgs: tapArgs));
+                    },
+                    series: <CartesianSeries<ChartDataModel, num>>[
+                      ScatterSeries<ChartDataModel, num>(
+                        markerSettings: const MarkerSettings(isVisible: true),
+                        onPointTap: (value) {
+                          bloc.pinPosition = bloc.chartSeriesController!.pointToPixel(CartesianChartPoint<num>(
+                              x: value.dataPoints?[(value.viewportPointIndex ?? 0).toInt()].x,
+                              y: value.dataPoints?[(value.viewportPointIndex ?? 0).toInt()].y ?? 0));
+
+                          bloc.snapPinToNearestPoint();
+                        },
+                        onPointLongPress: (pointInteractionDetails) {
+                          bloc.add(OrionDiamondChangePointIndexEvent(index: pointInteractionDetails.pointIndex ?? 0));
+                        },
+                        dataSource: bloc.chartData,
+                        onRendererCreated: (ChartSeriesController controller) {
+                          bloc.chartSeriesController = controller;
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Future.delayed(const Duration(milliseconds: 50), () {
+                              bloc.add(const OrionDiamondCalculateDotPositionsEvent());
+                            });
+                          });
+                        },
+                        xValueMapper: (ChartDataModel data, _) => data.x,
+                        yValueMapper: (ChartDataModel data, _) => data.y,
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    left: bloc.pinPosition.dx + bloc.yAxisWidth - 10,
+                    top: bloc.pinPosition.dy - 26,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onPanUpdate: (value) {
+                        bloc.add(OrionDiamondUpdatePinPositionEvent(dragUpdateDetails: value));
+                      },
+                      onPanEnd: (details) {
+                        bloc.add(const OrionDiamondSnapNearestPoint());
+                      },
+                      child: SmartImage(
+                        path: AppImages.icDiamond,
+                        width: 40.w,
+                        height: 40.w,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        SizedBox(height: 16.h),
+        BlocBuilder<OrionBloc, OrionState>(
+          buildWhen: (previous, current) => current is OrionDiamondMovedState,
+          builder: (context, state) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SmartText(
+                    "Price: \$${bloc.currentPrice.toStringAsFixed(2)}",
+                    style: style.selectionTitleStyle,
+                  ),
+                  SmartText(
+                    "Carat: ${bloc.currentCarat.toStringAsFixed(2)} ct",
+                    style: style.selectionTitleStyle,
+                  ),
+                ],
+              ),
+            );
+          },
+        )
       ],
     );
   }
 
-  Widget _buildDiamondPropertySelectionList(OrionBloc bloc, OrionStyle style) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: bloc.diamondPropertiesList.length,
-      itemBuilder: (context, index) {
-        return _buildDiamondPropertySelection(style, bloc, index);
-      },
-      separatorBuilder: (context, index) => Divider(height: 48.h),
-    );
-  }
-
-  Widget _buildDiamondPropertySelection(OrionStyle style, OrionBloc bloc, int index) {
+  Widget _buildCutSelection(OrionStyle style, OrionBloc bloc) {
     return BlocBuilder<OrionBloc, OrionState>(
-      buildWhen: (previous, current) =>
-          previous != current && current is OrionDiamondPropertiesChangedState && (current.diamondPropertiesIndex == index),
+      buildWhen: (previous, current) => current is OrionDiamondMovedState,
       builder: (context, state) {
-        final OrionDiamondPropertiesDataModel diamondProperties = bloc.diamondPropertiesList[index];
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SmartText(diamondProperties.title, style: style.selectionTitleStyle),
-            SizedBox(height: 8.h),
-            if (diamondProperties.selectedProperties != null) ...[
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(APPStrings.cut.tr, style: style.selectionTitleStyle),
+              SizedBox(height: 8.h),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  SmartText(diamondProperties.selectedProperties?.title, style: style.selectDiamondTitleStyle),
+                  SmartText(bloc.selectedCutModel.name, style: style.selectDiamondTitleStyle),
                   SizedBox(width: 8.w),
-                  SmartText(diamondProperties.selectedProperties?.subTitle, style: style.propertySelectionSubtitleStyle),
+                  SmartText(bloc.selectedCutModel.description, style: style.propertySelectionSubtitleStyle),
                 ],
               ),
               SizedBox(height: 8.h),
-            ],
-            SmartHorizontalItemBuilder(
-              itemCount: diamondProperties.propertiesList!.length,
-              scrollController: bloc.diamondPropertiesListController[index],
-              itemBetweenSpace: 20.w,
-              isScrollbarVisible: true,
-              itemBuilder: (context, propertiesIndex) {
-                final OrionPropertiesDetails properties = diamondProperties.propertiesList![propertiesIndex];
-                final bool isSelected = diamondProperties.selectedProperties == properties;
-                return GestureDetector(
-                  onTap: () => bloc.add(OrionDiamondPropertiesChangedEvent(index, propertiesIndex)),
-                  child: Container(
+              SmartHorizontalItemBuilder(
+                itemCount: bloc.cutModelList.length,
+                itemBetweenSpace: 20.w,
+                itemBuilder: (context, propertiesIndex) {
+                  final CutModel properties = bloc.cutModelList[propertiesIndex];
+                  final bool isSelected = bloc.selectedCutModel == properties;
+                  return Container(
                     color: Colors.transparent,
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: SmartText(
-                      properties.title,
+                      properties.name,
                       style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                      optionalPadding: EdgeInsets.only(bottom: 18.h),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildClaritySelection(OrionStyle style, OrionBloc bloc) {
+    return BlocBuilder<OrionBloc, OrionState>(
+      buildWhen: (previous, current) => current is OrionDiamondMovedState,
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(APPStrings.clarity.tr, style: style.selectionTitleStyle),
+              SizedBox(height: 8.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SmartText(bloc.selectedClarityModel.name, style: style.selectDiamondTitleStyle),
+                  SizedBox(width: 8.w),
+                  SmartText(bloc.selectedClarityModel.description, style: style.propertySelectionSubtitleStyle),
+                ],
+              ),
+              SizedBox(height: 8.h),
+              SmartHorizontalItemBuilder(
+                itemCount: bloc.clarityModelList.length,
+                itemBetweenSpace: 20.w,
+                itemBuilder: (context, propertiesIndex) {
+                  final ClarityModel properties = bloc.clarityModelList[propertiesIndex];
+                  final bool isSelected = bloc.selectedClarityModel == properties;
+                  return Container(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: SmartText(
+                      properties.name,
+                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildColorSelection(OrionStyle style, OrionBloc bloc) {
+    return BlocBuilder<OrionBloc, OrionState>(
+      buildWhen: (previous, current) => current is OrionDiamondMovedState,
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(APPStrings.color.tr, style: style.selectionTitleStyle),
+              SizedBox(height: 8.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SmartText(bloc.selectedColorModel.name, style: style.selectDiamondTitleStyle),
+                  SizedBox(width: 8.w),
+                  SmartText(bloc.selectedColorModel.description, style: style.propertySelectionSubtitleStyle),
+                ],
+              ),
+              SizedBox(height: 8.h),
+              SmartHorizontalItemBuilder(
+                itemCount: bloc.colorModelList.length,
+                itemBetweenSpace: 20.w,
+                itemBuilder: (context, propertiesIndex) {
+                  final ColorModel properties = bloc.colorModelList[propertiesIndex];
+                  final bool isSelected = bloc.selectedColorModel == properties;
+                  return Container(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: SmartText(
+                      properties.name,
+                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         );
       },
     );
