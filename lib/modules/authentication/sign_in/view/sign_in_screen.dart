@@ -34,8 +34,6 @@ class SignInScreen extends StatelessWidget {
                       _buildPasswordField(style, context, bloc),
                       SizedBox(height: 16.h),
                       _buildForgotPasswordText(context, style),
-                      // SizedBox(height: 32.h),
-                      // _buildLoginButton(context),
                       // TODO: For social media buttons
                       // const SizedBox(height: 32),
                       // _buildDivider(style),
