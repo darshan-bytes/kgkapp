@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:kgk/kgk.dart';
 
 part 'orion_event.dart';
@@ -27,8 +29,27 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
 
-  List<OrionDiamondPropertiesDataModel> diamondPropertiesList = [];
-  List<ScrollController> diamondPropertiesListController = [];
+  /// Chart Data
+  List<ChartDataModel> chartData = [];
+  int? pointIndex;
+  ChartSeriesController? chartSeriesController;
+  Offset pinPosition = const Offset(100, 100); // Initial position of the pin
+  List<Offset> dotPositions = [];
+  double xAxisWidth = -10.0.w;
+  double yAxisWidth = -10.0.w;
+
+  List<CutModel> cutModelList = [];
+  List<ClarityModel> clarityModelList = [];
+  List<ColorModel> colorModelList = [];
+
+  ClarityModel selectedClarityModel = ClarityModel(id: 1, name: 'IF', description: 'Internally Flawless');
+  ColorModel selectedColorModel = ColorModel(id: 1, name: 'D', description: 'Colorless');
+  CutModel selectedCutModel = CutModel(id: 1, name: 'Excellent', description: 'Very sparkly');
+
+  double currentPrice = 0.0;
+  double currentCarat = 0.0;
+
+  final GlobalKey chartKey = GlobalKey();
 
   OrionBloc() : super(const OrionInitial()) {
     on<OrionInitialEvent>(_onOrionInitialEvent);
@@ -36,6 +57,13 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     on<OrionDiamondShapeChangedEvent>(_onOrionDiamondShapeChangedEvent);
     on<OrionDiamondPropertiesChangedEvent>(_onOrionDiamondPropertiesChangedEvent);
     on<OrionPriceRangeEditEvent>(_onOrionPriceRangeEditEvent);
+    on<OrionDiamondCalculateDotPositionsEvent>(_onOrionDiamondCalculateDotPositionsEvent);
+    on<OrionDiamondChangePointIndexEvent>(_onOrionDiamondChangePointIndexEvent);
+    on<OrionDiamondChartTouchInteractionUpEvent>(_onOrionDiamondChartTouchInteractionUpEvent);
+    on<OrionDiamondChartTouchInteractionDownEvent>(_onOrionDiamondChartTouchInteractionDownEvent);
+    on<OrionDiamondChartTouchInteractionMoveEvent>(_onOrionDiamondChartTouchInteractionMoveEvent);
+    on<OrionDiamondUpdatePinPositionEvent>(_onOrionDiamondUpdatePinPositionEvent);
+    on<OrionDiamondSnapNearestPoint>(_onOrionDiamondSnapNearestPoint);
   }
 
   ///Event Handlers
@@ -43,8 +71,58 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     minPriceController.text = '\$ ${values.start.toStringAsFixed(2)}';
     maxPriceController.text = '\$ ${values.end.toStringAsFixed(2)}';
     _initDiamondShapeList();
-    _initDiamondPropertiesList();
+    _initModelsData();
     emit(const OrionLoadedState());
+  }
+
+  void _initModelsData() {
+    clarityModelList = [
+      ClarityModel(id: 1, name: 'IF', description: 'Internally Flawless'),
+      ClarityModel(id: 2, name: 'VVS1', description: 'Very Very Slightly Included 1'),
+      ClarityModel(id: 3, name: 'VVS2', description: 'Very Very Slightly Included 2'),
+      ClarityModel(id: 4, name: 'VS1', description: 'Very Slightly Included 1'),
+      ClarityModel(id: 5, name: 'VS2', description: 'Very Slightly Included 2'),
+      ClarityModel(id: 6, name: 'SI1', description: 'Slightly Included 1'),
+      ClarityModel(id: 7, name: 'SI2', description: 'Slightly Included 2'),
+      ClarityModel(id: 8, name: 'I1', description: 'Included 1'),
+      ClarityModel(id: 9, name: 'I2', description: 'Included 2'),
+      ClarityModel(id: 10, name: 'I3', description: 'Included 3'),
+    ];
+
+    colorModelList = [
+      ColorModel(id: 1, name: 'D', description: 'Colorless'),
+      ColorModel(id: 2, name: 'E', description: 'Colorless'),
+      ColorModel(id: 3, name: 'F', description: 'Colorless'),
+      ColorModel(id: 4, name: 'G', description: 'Near Colorless'),
+      ColorModel(id: 5, name: 'H', description: 'Near Colorless'),
+      ColorModel(id: 6, name: 'I', description: 'Near Colorless'),
+      ColorModel(id: 7, name: 'J', description: 'Near Colorless'),
+      ColorModel(id: 8, name: 'K', description: 'Faint Yellow'),
+      ColorModel(id: 9, name: 'L', description: 'Faint Yellow'),
+      ColorModel(id: 10, name: 'M', description: 'Faint Yellow'),
+    ];
+
+    cutModelList = [
+      CutModel(id: 1, name: 'Excellent', description: 'Very sparkly'),
+      CutModel(id: 2, name: 'Very Good', description: 'Very Good'),
+      CutModel(id: 3, name: 'Good', description: 'Good'),
+      CutModel(id: 4, name: 'Fair', description: 'Fair'),
+      CutModel(id: 5, name: 'Poor', description: 'Poor'),
+    ];
+
+    chartData = _generateChartData();
+  }
+
+  List<ChartDataModel> _generateChartData() {
+    final random = math.Random();
+    return List.generate(50, (index) {
+      return ChartDataModel(
+          random.nextDouble() * 40, // x value between 0 and 40
+          random.nextDouble() * 100, // y value
+          cutModel: cutModelList.randomValue,
+          clarityModel: clarityModelList.randomValue,
+          colorModel: colorModelList.randomValue);
+    });
   }
 
   void _onOrionPriceRangeChangedEvent(OrionPriceRangeChangedEvent event, Emitter<OrionState> emit) {
@@ -65,10 +143,18 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   void _onOrionDiamondPropertiesChangedEvent(OrionDiamondPropertiesChangedEvent event, Emitter<OrionState> emit) {
     emit(const OrionReloadedState());
-
-    diamondPropertiesList[event.diamondPropertiesIndex].selectedProperties =
-        diamondPropertiesList[event.diamondPropertiesIndex].propertiesList?[event.propertiesIndex];
-    emit(OrionDiamondPropertiesChangedState(event.diamondPropertiesIndex, event.propertiesIndex));
+    switch (event.diamondPropertiesIndex) {
+      case 0:
+        selectedCutModel = cutModelList[event.propertiesIndex];
+        break;
+      case 1:
+        selectedColorModel = colorModelList[event.propertiesIndex];
+        break;
+      case 2:
+        selectedClarityModel = clarityModelList[event.propertiesIndex];
+        break;
+    }
+    emit(OrionDiamondCutChangedState(event.diamondPropertiesIndex, event.propertiesIndex));
   }
 
   void _onOrionPriceRangeEditEvent(OrionPriceRangeEditEvent event, Emitter<OrionState> emit) {
@@ -94,61 +180,6 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
           id: '5', value: 'Princess', image: 'https://i.ibb.co/ykmsZS2/Princess.png', availableProductCount: Random().nextInt(100)),
     ];
     selectedDiamondShape = diamondShapeList.first;
-  }
-
-  void _initDiamondPropertiesList() {
-    diamondPropertiesList = [
-      OrionDiamondPropertiesDataModel(
-        id: 1,
-        title: 'Cut',
-        propertiesList: [
-          OrionPropertiesDetails(id: 1, title: 'Excellent', subTitle: 'Very sparkly'),
-          OrionPropertiesDetails(id: 2, title: 'Very Good', subTitle: 'Sparkly'),
-          OrionPropertiesDetails(id: 3, title: 'Good', subTitle: 'Sparkly'),
-          OrionPropertiesDetails(id: 4, title: 'Fair', subTitle: 'Very sparkly'),
-          OrionPropertiesDetails(id: 5, title: 'Poor', subTitle: 'Sparkly'),
-          OrionPropertiesDetails(id: 6, title: 'Low', subTitle: 'Quality'),
-        ],
-      ),
-      OrionDiamondPropertiesDataModel(
-        id: 2,
-        title: 'Color',
-        propertiesList: [
-          OrionPropertiesDetails(id: 1, title: 'D', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 2, title: 'E', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 3, title: 'F', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 4, title: 'G', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 5, title: 'H', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 6, title: 'I', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 7, title: 'J', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 8, title: 'K', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 9, title: 'L', subTitle: 'Colorless'),
-          OrionPropertiesDetails(id: 10, title: 'M', subTitle: 'Colorless'),
-        ],
-      ),
-      OrionDiamondPropertiesDataModel(
-        id: 3,
-        title: 'Clarity',
-        propertiesList: [
-          OrionPropertiesDetails(id: 1, title: 'IF', subTitle: 'Very slightly included'),
-          OrionPropertiesDetails(id: 2, title: 'VVS1', subTitle: 'Very slightly included'),
-          OrionPropertiesDetails(id: 3, title: 'VVS2', subTitle: 'Very slightly included'),
-          OrionPropertiesDetails(id: 4, title: 'VS1', subTitle: 'Very slightly included'),
-          OrionPropertiesDetails(id: 5, title: 'VS2', subTitle: 'Very slightly included'),
-          OrionPropertiesDetails(id: 6, title: 'SI1', subTitle: 'Slightly included'),
-          OrionPropertiesDetails(id: 7, title: 'SI2', subTitle: 'Slightly included'),
-          OrionPropertiesDetails(id: 8, title: 'I1', subTitle: 'Included'),
-          OrionPropertiesDetails(id: 9, title: 'I2', subTitle: 'Included'),
-          OrionPropertiesDetails(id: 10, title: 'I3', subTitle: 'Included'),
-        ],
-      ),
-    ];
-
-    for (OrionDiamondPropertiesDataModel element in diamondPropertiesList) {
-      element.selectedProperties = element.propertiesList?.first;
-    }
-
-    diamondPropertiesListController = List.generate(diamondPropertiesList.length, (index) => ScrollController());
   }
 
   /// Handles the change in the minimum price value from the text field.
@@ -203,5 +234,185 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     } else {
       maxPriceController.text = '\$ ${values.end.toStringAsFixed(2)}'; // Reset the text field if the value is out of range.
     }
+  }
+
+  /// Handles the drag update event for the pin.
+  Future<void> updatePinPosition(DragUpdateDetails details) async {
+    Offset newPosition = pinPosition + details.delta;
+
+    // Get the chart's render box
+    final RenderBox? renderBox = chartKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      final Size size = renderBox.size;
+
+      // Constrain the pin position within the chart area
+      newPosition = Offset(
+        newPosition.dx.clamp(0, size.width),
+        newPosition.dy.clamp(0, size.height - 44.w),
+      );
+    }
+
+    // Calculate the current price based on the pin position
+    if (chartSeriesController != null) {
+      CartesianChartPoint<dynamic> chartPoint = chartSeriesController!.pixelToPoint(Offset(pinPosition.dx + yAxisWidth, pinPosition.dy));
+      currentPrice = chartPoint.y!.toDouble();
+
+      // Directly use the x value as the carat value
+      currentCarat = chartPoint.x.toDouble();
+
+      // Ensure carat is not negative and round to two decimal places
+      currentCarat = math.max(0, (currentCarat * 100).round() / 100);
+    }
+
+    pinPosition = newPosition;
+    ChartDataModel? currentData = getCurrentChartData();
+    if (currentData != null) {
+      showSelectedData(currentData);
+    }
+  }
+
+  /// get the current chart data based on the pin position
+  ChartDataModel? getCurrentChartData() {
+    if (dotPositions.isEmpty) return null;
+
+    int nearestIndex = -1;
+    double minDistance = double.infinity;
+    for (int i = 0; i < dotPositions.length; i++) {
+      double distance = _calculateDistance(dotPositions[i], pinPosition);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestIndex = i;
+      }
+    }
+
+    return nearestIndex >= 0 ? chartData[nearestIndex] : null;
+  }
+
+  /// Show the selected data based on the current chart data
+  void showSelectedData(ChartDataModel data) {
+    selectedCutModel = data.cutModel;
+    selectedClarityModel = data.clarityModel;
+    selectedColorModel = data.colorModel;
+  }
+
+  /// Snap the pin to the nearest point on the chart
+  void snapPinToNearestPoint() {
+    if (dotPositions.isNotEmpty) {
+      pinPosition = findNearestOffset(dotPositions, pinPosition);
+      if (chartSeriesController != null) {
+        CartesianChartPoint<dynamic> chartPoint = chartSeriesController!.pixelToPoint(Offset(pinPosition.dx + yAxisWidth, pinPosition.dy));
+        currentPrice = chartPoint.y!.toDouble();
+
+        // Directly use the x value as the carat value
+        currentCarat = chartPoint.x.toDouble();
+
+        // Ensure carat is not negative and round to two decimal places
+        currentCarat = math.max(0, (currentCarat * 100).round() / 100);
+      }
+    }
+  }
+
+  /// Find the nearest offset from a list of offsets to a target offset
+  Offset findNearestOffset(List<Offset> offsetList, Offset targetOffset) {
+    double minDistance = double.infinity;
+    Offset nearestOffset = Offset.zero;
+
+    for (Offset offset in offsetList) {
+      double distance = _calculateDistance(offset, targetOffset);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestOffset = offset;
+      }
+    }
+
+    return nearestOffset;
+  }
+
+  /// Calculate the distance between two offsets
+  double _calculateDistance(Offset offset1, Offset offset2) {
+    double deltaX = offset1.dx - offset2.dx;
+    double deltaY = offset1.dy - offset2.dy;
+    return sqrt(deltaX * deltaX + deltaY * deltaY);
+  }
+
+  /// Calculate the positions of the dots on the chart
+  void calculateDotPositions() {
+    if (chartSeriesController != null) {
+      dotPositions = chartData.map((point) {
+        return chartSeriesController!.pointToPixel(CartesianChartPoint<num>(x: point.x, y: point.y ?? 0));
+      }).toList();
+
+      pinPosition = dotPositions.first;
+    }
+  }
+
+  void _onOrionDiamondCalculateDotPositionsEvent(OrionDiamondCalculateDotPositionsEvent event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+    calculateDotPositions();
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondChangePointIndexEvent(OrionDiamondChangePointIndexEvent event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+    pointIndex = event.index;
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondChartTouchInteractionUpEvent(OrionDiamondChartTouchInteractionUpEvent event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+
+    pinPosition = event.tapArgs.position;
+    snapPinToNearestPoint();
+
+    ChartDataModel? currentData = getCurrentChartData();
+    if (currentData != null) {
+      showSelectedData(currentData);
+    }
+
+    if (pointIndex != null && chartSeriesController != null) {
+      CartesianChartPoint<dynamic> dragPoint = chartSeriesController!.pixelToPoint(event.tapArgs.position);
+
+      chartData[pointIndex!] = ChartDataModel(dragPoint.x, dragPoint.y as double?,
+          cutModel: selectedCutModel, clarityModel: selectedClarityModel, colorModel: selectedColorModel);
+    }
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondChartTouchInteractionDownEvent(OrionDiamondChartTouchInteractionDownEvent event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+
+    pinPosition = event.tapArgs.position;
+    snapPinToNearestPoint();
+
+    ChartDataModel? currentData = getCurrentChartData();
+    if (currentData != null) {
+      showSelectedData(currentData);
+    }
+
+    if (pointIndex != null && chartSeriesController != null) {
+      CartesianChartPoint<dynamic> dragPoint = chartSeriesController!.pixelToPoint(event.tapArgs.position);
+
+      chartData[pointIndex!] = ChartDataModel(dragPoint.x, dragPoint.y as double?,
+          cutModel: selectedCutModel, clarityModel: selectedClarityModel, colorModel: selectedColorModel);
+    }
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondChartTouchInteractionMoveEvent(OrionDiamondChartTouchInteractionMoveEvent event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+    pinPosition = event.tapArgs.position;
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondUpdatePinPositionEvent(OrionDiamondUpdatePinPositionEvent event, Emitter<OrionState> emit) async {
+    emit(const OrionReloadedState());
+    await updatePinPosition(event.dragUpdateDetails);
+    emit(const OrionDiamondMovedState());
+  }
+
+  void _onOrionDiamondSnapNearestPoint(OrionDiamondSnapNearestPoint event, Emitter<OrionState> emit) {
+    emit(const OrionReloadedState());
+    snapPinToNearestPoint();
+    emit(const OrionDiamondMovedState());
   }
 }

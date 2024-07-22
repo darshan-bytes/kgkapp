@@ -31,13 +31,14 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   void _videoListener() {
     if (playerController.value.isInitialized) {
       isVideoInitialized = true;
+      playerController.removeListener(_videoListener);
     }
   }
 
   @override
   Future<void> close() {
-    playerController.removeListener(_videoListener);
     playerController.dispose();
+    playerController.removeListener(_videoListener);
     return super.close();
   }
 }
