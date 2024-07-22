@@ -22,3 +22,26 @@ final class SignInReloadState extends SignInState {
   @override
   List<Object> get props => [];
 }
+
+final class SignInLoadingState extends SignInState {
+  const SignInLoadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SignInSuccessState extends SignInState {
+  const SignInSuccessState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SignInErrorState extends SignInState {
+  final String errorMessage;
+
+  const SignInErrorState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

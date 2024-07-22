@@ -8,7 +8,7 @@ class SignInScreen extends StatelessWidget {
     final style = AppTheme.of(context).signInScreenStyle;
     final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
-      bottomNavigationBar: buildRichText(context),
+      bottomNavigationBar: buildRichText(context, bloc),
       appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor, isBack: false),
       body: SafeArea(
         child: Column(
@@ -53,6 +53,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildEmailField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.emailController,
       labelText: APPStrings.email.tr,
       hintText: APPStrings.hintEmail.tr,
       labelStyle: style.labelStyle,
@@ -65,6 +66,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildPasswordField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.passwordController,
       obscured: true,
       labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
@@ -92,11 +94,11 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildLoginButton(BuildContext context, SignInBloc bloc) {
     return SmartButton(
       margin: EdgeInsets.symmetric(horizontal: 17.w),
       onTap: () {
-        context.pushNamed(AppRoutes.userTypeSelection);
+        bloc.add(SignInButtonPressedEvent(context: context));
       },
       title: APPStrings.login.tr,
     );
@@ -148,14 +150,14 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget buildRichText(BuildContext context) {
+  Widget buildRichText(BuildContext context, SignInBloc bloc) {
     final style = AppTheme.of(context).signInScreenStyle;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildLoginButton(context),
+          _buildLoginButton(context, bloc),
           SizedBox(height: 16.h),
           SmartRichText(
             textAlign: TextAlign.center,

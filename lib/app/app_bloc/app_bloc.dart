@@ -110,3 +110,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(UserTypeState(userType));
   }
 }
+
+extension LoadingExtension on BuildContext {
+  void setAppLoading(bool isLoading) {
+    BlocProvider.of<AppBloc>(this).add(SetAppLoadingEvent(isLoading));
+  }
+}

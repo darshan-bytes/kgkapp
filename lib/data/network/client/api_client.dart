@@ -2,10 +2,10 @@
 class ApiClient {
   ApiClient._();
 
-  static const String apiBaseUrl = 'http://dev2.spaceo.in/project/laravel_basecode/code/public/api/v1';
+  static const String apiBaseUrl = 'https://api.kgk.magnetoinfotech.com/v1';
 
-  static const String loginUser = '/oauth/login';
-  static const String signUpUser = '/oauth/signup';
-  static const String userProfile = '/user/profile';
-  static const String socialLogin = '/oauth/social-signin';
+  static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
+  static const String signUpUser = '$apiBaseUrl/oauth/signup';
+  static const String userProfile = '$apiBaseUrl/user/profile';
+  static const String socialLogin = '$apiBaseUrl/oauth/social-signin';
 }
