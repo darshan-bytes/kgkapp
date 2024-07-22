@@ -68,14 +68,16 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
               SizedBox(height: spacingBetweenTitleAndItems),
             ],
             widgetBetweenTitleAndItems ?? const SizedBox.shrink(),
-            isScrollbarVisible
+            // Commented out the Scrollbar widget because JD asked to remove it.
+            /*isScrollbarVisible
                 ? Scrollbar(
                     controller: scrollController,
                     trackVisibility: false,
                     thumbVisibility: isScrollbarVisible,
                     child: child,
                   )
-                : child
+                : */
+            child
           ],
         ),
       ),

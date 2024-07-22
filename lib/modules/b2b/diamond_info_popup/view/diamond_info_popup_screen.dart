@@ -327,7 +327,9 @@ class DiamondInfoPopupScreen extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
             SelectionButton(
-              padding: EdgeInsets.all(12.w),
+              height: 42.w,
+              width: 42.w,
+              padding: EdgeInsets.all(6.w),
               isSelected: false,
               onTap: () {},
               image: AppImages.icHeart,

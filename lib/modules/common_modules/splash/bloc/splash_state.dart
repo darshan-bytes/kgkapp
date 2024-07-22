@@ -10,10 +10,15 @@ final class SplashInitial extends SplashState {
 }
 
 final class SplashVideoInitialized extends SplashState {
-  final VideoPlayerController playerController;
-
-  const SplashVideoInitialized({required this.playerController});
+  const SplashVideoInitialized();
 
   @override
-  List<Object?> get props => [playerController];
+  List<Object?> get props => [];
+}
+
+final class SplashVideoCompleteState extends SplashState {
+  const SplashVideoCompleteState();
+
+  @override
+  List<Object?> get props => [];
 }
