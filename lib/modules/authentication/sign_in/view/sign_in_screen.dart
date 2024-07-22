@@ -34,14 +34,14 @@ class SignInScreen extends StatelessWidget {
                       _buildPasswordField(style, context, bloc),
                       SizedBox(height: 16.h),
                       _buildForgotPasswordText(context, style),
-                      SizedBox(height: 32.h),
-                      _buildLoginButton(context),
+                      // SizedBox(height: 32.h),
+                      // _buildLoginButton(context),
                       // TODO: For social media buttons
                       // const SizedBox(height: 32),
                       // _buildDivider(style),
                       // const SizedBox(height: 24),
                       // _buildSocialMediaButtons(),
-                      SizedBox(height: 24.h),
+                      // SizedBox(height: 24.h),
                     ],
                   ),
                 ),
@@ -96,6 +96,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildLoginButton(BuildContext context) {
     return SmartButton(
+      margin: EdgeInsets.symmetric(horizontal: 17.w),
       onTap: () {
         context.pushNamed(AppRoutes.userTypeSelection);
       },
@@ -156,6 +157,8 @@ class SignInScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
+          _buildLoginButton(context),
+          SizedBox(height: 16.h),
           SmartRichText(
             textAlign: TextAlign.center,
             spans: [

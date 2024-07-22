@@ -10,16 +10,14 @@ class SplashScreen extends StatelessWidget {
         lazy: false,
         create: (context) => SplashBloc()..add(LoadSplashEvent(context: context)),
         child: BlocBuilder<SplashBloc, SplashState>(
-          buildWhen: (previous, current) => current is SplashVideoInitialized,
+          buildWhen: (previous, current) => current is SplashVideoInitialized || current is SplashVideoCompleteState,
           builder: (context, state) {
             SplashBloc bloc = BlocProvider.of<SplashBloc>(context);
-            if (state is SplashVideoInitialized && bloc.isVideoInitialized) {
+            if (state is SplashVideoInitialized && bloc.playerController.value.isInitialized) {
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  VideoPlayer(
-                    state.playerController,
-                  ),
+                  VideoPlayer(bloc.playerController),
                   SizedBox(
                     height: context.height,
                     width: context.width,
