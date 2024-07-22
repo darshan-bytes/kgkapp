@@ -26,6 +26,9 @@ class AppImages {
   static const String icSupport = 'assets/images/ic_support.svg';
   static const String icSupportActive = 'assets/images/ic_support_active.svg';
   static const String icSplashLogo = 'assets/images/ic_splash_logo.png';
+
+  // This image is used in splash screen only.
+  static const String icSplashLogoWithSvg = 'assets/images/ic_splash_logo.svg';
   static const String icCompanyBottomNavbar = 'assets/images/ic_company_bottom_navbar.svg';
   static const String icCompanyActive = 'assets/images/ic_company_active.svg';
 

@@ -9,7 +9,7 @@ class SignInScreen extends StatelessWidget {
     final SignInBloc bloc = context.read<SignInBloc>();
     return Scaffold(
       bottomNavigationBar: buildRichText(context),
-      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor),
+      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor, isBack: false),
       body: SafeArea(
         child: Column(
           children: [

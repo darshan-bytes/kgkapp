@@ -413,3 +413,4 @@ export 'package:kgk/widgets/smart_refresh_indicator.dart';
 export 'package:kgk/widgets/expandable_page_view/expandable_page_view.dart' hide WidgetBuilder;
 export 'package:kgk/modules/b2b/orion/model/chart_data_model.dart';
 export 'package:syncfusion_flutter_charts/charts.dart' hide LabelPlacement, EdgeLabelPlacement;
+export 'package:video_player/video_player.dart';
