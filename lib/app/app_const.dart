@@ -16,4 +16,5 @@ class AppConst {
   static const String profileAboutUsWebViewURL = 'https://www.kgkgroup.com/story-of-kgk/';
   static const String profilePrivacyPolicyWebViewURL = 'https://www.kgkgroup.com/privacy-policy/';
   static const String splashScreenVideoUrl = 'assets/images/splash_video_url.mp4';
+  static const int passwordLength = 8;
 }

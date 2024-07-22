@@ -35,7 +35,7 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(height: 16.h),
                       _buildForgotPasswordText(context, style),
                       SizedBox(height: 32.h),
-                      _buildLoginButton(context),
+                      _buildLoginButton(context, bloc),
                       // TODO: For social media buttons
                       // const SizedBox(height: 32),
                       // _buildDivider(style),
@@ -55,6 +55,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildEmailField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.emailController,
       labelText: APPStrings.email.tr,
       hintText: APPStrings.hintEmail.tr,
       labelStyle: style.labelStyle,
@@ -67,6 +68,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildPasswordField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.passwordController,
       obscured: true,
       labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
@@ -94,10 +96,10 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildLoginButton(BuildContext context, SignInBloc bloc) {
     return SmartButton(
       onTap: () {
-        context.pushNamed(AppRoutes.userTypeSelection);
+        bloc.add(SignInButtonPressedEvent(context: context));
       },
       title: APPStrings.login.tr,
     );

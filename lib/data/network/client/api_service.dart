@@ -1,12 +1,7 @@
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:kgk/kgk.dart';
 
 class ApiService implements ApiProvider {
-  String apiBaseUrl;
-
-  ApiService({required this.apiBaseUrl});
-
   @override
   Future<Either<String, dynamic>?> getMethod<T>(
     String url, {
@@ -16,12 +11,12 @@ class ApiService implements ApiProvider {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
 
-        final response = await http.get(Uri.parse(apiBaseUrl + url), headers: {
+        final response = await http.get(Uri.parse(url), headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
           HttpHeaders.contentTypeHeader: 'application/json',
         });
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == ResponseCode.success) {
           return Right(jsonDecode(response.body));
         } else {
           return Left(APPStrings.failedFetchData.tr);
@@ -43,11 +38,14 @@ class ApiService implements ApiProvider {
     try {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
+        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
 
-        final response = await http.post(Uri.parse(apiBaseUrl + url),
+        final response = await http.post(Uri.parse(url),
             headers: {
               HttpHeaders.authorizationHeader: 'Bearer $token',
               HttpHeaders.contentTypeHeader: 'application/json',
+              ApiKey.xApiKey: apiKey,
+              ApiKey.acceptLanguage: 'en',
               // Merge headers passed in the parameter
               if (headers != null) ...headers,
             },
@@ -76,7 +74,7 @@ class ApiService implements ApiProvider {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
 
-        final response = await http.put(Uri.parse(apiBaseUrl + url),
+        final response = await http.put(Uri.parse(url),
             headers: {
               HttpHeaders.authorizationHeader: 'Bearer $token',
               HttpHeaders.contentTypeHeader: 'application/json',
@@ -108,7 +106,7 @@ class ApiService implements ApiProvider {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
 
-        final response = await http.patch(Uri.parse(apiBaseUrl + url),
+        final response = await http.patch(Uri.parse(url),
             headers: {
               HttpHeaders.authorizationHeader: 'Bearer $token',
               HttpHeaders.contentTypeHeader: 'application/json',
@@ -139,7 +137,7 @@ class ApiService implements ApiProvider {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
 
-        final response = await http.delete(Uri.parse(apiBaseUrl + url), headers: {
+        final response = await http.delete(Uri.parse(url), headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
           HttpHeaders.contentTypeHeader: 'application/json',
         });
@@ -164,7 +162,7 @@ class ApiService implements ApiProvider {
       if (await ConnectivityManager().checkInternet()) {
         String? token = StorageManager().getAuthToken();
 
-        var request = http.MultipartRequest('POST', Uri.parse(apiBaseUrl + url))
+        var request = http.MultipartRequest('POST', Uri.parse(url))
           ..headers[HttpHeaders.authorizationHeader] = 'Bearer $token'
           ..headers[HttpHeaders.contentTypeHeader] = 'multipart/form-data';
 

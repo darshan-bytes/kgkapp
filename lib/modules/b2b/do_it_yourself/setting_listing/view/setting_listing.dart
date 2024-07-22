@@ -24,21 +24,28 @@ class SettingListingScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: FilterBottomActionBar(
-        controller: settingListingBloc.paginationScrollController.controller,
-        onFilterTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => FilterScreen(
-              onApply: () {},
-            ),
-          );
-        },
-        onSortTap: () {
-          Utils.showSmartModalBottomSheet(
-            context: context,
-            builder: (context) => const SortScreen(),
-          );
+      bottomNavigationBar: BlocBuilder<SettingListingBloc, SettingListingState>(
+        builder: (context, state) {
+          if (state is SettingLoadedState) {
+            return FilterBottomActionBar(
+              controller: settingListingBloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => FilterScreen(
+                    onApply: () {},
+                  ),
+                );
+              },
+              onSortTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SortScreen(),
+                );
+              },
+            );
+          }
+          return const SizedBox.shrink();
         },
       ),
       body: BlocBuilder<SettingListingBloc, SettingListingState>(

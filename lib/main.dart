@@ -43,13 +43,32 @@ class _MyAppState extends State<MyApp> {
                       value: SystemUiOverlayStyle.light,
                       child: Stack(
                         children: [
-                          if (widget != null) widget,
+                          BlocBuilder<AppBloc, AppState>(
+                              buildWhen: (previous, current) => current is AppLoadingState,
+                              builder: (context, state) {
+                                return IgnorePointer(
+                                  ignoring: appBloc.isLoading,
+                                  child: Stack(
+                                    children: [
+                                      widget ?? const Offstage(),
+                                      if (appBloc.isLoading) // Top level loading ( used while api calls)
+                                        AnimatedContainer(
+                                          duration: const Duration(milliseconds: 500),
+                                          color: Colors.grey.withOpacity(0.5),
+                                          child: const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              }),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
                               padding: const EdgeInsets.only(top: 55, right: 50),
                               child: const Banner(
-                                message: "18-Jul-24",
+                                message: "20-Jul-24",
                                 location: BannerLocation.bottomStart,
                               ),
                             ),
