@@ -7,11 +7,12 @@ class Utils {
   static void showMessage(String message) {
     Flushbar(
       message: message,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
+      animationDuration: const Duration(milliseconds: 1300),
       backgroundColor: AppThemes().appColor.primary,
-      margin: const EdgeInsets.all(10),
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      margin: EdgeInsets.all(10.w),
+      borderRadius: BorderRadius.all(Radius.circular(10.r)),
     ).show(NavigatorKey.navigatorKey.currentContext!);
   }
 
@@ -156,5 +157,15 @@ class Utils {
       anchorPoint: anchorPoint,
       sheetAnimationStyle: sheetAnimationStyle,
     );
+  }
+
+  /// Check email validation
+  static bool isEmail(String email) {
+    String regex =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = RegExp(regex);
+
+    return regExp.hasMatch(email);
   }
 }

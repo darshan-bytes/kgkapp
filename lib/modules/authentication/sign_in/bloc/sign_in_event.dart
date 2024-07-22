@@ -12,3 +12,12 @@ class ChangeSwitchValueEvent extends SignInEvent {
   @override
   List<Object> get props => [switchValue];
 }
+
+class SignInButtonPressedEvent extends SignInEvent {
+  final BuildContext context;
+
+  const SignInButtonPressedEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
