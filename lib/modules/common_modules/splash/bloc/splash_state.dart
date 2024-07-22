@@ -8,3 +8,12 @@ final class SplashInitial extends SplashState {
   @override
   List<Object> get props => [];
 }
+
+final class SplashVideoInitialized extends SplashState {
+  final VideoPlayerController playerController;
+
+  const SplashVideoInitialized({required this.playerController});
+
+  @override
+  List<Object?> get props => [playerController];
+}
