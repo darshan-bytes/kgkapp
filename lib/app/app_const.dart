@@ -15,6 +15,7 @@ class AppConst {
   static const String profileRingSizerWebViewURL = 'https://www.kgkgroup.com/ring-sizer/';
   static const String profileAboutUsWebViewURL = 'https://www.kgkgroup.com/story-of-kgk/';
   static const String profilePrivacyPolicyWebViewURL = 'https://www.kgkgroup.com/privacy-policy/';
-  static const String splashScreenVideoUrl = 'assets/images/splash_video_url.mp4';
+
+  static String splashScreenVideoUrl = Platform.isAndroid ? 'assets/images/splash_video_url.mp4' : 'assets/images/splash_video_url_ios.mp4';
   static const int passwordLength = 8;
 }
