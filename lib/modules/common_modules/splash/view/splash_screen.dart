@@ -9,26 +9,54 @@ class SplashScreen extends StatelessWidget {
       body: BlocProvider(
         lazy: false,
         create: (context) => SplashBloc()..add(LoadSplashEvent(context: context)),
-        child: Stack(
-          children: [
-            SizedBox(
-              height: context.height,
-              width: context.width,
-              child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
-            ),
-            SizedBox(
-              height: context.height,
-              width: context.width,
-              child: Center(
-                child: SmartImage(
-                  path: AppImages.icSplashLogo,
-                  height: 112.w,
-                  width: 112.w,
-                  fit: BoxFit.cover,
+        child: BlocBuilder<SplashBloc, SplashState>(
+          buildWhen: (previous, current) => current is SplashVideoInitialized,
+          builder: (context, state) {
+            SplashBloc bloc = BlocProvider.of<SplashBloc>(context);
+            if (state is SplashVideoInitialized && bloc.isVideoInitialized) {
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  VideoPlayer(
+                    state.playerController,
+                  ),
+                  SizedBox(
+                    height: context.height,
+                    width: context.width,
+                    child: Center(
+                      child: SmartImage(
+                        path: AppImages.icSplashLogoWithSvg,
+                        height: 112.w,
+                        width: 112.w,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return Stack(
+              children: [
+                SizedBox(
+                  height: context.height,
+                  width: context.width,
+                  child: const SmartImage(path: AppImages.icSplashBg, fit: BoxFit.cover),
                 ),
-              ),
-            )
-          ],
+                SizedBox(
+                  height: context.height,
+                  width: context.width,
+                  child: Center(
+                    child: SmartImage(
+                      path: AppImages.icSplashLogo,
+                      height: 112.w,
+                      width: 112.w,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
     );

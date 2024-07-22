@@ -412,3 +412,4 @@ export 'package:kgk/widgets/scroll_to_hide/scroll_to_hide_widget.dart';
 export 'package:flutter_bounceable/flutter_bounceable.dart';
 export 'package:kgk/widgets/smart_refresh_indicator.dart';
 export 'package:kgk/widgets/expandable_page_view/expandable_page_view.dart' hide WidgetBuilder;
+export 'package:video_player/video_player.dart';

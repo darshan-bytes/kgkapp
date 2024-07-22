@@ -99,6 +99,9 @@ dependencies:
   #For Bounce animation
   flutter_bounceable: ^1.1.0
 
+  #For Video Player
+  video_player: ^2.9.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
