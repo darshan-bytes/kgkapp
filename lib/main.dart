@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                             child: Container(
                               padding: const EdgeInsets.only(top: 55, right: 50),
                               child: const Banner(
-                                message: "18-Jul-24",
+                                message: "22-Jul-24",
                                 location: BannerLocation.bottomStart,
                               ),
                             ),
