@@ -156,7 +156,7 @@ class ProductListScreen extends StatelessWidget {
                     (
                       index: 13,
                       child: SmartImage(
-                        path: "https://i.ibb.co/3dynkYb/Frame-1410088928.png",
+                        path: "https://i.ibb.co/PN51B9q/Banner.png",
                         fit: BoxFit.fitWidth,
                         padding: EdgeInsets.symmetric(vertical: 32.h),
                       )
@@ -262,6 +262,12 @@ class ProductListScreen extends StatelessWidget {
                         },
                         productDetails: bloc.productList[index],
                       ),
+                      if (index == 13)
+                        SmartImage(
+                          path: "https://i.ibb.co/PN51B9q/Banner.png",
+                          fit: BoxFit.fitWidth,
+                          padding: EdgeInsets.symmetric(vertical: 32.h),
+                        ),
                       if (index == bloc.productList.length - 1 && state is ProductListLoadingMoreState)
                         const SmartCircularProgressIndicator(),
                     ],

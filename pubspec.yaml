@@ -29,7 +29,7 @@ dependencies:
 
   # For API
   dartz: ^0.10.1
-  http: ^1.2.1
+  http: ^1.2.2
 
   # For Device Info
   device_info_plus: ^10.1.0
@@ -91,13 +91,13 @@ dependencies:
   google_maps_flutter: ^2.7.0
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^26.1.41
+  syncfusion_flutter_sliders: ^26.1.42
 
   #For Calendar
-  syncfusion_flutter_calendar: ^26.1.41
+  syncfusion_flutter_calendar: ^26.1.42
 
 
-  syncfusion_flutter_charts: ^26.1.41+1
+  syncfusion_flutter_charts: ^26.1.42
 
   #For Bounce animation
   flutter_bounceable: ^1.1.0

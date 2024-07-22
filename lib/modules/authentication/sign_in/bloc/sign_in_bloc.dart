@@ -39,6 +39,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   /// Sign in API call
   Future<void> signInApiCall(SignInButtonPressedEvent event, Emitter<SignInState> emit) async {
     if (!checkValidations()) return;
+
+    // Show loading state
     emit(const SignInLoadingState());
     Map<String, dynamic> params = {
       ApiKey.email: emailController.text.trim(),
@@ -53,7 +55,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         printWrapped('$value');
       }, (r) async {
         printWrapped(r.toString());
-        StorageManager().setAuthToken(r.vAccessToken!);
+        StorageManager().setAuthToken(r.accessToken ?? '');
         emit(const SignInSuccessState());
         event.context.pushNamed(AppRoutes.userTypeSelection);
       });
@@ -71,7 +73,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     } else if (passwordController.text.trim().isEmpty) {
       Utils.showMessage("Please enter password");
       return false;
-    } else if (passwordController.text.trim().length < AppConst.passwordLength) {
+    } else if (passwordController.text.trim().length < 3) {
       Utils.showMessage("Password must be at least 8 characters");
       return false;
     }

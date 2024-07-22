@@ -44,27 +44,23 @@ class SmartSuggestionProductList extends StatelessWidget {
           ],
         ),
         SizedBox(height: 16.h),
-        Scrollbar(
+        SmartSingleChildScrollView(
           controller: scrollController,
-          thumbVisibility: true,
-          child: SmartSingleChildScrollView(
-            controller: scrollController,
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: isPaddingNeeded ? EdgeInsets.only(left: 17.w, right: 17.w) : EdgeInsets.zero,
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: 12.w,
-                runSpacing: 12.2,
-                children: suggestedProductList.map((product) {
-                  return ProductGridItem(
-                    margin: EdgeInsets.only(bottom: 17.h),
-                    onEyeTap: onEyeTap,
-                    onFavTap: onFavTap,
-                    productDetails: product,
-                  );
-                }).toList(),
-              ),
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: isPaddingNeeded ? EdgeInsets.only(left: 17.w, right: 17.w) : EdgeInsets.zero,
+            child: Wrap(
+              direction: Axis.horizontal,
+              spacing: 12.w,
+              runSpacing: 12.2,
+              children: suggestedProductList.map((product) {
+                return ProductGridItem(
+                  margin: EdgeInsets.only(bottom: 17.h),
+                  onEyeTap: onEyeTap,
+                  onFavTap: onFavTap,
+                  productDetails: product,
+                );
+              }).toList(),
             ),
           ),
         ),
