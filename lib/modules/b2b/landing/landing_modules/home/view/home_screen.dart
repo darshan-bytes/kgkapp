@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               context: context,
               imgList: homeBloc.eliganceList3,
               bgColor: const Color.fromRGBO(236, 236, 234, 1),
-              title: "SHOP BY METAL",
+              title: APPStrings.shopByMetal.tr.toUpperCase(),
               height: 170.w,
               fit: BoxFit.fitWidth,
             ),
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
               style,
               imgList: homeBloc.shopGemstones2List,
               width: 95.w,
-              title: 'SHOP ENGAGEMENT RING',
+              title: APPStrings.shopEngagementRing.tr,
             ),
             _buildGetInspiredSection(homeBloc, style),
             _buildViewAllCollectionsSection(
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
               context: context,
               imgList: homeBloc.eliganceList2,
               bgColor: const Color.fromRGBO(242, 242, 246, 1),
-              title: "Eligance",
+              title: APPStrings.eligance.tr,
               height: 132.w,
             ),
             _buildTopSellingEligence(
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
               context: context,
               imgList: homeBloc.eliganceList,
               bgColor: const Color.fromRGBO(247, 238, 233, 1),
-              title: "Eligance",
+              title: APPStrings.eligance.tr,
               height: 132.w,
             ),
             _buildHorizontalSlider(homeBloc, style),
@@ -90,17 +90,8 @@ class HomeScreen extends StatelessWidget {
             _buildCreateYourOwnSignaturePiece(homeBloc, style, context: context),
             _buildDealOfTheDaySection(homeBloc, style, context: context),
             // _buildShopByBrandsSection(homeBloc, style),
-            _buildPopularView(
-              homeBloc,
-              style,
-              title: "Shop By Brands",
-              popularList: homeBloc.shopByBrands,
-            ),
-            _buildViewAllCollectionsSection(
-              style,
-              context: context,
-              url: "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png",
-            ),
+            _buildPopularView(homeBloc, style, title: APPStrings.shopByBrands.tr, popularList: homeBloc.shopByBrands),
+            _buildViewAllCollectionsSection(style, context: context, url: "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png"),
             _buildShopByStyleSection(homeBloc, style),
             _buildRecentlyViewedSection(homeBloc, style, context: context)
           ],
@@ -214,7 +205,7 @@ class HomeScreen extends StatelessWidget {
         SizedBox(
           height: 20.h,
         ),
-        SmartText("Shop By Category", style: style.bannerTitleStyle),
+        SmartText(APPStrings.shopByCategory.tr, style: style.bannerTitleStyle),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: LayoutBuilder(
@@ -290,7 +281,7 @@ class HomeScreen extends StatelessWidget {
       SizedBox(height: 20.h),
       Padding(
         padding: EdgeInsets.only(left: 6.w),
-        child: SmartText("Trending Now", style: style.bannerTitleStyle),
+        child: SmartText(APPStrings.trendingNow.tr, style: style.bannerTitleStyle),
       ),
       SizedBox(height: 20.h),
       SizedBox(
@@ -410,10 +401,7 @@ Widget _buildHorizontalSlider(HomeBloc homeBloc, HomeScreenStyle style) {
       ),
       Padding(
         padding: EdgeInsets.only(left: 6.w),
-        child: SmartText(
-          "Shop Latest Collection",
-          style: style.bannerTitleStyle,
-        ),
+        child: SmartText(APPStrings.shopLatestCollection.tr, style: style.bannerTitleStyle),
       ),
       SizedBox(
         height: 20.h,
@@ -552,7 +540,7 @@ Widget _buildTopSellingEligence(
     color: bgColor ?? const Color.fromRGBO(247, 238, 233, 1),
     padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SmartText(title ?? "Eligance", style: style.bannerTitleStyle),
+      SmartText(title ?? APPStrings.eligance.tr, style: style.bannerTitleStyle),
       SizedBox(height: 16.h),
       SmartGridView(
           columns: 2,

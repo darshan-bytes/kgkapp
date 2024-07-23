@@ -671,5 +671,14 @@
   "search_template": "Search template",
   "validity": "Validity",
   "view_more": "View more",
-  "shop_by_x": "Shop by {#}"
+  "shop_by_x": "Shop by {#}",
+  "shop_engagement_ring": "SHOP ENGAGEMENT RING",
+  "eligance": "Eligance",
+  "shop_by_category": "Shop by category",
+  "trending_now": "Trending Now",
+  "shop_latest_collection": "Shop Latest Collection",
+  "email_required": "Please enter email",
+  "valid_email": "Please enter valid email",
+  "password_required": "Please enter password",
+  "valid_password": "Password must be at least 8 characters"
 }

@@ -66,16 +66,16 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   /// Check email & password validations as needed
   bool checkValidations() {
     if (emailController.text.trim().isEmpty) {
-      Utils.showMessage("Please enter email");
+      Utils.showMessage(APPStrings.emailRequired.tr);
       return false;
     } else if (!Utils.isEmail(emailController.text.trim())) {
-      Utils.showMessage("Please enter valid email");
+      Utils.showMessage(APPStrings.validEmail.tr);
       return false;
     } else if (passwordController.text.trim().isEmpty) {
-      Utils.showMessage("Please enter password");
+      Utils.showMessage(APPStrings.passwordRequired.tr);
       return false;
     } else if (passwordController.text.trim().length < 3) {
-      Utils.showMessage("Password must be at least 8 characters");
+      Utils.showMessage(APPStrings.validPassword.tr);
       return false;
     }
 
