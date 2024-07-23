@@ -8,7 +8,7 @@ class CommonResponse<T> {
 
   CommonResponse({this.statusCode, this.message, this.responseData});
 
-  bool get isSuccess => statusCode == 200;
+  bool get isSuccess => statusCode == 200 || statusCode == 201;
 
   bool get isTokenExpired => statusCode == 400;
 
