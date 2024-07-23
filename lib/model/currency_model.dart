@@ -1,0 +1,137 @@
+class CurrencyListModel {
+  CurrencyListModel({
+    required this.name,
+    required this.slug,
+    required this.code,
+    required this.symbol,
+    required this.isDefault,
+    required this.symbolPosition,
+    required this.decimalSeparator,
+    required this.thousandSeparator,
+    required this.decimalDigits,
+    required this.conversionType,
+    required this.status,
+    required this.createdBy,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.updatedBy,
+    required this.createdByDetails,
+    required this.updatedByDetails,
+  });
+
+  final String? name;
+  final String? slug;
+  final String? code;
+  final String? symbol;
+  final bool? isDefault;
+  final String? symbolPosition;
+  final String? decimalSeparator;
+  final String? thousandSeparator;
+  final String? decimalDigits;
+  final String? conversionType;
+  final bool? status;
+  final String? createdBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? id;
+  final String? updatedBy;
+  final AtedByDetails? createdByDetails;
+  final AtedByDetails? updatedByDetails;
+
+  factory CurrencyListModel.fromJson(Map<String, dynamic> json) {
+    return CurrencyListModel(
+      name: json["name"],
+      slug: json["slug"],
+      code: json["code"],
+      symbol: json["symbol"],
+      isDefault: json["is_default"],
+      symbolPosition: json["symbol_position"],
+      decimalSeparator: json["decimal_separator"],
+      thousandSeparator: json["thousand_separator"],
+      decimalDigits: json["decimal_digits"],
+      conversionType: json["conversion_type"],
+      status: json["status"],
+      createdBy: json["created_by"],
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      id: json["id"],
+      updatedBy: json["updated_by"],
+      createdByDetails: json["created_by_details"] == null ? null : AtedByDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : AtedByDetails.fromJson(json["updated_by_details"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "slug": slug,
+        "code": code,
+        "symbol": symbol,
+        "is_default": isDefault,
+        "symbol_position": symbolPosition,
+        "decimal_separator": decimalSeparator,
+        "thousand_separator": thousandSeparator,
+        "decimal_digits": decimalDigits,
+        "conversion_type": conversionType,
+        "status": status,
+        "created_by": createdBy,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "id": id,
+        "updated_by": updatedBy,
+        "created_by_details": createdByDetails?.toJson(),
+        "updated_by_details": updatedByDetails?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$name, $slug, $code, $symbol, $isDefault, $symbolPosition, $decimalSeparator, $thousandSeparator, $decimalDigits, $conversionType, $status, $createdBy, $createdAt, $updatedAt, $id, $updatedBy, $createdByDetails, $updatedByDetails, ";
+  }
+}
+
+class AtedByDetails {
+  AtedByDetails({
+    required this.firstname,
+    required this.lastname,
+    required this.profilePic,
+    required this.userAccountId,
+    required this.email,
+    required this.userType,
+    required this.profilePicUrl,
+  });
+
+  final String? firstname;
+  final String? lastname;
+  final String? profilePic;
+  final String? userAccountId;
+  final String? email;
+  final String? userType;
+  final String? profilePicUrl;
+
+  factory AtedByDetails.fromJson(Map<String, dynamic> json) {
+    return AtedByDetails(
+      firstname: json["firstname"],
+      lastname: json["lastname"],
+      profilePic: json["profile_pic"],
+      userAccountId: json["user_account_id"],
+      email: json["email"],
+      userType: json["user_type"],
+      profilePicUrl: json["profile_pic_url"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "firstname": firstname,
+        "lastname": lastname,
+        "profile_pic": profilePic,
+        "user_account_id": userAccountId,
+        "email": email,
+        "user_type": userType,
+        "profile_pic_url": profilePicUrl,
+      };
+
+  @override
+  String toString() {
+    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, ";
+  }
+}

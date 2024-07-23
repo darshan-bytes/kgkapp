@@ -13,6 +13,7 @@ class StorageManager {
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
   final String _locale = 'locale';
+  final String _currency = 'currency';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -38,6 +39,19 @@ class StorageManager {
     return _box.get(_locale);
   }
 
+  /// Set currency list
+  Future<void> setCurrency(List<CurrencyListModel> currency) async {
+    await _box.put(_currency, currency.map((e) => e.toJson()).toList());
+  }
+
+  List<CurrencyListModel> getCurrency() {
+    List<CurrencyListModel> currencyList = [];
+    _box.get(_currency)?.forEach((element) {
+      currencyList.add(CurrencyListModel.fromJson(element));
+    });
+    return currencyList;
+  }
+
   /// Set theme data
   Future<void> setThemeData(String theme) async {
     await _box.put('themeData', theme);
@@ -47,9 +61,13 @@ class StorageManager {
     return _box.get('themeData') ?? 'light';
   }
 
-  /// Clear all data stored
+  /// Clear all data stored except _locale
   Future<void> clearSession() async {
+    String? locale = getLocale();
     await _box.clear();
+    if (locale != null) {
+      await setLocale(locale);
+    }
   }
 
   Future<void> closeBox() async {

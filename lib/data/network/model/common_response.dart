@@ -10,7 +10,7 @@ class CommonResponse<T> {
 
   bool get isSuccess => statusCode == 200 || statusCode == 201;
 
-  bool get isTokenExpired => statusCode == 400;
+  bool get isTokenExpired => statusCode == 401;
 
   CommonResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
@@ -57,6 +57,8 @@ class CommonResponse<T> {
         return OfficeLocation.fromJson(json);
       case const (ForgotPasswordModel):
         return ForgotPasswordModel.fromJson(json);
+      case const (CurrencyListModel):
+        return CurrencyListModel.fromJson(json);
       default:
         throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
     }
