@@ -19,6 +19,10 @@ class ApiService implements ApiProvider {
       headers.addAll(additionalHeaders);
     }
 
+    if (token.isNullOrEmpty) {
+      headers.remove(HttpHeaders.authorizationHeader);
+    }
+
     return headers;
   }
 
@@ -38,7 +42,7 @@ class ApiService implements ApiProvider {
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
-          return Right(jsonDecode(response.body));
+          return Right(commonResponse.responseData);
         } else {
           ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
           return Left(errorResponse);

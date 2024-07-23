@@ -7,5 +7,7 @@ class ApiClient {
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
   static const String signUpUser = '$apiBaseUrl/oauth/signup';
   static const String userProfile = '$apiBaseUrl/user/profile';
-  static const String socialLogin = '$apiBaseUrl/oauth/social-signin';
+
+  static const String businessTypes = '$apiBaseUrl/business-types';
+  static const String officeLocations = '$apiBaseUrl/subarea-masters';
 }

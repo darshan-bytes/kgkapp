@@ -4,6 +4,15 @@ sealed class SignUpEvent extends Equatable {
   const SignUpEvent();
 }
 
+final class SignUpInitialEvent extends SignUpEvent {
+  final BuildContext context;
+
+  const SignUpInitialEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
 final class SignUpChangeAccountTypeEvent extends SignUpEvent {
   final bool isIndividual;
 

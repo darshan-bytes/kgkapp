@@ -101,7 +101,7 @@ class AppRoutes {
       case signUpPage:
         return MaterialPageRoute(
           builder: (context) {
-            BlocProvider.of<SignUpBloc>(context).add(const SignUpResetEvent());
+            BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
             return const SignUpScreen();
           },
           settings: settings,

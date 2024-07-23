@@ -5,7 +5,14 @@ part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  /// Indicates whether the SignUpBloc has been initialized.
+  ///
+  /// This flag is used to prevent re-initialization of the bloc's state and data fetching operations.
+  /// It is set to `true` once the initial setup and data loading are completed.
+  bool _isInitialised = false;
   bool isIndividual = true;
+  bool isBusinessTypeListFetched = false;
+  bool isOfficeLocationListFetched = false;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -42,21 +49,17 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     })
   ];
   late Country selectedCountry;
-  List<BusinessType> businessTypes = [
-    BusinessType(name: APPStrings.diamond.tr, code: APPStrings.diamond),
-    BusinessType(name: APPStrings.gemstone.tr, code: APPStrings.gemstone),
-    BusinessType(name: APPStrings.jewellery.tr, code: APPStrings.jewellery),
-  ];
+  List<BusinessType> businessTypes = [];
 
-  List<OfficeLocation> officeLocations = [
-    OfficeLocation(name: "India", code: "india"),
-    OfficeLocation(name: "United States", code: "us"),
-  ];
+  List<OfficeLocation> officeLocations = [];
 
   OfficeLocation? selectedOfficeLocation;
 
+  bool get isSignupButtonEnabled => isBusinessTypeListFetched && isOfficeLocationListFetched;
+
   SignUpBloc() : super(SignupInitial()) {
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+    on<SignUpInitialEvent>(_onSignUpInitialEvent);
     on<SignUpChangeAccountTypeEvent>(_onSignUpChangeAccountTypeEvent);
     on<SignUpChangeCountryCodeEvent>(_onSignUpChangeCountryCodeEvent);
     on<SignUpChangeCountryEvent>(_onSignUpChangeCountryEvent);
@@ -65,6 +68,53 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpRemoveContactEvent>(_onSignUpRemoveContactEvent);
     on<SignUpResetEvent>(_onSignUpResetEvent);
     on<SignUpChangeOfficeLocationEvent>(_onSignUpChangeOfficeLocationEvent);
+  }
+
+  Future<void> _onSignUpInitialEvent(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
+    if (_isInitialised) {
+      return;
+    }
+    _isInitialised = true;
+    emit(const SignUpLoadingState());
+    isBusinessTypeListFetched = await getBusinessTypeList(event, emit);
+    isOfficeLocationListFetched = await getOfficeLocations(event, emit);
+
+    emit(const SignUpLoadedState());
+  }
+
+  Future<bool> getBusinessTypeList(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
+    Either<ErrorResponse, List<BusinessType>>? businessTypeResponse = await UserRepository(event.context).getBusinessTypes();
+    return businessTypeResponse?.fold(
+          (l) {
+            emit(SignUpErrorState(l.message ?? ''));
+            Utils.showMessage(l.message ?? '');
+            return false;
+          },
+          (r) {
+            businessTypes = r;
+            return true;
+          },
+        ) ??
+        false;
+  }
+
+  Future<bool> getOfficeLocations(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
+    Either<ErrorResponse, List<OfficeLocation>>? officeLocationResponse = await UserRepository(event.context).getOfficeLocations();
+    return officeLocationResponse?.fold(
+          (l) {
+            emit(SignUpErrorState(l.message ?? ''));
+            Utils.showMessage(l.message ?? '');
+            return false;
+          },
+          (r) {
+            officeLocations = r;
+            if (officeLocations.isNotEmpty) {
+              selectedOfficeLocation = officeLocations.first;
+            }
+            return true;
+          },
+        ) ??
+        false;
   }
 
   void _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) {
