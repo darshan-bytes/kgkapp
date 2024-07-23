@@ -8,9 +8,9 @@ sealed class ForgotPasswordEvent extends Equatable {
 }
 
 class ForgotPasswordSubmitEvent extends ForgotPasswordEvent {
-  final String email;
+  final BuildContext context;
 
-  const ForgotPasswordSubmitEvent({required this.email});
+  const ForgotPasswordSubmitEvent({required this.context});
 
   @override
   List<Object> get props => [];

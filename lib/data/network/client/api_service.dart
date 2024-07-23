@@ -51,6 +51,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);
@@ -83,6 +86,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);
@@ -111,6 +117,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);
@@ -139,6 +148,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);
@@ -169,6 +181,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);
@@ -232,6 +247,9 @@ class ApiService implements ApiProvider {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
       }
+    } on KGKException catch (e) {
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
+      return Left(errorResponse);
     } catch (e) {
       ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
       return Left(errorResponse);

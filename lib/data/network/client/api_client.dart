@@ -10,4 +10,6 @@ class ApiClient {
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
+
+  static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
 }

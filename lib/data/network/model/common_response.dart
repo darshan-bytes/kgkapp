@@ -55,6 +55,10 @@ class CommonResponse<T> {
         return BusinessType.fromJson(json);
       case const (OfficeLocation):
         return OfficeLocation.fromJson(json);
+      case const (ForgotPasswordModel):
+        return ForgotPasswordModel.fromJson(json);
+      default:
+        throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
     }
   }
 }
