@@ -680,5 +680,7 @@
   "email_required": "Please enter email",
   "valid_email": "Please enter valid email",
   "password_required": "Please enter password",
-  "valid_password": "Password must be at least 8 characters"
+  "valid_password": "Password must be at least 8 characters",
+  "session_expired": "Session Expired",
+  "session_expired_desc": "Your session has expired. Please login again."
 }

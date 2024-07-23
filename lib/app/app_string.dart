@@ -863,4 +863,8 @@ class APPStrings {
   //Password validation key
   static const String passwordRequired = "password_required";
   static const String validPassword = "valid_password";
+
+  // Session Expired
+  static const String sessionExpired = 'session_expired';
+  static const String sessionExpiredDesc = 'session_expired_desc';
 }
