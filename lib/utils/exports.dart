@@ -420,3 +420,5 @@ export 'package:kgk/data/network/repository/user_repository.dart';
 export 'package:kgk/data/network/api_const/api_keys.dart';
 export 'package:video_player/video_player.dart';
 export 'package:kgk/data/network/model/common_response.dart';
+export 'package:kgk/utils/exception_file.dart';
+export 'package:kgk/modules/authentication/forgot_password/model/forgot_password_response_model.dart';
