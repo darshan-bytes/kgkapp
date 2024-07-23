@@ -864,6 +864,11 @@ class APPStrings {
   static const String passwordRequired = "password_required";
   static const String validPassword = "valid_password";
 
+  //No internet screen
+  static const String noInternetConnectionFound = "no_internet_connection_found";
+  static const String pleaseCheckYourInternetConnection = "please_check_your_internet_connection";
+  static const String tryAgain = "try_again";
+
   // Session Expired
   static const String sessionExpired = 'session_expired';
   static const String sessionExpiredDesc = 'session_expired_desc';

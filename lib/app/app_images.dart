@@ -164,15 +164,16 @@ class AppImages {
   static const String icMoreVerticalCircle = 'assets/images/ic_more_vertical_circle.svg';
 
   //Presentation
-  static String icAddComment = 'assets/images/ic_add_comment.svg';
-  static String icVersionHistory = 'assets/images/ic_version_history.svg';
+  static const String icAddComment = 'assets/images/ic_add_comment.svg';
+  static const String icVersionHistory = 'assets/images/ic_version_history.svg';
 
-  static String icClock = 'assets/images/ic_clock.svg';
+  static const String icClock = 'assets/images/ic_clock.svg';
 
   //Send Comment
-  static String icSendComment = 'assets/images/ic_send_comment.svg';
-  static String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
+  static const String icSendComment = 'assets/images/ic_send_comment.svg';
+  static const String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
 
   //ic_more_vertical
-  static String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static const String icNoInternetImage = 'assets/images/ic_no_internet.svg';
 }
