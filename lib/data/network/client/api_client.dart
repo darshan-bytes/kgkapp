@@ -8,4 +8,6 @@ class ApiClient {
   static const String signUpUser = '$apiBaseUrl/oauth/signup';
   static const String userProfile = '$apiBaseUrl/user/profile';
   static const String socialLogin = '$apiBaseUrl/oauth/social-signin';
+
+  static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
 }
