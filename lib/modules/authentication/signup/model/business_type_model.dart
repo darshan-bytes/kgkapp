@@ -1,23 +1,35 @@
 class BusinessType {
-  String? name;
-  String? code;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? id;
+  final String? name;
+  final String? slug;
   bool isSelected;
 
   BusinessType({
-    this.name,
-    this.code,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.name,
+    required this.slug,
     this.isSelected = false,
   });
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is BusinessType && other.name == name && other.code == code && other.isSelected == isSelected;
+  factory BusinessType.fromJson(Map<String, dynamic> json) {
+    return BusinessType(
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      id: json["id"],
+      name: json["name"],
+      slug: json["slug"],
+    );
   }
 
-  @override
-  int get hashCode => name.hashCode ^ code.hashCode ^ isSelected.hashCode;
-
-  @override
-  String toString() => 'BusinessType(name: $name, code: $code, isSelected: $isSelected)';
+  Map<String, dynamic> toJson() => {
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "id": id,
+        "name": name,
+        "slug": slug,
+      };
 }
