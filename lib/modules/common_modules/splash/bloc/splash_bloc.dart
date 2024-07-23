@@ -18,12 +18,25 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     playerController = VideoPlayerController.asset(AppConst.splashScreenVideoUrl);
     await playerController.initialize();
     await playerController.play();
-    final Duration duration = playerController.value.duration;
-    emit(const SplashVideoInitialized());
-    await Future.delayed(duration);
-    emit(const SplashVideoCompleteState());
-    //For navigation
-    event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+    await _currencyApiCall(event.context, emit);
+  }
+
+  Future<void> _currencyApiCall(BuildContext context, Emitter<SplashState> emit) async {
+    await UserRepository(context).getCurrencies().then((value) async {
+      await value?.fold((l) {
+        Utils.showMessage(l.message ?? '');
+      }, (r) async {
+        printWrapped(r.toString());
+        StorageManager().setCurrency(r);
+        final Duration duration = playerController.value.duration;
+        emit(const SplashVideoInitialized());
+        await Future.delayed(duration);
+        emit(const SplashVideoCompleteState());
+
+        //For navigation
+        context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+      });
+    });
   }
 
   @override

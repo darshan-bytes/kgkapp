@@ -8,7 +8,7 @@ class ApiService implements ApiProvider {
     String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
 
     Map<String, String> headers = {
-      HttpHeaders.authorizationHeader: 'Bearer $token',
+      if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
       HttpHeaders.contentTypeHeader: 'application/json',
       ApiKey.xApiKey: apiKey,
       ApiKey.acceptLanguage: 'en',
@@ -19,175 +19,86 @@ class ApiService implements ApiProvider {
       headers.addAll(additionalHeaders);
     }
 
-    if (token.isNullOrEmpty) {
-      headers.remove(HttpHeaders.authorizationHeader);
-    }
-
     return headers;
   }
 
-  // Common method to handle all types of api methods
-  @override
-  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(
-    String url, {
-    Map<String, dynamic>? query,
-  }) async {
+  Future<Either<ErrorResponse, dynamic>?> _sendRequest<T>(_ApiType method, String url,
+      {Map<String, dynamic>? query, dynamic body, Map<String, String>? headers, bool withFullResponse = false}) async {
     try {
-      if (await ConnectivityManager().checkInternet()) {
-        final response = await http.get(
-          Uri.parse(url),
-          headers: _getCommonHeaders(),
-        );
-
-        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
-
-        if (commonResponse.isSuccess) {
-          return Right(commonResponse.responseData);
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
-      } else {
-        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
-        return Left(errorResponse);
+      if (!await ConnectivityManager().checkInternet()) {
+        return Left(ErrorResponse(code: 0, message: APPStrings.checkInternet.tr));
       }
+
+      http.Response response;
+      switch (method) {
+        case _ApiType.get:
+          response = await http.get(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers));
+          break;
+        case _ApiType.post:
+          response = await http.post(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
+          break;
+        case _ApiType.put:
+          response = await http.put(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
+          break;
+        case _ApiType.patch:
+          response = await http.patch(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
+          break;
+        case _ApiType.delete:
+          response = await http.delete(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers));
+          break;
+        default:
+          throw Exception('Unsupported HTTP method');
+      }
+
+      var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
+
+      if (commonResponse.isTokenExpired) {
+        await StorageManager().clearSession();
+        Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());
+        return null;
+      }
+
+      return commonResponse.isSuccess
+          ? withFullResponse
+              ? Right(commonResponse)
+              : Right(commonResponse.responseData)
+          : Left(ErrorResponse.fromJson(jsonDecode(response.body)));
     } on KGKException catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
-      return Left(errorResponse);
+      return Left(ErrorResponse(code: 0, message: e.message));
     } catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
-      return Left(errorResponse);
+      return Left(ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr));
     }
   }
 
+  // Implement getMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> postMethod<T>(
-    String url,
-    dynamic body, {
-    Map<String, String>? headers,
-    bool withFullResponse = false,
-  }) async {
-    try {
-      if (await ConnectivityManager().checkInternet()) {
-        final response = await http.post(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
-
-        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
-
-        if (commonResponse.isSuccess) {
-          if (withFullResponse) {
-            return Right(commonResponse);
-          }
-          return Right(commonResponse.responseData);
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
-      } else {
-        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
-        return Left(errorResponse);
-      }
-    } on KGKException catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
-      return Left(errorResponse);
-    } catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
-      return Left(errorResponse);
-    }
+  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(String url, {Map<String, dynamic>? query}) async {
+    return _sendRequest<T>(_ApiType.get, url, query: query);
   }
 
+  // Implement postMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> putMethod<T>(
-    String url,
-    dynamic body, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      if (await ConnectivityManager().checkInternet()) {
-        final response = await http.put(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
-
-        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
-
-        if (commonResponse.isSuccess) {
-          return Right(jsonDecode(response.body));
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
-      } else {
-        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
-        return Left(errorResponse);
-      }
-    } on KGKException catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
-      return Left(errorResponse);
-    } catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
-      return Left(errorResponse);
-    }
+  Future<Either<ErrorResponse, dynamic>?> postMethod<T>(String url, dynamic body,
+      {Map<String, String>? headers, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.post, url, body: body, headers: headers, withFullResponse: withFullResponse);
   }
 
+  // Implement putMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(
-    String url,
-    dynamic body, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      if (await ConnectivityManager().checkInternet()) {
-        final response = await http.patch(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
-
-        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
-
-        if (commonResponse.isSuccess) {
-          return Right(jsonDecode(response.body));
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
-      } else {
-        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
-        return Left(errorResponse);
-      }
-    } on KGKException catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
-      return Left(errorResponse);
-    } catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
-      return Left(errorResponse);
-    }
+  Future<Either<ErrorResponse, dynamic>?> putMethod<T>(String url, dynamic body, {Map<String, String>? headers}) async {
+    return _sendRequest<T>(_ApiType.put, url, body: body, headers: headers);
   }
 
+  // Implement patchMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(
-    String url, {
-    Map<String, dynamic>? query,
-  }) async {
-    try {
-      if (await ConnectivityManager().checkInternet()) {
-        final response = await http.delete(
-          Uri.parse(url),
-          headers: _getCommonHeaders(),
-        );
+  Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(String url, dynamic body, {Map<String, String>? headers}) async {
+    return _sendRequest<T>(_ApiType.patch, url, body: body, headers: headers);
+  }
 
-        var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
-
-        if (commonResponse.isSuccess) {
-          return Right(jsonDecode(response.body));
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
-      } else {
-        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
-        return Left(errorResponse);
-      }
-    } on KGKException catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: e.message);
-      return Left(errorResponse);
-    } catch (e) {
-      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
-      return Left(errorResponse);
-    }
+  // Implement deleteMethod using sendRequest
+  @override
+  Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(String url, {Map<String, dynamic>? query}) async {
+    return _sendRequest<T>(_ApiType.delete, url, query: query);
   }
 
   @override
@@ -237,6 +148,12 @@ class ApiService implements ApiProvider {
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
+        if (commonResponse.isTokenExpired) {
+          // Show token expired popup
+          Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());
+          return null;
+        }
+
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
@@ -256,3 +173,5 @@ class ApiService implements ApiProvider {
     }
   }
 }
+
+enum _ApiType { get, post, put, patch, delete }

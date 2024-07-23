@@ -12,4 +12,5 @@ class ApiClient {
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
 
   static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
+  static const String currencies = '$apiBaseUrl/currency';
 }

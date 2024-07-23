@@ -681,5 +681,7 @@
   "valid_password": "Password must be at least 8 characters",
   "no_internet_connection_found": "No internet connection found",
   "please_check_your_internet_connection": "Please check your internet connection",
-  "try_again": "Try again"
+  "try_again": "Try again",
+  "session_expired": "Session Expired",
+  "session_expired_desc": "Your session has expired. Please login again."
 }
