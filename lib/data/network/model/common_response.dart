@@ -51,6 +51,10 @@ class CommonResponse<T> {
     switch (T) {
       case const (UserResponse):
         return UserResponse.fromJson(json);
+      case const (BusinessType):
+        return BusinessType.fromJson(json);
+      case const (OfficeLocation):
+        return OfficeLocation.fromJson(json);
       case const (ForgotPasswordModel):
         return ForgotPasswordModel.fromJson(json);
       default:

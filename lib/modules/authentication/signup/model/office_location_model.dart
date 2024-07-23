@@ -1,8 +1,23 @@
 class OfficeLocation {
-  final String name;
-  final String code;
+  String? name;
+  String? code;
 
-  OfficeLocation({required this.name, required this.code});
+  OfficeLocation({
+    required this.name,
+    required this.code,
+  });
+
+  OfficeLocation.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['name'] = name;
+    return data;
+  }
 
   @override
   bool operator ==(Object other) {

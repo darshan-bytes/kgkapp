@@ -9,6 +9,29 @@ final class SignupInitial extends SignUpState {
   List<Object> get props => [];
 }
 
+final class SignUpLoadingState extends SignUpState {
+  const SignUpLoadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class SignUpErrorState extends SignUpState {
+  final String message;
+
+  const SignUpErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class SignUpLoadedState extends SignUpState {
+  const SignUpLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class SignUpChangeAccountTypeState extends SignUpState {
   final bool isIndividual;
 
@@ -74,4 +97,11 @@ final class SignUpChangeOfficeLocationState extends SignUpState {
 
   @override
   List<Object> get props => [officeLocation];
+}
+
+final class SignUpSuccessState extends SignUpState {
+  const SignUpSuccessState();
+
+  @override
+  List<Object> get props => [];
 }
