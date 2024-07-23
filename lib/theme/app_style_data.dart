@@ -1237,4 +1237,9 @@ class LightModeTheme extends AppTheme {
 
   @override
   NewsletterScreenStyle get newsletterScreenStyle => NewsletterScreenStyle(labelStyle: interSemiBoldTextStyle);
+
+  @override
+  NoInternetScreenStyle get noInternetScreenStyle => NoInternetScreenStyle(
+      noInternetTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+      noInternetSubtitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C));
 }
