@@ -38,10 +38,11 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
   /// Check email & password validations as needed
   bool checkValidations() {
     if (emailController.text.trim().isEmpty) {
-      Utils.showMessage("Please enter email");
+      Utils.showMessage(APPStrings.emailRequired.tr);
+
       return false;
     } else if (!Utils.isEmail(emailController.text.trim())) {
-      Utils.showMessage("Please enter valid email");
+      Utils.showMessage(APPStrings.validEmail.tr);
       return false;
     }
     return true;

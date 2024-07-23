@@ -847,4 +847,20 @@ class APPStrings {
   static const String viewMore = 'view_more';
 
   static const String shopByX = 'shop_by_x';
+
+  //Home
+  static const String shopEngagementRing = 'shop_engagement_ring';
+  static const String eligance = 'eligance';
+  static const String shopByCategory = 'shop_by_category';
+  static const String trendingNow = 'trending_now';
+  static const String shopLatestCollection = 'shop_latest_collection';
+
+  //Email validation key
+  static const String invalidEmail = 'invalid_email';
+  static const String emailRequired = "email_required";
+  static const String validEmail = "valid_email";
+
+  //Password validation key
+  static const String passwordRequired = "password_required";
+  static const String validPassword = "valid_password";
 }
