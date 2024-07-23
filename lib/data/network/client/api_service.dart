@@ -2,183 +2,177 @@ import 'package:http/http.dart' as http;
 import 'package:kgk/kgk.dart';
 
 class ApiService implements ApiProvider {
+  // Common method to get headers
+  Map<String, String> _getCommonHeaders({Map<String, String>? additionalHeaders}) {
+    String? token = StorageManager().getAuthToken();
+    String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
+
+    Map<String, String> headers = {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      HttpHeaders.contentTypeHeader: 'application/json',
+      ApiKey.xApiKey: apiKey,
+      ApiKey.acceptLanguage: 'en',
+    };
+
+    // Merge additional headers if provided
+    if (additionalHeaders != null) {
+      headers.addAll(additionalHeaders);
+    }
+
+    return headers;
+  }
+
+  // Common method to handle all types of api methods
   @override
-  Future<Either<String, dynamic>?> getMethod<T>(
+  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(
     String url, {
     Map<String, dynamic>? query,
   }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        final response = await http.get(Uri.parse(url), headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-          HttpHeaders.contentTypeHeader: 'application/json',
-          ApiKey.xApiKey: apiKey,
-          ApiKey.acceptLanguage: 'en',
-        });
+        final response = await http.get(
+          Uri.parse(url),
+          headers: _getCommonHeaders(),
+        );
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
-          return Left(APPStrings.failedFetchData.tr);
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 
   @override
-  Future<Either<String, dynamic>?> postMethod<T>(
+  Future<Either<ErrorResponse, dynamic>?> postMethod<T>(
     String url,
     dynamic body, {
     Map<String, String>? headers,
+    bool withFullResponse = false,
   }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        final response = await http.post(Uri.parse(url),
-            headers: {
-              HttpHeaders.authorizationHeader: 'Bearer $token',
-              HttpHeaders.contentTypeHeader: 'application/json',
-              ApiKey.xApiKey: apiKey,
-              ApiKey.acceptLanguage: 'en',
-              // Merge headers passed in the parameter
-              if (headers != null) ...headers,
-            },
-            body: jsonEncode(body));
+        final response = await http.post(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
+          if (withFullResponse) {
+            return Right(commonResponse);
+          }
           return Right(commonResponse.responseData);
         } else {
-          return Left(commonResponse.message ?? '');
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 
   @override
-  Future<Either<String, dynamic>?> putMethod<T>(
+  Future<Either<ErrorResponse, dynamic>?> putMethod<T>(
     String url,
     dynamic body, {
     Map<String, String>? headers,
   }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        final response = await http.put(Uri.parse(url),
-            headers: {
-              HttpHeaders.authorizationHeader: 'Bearer $token',
-              HttpHeaders.contentTypeHeader: 'application/json',
-              ApiKey.xApiKey: apiKey,
-              ApiKey.acceptLanguage: 'en',
-              // Merge headers passed in the parameter
-              if (headers != null) ...headers,
-            },
-            body: jsonEncode(body));
+        final response = await http.put(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
-          return const Left('Failed to post data');
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 
   @override
-  Future<Either<String, dynamic>?> updateMethod<T>(
+  Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(
     String url,
     dynamic body, {
     Map<String, String>? headers,
   }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        final response = await http.patch(Uri.parse(url),
-            headers: {
-              HttpHeaders.authorizationHeader: 'Bearer $token',
-              HttpHeaders.contentTypeHeader: 'application/json',
-              ApiKey.xApiKey: apiKey,
-              ApiKey.acceptLanguage: 'en',
-              // Merge headers passed in the parameter
-              if (headers != null) ...headers,
-            },
-            body: jsonEncode(body));
+        final response = await http.patch(Uri.parse(url), headers: _getCommonHeaders(additionalHeaders: headers), body: jsonEncode(body));
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
-          return const Left('Failed to post data');
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 
   @override
-  Future<Either<String, dynamic>?> deleteMethod<T>(
+  Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(
     String url, {
     Map<String, dynamic>? query,
   }) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        final response = await http.delete(Uri.parse(url), headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-          HttpHeaders.contentTypeHeader: 'application/json',
-          ApiKey.xApiKey: apiKey,
-          ApiKey.acceptLanguage: 'en',
-        });
+        final response = await http.delete(
+          Uri.parse(url),
+          headers: _getCommonHeaders(),
+        );
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
-          return const Left('Failed to post data');
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 
   @override
-  Future<Either<String, dynamic>?> postMultipartMethod<T>(String url, Map<String, dynamic> body,
+  Future<Either<ErrorResponse, dynamic>?> postMultipartMethod<T>(String url, Map<String, dynamic> body,
       {Map<String, String>? headers, List<File>? files}) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
@@ -227,13 +221,16 @@ class ApiService implements ApiProvider {
         if (commonResponse.isSuccess) {
           return Right(jsonDecode(response.body));
         } else {
-          return Left('Failed to post data: ${response.reasonPhrase}');
+          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+          return Left(errorResponse);
         }
       } else {
-        return Left(APPStrings.checkInternet.tr);
+        ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
+        return Left(errorResponse);
       }
     } catch (e) {
-      return Left(APPStrings.somethingWrong.tr);
+      ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr);
+      return Left(errorResponse);
     }
   }
 }
