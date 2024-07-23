@@ -243,6 +243,8 @@ abstract class AppTheme {
   CalendarStyle get calendarStyle;
 
   NewsletterScreenStyle get newsletterScreenStyle;
+
+  NoInternetScreenStyle get noInternetScreenStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2298,4 +2300,14 @@ class NewsletterScreenStyle {
   final TextStyle labelStyle;
 
   NewsletterScreenStyle({required this.labelStyle});
+}
+
+class NoInternetScreenStyle {
+  final TextStyle noInternetTitleStyle;
+  final TextStyle noInternetSubtitleStyle;
+
+  NoInternetScreenStyle({
+    required this.noInternetTitleStyle,
+    required this.noInternetSubtitleStyle,
+  });
 }

@@ -863,4 +863,9 @@ class APPStrings {
   //Password validation key
   static const String passwordRequired = "password_required";
   static const String validPassword = "valid_password";
+
+  //No internet screen
+  static const String noInternetConnectionFound = "no_internet_connection_found";
+  static const String pleaseCheckYourInternetConnection = "please_check_your_internet_connection";
+  static const String tryAgain = "try_again";
 }
