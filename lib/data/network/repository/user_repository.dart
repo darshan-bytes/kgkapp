@@ -5,7 +5,7 @@ class UserRepository extends ApiService {
 
   UserRepository(this.context);
 
-  Future<Either<String, UserResponse>?> loginUser(Map<String, dynamic> params) async {
+  Future<Either<ErrorResponse, UserResponse>?> loginUser(Map<String, dynamic> params) async {
     context.setAppLoading(true);
     var response = await postMethod<UserResponse>(ApiClient.loginUser, params);
     context.setAppLoading(false);

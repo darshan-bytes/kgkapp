@@ -50,8 +50,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
     await UserRepository(event.context).loginUser(params).then((value) {
       value?.fold((l) {
-        Utils.showMessage(l);
-        emit(SignInErrorState(errorMessage: l));
+        ErrorResponse errorModel = l;
+        Utils.showMessage(errorModel.message ?? '');
+        emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
         printWrapped('$value');
       }, (r) async {
         printWrapped(r.toString());
