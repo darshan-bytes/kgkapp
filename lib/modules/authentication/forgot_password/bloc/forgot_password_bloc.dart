@@ -5,10 +5,20 @@ part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
+  bool _isInitialised = false;
   TextEditingController emailController = TextEditingController();
 
   ForgotPasswordBloc() : super(ForgotPasswordInitial()) {
+    on<ForgotPasswordInitialEvent>(_onInitialEvent);
     on<ForgotPasswordSubmitEvent>(_onSendEmail);
+  }
+
+  void _onInitialEvent(ForgotPasswordInitialEvent event, Emitter<ForgotPasswordState> emit) {
+    if (_isInitialised) {
+      return;
+    }
+    _isInitialised = true;
+    clearData();
   }
 
   Future<void> _onSendEmail(ForgotPasswordSubmitEvent event, Emitter<ForgotPasswordState> emit) async {
@@ -26,9 +36,10 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
           Utils.showMessage(l.message ?? '');
         }, (r) async {
           emit(ForgotPasswordSuccessState());
-          event.context.pushNamed(AppRoutes.emailSentPage);
-          clearData();
-          await Future.delayed(const Duration(milliseconds: 500));
+          if (!event.isFromResend) {
+            event.context.pushNamed(AppRoutes.emailSentPage);
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
           Utils.showMessage(r.message ?? '');
         });
       },

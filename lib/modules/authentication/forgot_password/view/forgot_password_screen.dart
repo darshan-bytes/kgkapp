@@ -57,9 +57,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             labelStyle: style.labelStyle,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
-                            onEditingComplete: () {
-                              FocusScope.of(context).nextFocus();
-                            },
+                            onFieldSubmitted: (p0) => bloc.add(ForgotPasswordSubmitEvent(context: context)),
                           ),
                         ],
                       ),

@@ -8,6 +8,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
     final signInStyle = AppTheme.of(context).signInScreenStyle;
     final style = AppTheme.of(context).forgotPasswordScreenStyle;
     final List<String> parts = APPStrings.emailHasBeenSendSuccessfully.tr.split('{#}');
+    final ForgotPasswordBloc forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
         appBarHeight: 52.h,
@@ -37,7 +38,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                       style: style.didNotGetEmailTextStyle.copyWith(height: 1.5.h),
                       children: [
                         TextSpan(
-                          text: "your_email@example.com",
+                          text: forgotPasswordBloc.emailController.text,
                           style: style.richSubTextStyle,
                         ),
                         TextSpan(text: parts[1], style: style.didNotGetEmailTextStyle),
@@ -51,7 +52,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        //TODO: Resend email logic
+                        forgotPasswordBloc.add(ForgotPasswordSubmitEvent(context: context, isFromResend: true));
                       },
                       child: SmartText(
                         APPStrings.resend.tr,
