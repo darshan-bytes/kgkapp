@@ -2,7 +2,6 @@ import 'package:kgk/kgk.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
-  static const getReadyPage = '/getReadyPage';
   static const signInPage = '/signInPage';
   static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
@@ -84,689 +83,719 @@ class AppRoutes {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
     switch (settings.name) {
       case initialRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen(), settings: settings);
-
-      case getReadyPage:
-        return MaterialPageRoute(
-          builder: (_) => const GetReadyScreen(),
-          settings: settings,
-        );
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const SplashScreen(),
+            transitionsBuilder: commonTransitionBuilder,
+            settings: settings);
 
       case signInPage:
-        return MaterialPageRoute(
-          builder: (_) => const SignInScreen(),
-          settings: settings,
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const SignInScreen(),
+          transitionsBuilder: commonTransitionBuilder,
         );
 
       case signUpPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
-            return const SignUpScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const SignUpScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
+
       case categoriesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
-            return const CategoriesScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const CategoriesScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case landingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
-            return const LandingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const LandingScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case forgotPasswordPage:
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const ForgotPasswordScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case resetPasswordPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ResetPasswordBloc>(context).add(const ResetPasswordInitialEvent());
-            return const ResetPasswordScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const ResetPasswordScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case emailSentPage:
-        return MaterialPageRoute(
-          builder: (_) => const ForgotEmailSentScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const ForgotEmailSentScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case notificationPage:
-        return MaterialPageRoute(
-          builder: (_) => const NotificationScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const NotificationScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case collectionPage:
-        return MaterialPageRoute(
-          builder: (_) => const CollectionScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const CollectionScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case productListGridPage:
-        return MaterialPageRoute(
-          builder: (context) {
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
             return BlocProvider<ProductListBloc>(
               create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
               child: const ProductListScreen(),
             );
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case stoneDetailPage:
-        return MaterialPageRoute(
-          builder: (context) {
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
             return BlocProvider<StoneDetailBloc>(
               create: (context) => StoneDetailBloc()..add(StoneDetailInitialEvent(context: context)),
               child: const StoneDetailScreen(),
             );
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case settingDetailPage:
-        return MaterialPageRoute(
-          builder: (_) => const SettingDetailScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const SettingDetailScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case stoneListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
             return BlocProvider<StoneListingBloc>(
               create: (context) => StoneListingBloc()..add(GetStoneProductListEvent(context)),
               child: const StoneListingScreen(),
             );
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case settingListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<SettingListingBloc>(
-              create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
-              child: const SettingListingScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SettingListingBloc>(
+            create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
+            child: const SettingListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case completeProductPage:
-        return MaterialPageRoute(
-          builder: (_) => const CompleteProductScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const CompleteProductScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case addAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
-            return const AddAddressScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AddAddressBloc>(
+            create: (context) => AddAddressBloc()..add(AddAddressInitialEvent(context)),
+            child: const AddAddressScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case addressListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
-            return const AddressListScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AddressListBloc>(
+            create: (context) => AddressListBloc()..add(const LoadAddressListEvent()),
+            child: const AddressListScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case wishListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
-            return const WishlistScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<WishlistBloc>(
+            create: (context) => WishlistBloc()..add(const InitialWishlistEvent()),
+            child: const WishlistScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case compareProductPage:
-        return MaterialPageRoute(
-          builder: (_) => const CompareProductScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const CompareProductScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case paymentPage:
-        return MaterialPageRoute(
-          builder: (_) => const PaymentScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const PaymentScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case productDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<ProductDetailsBloc>(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ProductDetailsBloc>(
             create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
             child: const ProductDetailsScreen(),
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case diamondInfoPopupPage:
-        return MaterialPageRoute(
-          builder: (_) => const DiamondInfoPopupScreen(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const DiamondInfoPopupScreen(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case productMenuBottomSheet:
-        return MaterialPageRoute(
-          builder: (_) => const ProductMenuBottomSheet(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const ProductMenuBottomSheet(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case auctionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
-            return const AuctionScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AuctionBloc>(
+            create: (context) => AuctionBloc()..add(AuctionInitialEvent(context: context)),
+            child: const AuctionScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case writeReviewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
-            return const WriteReviewScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<WriteReviewBloc>(
+            create: (context) => WriteReviewBloc()..add(const WriteReviewInitialEvent()),
+            child: const WriteReviewScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderConfirmationPage:
-        return MaterialPageRoute(
-          builder: (context) => OrderConfirmationScreen(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => OrderConfirmationScreen(
             orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
-            return const OrderScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrdersBloc>(
+            create: (context) => OrdersBloc()..add(OrdersInitialEvent(context)),
+            child: const OrderScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<OrderDetailBloc>(
-              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
-              child: const OrderDetailScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrderDetailBloc>(
+            create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
+            child: const OrderDetailScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case auctionListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<AuctionListingBloc>(
-              create: (_) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
-              child: const AuctionListingScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AuctionListingBloc>(
+            create: (_) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
+            child: const AuctionListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderTimelinePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<OrderTimelineBloc>(
-              create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
-              child: const OrderTimelineScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrderTimelineBloc>(
+            create: (_) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
+            child: const OrderTimelineScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case makeInquiryPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
-            return const MakeInquiryScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MakeInquiryBloc>(
+            create: (context) => MakeInquiryBloc()..add(MakeInquiryInitialEvent()),
+            child: const MakeInquiryScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case searchPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
-            return const SearchScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SearchBloc>(
+            create: (context) => SearchBloc(),
+            child: const SearchScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case qrScannerPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<QrCodeScanLoginBloc>(
-              create: (context) => QrCodeScanLoginBloc(),
-              child: const QrScannerScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<QrCodeScanLoginBloc>(
+            create: (context) => QrCodeScanLoginBloc(),
+            child: const QrScannerScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case searchResultPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<SearchResultBloc>(
-              create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
-              child: const SearchResultScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SearchResultBloc>(
+            create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
+            child: const SearchResultScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case notificationSettingsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<NotificationSettingsBloc>(
-              create: (context) => NotificationSettingsBloc(),
-              child: const NotificationSettingsView(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<NotificationSettingsBloc>(
+            create: (context) => NotificationSettingsBloc(),
+            child: const NotificationSettingsView(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case cmsWebViewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<CmsWebViewBloc>(
-              create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
-              child: const CmsWebViewScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<CmsWebViewBloc>(
+            create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
+            child: const CmsWebViewScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case faqPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
-            return const FaqScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<FaqBloc>(
+            create: (context) => FaqBloc()..add(const FaqInitialEvent()),
+            child: const FaqScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case preferencesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
-            return const PreferencesScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PreferencesBloc>(
+            create: (context) => PreferencesBloc(),
+            child: const PreferencesScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case userTypeSelection:
-        return MaterialPageRoute(
-          builder: (_) => const UserTypeSelection(),
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const UserTypeSelection(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case contactUsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
-            return const ContactUsScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ContactUsBloc>(
+            create: (context) => ContactUsBloc()..add(ContactUsInitialEvent()),
+            child: const ContactUsScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case dashboardPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
-            return const DashboardScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DashboardBloc>(
+            create: (context) => DashboardBloc()..add(const DashboardInitialEvent()),
+            child: const DashboardScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case pddListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<PddListingBloc>(
-              create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
-              child: const PddListingScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddListingBloc>(
+            create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
+            child: const PddListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case conceptListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ConceptListBloc>(
-              create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
-              child: const ConceptListScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ConceptListBloc>(
+            create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
+            child: const ConceptListScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case monitoringPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
-            return const MonitoringScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MonitoringBloc>(
+            create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
+            child: const MonitoringScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case savedAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
-            return const SavedAddressScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SavedAddressBloc>(
+            create: (context) => SavedAddressBloc()..add(const SavedAddressInitialEvent()),
+            child: const SavedAddressScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case shippingAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
-            return const ShippingAddressScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ShippingAddressBloc>(
+            create: (context) => ShippingAddressBloc()..add(ShippingAddressInitialEvent(context)),
+            child: const ShippingAddressScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case projectListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
-            return const ProjectListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ProjectListingBloc>(
+            create: (context) => ProjectListingBloc()..add(InitialProjectListingEvent(context: context)),
+            child: const ProjectListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case designBriefsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignBriefsBloc>(context).add(InitialDesignBriefsEvent(context: context));
-            return const DesignBriefsScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DesignBriefsBloc>(
+            create: (context) => DesignBriefsBloc()..add(InitialDesignBriefsEvent(context: context)),
+            child: const DesignBriefsScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case designListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
-            return const DesignListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DesignListingBloc>(
+            create: (context) => DesignListingBloc()..add(InitialDesignListingEvent(context: context)),
+            child: const DesignListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case stylesListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
-            return const StylesListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<StylesListingBloc>(
+            create: (context) => StylesListingBloc()..add(const StylesListingInitialEvent()),
+            child: const StylesListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case digitalCataloguePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
-            return const DigitalCatalogueListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DigitalCatalogueBloc>(
+            create: (context) => DigitalCatalogueBloc()..add(const DigitalCatalogueInitialEvent()),
+            child: const DigitalCatalogueListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case presentationPreviewPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PddPreviewBloc>(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddPreviewBloc>(
             create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewScreen(),
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case findStorePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
-            return const FindStoreScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<FindStoreBloc>(
+            create: (_) => FindStoreBloc()..add(FindStoreInitialEvent()),
+            child: const FindStoreScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case presentationPreviewHistory:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PddPreviewBloc>(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddPreviewBloc>(
             create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewHistoryScreen(),
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case cadLibraryListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
-            return const CadLibraryListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<CadLibraryListingBloc>(
+            create: (_) => CadLibraryListingBloc()..add(InitialCadListingEvent(context: context)),
+            child: const CadLibraryListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case designLibraryFeedbackPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
-            return const DesignLibraryFeedbackScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DesignLibraryFeedbackBloc>(
+            create: (_) => DesignLibraryFeedbackBloc()..add(InitialDesignLibraryFeedbackEvent()),
+            child: const DesignLibraryFeedbackScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case watchListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent());
-            return const WatchlistScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<WatchlistBloc>(
+            create: (_) => WatchlistBloc()..add(WatchlistInitialEvent()),
+            child: const WatchlistScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case allReviewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AllReviewBloc>(context).add(AllReviewInitialEvent(context));
-            return const AllReviewScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AllReviewBloc>(
+            create: (_) => AllReviewBloc()..add(AllReviewInitialEvent(context)),
+            child: const AllReviewScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case exhibitionListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
-            return const ExhibitionListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ExhibitionListingBloc>(
+            create: (_) => ExhibitionListingBloc()..add(InitialExhibitionListingEvent(context: context)),
+            child: const ExhibitionListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
         );
 
       case stonesLandingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
-            return const StonesLandingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<StonesLandingBloc>(
+            create: (_) => StonesLandingBloc()..add(InitialStonesLandingEvent(context: context)),
+            child: const StonesLandingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case previewCataloguePage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PreviewCatalogueBloc>(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PreviewCatalogueBloc>(
             create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
             child: const PreviewCatalogueScreen(),
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case designLibraryScreen:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
-            return const DesignLibraryScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<DesignLibraryBloc>(
+            create: (_) => DesignLibraryBloc()..add(const DesignLibraryInitialEvent()),
+            child: const DesignLibraryScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
+
       case activityLogScreenPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
-            return const ActivityLogScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ActivityLogBloc>(
+            create: (_) => ActivityLogBloc()..add(ActivityLogInitialEvent()),
+            child: const ActivityLogScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case watchlistDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<WatchlistDetailsBloc>(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<WatchlistDetailsBloc>(
             create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
             child: const WatchlistDetailsScreen(),
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
-            return const OrionScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrionBloc>(
+            create: (_) => OrionBloc()..add(const OrionInitialEvent()),
+            child: const OrionScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case manufacturerOrderListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
-            return const ManufacturerOrderListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ManufacturerOrderListingBloc>(
+            create: (_) => ManufacturerOrderListingBloc()..add(const InitialManufacturerOrderListingEvent()),
+            child: const ManufacturerOrderListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case myOrderTypeSelectionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const MyOrderTypeSelection();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const MyOrderTypeSelection(),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case retailerOrderListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
-            return const RetailerOrderListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<RetailerOrderListingBloc>(
+            create: (_) => RetailerOrderListingBloc()..add(RetailerOrderListingInitialEvent(context: context)),
+            child: const RetailerOrderListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case manufacturerOrderDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ManufacturerOrderDetailsBloc>(
-              create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
-              child: const ManufacturerOrderDetailsScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ManufacturerOrderDetailsBloc>(
+            create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+            child: const ManufacturerOrderDetailsScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case newsletterPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<NewsletterBloc>(context).add(NewsletterInitialEvent(context: context));
-            return const NewsletterScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<NewsletterBloc>(
+            create: (_) => NewsletterBloc()..add(NewsletterInitialEvent(context: context)),
+            child: const NewsletterScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case userMasterListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
-            return const UserMasterListingScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<UserMasterListingBloc>(
+            create: (_) => UserMasterListingBloc()..add(const InitialUserMasterListingEvent()),
+            child: const UserMasterListingScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case messagesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<MessagesBloc>(
-              create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
-              child: const MessagesScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MessagesBloc>(
+            create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
+            child: const MessagesScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case calendarPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<CalendarBloc>(
-              create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
-              child: const CalendarScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<CalendarBloc>(
+            create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
+            child: const CalendarScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case messagesDetailPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<MessageDetailBloc>(
-              create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
-              child: const MessageDetailScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MessageDetailBloc>(
+            create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
+            child: const MessageDetailScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case exhibitionDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ExhibitionDetailsBloc>(
-              create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
-              child: const ExhibitionDetailsScreen(),
-            );
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ExhibitionDetailsBloc>(
+            create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+            child: const ExhibitionDetailsScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
         );
 
       case presentationPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
-            return const PresentationScreen();
-          },
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PresentationBloc>(
+            create: (_) => PresentationBloc()..add(const InitialPresentationEvent()),
+            child: const PresentationScreen(),
+          ),
+          transitionsBuilder: commonTransitionBuilder,
         );
 
       default:
@@ -785,6 +814,20 @@ class AppRoutes {
         ),
       );
     });
+  }
+
+  // make commomn transition builder
+  static Widget commonTransitionBuilder(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    const begin = Offset(1.0, 0.0);
+    const end = Offset.zero;
+    final tween = Tween(begin: begin, end: end);
+    final offsetAnimation = animation.drive(tween);
+
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 }
 
