@@ -31,8 +31,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         final Duration duration = playerController.value.duration;
         emit(const SplashVideoInitialized());
         await Future.delayed(duration);
-        emit(const SplashVideoCompleteState());
-
         //For navigation
         context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
       });
