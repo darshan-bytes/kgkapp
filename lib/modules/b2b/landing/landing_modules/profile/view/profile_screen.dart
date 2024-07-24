@@ -291,7 +291,7 @@ class ProfileScreen extends StatelessWidget {
               message: APPStrings.deleteAccountDesc.tr,
               onApproved: () {
                 BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-                context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
+                context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
               },
               onDenied: () => context.pop(),
               onApprovedText: APPStrings.delete.tr,
