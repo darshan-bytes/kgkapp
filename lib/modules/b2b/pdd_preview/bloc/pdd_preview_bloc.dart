@@ -41,7 +41,7 @@ class PddPreviewBloc extends Bloc<PddPreviewEvent, PddPreviewState> {
   }
 
   Future<void> _onCmsWebViewInitialEvent() async {
-    String webviewUrl = AppConst.pddPreviewWebViewURL;
+    String webviewUrl = AppConst.presentationPreviewWebViewURL;
     webViewController = WebViewController()..setJavaScriptMode(JavaScriptMode.unrestricted);
     if (webviewUrl.isNotNullNorEmpty) {
       await webViewController.loadRequest(Uri.parse(webviewUrl));
