@@ -168,10 +168,6 @@ class ProductListScreen extends StatelessWidget {
                         bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
                         bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
                         bloc.productList[0] == productDetails;
-                    bool isOutOfStock = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                        bloc.productList[0] == productDetails;
                     bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
                         bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
                         bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
@@ -187,7 +183,7 @@ class ProductListScreen extends StatelessWidget {
                     return ProductGridItem(
                       productDetails: productDetails,
                       isCustomisable: isCustomisable,
-                      isOutOfStock: isOutOfStock,
+                      isOutOfStock: productDetails.isOutOfStock,
                       onAddToBagTap: getAddToBagTap(bloc),
                       onEyeTap: () {
                         if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
@@ -244,6 +240,7 @@ class ProductListScreen extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 17.h),
                         onEyeTap: () {},
                         onFavTap: () {},
+                        isOutOfStock: bloc.productList[index].isOutOfStock,
                         onAddToBagTap: () {},
                         isCustomisable: isCustomisable,
                         onTap: () {

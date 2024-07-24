@@ -15,6 +15,7 @@ class ProductListItem extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final bool isCustomisable;
+  final bool isOutOfStock;
 
   const ProductListItem({
     super.key,
@@ -32,6 +33,7 @@ class ProductListItem extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
     this.isCustomisable = false,
+    this.isOutOfStock = false,
   });
 
   @override
@@ -73,6 +75,16 @@ class ProductListItem extends StatelessWidget {
             fit: fit,
           ),
         ),
+        if (isOutOfStock)
+          Positioned(
+            top: 8.h,
+            left: 8.w,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
+              child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
+            ),
+          ),
         Positioned(
           top: 8,
           right: 8,
