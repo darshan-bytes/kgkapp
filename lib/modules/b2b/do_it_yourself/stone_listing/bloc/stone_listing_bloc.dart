@@ -61,6 +61,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         20,
         (index) => productList.add(
           ProductDetails(
+            isOutOfStock: index % 2 == 0,
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -79,6 +80,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         20,
         (index) => productList.add(
           ProductDetails(
+            isOutOfStock: index % 2 == 0,
             diamond: "1.5 gram",
             gram: "1.5 gram",
             imageUrl: index % 2 == 0 ? "https://i.ibb.co/477f41r/Group-1410089379.png" : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",
@@ -96,6 +98,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         20,
         (index) => productList.add(
           ProductDetails(
+            isOutOfStock: index % 2 == 0,
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
@@ -127,6 +130,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           10,
           (index) => productList.add(
                 ProductDetails(
+                  isOutOfStock: index % 2 == 0,
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -140,6 +144,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           10,
           (index) => productList.add(
                 ProductDetails(
+                  isOutOfStock: index % 2 == 0,
                   diamond: "1.5 gram",
                   gram: "1.5 gram",
                   imageUrl:
@@ -153,6 +158,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           10,
           (index) => productList.add(
                 ProductDetails(
+                    isOutOfStock: index % 2 == 0,
                     diamond: "2.5 crt",
                     gram: "1.5 grms",
                     imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
