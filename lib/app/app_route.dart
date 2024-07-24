@@ -122,7 +122,10 @@ class AppRoutes {
 
       case forgotPasswordPage:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const ForgotPasswordScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            BlocProvider.of<ForgotPasswordBloc>(context).add(const ForgotPasswordInitialEvent());
+            return const ForgotPasswordScreen();
+          },
           transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
@@ -869,7 +872,10 @@ extension RoutesDataExtension on BuildContext {
   Map<RoutesData, dynamic>? get routesData => ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
 
   Future<dynamic> pushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.pushNamed(this, routeName, arguments: arguments);
+    if (mounted) {
+      return await Navigator.pushNamed(this, routeName, arguments: arguments);
+    }
+    return null;
   }
 
   Future<dynamic> pushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
@@ -893,15 +899,19 @@ extension RoutesDataExtension on BuildContext {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  dynamic popUntil(RoutePredicate predicate) async {
+  void popUntil(RoutePredicate predicate) async {
     return Navigator.popUntil(this, predicate);
   }
 
-  dynamic popUntilOfContext(RoutePredicate predicate) async {
+  void popUntilOfContext(RoutePredicate predicate) async {
     return Navigator.of(this).popUntil(predicate);
   }
 
   Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {
     return Navigator.pop(this, arguments);
+  }
+
+  Future<dynamic> popOfContext({Map<RoutesData, dynamic>? arguments}) async {
+    return Navigator.of(this).pop(arguments);
   }
 }

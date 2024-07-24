@@ -82,7 +82,7 @@ class SignInScreen extends StatelessWidget {
   Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(AppRoutes.forgotPasswordPage);
+        context.pushNamed(AppRoutes.forgotPasswordPage).then((value) => context.read<ForgotPasswordBloc>().clearData());
       },
       child: Align(
         alignment: Alignment.centerRight,

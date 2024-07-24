@@ -6,7 +6,6 @@ class UserTypeSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SmartAppBar(isBack: false),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20.w),
