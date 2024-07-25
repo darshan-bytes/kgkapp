@@ -4,12 +4,11 @@ class APPStrings {
   /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
-  static const String languageKo = 'ko';
+  static const String languageFr = 'fr';
+  static const String languageHi = 'hi';
   static const String plusMinus = '+/-';
   static const String percentage = '%';
 
-  static const String welcomeBack = 'welcome_back';
-  static const String pleaseEnterEmailPass = 'please_enter_email_pass';
   static const String forgotPassword = 'forgot_password';
   static const String signIn = 'sign_in';
   static const String error = 'error';
