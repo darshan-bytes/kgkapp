@@ -13,4 +13,5 @@ class ApiClient {
 
   static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
   static const String currencies = '$apiBaseUrl/currency';
+  static const String languageLabels = '$apiBaseUrl/language/labels';
 }

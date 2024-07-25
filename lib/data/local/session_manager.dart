@@ -14,6 +14,8 @@ class StorageManager {
   final String _authTokenBoxName = 'auth_token';
   final String _locale = 'locale';
   final String _currency = 'currency';
+  final String _languageLabels = 'languageLabels';
+  final String _selectedCurrency = 'selectedCurrency';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -39,12 +41,22 @@ class StorageManager {
     return _box.get(_locale);
   }
 
+  /// Set selected currency
+  Future<void> setSelectedCurrency(String currency) async {
+    await _box.put(_selectedCurrency, currency);
+  }
+
+  /// Get selected currency
+  String? getSelectedCurrency() {
+    return _box.get(_selectedCurrency);
+  }
+
   /// Set currency list
-  Future<void> setCurrency(List<CurrencyListModel> currency) async {
+  Future<void> setCurrencyList(List<CurrencyListModel> currency) async {
     await _box.put(_currency, currency.map((e) => e.toJson()).toList());
   }
 
-  List<CurrencyListModel> getCurrency() {
+  List<CurrencyListModel> getCurrencyList() {
     List<CurrencyListModel> currencyList = [];
     _box.get(_currency)?.forEach((element) {
       currencyList.add(CurrencyListModel.fromJson(element));
@@ -68,6 +80,16 @@ class StorageManager {
     if (locale != null) {
       await setLocale(locale);
     }
+  }
+
+  // setLanguageLabels
+  Future<void> setLanguageLabels(Map<String, dynamic> languageLabels) async {
+    await _box.put(_languageLabels, jsonEncode(languageLabels));
+  }
+
+  // getLanguageLabels
+  Map<String, dynamic> getLanguageLabels() {
+    return jsonDecode(_box.get(_languageLabels) ?? '{}');
   }
 
   Future<void> closeBox() async {

@@ -29,11 +29,12 @@ class ConnectivityChangedEvent extends AppEvent {
 
 class LanguageChangedEvent extends AppEvent {
   final String languageCode;
+  final BuildContext context;
 
-  const LanguageChangedEvent(this.languageCode);
+  const LanguageChangedEvent(this.languageCode, {required this.context});
 
   @override
-  List<Object> get props => [languageCode];
+  List<Object> get props => [languageCode, context];
 }
 
 class SetAppLoadingEvent extends AppEvent {
