@@ -89,7 +89,9 @@ class PreferencesScreen extends StatelessWidget {
               const Spacer(),
               SmartButton(
                 title: APPStrings.save.tr,
-                onTap: () {},
+                onTap: () {
+                  bloc.add(PreferencesSaveEvent(context));
+                },
               ),
             ],
           ),

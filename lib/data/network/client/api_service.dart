@@ -1,17 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'package:kgk/kgk.dart';
+import 'dart:developer' as kgk_logger;
 
 class ApiService implements ApiProvider {
   // Common method to get headers
   Map<String, String> _getCommonHeaders({Map<String, String>? additionalHeaders}) {
     String? token = StorageManager().getAuthToken();
     String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
+    String? acceptLanguage = StorageManager().getLocale();
 
     Map<String, String> headers = {
       if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
       HttpHeaders.contentTypeHeader: 'application/json',
       ApiKey.xApiKey: apiKey,
-      ApiKey.acceptLanguage: 'en',
+      ApiKey.acceptLanguage: acceptLanguage ?? 'en',
     };
 
     // Merge additional headers if provided
@@ -28,7 +30,6 @@ class ApiService implements ApiProvider {
       if (!await ConnectivityManager().checkInternet()) {
         return Left(ErrorResponse(code: 0, message: APPStrings.checkInternet.tr));
       }
-
       http.Response response;
       switch (method) {
         case _ApiType.get:
@@ -49,6 +50,8 @@ class ApiService implements ApiProvider {
         default:
           throw Exception('Unsupported HTTP method');
       }
+
+      kgk_logger.log('Request URL: $url Response: ${response.body} StatusCode: ${response.statusCode}');
 
       var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
@@ -72,8 +75,9 @@ class ApiService implements ApiProvider {
 
   // Implement getMethod using sendRequest
   @override
-  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(String url, {Map<String, dynamic>? query}) async {
-    return _sendRequest<T>(_ApiType.get, url, query: query);
+  Future<Either<ErrorResponse, dynamic>?> getMethod<T>(String url,
+      {Map<String, dynamic>? query, Map<String, String>? headers, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.get, url, query: query, withFullResponse: withFullResponse, headers: headers);
   }
 
   // Implement postMethod using sendRequest
