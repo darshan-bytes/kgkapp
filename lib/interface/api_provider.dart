@@ -4,6 +4,7 @@ abstract class ApiProvider {
   Future<Either<ErrorResponse, dynamic>?> getMethod<T>(
     String url, {
     Map<String, dynamic>? query,
+    Map<String, String>? headers,
   });
 
   Future<Either<ErrorResponse, dynamic>?> postMethod<T>(

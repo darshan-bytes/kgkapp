@@ -40,3 +40,12 @@ class PreferencesChangeCurrencyEvent extends PreferencesEvent {
   @override
   List<Object> get props => [currency];
 }
+
+class PreferencesSaveEvent extends PreferencesEvent {
+  final BuildContext context;
+
+  const PreferencesSaveEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

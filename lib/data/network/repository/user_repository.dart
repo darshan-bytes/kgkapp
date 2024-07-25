@@ -42,4 +42,16 @@ class UserRepository extends ApiService {
     var response = await getMethod<CurrencyListModel>(ApiClient.currencies);
     return response?.fold((error) => Left(error), (currencies) => Right(currencies as List<CurrencyListModel>));
   }
+
+  // get Language Labels
+  Future<Either<ErrorResponse, CommonResponse>?> getLanguageLabels({bool showLoader = false}) async {
+    if (showLoader) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.languageLabels, withFullResponse: true);
+    if (showLoader) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (languageLabels) => Right(languageLabels as CommonResponse));
+  }
 }

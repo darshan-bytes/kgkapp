@@ -59,8 +59,10 @@ class CommonResponse<T> {
         return ForgotPasswordModel.fromJson(json);
       case const (CurrencyListModel):
         return CurrencyListModel.fromJson(json);
+      case const (Map<String, dynamic>):
+        return json;
       default:
-        throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
+      //throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
     }
   }
 }

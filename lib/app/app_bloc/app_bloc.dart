@@ -6,7 +6,6 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AppThemes appThemes = AppThemes();
-  bool languageSwitch = false;
   final Connectivity _connectivity = Connectivity();
   late Stream<List<ConnectivityResult>> _connectivityStream;
   ThemeData? themeData;
@@ -39,11 +38,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final String theme = StorageManager().getThemeData();
     debugPrint("theme $theme");
     if (theme == 'dark') {
-      languageSwitch = true;
       themeData = appThemes.dark();
       emit(ThemeDataState(appThemes.dark()));
     } else if (theme == 'light') {
-      languageSwitch = false;
       themeData = appThemes.light();
       emit(ThemeDataState(appThemes.light()));
     } else if (theme == 'system') {
@@ -71,14 +68,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> setThemeDataDark(Emitter<AppState> emit) async {
     themeData = appThemes.dark();
     await StorageManager().setThemeData('dark');
-    languageSwitch = true;
     emit(ThemeDataState(appThemes.dark()));
   }
 
   Future<void> setThemeDataLight(Emitter<AppState> emit) async {
     themeData = appThemes.light();
     await StorageManager().setThemeData('light');
-    languageSwitch = false;
     emit(ThemeDataState(appThemes.light()));
   }
 
@@ -89,14 +84,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _onLanguageChangedEvent(LanguageChangedEvent event, Emitter<AppState> emit) async {
     if (event.languageCode.isNotEmpty) {
       await StorageManager().setLocale(event.languageCode);
+      await _languageLabelApiCall(event.context);
     }
     await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
     locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
-    if (locale.languageCode == APPStrings.languageEn) {
-      languageSwitch = false;
-    } else {
-      languageSwitch = true;
-    }
     emit(LanguageState(locale));
   }
 
@@ -108,6 +99,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onSetUserTypeEvent(SetUserTypeEvent event, Emitter<AppState> emit) {
     userType = event.userType;
     emit(UserTypeState(userType));
+  }
+
+  Future<void> _languageLabelApiCall(BuildContext context) async {
+    await UserRepository(context).getLanguageLabels(showLoader: true).then((value) async {
+      await value?.fold((l) {
+        Utils.showMessage(l.message ?? '');
+      }, (r) async {
+        StorageManager().setLanguageLabels(r.responseData);
+      });
+    });
   }
 }
 
