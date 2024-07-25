@@ -34,7 +34,8 @@ class _MyAppState extends State<MyApp> {
                   navigatorKey: NavigatorKey.navigatorKey,
                   supportedLocales: const [
                     Locale(APPStrings.languageEn, ''), // English
-                    Locale(APPStrings.languageKo, '')
+                    Locale(APPStrings.languageFr, ''),
+                    Locale(APPStrings.languageHi, ''),
                   ],
                   theme: appBloc.themeData,
                   locale: appBloc.locale,
