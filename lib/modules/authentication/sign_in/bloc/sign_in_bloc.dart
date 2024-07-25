@@ -5,35 +5,13 @@ part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  bool switchValue = false;
   late BuildContext context;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   SignInBloc() : super(SignInInitial()) {
-    String lang = StorageManager().getLocale() ?? APPStrings.languageEn;
-    if (lang == APPStrings.languageEn) {
-      switchValue = false;
-    } else {
-      switchValue = true;
-    }
-    on<ChangeSwitchValueEvent>(onChangeSwitchValue);
     on<SignInButtonPressedEvent>(signInApiCall);
-  }
-
-  Future<void> onChangeSwitchValue(ChangeSwitchValueEvent event, Emitter<SignInState> emit) async {
-    emit(const SignInReloadState());
-    switchValue = event.switchValue;
-
-    if (event.switchValue) {
-      await StorageManager().setLocale(APPStrings.languageKo);
-    } else {
-      await StorageManager().setLocale(APPStrings.languageEn);
-    }
-
-    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
-    emit(const ChangeValueState());
   }
 
   /// Sign in API call
@@ -48,15 +26,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       ApiKey.rememberMe: true
     };
 
-    await UserRepository(event.context).loginUser(params).then((value) {
-      value?.fold((l) {
+    await UserRepository(event.context).loginUser(params).then((value) async {
+      await value?.fold((l) {
         ErrorResponse errorModel = l;
         Utils.showMessage(errorModel.message ?? '');
         emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
         printWrapped('$value');
       }, (r) async {
         printWrapped(r.toString());
-        StorageManager().setAuthToken(r.accessToken ?? '');
+        await StorageManager().setAuthToken(r.accessToken ?? '');
         emit(const SignInSuccessState());
         event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
       });

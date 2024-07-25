@@ -15,7 +15,9 @@ class ConnectivityManager {
   Future<bool> checkInternet() async {
     try {
       List<ConnectivityResult> result = await _connectivity.checkConnectivity();
-      return result.contains(ConnectivityResult.mobile) || result.contains(ConnectivityResult.wifi);
+      return result.contains(ConnectivityResult.mobile) ||
+          result.contains(ConnectivityResult.wifi) ||
+          result.contains(ConnectivityResult.ethernet);
     } on PlatformException catch (e) {
       debugPrint('Could not check connectivity status: $e');
       return false;
