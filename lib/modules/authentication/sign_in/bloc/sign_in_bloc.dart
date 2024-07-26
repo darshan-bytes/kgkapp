@@ -7,8 +7,8 @@ part 'sign_in_state.dart';
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   late BuildContext context;
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(text: kDebugMode ? "company@gmail.com" : '');
+  TextEditingController passwordController = TextEditingController(text: kDebugMode ? "123" : '');
 
   SignInBloc() : super(SignInInitial()) {
     on<SignInButtonPressedEvent>(signInApiCall);

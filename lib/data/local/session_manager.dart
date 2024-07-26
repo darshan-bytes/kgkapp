@@ -76,9 +76,14 @@ class StorageManager {
   /// Clear all data stored except _locale
   Future<void> clearSession() async {
     String? locale = getLocale();
+    List<CurrencyListModel>? currencyList = getCurrencyList();
     await _box.clear();
+
     if (locale != null) {
       await setLocale(locale);
+    }
+    if (currencyList.isNotNullNorEmpty) {
+      await setCurrencyList(currencyList);
     }
   }
 

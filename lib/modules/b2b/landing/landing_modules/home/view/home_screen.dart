@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               style,
               context: context,
               imgList: homeBloc.eliganceList3,
-              bgColor: const Color.fromRGBO(236, 236, 234, 1),
+              bgColor: style.topSellingElegance3Color,
               title: APPStrings.shopByMetal.tr.toUpperCase(),
               height: 170.w,
               fit: BoxFit.fitWidth,
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
               style,
               context: context,
               imgList: homeBloc.eliganceList2,
-              bgColor: const Color.fromRGBO(242, 242, 246, 1),
+              bgColor: style.topSellingElegance2Color,
               title: APPStrings.eligance.tr,
               height: 132.w,
             ),
@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               style,
               context: context,
               imgList: homeBloc.eliganceList,
-              bgColor: const Color.fromRGBO(247, 238, 233, 1),
+              bgColor: style.topSellingEleganceColor,
               title: APPStrings.eligance.tr,
               height: 132.w,
             ),
@@ -537,7 +537,7 @@ Widget _buildTopSellingEligence(
   BoxFit? fit,
 }) {
   return Container(
-    color: bgColor ?? const Color.fromRGBO(247, 238, 233, 1),
+    color: bgColor ?? style.topSellingEleganceColor,
     padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
     child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       SmartText(title ?? APPStrings.eligance.tr, style: style.bannerTitleStyle),
@@ -932,7 +932,7 @@ Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, {requ
 
 Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
   return Container(
-    color: const Color.fromRGBO(242, 230, 224, 1),
+    color: style.getInspiredSectionColor,
     padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
