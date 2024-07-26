@@ -36,6 +36,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitialState()) {
     on<InitialProfileListEvent>(_onInitialProfileListEvent);
     on<ToggleProfileListEvent>(_onToggleProfileListEvent);
+    on<LogoutEvent>(_onLogoutEvent);
+    on<DeleteProfileEvent>(_onDeleteProfileEvent);
   }
 
   void _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) {
@@ -373,5 +375,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } else {
       profileCMSList[event.index].onTap?.call(event.context);
     }
+  }
+
+  /// Logout event to clear session and navigate to login page
+  void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
+    BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
+    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
+    await StorageManager().clearSession();
+    event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+  }
+
+  /// Delete profile event to clear session and navigate to login page
+  void _onDeleteProfileEvent(DeleteProfileEvent event, Emitter<ProfileState> emit) async {
+    BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
+    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
+    await StorageManager().clearSession();
+    event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
   }
 }

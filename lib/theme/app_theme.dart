@@ -1745,6 +1745,10 @@ class HomeScreenStyle {
   final Color viewAllCollectionsBgColor;
   final Color shopGemstoneBgColor;
   final Color textStyleColor;
+  final Color topSellingEleganceColor;
+  final Color topSellingElegance2Color;
+  final Color topSellingElegance3Color;
+  final Color getInspiredSectionColor;
   final TextStyle bannerTitleStyle;
   final TextStyle shopGemstoneTitleStyle;
   final TextStyle viewAllCollectionsTextStyle;
@@ -1771,6 +1775,10 @@ class HomeScreenStyle {
     required this.getInspiredTitleStyle,
     required this.textStyleColor,
     required this.dropDownTextStyle,
+    required this.topSellingEleganceColor,
+    required this.topSellingElegance2Color,
+    required this.topSellingElegance3Color,
+    required this.getInspiredSectionColor,
   });
 }
 

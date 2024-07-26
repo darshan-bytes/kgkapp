@@ -41,6 +41,10 @@ class AppThemes {
     colorF1F7F9: Color(0xFFF1F7F9),
     colorEAE0D6: Color(0xFFEAE0D6),
     colorE2E2F0: Color(0xFFE2E2F0),
+    colorF2E6E0: Color(0xFFF2E6E0),
+    colorECECEA: Color(0xFFECECEA),
+    colorF2F2F6: Color(0xFFF2F2F6),
+    colorF7EEE9: Color(0xFFF7EEE9),
   );
 
   ThemeData light({MaterialColor? theme}) {
@@ -114,6 +118,10 @@ class AppColor {
   final Color colorF1F7F9;
   final Color colorEAE0D6;
   final Color colorE2E2F0;
+  final Color colorF2E6E0;
+  final Color colorECECEA;
+  final Color colorF2F2F6;
+  final Color colorF7EEE9;
 
   const AppColor(
       {required this.primary,
@@ -150,7 +158,11 @@ class AppColor {
       required this.color006FBB,
       required this.colorF1F7F9,
       required this.colorEAE0D6,
-      required this.colorE2E2F0});
+      required this.colorE2E2F0,
+      required this.colorF2E6E0,
+      required this.colorECECEA,
+      required this.colorF2F2F6,
+      required this.colorF7EEE9});
 }
 
 extension ThemeDataExtensions on ThemeData {

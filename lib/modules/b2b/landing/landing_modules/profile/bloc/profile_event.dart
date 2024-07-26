@@ -23,3 +23,21 @@ final class ToggleProfileListEvent extends ProfileEvent {
   @override
   List<Object?> get props => [index, context];
 }
+
+final class LogoutEvent extends ProfileEvent {
+  final BuildContext context;
+
+  const LogoutEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class DeleteProfileEvent extends ProfileEvent {
+  final BuildContext context;
+
+  const DeleteProfileEvent({required this.context});
+
+  @override
+  List<Object?> get props => [context];
+}
