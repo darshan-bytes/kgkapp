@@ -99,6 +99,7 @@ class AppRoutes {
             BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
             return const SignUpScreen();
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
       case categoriesPage:
@@ -107,6 +108,7 @@ class AppRoutes {
             BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
             return const CategoriesScreen();
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
@@ -217,6 +219,7 @@ class AppRoutes {
             BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
             return const AddAddressScreen();
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
@@ -226,6 +229,7 @@ class AppRoutes {
             BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
             return const AddressListScreen();
           },
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 

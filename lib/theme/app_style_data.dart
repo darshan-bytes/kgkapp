@@ -932,6 +932,10 @@ class LightModeTheme extends AppTheme {
         stepValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
         textStyleColor: colors.color303538,
         dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
+        topSellingEleganceColor: colors.colorF7EEE9,
+        topSellingElegance2Color: colors.colorF2F2F6,
+        topSellingElegance3Color: colors.colorECECEA,
+        getInspiredSectionColor: colors.colorF2E6E0,
       );
 
   @override
