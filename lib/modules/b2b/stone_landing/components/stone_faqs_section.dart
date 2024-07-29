@@ -42,6 +42,7 @@ class StonesFAQSection extends StatelessWidget {
                     faq.answer,
                     optionalPadding: EdgeInsets.only(bottom: 17.h),
                     style: style.originSectionSubTitleStyle,
+                    textAlign: TextAlign.start,
                   ),
                 ],
               );

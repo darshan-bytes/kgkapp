@@ -17,5 +17,6 @@ class AppConst {
   static const String profilePrivacyPolicyWebViewURL = 'https://www.kgkgroup.com/privacy-policy/';
 
   static String splashScreenVideoUrl = Platform.isAndroid ? 'assets/images/splash_video_url.mp4' : 'assets/images/splash_video_url_ios.mp4';
+  static String strapiImgBaseUrl = "https://strapi-cms.kgk.magnetoinfotech.com";
   static const int passwordLength = 8;
 }

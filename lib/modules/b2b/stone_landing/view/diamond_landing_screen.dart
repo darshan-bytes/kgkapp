@@ -14,76 +14,97 @@ class DiamondLandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        StoneBannerView(
-          imagePath: "https://i.ibb.co/7v98ZZF/Image-1.png",
-          title: "Sparkle and shine",
-          subTitle: "Cherished for their unique beauty, diamonds are the ultimate way to mark your moment and create a sparkling memory.",
-          naturalDiamondsButtonTitle: APPStrings.shopNaturalDiamonds.tr,
-          onTapShopNaturalDiamonds: () {},
-          labDiamondsButtonTitle: APPStrings.shopLabDiamonds.tr,
-          onTapShopLabDiamonds: () {},
-        ),
-        ShopStoneByShapeSection(
-          title: APPStrings.shopDiamondsByShape.tr,
-          itemList: bloc.shopDiamondsByStyleList,
-          onTap: (context, item) {},
-          homeScreenStyle: homeScreenStyle,
-          style: style,
-          scrollController: bloc.shopDiamondsScrollController,
-        ),
-        CraftedForYourSpecialMomentSection(
-          style: style,
-          title: "Crafted for your special moment",
-          buttonCallBack: () {},
-          buttonTitle: APPStrings.shopDiamonds.tr,
-          description:
-              "Every occasion deserves its tribute. Our lab grown diamonds are a high-quality, affordable way to mark your moment.",
-          backgroundImage: "https://i.ibb.co/NnpfYJW/Image.png",
-        ),
-        _buildOriginOfDiamondsSection(bloc, style, homeScreenStyle),
-        GetInspiredSection(
-          title: APPStrings.getInspired.tr,
-          onTap: (context, auctionModel) {},
-          itemList: bloc.getInspiredList,
-          bloc: bloc,
-          homeScreenStyle: homeScreenStyle,
-          style: style,
-        ),
-        DesignYourOwnStoneSection(
-          style: style,
-          mainBannerTitle: "Design your own diamond ring",
-          mainBannerDescription:
-              "Select your ideal ring setting, and let it embrace the brilliance of our handpicked diamonds, creating a timeless and exquisite symbol of love.",
-          mainBannerForegroundImagePath: "https://i.ibb.co/hZ4YjSR/Image-3.png",
-          mainBannerFirstButtonTitle: APPStrings.startWithANaturalDiamond.tr,
-          mainBannerFirstButtonCallback: () {},
-          mainBannerSecondButtonTitle: APPStrings.startWithALabDiamond.tr,
-          mainBannerSecondButtonCallback: () {},
-          firstBannerTitle: "Design your own earrings",
-          firstBannerDescription: "Select your setting and diamonds to get exactly what you're looking for.",
-          firstBannerBackgroundImagePath: "https://i.ibb.co/1J2wWPr/Image-4.png",
-          firstBannerButtonTitle: APPStrings.getStarted.tr,
-          firstBannerButtonCallback: () {},
-          secondBannerTitle: "Design your own necklace",
-          secondBannerDescription: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
-          secondBannerBackgroundImagePath: "https://i.ibb.co/FVJDbvp/Image323.png",
-          secondBannerButtonTitle: APPStrings.getStarted.tr,
-          secondBannerButtonCallback: () {},
-        ),
-        AboutOurStoneSection(
-          style: style,
-          title: APPStrings.aboutOurDiamonds.tr,
-          imagePath: "https://i.ibb.co/M6TZT3y/image-304.png",
-          subTitle: "All diamonds are hand-picked and calibrated to 100th of an mm when selecting the diamonds for all settings.",
-        ),
-        StonesFAQSection(
-          title: APPStrings.diamondFAQs.tr,
-          style: style,
-          faqs: bloc.diamondFAQS,
-        ),
-      ],
+    return BlocBuilder<StonesLandingBloc, StonesLandingState>(
+      buildWhen: (previous, current) => current is DiamondStrapiDataFetchedState,
+      builder: (context, state) {
+        if (bloc.diamondStrapiList.isEmpty) {
+          return const Center(child: SmartCircularProgressIndicator());
+        }
+        return RefreshIndicator.adaptive(
+          onRefresh: () async {
+            await bloc.pullToRefresh(context);
+          },
+          child: ListView.builder(
+              itemCount: bloc.diamondStrapiList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final item = bloc.diamondStrapiList[index];
+                return bloc.getDiamondWidgetsFromSlug(
+                    context, getLandingSlugFromString(item.slug?.slug ?? ''), bloc, style, homeScreenStyle, index);
+              }),
+        );
+        // return Column(
+        //   children: [
+        //     StoneBannerView(
+        //       imagePath: "https://i.ibb.co/7v98ZZF/Image-1.png",
+        //       title: "Sparkle and shine",
+        //       subTitle: "Cherished for their unique beauty, diamonds are the ultimate way to mark your moment and create a sparkling memory.",
+        //       naturalDiamondsButtonTitle: APPStrings.shopNaturalDiamonds.tr,
+        //       onTapShopNaturalDiamonds: () {},
+        //       labDiamondsButtonTitle: APPStrings.shopLabDiamonds.tr,
+        //       onTapShopLabDiamonds: () {},
+        //     ),
+        //     ShopStoneByShapeSection(
+        //       title: APPStrings.shopDiamondsByShape.tr,
+        //       itemList: bloc.shopDiamondsByStyleList,
+        //       onTap: (context, item) {},
+        //       homeScreenStyle: homeScreenStyle,
+        //       style: style,
+        //       scrollController: bloc.shopDiamondsScrollController,
+        //     ),
+        //     CraftedForYourSpecialMomentSection(
+        //       style: style,
+        //       title: "Crafted for your special moment",
+        //       buttonCallBack: () {},
+        //       buttonTitle: APPStrings.shopDiamonds.tr,
+        //       description:
+        //       "Every occasion deserves its tribute. Our lab grown diamonds are a high-quality, affordable way to mark your moment.",
+        //       backgroundImage: "https://i.ibb.co/NnpfYJW/Image.png",
+        //     ),
+        //     _buildOriginOfDiamondsSection(bloc, style, homeScreenStyle),
+        //     GetInspiredSection(
+        //       title: APPStrings.getInspired.tr,
+        //       onTap: (context, auctionModel) {},
+        //       itemList: bloc.getInspiredList,
+        //       bloc: bloc,
+        //       homeScreenStyle: homeScreenStyle,
+        //       style: style,
+        //     ),
+        //     DesignYourOwnStoneSection(
+        //       style: style,
+        //       mainBannerTitle: "Design your own diamond ring",
+        //       mainBannerDescription:
+        //       "Select your ideal ring setting, and let it embrace the brilliance of our handpicked diamonds, creating a timeless and exquisite symbol of love.",
+        //       mainBannerForegroundImagePath: "https://i.ibb.co/hZ4YjSR/Image-3.png",
+        //       mainBannerFirstButtonTitle: APPStrings.startWithANaturalDiamond.tr,
+        //       mainBannerFirstButtonCallback: () {},
+        //       mainBannerSecondButtonTitle: APPStrings.startWithALabDiamond.tr,
+        //       mainBannerSecondButtonCallback: () {},
+        //       firstBannerTitle: "Design your own earrings",
+        //       firstBannerDescription: "Select your setting and diamonds to get exactly what you're looking for.",
+        //       firstBannerBackgroundImagePath: "https://i.ibb.co/1J2wWPr/Image-4.png",
+        //       firstBannerButtonTitle: APPStrings.getStarted.tr,
+        //       firstBannerButtonCallback: () {},
+        //       secondBannerTitle: "Design your own necklace",
+        //       secondBannerDescription: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
+        //       secondBannerBackgroundImagePath: "https://i.ibb.co/FVJDbvp/Image323.png",
+        //       secondBannerButtonTitle: APPStrings.getStarted.tr,
+        //       secondBannerButtonCallback: () {},
+        //     ),
+        //     AboutOurStoneSection(
+        //       style: style,
+        //       title: APPStrings.aboutOurDiamonds.tr,
+        //       imagePath: "https://i.ibb.co/M6TZT3y/image-304.png",
+        //       subTitle: "All diamonds are hand-picked and calibrated to 100th of an mm when selecting the diamonds for all settings.",
+        //     ),
+        //     StonesFAQSection(
+        //       title: APPStrings.diamondFAQs.tr,
+        //       style: style,
+        //       faqs: bloc.diamondFAQS,
+        //     ),
+        //   ],
+        // );
+      },
     );
   }
 

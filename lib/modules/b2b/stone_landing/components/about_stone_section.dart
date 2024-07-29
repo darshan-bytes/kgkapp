@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class AboutOurStoneSection extends StatelessWidget {
   final StonesLandingScreenStyle style;
-  final bool isLearnMore;
+  final Function()? learnMore;
   final String title;
   final String subTitle;
   final String imagePath;
@@ -10,7 +10,7 @@ class AboutOurStoneSection extends StatelessWidget {
   const AboutOurStoneSection({
     super.key,
     required this.style,
-    this.isLearnMore = false,
+    this.learnMore,
     required this.title,
     required this.subTitle,
     required this.imagePath,
@@ -29,11 +29,14 @@ class AboutOurStoneSection extends StatelessWidget {
             subTitle,
             style: style.originSectionSubTitleStyle,
           ),
-          if (isLearnMore)
-            SmartText(
-              APPStrings.learnMore.tr,
-              optionalPadding: EdgeInsets.only(top: 24.h),
-              style: style.learnMoreTextStyle,
+          if (learnMore != null)
+            GestureDetector(
+              onTap: learnMore,
+              child: SmartText(
+                APPStrings.learnMore.tr,
+                optionalPadding: EdgeInsets.only(top: 24.h),
+                style: style.learnMoreTextStyle,
+              ),
             ),
           SizedBox(height: 16.h),
           SmartImage(path: imagePath),
