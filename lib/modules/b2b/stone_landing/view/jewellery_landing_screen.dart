@@ -30,7 +30,7 @@ class JewelleryLandingScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = bloc.jewelleryStrapiList[index];
                 return bloc.getJewelleriesWidgetsFromSlug(
-                    context, getLandingSlugFromString(item.slug?.slug ?? ''), bloc, style, homeScreenStyle, index);
+                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
               }),
         );
       },

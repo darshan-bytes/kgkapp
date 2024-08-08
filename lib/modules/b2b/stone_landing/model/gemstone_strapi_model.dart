@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class GemstoneStrapiModel {
   GemstoneStrapiModel({
     required this.data,
@@ -681,6 +683,8 @@ class Slug {
       slug: json["slug"],
     );
   }
+
+  LandingSlug get landingSlug => LandingSlug.values.firstWhereOrNull((element) => element.value == slug) ?? LandingSlug.unknown;
 
   Map<String, dynamic> toJson() => {
         "id": id,

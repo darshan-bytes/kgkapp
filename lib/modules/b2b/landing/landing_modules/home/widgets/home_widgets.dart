@@ -49,7 +49,6 @@ class HomeWidgets {
                 context: context,
                 redirectTo: getRedirectionToFromString(item.redirectTo ?? ''),
                 redirectionType: getRedirectionTypeFromString(item.redirectionType ?? ""));
-            // context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
           },
           imageUrl: item.imageUrl ?? '',
           title: item.name ?? '',
@@ -149,7 +148,7 @@ class HomeWidgets {
                       ),
                       if (homeBloc.shopBySpacificCategory[i].name.isNotNullNorEmpty)
                         Positioned(
-                          bottom: 4,
+                          bottom: 4.h,
                           left: 0,
                           right: 0,
                           child: Row(
@@ -162,7 +161,7 @@ class HomeWidgets {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4.r),
-                                  color: Colors.white,
+                                  color: style.whiteColor,
                                 ),
                                 child: SmartText(
                                   homeBloc.shopBySpacificCategory[i].name ?? '',
@@ -327,8 +326,6 @@ class HomeWidgets {
             shrinkWrap: true,
             itemBuilder: (context, index) => Container(
               padding: EdgeInsets.only(left: 6.w, right: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
-              // Add horizontal padding
-              // width: context.width * 0.8,
               child: SmartImage(
                 path: homeBloc.latestCollectionList[index].imageUrl ?? '',
                 fit: BoxFit.fitHeight,
@@ -469,8 +466,6 @@ class HomeWidgets {
                             context: context,
                             redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
                             redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""));
-                        // context
-                        //     .pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
                       },
                     ))
                 .toList())
@@ -514,7 +509,7 @@ class HomeWidgets {
     required String redirectionType,
   }) {
     return Padding(
-      padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h),
+      padding: EdgeInsets.zero,
       child: Stack(
         children: [
           SmartImage(

@@ -1,8 +1,8 @@
-import 'package:kgk/data/network/model/gemstone_strapi_model.dart';
-import 'package:kgk/data/network/model/jewelleries_strapi_model.dart';
+import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
+import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
 import 'package:kgk/kgk.dart';
 
-import '../../../../data/network/model/diamonds_strapi_model.dart';
+import '../model/diamonds_strapi_model.dart';
 
 part 'stones_landing_event.dart';
 
@@ -1369,33 +1369,16 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 }
 
 enum LandingSlug {
-  landingBanner,
-  jewelstonePoster,
-  originOfDiamonds,
-  landingGetInspired,
-  designAllJewellery,
-  aboutEntity,
-  landingFaq,
-  unknown
-}
+  landingBanner('landing-banner'),
+  jewelstonePoster('jewelstone-poster'),
+  originOfDiamonds('origin-of-diamonds'),
+  landingGetInspired('landing-get-inspired'),
+  designAllJewellery('design-all-jewellery'),
+  aboutEntity('about-entity'),
+  landingFaq('landing-faqs'),
+  unknown('unknown');
 
-LandingSlug getLandingSlugFromString(String slug) {
-  switch (slug) {
-    case 'landing-banner':
-      return LandingSlug.landingBanner;
-    case 'jewelstone-poster':
-      return LandingSlug.jewelstonePoster;
-    case 'origin-of-diamonds':
-      return LandingSlug.originOfDiamonds;
-    case 'landing-get-inspired':
-      return LandingSlug.landingGetInspired;
-    case 'design-all-jewellery':
-      return LandingSlug.designAllJewellery;
-    case 'about-entity':
-      return LandingSlug.aboutEntity;
-    case 'landing-faqs':
-      return LandingSlug.landingFaq;
-    default:
-      return LandingSlug.unknown;
-  }
+  const LandingSlug(this.value);
+
+  final String value;
 }

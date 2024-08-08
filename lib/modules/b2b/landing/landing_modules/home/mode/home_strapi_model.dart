@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class HomeStrapiModel {
   HomeStrapiModel({
     required this.data,
@@ -447,6 +449,8 @@ class Slug {
 
   final int? id;
   final String? slug;
+
+  HomeSlug get homeSlug => HomeSlug.values.firstWhereOrNull((element) => element.value == slug) ?? HomeSlug.unknown;
 
   factory Slug.fromJson(Map<String, dynamic> json) {
     return Slug(
