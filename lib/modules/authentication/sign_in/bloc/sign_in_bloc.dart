@@ -18,27 +18,29 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<void> signInApiCall(SignInButtonPressedEvent event, Emitter<SignInState> emit) async {
     if (!checkValidations()) return;
 
-    // Show loading state
-    emit(const SignInLoadingState());
-    Map<String, dynamic> params = {
-      ApiKey.email: emailController.text.trim(),
-      ApiKey.password: passwordController.text.trim(),
-      ApiKey.rememberMe: true
-    };
+    event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
 
-    await UserRepository(event.context).loginUser(params).then((value) async {
-      await value?.fold((l) {
-        ErrorResponse errorModel = l;
-        Utils.showMessage(errorModel.message ?? '');
-        emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
-        printWrapped('$value');
-      }, (r) async {
-        printWrapped(r.toString());
-        await StorageManager().setAuthToken(r.accessToken ?? '');
-        emit(const SignInSuccessState());
-        event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
-      });
-    });
+    // // Show loading state
+    // emit(const SignInLoadingState());
+    // Map<String, dynamic> params = {
+    //   ApiKey.email: emailController.text.trim(),
+    //   ApiKey.password: passwordController.text.trim(),
+    //   ApiKey.rememberMe: true
+    // };
+    //
+    // await UserRepository(event.context).loginUser(params).then((value) async {
+    //   await value?.fold((l) {
+    //     ErrorResponse errorModel = l;
+    //     Utils.showMessage(errorModel.message ?? '');
+    //     emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
+    //     printWrapped('$value');
+    //   }, (r) async {
+    //     printWrapped(r.toString());
+    //     await StorageManager().setAuthToken(r.accessToken ?? '');
+    //     emit(const SignInSuccessState());
+    //     event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+    //   });
+    // });
   }
 
   /// Check email & password validations as needed

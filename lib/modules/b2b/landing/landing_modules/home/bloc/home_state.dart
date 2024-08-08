@@ -47,3 +47,19 @@ final class HomeCategoryPageChangeState extends HomeState {
   @override
   List<Object> get props => [index];
 }
+
+final class HomeStrapiDataFetchedState extends HomeState {
+  const HomeStrapiDataFetchedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomeErrorState extends HomeState {
+  final String errorMessage;
+
+  const HomeErrorState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

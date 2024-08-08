@@ -10,6 +10,8 @@ class AuctionListModel {
   String? bidAmount;
   String? bidPlacedOn;
   String? percentageOff;
+  String? redirectTo;
+  String? redirectionType;
 
   AuctionListModel({
     this.id,
@@ -21,5 +23,7 @@ class AuctionListModel {
     this.bidAmount,
     this.bidPlacedOn,
     this.percentageOff,
+    this.redirectTo,
+    this.redirectionType,
   });
 }

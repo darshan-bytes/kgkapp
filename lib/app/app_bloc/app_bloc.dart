@@ -8,6 +8,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AppThemes appThemes = AppThemes();
   final Connectivity _connectivity = Connectivity();
   late Stream<List<ConnectivityResult>> _connectivityStream;
+  List<Locale> supportedLocales = const [
+    Locale(APPStrings.languageEn, ''), // English
+    Locale(APPStrings.languageFr, ''),
+    Locale(APPStrings.languageHi, ''),
+  ];
+  List<LocalizationsDelegate<Object>> localizationsDelegates = const [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    AppLocalizations.delegate,
+    CountryLocalizations.delegate,
+  ];
   ThemeData? themeData;
   Locale locale = const Locale(APPStrings.languageEn);
 

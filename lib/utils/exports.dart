@@ -424,3 +424,7 @@ export 'package:kgk/utils/exception_file.dart';
 export 'package:kgk/modules/authentication/forgot_password/model/forgot_password_response_model.dart';
 export 'package:kgk/model/currency_model.dart';
 export 'package:kgk/widgets/token_expire_dialog.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/home/widgets/home_widgets.dart';
+export 'package:kgk/data/network/repository/app_repository.dart';
+export 'package:html/parser.dart';

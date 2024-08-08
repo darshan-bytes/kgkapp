@@ -110,6 +110,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           IconTheme.merge(
             data: IconThemeData(color: _iconColor?.evaluate(_easeInAnimation!)),
@@ -126,6 +127,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
           ),
           ClipRect(
             child: Align(
+              alignment: Alignment.centerLeft,
               heightFactor: _easeInAnimation?.value,
               child: child,
             ),
@@ -152,7 +154,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
     return AnimatedBuilder(
       animation: _controller!.view,
       builder: _buildChildren,
-      child: closed ? null : Column(children: widget.children),
+      child: closed ? null : Column(crossAxisAlignment: CrossAxisAlignment.start, children: widget.children),
     );
   }
 }
