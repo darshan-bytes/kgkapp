@@ -31,7 +31,12 @@ class HomeScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return homeBloc.getWidgetsForHomeSlug(
-                      context, getHomeSlugFromString(homeBloc.homeStrapiList[index].slug!.slug ?? ''), homeBloc, style, index);
+                    context,
+                    (homeBloc.homeStrapiList[index].slug)?.homeSlug ?? HomeSlug.unknown,
+                    homeBloc,
+                    style,
+                    index,
+                  );
                 },
               ),
             );

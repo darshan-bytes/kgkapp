@@ -1,15 +1,17 @@
-class JewelleryStrapiModel {
-  JewelleryStrapiModel({
+import 'package:kgk/kgk.dart';
+
+class DiamondsStrapiModel {
+  DiamondsStrapiModel({
     required this.data,
     required this.meta,
   });
 
-  final List<Datum> data;
+  final List<DiamondsStrapiModelDatum> data;
   final Meta? meta;
 
-  factory JewelleryStrapiModel.fromJson(Map<String, dynamic> json) {
-    return JewelleryStrapiModel(
-      data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+  factory DiamondsStrapiModel.fromJson(Map<String, dynamic> json) {
+    return DiamondsStrapiModel(
+      data: json["data"] == null ? [] : List<DiamondsStrapiModelDatum>.from(json["data"]!.map((x) => DiamondsStrapiModelDatum.fromJson(x))),
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
     );
   }
@@ -25,8 +27,8 @@ class JewelleryStrapiModel {
   }
 }
 
-class Datum {
-  Datum({
+class DiamondsStrapiModelDatum {
+  DiamondsStrapiModelDatum({
     required this.id,
     required this.attributes,
   });
@@ -34,8 +36,8 @@ class Datum {
   final int? id;
   final PurpleAttributes? attributes;
 
-  factory Datum.fromJson(Map<String, dynamic> json) {
-    return Datum(
+  factory DiamondsStrapiModelDatum.fromJson(Map<String, dynamic> json) {
+    return DiamondsStrapiModelDatum(
       id: json["id"],
       attributes: json["attributes"] == null ? null : PurpleAttributes.fromJson(json["attributes"]),
     );
@@ -58,14 +60,14 @@ class PurpleAttributes {
     required this.updatedAt,
     required this.publishedAt,
     required this.locale,
-    required this.jewelleries,
+    required this.diamonds,
   });
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final DateTime? publishedAt;
   final String? locale;
-  final List<Jewellery> jewelleries;
+  final List<DiamondData> diamonds;
 
   factory PurpleAttributes.fromJson(Map<String, dynamic> json) {
     return PurpleAttributes(
@@ -73,7 +75,7 @@ class PurpleAttributes {
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       publishedAt: DateTime.tryParse(json["publishedAt"] ?? ""),
       locale: json["locale"],
-      jewelleries: json["jewelleries"] == null ? [] : List<Jewellery>.from(json["jewelleries"]!.map((x) => Jewellery.fromJson(x))),
+      diamonds: json["diamonds"] == null ? [] : List<DiamondData>.from(json["diamonds"]!.map((x) => DiamondData.fromJson(x))),
     );
   }
 
@@ -82,17 +84,17 @@ class PurpleAttributes {
         "updatedAt": updatedAt?.toIso8601String(),
         "publishedAt": publishedAt?.toIso8601String(),
         "locale": locale,
-        "jewelleries": jewelleries.map((x) => x.toJson()).toList(),
+        "diamonds": diamonds.map((x) => x.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return "$createdAt, $updatedAt, $publishedAt, $locale, $jewelleries, ";
+    return "$createdAt, $updatedAt, $publishedAt, $locale, $diamonds, ";
   }
 }
 
-class Jewellery {
-  Jewellery({
+class DiamondData {
+  DiamondData({
     required this.id,
     required this.component,
     required this.slug,
@@ -105,8 +107,10 @@ class Jewellery {
     required this.title,
     required this.description,
     required this.image,
-    required this.mobileImage,
     required this.banner,
+    required this.headline,
+    required this.about,
+    required this.faQs,
   });
 
   final int? id;
@@ -120,12 +124,14 @@ class Jewellery {
   final List<Country> country;
   final String? title;
   final String? description;
-  final MobileImageClass? image;
-  final MobileImageClass? mobileImage;
+  final DiamondImage? image;
   final List<Banner> banner;
+  final dynamic headline;
+  final About? about;
+  final List<Faq> faQs;
 
-  factory Jewellery.fromJson(Map<String, dynamic> json) {
-    return Jewellery(
+  factory DiamondData.fromJson(Map<String, dynamic> json) {
+    return DiamondData(
       id: json["id"],
       component: json["__component"],
       slug: json["slug"] == null ? null : Slug.fromJson(json["slug"]),
@@ -137,9 +143,11 @@ class Jewellery {
       country: json["country"] == null ? [] : List<Country>.from(json["country"]!.map((x) => Country.fromJson(x))),
       title: json["title"],
       description: json["description"],
-      image: json["image"] == null ? null : MobileImageClass.fromJson(json["image"]),
-      mobileImage: json["mobile_image"] == null ? null : MobileImageClass.fromJson(json["mobile_image"]),
+      image: json["image"] == null ? null : DiamondImage.fromJson(json["image"]),
       banner: json["banner"] == null ? [] : List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x))),
+      headline: json["headline"],
+      about: json["about"] == null ? null : About.fromJson(json["about"]),
+      faQs: json["FAQs"] == null ? [] : List<Faq>.from(json["FAQs"]!.map((x) => Faq.fromJson(x))),
     );
   }
 
@@ -156,13 +164,277 @@ class Jewellery {
         "title": title,
         "description": description,
         "image": image?.toJson(),
-        "mobile_image": mobileImage?.toJson(),
         "banner": banner.map((x) => x.toJson()).toList(),
+        "headline": headline,
+        "about": about?.toJson(),
+        "FAQs": faQs.map((x) => x.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return "$id, $component, $slug, $userType, $businessType, $button, $poster, $details, $country, $title, $description, $image, $mobileImage, $banner, ";
+    return "$id, $component, $slug, $userType, $businessType, $button, $poster, $details, $country, $title, $description, $image, $banner, $headline, $about, $faQs, ";
+  }
+}
+
+class About {
+  About({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.tag,
+    required this.redirecTo,
+    required this.redirectionType,
+    required this.image,
+  });
+
+  final int? id;
+  final String? title;
+  final String? description;
+  final dynamic tag;
+  final String? redirecTo;
+  final dynamic redirectionType;
+  final AboutImage? image;
+
+  factory About.fromJson(Map<String, dynamic> json) {
+    return About(
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      tag: json["tag"],
+      redirecTo: json["RedirecTo"],
+      redirectionType: json["RedirectionType"],
+      image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "RedirecTo": redirecTo,
+        "RedirectionType": redirectionType,
+        "image": image?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
+  }
+}
+
+class AboutImage {
+  AboutImage({
+    required this.data,
+  });
+
+  final List<PurpleDatum> data;
+
+  factory AboutImage.fromJson(Map<String, dynamic> json) {
+    return AboutImage(
+      data: json["data"] == null ? [] : List<PurpleDatum>.from(json["data"]!.map((x) => PurpleDatum.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "data": data.map((x) => x.toJson()).toList(),
+      };
+
+  @override
+  String toString() {
+    return "$data, ";
+  }
+}
+
+class PurpleDatum {
+  PurpleDatum({
+    required this.id,
+    required this.attributes,
+  });
+
+  final int? id;
+  final FluffyAttributes? attributes;
+
+  factory PurpleDatum.fromJson(Map<String, dynamic> json) {
+    return PurpleDatum(
+      id: json["id"],
+      attributes: json["attributes"] == null ? null : FluffyAttributes.fromJson(json["attributes"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "attributes": attributes?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$id, $attributes, ";
+  }
+}
+
+class FluffyAttributes {
+  FluffyAttributes({
+    required this.name,
+    required this.alternativeText,
+    required this.caption,
+    required this.width,
+    required this.height,
+    required this.formats,
+    required this.hash,
+    required this.ext,
+    required this.mime,
+    required this.size,
+    required this.url,
+    required this.previewUrl,
+    required this.provider,
+    required this.providerMetadata,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  final String? name;
+  final dynamic alternativeText;
+  final dynamic caption;
+  final int? width;
+  final int? height;
+  final PurpleFormats? formats;
+  final String? hash;
+  final String? ext;
+  final String? mime;
+  final double? size;
+  final String? url;
+  final dynamic previewUrl;
+  final String? provider;
+  final dynamic providerMetadata;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  factory FluffyAttributes.fromJson(Map<String, dynamic> json) {
+    return FluffyAttributes(
+      name: json["name"],
+      alternativeText: json["alternativeText"],
+      caption: json["caption"],
+      width: json["width"],
+      height: json["height"],
+      formats: json["formats"] == null ? null : PurpleFormats.fromJson(json["formats"]),
+      hash: json["hash"],
+      ext: json["ext"],
+      mime: json["mime"],
+      size: json["size"],
+      url: json["url"],
+      previewUrl: json["previewUrl"],
+      provider: json["provider"],
+      providerMetadata: json["provider_metadata"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "alternativeText": alternativeText,
+        "caption": caption,
+        "width": width,
+        "height": height,
+        "formats": formats?.toJson(),
+        "hash": hash,
+        "ext": ext,
+        "mime": mime,
+        "size": size,
+        "url": url,
+        "previewUrl": previewUrl,
+        "provider": provider,
+        "provider_metadata": providerMetadata,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
+
+  @override
+  String toString() {
+    return "$name, $alternativeText, $caption, $width, $height, $formats, $hash, $ext, $mime, $size, $url, $previewUrl, $provider, $providerMetadata, $createdAt, $updatedAt, ";
+  }
+}
+
+class PurpleFormats {
+  PurpleFormats({
+    required this.thumbnail,
+  });
+
+  final Large? thumbnail;
+
+  factory PurpleFormats.fromJson(Map<String, dynamic> json) {
+    return PurpleFormats(
+      thumbnail: json["thumbnail"] == null ? null : Large.fromJson(json["thumbnail"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "thumbnail": thumbnail?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$thumbnail, ";
+  }
+}
+
+class Large {
+  Large({
+    required this.ext,
+    required this.url,
+    required this.hash,
+    required this.mime,
+    required this.name,
+    required this.path,
+    required this.size,
+    required this.width,
+    required this.height,
+    required this.sizeInBytes,
+  });
+
+  final String? ext;
+  final String? url;
+  final String? hash;
+  final String? mime;
+  final String? name;
+  final dynamic path;
+  final double? size;
+  final int? width;
+  final int? height;
+  final int? sizeInBytes;
+
+  factory Large.fromJson(Map<String, dynamic> json) {
+    return Large(
+      ext: json["ext"],
+      url: json["url"],
+      hash: json["hash"],
+      mime: json["mime"],
+      name: json["name"],
+      path: json["path"],
+      size: json["size"],
+      width: json["width"],
+      height: json["height"],
+      sizeInBytes: json["sizeInBytes"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "ext": ext,
+        "url": url,
+        "hash": hash,
+        "mime": mime,
+        "name": name,
+        "path": path,
+        "size": size,
+        "width": width,
+        "height": height,
+        "sizeInBytes": sizeInBytes,
+      };
+
+  @override
+  String toString() {
+    return "$ext, $url, $hash, $mime, $name, $path, $size, $width, $height, $sizeInBytes, ";
   }
 }
 
@@ -187,8 +459,8 @@ class Banner {
   final dynamic buttonUrl;
   final dynamic buttonTarget;
   final String? description;
-  final String? redirectTo;
-  final String? redirectionType;
+  final dynamic redirectTo;
+  final dynamic redirectionType;
   final BannerImage? image;
 
   factory Banner.fromJson(Map<String, dynamic> json) {
@@ -300,7 +572,7 @@ class DataAttributes {
   final dynamic caption;
   final int? width;
   final int? height;
-  final Formats? formats;
+  final FluffyFormats? formats;
   final String? hash;
   final String? ext;
   final String? mime;
@@ -319,7 +591,7 @@ class DataAttributes {
       caption: json["caption"],
       width: json["width"],
       height: json["height"],
-      formats: json["formats"] == null ? null : Formats.fromJson(json["formats"]),
+      formats: json["formats"] == null ? null : FluffyFormats.fromJson(json["formats"]),
       hash: json["hash"],
       ext: json["ext"],
       mime: json["mime"],
@@ -358,8 +630,8 @@ class DataAttributes {
   }
 }
 
-class Formats {
-  Formats({
+class FluffyFormats {
+  FluffyFormats({
     required this.large,
     required this.small,
     required this.medium,
@@ -371,8 +643,8 @@ class Formats {
   final Large? medium;
   final Large? thumbnail;
 
-  factory Formats.fromJson(Map<String, dynamic> json) {
-    return Formats(
+  factory FluffyFormats.fromJson(Map<String, dynamic> json) {
+    return FluffyFormats(
       large: json["large"] == null ? null : Large.fromJson(json["large"]),
       small: json["small"] == null ? null : Large.fromJson(json["small"]),
       medium: json["medium"] == null ? null : Large.fromJson(json["medium"]),
@@ -390,65 +662,6 @@ class Formats {
   @override
   String toString() {
     return "$large, $small, $medium, $thumbnail, ";
-  }
-}
-
-class Large {
-  Large({
-    required this.ext,
-    required this.url,
-    required this.hash,
-    required this.mime,
-    required this.name,
-    required this.path,
-    required this.size,
-    required this.width,
-    required this.height,
-    required this.sizeInBytes,
-  });
-
-  final String? ext;
-  final String? url;
-  final String? hash;
-  final String? mime;
-  final String? name;
-  final dynamic path;
-  final double? size;
-  final int? width;
-  final int? height;
-  final int? sizeInBytes;
-
-  factory Large.fromJson(Map<String, dynamic> json) {
-    return Large(
-      ext: json["ext"],
-      url: json["url"],
-      hash: json["hash"],
-      mime: json["mime"],
-      name: json["name"],
-      path: json["path"],
-      size: json["size"].toDouble(),
-      width: json["width"],
-      height: json["height"],
-      sizeInBytes: json["sizeInBytes"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "ext": ext,
-        "url": url,
-        "hash": hash,
-        "mime": mime,
-        "name": name,
-        "path": path,
-        "size": size,
-        "width": width,
-        "height": height,
-        "sizeInBytes": sizeInBytes,
-      };
-
-  @override
-  String toString() {
-    return "$ext, $url, $hash, $mime, $name, $path, $size, $width, $height, $sizeInBytes, ";
   }
 }
 
@@ -539,7 +752,7 @@ class Country {
   final dynamic tag;
   final String? redirecTo;
   final dynamic redirectionType;
-  final BannerImage? image;
+  final CountryImage? image;
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
@@ -549,7 +762,7 @@ class Country {
       tag: json["tag"],
       redirecTo: json["RedirecTo"],
       redirectionType: json["RedirectionType"],
-      image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
+      image: json["image"] == null ? null : CountryImage.fromJson(json["image"]),
     );
   }
 
@@ -569,6 +782,166 @@ class Country {
   }
 }
 
+class CountryImage {
+  CountryImage({
+    required this.data,
+  });
+
+  final List<FluffyDatum> data;
+
+  factory CountryImage.fromJson(Map<String, dynamic> json) {
+    return CountryImage(
+      data: json["data"] == null ? [] : List<FluffyDatum>.from(json["data"]!.map((x) => FluffyDatum.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "data": data.map((x) => x.toJson()).toList(),
+      };
+
+  @override
+  String toString() {
+    return "$data, ";
+  }
+}
+
+class FluffyDatum {
+  FluffyDatum({
+    required this.id,
+    required this.attributes,
+  });
+
+  final int? id;
+  final TentacledAttributes? attributes;
+
+  factory FluffyDatum.fromJson(Map<String, dynamic> json) {
+    return FluffyDatum(
+      id: json["id"],
+      attributes: json["attributes"] == null ? null : TentacledAttributes.fromJson(json["attributes"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "attributes": attributes?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$id, $attributes, ";
+  }
+}
+
+class TentacledAttributes {
+  TentacledAttributes({
+    required this.name,
+    required this.alternativeText,
+    required this.caption,
+    required this.width,
+    required this.height,
+    required this.formats,
+    required this.hash,
+    required this.ext,
+    required this.mime,
+    required this.size,
+    required this.url,
+    required this.previewUrl,
+    required this.provider,
+    required this.providerMetadata,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  final String? name;
+  final dynamic alternativeText;
+  final dynamic caption;
+  final int? width;
+  final int? height;
+  final TentacledFormats? formats;
+  final String? hash;
+  final String? ext;
+  final String? mime;
+  final double? size;
+  final String? url;
+  final dynamic previewUrl;
+  final String? provider;
+  final dynamic providerMetadata;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  factory TentacledAttributes.fromJson(Map<String, dynamic> json) {
+    return TentacledAttributes(
+      name: json["name"],
+      alternativeText: json["alternativeText"],
+      caption: json["caption"],
+      width: json["width"],
+      height: json["height"],
+      formats: json["formats"] == null ? null : TentacledFormats.fromJson(json["formats"]),
+      hash: json["hash"],
+      ext: json["ext"],
+      mime: json["mime"],
+      size: json["size"].toDouble(),
+      url: json["url"],
+      previewUrl: json["previewUrl"],
+      provider: json["provider"],
+      providerMetadata: json["provider_metadata"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "alternativeText": alternativeText,
+        "caption": caption,
+        "width": width,
+        "height": height,
+        "formats": formats?.toJson(),
+        "hash": hash,
+        "ext": ext,
+        "mime": mime,
+        "size": size,
+        "url": url,
+        "previewUrl": previewUrl,
+        "provider": provider,
+        "provider_metadata": providerMetadata,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
+
+  @override
+  String toString() {
+    return "$name, $alternativeText, $caption, $width, $height, $formats, $hash, $ext, $mime, $size, $url, $previewUrl, $provider, $providerMetadata, $createdAt, $updatedAt, ";
+  }
+}
+
+class TentacledFormats {
+  TentacledFormats({
+    required this.small,
+    required this.thumbnail,
+  });
+
+  final Large? small;
+  final Large? thumbnail;
+
+  factory TentacledFormats.fromJson(Map<String, dynamic> json) {
+    return TentacledFormats(
+      small: json["small"] == null ? null : Large.fromJson(json["small"]),
+      thumbnail: json["thumbnail"] == null ? null : Large.fromJson(json["thumbnail"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "small": small?.toJson(),
+        "thumbnail": thumbnail?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$small, $thumbnail, ";
+  }
+}
+
 class Details {
   Details({
     required this.id,
@@ -578,7 +951,7 @@ class Details {
 
   final int? id;
   final String? title;
-  final dynamic description;
+  final String? description;
 
   factory Details.fromJson(Map<String, dynamic> json) {
     return Details(
@@ -600,15 +973,50 @@ class Details {
   }
 }
 
-class MobileImageClass {
-  MobileImageClass({
+class Faq {
+  Faq({
+    required this.id,
+    required this.question,
+    required this.answer,
+    required this.title,
+  });
+
+  final int? id;
+  final String? question;
+  final String? answer;
+  final dynamic title;
+
+  factory Faq.fromJson(Map<String, dynamic> json) {
+    return Faq(
+      id: json["id"],
+      question: json["question"],
+      answer: json["answer"],
+      title: json["title"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "question": question,
+        "answer": answer,
+        "title": title,
+      };
+
+  @override
+  String toString() {
+    return "$id, $question, $answer, $title, ";
+  }
+}
+
+class DiamondImage {
+  DiamondImage({
     required this.data,
   });
 
   final Dat? data;
 
-  factory MobileImageClass.fromJson(Map<String, dynamic> json) {
-    return MobileImageClass(
+  factory DiamondImage.fromJson(Map<String, dynamic> json) {
+    return DiamondImage(
       data: json["data"] == null ? null : Dat.fromJson(json["data"]),
     );
   }
@@ -639,7 +1047,7 @@ class Poster {
   final String? description;
   final dynamic tag;
   final String? redirecTo;
-  final dynamic redirectionType;
+  final String? redirectionType;
   final BannerImage? image;
 
   factory Poster.fromJson(Map<String, dynamic> json) {
@@ -685,6 +1093,8 @@ class Slug {
       slug: json["slug"],
     );
   }
+
+  LandingSlug get landingSlug => LandingSlug.values.firstWhereOrNull((element) => element.value == slug) ?? LandingSlug.unknown;
 
   Map<String, dynamic> toJson() => {
         "id": id,

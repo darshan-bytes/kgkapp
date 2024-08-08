@@ -30,7 +30,7 @@ class DiamondLandingScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = bloc.diamondStrapiList[index];
                 return bloc.getDiamondWidgetsFromSlug(
-                    context, getLandingSlugFromString(item.slug?.slug ?? ''), bloc, style, homeScreenStyle, index);
+                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
               }),
         );
         // return Column(

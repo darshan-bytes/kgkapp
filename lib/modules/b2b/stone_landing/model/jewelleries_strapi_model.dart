@@ -1,5 +1,7 @@
-class GemstoneStrapiModel {
-  GemstoneStrapiModel({
+import 'package:kgk/kgk.dart';
+
+class JewelleryStrapiModel {
+  JewelleryStrapiModel({
     required this.data,
     required this.meta,
   });
@@ -7,8 +9,8 @@ class GemstoneStrapiModel {
   final List<Datum> data;
   final Meta? meta;
 
-  factory GemstoneStrapiModel.fromJson(Map<String, dynamic> json) {
-    return GemstoneStrapiModel(
+  factory JewelleryStrapiModel.fromJson(Map<String, dynamic> json) {
+    return JewelleryStrapiModel(
       data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
     );
@@ -58,14 +60,14 @@ class PurpleAttributes {
     required this.updatedAt,
     required this.publishedAt,
     required this.locale,
-    required this.gemstones,
+    required this.jewelleries,
   });
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final DateTime? publishedAt;
   final String? locale;
-  final List<Gemstone> gemstones;
+  final List<Jewellery> jewelleries;
 
   factory PurpleAttributes.fromJson(Map<String, dynamic> json) {
     return PurpleAttributes(
@@ -73,7 +75,7 @@ class PurpleAttributes {
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       publishedAt: DateTime.tryParse(json["publishedAt"] ?? ""),
       locale: json["locale"],
-      gemstones: json["gemstones"] == null ? [] : List<Gemstone>.from(json["gemstones"]!.map((x) => Gemstone.fromJson(x))),
+      jewelleries: json["jewelleries"] == null ? [] : List<Jewellery>.from(json["jewelleries"]!.map((x) => Jewellery.fromJson(x))),
     );
   }
 
@@ -82,17 +84,17 @@ class PurpleAttributes {
         "updatedAt": updatedAt?.toIso8601String(),
         "publishedAt": publishedAt?.toIso8601String(),
         "locale": locale,
-        "gemstones": gemstones.map((x) => x.toJson()).toList(),
+        "jewelleries": jewelleries.map((x) => x.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return "$createdAt, $updatedAt, $publishedAt, $locale, $gemstones, ";
+    return "$createdAt, $updatedAt, $publishedAt, $locale, $jewelleries, ";
   }
 }
 
-class Gemstone {
-  Gemstone({
+class Jewellery {
+  Jewellery({
     required this.id,
     required this.component,
     required this.slug,
@@ -100,15 +102,13 @@ class Gemstone {
     required this.businessType,
     required this.button,
     required this.poster,
+    required this.details,
+    required this.country,
     required this.title,
     required this.description,
     required this.image,
+    required this.mobileImage,
     required this.banner,
-    required this.headline,
-    required this.about,
-    required this.faQs,
-    required this.details,
-    required this.country,
   });
 
   final int? id;
@@ -117,35 +117,31 @@ class Gemstone {
   final UserType? userType;
   final BusinessType? businessType;
   final List<Button> button;
-  final About? poster;
+  final Poster? poster;
+  final Details? details;
+  final List<Country> country;
   final String? title;
   final String? description;
-  final GemstoneImage? image;
+  final MobileImageClass? image;
+  final MobileImageClass? mobileImage;
   final List<Banner> banner;
-  final String? headline;
-  final About? about;
-  final List<Faq> faQs;
-  final Details? details;
-  final List<About> country;
 
-  factory Gemstone.fromJson(Map<String, dynamic> json) {
-    return Gemstone(
+  factory Jewellery.fromJson(Map<String, dynamic> json) {
+    return Jewellery(
       id: json["id"],
       component: json["__component"],
       slug: json["slug"] == null ? null : Slug.fromJson(json["slug"]),
       userType: json["user_type"] == null ? null : UserType.fromJson(json["user_type"]),
       businessType: json["business_type"] == null ? null : BusinessType.fromJson(json["business_type"]),
       button: json["button"] == null ? [] : List<Button>.from(json["button"]!.map((x) => Button.fromJson(x))),
-      poster: json["poster"] == null ? null : About.fromJson(json["poster"]),
+      poster: json["poster"] == null ? null : Poster.fromJson(json["poster"]),
+      details: json["details"] == null ? null : Details.fromJson(json["details"]),
+      country: json["country"] == null ? [] : List<Country>.from(json["country"]!.map((x) => Country.fromJson(x))),
       title: json["title"],
       description: json["description"],
-      image: json["image"] == null ? null : GemstoneImage.fromJson(json["image"]),
+      image: json["image"] == null ? null : MobileImageClass.fromJson(json["image"]),
+      mobileImage: json["mobile_image"] == null ? null : MobileImageClass.fromJson(json["mobile_image"]),
       banner: json["banner"] == null ? [] : List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x))),
-      headline: json["headline"],
-      about: json["about"] == null ? null : About.fromJson(json["about"]),
-      faQs: json["FAQs"] == null ? [] : List<Faq>.from(json["FAQs"]!.map((x) => Faq.fromJson(x))),
-      details: json["details"] == null ? null : Details.fromJson(json["details"]),
-      country: json["country"] == null ? [] : List<About>.from(json["country"]!.map((x) => About.fromJson(x))),
     );
   }
 
@@ -157,79 +153,89 @@ class Gemstone {
         "business_type": businessType?.toJson(),
         "button": button.map((x) => x.toJson()).toList(),
         "poster": poster?.toJson(),
+        "details": details?.toJson(),
+        "country": country.map((x) => x.toJson()).toList(),
         "title": title,
         "description": description,
         "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
         "banner": banner.map((x) => x.toJson()).toList(),
-        "headline": headline,
-        "about": about?.toJson(),
-        "FAQs": faQs.map((x) => x.toJson()).toList(),
-        "details": details?.toJson(),
-        "country": country.map((x) => x.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return "$id, $component, $slug, $userType, $businessType, $button, $poster, $title, $description, $image, $banner, $headline, $about, $faQs, $details, $country, ";
+    return "$id, $component, $slug, $userType, $businessType, $button, $poster, $details, $country, $title, $description, $image, $mobileImage, $banner, ";
   }
 }
 
-class About {
-  About({
+class Banner {
+  Banner({
     required this.id,
     required this.title,
-    required this.description,
     required this.tag,
-    required this.redirecTo,
+    required this.buttonLabel,
+    required this.buttonUrl,
+    required this.buttonTarget,
+    required this.description,
+    required this.redirectTo,
     required this.redirectionType,
     required this.image,
   });
 
   final int? id;
   final String? title;
+  final dynamic tag;
+  final String? buttonLabel;
+  final dynamic buttonUrl;
+  final dynamic buttonTarget;
   final String? description;
-  final String? tag;
-  final String? redirecTo;
-  final dynamic redirectionType;
-  final AboutImage? image;
+  final String? redirectTo;
+  final String? redirectionType;
+  final BannerImage? image;
 
-  factory About.fromJson(Map<String, dynamic> json) {
-    return About(
+  factory Banner.fromJson(Map<String, dynamic> json) {
+    return Banner(
       id: json["id"],
       title: json["title"],
-      description: json["description"],
       tag: json["tag"],
-      redirecTo: json["RedirecTo"],
-      redirectionType: json["RedirectionType"],
-      image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
+      buttonLabel: json["button_label"],
+      buttonUrl: json["button_url"],
+      buttonTarget: json["button_target"],
+      description: json["description"],
+      redirectTo: json["redirectTo"],
+      redirectionType: json["redirectionType"],
+      image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "description": description,
         "tag": tag,
-        "RedirecTo": redirecTo,
-        "RedirectionType": redirectionType,
+        "button_label": buttonLabel,
+        "button_url": buttonUrl,
+        "button_target": buttonTarget,
+        "description": description,
+        "redirectTo": redirectTo,
+        "redirectionType": redirectionType,
         "image": image?.toJson(),
       };
 
   @override
   String toString() {
-    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
+    return "$id, $title, $tag, $buttonLabel, $buttonUrl, $buttonTarget, $description, $redirectTo, $redirectionType, $image, ";
   }
 }
 
-class AboutImage {
-  AboutImage({
+class BannerImage {
+  BannerImage({
     required this.data,
   });
 
   final List<Dat> data;
 
-  factory AboutImage.fromJson(Map<String, dynamic> json) {
-    return AboutImage(
+  factory BannerImage.fromJson(Map<String, dynamic> json) {
+    return BannerImage(
       data: json["data"] == null ? [] : List<Dat>.from(json["data"]!.map((x) => Dat.fromJson(x))),
     );
   }
@@ -448,65 +454,6 @@ class Large {
   }
 }
 
-class Banner {
-  Banner({
-    required this.id,
-    required this.title,
-    required this.tag,
-    required this.buttonLabel,
-    required this.buttonUrl,
-    required this.buttonTarget,
-    required this.description,
-    required this.redirectTo,
-    required this.redirectionType,
-    required this.image,
-  });
-
-  final int? id;
-  final String? title;
-  final String? tag;
-  final String? buttonLabel;
-  final String? buttonUrl;
-  final String? buttonTarget;
-  final String? description;
-  final String? redirectTo;
-  final String? redirectionType;
-  final AboutImage? image;
-
-  factory Banner.fromJson(Map<String, dynamic> json) {
-    return Banner(
-      id: json["id"],
-      title: json["title"],
-      tag: json["tag"],
-      buttonLabel: json["button_label"],
-      buttonUrl: json["button_url"],
-      buttonTarget: json["button_target"],
-      description: json["description"],
-      redirectTo: json["redirectTo"],
-      redirectionType: json["redirectionType"],
-      image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "tag": tag,
-        "button_label": buttonLabel,
-        "button_url": buttonUrl,
-        "button_target": buttonTarget,
-        "description": description,
-        "redirectTo": redirectTo,
-        "redirectionType": redirectionType,
-        "image": image?.toJson(),
-      };
-
-  @override
-  String toString() {
-    return "$id, $title, $tag, $buttonLabel, $buttonUrl, $buttonTarget, $description, $redirectTo, $redirectionType, $image, ";
-  }
-}
-
 class BusinessType {
   BusinessType({
     required this.id,
@@ -546,7 +493,7 @@ class Button {
 
   final int? id;
   final String? label;
-  final String? url;
+  final dynamic url;
   final String? target;
   final String? redirectTo;
   final String? redirectionType;
@@ -574,6 +521,53 @@ class Button {
   @override
   String toString() {
     return "$id, $label, $url, $target, $redirectTo, $redirectionType, ";
+  }
+}
+
+class Country {
+  Country({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.tag,
+    required this.redirecTo,
+    required this.redirectionType,
+    required this.image,
+  });
+
+  final int? id;
+  final String? title;
+  final dynamic description;
+  final dynamic tag;
+  final String? redirecTo;
+  final dynamic redirectionType;
+  final BannerImage? image;
+
+  factory Country.fromJson(Map<String, dynamic> json) {
+    return Country(
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      tag: json["tag"],
+      redirecTo: json["RedirecTo"],
+      redirectionType: json["RedirectionType"],
+      image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "RedirecTo": redirecTo,
+        "RedirectionType": redirectionType,
+        "image": image?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
   }
 }
 
@@ -608,50 +602,15 @@ class Details {
   }
 }
 
-class Faq {
-  Faq({
-    required this.id,
-    required this.question,
-    required this.answer,
-    required this.title,
-  });
-
-  final int? id;
-  final String? question;
-  final String? answer;
-  final String? title;
-
-  factory Faq.fromJson(Map<String, dynamic> json) {
-    return Faq(
-      id: json["id"],
-      question: json["question"],
-      answer: json["answer"],
-      title: json["title"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "question": question,
-        "answer": answer,
-        "title": title,
-      };
-
-  @override
-  String toString() {
-    return "$id, $question, $answer, $title, ";
-  }
-}
-
-class GemstoneImage {
-  GemstoneImage({
+class MobileImageClass {
+  MobileImageClass({
     required this.data,
   });
 
   final Dat? data;
 
-  factory GemstoneImage.fromJson(Map<String, dynamic> json) {
-    return GemstoneImage(
+  factory MobileImageClass.fromJson(Map<String, dynamic> json) {
+    return MobileImageClass(
       data: json["data"] == null ? null : Dat.fromJson(json["data"]),
     );
   }
@@ -663,6 +622,53 @@ class GemstoneImage {
   @override
   String toString() {
     return "$data, ";
+  }
+}
+
+class Poster {
+  Poster({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.tag,
+    required this.redirecTo,
+    required this.redirectionType,
+    required this.image,
+  });
+
+  final int? id;
+  final String? title;
+  final String? description;
+  final dynamic tag;
+  final String? redirecTo;
+  final dynamic redirectionType;
+  final BannerImage? image;
+
+  factory Poster.fromJson(Map<String, dynamic> json) {
+    return Poster(
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      tag: json["tag"],
+      redirecTo: json["RedirecTo"],
+      redirectionType: json["RedirectionType"],
+      image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "RedirecTo": redirecTo,
+        "RedirectionType": redirectionType,
+        "image": image?.toJson(),
+      };
+
+  @override
+  String toString() {
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
   }
 }
 
@@ -681,6 +687,8 @@ class Slug {
       slug: json["slug"],
     );
   }
+
+  LandingSlug get landingSlug => LandingSlug.values.firstWhereOrNull((element) => element.value == slug) ?? LandingSlug.unknown;
 
   Map<String, dynamic> toJson() => {
         "id": id,

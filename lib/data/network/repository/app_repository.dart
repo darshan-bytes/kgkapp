@@ -1,15 +1,15 @@
-import 'package:kgk/data/network/model/gemstone_strapi_model.dart';
-import 'package:kgk/data/network/model/jewelleries_strapi_model.dart';
+import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
+import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
 import 'package:kgk/kgk.dart';
 import 'package:http/http.dart' as http;
-
-import '../model/diamonds_strapi_model.dart';
+import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
 class AppRepository extends ApiService {
   final BuildContext context;
 
   AppRepository(this.context);
 
+  /// Fetches the home data from the Strapi CMS
   Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
     try {
       final response = await http.get(Uri.parse(ApiClient.strapiHomeApiUrl));
@@ -32,9 +32,9 @@ class AppRepository extends ApiService {
     }
   }
 
+  /// Fetches the diamond data from the Strapi CMS
   Future<Either<ErrorResponse, List<DiamondData>>> fetchStrapiDiamondLandingData() async {
-    String populateQuery = await getPopulatedUrl();
-    String url = "${EndPoints.diamondPage}?populate[${Attributes.diamondPage}][populate]=$populateQuery&locale=${"en"}";
+    String url = await buildUrl(endpoint: StrapiEndPoints.diamondPage, attribute: Attributes.diamondPage);
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -55,9 +55,9 @@ class AppRepository extends ApiService {
     }
   }
 
+  /// Fetches the gemstone data from the Strapi CMS
   Future<Either<ErrorResponse, List<Gemstone>>> fetchStrapiGemstoneLandingData() async {
-    String populateQuery = await getPopulatedUrl();
-    String url = "${EndPoints.gemstonePage}?populate[${Attributes.gemstonePage}][populate]=$populateQuery&locale=${"en"}";
+    String url = await buildUrl(endpoint: StrapiEndPoints.gemstonePage, attribute: Attributes.gemstonePage);
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -79,9 +79,9 @@ class AppRepository extends ApiService {
     }
   }
 
+  /// Fetches the jewellery data from the Strapi CMS
   Future<Either<ErrorResponse, List<Jewellery>>> fetchStrapiJewelleryLandingData() async {
-    String populateQuery = await getPopulatedUrl();
-    String url = "${EndPoints.jewelleryPage}?populate[${Attributes.jewelleryPage}][populate]=$populateQuery&locale=${"en"}";
+    String url = await buildUrl(endpoint: StrapiEndPoints.jewelleryPage, attribute: Attributes.jewelleryPage);
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -104,9 +104,7 @@ class AppRepository extends ApiService {
   }
 }
 
-const String apiToken =
-    '209f75da6d6df7f6e575d7b80779e6ad6fa47720601d5a5f10b3e13616e0c164579ac11c65d0e51d2102db8bdb14d64a0cdc6c922e12c32e73194a7ce816822676c5c8db2da64eb3cda85f23b589b6536c88c937f4e11da29996b3dc216967d61428b25317654d4b061fba344fa0a3970dcfe9df18ee7dba9658ce1cf1a8edc1'; // Replace with your actual API token
-
+/// This function builds the populate query for the Strapi CMS
 String buildPopulateQuery(Map<String, dynamic> components) {
   List<String> populateFields = [];
 
@@ -133,11 +131,12 @@ String buildPopulateQuery(Map<String, dynamic> components) {
   return populateFields.join(',');
 }
 
+/// This function fetches the populated URL from the Strapi CMS
 Future<String> getPopulatedUrl() async {
   try {
     final response = await http.get(
-      Uri.parse(EndPoints.builder),
-      headers: {'Authorization': 'Bearer $apiToken'},
+      Uri.parse(StrapiEndPoints.builder),
+      headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'},
     );
 
     if (response.statusCode == 200) {
@@ -157,4 +156,11 @@ Future<String> getPopulatedUrl() async {
     printWrapped('Error populating query: $error');
     rethrow;
   }
+}
+
+/// This function builds the URL for the Strapi CMS
+Future<String> buildUrl({required String endpoint, required String attribute}) async {
+  String acceptLanguage = StorageManager().getLocale() ?? 'en';
+  String populateQuery = await getPopulatedUrl();
+  return "$endpoint?populate[$attribute][populate]=$populateQuery&locale=$acceptLanguage";
 }

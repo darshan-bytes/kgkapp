@@ -791,10 +791,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
           if (imageUrl != null) {
             dataList.add(AuctionListModel(
-              id: element['id'].toString(),
-              imageUrl: "${AppConst.strapiImgBaseUrl}$imageUrl",
-              redirectTo: redirectTo,
-              redirectionType: redirectionType,
+                id: element['id'].toString(),
+                imageUrl: "${AppConst.strapiImgBaseUrl}$imageUrl",
+                redirectTo: redirectTo,
+                redirectionType: redirectionType,
                 name: name));
           }
         }
@@ -846,8 +846,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileDIYGuidance:
-        final title = homeStrapiList[index].data['title'] as String? ?? '';
-        final subTitle = homeStrapiList[index].data['tagline'] as String? ?? '';
+        final title = homeStrapiList[index].data['title'].toString() ?? '';
+        final subTitle = homeStrapiList[index].data['tagline'].toString() ?? '';
         return HomeWidgets.buildCreateYourOwnSignaturePiece(
           homeBloc,
           style,
@@ -894,13 +894,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 }
 
 enum HomeSlug {
-  mobileHomeBanner,
-  mobileTopSellingCategories,
-  mobileViewAllCollection,
-  mobileGetInspired,
-  mobileShopByStyle,
-  mobileDIYGuidance,
-  unknown,
+  mobileHomeBanner('mobile-home-banner'),
+  mobileTopSellingCategories('mobile-top-selling-categories'),
+  mobileViewAllCollection('mobile-view-all-collection'),
+  mobileGetInspired('mobile-get-inspired'),
+  mobileShopByStyle('mobile-shop-by-style'),
+  mobileDIYGuidance('mobile-diy-guidance'),
+  unknown('unknown');
+
+  const HomeSlug(this.value);
+
+  final String value;
 }
 
 enum RedirectionTo {
@@ -916,24 +920,24 @@ enum RedirectionType {
   unknown,
 }
 
-HomeSlug getHomeSlugFromString(String slug) {
-  switch (slug) {
-    case 'mobile-home-banner':
-      return HomeSlug.mobileHomeBanner;
-    case 'mobile-top-selling-categories':
-      return HomeSlug.mobileTopSellingCategories;
-    case 'mobile-view-all-collection':
-      return HomeSlug.mobileViewAllCollection;
-    case 'mobile-get-inspired':
-      return HomeSlug.mobileGetInspired;
-    case 'mobile-shop-by-style':
-      return HomeSlug.mobileShopByStyle;
-    case 'mobile-diy-guidance':
-      return HomeSlug.mobileDIYGuidance;
-    default:
-      return HomeSlug.unknown;
-  }
-}
+// HomeSlug getHomeSlugFromString(String slug) {
+//   switch (slug) {
+//     case 'mobile-home-banner':
+//       return HomeSlug.mobileHomeBanner;
+//     case 'mobile-top-selling-categories':
+//       return HomeSlug.mobileTopSellingCategories;
+//     case 'mobile-view-all-collection':
+//       return HomeSlug.mobileViewAllCollection;
+//     case 'mobile-get-inspired':
+//       return HomeSlug.mobileGetInspired;
+//     case 'mobile-shop-by-style':
+//       return HomeSlug.mobileShopByStyle;
+//     case 'mobile-diy-guidance':
+//       return HomeSlug.mobileDIYGuidance;
+//     default:
+//       return HomeSlug.unknown;
+//   }
+// }
 
 RedirectionTo getRedirectionToFromString(String value) {
   switch (value.toLowerCase()) {

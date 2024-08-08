@@ -16,47 +16,49 @@ class ApiClient {
   static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
   static const String currencies = '$apiBaseUrl/currency';
   static const String languageLabels = '$apiBaseUrl/language/labels';
+
+  static const String diamondListing = '$apiBaseUrl/diamond/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
-class EndPoints {
-  static const String baseUrl = 'https://strapi-cms.kgk.magnetoinfotech.com'; // Replace with your actual base URL
+class StrapiEndPoints {
+  static const String baseUrl = 'https://strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
 
-  static String get aboutUsPage => '$baseUrl/api/about-uses';
+  static String get aboutUsPage => '$baseUrl/about-uses';
 
-  static String get builder => '$baseUrl/api/content-type-builder/components';
+  static String get builder => '$baseUrl/content-type-builder/components';
 
-  static String get contactUsPage => '$baseUrl/api/contact-uses';
+  static String get contactUsPage => '$baseUrl/contact-uses';
 
-  static String get diamondPage => '$baseUrl/api/diamonds';
+  static String get diamondPage => '$baseUrl/diamonds';
 
-  static String get disclaimers => '$baseUrl/api/disclaimers';
+  static String get disclaimers => '$baseUrl/disclaimers';
 
-  static String get educationDiamondPage => '$baseUrl/api/education-diamonds';
+  static String get educationDiamondPage => '$baseUrl/education-diamonds';
 
-  static String get educationGemstonePage => '$baseUrl/api/education-gemstones';
+  static String get educationGemstonePage => '$baseUrl/education-gemstones';
 
-  static String get educationLabGrownDiamondPage => '$baseUrl/api/education-lab-grown-diamonds';
+  static String get educationLabGrownDiamondPage => '$baseUrl/education-lab-grown-diamonds';
 
-  static String get educationMetalPage => '$baseUrl/api/education-metals';
+  static String get educationMetalPage => '$baseUrl/education-metals';
 
-  static String get educationRingSizerPage => '$baseUrl/api/education-ring-sizers';
+  static String get educationRingSizerPage => '$baseUrl/education-ring-sizers';
 
-  static String get faqPage => '$baseUrl/api/faqs';
+  static String get faqPage => '$baseUrl/faqs';
 
-  static String get gemstonePage => '$baseUrl/api/gemstones';
+  static String get gemstonePage => '$baseUrl/gemstones';
 
-  static String get homePage => '$baseUrl/api/homes';
+  static String get homePage => '$baseUrl/homes';
 
-  static String get jewelleryPage => '$baseUrl/api/jewelleries';
+  static String get jewelleryPage => '$baseUrl/jewelleries';
 
-  static String get notFoundPage => '$baseUrl/api/page-not-founds';
+  static String get notFoundPage => '$baseUrl/page-not-founds';
 
-  static String get privacyPolicyPage => '$baseUrl/api/privacy-policies';
+  static String get privacyPolicyPage => '$baseUrl/privacy-policies';
 
-  static String get returnPolicies => '$baseUrl/api/return-policies';
+  static String get returnPolicies => '$baseUrl/return-policies';
 
-  static String get termsOfUsesPage => '$baseUrl/api/terms-of-uses';
+  static String get termsOfUsesPage => '$baseUrl/terms-of-uses';
 }
 
 /// All attributes are defined here for the Strapi CMS

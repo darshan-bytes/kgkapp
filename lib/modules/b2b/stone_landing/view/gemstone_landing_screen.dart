@@ -30,7 +30,7 @@ class GemstoneLandingScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = bloc.gemstoneStrapiList[index];
                 return bloc.getGemStoneWidgetsFromSlug(
-                    context, getLandingSlugFromString(item.slug?.slug ?? ''), bloc, style, homeScreenStyle, index);
+                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
               }),
         );
       },
