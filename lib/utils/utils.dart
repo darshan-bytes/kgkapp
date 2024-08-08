@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:html/dom.dart' as dom;
 
 class Utils {
   Utils._();
@@ -167,5 +168,23 @@ class Utils {
     RegExp regExp = RegExp(regex);
 
     return regExp.hasMatch(email);
+  }
+
+  /// Parse HTML string to plain text
+  static String parseHtmlString(String htmlString) {
+    // Parse the HTML string
+    dom.Document document = parse(htmlString);
+
+    // Find the <a> tag with "Learn more" text and remove it
+    document.querySelectorAll('a').forEach((element) {
+      if (element.text.trim() == 'Learn more') {
+        element.remove();
+      }
+    });
+
+    final doc = parse(document.body?.innerHtml.trim());
+    final String? parsedString = parse(doc.body?.text).documentElement?.text;
+
+    return parsedString ?? "";
   }
 }

@@ -14,30 +14,51 @@ class JewelleryLandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        StoneBannerView(
-          imagePath: "https://i.ibb.co/SXyxfBq/Image-7.png",
-          title: "Exquisite jewellery for  every occasion",
-          subTitle: "Jewelry pieces hand-crafted to make your everyday special,your special days even more memorable.",
-          naturalDiamondsButtonTitle: APPStrings.exploreNow.tr,
-          onTapShopNaturalDiamonds: () {},
-        ),
-        _buildNewlyLaunchedSection(bloc, style),
-        _buildShopByMetalSection(bloc: bloc, homeScreenStyle: homeScreenStyle, style: style),
-        GetInspiredSection(
-          title: APPStrings.topSellingCategories.tr,
-          onTap: (context, auctionModel) {},
-          itemList: bloc.topSellingCategoriesList,
-          bloc: bloc,
-          homeScreenStyle: homeScreenStyle,
-          style: style,
-          backgroundColor: style.designYourOwnStoneBgColor,
-        ),
-        _buildJewelleryBannerSection(style: style),
-        _buildJewelleryCreateOwnSection(style: style)
-      ],
+    return BlocBuilder<StonesLandingBloc, StonesLandingState>(
+      buildWhen: (previous, current) => current is JewelleryStrapiDataFetchedState,
+      builder: (context, state) {
+        if (bloc.jewelleryStrapiList.isEmpty) {
+          return const Center(child: SmartCircularProgressIndicator());
+        }
+        return RefreshIndicator.adaptive(
+          onRefresh: () async {
+            await bloc.pullToRefresh(context);
+          },
+          child: ListView.builder(
+              itemCount: bloc.jewelleryStrapiList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final item = bloc.jewelleryStrapiList[index];
+                return bloc.getJewelleriesWidgetsFromSlug(
+                    context, (item.slug)?.landingSlug ?? LandingSlug.unknown, bloc, style, homeScreenStyle, index);
+              }),
+        );
+      },
     );
+    // return Column(
+    //   children: [
+    //     StoneBannerView(
+    //       imagePath: "https://i.ibb.co/SXyxfBq/Image-7.png",
+    //       title: "Exquisite jewellery for  every occasion",
+    //       subTitle: "Jewelry pieces hand-crafted to make your everyday special,your special days even more memorable.",
+    //       naturalDiamondsButtonTitle: APPStrings.exploreNow.tr,
+    //       onTapShopNaturalDiamonds: () {},
+    //     ),
+    //     _buildNewlyLaunchedSection(bloc, style),
+    //     _buildShopByMetalSection(bloc: bloc, homeScreenStyle: homeScreenStyle, style: style),
+    //     GetInspiredSection(
+    //       title: APPStrings.topSellingCategories.tr,
+    //       onTap: (context, auctionModel) {},
+    //       itemList: bloc.topSellingCategoriesList,
+    //       bloc: bloc,
+    //       homeScreenStyle: homeScreenStyle,
+    //       style: style,
+    //       backgroundColor: style.designYourOwnStoneBgColor,
+    //     ),
+    //     _buildJewelleryBannerSection(style: style),
+    //     _buildJewelleryCreateOwnSection(style: style)
+    //   ],
+    // );
   }
 
   Widget _buildNewlyLaunchedSection(StonesLandingBloc bloc, StonesLandingScreenStyle style) {

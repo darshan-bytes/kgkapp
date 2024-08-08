@@ -42,7 +42,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final List<AuctionListModel> eliganceList3 = _generateEligance3List();
 
+  List<Home> homeStrapiList = [];
+  HomeStrapiModel? homeStrapiModel;
+
   int kgkCoutureSelectedIndex = 0;
+
   List<String> kgkCoutureButtonsTitle = [
     APPStrings.all,
     APPStrings.luminous,
@@ -103,6 +107,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ? (categoryList.length ~/ categoryPerPageLength)
           : (categoryList.length ~/ categoryPerPageLength) + 1;
 
+  Completer<bool> refreshCompleter = Completer<bool>();
+
   HomeBloc() : super(HomeInitial()) {
     on<HomeInitialEvent>(_onHomeInitialEvent);
     on<HomeJewelleryImagePageChangeEvent>(_onHomeJewelleryImagePageChangeEvent);
@@ -110,10 +116,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeSelectJewelleryChangeTypeEvent>(_onChangeHomeStep2StoneTypeEvent);
     on<HomeKgkCoutureSelectionChangeEvent>(_onHomeKgkCoutureSelectionChangeEvent);
     on<HomeCategoryPageChangeEvent>(_onHomeCategoryPageChangeEvent);
+    on<HomePullToRefreshEvent>(_onHomePullToRefreshEvent);
   }
 
-  void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) {
+  void _onHomePullToRefreshEvent(HomePullToRefreshEvent event, Emitter<HomeState> emit) async {
+    emit(HomeReloadState());
+    await fetchStrapiData(event.context, emit);
+    refreshCompleter.complete(true);
+  }
+
+  void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async {
     currentPageIndex = 0;
+    await fetchStrapiData(event.context, emit);
+    if (refreshCompleter.isCompleted) {
+      refreshCompleter = Completer<bool>();
+    }
+    refreshCompleter.complete(true);
     emit(HomeInitial());
   }
 
@@ -146,6 +164,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeReloadState());
     currentPageIndex = event.index;
     emit(HomeCategoryPageChangeState(event.index));
+  }
+
+  Future<bool> pullToRefresh(BuildContext context) async {
+    if (!refreshCompleter.isCompleted) {
+      return false;
+    }
+    refreshCompleter = Completer<bool>();
+    add(HomePullToRefreshEvent(context: context));
+    return refreshCompleter.future;
   }
 
   // //For Jewellery List
@@ -729,5 +756,209 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         imageUrl: imageList[index],
       ),
     );
+  }
+
+  /// Fetches the Strapi data from the server
+  Future<void> fetchStrapiData(BuildContext context, Emitter<HomeState> emit) async {
+    homeStrapiList.clear();
+    await AppRepository(context).fetchStrapiHomeData().then((value) async {
+      value.fold((l) {
+        emit(HomeErrorState(errorMessage: l.message ?? ""));
+        Utils.showMessage(l.message ?? "");
+      }, (r) {
+        homeStrapiList = r;
+      });
+    });
+    emit(const HomeStrapiDataFetchedState());
+  }
+
+  /// Returns the widgets based on the [HomeSlug]
+  Widget getWidgetsForHomeSlug(
+    BuildContext context,
+    HomeSlug slug,
+    HomeBloc homeBloc,
+    HomeScreenStyle style,
+    int index,
+  ) {
+    List<AuctionListModel> parseDataList(dynamic data) {
+      List<AuctionListModel> dataList = [];
+      if (data is List) {
+        for (var element in data) {
+          final imageUrl = element['image']?['data']?['attributes']?['url'];
+          String redirectTo = element['redirectTo'];
+          String? name = element['title'];
+          String redirectionType = element['redirectionType'];
+
+          if (imageUrl != null) {
+            dataList.add(AuctionListModel(
+                id: element['id'].toString(),
+                imageUrl: "${AppConst.strapiImgBaseUrl}$imageUrl",
+                redirectTo: redirectTo,
+                redirectionType: redirectionType,
+                name: name));
+          }
+        }
+      }
+      return dataList;
+    }
+
+    switch (slug) {
+      case HomeSlug.mobileHomeBanner:
+        return HomeWidgets.buildEngagementImageSlider(
+          homeBloc,
+          parseDataList(homeStrapiList[index].data),
+        );
+
+      case HomeSlug.mobileTopSellingCategories:
+        return HomeWidgets.buildTopSellingCategories(
+          homeBloc,
+          style,
+          parseDataList(homeStrapiList[index].data),
+          context: context,
+        );
+
+      case HomeSlug.mobileViewAllCollection:
+        final imageUrl = homeStrapiList[index].data['image']?['data']?['attributes']?['url'];
+        String redirectTo = homeStrapiList[index].data['redirectTo'];
+        String redirectionType = homeStrapiList[index].data['redirectionType'];
+        return HomeWidgets.buildViewAllCollectionsSection(
+          homeBloc,
+          style,
+          context: context,
+          url: imageUrl != null ? "${AppConst.strapiImgBaseUrl}$imageUrl" : '',
+          redirectTo: redirectTo,
+          redirectionType: redirectionType,
+        );
+
+      case HomeSlug.mobileGetInspired:
+        return HomeWidgets.buildGetInspiredSection(
+          context,
+          homeBloc,
+          style,
+          parseDataList(homeStrapiList[index].data),
+        );
+
+      case HomeSlug.mobileShopByStyle:
+        return HomeWidgets.buildShopByStyleSection(
+          homeBloc,
+          style,
+          parseDataList(homeStrapiList[index].data),
+        );
+
+      case HomeSlug.mobileDIYGuidance:
+        final title = homeStrapiList[index].data['title'].toString() ?? '';
+        final subTitle = homeStrapiList[index].data['tagline'].toString() ?? '';
+        return HomeWidgets.buildCreateYourOwnSignaturePiece(
+          homeBloc,
+          style,
+          context: context,
+          title: title,
+          subTitle: subTitle,
+        );
+
+      case HomeSlug.unknown:
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  /// Handles redirection based on the [redirectTo] and [redirectionType]
+  void handleRedirection({required BuildContext context, required RedirectionTo redirectTo, required RedirectionType redirectionType}) {
+    Map<RoutesData, dynamic>? arguments;
+    String routeName;
+
+    switch (redirectTo) {
+      case RedirectionTo.gemstone:
+        routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForGemstones};
+        break;
+
+      case RedirectionTo.diamond:
+        routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault};
+        break;
+
+      case RedirectionTo.jewellery:
+        routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
+        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForRing};
+        break;
+
+      case RedirectionTo.unknown:
+      default:
+        printWrapped('Unknown redirection');
+        return; // Exit early for unknown redirection
+    }
+
+    context.pushNamed(routeName, arguments: arguments);
+  }
+}
+
+enum HomeSlug {
+  mobileHomeBanner('mobile-home-banner'),
+  mobileTopSellingCategories('mobile-top-selling-categories'),
+  mobileViewAllCollection('mobile-view-all-collection'),
+  mobileGetInspired('mobile-get-inspired'),
+  mobileShopByStyle('mobile-shop-by-style'),
+  mobileDIYGuidance('mobile-diy-guidance'),
+  unknown('unknown');
+
+  const HomeSlug(this.value);
+
+  final String value;
+}
+
+enum RedirectionTo {
+  gemstone,
+  diamond,
+  jewellery,
+  unknown,
+}
+
+enum RedirectionType {
+  listing,
+  details,
+  unknown,
+}
+
+// HomeSlug getHomeSlugFromString(String slug) {
+//   switch (slug) {
+//     case 'mobile-home-banner':
+//       return HomeSlug.mobileHomeBanner;
+//     case 'mobile-top-selling-categories':
+//       return HomeSlug.mobileTopSellingCategories;
+//     case 'mobile-view-all-collection':
+//       return HomeSlug.mobileViewAllCollection;
+//     case 'mobile-get-inspired':
+//       return HomeSlug.mobileGetInspired;
+//     case 'mobile-shop-by-style':
+//       return HomeSlug.mobileShopByStyle;
+//     case 'mobile-diy-guidance':
+//       return HomeSlug.mobileDIYGuidance;
+//     default:
+//       return HomeSlug.unknown;
+//   }
+// }
+
+RedirectionTo getRedirectionToFromString(String value) {
+  switch (value.toLowerCase()) {
+    case 'gemstone':
+      return RedirectionTo.gemstone;
+    case 'diamond':
+      return RedirectionTo.diamond;
+    case 'jewellery':
+      return RedirectionTo.jewellery;
+    default:
+      return RedirectionTo.unknown;
+  }
+}
+
+RedirectionType getRedirectionTypeFromString(String value) {
+  switch (value.toLowerCase()) {
+    case 'product list':
+      return RedirectionType.listing;
+    case 'product details':
+      return RedirectionType.details;
+    default:
+      return RedirectionType.unknown;
   }
 }

@@ -1,0 +1,166 @@
+import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
+import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
+import 'package:kgk/kgk.dart';
+import 'package:http/http.dart' as http;
+import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
+
+class AppRepository extends ApiService {
+  final BuildContext context;
+
+  AppRepository(this.context);
+
+  /// Fetches the home data from the Strapi CMS
+  Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
+    try {
+      final response = await http.get(Uri.parse(ApiClient.strapiHomeApiUrl));
+
+      if (response.statusCode == 200) {
+        final homeStrapiModel = HomeStrapiModel.fromJson(jsonDecode(response.body));
+        List<Home> homeStrapiList = homeStrapiModel.data.first.attributes?.home ?? [];
+        return Right(homeStrapiList);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? 'Unknown error',
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: 'An error occurred',
+      ));
+    }
+  }
+
+  /// Fetches the diamond data from the Strapi CMS
+  Future<Either<ErrorResponse, List<DiamondData>>> fetchStrapiDiamondLandingData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.diamondPage, attribute: Attributes.diamondPage);
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final diamondsStrapiModel = DiamondsStrapiModel.fromJson(jsonDecode(response.body));
+        List<DiamondData> diamondStrapiList = diamondsStrapiModel.data.first.attributes?.diamonds ?? [];
+        return Right(diamondStrapiList);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? 'Unknown error',
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: 'An error occurred',
+      ));
+    }
+  }
+
+  /// Fetches the gemstone data from the Strapi CMS
+  Future<Either<ErrorResponse, List<Gemstone>>> fetchStrapiGemstoneLandingData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.gemstonePage, attribute: Attributes.gemstonePage);
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final gemstonesStrapiModel = GemstoneStrapiModel.fromJson(jsonDecode(response.body));
+        List<Gemstone> gemstoneStrapiList = gemstonesStrapiModel.data.first.attributes?.gemstones ?? [];
+        return Right(gemstoneStrapiList);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? 'Unknown error',
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: 'An error occurred',
+      ));
+    }
+  }
+
+  /// Fetches the jewellery data from the Strapi CMS
+  Future<Either<ErrorResponse, List<Jewellery>>> fetchStrapiJewelleryLandingData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.jewelleryPage, attribute: Attributes.jewelleryPage);
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final jewelleryStrapiModel = JewelleryStrapiModel.fromJson(jsonDecode(response.body));
+        List<Jewellery> jewelleryStrapiList = jewelleryStrapiModel.data.first.attributes?.jewelleries ?? [];
+        return Right(jewelleryStrapiList);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? 'Unknown error',
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: 'An error occurred',
+      ));
+    }
+  }
+}
+
+/// This function builds the populate query for the Strapi CMS
+String buildPopulateQuery(Map<String, dynamic> components) {
+  List<String> populateFields = [];
+
+  void addPopulateField(Map<String, dynamic> component, [String parentPath = '']) {
+    String currentPath = parentPath.isNotEmpty ? '$parentPath.' : '';
+    component['attributes'].forEach((key, value) {
+      if (value['type'] == 'component' || value['type'] == 'dynamiczone') {
+        String componentName = value['component'] ?? key;
+        String nestedPath = '$currentPath$key';
+        populateFields.add(nestedPath);
+        if (components.containsKey(componentName)) {
+          addPopulateField(components[componentName], nestedPath);
+        }
+      } else if (value['type'] == 'media') {
+        populateFields.add('$currentPath$key');
+      }
+    });
+  }
+
+  components.forEach((componentName, componentValue) {
+    addPopulateField(componentValue);
+  });
+
+  return populateFields.join(',');
+}
+
+/// This function fetches the populated URL from the Strapi CMS
+Future<String> getPopulatedUrl() async {
+  try {
+    final response = await http.get(
+      Uri.parse(StrapiEndPoints.builder),
+      headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'},
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> temp = json.decode(response.body);
+
+      final Map<String, dynamic> components = {};
+      for (var component in temp['data']) {
+        components[component['uid']] = component['schema'];
+      }
+
+      final String populateQuery = buildPopulateQuery(components);
+      return populateQuery;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  } catch (error) {
+    printWrapped('Error populating query: $error');
+    rethrow;
+  }
+}
+
+/// This function builds the URL for the Strapi CMS
+Future<String> buildUrl({required String endpoint, required String attribute}) async {
+  String acceptLanguage = StorageManager().getLocale() ?? 'en';
+  String populateQuery = await getPopulatedUrl();
+  return "$endpoint?populate[$attribute][populate]=$populateQuery&locale=$acceptLanguage";
+}

@@ -16,88 +16,139 @@ class HomeScreen extends StatelessWidget {
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
       body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            _buildJewelleryList(homeBloc, style),
-            _buildEngagementImageSlider(homeBloc),
-            _buildShopDiamondSection(homeBloc, style),
-            _buildShopGemstoneSection(
-              homeBloc,
-              style,
-              imgList: homeBloc.shopGemstonesList,
-              width: 72.w,
-              title: APPStrings.shopGemstones.tr,
-            ),
-            _buildTopSellingEligence(
-              homeBloc,
-              style,
-              context: context,
-              imgList: homeBloc.eliganceList3,
-              bgColor: style.topSellingElegance3Color,
-              title: APPStrings.shopByMetal.tr.toUpperCase(),
-              height: 170.w,
-              fit: BoxFit.fitWidth,
-            ),
-            _buildShopGemstoneSection(
-              homeBloc,
-              style,
-              imgList: homeBloc.shopGemstones2List,
-              width: 95.w,
-              title: APPStrings.shopEngagementRing.tr,
-            ),
-            _buildGetInspiredSection(homeBloc, style),
-            _buildViewAllCollectionsSection(
-              style,
-              context: context,
-              url: "https://i.ibb.co/Y2G1LR2/Latest-Collections1.jpg",
-            ),
-            _buildTopSellingEligence(
-              homeBloc,
-              style,
-              context: context,
-              imgList: homeBloc.eliganceList2,
-              bgColor: style.topSellingElegance2Color,
-              title: APPStrings.eligance.tr,
-              height: 132.w,
-            ),
-            _buildTopSellingEligence(
-              homeBloc,
-              style,
-              context: context,
-              imgList: homeBloc.eliganceList,
-              bgColor: style.topSellingEleganceColor,
-              title: APPStrings.eligance.tr,
-              height: 132.w,
-            ),
-            _buildHorizontalSlider(homeBloc, style),
-            _buildShopBySpacificCategory(homeBloc, style, context: context),
-            _buildTrendingView(homeBloc, style),
-            // _buildPopularView(homeBloc, style, "FANCY COLOR DIAMONDS", homeBloc.exploreFancyColorDiamondsList),
-            _buildViewAllCollectionsSection(
-              style,
-              context: context,
-              url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg",
-            ),
-            _buildTopSellingCategories(homeBloc, style, context: context),
-            _buildViewAllCollectionsSection(
-              style,
-              context: context,
-              url: "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png",
-            ),
-            _buildKGKCoutureTabBarSection(homeBloc, style, context: context),
-            _buildCategoryGridPageView(homeBloc, style, context: context),
-            _buildCreateYourOwnSignaturePiece(homeBloc, style, context: context),
-            _buildDealOfTheDaySection(homeBloc, style, context: context),
-            // _buildShopByBrandsSection(homeBloc, style),
-            _buildPopularView(homeBloc, style, title: APPStrings.shopByBrands.tr, popularList: homeBloc.shopByBrands),
-            _buildViewAllCollectionsSection(style, context: context, url: "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png"),
-            _buildShopByStyleSection(homeBloc, style),
-            _buildRecentlyViewedSection(homeBloc, style, context: context)
-          ],
+        child: BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previous, current) => current is HomeStrapiDataFetchedState,
+          builder: (context, state) {
+            if (homeBloc.homeStrapiList.isEmpty) {
+              return const SmartCircularProgressIndicator();
+            }
+            return RefreshIndicator.adaptive(
+              onRefresh: () async {
+                await homeBloc.pullToRefresh(context);
+              },
+              child: ListView.builder(
+                itemCount: homeBloc.homeStrapiList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return homeBloc.getWidgetsForHomeSlug(
+                    context,
+                    (homeBloc.homeStrapiList[index].slug)?.homeSlug ?? HomeSlug.unknown,
+                    homeBloc,
+                    style,
+                    index,
+                  );
+                },
+              ),
+            );
+          },
         ),
+        // child: ListView(
+        //   shrinkWrap: true,
+        //   children: [
+        //     _buildJewelleryList(homeBloc, style),
+        //     _buildEngagementImageSlider(homeBloc),
+        //     _buildShopDiamondSection(homeBloc, style),
+        //     _buildShopGemstoneSection(
+        //       homeBloc,
+        //       style,
+        //       imgList: homeBloc.shopGemstonesList,
+        //       width: 72.w,
+        //       title: APPStrings.shopGemstones.tr,
+        //     ),
+        //     _buildTopSellingEligence(
+        //       homeBloc,
+        //       style,
+        //       context: context,
+        //       imgList: homeBloc.eliganceList3,
+        //       bgColor: style.topSellingElegance3Color,
+        //       title: APPStrings.shopByMetal.tr.toUpperCase(),
+        //       height: 170.w,
+        //       fit: BoxFit.fitWidth,
+        //     ),
+        //     _buildShopGemstoneSection(
+        //       homeBloc,
+        //       style,
+        //       imgList: homeBloc.shopGemstones2List,
+        //       width: 95.w,
+        //       title: APPStrings.shopEngagementRing.tr,
+        //     ),
+        //     _buildGetInspiredSection(homeBloc, style),
+        //     _buildViewAllCollectionsSection(
+        //       style,
+        //       context: context,
+        //       url: "https://i.ibb.co/Y2G1LR2/Latest-Collections1.jpg",
+        //     ),
+        //     _buildTopSellingEligence(
+        //       homeBloc,
+        //       style,
+        //       context: context,
+        //       imgList: homeBloc.eliganceList2,
+        //       bgColor: style.topSellingElegance2Color,
+        //       title: APPStrings.eligance.tr,
+        //       height: 132.w,
+        //     ),
+        //     _buildTopSellingEligence(
+        //       homeBloc,
+        //       style,
+        //       context: context,
+        //       imgList: homeBloc.eliganceList,
+        //       bgColor: style.topSellingEleganceColor,
+        //       title: APPStrings.eligance.tr,
+        //       height: 132.w,
+        //     ),
+        //     _buildHorizontalSlider(homeBloc, style),
+        //     _buildShopBySpacificCategory(homeBloc, style, context: context),
+        //     _buildTrendingView(homeBloc, style),
+        //     // _buildPopularView(homeBloc, style, "FANCY COLOR DIAMONDS", homeBloc.exploreFancyColorDiamondsList),
+        //     _buildViewAllCollectionsSection(
+        //       style,
+        //       context: context,
+        //       url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg",
+        //     ),
+        //     _buildTopSellingCategories(homeBloc, style, context: context),
+        //     _buildViewAllCollectionsSection(
+        //       style,
+        //       context: context,
+        //       url: "https://i.ibb.co/BCjw6Br/Screenshot-2023-09-20-at-12-51-1.png",
+        //     ),
+        //     _buildKGKCoutureTabBarSection(homeBloc, style, context: context),
+        //     _buildCategoryGridPageView(homeBloc, style, context: context),
+        //     _buildCreateYourOwnSignaturePiece(homeBloc, style, context: context),
+        //     _buildDealOfTheDaySection(homeBloc, style, context: context),
+        //     // _buildShopByBrandsSection(homeBloc, style),
+        //     _buildPopularView(homeBloc, style, title: APPStrings.shopByBrands.tr, popularList: homeBloc.shopByBrands),
+        //     _buildViewAllCollectionsSection(style, context: context, url: "https://i.ibb.co/Kr8tCdj/Latest-Collections3.png"),
+        //     _buildShopByStyleSection(homeBloc, style),
+        //     _buildRecentlyViewedSection(homeBloc, style, context: context)
+        //   ],
+        // ),
       ),
     );
+  }
+
+  Widget getContainerForHomeSlug(BuildContext context, HomeSlug slug, HomeBloc homeBloc, HomeScreenStyle style) {
+    switch (slug) {
+      case HomeSlug.mobileHomeBanner:
+        return _buildEngagementImageSlider(homeBloc);
+      case HomeSlug.mobileTopSellingCategories:
+        return _buildTopSellingCategories(homeBloc, style, context: context);
+
+      case HomeSlug.mobileViewAllCollection:
+        return _buildViewAllCollectionsSection(
+          style,
+          context: context,
+          url: "https://i.ibb.co/fFFtsFT/Latest-Collections2.jpg",
+        );
+      case HomeSlug.mobileGetInspired:
+        return _buildGetInspiredSection(homeBloc, style);
+      case HomeSlug.mobileShopByStyle:
+        return _buildShopByStyleSection(homeBloc, style);
+      case HomeSlug.mobileDIYGuidance:
+        return _buildCreateYourOwnSignaturePiece(homeBloc, style, context: context);
+      case HomeSlug.unknown:
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   // ignore: unused_element

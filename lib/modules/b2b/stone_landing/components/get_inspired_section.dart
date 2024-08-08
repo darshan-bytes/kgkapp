@@ -8,6 +8,7 @@ class GetInspiredSection extends StatelessWidget {
   final List<AuctionListModel> itemList;
   final void Function(BuildContext, AuctionListModel) onTap;
   final Color? backgroundColor;
+  final double? height;
 
   const GetInspiredSection({
     super.key,
@@ -18,7 +19,7 @@ class GetInspiredSection extends StatelessWidget {
     required this.itemList,
     required this.onTap,
     this.backgroundColor,
-  });
+      this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class GetInspiredSection extends StatelessWidget {
                   onTap: () => onTap(context, field),
                   child: SmartImageTitleColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    topWidget: SmartImage(height: 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
+                    topWidget: SmartImage(height: height ?? 188.w, path: field.imageUrl ?? '', fit: BoxFit.fill),
                     title: field.name ?? '',
                     titleStyle: homeScreenStyle.getInspiredTitleStyle,
                   ),
