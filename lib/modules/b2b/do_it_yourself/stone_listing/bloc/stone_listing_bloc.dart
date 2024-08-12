@@ -8,6 +8,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   bool isInitialToggle = true;
   bool isGrid = true;
   List<ProductDetails> productList = [];
+  List<DiamondDatum> diamondDatumList = [];
+
+  int currentPage = 1;
+  int? totalNumberOfPages;
+  int limit = 10;
 
   String tabOneTitle = APPStrings.naturalDiamond.tr;
   String tabTwoTitle = APPStrings.looseDiamond.tr;
@@ -42,18 +47,18 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
     paginationScrollController.init(
       loadAction: (int currentPage) async {
-        add(StoneListLoadMoreEvent(currentPage));
+        add(StoneListLoadMoreEvent(event.context, currentPage));
       },
     );
     getScreenIdentifier(event.context);
-    _generateProductList();
+    _generateProductList(event.context, emit);
 
     refreshCompleter.complete(true);
 
     emit(const StoneProductLoadedState());
   }
 
-  void _generateProductList() {
+  Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
       stoneListingAppbarTitle = APPStrings.diy.tr;
       productList.clear();
@@ -91,28 +96,64 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       );
     } else {
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
-      productList.clear();
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
-      List.generate(
-        20,
-        (index) => productList.add(
-          ProductDetails(
-            isOutOfStock: index % 2 == 0,
-            diamond: "2.5 crt",
-            gram: "1.5 grms",
-            imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
-            name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-            originalPrice: "\$3,000.00",
-          ),
-        ),
-      );
+      productList.clear();
+      await fetchDiamondList(context, emit, true);
     }
+  }
+
+  Future<void> fetchDiamondList(BuildContext context, Emitter<StoneListingState> emit, bool? isLoadMore) async {
+    String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
+    String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
+    await AppRepository(context)
+        .fetchDiamondList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type)
+        .then((value) {
+      value?.fold((l) {
+        Utils.showMessage(l.message ?? "");
+      }, (r) {
+        diamondDatumList = r.data;
+        totalNumberOfPages = (r.filteredRecords ?? 0) ~/ limit;
+        List.generate(
+          diamondDatumList.length,
+          (index) => productList.add(
+            ProductDetails(
+              isOutOfStock: index % 2 == 0,
+              diamond: "2.5 crt",
+              gram: "1.5 grms",
+              imageUrl: diamondDatumList[index].image.first.url,
+              //"https://i.ibb.co/yBHp2KB/image-7.png",
+              name: diamondDatumList[index].rmDescription ?? "",
+              originalPrice: "$currency${diamondDatumList[index].price.toString()}",
+              //"\$3,000.00",
+              ctsOrGms: diamondDatumList[index].ctsOrGms,
+              rappaportPrice: diamondDatumList[index].rappaportPrice,
+              priceCts: diamondDatumList[index].priceCts,
+              discountPrice: diamondDatumList[index].discountPrice,
+              finalPrice: diamondDatumList[index].finalPrice,
+              lotCode: diamondDatumList[index].lotCode,
+              shape: diamondDatumList[index].shape,
+              fluorescence: diamondDatumList[index].fluorescence,
+              labs: diamondDatumList[index].labs,
+              lsp: diamondDatumList[index].lsp,
+              color: diamondDatumList[index].color,
+              clarity: diamondDatumList[index].clarity,
+              cut: diamondDatumList[index].cut,
+              certificateFile: diamondDatumList[index].certificateFile,
+              openDnaUrl: diamondDatumList[index].openDnaUrl,
+            ),
+          ),
+        );
+
+        emit(const StoneDiamondListLoadedState());
+      });
+    });
   }
 
   void _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) {
     emit(StoneProductReloadState());
     isInitialToggle = event.isInitialToggle;
+    _generateProductList(event.context, emit);
     emit(StoneChangeTypeState(isInitialToggle));
   }
 
@@ -154,36 +195,27 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
                 ),
               ));
     } else {
-      List.generate(
-          10,
-          (index) => productList.add(
-                ProductDetails(
-                    isOutOfStock: index % 2 == 0,
-                    diamond: "2.5 crt",
-                    gram: "1.5 grms",
-                    imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
-                    name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-                    originalPrice: "\$3,000.00"),
-              ));
+      currentPage++;
+      await fetchDiamondList(event.context, emit, false);
     }
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);
     emit(StoneListLoadedMoreState(event.currentPage + 1));
   }
 
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
     await Future.delayed(const Duration(seconds: 3));
     paginationScrollController.pullToRefresh();
-    _generateProductList();
+    _generateProductList(event.context, emit);
     refreshCompleter.complete(true);
     emit(const StoneProductLoadedState());
   }
 
-  Future<bool> pullToRefresh() async {
+  Future<bool> pullToRefresh(BuildContext context) async {
     if (!refreshCompleter.isCompleted) {
       return false;
     }
     refreshCompleter = Completer<bool>();
-    add(const StoneListPullToRefreshEvent());
+    add(StoneListPullToRefreshEvent(context));
     bool result = await refreshCompleter.future;
     return result;
   }

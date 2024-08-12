@@ -20,6 +20,21 @@ class ProductDetails {
   bool isOutOfStock;
   String? company;
   String? productSku;
+  double? ctsOrGms;
+  String? rappaportPrice;
+  String? priceCts;
+  String? discountPrice;
+  String? finalPrice;
+  String? lotCode;
+  String? shape;
+  String? fluorescence;
+  String? labs;
+  String? lsp;
+  String? color;
+  String? clarity;
+  String? cut;
+  String? certificateFile;
+  String? openDnaUrl;
 
   ProductDetails({
     this.productId,
@@ -41,5 +56,20 @@ class ProductDetails {
     this.isOutOfStock = false,
     this.company,
     this.productSku,
+    this.ctsOrGms,
+    this.rappaportPrice,
+    this.priceCts,
+    this.discountPrice,
+    this.finalPrice,
+    this.lotCode,
+    this.shape,
+    this.fluorescence,
+    this.labs,
+    this.lsp,
+    this.color,
+    this.clarity,
+    this.cut,
+    this.certificateFile,
+    this.openDnaUrl,
   });
 }

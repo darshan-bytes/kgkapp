@@ -102,6 +102,20 @@ class AppRepository extends ApiService {
       ));
     }
   }
+
+  /// Fetches diamond list
+  Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList(
+      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing,
+        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.type: type}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
