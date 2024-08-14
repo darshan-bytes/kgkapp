@@ -9,6 +9,7 @@ class SmartImage extends StatelessWidget {
   final Color? color;
   final GestureTapCallback? onTap;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final BorderRadius? inkwellBorderRadius;
   final BoxBorder? border;
 
@@ -22,6 +23,7 @@ class SmartImage extends StatelessWidget {
     this.color,
     this.onTap,
     this.padding,
+    this.margin,
     this.inkwellBorderRadius,
     this.border,
   });
@@ -34,6 +36,7 @@ class SmartImage extends StatelessWidget {
         height: height,
         width: width,
         padding: padding,
+        margin: margin,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           borderRadius: imageBorderRadius,
@@ -55,6 +58,7 @@ class SmartImage extends StatelessWidget {
             height: height,
             width: width,
             padding: padding,
+            margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
@@ -73,6 +77,7 @@ class SmartImage extends StatelessWidget {
             height: height,
             width: width,
             padding: padding,
+            margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
@@ -90,6 +95,7 @@ class SmartImage extends StatelessWidget {
             height: height,
             width: width,
             padding: padding,
+            margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
@@ -107,6 +113,7 @@ class SmartImage extends StatelessWidget {
             height: height,
             width: width,
             padding: padding,
+            margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,
@@ -147,6 +154,7 @@ class SmartImage extends StatelessWidget {
             height: height,
             width: width,
             padding: padding,
+            margin: margin,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: imageBorderRadius,

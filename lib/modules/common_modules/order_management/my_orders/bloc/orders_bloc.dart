@@ -219,45 +219,72 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   // Helper methods
   static List<MyOrderDetailsModel> _generateDiamondOrdersList() {
     return List.generate(
-      8,
+      10,
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 7}",
         orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
+        orderDate: "17/03/23",
         orderTotal: "\$12,500",
         orderItems: "5",
         orderQuantity: "40",
+        deliveryDate: "22/03/23",
+        orderImages: [
+          'https://i.ibb.co/HgjT1rt/Image.png',
+          'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
+          'https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
+          'https://i.ibb.co/1J2wWPr/Image-4.png',
+          'https://i.ibb.co/FVJDbvp/Image323.png',
+          'https://i.ibb.co/4VSsw5B/Image-8.png'
+        ],
       ),
     );
   }
 
   static List<MyOrderDetailsModel> _generateGemstoneOrdersList() {
     return List.generate(
-      8,
+      10,
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 3}",
         orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
+        orderDate: "17/03/23",
         orderTotal: "\$12,500",
         orderItems: "5",
         orderQuantity: "40",
+        deliveryDate: "22/03/23",
+        orderImages: [
+          'https://i.ibb.co/HgjT1rt/Image.png',
+          'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
+          'https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
+          'https://i.ibb.co/1J2wWPr/Image-4.png',
+          'https://i.ibb.co/FVJDbvp/Image323.png',
+          'https://i.ibb.co/4VSsw5B/Image-8.png'
+        ],
       ),
     );
   }
 
   static List<MyOrderDetailsModel> _generateJewelleryOrdersList() {
     return List.generate(
-      8,
+      10,
       (index) => MyOrderDetailsModel(
         id: index.toString(),
         orderId: "1456${index + 6}",
         orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: "17/03/23 06:00 PM",
+        orderDate: "17/03/23",
         orderTotal: "\$12,500",
         orderItems: "5",
         orderQuantity: "40",
+        deliveryDate: "22/03/23",
+        orderImages: [
+          'https://i.ibb.co/HgjT1rt/Image.png',
+          'https://i.ibb.co/1LRFJ3h/Lab-grown-Category.png',
+          'https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
+          'https://i.ibb.co/1J2wWPr/Image-4.png',
+          'https://i.ibb.co/FVJDbvp/Image323.png',
+          'https://i.ibb.co/4VSsw5B/Image-8.png'
+        ],
       ),
     );
   }

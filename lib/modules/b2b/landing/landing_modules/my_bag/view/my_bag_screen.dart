@@ -243,7 +243,10 @@ class MyBagScreen extends StatelessWidget {
   }
 
   Widget _buildMyBagList(MyBagBloc bloc, MyBagScreenStyle style) {
-    return ListView.builder(
+    return BlocBuilder<MyBagBloc, MyBagState>(
+      buildWhen: (_, current) => current is MyBagToggleViewModeState,
+      builder: (context, state) {
+        return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       itemBuilder: (context, index) {
         ProductDetails product = bloc.myBagProductList[index];
@@ -255,7 +258,11 @@ class MyBagScreen extends StatelessWidget {
             },
             productDetails: product,
             margin: EdgeInsets.only(bottom: 17.h),
-          );
+                showMoreDetails: product.showMore,
+                onShowMorePress: () {
+                  bloc.add(MyBagToggleViewModeEvent(index: index));
+                },
+              );
         } else {
           return CartProductItem(
             selectedQuality: product.productQuality,
@@ -289,6 +296,8 @@ class MyBagScreen extends StatelessWidget {
       itemCount: bloc.myBagProductList.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+    );
+      },
     );
   }
 
