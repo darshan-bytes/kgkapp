@@ -243,6 +243,8 @@ abstract class AppTheme {
   CalendarStyle get calendarStyle;
 
   NewsletterScreenStyle get newsletterScreenStyle;
+
+  ImageSearchStyle get imageSearchStyle;
 }
 
 class PrimaryButtonStyle {
@@ -396,12 +398,16 @@ class CategoryTileStyle {
   final TextStyle detailStyle;
   final Color backgroundColor;
   final Color dividerLineColor;
+  final Color whiteColor;
+  final Color primaryColor;
 
   CategoryTileStyle({
     required this.labelStyle,
     required this.backgroundColor,
     required this.detailStyle,
     required this.dividerLineColor,
+    required this.whiteColor,
+    required this.primaryColor,
   });
 }
 
@@ -2298,4 +2304,24 @@ class NewsletterScreenStyle {
   final TextStyle labelStyle;
 
   NewsletterScreenStyle({required this.labelStyle});
+}
+
+class ImageSearchStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final TextStyle buttonTextStyle;
+  final Color selectedColor;
+  final Color unSelectedColor;
+  final TextStyle selectedItemStyle;
+  final TextStyle unSelectedItemStyle;
+
+  ImageSearchStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.buttonTextStyle,
+    required this.selectedColor,
+    required this.unSelectedColor,
+    required this.selectedItemStyle,
+    required this.unSelectedItemStyle,
+  });
 }

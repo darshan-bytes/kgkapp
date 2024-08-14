@@ -13,6 +13,7 @@ class ProductInfoItem extends StatelessWidget {
   final void Function()? onTapUSA;
   final void Function()? onTapImageViewer;
   final void Function()? onTapDNA;
+  final bool? isShowMore;
 
   const ProductInfoItem({
     super.key,
@@ -28,7 +29,7 @@ class ProductInfoItem extends StatelessWidget {
     this.onTapDNA,
     this.isSelectedBackground = false,
     this.selectedBackgroundColor,
-  });
+      this.isShowMore});
 
   @override
   Widget build(BuildContext context) {

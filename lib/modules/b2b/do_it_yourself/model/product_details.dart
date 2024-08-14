@@ -20,6 +20,7 @@ class ProductDetails {
   bool isOutOfStock;
   String? company;
   String? productSku;
+  bool showMore;
 
   ProductDetails({
     this.productId,
@@ -41,5 +42,6 @@ class ProductDetails {
     this.isOutOfStock = false,
     this.company,
     this.productSku,
+    this.showMore = false,
   });
 }

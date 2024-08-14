@@ -46,45 +46,54 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (productDetailsBloc.isCustomisation) ...[
                     if (productDetailsBloc.userType == UserType.b2cUser) ..._buildB2CCustomisationDetails(style),
                     if (productDetailsBloc.userType == UserType.b2bUser) ..._buildB2BCustomisationDetails(productDetailsBloc, style),
                   ],
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
+                        flex: 5,
+                        child: SizedBox(
+                          height: 60.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SmartText('\$1200.00', style: style.priceStyle),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SmartText('\$1600.00', style: style.originalPriceStyle),
+                                  SizedBox(width: 8.w),
+                                  SmartText('(3% OFF)', style: style.discountStyle),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        flex: 4,
                         child: SmartButton(
+                          height: 60.h,
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
-                            //TODO: Add to bag functionality
+                            // TODO: Add to bag functionality
                           },
                         ),
                       ),
-                      if (!productDetailsBloc.isCustomisation) ...[
-                        SizedBox(width: 8.w),
-                        SelectionButton(
-                          height: 42.w,
-                          width: 42.w,
-                          padding: EdgeInsets.all(6.w),
-                          isSelected: false,
-                          onTap: () {},
-                          image: AppImages.icHeart,
-                        ),
-                        SizedBox(width: 8.w),
-                        SelectionButton(
-                          height: 42.w,
-                          width: 42.w,
-                          padding: EdgeInsets.all(6.w),
-                          isSelected: false,
-                          onTap: () {},
-                          image: AppImages.icShare,
-                        ),
-                      ],
                     ],
                   ),
                 ],
@@ -203,10 +212,41 @@ class ProductDetailsScreen extends StatelessWidget {
           builder: (context, state) {
             return Column(
               children: [
-                SmartCarouselSlider(
-                  imgList: productDetailsBloc.imgList,
-                  controller: productDetailsBloc.controller,
-                  on360Tap: productDetailsBloc.isCustomisation ? () {} : null,
+                Stack(
+                  children: [
+                    SmartCarouselSlider(
+                      imgList: productDetailsBloc.imgList,
+                      controller: productDetailsBloc.controller,
+                      on360Tap: productDetailsBloc.isCustomisation ? () {} : null,
+                    ),
+                    if (!productDetailsBloc.isCustomisation)
+                      Padding(
+                        padding: EdgeInsets.all(12.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(width: 8.w),
+                            SelectionButton(
+                              height: 42.w,
+                              width: 42.w,
+                              padding: EdgeInsets.all(6.w),
+                              isSelected: false,
+                              onTap: () {},
+                              image: AppImages.icHeart,
+                            ),
+                            SizedBox(width: 8.w),
+                            SelectionButton(
+                              height: 42.w,
+                              width: 42.w,
+                              padding: EdgeInsets.all(6.w),
+                              isSelected: false,
+                              onTap: () {},
+                              image: AppImages.icShare,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
                 SizedBox(height: 40.h),
                 _productDetail(style, productDetailsBloc, context),
@@ -231,8 +271,6 @@ class ProductDetailsScreen extends StatelessWidget {
           _buildRatingBarAndReviews(style),
           SizedBox(height: 16.h),
           _compareWidget(productDetailsBloc, style),
-          Divider(height: 48.h),
-          _buildPriceDetails(style, productDetailsBloc),
           Divider(height: 48.h),
           _buildCustomizationList(productDetailsBloc),
           if (productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing) Divider(height: 48.h),
@@ -408,6 +446,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  /// Right now not used anywhere but can be used in future
   Widget _buildPriceDetails(ProductDetailsStyle style, ProductDetailsBloc productDetailsBloc) {
     return productDetailsBloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(

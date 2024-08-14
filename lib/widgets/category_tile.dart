@@ -15,7 +15,10 @@ class CategoryTile extends StatelessWidget {
     final CategoryTileStyle categoryTileStyle = AppTheme.of(context).categoryTileStyle;
     return Container(
       margin: EdgeInsets.only(top: 6.0.h, bottom: 6.0.h, right: 6.0.w, left: 6.0.w),
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: categoryTileStyle.whiteColor,
+        border: isSelected ? Border.all(color: categoryTileStyle.primaryColor, width: 2.w) : null,
+      ),
       child: Stack(
         children: [
           SmartImage(
@@ -40,8 +43,8 @@ class CategoryTile extends StatelessWidget {
                 if (category.isExpanded)
                   Icon(
                     isSelected ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                  size: 16.w,
-                ),
+                    size: 16.w,
+                  ),
               ],
             ),
           ),

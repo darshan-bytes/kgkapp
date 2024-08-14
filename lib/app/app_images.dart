@@ -175,4 +175,6 @@ class AppImages {
 
   //ic_more_vertical
   static String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static String icImgSearch = 'assets/images/ic_img_search.png';
+  static String icSearchImgThumbnail = 'assets/images/ic_search_img_thumbnail.svg';
 }
