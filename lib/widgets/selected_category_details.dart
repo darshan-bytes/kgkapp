@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class SelectedCategoryDetails extends StatelessWidget {
   final ArrowPosition arrowPosition;
-  final List<String> productsDetailsList;
+  final List<ProductDetailModel> productsDetailsList;
   final ScrollController scrollController;
   final void Function(dynamic) onProductSelected;
 
@@ -45,7 +45,7 @@ class SelectedCategoryDetails extends StatelessWidget {
         Container(
           width: double.infinity,
           margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
-          constraints: BoxConstraints(maxHeight: 260.w),
+          constraints: BoxConstraints(maxHeight: 320.w),
           color: categoryTileStyle.backgroundColor,
           child: Scrollbar(
             trackVisibility: true,
@@ -64,12 +64,21 @@ class SelectedCategoryDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
-                            child: SmartText(
-                              productsDetailsList[index],
-                              style: categoryTileStyle.detailStyle,
-                            ),
+                          Row(
+                            children: [
+                              SmartImage(
+                                path: productsDetailsList[index].image ?? '',
+                                height: 34.w,
+                                width: 34.w,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 18.h, bottom: 18.h, left: 10.w),
+                                child: SmartText(
+                                  productsDetailsList[index].name,
+                                  style: categoryTileStyle.detailStyle,
+                                ),
+                              ),
+                            ],
                           ),
                           if (index != productsDetailsList.length - 1)
                             Container(

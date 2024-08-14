@@ -19,6 +19,9 @@ class SearchScreen extends StatelessWidget {
             });
           }
         },
+        onTapSuffixIconWithImageSearch: () {
+          context.pushNamed(AppRoutes.imageSearchPage);
+        },
       ),
       body: _getBody(searchBloc, style: style),
       bottomNavigationBar: _buildSearchByCategory(searchBloc, style),

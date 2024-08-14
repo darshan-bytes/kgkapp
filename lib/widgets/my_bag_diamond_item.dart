@@ -4,21 +4,26 @@ class MyBagDiamondItem extends StatelessWidget {
   final ProductDetails productDetails;
   final Function()? onTap;
   final Function()? onTapMenuButton;
+  final Function()? onShowMorePress;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
+  final bool showMoreDetails;
 
   const MyBagDiamondItem({
     super.key,
     required this.productDetails,
     this.onTap,
     this.onTapMenuButton,
+    this.onShowMorePress,
     this.padding,
     this.margin = EdgeInsets.zero,
+    this.showMoreDetails = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
+    final productInfoItemStyle = AppTheme.of(context).productInfoItemStyle;
     DiamondClarityChart chart = productDetails.diamondClarityChart ?? DiamondClarityChart();
     return GestureDetector(
       onTap: onTap,
@@ -81,46 +86,78 @@ class MyBagDiamondItem extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16.h),
-            const Divider(),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildDetailColumn(APPStrings.lab.tr, chart.lab, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.cut.tr, chart.cut, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.polish.tr, chart.polish, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.symmetry.tr, chart.symmetry, style)),
-              ],
+            InkWell(
+              onTap: onShowMorePress,
+              child: Container(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SmartText(
+                      showMoreDetails ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+                      isAutoSizeText: true,
+                      style: productInfoItemStyle.moreDetailsTextStyle,
+                    ),
+                    SizedBox(width: 4.w),
+                    SmartImage(
+                      path: showMoreDetails ? AppImages.icArrowUp : AppImages.icArrowDown,
+                      height: 16.h,
+                      width: 16.w,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildDetailColumn(APPStrings.flourish.tr, chart.flourish, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.tablePercentage.tr, chart.table, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.depthPercentage.tr, chart.depth, style)),
-                const Expanded(child: SizedBox()),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            const Divider(),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildDetailColumn(APPStrings.rap.tr, chart.rap, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style, isDiscount: true)),
-                Expanded(child: _buildDetailColumn(APPStrings.kgkAmount.tr, chart.kgkAmount, style)),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildDetailColumn(APPStrings.yourPercentage.tr, chart.your, style, isTextFormField: true)),
-                Expanded(child: _buildDetailColumn(APPStrings.yourRate.tr, chart.yourRate, style)),
-                Expanded(child: _buildDetailColumn(APPStrings.yourValue.tr, chart.yourValue, style)),
-              ],
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              child: Column(
+                children: showMoreDetails
+                    ? [
+                        SizedBox(height: 16.h),
+                        const Divider(),
+                        SizedBox(height: 16.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildDetailColumn(APPStrings.lab.tr, chart.lab, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.cut.tr, chart.cut, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.polish.tr, chart.polish, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.symmetry.tr, chart.symmetry, style)),
+                          ],
+                        ),
+                        SizedBox(height: 16.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildDetailColumn(APPStrings.flourish.tr, chart.flourish, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.tablePercentage.tr, chart.table, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.depthPercentage.tr, chart.depth, style)),
+                            const SizedBox.expand(),
+                          ],
+                        ),
+                        SizedBox(height: 16.h),
+                        const Divider(),
+                        SizedBox(height: 16.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildDetailColumn(APPStrings.rap.tr, chart.rap, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.discount.tr, chart.discount, style, isDiscount: true)),
+                            Expanded(child: _buildDetailColumn(APPStrings.kgkAmount.tr, chart.kgkAmount, style)),
+                          ],
+                        ),
+                        SizedBox(height: 16.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildDetailColumn(APPStrings.yourPercentage.tr, chart.your, style, isTextFormField: true)),
+                            Expanded(child: _buildDetailColumn(APPStrings.yourRate.tr, chart.yourRate, style)),
+                            Expanded(child: _buildDetailColumn(APPStrings.yourValue.tr, chart.yourValue, style)),
+                          ],
+                        ),
+                      ]
+                    : [],
+              ),
             ),
           ],
         ),

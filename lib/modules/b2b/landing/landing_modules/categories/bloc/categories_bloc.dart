@@ -15,119 +15,119 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ScrollController scrollController = ScrollController();
 
   List<CategoriesModel> categories = [];
-  List<String> selectedCategoriesList = [];
+  List<ProductDetailModel> selectedCategoriesList = [];
 
   //B2C subCategory List
-  List<String> naturalDiamondSubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> naturalDiamondSubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> labGrownDiamondSubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> labGrownDiamondSubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> gemstonesSubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> gemstonesSubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> jewellerySubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> jewellerySubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> doItYourselfSubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> aboutUsSubOptionsB2CList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> aboutUsSubOptionsB2CList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> educationSubOptionsB2CList = [
-    'Diamonds',
-    'Lab created diamonds',
-    'Gemstone',
-    'Metals',
-    'Ring sizer',
+  List<ProductDetailModel> educationSubOptionsB2CList = [
+    ProductDetailModel(name: 'Diamonds', image: ''),
+    ProductDetailModel(name: 'Lab created diamonds', image: ''),
+    ProductDetailModel(name: 'Gemstone', image: ''),
+    ProductDetailModel(name: 'Metals', image: ''),
+    ProductDetailModel(name: 'Ring sizer', image: ''),
   ];
 
   //B2B subCategory List
-  List<String> pddSubOptionsList = [
-    'Concept Listing',
-    'Presentation Listing',
-    'Project Listing',
-    'Design Listing',
-    'Styles Listing',
-    'Monitoring'
+  List<ProductDetailModel> pddSubOptionsList = [
+    ProductDetailModel(name: 'Concept Listing', image: ''),
+    ProductDetailModel(name: 'Presentation Listing', image: ''),
+    ProductDetailModel(name: 'Project Listing', image: ''),
+    ProductDetailModel(name: 'Design Listing', image: ''),
+    ProductDetailModel(name: 'Styles Listing', image: ''),
+    ProductDetailModel(name: 'Monitoring', image: ''),
   ];
 
-  List<String> jewellerySubOptionsB2BList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> jewellerySubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> diamondSubOptionsB2BList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> diamondSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> gemstoneSubOptionsB2BList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
-  ];
-
-  List<String> librarySubOptionsList = [
-    'Product Library - Grey',
-    'Product Library MF - Platinum',
-    'Design Library',
-    'CAD Library',
-    'Seasonal Offers',
+  List<ProductDetailModel> gemstoneSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
 
-  List<String> digitalCatalogueSubOptionsB2BList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> librarySubOptionsList = [
+    ProductDetailModel(name: 'Product Library - Grey', image: ''),
+    ProductDetailModel(name: 'Product Library MF - Platinum', image: ''),
+    ProductDetailModel(name: 'Design Library', image: ''),
+    ProductDetailModel(name: 'CAD Library', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: '')
   ];
-  List<String> doItYourselfSubOptionsB2BList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+
+  List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
-  List<String> orionSubCategoryList = [
-    'Collection',
-    'Best Selling',
-    'Seasonal Offers',
-    'Occasion Offer',
-    'Deals',
+  List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
+  ];
+  List<ProductDetailModel> orionSubCategoryList = [
+    ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    ProductDetailModel(name: 'Occasion Offer', image: ''),
+    ProductDetailModel(name: 'Deals', image: ''),
   ];
 
   CategoriesBloc() : super(CategoriesInitial()) {

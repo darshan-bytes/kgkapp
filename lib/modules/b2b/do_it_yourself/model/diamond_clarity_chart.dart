@@ -40,8 +40,7 @@ class DiamondClarityChart {
     this.kgkAmount,
     this.your,
     this.yourRate,
-    this.yourValue,
-  });
+      this.yourValue});
 
   factory DiamondClarityChart.fromJson(Map<String, dynamic> json) => DiamondClarityChart(
         ct: json["ct"],
@@ -63,8 +62,7 @@ class DiamondClarityChart {
         kgkAmount: json["kgk_amount"],
         your: json["your"],
         yourRate: json["your_rate"],
-        yourValue: json["your_value"],
-      );
+      yourValue: json["your_value"]);
 
   Map<String, dynamic> toJson() => {
         "ct": ct,
@@ -86,6 +84,6 @@ class DiamondClarityChart {
         "kgk_amount": kgkAmount,
         "your": your,
         "your_rate": yourRate,
-        "your_value": yourValue,
+        "your_value": yourValue
       };
 }

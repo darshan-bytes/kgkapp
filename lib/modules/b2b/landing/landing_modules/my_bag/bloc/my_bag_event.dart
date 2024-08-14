@@ -82,3 +82,12 @@ final class MyBagToggleReadMoreDetailsEvent extends MyBagEvent {
   @override
   List<Object> get props => [];
 }
+
+final class MyBagToggleViewModeEvent extends MyBagEvent {
+  final int index;
+
+  const MyBagToggleViewModeEvent({required this.index});
+
+  @override
+  List<Object> get props => [index];
+}

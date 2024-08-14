@@ -29,11 +29,16 @@ class OrderDetailScreen extends StatelessWidget {
                 children: [
                   _buildOrderDetailsInfoCard(bloc, style, context),
                   SizedBox(height: 24.h),
-                  _buildOrderCreatorDetailsInfoCard(style),
-                  SizedBox(height: 32.h),
                   _buildSearchTextField(bloc),
                   SizedBox(height: 24.h),
                   _buildOrderList(bloc, style),
+                  BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                    buildWhen: (previous, current) =>
+                        current is OrderDetailsLoadedMoreProductsState || current is OrderDetailsLoadingMoreProductsState,
+                    builder: (context, state) {
+                      return _buildOrderCreatorDetailsInfoCard(style);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -96,7 +101,7 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildOrderCreatorDetailsInfoCard(OrderDetailScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 32.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -299,7 +304,10 @@ class OrderDetailScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildPopupOption(context, text: APPStrings.trackOrder.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                _showTrackOrderBottomSheet(bloc, context);
+                _showTrackOrderBottomSheet(bloc, context, APPStrings.trackOrder.tr);
+              }),
+              _buildPopupOption(context, text: APPStrings.manufacturingStatus.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                _showTrackOrderBottomSheet(bloc, context, APPStrings.manufacturingStatus.tr);
               }),
               if (bloc.userType == UserType.b2bUser) ...{
                 _buildPopupOption(context, text: APPStrings.returnProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
@@ -320,7 +328,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  void _showTrackOrderBottomSheet(OrderDetailBloc bloc, BuildContext context) {
+  void _showTrackOrderBottomSheet(OrderDetailBloc bloc, BuildContext context, String? appBarTitle) {
     context.pop();
     Utils.showSmartModalBottomSheet(
       context: context,
@@ -329,7 +337,7 @@ class OrderDetailScreen extends StatelessWidget {
       ),
       builder: (context) => BlocProvider<OrderDetailBloc>(
         create: (context) => OrderDetailBloc(),
-        child: const TrackOrderBottomSheet(),
+        child: TrackOrderBottomSheet(appBarTitle: appBarTitle),
       ),
     );
   }

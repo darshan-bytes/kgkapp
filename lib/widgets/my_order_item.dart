@@ -39,11 +39,13 @@ class MyOrderItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _buildDetailColumn(APPStrings.orderId.tr, model.orderId, style)),
+                    // SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == model.orderStatus.value)),
+
                     Expanded(
                         child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: _buildDetailColumn(APPStrings.status.tr, model.orderStatus.value, style, isOrderStatus: true)),
+                        Expanded(child: _buildDetailColumn(APPStrings.status.tr, model.orderStatus.value, style)),
                         InkWell(
                             onTap: () {
                               if (onTapMenuButton != null) {
