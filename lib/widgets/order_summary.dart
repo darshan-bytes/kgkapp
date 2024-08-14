@@ -53,10 +53,6 @@ class OrderSummary extends StatelessWidget {
           ],
           SizedBox(height: 16.h),
           _buildTotalSection(style),
-          if (onTapCheckout != null) ...[
-            SizedBox(height: 24.h),
-            SmartButton(onTap: onTapCheckout!, title: APPStrings.checkout.tr),
-          ]
         ],
       ),
     );

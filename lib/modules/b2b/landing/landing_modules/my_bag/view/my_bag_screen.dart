@@ -27,6 +27,7 @@ class MyBagScreen extends StatelessWidget {
         ),
       ),
       body: _getBody(myBagBloc, style),
+      bottomNavigationBar: buildCheckoutButton(context, style),
     );
   }
 
@@ -133,7 +134,7 @@ class MyBagScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 16.h),
-                buildCheckoutButton(context),
+                buildCheckoutButton(context, style),
               ],
             );
           },
@@ -153,6 +154,7 @@ class MyBagScreen extends StatelessWidget {
           return SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(height: 24.h),
                 _buildSelectAllProductBox(bloc, style, context),
@@ -233,12 +235,16 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCheckoutButton(BuildContext context) {
-    return SmartButton(
-      onTap: () {
-        context.pushNamed(AppRoutes.addressListPage);
-      },
-      title: APPStrings.checkout.tr,
+  Widget buildCheckoutButton(BuildContext context, MyBagScreenStyle style) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 18.w),
+      color: style.backgroundColor,
+      child: SmartButton(
+        onTap: () {
+          context.pushNamed(AppRoutes.addressListPage);
+        },
+        title: APPStrings.checkout.tr,
+      ),
     );
   }
 

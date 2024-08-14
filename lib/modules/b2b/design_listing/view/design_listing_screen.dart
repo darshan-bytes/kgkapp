@@ -22,7 +22,7 @@ class DesignListingScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _buildSearchTextFieldWithSelectionButton(bloc, context),
-                    _buildDesignList(bloc),
+                    _buildDesignList(bloc, context),
                     SizedBox(height: 16.h),
                   ],
                 );
@@ -109,7 +109,7 @@ class DesignListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDesignList(DesignListingBloc bloc) {
+  Widget _buildDesignList(DesignListingBloc bloc, BuildContext context) {
     return BlocBuilder<DesignListingBloc, DesignListingState>(
       buildWhen: (previous, current) =>
           current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
@@ -117,7 +117,7 @@ class DesignListingScreen extends StatelessWidget {
         if (bloc.designList.isEmpty || bloc.designListForGrid.isEmpty) {
           return _buildEmptyState();
         }
-        return _buildListOrGridView(bloc, state);
+        return _buildListOrGridView(bloc, state, context);
       },
     );
   }
@@ -126,13 +126,13 @@ class DesignListingScreen extends StatelessWidget {
     return NoDataFoundWidget(text: APPStrings.noDesignsFound.tr);
   }
 
-  Widget _buildListOrGridView(DesignListingBloc bloc, DesignListingState state) {
+  Widget _buildListOrGridView(DesignListingBloc bloc, DesignListingState state, BuildContext context) {
     return Expanded(
-      child: bloc.isGrid ? _buildGridView(bloc, state) : _buildListView(bloc, state),
+      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state),
     );
   }
 
-  Widget _buildGridView(DesignListingBloc bloc, DesignListingState state) {
+  Widget _buildGridView(DesignListingBloc bloc, DesignListingState state, BuildContext context) {
     return SmartSingleChildScrollView(
       key: bloc.paginationScrollController.gridKey,
       controller: bloc.paginationScrollController.controller,
@@ -141,8 +141,13 @@ class DesignListingScreen extends StatelessWidget {
       },
       child: SmartGridView(
         isLoadingMore: state is DesignListLoadingMoreState,
-        items: List.generate(bloc.designListForGrid.length,
-            (index) => DesignListingGridItem.designGridItem(designModel: bloc.designListForGrid[index], onTap: () {})),
+        items: List.generate(
+            bloc.designListForGrid.length,
+            (index) => DesignListingGridItem.designGridItem(
+                designModel: bloc.designListForGrid[index],
+                onTap: () {
+                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                })),
       ),
     );
   }
