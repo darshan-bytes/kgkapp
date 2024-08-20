@@ -1,64 +1,103 @@
-import '../kgk.dart';
+import 'package:kgk/kgk.dart';
 
-enum Edge { TOP, RIGHT, BOTTOM, LEFT }
+enum Edge { top, right, bottom, left }
 
-class Chevron extends StatelessWidget {
-  const Chevron(
-      {super.key,
-      this.triangleHeight = 30,
-      this.color = Colors.blue,
-      required this.child,
-      this.edge = Edge.RIGHT,
-      this.clipShadows = const []});
+enum Clipper { start, center, end }
 
-  ///The widget that is going to be clipped as point shape
+/// Chevron Progress Widget
+
+class ChevronProgress extends StatelessWidget {
+  const ChevronProgress({
+    super.key,
+    required this.child,
+    required this.clipper,
+    this.color = Colors.blue,
+    this.edge = Edge.right,
+  });
+
+  ///The widget that is going to be clipped as chevron shape
   final Widget child;
 
-  ///The height of the triangle
-  final double triangleHeight;
-
-  ///The edge that Point points
+  ///The edge the chevron points
   final Edge edge;
 
   /// The background color of Chevron
   final Color color;
 
-  ///List of shadows to be cast on the border
-  final List<ClipShadow> clipShadows;
+  final Clipper clipper;
 
   @override
   Widget build(BuildContext context) {
-    var clipper = PointClipper(triangleHeight, edge);
     return CustomPaint(
-      painter: ClipShadowPainter(clipper, clipShadows),
+      painter: ClipShadowPainter(getClipperPainter(clipper), []),
       child: ClipPath(
-        clipper: clipper,
+        clipper: getClipperPainter(clipper),
         child: Container(
-          width: 130.w,
+          width: clipper != Clipper.center ? 130.w : 145.w,
           color: color,
           child: child,
         ),
       ),
     );
   }
+
+  CustomClipper<Path> getClipperPainter(clipper) {
+    switch (clipper) {
+      case Clipper.start:
+        return PointClipper(Edge.right);
+      case Clipper.center:
+        return ChevronClipper(Edge.right);
+      case Clipper.end:
+        return LabelClipper(Edge.left);
+      default:
+        return ChevronClipper(edge);
+    }
+  }
 }
 
-class PointClipper extends CustomClipper<Path> {
-  PointClipper(this.triangleHeight, this.edge);
+class ClipShadowPainter extends CustomPainter {
+  final CustomClipper<Path> clipper;
+  final List<ClipShadow> clipShadows;
 
-  final double triangleHeight;
+  ClipShadowPainter(this.clipper, this.clipShadows);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    for (var shadow in clipShadows) {
+      canvas.drawShadow(clipper.getClip(size), shadow.color, shadow.elevation, true);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class ClipShadow {
+  final Color color;
+  final double elevation;
+
+  ClipShadow({required this.color, this.elevation = 5});
+}
+
+/// Start Clipper
+class PointClipper extends CustomClipper<Path> {
+  PointClipper(this.edge);
+
+  final double triangleHeight = 30.w;
   final Edge edge;
 
   @override
   Path getClip(Size size) {
     switch (edge) {
-      case Edge.TOP:
+      case Edge.top:
         return _getTopPath(size);
-      case Edge.RIGHT:
+      case Edge.right:
         return _getRightPath(size);
-      case Edge.BOTTOM:
+      case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.LEFT:
+      case Edge.left:
         return _getLeftPath(size);
       default:
         return _getRightPath(size);
@@ -114,84 +153,12 @@ class PointClipper extends CustomClipper<Path> {
   }
 }
 
-class ClipShadowPainter extends CustomPainter {
-  final CustomClipper<Path> clipper;
-  final List<ClipShadow> clipShadows;
-
-  ClipShadowPainter(this.clipper, this.clipShadows);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    for (var shadow in clipShadows) {
-      canvas.drawShadow(clipper.getClip(size), shadow.color, shadow.elevation, true);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class ClipShadow {
-  final Color color;
-  final double elevation;
-
-  ClipShadow({required this.color, this.elevation = 5});
-}
-
-/// Chevron Progress Widget
-
-class ChevronProgress extends StatelessWidget {
-  const ChevronProgress(
-      {super.key,
-      this.triangleHeight = 30,
-      required this.isLabel,
-      required this.child,
-      this.color = Colors.blue,
-      this.edge = Edge.RIGHT,
-      this.clipShadows = const []});
-
-  ///The widget that is going to be clipped as chevron shape
-  final Widget child;
-
-  ///The height of triangle
-  final double triangleHeight;
-
-  ///The edge the chevron points
-  final Edge edge;
-
-  /// The background color of Chevron
-  final Color color;
-
-  ///List of shadows to be cast on the border
-  final List<ClipShadow> clipShadows;
-
-  final bool isLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    var chevronClipper = ChevronClipper(triangleHeight, edge);
-    var labelClipper = LabelClipper(triangleHeight, Edge.LEFT);
-    return CustomPaint(
-      painter: ClipShadowPainter(isLabel ? labelClipper : chevronClipper, clipShadows),
-      child: ClipPath(
-        clipper: isLabel ? labelClipper : chevronClipper,
-        child: Container(
-          width: isLabel ? 130.w : 145.w,
-          color: color,
-          child: child,
-        ),
-      ),
-    );
-  }
-}
-
+/// Center Clipper
 class ChevronClipper extends CustomClipper<Path> {
-  ChevronClipper(this.triangleHeight, this.edge);
+  ChevronClipper(this.edge);
 
   ///The height of triangle
-  final double triangleHeight;
+  final double triangleHeight = 30.w;
 
   ///The edge the chevron points
   final Edge edge;
@@ -199,13 +166,13 @@ class ChevronClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     switch (edge) {
-      case Edge.TOP:
+      case Edge.top:
         return _getTopPath(size);
-      case Edge.RIGHT:
+      case Edge.right:
         return _getRightPath(size);
-      case Edge.BOTTOM:
+      case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.LEFT:
+      case Edge.left:
         return _getLeftPath(size);
       default:
         return _getRightPath(size);
@@ -264,13 +231,12 @@ class ChevronClipper extends CustomClipper<Path> {
   }
 }
 
-/// Label Clipper
-
+/// End Clipper
 class LabelClipper extends CustomClipper<Path> {
-  LabelClipper(this.triangleHeight, this.edge);
+  LabelClipper(this.edge);
 
   ///The height of triangle that is going to be used to clip the [edge]
-  final double triangleHeight;
+  final double triangleHeight = 30.w;
 
   ///The edge that triangle clipping is going to be applied
   final Edge edge;
@@ -278,13 +244,13 @@ class LabelClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     switch (edge) {
-      case Edge.TOP:
+      case Edge.top:
         return _getTopPath(size);
-      case Edge.RIGHT:
+      case Edge.right:
         return _getRightPath(size);
-      case Edge.BOTTOM:
+      case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.LEFT:
+      case Edge.left:
         return _getLeftPath(size);
       default:
         return _getRightPath(size);
