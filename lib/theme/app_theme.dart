@@ -632,15 +632,19 @@ class DiyProgressViewStyle {
   final TextStyle indexStyle;
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
+  final TextStyle selectedIndexStyle;
   final Color selectedBorderColor;
   final Color unselectedBorderColor;
+  final Color backgroundChevronColor;
 
   DiyProgressViewStyle({
     required this.indexStyle,
     required this.titleStyle,
     required this.subTitleStyle,
+    required this.selectedIndexStyle,
     required this.selectedBorderColor,
     required this.unselectedBorderColor,
+    required this.backgroundChevronColor,
   });
 }
 
