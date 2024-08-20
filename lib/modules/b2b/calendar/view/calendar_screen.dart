@@ -197,7 +197,7 @@ class CalendarScreen extends StatelessWidget {
             selectionDecoration: BoxDecoration(border: Border.all(color: style.primary, width: 1.w)),
             monthViewSettings: const MonthViewSettings(
               appointmentDisplayCount: 3,
-              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+              appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
             ),
             timeSlotViewSettings: const TimeSlotViewSettings(
               startHour: 0,
