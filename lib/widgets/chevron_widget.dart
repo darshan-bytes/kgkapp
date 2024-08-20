@@ -2,8 +2,6 @@ import 'package:kgk/kgk.dart';
 
 enum Edge { top, right, bottom, left }
 
-enum Edge { top, right, bottom, left }
-
 enum Clipper { start, center, end }
 
 /// Chevron Progress Widget

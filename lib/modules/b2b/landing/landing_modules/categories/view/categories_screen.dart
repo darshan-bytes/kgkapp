@@ -60,7 +60,7 @@ class CategoriesScreen extends StatelessWidget {
                           final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
                           if (selectedCategory != null) {
                             categoriesBloc.navigateBasedOnCategory(
-                                context: context, categoryName: selectedCategory, categorySubName: value);
+                                context: context, categoryName: selectedCategory, categorySubName: value.name);
                           }
                         },
                       ),

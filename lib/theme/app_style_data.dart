@@ -163,7 +163,9 @@ class LightModeTheme extends AppTheme {
       backgroundColor: colors.colorC5DEEB.withOpacity(0.38),
       dividerLineColor: colors.colorD3DAE0,
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
-      detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp));
+      detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
+      primaryColor: colors.primary,
+      whiteColor: colors.white);
 
   @override
   ForgotPasswordScreenStyle get forgotPasswordScreenStyle => ForgotPasswordScreenStyle(
@@ -1239,4 +1241,15 @@ class LightModeTheme extends AppTheme {
 
   @override
   NewsletterScreenStyle get newsletterScreenStyle => NewsletterScreenStyle(labelStyle: interSemiBoldTextStyle);
+
+  @override
+  ImageSearchStyle get imageSearchStyle => ImageSearchStyle(
+        titleStyle: eBGaramondBoldTextStyle.copyWith(fontSize: 24.sp),
+        subTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+        buttonTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
+        selectedColor: colors.primary,
+        unSelectedColor: colors.color8C8C8C,
+        selectedItemStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.primary),
+        unSelectedItemStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.color8C8C8C),
+      );
 }

@@ -21,6 +21,7 @@ class SmartCarouselSlider extends StatelessWidget {
     final ImageCarouselStyle imageCarouselStyle = AppTheme.of(context).imageCarouselStyle;
     ValueNotifier<int> currentPage = ValueNotifier<int>(0);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Stack(
           children: [
@@ -55,28 +56,35 @@ class SmartCarouselSlider extends StatelessWidget {
               )
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            imgList.length,
-            (index) {
-              return GestureDetector(
-                onTap: () => controller.animateToPage(index),
-                child: ValueListenableBuilder<int>(
-                    valueListenable: currentPage,
-                    builder: (context, value, child) {
-                      return Container(
-                        width: 10.0.w,
-                        height: 10.0.w,
-                        margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: currentPage.value == index ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
-                      );
-                    }),
-              );
-            },
-          ),
+        SizedBox(
+          height: 60.h,
+          child: ListView.builder(
+              itemCount: imgList.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => controller.animateToPage(index),
+                  child: ValueListenableBuilder<int>(
+                      valueListenable: currentPage,
+                      builder: (context, value, child) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
+                          child: Center(
+                            child: SmartImage(
+                              path: imgList[index],
+                              width: 44.0.w,
+                              height: 44.0.w,
+                              border: Border.all(
+                                color: currentPage.value == index ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor,
+                                width: 1.6.w,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                );
+              }),
         ),
       ],
     );

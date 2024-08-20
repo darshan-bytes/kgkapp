@@ -669,5 +669,6 @@
   "search_template": "KO - Search template",
   "validity": "KO - Validity",
   "view_more": "KO - View more",
-  "shop_by_x": "KO - Shop by {#}"
+  "shop_by_x": "KO - Shop by {#}",
+  "manufacturing_status": "Manufacturing Status"
 }

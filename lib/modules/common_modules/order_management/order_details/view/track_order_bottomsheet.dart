@@ -1,7 +1,9 @@
 import 'package:kgk/kgk.dart';
 
 class TrackOrderBottomSheet extends StatelessWidget {
-  const TrackOrderBottomSheet({super.key});
+  final String? appBarTitle;
+
+  const TrackOrderBottomSheet({super.key, this.appBarTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class TrackOrderBottomSheet extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 16.h),
-                  _buildAppBar(context, style),
+                  _buildAppBar(context, style, appBarTitle ?? APPStrings.trackOrder.tr),
                   SizedBox(height: 24.h),
                   _buildOrderDetailsInfoCard(style),
                   SizedBox(height: 24.h),
@@ -43,11 +45,11 @@ class TrackOrderBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(BuildContext context, TrackOrderBottomSheetStyle style) {
+  Widget _buildAppBar(BuildContext context, TrackOrderBottomSheetStyle style, String appBarTitle) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SmartText(APPStrings.trackOrder.tr, style: style.titleStyle),
+        SmartText(appBarTitle, style: style.titleStyle),
         SizedBox(width: 8.w),
         SmartImage(
           path: AppImages.icCross,
