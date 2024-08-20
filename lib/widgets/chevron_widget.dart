@@ -1,4 +1,6 @@
-import '../kgk.dart';
+import 'package:kgk/kgk.dart';
+
+enum Edge { top, right, bottom, left }
 
 enum Edge { top, right, bottom, left }
 
@@ -85,7 +87,7 @@ class ClipShadow {
 class PointClipper extends CustomClipper<Path> {
   PointClipper(this.edge);
 
-  final double triangleHeight = 30;
+  final double triangleHeight = 30.w;
   final Edge edge;
 
   @override
@@ -158,7 +160,7 @@ class ChevronClipper extends CustomClipper<Path> {
   ChevronClipper(this.edge);
 
   ///The height of triangle
-  final double triangleHeight = 30;
+  final double triangleHeight = 30.w;
 
   ///The edge the chevron points
   final Edge edge;
@@ -236,7 +238,7 @@ class LabelClipper extends CustomClipper<Path> {
   LabelClipper(this.edge);
 
   ///The height of triangle that is going to be used to clip the [edge]
-  final double triangleHeight = 30;
+  final double triangleHeight = 30.w;
 
   ///The edge that triangle clipping is going to be applied
   final Edge edge;

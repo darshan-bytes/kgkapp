@@ -14,7 +14,7 @@ class DiyProgressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: padding ?? EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
-        width: double.infinity,
+        width: context.width,
         child: Stack(
           children: [
             Align(
