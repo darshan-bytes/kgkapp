@@ -297,9 +297,11 @@ class LightModeTheme extends AppTheme {
   DiyProgressViewStyle get diyProgressViewStyle => DiyProgressViewStyle(
         indexStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         titleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
+        selectedIndexStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.white),
         subTitleStyle: eBGaramondRegularTextStyle.copyWith(fontWeight: FontWeight.w400, fontSize: 16.sp, color: colors.color303538),
         selectedBorderColor: colors.color424445,
         unselectedBorderColor: colors.colorD3DAE0,
+        backgroundChevronColor: colors.primary,
       );
 
   @override
