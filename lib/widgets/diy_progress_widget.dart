@@ -17,12 +17,11 @@ class DiyProgressWidget extends StatelessWidget {
         width: double.infinity,
         child: Stack(
           children: [
-            _commonChevron(context, selectedStep == 1, 'Choose a', 1, 'Diamond'),
-            Positioned(left: 105.w, child: _commonChevron(context, selectedStep == 2, 'Choose a', 2, 'Setting')),
-            Positioned(left: 112.w * 2, child: _commonChevron(context, selectedStep == 3, 'Choose a', 3, 'Ring')),
+            Align(alignment: Alignment.centerLeft, child: _commonChevron(context, selectedStep == 1, 'Choose a', 1, 'Diamond')),
+            Align(alignment: Alignment.center, child: _commonChevron(context, selectedStep == 2, 'Choose a', 2, 'Setting')),
+            Align(alignment: Alignment.centerRight, child: _commonChevron(context, selectedStep == 3, 'Choose a', 3, 'Ring')),
           ],
         )
-
         // Row(
         //   children: [
         //     _commonChevron(context, selectedStep == 1, 'Choose a', 1, 'Diamond'),
@@ -60,7 +59,7 @@ class DiyProgressWidget extends StatelessWidget {
                 ? style.backgroundChevronColor
                 : selectedStep + 1 == index
                     ? style.backgroundChevronColor.withOpacity(0.5)
-                    : style.unselectedBorderColor.withOpacity(0.3),
+                    : style.unselectedBorderColor.withOpacity(0.5),
             child: Center(
               child: SmartText(
                 '$title \n$subTitle',

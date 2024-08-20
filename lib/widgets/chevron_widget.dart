@@ -34,7 +34,7 @@ class Chevron extends StatelessWidget {
       child: ClipPath(
         clipper: clipper,
         child: Container(
-          width: 130,
+          width: 130.w,
           color: color,
           child: child,
         ),
