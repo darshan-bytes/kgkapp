@@ -179,11 +179,14 @@ class ProductGridItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmartText(
-              productDetails.name,
-              style: style.productNameStyle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              height: 38.h,
+              child: SmartText(
+                productDetails.name,
+                style: style.productNameStyle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
@@ -212,9 +215,13 @@ class ProductGridItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (isStoneWithPrice)
+                  if (isStoneWithPrice && productDetails.ctsOrGms != null)
                     SmartImage(
-                      path: AppImages.icStone,
+                      path: productDetails.ctsOrGms! > 0.1
+                          ? AppImages.icOneRing
+                          : productDetails.ctsOrGms! > 0.2
+                              ? AppImages.icTwoRing
+                              : AppImages.icThreeRing,
                       height: 20.w,
                       width: 20.w,
                       fit: BoxFit.fill,

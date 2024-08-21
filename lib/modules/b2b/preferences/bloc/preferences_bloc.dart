@@ -35,7 +35,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     languageList.add(LanguageModel(name: "French", symbol: "fr"));
 
     StorageManager().getCurrencyList().forEach((element) {
-      currencyList.add(CurrencyModel(name: "${element.name ?? ''} (${element.symbol ?? ''})"));
+      currencyList.add(CurrencyModel(name: element.name ?? '', symbol: element.symbol ?? '\$'));
     });
 
     selectedCountry = countryList.first;
@@ -66,6 +66,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     selectedCurrency = event.currency;
     if (selectedCurrency != null) {
       StorageManager().setSelectedCurrency(selectedCurrency!.name);
+      StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
     }
     emit(PreferencesChangeCurrencyState());
   }

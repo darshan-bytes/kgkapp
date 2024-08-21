@@ -53,3 +53,10 @@ final class StoneListLoadedMoreState extends StoneListingState {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class StoneDiamondListLoadedState extends StoneListingState {
+  const StoneDiamondListLoadedState();
+
+  @override
+  List<Object> get props => [];
+}

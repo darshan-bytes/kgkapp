@@ -13,6 +13,7 @@ class ProductInfoItem extends StatelessWidget {
   final void Function()? onTapUSA;
   final void Function()? onTapImageViewer;
   final void Function()? onTapDNA;
+  final List<String>? productFeaturesList;
 
   const ProductInfoItem({
     super.key,
@@ -28,6 +29,7 @@ class ProductInfoItem extends StatelessWidget {
     this.onTapDNA,
     this.isSelectedBackground = false,
     this.selectedBackgroundColor,
+    this.productFeaturesList,
   });
 
   @override
@@ -91,27 +93,14 @@ class ProductInfoItem extends StatelessWidget {
 
   Widget _buildSlotFirstWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
     TextStyle shapeTextStyle = productInfoItemStyle.stoneShapeTextStyle;
-    return Column(children: [
+    Widget myRow = buildHorizontalListview(
+      productFeaturesList ?? [],
+      shapeTextStyle,
+      _buildDivider(style),
+    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(
-              "${chart.cut?.substring(0, 2).toUpperCase()}/${chart.polish?.substring(0, 2).toUpperCase()}/${chart.symmetry?.substring(0, 2).toUpperCase()}",
-              isAutoSizeText: true,
-              style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
-        ],
-      ),
-      SizedBox(height: 16.h),
+      SizedBox(height: 32.h, child: myRow),
       const Divider(),
       SizedBox(height: 16.h),
     ]);
@@ -302,6 +291,38 @@ class ProductInfoItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildHorizontalListview(List<String> texts, TextStyle style, Widget divider) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: texts.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SmartText(texts[index], isAutoSizeText: true, style: style),
+            divider,
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildRow(List<String> texts, TextStyle style, Widget divider) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: texts.expand((text) {
+        return [
+          SmartText(text, isAutoSizeText: true, style: style),
+          divider,
+        ];
+      }).toList()
+        ..removeLast(), // Remove the last divider
     );
   }
 }

@@ -17,7 +17,7 @@ class ApiClient {
   static const String currencies = '$apiBaseUrl/currency';
   static const String languageLabels = '$apiBaseUrl/language/labels';
 
-  static const String diamondListing = '$apiBaseUrl/diamond/filters';
+  static const String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

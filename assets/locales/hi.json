@@ -683,5 +683,6 @@
   "please_check_your_internet_connection": "कृपया अपने इंटरनेट कनेक्शन की जाँच करें",
   "try_again": "पुनः प्रयास करें",
   "session_expired": "सत्र समाप्त हुआ",
-  "session_expired_desc": "आपका सत्र समाप्त हो गया है। कृपया फिर भाग लें।"
+  "session_expired_desc": "आपका सत्र समाप्त हो गया है। कृपया फिर भाग लें।",
+  "dna": "DNA"
 }

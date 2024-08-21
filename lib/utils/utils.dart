@@ -187,4 +187,9 @@ class Utils {
 
     return parsedString ?? "";
   }
+
+  static String textWithCurrencySymbol(String text) {
+    String currencySymbol = StorageManager().getSelectedCurrencySymbol() ?? "";
+    return "$currencySymbol$text";
+  }
 }

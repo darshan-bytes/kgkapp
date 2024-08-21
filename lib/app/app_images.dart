@@ -176,4 +176,7 @@ class AppImages {
   //ic_more_vertical
   static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
   static const String icNoInternetImage = 'assets/images/ic_no_internet.svg';
+  static const String icOneRing = 'assets/images/ic_one_ring.svg';
+  static const String icTwoRing = 'assets/images/ic_two_ring.svg';
+  static const String icThreeRing = 'assets/images/ic_three_ring.svg';
 }

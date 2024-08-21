@@ -59,6 +59,8 @@ class CommonResponse<T> {
         return ForgotPasswordModel.fromJson(json);
       case const (CurrencyListModel):
         return CurrencyListModel.fromJson(json);
+      case const (DiamondListingModel):
+        return DiamondListingModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

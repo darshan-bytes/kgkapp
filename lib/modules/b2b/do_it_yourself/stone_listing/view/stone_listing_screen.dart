@@ -61,7 +61,7 @@ class StoneListingScreen extends StatelessWidget {
                 child: SmartSingleChildScrollView(
               controller: diamondListingBloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await diamondListingBloc.pullToRefresh();
+                await diamondListingBloc.pullToRefresh(context);
               },
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
@@ -97,7 +97,7 @@ class StoneListingScreen extends StatelessWidget {
                 title: diamondListingBloc.tabOneTitle,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeTypeEvent(true));
+                  diamondListingBloc.add(StoneChangeTypeEvent(true, context));
                 },
               ),
             ),
@@ -107,7 +107,7 @@ class StoneListingScreen extends StatelessWidget {
                 title: diamondListingBloc.tabTwoTitle,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(const StoneChangeTypeEvent(false));
+                  diamondListingBloc.add(StoneChangeTypeEvent(false, context));
                 },
               ),
             ),
@@ -191,7 +191,7 @@ class StoneListingScreen extends StatelessWidget {
           current is StoneListLoadingMoreState ||
           current is StoneListLoadedMoreState,
       builder: (context, state) {
-        if (diamondListingBloc.productList.isEmpty) {
+        if (diamondListingBloc.productList.isEmpty && state is StoneDiamondListLoadedState) {
           return NoDataFoundWidget(text: APPStrings.noDiamondProductFound.tr);
         } else {
           if (diamondListingBloc.isGrid) {
@@ -232,73 +232,99 @@ class StoneListingScreen extends StatelessWidget {
                   itemCount: diamondListingBloc.productList.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
-                      ? ProductListItem(
-                          onTap: () {
-                            context.pushNamed(AppRoutes.stoneDetailPage,
-                                arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                          },
-                          onEyeTap: () {},
-                          onFavTap: () {},
-                          productDetails: diamondListingBloc.productList[index],
-                        )
-                      : ProductInfoItem(
-                          onTap360View: () => printWrapped("onTap360View"),
-                          onTapDNA: () => printWrapped("onTapDNA"),
-                          onTapCertificate: () => printWrapped("onTapCertificate"),
-                          onTapImageViewer: () => printWrapped("onTapImageViewer"),
-                          onTapUSA: () => printWrapped("onTapUSA"),
-                          onTapMenuButton: () {
-                            Utils.showSmartModalBottomSheet(
-                              context: context,
-                              builder: (context) => const ProductMenuBottomSheet(),
-                            );
-                          },
-                          isSelectedBackground: (index % 2 != 0),
-                          onTap: () {
-                            if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
+                  itemBuilder: (context, index) {
+                    List<String> attributes = [];
+                    attributes.add(diamondListingBloc.productList[index].color ?? "");
+                    attributes.add(diamondListingBloc.productList[index].clarity ?? "");
+                    attributes.add(diamondListingBloc.productList[index].cut ?? "");
+                    return diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
+                        ? ProductListItem(
+                            onTap: () {
                               context.pushNamed(AppRoutes.stoneDetailPage,
                                   arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                            } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                              context.pushNamed(AppRoutes.productDetailsPage,
-                                  arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
-                              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
-                              // context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                              //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                            } else {
-                              context.pushNamed(AppRoutes.productDetailsPage,
-                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                            }
-                          },
-                          productDetails: ProductDetails(
-                            productInfoClarityChat: ProductInfoClarityChat(
-                                rapRate: "\$35,500.00",
-                                productId: "1",
-                                productName: "1.00 Cts Round Diamond",
-                                ct: "10.04",
-                                shape: "Marquise",
-                                colour: "H",
-                                clarity: "VVS1",
-                                lotNumber: "MBFG716306",
-                                certificateNumber: "230000066395",
-                                measurements: "10.18 x 8.34 x 6.14",
-                                lab: "GIA",
-                                cut: "Excellent",
-                                polish: "Excellent",
-                                symmetry: "Excellent",
-                                flourish: "O",
-                                tablePercentage: "50",
-                                depthPercentage: "50",
-                                rap: "\$24,850.00",
-                                discount: "-30.00",
-                                perCts: "\$24,850.00",
-                                amount: "\$1,24,995.50",
-                                fluorescence: '0'),
-                            productId: "1",
-                            diamond: "1.5 gram",
-                            gram: "1.5 gram",
-                            imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
-                          )),
+                            },
+                            onEyeTap: () {},
+                            onFavTap: () {},
+                            productDetails: diamondListingBloc.productList[index],
+                          )
+                        : ProductInfoItem(
+                            onTap360View: () => printWrapped("onTap360View"),
+                            productFeaturesList: attributes,
+                            onTapDNA: () {
+                              context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                                RoutesData.cmsPageData: CmsWebViewDataModel(
+                                  url: diamondListingBloc.productList[index].openDnaUrl,
+                                  title: APPStrings.dna.tr,
+                                )
+                              });
+                            },
+                            onTapCertificate: () {
+                              context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
+                                RoutesData.cmsPageData: CmsWebViewDataModel(
+                                  url: diamondListingBloc.productList[index].certificateFile,
+                                  title: APPStrings.certificate.tr,
+                                )
+                              });
+                            },
+                            onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                            onTapUSA: () => printWrapped("onTapUSA"),
+                            onTapMenuButton: () {
+                              Utils.showSmartModalBottomSheet(
+                                context: context,
+                                builder: (context) => const ProductMenuBottomSheet(),
+                              );
+                            },
+                            isSelectedBackground: (index % 2 != 0),
+                            onTap: () {
+                              if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
+                                context.pushNamed(AppRoutes.stoneDetailPage,
+                                    arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                              } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                                context.pushNamed(AppRoutes.productDetailsPage,
+                                    arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                                //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                                // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                                //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                              } else {
+                                context.pushNamed(AppRoutes.productDetailsPage,
+                                    arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                              }
+                            },
+                            productDetails: ProductDetails(
+                              productInfoClarityChat: ProductInfoClarityChat(
+                                  rapRate: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].rappaportPrice ?? ''),
+                                  //,"\$35,500.00",
+                                  productId: diamondListingBloc.productList[index].productId,
+                                  productName: diamondListingBloc.productList[index].name,
+                                  //"1.00 Cts Round Diamond",
+                                  ct: "10.04",
+                                  shape: diamondListingBloc.productList[index].shape,
+                                  colour: "H",
+                                  clarity: "VVS1",
+                                  lotNumber: diamondListingBloc.productList[index].lotCode,
+                                  certificateNumber: "230000066395",
+                                  measurements: "10.18 x 8.34 x 6.14",
+                                  lab: diamondListingBloc.productList[index].labs,
+                                  cut: "Excellent",
+                                  polish: "Excellent",
+                                  symmetry: "Excellent",
+                                  flourish: "O",
+                                  tablePercentage: "50",
+                                  depthPercentage: "50",
+                                  rap: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].lsp ?? ''),
+                                  //"\$24,851.00",
+                                  discount: diamondListingBloc.productList[index].discountPercentage,
+                                  //"-30.00",
+                                  perCts: "\$24,850.00",
+                                  amount: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].finalPrice ?? ''),
+                                  //"\$1,24,995.50",
+                                  fluorescence: diamondListingBloc.productList[index].fluorescence),
+                              productId: "1",
+                              diamond: "1.5 gram",
+                              gram: "1.5 gram",
+                              imageUrl: diamondListingBloc.productList[index].imageUrl, // "https://i.ibb.co/swb5gVs/Round.png",
+                            ));
+                  },
                   separatorBuilder: (context, index) => SizedBox(height: 17.h),
                 ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
