@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 
 part 'product_list_event.dart';
 
@@ -20,6 +21,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   List<ProductDetails> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
+
+  int currentPage = 1;
+  int? totalNumberOfPages;
+  int limit = 10;
+
+  List<JewelleryDatum> jewelleryDatumList = [];
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -52,7 +59,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ReloadProductState());
     paginationScrollController.init(
       loadAction: (int currentPage) async {
-        add(ProductListLoadMoreEvent(currentPage));
+        add(ProductListLoadMoreEvent(currentPage, event.context));
       },
     );
     isGrid = true;
@@ -61,18 +68,19 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(ProductDetails(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                name: "Diamond Vine Ring in 18k Rose Gold",
-                originalPrice: '\$5,000.00',
-                discountPercentage: "You have saved 10%",
-                offerPrice: '\$3,000.00',
-                company: "Martin Flyer",
-                productSku: "DERS01XXSRR",
-                isOutOfStock: index % 2 == 0,
-              )));
+      await fetchJewelleriesList(event.context, emit, true);
+      // List.generate(
+      //     20,
+      //     (index) => productList.add(ProductDetails(
+      //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+      //           name: "Diamond Vine Ring in 18k Rose Gold",
+      //           originalPrice: '\$5,000.00',
+      //           discountPercentage: "You have saved 10%",
+      //           offerPrice: '\$3,000.00',
+      //           company: "Martin Flyer",
+      //           productSku: "DERS01XXSRR",
+      //           isOutOfStock: index % 2 == 0,
+      //         )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
       productList.clear();
@@ -115,22 +123,64 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(const ProductListLoadedState());
   }
 
+  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
+    String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
+    await AppRepository(context)
+        .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '')
+        .then((value) async {
+      value?.fold((l) {
+        Utils.showMessage(l.message ?? "");
+      }, (r) {
+        jewelleryDatumList = r.data;
+        totalNumberOfPages = (r.filteredRecords ?? 0) ~/ limit;
+
+        List.generate(jewelleryDatumList.length, (index) {
+          productList.add(ProductDetails(
+            imageUrl: "",
+            name: jewelleryDatumList[index].productDescription ?? "",
+            originalPrice: "$currency ${jewelleryDatumList[index].finalPrice ?? ""}",
+            discountPercentage: "You have saved 10%",
+            offerPrice: "$currency ${jewelleryDatumList[index].discountPrice ?? ""}",
+            // company: jewelleryDatumList[index].company ?? "",
+            // productSku: jewelleryDatumList[index].sku ?? "",
+            // isOutOfStock: jewelleryDatumList[index].isOutOfStock ?? false,
+          ));
+        });
+
+        // List.generate(
+        //     20,
+        //     (index) => productList.add(ProductDetails(
+        //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+        //           name: "Diamond Vine Ring in 18k Rose Gold",
+        //           originalPrice: '\$5,000.00',
+        //           discountPercentage: "You have saved 10%",
+        //           offerPrice: '\$3,000.00',
+        //           company: "Martin Flyer",
+        //           productSku: "DERS01XXSRR",
+        //           isOutOfStock: index % 2 == 0,
+        //         )));
+      });
+    });
+  }
+
   Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
     emit(ProductListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     if (screenIdentifier == ScreenIdentifier.productForRing) {
-      List.generate(
-          10,
-          (index) => productList.add(ProductDetails(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                name: "Diamond Vine Ring in 18k Rose Gold",
-                originalPrice: '\$5,000.00',
-                discountPercentage: "You have saved 10%",
-                offerPrice: '\$3,000.00',
-                company: "Martin Flyer",
-                productSku: "DERS01XXSRR",
-                isOutOfStock: index % 2 == 0,
-              )));
+      currentPage++;
+      await fetchJewelleriesList(event.context, emit, false);
+      // List.generate(
+      //     10,
+      //     (index) => productList.add(ProductDetails(
+      //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+      //           name: "Diamond Vine Ring in 18k Rose Gold",
+      //           originalPrice: '\$5,000.00',
+      //           discountPercentage: "You have saved 10%",
+      //           offerPrice: '\$3,000.00',
+      //           company: "Martin Flyer",
+      //           productSku: "DERS01XXSRR",
+      //           isOutOfStock: index % 2 == 0,
+      //         )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       List.generate(
           10,
@@ -164,7 +214,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                 ),
               ));
     }
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);
     emit(ProductListLoadedMoreState(event.currentPage + 1));
   }
 
@@ -174,19 +224,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      productList = List.generate(
-        20,
-        (index) => ProductDetails(
-          imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-          name: "Diamond Vine Ring in 18k Rose Gold",
-          originalPrice: '\$5,000.00',
-          discountPercentage: "You have saved 10%",
-          offerPrice: '\$3,000.00',
-          company: "Martin Flyer",
-          productSku: "DERS01XXSRR",
-          isOutOfStock: index % 2 == 0,
-        ),
-      ).toList();
+      await fetchJewelleriesList(event.context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
       productList.clear();
@@ -225,12 +263,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(const ProductListLoadedState());
   }
 
-  Future<bool> pullToRefresh() async {
+  Future<bool> pullToRefresh(BuildContext context) async {
     if (!refreshCompleter.isCompleted) {
       return false;
     }
     refreshCompleter = Completer<bool>();
-    add(const ProductListPullToRefreshEvent());
+    add(ProductListPullToRefreshEvent(context));
     bool result = await refreshCompleter.future;
     return result;
   }

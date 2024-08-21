@@ -1,4 +1,6 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
+import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 
 /// Common response model
 class CommonResponse<T> {
@@ -61,6 +63,10 @@ class CommonResponse<T> {
         return CurrencyListModel.fromJson(json);
       case const (DiamondListingModel):
         return DiamondListingModel.fromJson(json);
+      case const (GemstoneListingModel):
+        return GemstoneListingModel.fromJson(json);
+      case const (JewelleryListingModel):
+        return JewelleryListingModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

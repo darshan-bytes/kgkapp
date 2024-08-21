@@ -60,7 +60,7 @@ class ProductListScreen extends StatelessWidget {
             return SmartSingleChildScrollView(
               controller: bloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await bloc.pullToRefresh();
+                await bloc.pullToRefresh(context);
               },
               child: SafeArea(
                 child: Padding(
@@ -78,7 +78,7 @@ class ProductListScreen extends StatelessWidget {
               ),
             );
           } else {
-            return const SmartCircularProgressIndicator();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -152,16 +152,16 @@ class ProductListScreen extends StatelessWidget {
           return Column(
             children: [
               SmartGridView(
-                  additionalWidgets: [
-                    (
-                      index: 13,
-                      child: SmartImage(
-                        path: "https://i.ibb.co/PN51B9q/Banner.png",
-                        fit: BoxFit.fitWidth,
-                        padding: EdgeInsets.symmetric(vertical: 32.h),
-                      )
-                    ),
-                  ],
+                  // additionalWidgets: [
+                  //   (
+                  //     index: bloc.productList.length,
+                  //     child: SmartImage(
+                  //       path: "https://i.ibb.co/PN51B9q/Banner.png",
+                  //       fit: BoxFit.fitWidth,
+                  //       padding: EdgeInsets.symmetric(vertical: 32.h),
+                  //     )
+                  //   ),
+                  // ],
                   items: bloc.productList.map((ProductDetails productDetails) {
                     /// If need to  product customization icon then remove onCancel voidCallback
                     bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
