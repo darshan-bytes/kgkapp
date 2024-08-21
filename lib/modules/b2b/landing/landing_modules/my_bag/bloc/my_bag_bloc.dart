@@ -72,7 +72,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         const CartProductQuality(name: "32K Gold"),
       ],
       cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
-        showMore: false),
+      showMore: false,
+    ),
   );
   List<ProductDetails> suggestedProductList = List.generate(
     8,
