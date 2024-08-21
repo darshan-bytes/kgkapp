@@ -132,7 +132,7 @@ class MyBagDiamondItem extends StatelessWidget {
                             Expanded(child: _buildDetailColumn(APPStrings.flourish.tr, chart.flourish, style)),
                             Expanded(child: _buildDetailColumn(APPStrings.tablePercentage.tr, chart.table, style)),
                             Expanded(child: _buildDetailColumn(APPStrings.depthPercentage.tr, chart.depth, style)),
-                            const SizedBox.expand(),
+                            const Spacer(),
                           ],
                         ),
                         SizedBox(height: 16.h),
