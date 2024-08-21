@@ -683,5 +683,6 @@
   "please_check_your_internet_connection": "S'il vous plait, vérifiez votre connexion internet",
   "try_again": "Essayer à nouveau",
   "session_expired": "La session a expiré",
-  "session_expired_desc": "Votre session a expiré. Veuillez vous reconnecter."
+  "session_expired_desc": "Votre session a expiré. Veuillez vous reconnecter.",
+  "dna": "DNA"
 }

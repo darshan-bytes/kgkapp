@@ -871,4 +871,5 @@ class APPStrings {
   // Session Expired
   static const String sessionExpired = 'session_expired';
   static const String sessionExpiredDesc = 'session_expired_desc';
+  static const String dna = 'dna';
 }

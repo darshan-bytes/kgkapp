@@ -22,4 +22,6 @@ class AppConst {
   static String strapiImgBaseUrl = "https://strapi-cms.kgk.magnetoinfotech.com";
   static const int passwordLength = 8;
   static const String appCurrency = "INR";
+  static const String diamondSinglestone = "DIAMONDSINGLESTONE";
+  static const String diamondNormal = "DIAMONDNORMAL";
 }

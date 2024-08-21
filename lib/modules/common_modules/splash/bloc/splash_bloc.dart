@@ -50,7 +50,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       }, (r) async {
         // Store language labels in local storage if API call succeeds
         await StorageManager().setLanguageLabels(r.responseData);
-
         BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent('', context: context));
       });
     });

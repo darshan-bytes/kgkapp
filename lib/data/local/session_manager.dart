@@ -16,6 +16,7 @@ class StorageManager {
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
+  final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -39,6 +40,15 @@ class StorageManager {
 
   String? getLocale() {
     return _box.get(_locale);
+  }
+
+  /// Set selected currency
+  Future<void> setSelectedCurrencySymbol(String symbol) async {
+    await _box.put(_selectedCurrencySymbol, symbol);
+  }
+
+  String? getSelectedCurrencySymbol() {
+    return _box.get(_selectedCurrencySymbol);
   }
 
   /// Set selected currency

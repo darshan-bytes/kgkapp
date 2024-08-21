@@ -69,8 +69,7 @@ class ProductInfoClarityChat {
         depthPercentage: json["depth_percentage"],
         tablePercentage: json["table_percentage"],
         rapRate: json["rap_rate"],
-        fluorescence: json["fluorescence"],
-      );
+      fluorescence: json["fluorescence"]);
 
   Map<String, dynamic> toJson() => {
         "product_id": productId,
@@ -94,6 +93,6 @@ class ProductInfoClarityChat {
         "depth_percentage": depthPercentage,
         "table_percentage": tablePercentage,
         "rap_rate": rapRate,
-        "fluorescence": fluorescence,
+        "fluorescence": fluorescence
       };
 }

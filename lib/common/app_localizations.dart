@@ -22,12 +22,12 @@ class AppLocalizations {
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
 
-    Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
-
-    if (languageLabels.isNotEmpty) {
-      _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
-      return true;
-    }
+    // Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
+    //
+    // if (languageLabels.isNotEmpty) {
+    //   _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
+    //   return true;
+    // }
 
     String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
