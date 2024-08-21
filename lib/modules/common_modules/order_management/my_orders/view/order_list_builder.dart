@@ -24,6 +24,7 @@ class OrderListBuilder extends StatelessWidget {
       },
       child: ListView.separated(
         itemCount: ordersList.length,
+        shrinkWrap: true,
         controller: currentScrollController.scrollController,
         itemBuilder: (context, index) {
           return BlocBuilder<OrdersBloc, OrdersState>(
@@ -31,7 +32,7 @@ class OrderListBuilder extends StatelessWidget {
             builder: (context, state) {
               return Column(
                 children: [
-                  MyOrderItem(
+                  MyOrderNewItem(
                     onTap: () {
                       if (onTap != null) {
                         onTap!(index);

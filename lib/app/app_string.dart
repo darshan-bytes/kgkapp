@@ -846,6 +846,7 @@ class APPStrings {
   static const String viewMore = 'view_more';
 
   static const String shopByX = 'shop_by_x';
+  static const String manufacturingStatus = 'manufacturing_status';
 
   //Home
   static const String shopEngagementRing = 'shop_engagement_ring';

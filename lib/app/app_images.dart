@@ -175,6 +175,8 @@ class AppImages {
 
   //ic_more_vertical
   static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static const String icImgSearch = 'assets/images/ic_img_search.png';
+  static const String icSearchImgThumbnail = 'assets/images/ic_search_img_thumbnail.svg';
   static const String icNoInternetImage = 'assets/images/ic_no_internet.svg';
   static const String icOneRing = 'assets/images/ic_one_ring.svg';
   static const String icTwoRing = 'assets/images/ic_two_ring.svg';

@@ -77,6 +77,7 @@ class AppRoutes {
   static const calendarPage = '/calendarPage';
   static const presentationPage = '/presentationPage';
   static const newsletterPage = '/newsletterPage';
+  static const imageSearchPage = '/imageSearchPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -799,6 +800,17 @@ class AppRoutes {
             return const PresentationScreen();
           },
           transitionsBuilder: commonTransitionBuilder,
+        );
+
+      case imageSearchPage:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider<ImageSearchBloc>(
+              create: (_) => ImageSearchBloc()..add(ImageSearchInitialEvent()),
+              child: const ImageSearchScreen(),
+            );
+          },
+          settings: settings,
         );
 
       default:
