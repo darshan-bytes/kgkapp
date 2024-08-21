@@ -20,6 +20,7 @@ class ProductDetails {
   bool isOutOfStock;
   String? company;
   String? productSku;
+  bool showMore;
   double? ctsOrGms;
   String? rappaportPrice;
   String? priceCts;
@@ -56,6 +57,7 @@ class ProductDetails {
     this.isOutOfStock = false,
     this.company,
     this.productSku,
+    this.showMore = false,
     this.ctsOrGms,
     this.rappaportPrice,
     this.priceCts,

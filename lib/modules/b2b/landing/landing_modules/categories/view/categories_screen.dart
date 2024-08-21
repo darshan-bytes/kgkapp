@@ -51,19 +51,23 @@ class CategoriesScreen extends StatelessWidget {
                         }
                       },
                     ),
-                    if (categoriesBloc.selectedRowIndex == index)
-                      SelectedCategoryDetails(
-                        arrowPosition: categoriesBloc.arrowPosition,
-                        productsDetailsList: categoriesBloc.selectedCategoriesList,
-                        scrollController: categoriesBloc.scrollController,
-                        onProductSelected: (value) {
-                          final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
-                          if (selectedCategory != null) {
-                            categoriesBloc.navigateBasedOnCategory(
-                                context: context, categoryName: selectedCategory, categorySubName: value);
-                          }
-                        },
-                      ),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      child: categoriesBloc.selectedRowIndex == index
+                          ? SelectedCategoryDetails(
+                              arrowPosition: categoriesBloc.arrowPosition,
+                              productsDetailsList: categoriesBloc.selectedCategoriesList,
+                              scrollController: categoriesBloc.scrollController,
+                              onProductSelected: (value) {
+                                final selectedCategory = sublist[categoriesBloc.selectedItemIndex ?? 0].name;
+                                if (selectedCategory != null) {
+                                  categoriesBloc.navigateBasedOnCategory(
+                                      context: context, categoryName: selectedCategory, categorySubName: value.name);
+                                }
+                              },
+                            )
+                          : const SizedBox.shrink(),
+                    )
                   ],
                 );
               },

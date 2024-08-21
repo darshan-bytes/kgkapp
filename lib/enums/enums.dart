@@ -80,3 +80,8 @@ enum CalenderEventType {
 
   final String value;
 }
+
+/// DIY Progress Bar Chevron Widget Enums
+enum Edge { top, right, bottom, left }
+
+enum Clipper { start, center, end }

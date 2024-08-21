@@ -84,3 +84,10 @@ final class MyBagToggleReadMoreDetailsState extends MyBagState {
   @override
   List<Object> get props => [isReadMoreDetailsOpen];
 }
+
+final class MyBagToggleViewModeState extends MyBagState {
+  const MyBagToggleViewModeState();
+
+  @override
+  List<Object> get props => [];
+}

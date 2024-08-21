@@ -20,6 +20,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final EdgeInsets? padding;
   final bool isSearchBar;
   final VoidCallback? onTapSuffixIconWithSearchBar;
+  final VoidCallback? onTapSuffixIconWithImageSearch;
   final TextEditingController? searchController;
 
   SmartAppBar({
@@ -43,6 +44,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.optionalEndSpacing,
     this.isSearchBar = false,
     this.onTapSuffixIconWithSearchBar,
+    this.onTapSuffixIconWithImageSearch,
     this.searchController,
   });
 
@@ -115,23 +117,46 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
               if (onTapSuffixIconWithSearchBar != null) {
                 onTapSuffixIconWithSearchBar!();
               }
+              if (onTapSuffixIconWithImageSearch != null) {
+                onTapSuffixIconWithImageSearch!();
+              }
             },
-            suffixIcon: GestureDetector(
-              onTap: () {
-                if (onTapSuffixIconWithSearchBar != null) {
-                  onTapSuffixIconWithSearchBar!();
-                }
-              },
-              child: FittedBox(
-                child: Container(
-                  margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
-                  padding: EdgeInsets.zero,
-                  child: SmartImage(
-                    path: AppImages.icSearchThin,
-                    height: 16.w,
-                    width: 16.w,
+            suffixIcon: FittedBox(
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      if (onTapSuffixIconWithImageSearch != null) {
+                        onTapSuffixIconWithImageSearch!();
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 8.w),
+                      padding: EdgeInsets.zero,
+                      child: SmartImage(
+                        path: AppImages.icImgSearch,
+                        height: 16.w,
+                        width: 16.w,
+                      ),
+                    ),
                   ),
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      if (onTapSuffixIconWithSearchBar != null) {
+                        onTapSuffixIconWithSearchBar!();
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 10.w),
+                      padding: EdgeInsets.zero,
+                      child: SmartImage(
+                        path: AppImages.icSearchThin,
+                        height: 16.w,
+                        width: 16.w,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
