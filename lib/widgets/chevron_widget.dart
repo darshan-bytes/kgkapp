@@ -1,11 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-enum Edge { top, right, bottom, left }
-
-enum Clipper { start, center, end }
-
 /// Chevron Progress Widget
-
 class ChevronProgress extends StatelessWidget {
   const ChevronProgress({
     super.key,
@@ -28,13 +23,24 @@ class ChevronProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double containerWidth = clipper != Clipper.center ? 130.w : 145.w;
+    final Radius radiusValue = Radius.circular(4.r);
+    final Radius startRadius = clipper == Clipper.start ? radiusValue : Radius.zero;
+
     return CustomPaint(
       painter: ClipShadowPainter(getClipperPainter(clipper), []),
       child: ClipPath(
         clipper: getClipperPainter(clipper),
         child: Container(
-          width: clipper != Clipper.center ? 130.w : 145.w,
-          color: color,
+          width: containerWidth,
+          decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.only(
+                bottomLeft: startRadius,
+                topLeft: startRadius,
+                topRight: radiusValue,
+                bottomRight: radiusValue,
+              )),
           child: child,
         ),
       ),
