@@ -72,6 +72,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         const CartProductQuality(name: "32K Gold"),
       ],
       cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
+      showMore: false,
     ),
   );
   List<ProductDetails> suggestedProductList = List.generate(
@@ -125,6 +126,19 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<ShowFullProductDetailsEvent>(_onShowFullProductDetailsEvent);
     on<MyBagPaymentConditionChangedEvent>(_onMyBagPaymentConditionChangedEvent);
     on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
+    on<MyBagToggleViewModeEvent>(_onMyBagToggleViewModeEvent);
+  }
+
+  void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
+    emit(MyBagReloadState());
+    for (int i = 0; i < myBagProductList.length; i++) {
+      myBagProductList[i].showMore = (i == event.index) ? !myBagProductList[i].showMore : false;
+    }
+
+    // if(myBagProductList[event.index].showMore != null) {
+    //   myBagProductList[event.index].showMore = !myBagProductList[event.index].showMore!;
+    // }
+    emit(const MyBagToggleViewModeState());
   }
 
   void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {

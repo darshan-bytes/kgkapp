@@ -8,6 +8,8 @@ class MyOrderDetailsModel {
   String? orderTotal;
   String? orderItems;
   String? orderQuantity;
+  String? deliveryDate;
+  List<String>? orderImages;
 
   MyOrderDetailsModel({
     this.id,
@@ -17,5 +19,7 @@ class MyOrderDetailsModel {
     this.orderTotal,
     this.orderItems,
     this.orderQuantity,
+    this.deliveryDate,
+    this.orderImages,
   });
 }

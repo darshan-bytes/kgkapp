@@ -5,6 +5,7 @@ class SmartStatusBadge extends StatelessWidget {
   final double? height;
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
+  final double? fontSize;
 
   const SmartStatusBadge({
     super.key,
@@ -12,6 +13,7 @@ class SmartStatusBadge extends StatelessWidget {
     this.height,
     this.borderRadius,
     this.padding,
+    this.fontSize,
   });
 
   @override
@@ -32,7 +34,7 @@ class SmartStatusBadge extends StatelessWidget {
         child: Center(
           child: SmartText(
             statusText.tr,
-            style: style.statusTextStyle.copyWith(color: textColor),
+            style: style.statusTextStyle.copyWith(color: textColor, fontSize: fontSize ?? 12.sp),
             textAlign: TextAlign.center,
           ),
         ),

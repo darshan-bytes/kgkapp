@@ -13,6 +13,7 @@ class ProductInfoItem extends StatelessWidget {
   final void Function()? onTapUSA;
   final void Function()? onTapImageViewer;
   final void Function()? onTapDNA;
+  final bool? isShowMore;
   final List<String>? productFeaturesList;
 
   const ProductInfoItem({
@@ -29,6 +30,7 @@ class ProductInfoItem extends StatelessWidget {
     this.onTapDNA,
     this.isSelectedBackground = false,
     this.selectedBackgroundColor,
+    this.isShowMore,
     this.productFeaturesList,
   });
 
