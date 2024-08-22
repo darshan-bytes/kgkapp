@@ -12,7 +12,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   ProductDetails? productDetails;
   bool isCustomisation = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
   final ScrollController youMayLikeScrollController = ScrollController();
   final ScrollController recentViewScrollController = ScrollController();
 

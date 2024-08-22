@@ -8,7 +8,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
   int current = 0;
   bool isGemstoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
   final List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
     "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",

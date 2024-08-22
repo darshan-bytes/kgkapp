@@ -22,7 +22,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   GlobalKey<SmartExpansionTileState> stoneDetailsKey = GlobalKey();
 
   int current = 0;
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
 
   StoneDetailBloc() : super(StoneDetailInitial()) {
     on<StoneDetailInitialEvent>(_stoneDetailInitialEvent);

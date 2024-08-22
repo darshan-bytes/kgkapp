@@ -340,7 +340,7 @@ class HomeWidgets {
 
   static Widget buildImageIndicator(HomeBloc homeBloc,
       {required List itemList,
-      CarouselController? carouselController,
+      CarouselSliderController? carouselController,
       required int currentIndex,
       required BuildContext context,
       VoidCallback? onTap}) {
@@ -501,7 +501,8 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildViewAllCollectionsSection(HomeBloc homeBloc,
+  static Widget buildViewAllCollectionsSection(
+    HomeBloc homeBloc,
     HomeScreenStyle style, {
     required BuildContext context,
     required String url,

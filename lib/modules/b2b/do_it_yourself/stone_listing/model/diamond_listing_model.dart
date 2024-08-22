@@ -641,7 +641,7 @@ class DiamondDatum {
         "hna": hna,
         "hna_ref_suid": hnaRefSuid,
         "hna_suid": hnaSuid,
-        "image": image.map((x) => x?.toJson()).toList(),
+        "image": image.map((x) => x.toJson()).toList(),
         "includes": includes,
         "inscription_number": inscriptionNumber,
         "intensity": intensity,
