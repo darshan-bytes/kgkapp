@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class SmartCarouselSlider extends StatelessWidget {
   final List<String> imgList;
-  final CarouselController controller;
+  final CarouselSliderController controller;
   final Function(int index, CarouselPageChangedReason reason)? onPageChanged;
   final Function()? on360Tap;
   final Color? backgroundColor;

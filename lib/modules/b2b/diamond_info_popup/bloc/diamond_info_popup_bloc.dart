@@ -13,7 +13,7 @@ class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupS
     "https://i.ibb.co/8s6hWz2/image-414.png",
   ];
 
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
 
   final ProductInfoModel productInfoModel = ProductInfoModel(
     productName: "1.00 Carat Round Diamond",
