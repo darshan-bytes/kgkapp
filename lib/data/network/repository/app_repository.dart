@@ -1,3 +1,5 @@
+import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
+import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
 import 'package:kgk/kgk.dart';
@@ -111,6 +113,34 @@ class AppRepository extends ApiService {
     }
     var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing,
         query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.type: type}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  /// Fetches gemstone list
+  Future<Either<ErrorResponse, GemstoneListingModel>?> fetchGemstoneList(
+      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing,
+        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  /// Fetches jewellery list
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList(
+      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing,
+        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

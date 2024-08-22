@@ -22,16 +22,19 @@ final class ProductChangeListingTypeEvent extends ProductListEvent {
 
 final class ProductListLoadMoreEvent extends ProductListEvent {
   final int currentPage;
+  final BuildContext context;
 
-  const ProductListLoadMoreEvent(this.currentPage);
+  const ProductListLoadMoreEvent(this.currentPage, this.context);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [currentPage, context];
 }
 
 final class ProductListPullToRefreshEvent extends ProductListEvent {
-  const ProductListPullToRefreshEvent();
+  final BuildContext context;
+
+  const ProductListPullToRefreshEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
