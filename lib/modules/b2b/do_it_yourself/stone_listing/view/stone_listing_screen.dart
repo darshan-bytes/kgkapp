@@ -233,10 +233,13 @@ class StoneListingScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    List<String> attributes = [];
-                    attributes.add(diamondListingBloc.productList[index].color ?? "");
-                    attributes.add(diamondListingBloc.productList[index].clarity ?? "");
-                    attributes.add(diamondListingBloc.productList[index].cut ?? "");
+                    final product = diamondListingBloc.productList[index];
+                    /// Attributes list for stone info
+                    List<String> attributes = [
+                      product.color,
+                      product.clarity,
+                      product.cut,
+                    ].where((attr) => attr != null).map((attr) => attr!).toList();
                     return diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
                         ? ProductListItem(
                             onTap: () {

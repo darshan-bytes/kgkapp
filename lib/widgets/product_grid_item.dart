@@ -200,11 +200,11 @@ class ProductGridItem extends StatelessWidget {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: <Widget>[
                         SmartText(
-                          productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+                          productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
                           style: style.priceTextStyle,
                           optionalPadding: EdgeInsets.only(right: 8.w),
                         ),
-                        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+                        if (productDetails.finalPrice.isNotNullNorEmpty) ...[
                           SmartText(
                             productDetails.originalPrice,
                             maxLines: 1,

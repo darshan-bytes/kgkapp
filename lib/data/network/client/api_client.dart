@@ -18,6 +18,8 @@ class ApiClient {
   static const String languageLabels = '$apiBaseUrl/language/labels';
 
   static const String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
+  static const String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
+  static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
