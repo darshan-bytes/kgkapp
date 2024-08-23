@@ -129,6 +129,7 @@ export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_mode
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categories_bloc.dart';
+
 //model
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categories_screen.dart';
@@ -271,6 +272,7 @@ export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+
 // bloc
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
 export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';

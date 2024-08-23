@@ -481,7 +481,7 @@ Widget _buildHorizontalSlider(HomeBloc homeBloc, HomeScreenStyle style) {
 
 Widget _buildImageIndicator(HomeBloc homeBloc,
     {required List itemList,
-    CarouselController? carouselController,
+    CarouselSliderController? carouselController,
     required int currentIndex,
     required BuildContext context,
     VoidCallback? onTap}) {
