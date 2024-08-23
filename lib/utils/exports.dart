@@ -434,3 +434,4 @@ export 'package:kgk/modules/b2b/landing/landing_modules/home/widgets/home_widget
 export 'package:kgk/data/network/repository/app_repository.dart';
 export 'package:html/parser.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/diamond_listing_model.dart';
+export 'package:kgk/data/network/repository/diamond_repository.dart';

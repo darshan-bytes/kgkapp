@@ -7,104 +7,109 @@ class DiamondInfoPopupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final DiamondInfoPopupBloc bloc = BlocProvider.of<DiamondInfoPopupBloc>(context);
     final DiamondInfoPopupScreenStyle style = AppTheme.of(context).diamondInfoPopupScreenStyle;
-    final ProductInfoModel productInfoModel = bloc.productInfoModel;
-    return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.diamonds.tr,
-        onSearch: () {
-          context.pushNamed(AppRoutes.searchPage);
-        },
-        onFavorite: () {
-          context.pushNamed(AppRoutes.wishListPage);
-        },
-      ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.w),
-        child: SmartSingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8.h),
-              _buildImageSlider(bloc),
-              if (productInfoModel.productName.isNotNullNorEmpty) ...[
-                SizedBox(height: 16.h),
-                SmartText(
-                  productInfoModel.productName,
-                  style: style.productNameStyle,
-                ),
-              ],
-              if (productInfoModel.originalPrice.isNotNullNorEmpty) ...[
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 4.h,
-                  ),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: SmartText(
-                          productInfoModel.offerPrice.isNotNullNorEmpty ? productInfoModel.offerPrice : productInfoModel.originalPrice,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: style.offerPriceStyle,
-                        ),
-                      ),
-                      SizedBox(width: 12.w),
-                      Flexible(
-                        child: SmartText(
-                          productInfoModel.originalPrice,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: style.actualPriceStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16.h),
-                const Divider(),
-                SizedBox(height: 16.h),
-              ],
-              _buildBasicInfo(productInfoModel, style),
-              SizedBox(height: 8.h),
-              const Divider(),
-              SizedBox(height: 16.h),
-              _buildMeasurementsInfo(productInfoModel, style),
-              SizedBox(height: 8.h),
-              const Divider(),
-              SizedBox(height: 16.h),
-              _buildInclusionInfo(productInfoModel, style),
-              SizedBox(height: 8.h),
-              const Divider(),
-              SizedBox(height: 16.h),
-              _buildOtherInfo(productInfoModel, style),
-              SizedBox(height: 8.h),
-              const Divider(),
-              SizedBox(height: 16.h),
-              _buildPriceDetailsInfo(productInfoModel, style),
-              SizedBox(height: 16.h),
-              const Divider(),
-              SizedBox(height: 24.h),
-              _buildInquirySection(context),
-              //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
-              // SizedBox(height: 24.h),
-              // InkWell(
-              //   onTap: () {
-              //     context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
-              //   },
-              //   child: Center(
-              //     child: SmartText(
-              //       APPStrings.viewMoreDetails.tr,
-              //       style: style.viewMoreDetailsTextStyle,
-              //       optionalPadding: REdgeInsets.symmetric(vertical: 12.h),
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 16.h),
-            ],
+
+    return BlocBuilder<DiamondInfoPopupBloc, DiamondInfoPopupState>(
+      builder: (context, state) {
+        final ProductInfoModel productInfoModel = bloc.productInfoModel;
+        return Scaffold(
+          appBar: SmartAppBar(
+            title: APPStrings.diamonds.tr,
+            onSearch: () {
+              context.pushNamed(AppRoutes.searchPage);
+            },
+            onFavorite: () {
+              context.pushNamed(AppRoutes.wishListPage);
+            },
           ),
-        ),
-      ),
+          bottomNavigationBar: _buildBottomNavigationBar(),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: SmartSingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8.h),
+                  _buildImageSlider(bloc),
+                  if (productInfoModel.productName.isNotNullNorEmpty) ...[
+                    SizedBox(height: 16.h),
+                    SmartText(
+                      productInfoModel.productName,
+                      style: style.productNameStyle,
+                    ),
+                  ],
+                  if (productInfoModel.originalPrice.isNotNullNorEmpty) ...[
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 4.h,
+                      ),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: SmartText(
+                              productInfoModel.offerPrice.isNotNullNorEmpty ? productInfoModel.offerPrice : productInfoModel.originalPrice,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: style.offerPriceStyle,
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Flexible(
+                            child: SmartText(
+                              productInfoModel.originalPrice,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: style.actualPriceStyle,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    const Divider(),
+                    SizedBox(height: 16.h),
+                  ],
+                  _buildBasicInfo(productInfoModel, style),
+                  SizedBox(height: 8.h),
+                  const Divider(),
+                  SizedBox(height: 16.h),
+                  _buildMeasurementsInfo(productInfoModel, style),
+                  SizedBox(height: 8.h),
+                  const Divider(),
+                  SizedBox(height: 16.h),
+                  _buildInclusionInfo(productInfoModel, style),
+                  SizedBox(height: 8.h),
+                  const Divider(),
+                  SizedBox(height: 16.h),
+                  _buildOtherInfo(productInfoModel, style),
+                  SizedBox(height: 8.h),
+                  const Divider(),
+                  SizedBox(height: 16.h),
+                  _buildPriceDetailsInfo(productInfoModel, style),
+                  SizedBox(height: 16.h),
+                  const Divider(),
+                  SizedBox(height: 24.h),
+                  _buildInquirySection(context),
+                  //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                  // SizedBox(height: 24.h),
+                  // InkWell(
+                  //   onTap: () {
+                  //     context.pushNamed(AppRoutes.productDetailsPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                  //   },
+                  //   child: Center(
+                  //     child: SmartText(
+                  //       APPStrings.viewMoreDetails.tr,
+                  //       style: style.viewMoreDetailsTextStyle,
+                  //       optionalPadding: REdgeInsets.symmetric(vertical: 12.h),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 16.h),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

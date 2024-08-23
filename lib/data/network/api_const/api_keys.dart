@@ -10,4 +10,5 @@ class ApiKey {
   static const String limit = 'limit';
   static const String page = 'page';
   static const String type = 'type';
+  static const String view = 'view';
 }

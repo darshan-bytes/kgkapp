@@ -207,14 +207,18 @@ class StoneListingScreen extends StatelessWidget {
                         context
                             .pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                        context.pushNamed(AppRoutes.productDetailsPage,
-                            arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                          RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
+                          RoutesData.productId: productDetails.productId
+                        });
                         //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
                         // context.pushNamed(AppRoutes.diamondInfoPopupPage,
                         //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else {
-                        context.pushNamed(AppRoutes.productDetailsPage,
-                            arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                          RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
+                          RoutesData.productId: productDetails.productId
+                        });
                       }
                     },
                     onEyeTap: () {},
@@ -234,6 +238,7 @@ class StoneListingScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final product = diamondListingBloc.productList[index];
+
                     /// Attributes list for stone info
                     List<String> attributes = [
                       product.color,

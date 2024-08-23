@@ -6,14 +6,14 @@ class DiamondListingModel {
     required this.totalRecords,
   });
 
-  final List<DiamondDatum> data;
+  final List<DiamondDataModel> data;
   final int? filteredRecords;
   final DiamondPagination? pagination;
   final int? totalRecords;
 
   factory DiamondListingModel.fromJson(Map<String, dynamic> json) {
     return DiamondListingModel(
-      data: json["data"] == null ? [] : List<DiamondDatum>.from(json["data"]!.map((x) => DiamondDatum.fromJson(x))),
+      data: json["data"] == null ? [] : List<DiamondDataModel>.from(json["data"]!.map((x) => DiamondDataModel.fromJson(x))),
       filteredRecords: json["filteredRecords"],
       pagination: json["pagination"] == null ? null : DiamondPagination.fromJson(json["pagination"]),
       totalRecords: json["totalRecords"],
@@ -33,8 +33,8 @@ class DiamondListingModel {
   }
 }
 
-class DiamondDatum {
-  DiamondDatum({
+class DiamondDataModel {
+  DiamondDataModel({
     required this.id,
     required this.avgWeight,
     required this.backRate,
@@ -384,8 +384,8 @@ class DiamondDatum {
   final String? priceCts;
   final String? finalPrice;
 
-  factory DiamondDatum.fromJson(Map<String, dynamic> json) {
-    return DiamondDatum(
+  factory DiamondDataModel.fromJson(Map<String, dynamic> json) {
+    return DiamondDataModel(
       id: json["id"],
       avgWeight: json["avg_weight"],
       backRate: json["back_rate"].toDouble(),
