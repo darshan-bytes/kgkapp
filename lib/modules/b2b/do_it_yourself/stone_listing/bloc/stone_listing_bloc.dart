@@ -2,13 +2,14 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
 
 part 'stone_listing_event.dart';
+
 part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   bool isInitialToggle = true;
   bool isGrid = true;
   List<ProductDetails> productList = [];
-  List<DiamondDatum> diamondDatumList = [];
+  List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
   int currentPage = 1;
@@ -52,7 +53,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       },
     );
     getScreenIdentifier(event.context);
-    _generateProductList(event.context, emit);
+    await _generateProductList(event.context, emit);
 
     refreshCompleter.complete(true);
 
@@ -95,7 +96,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> fetchDiamondList(BuildContext context, Emitter<StoneListingState> emit, bool? isLoadMore) async {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
-      await AppRepository(context)
+    await AppRepository(context)
         .fetchDiamondList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type)
         .then((value) {
       value?.fold((l) {
@@ -107,6 +108,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           diamondDatumList.length,
           (index) => productList.add(
             ProductDetails(
+              productId: diamondDatumList[index].id,
               isOutOfStock: index % 2 == 0,
               diamond: "2.5 crt",
               gram: "1.5 grms",
@@ -154,6 +156,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           gemstoneDatumList.length,
           (index) => productList.add(
             ProductDetails(
+              productId: gemstoneDatumList[index].id,
               isOutOfStock: index % 2 == 0,
               diamond: "2.5 crt",
               gram: "1.5 grms",
@@ -186,10 +189,10 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     });
   }
 
-  void _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) {
+  Future<void> _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) async {
     emit(StoneProductReloadState());
     isInitialToggle = event.isInitialToggle;
-    _generateProductList(event.context, emit);
+    await _generateProductList(event.context, emit);
     emit(StoneChangeTypeState(isInitialToggle));
   }
 
@@ -230,7 +233,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
     await Future.delayed(const Duration(seconds: 3));
     paginationScrollController.pullToRefresh();
-    _generateProductList(event.context, emit);
+    await _generateProductList(event.context, emit);
     refreshCompleter.complete(true);
     emit(const StoneProductLoadedState());
   }

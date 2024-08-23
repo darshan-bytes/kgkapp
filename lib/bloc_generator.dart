@@ -30,7 +30,6 @@ class BlocGenerator {
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
       BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
-      BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),

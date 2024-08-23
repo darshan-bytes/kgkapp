@@ -46,7 +46,8 @@ class ApiService implements ApiProvider {
         uri = uri.replace(queryParameters: query.map((key, value) => MapEntry(key, value.toString())));
         url = uri.toString();
       }
-
+      kgk_logger.log(
+          'Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: $query');
       switch (method) {
         case _ApiType.get:
           response = await http.get(Uri.parse(url),

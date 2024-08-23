@@ -684,5 +684,7 @@
   "try_again": "पुनः प्रयास करें",
   "session_expired": "सत्र समाप्त हुआ",
   "session_expired_desc": "आपका सत्र समाप्त हो गया है। कृपया फिर भाग लें।",
-  "dna": "DNA"
+  "dna": "DNA",
+  "percentage_off_interpolating": "({$}% OFF)",
+  "retry": "Retry"
 }
