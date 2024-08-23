@@ -270,7 +270,12 @@ class AppRoutes {
 
       case diamondInfoPopupPage:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const DiamondInfoPopupScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return BlocProvider<DiamondInfoPopupBloc>(
+              create: (_) => DiamondInfoPopupBloc()..add(DiamondInfoPopupInitialEvent(context)),
+              child: const DiamondInfoPopupScreen(),
+            );
+          },
           transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
@@ -863,7 +868,8 @@ enum RoutesData {
   catalogueData,
   watchlistId,
   messageModel,
-  conceptId
+  conceptId,
+  diamondInfo
 }
 
 enum ScreenIdentifier {

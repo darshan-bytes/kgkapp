@@ -102,4 +102,10 @@ extension StringExtensions on String {
       {String inputDateFormat = DateFormatter.dateFormatYYYYMMDDHHMMSS, String outputDateFormat = DateFormatter.dateFormatDDMMMYYYY}) {
     return DateFormat(outputDateFormat).format(DateFormat(inputDateFormat).parse(this));
   }
+
+  String get setCurrency {
+    String symbol = StorageManager().getSelectedCurrencySymbol() ?? '';
+    printWrapped("symbol: $symbol");
+    return "$symbol $this";
+  }
 }

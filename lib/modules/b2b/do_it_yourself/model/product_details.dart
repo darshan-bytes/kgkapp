@@ -36,6 +36,8 @@ class ProductDetails {
   String? cut;
   String? certificateFile;
   String? openDnaUrl;
+  int? reviewCount;
+  double? rating;
 
   ProductDetails({
     this.productId,
@@ -73,5 +75,11 @@ class ProductDetails {
     this.cut,
     this.certificateFile,
     this.openDnaUrl,
+    this.reviewCount,
+    this.rating,
   });
+}
+
+extension ProductDetailsExtension on ProductDetails {
+  String get displayPrice => offerPrice ?? originalPrice ?? '';
 }

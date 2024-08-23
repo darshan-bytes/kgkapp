@@ -5,11 +5,14 @@ part 'product_details_event.dart';
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
+  bool isInitialized = false;
+
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
   String productName = '';
   ProductDetails? productDetails;
+  DiamondDataModel? diamondData;
   bool isCustomisation = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselSliderController controller = CarouselSliderController();
@@ -26,6 +29,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   ];
   int current = 0;
   bool isCompare = false;
+
+  bool isErrorInLoadingData = false;
 
   List<ProductCustomizationOptions> productCustomizations = [
     ProductCustomizationOptions(
@@ -140,26 +145,28 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
   }
 
-  void _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
+  Future<void> _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    if (isInitialized) return;
+    isInitialized = true;
     emit(ProductDetailsLoadingState());
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
 
     getScreenIdentifier(event.context);
 
+    productName = screenIdentifier == ScreenIdentifier.productForRing
+        ? '14k Gold Engagement Ring'
+        : screenIdentifier == ScreenIdentifier.productForGemstones
+            ? '0.35 Carat Super Premium Oval Moissanite'
+            : '';
+
+    String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
 
-      imgList = [
-        "https://i.ibb.co/8s6hWz2/image-414.png",
-        "https://i.ibb.co/8s6hWz2/image-414.png",
-        "https://i.ibb.co/8s6hWz2/image-414.png",
-        "https://i.ibb.co/8s6hWz2/image-414.png",
-        "https://i.ibb.co/8s6hWz2/image-414.png",
-      ];
-
+      //TODO: Need to integrate API for suggested products
       suggestedProductList = List.generate(
         8,
         (index) => ProductDetails(
@@ -170,6 +177,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           originalPrice: "\$ 5,000.00",
         ),
       );
+      await getDiamondsDetails(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
@@ -208,12 +216,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       );
     }
 
-    productName = screenIdentifier == ScreenIdentifier.productForRing
-        ? '14k Gold Engagement Ring'
-        : screenIdentifier == ScreenIdentifier.productForGemstones
-            ? '0.35 Carat Super Premium Oval Moissanite'
-            : '1.01 Carat Round Diamond';
-    String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
 
     if (isCustomisation) {
@@ -235,13 +237,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ),
       );
     }
-    productDetails = ProductDetails(
-      productId: productId,
-      name: productName,
-      offerPrice: '\$1200.00',
-      originalPrice: '\$1600.00',
-      discountPercentage: '(3% OFF)',
-    );
 
     reviewList = List.generate(
       6,
@@ -264,6 +259,38 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     if (productDetails != null) {
       emit(ProductDetailsLoadedState(productDetails!));
     }
+  }
+
+  Future<void> getDiamondsDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondDataModel>? response = await DiamondRepository(context).getDiamondDetailById(productId);
+    response?.fold(
+      (error) {
+        isErrorInLoadingData = true;
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        diamondData = data;
+        if (diamondData != null) {
+          isErrorInLoadingData = false;
+          bool isDiscounted =
+              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
+          productName = diamondData!.rmDescription ?? '';
+          imgList = diamondData!.image.map((e) => e.url ?? '').toList();
+          productDetails = ProductDetails(
+            productId: productId,
+            name: productName,
+            offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
+            originalPrice: diamondData!.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([diamondData!.discountPercentage]) : null,
+            productSku: diamondData!.lotCode,
+            reviewCount: diamondData!.reviewCount,
+            rating: diamondData!.rating?.toDouble(),
+          );
+        }
+      },
+    );
   }
 
   void getScreenIdentifier(BuildContext context) {

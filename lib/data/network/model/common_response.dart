@@ -67,6 +67,8 @@ class CommonResponse<T> {
         return GemstoneListingModel.fromJson(json);
       case const (JewelleryListingModel):
         return JewelleryListingModel.fromJson(json);
+      case const (DiamondDataModel):
+        return DiamondDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
