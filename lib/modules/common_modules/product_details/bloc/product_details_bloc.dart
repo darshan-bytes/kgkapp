@@ -144,6 +144,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
     on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
+    on<ProductDetailsSuggestedProductLoadedEvent>(_onProductDetailsSuggestedProductLoadedEvent);
   }
 
   Future<void> _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
@@ -168,17 +169,18 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       suggestedProductList.clear();
 
       //TODO: Need to integrate API for suggested products
-      suggestedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
-          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
+      // suggestedProductList = List.generate(
+      //   8,
+      //   (index) => ProductDetails(
+      //     diamond: "1.5 gram",
+      //     gram: "1.5 gram",
+      //     imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+      //     name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+      //     originalPrice: "\$ 5,000.00",
+      //   ),
+      // );
       await getDiamondsDetails(event.context, productId);
+      getDiamondYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
@@ -315,6 +317,38 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
+  Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondListingModel>? response =
+        await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        if (data.data.isNotEmpty) {
+          List<DiamondDataModel> suggestedProductListAPI = data.data;
+          suggestedProductList = suggestedProductListAPI.map((e) {
+            bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+            return ProductDetails(
+              productId: e.id,
+              name: e.rmDescription ?? '',
+              imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+              originalPrice: e.finalPrice?.setCurrency,
+              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+              productSku: e.lotCode,
+              reviewCount: e.reviewCount,
+              rating: e.rating?.toDouble(),
+            );
+          }).toList();
+          add(const ProductDetailsSuggestedProductLoadedEvent());
+        }
+      },
+    );
+  }
+
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
@@ -346,5 +380,26 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void _onGemstoneDetailsToggleEvent(GemstoneDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
     isGemstoneDetailsOpen = !isGemstoneDetailsOpen;
     emit(GemstoneDetailsToggleState(isGemstoneDetailsOpen));
+  }
+
+  void _onProductDetailsSuggestedProductLoadedEvent(ProductDetailsSuggestedProductLoadedEvent event, Emitter<ProductDetailsState> emit) {
+    emit(ProductDetailsSuggestedProductLoadedState(suggestedProductList));
+  }
+
+  void navigateBasedOnScreenIdentifier(BuildContext context) {
+    switch (screenIdentifier) {
+      case ScreenIdentifier.productForRing:
+        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        break;
+      case ScreenIdentifier.productForGemstones:
+      case ScreenIdentifier.productForDiamonds:
+        context.pushNamed(AppRoutes.stoneListingPage, arguments: {
+          RoutesData.isPageFor: screenIdentifier,
+          RoutesData.productId: productDetails?.productId,
+        });
+        break;
+      default:
+        break;
+    }
   }
 }

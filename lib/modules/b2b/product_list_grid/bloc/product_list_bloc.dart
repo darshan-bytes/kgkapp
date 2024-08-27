@@ -132,7 +132,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         Utils.showMessage(l.message ?? "");
       }, (r) {
         jewelleryDatumList = r.data;
-        totalNumberOfPages = (r.filteredRecords ?? 0) ~/ limit;
+        totalNumberOfPages = (r.totalRecords ?? 0) ~/ limit;
 
         List.generate(jewelleryDatumList.length, (index) {
           productList.add(ProductDetails(
