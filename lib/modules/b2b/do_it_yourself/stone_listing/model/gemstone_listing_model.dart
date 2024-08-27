@@ -11,7 +11,7 @@ class GemstoneListingModel {
   final Pagination? pagination;
   final int? totalRecords;
 
-  factory GemstoneListingModel.fromJson(Map<String, dynamic> json){
+  factory GemstoneListingModel.fromJson(Map<String, dynamic> json) {
     return GemstoneListingModel(
       data: json["data"] == null ? [] : List<GemstoneDatum>.from(json["data"]!.map((x) => GemstoneDatum.fromJson(x))),
       filteredRecords: json["filteredRecords"],
@@ -21,14 +21,14 @@ class GemstoneListingModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "data": data.map((x) => x.toJson()).toList(),
-    "filteredRecords": filteredRecords,
-    "pagination": pagination?.toJson(),
-    "totalRecords": totalRecords,
-  };
+        "data": data.map((x) => x.toJson()).toList(),
+        "filteredRecords": filteredRecords,
+        "pagination": pagination?.toJson(),
+        "totalRecords": totalRecords,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$data, $filteredRecords, $pagination, $totalRecords, ";
   }
 }
@@ -289,7 +289,7 @@ class GemstoneDatum {
   final dynamic hna;
   final dynamic hnaRefSuid;
   final dynamic hnaSuid;
-  final List<Image> image;
+  final List<GemstoneDetailsImage> image;
   final dynamic includes;
   final dynamic inscriptionNumber;
   final dynamic intensity;
@@ -386,7 +386,7 @@ class GemstoneDatum {
   final String? finalPrice;
   final String? priceCts;
 
-  factory GemstoneDatum.fromJson(Map<String, dynamic> json){
+  factory GemstoneDatum.fromJson(Map<String, dynamic> json) {
     return GemstoneDatum(
       id: json["id"],
       avgWeight: json["avg_weight"],
@@ -426,7 +426,7 @@ class GemstoneDatum {
       crownOpenSuid: json["crown_open_suid"],
       crownAngle: json["crown_angle"],
       crownHeight: json["crown_height"],
-      ctsOrGms: json["cts_or_gms"],
+      ctsOrGms: double.tryParse(json["cts_or_gms"].toString()),
       culet: json["culet"],
       culetCondRefSuid: json["culet_cond_ref_suid"],
       culetCondSuid: json["culet_cond_suid"],
@@ -466,7 +466,7 @@ class GemstoneDatum {
       hna: json["hna"],
       hnaRefSuid: json["hna_ref_suid"],
       hnaSuid: json["hna_suid"],
-      image: json["image"] == null ? [] : List<Image>.from(json["image"]!.map((x) => Image.fromJson(x))),
+      image: json["image"] == null ? [] : List<GemstoneDetailsImage>.from(json["image"]!.map((x) => GemstoneDetailsImage.fromJson(x))),
       includes: json["includes"],
       inscriptionNumber: json["inscription_number"],
       intensity: json["intensity"],
@@ -566,207 +566,207 @@ class GemstoneDatum {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avg_weight": avgWeight,
-    "back_rate": backRate,
-    "black_crown": blackCrown,
-    "black_crown_ref_suid": blackCrownRefSuid,
-    "black_crown_suid": blackCrownSuid,
-    "black_table": blackTable,
-    "black_table_ref_suid": blackTableRefSuid,
-    "black_table_suid": blackTableSuid,
-    "csc_code": cscCode,
-    "csc_id": cscId,
-    "csc_name": cscName,
-    "certificate": certificate,
-    "certificate_card_image": certificateCardImage,
-    "certificate_file": certificateFile,
-    "certificate_image": certificateImage,
-    "certificate_video": certificateVideo,
-    "clarity": clarity,
-    "clarity_grading": clarityGrading,
-    "clarity_ref_suid": clarityRefSuid,
-    "clarity_suid": claritySuid,
-    "clarity_char": clarityChar,
-    "color": color,
-    "color_grading": colorGrading,
-    "color_grading_ref_suid": colorGradingRefSuid,
-    "color_grading_suid": colorGradingSuid,
-    "color_origin": colorOrigin,
-    "color_ref_suid": colorRefSuid,
-    "color_suid": colorSuid,
-    "comment": comment,
-    "commodity_name": commodityName,
-    "commodity_name_ref_suid": commodityNameRefSuid,
-    "commodity_name_suid": commodityNameSuid,
-    "crown_open": crownOpen,
-    "crown_open_ref_suid": crownOpenRefSuid,
-    "crown_open_suid": crownOpenSuid,
-    "crown_angle": crownAngle,
-    "crown_height": crownHeight,
-    "cts_or_gms": ctsOrGms,
-    "culet": culet,
-    "culet_cond_ref_suid": culetCondRefSuid,
-    "culet_cond_suid": culetCondSuid,
-    "culet_size_ref_suid": culetSizeRefSuid,
-    "culet_size_suid": culetSizeSuid,
-    "culet_cond": culetCond,
-    "culet_ref_suid": culetRefSuid,
-    "culet_size": culetSize,
-    "culet_suid": culetSuid,
-    "culet_gia": culetGia,
-    "currency": currency,
-    "cut": cut,
-    "cut_ref_suid": cutRefSuid,
-    "cut_suid": cutSuid,
-    "depth": depth,
-    "diamond_asset_url": diamondAssetUrl,
-    "discount_percentage": discountPercentage,
-    "dtc_band": dtcBand,
-    "fancy_color": fancyColor,
-    "fancy_color_ref_suid": fancyColorRefSuid,
-    "fancy_color_suid": fancyColorSuid,
-    "flag": flag,
-    "fluorescence": fluorescence,
-    "fluorescence_ref_suid": fluorescenceRefSuid,
-    "fluorescence_suid": fluorescenceSuid,
-    "girdle": girdle,
-    "girdle_inclusion": girdleInclusion,
-    "girdle_inclusion_ref_suid": girdleInclusionRefSuid,
-    "girdle_inclusion_suid": girdleInclusionSuid,
-    "girdle_size": girdleSize,
-    "girdle_cond": girdleCond,
-    "girdle_per": girdlePer,
-    "girdle_ref_suid": girdleRefSuid,
-    "girdle_suid": girdleSuid,
-    "grade": grade,
-    "guest_user": guestUser,
-    "hna": hna,
-    "hna_ref_suid": hnaRefSuid,
-    "hna_suid": hnaSuid,
-    "image": image.map((x) => x.toJson()).toList(),
-    "includes": includes,
-    "inscription_number": inscriptionNumber,
-    "intensity": intensity,
-    "inv_type_discount": invTypeDiscount,
-    "inventory_type": inventoryType,
-    "key_to_symbol": keyToSymbol,
-    "key_to_symbol_ref_suid": keyToSymbolRefSuid,
-    "key_to_symbol_suid": keyToSymbolSuid,
-    "lw_ratio": lwRatio,
-    "labs": labs,
-    "laser_inscription": laserInscription,
-    "laser_ins_reg": laserInsReg,
-    "location": location,
-    "lot_code_ref_suid": lotCodeRefSuid,
-    "lot_code_suid": lotCodeSuid,
-    "lot_code": lotCode,
-    "lower_half": lowerHalf,
-    "lsp": lsp,
-    "max_size": maxSize,
-    "measurements": measurements,
-    "milky": milky,
-    "milky_ref_suid": milkyRefSuid,
-    "milky_suid": milkySuid,
-    "min_size": minSize,
-    "no_bgm": noBgm,
-    "open_dna_url": openDnaUrl,
-    "origin": origin,
-    "pav_open": pavOpen,
-    "pav_open_ref_suid": pavOpenRefSuid,
-    "pav_open_suid": pavOpenSuid,
-    "pavilion_angle": pavilionAngle,
-    "pavilion_depth": pavilionDepth,
-    "pcs": pcs,
-    "polish": polish,
-    "price": price,
-    "quality": quality,
-    "rm_description": rmDescription,
-    "rappaport_date": rappaportDate,
-    "rappaport_price": rappaportPrice,
-    "raw_material": rawMaterial,
-    "raw_material_ref_suid": rawMaterialRefSuid,
-    "raw_material_suid": rawMaterialSuid,
-    "received_date_time": receivedDateTime?.toIso8601String(),
-    "ref_suid": refSuid,
-    "ssc_website_lot_no": sscWebsiteLotNo,
-    "shape": shape,
-    "shape_code": shapeCode,
-    "shape_ref_suid": shapeRefSuid,
-    "shape_suid": shapeSuid,
-    "size": size,
-    "size_range": sizeRange,
-    "imported_from": importedFrom,
-    "special_offer": specialOffer,
-    "star_length": starLength,
-    "status": status,
-    "stone": stone,
-    "sub_type_code": subTypeCode,
-    "sub_type_name": subTypeName,
-    "subarea_code": subareaCode,
-    "subarea_id": subareaId,
-    "subarea_name": subareaName,
-    "suid": suid,
-    "supplier_code": supplierCode,
-    "supplier_name": supplierName,
-    "symmetry": symmetry,
-    "symmetry_ref_suid": symmetryRefSuid,
-    "symmetry_suid": symmetrySuid,
-    "table": table,
-    "table_open": tableOpen,
-    "table_open_ref_suid": tableOpenRefSuid,
-    "table_open_suid": tableOpenSuid,
-    "total_carat": totalCarat,
-    "treatment": treatment,
-    "type": type,
-    "uom1": uom1,
-    "uom2": uom2,
-    "updated_date_time": updatedDateTime?.toIso8601String(),
-    "video": video,
-    "white_in_center": whiteInCenter,
-    "white_in_center_ref_suid": whiteInCenterRefSuid,
-    "white_in_center_suid": whiteInCenterSuid,
-    "white_in_crown": whiteInCrown,
-    "white_in_crown_ref_suid": whiteInCrownRefSuid,
-    "white_in_crown_suid": whiteInCrownSuid,
-    "reference_id": referenceId,
-    "created_at": datumCreatedAt,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "view_count": viewCount,
-    "discount_price": discountPrice,
-    "is_favorite": isFavorite,
-    "rating": rating,
-    "review_count": reviewCount,
-    "final_price": finalPrice,
-    "price_cts": priceCts,
-  };
+        "id": id,
+        "avg_weight": avgWeight,
+        "back_rate": backRate,
+        "black_crown": blackCrown,
+        "black_crown_ref_suid": blackCrownRefSuid,
+        "black_crown_suid": blackCrownSuid,
+        "black_table": blackTable,
+        "black_table_ref_suid": blackTableRefSuid,
+        "black_table_suid": blackTableSuid,
+        "csc_code": cscCode,
+        "csc_id": cscId,
+        "csc_name": cscName,
+        "certificate": certificate,
+        "certificate_card_image": certificateCardImage,
+        "certificate_file": certificateFile,
+        "certificate_image": certificateImage,
+        "certificate_video": certificateVideo,
+        "clarity": clarity,
+        "clarity_grading": clarityGrading,
+        "clarity_ref_suid": clarityRefSuid,
+        "clarity_suid": claritySuid,
+        "clarity_char": clarityChar,
+        "color": color,
+        "color_grading": colorGrading,
+        "color_grading_ref_suid": colorGradingRefSuid,
+        "color_grading_suid": colorGradingSuid,
+        "color_origin": colorOrigin,
+        "color_ref_suid": colorRefSuid,
+        "color_suid": colorSuid,
+        "comment": comment,
+        "commodity_name": commodityName,
+        "commodity_name_ref_suid": commodityNameRefSuid,
+        "commodity_name_suid": commodityNameSuid,
+        "crown_open": crownOpen,
+        "crown_open_ref_suid": crownOpenRefSuid,
+        "crown_open_suid": crownOpenSuid,
+        "crown_angle": crownAngle,
+        "crown_height": crownHeight,
+        "cts_or_gms": ctsOrGms,
+        "culet": culet,
+        "culet_cond_ref_suid": culetCondRefSuid,
+        "culet_cond_suid": culetCondSuid,
+        "culet_size_ref_suid": culetSizeRefSuid,
+        "culet_size_suid": culetSizeSuid,
+        "culet_cond": culetCond,
+        "culet_ref_suid": culetRefSuid,
+        "culet_size": culetSize,
+        "culet_suid": culetSuid,
+        "culet_gia": culetGia,
+        "currency": currency,
+        "cut": cut,
+        "cut_ref_suid": cutRefSuid,
+        "cut_suid": cutSuid,
+        "depth": depth,
+        "diamond_asset_url": diamondAssetUrl,
+        "discount_percentage": discountPercentage,
+        "dtc_band": dtcBand,
+        "fancy_color": fancyColor,
+        "fancy_color_ref_suid": fancyColorRefSuid,
+        "fancy_color_suid": fancyColorSuid,
+        "flag": flag,
+        "fluorescence": fluorescence,
+        "fluorescence_ref_suid": fluorescenceRefSuid,
+        "fluorescence_suid": fluorescenceSuid,
+        "girdle": girdle,
+        "girdle_inclusion": girdleInclusion,
+        "girdle_inclusion_ref_suid": girdleInclusionRefSuid,
+        "girdle_inclusion_suid": girdleInclusionSuid,
+        "girdle_size": girdleSize,
+        "girdle_cond": girdleCond,
+        "girdle_per": girdlePer,
+        "girdle_ref_suid": girdleRefSuid,
+        "girdle_suid": girdleSuid,
+        "grade": grade,
+        "guest_user": guestUser,
+        "hna": hna,
+        "hna_ref_suid": hnaRefSuid,
+        "hna_suid": hnaSuid,
+        "image": image.map((x) => x.toJson()).toList(),
+        "includes": includes,
+        "inscription_number": inscriptionNumber,
+        "intensity": intensity,
+        "inv_type_discount": invTypeDiscount,
+        "inventory_type": inventoryType,
+        "key_to_symbol": keyToSymbol,
+        "key_to_symbol_ref_suid": keyToSymbolRefSuid,
+        "key_to_symbol_suid": keyToSymbolSuid,
+        "lw_ratio": lwRatio,
+        "labs": labs,
+        "laser_inscription": laserInscription,
+        "laser_ins_reg": laserInsReg,
+        "location": location,
+        "lot_code_ref_suid": lotCodeRefSuid,
+        "lot_code_suid": lotCodeSuid,
+        "lot_code": lotCode,
+        "lower_half": lowerHalf,
+        "lsp": lsp,
+        "max_size": maxSize,
+        "measurements": measurements,
+        "milky": milky,
+        "milky_ref_suid": milkyRefSuid,
+        "milky_suid": milkySuid,
+        "min_size": minSize,
+        "no_bgm": noBgm,
+        "open_dna_url": openDnaUrl,
+        "origin": origin,
+        "pav_open": pavOpen,
+        "pav_open_ref_suid": pavOpenRefSuid,
+        "pav_open_suid": pavOpenSuid,
+        "pavilion_angle": pavilionAngle,
+        "pavilion_depth": pavilionDepth,
+        "pcs": pcs,
+        "polish": polish,
+        "price": price,
+        "quality": quality,
+        "rm_description": rmDescription,
+        "rappaport_date": rappaportDate,
+        "rappaport_price": rappaportPrice,
+        "raw_material": rawMaterial,
+        "raw_material_ref_suid": rawMaterialRefSuid,
+        "raw_material_suid": rawMaterialSuid,
+        "received_date_time": receivedDateTime?.toIso8601String(),
+        "ref_suid": refSuid,
+        "ssc_website_lot_no": sscWebsiteLotNo,
+        "shape": shape,
+        "shape_code": shapeCode,
+        "shape_ref_suid": shapeRefSuid,
+        "shape_suid": shapeSuid,
+        "size": size,
+        "size_range": sizeRange,
+        "imported_from": importedFrom,
+        "special_offer": specialOffer,
+        "star_length": starLength,
+        "status": status,
+        "stone": stone,
+        "sub_type_code": subTypeCode,
+        "sub_type_name": subTypeName,
+        "subarea_code": subareaCode,
+        "subarea_id": subareaId,
+        "subarea_name": subareaName,
+        "suid": suid,
+        "supplier_code": supplierCode,
+        "supplier_name": supplierName,
+        "symmetry": symmetry,
+        "symmetry_ref_suid": symmetryRefSuid,
+        "symmetry_suid": symmetrySuid,
+        "table": table,
+        "table_open": tableOpen,
+        "table_open_ref_suid": tableOpenRefSuid,
+        "table_open_suid": tableOpenSuid,
+        "total_carat": totalCarat,
+        "treatment": treatment,
+        "type": type,
+        "uom1": uom1,
+        "uom2": uom2,
+        "updated_date_time": updatedDateTime?.toIso8601String(),
+        "video": video,
+        "white_in_center": whiteInCenter,
+        "white_in_center_ref_suid": whiteInCenterRefSuid,
+        "white_in_center_suid": whiteInCenterSuid,
+        "white_in_crown": whiteInCrown,
+        "white_in_crown_ref_suid": whiteInCrownRefSuid,
+        "white_in_crown_suid": whiteInCrownSuid,
+        "reference_id": referenceId,
+        "created_at": datumCreatedAt,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "view_count": viewCount,
+        "discount_price": discountPrice,
+        "is_favorite": isFavorite,
+        "rating": rating,
+        "review_count": reviewCount,
+        "final_price": finalPrice,
+        "price_cts": priceCts,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $avgWeight, $backRate, $blackCrown, $blackCrownRefSuid, $blackCrownSuid, $blackTable, $blackTableRefSuid, $blackTableSuid, $cscCode, $cscId, $cscName, $certificate, $certificateCardImage, $certificateFile, $certificateImage, $certificateVideo, $clarity, $clarityGrading, $clarityRefSuid, $claritySuid, $clarityChar, $color, $colorGrading, $colorGradingRefSuid, $colorGradingSuid, $colorOrigin, $colorRefSuid, $colorSuid, $comment, $commodityName, $commodityNameRefSuid, $commodityNameSuid, $crownOpen, $crownOpenRefSuid, $crownOpenSuid, $crownAngle, $crownHeight, $ctsOrGms, $culet, $culetCondRefSuid, $culetCondSuid, $culetSizeRefSuid, $culetSizeSuid, $culetCond, $culetRefSuid, $culetSize, $culetSuid, $culetGia, $currency, $cut, $cutRefSuid, $cutSuid, $depth, $diamondAssetUrl, $discountPercentage, $dtcBand, $fancyColor, $fancyColorRefSuid, $fancyColorSuid, $flag, $fluorescence, $fluorescenceRefSuid, $fluorescenceSuid, $girdle, $girdleInclusion, $girdleInclusionRefSuid, $girdleInclusionSuid, $girdleSize, $girdleCond, $girdlePer, $girdleRefSuid, $girdleSuid, $grade, $guestUser, $hna, $hnaRefSuid, $hnaSuid, $image, $includes, $inscriptionNumber, $intensity, $invTypeDiscount, $inventoryType, $keyToSymbol, $keyToSymbolRefSuid, $keyToSymbolSuid, $lwRatio, $labs, $laserInscription, $laserInsReg, $location, $lotCodeRefSuid, $lotCodeSuid, $lotCode, $lowerHalf, $lsp, $maxSize, $measurements, $milky, $milkyRefSuid, $milkySuid, $minSize, $noBgm, $openDnaUrl, $origin, $pavOpen, $pavOpenRefSuid, $pavOpenSuid, $pavilionAngle, $pavilionDepth, $pcs, $polish, $price, $quality, $rmDescription, $rappaportDate, $rappaportPrice, $rawMaterial, $rawMaterialRefSuid, $rawMaterialSuid, $receivedDateTime, $refSuid, $sscWebsiteLotNo, $shape, $shapeCode, $shapeRefSuid, $shapeSuid, $size, $sizeRange, $importedFrom, $specialOffer, $starLength, $status, $stone, $subTypeCode, $subTypeName, $subareaCode, $subareaId, $subareaName, $suid, $supplierCode, $supplierName, $symmetry, $symmetryRefSuid, $symmetrySuid, $table, $tableOpen, $tableOpenRefSuid, $tableOpenSuid, $totalCarat, $treatment, $type, $uom1, $uom2, $updatedDateTime, $video, $whiteInCenter, $whiteInCenterRefSuid, $whiteInCenterSuid, $whiteInCrown, $whiteInCrownRefSuid, $whiteInCrownSuid, $referenceId, $datumCreatedAt, $createdAt, $updatedAt, $viewCount, $discountPrice, $isFavorite, $rating, $reviewCount, $finalPrice, $priceCts, ";
   }
 }
 
-class Image {
-  Image({
+class GemstoneDetailsImage {
+  GemstoneDetailsImage({
     required this.url,
   });
 
   final String? url;
 
-  factory Image.fromJson(Map<String, dynamic> json){
-    return Image(
+  factory GemstoneDetailsImage.fromJson(Map<String, dynamic> json) {
+    return GemstoneDetailsImage(
       url: json["URL"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "URL": url,
-  };
+        "URL": url,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$url, ";
   }
 }
@@ -780,7 +780,7 @@ class Pagination {
   final String? limit;
   final String? page;
 
-  factory Pagination.fromJson(Map<String, dynamic> json){
+  factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
       limit: json["limit"],
       page: json["page"],
@@ -788,12 +788,12 @@ class Pagination {
   }
 
   Map<String, dynamic> toJson() => {
-    "limit": limit,
-    "page": page,
-  };
+        "limit": limit,
+        "page": page,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$limit, $page, ";
   }
 }

@@ -1,4 +1,4 @@
-import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
@@ -145,6 +145,30 @@ class AppRepository extends ApiService {
       context.setAppLoading(false);
     }
     return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  //For Getting Diamond Details by ID
+  Future<Either<ErrorResponse, DiamondDataModel>?> getDiamondDetailById(String id) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DiamondDataModel>(
+      ApiClient.diamondDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Getting Gemstone Details by ID
+  Future<Either<ErrorResponse, GemstoneDatum>?> getGemstoneDetailById(String id) async {
+    context.setAppLoading(true);
+    var response = await getMethod<GemstoneDatum>(
+      ApiClient.gemstoneDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   ///For Getting Diamond You May Like by ID

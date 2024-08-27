@@ -13,6 +13,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   DiamondDataModel? diamondData;
+  GemstoneDatum? gemstoneData;
   bool isCustomisation = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselSliderController controller = CarouselSliderController();
@@ -186,26 +187,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
 
-      imgList = [
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-      ];
-
-      recentlyViewedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/RQQGX6J/image-7.png',
-          name: "Diamond Vine Ring in 18k Rose Gold",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
-
+      // Gemstone Details API
+      await getGemstoneDetails(event.context, productId);
       suggestedProductList = List.generate(
         8,
         (index) => ProductDetails(
@@ -264,7 +247,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
-    Either<ErrorResponse, DiamondDataModel>? response = await DiamondRepository(context).getDiamondDetailById(productId);
+    Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     response?.fold(
       (error) {
         isErrorInLoadingData = true;
@@ -289,6 +272,45 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
             rating: diamondData!.rating?.toDouble(),
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> getGemstoneDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, GemstoneDatum>? response = await AppRepository(context).getGemstoneDetailById(productId);
+    response?.fold(
+      (error) {
+        isErrorInLoadingData = true;
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        gemstoneData = data;
+        if (gemstoneData != null) {
+          isErrorInLoadingData = false;
+          bool isDiscounted = gemstoneData?.discountPercentage != null &&
+              (gemstoneData?.discountPercentage is num) &&
+              (gemstoneData?.discountPercentage ?? 0) > 0;
+          productName = gemstoneData?.rmDescription ?? '';
+          if (gemstoneData?.image.isNotEmpty ?? false) {
+            imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
+          }
+          productDetails = ProductDetails(
+            productId: productId,
+            name: productName,
+            offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
+            originalPrice: gemstoneData?.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([gemstoneData?.discountPercentage]) : null,
+            productSku: gemstoneData?.lotCode,
+            reviewCount: gemstoneData?.reviewCount,
+            rating: gemstoneData?.rating?.toDouble(),
+            shape: gemstoneData?.shape,
+            productQuality: CartProductQuality(name: gemstoneData?.quality),
+            color: gemstoneData?.color,
+            clarity: gemstoneData?.clarity,
           );
         }
       },
