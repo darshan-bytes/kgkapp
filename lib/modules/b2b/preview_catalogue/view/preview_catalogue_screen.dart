@@ -180,7 +180,8 @@ class PreviewCatalogueScreen extends StatelessWidget {
                       builder: (context, state) {
                         return ProductGridItem(
                           productDetails: bloc.productList[index],
-                          onCommentTap: bloc.isCommentVisible
+                          isBadgeVisible: true,
+                          onCommentTap: bloc.productList[index].isCommentVisible
                               ? () {
                                   bloc.add(PreviewCatalogueCommentProductSelectEvent(index: index));
                                 }

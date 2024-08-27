@@ -848,4 +848,10 @@ class APPStrings {
 
   static const String shopByX = 'shop_by_x';
   static const String manufacturingStatus = 'manufacturing_status';
+  static const String cancelItemList = 'cancel_item_list';
+  static const String commodity = 'commodity';
+  static const String origin = 'origin';
+  static const String onHold = 'on_hold';
+  static const String wip = 'wip';
+
 }
