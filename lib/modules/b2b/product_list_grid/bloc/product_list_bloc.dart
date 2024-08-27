@@ -26,7 +26,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   int? totalNumberOfPages;
   int limit = 10;
 
-  List<JewelleryDatum> jewelleryDatumList = [];
+  List<JewelleryDataModel> jewelleryDatumList = [];
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -136,6 +136,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
         List.generate(jewelleryDatumList.length, (index) {
           productList.add(ProductDetails(
+            productId: jewelleryDatumList[index].id ?? "",
             imageUrl: "",
             name: jewelleryDatumList[index].productDescription ?? "",
             originalPrice: "$currency ${jewelleryDatumList[index].finalPrice ?? ""}",

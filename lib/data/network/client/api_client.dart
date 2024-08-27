@@ -22,6 +22,8 @@ class ApiClient {
   static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
+
+  static String productDetails(String id) => '$apiBaseUrl/jewelleries/$id/view';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
