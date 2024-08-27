@@ -20,6 +20,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   String tabTwoTitle = APPStrings.looseDiamond.tr;
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
+  String productId = "";
 
   String stoneListingAppbarTitle = "DIY";
 
@@ -35,6 +36,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     on<StoneListPullToRefreshEvent>(_onStoneListPullToRefresh);
   }
 
+  bool get displaySelection => productId.isEmpty;
+
   @override
   Future<void> close() {
     paginationScrollController.dispose();
@@ -44,6 +47,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
+    productId = data?[RoutesData.productId] ?? "";
   }
 
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
@@ -96,48 +100,53 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> fetchDiamondList(BuildContext context, Emitter<StoneListingState> emit, bool? isLoadMore) async {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
-    await AppRepository(context)
-        .fetchDiamondList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type)
-        .then((value) {
-      value?.fold((l) {
-        Utils.showMessage(l.message ?? "");
-      }, (r) {
-        diamondDatumList = r.data;
-        totalNumberOfPages = (r.filteredRecords ?? 0) ~/ limit;
-        List.generate(
-          diamondDatumList.length,
-          (index) => productList.add(
-            ProductDetails(
-              productId: diamondDatumList[index].id,
-              isOutOfStock: index % 2 == 0,
-              diamond: "2.5 crt",
-              gram: "1.5 grms",
-              imageUrl: diamondDatumList[index].image.first.url,
-              //"https://i.ibb.co/yBHp2KB/image-7.png",
-              name: diamondDatumList[index].rmDescription ?? "",
-              originalPrice: "$currency${diamondDatumList[index].price.toString()}",
-              //"\$3,000.00",
-              ctsOrGms: diamondDatumList[index].ctsOrGms,
-              rappaportPrice: diamondDatumList[index].rappaportPrice,
-              priceCts: diamondDatumList[index].priceCts,
-              discountPrice: diamondDatumList[index].discountPrice,
-              finalPrice: diamondDatumList[index].finalPrice,
-              lotCode: diamondDatumList[index].lotCode,
-              shape: diamondDatumList[index].shape,
-              fluorescence: diamondDatumList[index].fluorescence,
-              labs: diamondDatumList[index].labs,
-              lsp: diamondDatumList[index].lsp,
-              color: diamondDatumList[index].color,
-              clarity: diamondDatumList[index].clarity,
-              cut: diamondDatumList[index].cut,
-              certificateFile: diamondDatumList[index].certificateFile,
-              openDnaUrl: diamondDatumList[index].openDnaUrl,
-            ),
-          ),
-        );
+    Either<ErrorResponse, DiamondListingModel>? response;
+    if (productId.isNotEmpty) {
+      response = await AppRepository(context)
+          .getDiamondYouMayLike(productId, page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+    } else {
+      response = await AppRepository(context)
+          .fetchDiamondList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
+    }
 
-        emit(const StoneDiamondListLoadedState());
-      });
+    response?.fold((l) {
+      Utils.showMessage(l.message ?? "");
+    }, (r) {
+      diamondDatumList = r.data;
+      totalNumberOfPages = (r.totalRecords ?? 0) ~/ limit;
+      List.generate(
+        diamondDatumList.length,
+        (index) => productList.add(
+          ProductDetails(
+            productId: diamondDatumList[index].id,
+            isOutOfStock: index % 2 == 0,
+            diamond: "2.5 crt",
+            gram: "1.5 grms",
+            imageUrl: diamondDatumList[index].image.first.url,
+            //"https://i.ibb.co/yBHp2KB/image-7.png",
+            name: diamondDatumList[index].rmDescription ?? "",
+            originalPrice: "$currency${diamondDatumList[index].price}",
+            //"\$3,000.00",
+            ctsOrGms: diamondDatumList[index].ctsOrGms,
+            rappaportPrice: diamondDatumList[index].rappaportPrice,
+            priceCts: diamondDatumList[index].priceCts,
+            discountPrice: diamondDatumList[index].discountPrice,
+            finalPrice: diamondDatumList[index].finalPrice,
+            lotCode: diamondDatumList[index].lotCode,
+            shape: diamondDatumList[index].shape,
+            fluorescence: diamondDatumList[index].fluorescence,
+            labs: diamondDatumList[index].labs,
+            lsp: diamondDatumList[index].lsp,
+            color: diamondDatumList[index].color,
+            clarity: diamondDatumList[index].clarity,
+            cut: diamondDatumList[index].cut,
+            certificateFile: diamondDatumList[index].certificateFile,
+            openDnaUrl: diamondDatumList[index].openDnaUrl,
+          ),
+        ),
+      );
+
+      emit(const StoneDiamondListLoadedState());
     });
   }
 
@@ -151,7 +160,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         Utils.showMessage(l.message ?? "");
       }, (r) {
         gemstoneDatumList = r.data;
-        totalNumberOfPages = (r.filteredRecords ?? 0) ~/ limit;
+        totalNumberOfPages = (r.totalRecords ?? 0) ~/ limit;
         List.generate(
           gemstoneDatumList.length,
           (index) => productList.add(
