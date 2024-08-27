@@ -170,6 +170,17 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  ///For Getting Diamond You May Like by ID
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    var response = await getMethod<DiamondListingModel>(
+      ApiClient.diamondYouMayLike(id),
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+      withCurrencyHeader: true,
+    );
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

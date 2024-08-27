@@ -8,6 +8,7 @@ class SmartSuggestionProductList extends StatelessWidget {
   final VoidCallback onFavTap;
   final bool isPaddingNeeded;
   final ScrollController scrollController;
+  final Function(ProductDetails)? onProductTap;
 
   const SmartSuggestionProductList({
     super.key,
@@ -18,6 +19,7 @@ class SmartSuggestionProductList extends StatelessWidget {
     required this.onFavTap,
     this.isPaddingNeeded = true,
     required this.scrollController,
+    this.onProductTap,
   });
 
   @override
@@ -55,6 +57,11 @@ class SmartSuggestionProductList extends StatelessWidget {
               runSpacing: 12.2,
               children: suggestedProductList.map((product) {
                 return ProductGridItem(
+                  onTap: onProductTap != null
+                      ? () {
+                          onProductTap?.call(product);
+                        }
+                      : null,
                   margin: EdgeInsets.only(bottom: 17.h),
                   onEyeTap: onEyeTap,
                   onFavTap: onFavTap,
