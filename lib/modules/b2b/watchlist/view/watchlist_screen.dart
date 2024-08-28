@@ -22,7 +22,7 @@ class WatchlistScreen extends StatelessWidget {
           if (state is WatchlistLoadedState) {
             return SmartSingleChildScrollView(
               onRefresh: () async {
-                await bloc.pullToRefresh();
+                await bloc.pullToRefresh(context: context);
               },
               padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
               controller: bloc.paginationScrollController.controller,
@@ -54,7 +54,7 @@ class WatchlistScreen extends StatelessWidget {
               ),
             );
           }
-          return const SmartCircularProgressIndicator();
+          return const SizedBox.shrink();
         },
       ),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
@@ -102,14 +102,7 @@ class WatchlistScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 16.0.h),
                     child: SmartButton(
                         onTap: () {
-                          BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
-                          Utils.showSmartModalBottomSheet(
-                            context: context,
-                            enableDrag: false,
-                            builder: (context) {
-                              return const EditWatchlistScreen();
-                            },
-                          );
+                          bloc.createNewWatchlist(context);
                         },
                         title: APPStrings.create.tr),
                   ),

@@ -103,7 +103,7 @@ class EditWatchlistScreen extends StatelessWidget {
                               Expanded(
                                   child: SmartButton(
                                       onTap: () {
-                                        context.pop();
+                                        bloc.add(EditWatchlistSaveEvent(context));
                                       },
                                       title: APPStrings.save.tr)),
                             ],

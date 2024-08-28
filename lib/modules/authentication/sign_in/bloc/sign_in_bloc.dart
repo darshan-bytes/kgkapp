@@ -7,10 +7,19 @@ part 'sign_in_state.dart';
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   late BuildContext context;
 
-  TextEditingController emailController = TextEditingController(text: kDebugMode ? "company@gmail.com" : '');
-  TextEditingController passwordController = TextEditingController(text: kDebugMode ? "123" : '');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   SignInBloc() : super(SignInInitial()) {
+    if (kDebugMode) {
+      //B2C
+      emailController.text = "erica@gmail.com";
+      passwordController.text = "123";
+
+      //B2B
+      // emailController.text = "rakesh.abjewellers+18@yopmail.com";
+      // passwordController.text = "123";
+    }
     on<SignInButtonPressedEvent>(signInApiCall);
   }
 
@@ -18,29 +27,30 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<void> signInApiCall(SignInButtonPressedEvent event, Emitter<SignInState> emit) async {
     if (!checkValidations()) return;
 
-    event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+    // Below code is commented for future use if we need to bypass login API
+    // event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
 
-    // // Show loading state
-    // emit(const SignInLoadingState());
-    // Map<String, dynamic> params = {
-    //   ApiKey.email: emailController.text.trim(),
-    //   ApiKey.password: passwordController.text.trim(),
-    //   ApiKey.rememberMe: true
-    // };
-    //
-    // await UserRepository(event.context).loginUser(params).then((value) async {
-    //   await value?.fold((l) {
-    //     ErrorResponse errorModel = l;
-    //     Utils.showMessage(errorModel.message ?? '');
-    //     emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
-    //     printWrapped('$value');
-    //   }, (r) async {
-    //     printWrapped(r.toString());
-    //     await StorageManager().setAuthToken(r.accessToken ?? '');
-    //     emit(const SignInSuccessState());
-    //     event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
-    //   });
-    // });
+    // Show loading state
+    emit(const SignInLoadingState());
+    Map<String, dynamic> params = {
+      ApiKey.email: emailController.text.trim(),
+      ApiKey.password: passwordController.text.trim(),
+      ApiKey.rememberMe: true
+    };
+
+    await UserRepository(event.context).loginUser(params).then((value) async {
+      await value?.fold((l) {
+        ErrorResponse errorModel = l;
+        Utils.showMessage(errorModel.message ?? '');
+        emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
+        printWrapped('$value');
+      }, (r) async {
+        printWrapped(r.toString());
+        await StorageManager().setAuthToken(r.accessToken ?? '');
+        emit(const SignInSuccessState());
+        event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+      });
+    });
   }
 
   /// Check email & password validations as needed

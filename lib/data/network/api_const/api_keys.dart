@@ -11,4 +11,8 @@ class ApiKey {
   static const String page = 'page';
   static const String type = 'type';
   static const String view = 'view';
+  static const String name = 'name';
+  static const String hours = 'hours';
+  static const String minutes = 'minutes';
+  static const String days = 'days';
 }

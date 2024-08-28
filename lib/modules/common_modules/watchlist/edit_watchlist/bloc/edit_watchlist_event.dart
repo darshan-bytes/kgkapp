@@ -21,3 +21,12 @@ final class EditWatchlistDurationChangedEvent extends EditWatchlistEvent {
   @override
   List<Object> get props => [duration];
 }
+
+final class EditWatchlistSaveEvent extends EditWatchlistEvent {
+  final BuildContext context;
+
+  const EditWatchlistSaveEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

@@ -146,7 +146,9 @@ class UserPermissions {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       userId: json["user_id"],
-      permissions: Map.from(json["permissions"]).map((k, v) => MapEntry<String, KGKPermission>(k, KGKPermission.fromJson(v))),
+      permissions: json["permissions"] == null
+          ? {}
+          : Map.from(json["permissions"]).map((k, v) => MapEntry<String, KGKPermission>(k, KGKPermission.fromJson(v))),
       diamond: json["diamond"] == null ? null : Diamond.fromJson(json["diamond"]),
       gemstone: json["gemstone"] == null ? null : Diamond.fromJson(json["gemstone"]),
       jewellery: json["jewellery"] == null ? null : Diamond.fromJson(json["jewellery"]),
