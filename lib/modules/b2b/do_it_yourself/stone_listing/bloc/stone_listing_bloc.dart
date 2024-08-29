@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
 
 part 'stone_listing_event.dart';
 
