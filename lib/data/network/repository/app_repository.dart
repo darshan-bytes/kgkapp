@@ -181,6 +181,33 @@ class AppRepository extends ApiService {
     );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  /// For Getting Watchlist Data
+  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<WatchlistData>>(
+      ApiClient.watchList,
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+    );
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Getting Watchlist Data
+  Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

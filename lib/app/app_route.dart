@@ -616,7 +616,7 @@ class AppRoutes {
       case watchListPage:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent());
+            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent(context));
             return const WatchlistScreen();
           },
           transitionsBuilder: commonTransitionBuilder,
@@ -869,7 +869,8 @@ enum RoutesData {
   watchlistId,
   messageModel,
   conceptId,
-  diamondInfo
+  diamondInfo,
+  isWatchlistCreated,
 }
 
 enum ScreenIdentifier {
