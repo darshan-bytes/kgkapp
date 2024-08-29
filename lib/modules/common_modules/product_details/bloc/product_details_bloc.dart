@@ -189,16 +189,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
       // Gemstone Details API
       await getGemstoneDetails(event.context, productId);
-      suggestedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/s1Xyxy7/image-7.png',
-          name: "Diamond Vine Ring in 18k Rose Gold",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
+      getGemstoneYouMayLike(event.context, productId);
     }
 
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
@@ -345,6 +336,39 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }).toList();
           add(const ProductDetailsSuggestedProductLoadedEvent());
         }
+      },
+    );
+  }
+
+  Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
+    final Either<ErrorResponse, GemstoneListingModel>? response =
+        await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
+
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message!);
+        }
+      },
+      (data) {
+        if (data.data.isEmpty) return;
+        suggestedProductList = data.data.map((e) {
+          final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
+
+          return ProductDetails(
+            productId: e.id,
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+          );
+        }).toList();
+
+        add(const ProductDetailsSuggestedProductLoadedEvent());
       },
     );
   }
