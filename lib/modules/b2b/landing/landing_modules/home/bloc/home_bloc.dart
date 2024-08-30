@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 
 part 'home_event.dart';
 

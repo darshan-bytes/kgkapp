@@ -23,6 +23,15 @@ class ApiClient {
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
 
+  static String diamondYouMayLike(String id) => '$apiBaseUrl/commodity/diamond/$id/you-may-also-like';
+
+  static String gemstoneDetails(String id) => '$apiBaseUrl/commodity/color-stone/$id/view';
+
+  // For Get the list of watchList, Create watchList and Update watchList
+  static const String watchList = '$apiBaseUrl/watchlist';
+
+  static String gemstoneYouMayAlsoLike(String id) => '$apiBaseUrl/commodity/color-stone/$id/you-may-also-like';
+
   static String productDetails(String id) => '$apiBaseUrl/jewelleries/$id/view';
 }
 

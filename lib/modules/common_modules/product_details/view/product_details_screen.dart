@@ -331,7 +331,7 @@ class ProductDetailsScreen extends StatelessWidget {
           if (bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
-            _diamondDetails(bloc, style),
+            _gemstoneDetails(bloc, style),
             const Divider(),
           ],
           if (bloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
@@ -385,7 +385,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
             SizedBox(height: 32.h),
           ],
-          if (bloc.suggestedProductList.isNotEmpty) _buildSuggestedProductList(bloc, style, context),
+          _buildSuggestedProductList(bloc, style, context),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
               bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 32.h),
@@ -591,15 +591,15 @@ class ProductDetailsScreen extends StatelessWidget {
             },
             children: [
               SizedBox(height: 16.h),
-              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
+              _settingWidget(APPStrings.shape.tr, bloc.productDetails?.shape ?? '-', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, '1', context),
+              _settingWidget(APPStrings.quantity.tr, bloc.productDetails?.productQuantity?.name ?? '-', context),
               SizedBox(height: 14.h),
               _settingWidget(APPStrings.totalCarat.tr, '1', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color.tr, 'F-G', context),
+              _settingWidget(APPStrings.color.tr, bloc.productDetails?.color ?? '-', context),
               SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
+              _settingWidget(APPStrings.clarity.tr, bloc.productDetails?.clarity ?? '-', context),
               SizedBox(height: 14.h),
               _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
             ],
@@ -621,16 +621,24 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildSuggestedProductList(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
-    return SmartSuggestionProductList(
-        title: APPStrings.youMayAlsoLike.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: bloc.suggestedProductList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        isPaddingNeeded: false,
-        scrollController: bloc.youMayLikeScrollController);
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is ProductDetailsSuggestedProductLoadedState,
+      builder: (context, state) {
+        if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
+        return SmartSuggestionProductList(
+            title: APPStrings.youMayAlsoLike.tr,
+            onViewAllTap: () => bloc.navigateBasedOnScreenIdentifier(context),
+            suggestedProductList: bloc.suggestedProductList,
+            onProductTap: (product) {
+              context.pushNamed(AppRoutes.productDetailsPage,
+                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: bloc.screenIdentifier});
+            },
+            onEyeTap: () {},
+            onFavTap: () {},
+            isPaddingNeeded: false,
+            scrollController: bloc.youMayLikeScrollController);
+      },
+    );
   }
 
   Widget _buildRecentlyViewedProductList(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {

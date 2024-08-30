@@ -69,8 +69,10 @@ class StoneListingScreen extends StatelessWidget {
                   if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
                   if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
                     const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
-                  SizedBox(height: 24.h),
-                  _buildSelectionDiamond(diamondListingBloc),
+                  if (diamondListingBloc.displaySelection) ...[
+                    SizedBox(height: 24.h),
+                    _buildSelectionDiamond(diamondListingBloc),
+                  ],
                   SizedBox(height: 24.h),
                   _buildProductFilterCount(style, diamondListingBloc),
                   SizedBox(height: 24.h),

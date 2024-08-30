@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
 import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 
 /// Common response model
@@ -69,12 +68,16 @@ class CommonResponse<T> {
         return JewelleryListingModel.fromJson(json);
       case const (DiamondDataModel):
         return DiamondDataModel.fromJson(json);
+      case const (GemstoneDatum):
+        return GemstoneDatum.fromJson(json);
+      case const (PaginationData<WatchlistData>):
+        return PaginationData<WatchlistData>.fromJson(json);
       case const (JewelleryDataModel):
         return JewelleryDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
-      //throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
+        throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
     }
   }
 }

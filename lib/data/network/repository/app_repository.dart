@@ -1,4 +1,4 @@
-import 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
@@ -145,6 +145,79 @@ class AppRepository extends ApiService {
       context.setAppLoading(false);
     }
     return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  //For Getting Diamond Details by ID
+  Future<Either<ErrorResponse, DiamondDataModel>?> getDiamondDetailById(String id) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DiamondDataModel>(
+      ApiClient.diamondDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Getting Gemstone Details by ID
+  Future<Either<ErrorResponse, GemstoneDatum>?> getGemstoneDetailById(String id) async {
+    context.setAppLoading(true);
+    var response = await getMethod<GemstoneDatum>(
+      ApiClient.gemstoneDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For Getting Diamond You May Like by ID
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    var response = await getMethod<DiamondListingModel>(
+      ApiClient.diamondYouMayLike(id),
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+      withCurrencyHeader: true,
+    );
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Getting Watchlist Data
+  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+  }) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<WatchlistData>>(
+      ApiClient.watchList,
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+    );
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Getting Watchlist Data
+  Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For Getting Gemstone You May Like by ID
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneYouMayLike(String id,
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    var response = await getMethod<GemstoneListingModel>(
+      ApiClient.gemstoneYouMayAlsoLike(id),
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+      withCurrencyHeader: true,
+    );
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
 

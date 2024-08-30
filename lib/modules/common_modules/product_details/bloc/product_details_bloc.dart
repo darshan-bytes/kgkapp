@@ -14,6 +14,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   String productName = '';
   ProductDetails? productDetails;
   DiamondDataModel? diamondData;
+  GemstoneDatum? gemstoneData;
   bool isCustomisation = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselSliderController controller = CarouselSliderController();
@@ -144,6 +145,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
     on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
+    on<ProductDetailsSuggestedProductLoadedEvent>(_onProductDetailsSuggestedProductLoadedEvent);
   }
 
   Future<void> _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
@@ -168,53 +170,27 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       suggestedProductList.clear();
 
       //TODO: Need to integrate API for suggested products
-      suggestedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
-          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
+      // suggestedProductList = List.generate(
+      //   8,
+      //   (index) => ProductDetails(
+      //     diamond: "1.5 gram",
+      //     gram: "1.5 gram",
+      //     imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+      //     name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+      //     originalPrice: "\$ 5,000.00",
+      //   ),
+      // );
       await getDiamondsDetails(event.context, productId);
+      getDiamondYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
 
-      imgList = [
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-        "https://i.ibb.co/477f41r/Group-1410089379.png",
-      ];
-
-      recentlyViewedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/RQQGX6J/image-7.png',
-          name: "Diamond Vine Ring in 18k Rose Gold",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
-
-      suggestedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/s1Xyxy7/image-7.png',
-          name: "Diamond Vine Ring in 18k Rose Gold",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
+      // Gemstone Details API
+      await getGemstoneDetails(event.context, productId);
+      getGemstoneYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
       // productCustomizations.clear();
       imgList.clear();
@@ -280,7 +256,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
-    Either<ErrorResponse, DiamondDataModel>? response = await DiamondRepository(context).getDiamondDetailById(productId);
+    Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     response?.fold(
       (error) {
         isErrorInLoadingData = true;
@@ -307,6 +283,110 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             rating: diamondData!.rating?.toDouble(),
           );
         }
+      },
+    );
+  }
+
+  Future<void> getGemstoneDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, GemstoneDatum>? response = await AppRepository(context).getGemstoneDetailById(productId);
+    response?.fold(
+      (error) {
+        isErrorInLoadingData = true;
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        gemstoneData = data;
+        if (gemstoneData != null) {
+          isErrorInLoadingData = false;
+          bool isDiscounted = gemstoneData?.discountPercentage != null &&
+              (gemstoneData?.discountPercentage is num) &&
+              (gemstoneData?.discountPercentage ?? 0) > 0;
+          productName = gemstoneData?.rmDescription ?? '';
+          if (gemstoneData?.image.isNotEmpty ?? false) {
+            imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
+          }
+          productDetails = ProductDetails(
+            productId: productId,
+            name: productName,
+            offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
+            originalPrice: gemstoneData?.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([gemstoneData?.discountPercentage]) : null,
+            productSku: gemstoneData?.lotCode,
+            reviewCount: gemstoneData?.reviewCount,
+            rating: gemstoneData?.rating?.toDouble(),
+            shape: gemstoneData?.shape,
+            productQuality: CartProductQuality(name: gemstoneData?.quality),
+            color: gemstoneData?.color,
+            clarity: gemstoneData?.clarity,
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondListingModel>? response =
+        await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        if (data.data.isNotEmpty) {
+          List<DiamondDataModel> suggestedProductListAPI = data.data;
+          suggestedProductList = suggestedProductListAPI.map((e) {
+            bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+            return ProductDetails(
+              productId: e.id,
+              name: e.rmDescription ?? '',
+              imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+              originalPrice: e.finalPrice?.setCurrency,
+              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+              productSku: e.lotCode,
+              reviewCount: e.reviewCount,
+              rating: e.rating?.toDouble(),
+            );
+          }).toList();
+          add(const ProductDetailsSuggestedProductLoadedEvent());
+        }
+      },
+    );
+  }
+
+  Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
+    final Either<ErrorResponse, GemstoneListingModel>? response =
+        await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
+
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message!);
+        }
+      },
+      (data) {
+        if (data.data.isEmpty) return;
+        suggestedProductList = data.data.map((e) {
+          final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
+
+          return ProductDetails(
+            productId: e.id,
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+          );
+        }).toList();
+
+        add(const ProductDetailsSuggestedProductLoadedEvent());
       },
     );
   }
@@ -373,5 +453,26 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void _onGemstoneDetailsToggleEvent(GemstoneDetailsToggleEvent event, Emitter<ProductDetailsState> emit) {
     isGemstoneDetailsOpen = !isGemstoneDetailsOpen;
     emit(GemstoneDetailsToggleState(isGemstoneDetailsOpen));
+  }
+
+  void _onProductDetailsSuggestedProductLoadedEvent(ProductDetailsSuggestedProductLoadedEvent event, Emitter<ProductDetailsState> emit) {
+    emit(ProductDetailsSuggestedProductLoadedState(suggestedProductList));
+  }
+
+  void navigateBasedOnScreenIdentifier(BuildContext context) {
+    switch (screenIdentifier) {
+      case ScreenIdentifier.productForRing:
+        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        break;
+      case ScreenIdentifier.productForGemstones:
+      case ScreenIdentifier.productForDiamonds:
+        context.pushNamed(AppRoutes.stoneListingPage, arguments: {
+          RoutesData.isPageFor: screenIdentifier,
+          RoutesData.productId: productDetails?.productId,
+        });
+        break;
+      default:
+        break;
+    }
   }
 }
