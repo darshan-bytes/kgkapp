@@ -5,11 +5,22 @@ sealed class WatchlistState extends Equatable {
 }
 
 final class WatchlistInitial extends WatchlistState {
+  const WatchlistInitial();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class WatchlistLoadingState extends WatchlistState {
+  const WatchlistLoadingState();
+
   @override
   List<Object> get props => [];
 }
 
 final class WatchlistLoadedState extends WatchlistState {
+  const WatchlistLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -39,8 +50,8 @@ final class WatchlistLoadingMoreState extends WatchlistState {
   List<Object> get props => [];
 }
 
-final class WatchlistLoadMoreState extends WatchlistState {
-  const WatchlistLoadMoreState();
+final class WatchlistDeleteState extends WatchlistState {
+  const WatchlistDeleteState();
 
   @override
   List<Object> get props => [];

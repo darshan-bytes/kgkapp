@@ -9,7 +9,7 @@ class JewelleryListingModel {
   final List<JewelleryDatum> data;
   final int? filteredRecords;
   final Pagination? pagination;
-  final int? totalRecords;
+  int? totalRecords;
 
   factory JewelleryListingModel.fromJson(Map<String, dynamic> json) {
     return JewelleryListingModel(

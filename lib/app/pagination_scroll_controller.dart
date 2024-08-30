@@ -83,19 +83,19 @@ class SmartPaginationScrollController {
 
   /// Listens to scroll events and triggers the load action when the scroll position
   /// reaches a certain boundary. It also manages the loading state and the current page.
-  void scrollListener() {
+  Future<void> scrollListener() async {
     if (controller.offset > 0) {
       canScrollToTop.value = true;
     } else {
       canScrollToTop.value = false;
     }
-    if (hasNextPage) {
+    if (hasNextPage && isPageLoaded.isCompleted) {
       try {
         if (controller.offset >= controller.position.maxScrollExtent * boundaryOffset && !isLoading) {
           isLoading = true;
           isPageLoaded = Completer<bool>();
           loadAction(currentPage);
-          isPageLoaded.future.then((bool shouldStop) {
+          await isPageLoaded.future.then((bool shouldStop) {
             isLoading = false;
             currentPage++;
             boundaryOffset = 1 - 1 / (currentPage * 2);

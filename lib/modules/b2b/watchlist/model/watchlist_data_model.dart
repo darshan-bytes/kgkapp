@@ -155,6 +155,6 @@ class WatchlistDuration {
 
 extension WatchlistDurationExtension on WatchlistDuration {
   String get displayDuration {
-    return '${hours ?? 0}h : ${minutes ?? 0}m : ${days ?? 0}s';
+    return '${days ?? 0}d ${hours ?? 0}h ${minutes ?? 0}m';
   }
 }
