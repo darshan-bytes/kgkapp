@@ -75,9 +75,17 @@ class B2BListingItem extends StatelessWidget {
               border: Border.all(color: style.borderColor),
             ),
             child: SmartGridView(
-              items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel)
-                  .map((field) => _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w))
-                  .toList(),
+              items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel).map((field) {
+                /// if the type is watchlistType, then we are displaying the remaining time of the listing item. that will be decremented by 1 second every second. so changed it to value notifier builder.
+                if (type == B2BListingType.watchlistType && field.label != null && listingItemModel.strRemainingTime != null) {
+                  return ValueListenableBuilder(
+                    valueListenable: listingItemModel.strRemainingTime!,
+                    builder: (context, value, child) => _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w),
+                  );
+                } else {
+                  return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);
+                }
+              }).toList(),
               columns: columns,
               spacing: 0.0.w,
               runSpacing: gridRunSpacing ?? 16.0.h,

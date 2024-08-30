@@ -6,63 +6,80 @@ class WatchlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final WatchlistBloc bloc = BlocProvider.of<WatchlistBloc>(context);
-    return Scaffold(
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: bloc.paginationScrollController.canScrollToTop,
-        onTap: bloc.paginationScrollController.scrollToTop,
+    return PopScope(
+      onPopInvokedWithResult: (_, __) {
+        bloc.add(const WatchListCloseEvent());
+      },
+      child: Scaffold(
+        floatingActionButton: ScrollToTopFAB(
+          canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+          onTap: bloc.paginationScrollController.scrollToTop,
+        ),
+        appBar: SmartAppBar(
+          title: APPStrings.watchlist.tr,
+          onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
+          onSearch: () => context.pushNamed(AppRoutes.searchPage),
+        ),
+        body: BlocBuilder<WatchlistBloc, WatchlistState>(
+          buildWhen: (previous, current) => current is WatchlistLoadedState,
+          builder: (context, state) {
+            if (state is WatchlistLoadedState) {
+              return SmartSingleChildScrollView(
+                onRefresh: () async {
+                  await bloc.pullToRefresh(context: context);
+                },
+                padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
+                controller: bloc.paginationScrollController.controller,
+                child: Column(
+                  children: [
+                    SmartTextField.search(
+                      height: 48.h,
+                      hintText: APPStrings.searchWatchlist.tr,
+                      controller: bloc.watchlistSearchController,
+                      onValueChanges: (value) {
+                        /// We can use this function inside watchlist bloc using TextEditingController.addListener
+                        /// but we need BuildContext inside the function so called from here
+                        bloc.searchListener(context);
+                      },
+                    ),
+                    SizedBox(height: 24.h),
+                    BlocBuilder<WatchlistBloc, WatchlistState>(
+                      buildWhen: (previous, current) =>
+                          current is WatchlistLoadedState ||
+                          current is WatchlistLoadedMoreState ||
+                          current is WatchlistDeleteState ||
+                          current is WatchlistLoadingState,
+                      builder: (builderContext, state) {
+                        if (bloc.watchListingList.isEmpty && state is! WatchlistLoadingState) {
+                          return NoDataFoundWidget(
+                            text: APPStrings.noWatchlistFound.tr,
+                            onRetry: () {
+                              bloc.pullToRefresh(context: builderContext);
+                            },
+                          );
+                        }
+                        return ListView.builder(
+                          itemCount: bloc.watchListingList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => _buildWatchlistItem(bloc, index, builderContext),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+        bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       ),
-      appBar: SmartAppBar(
-        title: APPStrings.watchlist.tr,
-        onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
-        onSearch: () => context.pushNamed(AppRoutes.searchPage),
-      ),
-      body: BlocBuilder<WatchlistBloc, WatchlistState>(
-        buildWhen: (previous, current) => current is WatchlistLoadedState,
-        builder: (context, state) {
-          if (state is WatchlistLoadedState) {
-            return SmartSingleChildScrollView(
-              onRefresh: () async {
-                await bloc.pullToRefresh(context: context);
-              },
-              padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
-              controller: bloc.paginationScrollController.controller,
-              child: Column(
-                children: [
-                  SmartTextField.search(
-                    height: 48.h,
-                    hintText: APPStrings.searchWatchlist.tr,
-                    controller: bloc.watchlistSearchController,
-                  ),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  BlocBuilder<WatchlistBloc, WatchlistState>(
-                    buildWhen: (previous, current) => current is WatchlistLoadedState || current is WatchlistLoadedMoreState,
-                    builder: (context, state) {
-                      if (bloc.watchListingList.isEmpty) {
-                        return NoDataFoundWidget(text: APPStrings.noWatchlistFound.tr);
-                      }
-                      return ListView.builder(
-                        itemCount: bloc.watchListingList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => _buildWatchlistItem(bloc, index, context),
-                      );
-                    },
-                  )
-                ],
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
-      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
     );
   }
 
   /// Build Watchlist Item Widget
-  Widget _buildWatchlistItem(WatchlistBloc bloc, int index, BuildContext context) {
+  Widget _buildWatchlistItem(WatchlistBloc bloc, int index, BuildContext screenContext) {
     return BlocBuilder<WatchlistBloc, WatchlistState>(
       buildWhen: (previous, current) => current is WatchlistLoadingMoreState || current is WatchlistLoadedMoreState,
       builder: (context, state) {
@@ -70,7 +87,7 @@ class WatchlistScreen extends StatelessWidget {
           children: [
             B2BListingItem(
               onTapMenuButton: () {
-                _showWatchlistBottomSheet(context);
+                _showWatchlistBottomSheet(screenContext, bloc, index: index);
               },
               type: B2BListingType.watchlistType,
               listingItemModel: bloc.watchListingList[index],
@@ -128,10 +145,10 @@ class WatchlistScreen extends StatelessWidget {
   }
 
   /// Show watchlist bottom sheet with edit and delete option
-  void _showWatchlistBottomSheet(BuildContext context) {
-    OrderPopupStyle orderPopupStyle = AppTheme.of(context).orderPopupStyle;
+  void _showWatchlistBottomSheet(BuildContext screenContext, WatchlistBloc bloc, {required int index}) {
+    OrderPopupStyle orderPopupStyle = AppTheme.of(screenContext).orderPopupStyle;
     Utils.showSmartModalBottomSheet(
-        context: context,
+        context: screenContext,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
         ),
@@ -161,7 +178,8 @@ class WatchlistScreen extends StatelessWidget {
                     }),
                     _buildPopupOption(context, text: APPStrings.removeWatchlist.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                       context.pop();
-                      _buildRemoveWatchlistPopup(context);
+                      WatchlistData watchlistData = WatchlistData.fromJson(bloc.watchlistDataList[index].toJson());
+                      _buildRemoveWatchlistPopup(screenContext, bloc, watchlistData: watchlistData);
                     }),
                   ],
                 ),
@@ -172,16 +190,18 @@ class WatchlistScreen extends StatelessWidget {
   }
 
   /// Remove Watchlist Popup
-  void _buildRemoveWatchlistPopup(BuildContext context) {
+  void _buildRemoveWatchlistPopup(BuildContext screenContext, WatchlistBloc bloc, {required WatchlistData watchlistData}) {
     Utils.showSmartModalBottomSheet(
-      context: context,
+      context: screenContext,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
       ),
       builder: (context) => ConfirmationDialog(
         title: APPStrings.removeWatchlistName.tr,
-        message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([56]),
-        onApproved: () => context.pop(),
+        message: APPStrings.addedXProductsWillBeRemoved.tr.interpolate([watchlistData.products?.length ?? 0]),
+        onApproved: () {
+          bloc.add(WatchListDeleteEvent(watchlistData.sId, context, screenContext));
+        },
         onDenied: () => context.pop(),
         onApprovedText: APPStrings.remove.tr,
         onDeniedText: APPStrings.cancel.tr,

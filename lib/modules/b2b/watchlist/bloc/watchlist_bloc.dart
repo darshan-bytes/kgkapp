@@ -10,21 +10,27 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   List<B2BCustomListingDataModel> watchListingList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
+  String searchQuery = '';
 
   int? totalNumberOfPages;
   int limit = 10;
 
   List<WatchlistData> watchlistDataList = [];
 
-  WatchlistBloc() : super(WatchlistInitial()) {
+  Timer? _debounce;
+
+  WatchlistBloc() : super(const WatchlistInitial()) {
     on<WatchlistInitialEvent>(_onWatchlistInitialEvent);
     on<WatchlistLoadMoreEvent>(_onWatchlistLoadMoreEvent);
     on<WatchlistPullToRefreshEvent>(_onWatchlistPullToRefresh);
+    on<WatchListCloseEvent>(_onWatchListClose);
+    on<WatchListSearchEvent>(_onWatchListSearch);
+    on<WatchListDeleteEvent>(_onWatchListDelete);
   }
 
   @override
   Future<void> close() {
-    paginationScrollController.dispose();
+    clearBlocData();
     return super.close();
   }
 
@@ -48,7 +54,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     watchListingList.clear();
     await fetchWatchlist(event.context, emit, false, 1);
     refreshCompleter.complete(true);
-    emit(WatchlistLoadedState());
+    emit(const WatchlistLoadedState());
   }
 
   void _onWatchlistLoadMoreEvent(WatchlistLoadMoreEvent event, Emitter<WatchlistState> emit) async {
@@ -64,17 +70,20 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     watchlistDataList.clear();
     await fetchWatchlist(event.context, emit, false, 1);
     refreshCompleter.complete(true);
-    emit(WatchlistLoadedState());
+    emit(const WatchlistLoadedState());
   }
 
   Future<void> fetchWatchlist(BuildContext context, Emitter<WatchlistState> emit, bool? isLoadMore, int currentPage) async {
     if (isLoadMore == true) {
       emit(const WatchlistLoadingMoreState());
+    } else {
+      emit(const WatchlistLoadingState());
     }
     Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(context).getWatchList(
       page: currentPage.toString(),
       limit: limit.toString(),
       isLoadMore: isLoadMore ?? false,
+      searchQuery: searchQuery,
     );
     response?.fold(
       (l) {
@@ -94,10 +103,12 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
               id: e.sId ?? "",
               strName: e.name ?? "",
               status: e.displayStatus,
-              strFrom: e.createdAt,
-              strTo: e.expiresAt,
+              strFrom: e.createdAt?.changeDateFormat(
+                  outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
+              strTo: e.expiresAt?.changeDateFormat(
+                  outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
-              strRemainingTime: e.duration?.displayDuration ?? "",
+              strRemainingTime: ValueNotifier<String>(e.duration?.displayDuration ?? ""),
 
               /// Below code is commented as it is currently not available in API
               // strConceptNumber: e.strConceptNumber ?? "",
@@ -106,14 +117,30 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
             )));
         paginationScrollController.hasNextPage = currentPage < totalNumberOfPages!;
         paginationScrollController.isPageLoaded.complete(currentPage == totalNumberOfPages);
+        if (currentPage == 1) {
+          startTimerForDurationDecrement();
+        }
       },
     );
+  }
+
+  void startTimerForDurationDecrement() {
+    //TODO: Implement timer for decrementing the duration, Need to discuss with JD for the same
+    // timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   for (int i = 0; i < watchlistDataList.length; i++) {
+    //     if (watchlistDataList[i].duration?.seconds != null) {
+    //       watchlistDataList[i].duration!.seconds = watchlistDataList[i].duration!.seconds! - 1;
+    //       watchListingList[i].strRemainingTime.value = watchlistDataList[i].duration?.displayDuration ?? "";
+    //     }
+    //   }
+    // });
   }
 
   Future<bool> pullToRefresh({required BuildContext context}) async {
     if (!refreshCompleter.isCompleted) {
       return false;
     }
+    paginationScrollController.pullToRefresh();
     refreshCompleter = Completer<bool>();
     add(WatchlistPullToRefreshEvent(context: context));
     bool result = await refreshCompleter.future;
@@ -131,5 +158,63 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     if (result?[RoutesData.isWatchlistCreated] == true) {
       pullToRefresh(context: context);
     }
+  }
+
+  void _onWatchListClose(WatchListCloseEvent event, Emitter<WatchlistState> emit) {
+    clearBlocData();
+    emit(const WatchlistInitial());
+  }
+
+  FutureOr<void> _onWatchListSearch(WatchListSearchEvent event, Emitter<WatchlistState> emit) {
+    pullToRefresh(context: event.context);
+  }
+
+  void searchListener(BuildContext context) {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      searchQuery = watchlistSearchController.text;
+      add(WatchListSearchEvent(searchQuery, context));
+    });
+  }
+
+  void clearBlocData() {
+    isInitialized = false;
+    paginationScrollController.dispose();
+    paginationScrollController = SmartPaginationScrollController();
+    watchListingList.clear();
+    watchlistDataList.clear();
+    refreshCompleter = Completer<bool>();
+    watchlistSearchController.clear();
+    _debounce?.cancel();
+  }
+
+  Future<void> _onWatchListDelete(WatchListDeleteEvent event, Emitter<WatchlistState> emit) async {
+    if (watchlistDataList.isEmpty || event.watchlistId == null) return;
+    emit(const WatchlistReloadState());
+    int index = watchlistDataList.indexWhere((element) => element.sId == event.watchlistId);
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).deleteWatchList(watchlistDataList[index].sId!);
+    await response?.fold(
+      (l) {
+        Utils.showMessage(l.message ?? "");
+      },
+      (r) async {
+        event.context.pop();
+        await Future.delayed(const Duration(milliseconds: 500));
+        if (watchlistDataList.length == 1) {
+          if (event.screenContext.mounted) {
+            await pullToRefresh(context: event.screenContext);
+          }
+        } else if (watchlistDataList.length > 1) {
+          watchlistDataList.removeAt(index);
+          watchListingList.removeAt(index);
+        }
+        emit(const WatchlistDeleteState());
+        if (r.message != null) {
+          Utils.showMessage(r.message ?? "");
+        }
+      },
+    );
   }
 }

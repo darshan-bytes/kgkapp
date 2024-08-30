@@ -44,6 +44,7 @@ class EditWatchlistScreen extends StatelessWidget {
                             hintText: APPStrings.hintWatchlistName.tr,
                             controller: bloc.nameController,
                             textInputAction: TextInputAction.done,
+                            textCapitalization: TextCapitalization.words,
                           ),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
