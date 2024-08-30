@@ -31,6 +31,8 @@ class ApiClient {
   static const String watchList = '$apiBaseUrl/watchlist';
 
   static String gemstoneYouMayAlsoLike(String id) => '$apiBaseUrl/commodity/color-stone/$id/you-may-also-like';
+
+  static String watchListById(String watchlistIds) => '$apiBaseUrl/watchlist/$watchlistIds';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

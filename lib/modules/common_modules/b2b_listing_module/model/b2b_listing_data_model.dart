@@ -45,7 +45,7 @@ class B2BCustomListingDataModel {
   String? strFrom;
   String? strTo;
   String? strNumberOfProduct;
-  String? strRemainingTime;
+  ValueNotifier<String>? strRemainingTime;
   String? strItemSold;
   String? strOrdersReceived;
   String? strTotalSell;

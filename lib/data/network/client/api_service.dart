@@ -114,22 +114,24 @@ class ApiService implements ApiProvider {
   // Implement putMethod using sendRequest
   @override
   Future<Either<ErrorResponse, dynamic>?> putMethod<T>(String url, dynamic body,
-      {Map<String, String>? headers, bool withCurrencyHeader = false}) async {
-    return _sendRequest<T>(_ApiType.put, url, body: body, headers: headers, withCurrencyHeader: withCurrencyHeader);
+      {Map<String, String>? headers, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.put, url,
+        body: body, headers: headers, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
   }
 
   // Implement patchMethod using sendRequest
   @override
   Future<Either<ErrorResponse, dynamic>?> updateMethod<T>(String url, dynamic body,
-      {Map<String, String>? headers, bool withCurrencyHeader = false}) async {
-    return _sendRequest<T>(_ApiType.patch, url, body: body, headers: headers, withCurrencyHeader: withCurrencyHeader);
+      {Map<String, String>? headers, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.patch, url,
+        body: body, headers: headers, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
   }
 
   // Implement deleteMethod using sendRequest
   @override
   Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(String url,
-      {Map<String, dynamic>? query, bool withCurrencyHeader = false}) async {
-    return _sendRequest<T>(_ApiType.delete, url, query: query, withCurrencyHeader: withCurrencyHeader);
+      {Map<String, dynamic>? query, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.delete, url, query: query, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
   }
 
   @override

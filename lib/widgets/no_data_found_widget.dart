@@ -8,6 +8,8 @@ class NoDataFoundWidget extends StatelessWidget {
   final TextStyle? subTextStyle;
   final double? imageWidth;
   final double? imageHeight;
+  final VoidCallback? onRetry;
+  final String? retryText;
 
   const NoDataFoundWidget({
     super.key,
@@ -18,6 +20,8 @@ class NoDataFoundWidget extends StatelessWidget {
     this.subTextStyle,
     this.imageWidth,
     this.imageHeight,
+    this.onRetry,
+    this.retryText,
   });
 
   @override
@@ -45,6 +49,13 @@ class NoDataFoundWidget extends StatelessWidget {
             SmartText(
               subText!,
               style: style.subTitleStyle.merge(subTextStyle),
+            ),
+          ],
+          if (onRetry != null) ...[
+            SizedBox(height: 16.h),
+            SmartButton(
+              title: retryText ?? APPStrings.retry.tr,
+              onTap: () => onRetry?.call(),
             ),
           ],
         ],

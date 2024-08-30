@@ -15,4 +15,5 @@ class ApiKey {
   static const String hours = 'hours';
   static const String minutes = 'minutes';
   static const String days = 'days';
+  static const String search = 'search';
 }
