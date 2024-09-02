@@ -265,7 +265,7 @@ class JewelleryDatum {
   final String? brandName;
   final dynamic productName;
   final String? market;
-  final List<dynamic> multipleFinishedViewImage;
+  final List<MultipleFinishedViewImage> multipleFinishedViewImage;
   final dynamic setsPart;
   final dynamic kgkCollection2Name;
   final int? refSuid;
@@ -312,7 +312,7 @@ class JewelleryDatum {
       customerCollectionRefSuid: json["customer_collection_ref_suid"],
       metalColor1Suid: json["metal_color_1_suid"],
       ageRange: json["age_range"],
-      productPriceLocalCurrency: json["product_price_local_currency"].toDouble(),
+      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"].toDouble() : 0,
       setName: json["set_name"],
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
@@ -334,7 +334,7 @@ class JewelleryDatum {
       productSize: json["product_size"],
       metalColor2RefSuid: json["metal_color_2_ref_suid"],
       kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"],
-      productPriceIntCurrency: json["product_price_int_currency"].toDouble(),
+      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"].toDouble() : 0,
       stockTypeRefSuid: json["stock_type_ref_suid"],
       customerAliasName: json["customer_alias_name"],
       mspRateIntlCurrency: json["msp_rate_intl_currency"],
@@ -401,8 +401,9 @@ class JewelleryDatum {
       brandName: json["brand_name"],
       productName: json["product_name"],
       market: json["market"],
-      multipleFinishedViewImage:
-          json["multiple_finished_view_image"] == null ? [] : List<dynamic>.from(json["multiple_finished_view_image"]!.map((x) => x)),
+      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
+          ? []
+          : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
       setsPart: json["sets_part"],
       kgkCollection2Name: json["kgk_collection_2_name"],
       refSuid: json["ref_suid"],
@@ -541,7 +542,7 @@ class JewelleryDatum {
         "brand_name": brandName,
         "product_name": productName,
         "market": market,
-        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x).toList(),
+        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
         "sets_part": setsPart,
         "kgk_collection_2_name": kgkCollection2Name,
         "ref_suid": refSuid,
@@ -584,6 +585,52 @@ class JewelleryDatum {
   @override
   String toString() {
     return "$metalColor3RefSuid, $tagPriceLocalCurrency, $settingType, $customerCollectionRefSuid, $metalColor1Suid, $ageRange, $productPriceLocalCurrency, $setName, $manufactureDate, $exclusive, $styleNo, $id, $huidNo2, $productDescription, $coordinatorSalesmanSuid, $huidNo1, $lspRateIntlCurrency, $ageDays, $businessCategory, $marketSuid, $bestSellerQuantity, $businessCategoryRefSuid, $goodOrigin, $kgkCollection3RefSuid, $jewelleryTypeGroupSuid, $productSize, $metalColor2RefSuid, $kgkCollection2RefSuid, $productPriceIntCurrency, $stockTypeRefSuid, $customerAliasName, $mspRateIntlCurrency, $metalCommodity, $jewelleryTypeSuid, $binGroup, $metalColor1, $metalColor2, $cut, $metalColor3, $customization, $createdAt, $updatedDateTime, $metalCommoditySuid, $updatedAt, $lspRateLocalCurrency, $currency, $collectionGroupNameRefSuid, $marketRefSuid, $metalCommodityRefSuid, $supplierName, $metalColor3Suid, $metalKtRefSuid, $cscCode, $grossPriceLocalCurrency, $subAreaName, $kgkCollection3Suid, $stockType, $kgkCollectionSuid, $subJewelleryType, $deleted, $ctsOrGms, $customerCollectionSuid, $jewelleryTypeGroup, $certificateNo, $diamondGrade, $viewCount, $coordinatorSalesman, $newArrival, $bestSeller, $singleStone, $customerSuid, $referenceId, $customerPoNo, $cscName, $tagPriceIntlCurrency, $grossPriceIntlCurrency, $collectionGroupName, $contractNoSkuNo, $metalKt, $styleSuid, $customerSku, $jewelleryTypeRefSuid, $cscId, $styleRefSuid, $headSalesmanSuid, $subAreaId, $combination, $businessCategorySuid, $stockTypeSuid, $customerRefSuid, $guestUser, $importedFrom, $brandName, $productName, $market, $multipleFinishedViewImage, $setsPart, $kgkCollection2Name, $refSuid, $qty, $metalKtSuid, $metalColor1RefSuid, $setNo, $componentDetails, $supplierCode, $mspRateLocalCurrency, $kgkCollection2Suid, $kgkCollection3Name, $receivedDateTime, $suid, $customerCollectionName, $jewelleryType, $headSalesman, $headSalesmanRefSuid, $kgkCollectionRefSuid, $coordinatorSalesmanRefSuid, $customerGroupName, $kgkCollection, $metalColor2Suid, $location, $customer, $crt, $gms, $rating, $reviewCount, $metalColor1HexCode, $metalColor2HexCode, $metalColor3HexCode, $discountPercentage, $businessCategoryName, $jewelleryTypeName, $finalPrice, $discountPrice, ";
+  }
+}
+
+class MultipleFinishedViewImage {
+  String? highRes3;
+  String? highRes4;
+  String? contractNo;
+  String? imageAvailable;
+  String? imageAvailableMa;
+  String? highRes1;
+  String? highRes2;
+  String? imageURL;
+
+  MultipleFinishedViewImage({
+    this.highRes3,
+    this.highRes4,
+    this.contractNo,
+    this.imageAvailable,
+    this.imageAvailableMa,
+    this.highRes1,
+    this.highRes2,
+    this.imageURL,
+  });
+
+  MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
+    highRes3 = json['high_res3'];
+    highRes4 = json['high_res4'];
+    contractNo = json['ContractNo'];
+    imageAvailable = json['IMAGE_AVAILABLE'];
+    imageAvailableMa = json['IMAGE_AVAILABLE_MA'];
+    highRes1 = json['high_res1'];
+    highRes2 = json['high_res2'];
+    imageURL = json['IMAGE_URL'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['high_res3'] = highRes3;
+    data['high_res4'] = highRes4;
+    data['ContractNo'] = contractNo;
+    data['IMAGE_AVAILABLE'] = imageAvailable;
+    data['IMAGE_AVAILABLE_MA'] = imageAvailableMa;
+    data['high_res1'] = highRes1;
+    data['high_res2'] = highRes2;
+    data['IMAGE_URL'] = imageURL;
+    return data;
   }
 }
 
