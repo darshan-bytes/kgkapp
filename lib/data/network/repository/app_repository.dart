@@ -228,11 +228,17 @@ class AppRepository extends ApiService {
   ///For Getting Jewellery You May Like by ID
   Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
+    if(isLoadMore){
+      context.setAppLoading(true);
+    }
     var response = await getMethod<JewelleryListingModel>(
-      ApiClient.jewelleryYouMayAlsoLike("EFGSTOCK1600073718"),
+      ApiClient.jewelleryYouMayAlsoLike(id),
       query: {ApiKey.page: page, ApiKey.limit: limit},
       withCurrencyHeader: true,
     );
+    if(isLoadMore){
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

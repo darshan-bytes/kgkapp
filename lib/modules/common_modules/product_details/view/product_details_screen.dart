@@ -380,9 +380,10 @@ class ProductDetailsScreen extends StatelessWidget {
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),
               SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
-                context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
+                context.pushNamed(AppRoutes.allReviewPage);
               }),
             ],
+            if (bloc.suggestedProductList.isNotNullNorEmpty)
             SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),

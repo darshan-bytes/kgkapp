@@ -91,12 +91,11 @@ dependencies:
   google_maps_flutter: ^2.9.0
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^26.2.10
+  syncfusion_flutter_sliders: ^26.2.12
 
   #For Calendar
-  syncfusion_flutter_calendar: ^26.2.10
+  syncfusion_flutter_calendar: ^26.2.12
 
-  #  syncfusion_flutter_charts: ^26.2.10
   syncfusion_flutter_charts:
     path: packages/syncfusion_flutter_charts
 

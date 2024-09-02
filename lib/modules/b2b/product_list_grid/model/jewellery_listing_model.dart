@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class JewelleryListingModel {
   JewelleryListingModel({
     required this.data,
@@ -317,7 +319,7 @@ class JewelleryDataModel {
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
       styleNo: json["style_no"],
-      id: json["id"],
+      id: json["id"] ?? json["_id"],
       huidNo2: json["huid_no_2"],
       productDescription: json["product_description"],
       coordinatorSalesmanSuid: json["coordinator_salesman_suid"],
@@ -723,10 +725,10 @@ class ComponentDetail {
 
   factory ComponentDetail.fromJson(Map<String, dynamic> json) {
     return ComponentDetail(
-      consumedQty2: json["ConsumedQty2"],
+      consumedQty2: json["ConsumedQty2"]?.toString() ?? "0",
       brokenQty1: json["BrokenQty1"].toDouble(),
       shape: json["Shape"],
-      consumedQty1: json["ConsumedQty1"],
+      consumedQty1: json["ConsumedQty1"]?.toString() ?? "0",
       mmSize: json["MMSize"],
       totalQty2: json["TotalQty2"].toDouble(),
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
@@ -745,7 +747,7 @@ class ComponentDetail {
       cut: json["Cut"],
       colorSuid: json["ColorSuid"],
       color: json["Color"],
-      intCurrencyAmount: json["IntCurrencyAmount"],
+      intCurrencyAmount: json["IntCurrencyAmount"]?.toString() ?? "0",
       rmName: json["RMName"],
       rmNameSuid: json["RMNameSuid"],
       claritySuid: json["ClaritySuid"],
@@ -754,15 +756,15 @@ class ComponentDetail {
       internationalQualityRefSuid: json["InternationalQualityRefSuid"],
       clarity: json["Clarity"],
       internationalQualitySuid: json["InternationalQualitySuid"],
-      localCurrencyRate: json["LocalCurrencyRate"],
-      intCurrencyRate: json["IntCurrencyRate"],
-      totalQty1: json["TotalQty1"],
+      localCurrencyRate: json["LocalCurrencyRate"]?.toString() ?? "0",
+      intCurrencyRate: json["IntCurrencyRate"]?.toString() ?? "0",
+      totalQty1: json["TotalQty1"]?.toString() ?? "0",
       lotCode: json["LotCode"],
       uom2: json["UOM2"],
       uom1: json["UOM1"],
       clarityRefSuid: json["ClarityRefSuid"],
       karatage: json["Karatage"],
-      lossQty1: json["LossQty1"],
+      lossQty1: json["LossQty1"]?.toString() ?? "0",
       id: json["_id"],
     );
   }
@@ -828,8 +830,8 @@ class Pagination {
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
-      limit: json["limit"],
-      page: json["page"],
+      limit: json["limit"].toString(),
+      page: json["page"].toString(),
     );
   }
 

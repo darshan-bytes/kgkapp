@@ -81,7 +81,7 @@ class StoneListingScreen extends StatelessWidget {
               ),
             ));
           }
-          return const SmartCircularProgressIndicator();
+          return const SizedBox.shrink();
         },
       ),
     );

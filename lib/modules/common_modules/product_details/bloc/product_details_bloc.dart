@@ -402,23 +402,22 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
-        if (data.data.isNotEmpty) {
-          suggestedProductList = data.data.map((e) {
-            bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
-            return ProductDetails(
-              productId: e.id,
-              name: e.productDescription ?? '',
-              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-              originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
-              productSku: e.contractNoSkuNo,
-              reviewCount: e.reviewCount,
-              rating: e.rating?.toDouble(),
-            );
-          }).toList();
+        suggestedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+          return ProductDetails(
+            productId: e.id,
+            name: e.productDescription ?? '',
+            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            productSku: e.contractNoSkuNo,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+          );
+        }).toList();
           add(const ProductDetailsSuggestedProductLoadedEvent());
-        }
+
       },
     );
   }
@@ -494,7 +493,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void navigateBasedOnScreenIdentifier(BuildContext context) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
-        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing,RoutesData.productId: productDetails?.productId,});
         break;
       case ScreenIdentifier.productForGemstones:
       case ScreenIdentifier.productForDiamonds:
