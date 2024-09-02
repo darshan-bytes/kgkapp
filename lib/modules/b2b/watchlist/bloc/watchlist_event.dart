@@ -31,3 +31,31 @@ final class WatchlistPullToRefreshEvent extends WatchlistEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class WatchListCloseEvent extends WatchlistEvent {
+  const WatchListCloseEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class WatchListSearchEvent extends WatchlistEvent {
+  final String searchQuery;
+  final BuildContext context;
+
+  const WatchListSearchEvent(this.searchQuery, this.context);
+
+  @override
+  List<Object> get props => [searchQuery, context];
+}
+
+final class WatchListDeleteEvent extends WatchlistEvent {
+  final String? watchlistId;
+  final BuildContext context;
+  final BuildContext screenContext;
+
+  const WatchListDeleteEvent(this.watchlistId, this.context, this.screenContext);
+
+  @override
+  List<Object?> get props => [watchlistId, context, screenContext];
+}

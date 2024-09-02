@@ -11,7 +11,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
-  int currentPage = 1;
   int? totalNumberOfPages;
   int limit = 10;
 
@@ -101,18 +100,19 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     if (productId.isNotEmpty) {
-      response = await AppRepository(context)
-          .getDiamondYouMayLike(productId, page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+      response = await AppRepository(context).getDiamondYouMayLike(productId,
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
     } else {
-      response = await AppRepository(context)
-          .fetchDiamondList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
+      response = await AppRepository(context).fetchDiamondList(
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
     }
 
     response?.fold((l) {
       Utils.showMessage(l.message ?? "");
     }, (r) {
       diamondDatumList = r.data;
-      totalNumberOfPages = (r.totalRecords ?? 0) ~/ limit;
+      r.totalRecords ??= 0;
+      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
       List.generate(
         diamondDatumList.length,
         (index) => productList.add(
@@ -152,17 +152,18 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, GemstoneListingModel>? response;
     if (productId.isNotEmpty) {
-      response = await AppRepository(context)
-          .getGemstoneYouMayLike(productId, page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+      response = await AppRepository(context).getGemstoneYouMayLike(productId,
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
     } else {
-      response = await AppRepository(context)
-          .fetchGemstoneList(page: currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
+      response = await AppRepository(context).fetchGemstoneList(
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
     }
     response?.fold((l) {
       Utils.showMessage(l.message ?? "");
     }, (r) {
       gemstoneDatumList = r.data;
-      totalNumberOfPages = (r.totalRecords ?? 0) ~/ limit;
+      r.totalRecords ??= 0;
+      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
       List.generate(
         gemstoneDatumList.length,
         (index) => productList.add(
@@ -228,10 +229,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
                 ),
               ));
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-      currentPage++;
       await fetchGemstoneList(event.context, emit, false);
     } else {
-      currentPage++;
       await fetchDiamondList(event.context, emit, false);
     }
     paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);

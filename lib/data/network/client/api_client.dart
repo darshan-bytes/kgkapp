@@ -33,6 +33,10 @@ class ApiClient {
   static String gemstoneYouMayAlsoLike(String id) => '$apiBaseUrl/commodity/color-stone/$id/you-may-also-like';
 
   static String productDetails(String id) => '$apiBaseUrl/jewelleries/$id/view';
+
+  static String watchListById(String watchlistIds) => '$apiBaseUrl/watchlist/$watchlistIds';
+
+  static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

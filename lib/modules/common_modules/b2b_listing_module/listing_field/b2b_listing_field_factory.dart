@@ -161,7 +161,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.from.tr, value: model.strFrom),
           B2BItemField(label: APPStrings.to.tr, value: model.strTo),
           B2BItemField(label: APPStrings.numberOfProduct.tr, value: model.strNumberOfProduct),
-          B2BItemField(label: APPStrings.remainingTime.tr, value: model.strRemainingTime),
+          B2BItemField(label: APPStrings.remainingTime.tr, value: model.strRemainingTime?.value),
         ];
       case B2BListingType.exhibitionDetailPageProductsType:
         return [

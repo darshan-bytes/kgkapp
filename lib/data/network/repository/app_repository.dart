@@ -187,13 +187,18 @@ class AppRepository extends ApiService {
     required String limit,
     required String page,
     bool isLoadMore = false,
+    required String searchQuery,
   }) async {
     if (!isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<PaginationData<WatchlistData>>(
       ApiClient.watchList,
-      query: {ApiKey.page: page, ApiKey.limit: limit},
+      query: {
+        ApiKey.page: page,
+        ApiKey.limit: limit,
+        if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
+      },
     );
     if (!isLoadMore) {
       context.setAppLoading(false);
@@ -201,7 +206,7 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  /// For Getting Watchlist Data
+  /// For Create Watchlist
   Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     var response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
@@ -217,6 +222,25 @@ class AppRepository extends ApiService {
       query: {ApiKey.page: page, ApiKey.limit: limit},
       withCurrencyHeader: true,
     );
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For Getting Jewellery You May Like by ID
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryYouMayLike(String id,
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.jewelleryYouMayAlsoLike("EFGSTOCK1600073718"),
+      query: {ApiKey.page: page, ApiKey.limit: limit},
+      withCurrencyHeader: true,
+    );
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Deleting Watchlist by ID
+  Future<Either<ErrorResponse, CommonResponse>?> deleteWatchList(String id) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.watchListById(id), withFullResponse: true);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

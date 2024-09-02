@@ -144,9 +144,15 @@ class TaskDetailsBottomSheet extends StatelessWidget {
         children: [
           Row(
             children: [
-              _detailWidget(title: APPStrings.startDate.tr, subTitle: calendarData.start?.changeDateFormat() ?? '', style: style),
+              _detailWidget(
+                  title: APPStrings.startDate.tr,
+                  subTitle: calendarData.start?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS) ?? '',
+                  style: style),
               SizedBox(width: 32.w),
-              _detailWidget(title: APPStrings.dueDate.tr, subTitle: calendarData.end?.changeDateFormat() ?? '', style: style),
+              _detailWidget(
+                  title: APPStrings.dueDate.tr,
+                  subTitle: calendarData.end?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS) ?? '',
+                  style: style),
             ],
           ),
           _detailWidget(
@@ -168,7 +174,9 @@ class TaskDetailsBottomSheet extends StatelessWidget {
           ),
           _detailWidget(
             title: APPStrings.createdOn.tr,
-            subTitle: calendarData.createdDate?.changeDateFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ?? '',
+            subTitle: calendarData.createdDate?.changeDateFormat(
+                    inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS, outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ??
+                '',
             style: style,
           )
         ],

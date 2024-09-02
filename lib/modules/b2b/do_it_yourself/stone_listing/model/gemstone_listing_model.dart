@@ -9,7 +9,7 @@ class GemstoneListingModel {
   final List<GemstoneDatum> data;
   final int? filteredRecords;
   final Pagination? pagination;
-  final int? totalRecords;
+  int? totalRecords;
 
   factory GemstoneListingModel.fromJson(Map<String, dynamic> json) {
     return GemstoneListingModel(

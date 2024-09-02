@@ -9,7 +9,7 @@ class JewelleryListingModel {
   final List<JewelleryDataModel> data;
   final int? filteredRecords;
   final Pagination? pagination;
-  final int? totalRecords;
+  int? totalRecords;
 
   factory JewelleryListingModel.fromJson(Map<String, dynamic> json) {
     return JewelleryListingModel(
@@ -312,7 +312,7 @@ class JewelleryDataModel {
       customerCollectionRefSuid: json["customer_collection_ref_suid"],
       metalColor1Suid: json["metal_color_1_suid"],
       ageRange: json["age_range"],
-      productPriceLocalCurrency: json["product_price_local_currency"].toDouble(),
+      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"].toDouble() : 0.0,
       setName: json["set_name"],
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
@@ -334,7 +334,7 @@ class JewelleryDataModel {
       productSize: json["product_size"],
       metalColor2RefSuid: json["metal_color_2_ref_suid"],
       kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"],
-      productPriceIntCurrency: json["product_price_int_currency"].toDouble(),
+      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"].toDouble() : 0.0,
       stockTypeRefSuid: json["stock_type_ref_suid"],
       customerAliasName: json["customer_alias_name"],
       mspRateIntlCurrency: json["msp_rate_intl_currency"],

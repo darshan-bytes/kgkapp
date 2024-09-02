@@ -98,8 +98,7 @@ extension StringExtensions on String {
     }
   }
 
-  String changeDateFormat(
-      {String inputDateFormat = DateFormatter.dateFormatYYYYMMDDHHMMSS, String outputDateFormat = DateFormatter.dateFormatDDMMMYYYY}) {
+  String changeDateFormat({String? inputDateFormat, String outputDateFormat = DateFormatter.dateFormatDDMMMYYYY}) {
     return DateFormat(outputDateFormat).format(DateFormat(inputDateFormat).parse(this));
   }
 

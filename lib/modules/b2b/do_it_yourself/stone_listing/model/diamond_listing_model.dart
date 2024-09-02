@@ -9,7 +9,7 @@ class DiamondListingModel {
   final List<DiamondDataModel> data;
   final int? filteredRecords;
   final DiamondPagination? pagination;
-  final int? totalRecords;
+  int? totalRecords;
 
   factory DiamondListingModel.fromJson(Map<String, dynamic> json) {
     return DiamondListingModel(

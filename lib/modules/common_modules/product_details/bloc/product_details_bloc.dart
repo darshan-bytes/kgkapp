@@ -181,7 +181,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       //   ),
       // );
       await getDiamondsDetails(event.context, productId);
-      getDiamondYouMayLike(event.context, productId);
+      await getDiamondYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
@@ -190,24 +190,25 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
       // Gemstone Details API
       await getGemstoneDetails(event.context, productId);
-      getGemstoneYouMayLike(event.context, productId);
+      await getGemstoneYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
       // productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
 
-      //TODO: Need to integrate API for suggested products
-      suggestedProductList = List.generate(
-        8,
-        (index) => ProductDetails(
-          diamond: "1.5 gram",
-          gram: "1.5 gram",
-          imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
-          name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-          originalPrice: "\$ 5,000.00",
-        ),
-      );
+      // //TODO: Need to integrate API for suggested products
+      // suggestedProductList = List.generate(
+      //   8,
+      //   (index) => ProductDetails(
+      //     diamond: "1.5 gram",
+      //     gram: "1.5 gram",
+      //     imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
+      //     name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
+      //     originalPrice: "\$ 5,000.00",
+      //   ),
+      // );
       await getProductDetailsDetails(event.context, productId);
+      await getProductYouMayLike(event.context, productId);
     }
 
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
@@ -387,6 +388,37 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }).toList();
 
         add(const ProductDetailsSuggestedProductLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getProductYouMayLike(BuildContext context, String productId) async {
+    Either<ErrorResponse, JewelleryListingModel>? response =
+        await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        if (data.data.isNotEmpty) {
+          suggestedProductList = data.data.map((e) {
+            bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+            return ProductDetails(
+              productId: e.id,
+              name: e.productDescription ?? '',
+              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+              originalPrice: e.finalPrice?.setCurrency,
+              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+              productSku: e.contractNoSkuNo,
+              reviewCount: e.reviewCount,
+              rating: e.rating?.toDouble(),
+            );
+          }).toList();
+          add(const ProductDetailsSuggestedProductLoadedEvent());
+        }
       },
     );
   }
