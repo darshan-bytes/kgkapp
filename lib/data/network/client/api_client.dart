@@ -38,6 +38,9 @@ class ApiClient {
 
   static String watchListUpdateProduct(String watchlistId, String productId) =>
       '$apiBaseUrl/watchlist/$watchlistId/product/$productId/update';
+
+  static String watchListRemoveProduct(String watchlistId, String productId) =>
+      '$apiBaseUrl/watchlist/$watchlistId/product/$productId/remove';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

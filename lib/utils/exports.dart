@@ -435,3 +435,4 @@ export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/diamond_listi
 export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
 export 'package:kgk/modules/b2b/watchlist/model/watchlist_data_model.dart';
 export 'package:kgk/data/network/model/pagination_data_model.dart';
+export 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
