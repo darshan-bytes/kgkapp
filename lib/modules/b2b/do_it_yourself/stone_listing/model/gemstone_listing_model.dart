@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class GemstoneListingModel {
   GemstoneListingModel({
     required this.data,
@@ -266,7 +268,7 @@ class GemstoneDatum {
   final dynamic cutSuid;
   final dynamic depth;
   final String? diamondAssetUrl;
-  final int? discountPercentage;
+  final double? discountPercentage;
   final dynamic dtcBand;
   final dynamic fancyColor;
   final dynamic fancyColorRefSuid;
@@ -443,7 +445,7 @@ class GemstoneDatum {
       cutSuid: json["cut_suid"],
       depth: json["depth"],
       diamondAssetUrl: json["diamond_asset_url"],
-      discountPercentage: json["discount_percentage"],
+      discountPercentage: json["discount_percentage"] != null ? double.tryParse(json["discount_percentage"].toString()) : 0.0,
       dtcBand: json["dtc_band"],
       fancyColor: json["fancy_color"],
       fancyColorRefSuid: json["fancy_color_ref_suid"],
@@ -768,32 +770,5 @@ class GemstoneDetailsImage {
   @override
   String toString() {
     return "$url, ";
-  }
-}
-
-class Pagination {
-  Pagination({
-    required this.limit,
-    required this.page,
-  });
-
-  final String? limit;
-  final String? page;
-
-  factory Pagination.fromJson(Map<String, dynamic> json) {
-    return Pagination(
-      limit: json["limit"],
-      page: json["page"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "limit": limit,
-        "page": page,
-      };
-
-  @override
-  String toString() {
-    return "$limit, $page, ";
   }
 }

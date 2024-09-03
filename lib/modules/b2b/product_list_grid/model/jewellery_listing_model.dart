@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class JewelleryListingModel {
   JewelleryListingModel({
     required this.data,
@@ -6,14 +8,14 @@ class JewelleryListingModel {
     required this.totalRecords,
   });
 
-  final List<JewelleryDatum> data;
+  final List<JewelleryDataModel> data;
   final int? filteredRecords;
   final Pagination? pagination;
   int? totalRecords;
 
   factory JewelleryListingModel.fromJson(Map<String, dynamic> json) {
     return JewelleryListingModel(
-      data: json["data"] == null ? [] : List<JewelleryDatum>.from(json["data"]!.map((x) => JewelleryDatum.fromJson(x))),
+      data: json["data"] == null ? [] : List<JewelleryDataModel>.from(json["data"]!.map((x) => JewelleryDataModel.fromJson(x))),
       filteredRecords: json["filteredRecords"],
       pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
       totalRecords: json["totalRecords"],
@@ -33,8 +35,8 @@ class JewelleryListingModel {
   }
 }
 
-class JewelleryDatum {
-  JewelleryDatum({
+class JewelleryDataModel {
+  JewelleryDataModel({
     required this.metalColor3RefSuid,
     required this.tagPriceLocalCurrency,
     required this.settingType,
@@ -298,21 +300,21 @@ class JewelleryDatum {
   final String? metalColor1HexCode;
   final String? metalColor2HexCode;
   final String? metalColor3HexCode;
-  final dynamic discountPercentage;
+  final double? discountPercentage;
   final String? businessCategoryName;
   final String? jewelleryTypeName;
   final String? finalPrice;
   final String? discountPrice;
 
-  factory JewelleryDatum.fromJson(Map<String, dynamic> json) {
-    return JewelleryDatum(
+  factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
+    return JewelleryDataModel(
       metalColor3RefSuid: json["metal_color_3_ref_suid"],
       tagPriceLocalCurrency: json["tag_price_local_currency"],
       settingType: json["setting_type"],
       customerCollectionRefSuid: json["customer_collection_ref_suid"],
       metalColor1Suid: json["metal_color_1_suid"],
       ageRange: json["age_range"],
-      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"].toDouble() : 0,
+      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"].toDouble() : 0.0,
       setName: json["set_name"],
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
@@ -334,7 +336,7 @@ class JewelleryDatum {
       productSize: json["product_size"],
       metalColor2RefSuid: json["metal_color_2_ref_suid"],
       kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"],
-      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"].toDouble() : 0,
+      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"].toDouble() : 0.0,
       stockTypeRefSuid: json["stock_type_ref_suid"],
       customerAliasName: json["customer_alias_name"],
       mspRateIntlCurrency: json["msp_rate_intl_currency"],
@@ -438,11 +440,11 @@ class JewelleryDatum {
       metalColor1HexCode: json["metal_color_1_hex_code"],
       metalColor2HexCode: json["metal_color_2_hex_code"],
       metalColor3HexCode: json["metal_color_3_hex_code"],
-      discountPercentage: json["discount_percentage"],
+      discountPercentage: double.tryParse(json["discount_percentage"]?.toString() ?? ""),
       businessCategoryName: json["business_category_name"],
       jewelleryTypeName: json["jewellery_type_name"],
-      finalPrice: json["final_price"],
-      discountPrice: json["discount_price"],
+      finalPrice: json["final_price"]?.toString(),
+      discountPrice: json["discount_price"]?.toString(),
     );
   }
 
@@ -589,49 +591,49 @@ class JewelleryDatum {
 }
 
 class MultipleFinishedViewImage {
-  String? highRes3;
-  String? highRes4;
-  String? contractNo;
-  String? imageAvailable;
-  String? imageAvailableMa;
-  String? highRes1;
-  String? highRes2;
-  String? imageURL;
-
   MultipleFinishedViewImage({
-    this.highRes3,
-    this.highRes4,
-    this.contractNo,
-    this.imageAvailable,
-    this.imageAvailableMa,
-    this.highRes1,
-    this.highRes2,
-    this.imageURL,
+    required this.highRes3,
+    required this.highRes4,
+    required this.contractNo,
+    required this.imageAvailable,
+    required this.imageAvailableMa,
+    required this.highRes1,
+    required this.highRes2,
+    required this.imageUrl,
   });
 
-  MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
-    highRes3 = json['high_res3'];
-    highRes4 = json['high_res4'];
-    contractNo = json['ContractNo'];
-    imageAvailable = json['IMAGE_AVAILABLE'];
-    imageAvailableMa = json['IMAGE_AVAILABLE_MA'];
-    highRes1 = json['high_res1'];
-    highRes2 = json['high_res2'];
-    imageURL = json['IMAGE_URL'];
+  final dynamic highRes3;
+  final dynamic highRes4;
+  final String? contractNo;
+  final String? imageAvailable;
+  final String? imageAvailableMa;
+  final dynamic highRes1;
+  final dynamic highRes2;
+  final String? imageUrl;
+
+  factory MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
+    return MultipleFinishedViewImage(
+      highRes3: json["high_res3"],
+      highRes4: json["high_res4"],
+      contractNo: json["ContractNo"],
+      imageAvailable: json["IMAGE_AVAILABLE"],
+      imageAvailableMa: json["IMAGE_AVAILABLE_MA"],
+      highRes1: json["high_res1"],
+      highRes2: json["high_res2"],
+      imageUrl: json["IMAGE_URL"],
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['high_res3'] = highRes3;
-    data['high_res4'] = highRes4;
-    data['ContractNo'] = contractNo;
-    data['IMAGE_AVAILABLE'] = imageAvailable;
-    data['IMAGE_AVAILABLE_MA'] = imageAvailableMa;
-    data['high_res1'] = highRes1;
-    data['high_res2'] = highRes2;
-    data['IMAGE_URL'] = imageURL;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "high_res3": highRes3,
+        "high_res4": highRes4,
+        "ContractNo": contractNo,
+        "IMAGE_AVAILABLE": imageAvailable,
+        "IMAGE_AVAILABLE_MA": imageAvailableMa,
+        "high_res1": highRes1,
+        "high_res2": highRes2,
+        "IMAGE_URL": imageUrl,
+      };
 }
 
 class ComponentDetail {
@@ -723,10 +725,10 @@ class ComponentDetail {
 
   factory ComponentDetail.fromJson(Map<String, dynamic> json) {
     return ComponentDetail(
-      consumedQty2: json["ConsumedQty2"],
+      consumedQty2: json["ConsumedQty2"]?.toString() ?? "0",
       brokenQty1: json["BrokenQty1"].toDouble(),
       shape: json["Shape"],
-      consumedQty1: json["ConsumedQty1"],
+      consumedQty1: json["ConsumedQty1"]?.toString() ?? "0",
       mmSize: json["MMSize"],
       totalQty2: json["TotalQty2"].toDouble(),
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
@@ -745,7 +747,7 @@ class ComponentDetail {
       cut: json["Cut"],
       colorSuid: json["ColorSuid"],
       color: json["Color"],
-      intCurrencyAmount: json["IntCurrencyAmount"],
+      intCurrencyAmount: json["IntCurrencyAmount"]?.toString() ?? "0",
       rmName: json["RMName"],
       rmNameSuid: json["RMNameSuid"],
       claritySuid: json["ClaritySuid"],
@@ -754,15 +756,15 @@ class ComponentDetail {
       internationalQualityRefSuid: json["InternationalQualityRefSuid"],
       clarity: json["Clarity"],
       internationalQualitySuid: json["InternationalQualitySuid"],
-      localCurrencyRate: json["LocalCurrencyRate"],
-      intCurrencyRate: json["IntCurrencyRate"],
-      totalQty1: json["TotalQty1"],
+      localCurrencyRate: json["LocalCurrencyRate"]?.toString() ?? "0",
+      intCurrencyRate: json["IntCurrencyRate"]?.toString() ?? "0",
+      totalQty1: json["TotalQty1"]?.toString() ?? "0",
       lotCode: json["LotCode"],
       uom2: json["UOM2"],
       uom1: json["UOM1"],
       clarityRefSuid: json["ClarityRefSuid"],
       karatage: json["Karatage"],
-      lossQty1: json["LossQty1"],
+      lossQty1: json["LossQty1"]?.toString() ?? "0",
       id: json["_id"],
     );
   }

@@ -77,15 +77,27 @@ class WatchlistData {
 
 extension WatchlistDataExtension on WatchlistData {
   ProjectStatus get displayStatus {
-    // ProjectStatus.active;
     return status == true ? ProjectStatus.active : ProjectStatus.inActive;
   }
+
+  String get displayFromDate =>
+      createdAt?.changeDateFormat(
+          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ??
+      "";
+
+  String get displayToDate =>
+      expiresAt?.changeDateFormat(
+          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ??
+      "";
 }
 
 class WatchlistProducts {
   String? productId;
   String? commodity;
   NotificationSettings? notificationSettings;
+  JewelleryDataModel? jewelleryData;
+  DiamondDataModel? diamondData;
+  GemstoneDatum? gemstoneData;
 
   WatchlistProducts({this.productId, this.commodity, this.notificationSettings});
 
@@ -93,6 +105,21 @@ class WatchlistProducts {
     productId = json['productId'];
     commodity = json['commodity'];
     notificationSettings = json['notificationSettings'] != null ? NotificationSettings.fromJson(json['notificationSettings']) : null;
+    if (json['productData'] != null) {
+      switch (displayCommodity) {
+        case Commodity.diamond:
+          diamondData = DiamondDataModel.fromJson(json['productData']);
+          break;
+        case Commodity.jewellery:
+          jewelleryData = JewelleryDataModel.fromJson(json['productData']);
+          break;
+        case Commodity.gemstone:
+          gemstoneData = GemstoneDatum.fromJson(json['productData']);
+          break;
+        default:
+          diamondData = DiamondDataModel.fromJson(json['productData']);
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -102,8 +129,26 @@ class WatchlistProducts {
     if (notificationSettings != null) {
       data['notificationSettings'] = notificationSettings!.toJson();
     }
+    switch (displayCommodity) {
+      case Commodity.diamond:
+        data['productData'] = diamondData?.toJson();
+        break;
+      case Commodity.jewellery:
+        data['productData'] = jewelleryData?.toJson();
+        break;
+      case Commodity.gemstone:
+        data['productData'] = gemstoneData?.toJson();
+        break;
+      default:
+        data['productData'] = diamondData?.toJson();
+    }
     return data;
   }
+}
+
+extension WatchlistProductsExtension on WatchlistProducts {
+  Commodity get displayCommodity =>
+      Commodity.values.firstWhereOrNull((element) => element.value == commodity?.toLowerCase()) ?? Commodity.diamond;
 }
 
 class NotificationSettings {
