@@ -12,7 +12,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<GemstoneDatum> gemstoneDatumList = [];
 
   int? totalNumberOfPages;
-  int limit = 10;
+  static const int limit = 10;
 
   String tabOneTitle = APPStrings.naturalDiamond.tr;
   String tabTwoTitle = APPStrings.looseDiamond.tr;
@@ -32,6 +32,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     on<StoneChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<StoneListLoadMoreEvent>(_onStoneListLoadMoreEvent);
     on<StoneListPullToRefreshEvent>(_onStoneListPullToRefresh);
+    on<StoneListAddToWatchListEvent>(_onStoneListAddToWatchList);
   }
 
   bool get displaySelection => productId.isEmpty;
@@ -70,7 +71,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         20,
         (index) => productList.add(
           ProductDetails(
-            isOutOfStock: index % 2 == 0,
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -118,7 +118,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         (index) => productList.add(
           ProductDetails(
             productId: diamondDatumList[index].id,
-            isOutOfStock: index % 2 == 0,
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: diamondDatumList[index].image.first.url,
@@ -130,6 +129,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             discountPrice: diamondDatumList[index].discountPrice,
             finalPrice: diamondDatumList[index].finalPrice,
             lotCode: diamondDatumList[index].lotCode,
+            productSku: diamondDatumList[index].lotCode,
             shape: diamondDatumList[index].shape,
             fluorescence: diamondDatumList[index].fluorescence,
             labs: diamondDatumList[index].labs,
@@ -139,10 +139,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             cut: diamondDatumList[index].cut,
             certificateFile: diamondDatumList[index].certificateFile,
             openDnaUrl: diamondDatumList[index].openDnaUrl,
+            commodity: Commodity.diamond,
+            company: diamondDatumList[index].id,
           ),
         ),
       );
-
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
   }
@@ -169,7 +171,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         (index) => productList.add(
           ProductDetails(
             productId: gemstoneDatumList[index].id,
-            isOutOfStock: index % 2 == 0,
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: gemstoneDatumList[index].image.isNotNullNorEmpty ? gemstoneDatumList[index].image.first.url : null,
@@ -190,10 +191,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             cut: gemstoneDatumList[index].cut,
             certificateFile: gemstoneDatumList[index].certificateFile,
             openDnaUrl: gemstoneDatumList[index].openDnaUrl,
+            commodity: Commodity.gemstone,
           ),
         ),
       );
-
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
   }
@@ -219,7 +221,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           10,
           (index) => productList.add(
                 ProductDetails(
-                  isOutOfStock: index % 2 == 0,
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -233,7 +234,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     } else {
       await fetchDiamondList(event.context, emit, false);
     }
-    paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);
     emit(StoneListLoadedMoreState(event.currentPage + 1));
   }
 
@@ -253,5 +253,18 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     add(StoneListPullToRefreshEvent(context));
     bool result = await refreshCompleter.future;
     return result;
+  }
+
+  Future<void> _onStoneListAddToWatchList(StoneListAddToWatchListEvent event, Emitter<StoneListingState> emit) async {
+    ProductDetails? productDetails = productList.firstWhereOrNull((element) => element.productId == event.stoneId);
+    if (productDetails != null) {
+      BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(productDetails, event.context));
+      Utils.showSmartModalBottomSheet(
+        context: event.context,
+        enableDrag: false,
+        useRootNavigator: true,
+        builder: (context) => const AddWatchlistScreen(),
+      );
+    }
   }
 }

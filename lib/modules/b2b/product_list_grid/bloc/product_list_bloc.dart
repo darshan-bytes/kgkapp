@@ -33,6 +33,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     on<ProductListLoadMoreEvent>(_onProductListLoadMoreEvent);
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<ProductListPullToRefreshEvent>(_onProductListPullToRefresh);
+    on<ProductListAddToWatchListEvent>(_onProductListAddToWatchList);
   }
 
   @override
@@ -137,29 +138,19 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
         List.generate(jewelleryDatumList.length, (index) {
           productList.add(ProductDetails(
-            imageUrl: "",
+            imageUrl: jewelleryDatumList[index].multipleFinishedViewImage.isNotNullNorEmpty
+                ? jewelleryDatumList[index].multipleFinishedViewImage[0].imageURL
+                : "",
             name: jewelleryDatumList[index].productDescription ?? "",
             originalPrice: "$currency ${jewelleryDatumList[index].finalPrice ?? ""}",
             discountPercentage: "You have saved 10%",
             offerPrice: "$currency ${jewelleryDatumList[index].discountPrice ?? ""}",
-            // company: jewelleryDatumList[index].company ?? "",
-            // productSku: jewelleryDatumList[index].sku ?? "",
-            // isOutOfStock: jewelleryDatumList[index].isOutOfStock ?? false,
+            productId: jewelleryDatumList[index].id ?? "",
+            commodity: Commodity.jewellery,
+            productSku: jewelleryDatumList[index].contractNoSkuNo,
+            company: jewelleryDatumList[index].brandName,
           ));
         });
-
-        // List.generate(
-        //     20,
-        //     (index) => productList.add(ProductDetails(
-        //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-        //           name: "Diamond Vine Ring in 18k Rose Gold",
-        //           originalPrice: '\$5,000.00',
-        //           discountPercentage: "You have saved 10%",
-        //           offerPrice: '\$3,000.00',
-        //           company: "Martin Flyer",
-        //           productSku: "DERS01XXSRR",
-        //           isOutOfStock: index % 2 == 0,
-        //         )));
       });
     });
   }
@@ -170,18 +161,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       currentPage++;
       await fetchJewelleriesList(event.context, emit, false);
-      // List.generate(
-      //     10,
-      //     (index) => productList.add(ProductDetails(
-      //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-      //           name: "Diamond Vine Ring in 18k Rose Gold",
-      //           originalPrice: '\$5,000.00',
-      //           discountPercentage: "You have saved 10%",
-      //           offerPrice: '\$3,000.00',
-      //           company: "Martin Flyer",
-      //           productSku: "DERS01XXSRR",
-      //           isOutOfStock: index % 2 == 0,
-      //         )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       List.generate(
           10,
@@ -278,5 +257,20 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ReloadProductState());
     isGrid = !isGrid;
     emit(ProductChangeListingTypeState());
+  }
+
+  Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      ProductDetails? productDetails = productList.firstWhereOrNull((element) => element.productId == event.productId);
+      if (productDetails != null) {
+        BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(productDetails, event.context));
+        await Utils.showSmartModalBottomSheet(
+          context: event.context,
+          enableDrag: false,
+          useRootNavigator: true,
+          builder: (context) => const AddWatchlistScreen(),
+        );
+      }
+    }
   }
 }

@@ -9,19 +9,20 @@ sealed class AddToWatchlistEvent extends Equatable {
 final class AddToWatchlistInitialEvent extends AddToWatchlistEvent {
   final ProductDetails productDetails;
   final WatchlistActionType actionType;
+  final BuildContext context;
 
-  const AddToWatchlistInitialEvent.add(this.productDetails) : actionType = WatchlistActionType.add;
+  const AddToWatchlistInitialEvent.add(this.productDetails, this.context) : actionType = WatchlistActionType.add;
 
-  const AddToWatchlistInitialEvent.edit(this.productDetails) : actionType = WatchlistActionType.edit;
+  const AddToWatchlistInitialEvent.edit(this.productDetails, this.context) : actionType = WatchlistActionType.edit;
 
-  const AddToWatchlistInitialEvent.remove(this.productDetails) : actionType = WatchlistActionType.remove;
+  const AddToWatchlistInitialEvent.remove(this.productDetails, this.context) : actionType = WatchlistActionType.remove;
 
   @override
   List<Object> get props => [productDetails, actionType];
 }
 
 final class WatchlistChangeNameEvent extends AddToWatchlistEvent {
-  final WatchlistDetailsModel selectedWatchlist;
+  final WatchlistData selectedWatchlist;
 
   const WatchlistChangeNameEvent(this.selectedWatchlist);
 
@@ -36,4 +37,13 @@ class WatchlistCheckEvent extends AddToWatchlistEvent {
 
   @override
   List<Object> get props => [index];
+}
+
+final class AddToWatchListSaveEvent extends AddToWatchlistEvent {
+  final BuildContext context;
+
+  const AddToWatchListSaveEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
 }

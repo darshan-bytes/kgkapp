@@ -81,7 +81,7 @@ class StoneListingScreen extends StatelessWidget {
               ),
             ));
           }
-          return const SmartCircularProgressIndicator();
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -223,7 +223,11 @@ class StoneListingScreen extends StatelessWidget {
                         });
                       }
                     },
-                    onEyeTap: () {},
+                    onEyeTap: () {
+                      if (productDetails.productId != null) {
+                        diamondListingBloc.add(StoneListAddToWatchListEvent(productDetails.productId!, context));
+                      }
+                    },
                     onFavTap: () {},
                   );
                 }).toList()),

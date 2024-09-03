@@ -96,7 +96,6 @@ dependencies:
   #For Calendar
   syncfusion_flutter_calendar: ^26.2.10
 
-  #  syncfusion_flutter_charts: ^26.2.10
   syncfusion_flutter_charts:
     path: packages/syncfusion_flutter_charts
 

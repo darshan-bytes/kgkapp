@@ -687,5 +687,6 @@
   "session_expired_desc": "Your session has expired. Please login again.",
   "dna": "DNA",
   "percentage_off_interpolating": "({$}% OFF)",
-  "retry": "Retry"
+  "retry": "Retry",
+  "please_select_watchlist": "Please select watchlist"
 }

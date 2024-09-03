@@ -59,3 +59,12 @@ final class WatchListDeleteEvent extends WatchlistEvent {
   @override
   List<Object?> get props => [watchlistId, context, screenContext];
 }
+
+final class WatchListLoadFullListEvent extends WatchlistEvent {
+  final BuildContext context;
+
+  const WatchListLoadFullListEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
