@@ -175,7 +175,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 isOutOfStock: productDetails.isOutOfStock,
                 productDetails: productDetails,
                 onCancelTap: () {
-                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.remove(productDetails));
+                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.remove(productDetails, context));
                   Utils.showSmartModalBottomSheet(
                     context: context,
                     enableDrag: false,
@@ -187,7 +187,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 isFavourite: true,
                 onEyeTap: () {},
                 onAddToBagTap: () {
-                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.edit(productDetails));
+                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.edit(productDetails, context));
                   Utils.showSmartModalBottomSheet(
                     context: context,
                     enableDrag: false,

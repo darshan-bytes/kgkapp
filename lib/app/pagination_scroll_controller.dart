@@ -94,10 +94,10 @@ class SmartPaginationScrollController {
         if (controller.offset >= controller.position.maxScrollExtent * boundaryOffset && !isLoading) {
           isLoading = true;
           isPageLoaded = Completer<bool>();
+          currentPage++;
           loadAction(currentPage);
           await isPageLoaded.future.then((bool shouldStop) {
             isLoading = false;
-            currentPage++;
             boundaryOffset = 1 - 1 / (currentPage * 2);
             if (shouldStop == true) {
               hasNextPage = false;

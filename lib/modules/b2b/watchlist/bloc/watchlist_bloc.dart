@@ -16,6 +16,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   int limit = 10;
 
   List<WatchlistData> watchlistDataList = [];
+  Completer<List<WatchlistData>> allWatchlistFull = Completer<List<WatchlistData>>();
 
   Timer? _debounce;
 
@@ -26,6 +27,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     on<WatchListCloseEvent>(_onWatchListClose);
     on<WatchListSearchEvent>(_onWatchListSearch);
     on<WatchListDeleteEvent>(_onWatchListDelete);
+    on<WatchListLoadFullListEvent>(_onWatchListLoadFullLis);
   }
 
   @override
@@ -142,6 +144,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     }
     paginationScrollController.pullToRefresh();
     refreshCompleter = Completer<bool>();
+    resetAllWatchlistFull();
     add(WatchlistPullToRefreshEvent(context: context));
     bool result = await refreshCompleter.future;
     return result;
@@ -214,6 +217,30 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
         if (r.message != null) {
           Utils.showMessage(r.message ?? "");
         }
+      },
+    );
+  }
+
+  void resetAllWatchlistFull() {
+    allWatchlistFull = Completer<List<WatchlistData>>();
+  }
+
+  Future<void> _onWatchListLoadFullLis(WatchListLoadFullListEvent event, Emitter<WatchlistState> emit) async {
+    if (allWatchlistFull.isCompleted) {
+      allWatchlistFull = Completer<List<WatchlistData>>();
+    }
+    Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(event.context).getWatchList(
+      page: "1",
+      limit: limit.toString(),
+      isLoadMore: false,
+      isFullList: true,
+    );
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message ?? "");
+      },
+      (r) {
+        allWatchlistFull.complete((r.dataList ?? []) as List<WatchlistData>);
       },
     );
   }

@@ -686,5 +686,6 @@
   "session_expired_desc": "Votre session a expiré. Veuillez vous reconnecter.",
   "dna": "DNA",
   "percentage_off_interpolating": "({$}% OFF)",
-  "retry": "Retry"
+  "retry": "Retry",
+  "please_select_watchlist": "FR - Please select watchlist"
 }

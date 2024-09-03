@@ -876,4 +876,5 @@ class APPStrings {
 
   static const String percentageOffInterpolating = 'percentage_off_interpolating';
   static const String retry = 'retry';
+  static const String pleaseSelectWatchlist = 'please_select_watchlist';
 }

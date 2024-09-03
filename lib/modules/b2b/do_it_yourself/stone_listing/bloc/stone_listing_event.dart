@@ -51,3 +51,13 @@ class StoneListPullToRefreshEvent extends StoneListingEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class StoneListAddToWatchListEvent extends StoneListingEvent {
+  final String stoneId;
+  final BuildContext context;
+
+  const StoneListAddToWatchListEvent(this.stoneId, this.context);
+
+  @override
+  List<Object> get props => [stoneId, context];
+}
