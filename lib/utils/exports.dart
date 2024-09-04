@@ -437,3 +437,4 @@ export 'package:kgk/modules/b2b/watchlist/model/watchlist_data_model.dart';
 export 'package:kgk/data/network/model/pagination_data_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 export 'package:kgk/data/network/repository/product_repository.dart';
+export 'package:kgk/model/wishlist_response_model.dart';

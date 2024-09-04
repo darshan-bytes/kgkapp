@@ -23,6 +23,7 @@ class SelectionButton extends StatelessWidget {
   final double? iconBetweenSpace;
   final BoxConstraints? constraints;
   final double scaleFactor;
+  final BoxFit? fit;
 
   const SelectionButton({
     super.key,
@@ -48,6 +49,7 @@ class SelectionButton extends StatelessWidget {
     this.iconBetweenSpace,
     this.constraints,
     this.scaleFactor = 0.8,
+    this.fit,
   });
 
   @override
@@ -87,6 +89,7 @@ class SelectionButton extends StatelessWidget {
                     : (unselectedButtonIconColor ?? style.unselectedButtonIconColor),
                 height: imageHeight,
                 width: imageWidth,
+                fit: fit,
               ),
             if (image != null && title != null) SizedBox(width: iconBetweenSpace ?? 8.w),
             if (title != null)

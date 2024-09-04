@@ -45,6 +45,10 @@ class ApiClient {
       '$apiBaseUrl/watchlist/$watchlistId/product/$productId/remove';
 
   static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
+
+  static const String createWishList = '$apiBaseUrl/wishlist';
+
+  static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

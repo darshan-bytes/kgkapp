@@ -231,7 +231,7 @@ class AppRepository extends ApiService {
   ///For Getting Jewellery You May Like by ID
   Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
-    if(isLoadMore){
+    if (isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<JewelleryListingModel>(
@@ -239,7 +239,7 @@ class AppRepository extends ApiService {
       query: {ApiKey.page: page, ApiKey.limit: limit},
       withCurrencyHeader: true,
     );
-    if(isLoadMore){
+    if (isLoadMore) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
@@ -289,6 +289,18 @@ class AppRepository extends ApiService {
     var response =
         await deleteMethod<Map<String, dynamic>>(ApiClient.watchListRemoveProduct(watchlistId, productId), withFullResponse: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For create wishlist
+  Future<Either<ErrorResponse, CommonResponse<WishlistResponseModel>>?> createWishList({required Map<String, dynamic> body}) async {
+    var response = await postMethod<WishlistResponseModel>(ApiClient.createWishList, body, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For delete wishlist
+  Future<Either<ErrorResponse, CommonResponse>?> deleteWishList(String id) async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteWishList(id), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

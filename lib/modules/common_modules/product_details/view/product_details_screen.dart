@@ -235,8 +235,15 @@ class ProductDetailsScreen extends StatelessWidget {
                                       width: 42.w,
                                       padding: EdgeInsets.all(6.w),
                                       isSelected: false,
-                                      onTap: () {},
-                                      image: AppImages.icHeart,
+                                      onTap: () {
+                                        if (bloc.productDetails != null) {
+                                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: bloc.productDetails!);
+                                        }
+                                      },
+                                      imageWidth: 20.w,
+                                      imageHeight: 20.w,
+                                      fit: BoxFit.contain,
+                                      image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
                                     ),
                                     SizedBox(width: 8.w),
                                     SelectionButton(
@@ -383,8 +390,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 context.pushNamed(AppRoutes.allReviewPage);
               }),
             ],
-            if (bloc.suggestedProductList.isNotNullNorEmpty)
-            SizedBox(height: 32.h),
+            if (bloc.suggestedProductList.isNotNullNorEmpty) SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
