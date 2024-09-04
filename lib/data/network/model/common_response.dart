@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 /// Common response model
 class CommonResponse<T> {
@@ -75,6 +76,8 @@ class CommonResponse<T> {
         return WatchlistData.fromJson(json);
       case const (JewelleryDataModel):
         return JewelleryDataModel.fromJson(json);
+      case const (WishlistModel):
+        return WishlistModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

@@ -5,24 +5,29 @@ sealed class WishlistEvent extends Equatable {
 }
 
 class InitialWishlistEvent extends WishlistEvent {
-  const InitialWishlistEvent();
+  final BuildContext context;
+
+  const InitialWishlistEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class LoadMoreWishlistEvent extends WishlistEvent {
+  final BuildContext context;
   final int currentPage;
 
-  const LoadMoreWishlistEvent(this.currentPage);
+  const LoadMoreWishlistEvent(this.context,this.currentPage);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context,currentPage];
 }
 
 final class WishlistPullToRefreshEvent extends WishlistEvent {
-  const WishlistPullToRefreshEvent();
+  final BuildContext context;
+
+  const WishlistPullToRefreshEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
