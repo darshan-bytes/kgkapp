@@ -73,6 +73,8 @@ class CommonResponse<T> {
         return PaginationData<WatchlistData>.fromJson(json);
       case const (WatchlistData):
         return WatchlistData.fromJson(json);
+      case const (JewelleryDataModel):
+        return JewelleryDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

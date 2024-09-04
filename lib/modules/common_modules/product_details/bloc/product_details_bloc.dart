@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'product_details_event.dart';
-
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
@@ -20,14 +19,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   final ScrollController youMayLikeScrollController = ScrollController();
   final ScrollController recentViewScrollController = ScrollController();
 
-  List<String> imgList = [
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-  ];
+  List<String> imgList = [];
   int current = 0;
   bool isCompare = false;
 
@@ -156,40 +148,26 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
     getScreenIdentifier(event.context);
 
-    productName = screenIdentifier == ScreenIdentifier.productForRing
-        ? '14k Gold Engagement Ring'
-        : screenIdentifier == ScreenIdentifier.productForGemstones
-            ? '0.35 Carat Super Premium Oval Moissanite'
-            : '';
-
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
-
-      //TODO: Need to integrate API for suggested products
-      // suggestedProductList = List.generate(
-      //   8,
-      //   (index) => ProductDetails(
-      //     diamond: "1.5 gram",
-      //     gram: "1.5 gram",
-      //     imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
-      //     name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      //     originalPrice: "\$ 5,000.00",
-      //   ),
-      // );
       await getDiamondsDetails(event.context, productId);
-      getDiamondYouMayLike(event.context, productId);
+      await getDiamondYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
-
       // Gemstone Details API
       await getGemstoneDetails(event.context, productId);
-      getGemstoneYouMayLike(event.context, productId);
+      await getGemstoneYouMayLike(event.context, productId);
+    } else if (screenIdentifier == ScreenIdentifier.productForRing) {
+      imgList.clear();
+      suggestedProductList.clear();
+      await getProductDetailsDetails(event.context, productId);
+      await getProductYouMayLike(event.context, productId);
     }
 
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
@@ -373,6 +351,65 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
+  Future<void> getProductYouMayLike(BuildContext context, String productId) async {
+    Either<ErrorResponse, JewelleryListingModel>? response =
+        await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        suggestedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
+          return ProductDetails(
+            productId: e.id,
+            name: e.productDescription ?? '',
+            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            productSku: e.contractNoSkuNo,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+          );
+        }).toList();
+        add(const ProductDetailsSuggestedProductLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getProductDetailsDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, JewelleryDataModel>? response = await ProductRepository(context).getProductDetailById(productId);
+    response?.fold(
+      (error) {
+        isErrorInLoadingData = true;
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (jewelleryData) {
+        isErrorInLoadingData = false;
+        productName = jewelleryData.productDescription ?? '';
+        bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
+        imgList = jewelleryData.multipleFinishedViewImage.map((e) => e.imageUrl ?? '').toList();
+        productDetails = ProductDetails(
+          productId: productId,
+          name: productName,
+          offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
+          originalPrice: jewelleryData.finalPrice?.setCurrency,
+          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([jewelleryData.discountPercentage]) : null,
+          productSku: jewelleryData.contractNoSkuNo,
+          reviewCount: jewelleryData.reviewCount,
+          rating: jewelleryData.rating?.toDouble(),
+          brandName: jewelleryData.brandName,
+          imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
+        );
+      },
+    );
+  }
+
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
@@ -413,7 +450,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void navigateBasedOnScreenIdentifier(BuildContext context) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
-        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+        context.pushNamed(AppRoutes.productListGridPage, arguments: {
+          RoutesData.isPageFor: ScreenIdentifier.productForRing,
+          RoutesData.productId: productDetails?.productId,
+        });
         break;
       case ScreenIdentifier.productForGemstones:
       case ScreenIdentifier.productForDiamonds:

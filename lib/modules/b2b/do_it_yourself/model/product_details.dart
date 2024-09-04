@@ -38,6 +38,7 @@ class ProductDetails {
   String? openDnaUrl;
   int? reviewCount;
   double? rating;
+  String? brandName;
   Commodity? commodity;
 
   ProductDetails({
@@ -78,6 +79,7 @@ class ProductDetails {
     this.openDnaUrl,
     this.reviewCount,
     this.rating,
+    this.brandName,
     this.commodity,
   });
 }

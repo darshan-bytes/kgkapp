@@ -25,6 +25,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   int? totalNumberOfPages;
   int limit = 10;
 
+  String productId = "";
+
   List<JewelleryDataModel> jewelleryDatumList = [];
 
   ProductListBloc() : super(ProductListInitial()) {
@@ -45,6 +47,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
+      productId = data[RoutesData.productId] ?? "";
     }
   }
 
@@ -69,18 +72,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
       await fetchJewelleriesList(event.context, emit, true);
-      // List.generate(
-      //     20,
-      //     (index) => productList.add(ProductDetails(
-      //           imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-      //           name: "Diamond Vine Ring in 18k Rose Gold",
-      //           originalPrice: '\$5,000.00',
-      //           discountPercentage: "You have saved 10%",
-      //           offerPrice: '\$3,000.00',
-      //           company: "Martin Flyer",
-      //           productSku: "DERS01XXSRR",
-      //           isOutOfStock: index % 2 == 0,
-      //         )));
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
       productList.clear();
@@ -125,10 +116,16 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
-    await AppRepository(context)
-        .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '')
-        .then((value) async {
-      value?.fold((l) {
+
+    Either<ErrorResponse, JewelleryListingModel>? response;
+    if(productId.isNotEmpty){
+      response = await AppRepository(context).getJewelleryYouMayLike(productId,limit: limit.toString(), isLoadMore: true, page: currentPage.toString());
+    }else{
+      response = await AppRepository(context)
+        .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
+    }
+
+    response?.fold((l) {
         Utils.showMessage(l.message ?? "");
       }, (r) {
         jewelleryDatumList = r.data;
@@ -151,7 +148,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           ));
         });
       });
-    });
   }
 
   Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
