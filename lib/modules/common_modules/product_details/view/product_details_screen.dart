@@ -367,7 +367,14 @@ class ProductDetailsScreen extends StatelessWidget {
           const Divider(),
           SizedBox(height: 24.h),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
-            const ProductReviewsDetails(),
+            ProductReviewsDetails(
+              onTap: () {
+                context.pushNamed(AppRoutes.writeReviewPage, arguments: {
+                  RoutesData.productId: bloc.productDetails?.productId,
+                  RoutesData.commodity: bloc.productDetails?.commodity,
+                });
+              },
+            ),
             SizedBox(height: 32.h),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
@@ -383,8 +390,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 context.pushNamed(AppRoutes.allReviewPage);
               }),
             ],
-            if (bloc.suggestedProductList.isNotNullNorEmpty)
-            SizedBox(height: 32.h),
+            if (bloc.suggestedProductList.isNotNullNorEmpty) SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||

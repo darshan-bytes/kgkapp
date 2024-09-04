@@ -34,6 +34,6 @@ abstract class ApiProvider {
     String url,
     Map<String, dynamic> body, {
     Map<String, String>? headers,
-    List<File>? files,
+    List<ModelMultiPartFile>? files,
   });
 }

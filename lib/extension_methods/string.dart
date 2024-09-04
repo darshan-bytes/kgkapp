@@ -107,4 +107,6 @@ extension StringExtensions on String {
     printWrapped("symbol: $symbol");
     return "$symbol $this";
   }
+
+  String get setMediaUrl => "${ApiClient.assetsBaseUrl}$this";
 }
