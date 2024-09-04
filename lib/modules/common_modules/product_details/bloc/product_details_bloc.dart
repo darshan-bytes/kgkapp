@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'product_details_event.dart';
+
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
@@ -405,6 +406,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           rating: jewelleryData.rating?.toDouble(),
           brandName: jewelleryData.brandName,
           imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
+          commodity: Commodity.jewellery,
         );
       },
     );

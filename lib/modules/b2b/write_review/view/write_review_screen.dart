@@ -11,7 +11,7 @@ class WriteReviewScreen extends StatelessWidget {
       appBar: SmartAppBar(
         title: APPStrings.writeAReview.tr,
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context),
+      bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
@@ -20,7 +20,7 @@ class WriteReviewScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 24.h),
-                ...buildStarsView(style),
+                ...buildStarsView(style, bloc),
                 SizedBox(height: 24.h),
                 _buildTitleField(bloc),
                 SizedBox(height: 24.h),
@@ -35,14 +35,16 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> buildStarsView(WriteReviewScreenStyle style) {
+  List<Widget> buildStarsView(WriteReviewScreenStyle style, WriteReviewBloc bloc) {
     return [
       SmartText(APPStrings.rateUs.tr, style: style.labelStyle),
       SizedBox(height: 8.h),
       SmartRatingBar(
         initialRating: 0,
         itemSize: 32.w,
-        onRatingUpdate: (value) {},
+        onRatingUpdate: (value) {
+          bloc.selectedRating = value.toInt();
+        },
       ),
     ];
   }
@@ -190,13 +192,12 @@ class WriteReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
+  Widget _buildBottomNavigationBar(BuildContext context, WriteReviewBloc bloc) {
     return SafeArea(
       child: SmartButton(
         margin: EdgeInsets.all(17.w),
         onTap: () {
-          // Add your submit logic here
-          context.pop();
+          bloc.add(WriteReviewSubmitEvent(context));
         },
         title: APPStrings.submit.tr,
       ),
