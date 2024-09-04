@@ -871,6 +871,7 @@ enum RoutesData {
   conceptId,
   diamondInfo,
   isWatchlistCreated,
+  isWatchlistUpdated,
 }
 
 enum ScreenIdentifier {

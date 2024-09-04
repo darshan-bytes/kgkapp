@@ -10,12 +10,15 @@ final class AddToWatchlistInitialEvent extends AddToWatchlistEvent {
   final ProductDetails productDetails;
   final WatchlistActionType actionType;
   final BuildContext context;
+  final WatchlistData? watchlistData;
 
-  const AddToWatchlistInitialEvent.add(this.productDetails, this.context) : actionType = WatchlistActionType.add;
+  const AddToWatchlistInitialEvent.add(this.productDetails, this.context)
+      : actionType = WatchlistActionType.add,
+        watchlistData = null;
 
-  const AddToWatchlistInitialEvent.edit(this.productDetails, this.context) : actionType = WatchlistActionType.edit;
+  const AddToWatchlistInitialEvent.edit(this.productDetails, this.context, this.watchlistData) : actionType = WatchlistActionType.edit;
 
-  const AddToWatchlistInitialEvent.remove(this.productDetails, this.context) : actionType = WatchlistActionType.remove;
+  const AddToWatchlistInitialEvent.remove(this.productDetails, this.context, this.watchlistData) : actionType = WatchlistActionType.remove;
 
   @override
   List<Object> get props => [productDetails, actionType];
