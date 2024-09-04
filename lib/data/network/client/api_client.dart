@@ -36,6 +36,14 @@ class ApiClient {
 
   static String watchListById(String watchlistIds) => '$apiBaseUrl/watchlist/$watchlistIds';
 
+  static String watchListAddProduct(String watchlistId) => '$apiBaseUrl/watchlist/$watchlistId/add-product';
+
+  static String watchListUpdateProduct(String watchlistId, String productId) =>
+      '$apiBaseUrl/watchlist/$watchlistId/product/$productId/update';
+
+  static String watchListRemoveProduct(String watchlistId, String productId) =>
+      '$apiBaseUrl/watchlist/$watchlistId/product/$productId/remove';
+
   static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
 }
 

@@ -300,7 +300,7 @@ class JewelleryDataModel {
   final String? metalColor1HexCode;
   final String? metalColor2HexCode;
   final String? metalColor3HexCode;
-  final dynamic discountPercentage;
+  final double? discountPercentage;
   final String? businessCategoryName;
   final String? jewelleryTypeName;
   final String? finalPrice;
@@ -440,11 +440,11 @@ class JewelleryDataModel {
       metalColor1HexCode: json["metal_color_1_hex_code"],
       metalColor2HexCode: json["metal_color_2_hex_code"],
       metalColor3HexCode: json["metal_color_3_hex_code"],
-      discountPercentage: json["discount_percentage"],
+      discountPercentage: double.tryParse(json["discount_percentage"]?.toString() ?? ""),
       businessCategoryName: json["business_category_name"],
       jewelleryTypeName: json["jewellery_type_name"],
-      finalPrice: json["final_price"],
-      discountPrice: json["discount_price"],
+      finalPrice: json["final_price"]?.toString(),
+      discountPrice: json["discount_price"]?.toString(),
     );
   }
 

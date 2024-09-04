@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 
 /// Common response model
 class CommonResponse<T> {
@@ -72,6 +71,8 @@ class CommonResponse<T> {
         return GemstoneDatum.fromJson(json);
       case const (PaginationData<WatchlistData>):
         return PaginationData<WatchlistData>.fromJson(json);
+      case const (WatchlistData):
+        return WatchlistData.fromJson(json);
       case const (JewelleryDataModel):
         return JewelleryDataModel.fromJson(json);
       case const (Map<String, dynamic>):

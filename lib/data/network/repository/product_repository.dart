@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 
 class ProductRepository extends ApiService {
   final BuildContext context;

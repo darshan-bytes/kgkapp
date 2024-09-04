@@ -1,9 +1,9 @@
+import 'package:http/http.dart' as http;
+import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
-import 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-import 'package:kgk/kgk.dart';
-import 'package:http/http.dart' as http;
+
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
 class AppRepository extends ApiService {
@@ -187,18 +187,21 @@ class AppRepository extends ApiService {
     required String limit,
     required String page,
     bool isLoadMore = false,
-    required String searchQuery,
+    String searchQuery = '',
+    bool isFullList = false,
   }) async {
     if (!isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<PaginationData<WatchlistData>>(
       ApiClient.watchList,
-      query: {
-        ApiKey.page: page,
-        ApiKey.limit: limit,
-        if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
-      },
+      query: isFullList
+          ? null
+          : {
+              ApiKey.page: page,
+              ApiKey.limit: limit,
+              if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
+            },
     );
     if (!isLoadMore) {
       context.setAppLoading(false);
@@ -246,6 +249,45 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> deleteWatchList(String id) async {
     context.setAppLoading(true);
     var response = await deleteMethod<Map<String, dynamic>>(ApiClient.watchListById(id), withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Add Product in Watchlist
+  Future<Either<ErrorResponse, CommonResponse>?> watchListAddProduct(String watchlistId, Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.watchListAddProduct(watchlistId), body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Update Product in Watchlist
+  Future<Either<ErrorResponse, CommonResponse>?> watchListUpdateProduct(
+      String watchlistId, String productId, Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response =
+        await putMethod<Map<String, dynamic>>(ApiClient.watchListUpdateProduct(watchlistId, productId), body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Getting Watchlist details by ID
+  Future<Either<ErrorResponse, WatchlistData>?> getWatchListById(String id, {bool isInBackground = false}) async {
+    if (!isInBackground) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<WatchlistData>(ApiClient.watchListById(id));
+    if (!isInBackground) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Remove Product from Watchlist by ID
+  Future<Either<ErrorResponse, CommonResponse>?> watchListRemoveProduct(String watchlistId, String productId) async {
+    context.setAppLoading(true);
+    var response =
+        await deleteMethod<Map<String, dynamic>>(ApiClient.watchListRemoveProduct(watchlistId, productId), withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

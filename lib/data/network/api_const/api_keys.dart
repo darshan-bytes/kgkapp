@@ -16,4 +16,8 @@ class ApiKey {
   static const String minutes = 'minutes';
   static const String days = 'days';
   static const String search = 'search';
+  static const String notifyOnPriceDrop = 'notifyOnPriceDrop';
+  static const String notifyOnDiscount = 'notifyOnDiscount';
+  static const String commodity = 'commodity';
+  static const String productId = 'productId';
 }

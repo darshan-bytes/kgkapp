@@ -59,7 +59,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
             ),
           );
         } else {
-          return const SmartCircularProgressIndicator();
+          return const SizedBox.shrink();
         }
       },
     );
@@ -82,7 +82,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
               SmartStatusBadge(
                 borderRadius: 22.r,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                currentStatus: bloc.watchlistDetailsModel.status,
+                currentStatus: bloc.watchlistDetailsModel.displayStatus,
               ),
               SizedBox(width: 16.w),
               SmartImage(
@@ -96,42 +96,41 @@ class WatchlistDetailsScreen extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              SizedBox(
-                width: 152.w,
+              Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildDetailColumn(
                       APPStrings.noOfProducts.tr,
-                      '5',
+                      bloc.productList.length.toString(),
                       style,
                       titleStyle: style.noOfProductsStyle,
                     ),
                     SizedBox(height: 19.h),
                     _buildDetailColumn(
                       APPStrings.from.tr,
-                      bloc.watchlistDetailsModel.watchlistFromDate,
+                      bloc.watchlistDetailsModel.displayFromDate,
                       style,
                     ),
                   ],
                 ),
               ),
-              SizedBox(width: 14.w),
+              SizedBox(width: 16.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildDetailColumn(
                       APPStrings.remainingTime.tr,
-                      bloc.watchlistDetailsModel.remainingTime,
+                      bloc.watchlistDetailsModel.duration?.displayDuration,
                       style,
                       valueStyle: style.watchlistNameStyle,
                     ),
                     SizedBox(height: 16.h),
                     _buildDetailColumn(
                       APPStrings.to.tr,
-                      bloc.watchlistDetailsModel.watchlistToDate,
+                      bloc.watchlistDetailsModel.displayToDate,
                       style,
                     ),
                   ],
@@ -166,6 +165,9 @@ class WatchlistDetailsScreen extends StatelessWidget {
     return BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
       buildWhen: (previous, current) => current is WatchlistProductLoadedMore || current is WatchlistProductLoadingMore,
       builder: (context, state) {
+        if (bloc.productList.isEmpty) {
+          return NoDataFoundWidget(text: APPStrings.noProductsAddedInWatchlist.tr);
+        }
         return SmartGridView(
           items: List.generate(
             bloc.productList.length,
@@ -175,25 +177,11 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 isOutOfStock: productDetails.isOutOfStock,
                 productDetails: productDetails,
                 onCancelTap: () {
-                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.remove(productDetails));
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    enableDrag: false,
-                    useRootNavigator: true,
-                    builder: (context) => const AddWatchlistScreen(),
-                  );
+                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
                 },
                 onFavTap: () {},
-                isFavourite: true,
-                onEyeTap: () {},
                 onAddToBagTap: () {
-                  BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.edit(productDetails));
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    enableDrag: false,
-                    useRootNavigator: true,
-                    builder: (context) => const AddWatchlistScreen(),
-                  );
+                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
                 },
                 buttonText: APPStrings.edit.tr,
               );

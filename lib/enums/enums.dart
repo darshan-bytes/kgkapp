@@ -42,8 +42,13 @@ enum ProjectStatus {
 }
 
 enum UserType {
-  b2cUser,
-  b2bUser,
+  b2cUser('customer'),
+  b2bUser('business'),
+  ;
+
+  const UserType(this.value);
+
+  final String value;
 }
 
 /// [B2BListingType] -  Representing various listing types of B2B Listing.
@@ -85,3 +90,19 @@ enum CalenderEventType {
 enum Edge { top, right, bottom, left }
 
 enum Clipper { start, center, end }
+
+enum Commodity {
+  diamond('diamond'),
+  gemstone('gemstone'),
+  jewellery('jewellery'),
+  styleLibrary('style_library'),
+  skuLibrary('sku_library'),
+  cadLibrary('cad_library'),
+  designLibrary('design_library'),
+  finishedGoodLibrary('finished_good_library'),
+  ;
+
+  const Commodity(this.value);
+
+  final String value;
+}

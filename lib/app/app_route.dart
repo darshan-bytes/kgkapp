@@ -94,97 +94,43 @@ class AppRoutes {
 
       case signUpPage:
         builder = (context) {
-          return BlocProvider<SignUpBloc>(
-            create: (context) => SignUpBloc()..add(SignUpInitialEvent(context)),
-            child: const SignUpScreen(),
-          );
+          BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
+          return const SignUpScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
-      //     return const SignUpScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
+
       case categoriesPage:
         builder = (context) {
-          return BlocProvider<CategoriesBloc>(
-            create: (context) => CategoriesBloc()..add(CategoriesInitialEvent(context: context)),
-            child: const CategoriesScreen(),
-          );
+          BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
+          return const CategoriesScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
-      //     return const CategoriesScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case landingPage:
         builder = (context) {
-          return BlocProvider<LandingBloc>(
-            create: (context) => LandingBloc()..add(LandingInitialEvent(context: context)),
-            child: const LandingScreen(),
-          );
+          BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
+          return const LandingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
-      //     return const LandingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case forgotPasswordPage:
         builder = (context) {
-          return BlocProvider<ForgotPasswordBloc>(
-            create: (context) => ForgotPasswordBloc()..add(const ForgotPasswordInitialEvent()),
-            child: const ForgotPasswordScreen(),
-          );
+          BlocProvider.of<ForgotPasswordBloc>(context).add(const ForgotPasswordInitialEvent());
+          return const ForgotPasswordScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ForgotPasswordBloc>(context).add(const ForgotPasswordInitialEvent());
-      //     return const ForgotPasswordScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case emailSentPage:
         builder = (context) => const ForgotEmailSentScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const ForgotEmailSentScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case notificationPage:
         builder = (context) => const NotificationScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const NotificationScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case collectionPage:
         builder = (context) => const CollectionScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const CollectionScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case productListGridPage:
         builder = (context) {
@@ -194,16 +140,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     return BlocProvider<ProductListBloc>(
-      //       create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
-      //       child: const ProductListScreen(), 
-      //     );
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case stoneDetailPage:
         builder = (context) {
@@ -213,25 +149,10 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     return BlocProvider<StoneDetailBloc>(
-      //       create: (context) => StoneDetailBloc()..add(StoneDetailInitialEvent(context: context)),
-      //       child: const StoneDetailScreen(),
-      //     );
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case settingDetailPage:
         builder = (context) => const SettingDetailScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const SettingDetailScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case stoneListingPage:
         builder = (context) {
@@ -241,16 +162,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     return BlocProvider<StoneListingBloc>(
-      //       create: (context) => StoneListingBloc()..add(GetStoneProductListEvent(context)),
-      //       child: const StoneListingScreen(),
-      //     );
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case settingListingPage:
         builder = (context) {
@@ -260,92 +171,39 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SettingListingBloc>(
-      //     create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
-      //     child: const SettingListingScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case completeProductPage:
         builder = (context) => const CompleteProductScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const CompleteProductScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case addAddressPage:
         builder = (context) {
-          return BlocProvider<AddAddressBloc>(
-            create: (context) => AddAddressBloc()..add(AddAddressInitialEvent(context)),
-            child: const AddAddressScreen(),
-          );
+          BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
+          return const AddAddressScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
-      //     return const AddAddressScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case addressListPage:
         builder = (context) {
-          return BlocProvider<AddressListBloc>(
-            create: (context) => AddressListBloc()..add(const LoadAddressListEvent()),
-            child: const AddressListScreen(),
-          );
+          BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
+          return const AddressListScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
-      //     return const AddressListScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case wishListPage:
         builder = (context) {
-          return BlocProvider<WishlistBloc>(
-            create: (context) => WishlistBloc()..add(const InitialWishlistEvent()),
-            child: const WishlistScreen(),
-          );
+          BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
+          return const WishlistScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
-      //     return const WishlistScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case compareProductPage:
         builder = (context) => const CompareProductScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const CompareProductScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case paymentPage:
         builder = (context) => const PaymentScreen();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const PaymentScreen(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case productDetailsPage:
         builder = (context) {
@@ -355,14 +213,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ProductDetailsBloc>(
-      //     create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
-      //     child: const ProductDetailsScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case diamondInfoPopupPage:
         builder = (context) {
@@ -372,59 +222,24 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     return BlocProvider<DiamondInfoPopupBloc>(
-      //       create: (_) => DiamondInfoPopupBloc()..add(DiamondInfoPopupInitialEvent(context)),
-      //       child: const DiamondInfoPopupScreen(),
-      //     );
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case productMenuBottomSheet:
         builder = (context) => const ProductMenuBottomSheet();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const ProductMenuBottomSheet(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case auctionPage:
         builder = (context) {
-          return BlocProvider<AuctionBloc>(
-            create: (context) => AuctionBloc()..add(AuctionInitialEvent(context: context)),
-            child: const AuctionScreen(),
-          );
+          BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
+          return const AuctionScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
-      //     return const AuctionScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case writeReviewPage:
         builder = (context) {
-          return BlocProvider<WriteReviewBloc>(
-            create: (context) => WriteReviewBloc()..add(const WriteReviewInitialEvent()),
-            child: const WriteReviewScreen(),
-          );
+          BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
+          return const WriteReviewScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
-      //     return const WriteReviewScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case orderConfirmationPage:
         return PageRouteBuilder(
@@ -437,20 +252,10 @@ class AppRoutes {
 
       case orderPage:
         builder = (context) {
-          return BlocProvider<OrdersBloc>(
-            create: (context) => OrdersBloc()..add(OrdersInitialEvent(context)),
-            child: const OrderScreen(),
-          );
+          BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
+          return const OrderScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
-      //     return const OrderScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case orderDetailsPage:
         builder = (context) {
@@ -460,14 +265,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrderDetailBloc>(
-      //     create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
-      //     child: const OrderDetailScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case auctionListingPage:
         builder = (context) {
@@ -477,14 +274,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<AuctionListingBloc>(
-      //     create: (_) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
-      //     child: const AuctionListingScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case orderTimelinePage:
         builder = (context) {
@@ -494,31 +283,13 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<OrderTimelineBloc>(
-      //     create: (_) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
-      //     child: const OrderTimelineScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case makeInquiryPage:
         builder = (context) {
-          return BlocProvider<MakeInquiryBloc>(
-            create: (context) => MakeInquiryBloc()..add(MakeInquiryInitialEvent()),
-            child: const MakeInquiryScreen(),
-          );
+          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
+          return const MakeInquiryScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
-      //     return const MakeInquiryScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case searchPage:
         builder = (context) {
@@ -528,14 +299,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
-      //     return const SearchScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case qrScannerPage:
         builder = (context) {
@@ -545,14 +308,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<QrCodeScanLoginBloc>(
-      //     create: (context) => QrCodeScanLoginBloc(),
-      //     child: const QrScannerScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case searchResultPage:
         builder = (context) {
@@ -562,14 +317,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<SearchResultBloc>(
-      //     create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
-      //     child: const SearchResultScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case notificationSettingsPage:
         builder = (context) {
@@ -579,14 +326,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<NotificationSettingsBloc>(
-      //     create: (context) => NotificationSettingsBloc(),
-      //     child: const NotificationSettingsView(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case cmsWebViewPage:
         builder = (context) {
@@ -596,91 +335,38 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<CmsWebViewBloc>(
-      //     create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
-      //     child: const CmsWebViewScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case faqPage:
         builder = (context) {
-          return BlocProvider<FaqBloc>(
-            create: (context) => FaqBloc()..add(const FaqInitialEvent()),
-            child: const FaqScreen(),
-          );
+          BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
+          return const FaqScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
-      //     return const FaqScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case preferencesPage:
         builder = (context) {
-          return BlocProvider<PreferencesBloc>(
-            create: (context) => PreferencesBloc()..add(PreferencesInitialEvent()),
-            child: const PreferencesScreen(),
-          );
+          BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
+          return const PreferencesScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
-      //     return const PreferencesScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case userTypeSelection:
         builder = (context) => const UserTypeSelection();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const UserTypeSelection(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case contactUsPage:
         builder = (context) {
-          return BlocProvider<ContactUsBloc>(
-            create: (context) => ContactUsBloc()..add(ContactUsInitialEvent()),
-            child: const ContactUsScreen(),
-          );
+          BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
+          return const ContactUsScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
-      //     return const ContactUsScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case dashboardPage:
         builder = (context) {
-          return BlocProvider<DashboardBloc>(
-            create: (context) => DashboardBloc()..add(const DashboardInitialEvent()),
-            child: const DashboardScreen(),
-          );
+          BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
+          return const DashboardScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
-      //     return const DashboardScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case pddListingPage:
         builder = (context) {
@@ -690,14 +376,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddListingBloc>(
-      //     create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
-      //     child: const PddListingScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case conceptListPage:
         builder = (context) {
@@ -707,150 +385,62 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ConceptListBloc>(
-      //     create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
-      //     child: const ConceptListScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case monitoringPage:
         builder = (context) {
-          return BlocProvider<MonitoringBloc>(
-            create: (context) => MonitoringBloc()..add(MonitoringInitialEvent()),
-            child: const MonitoringScreen(),
-          );
+          BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
+          return const MonitoringScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
-      //     return const MonitoringScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case savedAddressPage:
         builder = (context) {
-          return BlocProvider<SavedAddressBloc>(
-            create: (context) => SavedAddressBloc()..add(const SavedAddressInitialEvent()),
-            child: const SavedAddressScreen(),
-          );
+          BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
+          return const SavedAddressScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
-      //     return const SavedAddressScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case shippingAddressPage:
         builder = (context) {
-          return BlocProvider<ShippingAddressBloc>(
-            create: (context) => ShippingAddressBloc()..add(ShippingAddressInitialEvent(context)),
-            child: const ShippingAddressScreen(),
-          );
+          BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
+          return const ShippingAddressScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
-      //     return const ShippingAddressScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case projectListingPage:
         builder = (context) {
-          return BlocProvider<ProjectListingBloc>(
-            create: (context) => ProjectListingBloc()..add(InitialProjectListingEvent(context: context)),
-            child: const ProjectListingScreen(),
-          );
+          BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
+          return const ProjectListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
-      //     return const ProjectListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case designBriefsPage:
         builder = (context) {
-          return BlocProvider<DesignBriefsBloc>(
-            create: (context) => DesignBriefsBloc()..add(InitialDesignBriefsEvent(context: context)),
-            child: const DesignBriefsScreen(),
-          );
+          BlocProvider.of<DesignBriefsBloc>(context).add(InitialDesignBriefsEvent(context: context));
+          return const DesignBriefsScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DesignBriefsBloc>(context).add(InitialDesignBriefsEvent(context: context));
-      //     return const DesignBriefsScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case designListingPage:
         builder = (context) {
-          return BlocProvider<DesignListingBloc>(
-            create: (context) => DesignListingBloc()..add(InitialDesignListingEvent(context: context)),
-            child: const DesignListingScreen(),
-          );
+          BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
+          return const DesignListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
-      //     return const DesignListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case stylesListingPage:
         builder = (context) {
-          return BlocProvider<StylesListingBloc>(
-            create: (context) => StylesListingBloc()..add(const StylesListingInitialEvent()),
-            child: const StylesListingScreen(),
-          );
+          BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
+          return const StylesListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
-      //     return const StylesListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case digitalCataloguePage:
         builder = (context) {
-          return BlocProvider<DigitalCatalogueBloc>(
-            create: (context) => DigitalCatalogueBloc()..add(const DigitalCatalogueInitialEvent()),
-            child: const DigitalCatalogueListingScreen(),
-          );
+          BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
+          return const DigitalCatalogueListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
-      //     return const DigitalCatalogueListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case presentationPreviewPage:
         builder = (context) {
@@ -860,31 +450,13 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddPreviewBloc>(
-      //     create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
-      //     child: const PddPreviewScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case findStorePage:
         builder = (context) {
-          return BlocProvider<FindStoreBloc>(
-            create: (context) => FindStoreBloc()..add(FindStoreInitialEvent()),
-            child: const FindStoreScreen(),
-          );
+          BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
+          return const FindStoreScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
-      //     return const FindStoreScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case presentationPreviewHistory:
         builder = (context) {
@@ -894,65 +466,27 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PddPreviewBloc>(
-      //     create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
-      //     child: const PddPreviewHistoryScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case cadLibraryListingPage:
         builder = (context) {
-          return BlocProvider<CadLibraryListingBloc>(
-            create: (context) => CadLibraryListingBloc()..add(InitialCadListingEvent(context: context)),
-            child: const CadLibraryListingScreen(),
-          );
+          BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
+          return const CadLibraryListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
-      //     return const CadLibraryListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case designLibraryFeedbackPage:
         builder = (context) {
-          return BlocProvider<DesignLibraryFeedbackBloc>(
-            create: (context) => DesignLibraryFeedbackBloc()..add(InitialDesignLibraryFeedbackEvent()),
-            child: const DesignLibraryFeedbackScreen(),
-          );
+          BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
+          return const DesignLibraryFeedbackScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
-      //     return const DesignLibraryFeedbackScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case watchListPage:
         builder = (context) {
-          return BlocProvider<WatchlistBloc>(
-            create: (context) => WatchlistBloc()..add(WatchlistInitialEvent(context)),
-            child: const WatchlistScreen(),
-          );
+          BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent(context));
+          return const WatchlistScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent(context));
-      //     return const WatchlistScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case allReviewPage:
         builder = (context) {
@@ -962,47 +496,20 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<AllReviewBloc>(context).add(AllReviewInitialEvent(context));
-      //     return const AllReviewScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case exhibitionListingPage:
         builder = (context) {
-          return BlocProvider<ExhibitionListingBloc>(
-            create: (context) => ExhibitionListingBloc()..add(InitialExhibitionListingEvent(context: context)),
-            child: const ExhibitionListingScreen(),
-          );
+          BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
+          return const ExhibitionListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
-      //     return const ExhibitionListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      // );
 
       case stonesLandingPage:
         builder = (context) {
-          return BlocProvider<StonesLandingBloc>(
-            create: (context) => StonesLandingBloc()..add(InitialStonesLandingEvent(context: context)),
-            child: const StonesLandingScreen(),
-          );
+          BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
+          return const StonesLandingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
-      //     return const StonesLandingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case previewCataloguePage:
         builder = (context) {
@@ -1012,49 +519,20 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<PreviewCatalogueBloc>(
-      //     create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
-      //     child: const PreviewCatalogueScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case designLibraryScreen:
         builder = (context) {
-          return BlocProvider<DesignLibraryBloc>(
-            create: (context) => DesignLibraryBloc()..add(const DesignLibraryInitialEvent()),
-            child: const DesignLibraryScreen(),
-          );
+          BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
+          return const DesignLibraryScreen();
         };
         break;
-
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
-      //     return const DesignLibraryScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case activityLogScreenPage:
         builder = (context) {
-          return BlocProvider<ActivityLogBloc>(
-            create: (context) => ActivityLogBloc()..add(ActivityLogInitialEvent()),
-            child: const ActivityLogScreen(),
-          );
+          BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
+          return const ActivityLogScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
-      //     return const ActivityLogScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case watchlistDetailsPage:
         builder = (context) {
@@ -1064,74 +542,31 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<WatchlistDetailsBloc>(
-      //     create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
-      //     child: const WatchlistDetailsScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case orionPage:
         builder = (context) {
-          return BlocProvider<OrionBloc>(
-            create: (context) => OrionBloc()..add(const OrionInitialEvent()),
-            child: const OrionScreen(),
-          );
+          BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+          return const OrionScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
-      //     return const OrionScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case manufacturerOrderListingPage:
         builder = (context) {
-          return BlocProvider<ManufacturerOrderListingBloc>(
-            create: (context) => ManufacturerOrderListingBloc()..add(const InitialManufacturerOrderListingEvent()),
-            child: const ManufacturerOrderListingScreen(),
-          );
+          BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
+          return const ManufacturerOrderListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
-      //     return const ManufacturerOrderListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case myOrderTypeSelectionPage:
         builder = (context) => const MyOrderTypeSelection();
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => const MyOrderTypeSelection(),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case retailerOrderListingPage:
         builder = (context) {
-          return BlocProvider<RetailerOrderListingBloc>(
-            create: (context) => RetailerOrderListingBloc()..add(RetailerOrderListingInitialEvent(context: context)),
-            child: const RetailerOrderListingScreen(),
-          );
+          BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
+          return const RetailerOrderListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
-      //     return const RetailerOrderListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case manufacturerOrderDetailsPage:
         builder = (context) {
@@ -1141,48 +576,20 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ManufacturerOrderDetailsBloc>(
-      //     create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
-      //     child: const ManufacturerOrderDetailsScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case newsletterPage:
         builder = (context) {
-          return BlocProvider<NewsletterBloc>(
-            create: (context) => NewsletterBloc()..add(NewsletterInitialEvent(context: context)),
-            child: const NewsletterScreen(),
-          );
+          BlocProvider.of<NewsletterBloc>(context).add(NewsletterInitialEvent(context: context));
+          return const NewsletterScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<NewsletterBloc>(context).add(NewsletterInitialEvent(context: context));
-      //     return const NewsletterScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case userMasterListingPage:
         builder = (context) {
-          return BlocProvider<UserMasterListingBloc>(
-            create: (context) => UserMasterListingBloc()..add(const InitialUserMasterListingEvent()),
-            child: const UserMasterListingScreen(),
-          );
+          BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
+          return const UserMasterListingScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
-      //     return const UserMasterListingScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case messagesPage:
         builder = (context) {
@@ -1192,14 +599,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MessagesBloc>(
-      //     create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
-      //     child: const MessagesScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case calendarPage:
         builder = (context) {
@@ -1209,14 +608,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<CalendarBloc>(
-      //     create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
-      //     child: const CalendarScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case messagesDetailPage:
         builder = (context) {
@@ -1226,14 +617,6 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<MessageDetailBloc>(
-      //     create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
-      //     child: const MessageDetailScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      //   settings: settings,
-      // );
 
       case exhibitionDetailsPage:
         builder = (context) {
@@ -1243,29 +626,13 @@ class AppRoutes {
           );
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) => BlocProvider<ExhibitionDetailsBloc>(
-      //     create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
-      //     child: const ExhibitionDetailsScreen(),
-      //   ),
-      //   transitionsBuilder: commonTransitionBuilder,
-      // );
 
       case presentationPage:
         builder = (context) {
-          return BlocProvider<PresentationBloc>(
-            create: (context) => PresentationBloc()..add(const InitialPresentationEvent()),
-            child: const PresentationScreen(),
-          );
+          BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
+          return const PresentationScreen();
         };
         break;
-      // return PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
-      //     return const PresentationScreen();
-      //   },
-      //   transitionsBuilder: commonTransitionBuilder,
-      // );
 
       case imageSearchPage:
         builder = (context) {
@@ -1275,15 +642,6 @@ class AppRoutes {
           );
         };
         break;
-      // return MaterialPageRoute(
-      //   builder: (context) {
-      //     return BlocProvider<ImageSearchBloc>(
-      //       create: (_) => ImageSearchBloc()..add(ImageSearchInitialEvent()),
-      //       child: const ImageSearchScreen(),
-      //     );
-      //   },
-      //   settings: settings,
-      // );
 
       default:
         return _errorRoute();
@@ -1356,6 +714,7 @@ enum RoutesData {
   conceptId,
   diamondInfo,
   isWatchlistCreated,
+  isWatchlistUpdated,
 }
 
 enum ScreenIdentifier {

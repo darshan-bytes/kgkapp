@@ -124,26 +124,14 @@ class AddWatchlistScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SmartText(
-                      bloc.productDetails?.name ?? '',
-                      maxLines: 2,
-                      style: style.subTitleStyle,
-                    ),
-                    SizedBox(height: 5.h),
+                    SmartText(bloc.productDetails?.name ?? '', maxLines: 2, style: style.subTitleStyle),
+                    if (bloc.productDetails?.company != null || bloc.productDetails?.productSku != null) SizedBox(height: 5.h),
                     Row(
                       children: [
-                        SmartText(
-                          bloc.productDetails?.company,
-                          style: style.subTextStyle,
-                        ),
-                        SmartText(
-                          ' | ',
-                          style: style.subTextStyle,
-                        ),
-                        SmartText(
-                          bloc.productDetails?.productSku,
-                          style: style.subTextStyle,
-                        ),
+                        if (bloc.productDetails?.company != null) SmartText(bloc.productDetails?.company, style: style.subTextStyle),
+                        if (bloc.productDetails?.company != null && bloc.productDetails?.productSku != null)
+                          SmartText(' | ', style: style.subTextStyle),
+                        if (bloc.productDetails?.productSku != null) SmartText(bloc.productDetails?.productSku, style: style.subTextStyle),
                       ],
                     ),
                   ],
@@ -160,11 +148,11 @@ class AddWatchlistScreen extends StatelessWidget {
     return BlocBuilder<AddToWatchlistBloc, AddToWatchlistState>(
       buildWhen: (previous, current) => current is WatchlistChangeNameState,
       builder: (context, state) {
-        return SmartDropDown<WatchlistDetailsModel>(
+        return SmartDropDown<WatchlistData>(
           hintText: APPStrings.hintWatchlistName.tr,
           labelText: APPStrings.watchlist.tr,
-          items: bloc.arrWatchlist.map((WatchlistDetailsModel watchlist) {
-            return SmartDropDownItem<WatchlistDetailsModel>(
+          items: bloc.arrWatchlist.map((WatchlistData watchlist) {
+            return SmartDropDownItem<WatchlistData>(
               value: watchlist,
               title: watchlist.name ?? '',
             );
@@ -174,7 +162,7 @@ class AddWatchlistScreen extends StatelessWidget {
               bloc.add(WatchlistChangeNameEvent(watchlist));
             }
           },
-          selectedItem: bloc.selectedWatchlistName,
+          selectedItem: bloc.selectedWatchlist,
         );
       },
     );
@@ -268,7 +256,7 @@ class AddWatchlistScreen extends StatelessWidget {
             Expanded(
               child: SmartButton(
                 onTap: () {
-                  context.pop();
+                  bloc.add(AddToWatchListSaveEvent(context));
                 },
                 title: bloc.isEdit ? APPStrings.save.tr : (bloc.isRemove ? APPStrings.remove.tr : APPStrings.add.tr),
               ),

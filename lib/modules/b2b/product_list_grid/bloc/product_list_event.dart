@@ -38,3 +38,13 @@ final class ProductListPullToRefreshEvent extends ProductListEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class ProductListAddToWatchListEvent extends ProductListEvent {
+  final String productId;
+  final BuildContext context;
+
+  const ProductListAddToWatchListEvent(this.productId, this.context);
+
+  @override
+  List<Object> get props => [productId, context];
+}

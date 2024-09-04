@@ -558,7 +558,7 @@ class DiamondDataModel {
       reviewCount: json["review_count"],
       isFavorite: json["is_favorite"],
       priceCts: json["price_cts"],
-      finalPrice: json["final_price"],
+      finalPrice: json["final_price"]?.toString(),
     );
   }
 

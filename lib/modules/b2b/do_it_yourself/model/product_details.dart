@@ -39,6 +39,7 @@ class ProductDetails {
   int? reviewCount;
   double? rating;
   String? brandName;
+  Commodity? commodity;
 
   ProductDetails({
     this.productId,
@@ -79,6 +80,7 @@ class ProductDetails {
     this.reviewCount,
     this.rating,
     this.brandName,
+    this.commodity,
   });
 }
 
