@@ -22,7 +22,7 @@ class ProductDetailsScreen extends StatelessWidget {
           },
         ),
       ),
-      body: bloc.isErrorInLoadingData ? getErrorWidget(bloc, context) : getScaffoldBody(bloc, style),
+      body: getScaffoldBody(bloc, style),
       floatingActionButton: bloc.isErrorInLoadingData ? null : _buildCompareButton(bloc, style),
       bottomNavigationBar: bloc.isErrorInLoadingData ? null : _buildBottomNavigationBar(bloc, style, context),
     );
@@ -212,50 +212,53 @@ class ProductDetailsScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
             if (state is ProductDetailsLoadedState) {
-              return Column(
-                children: [
-                  Stack(
-                    children: [
-                      SmartCarouselSlider(
-                        imgList: bloc.imgList,
-                        controller: bloc.controller,
-                        on360Tap: bloc.isCustomisation ? () {} : null,
-                      ),
-                      if (!bloc.isCustomisation)
-                        Padding(
-                          padding: EdgeInsets.all(12.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(width: 8.w),
-                              SelectionButton(
-                                height: 42.w,
-                                width: 42.w,
-                                padding: EdgeInsets.all(6.w),
-                                isSelected: false,
-                                onTap: () {},
-                                image: AppImages.icHeart,
+              return bloc.isErrorInLoadingData
+                  ? getErrorWidget(bloc, context)
+                  : Column(
+                      children: [
+                        Stack(
+                          children: [
+                            SmartCarouselSlider(
+                              imgList: bloc.imgList,
+                              controller: bloc.controller,
+                              on360Tap: bloc.isCustomisation ? () {} : null,
+                            ),
+                            if (!bloc.isCustomisation)
+                              Padding(
+                                padding: EdgeInsets.all(12.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    SizedBox(width: 8.w),
+                                    SelectionButton(
+                                      height: 42.w,
+                                      width: 42.w,
+                                      padding: EdgeInsets.all(6.w),
+                                      isSelected: false,
+                                      onTap: () {},
+                                      image: AppImages.icHeart,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    SelectionButton(
+                                      height: 42.w,
+                                      width: 42.w,
+                                      padding: EdgeInsets.all(6.w),
+                                      isSelected: false,
+                                      onTap: () {},
+                                      image: AppImages.icShare,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              SizedBox(width: 8.w),
-                              SelectionButton(
-                                height: 42.w,
-                                width: 42.w,
-                                padding: EdgeInsets.all(6.w),
-                                isSelected: false,
-                                onTap: () {},
-                                image: AppImages.icShare,
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
-                    ],
-                  ),
-                  SizedBox(height: 40.h),
-                  _productDetail(style, bloc, context),
-                ],
-              );
+                        SizedBox(height: 40.h),
+                        _productDetail(style, bloc, context),
+                      ],
+                    );
+            } else {
+              return const SizedBox.shrink();
             }
-            return const SizedBox.shrink();
           },
         ),
       ),
@@ -377,9 +380,10 @@ class ProductDetailsScreen extends StatelessWidget {
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),
               SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
-                context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
+                context.pushNamed(AppRoutes.allReviewPage);
               }),
             ],
+            if (bloc.suggestedProductList.isNotNullNorEmpty)
             SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
@@ -394,23 +398,26 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _productTypeAndCode(ProductDetailsStyle style, ProductDetailsBloc bloc) {
+    if (bloc.productDetails == null) return const SizedBox();
     return bloc.screenIdentifier == ScreenIdentifier.productForRing
         ? Row(
             children: [
-              SmartText('Martin Flyer', style: style.productTypeStyle),
-              SizedBox(width: 8.w),
-              Container(
-                height: 4.w,
-                width: 4.w,
-                decoration: BoxDecoration(
-                    color: style.dotColor,
-                    border: Border.all(
+              if (bloc.productDetails!.brandName.isNotNullNorEmpty)
+                SmartText(bloc.productDetails?.brandName, style: style.productTypeStyle),
+              if (bloc.productDetails!.brandName.isNotNullNorEmpty && bloc.productDetails!.productSku.isNotNullNorEmpty) ...[
+                SizedBox(width: 8.w),
+                Container(
+                  height: 4.w,
+                  width: 4.w,
+                  decoration: BoxDecoration(
                       color: style.dotColor,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.r))),
-              ),
-              SizedBox(width: 8.w),
-              SmartText('DERC03RDA', style: style.productCodeStyle),
+                      border: Border.all(color: style.dotColor),
+                      borderRadius: BorderRadius.all(Radius.circular(50.r))),
+                ),
+                SizedBox(width: 8.w),
+              ],
+              if (bloc.productDetails!.productSku.isNotNullNorEmpty)
+                SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle),
             ],
           )
         : SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle);

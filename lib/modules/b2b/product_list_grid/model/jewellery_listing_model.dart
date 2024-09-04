@@ -319,7 +319,7 @@ class JewelleryDataModel {
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
       styleNo: json["style_no"],
-      id: json["id"],
+      id: json["id"] ?? json["_id"],
       huidNo2: json["huid_no_2"],
       productDescription: json["product_description"],
       coordinatorSalesmanSuid: json["coordinator_salesman_suid"],
@@ -830,8 +830,8 @@ class Pagination {
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
-      limit: json["limit"],
-      page: json["page"],
+      limit: json["limit"].toString(),
+      page: json["page"].toString(),
     );
   }
 

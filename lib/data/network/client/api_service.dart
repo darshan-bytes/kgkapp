@@ -10,8 +10,10 @@ class ApiService implements ApiProvider {
     String? acceptLanguage = StorageManager().getLocale();
     String? currency = StorageManager().getSelectedCurrency();
 
+    printWrapped("Token ::::: $token");
+
     Map<String, String> headers = {
-      if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
+      // if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
       HttpHeaders.contentTypeHeader: 'application/json',
       ApiKey.xApiKey: apiKey,
       ApiKey.acceptLanguage: acceptLanguage ?? 'en',

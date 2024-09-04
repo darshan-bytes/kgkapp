@@ -315,7 +315,7 @@ class StoneListingScreen extends StatelessWidget {
                                   shape: diamondListingBloc.productList[index].shape,
                                   colour: "H",
                                   clarity: "VVS1",
-                                  lotNumber: diamondListingBloc.productList[index].lotCode,
+                                  lotNumber: diamondListingBloc.productList[index].productSku,
                                   certificateNumber: "230000066395",
                                   measurements: "10.18 x 8.34 x 6.14",
                                   lab: diamondListingBloc.productList[index].labs,

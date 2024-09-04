@@ -20,7 +20,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
   String productId = "";
 
-  String stoneListingAppbarTitle = "DIY";
+  String stoneListingAppbarTitle = "";
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
