@@ -151,7 +151,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   }
 
   Future<void> createNewWatchlist(BuildContext context) async {
-    BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
+    BlocProvider.of<EditWatchlistBloc>(context).add(EditWatchlistInitialEvent(isEdit: false, watchlistData: WatchlistData()));
     final result = await Utils.showSmartModalBottomSheet(
       context: context,
       enableDrag: false,

@@ -16,6 +16,8 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
   int get durationMinutes => duration?.inMinutes.remainder(60) ?? 0;
   final TextEditingController nameController = TextEditingController();
 
+  WatchlistData? watchlistData;
+
   EditWatchlistBloc() : super(const EditWatchlistInitial()) {
     on<EditWatchlistInitialEvent>(_onEditWatchlistInitialEvent);
     on<EditWatchlistDurationChangedEvent>(_onEditWatchlistDurationChangedEvent);
@@ -23,12 +25,18 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
   }
 
   void _onEditWatchlistInitialEvent(EditWatchlistInitialEvent event, Emitter<EditWatchlistState> emit) {
+    emit(const EditWatchlistReloadState());
     isEdit = event.isEdit;
     if (isEdit) {
+      watchlistData = event.watchlistData;
       appBarTitle = APPStrings.editWatchlist.tr;
-      nameController.text = 'Watchlist 1';
-      duration = const Duration(days: 1, hours: 3, minutes: 30);
+      nameController.text = watchlistData?.name ?? '';
+      duration = Duration(
+          days: watchlistData?.duration?.days ?? 0,
+          hours: watchlistData?.duration?.hours ?? 0,
+          minutes: watchlistData?.duration?.minutes ?? 0);
     } else {
+      watchlistData = null;
       appBarTitle = APPStrings.createWatchlist.tr;
       nameController.clear();
       duration = Duration.zero;
@@ -48,7 +56,10 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
       ApiKey.minutes: duration?.inMinutes.remainder(60),
       ApiKey.days: duration?.inDays,
     };
-    Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).createWatchlist(body: body);
+    if (isEdit) {
+      body[ApiKey.watchlistId] = watchlistData?.sId;
+    }
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).createWatchlist(body: body, isEdit: isEdit);
 
     response?.fold(
       (l) {
@@ -56,7 +67,11 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
       },
       (data) {
         nameController.clear();
-        event.context.pop(arguments: {RoutesData.isWatchlistCreated: true});
+        if (isEdit) {
+          event.context.pop(arguments: {RoutesData.isWatchlistUpdated: true});
+        } else {
+          event.context.pop(arguments: {RoutesData.isWatchlistCreated: true});
+        }
         Utils.showMessage(data.message ?? '');
       },
     );

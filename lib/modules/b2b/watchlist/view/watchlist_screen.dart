@@ -93,7 +93,7 @@ class WatchlistScreen extends StatelessWidget {
               listingItemModel: bloc.watchListingList[index],
               margin: EdgeInsets.only(bottom: 16.h),
               onTap: () {
-                context.pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchListingList[index].id});
+                context.pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchlistDataList[index].sId});
               },
             ),
             if (state is WatchlistLoadingMoreState && index == bloc.watchListingList.length - 1) const SmartCircularProgressIndicator(),
@@ -165,16 +165,21 @@ class WatchlistScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildPopupOption(context, text: APPStrings.editWatchlist.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                    _buildPopupOption(context, text: APPStrings.editWatchlist.tr, style: orderPopupStyle.optionTextStyle, onTap: () async {
                       context.pop();
-                      BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent());
-                      Utils.showSmartModalBottomSheet(
+                      BlocProvider.of<EditWatchlistBloc>(context)
+                          .add(EditWatchlistInitialEvent(isEdit: true, watchlistData: bloc.watchlistDataList[index]));
+
+                      final result = await Utils.showSmartModalBottomSheet(
                         context: context,
                         enableDrag: false,
                         builder: (context) {
                           return const EditWatchlistScreen();
                         },
                       );
+                      if (result?[RoutesData.isWatchlistUpdated] == true) {
+                        bloc.add(WatchlistPullToRefreshEvent(context: screenContext));
+                      }
                     }),
                     _buildPopupOption(context, text: APPStrings.removeWatchlist.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
                       context.pop();
