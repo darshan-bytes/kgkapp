@@ -51,7 +51,7 @@ class ApiClient {
   static const String createWishList = '$apiBaseUrl/wishlist';
 
   static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
-  
+
   static const String productReviews = '$apiBaseUrl/product/reviews';
 }
 
