@@ -69,7 +69,7 @@ class ProductGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            productImageSection(productItemWidth, style),
+            productImageSection(productItemWidth, style, context),
             productDetailsSection(productItemWidth, style),
           ],
         ),
@@ -77,7 +77,7 @@ class ProductGridItem extends StatelessWidget {
     );
   }
 
-  Widget productImageSection(double width, ProductItemStyle style) {
+  Widget productImageSection(double width, ProductItemStyle style, BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -115,7 +115,18 @@ class ProductGridItem extends StatelessWidget {
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
               SizedBox(width: 8.w),
               if (onFavTap != null)
-                buildIcon(path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon, onTap: onFavTap, style: style),
+                BlocBuilder<AppBloc, AppState>(
+                  buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                  builder: (context, state) {
+                    return buildIcon(
+                        path: productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
+                        onTap: () {
+                          onFavTap?.call();
+                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                        },
+                        style: style);
+                  },
+                ),
             ],
           ),
         ),

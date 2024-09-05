@@ -49,7 +49,7 @@ class ApiService implements ApiProvider {
         url = uri.toString();
       }
       kgk_logger.log(
-          'Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: $query');
+          'Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
       switch (method) {
         case _ApiType.get:
           response = await http.get(Uri.parse(url),
@@ -138,40 +138,39 @@ class ApiService implements ApiProvider {
 
   @override
   Future<Either<ErrorResponse, dynamic>?> postMultipartMethod<T>(String url, Map<String, dynamic> body,
-      {Map<String, String>? headers, List<File>? files, bool withCurrencyHeader = false}) async {
+      {Map<String, String>? headers,
+      Map<String, dynamic>? query,
+      List<ModelMultiPartFile>? files,
+      bool withCurrencyHeader = false,
+      bool withFullResponse = false}) async {
     try {
       if (await ConnectivityManager().checkInternet()) {
-        String? token = StorageManager().getAuthToken();
-        String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
-
-        var request = http.MultipartRequest('POST', Uri.parse(url))
-          ..headers[HttpHeaders.authorizationHeader] = 'Bearer $token'
-          ..headers[ApiKey.xApiKey] = apiKey
-          ..headers[ApiKey.acceptLanguage] = 'en'
-          ..headers[HttpHeaders.contentTypeHeader] = 'multipart/form-data';
-
-        if (withCurrencyHeader) {
-          String? currency = StorageManager().getSelectedCurrency();
-          request.headers[ApiKey.currency] = currency ?? 'INR';
+        Uri uri = Uri.parse(url);
+        if (query != null && query.isNotEmpty) {
+          uri = uri.replace(queryParameters: query.map((key, value) => MapEntry(key, value.toString())));
+          url = uri.toString();
         }
 
-        // Add additional headers if provided
-        if (headers != null) {
-          headers.forEach((key, value) {
-            request.headers[key] = value;
-          });
-        }
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader).forEach((key, value) {
+          request.headers[key] = value;
+        });
 
         // Add files to the request if provided
         if (files != null) {
-          for (var file in files) {
+          for (var fileData in files) {
+            File file = File(fileData.filePath);
+            String fileName = (fileData.filePath).split('/').last;
+            List<String> mimeType = (mime(fileName) ?? '').split('/');
             var stream = http.ByteStream(file.openRead());
             var length = await file.length();
             var multipartFile = http.MultipartFile(
-              'file',
+              fileData.apiKey,
               stream,
               length,
-              filename: file.path.split('/').last,
+              filename: fileName.split('.').first.toLowerCase(),
+              contentType: MediaType(mimeType.first, mimeType.last),
             );
             request.files.add(multipartFile);
           }
@@ -184,6 +183,9 @@ class ApiService implements ApiProvider {
           });
         }
 
+        kgk_logger.log(
+            'Request URL: $url method: postMultipartMethod headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+
         var response = await http.Response.fromStream(await request.send());
 
         var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
@@ -194,12 +196,11 @@ class ApiService implements ApiProvider {
           return null;
         }
 
-        if (commonResponse.isSuccess) {
-          return Right(jsonDecode(response.body));
-        } else {
-          ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
-          return Left(errorResponse);
-        }
+        return commonResponse.isSuccess
+            ? withFullResponse
+                ? Right(commonResponse)
+                : Right(commonResponse.responseData)
+            : Left(ErrorResponse.fromJson(jsonDecode(response.body)));
       } else {
         ErrorResponse errorResponse = ErrorResponse(code: 0, message: APPStrings.checkInternet.tr);
         return Left(errorResponse);
@@ -215,3 +216,11 @@ class ApiService implements ApiProvider {
 }
 
 enum _ApiType { get, post, put, patch, delete }
+
+///[ModelMultiPartFile] is used for file value
+class ModelMultiPartFile {
+  String filePath;
+  String apiKey;
+
+  ModelMultiPartFile({required this.filePath, required this.apiKey});
+}

@@ -689,5 +689,7 @@
   "percentage_off_interpolating": "({$}% OFF)",
   "retry": "Retry",
   "please_select_watchlist": "Please select watchlist",
-  "no_products_added_in_watchlist": "No Products Added in the Watchlist"
+  "no_products_added_in_watchlist": "No Products Added in the Watchlist",
+  "error_title_required": "Title is required",
+  "error_review_required": "Review is required"
 }

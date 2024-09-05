@@ -118,36 +118,39 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
 
     Either<ErrorResponse, JewelleryListingModel>? response;
-    if(productId.isNotEmpty){
-      response = await AppRepository(context).getJewelleryYouMayLike(productId,limit: limit.toString(), isLoadMore: true, page: currentPage.toString());
-    }else{
+    if (productId.isNotEmpty) {
       response = await AppRepository(context)
-        .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
+          .getJewelleryYouMayLike(productId, limit: limit.toString(), isLoadMore: true, page: currentPage.toString());
+    } else {
+      response = await AppRepository(context)
+          .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
     }
 
     response?.fold((l) {
-        Utils.showMessage(l.message ?? "");
-      }, (r) {
-        jewelleryDatumList = r.data;
-        r.totalRecords ??= 0;
-        totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+      Utils.showMessage(l.message ?? "");
+    }, (r) {
+      jewelleryDatumList = r.data;
+      r.totalRecords ??= 0;
+      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
 
-        List.generate(jewelleryDatumList.length, (index) {
-          productList.add(ProductDetails(
-            imageUrl: jewelleryDatumList[index].multipleFinishedViewImage.isNotNullNorEmpty
-                ? jewelleryDatumList[index].multipleFinishedViewImage[0].imageUrl
-                : "",
-            name: jewelleryDatumList[index].productDescription ?? "",
-            originalPrice: "$currency ${jewelleryDatumList[index].finalPrice ?? ""}",
-            discountPercentage: "You have saved 10%",
-            offerPrice: "$currency ${jewelleryDatumList[index].discountPrice ?? ""}",
-            productId: jewelleryDatumList[index].id ?? "",
-            commodity: Commodity.jewellery,
-            productSku: jewelleryDatumList[index].contractNoSkuNo,
-            company: jewelleryDatumList[index].brandName,
-          ));
-        });
+      List.generate(jewelleryDatumList.length, (index) {
+        productList.add(ProductDetails(
+          imageUrl: jewelleryDatumList[index].multipleFinishedViewImage.isNotNullNorEmpty
+              ? jewelleryDatumList[index].multipleFinishedViewImage[0].imageUrl
+              : "",
+          name: jewelleryDatumList[index].productDescription ?? "",
+          originalPrice: jewelleryDatumList[index].finalPrice?.setCurrency,
+          discountPercentage: "You have saved 10%",
+          offerPrice: jewelleryDatumList[index].discountPrice?.setCurrency,
+          productId: jewelleryDatumList[index].id ?? "",
+          commodity: Commodity.jewellery,
+          productSku: jewelleryDatumList[index].contractNoSkuNo,
+          company: jewelleryDatumList[index].brandName,
+          isFavourite: jewelleryDatumList[index].isFavorite,
+          wishlistId: jewelleryDatumList[index].wishlistID,
+        ));
       });
+    });
   }
 
   Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {

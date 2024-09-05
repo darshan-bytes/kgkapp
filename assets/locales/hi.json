@@ -688,5 +688,7 @@
   "percentage_off_interpolating": "({$}% OFF)",
   "retry": "पुनः प्रयास करें",
   "please_select_watchlist": "कृपया वॉचलिस्ट का चयन करें",
-  "no_products_added_in_watchlist": "वॉचलिस्ट में कोई प्रोडक्ट नहीं जोड़ा गया है"
+  "no_products_added_in_watchlist": "वॉचलिस्ट में कोई प्रोडक्ट नहीं जोड़ा गया है",
+  "error_title_required": "शीर्षक आवश्यक है",
+  "error_review_required": "समीक्षा आवश्यक है"
 }

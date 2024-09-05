@@ -228,6 +228,7 @@ class StoneListingScreen extends StatelessWidget {
                         diamondListingBloc.add(StoneListAddToWatchListEvent(productDetails.productId!, context));
                       }
                     },
+                    isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
                   );
                 }).toList()),
