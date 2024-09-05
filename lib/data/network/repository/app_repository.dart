@@ -3,6 +3,7 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
+import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
@@ -140,6 +141,19 @@ class AppRepository extends ApiService {
       context.setAppLoading(true);
     }
     var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing,
+        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, WishlistModel>?> fetchWishList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<WishlistModel>(ApiClient.wishlist,
         query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);

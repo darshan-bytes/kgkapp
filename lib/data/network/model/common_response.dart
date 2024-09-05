@@ -79,6 +79,8 @@ class CommonResponse<T> {
         return WishlistResponseModel.fromJson(json);
       case const (ProductReviewModel):
         return ProductReviewModel.fromJson(json);
+      case const (WishlistModel):
+        return WishlistModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
