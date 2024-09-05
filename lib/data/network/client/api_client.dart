@@ -48,6 +48,10 @@ class ApiClient {
 
   static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
 
+  static const String createWishList = '$apiBaseUrl/wishlist';
+
+  static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
+
   static const String productReviews = '$apiBaseUrl/product/reviews';
 }
 

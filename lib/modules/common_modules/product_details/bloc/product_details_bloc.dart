@@ -242,6 +242,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
             rating: diamondData!.rating?.toDouble(),
+            commodity: Commodity.diamond,
+            isFavourite: diamondData?.isFavorite ?? false,
+            wishlistId: diamondData?.wishlistID,
           );
         }
       },
@@ -281,6 +284,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productQuality: CartProductQuality(name: gemstoneData?.quality),
             color: gemstoneData?.color,
             clarity: gemstoneData?.clarity,
+            commodity: Commodity.gemstone,
+            isFavourite: gemstoneData?.isFavorite ?? false,
+            wishlistId: gemstoneData?.wishlistID,
           );
         }
       },
@@ -311,6 +317,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               productSku: e.lotCode,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
+              commodity: Commodity.diamond,
+              isFavourite: e.isFavorite,
+              wishlistId: e.wishlistID,
             );
           }).toList();
           add(const ProductDetailsSuggestedProductLoadedEvent());
@@ -344,6 +353,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
+            commodity: Commodity.gemstone,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
           );
         }).toList();
 
@@ -374,6 +386,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productSku: e.contractNoSkuNo,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            commodity: Commodity.jewellery,
           );
         }).toList();
         add(const ProductDetailsSuggestedProductLoadedEvent());
@@ -407,6 +422,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           brandName: jewelleryData.brandName,
           imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
           commodity: Commodity.jewellery,
+          isFavourite: jewelleryData.isFavorite,
+          wishlistId: jewelleryData.wishlistID,
         );
       },
     );

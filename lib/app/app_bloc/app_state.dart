@@ -53,3 +53,17 @@ final class UserTypeState extends AppState {
   @override
   List<Object> get props => [userType];
 }
+
+final class ProductAddToFavoriteState extends AppState {
+  const ProductAddToFavoriteState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ProductRemoveFromFavoriteState extends AppState {
+  const ProductRemoveFromFavoriteState();
+
+  @override
+  List<Object> get props => [];
+}

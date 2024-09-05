@@ -292,6 +292,18 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  ///For create wishlist
+  Future<Either<ErrorResponse, CommonResponse<WishlistResponseModel>>?> createWishList({required Map<String, dynamic> body}) async {
+    var response = await postMethod<WishlistResponseModel>(ApiClient.createWishList, body, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  ///For delete wishlist
+  Future<Either<ErrorResponse, CommonResponse>?> deleteWishList(String id) async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteWishList(id), withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // For Add Product review
   Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> addProductReview(Map<String, dynamic> body,
       {required List<String> images}) async {

@@ -205,7 +205,8 @@ class DiamondDataModel {
     required this.discountPrice,
     required this.rating,
     required this.reviewCount,
-    required this.isFavorite,
+    this.isFavorite = false,
+    required this.wishlistID,
     required this.priceCts,
     required this.finalPrice,
   });
@@ -380,7 +381,8 @@ class DiamondDataModel {
   final String? discountPrice;
   final int? rating;
   final int? reviewCount;
-  final dynamic isFavorite;
+  final bool isFavorite;
+  final String? wishlistID;
   final String? priceCts;
   final String? finalPrice;
 
@@ -556,9 +558,10 @@ class DiamondDataModel {
       discountPrice: json["discount_price"],
       rating: json["rating"],
       reviewCount: json["review_count"],
-      isFavorite: json["is_favorite"],
+      isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       priceCts: json["price_cts"],
       finalPrice: json["final_price"]?.toString(),
+      wishlistID: json["is_favorite"],
     );
   }
 

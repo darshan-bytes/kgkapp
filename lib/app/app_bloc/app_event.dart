@@ -54,3 +54,23 @@ class SetUserTypeEvent extends AppEvent {
   @override
   List<Object> get props => [userType];
 }
+
+class ProductAddToFavoriteEvent extends AppEvent {
+  final ProductDetails productDetails;
+  final BuildContext context;
+
+  const ProductAddToFavoriteEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
+
+class ProductRemoveFromFavoriteEvent extends AppEvent {
+  final ProductDetails productDetails;
+  final BuildContext context;
+
+  const ProductRemoveFromFavoriteEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
