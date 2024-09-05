@@ -12,6 +12,7 @@ class StorageManager {
 
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
+  final String _userId = 'userId';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
@@ -31,6 +32,15 @@ class StorageManager {
 
   String? getAuthToken() {
     return _box.get(_authTokenBoxName);
+  }
+
+  /// Set userId after login-signup
+  Future<void> setUserId(String userId) async {
+    await _box.put(_userId, userId);
+  }
+
+  String? getUserId() {
+    return _box.get(_userId);
   }
 
   /// Set locale after login-signup

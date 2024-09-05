@@ -58,7 +58,6 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         productList = [
           for (var element in wishlistModel.data)
             if (element.productData != null)
-              /// In ProductDetails commodity need to set is Pending from backend
               ProductDetails(
                 productId: element.productId ?? '',
                 imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
@@ -66,7 +65,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
                     : "",
                 name: element.productData!.productDescription ?? "",
                 originalPrice: element.productData!.discountPrice?.setCurrency,
-                // commodity: element.productData!.commodity ?? "",
+                commodity: element.displayCommodity,
               )
         ];
       });
