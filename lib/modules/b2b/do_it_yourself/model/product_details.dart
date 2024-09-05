@@ -40,6 +40,8 @@ class ProductDetails {
   double? rating;
   String? brandName;
   Commodity? commodity;
+  bool isFavourite;
+  String? wishlistId;
 
   ProductDetails({
     this.productId,
@@ -81,6 +83,8 @@ class ProductDetails {
     this.rating,
     this.brandName,
     this.commodity,
+    this.isFavourite = false,
+    this.wishlistId,
   });
 }
 

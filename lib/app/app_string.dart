@@ -878,4 +878,7 @@ class APPStrings {
   static const String retry = 'retry';
   static const String pleaseSelectWatchlist = 'please_select_watchlist';
   static const String noProductsAddedInWatchlist = 'no_products_added_in_watchlist';
+
+  static const String errorTitleRequired = 'error_title_required';
+  static const String errorReviewRequired = 'error_review_required';
 }

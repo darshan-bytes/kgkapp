@@ -146,7 +146,9 @@ class ProductListScreen extends StatelessWidget {
           current is ProductListInitial ||
           current is ProductListLoadedMoreState ||
           current is ProductListLoadingMoreState ||
-          current is ProductListLoadedState,
+          current is ProductListLoadedState ||
+          current is ProductAddToFavoriteState ||
+          current is ProductRemoveFromFavoriteState,
       builder: (context, state) {
         if (bloc.isGrid) {
           return Column(
@@ -190,6 +192,7 @@ class ProductListScreen extends StatelessWidget {
                       bloc.add(ProductListAddToWatchListEvent(productDetails.productId!, context));
                     }
                   },
+                  isFavourite: productDetails.isFavourite,
                   onFavTap: () {},
                   prefixImage: AppImages.icShoppingBag,
                   imageSize: 16.w,

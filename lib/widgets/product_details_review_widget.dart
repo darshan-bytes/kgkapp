@@ -1,7 +1,9 @@
 import 'package:kgk/kgk.dart';
 
 class ProductReviewsDetails extends StatelessWidget {
-  const ProductReviewsDetails({super.key});
+  final VoidCallback onTap;
+
+  const ProductReviewsDetails({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +130,7 @@ class ProductReviewsDetails extends StatelessWidget {
         SizedBox(height: 16.h),
         SmartButton(
           onTap: () {
-            context.pushNamed(AppRoutes.writeReviewPage);
+            onTap();
           },
           title: APPStrings.writeAReview.tr,
           prefixImage: AppImages.icEdit,

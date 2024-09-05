@@ -236,8 +236,10 @@ class AppRoutes {
 
       case writeReviewPage:
         builder = (context) {
-          BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
-          return const WriteReviewScreen();
+          return BlocProvider<WriteReviewBloc>(
+            create: (context) => WriteReviewBloc()..add(WriteReviewInitialEvent(context)),
+            child: const WriteReviewScreen(),
+          );
         };
         break;
 
@@ -715,6 +717,7 @@ enum RoutesData {
   diamondInfo,
   isWatchlistCreated,
   isWatchlistUpdated,
+  commodity,
 }
 
 enum ScreenIdentifier {

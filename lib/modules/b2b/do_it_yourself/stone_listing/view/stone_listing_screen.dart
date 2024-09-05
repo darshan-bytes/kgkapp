@@ -228,6 +228,7 @@ class StoneListingScreen extends StatelessWidget {
                         diamondListingBloc.add(StoneListAddToWatchListEvent(productDetails.productId!, context));
                       }
                     },
+                    isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
                   );
                 }).toList()),
@@ -306,7 +307,7 @@ class StoneListingScreen extends StatelessWidget {
                             },
                             productDetails: ProductDetails(
                               productInfoClarityChat: ProductInfoClarityChat(
-                                  rapRate: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].rappaportPrice ?? ''),
+                                  rapRate: diamondListingBloc.productList[index].rappaportPrice?.setCurrency,
                                   //,"\$35,500.00",
                                   productId: diamondListingBloc.productList[index].productId,
                                   productName: diamondListingBloc.productList[index].name,
@@ -325,18 +326,15 @@ class StoneListingScreen extends StatelessWidget {
                                   flourish: "O",
                                   tablePercentage: "50",
                                   depthPercentage: "50",
-                                  rap: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].lsp ?? ''),
-                                  //"\$24,851.00",
+                                  rap: diamondListingBloc.productList[index].lsp?.setCurrency,
                                   discount: diamondListingBloc.productList[index].discountPercentage,
-                                  //"-30.00",
                                   perCts: "\$24,850.00",
-                                  amount: Utils.textWithCurrencySymbol(diamondListingBloc.productList[index].finalPrice ?? ''),
-                                  //"\$1,24,995.50",
+                                  amount: diamondListingBloc.productList[index].finalPrice?.setCurrency,
                                   fluorescence: diamondListingBloc.productList[index].fluorescence),
-                              productId: "1",
+                              productId: diamondListingBloc.productList[index].productId,
                               diamond: "1.5 gram",
                               gram: "1.5 gram",
-                              imageUrl: diamondListingBloc.productList[index].imageUrl, // "https://i.ibb.co/swb5gVs/Round.png",
+                              imageUrl: diamondListingBloc.productList[index].imageUrl,
                             ));
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 17.h),

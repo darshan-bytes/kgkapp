@@ -52,18 +52,21 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       value?.fold((l) {
         Utils.showMessage(l.message ?? "");
       }, (r) {
+        r.totalRecords ??= 0;
         WishlistModel wishlistModel = r;
         totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
         productList = [
           for (var element in wishlistModel.data)
             if (element.productData != null)
+              /// In ProductDetails commodity need to set is Pending from backend
               ProductDetails(
                 productId: element.productId ?? '',
                 imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
                     ? element.productData!.multipleFinishedViewImage.first.imageUrl
                     : "",
                 name: element.productData!.productDescription ?? "",
-                originalPrice: Utils.textWithCurrencySymbol(element.productData!.discountPrice ?? ''),
+                originalPrice: element.productData!.discountPrice?.setCurrency,
+                // commodity: element.productData!.commodity ?? "",
               )
         ];
       });
