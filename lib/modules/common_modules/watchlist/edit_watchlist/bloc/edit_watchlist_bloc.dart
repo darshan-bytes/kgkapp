@@ -50,28 +50,25 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
   }
 
   Future<void> _onEditWatchlistSaveEvent(EditWatchlistSaveEvent event, Emitter<EditWatchlistState> emit) async {
-    Map<String, dynamic> body = {
+    final Map<String, dynamic> body = {
       ApiKey.name: nameController.text,
       ApiKey.hours: duration?.inHours.remainder(24),
       ApiKey.minutes: duration?.inMinutes.remainder(60),
       ApiKey.days: duration?.inDays,
+      if (isEdit) ApiKey.watchlistId: watchlistData?.sId,
     };
-    if (isEdit) {
-      body[ApiKey.watchlistId] = watchlistData?.sId;
-    }
-    Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).createWatchlist(body: body, isEdit: isEdit);
+
+    final Either<ErrorResponse, CommonResponse>? response = isEdit
+        ? await AppRepository(event.context).editWatchlist(body: body)
+        : await AppRepository(event.context).createWatchlist(body: body);
 
     response?.fold(
-      (l) {
-        Utils.showMessage(l.message ?? '');
-      },
+      (error) => Utils.showMessage(error.message ?? ''),
       (data) {
         nameController.clear();
-        if (isEdit) {
-          event.context.pop(arguments: {RoutesData.isWatchlistUpdated: true});
-        } else {
-          event.context.pop(arguments: {RoutesData.isWatchlistCreated: true});
-        }
+        final Map<RoutesData, bool> popArguments = isEdit ? {RoutesData.isWatchlistUpdated: true} : {RoutesData.isWatchlistCreated: true};
+
+        event.context.pop(arguments: popArguments);
         Utils.showMessage(data.message ?? '');
       },
     );

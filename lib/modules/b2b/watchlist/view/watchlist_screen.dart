@@ -178,7 +178,7 @@ class WatchlistScreen extends StatelessWidget {
                         },
                       );
                       if (result?[RoutesData.isWatchlistUpdated] == true) {
-                        bloc.add(WatchlistPullToRefreshEvent(context: screenContext));
+                        bloc.pullToRefresh(context: screenContext);
                       }
                     }),
                     _buildPopupOption(context, text: APPStrings.removeWatchlist.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {

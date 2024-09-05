@@ -171,7 +171,7 @@ class AddWatchlistScreen extends StatelessWidget {
   Widget _buildCreateWatchlistButton(BuildContext context) {
     return SmartButton(
       onTap: () async {
-        BlocProvider.of<EditWatchlistBloc>(context).add(EditWatchlistInitialEvent(isEdit: false, watchlistData: WatchlistData()));
+        BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
         context.pop();
         await Utils.showSmartModalBottomSheet(
           context: getNavigatorKeyContext,

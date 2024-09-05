@@ -198,10 +198,10 @@ class AppRepository extends ApiService {
       query: isFullList
           ? null
           : {
-        ApiKey.page: page,
-        ApiKey.limit: limit,
-        if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
-      },
+              ApiKey.page: page,
+              ApiKey.limit: limit,
+              if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
+            },
     );
     if (!isLoadMore) {
       context.setAppLoading(false);
@@ -210,14 +210,17 @@ class AppRepository extends ApiService {
   }
 
   /// For Create Watchlist
-  Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body, bool isEdit = false}) async {
-    Either<ErrorResponse, dynamic>? response;
+  Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    if (isEdit) {
-      response = await putMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
-    } else {
-      response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
-    }
+    Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Edit Watchlist
+  Future<Either<ErrorResponse, CommonResponse>?> editWatchlist({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    Either<ErrorResponse, dynamic>? response = await putMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -267,11 +270,11 @@ class AppRepository extends ApiService {
   }
 
   // For Update Product in Watchlist
-  Future<Either<ErrorResponse, CommonResponse>?> watchListUpdateProduct(String watchlistId, String productId,
-      Map<String, dynamic> body) async {
+  Future<Either<ErrorResponse, CommonResponse>?> watchListUpdateProduct(
+      String watchlistId, String productId, Map<String, dynamic> body) async {
     context.setAppLoading(true);
     var response =
-    await putMethod<Map<String, dynamic>>(ApiClient.watchListUpdateProduct(watchlistId, productId), body, withFullResponse: true);
+        await putMethod<Map<String, dynamic>>(ApiClient.watchListUpdateProduct(watchlistId, productId), body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -292,7 +295,7 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> watchListRemoveProduct(String watchlistId, String productId) async {
     context.setAppLoading(true);
     var response =
-    await deleteMethod<Map<String, dynamic>>(ApiClient.watchListRemoveProduct(watchlistId, productId), withFullResponse: true);
+        await deleteMethod<Map<String, dynamic>>(ApiClient.watchListRemoveProduct(watchlistId, productId), withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
