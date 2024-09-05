@@ -226,7 +226,15 @@ class AppRepository extends ApiService {
   /// For Create Watchlist
   Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Edit Watchlist
+  Future<Either<ErrorResponse, CommonResponse>?> editWatchlist({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    Either<ErrorResponse, dynamic>? response = await putMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

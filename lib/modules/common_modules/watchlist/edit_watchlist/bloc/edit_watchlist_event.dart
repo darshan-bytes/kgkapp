@@ -6,11 +6,12 @@ sealed class EditWatchlistEvent extends Equatable {
 
 final class EditWatchlistInitialEvent extends EditWatchlistEvent {
   final bool isEdit;
+  final WatchlistData? watchlistData;
 
-  const EditWatchlistInitialEvent({this.isEdit = true});
+  const EditWatchlistInitialEvent({this.isEdit = true, this.watchlistData});
 
   @override
-  List<Object> get props => [isEdit];
+  List<Object?> get props => [isEdit, watchlistData];
 }
 
 final class EditWatchlistDurationChangedEvent extends EditWatchlistEvent {
