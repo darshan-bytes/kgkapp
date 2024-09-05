@@ -3,6 +3,8 @@ class ApiClient {
   ApiClient._();
 
   static const String apiBaseUrl = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String assetsBaseUrl = '$apiBaseUrl/assets/';
+
   static const String strapiHomeApiUrl =
       'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
 
@@ -49,6 +51,8 @@ class ApiClient {
   static const String createWishList = '$apiBaseUrl/wishlist';
 
   static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
+  
+  static const String productReviews = '$apiBaseUrl/product/reviews';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

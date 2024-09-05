@@ -21,4 +21,9 @@ class ApiKey {
   static const String commodity = 'commodity';
   static const String productId = 'productId';
   static const String productId_ = 'product_id';
+  static const String title = 'title';
+  static const String description = 'description';
+  static const String businessType = 'business_type';
+  static const String rating = 'rating';
+  static const String files = 'files';
 }

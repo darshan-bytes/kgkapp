@@ -438,3 +438,6 @@ export 'package:kgk/data/network/model/pagination_data_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
 export 'package:kgk/data/network/repository/product_repository.dart';
 export 'package:kgk/model/wishlist_response_model.dart';
+export 'package:kgk/modules/common_modules/product_details/model/product_review_model.dart';
+export 'package:http_parser/http_parser.dart';
+export 'package:mime_type/mime_type.dart';
