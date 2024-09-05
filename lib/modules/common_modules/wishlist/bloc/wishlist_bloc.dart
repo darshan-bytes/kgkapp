@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 part 'wishlist_event.dart';
 
@@ -8,6 +9,11 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   List<ProductDetails> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
+  List<WishlistDatum> wishlistDataList = [];
+
+  int currentPage = 1;
+  int? totalNumberOfPages;
+  int limit = 10;
 
   WishlistBloc() : super(WishlistInitial()) {
     on<InitialWishlistEvent>(onInitialWishlistEvent);
@@ -21,7 +27,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     return super.close();
   }
 
-  void onInitialWishlistEvent(InitialWishlistEvent event, Emitter<WishlistState> emit) {
+  Future<void> onInitialWishlistEvent(InitialWishlistEvent event, Emitter<WishlistState> emit) async {
     emit(WishlistReloadState());
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
@@ -32,33 +38,46 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     }
     paginationScrollController.init(
       loadAction: (int currentPage) async {
-        add(LoadMoreWishlistEvent(currentPage));
+        add(LoadMoreWishlistEvent(event.context, currentPage));
       },
     );
 
-    productList = List.generate(
-      20,
-      (index) => ProductDetails(
-        imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-        name: "Diamond Vine Ring in 18k Rose Gold",
-        originalPrice: '\$5,000.00',
-      ),
-    );
+    await fetchWishlistData(event.context, emit);
     refreshCompleter.complete(true);
     emit(WishlistDataFetchedState());
   }
 
+  Future<void> fetchWishlistData(BuildContext context, Emitter<WishlistState> emit) async {
+    await AppRepository(context).fetchWishList(limit: limit.toString(), page: currentPage.toString()).then((value) {
+      value?.fold((l) {
+        Utils.showMessage(l.message ?? "");
+      }, (r) {
+        r.totalRecords ??= 0;
+        WishlistModel wishlistModel = r;
+        totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+        productList = [
+          for (var element in wishlistModel.data)
+            if (element.productData != null)
+              /// In ProductDetails commodity need to set is Pending from backend
+              ProductDetails(
+                productId: element.productId ?? '',
+                imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
+                    ? element.productData!.multipleFinishedViewImage.first.imageUrl
+                    : "",
+                name: element.productData!.productDescription ?? "",
+                originalPrice: element.productData!.discountPrice?.setCurrency,
+                // commodity: element.productData!.commodity ?? "",
+              )
+        ];
+      });
+    });
+  }
+
   Future<void> _onLoadMoreWishlistEvent(LoadMoreWishlistEvent event, Emitter<WishlistState> emit) async {
     emit(WishlistLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-    productList.addAll(List.generate(
-        20,
-        (index) => ProductDetails(
-              imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-              name: "Diamond Vine Ring in 18k Rose Gold",
-              originalPrice: '\$5,000.00',
-            )));
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
+    currentPage++;
+    await fetchWishlistData(event.context, emit);
+    paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);
     emit(WishlistLoadedMoreState(event.currentPage + 1));
   }
 
@@ -66,23 +85,19 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     emit(WishlistReloadState());
     await Future.delayed(const Duration(seconds: 2));
     paginationScrollController.pullToRefresh();
-    productList = List.generate(
-        20,
-        (index) => ProductDetails(
-              imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-              name: "Diamond Vine Ring in 18k Rose Gold",
-              originalPrice: '\$5,000.00',
-            ));
+    productList.clear();
+    currentPage = 1;
+    await fetchWishlistData(event.context, emit);
     refreshCompleter.complete(true);
     emit(WishlistDataFetchedState());
   }
 
-  Future<bool> pullToRefresh() async {
+  Future<bool> pullToRefresh(BuildContext context) async {
     if (!refreshCompleter.isCompleted) {
       return false;
     }
     refreshCompleter = Completer<bool>();
-    add(const WishlistPullToRefreshEvent());
+    add(WishlistPullToRefreshEvent(context));
     return refreshCompleter.future;
   }
 }
