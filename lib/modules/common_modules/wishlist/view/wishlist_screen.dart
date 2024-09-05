@@ -16,7 +16,7 @@ class WishlistScreen extends StatelessWidget {
           if (state is WishlistDataFetchedState) {
             return SmartSingleChildScrollView(
               onRefresh: () async {
-                await bloc.pullToRefresh();
+                await bloc.pullToRefresh(context);
               },
               controller: bloc.paginationScrollController.scrollController,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
