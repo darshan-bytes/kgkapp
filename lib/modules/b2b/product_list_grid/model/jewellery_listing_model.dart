@@ -170,6 +170,8 @@ class JewelleryDataModel {
     required this.jewelleryTypeName,
     required this.finalPrice,
     required this.discountPrice,
+    this.isFavorite = false,
+    required this.wishlistID,
   });
 
   final dynamic metalColor3RefSuid;
@@ -305,6 +307,8 @@ class JewelleryDataModel {
   final String? jewelleryTypeName;
   final String? finalPrice;
   final String? discountPrice;
+  final bool isFavorite;
+  final String? wishlistID;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
@@ -445,6 +449,8 @@ class JewelleryDataModel {
       jewelleryTypeName: json["jewellery_type_name"],
       finalPrice: json["final_price"]?.toString(),
       discountPrice: json["discount_price"]?.toString(),
+      isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
+      wishlistID: json["is_favorite"],
     );
   }
 

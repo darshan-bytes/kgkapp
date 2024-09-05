@@ -206,11 +206,12 @@ class GemstoneDatum {
     required this.updatedAt,
     required this.viewCount,
     required this.discountPrice,
-    required this.isFavorite,
+    this.isFavorite = false,
     required this.rating,
     required this.reviewCount,
     required this.finalPrice,
     required this.priceCts,
+    required this.wishlistID,
   });
 
   final String? id;
@@ -382,11 +383,12 @@ class GemstoneDatum {
   final DateTime? updatedAt;
   final int? viewCount;
   final String? discountPrice;
-  final dynamic isFavorite;
+  final bool isFavorite;
   final int? rating;
   final int? reviewCount;
   final String? finalPrice;
   final String? priceCts;
+  final String? wishlistID;
 
   factory GemstoneDatum.fromJson(Map<String, dynamic> json) {
     return GemstoneDatum(
@@ -559,11 +561,12 @@ class GemstoneDatum {
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       viewCount: json["view_count"],
       discountPrice: json["discount_price"],
-      isFavorite: json["is_favorite"],
+      isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       rating: json["rating"],
       reviewCount: json["review_count"],
       finalPrice: json["final_price"],
       priceCts: json["price_cts"],
+      wishlistID: json["is_favorite"],
     );
   }
 

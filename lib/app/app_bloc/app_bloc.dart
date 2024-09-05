@@ -29,6 +29,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   int notificationCount = 1;
 
+  ///For wishlist
+  Timer? _debounce;
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
@@ -36,6 +39,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<LanguageChangedEvent>(_onLanguageChangedEvent);
     on<SetAppLoadingEvent>(_onSetLoadingEvent);
     on<SetUserTypeEvent>(_onSetUserTypeEvent);
+    on<ProductAddToFavoriteEvent>(_onProductAddToFavoriteEvent);
+    on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -121,6 +126,60 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         StorageManager().setLanguageLabels(r.responseData);
       });
     });
+  }
+
+  void onTapFavorite(context, {required ProductDetails productDetails}) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
+        BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(productDetails, context));
+      } else {
+        BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(productDetails, context));
+      }
+    });
+  }
+
+  ///for add product to wishlist
+  Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
+    Map<String, dynamic> body = {
+      ApiKey.productId_: event.productDetails.productId,
+      ApiKey.commodity: event.productDetails.commodity?.value
+    };
+    await AppRepository(event.context).createWishList(body: body).then(
+      (response) {
+        response?.fold(
+          (l) {
+            Utils.showMessage(l.message ?? '');
+          },
+          (data) {
+            Utils.showMessage(data.message ?? '');
+            WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
+            event.productDetails.wishlistId = model.id;
+            event.productDetails.isFavourite = true;
+            emit(const ProductAddToFavoriteState());
+          },
+        );
+      },
+    );
+  }
+
+  ///for remove product from wishlist
+  Future<void> _onProductRemoveFromWishlist(ProductRemoveFromFavoriteEvent event, Emitter<AppState> emit) async {
+    await AppRepository(event.context).deleteWishList(event.productDetails.wishlistId ?? '').then(
+      (response) {
+        response?.fold(
+          (l) {
+            Utils.showMessage(l.message ?? '');
+          },
+          (data) {
+            Utils.showMessage(data.message ?? '');
+            event.productDetails.isFavourite = false;
+            event.productDetails.wishlistId = null;
+            emit(const ProductRemoveFromFavoriteState());
+          },
+        );
+      },
+    );
   }
 }
 
