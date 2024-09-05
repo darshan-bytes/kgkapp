@@ -1,9 +1,13 @@
 import 'package:kgk/kgk.dart';
 
 part 'write_review_event.dart';
+
 part 'write_review_state.dart';
 
 class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
+  String productId = '';
+  Commodity? commodity;
+  int selectedRating = 0;
   final ImagePicker _picker = ImagePicker();
   List<XFile> imageFileList = [];
 
@@ -18,13 +22,16 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   FocusNode reviewFocusNode = FocusNode();
 
   WriteReviewBloc() : super(const WriteReviewInitial()) {
+    on<WriteReviewInitialEvent>(_onInitEvent);
     on<PickImageEvent>(_onMultiImagePicked);
     on<RemoveSelectedImageEvent>(_onRemoveSelectedImage);
     on<WriteReviewResetEvent>(_onWriteReviewReset);
-    on<WriteReviewInitialEvent>(_onInitEvent);
+    on<WriteReviewSubmitEvent>(_onWriteReviewSubmitEvent);
   }
 
   void _onInitEvent(WriteReviewInitialEvent event, Emitter<WriteReviewState> emit) {
+    productId = (event.context.routesData?[RoutesData.productId] as String?) ?? '';
+    commodity = event.context.routesData?[RoutesData.commodity] as Commodity?;
     add(const WriteReviewResetEvent());
   }
 
@@ -108,5 +115,33 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     titleFocusNode.unfocus();
     reviewFocusNode.unfocus();
     imageFileList.clear();
+  }
+
+  Future<void> _onWriteReviewSubmitEvent(WriteReviewSubmitEvent event, Emitter<WriteReviewState> emit) async {
+    if (titleController.text.isEmpty) {
+      Utils.showMessage(APPStrings.errorTitleRequired.tr);
+      return;
+    }
+
+    if (reviewController.text.isEmpty) {
+      Utils.showMessage(APPStrings.errorReviewRequired.tr);
+      return;
+    }
+    Map<String, String> body = {
+      ApiKey.productId_: productId,
+      ApiKey.title: titleController.text,
+      ApiKey.description: reviewController.text,
+      ApiKey.businessType: commodity?.value ?? '',
+      ApiKey.rating: selectedRating.toString(),
+    };
+    Either<ErrorResponse, CommonResponse<ProductReviewModel>>? response =
+        await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
+    await response?.fold((error) {
+      Utils.showMessage(error.message ?? '');
+    }, (data) async {
+      event.context.pop();
+      await Future.delayed(const Duration(milliseconds: 500));
+      Utils.showMessage(data.message ?? '');
+    });
   }
 }

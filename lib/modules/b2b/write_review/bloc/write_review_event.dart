@@ -8,10 +8,12 @@ sealed class WriteReviewEvent extends Equatable {
 }
 
 final class WriteReviewInitialEvent extends WriteReviewEvent {
-  const WriteReviewInitialEvent();
+  final BuildContext context;
+
+  const WriteReviewInitialEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class PickImageEvent extends WriteReviewEvent {
@@ -37,4 +39,13 @@ final class WriteReviewResetEvent extends WriteReviewEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class WriteReviewSubmitEvent extends WriteReviewEvent {
+  final BuildContext context;
+
+  const WriteReviewSubmitEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
 }
