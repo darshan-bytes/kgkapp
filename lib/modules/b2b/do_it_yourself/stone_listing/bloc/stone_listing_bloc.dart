@@ -112,7 +112,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }, (r) {
       diamondDatumList = r.data;
       r.totalRecords ??= 0;
-      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
       List.generate(
         diamondDatumList.length,
         (index) => productList.add(
@@ -167,7 +167,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }, (r) {
       gemstoneDatumList = r.data;
       r.totalRecords ??= 0;
-      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
       List.generate(
         gemstoneDatumList.length,
         (index) => productList.add(

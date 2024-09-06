@@ -187,4 +187,14 @@ class Utils {
 
     return parsedString ?? "";
   }
+
+  /// Calculates the total number of pages based on the total number of records and the limit per page.
+  ///
+  /// \param: totalRecords The total number of records. If null, it defaults to 0.
+  /// \param: limit The number of records per page.
+  /// \return: The total number of pages.
+  static int calculateTotalPages(int? totalRecords, int limit) {
+    totalRecords ??= 0;
+    return (totalRecords % limit == 0) ? totalRecords ~/ limit : (totalRecords ~/ limit) + 1;
+  }
 }

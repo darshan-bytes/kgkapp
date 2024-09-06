@@ -153,8 +153,8 @@ class AppRepository extends ApiService {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<WishlistModel>(ApiClient.wishlist,
-        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    var response =
+        await getMethod<WishlistModel>(ApiClient.wishlist, query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -332,6 +332,15 @@ class AppRepository extends ApiService {
     context.setAppLoading(true);
     var response = await postMultipartMethod<ProductReviewModel>(ApiClient.productReviews, body,
         withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Get Product Reviews
+  Future<Either<ErrorResponse, PaginationData<ProductReviewModel>>?> productReviewsFilter(String productId,
+      {Map<String, dynamic>? query}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<PaginationData<ProductReviewModel>>(ApiClient.productReviewsFilter(productId), query: query);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
