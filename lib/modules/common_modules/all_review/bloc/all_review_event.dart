@@ -15,9 +15,10 @@ final class AllReviewInitialEvent extends AllReviewEvent {
 
 final class AllReviewLoadMoreEvent extends AllReviewEvent {
   final int currentPage;
+  final BuildContext context;
 
-  const AllReviewLoadMoreEvent(this.currentPage);
+  const AllReviewLoadMoreEvent(this.currentPage, this.context);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [currentPage, context];
 }

@@ -54,6 +54,8 @@ class ApiClient {
   static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
 
   static const String productReviews = '$apiBaseUrl/product/reviews';
+
+  static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

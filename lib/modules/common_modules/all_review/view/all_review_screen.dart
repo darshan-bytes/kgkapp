@@ -15,7 +15,7 @@ class AllReviewScreen extends StatelessWidget {
             return ListView.separated(
               controller: bloc.paginationScrollController.scrollController,
               padding: EdgeInsets.all(16.w),
-              itemCount: bloc.reviewDataModel.length,
+              itemCount: bloc.reviewList.length,
               itemBuilder: (context, index) {
                 return BlocBuilder<AllReviewBloc, AllReviewState>(
                   buildWhen: (previous, current) =>
@@ -23,8 +23,8 @@ class AllReviewScreen extends StatelessWidget {
                   builder: (context, state) {
                     return Column(
                       children: [
-                        ProductCustomerReviewWidget(reviewDataModel: bloc.reviewDataModel[index]),
-                        if (index == bloc.reviewDataModel.length - 1 && state is AllReviewLoadingMoreState)
+                        ProductCustomerReviewWidget(reviewDataModel: bloc.reviewList[index]),
+                        if (index == bloc.reviewList.length - 1 && state is AllReviewLoadingMoreState)
                           const SmartCircularProgressIndicator(),
                       ],
                     );
