@@ -85,3 +85,12 @@ final class SignUpChangeOfficeLocationEvent extends SignUpEvent {
   @override
   List<Object> get props => [officeLocation];
 }
+
+final class SignUpSubmitEvent extends SignUpEvent {
+  final BuildContext context;
+
+  const SignUpSubmitEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

@@ -856,7 +856,6 @@ class APPStrings {
   static const String shopLatestCollection = 'shop_latest_collection';
 
   //Email validation key
-  static const String invalidEmail = 'invalid_email';
   static const String emailRequired = "email_required";
   static const String validEmail = "valid_email";
 
@@ -881,4 +880,14 @@ class APPStrings {
 
   static const String errorTitleRequired = 'error_title_required';
   static const String errorReviewRequired = 'error_review_required';
+
+  static const String errorFirstNameRequired = 'error_first_name_required';
+  static const String errorLastNameRequired = 'error_last_name_required';
+  static const String errorContactNumberRequired = 'error_contact_number_required';
+  static const String errorPasswordRequired = 'error_password_required';
+  static const String errorConfirmPasswordRequired = 'error_confirm_password_required';
+  static const String errorPasswordNotMatch = 'error_password_not_match';
+  static const String errorCompanyNameRequired = 'error_company_name_required';
+  static const String errorOfficeLocationRequired = 'error_office_location_required';
+  static const String errorBusinessTypeRequired = 'error_business_type_required';
 }

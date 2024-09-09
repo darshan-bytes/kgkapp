@@ -691,5 +691,15 @@
   "please_select_watchlist": "Please select watchlist",
   "no_products_added_in_watchlist": "No Products Added in the Watchlist",
   "error_title_required": "Title is required",
-  "error_review_required": "Review is required"
+  "error_review_required": "Review is required",
+  "error_first_name_required": "First name is required",
+  "error_last_name_required": "Last name is required",
+  "error_contact_number_required": "Contact number is required",
+  "error_company_name_required": "Company name is required",
+  "error_office_location_required": "Office location is required",
+  "error_business_type_required": "Please select at least one business type",
+  "error_country_required": "Country is required",
+  "error_password_required": "Password is required",
+  "error_confirm_password_required": "Confirm password is required",
+  "error_password_not_match": "Password does not match"
 }

@@ -91,7 +91,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
-                            if(bloc.productDetails != null) {
+                            if (bloc.productDetails != null) {
                               BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: bloc.productDetails!);
                             }
                           },
