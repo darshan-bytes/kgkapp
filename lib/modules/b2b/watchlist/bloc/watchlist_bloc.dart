@@ -93,7 +93,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
       },
       (r) {
         r.totalRecords ??= 0;
-        totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+        totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
         List<WatchlistData> dataList = (r.dataList ?? []) as List<WatchlistData>;
         if (currentPage == 1) {
           watchlistDataList.clear();

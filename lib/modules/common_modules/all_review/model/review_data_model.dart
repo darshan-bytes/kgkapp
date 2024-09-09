@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ReviewDataModel {
-  int? id;
+  String? id;
   String? userName;
   int? rating;
   String? title;

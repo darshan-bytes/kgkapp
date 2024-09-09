@@ -115,6 +115,10 @@ class UserIdDetails {
   }
 }
 
+extension UserIdDetailsExtension on UserIdDetails {
+  String get fullName => "$firstname $lastname";
+}
+
 class UserPermissions {
   UserPermissions({
     required this.id,

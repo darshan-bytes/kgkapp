@@ -169,6 +169,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       suggestedProductList.clear();
       await getProductDetailsDetails(event.context, productId);
       await getProductYouMayLike(event.context, productId);
+      await productReviewsFilter(event.context, productId);
     }
 
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
@@ -193,24 +194,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       );
     }
 
-    reviewList = List.generate(
-      6,
-      (index) => ReviewDataModel(
-        id: index,
-        userName: 'Esther Howard',
-        date: '01/05/23',
-        rating: 4,
-        title: 'Gorgeous and more gorgeous',
-        review:
-            'I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone.',
-        images: [
-          'https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png',
-          'https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
-          'https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png',
-          'https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png',
-        ],
-      ),
-    );
     if (productDetails != null) {
       emit(ProductDetailsLoadedState(productDetails!));
     }
@@ -425,6 +408,35 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           isFavourite: jewelleryData.isFavorite,
           wishlistId: jewelleryData.wishlistID,
         );
+      },
+    );
+  }
+
+  Future<void> productReviewsFilter(BuildContext context, String productId) async {
+    // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
+    Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
+        await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"});
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        reviewList = (data.dataList as List<ProductReviewModel>?)?.map((e) {
+              return ReviewDataModel(
+                id: e.id,
+                userName: e.userIdDetails?.fullName ?? '',
+                date: e.createdAt?.changeDateFormat(
+                        inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
+                    '',
+                rating: e.rating ?? 0,
+                title: e.title ?? '',
+                review: e.description ?? '',
+                images: e.displayImage ?? [],
+              );
+            }).toList() ??
+            [];
       },
     );
   }
