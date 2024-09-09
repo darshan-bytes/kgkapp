@@ -13,6 +13,7 @@ class StorageManager {
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
   final String _userId = 'userId';
+  final String _userData = 'userData';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
@@ -42,6 +43,15 @@ class StorageManager {
 
   String? getUserId() {
     return _box.get(_userId);
+  }
+
+  Future<void> setUserData(UserIdDetails userIdDetails) async {
+    await _box.put(_userData, jsonEncode(userIdDetails.toJson()));
+  }
+
+  UserIdDetails? getUserData() {
+    String? userData = _box.get(_userData);
+    return userData.isNotNullNorEmpty ? UserIdDetails.fromJson(jsonDecode(userData!)) : null;
   }
 
   /// Set locale after login-signup

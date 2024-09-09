@@ -21,7 +21,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
 
-  int currentPage = 1;
   int? totalNumberOfPages;
   int limit = 10;
 
@@ -122,11 +121,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     Either<ErrorResponse, JewelleryListingModel>? response;
     if (productId.isNotEmpty) {
-      response = await AppRepository(context)
-          .getJewelleryYouMayLike(productId, limit: limit.toString(), isLoadMore: true, page: currentPage.toString());
+      response = await AppRepository(context).getJewelleryYouMayLike(productId,
+          limit: limit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
     } else {
-      response = await AppRepository(context)
-          .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
+      response = await AppRepository(context).fetchJewelleryList(
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
     }
 
     response?.fold((l) {
@@ -153,6 +152,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           wishlistId: jewelleryDatumList[index].wishlistID,
         ));
       });
+
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     });
   }
 
@@ -160,7 +161,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ProductListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     if (screenIdentifier == ScreenIdentifier.productForRing) {
-      currentPage++;
       await fetchJewelleriesList(event.context, emit, false);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       List.generate(
