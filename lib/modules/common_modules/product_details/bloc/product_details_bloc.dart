@@ -114,6 +114,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       originalPrice: "\$5,000.00",
     ),
   );
+  List<JewelleryDataModel> jewelleryDatumListAPI = [];
+  List<DiamondDataModel> diamondDatumListAPI = [];
+  List<GemstoneDatum> gemstoneDatumListAPI = [];
 
   List<ProductDetails> recentlyViewedProductList = List.generate(
     8,
@@ -150,6 +153,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     getScreenIdentifier(event.context);
 
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
+    // String productId = "EFGSTOCK5052030656";
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
       imgList.clear();
@@ -287,8 +291,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       },
       (data) {
         if (data.data.isNotEmpty) {
-          List<DiamondDataModel> suggestedProductListAPI = data.data;
-          suggestedProductList = suggestedProductListAPI.map((e) {
+          diamondDatumListAPI = data.data;
+          suggestedProductList = diamondDatumListAPI.map((e) {
             bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
             return ProductDetails(
               productId: e.id,
@@ -323,6 +327,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       },
       (data) {
         if (data.data.isEmpty) return;
+        gemstoneDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
           final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
 
@@ -357,6 +362,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        jewelleryDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
           bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
           return ProductDetails(
@@ -496,5 +502,56 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       default:
         break;
     }
+  }
+
+  void _initWishlistUpdaterServiceBloc(BuildContext context) {
+    WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+    wishlistUpdaterServiceBloc.stream.listen((state) {
+      if (state is WishListUpdateProductState) {
+        if (screenIdentifier == ScreenIdentifier.productForRing) {
+          int index = jewelleryDatumListAPI.indexWhere((element) => element.id == state.productId);
+          if (index != -1) {
+            if (state.wishlistId.isNotEmpty) {
+              jewelleryDatumListAPI[index].isFavorite = true;
+              jewelleryDatumListAPI[index].wishlistID = state.wishlistId;
+            } else {
+              jewelleryDatumListAPI[index].isFavorite = false;
+              jewelleryDatumListAPI[index].wishlistID = "";
+            }
+            suggestedProductList[index].isFavourite = jewelleryDatumListAPI[index].isFavorite;
+            suggestedProductList[index].wishlistId =
+                jewelleryDatumListAPI[index].wishlistID.isNotNullNorEmpty ? jewelleryDatumListAPI[index].wishlistID : null;
+          }
+        } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
+          int index = diamondDatumListAPI.indexWhere((element) => element.id == state.productId);
+          if (index != -1) {
+            if (state.wishlistId.isNotEmpty) {
+              diamondDatumListAPI[index].isFavorite = true;
+              diamondDatumListAPI[index].wishlistID = state.wishlistId;
+            } else {
+              diamondDatumListAPI[index].isFavorite = false;
+              diamondDatumListAPI[index].wishlistID = "";
+            }
+            suggestedProductList[index].isFavourite = diamondDatumListAPI[index].isFavorite;
+            suggestedProductList[index].wishlistId =
+                diamondDatumListAPI[index].wishlistID.isNotNullNorEmpty ? diamondDatumListAPI[index].wishlistID : null;
+          }
+        } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+          int index = gemstoneDatumListAPI.indexWhere((element) => element.id == state.productId);
+          if (index != -1) {
+            if (state.wishlistId.isNotEmpty) {
+              gemstoneDatumListAPI[index].isFavorite = true;
+              gemstoneDatumListAPI[index].wishlistID = state.wishlistId;
+            } else {
+              gemstoneDatumListAPI[index].isFavorite = false;
+              gemstoneDatumListAPI[index].wishlistID = "";
+            }
+            suggestedProductList[index].isFavourite = gemstoneDatumListAPI[index].isFavorite;
+            suggestedProductList[index].wishlistId =
+                gemstoneDatumListAPI[index].wishlistID.isNotNullNorEmpty ? gemstoneDatumListAPI[index].wishlistID : null;
+          }
+        }
+      }
+    });
   }
 }

@@ -366,7 +366,8 @@ class SignUpScreen extends StatelessWidget {
           isEnabled: signUpBloc.isSignupButtonEnabled,
           title: APPStrings.register.tr,
           onTap: () {
-            context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
+            signUpBloc.add(SignUpSubmitEvent(context));
+            // context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
           },
         );
       },

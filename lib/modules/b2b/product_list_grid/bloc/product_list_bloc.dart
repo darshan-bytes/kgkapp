@@ -54,6 +54,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    _initWishlistUpdaterServiceBloc(event.context);
 
     if (!refreshCompleter.isCompleted) {
       refreshCompleter.complete(true);
@@ -270,5 +271,28 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         );
       }
     }
+  }
+
+  void _initWishlistUpdaterServiceBloc(BuildContext context) {
+    WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+    wishlistUpdaterServiceBloc.stream.listen((state) {
+      if (state is WishListUpdateProductState) {
+        if (screenIdentifier == ScreenIdentifier.productForRing) {
+          int index = jewelleryDatumList.indexWhere((element) => element.id == state.productId);
+          if (index != -1) {
+            if (state.wishlistId.isNotEmpty) {
+              jewelleryDatumList[index].isFavorite = true;
+              jewelleryDatumList[index].wishlistID = state.wishlistId;
+            } else {
+              jewelleryDatumList[index].isFavorite = false;
+              jewelleryDatumList[index].wishlistID = "";
+            }
+            productList[index].isFavourite = jewelleryDatumList[index].isFavorite;
+            productList[index].wishlistId =
+                jewelleryDatumList[index].wishlistID.isNotNullNorEmpty ? jewelleryDatumList[index].wishlistID : null;
+          }
+        }
+      }
+    });
   }
 }
