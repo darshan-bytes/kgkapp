@@ -9,11 +9,10 @@ class ApiClient {
       'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
 
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
-  static const String signUpUser = '$apiBaseUrl/oauth/signup';
-  static const String userProfile = '$apiBaseUrl/user/profile';
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
+  static const String signUpCustomer = '$apiBaseUrl/customer/signup';
 
   static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
   static const String currencies = '$apiBaseUrl/currency';
