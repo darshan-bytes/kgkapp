@@ -49,8 +49,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         printWrapped(r.toString());
         await StorageManager().setAuthToken(r.accessToken ?? '');
         await StorageManager().setUserId(r.userId ?? '');
-        emit(const SignInSuccessState());
-        event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+        if (r.userIdDetails != null) {
+          await StorageManager().setUserData(r.userIdDetails!);
+        }
+        if (r.userIdDetails?.userTypeEnum != null) {
+          emit(const SignInSuccessState());
+          BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+          event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+        }
+        // event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
       });
     });
   }
