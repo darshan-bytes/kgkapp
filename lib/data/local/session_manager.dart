@@ -12,11 +12,13 @@ class StorageManager {
 
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
+  final String _userId = 'userId';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
+  final String _bagId = 'bagId';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -31,6 +33,15 @@ class StorageManager {
 
   String? getAuthToken() {
     return _box.get(_authTokenBoxName);
+  }
+
+  /// Set userId after login-signup
+  Future<void> setUserId(String userId) async {
+    await _box.put(_userId, userId);
+  }
+
+  String? getUserId() {
+    return _box.get(_userId);
   }
 
   /// Set locale after login-signup
@@ -81,6 +92,15 @@ class StorageManager {
 
   String getThemeData() {
     return _box.get('themeData') ?? 'light';
+  }
+
+  /// Set bag id for cart
+  Future<void> storeBagId(String badgeId) async {
+    await _box.put(_bagId, badgeId);
+  }
+
+  String? getBagId() {
+    return _box.get(_bagId);
   }
 
   /// Clear all data stored except _locale
