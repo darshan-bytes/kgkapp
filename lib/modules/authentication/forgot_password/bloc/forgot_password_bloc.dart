@@ -52,7 +52,7 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
       Utils.showMessage(APPStrings.emailRequired.tr);
 
       return false;
-    } else if (!Utils.isEmail(emailController.text.trim())) {
+    } else if (!Utils.isValidEmail(emailController.text.trim())) {
       Utils.showMessage(APPStrings.validEmail.tr);
       return false;
     }
