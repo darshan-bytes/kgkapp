@@ -65,6 +65,7 @@ class BlocGenerator {
       BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
       BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
+      BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc()),
     ];
   }
 }
