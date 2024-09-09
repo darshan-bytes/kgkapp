@@ -74,3 +74,23 @@ class ProductRemoveFromFavoriteEvent extends AppEvent {
   @override
   List<Object> get props => [productDetails, context];
 }
+
+class ProductAddToBagEvent extends AppEvent {
+  final ProductDetails productDetails;
+  final BuildContext context;
+
+  const ProductAddToBagEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
+
+class ProductRemoveFromBagEvent extends AppEvent {
+  final ProductDetails productDetails;
+  final BuildContext context;
+
+  const ProductRemoveFromBagEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}

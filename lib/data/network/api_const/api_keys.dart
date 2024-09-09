@@ -27,4 +27,7 @@ class ApiKey {
   static const String rating = 'rating';
   static const String files = 'files';
   static const String watchlistId = 'watchlistId';
+  static const String quantity = 'quantity';
+  static const String suid = 'suid';
+  static const String userId = 'user_id';
 }

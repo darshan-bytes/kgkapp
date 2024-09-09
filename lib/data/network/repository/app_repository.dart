@@ -344,6 +344,14 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // Add Product into Bag
+  Future<Either<ErrorResponse, CommonResponse>?> addToBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.addToBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

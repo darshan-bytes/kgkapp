@@ -48,6 +48,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       }, (r) async {
         printWrapped(r.toString());
         await StorageManager().setAuthToken(r.accessToken ?? '');
+        await StorageManager().setUserId(r.userId ?? '');
         emit(const SignInSuccessState());
         event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
       });
