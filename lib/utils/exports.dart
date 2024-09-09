@@ -442,3 +442,4 @@ export 'package:kgk/modules/common_modules/product_details/model/product_review_
 export 'package:http_parser/http_parser.dart';
 export 'package:mime_type/mime_type.dart';
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
+export 'package:kgk/app/wishlist_updater_service/wishlist_updater_service_bloc.dart';
