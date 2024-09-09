@@ -91,7 +91,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
-                            if(bloc.productDetails != null) {
+                            if (bloc.productDetails != null) {
                               BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: bloc.productDetails!);
                             }
                           },
@@ -232,20 +232,27 @@ class ProductDetailsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     SizedBox(width: 8.w),
-                                    SelectionButton(
-                                      height: 42.w,
-                                      width: 42.w,
-                                      padding: EdgeInsets.all(6.w),
-                                      isSelected: false,
-                                      onTap: () {
-                                        if (bloc.productDetails != null) {
-                                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: bloc.productDetails!);
-                                        }
+                                    BlocBuilder<AppBloc, AppState>(
+                                      buildWhen: (previous, current) =>
+                                          current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                                      builder: (context, state) {
+                                        return SelectionButton(
+                                          height: 42.w,
+                                          width: 42.w,
+                                          padding: EdgeInsets.all(6.w),
+                                          isSelected: false,
+                                          onTap: () {
+                                            if (bloc.productDetails != null) {
+                                              BlocProvider.of<AppBloc>(context)
+                                                  .onTapFavorite(context, productDetails: bloc.productDetails!);
+                                            }
+                                          },
+                                          imageWidth: 20.w,
+                                          imageHeight: 20.w,
+                                          fit: BoxFit.contain,
+                                          image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
+                                        );
                                       },
-                                      imageWidth: 20.w,
-                                      imageHeight: 20.w,
-                                      fit: BoxFit.contain,
-                                      image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
                                     ),
                                     SizedBox(width: 8.w),
                                     SelectionButton(

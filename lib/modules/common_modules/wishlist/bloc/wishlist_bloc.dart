@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 part 'wishlist_event.dart';
 

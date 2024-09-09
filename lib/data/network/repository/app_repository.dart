@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
