@@ -5,8 +5,11 @@ part 'all_review_event.dart';
 part 'all_review_state.dart';
 
 class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
-  List<ReviewDataModel> reviewDataModel = [];
-
+  List<ReviewDataModel> reviewList = [];
+  List<ProductReviewModel> productReviewListAPI = [];
+  String productId = '';
+  int? totalNumberOfPages;
+  static const int limit = 10;
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   AllReviewBloc() : super(AllReviewInitial()) {
@@ -14,29 +17,18 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
     on<AllReviewLoadMoreEvent>(_onAllReviewLoadMoreEvent);
   }
 
-  void _onAllReviewInitialEvent(AllReviewInitialEvent event, Emitter<AllReviewState> emit) {
+  Future<void> _onAllReviewInitialEvent(AllReviewInitialEvent event, Emitter<AllReviewState> emit) async {
     emit(const ReloadAllReviewState());
+    productId = event.context.routesData?[RoutesData.productId] ?? '';
     paginationScrollController.init(
       loadAction: (int currentPage) async {
-        add(AllReviewLoadMoreEvent(currentPage));
+        add(AllReviewLoadMoreEvent(currentPage, event.context));
       },
     );
-    reviewDataModel.clear();
+    reviewList.clear();
+    productReviewListAPI.clear();
     emit(const AllReviewLoadingState());
-    List.generate(
-      20,
-      (index) => reviewDataModel.add(
-        ReviewDataModel(
-          userName: "John Doe",
-          date: "12th June 2021",
-          rating: 4,
-          title: "Good Product",
-          review:
-              'I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone.',
-          images: index % 2 == 0 ? ["https://i.ibb.co/zZ6y0w4/image-7-4.png", "https://i.ibb.co/xStbncs/image-7-5.png"] : null,
-        ),
-      ),
-    );
+    await productReviewsFilter(event.context, productId);
 
     emit(const AllReviewLoadedState());
   }
@@ -44,22 +36,42 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
   Future<void> _onAllReviewLoadMoreEvent(AllReviewLoadMoreEvent event, Emitter<AllReviewState> emit) async {
     emit(const AllReviewLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
-    List.generate(
-      20,
-      (index) => reviewDataModel.add(
-        ReviewDataModel(
-          id: index + 1,
-          userName: "John Doe",
-          date: "12th June 2021",
-          rating: 4,
-          title: "Good Product",
-          review:
-              'I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone. I love this ring. It is so beautiful and the quality is amazing. I have received so many compliments on it. I would highly recommend this ring to anyone.',
-          images: index % 2 == 0 ? ["https://i.ibb.co/zZ6y0w4/image-7-4.png", "https://i.ibb.co/xStbncs/image-7-5.png"] : null,
-        ),
-      ),
-    );
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 4);
+    await productReviewsFilter(event.context, productId);
     emit(const AllReviewLoadedMoreState());
+  }
+
+  Future<void> productReviewsFilter(BuildContext context, String productId) async {
+    Map<String, dynamic> query = {
+      ApiKey.limit: limit,
+      ApiKey.page: paginationScrollController.currentPage,
+    };
+    Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
+        await AppRepository(context).productReviewsFilter(productId, query: query);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords, limit);
+        List<ProductReviewModel> localList = data.dataList as List<ProductReviewModel>? ?? [];
+        productReviewListAPI.addAll(localList);
+        for (ProductReviewModel e in localList) {
+          reviewList.add(ReviewDataModel(
+            id: e.id,
+            userName: e.userIdDetails?.fullName ?? '',
+            date: e.createdAt?.changeDateFormat(
+                    inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
+                '',
+            rating: e.rating ?? 0,
+            title: e.title ?? '',
+            review: e.description ?? '',
+            images: e.displayImage ?? [],
+          ));
+        }
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      },
+    );
   }
 }

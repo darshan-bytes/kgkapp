@@ -206,7 +206,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           (l) {
             Utils.showMessage(l.message ?? '');
           },
-          (data) {
+          (data) async {
+            String bagId = data.responseData['_id'];
+            await StorageManager().storeBagId(bagId);
             Utils.showMessage(data.message ?? '');
           },
         );
@@ -215,18 +217,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {
-    // await AppRepository(event.context).removeFromBag(event.productDetails.productId).then(
-    //   (response) {
-    //     response?.fold(
-    //       (l) {
-    //         Utils.showMessage(l.message ?? '');
-    //       },
-    //       (data) {
-    //         Utils.showMessage(data.message ?? '');
-    //       },
-    //     );
-    //   },
-    // );
+    /// Implementing it later
   }
 }
 

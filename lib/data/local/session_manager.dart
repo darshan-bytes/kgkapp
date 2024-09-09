@@ -18,6 +18,7 @@ class StorageManager {
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
+  final String _bagId = 'bagId';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -91,6 +92,15 @@ class StorageManager {
 
   String getThemeData() {
     return _box.get('themeData') ?? 'light';
+  }
+
+  /// Set bag id for cart
+  Future<void> storeBagId(String badgeId) async {
+    await _box.put(_bagId, badgeId);
+  }
+
+  String? getBagId() {
+    return _box.get(_bagId);
   }
 
   /// Clear all data stored except _locale

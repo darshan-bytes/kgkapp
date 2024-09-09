@@ -33,7 +33,7 @@ class ProductReviewModel {
 
   ProductReviewModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    userId = json['user_id'];
+    userId = json['user_id']?.toString();
     productId = json['product_id'];
     title = json['title'];
     description = json['description'];
@@ -66,4 +66,8 @@ class ProductReviewModel {
     }
     return data;
   }
+}
+
+extension ProductReviewModelExtension on ProductReviewModel {
+  List<String>? get displayImage => images?.split(',').map((e) => e.trim().setMediaUrl).toList();
 }
