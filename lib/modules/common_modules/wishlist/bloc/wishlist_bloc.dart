@@ -6,7 +6,7 @@ part 'wishlist_event.dart';
 part 'wishlist_state.dart';
 
 class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
   List<WishlistDatum> wishlistDataList = [];
@@ -58,15 +58,18 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         productList = [
           for (var element in wishlistModel.data)
             if (element.productData != null)
+
               /// In ProductDetails commodity need to set is Pending from backend
-              ProductDetails(
+              ProductDetailsModel(
                 productId: element.productId ?? '',
                 imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
                     ? element.productData!.multipleFinishedViewImage.first.imageUrl
                     : "",
                 name: element.productData!.productDescription ?? "",
                 originalPrice: element.productData!.discountPrice?.setCurrency,
-                // commodity: element.productData!.commodity ?? "",
+                // commodity: element.productData?.commodity ?? "",
+                isFavourite: element.productData?.isFavorite ?? true,
+                wishlistId: element.productData?.wishlistId ?? "",
               )
         ];
       });

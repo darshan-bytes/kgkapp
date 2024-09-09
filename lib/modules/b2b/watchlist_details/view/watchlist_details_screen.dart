@@ -172,7 +172,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
           items: List.generate(
             bloc.productList.length,
             (index) {
-              ProductDetails productDetails = bloc.productList[index];
+              ProductDetailsModel productDetails = bloc.productList[index];
               return ProductGridItem(
                 isOutOfStock: productDetails.isOutOfStock,
                 productDetails: productDetails,

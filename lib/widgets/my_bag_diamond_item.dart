@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class MyBagDiamondItem extends StatelessWidget {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final Function()? onTap;
   final Function()? onTapMenuButton;
   final Function()? onShowMorePress;

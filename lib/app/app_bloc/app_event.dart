@@ -56,7 +56,7 @@ class SetUserTypeEvent extends AppEvent {
 }
 
 class ProductAddToFavoriteEvent extends AppEvent {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final BuildContext context;
 
   const ProductAddToFavoriteEvent(this.productDetails, this.context);
@@ -66,7 +66,7 @@ class ProductAddToFavoriteEvent extends AppEvent {
 }
 
 class ProductRemoveFromFavoriteEvent extends AppEvent {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final BuildContext context;
 
   const ProductRemoveFromFavoriteEvent(this.productDetails, this.context);

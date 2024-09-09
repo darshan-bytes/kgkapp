@@ -11,7 +11,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   UserType userType = UserType.b2cUser;
 
   String productName = '';
-  ProductDetails? productDetails;
+  ProductDetailsModel? productDetails;
   DiamondDataModel? diamondData;
   GemstoneDatum? gemstoneData;
   bool isCustomisation = false;
@@ -102,9 +102,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
   GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
 
-  List<ProductDetails> suggestedProductList = List.generate(
+  List<ProductDetailsModel> suggestedProductList = List.generate(
     8,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamond: "2.5 crt",
       gram: "1.5 grms",
       imageUrl: index % 2 == 0
@@ -115,9 +115,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     ),
   );
 
-  List<ProductDetails> recentlyViewedProductList = List.generate(
+  List<ProductDetailsModel> recentlyViewedProductList = List.generate(
     8,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamond: "2.5 crt",
       gram: "1.5 grms",
       imageUrl: index % 2 == 0
@@ -161,7 +161,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
-      // Gemstone Details API
       await getGemstoneDetails(event.context, productId);
       await getGemstoneYouMayLike(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
@@ -233,7 +232,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
-          productDetails = ProductDetails(
+          productDetails = ProductDetailsModel(
             productId: productId,
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
@@ -271,7 +270,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           if (gemstoneData?.image.isNotEmpty ?? false) {
             imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
           }
-          productDetails = ProductDetails(
+          productDetails = ProductDetailsModel(
             productId: productId,
             name: productName,
             offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
@@ -307,7 +306,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           List<DiamondDataModel> suggestedProductListAPI = data.data;
           suggestedProductList = suggestedProductListAPI.map((e) {
             bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
-            return ProductDetails(
+            return ProductDetailsModel(
               productId: e.id,
               name: e.rmDescription ?? '',
               imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
@@ -343,7 +342,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         suggestedProductList = data.data.map((e) {
           final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
 
-          return ProductDetails(
+          return ProductDetailsModel(
             productId: e.id,
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
@@ -376,7 +375,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (data) {
         suggestedProductList = data.data.map((e) {
           bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
-          return ProductDetails(
+          return ProductDetailsModel(
             productId: e.id,
             name: e.productDescription ?? '',
             imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
@@ -387,8 +386,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
             isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
             commodity: Commodity.jewellery,
+            wishlistId: e.wishlistID,
           );
         }).toList();
         add(const ProductDetailsSuggestedProductLoadedEvent());
@@ -410,7 +409,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
         imgList = jewelleryData.multipleFinishedViewImage.map((e) => e.imageUrl ?? '').toList();
-        productDetails = ProductDetails(
+        productDetails = ProductDetailsModel(
           productId: productId,
           name: productName,
           offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,

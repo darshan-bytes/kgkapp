@@ -124,7 +124,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
 
   Widget _buildGridView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state, BuildContext context) {
     return SmartGridView(
-      items: bloc.productList.map((ProductDetails productDetails) {
+      items: bloc.productList.map((ProductDetailsModel productDetails) {
         return ProductGridItem(
           productDetails: productDetails,
           isOutOfStock: false,

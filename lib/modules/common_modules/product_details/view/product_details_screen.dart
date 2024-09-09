@@ -251,7 +251,25 @@ class ProductDetailsScreen extends StatelessWidget {
                                       width: 42.w,
                                       padding: EdgeInsets.all(6.w),
                                       isSelected: false,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Utils.showSmartModalBottomSheet(
+                                          context: context,
+                                          enableDrag: false,
+                                          builder: (sheetContext) => ShareOptionSheet(
+                                            title: "Share ${bloc.productDetails?.productSku ?? ''}",
+                                            onTapQrCode: () {
+                                              sheetContext.pop();
+                                              _showQrCodeDialog(context: context, data: "https://dev.kgk.magnetoinfotech.com");
+                                            },
+                                            onTapCopy: () async {
+                                              await Clipboard.setData(const ClipboardData(text: "https://dev.kgk.magnetoinfotech.com"));
+                                            },
+                                            onTapWhatsapp: () async {
+                                              await Share.share("https://dev.kgk.magnetoinfotech.com");
+                                            },
+                                          ),
+                                        );
+                                      },
                                       image: AppImages.icShare,
                                     ),
                                   ],
@@ -436,7 +454,7 @@ class ProductDetailsScreen extends StatelessWidget {
         : SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle);
   }
 
-  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetails? productDetails) {
+  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetailsModel? productDetails) {
     return Row(
       children: [
         SmartRatingBar(
@@ -687,6 +705,76 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _showQrCodeDialog({required BuildContext context, required String data}) {
+    final QRCodeDialogStyle style = AppTheme.of(context).qrCodeDialogStyle;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            insetPadding: EdgeInsets.all(32.w),
+            child: AnimatedScale(
+              scale: 1.0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutBack,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(24.w),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 15.0,
+                          spreadRadius: 5.0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Scan this QR Code',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => context.pop(),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.redAccent,
+                                radius: 16.w,
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.h),
+                        QrImageView(
+                          data: data,
+                          version: QrVersions.auto,
+                          size: 245.w,
+                          backgroundColor: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
     );
   }
 }

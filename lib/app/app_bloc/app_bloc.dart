@@ -128,7 +128,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapFavorite(context, {required ProductDetails productDetails}) {
+  void onTapFavorite(context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
@@ -141,6 +141,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   ///for add product to wishlist
   Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
+    emit(AppReloadState());
     Map<String, dynamic> body = {
       ApiKey.productId_: event.productDetails.productId,
       ApiKey.commodity: event.productDetails.commodity?.value
@@ -165,6 +166,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   ///for remove product from wishlist
   Future<void> _onProductRemoveFromWishlist(ProductRemoveFromFavoriteEvent event, Emitter<AppState> emit) async {
+    emit(AppReloadState());
     await AppRepository(event.context).deleteWishList(event.productDetails.wishlistId ?? '').then(
       (response) {
         response?.fold(

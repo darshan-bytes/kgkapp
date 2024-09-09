@@ -50,9 +50,9 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   bool isBillingAndShippingSame = true;
 
-  List<ProductDetails> productList = List.generate(
+  List<ProductDetailsModel> productList = List.generate(
       25,
-      (index) => ProductDetails(
+      (index) => ProductDetailsModel(
             productId: index.toString(),
             imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
             name: "Diamond Vine Ring in 18k Rose Gold",

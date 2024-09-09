@@ -200,7 +200,7 @@ class StoneListingScreen extends StatelessWidget {
             return Column(
               children: [
                 SmartGridView(
-                    items: diamondListingBloc.productList.map((ProductDetails productDetails) {
+                    items: diamondListingBloc.productList.map((ProductDetailsModel productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     isStoneWithPrice: true,
@@ -305,7 +305,7 @@ class StoneListingScreen extends StatelessWidget {
                                     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                               }
                             },
-                            productDetails: ProductDetails(
+                            productDetails: ProductDetailsModel(
                               productInfoClarityChat: ProductInfoClarityChat(
                                   rapRate: diamondListingBloc.productList[index].rappaportPrice?.setCurrency,
                                   //,"\$35,500.00",

@@ -13,7 +13,7 @@ final class AddressListLoadedState extends AddressListState {
   final List<AddressDetails> addressList;
   final AddressDetails selectedAddress;
   final bool isBillingAndShippingSame;
-  final List<ProductDetails> productList;
+  final List<ProductDetailsModel> productList;
 
   const AddressListLoadedState(
     this.addressList,

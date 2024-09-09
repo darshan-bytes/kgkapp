@@ -7,7 +7,7 @@ part 'stone_listing_state.dart';
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   bool isInitialToggle = true;
   bool isGrid = true;
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
@@ -70,7 +70,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       List.generate(
         20,
         (index) => productList.add(
-          ProductDetails(
+          ProductDetailsModel(
             diamond: "2.5 crt",
             gram: "1.5 grms",
             imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -115,36 +115,39 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
       List.generate(
         diamondDatumList.length,
-        (index) => productList.add(
-          ProductDetails(
-            productId: diamondDatumList[index].id,
-            diamond: "2.5 crt",
-            gram: "1.5 grms",
-            imageUrl: diamondDatumList[index].image.first.url,
-            name: diamondDatumList[index].rmDescription ?? "",
-            originalPrice: (diamondDatumList[index].price ?? 0).toString().setCurrency,
-            ctsOrGms: diamondDatumList[index].ctsOrGms,
-            rappaportPrice: diamondDatumList[index].rappaportPrice,
-            priceCts: diamondDatumList[index].priceCts,
-            discountPrice: diamondDatumList[index].discountPrice?.setCurrency,
-            finalPrice: diamondDatumList[index].finalPrice?.setCurrency,
-            lotCode: diamondDatumList[index].lotCode,
-            productSku: diamondDatumList[index].lotCode,
-            shape: diamondDatumList[index].shape,
-            fluorescence: diamondDatumList[index].fluorescence,
-            labs: diamondDatumList[index].labs,
-            lsp: diamondDatumList[index].lsp,
-            color: diamondDatumList[index].color,
-            clarity: diamondDatumList[index].clarity,
-            cut: diamondDatumList[index].cut,
-            certificateFile: diamondDatumList[index].certificateFile,
-            openDnaUrl: diamondDatumList[index].openDnaUrl,
-            commodity: Commodity.diamond,
-            company: diamondDatumList[index].id,
-            isFavourite: diamondDatumList[index].isFavorite,
-            wishlistId: diamondDatumList[index].wishlistID,
-          ),
-        ),
+        (index) {
+          print("productID ${diamondDatumList[index].id}");
+          productList.add(
+            ProductDetailsModel(
+              productId: diamondDatumList[index].id,
+              diamond: "2.5 crt",
+              gram: "1.5 grms",
+              imageUrl: diamondDatumList[index].image.first.url,
+              name: diamondDatumList[index].rmDescription ?? "",
+              originalPrice: (diamondDatumList[index].price ?? 0).toString().setCurrency,
+              ctsOrGms: diamondDatumList[index].ctsOrGms,
+              rappaportPrice: diamondDatumList[index].rappaportPrice,
+              priceCts: diamondDatumList[index].priceCts,
+              discountPrice: diamondDatumList[index].discountPrice?.setCurrency,
+              finalPrice: diamondDatumList[index].finalPrice?.setCurrency,
+              lotCode: diamondDatumList[index].lotCode,
+              productSku: diamondDatumList[index].lotCode,
+              shape: diamondDatumList[index].shape,
+              fluorescence: diamondDatumList[index].fluorescence,
+              labs: diamondDatumList[index].labs,
+              lsp: diamondDatumList[index].lsp,
+              color: diamondDatumList[index].color,
+              clarity: diamondDatumList[index].clarity,
+              cut: diamondDatumList[index].cut,
+              certificateFile: diamondDatumList[index].certificateFile,
+              openDnaUrl: diamondDatumList[index].openDnaUrl,
+              commodity: Commodity.diamond,
+              company: diamondDatumList[index].id,
+              isFavourite: diamondDatumList[index].isFavorite,
+              wishlistId: diamondDatumList[index].wishlistID,
+            ),
+          );
+        },
       );
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
@@ -171,7 +174,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       List.generate(
         gemstoneDatumList.length,
         (index) => productList.add(
-          ProductDetails(
+          ProductDetailsModel(
             productId: gemstoneDatumList[index].id,
             diamond: "2.5 crt",
             gram: "1.5 grms",
@@ -224,7 +227,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       List.generate(
           10,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -260,7 +263,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onStoneListAddToWatchList(StoneListAddToWatchListEvent event, Emitter<StoneListingState> emit) async {
-    ProductDetails? productDetails = productList.firstWhereOrNull((element) => element.productId == event.stoneId);
+    ProductDetailsModel? productDetails = productList.firstWhereOrNull((element) => element.productId == event.stoneId);
     if (productDetails != null) {
       BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(productDetails, event.context));
       Utils.showSmartModalBottomSheet(

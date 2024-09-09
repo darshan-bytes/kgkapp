@@ -15,7 +15,7 @@ final class ProductDetailsLoadingState extends ProductDetailsState {
 }
 
 final class ProductDetailsLoadedState extends ProductDetailsState {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
 
   const ProductDetailsLoadedState(this.productDetails);
 
@@ -71,7 +71,7 @@ final class GemstoneDetailsToggleState extends ProductDetailsState {
 }
 
 final class ProductDetailsSuggestedProductLoadedState extends ProductDetailsState {
-  final List<ProductDetails> suggestedProducts;
+  final List<ProductDetailsModel> suggestedProducts;
 
   const ProductDetailsSuggestedProductLoadedState(this.suggestedProducts);
 

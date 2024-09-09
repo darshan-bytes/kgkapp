@@ -43,9 +43,9 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     {"date_time": "17/03/23 10:00 PM", "price": "\$4500.00"},
   ];
 
-  List<ProductDetails> youMayAlisLikeProductList = List.generate(
+  List<ProductDetailsModel> youMayAlisLikeProductList = List.generate(
     8,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamond: "1.5 gram",
       gram: "1.5 gram",
       imageUrl: "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
