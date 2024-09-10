@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
@@ -349,6 +348,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> addToBag({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     var response = await postMethod<Map<String, dynamic>>(ApiClient.addToBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Collections listing
+  Future<Either<ErrorResponse, List<CollectionDataModel>>?> collectionMasterList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<CollectionDataModel>(ApiClient.collectionMaster);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
