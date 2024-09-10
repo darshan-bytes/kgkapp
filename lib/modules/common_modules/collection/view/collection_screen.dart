@@ -116,11 +116,7 @@ class CollectionScreen extends StatelessWidget {
             itemCount: bloc.collectionMasterList.length,
             itemBuilder: (context, index) {
               CollectionDataModel collectionDataModel = bloc.collectionMasterList[index];
-              return _buildCollectionSubItemList(
-                collectionDataModel: collectionDataModel,
-                context: context,
-                style: style,
-              );
+              return _buildCollectionSubItemList(collectionDataModel: collectionDataModel, context: context, style: style, bloc: bloc);
             },
           );
         }
@@ -130,7 +126,10 @@ class CollectionScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionSubItemList(
-      {required CollectionDataModel collectionDataModel, required BuildContext context, required CollectionViewStyle style}) {
+      {required CollectionDataModel collectionDataModel,
+      required BuildContext context,
+      required CollectionViewStyle style,
+      required CollectionBloc bloc}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,11 +140,16 @@ class CollectionScreen extends StatelessWidget {
           collectionDataModel.items?.length ?? 0,
           (subIndex) {
             CollectionDataItemsModel item = collectionDataModel.items?[subIndex] ?? CollectionDataItemsModel();
+            Widget child;
             if (item.image.isNotNullNorEmpty) {
-              return SmartImage(path: item.image ?? '', width: context.width, fit: BoxFit.fill, margin: EdgeInsets.only(bottom: 16.h));
+              child = SmartImage(path: item.image ?? '', width: context.width, fit: BoxFit.fill, margin: EdgeInsets.only(bottom: 16.h));
             } else {
-              return const SmartText("NO IMAGE FOUND");
+              child = const SmartText("NO IMAGE FOUND");
             }
+            return InkWell(
+              onTap: () => bloc.navigateToJewelleryListingScreen(context: context, collectionName: item.name ?? ""),
+              child: child,
+            );
           },
         ),
       ],
