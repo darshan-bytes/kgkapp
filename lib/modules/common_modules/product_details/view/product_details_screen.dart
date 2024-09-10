@@ -409,10 +409,7 @@ class ProductDetailsScreen extends StatelessWidget {
             if (bloc.suggestedProductList.isNotNullNorEmpty) SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
-            _buildRecentlyViewedProductList(bloc, style, context),
-          ],
+          _buildRecentlyViewedProductList(bloc, style, context),
         ],
       ),
     );
@@ -649,13 +646,14 @@ class ProductDetailsScreen extends StatelessWidget {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(
             title: APPStrings.youMayAlsoLike.tr,
-            onViewAllTap: bloc.suggestedProductList.length > 5 ? () => bloc.navigateBasedOnScreenIdentifier(context) : null,
+            onViewAllTap: bloc.suggestedProductList.length > 5
+                ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
+                : null,
             suggestedProductList: bloc.suggestedProductList,
             onProductTap: (product) {
               context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                 RoutesData.productId: product.productId,
                 RoutesData.isPageFor: bloc.screenIdentifier,
-                RoutesData.productNavigation: AppConst.youMayLike
               });
             },
             onEyeTap: () {},
@@ -670,7 +668,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
       buildWhen: (previous, current) => current is ProductDetailsRecentlyViewedLoadedState,
       builder: (context, state) {
-        if(bloc.recentlyViewedProductList.isNotNullNorEmpty) {
+        if (bloc.recentlyViewedProductList.isNotNullNorEmpty) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -680,7 +678,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   title: APPStrings.recentlyViewed.tr,
                   onViewAllTap: bloc.recentlyViewedProductList.length > 5
                       ? () {
-                          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
+                              productNavigation: AppConst.recentlyViewed);
                         }
                       : null,
                   suggestedProductList: bloc.recentlyViewedProductList,
@@ -688,7 +687,6 @@ class ProductDetailsScreen extends StatelessWidget {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                       RoutesData.productId: product.productId,
                       RoutesData.isPageFor: bloc.screenIdentifier,
-                      RoutesData.productNavigation: AppConst.recentlyViewed
                     });
                   },
                   onEyeTap: () {},
@@ -697,7 +695,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   scrollController: bloc.recentViewScrollController),
             ],
           );
-        }else{
+        } else {
           return const SizedBox.shrink();
         }
       },

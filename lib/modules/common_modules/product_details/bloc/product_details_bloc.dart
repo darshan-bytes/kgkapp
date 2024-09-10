@@ -135,9 +135,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     isInitialized = true;
     emit(ProductDetailsLoadingState());
     // assigning current userType
-    userType = BlocProvider
-        .of<AppBloc>(event.context)
-        .userType;
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
 
     getScreenIdentifier(event.context);
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
@@ -146,7 +144,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       imgList.clear();
       suggestedProductList.clear();
       await getDiamondsDetails(event.context, productId);
+      if (productDetails != null) {
+        emit(ProductDetailsLoadedState(productDetails!));
+      }
       await getDiamondYouMayLike(event.context, productId);
+      await getDiamondsRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
@@ -154,7 +156,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       recentlyViewedProductList.clear();
       // Gemstone Details API
       await getGemstoneDetails(event.context, productId);
+      if (productDetails != null) {
+        emit(ProductDetailsLoadedState(productDetails!));
+      }
       await getGemstoneYouMayLike(event.context, productId);
+      await getGemstoneRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
       imgList.clear();
       suggestedProductList.clear();
@@ -164,8 +170,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       if (productDetails != null) {
         emit(ProductDetailsLoadedState(productDetails!));
       }
-      await getProductYouMayLike(event.context, productId);
       await productReviewsFilter(event.context, productId);
+      await getProductYouMayLike(event.context, productId);
       await getProductRecentlyViewed(event.context, productId);
     }
 
@@ -179,7 +185,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           name: APPStrings.head.tr,
           type: ProductCustomizationType.head.value,
           selectedValue:
-          ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
+              ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
           values: [
             ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
             ProductCustomizationOptionValues(id: '2', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
@@ -195,13 +201,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
     Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     response?.fold(
-          (error) {
+      (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         diamondData = data;
         if (diamondData != null) {
           isErrorInLoadingData = false;
@@ -215,7 +221,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
             originalPrice: diamondData!.finalPrice?.setCurrency,
             discountPercentage:
-            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
+                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
             rating: diamondData!.rating?.toDouble(),
@@ -231,13 +237,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> getGemstoneDetails(BuildContext context, String productId) async {
     Either<ErrorResponse, GemstoneDatum>? response = await AppRepository(context).getGemstoneDetailById(productId);
     response?.fold(
-          (error) {
+      (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
@@ -254,7 +260,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
             originalPrice: gemstoneData?.finalPrice?.setCurrency,
             discountPercentage:
-            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
+                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
             productSku: gemstoneData?.lotCode,
             reviewCount: gemstoneData?.reviewCount,
             rating: gemstoneData?.rating?.toDouble(),
@@ -273,14 +279,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
     Either<ErrorResponse, DiamondListingModel>? response =
-    await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
+        await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
     response?.fold(
-          (error) {
+      (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         if (data.data.isNotEmpty) {
           diamondDatumListAPI = data.data;
           suggestedProductList = diamondDatumListAPI.map((e) {
@@ -308,15 +314,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
     final Either<ErrorResponse, GemstoneListingModel>? response =
-    await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
+        await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
 
     response?.fold(
-          (error) {
+      (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message!);
         }
       },
-          (data) {
+      (data) {
         if (data.data.isEmpty) return;
         gemstoneDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
@@ -345,14 +351,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductYouMayLike(BuildContext context, String productId) async {
     Either<ErrorResponse, JewelleryListingModel>? response =
-    await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
+        await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
     response?.fold(
-          (error) {
+      (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         jewelleryDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
           bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
@@ -377,16 +383,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getProductDetails(BuildContext context, String productId) async {
-    Either<ErrorResponse, JewelleryDataModel>? response =
-    await AppRepository(context).getProductDetailById(productId, isLoadingShow: true);
+    Either<ErrorResponse, JewelleryDataModel>? response = await AppRepository(context).getProductDetailById(productId, isLoadingShow: true);
     response?.fold(
-          (error) {
+      (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (jewelleryData) {
+      (jewelleryData) {
         isErrorInLoadingData = false;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
@@ -397,7 +402,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
           originalPrice: jewelleryData.finalPrice?.setCurrency,
           discountPercentage:
-          isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
+              isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
           productSku: jewelleryData.contractNoSkuNo,
           reviewCount: jewelleryData.reviewCount,
           rating: jewelleryData.rating?.toDouble(),
@@ -414,27 +419,27 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> productReviewsFilter(BuildContext context, String productId) async {
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
     Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
-    await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
+        await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
     response?.fold(
-          (error) {
+      (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         reviewList = (data.dataList as List<ProductReviewModel>?)?.map((e) {
-          return ReviewDataModel(
-            id: e.id,
-            userName: e.userIdDetails?.fullName ?? '',
-            date: e.createdAt?.changeDateFormat(
-                inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
-                '',
-            rating: e.rating ?? 0,
-            title: e.title ?? '',
-            review: e.description ?? '',
-            images: e.displayImage ?? [],
-          );
-        }).toList() ??
+              return ReviewDataModel(
+                id: e.id,
+                userName: e.userIdDetails?.fullName ?? '',
+                date: e.createdAt?.changeDateFormat(
+                        inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
+                    '',
+                rating: e.rating ?? 0,
+                title: e.title ?? '',
+                review: e.description ?? '',
+                images: e.displayImage ?? [],
+              );
+            }).toList() ??
             [];
         add(const ProductDetailsReviewsLoadedEvent());
       },
@@ -443,14 +448,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
     Either<ErrorResponse, JewelleryListingModel>? response =
-    await AppRepository(context).getRecentlyViewedProductList(page: "1", limit: "10");
+        await AppRepository(context).getRecentlyViewedProductList(page: "1", limit: "10");
     response?.fold(
-          (error) {
+      (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-          (data) {
+      (data) {
         recentlyViewedProductList = data.data.map((e) {
           return ProductDetails(
             productId: e.id,
@@ -459,13 +464,77 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             offerPrice: e.discountPrice?.setCurrency,
             originalPrice: e.finalPrice?.setCurrency,
             discountPercentage:
-            e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+                e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.contractNoSkuNo,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
             isFavourite: e.isFavorite,
             wishlistId: e.wishlistID,
             commodity: Commodity.jewellery,
+          );
+        }).toList();
+        add(const ProductDetailsReviewsLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getDiamondsRecentlyViewed(BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondListingModel>? response =
+        await AppRepository(context).getDiamondRecentlyViewedProductList(page: "1", limit: "10");
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        recentlyViewedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+          return ProductDetails(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.diamond,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+          );
+        }).toList();
+        add(const ProductDetailsReviewsLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getGemstoneRecentlyViewed(BuildContext context, String productId) async {
+    Either<ErrorResponse, GemstoneListingModel>? response =
+        await AppRepository(context).getGemstoneRecentlyViewedProductList(page: "1", limit: "10");
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        recentlyViewedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage! > 0;
+          return ProductDetails(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.gemstone,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
           );
         }).toList();
         add(const ProductDetailsReviewsLoadedEvent());
@@ -515,12 +584,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(const ProductDetailsRecentlyViewedLoadedState());
   }
 
-  void navigateBasedOnScreenIdentifier(BuildContext context) {
+  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context, {required String productNavigation}) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
         context.pushNamed(AppRoutes.productListGridPage, arguments: {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
           RoutesData.productId: productDetails?.productId,
+          RoutesData.productNavigation: productNavigation,
         });
         break;
       case ScreenIdentifier.productForGemstones:
@@ -528,6 +598,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         context.pushNamed(AppRoutes.stoneListingPage, arguments: {
           RoutesData.isPageFor: screenIdentifier,
           RoutesData.productId: productDetails?.productId,
+          RoutesData.productNavigation: productNavigation,
         });
         break;
       default:
