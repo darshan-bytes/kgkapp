@@ -211,8 +211,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             Utils.showMessage(l.message ?? '');
           },
           (data) async {
-            String bagId = data.responseData['_id'];
-            await StorageManager().storeBagId(bagId);
+            MyBagDataModel myBagDataModel = data.responseData;
+            await StorageManager().storeBagData(myBagDataModel);
             Utils.showMessage(data.message ?? '');
           },
         );

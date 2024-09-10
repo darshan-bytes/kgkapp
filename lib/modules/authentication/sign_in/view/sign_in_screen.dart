@@ -6,46 +6,54 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    final SignInBloc bloc = context.read<SignInBloc>();
+    final SignInBloc bloc = BlocProvider.of<SignInBloc>(context);
     return Scaffold(
       bottomNavigationBar: buildRichText(context, bloc),
-      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor, isBack: false),
+      appBar: SmartAppBar(
+        appBarHeight: 52.h,
+        isBorder: false,
+        backgroundColor: style.backgroundColor,
+        isBack: false,
+        actions: [
+          SmartText(
+            APPStrings.skip.tr,
+            style: style.skipTextStyle,
+            onTap: () {
+              BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
+              context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+            },
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SmartSingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SmartText(
-                        APPStrings.login.tr,
-                        style: style.titleTextStyle,
-                      ),
-                      SmartText(
-                        APPStrings.enterYourAccountDetails.tr,
-                        style: style.subTitleStyle,
-                      ),
-                      SizedBox(height: 32.h),
-                      _buildEmailField(style, context, bloc),
-                      SizedBox(height: 24.h),
-                      _buildPasswordField(style, context, bloc),
-                      SizedBox(height: 16.h),
-                      _buildForgotPasswordText(context, style),
-                      // TODO: For social media buttons
-                      // const SizedBox(height: 32),
-                      // _buildDivider(style),
-                      // const SizedBox(height: 24),
-                      // _buildSocialMediaButtons(),
-                      // SizedBox(height: 24.h),
-                    ],
-                  ),
-                ),
+        child: SmartSingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(
+                APPStrings.login.tr,
+                style: style.titleTextStyle,
               ),
-            ),
-          ],
+              SmartText(
+                APPStrings.enterYourAccountDetails.tr,
+                style: style.subTitleStyle,
+              ),
+              SizedBox(height: 32.h),
+              _buildEmailField(style, context, bloc),
+              SizedBox(height: 24.h),
+              _buildPasswordField(style, context, bloc),
+              SizedBox(height: 16.h),
+              _buildForgotPasswordText(context, style),
+              // TODO: For social media buttons
+              // const SizedBox(height: 32),
+              // _buildDivider(style),
+              // const SizedBox(height: 24),
+              // _buildSocialMediaButtons(),
+              // SizedBox(height: 24.h),
+            ],
+          ),
         ),
       ),
     );

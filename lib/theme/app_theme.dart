@@ -366,6 +366,7 @@ class SignInScreenStyle {
   final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
   final TextStyle registerTextStyle;
+  final TextStyle skipTextStyle;
 
   SignInScreenStyle({
     required this.labelStyle,
@@ -374,6 +375,7 @@ class SignInScreenStyle {
     required this.titleTextStyle,
     required this.subTitleStyle,
     required this.registerTextStyle,
+    required this.skipTextStyle,
   });
 }
 
