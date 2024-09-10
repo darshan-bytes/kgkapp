@@ -890,4 +890,5 @@ class APPStrings {
   static const String errorCompanyNameRequired = 'error_company_name_required';
   static const String errorOfficeLocationRequired = 'error_office_location_required';
   static const String errorBusinessTypeRequired = 'error_business_type_required';
+  static const String youHaveSavedX = 'you_have_saved_x';
 }

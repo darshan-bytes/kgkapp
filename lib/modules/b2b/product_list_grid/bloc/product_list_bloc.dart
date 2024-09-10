@@ -25,6 +25,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   int limit = 10;
 
   String productId = "";
+  String productNavigation = '';
 
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
@@ -49,6 +50,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
       productId = data[RoutesData.productId] ?? "";
+      productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
     }
   }
 
@@ -120,9 +122,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
 
     Either<ErrorResponse, JewelleryListingModel>? response;
-    if (productId.isNotEmpty) {
+    if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
       response = await AppRepository(context).getJewelleryYouMayLike(productId,
           limit: limit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
+    } else if (productNavigation == AppConst.recentlyViewed) {
+      response = await AppRepository(context)
+          .getRecentlyViewedProductList(limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
     } else {
       response = await AppRepository(context).fetchJewelleryList(
           page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
@@ -142,7 +147,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
               : "",
           name: jewelleryDatumList[index].productDescription ?? "",
           originalPrice: jewelleryDatumList[index].finalPrice?.setCurrency,
-          discountPercentage: "You have saved 10%",
+          discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryDatumList[index].discountPercentage]),
           offerPrice: jewelleryDatumList[index].discountPrice?.setCurrency,
           productId: jewelleryDatumList[index].id ?? "",
           commodity: Commodity.jewellery,

@@ -411,9 +411,8 @@ class ProductDetailsScreen extends StatelessWidget {
           _buildSuggestedProductList(bloc, style, context),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
               bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
-            SizedBox(height: 32.h),
             _buildRecentlyViewedProductList(bloc, style, context),
-          ]
+          ],
         ],
       ),
     );
@@ -650,11 +649,14 @@ class ProductDetailsScreen extends StatelessWidget {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(
             title: APPStrings.youMayAlsoLike.tr,
-            onViewAllTap: () => bloc.navigateBasedOnScreenIdentifier(context),
+            onViewAllTap: bloc.suggestedProductList.length > 5 ? () => bloc.navigateBasedOnScreenIdentifier(context) : null,
             suggestedProductList: bloc.suggestedProductList,
             onProductTap: (product) {
-              context.pushNamed(AppRoutes.productDetailsPage,
-                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: bloc.screenIdentifier});
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.productId: product.productId,
+                RoutesData.isPageFor: bloc.screenIdentifier,
+                RoutesData.productNavigation: AppConst.youMayLike
+              });
             },
             onEyeTap: () {},
             onFavTap: () {},
@@ -665,16 +667,41 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildRecentlyViewedProductList(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
-    return SmartSuggestionProductList(
-        title: APPStrings.recentlyViewed.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: bloc.recentlyViewedProductList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        isPaddingNeeded: false,
-        scrollController: bloc.recentViewScrollController);
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is ProductDetailsRecentlyViewedLoadedState,
+      builder: (context, state) {
+        if(bloc.recentlyViewedProductList.isNotNullNorEmpty) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 32.h),
+              SmartSuggestionProductList(
+                  title: APPStrings.recentlyViewed.tr,
+                  onViewAllTap: bloc.recentlyViewedProductList.length > 5
+                      ? () {
+                          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                        }
+                      : null,
+                  suggestedProductList: bloc.recentlyViewedProductList,
+                  onProductTap: (product) {
+                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                      RoutesData.productId: product.productId,
+                      RoutesData.isPageFor: bloc.screenIdentifier,
+                      RoutesData.productNavigation: AppConst.recentlyViewed
+                    });
+                  },
+                  onEyeTap: () {},
+                  onFavTap: () {},
+                  isPaddingNeeded: false,
+                  scrollController: bloc.recentViewScrollController),
+            ],
+          );
+        }else{
+          return const SizedBox.shrink();
+        }
+      },
+    );
   }
 
   Widget getErrorWidget(ProductDetailsBloc bloc, BuildContext context) {
