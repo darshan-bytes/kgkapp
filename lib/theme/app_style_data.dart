@@ -153,6 +153,7 @@ class LightModeTheme extends AppTheme {
         labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
+        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
       );
 
   @override

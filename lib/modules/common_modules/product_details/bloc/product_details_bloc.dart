@@ -286,7 +286,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           suggestedProductList = diamondDatumListAPI.map((e) {
             bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
             return ProductDetails(
-              productId: e.id,
+              productId: e.suid ?? '',
               name: e.rmDescription ?? '',
               imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
               offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
@@ -323,7 +323,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
 
           return ProductDetails(
-            productId: e.id,
+            productId: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
@@ -357,7 +357,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         suggestedProductList = data.data.map((e) {
           bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
           return ProductDetails(
-            productId: e.id,
+            productId: e.suid ?? '',
             name: e.productDescription ?? '',
             imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
