@@ -102,34 +102,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
   GlobalKey<SmartExpansionTileState> gemstoneDetailsKey = GlobalKey();
 
-  List<ProductDetails> suggestedProductList = List.generate(
-    8,
-    (index) => ProductDetails(
-      diamond: "2.5 crt",
-      gram: "1.5 grms",
-      imageUrl: index % 2 == 0
-          ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
-          : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-      name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$5,000.00",
-    ),
-  );
+  List<ProductDetails> suggestedProductList = [];
   List<JewelleryDataModel> jewelleryDatumListAPI = [];
   List<DiamondDataModel> diamondDatumListAPI = [];
   List<GemstoneDatum> gemstoneDatumListAPI = [];
 
-  List<ProductDetails> recentlyViewedProductList = List.generate(
-    8,
-    (index) => ProductDetails(
-      diamond: "2.5 crt",
-      gram: "1.5 grms",
-      imageUrl: index % 2 == 0
-          ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
-          : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-      name: "Diamond Vine Ring in 18k Rose Gold",
-      originalPrice: "\$5,000.00",
-    ),
-  );
+  List<ProductDetails> recentlyViewedProductList = [];
 
   List<ReviewDataModel> reviewList = [];
 
@@ -143,6 +121,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
     on<ProductDetailsSuggestedProductLoadedEvent>(_onProductDetailsSuggestedProductLoadedEvent);
+    on<ProductDetailsReviewsLoadedEvent>(_onProductDetailsReviewsLoadedEvent);
   }
 
   @override
@@ -156,10 +135,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     isInitialized = true;
     emit(ProductDetailsLoadingState());
     // assigning current userType
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    userType = BlocProvider
+        .of<AppBloc>(event.context)
+        .userType;
 
     getScreenIdentifier(event.context);
-
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       productCustomizations.clear();
@@ -178,9 +158,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
       imgList.clear();
       suggestedProductList.clear();
-      await getProductDetailsDetails(event.context, productId);
+      recentlyViewedProductList.clear();
+
+      await getProductDetails(event.context, productId);
+      if (productDetails != null) {
+        emit(ProductDetailsLoadedState(productDetails!));
+      }
       await getProductYouMayLike(event.context, productId);
       await productReviewsFilter(event.context, productId);
+      await getProductRecentlyViewed(event.context, productId);
     }
 
     isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
@@ -193,7 +179,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           name: APPStrings.head.tr,
           type: ProductCustomizationType.head.value,
           selectedValue:
-              ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
+          ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/0t0HyMp/Frame-1410088948.png'),
           values: [
             ProductCustomizationOptionValues(id: '1', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
             ProductCustomizationOptionValues(id: '2', value: 'Four Prong', image: 'https://i.ibb.co/Sv3GQ6D/image-329.png'),
@@ -204,22 +190,18 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ),
       );
     }
-
-    if (productDetails != null) {
-      emit(ProductDetailsLoadedState(productDetails!));
-    }
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
     Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     response?.fold(
-      (error) {
+          (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (data) {
+          (data) {
         diamondData = data;
         if (diamondData != null) {
           isErrorInLoadingData = false;
@@ -232,7 +214,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
             originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([diamondData!.discountPercentage]) : null,
+            discountPercentage:
+            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
             rating: diamondData!.rating?.toDouble(),
@@ -248,13 +231,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> getGemstoneDetails(BuildContext context, String productId) async {
     Either<ErrorResponse, GemstoneDatum>? response = await AppRepository(context).getGemstoneDetailById(productId);
     response?.fold(
-      (error) {
+          (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (data) {
+          (data) {
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
@@ -270,7 +253,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
             originalPrice: gemstoneData?.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([gemstoneData?.discountPercentage]) : null,
+            discountPercentage:
+            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
             productSku: gemstoneData?.lotCode,
             reviewCount: gemstoneData?.reviewCount,
             rating: gemstoneData?.rating?.toDouble(),
@@ -289,14 +273,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
     Either<ErrorResponse, DiamondListingModel>? response =
-        await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
+    await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
     response?.fold(
-      (error) {
+          (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (data) {
+          (data) {
         if (data.data.isNotEmpty) {
           diamondDatumListAPI = data.data;
           suggestedProductList = diamondDatumListAPI.map((e) {
@@ -307,7 +291,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
               offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
               originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
               productSku: e.lotCode,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
@@ -324,15 +308,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
     final Either<ErrorResponse, GemstoneListingModel>? response =
-        await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
+    await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
 
     response?.fold(
-      (error) {
+          (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message!);
         }
       },
-      (data) {
+          (data) {
         if (data.data.isEmpty) return;
         gemstoneDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
@@ -344,7 +328,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -361,14 +345,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductYouMayLike(BuildContext context, String productId) async {
     Either<ErrorResponse, JewelleryListingModel>? response =
-        await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
+    await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
     response?.fold(
-      (error) {
+          (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (data) {
+          (data) {
         jewelleryDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
           bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
@@ -378,7 +362,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([e.discountPercentage]) : null,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.contractNoSkuNo,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -392,16 +376,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
-  Future<void> getProductDetailsDetails(BuildContext context, String productId) async {
-    Either<ErrorResponse, JewelleryDataModel>? response = await ProductRepository(context).getProductDetailById(productId);
+  Future<void> getProductDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, JewelleryDataModel>? response =
+    await AppRepository(context).getProductDetailById(productId, isLoadingShow: true);
     response?.fold(
-      (error) {
+          (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (jewelleryData) {
+          (jewelleryData) {
         isErrorInLoadingData = false;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
@@ -411,7 +396,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           name: productName,
           offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
           originalPrice: jewelleryData.finalPrice?.setCurrency,
-          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.interpolate([jewelleryData.discountPercentage]) : null,
+          discountPercentage:
+          isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
           productSku: jewelleryData.contractNoSkuNo,
           reviewCount: jewelleryData.reviewCount,
           rating: jewelleryData.rating?.toDouble(),
@@ -428,28 +414,61 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> productReviewsFilter(BuildContext context, String productId) async {
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
     Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
-        await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"});
+    await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
     response?.fold(
-      (error) {
+          (error) {
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message ?? '');
         }
       },
-      (data) {
+          (data) {
         reviewList = (data.dataList as List<ProductReviewModel>?)?.map((e) {
-              return ReviewDataModel(
-                id: e.id,
-                userName: e.userIdDetails?.fullName ?? '',
-                date: e.createdAt?.changeDateFormat(
-                        inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
-                    '',
-                rating: e.rating ?? 0,
-                title: e.title ?? '',
-                review: e.description ?? '',
-                images: e.displayImage ?? [],
-              );
-            }).toList() ??
+          return ReviewDataModel(
+            id: e.id,
+            userName: e.userIdDetails?.fullName ?? '',
+            date: e.createdAt?.changeDateFormat(
+                inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY) ??
+                '',
+            rating: e.rating ?? 0,
+            title: e.title ?? '',
+            review: e.description ?? '',
+            images: e.displayImage ?? [],
+          );
+        }).toList() ??
             [];
+        add(const ProductDetailsReviewsLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
+    Either<ErrorResponse, JewelleryListingModel>? response =
+    await AppRepository(context).getRecentlyViewedProductList(page: "1", limit: "10");
+    response?.fold(
+          (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+          (data) {
+        recentlyViewedProductList = data.data.map((e) {
+          return ProductDetails(
+            productId: e.id,
+            name: e.productDescription ?? '',
+            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+            offerPrice: e.discountPrice?.setCurrency,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage:
+            e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.contractNoSkuNo,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            commodity: Commodity.jewellery,
+          );
+        }).toList();
+        add(const ProductDetailsReviewsLoadedEvent());
       },
     );
   }
@@ -491,6 +510,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(ProductDetailsSuggestedProductLoadedState(suggestedProductList));
   }
 
+  void _onProductDetailsReviewsLoadedEvent(ProductDetailsReviewsLoadedEvent event, Emitter<ProductDetailsState> emit) {
+    emit(const ReloadProductDetailsState());
+    emit(const ProductDetailsRecentlyViewedLoadedState());
+  }
+
   void navigateBasedOnScreenIdentifier(BuildContext context) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
@@ -511,54 +535,63 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
+  // Initialize the WishlistUpdaterService
   void _initWishlistUpdaterServiceBloc(BuildContext context) {
-    WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
-    wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen((state) {
-      if (state is WishListUpdateProductState) {
-        if (screenIdentifier == ScreenIdentifier.productForRing) {
-          int index = jewelleryDatumListAPI.indexWhere((element) => element.id == state.productId);
-          if (index != -1) {
-            if (state.wishlistId.isNotEmpty) {
-              jewelleryDatumListAPI[index].isFavorite = true;
-              jewelleryDatumListAPI[index].wishlistID = state.wishlistId;
-            } else {
-              jewelleryDatumListAPI[index].isFavorite = false;
-              jewelleryDatumListAPI[index].wishlistID = "";
-            }
-            suggestedProductList[index].isFavourite = jewelleryDatumListAPI[index].isFavorite;
-            suggestedProductList[index].wishlistId =
-                jewelleryDatumListAPI[index].wishlistID.isNotNullNorEmpty ? jewelleryDatumListAPI[index].wishlistID : null;
-          }
-        } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
-          int index = diamondDatumListAPI.indexWhere((element) => element.id == state.productId);
-          if (index != -1) {
-            if (state.wishlistId.isNotEmpty) {
-              diamondDatumListAPI[index].isFavorite = true;
-              diamondDatumListAPI[index].wishlistID = state.wishlistId;
-            } else {
-              diamondDatumListAPI[index].isFavorite = false;
-              diamondDatumListAPI[index].wishlistID = "";
-            }
-            suggestedProductList[index].isFavourite = diamondDatumListAPI[index].isFavorite;
-            suggestedProductList[index].wishlistId =
-                diamondDatumListAPI[index].wishlistID.isNotNullNorEmpty ? diamondDatumListAPI[index].wishlistID : null;
-          }
-        } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-          int index = gemstoneDatumListAPI.indexWhere((element) => element.id == state.productId);
-          if (index != -1) {
-            if (state.wishlistId.isNotEmpty) {
-              gemstoneDatumListAPI[index].isFavorite = true;
-              gemstoneDatumListAPI[index].wishlistID = state.wishlistId;
-            } else {
-              gemstoneDatumListAPI[index].isFavorite = false;
-              gemstoneDatumListAPI[index].wishlistID = "";
-            }
-            suggestedProductList[index].isFavourite = gemstoneDatumListAPI[index].isFavorite;
-            suggestedProductList[index].wishlistId =
-                gemstoneDatumListAPI[index].wishlistID.isNotNullNorEmpty ? gemstoneDatumListAPI[index].wishlistID : null;
-          }
-        }
-      }
-    });
+    final wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+    wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen(_handleWishlistUpdate);
+  }
+
+// Handle wishlist update events
+  void _handleWishlistUpdate(WishlistUpdaterServiceState state) {
+    if (state is WishListUpdateProductState) {
+      _updateProductList(state);
+      _updateRecentlyViewedList(state);
+    }
+  }
+
+// Update the appropriate product list based on the screen identifier
+  void _updateProductList(WishListUpdateProductState state) {
+    List<dynamic> targetList;
+    switch (screenIdentifier) {
+      case ScreenIdentifier.productForRing:
+        targetList = jewelleryDatumListAPI;
+        break;
+      case ScreenIdentifier.productForDiamonds:
+        targetList = diamondDatumListAPI;
+        break;
+      case ScreenIdentifier.productForGemstones:
+        targetList = gemstoneDatumListAPI;
+        break;
+      default:
+        return; // Exit if no matching screen identifier
+    }
+
+    final index = targetList.indexWhere((element) => element.id == state.productId);
+    if (index != -1) {
+      _updateProductDetails(targetList[index], state.wishlistId);
+      _updateSuggestedProductList(index, targetList[index]);
+    }
+  }
+
+// Update product details based on wishlist status
+  void _updateProductDetails(dynamic product, String wishlistId) {
+    product.isFavorite = wishlistId.isNotEmpty;
+    product.wishlistID = wishlistId;
+  }
+
+// Update the suggested product list
+  void _updateSuggestedProductList(int index, dynamic product) {
+    suggestedProductList[index].isFavourite = product.isFavorite;
+    suggestedProductList[index].wishlistId = product.wishlistID.isNotNullNorEmpty ? product.wishlistID : null;
+  }
+
+// Update the recently viewed product list
+  void _updateRecentlyViewedList(WishListUpdateProductState state) {
+    final recentlyIndex = recentlyViewedProductList.indexWhere((element) => element.productId == state.productId);
+    if (recentlyIndex != -1) {
+      final product = recentlyViewedProductList[recentlyIndex];
+      product.wishlistId = state.wishlistId;
+      product.isFavourite = state.wishlistId.isNotEmpty;
+    }
   }
 }

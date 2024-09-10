@@ -686,7 +686,7 @@
   "session_expired": "Session Expired",
   "session_expired_desc": "Your session has expired. Please login again.",
   "dna": "DNA",
-  "percentage_off_interpolating": "({$}% OFF)",
+  "percentage_off_interpolating": "({#}% OFF)",
   "retry": "Retry",
   "please_select_watchlist": "Please select watchlist",
   "no_products_added_in_watchlist": "No Products Added in the Watchlist",
@@ -701,5 +701,6 @@
   "error_country_required": "Country is required",
   "error_password_required": "Password is required",
   "error_confirm_password_required": "Confirm password is required",
-  "error_password_not_match": "Password does not match"
+  "error_password_not_match": "Password does not match",
+  "you_have_saved_x": "You have saved {#}"
 }

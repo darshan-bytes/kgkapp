@@ -50,20 +50,9 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   bool isBillingAndShippingSame = true;
 
-  List<ProductDetails> productList = List.generate(
-      25,
-      (index) => ProductDetails(
-            productId: index.toString(),
-            imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-            name: "Diamond Vine Ring in 18k Rose Gold",
-            originalPrice: '\$5,000.00',
-            discountPercentage: "You have saved 10%",
-            offerPrice: '\$3,000.00',
-          ));
-
   void _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) {
     selectedAddress = addressList.first;
-    emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame, productList));
+    emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
   }
 
   void _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) {

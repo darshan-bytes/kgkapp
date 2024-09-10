@@ -337,10 +337,14 @@ class AppRepository extends ApiService {
 
   // For Get Product Reviews
   Future<Either<ErrorResponse, PaginationData<ProductReviewModel>>?> productReviewsFilter(String productId,
-      {Map<String, dynamic>? query}) async {
-    context.setAppLoading(true);
+      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
     var response = await getMethod<PaginationData<ProductReviewModel>>(ApiClient.productReviewsFilter(productId), query: query);
-    context.setAppLoading(false);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -349,6 +353,38 @@ class AppRepository extends ApiService {
     context.setAppLoading(true);
     var response = await postMethod<Map<String, dynamic>>(ApiClient.addToBag, body, withFullResponse: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.jewelleryListing,
+      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter : "frequently-viewed-products"},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Getting Product Details by ID
+  Future<Either<ErrorResponse, JewelleryDataModel>?> getProductDetailById(String id, {bool isLoadingShow = true}) async {
+    if (isLoadingShow) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryDataModel>(
+      ApiClient.productDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    if (isLoadingShow) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
