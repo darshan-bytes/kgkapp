@@ -57,7 +57,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
           event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
         }
-        // event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
       });
     });
   }

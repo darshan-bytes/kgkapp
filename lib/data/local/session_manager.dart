@@ -19,7 +19,7 @@ class StorageManager {
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
-  final String _bagId = 'bagId';
+  final String _bagData = 'bagData';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -105,12 +105,13 @@ class StorageManager {
   }
 
   /// Set bag id for cart
-  Future<void> storeBagId(String badgeId) async {
-    await _box.put(_bagId, badgeId);
+  Future<void> storeBagData(MyBagDataModel badgeId) async {
+    await _box.put(_bagData, jsonEncode(badgeId.toJson()));
   }
 
-  String? getBagId() {
-    return _box.get(_bagId);
+  MyBagDataModel? getBagData() {
+    String? bagData = _box.get(_bagData);
+    return bagData.isNotNullNorEmpty ? MyBagDataModel.fromJson(jsonDecode(bagData!)) : null;
   }
 
   /// Clear all data stored except _locale
