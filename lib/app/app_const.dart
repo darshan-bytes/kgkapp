@@ -24,4 +24,6 @@ class AppConst {
   static const String appCurrency = "INR";
   static const String diamondSinglestone = "DIAMONDSINGLESTONE";
   static const String diamondNormal = "DIAMONDNORMAL";
+  static const String youMayLike = "YOU_MAY_LIKE";
+  static const String recentlyViewed = "RECENTLY_VIEWED";
 }

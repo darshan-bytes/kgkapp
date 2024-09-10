@@ -13,17 +13,20 @@ final class AddressListLoadedState extends AddressListState {
   final List<AddressDetails> addressList;
   final AddressDetails selectedAddress;
   final bool isBillingAndShippingSame;
+<<<<<<< HEAD
   final List<ProductDetailsModel> productList;
+=======
+
+>>>>>>> refs/remotes/origin/development
 
   const AddressListLoadedState(
     this.addressList,
     this.selectedAddress,
     this.isBillingAndShippingSame,
-    this.productList,
   );
 
   @override
-  List<Object> get props => [addressList, selectedAddress, isBillingAndShippingSame, productList];
+  List<Object> get props => [addressList, selectedAddress, isBillingAndShippingSame];
 }
 
 final class AddressListReloadState extends AddressListState {

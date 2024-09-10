@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 part 'wishlist_event.dart';
 
@@ -54,12 +53,10 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       }, (r) {
         r.totalRecords ??= 0;
         WishlistModel wishlistModel = r;
-        totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+        totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
         productList = [
           for (var element in wishlistModel.data)
             if (element.productData != null)
-
-              /// In ProductDetails commodity need to set is Pending from backend
               ProductDetailsModel(
                 productId: element.productId ?? '',
                 imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
@@ -67,7 +64,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
                     : "",
                 name: element.productData!.productDescription ?? "",
                 originalPrice: element.productData!.discountPrice?.setCurrency,
-                // commodity: element.productData?.commodity ?? "",
+                commodity: element.displayCommodity,
                 isFavourite: element.productData?.isFavorite ?? true,
                 wishlistId: element.productData?.wishlistId ?? "",
               )

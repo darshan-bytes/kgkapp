@@ -21,13 +21,14 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
 
-  int currentPage = 1;
   int? totalNumberOfPages;
   int limit = 10;
 
   String productId = "";
+  String productNavigation = '';
 
   List<JewelleryDataModel> jewelleryDatumList = [];
+  StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -40,6 +41,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   @override
   Future<void> close() {
     paginationScrollController.dispose();
+    wishlistUpdaterServiceStream?.cancel();
     return super.close();
   }
 
@@ -48,12 +50,14 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
       productId = data[RoutesData.productId] ?? "";
+      productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
     }
   }
 
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    _initWishlistUpdaterServiceBloc(event.context);
 
     if (!refreshCompleter.isCompleted) {
       refreshCompleter.complete(true);
@@ -118,12 +122,15 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
 
     Either<ErrorResponse, JewelleryListingModel>? response;
-    if (productId.isNotEmpty) {
+    if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
+      response = await AppRepository(context).getJewelleryYouMayLike(productId,
+          limit: limit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
+    } else if (productNavigation == AppConst.recentlyViewed) {
       response = await AppRepository(context)
-          .getJewelleryYouMayLike(productId, limit: limit.toString(), isLoadMore: true, page: currentPage.toString());
+          .getRecentlyViewedProductList(limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
     } else {
-      response = await AppRepository(context)
-          .fetchJewelleryList(page: currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
+      response = await AppRepository(context).fetchJewelleryList(
+          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
     }
 
     response?.fold((l) {
@@ -131,7 +138,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }, (r) {
       jewelleryDatumList = r.data;
       r.totalRecords ??= 0;
-      totalNumberOfPages = (r.totalRecords! % limit == 0) ? (r.totalRecords ?? 0) ~/ limit : ((r.totalRecords ?? 0) ~/ limit) + 1;
+      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
 
       List.generate(jewelleryDatumList.length, (index) {
         productList.add(ProductDetailsModel(
@@ -140,7 +147,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
               : "",
           name: jewelleryDatumList[index].productDescription ?? "",
           originalPrice: jewelleryDatumList[index].finalPrice?.setCurrency,
-          discountPercentage: "You have saved 10%",
+          discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryDatumList[index].discountPercentage]),
           offerPrice: jewelleryDatumList[index].discountPrice?.setCurrency,
           productId: jewelleryDatumList[index].id ?? "",
           commodity: Commodity.jewellery,
@@ -150,6 +157,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           wishlistId: jewelleryDatumList[index].wishlistID,
         ));
       });
+
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     });
   }
 
@@ -157,7 +166,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ProductListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
     if (screenIdentifier == ScreenIdentifier.productForRing) {
-      currentPage++;
       await fetchJewelleriesList(event.context, emit, false);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       List.generate(
@@ -270,5 +278,28 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         );
       }
     }
+  }
+
+  void _initWishlistUpdaterServiceBloc(BuildContext context) {
+    WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+    wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen((state) {
+      if (state is WishListUpdateProductState) {
+        if (screenIdentifier == ScreenIdentifier.productForRing) {
+          int index = jewelleryDatumList.indexWhere((element) => element.id == state.productId);
+          if (index != -1) {
+            if (state.wishlistId.isNotEmpty) {
+              jewelleryDatumList[index].isFavorite = true;
+              jewelleryDatumList[index].wishlistID = state.wishlistId;
+            } else {
+              jewelleryDatumList[index].isFavorite = false;
+              jewelleryDatumList[index].wishlistID = "";
+            }
+            productList[index].isFavourite = jewelleryDatumList[index].isFavorite;
+            productList[index].wishlistId =
+                jewelleryDatumList[index].wishlistID.isNotNullNorEmpty ? jewelleryDatumList[index].wishlistID : null;
+          }
+        }
+      }
+    });
   }
 }

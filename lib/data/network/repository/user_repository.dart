@@ -54,4 +54,12 @@ class UserRepository extends ApiService {
     }
     return response?.fold((error) => Left(error), (languageLabels) => Right(languageLabels as CommonResponse));
   }
+
+  // For User SignUp
+  Future<Either<ErrorResponse, CommonResponse>?> signUpCustomer(Map<String, dynamic> params) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CommonResponse>(ApiClient.signUpCustomer, params, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r as CommonResponse));
+  }
 }

@@ -48,8 +48,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       }, (r) async {
         printWrapped(r.toString());
         await StorageManager().setAuthToken(r.accessToken ?? '');
-        emit(const SignInSuccessState());
-        event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+        await StorageManager().setUserId(r.userId ?? '');
+        if (r.userIdDetails != null) {
+          await StorageManager().setUserData(r.userIdDetails!);
+        }
+        if (r.userIdDetails?.userTypeEnum != null) {
+          emit(const SignInSuccessState());
+          BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+          event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+        }
       });
     });
   }
@@ -59,7 +66,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (emailController.text.trim().isEmpty) {
       Utils.showMessage(APPStrings.emailRequired.tr);
       return false;
-    } else if (!Utils.isEmail(emailController.text.trim())) {
+    } else if (!Utils.isValidEmail(emailController.text.trim())) {
       Utils.showMessage(APPStrings.validEmail.tr);
       return false;
     } else if (passwordController.text.trim().isEmpty) {

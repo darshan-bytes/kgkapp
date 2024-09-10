@@ -41,6 +41,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<SetUserTypeEvent>(_onSetUserTypeEvent);
     on<ProductAddToFavoriteEvent>(_onProductAddToFavoriteEvent);
     on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
+    on<ProductAddToBagEvent>(_onProductAddToBagEvent);
+    on<ProductRemoveFromBagEvent>(_onProductRemoveFromBagEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -139,6 +141,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
+  void onTapBag(context, {required ProductDetails productDetails}) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+    });
+  }
+
   ///for add product to wishlist
   Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
     emit(AppReloadState());
@@ -157,6 +166,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
             emit(const ProductAddToFavoriteState());
           },
         );
@@ -177,11 +188,42 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             Utils.showMessage(data.message ?? '');
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = null;
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
             emit(const ProductRemoveFromFavoriteState());
           },
         );
       },
     );
+  }
+
+  Future<void> _onProductAddToBagEvent(ProductAddToBagEvent event, Emitter<AppState> emit) async {
+    String userId = StorageManager().getUserId() ?? '';
+    Map<String, dynamic> body = {
+      ApiKey.commodity: event.productDetails.commodity?.value,
+      ApiKey.quantity: 1,
+      ApiKey.suid: event.productDetails.productId,
+      ApiKey.userId: userId,
+    };
+
+    await AppRepository(event.context).addToBag(body: body).then(
+      (response) {
+        response?.fold(
+          (l) {
+            Utils.showMessage(l.message ?? '');
+          },
+          (data) async {
+            MyBagDataModel myBagDataModel = data.responseData;
+            await StorageManager().storeBagData(myBagDataModel);
+            Utils.showMessage(data.message ?? '');
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {
+    /// Implementing it later
   }
 }
 

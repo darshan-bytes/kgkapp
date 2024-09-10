@@ -436,7 +436,6 @@ export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_list
 export 'package:kgk/modules/b2b/watchlist/model/watchlist_data_model.dart';
 export 'package:kgk/data/network/model/pagination_data_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
-export 'package:kgk/data/network/repository/product_repository.dart';
 export 'package:kgk/model/wishlist_response_model.dart';
 export 'package:kgk/modules/common_modules/product_details/model/product_review_model.dart';
 export 'package:http_parser/http_parser.dart';
@@ -445,3 +444,5 @@ export 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 export 'package:kgk/widgets/share_option_sheet.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 export 'package:share_plus/share_plus.dart';
+export 'package:kgk/app/wishlist_updater_service/wishlist_updater_service_bloc.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/my_bag_data_model.dart';
