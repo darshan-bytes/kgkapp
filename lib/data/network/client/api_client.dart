@@ -57,6 +57,8 @@ class ApiClient {
   static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
 
   static const String addToBag = '$apiBaseUrl/bag/create';
+  
+  static const String collectionMaster = '$apiBaseUrl/collection-master';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

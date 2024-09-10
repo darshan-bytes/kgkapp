@@ -8,3 +8,13 @@ final class CollectionInitial extends CollectionState {
   @override
   List<Object> get props => [];
 }
+
+final class CollectionReloadState extends CollectionState {
+  @override
+  List<Object> get props => [];
+}
+
+final class CollectionMasterListLoadedState extends CollectionState {
+  @override
+  List<Object> get props => [];
+}

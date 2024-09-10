@@ -519,10 +519,11 @@ class HomeWidgets {
             width: double.infinity,
             fit: BoxFit.fitWidth,
             onTap: () {
-              homeBloc.handleRedirection(
-                  context: context,
-                  redirectTo: getRedirectionToFromString(redirectTo),
-                  redirectionType: getRedirectionTypeFromString(redirectionType));
+              context.pushNamed(AppRoutes.collectionPage);
+              // homeBloc.handleRedirection(
+              //     context: context,
+              //     redirectTo: getRedirectionToFromString(redirectTo),
+              //     redirectionType: getRedirectionTypeFromString(redirectionType));
             },
           ),
           Positioned(
@@ -531,10 +532,11 @@ class HomeWidgets {
             right: 0.w,
             child: GestureDetector(
               onTap: () {
-                homeBloc.handleRedirection(
-                    context: context,
-                    redirectTo: getRedirectionToFromString(redirectTo),
-                    redirectionType: getRedirectionTypeFromString(redirectionType));
+                context.pushNamed(AppRoutes.collectionPage);
+                // homeBloc.handleRedirection(
+                //     context: context,
+                //     redirectTo: getRedirectionToFromString(redirectTo),
+                //     redirectionType: getRedirectionTypeFromString(redirectionType));
               },
               child: Container(
                 height: 60.h,
