@@ -60,3 +60,10 @@ final class ProductDetailsSuggestedProductLoadedEvent extends ProductDetailsEven
   @override
   List<Object> get props => [];
 }
+
+final class ProductDetailsReviewsLoadedEvent extends ProductDetailsEvent {
+  const ProductDetailsReviewsLoadedEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -543,7 +543,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
-        discountPercentage: isOfferAvailable ? "You have saved 10%" : null,
+        discountPercentage: isOfferAvailable ? APPStrings.youHaveSavedX.tr.interpolate(["10%"]) : null,
         offerPrice: isOfferAvailable ? '\$4,000.00' : null,
       ),
     );

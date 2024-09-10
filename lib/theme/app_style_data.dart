@@ -153,6 +153,7 @@ class LightModeTheme extends AppTheme {
         labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
+        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
       );
 
   @override
@@ -1266,7 +1267,9 @@ class LightModeTheme extends AppTheme {
   QRCodeDialogStyle get qrCodeDialogStyle => QRCodeDialogStyle(
         whiteColor: colors.white,
         primaryColor: colors.primary,
-        titleStyle: interBoldTextStyle,
+        titleStyle: interBoldTextStyle.copyWith(fontSize: 20.sp),
         subTitleStyle: interRegularTextStyle,
+        borderColor: colors.colorD3DAE0,
+        shadowColor: colors.black.withOpacity(0.1),
       );
 }

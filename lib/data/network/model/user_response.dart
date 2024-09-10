@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class UserResponse {
   UserResponse({
     required this.accessToken,
@@ -113,6 +115,12 @@ class UserIdDetails {
   String toString() {
     return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, ";
   }
+}
+
+extension UserIdDetailsExtension on UserIdDetails {
+  String get fullName => "$firstname $lastname";
+
+  UserType get userTypeEnum => UserType.values.firstWhereOrNull((element) => element.value == userType) ?? UserType.b2cUser;
 }
 
 class UserPermissions {

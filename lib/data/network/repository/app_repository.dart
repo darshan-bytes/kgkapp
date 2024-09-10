@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
@@ -153,8 +152,8 @@ class AppRepository extends ApiService {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<WishlistModel>(ApiClient.wishlist,
-        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    var response =
+        await getMethod<WishlistModel>(ApiClient.wishlist, query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -333,6 +332,59 @@ class AppRepository extends ApiService {
     var response = await postMultipartMethod<ProductReviewModel>(ApiClient.productReviews, body,
         withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Get Product Reviews
+  Future<Either<ErrorResponse, PaginationData<ProductReviewModel>>?> productReviewsFilter(String productId,
+      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<ProductReviewModel>>(ApiClient.productReviewsFilter(productId), query: query);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // Add Product into Bag
+  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> addToBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<MyBagDataModel>(ApiClient.addToBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.jewelleryListing,
+      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter : "frequently-viewed-products"},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Getting Product Details by ID
+  Future<Either<ErrorResponse, JewelleryDataModel>?> getProductDetailById(String id, {bool isLoadingShow = true}) async {
+    if (isLoadingShow) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryDataModel>(
+      ApiClient.productDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    if (isLoadingShow) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

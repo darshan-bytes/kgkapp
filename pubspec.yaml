@@ -82,7 +82,7 @@ dependencies:
   intl: ^0.19.0
 
   #For Qr Code Scanner
-  mobile_scanner: ^5.2.1
+  mobile_scanner: ^5.2.2
 
   #For Webview
   webview_flutter: ^4.9.0
@@ -91,10 +91,10 @@ dependencies:
   google_maps_flutter: ^2.9.0
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^26.2.12
+  syncfusion_flutter_sliders: ^26.2.13
 
   #For Calendar
-  syncfusion_flutter_calendar: ^26.2.12
+  syncfusion_flutter_calendar: ^26.2.13
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -112,6 +112,8 @@ dependencies:
   video_player: ^2.9.1
 
   html: ^0.15.4
+
+  # mime_type and http_parser both Used in Multipart File Uploading in ApiService class
   mime_type: ^1.0.1
   http_parser: ^4.0.2
 

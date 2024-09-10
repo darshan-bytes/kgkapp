@@ -12,11 +12,14 @@ class StorageManager {
 
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
+  final String _userId = 'userId';
+  final String _userData = 'userData';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
+  final String _bagData = 'bagData';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -31,6 +34,24 @@ class StorageManager {
 
   String? getAuthToken() {
     return _box.get(_authTokenBoxName);
+  }
+
+  /// Set userId after login-signup
+  Future<void> setUserId(String userId) async {
+    await _box.put(_userId, userId);
+  }
+
+  String? getUserId() {
+    return _box.get(_userId);
+  }
+
+  Future<void> setUserData(UserIdDetails userIdDetails) async {
+    await _box.put(_userData, jsonEncode(userIdDetails.toJson()));
+  }
+
+  UserIdDetails? getUserData() {
+    String? userData = _box.get(_userData);
+    return userData.isNotNullNorEmpty ? UserIdDetails.fromJson(jsonDecode(userData!)) : null;
   }
 
   /// Set locale after login-signup
@@ -81,6 +102,16 @@ class StorageManager {
 
   String getThemeData() {
     return _box.get('themeData') ?? 'light';
+  }
+
+  /// Set bag id for cart
+  Future<void> storeBagData(MyBagDataModel badgeId) async {
+    await _box.put(_bagData, jsonEncode(badgeId.toJson()));
+  }
+
+  MyBagDataModel? getBagData() {
+    String? bagData = _box.get(_bagData);
+    return bagData.isNotNullNorEmpty ? MyBagDataModel.fromJson(jsonDecode(bagData!)) : null;
   }
 
   /// Clear all data stored except _locale
