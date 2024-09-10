@@ -78,3 +78,17 @@ final class ProductDetailsSuggestedProductLoadedState extends ProductDetailsStat
   @override
   List<Object> get props => [suggestedProducts];
 }
+
+final class ReloadProductDetailsState extends ProductDetailsState {
+  @override
+  List<Object> get props => [];
+
+  const ReloadProductDetailsState();
+}
+
+final class ProductDetailsRecentlyViewedLoadedState extends ProductDetailsState {
+  const ProductDetailsRecentlyViewedLoadedState();
+
+  @override
+  List<Object> get props => [];
+}

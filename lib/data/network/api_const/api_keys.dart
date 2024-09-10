@@ -46,4 +46,5 @@ class ApiKey {
   static const String zipCode = 'zip_code';
   static const String status = 'status';
   static const String userType = 'user_type';
+  static const String customFilter = 'customFilter';
 }
