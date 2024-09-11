@@ -18,7 +18,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   String tabTwoTitle = APPStrings.looseDiamond.tr;
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
-  String productId = "";
+  String productId = '';
+  String productNavigation = '';
 
   String stoneListingAppbarTitle = "";
 
@@ -47,6 +48,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
     productId = data?[RoutesData.productId] ?? "";
+    productNavigation = data?[RoutesData.productNavigation] ?? AppConst.youMayLike;
   }
 
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
@@ -99,9 +101,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
-    if (productId.isNotEmpty) {
-      response = await AppRepository(context).getDiamondYouMayLike(productId,
-          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+
+    if (productId.isNotEmpty && productNavigation.isNotEmpty) {
+      if (productNavigation == AppConst.youMayLike) {
+        response = await AppRepository(context).getDiamondYouMayLike(productId,
+            page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+      } else if (productNavigation == AppConst.recentlyViewed) {
+        response = await AppRepository(context).getDiamondRecentlyViewedProductList(
+            limit: limit.toString(), isLoadMore: isLoadMore ?? false, page: paginationScrollController.currentPage.toString());
+      }
     } else {
       response = await AppRepository(context).fetchDiamondList(
           page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
@@ -155,9 +163,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
     String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, GemstoneListingModel>? response;
-    if (productId.isNotEmpty) {
-      response = await AppRepository(context).getGemstoneYouMayLike(productId,
-          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+
+    if (productId.isNotEmpty && productNavigation.isNotEmpty) {
+      if (productNavigation == AppConst.youMayLike) {
+        response = await AppRepository(context).getGemstoneYouMayLike(productId,
+            page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString());
+      } else if (productNavigation == AppConst.recentlyViewed) {
+        response = await AppRepository(context).getGemstoneRecentlyViewedProductList(
+            limit: limit.toString(), isLoadMore: isLoadMore ?? false, page: paginationScrollController.currentPage.toString());
+      }
     } else {
       response = await AppRepository(context).fetchGemstoneList(
           page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
