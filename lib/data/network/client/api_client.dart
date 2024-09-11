@@ -9,6 +9,7 @@ class ApiClient {
       'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
 
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
+  static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';

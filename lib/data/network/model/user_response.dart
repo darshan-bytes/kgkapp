@@ -52,7 +52,7 @@ class Role {
 
   factory Role.fromJson(Map<String, dynamic> json) {
     return Role(
-      id: json["id"],
+      id: json["id"]?.toString(),
       name: json["name"],
       slug: json["slug"],
     );
@@ -94,7 +94,7 @@ class UserIdDetails {
       firstname: json["firstname"],
       lastname: json["lastname"],
       profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
+      userAccountId: json["user_account_id"]?.toString(),
       email: json["email"],
       userType: json["user_type"],
       profilePicUrl: json["profile_pic_url"],
