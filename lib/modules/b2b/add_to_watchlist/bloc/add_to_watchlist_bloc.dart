@@ -27,7 +27,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
 
   WatchlistData? selectedWatchlist;
 
-  ProductDetails? productDetails;
+  ProductDetailsModel? productDetails;
 
   late WatchlistBloc watchlistBloc;
 

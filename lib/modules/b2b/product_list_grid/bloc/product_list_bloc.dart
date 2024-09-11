@@ -17,7 +17,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
 
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
 
@@ -82,7 +82,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           20,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -96,7 +96,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           20,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                   name: "Diamond Vine Ring in 18k Rose Gold",
                   originalPrice: '\$5,000.00',
@@ -108,7 +108,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           20,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
                   name: "Diamond Vine Ring in 18k Yellow Gold",
                   originalPrice: '\$5,000.00',
@@ -141,7 +141,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
 
       List.generate(jewelleryDatumList.length, (index) {
-        productList.add(ProductDetails(
+        productList.add(ProductDetailsModel(
           imageUrl: jewelleryDatumList[index].multipleFinishedViewImage.isNotNullNorEmpty
               ? jewelleryDatumList[index].multipleFinishedViewImage[0].imageUrl
               : "",
@@ -171,7 +171,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           10,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -183,7 +183,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           10,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                   name: "Diamond Vine Ring in 18k Rose Gold",
                   originalPrice: '\$5,000.00',
@@ -193,7 +193,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       List.generate(
           10,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
                   name: "Diamond Vine Ring in 18k Yellow Gold",
                   originalPrice: '\$5,000.00',
@@ -216,7 +216,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productList.clear();
       productList = List.generate(
         20,
-        (index) => ProductDetails(
+        (index) => ProductDetailsModel(
           diamond: "2.5 crt",
           gram: "1.5 grms",
           imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
@@ -229,7 +229,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productList.clear();
       productList = List.generate(
           20,
-          (index) => ProductDetails(
+          (index) => ProductDetailsModel(
                 imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                 name: "Diamond Vine Ring in 18k Rose Gold",
                 originalPrice: '\$5,000.00',
@@ -239,7 +239,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productList.clear();
       productList = List.generate(
           20,
-          (index) => ProductDetails(
+          (index) => ProductDetailsModel(
                 imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
                 name: "Diamond Vine Ring in 18k Yellow Gold",
                 originalPrice: '\$5,000.00',
@@ -267,7 +267,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
-      ProductDetails? productDetails = productList.firstWhereOrNull((element) => element.productId == event.productId);
+      ProductDetailsModel? productDetails = productList.firstWhereOrNull((element) => element.productId == event.productId);
       if (productDetails != null) {
         BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(productDetails, event.context));
         await Utils.showSmartModalBottomSheet(

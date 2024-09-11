@@ -247,6 +247,8 @@ abstract class AppTheme {
   ImageSearchStyle get imageSearchStyle;
 
   NoInternetScreenStyle get noInternetScreenStyle;
+
+  QRCodeDialogStyle get qrCodeDialogStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2349,5 +2351,23 @@ class NoInternetScreenStyle {
   NoInternetScreenStyle({
     required this.noInternetTitleStyle,
     required this.noInternetSubtitleStyle,
+  });
+}
+
+class QRCodeDialogStyle {
+  final Color whiteColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color shadowColor;
+  final Color borderColor;
+
+  QRCodeDialogStyle({
+    required this.whiteColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.shadowColor,
+    required this.borderColor,
   });
 }

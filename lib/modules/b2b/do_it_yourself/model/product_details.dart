@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-class ProductDetails {
+class ProductDetailsModel {
   String? productId;
   String? name;
   String? offerPrice;
@@ -43,7 +43,7 @@ class ProductDetails {
   bool isFavourite;
   String? wishlistId;
 
-  ProductDetails({
+  ProductDetailsModel({
     this.productId,
     this.name,
     this.offerPrice,
@@ -88,6 +88,6 @@ class ProductDetails {
   });
 }
 
-extension ProductDetailsExtension on ProductDetails {
+extension ProductDetailsExtension on ProductDetailsModel {
   String get displayPrice => offerPrice ?? originalPrice ?? '';
 }

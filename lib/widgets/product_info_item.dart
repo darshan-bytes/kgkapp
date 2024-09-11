@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ProductInfoItem extends StatelessWidget {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final bool isSelectedBackground;
   final Color? selectedBackgroundColor;
   final Function()? onTap;

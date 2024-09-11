@@ -166,7 +166,7 @@ class OrderDetailScreen extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
-            late ProductDetails product;
+            late ProductDetailsModel product;
             if (bloc.userType == UserType.b2cUser) {
               product = bloc.orderProductList[index];
             }

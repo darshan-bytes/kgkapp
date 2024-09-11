@@ -15,7 +15,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   int currentTrackOrderIndex = 2;
 
   // Orders lists
-  List<ProductDetails> orderProductList = [];
+  List<ProductDetailsModel> orderProductList = [];
   List<OrderDetailsProductModel> orderProductDetailsList = [];
   List<CancellationReasonModel> cancellationReasonsList = [];
 
@@ -98,10 +98,10 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   }
 
   // Helper methods
-  List<ProductDetails> _generateOrdersDetailsList() {
+  List<ProductDetailsModel> _generateOrdersDetailsList() {
     return List.generate(
       8,
-      (index) => ProductDetails(
+      (index) => ProductDetailsModel(
         productId: index.toString(),
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
         name: "DERC03RDA 1${index + 4}k White & Gold Engagement Ring",

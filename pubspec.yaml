@@ -96,6 +96,12 @@ dependencies:
   #For Calendar
   syncfusion_flutter_calendar: ^26.2.13
 
+  #For QR Code
+  qr_flutter: ^4.1.0
+
+  #For Share
+  share_plus: ^10.0.2
+
   syncfusion_flutter_charts:
     path: packages/syncfusion_flutter_charts
 

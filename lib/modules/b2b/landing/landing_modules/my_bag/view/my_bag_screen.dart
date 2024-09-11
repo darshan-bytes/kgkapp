@@ -253,56 +253,56 @@ class MyBagScreen extends StatelessWidget {
       buildWhen: (_, current) => current is MyBagToggleViewModeState,
       builder: (context, state) {
         return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
-      itemBuilder: (context, index) {
-        ProductDetails product = bloc.myBagProductList[index];
-        if (product.isDiamondProduct) {
-          return MyBagDiamondItem(
-            onTap: () {},
-            onTapMenuButton: () {
-              handleDiamondMenuButtonTap(context, index, bloc, style);
-            },
-            productDetails: product,
-            margin: EdgeInsets.only(bottom: 17.h),
+          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          itemBuilder: (context, index) {
+            ProductDetailsModel product = bloc.myBagProductList[index];
+            if (product.isDiamondProduct) {
+              return MyBagDiamondItem(
+                onTap: () {},
+                onTapMenuButton: () {
+                  handleDiamondMenuButtonTap(context, index, bloc, style);
+                },
+                productDetails: product,
+                margin: EdgeInsets.only(bottom: 17.h),
                 showMoreDetails: product.showMore,
                 onShowMorePress: () {
                   bloc.add(MyBagToggleViewModeEvent(index: index));
                 },
               );
-        } else {
-          return CartProductItem(
-            selectedQuality: product.productQuality,
-            selectedQuantity: product.productQuantity,
-            onRemoveTap: () {
-              bloc.add(MyBagRemoveProductEvent(index: index));
-            },
-            onMoveToWishListTap: () {},
-            margin: EdgeInsets.only(bottom: 24.h),
-            onEyeTap: () {},
-            onTap: () {
-              context.pushNamed(AppRoutes.productDetailsPage,
-                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productForRing});
-            },
-            productDetails: product,
-            qualityOptionsList: product.cartProductQuality ?? [],
-            quantityOptionsList: product.cartProductQuantity ?? [],
-            onQualityChanged: (CartProductQuality value) {
-              bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
-            },
-            onQuantityChanged: (CartProductQuantity value) {
-              bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
-            },
-            isSelectedProduct: product.isSelectedProduct,
-            onChangedCheckbox: (value) {
-              bloc.add(MyBagSelectProductChangedEvent(index: index));
-            },
-          );
-        }
-      },
-      itemCount: bloc.myBagProductList.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-    );
+            } else {
+              return CartProductItem(
+                selectedQuality: product.productQuality,
+                selectedQuantity: product.productQuantity,
+                onRemoveTap: () {
+                  bloc.add(MyBagRemoveProductEvent(index: index));
+                },
+                onMoveToWishListTap: () {},
+                margin: EdgeInsets.only(bottom: 24.h),
+                onEyeTap: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.productDetailsPage,
+                      arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productForRing});
+                },
+                productDetails: product,
+                qualityOptionsList: product.cartProductQuality ?? [],
+                quantityOptionsList: product.cartProductQuantity ?? [],
+                onQualityChanged: (CartProductQuality value) {
+                  bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
+                },
+                onQuantityChanged: (CartProductQuantity value) {
+                  bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
+                },
+                isSelectedProduct: product.isSelectedProduct,
+                onChangedCheckbox: (value) {
+                  bloc.add(MyBagSelectProductChangedEvent(index: index));
+                },
+              );
+            }
+          },
+          itemCount: bloc.myBagProductList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+        );
       },
     );
   }

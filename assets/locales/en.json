@@ -703,5 +703,8 @@
   "error_confirm_password_required": "Confirm password is required",
   "error_password_not_match": "Password does not match",
   "you_have_saved_x": "You have saved {#}",
+  "text_copied": "Text copied!",
+  "scan_this_qr_code": "Scan this QR Code",
+  "scan_this_qr_code_details": "Scan this QR code to get more product details",
   "logging_in": "Logging in..."
 }
