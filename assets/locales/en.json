@@ -702,5 +702,6 @@
   "error_password_required": "Password is required",
   "error_confirm_password_required": "Confirm password is required",
   "error_password_not_match": "Password does not match",
-  "you_have_saved_x": "You have saved {#}"
+  "you_have_saved_x": "You have saved {#}",
+  "logging_in": "Logging in..."
 }
