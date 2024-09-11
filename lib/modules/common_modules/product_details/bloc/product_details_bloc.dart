@@ -144,14 +144,22 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       imgList.clear();
       suggestedProductList.clear();
       await getDiamondsDetails(event.context, productId);
+      if (productDetails != null) {
+        emit(ProductDetailsLoadedState(productDetails!));
+      }
       await getDiamondYouMayLike(event.context, productId);
+      await getDiamondsRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
       await getGemstoneDetails(event.context, productId);
+      if (productDetails != null) {
+        emit(ProductDetailsLoadedState(productDetails!));
+      }
       await getGemstoneYouMayLike(event.context, productId);
+      await getGemstoneRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
       imgList.clear();
       suggestedProductList.clear();
@@ -161,8 +169,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       if (productDetails != null) {
         emit(ProductDetailsLoadedState(productDetails!));
       }
-      await getProductYouMayLike(event.context, productId);
       await productReviewsFilter(event.context, productId);
+      await getProductYouMayLike(event.context, productId);
       await getProductRecentlyViewed(event.context, productId);
     }
 
@@ -469,6 +477,70 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
+  Future<void> getDiamondsRecentlyViewed(BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondListingModel>? response =
+        await AppRepository(context).getDiamondRecentlyViewedProductList(page: "1", limit: "10");
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        recentlyViewedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+          return ProductDetails(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.diamond,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+          );
+        }).toList();
+        add(const ProductDetailsReviewsLoadedEvent());
+      },
+    );
+  }
+
+  Future<void> getGemstoneRecentlyViewed(BuildContext context, String productId) async {
+    Either<ErrorResponse, GemstoneListingModel>? response =
+        await AppRepository(context).getGemstoneRecentlyViewedProductList(page: "1", limit: "10");
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message ?? '');
+        }
+      },
+      (data) {
+        recentlyViewedProductList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage! > 0;
+          return ProductDetails(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.gemstone,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+          );
+        }).toList();
+        add(const ProductDetailsReviewsLoadedEvent());
+      },
+    );
+  }
+
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
@@ -511,12 +583,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(const ProductDetailsRecentlyViewedLoadedState());
   }
 
-  void navigateBasedOnScreenIdentifier(BuildContext context) {
+  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context, {required String productNavigation}) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
         context.pushNamed(AppRoutes.productListGridPage, arguments: {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
           RoutesData.productId: productDetails?.productId,
+          RoutesData.productNavigation: productNavigation,
         });
         break;
       case ScreenIdentifier.productForGemstones:
@@ -524,6 +597,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         context.pushNamed(AppRoutes.stoneListingPage, arguments: {
           RoutesData.isPageFor: screenIdentifier,
           RoutesData.productId: productDetails?.productId,
+          RoutesData.productNavigation: productNavigation,
         });
         break;
       default:
