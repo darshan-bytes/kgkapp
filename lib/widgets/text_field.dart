@@ -188,12 +188,6 @@ class SmartTextFieldState extends State<SmartTextField> {
             ),
             SizedBox(height: 8.h),
           ],
-          FormBuilderTextField(
-            validator: widget.validator,
-            builder: (state) {
-              return SizedBox();
-            },
-          ),
           SizedBox(
             height: widget.height ?? ((widget.maxLines ?? 0) > 1 ? null : (widget.isSearch ? 40.w : 48.w)),
             child: TextFormField(
