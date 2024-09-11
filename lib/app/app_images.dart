@@ -157,6 +157,7 @@ class AppImages {
   //Share Presentation
   static const String icQrCode = 'assets/images/ic_qr_code.svg';
   static const String icWhatsapp = 'assets/images/ic_whatsapp.svg';
+  static const String icOther = 'assets/images/ic_other.svg';
   static const String icFaceBook = 'assets/images/ic_face_book.svg';
   static const String icCopy = 'assets/images/ic_copy.svg';
   static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';

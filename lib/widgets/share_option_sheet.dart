@@ -6,9 +6,7 @@ class ShareOptionSheet extends StatelessWidget {
   final VoidCallback? onTapShare;
   final VoidCallback? onTapEmail;
   final VoidCallback? onTapCopy;
-  final VoidCallback? onTapWhatsapp;
   final VoidCallback? onTapOther;
-  final VoidCallback? onTapFacebook;
 
   const ShareOptionSheet({
     super.key,
@@ -17,9 +15,7 @@ class ShareOptionSheet extends StatelessWidget {
     this.onTapShare,
     this.onTapEmail,
     this.onTapCopy,
-    this.onTapWhatsapp,
     this.onTapOther,
-    this.onTapFacebook,
   });
 
   @override
@@ -47,7 +43,6 @@ class ShareOptionSheet extends StatelessWidget {
                 _buildShareButtonsRow(style),
                 SizedBox(height: 32.h),
                 _buildBottomNavbar(style, context),
-                SizedBox(height: 24.h),
               ],
             ),
           ),
@@ -71,16 +66,13 @@ class ShareOptionSheet extends StatelessWidget {
 
   Widget _buildShareButtonsRow(SharePresentationStyle style) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icQrCode, APPStrings.qrCode.tr, () {
           onTapQrCode?.call();
         }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icWhatsapp, APPStrings.whatsapp.tr, () {
-          onTapWhatsapp?.call();
-        }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icFaceBook, APPStrings.facebook.tr, () {
-          onTapFacebook?.call();
+        _buildShareButtons(style.iconButtonTextStyle, AppImages.icOther, APPStrings.other.tr, () {
+          onTapOther?.call();
         }),
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icCopy, APPStrings.copyLink.tr, () {
           onTapCopy?.call();

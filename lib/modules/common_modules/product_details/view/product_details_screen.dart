@@ -273,7 +273,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                             onTapCopy: () async {
                                               bloc.onTapCopyLink(context: context);
                                             },
-                                            onTapWhatsapp: () async {
+                                            onTapOther: () async {
                                               bloc.onTapShareLink(context: context);
                                             },
                                           ),

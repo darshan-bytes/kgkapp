@@ -603,6 +603,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   // Share link
   Future<void> onTapShareLink({required BuildContext context}) async {
+    context.pop();
     await Share.share("https://dev.kgk.magnetoinfotech.com");
   }
 }

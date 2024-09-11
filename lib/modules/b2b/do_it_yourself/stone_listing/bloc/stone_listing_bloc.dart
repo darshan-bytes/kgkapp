@@ -116,7 +116,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       List.generate(
         diamondDatumList.length,
         (index) {
-          print("productID ${diamondDatumList[index].id}");
           productList.add(
             ProductDetailsModel(
               productId: diamondDatumList[index].id,
