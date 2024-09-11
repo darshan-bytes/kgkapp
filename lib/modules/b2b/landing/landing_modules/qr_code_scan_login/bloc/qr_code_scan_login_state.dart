@@ -17,3 +17,12 @@ final class QrCodeScanLoginResult extends QrCodeScanLoginState {
   @override
   List<Object?> get props => [barcode];
 }
+
+final class QrCodeScanLoginError extends QrCodeScanLoginState {
+  final String errorMessage;
+
+  const QrCodeScanLoginError({required this.errorMessage});
+
+  @override
+  List<Object?> get props => [errorMessage];
+}

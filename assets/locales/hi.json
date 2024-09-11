@@ -704,5 +704,6 @@
   "you_have_saved_x": "आपने {#} बचाया ह",
   "text_copied": "कॉपी किया गया",
   "scan_this_qr_code": "यह QR कोड स्कैन करें",
-  "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें"
+  "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें",
+  "logging_in": "Logging in..."
 }

@@ -198,28 +198,37 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _onProductAddToBagEvent(ProductAddToBagEvent event, Emitter<AppState> emit) async {
-    String userId = StorageManager().getUserId() ?? '';
-    Map<String, dynamic> body = {
-      ApiKey.commodity: event.productDetails.commodity?.value,
-      ApiKey.quantity: 1,
-      ApiKey.suid: event.productDetails.productId,
-      ApiKey.userId: userId,
-    };
 
-    await AppRepository(event.context).addToBag(body: body).then(
-      (response) {
-        response?.fold(
-          (l) {
-            Utils.showMessage(l.message ?? '');
-          },
-          (data) async {
-            MyBagDataModel myBagDataModel = data.responseData;
-            await StorageManager().storeBagData(myBagDataModel);
-            Utils.showMessage(data.message ?? '');
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if (myBagDataModel != null) {
+      if(myBagDataModel.commodity == event.productDetails.commodity?.value) {
+        String userId = StorageManager().getUserId() ?? '';
+        Map<String, dynamic> body = {
+          ApiKey.commodity: event.productDetails.commodity?.value,
+          ApiKey.quantity: 1,
+          ApiKey.suid: event.productDetails.productId,
+          ApiKey.userId: userId,
+        };
+
+        await AppRepository(event.context).addToBag(body: body).then(
+              (response) {
+            response?.fold(
+                  (l) {
+                Utils.showMessage(l.message ?? '');
+              },
+                  (data) async {
+                MyBagDataModel myBagDataModel = data.responseData;
+                await StorageManager().storeBagData(myBagDataModel);
+                Utils.showMessage(data.message ?? '');
+              },
+            );
           },
         );
-      },
-    );
+      }else{
+        /// TODO: Implement it later for delete the old bag and add new bag
+      }
+    }
+
   }
 
   Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {

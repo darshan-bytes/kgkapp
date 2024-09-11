@@ -894,4 +894,5 @@ class APPStrings {
   static const String textCopied = 'text_copied';
   static const String scanThisQRCode = 'scan_this_qr_code';
   static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
+  static const String loggingIn = 'logging_in';
 }

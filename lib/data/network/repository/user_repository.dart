@@ -62,4 +62,10 @@ class UserRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r as CommonResponse));
   }
+
+  // For QR Code Login
+  Future<Either<ErrorResponse, UserResponse>?> verifyQrCodeForAuth(Map<String, dynamic> params) async {
+    var response = await postMethod<UserResponse>(ApiClient.verifyQrCodeForAuth, params);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
