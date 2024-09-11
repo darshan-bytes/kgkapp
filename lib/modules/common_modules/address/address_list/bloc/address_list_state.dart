@@ -14,7 +14,6 @@ final class AddressListLoadedState extends AddressListState {
   final AddressDetails selectedAddress;
   final bool isBillingAndShippingSame;
 
-
   const AddressListLoadedState(
     this.addressList,
     this.selectedAddress,

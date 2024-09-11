@@ -702,5 +702,8 @@
   "error_confirm_password_required": "पासवर्ड की पुष्टि करें आवश्यक है",
   "error_password_not_match": "पासवर्ड मेल नहीं खाता",
   "you_have_saved_x": "आपने {#} बचाया ह",
+  "text_copied": "कॉपी किया गया",
+  "scan_this_qr_code": "यह QR कोड स्कैन करें",
+  "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें",
   "logging_in": "Logging in..."
 }

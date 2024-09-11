@@ -891,5 +891,8 @@ class APPStrings {
   static const String errorOfficeLocationRequired = 'error_office_location_required';
   static const String errorBusinessTypeRequired = 'error_business_type_required';
   static const String youHaveSavedX = 'you_have_saved_x';
+  static const String textCopied = 'text_copied';
+  static const String scanThisQRCode = 'scan_this_qr_code';
+  static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
   static const String loggingIn = 'logging_in';
 }

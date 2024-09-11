@@ -1262,4 +1262,14 @@ class LightModeTheme extends AppTheme {
   NoInternetScreenStyle get noInternetScreenStyle => NoInternetScreenStyle(
       noInternetTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
       noInternetSubtitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C));
+
+  @override
+  QRCodeDialogStyle get qrCodeDialogStyle => QRCodeDialogStyle(
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+        titleStyle: interBoldTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle,
+        borderColor: colors.colorD3DAE0,
+        shadowColor: colors.black.withOpacity(0.1),
+      );
 }

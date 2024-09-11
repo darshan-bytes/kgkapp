@@ -441,6 +441,9 @@ export 'package:kgk/modules/common_modules/product_details/model/product_review_
 export 'package:http_parser/http_parser.dart';
 export 'package:mime_type/mime_type.dart';
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
+export 'package:kgk/widgets/share_option_sheet.dart';
+export 'package:qr_flutter/qr_flutter.dart';
+export 'package:share_plus/share_plus.dart';
 export 'package:kgk/app/wishlist_updater_service/wishlist_updater_service_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/my_bag_data_model.dart';
 export 'package:device_info_plus/device_info_plus.dart';

@@ -23,9 +23,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool showMoreDetails = false;
   String subTotalAmount = "\$90,000.00";
 
-  List<ProductDetails> myBagProductList = List.generate(
+  List<ProductDetailsModel> myBagProductList = List.generate(
     9,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamondClarityChart: DiamondClarityChart(
         ct: "10.04",
         shape: "Marquise",
@@ -75,9 +75,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       showMore: false,
     ),
   );
-  List<ProductDetails> suggestedProductList = List.generate(
+  List<ProductDetailsModel> suggestedProductList = List.generate(
     8,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamond: "2.5 crt",
       gram: "1.5 grms",
       imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
@@ -86,9 +86,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     ),
   );
 
-  List<ProductDetails> mostPurchaseProductList = List.generate(
+  List<ProductDetailsModel> mostPurchaseProductList = List.generate(
     8,
-    (index) => ProductDetails(
+    (index) => ProductDetailsModel(
       diamond: "1.5 gram",
       gram: "1.5 gram",
       imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
@@ -175,7 +175,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(MyBagReloadState());
     selectAllProduct = event.selectAllProduct;
     selectedProductCount = selectAllProduct ? myBagProductList.length : 0;
-    for (ProductDetails product in myBagProductList) {
+    for (ProductDetailsModel product in myBagProductList) {
       product.isSelectedProduct = selectAllProduct;
     }
     emit(MyBagSelectAllProductChangedState(selectAllProduct: selectAllProduct));
@@ -183,7 +183,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   void _onMyBagSelectProductChangedEvent(MyBagSelectProductChangedEvent event, Emitter<MyBagState> emit) {
     emit(MyBagReloadState());
-    final ProductDetails product = myBagProductList[event.index];
+    final ProductDetailsModel product = myBagProductList[event.index];
     product.isSelectedProduct = !product.isSelectedProduct;
     if (product.isSelectedProduct) {
       selectedProductCount += 1;

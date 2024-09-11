@@ -260,7 +260,25 @@ class ProductDetailsScreen extends StatelessWidget {
                                       width: 42.w,
                                       padding: EdgeInsets.all(6.w),
                                       isSelected: false,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Utils.showSmartModalBottomSheet(
+                                          context: context,
+                                          enableDrag: false,
+                                          builder: (context) => ShareOptionSheet(
+                                            title: APPStrings.share.tr,
+                                            onTapQrCode: () {
+                                              context.pop();
+                                              _showQrCodeDialog(context: context, data: "https://dev.kgk.magnetoinfotech.com");
+                                            },
+                                            onTapCopy: () async {
+                                              bloc.onTapCopyLink(context: context);
+                                            },
+                                            onTapOther: () async {
+                                              bloc.onTapShareLink(context: context);
+                                            },
+                                          ),
+                                        );
+                                      },
                                       image: AppImages.icShare,
                                     ),
                                   ],
@@ -441,7 +459,7 @@ class ProductDetailsScreen extends StatelessWidget {
         : SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle);
   }
 
-  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetails? productDetails) {
+  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetailsModel? productDetails) {
     return Row(
       children: [
         SmartRatingBar(
@@ -721,6 +739,67 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _showQrCodeDialog({required BuildContext context, required String data}) {
+    final QRCodeDialogStyle style = AppTheme.of(context).qrCodeDialogStyle;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: AnimatedScale(
+            scale: 1.0,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOutBack,
+            child: Stack(
+              alignment: Alignment.topRight,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(24.w),
+                  decoration: BoxDecoration(
+                    color: style.whiteColor,
+                    boxShadow: [
+                      BoxShadow(color: style.shadowColor, blurRadius: 15.0, spreadRadius: 5.0),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          height: 56.w,
+                          width: 56.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: style.borderColor),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Icon(Icons.qr_code_2_outlined, size: 42.w, color: style.primaryColor)),
+                      SizedBox(height: 16.h),
+                      SmartText(APPStrings.scanThisQRCode.tr, style: style.titleStyle),
+                      SizedBox(height: 8.h),
+                      SmartText(APPStrings.scanThisQRCodeDetails.tr, style: style.subTitleStyle, textAlign: TextAlign.center),
+                      SizedBox(height: 20.h),
+                      QrImageView(data: data, version: QrVersions.auto, size: 245.w, backgroundColor: style.whiteColor),
+                    ],
+                  ),
+                ),
+                PositionedDirectional(
+                  end: 20.w,
+                  top: 20.h,
+                  child: SmartImage(
+                    path: AppImages.icCross,
+                    height: 24.w,
+                    width: 24.w,
+                    color: style.primaryColor,
+                    onTap: () => context.pop(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
