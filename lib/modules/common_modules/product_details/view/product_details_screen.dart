@@ -696,8 +696,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   title: APPStrings.recentlyViewed.tr,
                   onViewAllTap: bloc.recentlyViewedProductList.length > 5
                       ? () {
-                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context
-                              ,
+                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
                               productNavigation: AppConst.recentlyViewed);
                         }
                       : null,
