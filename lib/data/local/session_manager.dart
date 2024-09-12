@@ -114,6 +114,10 @@ class StorageManager {
     return bagData.isNotNullNorEmpty ? MyBagDataModel.fromJson(jsonDecode(bagData!)) : null;
   }
 
+  Future<void> clearBagData() async {
+    await _box.delete(_bagData);
+  }
+
   /// Clear all data stored except _locale
   Future<void> clearSession() async {
     String? locale = getLocale();

@@ -197,38 +197,54 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  // Add to bag event
   Future<void> _onProductAddToBagEvent(ProductAddToBagEvent event, Emitter<AppState> emit) async {
-
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    if (myBagDataModel != null) {
-      if(myBagDataModel.commodity == event.productDetails.commodity?.value) {
-        String userId = StorageManager().getUserId() ?? '';
-        Map<String, dynamic> body = {
-          ApiKey.commodity: event.productDetails.commodity?.value,
-          ApiKey.quantity: 1,
-          ApiKey.suid: event.productDetails.productId,
-          ApiKey.userId: userId,
-        };
+    String userId = StorageManager().getUserId() ?? '';
 
-        await AppRepository(event.context).addToBag(body: body).then(
-              (response) {
-            response?.fold(
-                  (l) {
-                Utils.showMessage(l.message ?? '');
-              },
-                  (data) async {
-                MyBagDataModel myBagDataModel = data.responseData;
-                await StorageManager().storeBagData(myBagDataModel);
-                Utils.showMessage(data.message ?? '');
-              },
-            );
-          },
-        );
-      }else{
-        /// TODO: Implement it later for delete the old bag and add new bag
-      }
+    if (myBagDataModel != null && myBagDataModel.commodity != event.productDetails.commodity?.value) {
+      await _deleteAndRetryBag(event, emit, myBagDataModel.sId ?? '');
     }
+    await _addToBag(event, userId);
+  }
 
+  // Add to bag
+  Future<void> _addToBag(ProductAddToBagEvent event, String userId) async {
+    Map<String, dynamic> body = {
+      ApiKey.commodity: event.productDetails.commodity?.value,
+      ApiKey.quantity: 1,
+      ApiKey.suid: event.productDetails.productId,
+      ApiKey.userId: userId,
+    };
+
+    await AppRepository(event.context).addToBag(body: body).then((response) {
+      response?.fold(
+        (l) => Utils.showMessage(l.message ?? ''),
+        (data) async {
+          MyBagDataModel myBagDataModel = data.responseData;
+          await StorageManager().storeBagData(myBagDataModel);
+          Utils.showMessage(data.message ?? '');
+        },
+      );
+    });
+  }
+
+  // Delete and retry bag
+  Future<void> _deleteAndRetryBag(ProductAddToBagEvent event, Emitter<AppState> emit, String bagId) async {
+    if (bagId.isNullOrEmpty) {
+      return;
+    }
+    Map<String, dynamic> body = {ApiKey.id: bagId};
+
+    await AppRepository(event.context).deleteBag(body: body).then((response) {
+      response?.fold(
+        (l) => Utils.showMessage(l.message ?? ''),
+        (data) async {
+          await StorageManager().clearBagData();
+          Utils.showMessage(data.message ?? '');
+        },
+      );
+    });
   }
 
   Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {
