@@ -356,6 +356,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // Delete Entire Bag
+  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> deleteBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, CommonResponse<MyBagDataModel>>>(ApiClient.deleteBag, withFullResponse: true, body: body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
       {required String limit, required String page, bool isLoadMore = false}) async {
     if (isLoadMore) {

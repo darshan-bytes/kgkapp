@@ -49,4 +49,5 @@ class ApiKey {
   static const String customFilter = 'customFilter';
   static const String qrToken = 'qr_token';
   static const String deviceId = 'device_id';
+  static const String id = 'id';
 }
