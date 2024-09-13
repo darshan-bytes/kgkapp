@@ -23,6 +23,20 @@ class NotificationScreen extends StatelessWidget {
               height: 48.w,
               contentPadding: EdgeInsets.only(top: 4.h, left: 1.w, right: 1.w),
             ),
+            Container(
+              alignment: Alignment.centerRight,
+              height: 52.h,
+              child: IntrinsicWidth(
+                child: InkWell(
+                  onTap: () {},
+                  child: SmartText(
+                    APPStrings.clearAll.tr,
+                    style: style.clearAllStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -33,7 +47,7 @@ class NotificationScreen extends StatelessWidget {
                 );
               },
               itemBuilder: (context, index) {
-                return _notificationItem(context);
+                return _notificationItem(context, index);
               },
             )
           ],
@@ -42,10 +56,10 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 
-  Widget _notificationItem(BuildContext context) {
+  Widget _notificationItem(BuildContext context, int index) {
     final style = AppTheme.of(context).allNotificationViewStyle;
     return Padding(
-      padding: EdgeInsets.only(top: 24.h),
+      padding: EdgeInsetsDirectional.only(top: index != 0 ? 24.h : 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -12,6 +12,7 @@ class CartProductItem extends StatelessWidget {
   final Function()? onEyeTap;
   final Function()? onRemoveTap;
   final Function()? onMoveToWishListTap;
+  final Function()? onDeleteTap;
   final BoxFit fit;
   final bool isFavourite;
   final EdgeInsetsGeometry padding;
@@ -26,6 +27,7 @@ class CartProductItem extends StatelessWidget {
   final Function(bool?)? onChangedCheckbox;
   final bool isCheckboxShow;
   final TextStyle? priceTextStyle;
+  final bool isDropDownEnable;
 
   const CartProductItem(
       {super.key,
@@ -41,6 +43,7 @@ class CartProductItem extends StatelessWidget {
       this.onEyeTap,
       this.onRemoveTap,
       this.onMoveToWishListTap,
+      this.onDeleteTap,
       this.isFavourite = false,
       this.padding = EdgeInsets.zero,
       this.margin = EdgeInsets.zero,
@@ -53,6 +56,7 @@ class CartProductItem extends StatelessWidget {
       this.isSelectedProduct = false,
       this.onChangedCheckbox,
       this.isCheckboxShow = true,
+      this.isDropDownEnable = true,
       this.priceTextStyle});
 
   @override
@@ -77,39 +81,7 @@ class CartProductItem extends StatelessWidget {
                 productDetailsSection(style, context),
               ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: SmartButton(
-                    activeBackgroundColor: style.backgroundColor,
-                    title: APPStrings.remove.tr,
-                    titleStyle: style.removeBagTextStyle,
-                    borderRadius: const BorderRadius.all(Radius.zero),
-                    onTap: () {
-                      if (onRemoveTap != null) {
-                        onRemoveTap!();
-                      }
-                    },
-                  )),
-                  Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
-                  Expanded(
-                      child: SmartButton(
-                          activeBackgroundColor: style.backgroundColor,
-                          title: APPStrings.moveToWishlist.tr,
-                          titleStyle: style.removeBagTextStyle,
-                          borderRadius: const BorderRadius.all(Radius.zero),
-                          onTap: () {
-                            if (onMoveToWishListTap != null) {
-                              onMoveToWishListTap!();
-                            }
-                          })),
-                ],
-              ),
-            )
+            const Divider()
           ],
         ),
       ),
@@ -182,11 +154,26 @@ class CartProductItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmartText(
-              productDetails.name,
-              style: style.productNameStyle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: SmartText(
+                    productDetails.name,
+                    style: style.productNameStyle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if(onDeleteTap != null)
+                GestureDetector(
+                  onTap: onDeleteTap,
+                  child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                      child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w)),
+                ),
+              ],
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
@@ -204,36 +191,12 @@ class CartProductItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
-              SizedBox(height: 8.h),
             ],
-            Padding(
-              padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: SmartDropDown<CartProductQuality>(
-                      selectedItem: selectedQuality,
-                      items: qualityOptionsList.map((e) => SmartDropDownItem<CartProductQuality>(value: e, title: e.name ?? '')).toList(),
-                      hintText: APPStrings.selectQuality.tr,
-                      onChanged: (newValue) => onQualityChanged?.call(newValue!),
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
-                  Expanded(
-                    flex: 1,
-                    child: SmartDropDown<CartProductQuantity>(
-                      scrollDirection: Axis.horizontal,
-                      selectedItem: selectedQuantity,
-                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                      items: quantityOptionsList.map((e) => SmartDropDownItem<CartProductQuantity>(value: e, title: e.name ?? '')).toList(),
-                      hintText: APPStrings.selectQuantity.tr,
-                    ),
-                  ),
-                ],
-              ),
-            )
+            SizedBox(height: 8.h),
+            SmartText(selectedQuality?.name ?? '', style: style.productNameStyle),
+            SizedBox(height: 8.h),
+            SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
+            SizedBox(height: 12.h),
           ],
         ),
       ),

@@ -416,3 +416,7 @@ export 'package:kgk/modules/common_modules/image_search/bloc/image_search_bloc.d
 export 'package:kgk/modules/common_modules/image_search/view/image_search_screen.dart';
 export 'package:kgk/widgets/my_order_new_item.dart';
 export 'package:webview_flutter/webview_flutter.dart';
+export 'package:kgk/model/style_design_model.dart';
+export 'package:kgk/widgets/smart_style_design_listing.dart';
+export 'package:kgk/widgets/concept_item.dart';
+export 'package:kgk/modules/b2b/concept_list/model/concept_list_model.dart';

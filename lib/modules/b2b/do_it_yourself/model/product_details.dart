@@ -21,6 +21,8 @@ class ProductDetails {
   String? company;
   String? productSku;
   bool showMore;
+  bool isForAuction;
+  bool isCommentVisible;
 
   ProductDetails({
     this.productId,
@@ -43,5 +45,7 @@ class ProductDetails {
     this.company,
     this.productSku,
     this.showMore = false,
+    this.isForAuction = false,
+    this.isCommentVisible = false,
   });
 }

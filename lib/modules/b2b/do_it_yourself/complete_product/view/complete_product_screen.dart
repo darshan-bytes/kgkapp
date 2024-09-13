@@ -31,21 +31,55 @@ class CompleteProductScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          child: Row(
-            children: [
-              Expanded(
-                child: SmartButton(
-                  height: 48.w,
-                  prefixImage: AppImages.icShoppingBag,
-                  title: APPStrings.addToBag.tr,
-                  onTap: () {},
-                ),
-              ),
-            ],
+      bottomNavigationBar: bottomNavigationBar(style, completeProductBloc),
+    );
+  }
+
+  Widget bottomNavigationBar(CompleteProductStyle style, CompleteProductBloc completeProductBloc) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+      decoration: BoxDecoration(
+        color: style.whiteColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 7.r,
+            blurRadius: 7.r,
+            offset: const Offset(0, 3), // changes position of shadow
           ),
+        ],
+      ),
+      child: SafeArea(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SmartImage(path: completeProductBloc.imgList.first, height: 55.w, width: 55.w),
+            Expanded(
+              flex: 4,
+              child:  Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SmartText(APPStrings.approxPrice.tr, style: style.productTypeStyle),
+                  SizedBox(height: 4.w),
+                  SmartText('\$1200.00', style: style.priceStyle),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Expanded(
+              flex: 5,
+              child: SmartButton(
+                prefixImage: AppImages.icShoppingBag,
+                onTap: () {},
+                title: APPStrings.addToBag.tr,
+                height: 55.h,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -121,14 +155,6 @@ class CompleteProductScreen extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              SmartText(APPStrings.approxPrice.tr, style: style.productTypeStyle),
-              SizedBox(width: 12.w),
-              SmartText('\$1200.00', style: style.priceStyle),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Row(
-            children: [
               SmartText(APPStrings.buyingInBulk.tr, style: style.productTypeStyle),
               SizedBox(width: 12.w),
               SmartButton(
@@ -149,7 +175,7 @@ class CompleteProductScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 16.h),
           SmartText(APPStrings.approxPriceNote.tr, style: style.productTypeStyle),
           SizedBox(height: 32.h),
           Row(

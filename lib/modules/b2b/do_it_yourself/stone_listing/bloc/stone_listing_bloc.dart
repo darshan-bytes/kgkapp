@@ -104,6 +104,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             imageUrl: "https://i.ibb.co/yBHp2KB/image-7.png",
             name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
             originalPrice: "\$3,000.00",
+            isForAuction: index % 2 == 0,
           ),
         ),
       );

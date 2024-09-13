@@ -34,6 +34,8 @@ enum ProjectStatus {
   onTime('on_time'),
   created('created'),
   inActive('in_active'),
+  onHold('on_hold'),
+  wip('wip'),
   ;
 
   final String value;
