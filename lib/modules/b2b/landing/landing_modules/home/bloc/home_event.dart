@@ -57,3 +57,19 @@ final class HomeCategoryPageChangeEvent extends HomeEvent {
   @override
   List<Object> get props => [index];
 }
+
+final class HomeStrapiDataFetchedEvent extends HomeEvent {
+  const HomeStrapiDataFetchedEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomePullToRefreshEvent extends HomeEvent {
+  final BuildContext context;
+
+  const HomePullToRefreshEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}

@@ -255,7 +255,7 @@ class MyBagScreen extends StatelessWidget {
         return ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
-            ProductDetails product = bloc.myBagProductList[index];
+            ProductDetailsModel product = bloc.myBagProductList[index];
             if (product.isDiamondProduct) {
               return Column(
                 children: [
@@ -276,7 +276,7 @@ class MyBagScreen extends StatelessWidget {
                     },
                     isSelectedBackground: false,
                     onTap: () {},
-                    productDetails: ProductDetails(
+                    productDetails: ProductDetailsModel(
                       productInfoClarityChat: ProductInfoClarityChat(
                           carat: "36.09",
                           commodity: "Sapphire",
@@ -332,7 +332,7 @@ class MyBagScreen extends StatelessWidget {
                     },
                     isSelectedBackground: false,
                     onTap: () {},
-                    productDetails: ProductDetails(
+                    productDetails: ProductDetailsModel(
                       productInfoClarityChat: ProductInfoClarityChat(
                           carat: "36.09",
                           commodity: "Sapphire",

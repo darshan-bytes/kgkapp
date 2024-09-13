@@ -11,6 +11,13 @@ final class WatchlistDetailsInitial extends WatchlistDetailsState {
   List<Object> get props => [];
 }
 
+final class WatchlistDetailsReload extends WatchlistDetailsState {
+  const WatchlistDetailsReload();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class WatchlistDetailsLoading extends WatchlistDetailsState {
   const WatchlistDetailsLoading();
 

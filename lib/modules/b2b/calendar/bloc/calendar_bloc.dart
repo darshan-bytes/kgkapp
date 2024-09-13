@@ -159,6 +159,75 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         .toList();
   }
 
+  String generateMeetingTitle() {
+    // Expanded lists of adjectives and nouns
+    final List<String> adjectives = [
+      'Strategic',
+      'Creative',
+      'Innovative',
+      'Dynamic',
+      'Collaborative',
+      'Productive',
+      'Visionary',
+      'Impactful',
+      'Proactive',
+      'Effective',
+      'Efficient',
+      'Insightful',
+      'Focused',
+      'Inspirational',
+      'Engaging',
+      'Interactive',
+      'Comprehensive',
+      'Synergistic',
+      'Holistic',
+      'Pioneering',
+      'Agile',
+      'Inclusive',
+      'Transparent',
+      'Data-Driven',
+      'Optimized',
+    ];
+
+    final List<String> nouns = [
+      'Brainstorm',
+      'Discussion',
+      'Planning',
+      'Sync',
+      'Huddle',
+      'Debrief',
+      'Session',
+      'Workshop',
+      'Review',
+      'Check-In',
+      'Kickoff',
+      'Standup',
+      'Retrospective',
+      'Alignment',
+      'Strategy',
+      'Sprint',
+      'Catch-Up',
+      'Forum',
+      'Roundtable',
+      'Focus Group',
+      'Consultation',
+      'Q&A',
+      'Update',
+      'Dialogue',
+      'Briefing',
+    ];
+
+    // Create a random number generator
+    final Random random = Random();
+
+    // Select a random adjective and noun
+    String adjective = adjectives[random.nextInt(adjectives.length)];
+    String noun = nouns[random.nextInt(nouns.length)];
+
+    // Combine and return the meeting title
+    return '$adjective $noun';
+  }
+
   ///Helper Methods
   List<CalendarData> _generateCalendarDataList() {
     return List.generate(
@@ -170,7 +239,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         int month = DateTime.now().month;
         return CalendarData(
           id: index,
-          title: 'Title ${index + 1}',
+          title: generateMeetingTitle(),
           description:
               'Lorem ipsum dolor sit amet consectetur. At velit in morbi integer. Nullam suspendisse pulvinar aliquet lacus morbi accumsan. Egestas enim consectetur convallis ut egestas. Volutpat ultrices ullamcorper hendrerit risus',
           type: [CalenderEventType.meeting.value, CalenderEventType.task.value].randomValue,

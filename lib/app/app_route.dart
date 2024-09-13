@@ -2,13 +2,11 @@ import 'package:kgk/kgk.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
-  static const getReadyPage = '/getReadyPage';
   static const signInPage = '/signInPage';
   static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
   static const landingPage = '/landingPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
-  static const resetPasswordPage = '/resetPasswordPage';
   static const emailSentPage = '/emailSentPage';
   static const notificationPage = '/notificationPage';
   static const collectionPage = '/collectionPage';
@@ -83,707 +81,575 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
+
+    WidgetBuilder builder;
     switch (settings.name) {
       case initialRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen(), settings: settings);
-
-      case getReadyPage:
-        return MaterialPageRoute(
-          builder: (_) => const GetReadyScreen(),
-          settings: settings,
-        );
+        builder = (context) => const SplashScreen();
+        break;
 
       case signInPage:
-        return MaterialPageRoute(
-          builder: (_) => const SignInScreen(),
-          settings: settings,
-        );
+        builder = (context) => const SignInScreen();
+        break;
 
       case signUpPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SignUpBloc>(context).add(const SignUpResetEvent());
-            return const SignUpScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
+          return const SignUpScreen();
+        };
+        break;
+
       case categoriesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
-            return const CategoriesScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
+          return const CategoriesScreen();
+        };
+        break;
 
       case landingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
-            return const LandingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
+          return const LandingScreen();
+        };
+        break;
 
       case forgotPasswordPage:
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
-          settings: settings,
-        );
-
-      case resetPasswordPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ResetPasswordBloc>(context).add(const ResetPasswordInitialEvent());
-            return const ResetPasswordScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ForgotPasswordBloc>(context).add(const ForgotPasswordInitialEvent());
+          return const ForgotPasswordScreen();
+        };
+        break;
 
       case emailSentPage:
-        return MaterialPageRoute(
-          builder: (_) => const ForgotEmailSentScreen(),
-          settings: settings,
-        );
+        builder = (context) => const ForgotEmailSentScreen();
+        break;
 
       case notificationPage:
-        return MaterialPageRoute(
-          builder: (_) => const NotificationScreen(),
-          settings: settings,
-        );
+        builder = (context) => const NotificationScreen();
+        break;
 
       case collectionPage:
-        return MaterialPageRoute(
-          builder: (_) => const CollectionScreen(),
-          settings: settings,
-        );
+        builder = (context) => const CollectionScreen();
+        break;
 
       case productListGridPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ProductListBloc>(
-              create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
-              child: const ProductListScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<ProductListBloc>(
+            create: (context) => ProductListBloc()..add(InitialProductListEvent(context)),
+            child: const ProductListScreen(),
+          );
+        };
+        break;
 
       case stoneDetailPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<StoneDetailBloc>(
-              create: (context) => StoneDetailBloc()..add(StoneDetailInitialEvent(context: context)),
-              child: const StoneDetailScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<StoneDetailBloc>(
+            create: (context) => StoneDetailBloc()..add(StoneDetailInitialEvent(context: context)),
+            child: const StoneDetailScreen(),
+          );
+        };
+        break;
 
       case settingDetailPage:
-        return MaterialPageRoute(
-          builder: (_) => const SettingDetailScreen(),
-          settings: settings,
-        );
+        builder = (context) => const SettingDetailScreen();
+        break;
 
       case stoneListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<StoneListingBloc>(
-              create: (context) => StoneListingBloc()..add(GetStoneProductListEvent(context)),
-              child: const StoneListingScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<StoneListingBloc>(
+            create: (context) => StoneListingBloc()..add(GetStoneProductListEvent(context)),
+            child: const StoneListingScreen(),
+          );
+        };
+        break;
 
       case settingListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<SettingListingBloc>(
-              create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
-              child: const SettingListingScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<SettingListingBloc>(
+            create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
+            child: const SettingListingScreen(),
+          );
+        };
+        break;
 
       case completeProductPage:
-        return MaterialPageRoute(
-          builder: (_) => const CompleteProductScreen(),
-          settings: settings,
-        );
+        builder = (context) => const CompleteProductScreen();
+        break;
 
       case addAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
-            return const AddAddressScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
+          return const AddAddressScreen();
+        };
+        break;
 
       case addressListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
-            return const AddressListScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
+          return const AddressListScreen();
+        };
+        break;
 
       case wishListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WishlistBloc>(context).add(const InitialWishlistEvent());
-            return const WishlistScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<WishlistBloc>(context).add(InitialWishlistEvent(context));
+          return const WishlistScreen();
+        };
+        break;
 
       case compareProductPage:
-        return MaterialPageRoute(
-          builder: (_) => const CompareProductScreen(),
-          settings: settings,
-        );
+        builder = (context) => const CompareProductScreen();
+        break;
 
       case paymentPage:
-        return MaterialPageRoute(
-          builder: (_) => const PaymentScreen(),
-          settings: settings,
-        );
+        builder = (context) => const PaymentScreen();
+        break;
 
       case productDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<ProductDetailsBloc>(
-            create: (_) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
+        builder = (context) {
+          return BlocProvider<ProductDetailsBloc>(
+            create: (context) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
             child: const ProductDetailsScreen(),
-          ),
-          settings: settings,
-        );
+          );
+        };
+        break;
 
       case diamondInfoPopupPage:
-        return MaterialPageRoute(
-          builder: (_) => const DiamondInfoPopupScreen(),
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<DiamondInfoPopupBloc>(
+            create: (context) => DiamondInfoPopupBloc()..add(DiamondInfoPopupInitialEvent(context)),
+            child: const DiamondInfoPopupScreen(),
+          );
+        };
+        break;
 
       case productMenuBottomSheet:
-        return MaterialPageRoute(
-          builder: (_) => const ProductMenuBottomSheet(),
-          settings: settings,
-        );
+        builder = (context) => const ProductMenuBottomSheet();
+        break;
 
       case auctionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
-            return const AuctionScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
+          return const AuctionScreen();
+        };
+        break;
 
       case writeReviewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WriteReviewBloc>(context).add(const WriteReviewInitialEvent());
-            return const WriteReviewScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<WriteReviewBloc>(
+            create: (context) => WriteReviewBloc()..add(WriteReviewInitialEvent(context)),
+            child: const WriteReviewScreen(),
+          );
+        };
+        break;
 
       case orderConfirmationPage:
-        return MaterialPageRoute(
-          builder: (context) => OrderConfirmationScreen(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => OrderConfirmationScreen(
             orderNumber: context.routesData?[RoutesData.orderNumber] ?? '',
           ),
+          transitionsBuilder: commonTransitionBuilder,
           settings: settings,
         );
 
       case orderPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
-            return const OrderScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
+          return const OrderScreen();
+        };
+        break;
 
       case orderDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<OrderDetailBloc>(
-              create: (_) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
-              child: const OrderDetailScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<OrderDetailBloc>(
+            create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
+            child: const OrderDetailScreen(),
+          );
+        };
+        break;
 
       case auctionListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<AuctionListingBloc>(
-              create: (_) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
-              child: const AuctionListingScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<AuctionListingBloc>(
+            create: (context) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
+            child: const AuctionListingScreen(),
+          );
+        };
+        break;
 
       case orderTimelinePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<OrderTimelineBloc>(
-              create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
-              child: const OrderTimelineScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<OrderTimelineBloc>(
+            create: (context) => OrderTimelineBloc()..add(InitialOrderTimelineEvent(context)),
+            child: const OrderTimelineScreen(),
+          );
+        };
+        break;
 
       case makeInquiryPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
-            return const MakeInquiryScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
+          return const MakeInquiryScreen();
+        };
+        break;
 
       case searchPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SearchBloc>(context).add(InitialSearchEvent());
-            return const SearchScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<SearchBloc>(
+            create: (context) => SearchBloc()..add(InitialSearchEvent()),
+            child: const SearchScreen(),
+          );
+        };
+        break;
 
       case qrScannerPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<QrCodeScanLoginBloc>(
-              create: (context) => QrCodeScanLoginBloc(),
-              child: const QrScannerScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<QrCodeScanLoginBloc>(
+            create: (context) => QrCodeScanLoginBloc(),
+            child: const QrScannerScreen(),
+          );
+        };
+        break;
 
       case searchResultPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<SearchResultBloc>(
-              create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
-              child: const SearchResultScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<SearchResultBloc>(
+            create: (context) => SearchResultBloc()..add(InitialSearchResultEvent(context: context)),
+            child: const SearchResultScreen(),
+          );
+        };
+        break;
 
       case notificationSettingsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<NotificationSettingsBloc>(
-              create: (context) => NotificationSettingsBloc(),
-              child: const NotificationSettingsView(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<NotificationSettingsBloc>(
+            create: (context) => NotificationSettingsBloc(),
+            child: const NotificationSettingsView(),
+          );
+        };
+        break;
 
       case cmsWebViewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<CmsWebViewBloc>(
-              create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
-              child: const CmsWebViewScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<CmsWebViewBloc>(
+            create: (context) => CmsWebViewBloc()..add(CmsWebViewInitialEvent(context: context)),
+            child: const CmsWebViewScreen(),
+          );
+        };
+        break;
 
       case faqPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
-            return const FaqScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
+          return const FaqScreen();
+        };
+        break;
 
       case preferencesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
-            return const PreferencesScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
+          return const PreferencesScreen();
+        };
+        break;
 
       case userTypeSelection:
-        return MaterialPageRoute(
-          builder: (_) => const UserTypeSelection(),
-          settings: settings,
-        );
+        builder = (context) => const UserTypeSelection();
+        break;
 
       case contactUsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
-            return const ContactUsScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent());
+          return const ContactUsScreen();
+        };
+        break;
 
       case dashboardPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
-            return const DashboardScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DashboardBloc>(context).add(const DashboardInitialEvent());
+          return const DashboardScreen();
+        };
+        break;
 
       case pddListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<PddListingBloc>(
-              create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
-              child: const PddListingScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<PddListingBloc>(
+            create: (context) => PddListingBloc()..add(InitialPddListingEvent(context: context)),
+            child: const PddListingScreen(),
+          );
+        };
+        break;
 
       case conceptListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ConceptListBloc>(
-              create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
-              child: const ConceptListScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<ConceptListBloc>(
+            create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
+            child: const ConceptListScreen(),
+          );
+        };
+        break;
 
       case monitoringPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
-            return const MonitoringScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<MonitoringBloc>(context).add(MonitoringInitialEvent());
+          return const MonitoringScreen();
+        };
+        break;
 
       case savedAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
-            return const SavedAddressScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
+          return const SavedAddressScreen();
+        };
+        break;
 
       case shippingAddressPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
-            return const ShippingAddressScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
+          return const ShippingAddressScreen();
+        };
+        break;
 
       case projectListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
-            return const ProjectListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ProjectListingBloc>(context).add(InitialProjectListingEvent(context: context));
+          return const ProjectListingScreen();
+        };
+        break;
 
       case designBriefsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignBriefsBloc>(context).add(InitialDesignBriefsEvent(context: context));
-            return const DesignBriefsScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DesignBriefsBloc>(context).add(InitialDesignBriefsEvent(context: context));
+          return const DesignBriefsScreen();
+        };
+        break;
 
       case designListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
-            return const DesignListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DesignListingBloc>(context).add(InitialDesignListingEvent(context: context));
+          return const DesignListingScreen();
+        };
+        break;
 
       case stylesListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
-            return const StylesListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
+          return const StylesListingScreen();
+        };
+        break;
 
       case digitalCataloguePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
-            return const DigitalCatalogueListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
+          return const DigitalCatalogueListingScreen();
+        };
+        break;
 
       case presentationPreviewPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PddPreviewBloc>(
-            create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
+        builder = (context) {
+          return BlocProvider<PddPreviewBloc>(
+            create: (context) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewScreen(),
-          ),
-          settings: settings,
-        );
+          );
+        };
+        break;
 
       case findStorePage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
-            return const FindStoreScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<FindStoreBloc>(context).add(FindStoreInitialEvent());
+          return const FindStoreScreen();
+        };
+        break;
 
       case presentationPreviewHistory:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PddPreviewBloc>(
-            create: (_) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
+        builder = (context) {
+          return BlocProvider<PddPreviewBloc>(
+            create: (context) => PddPreviewBloc()..add(InitialPddPreviewEvent(context: context)),
             child: const PddPreviewHistoryScreen(),
-          ),
-          settings: settings,
-        );
+          );
+        };
+        break;
 
       case cadLibraryListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
-            return const CadLibraryListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
+          return const CadLibraryListingScreen();
+        };
+        break;
 
       case designLibraryFeedbackPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
-            return const DesignLibraryFeedbackScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DesignLibraryFeedbackBloc>(context).add(InitialDesignLibraryFeedbackEvent());
+          return const DesignLibraryFeedbackScreen();
+        };
+        break;
 
       case watchListPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent());
-            return const WatchlistScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<WatchlistBloc>(context).add(WatchlistInitialEvent(context));
+          return const WatchlistScreen();
+        };
+        break;
 
       case allReviewPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<AllReviewBloc>(context).add(AllReviewInitialEvent(context));
-            return const AllReviewScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<AllReviewBloc>(
+            create: (context) => AllReviewBloc()..add(AllReviewInitialEvent(context)),
+            child: const AllReviewScreen(),
+          );
+        };
+        break;
 
       case exhibitionListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
-            return const ExhibitionListingScreen();
-          },
-        );
+        builder = (context) {
+          BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
+          return const ExhibitionListingScreen();
+        };
+        break;
 
       case stonesLandingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
-            return const StonesLandingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
+          return const StonesLandingScreen();
+        };
+        break;
 
       case previewCataloguePage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<PreviewCatalogueBloc>(
+        builder = (context) {
+          return BlocProvider<PreviewCatalogueBloc>(
             create: (context) => PreviewCatalogueBloc()..add(InitialPreviewCatalogueEvent(context)),
             child: const PreviewCatalogueScreen(),
-          ),
-          settings: settings,
-        );
+          );
+        };
+        break;
 
       case designLibraryScreen:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
-            return const DesignLibraryScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
+          return const DesignLibraryScreen();
+        };
+        break;
+
       case activityLogScreenPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
-            return const ActivityLogScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ActivityLogBloc>(context).add(ActivityLogInitialEvent());
+          return const ActivityLogScreen();
+        };
+        break;
 
       case watchlistDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider<WatchlistDetailsBloc>(
+        builder = (context) {
+          return BlocProvider<WatchlistDetailsBloc>(
             create: (context) => WatchlistDetailsBloc()..add(WatchlistDetailsInitialEvent(context)),
             child: const WatchlistDetailsScreen(),
-          ),
-          settings: settings,
-        );
+          );
+        };
+        break;
 
       case orionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
-            return const OrionScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+          return const OrionScreen();
+        };
+        break;
 
       case manufacturerOrderListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
-            return const ManufacturerOrderListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<ManufacturerOrderListingBloc>(context).add(const InitialManufacturerOrderListingEvent());
+          return const ManufacturerOrderListingScreen();
+        };
+        break;
 
       case myOrderTypeSelectionPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const MyOrderTypeSelection();
-          },
-          settings: settings,
-        );
+        builder = (context) => const MyOrderTypeSelection();
+        break;
 
       case retailerOrderListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
-            return const RetailerOrderListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<RetailerOrderListingBloc>(context).add(RetailerOrderListingInitialEvent(context: context));
+          return const RetailerOrderListingScreen();
+        };
+        break;
 
       case manufacturerOrderDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ManufacturerOrderDetailsBloc>(
-              create: (_) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
-              child: const ManufacturerOrderDetailsScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<ManufacturerOrderDetailsBloc>(
+            create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
+            child: const ManufacturerOrderDetailsScreen(),
+          );
+        };
+        break;
 
       case newsletterPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<NewsletterBloc>(context).add(NewsletterInitialEvent(context: context));
-            return const NewsletterScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<NewsletterBloc>(context).add(NewsletterInitialEvent(context: context));
+          return const NewsletterScreen();
+        };
+        break;
 
       case userMasterListingPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
-            return const UserMasterListingScreen();
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
+          return const UserMasterListingScreen();
+        };
+        break;
 
       case messagesPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<MessagesBloc>(
-              create: (_) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
-              child: const MessagesScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<MessagesBloc>(
+            create: (context) => MessagesBloc()..add(MessagesInitialEvent(context: context)),
+            child: const MessagesScreen(),
+          );
+        };
+        break;
 
       case calendarPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<CalendarBloc>(
-              create: (_) => CalendarBloc()..add(InitialCalendarEvent(context)),
-              child: const CalendarScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<CalendarBloc>(
+            create: (context) => CalendarBloc()..add(InitialCalendarEvent(context)),
+            child: const CalendarScreen(),
+          );
+        };
+        break;
 
       case messagesDetailPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<MessageDetailBloc>(
-              create: (_) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
-              child: const MessageDetailScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<MessageDetailBloc>(
+            create: (context) => MessageDetailBloc()..add(MessageDetailInitialEvent(context: context)),
+            child: const MessageDetailScreen(),
+          );
+        };
+        break;
 
       case exhibitionDetailsPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ExhibitionDetailsBloc>(
-              create: (_) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
-              child: const ExhibitionDetailsScreen(),
-            );
-          },
-        );
+        builder = (context) {
+          return BlocProvider<ExhibitionDetailsBloc>(
+            create: (context) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+            child: const ExhibitionDetailsScreen(),
+          );
+        };
+        break;
 
       case presentationPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
-            return const PresentationScreen();
-          },
-        );
+        builder = (context) {
+          BlocProvider.of<PresentationBloc>(context).add(const InitialPresentationEvent());
+          return const PresentationScreen();
+        };
+        break;
 
       case imageSearchPage:
-        return MaterialPageRoute(
-          builder: (context) {
-            return BlocProvider<ImageSearchBloc>(
-              create: (_) => ImageSearchBloc()..add(ImageSearchInitialEvent()),
-              child: const ImageSearchScreen(),
-            );
-          },
-          settings: settings,
-        );
+        builder = (context) {
+          return BlocProvider<ImageSearchBloc>(
+            create: (context) => ImageSearchBloc()..add(ImageSearchInitialEvent()),
+            child: const ImageSearchScreen(),
+          );
+        };
+        break;
 
       default:
         return _errorRoute();
     }
+
+    return _buildRoute(settings, builder);
   }
 
   static Route<dynamic> _errorRoute() {
@@ -797,6 +663,36 @@ class AppRoutes {
         ),
       );
     });
+  }
+
+  static Route<dynamic> _buildRoute(RouteSettings settings, WidgetBuilder builder) {
+    if (Platform.isIOS) {
+      return CupertinoPageRoute(
+        builder: builder,
+        settings: settings,
+        fullscreenDialog: false,
+      );
+    } else {
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+        transitionsBuilder: commonTransitionBuilder,
+        settings: settings,
+      );
+    }
+  }
+
+  // make commomn transition builder
+  static Widget commonTransitionBuilder(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    const begin = Offset(1.0, 0.0);
+    const end = Offset.zero;
+    final tween = Tween(begin: begin, end: end);
+    final offsetAnimation = animation.drive(tween);
+
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 }
 
@@ -817,7 +713,12 @@ enum RoutesData {
   catalogueData,
   watchlistId,
   messageModel,
-  conceptId
+  conceptId,
+  diamondInfo,
+  isWatchlistCreated,
+  isWatchlistUpdated,
+  commodity,
+  productNavigation
 }
 
 enum ScreenIdentifier {
@@ -842,7 +743,10 @@ extension RoutesDataExtension on BuildContext {
   Map<RoutesData, dynamic>? get routesData => ModalRoute.of(this)?.settings.arguments as Map<RoutesData, dynamic>?;
 
   Future<dynamic> pushNamed(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
-    return await Navigator.pushNamed(this, routeName, arguments: arguments);
+    if (mounted) {
+      return await Navigator.pushNamed(this, routeName, arguments: arguments);
+    }
+    return null;
   }
 
   Future<dynamic> pushNamedOfContext(String routeName, {Map<RoutesData, dynamic>? arguments}) async {
@@ -866,15 +770,19 @@ extension RoutesDataExtension on BuildContext {
     return await Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  dynamic popUntil(RoutePredicate predicate) async {
+  void popUntil(RoutePredicate predicate) async {
     return Navigator.popUntil(this, predicate);
   }
 
-  dynamic popUntilOfContext(RoutePredicate predicate) async {
+  void popUntilOfContext(RoutePredicate predicate) async {
     return Navigator.of(this).popUntil(predicate);
   }
 
   Future<dynamic> pop({Map<RoutesData, dynamic>? arguments}) async {
     return Navigator.pop(this, arguments);
+  }
+
+  Future<dynamic> popOfContext({Map<RoutesData, dynamic>? arguments}) async {
+    return Navigator.of(this).pop(arguments);
   }
 }

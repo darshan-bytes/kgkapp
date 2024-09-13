@@ -8,6 +8,7 @@ class StoneBannerView extends StatelessWidget {
   final VoidCallback? onTapShopNaturalDiamonds;
   final String? labDiamondsButtonTitle;
   final VoidCallback? onTapShopLabDiamonds;
+  final List<Widget>? buttonList;
 
   const StoneBannerView({
     super.key,
@@ -18,30 +19,31 @@ class StoneBannerView extends StatelessWidget {
     this.onTapShopNaturalDiamonds,
     this.labDiamondsButtonTitle,
     this.onTapShopLabDiamonds,
+    this.buttonList,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttonList = [];
-
-    if (naturalDiamondsButtonTitle != null && onTapShopNaturalDiamonds != null) {
-      buttonList.add(SmartButton(onTap: onTapShopNaturalDiamonds!, title: naturalDiamondsButtonTitle!));
-    }
-
-    if (labDiamondsButtonTitle != null && onTapShopLabDiamonds != null) {
-      if (buttonList.isNotEmpty) {
-        buttonList.add(SizedBox(height: 16.h));
+    List<Widget> staticButtonList = [];
+    if (buttonList != null) {
+      if (naturalDiamondsButtonTitle != null && onTapShopNaturalDiamonds != null) {
+        staticButtonList.add(SmartButton(onTap: onTapShopNaturalDiamonds!, title: naturalDiamondsButtonTitle!));
       }
-      buttonList.add(SmartButton(onTap: onTapShopLabDiamonds!, title: labDiamondsButtonTitle!));
-    }
 
+      if (labDiamondsButtonTitle != null && onTapShopLabDiamonds != null) {
+        if (staticButtonList.isNotEmpty) {
+          staticButtonList.add(SizedBox(height: 16.h));
+        }
+        staticButtonList.add(SmartButton(onTap: onTapShopLabDiamonds!, title: labDiamondsButtonTitle!));
+      }
+    }
     return StonesBannerView(
       backgroundImagePath: imagePath,
       backgroundImageHeight: 640.h,
       bannerTitleText: title,
       bannerSubTitleText: subTitle,
       spaceBetweenImageAndTitle: 48.h,
-      buttonList: buttonList,
+      buttonList: buttonList ?? staticButtonList,
     );
   }
 }

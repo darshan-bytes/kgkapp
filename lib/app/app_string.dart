@@ -4,12 +4,11 @@ class APPStrings {
   /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
-  static const String languageKo = 'ko';
+  static const String languageFr = 'fr';
+  static const String languageHi = 'hi';
   static const String plusMinus = '+/-';
   static const String percentage = '%';
 
-  static const String welcomeBack = 'welcome_back';
-  static const String pleaseEnterEmailPass = 'please_enter_email_pass';
   static const String forgotPassword = 'forgot_password';
   static const String signIn = 'sign_in';
   static const String error = 'error';
@@ -848,10 +847,57 @@ class APPStrings {
 
   static const String shopByX = 'shop_by_x';
   static const String manufacturingStatus = 'manufacturing_status';
+
+  //Home
+  static const String shopEngagementRing = 'shop_engagement_ring';
+  static const String eligance = 'eligance';
+  static const String shopByCategory = 'shop_by_category';
+  static const String trendingNow = 'trending_now';
+  static const String shopLatestCollection = 'shop_latest_collection';
+
+  //Email validation key
+  static const String emailRequired = "email_required";
+  static const String validEmail = "valid_email";
+
+  //Password validation key
+  static const String passwordRequired = "password_required";
+  static const String validPassword = "valid_password";
+
+  //No internet screen
+  static const String noInternetConnectionFound = "no_internet_connection_found";
+  static const String pleaseCheckYourInternetConnection = "please_check_your_internet_connection";
+  static const String tryAgain = "try_again";
+
+  // Session Expired
+  static const String sessionExpired = 'session_expired';
+  static const String sessionExpiredDesc = 'session_expired_desc';
+  static const String dna = 'dna';
+
+  static const String percentageOffInterpolating = 'percentage_off_interpolating';
+  static const String retry = 'retry';
+  static const String pleaseSelectWatchlist = 'please_select_watchlist';
+  static const String noProductsAddedInWatchlist = 'no_products_added_in_watchlist';
+
+  static const String errorTitleRequired = 'error_title_required';
+  static const String errorReviewRequired = 'error_review_required';
+
+  static const String errorFirstNameRequired = 'error_first_name_required';
+  static const String errorLastNameRequired = 'error_last_name_required';
+  static const String errorContactNumberRequired = 'error_contact_number_required';
+  static const String errorPasswordRequired = 'error_password_required';
+  static const String errorConfirmPasswordRequired = 'error_confirm_password_required';
+  static const String errorPasswordNotMatch = 'error_password_not_match';
+  static const String errorCompanyNameRequired = 'error_company_name_required';
+  static const String errorOfficeLocationRequired = 'error_office_location_required';
+  static const String errorBusinessTypeRequired = 'error_business_type_required';
+  static const String youHaveSavedX = 'you_have_saved_x';
+  static const String textCopied = 'text_copied';
+  static const String scanThisQRCode = 'scan_this_qr_code';
+  static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
+  static const String loggingIn = 'logging_in';
   static const String cancelItemList = 'cancel_item_list';
   static const String commodity = 'commodity';
   static const String origin = 'origin';
   static const String onHold = 'on_hold';
   static const String wip = 'wip';
-
 }

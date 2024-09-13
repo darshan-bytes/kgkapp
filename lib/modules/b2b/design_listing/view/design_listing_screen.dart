@@ -114,7 +114,7 @@ class DesignListingScreen extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
       builder: (context, state) {
-        if (bloc.designNewList.isEmpty || bloc.designListForGrid.isEmpty) {
+        if (bloc.designList.isEmpty || bloc.designListForGrid.isEmpty) {
           return _buildEmptyState();
         }
         return _buildListOrGridView(bloc, state, context);
@@ -158,13 +158,13 @@ class DesignListingScreen extends StatelessWidget {
         shrinkWrap: true,
         key: bloc.paginationScrollController.listKey,
         controller: bloc.paginationScrollController.scrollController,
-        itemCount: bloc.designNewList.length,
+        itemCount: bloc.designList.length,
         itemBuilder: (context, index) {
-          StyleDesignModel designItem = bloc.designNewList[index];
+          StyleDesignModel designItem = bloc.designList[index];
           return Column(
             children: [
               SmartStyleDesignListing(listingItemModel: designItem),
-              if (index == bloc.designNewList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
+              if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
             ],
           );
         },

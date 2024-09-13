@@ -246,6 +246,10 @@ abstract class AppTheme {
 
   ImageSearchStyle get imageSearchStyle;
 
+  NoInternetScreenStyle get noInternetScreenStyle;
+
+  QRCodeDialogStyle get qrCodeDialogStyle;
+
   StyleDesignListStyle get styleDesignListStyle;
 
   ConceptListingStyle get conceptListingStyle;
@@ -368,6 +372,7 @@ class SignInScreenStyle {
   final TextStyle labelStyle;
   final TextStyle forgotPasswordStyle;
   final TextStyle registerTextStyle;
+  final TextStyle skipTextStyle;
 
   SignInScreenStyle({
     required this.labelStyle,
@@ -376,6 +381,7 @@ class SignInScreenStyle {
     required this.titleTextStyle,
     required this.subTitleStyle,
     required this.registerTextStyle,
+    required this.skipTextStyle,
   });
 }
 
@@ -1307,19 +1313,18 @@ class StatusBadgeStyle {
   final Color yellowTextColor;
   final Color yellowBgColor;
 
-  StatusBadgeStyle({
-    required this.orangeInProgressBackgroundColor,
-    required this.orangeInProgressTextColor,
-    required this.activeBackgroundColor,
-    required this.activeTextColor,
-    required this.statusTextStyle,
-    required this.lostBackgroundColor,
-    required this.lostTextColor,
-    required this.blueInProgressBackgroundColor,
-    required this.blueInProgressTextColor,
-    required this.yellowTextColor,
-    required this.yellowBgColor
-  });
+  StatusBadgeStyle(
+      {required this.orangeInProgressBackgroundColor,
+      required this.orangeInProgressTextColor,
+      required this.activeBackgroundColor,
+      required this.activeTextColor,
+      required this.statusTextStyle,
+      required this.lostBackgroundColor,
+      required this.lostTextColor,
+      required this.blueInProgressBackgroundColor,
+      required this.blueInProgressTextColor,
+      required this.yellowTextColor,
+      required this.yellowBgColor});
 }
 
 class OrderCancelPopupStyle {
@@ -1779,6 +1784,10 @@ class HomeScreenStyle {
   final Color viewAllCollectionsBgColor;
   final Color shopGemstoneBgColor;
   final Color textStyleColor;
+  final Color topSellingEleganceColor;
+  final Color topSellingElegance2Color;
+  final Color topSellingElegance3Color;
+  final Color getInspiredSectionColor;
   final TextStyle bannerTitleStyle;
   final TextStyle shopGemstoneTitleStyle;
   final TextStyle viewAllCollectionsTextStyle;
@@ -1805,6 +1814,10 @@ class HomeScreenStyle {
     required this.getInspiredTitleStyle,
     required this.textStyleColor,
     required this.dropDownTextStyle,
+    required this.topSellingEleganceColor,
+    required this.topSellingElegance2Color,
+    required this.topSellingElegance3Color,
+    required this.getInspiredSectionColor,
   });
 }
 
@@ -2356,6 +2369,34 @@ class ImageSearchStyle {
   });
 }
 
+class NoInternetScreenStyle {
+  final TextStyle noInternetTitleStyle;
+  final TextStyle noInternetSubtitleStyle;
+
+  NoInternetScreenStyle({
+    required this.noInternetTitleStyle,
+    required this.noInternetSubtitleStyle,
+  });
+}
+
+class QRCodeDialogStyle {
+  final Color whiteColor;
+  final Color primaryColor;
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color shadowColor;
+  final Color borderColor;
+
+  QRCodeDialogStyle({
+    required this.whiteColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.shadowColor,
+    required this.borderColor,
+  });
+}
+
 class StyleDesignListStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
@@ -2370,7 +2411,7 @@ class StyleDesignListStyle {
   });
 }
 
-class ConceptListingStyle{
+class ConceptListingStyle {
   final Color borderColor;
   final TextStyle titleStyle;
 

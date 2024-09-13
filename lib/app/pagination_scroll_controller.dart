@@ -7,7 +7,7 @@ class SmartPaginationScrollController {
   late ScrollController secondaryScrollController;
   bool _isInitialised = false;
   bool isLoading = false;
-  bool stopLoading = false;
+  bool hasNextPage = true;
   int currentPage = 1;
   double boundaryOffset = 0.5;
   Completer<bool> isPageLoaded = Completer<bool>();
@@ -31,7 +31,7 @@ class SmartPaginationScrollController {
   void pullToRefresh() {
     isPageLoaded = Completer<bool>();
     currentPage = 1;
-    stopLoading = false;
+    hasNextPage = true;
   }
 
   /// Initializes the scroll controller and sets the load action.
@@ -83,24 +83,24 @@ class SmartPaginationScrollController {
 
   /// Listens to scroll events and triggers the load action when the scroll position
   /// reaches a certain boundary. It also manages the loading state and the current page.
-  void scrollListener() {
+  Future<void> scrollListener() async {
     if (controller.offset > 0) {
       canScrollToTop.value = true;
     } else {
       canScrollToTop.value = false;
     }
-    if (!stopLoading) {
+    if (hasNextPage && isPageLoaded.isCompleted) {
       try {
         if (controller.offset >= controller.position.maxScrollExtent * boundaryOffset && !isLoading) {
           isLoading = true;
           isPageLoaded = Completer<bool>();
+          currentPage++;
           loadAction(currentPage);
-          isPageLoaded.future.then((bool shouldStop) {
+          await isPageLoaded.future.then((bool shouldStop) {
             isLoading = false;
-            currentPage++;
             boundaryOffset = 1 - 1 / (currentPage * 2);
             if (shouldStop == true) {
-              stopLoading = true;
+              hasNextPage = false;
             }
           });
         }

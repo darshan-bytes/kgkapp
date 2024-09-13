@@ -6,7 +6,6 @@ class BlocGenerator {
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
       BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
-      BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
@@ -28,9 +27,7 @@ class BlocGenerator {
       BlocProvider<AddAddressBloc>(create: (_) => AddAddressBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
-      BlocProvider<WriteReviewBloc>(create: (_) => WriteReviewBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
-      BlocProvider<DiamondInfoPopupBloc>(create: (_) => DiamondInfoPopupBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
@@ -56,7 +53,6 @@ class BlocGenerator {
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
       BlocProvider<DesignLibraryFeedbackBloc>(create: (_) => DesignLibraryFeedbackBloc()),
       BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),
-      BlocProvider<AllReviewBloc>(create: (_) => AllReviewBloc()),
       BlocProvider<StonesLandingBloc>(create: (_) => StonesLandingBloc()),
       BlocProvider<WatchlistBloc>(create: (_) => WatchlistBloc()),
       BlocProvider<ProductListBloc>(create: (_) => ProductListBloc()),
@@ -69,6 +65,7 @@ class BlocGenerator {
       BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
       BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
+      BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc()),
     ];
   }
 }

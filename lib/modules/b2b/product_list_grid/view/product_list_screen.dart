@@ -60,7 +60,7 @@ class ProductListScreen extends StatelessWidget {
             return SmartSingleChildScrollView(
               controller: bloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await bloc.pullToRefresh();
+                await bloc.pullToRefresh(context);
               },
               child: SafeArea(
                 child: Padding(
@@ -78,7 +78,7 @@ class ProductListScreen extends StatelessWidget {
               ),
             );
           } else {
-            return const SmartCircularProgressIndicator();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -146,76 +146,71 @@ class ProductListScreen extends StatelessWidget {
           current is ProductListInitial ||
           current is ProductListLoadedMoreState ||
           current is ProductListLoadingMoreState ||
-          current is ProductListLoadedState,
+          current is ProductListLoadedState ||
+          current is ProductAddToFavoriteState ||
+          current is ProductRemoveFromFavoriteState,
       builder: (context, state) {
         if (bloc.isGrid) {
           return Column(
             children: [
               SmartGridView(
-                  additionalWidgets: [
-                    (
-                      index: 13,
-                      child: SmartImage(
-                        path: "https://i.ibb.co/PN51B9q/Banner.png",
-                        fit: BoxFit.fitWidth,
-                        padding: EdgeInsets.symmetric(vertical: 32.h),
-                      )
-                    ),
-                  ],
-                  items: bloc.productList.map((ProductDetails productDetails) {
-                    /// If need to  product customization icon then remove onCancel voidCallback
-                    bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                        bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                        bloc.productList[0] == productDetails;
-                    bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
-                        bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
-                        bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
+                  // additionalWidgets: [
+                  //   (
+                  //     index: bloc.productList.length,
+                  //     child: SmartImage(
+                  //       path: "https://i.ibb.co/PN51B9q/Banner.png",
+                  //       fit: BoxFit.fitWidth,
+                  //       padding: EdgeInsets.symmetric(vertical: 32.h),
+                  //     )
+                  //   ),
+                  // ],
+                  items: bloc.productList.map((ProductDetailsModel productDetails) {
+                /// If need to  product customization icon then remove onCancel voidCallback
+                bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
+                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
+                    bloc.productList[0] == productDetails;
+                bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
+                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
+                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
 
-                    Function()? getAddToBagTap(ProductListBloc bloc) {
-                      return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-                              bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
-                              bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
-                          ? () {}
-                          : null;
+                Function()? getAddToBagTap(ProductListBloc bloc) {
+                  return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
+                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
+                      ? () {}
+                      : null;
+                }
+
+                return ProductGridItem(
+                  productDetails: productDetails,
+                  isCustomisable: isCustomisable,
+                  isOutOfStock: productDetails.isOutOfStock,
+                  onAddToBagTap: getAddToBagTap(bloc),
+                  onEyeTap: () {
+                    if (productDetails.productId != null) {
+                      bloc.add(ProductListAddToWatchListEvent(productDetails.productId!, context));
                     }
-
-                    return ProductGridItem(
-                      productDetails: productDetails,
-                      isCustomisable: isCustomisable,
-                      isOutOfStock: productDetails.isOutOfStock,
-                      onAddToBagTap: getAddToBagTap(bloc),
-                      onEyeTap: () {
-                        if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                          BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails));
-                          Utils.showSmartModalBottomSheet(
-                            context: context,
-                            enableDrag: false,
-                            useRootNavigator: true,
-                            builder: (context) => const AddWatchlistScreen(),
-                          );
-                        }
-                      },
-                      onFavTap: () {},
-                      prefixImage: AppImages.icShoppingBag,
-                      imageSize: 16.w,
-                      isStoneWithPrice: isStoneWithPrice,
-                      onTap: () {
-                        if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                          context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                            RoutesData.productId: productDetails.productId ?? '',
-                            RoutesData.isPageFor: bloc.screenIdentifier
-                          });
-                        } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-                          // Navigation to product details page
-                        } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-                          // Navigation to product details page
-                        } else {
-                          context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
-                        }
-                      },
-                    );
-                  }).toList()),
+                  },
+                  isFavourite: productDetails.isFavourite,
+                  onFavTap: () {},
+                  prefixImage: AppImages.icShoppingBag,
+                  imageSize: 16.w,
+                  isStoneWithPrice: isStoneWithPrice,
+                  onTap: () {
+                    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+                      context.pushNamed(AppRoutes.productDetailsPage,
+                          arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
+                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+                      // Navigation to product details page
+                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+                      // Navigation to product details page
+                    } else {
+                      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
+                    }
+                  },
+                );
+              }).toList()),
               if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
               SizedBox(
                 height: 17.h,

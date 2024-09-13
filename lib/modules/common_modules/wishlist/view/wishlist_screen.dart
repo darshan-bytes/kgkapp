@@ -16,7 +16,7 @@ class WishlistScreen extends StatelessWidget {
           if (state is WishlistDataFetchedState) {
             return SmartSingleChildScrollView(
               onRefresh: () async {
-                await bloc.pullToRefresh();
+                await bloc.pullToRefresh(context);
               },
               controller: bloc.paginationScrollController.scrollController,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -45,7 +45,7 @@ class WishlistScreen extends StatelessWidget {
         return Column(
           children: [
             SmartGridView(
-                items: bloc.productList.map((ProductDetails productDetails) {
+                items: bloc.productList.map((ProductDetailsModel productDetails) {
               return ProductGridItem(
                 productDetails: productDetails,
                 onAddToBagTap: () {},

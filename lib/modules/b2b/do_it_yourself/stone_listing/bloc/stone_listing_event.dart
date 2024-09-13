@@ -18,11 +18,12 @@ class GetStoneProductListEvent extends StoneListingEvent {
 
 class StoneChangeTypeEvent extends StoneListingEvent {
   final bool isInitialToggle;
+  final BuildContext context;
 
-  const StoneChangeTypeEvent(this.isInitialToggle);
+  const StoneChangeTypeEvent(this.isInitialToggle, this.context);
 
   @override
-  List<Object> get props => [isInitialToggle];
+  List<Object> get props => [isInitialToggle, context];
 }
 
 class StoneChangeListingTypeEvent extends StoneListingEvent {
@@ -33,17 +34,30 @@ class StoneChangeListingTypeEvent extends StoneListingEvent {
 }
 
 class StoneListLoadMoreEvent extends StoneListingEvent {
+  final BuildContext context;
   final int currentPage;
 
-  const StoneListLoadMoreEvent(this.currentPage);
+  const StoneListLoadMoreEvent(this.context, this.currentPage);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 class StoneListPullToRefreshEvent extends StoneListingEvent {
-  const StoneListPullToRefreshEvent();
+  final BuildContext context;
+
+  const StoneListPullToRefreshEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
+}
+
+final class StoneListAddToWatchListEvent extends StoneListingEvent {
+  final String stoneId;
+  final BuildContext context;
+
+  const StoneListAddToWatchListEvent(this.stoneId, this.context);
+
+  @override
+  List<Object> get props => [stoneId, context];
 }

@@ -72,7 +72,7 @@ class SignUpScreen extends StatelessWidget {
                     else
                       ...generateCompanyForm(signUpBloc, context),
                     SizedBox(height: 32.h),
-                    _buildRegisterButton(context),
+                    _buildRegisterButton(context, signUpBloc),
                   ],
                 ),
               ),
@@ -344,7 +344,7 @@ class SignUpScreen extends StatelessWidget {
           items: signUpBloc.officeLocations.map((OfficeLocation officeLocation) {
             return SmartDropDownItem<OfficeLocation>(
               value: officeLocation,
-              title: officeLocation.name,
+              title: officeLocation.name ?? '',
             );
           }).toList(),
           onChanged: (businessType) {
@@ -358,12 +358,17 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRegisterButton(BuildContext context) {
-    return SmartButton(
-      title: APPStrings.register.tr,
-      onTap: () {
-        Navigator.popUntil(
-            context, (route) => (route.settings.name == AppRoutes.getReadyPage) || (route.settings.name == AppRoutes.signInPage));
+  Widget _buildRegisterButton(BuildContext context, SignUpBloc signUpBloc) {
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpLoadedState || current is SignUpErrorState,
+      builder: (context, state) {
+        return SmartButton(
+          isEnabled: signUpBloc.isSignupButtonEnabled,
+          title: APPStrings.register.tr,
+          onTap: () {
+            signUpBloc.add(SignUpSubmitEvent(context));
+          },
+        );
       },
     );
   }

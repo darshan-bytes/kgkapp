@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ProductGridItem extends StatelessWidget {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final double? boxHeight;
   final double? boxWidth;
   final double? imageHeight;
@@ -73,7 +73,7 @@ class ProductGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            productImageSection(productItemWidth, style),
+            productImageSection(productItemWidth, style, context),
             productDetailsSection(productItemWidth, style),
           ],
         ),
@@ -81,7 +81,7 @@ class ProductGridItem extends StatelessWidget {
     );
   }
 
-  Widget productImageSection(double width, ProductItemStyle style) {
+  Widget productImageSection(double width, ProductItemStyle style, BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -125,7 +125,18 @@ class ProductGridItem extends StatelessWidget {
               if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
               SizedBox(width: 8.w),
               if (onFavTap != null)
-                buildIcon(path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon, onTap: onFavTap, style: style),
+                BlocBuilder<AppBloc, AppState>(
+                  buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                  builder: (context, state) {
+                    return buildIcon(
+                        path: productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
+                        onTap: () {
+                          onFavTap?.call();
+                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                        },
+                        style: style);
+                  },
+                ),
             ],
           ),
         ),
@@ -194,11 +205,14 @@ class ProductGridItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmartText(
-              productDetails.name,
-              style: style.productNameStyle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              height: 38.h,
+              child: SmartText(
+                productDetails.name,
+                style: style.productNameStyle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
@@ -212,11 +226,11 @@ class ProductGridItem extends StatelessWidget {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: <Widget>[
                         SmartText(
-                          productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+                          productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
                           style: style.priceTextStyle,
                           optionalPadding: EdgeInsets.only(right: 8.w),
                         ),
-                        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+                        if (productDetails.finalPrice.isNotNullNorEmpty) ...[
                           SmartText(
                             productDetails.originalPrice,
                             maxLines: 1,
@@ -227,9 +241,13 @@ class ProductGridItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (isStoneWithPrice)
+                  if (isStoneWithPrice && productDetails.ctsOrGms != null)
                     SmartImage(
-                      path: AppImages.icStone,
+                      path: productDetails.ctsOrGms! > 0.1
+                          ? AppImages.icOneRing
+                          : productDetails.ctsOrGms! > 0.2
+                              ? AppImages.icTwoRing
+                              : AppImages.icThreeRing,
                       height: 20.w,
                       width: 20.w,
                       fit: BoxFit.fill,

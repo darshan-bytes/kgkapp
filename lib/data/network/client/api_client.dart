@@ -2,10 +2,125 @@
 class ApiClient {
   ApiClient._();
 
-  static const String apiBaseUrl = 'http://dev2.spaceo.in/project/laravel_basecode/code/public/api/v1';
+  static const String apiBaseUrl = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
-  static const String loginUser = '/oauth/login';
-  static const String signUpUser = '/oauth/signup';
-  static const String userProfile = '/user/profile';
-  static const String socialLogin = '/oauth/social-signin';
+  static const String strapiHomeApiUrl =
+      'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
+
+  static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
+  static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
+
+  static const String businessTypes = '$apiBaseUrl/business-types';
+  static const String officeLocations = '$apiBaseUrl/subarea-masters';
+  static const String signUpCustomer = '$apiBaseUrl/customer/signup';
+
+  static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
+  static const String currencies = '$apiBaseUrl/currency';
+  static const String languageLabels = '$apiBaseUrl/language/labels';
+
+  static const String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
+  static const String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
+  static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
+  static const String wishlist = '$apiBaseUrl/wishlist/filters';
+
+  static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
+
+  static String diamondYouMayLike(String id) => '$apiBaseUrl/commodity/diamond/$id/you-may-also-like';
+
+  static String gemstoneDetails(String id) => '$apiBaseUrl/commodity/color-stone/$id/view';
+
+  // For Get the list of watchList, Create watchList and Update watchList
+  static const String watchList = '$apiBaseUrl/watchlist';
+
+  static String gemstoneYouMayAlsoLike(String id) => '$apiBaseUrl/commodity/color-stone/$id/you-may-also-like';
+
+  static String productDetails(String id) => '$apiBaseUrl/jewelleries/$id/view';
+
+  static String watchListById(String watchlistIds) => '$apiBaseUrl/watchlist/$watchlistIds';
+
+  static String watchListAddProduct(String watchlistId) => '$apiBaseUrl/watchlist/$watchlistId/add-product';
+
+  static String watchListUpdateProduct(String watchlistId, String productId) =>
+      '$apiBaseUrl/watchlist/$watchlistId/product/$productId/update';
+
+  static String watchListRemoveProduct(String watchlistId, String productId) =>
+      '$apiBaseUrl/watchlist/$watchlistId/product/$productId/remove';
+
+  static String jewelleryYouMayAlsoLike(String id) => '$apiBaseUrl/jewelleries/$id/you-may-also-like';
+
+  static const String createWishList = '$apiBaseUrl/wishlist';
+
+  static String deleteWishList(String id) => '$apiBaseUrl/wishlist/$id';
+
+  static const String productReviews = '$apiBaseUrl/product/reviews';
+
+  static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
+
+  static const String addToBag = '$apiBaseUrl/bag/create';
+
+  static const String deleteBag = '$apiBaseUrl/bag';
+}
+
+/// All api endpoints are defined here for the Strapi CMS
+class StrapiEndPoints {
+  static const String baseUrl = 'https://strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
+
+  static String get aboutUsPage => '$baseUrl/about-uses';
+
+  static String get builder => '$baseUrl/content-type-builder/components';
+
+  static String get contactUsPage => '$baseUrl/contact-uses';
+
+  static String get diamondPage => '$baseUrl/diamonds';
+
+  static String get disclaimers => '$baseUrl/disclaimers';
+
+  static String get educationDiamondPage => '$baseUrl/education-diamonds';
+
+  static String get educationGemstonePage => '$baseUrl/education-gemstones';
+
+  static String get educationLabGrownDiamondPage => '$baseUrl/education-lab-grown-diamonds';
+
+  static String get educationMetalPage => '$baseUrl/education-metals';
+
+  static String get educationRingSizerPage => '$baseUrl/education-ring-sizers';
+
+  static String get faqPage => '$baseUrl/faqs';
+
+  static String get gemstonePage => '$baseUrl/gemstones';
+
+  static String get homePage => '$baseUrl/homes';
+
+  static String get jewelleryPage => '$baseUrl/jewelleries';
+
+  static String get notFoundPage => '$baseUrl/page-not-founds';
+
+  static String get privacyPolicyPage => '$baseUrl/privacy-policies';
+
+  static String get returnPolicies => '$baseUrl/return-policies';
+
+  static String get termsOfUsesPage => '$baseUrl/terms-of-uses';
+}
+
+/// All attributes are defined here for the Strapi CMS
+class Attributes {
+  static const String homePage = 'home';
+  static const String diamondPage = 'diamonds';
+  static const String gemstonePage = 'gemstones';
+  static const String jewelleryPage = 'jewelleries';
+  static const String contactUsPage = 'contact_us';
+  static const String aboutUsPage = 'About_us';
+  static const String faqPage = 'faqs';
+  static const String notFoundPage = 'page_not_found';
+  static const String termsOfUsePage = 'terms_of_use';
+  static const String privacyPolicyPage = 'privacy_policy';
+  static const String returnPolicyPage = 'return_policy';
+  static const String disclaimerPage = 'disclaimer';
+  static const String educationDiamondPage = 'diamonds';
+  static const String educationGemstonePage = 'gemstones';
+  static const String educationMetalPage = 'metals';
+  static const String educationRingSizerPage = 'ring_sizers';
+  static const String educationLabGrownDiamondPage = 'lab_grown_diamonds';
+  static const String findAStorePage = 'Find_a_store';
 }

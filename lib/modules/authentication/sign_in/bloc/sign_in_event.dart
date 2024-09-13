@@ -4,11 +4,11 @@ sealed class SignInEvent extends Equatable {
   const SignInEvent();
 }
 
-class ChangeSwitchValueEvent extends SignInEvent {
-  final bool switchValue;
+class SignInButtonPressedEvent extends SignInEvent {
+  final BuildContext context;
 
-  const ChangeSwitchValueEvent({required this.switchValue});
+  const SignInButtonPressedEvent({required this.context});
 
   @override
-  List<Object> get props => [switchValue];
+  List<Object> get props => [context];
 }

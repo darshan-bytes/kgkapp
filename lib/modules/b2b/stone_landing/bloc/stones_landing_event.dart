@@ -12,3 +12,12 @@ class InitialStonesLandingEvent extends StonesLandingEvent {
   @override
   List<Object> get props => [];
 }
+
+class PullToRefreshStonesLandingEvent extends StonesLandingEvent {
+  final BuildContext context;
+
+  const PullToRefreshStonesLandingEvent({required this.context});
+
+  @override
+  List<Object> get props => [];
+}

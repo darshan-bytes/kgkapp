@@ -6,46 +6,54 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    final SignInBloc bloc = context.read<SignInBloc>();
+    final SignInBloc bloc = BlocProvider.of<SignInBloc>(context);
     return Scaffold(
-      bottomNavigationBar: buildRichText(context),
-      appBar: SmartAppBar(appBarHeight: 52.h, isBorder: false, backgroundColor: style.backgroundColor, isBack: false),
+      bottomNavigationBar: buildRichText(context, bloc),
+      appBar: SmartAppBar(
+        appBarHeight: 52.h,
+        isBorder: false,
+        backgroundColor: style.backgroundColor,
+        isBack: false,
+        actions: [
+          SmartText(
+            APPStrings.skip.tr,
+            style: style.skipTextStyle,
+            onTap: () {
+              BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
+              context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+            },
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SmartSingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SmartText(
-                        APPStrings.login.tr,
-                        style: style.titleTextStyle,
-                      ),
-                      SmartText(
-                        APPStrings.enterYourAccountDetails.tr,
-                        style: style.subTitleStyle,
-                      ),
-                      SizedBox(height: 32.h),
-                      _buildEmailField(style, context, bloc),
-                      SizedBox(height: 24.h),
-                      _buildPasswordField(style, context, bloc),
-                      SizedBox(height: 16.h),
-                      _buildForgotPasswordText(context, style),
-                      // TODO: For social media buttons
-                      // const SizedBox(height: 32),
-                      // _buildDivider(style),
-                      // const SizedBox(height: 24),
-                      // _buildSocialMediaButtons(),
-                      // SizedBox(height: 24.h),
-                    ],
-                  ),
-                ),
+        child: SmartSingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(
+                APPStrings.login.tr,
+                style: style.titleTextStyle,
               ),
-            ),
-          ],
+              SmartText(
+                APPStrings.enterYourAccountDetails.tr,
+                style: style.subTitleStyle,
+              ),
+              SizedBox(height: 32.h),
+              _buildEmailField(style, context, bloc),
+              SizedBox(height: 24.h),
+              _buildPasswordField(style, context, bloc),
+              SizedBox(height: 16.h),
+              _buildForgotPasswordText(context, style),
+              // TODO: For social media buttons
+              // const SizedBox(height: 32),
+              // _buildDivider(style),
+              // const SizedBox(height: 24),
+              // _buildSocialMediaButtons(),
+              // SizedBox(height: 24.h),
+            ],
+          ),
         ),
       ),
     );
@@ -53,6 +61,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildEmailField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.emailController,
       labelText: APPStrings.email.tr,
       hintText: APPStrings.hintEmail.tr,
       labelStyle: style.labelStyle,
@@ -65,6 +74,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildPasswordField(SignInScreenStyle style, context, SignInBloc bloc) {
     return SmartTextField(
+      controller: bloc.passwordController,
       obscured: true,
       labelText: APPStrings.password.tr,
       hintText: APPStrings.password.tr,
@@ -80,7 +90,7 @@ class SignInScreen extends StatelessWidget {
   Widget _buildForgotPasswordText(BuildContext context, SignInScreenStyle style) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(AppRoutes.forgotPasswordPage);
+        context.pushNamed(AppRoutes.forgotPasswordPage).then((value) => context.read<ForgotPasswordBloc>().clearData());
       },
       child: Align(
         alignment: Alignment.centerRight,
@@ -92,11 +102,11 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildLoginButton(BuildContext context, SignInBloc bloc) {
     return SmartButton(
       margin: EdgeInsets.symmetric(horizontal: 17.w),
       onTap: () {
-        context.pushNamed(AppRoutes.userTypeSelection);
+        bloc.add(SignInButtonPressedEvent(context: context));
       },
       title: APPStrings.login.tr,
     );
@@ -148,14 +158,14 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget buildRichText(BuildContext context) {
+  Widget buildRichText(BuildContext context, SignInBloc bloc) {
     final style = AppTheme.of(context).signInScreenStyle;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildLoginButton(context),
+          _buildLoginButton(context, bloc),
           SizedBox(height: 16.h),
           SmartRichText(
             textAlign: TextAlign.center,

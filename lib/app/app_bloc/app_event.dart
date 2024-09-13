@@ -29,11 +29,12 @@ class ConnectivityChangedEvent extends AppEvent {
 
 class LanguageChangedEvent extends AppEvent {
   final String languageCode;
+  final BuildContext context;
 
-  const LanguageChangedEvent(this.languageCode);
+  const LanguageChangedEvent(this.languageCode, {required this.context});
 
   @override
-  List<Object> get props => [languageCode];
+  List<Object> get props => [languageCode, context];
 }
 
 class SetAppLoadingEvent extends AppEvent {
@@ -52,4 +53,44 @@ class SetUserTypeEvent extends AppEvent {
 
   @override
   List<Object> get props => [userType];
+}
+
+class ProductAddToFavoriteEvent extends AppEvent {
+  final ProductDetailsModel productDetails;
+  final BuildContext context;
+
+  const ProductAddToFavoriteEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
+
+class ProductRemoveFromFavoriteEvent extends AppEvent {
+  final ProductDetailsModel productDetails;
+  final BuildContext context;
+
+  const ProductRemoveFromFavoriteEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
+
+class ProductAddToBagEvent extends AppEvent {
+  final ProductDetailsModel productDetails;
+  final BuildContext context;
+
+  const ProductAddToBagEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}
+
+class ProductRemoveFromBagEvent extends AppEvent {
+  final ProductDetailsModel productDetails;
+  final BuildContext context;
+
+  const ProductRemoveFromBagEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
 }

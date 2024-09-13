@@ -13,7 +13,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
 
   //List of designs
   List<B2BCustomListingDataModel> designListForGrid = _generateDesignListForGrid();
-  List<StyleDesignModel> designNewList = _generateDesignNewList();
+  List<StyleDesignModel> designList = _generateDesignNewList();
 
   //Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
@@ -54,16 +54,16 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   void clearData() {
     isGrid = true;
     designSearchController.clear();
-    designNewList.clear();
+    designList.clear();
     designListForGrid.clear();
-    designNewList.addAll(_generateDesignNewList());
+    designList.addAll(_generateDesignNewList());
     designListForGrid.addAll(_generateDesignList());
   }
 
   Future<void> _onDesignListLoadMoreEvent(DesignListLoadMoreEvent event, Emitter<DesignListingState> emit) async {
     emit(const DesignListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
-    designNewList.addAll(_generateDesignNewList());
+    designList.addAll(_generateDesignNewList());
     designListForGrid.addAll(_generateDesignListForGrid());
     paginationScrollController.isPageLoaded.complete(event.currentPage == 4);
     emit(DesignListLoadedMoreState(event.currentPage + 1));
@@ -146,7 +146,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     emit(DesignListingReloadState());
     await Future.delayed(const Duration(seconds: 1));
     paginationScrollController.pullToRefresh();
-    designNewList = _generateDesignNewList();
+    designList = _generateDesignNewList();
     designListForGrid = _generateDesignListForGrid();
     refreshCompleter.complete(true);
     emit(const DesignListingLoadedState());

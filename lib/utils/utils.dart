@@ -1,17 +1,19 @@
 import 'package:kgk/kgk.dart';
+import 'package:html/dom.dart' as dom;
 
 class Utils {
   Utils._();
 
   /// Show common snack bar messages
-  static void showMessage(String message) {
-    Flushbar(
+  static Future<void> showMessage(String message) async {
+    await Flushbar(
       message: message,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
+      animationDuration: const Duration(milliseconds: 1300),
       backgroundColor: AppThemes().appColor.primary,
-      margin: const EdgeInsets.all(10),
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      margin: EdgeInsets.all(10.w),
+      borderRadius: BorderRadius.all(Radius.circular(10.r)),
     ).show(NavigatorKey.navigatorKey.currentContext!);
   }
 
@@ -110,6 +112,27 @@ class Utils {
     );
   }
 
+  static void showQrAuthLoadingDialog(BuildContext context) {
+    final style = AppTheme.of(context).profilePageScreenStyle;
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: 70.h, // Set the specific height here
+              width: context.width, // You can adjust the width as well
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.r),
+                color: style.backgroundColor,
+              ),
+              child: Row(
+                children: [const SmartCircularProgressIndicator(), SmartText(APPStrings.loggingIn.tr)],
+              ),
+            ),
+          );
+        });
+  }
+
   static Future<T?> showSmartModalBottomSheet<T>({
     required BuildContext context,
     required WidgetBuilder builder,
@@ -156,5 +179,43 @@ class Utils {
       anchorPoint: anchorPoint,
       sheetAnimationStyle: sheetAnimationStyle,
     );
+  }
+
+  /// Check email validation
+  static bool isValidEmail(String email) {
+    String regex =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = RegExp(regex);
+
+    return regExp.hasMatch(email);
+  }
+
+  /// Parse HTML string to plain text
+  static String parseHtmlString(String htmlString) {
+    // Parse the HTML string
+    dom.Document document = parse(htmlString);
+
+    // Find the <a> tag with "Learn more" text and remove it
+    document.querySelectorAll('a').forEach((element) {
+      if (element.text.trim() == 'Learn more') {
+        element.remove();
+      }
+    });
+
+    final doc = parse(document.body?.innerHtml.trim());
+    final String? parsedString = parse(doc.body?.text).documentElement?.text;
+
+    return parsedString ?? "";
+  }
+
+  /// Calculates the total number of pages based on the total number of records and the limit per page.
+  ///
+  /// \param: totalRecords The total number of records. If null, it defaults to 0.
+  /// \param: limit The number of records per page.
+  /// \return: The total number of pages.
+  static int calculateTotalPages(int? totalRecords, int limit) {
+    totalRecords ??= 0;
+    return (totalRecords % limit == 0) ? totalRecords ~/ limit : (totalRecords ~/ limit) + 1;
   }
 }

@@ -32,47 +32,73 @@ class _MyAppState extends State<MyApp> {
                   initialRoute: AppRoutes.initialRoute,
                   title: APPStrings.appName,
                   navigatorKey: NavigatorKey.navigatorKey,
-                  supportedLocales: const [
-                    Locale(APPStrings.languageEn, ''), // English
-                    Locale(APPStrings.languageKo, '')
-                  ],
+                  supportedLocales: appBloc.supportedLocales,
                   theme: appBloc.themeData,
                   locale: appBloc.locale,
                   builder: (context, widget) {
-                    return AnnotatedRegion<SystemUiOverlayStyle>(
-                      value: SystemUiOverlayStyle.light,
-                      child: Stack(
-                        children: [
-                          if (widget != null) widget,
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              padding: const EdgeInsets.only(top: 55, right: 50),
-                              child: const Banner(
-                                message: "03-Sep-24",
-                                location: BannerLocation.bottomStart,
-                              ),
-                            ),
-                          ),
-                          if (appState is ConnectivityState && !appState.isConnected)
-                            NoInternetScreen(
-                              theme: appBloc.themeData ?? appBloc.appThemes.light(),
-                            )
-                        ],
-                      ),
-                    );
+                    return buildMaterialBuilder(appBloc, widget, appState);
                   },
                   navigatorObservers: [MyNavigatorObserver()],
-                  localizationsDelegates: const [
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                    AppLocalizations.delegate,
-                    CountryLocalizations.delegate,
-                  ],
+                  localizationsDelegates: appBloc.localizationsDelegates,
                 ),
               );
             },
+          ),
+        );
+      },
+    );
+  }
+
+  /// Create main app view builder
+  AnnotatedRegion<SystemUiOverlayStyle> buildMaterialBuilder(AppBloc appBloc, Widget? widget, AppState appState) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Stack(
+        children: [
+          buildAppRootsWidgets(appBloc, widget),
+          buildDateBannerTag(),
+          if (appState is ConnectivityState && !appState.isConnected)
+            NoInternetScreen(
+              theme: appBloc.themeData ?? appBloc.appThemes.light(),
+            )
+        ],
+      ),
+    );
+  }
+
+  /// Build date banner tag on top right corner
+  Align buildDateBannerTag() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        padding: const EdgeInsets.only(top: 55, right: 50),
+        child: const Banner(
+          message: "08-Aug-24",
+          location: BannerLocation.bottomStart,
+        ),
+      ),
+    );
+  }
+
+  /// Build app roots widgets with loading indicator
+  BlocBuilder<AppBloc, AppState> buildAppRootsWidgets(AppBloc appBloc, Widget? widget) {
+    return BlocBuilder<AppBloc, AppState>(
+      buildWhen: (previous, current) => current is AppLoadingState,
+      builder: (context, state) {
+        return IgnorePointer(
+          ignoring: appBloc.isLoading,
+          child: Stack(
+            children: [
+              widget ?? const Offstage(),
+              if (appBloc.isLoading) // Top level loading ( used while api calls)
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  color: Colors.grey.withOpacity(0.5),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
           ),
         );
       },

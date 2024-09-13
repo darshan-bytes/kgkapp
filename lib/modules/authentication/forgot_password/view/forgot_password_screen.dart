@@ -6,7 +6,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).signInScreenStyle;
-    final forgotPasswordBloc = BlocProvider.of<ForgotPasswordBloc>(context);
+    final ForgotPasswordBloc bloc = BlocProvider.of<ForgotPasswordBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
         appBarHeight: 52.h,
@@ -21,7 +21,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             SmartButton(
               margin: EdgeInsets.symmetric(horizontal: 17.w),
               onTap: () {
-                context.pushNamed(AppRoutes.emailSentPage);
+                bloc.add(ForgotPasswordSubmitEvent(context: context));
               },
               title: APPStrings.submit.tr,
             ),
@@ -51,15 +51,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 32.h),
                           SmartTextField(
-                            controller: forgotPasswordBloc.emailController,
+                            controller: bloc.emailController,
                             labelText: APPStrings.email.tr,
                             hintText: APPStrings.hintEmail.tr,
                             labelStyle: style.labelStyle,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
-                            onEditingComplete: () {
-                              FocusScope.of(context).nextFocus();
-                            },
+                            onFieldSubmitted: (p0) => bloc.add(ForgotPasswordSubmitEvent(context: context)),
                           ),
                         ],
                       ),

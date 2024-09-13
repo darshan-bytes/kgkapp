@@ -47,6 +47,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         _initializeB2BUser(event.context);
         break;
     }
+    blocList[0].add(HomeInitialEvent(context: event.context));
     emit(LandingLoadedState(userType: userType, pages: pages, blocList: blocList));
     _isInitialized = true;
   }

@@ -13,7 +13,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   List<int> pageList = [];
   int currentPage = 0;
 
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
 
   late WebViewController webViewController;
 
@@ -46,7 +46,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         commentFocusNode = FocusNode();
         productList = List.generate(
           20,
-          (index) => ProductDetails(
+          (index) => ProductDetailsModel(
             imageUrl: index % 2 == 0
                 ? "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png"
                 : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",

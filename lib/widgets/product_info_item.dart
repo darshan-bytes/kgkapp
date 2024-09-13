@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ProductInfoItem extends StatelessWidget {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final bool isSelectedBackground;
   final Color? selectedBackgroundColor;
   final Function()? onTap;
@@ -14,26 +14,29 @@ class ProductInfoItem extends StatelessWidget {
   final void Function()? onTapImageViewer;
   final void Function()? onTapDNA;
   final bool? isShowMore;
+  final List<String>? productFeaturesList;
   final bool isAutoSizeText;
   final bool isDiamond;
 
-  const ProductInfoItem(
-      {super.key,
-      required this.productDetails,
-      this.onTap,
-      this.onTapMenuButton,
-      this.padding,
-      this.margin = EdgeInsets.zero,
-      this.onTap360View,
-      this.onTapCertificate,
-      this.onTapUSA,
-      this.onTapImageViewer,
-      this.onTapDNA,
-      this.isSelectedBackground = false,
-      this.selectedBackgroundColor,
-      this.isShowMore,
-      this.isAutoSizeText = true,
-      this.isDiamond = false});
+  const ProductInfoItem({
+    super.key,
+    required this.productDetails,
+    this.onTap,
+    this.onTapMenuButton,
+    this.padding,
+    this.margin = EdgeInsets.zero,
+    this.onTap360View,
+    this.onTapCertificate,
+    this.onTapUSA,
+    this.onTapImageViewer,
+    this.onTapDNA,
+    this.isSelectedBackground = false,
+    this.selectedBackgroundColor,
+    this.isShowMore,
+    this.productFeaturesList,
+    this.isAutoSizeText = true,
+    this.isDiamond = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +114,17 @@ class ProductInfoItem extends StatelessWidget {
 
   Widget _buildSlotFirstWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
     TextStyle shapeTextStyle = productInfoItemStyle.stoneShapeTextStyle;
+    //  Widget myRow = buildHorizontalListview(
+    //       productFeaturesList ?? [],
+    //       shapeTextStyle,
+    //       _buildDivider(style),
+    //     );
+    //     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    //       SizedBox(height: 16.h),
+    //       SizedBox(height: 32.h, child: myRow),
+    //       const Divider(),
+    //       SizedBox(height: 16.h),
+    //     ]);
     return Column(children: [
       SizedBox(height: 16.h),
       if (isDiamond) ...[
@@ -355,6 +369,38 @@ class ProductInfoItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildHorizontalListview(List<String> texts, TextStyle style, Widget divider) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: texts.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SmartText(texts[index], isAutoSizeText: true, style: style),
+            divider,
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildRow(List<String> texts, TextStyle style, Widget divider) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: texts.expand((text) {
+        return [
+          SmartText(text, isAutoSizeText: true, style: style),
+          divider,
+        ];
+      }).toList()
+        ..removeLast(), // Remove the last divider
     );
   }
 }

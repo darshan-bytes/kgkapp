@@ -157,6 +157,7 @@ class AppImages {
   //Share Presentation
   static const String icQrCode = 'assets/images/ic_qr_code.svg';
   static const String icWhatsapp = 'assets/images/ic_whatsapp.svg';
+  static const String icOther = 'assets/images/ic_other.svg';
   static const String icFaceBook = 'assets/images/ic_face_book.svg';
   static const String icCopy = 'assets/images/ic_copy.svg';
   static const String icAnyoneWithLink = 'assets/images/ic_anyone_with_link.svg';
@@ -164,20 +165,24 @@ class AppImages {
   static const String icMoreVerticalCircle = 'assets/images/ic_more_vertical_circle.svg';
 
   //Presentation
-  static String icAddComment = 'assets/images/ic_add_comment.svg';
-  static String icVersionHistory = 'assets/images/ic_version_history.svg';
+  static const String icAddComment = 'assets/images/ic_add_comment.svg';
+  static const String icVersionHistory = 'assets/images/ic_version_history.svg';
 
-  static String icClock = 'assets/images/ic_clock.svg';
+  static const String icClock = 'assets/images/ic_clock.svg';
 
   //Send Comment
-  static String icSendComment = 'assets/images/ic_send_comment.svg';
-  static String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
+  static const String icSendComment = 'assets/images/ic_send_comment.svg';
+  static const String icFindStorePin = 'assets/images/ic_find_store_pin.svg';
 
   //ic_more_vertical
-  static String icMoreVertical = 'assets/images/ic_more_vertical.svg';
-  static String icImgSearch = 'assets/images/ic_img_search.png';
-  static String icSearchImgThumbnail = 'assets/images/ic_search_img_thumbnail.svg';
-  static String icDelete = 'assets/images/ic_delete.png';
-  static String icAuctionLabel = 'assets/images/ic_auction_label.svg';
-  static String icBadge = 'assets/images/ic_badge.svg';
+  static const String icMoreVertical = 'assets/images/ic_more_vertical.svg';
+  static const String icImgSearch = 'assets/images/ic_img_search.png';
+  static const String icSearchImgThumbnail = 'assets/images/ic_search_img_thumbnail.svg';
+  static const String icNoInternetImage = 'assets/images/ic_no_internet.svg';
+  static const String icOneRing = 'assets/images/ic_one_ring.svg';
+  static const String icTwoRing = 'assets/images/ic_two_ring.svg';
+  static const String icThreeRing = 'assets/images/ic_three_ring.svg';
+  static const String icDelete = 'assets/images/ic_delete.png';
+  static const String icAuctionLabel = 'assets/images/ic_auction_label.svg';
+  static const String icBadge = 'assets/images/ic_badge.svg';
 }

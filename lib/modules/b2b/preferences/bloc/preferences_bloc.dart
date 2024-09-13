@@ -18,6 +18,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     on<PreferencesChangeCountryEvent>(_onChangeCountryEvent);
     on<PreferencesChangeLanguageEvent>(_onChangeLanguageEvent);
     on<PreferencesChangeCurrencyEvent>(_onChangeCurrencyEvent);
+    on<PreferencesSaveEvent>(_onSaveEvent);
   }
 
   void _onInitialEvent(PreferencesInitialEvent event, Emitter<PreferencesState> emit) {
@@ -31,18 +32,16 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     countryList.add(CountryModel(name: "Australia", code: "AU"));
 
     languageList.add(LanguageModel(name: "English", symbol: "en"));
-    languageList.add(LanguageModel(name: "Hindi", symbol: "hi"));
-    languageList.add(LanguageModel(name: "Spanish", symbol: "es"));
     languageList.add(LanguageModel(name: "French", symbol: "fr"));
 
-    currencyList.add(CurrencyModel(name: "Dollar (\$)"));
-    currencyList.add(CurrencyModel(name: "Pound (£)"));
-    currencyList.add(CurrencyModel(name: "Euro (€)"));
-    currencyList.add(CurrencyModel(name: "Rupee (₹)"));
+    StorageManager().getCurrencyList().forEach((element) {
+      currencyList.add(CurrencyModel(name: element.name ?? '', symbol: element.symbol ?? '\$'));
+    });
 
     selectedCountry = countryList.first;
-    selectedLanguage = languageList.first;
-    selectedCurrency = currencyList.first;
+    selectedLanguage = languageList.firstWhereOrNull((element) => element.symbol == (StorageManager().getLocale() ?? 'en'));
+    selectedCurrency =
+        currencyList.firstWhereOrNull((element) => element.name == (StorageManager().getSelectedCurrency() ?? currencyList.first.name));
 
     emit(PreferencesReloadState());
     emit(PreferencesChangeCountryState());
@@ -65,6 +64,14 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   void _onChangeCurrencyEvent(PreferencesChangeCurrencyEvent event, Emitter<PreferencesState> emit) {
     emit(PreferencesReloadState());
     selectedCurrency = event.currency;
+    if (selectedCurrency != null) {
+      StorageManager().setSelectedCurrency(selectedCurrency!.name);
+      StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
+    }
     emit(PreferencesChangeCurrencyState());
+  }
+
+  void _onSaveEvent(PreferencesSaveEvent event, Emitter<PreferencesState> emit) {
+    BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(selectedLanguage?.symbol ?? 'en', context: event.context));
   }
 }

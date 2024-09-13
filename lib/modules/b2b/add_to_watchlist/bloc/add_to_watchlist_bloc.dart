@@ -9,12 +9,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
 
   bool get isRemove => actionType == WatchlistActionType.remove;
   WatchlistActionType actionType = WatchlistActionType.add;
-  List<WatchlistDetailsModel> arrWatchlist = [
-    WatchlistDetailsModel(name: "My Watchlist"),
-    WatchlistDetailsModel(name: "John Samanta"),
-    WatchlistDetailsModel(name: "Jenny Wilson"),
-    WatchlistDetailsModel(name: "Alex Williams"),
-  ];
+  List<WatchlistData> arrWatchlist = [];
 
   final List<WatchlistSelectionModel> _arrSelectedWatchlist = [
     WatchlistSelectionModel(name: APPStrings.notifyWhenProductIsInStock.tr),
@@ -30,32 +25,47 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
     }
   }
 
-  WatchlistDetailsModel? selectedWatchlistName;
+  WatchlistData? selectedWatchlist;
 
-  ProductDetails? productDetails;
+  ProductDetailsModel? productDetails;
+
+  late WatchlistBloc watchlistBloc;
 
   AddToWatchlistBloc() : super(const AddToWatchlistInitial()) {
     on<AddToWatchlistInitialEvent>(_onAddToWatchlistInitialEvent);
     on<WatchlistChangeNameEvent>(_onChangeWatchList);
     on<WatchlistCheckEvent>(_onSelectedWatchlistEvent);
+    on<AddToWatchListSaveEvent>(_onAddToWatchListSave);
   }
 
-  void _onAddToWatchlistInitialEvent(AddToWatchlistInitialEvent event, Emitter<AddToWatchlistState> emit) {
-    if (productDetails != event.productDetails || actionType != event.actionType) {
-      actionType = event.actionType;
-      emit(const AddToWatchlistReloadState());
-      productDetails = event.productDetails;
-      selectedWatchlistName = null;
-      for (WatchlistSelectionModel element in _arrSelectedWatchlist) {
-        element.isSelected = false;
-      }
+  Future<void> _onAddToWatchlistInitialEvent(AddToWatchlistInitialEvent event, Emitter<AddToWatchlistState> emit) async {
+    actionType = event.actionType;
+    watchlistBloc = BlocProvider.of<WatchlistBloc>(event.context);
+    for (WatchlistSelectionModel element in _arrSelectedWatchlist) {
+      element.isSelected = false;
       emit(const AddToWatchlistLoadedState());
     }
+    if (actionType == WatchlistActionType.add) {
+      watchlistBloc.add(WatchListLoadFullListEvent(event.context));
+      arrWatchlist = await watchlistBloc.allWatchlistFull.future;
+      selectedWatchlist = null;
+    } else {
+      selectedWatchlist = event.watchlistData;
+      NotificationSettings? notificationSettings = selectedWatchlist?.products
+          ?.firstWhereOrNull((WatchlistProducts element) => element.productId == event.productDetails.productId)
+          ?.notificationSettings;
+      if (notificationSettings != null) {
+        _arrSelectedWatchlist[1].isSelected = notificationSettings.notifyOnPriceDrop ?? false;
+        _arrSelectedWatchlist[2].isSelected = notificationSettings.notifyOnDiscount ?? false;
+      }
+    }
+    emit(const AddToWatchlistReloadState());
+    productDetails = event.productDetails;
   }
 
   void _onChangeWatchList(WatchlistChangeNameEvent event, Emitter<AddToWatchlistState> emit) {
     emit((const AddToWatchlistReloadState()));
-    selectedWatchlistName = event.selectedWatchlist;
+    selectedWatchlist = event.selectedWatchlist;
     emit(const WatchlistChangeNameState());
   }
 
@@ -63,5 +73,45 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
     emit(const AddToWatchlistReloadState());
     arrSelectedWatchlist[event.index].isSelected = !arrSelectedWatchlist[event.index].isSelected;
     emit(WatchlistSelectedState(event.index));
+  }
+
+  Future<void> _onAddToWatchListSave(AddToWatchListSaveEvent event, Emitter<AddToWatchlistState> emit) async {
+    if (selectedWatchlist?.sId == null) {
+      Utils.showMessage(APPStrings.pleaseSelectWatchlist.tr);
+      return;
+    }
+    Map<String, dynamic> body = {
+      ApiKey.productId: productDetails?.productId,
+      ApiKey.commodity: productDetails?.commodity?.value,
+      ApiKey.notifyOnPriceDrop: _arrSelectedWatchlist[1].isSelected,
+      ApiKey.notifyOnDiscount: _arrSelectedWatchlist[2].isSelected,
+    };
+
+    Either<ErrorResponse, CommonResponse>? response;
+    if (actionType == WatchlistActionType.remove) {
+      response = await AppRepository(event.context).watchListRemoveProduct(selectedWatchlist!.sId ?? '', productDetails?.productId ?? '');
+    } else if (selectedWatchlist?.products?.map((WatchlistProducts e) => e.productId).contains(productDetails?.productId) == false) {
+      response = await AppRepository(event.context).watchListAddProduct(selectedWatchlist!.sId ?? '', body);
+    } else {
+      response =
+          await AppRepository(event.context).watchListUpdateProduct(selectedWatchlist!.sId ?? '', productDetails?.productId ?? '', body);
+    }
+
+    await response?.fold((ErrorResponse error) {
+      Utils.showMessage(error.message ?? '');
+    }, (CommonResponse response) async {
+      // Resets the watchlist full list to get updated data when the user clicks on the add to watchlist button for the same product again.
+      // This requires calling the update product API.
+      watchlistBloc.resetAllWatchlistFull();
+      switch (actionType) {
+        case WatchlistActionType.edit:
+        case WatchlistActionType.remove:
+          event.context.pop(arguments: {RoutesData.isWatchlistUpdated: true});
+        default:
+          event.context.pop();
+      }
+      await Future.delayed(const Duration(milliseconds: 500));
+      Utils.showMessage(response.message ?? '');
+    });
   }
 }

@@ -15,10 +15,11 @@ class StonesLandingScreen extends StatelessWidget {
         return Scaffold(
           appBar: _buildAppBar(bloc, context, style),
           body: SafeArea(
-            child: ListView(
-              shrinkWrap: true,
-              children: [_getBody(context, bloc, style, homeScreenStyle)],
-            ),
+            child: _getBody(context, bloc, style, homeScreenStyle),
+            //  child: ListView(
+            //    shrinkWrap: true,
+            //    children: [_getBody(context, bloc, style, homeScreenStyle)],
+            //  ),
           ),
         );
       },

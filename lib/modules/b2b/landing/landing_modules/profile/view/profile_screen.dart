@@ -222,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
           _buildPopupItem(
               title: APPStrings.logout.tr,
               onTap: () {
-                _buildLogoutPopup(context);
+                _buildLogoutPopup(context, bloc);
               },
               image: AppImages.icLogout,
               textStyle: style.logoutTextStyle),
@@ -230,7 +230,7 @@ class ProfileScreen extends StatelessWidget {
           _buildPopupItem(
               title: APPStrings.deleteAccount.tr,
               onTap: () {
-                _buildDeletePopup(context);
+                _buildDeletePopup(context, bloc);
               },
               image: AppImages.icDeleteAccount,
               textStyle: style.fontTextStyle),
@@ -260,7 +260,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _buildLogoutPopup(BuildContext context) {
+  void _buildLogoutPopup(BuildContext context, ProfileBloc bloc) {
     Utils.showSmartModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -270,9 +270,7 @@ class ProfileScreen extends StatelessWidget {
               title: APPStrings.logoutAsk.tr,
               message: APPStrings.logoutMsg.tr,
               onApproved: () {
-                BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-                context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+                bloc.add(LogoutEvent(context: context));
               },
               onDenied: () => context.pop(),
               onApprovedText: APPStrings.logout.tr,
@@ -280,7 +278,7 @@ class ProfileScreen extends StatelessWidget {
             ));
   }
 
-  void _buildDeletePopup(BuildContext context) {
+  void _buildDeletePopup(BuildContext context, ProfileBloc bloc) {
     Utils.showSmartModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -290,8 +288,7 @@ class ProfileScreen extends StatelessWidget {
               title: APPStrings.deleteAccountAsk.tr,
               message: APPStrings.deleteAccountDesc.tr,
               onApproved: () {
-                BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: context));
-                context.pushNamedAndRemoveUntil(AppRoutes.getReadyPage, (route) => false);
+                bloc.add(DeleteProfileEvent(context: context));
               },
               onDenied: () => context.pop(),
               onApprovedText: APPStrings.delete.tr,

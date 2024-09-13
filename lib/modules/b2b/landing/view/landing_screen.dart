@@ -15,7 +15,7 @@ class LandingScreen extends StatelessWidget {
               buildWhen: (previous, current) => current is LandingChangeTabState,
               builder: (context, state) => PopScope(
                 canPop: landingBloc.currentIndex == 0,
-                onPopInvoked: (didPop) {
+                onPopInvokedWithResult: (didPop, result) {
                   landingBloc.add(LandingChangeTabEvent(0, context: context));
                 },
                 child: landingBloc.pages[landingBloc.currentIndex],

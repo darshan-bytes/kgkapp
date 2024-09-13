@@ -1,6 +1,6 @@
 import 'package:kgk/kgk.dart';
 
-class ProductDetails {
+class ProductDetailsModel {
   String? productId;
   String? name;
   String? offerPrice;
@@ -21,10 +21,31 @@ class ProductDetails {
   String? company;
   String? productSku;
   bool showMore;
+  double? ctsOrGms;
+  String? rappaportPrice;
+  String? priceCts;
+  String? discountPrice;
+  String? finalPrice;
+  String? lotCode;
+  String? shape;
+  String? fluorescence;
+  String? labs;
+  String? lsp;
+  String? color;
+  String? clarity;
+  String? cut;
+  String? certificateFile;
+  String? openDnaUrl;
+  int? reviewCount;
+  double? rating;
+  String? brandName;
+  Commodity? commodity;
+  bool isFavourite;
+  String? wishlistId;
   bool isForAuction;
   bool isCommentVisible;
 
-  ProductDetails({
+  ProductDetailsModel({
     this.productId,
     this.name,
     this.offerPrice,
@@ -45,7 +66,32 @@ class ProductDetails {
     this.company,
     this.productSku,
     this.showMore = false,
+    this.ctsOrGms,
+    this.rappaportPrice,
+    this.priceCts,
+    this.discountPrice,
+    this.finalPrice,
+    this.lotCode,
+    this.shape,
+    this.fluorescence,
+    this.labs,
+    this.lsp,
+    this.color,
+    this.clarity,
+    this.cut,
+    this.certificateFile,
+    this.openDnaUrl,
+    this.reviewCount,
+    this.rating,
+    this.brandName,
+    this.commodity,
+    this.isFavourite = false,
+    this.wishlistId,
     this.isForAuction = false,
     this.isCommentVisible = false,
   });
+}
+
+extension ProductDetailsExtension on ProductDetailsModel {
+  String get displayPrice => offerPrice ?? originalPrice ?? '';
 }

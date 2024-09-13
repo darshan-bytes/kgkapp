@@ -17,8 +17,8 @@ class CmsWebViewBloc extends Bloc<CmsWebViewEvent, CmsWebViewState> {
     CmsWebViewDataModel? webViewData = event.context.routesData?[RoutesData.cmsPageData];
     appBloc = BlocProvider.of<AppBloc>(event.context);
     if (webViewData != null) {
-      String url = webViewData.url ?? '';
       appBarTitle = webViewData.title ?? '';
+      String url = webViewData.url ?? '';
 
       webViewController = WebViewController()..setJavaScriptMode(JavaScriptMode.unrestricted);
       if (url.isNotNullNorEmpty) {

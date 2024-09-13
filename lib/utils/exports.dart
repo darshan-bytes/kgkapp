@@ -129,6 +129,7 @@ export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_mode
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categories_bloc.dart';
+
 //model
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categories_screen.dart';
@@ -271,6 +272,7 @@ export 'package:kgk/modules/common_modules/cms_web_view/model/cms_web_view_data_
 export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen.dart';
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+
 // bloc
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
 export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
@@ -411,11 +413,40 @@ export 'package:readmore/readmore.dart';
 export 'package:syncfusion_flutter_calendar/calendar.dart';
 export 'package:syncfusion_flutter_charts/charts.dart' hide LabelPlacement, EdgeLabelPlacement;
 export 'package:syncfusion_flutter_sliders/sliders.dart';
+export 'package:dartz/dartz.dart' hide State;
+export 'package:kgk/data/network/model/user_response.dart';
+export 'package:kgk/data/network/client/api_client.dart';
+export 'package:kgk/data/network/repository/user_repository.dart';
+export 'package:kgk/data/network/api_const/api_keys.dart';
 export 'package:video_player/video_player.dart';
 export 'package:kgk/modules/common_modules/image_search/bloc/image_search_bloc.dart';
 export 'package:kgk/modules/common_modules/image_search/view/image_search_screen.dart';
 export 'package:kgk/widgets/my_order_new_item.dart';
 export 'package:webview_flutter/webview_flutter.dart';
+export 'package:kgk/data/network/model/common_response.dart';
+export 'package:kgk/utils/exception_file.dart';
+export 'package:kgk/modules/authentication/forgot_password/model/forgot_password_response_model.dart';
+export 'package:kgk/model/currency_model.dart';
+export 'package:kgk/widgets/token_expire_dialog.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/home/widgets/home_widgets.dart';
+export 'package:kgk/data/network/repository/app_repository.dart';
+export 'package:html/parser.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/diamond_listing_model.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/stone_listing/model/gemstone_listing_model.dart';
+export 'package:kgk/modules/b2b/watchlist/model/watchlist_data_model.dart';
+export 'package:kgk/data/network/model/pagination_data_model.dart';
+export 'package:kgk/modules/b2b/product_list_grid/model/jewellery_listing_model.dart';
+export 'package:kgk/model/wishlist_response_model.dart';
+export 'package:kgk/modules/common_modules/product_details/model/product_review_model.dart';
+export 'package:http_parser/http_parser.dart';
+export 'package:mime_type/mime_type.dart';
+export 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
+export 'package:kgk/widgets/share_option_sheet.dart';
+export 'package:qr_flutter/qr_flutter.dart';
+export 'package:share_plus/share_plus.dart';
+export 'package:kgk/app/wishlist_updater_service/wishlist_updater_service_bloc.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/my_bag_data_model.dart';
+export 'package:device_info_plus/device_info_plus.dart';
 export 'package:kgk/model/style_design_model.dart';
 export 'package:kgk/widgets/smart_style_design_listing.dart';
 export 'package:kgk/widgets/concept_item.dart';

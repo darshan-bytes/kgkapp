@@ -8,13 +8,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
-  final List<String> imgList = [
-    "https://i.ibb.co/8s6hWz2/image-414.png",
-    "https://i.ibb.co/8s6hWz2/image-414.png",
-    "https://i.ibb.co/8s6hWz2/image-414.png",
-    "https://i.ibb.co/8s6hWz2/image-414.png",
-    "https://i.ibb.co/8s6hWz2/image-414.png",
-  ];
+  final List<String> imgList = [];
 
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDefault;
 
@@ -22,7 +16,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   GlobalKey<SmartExpansionTileState> stoneDetailsKey = GlobalKey();
 
   int current = 0;
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
 
   StoneDetailBloc() : super(StoneDetailInitial()) {
     on<StoneDetailInitialEvent>(_stoneDetailInitialEvent);

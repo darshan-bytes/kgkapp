@@ -1,8 +1,6 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/model/style_design_model.dart';
 
 part 'styles_listing_event.dart';
-
 part 'styles_listing_state.dart';
 
 class StylesListingBloc extends Bloc<StylesListingEvent, StylesListingState> {

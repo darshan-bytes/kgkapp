@@ -153,6 +153,7 @@ class LightModeTheme extends AppTheme {
         labelStyle: interRegularTextStyle,
         forgotPasswordStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         registerTextStyle: interRegularTextStyle.copyWith(color: colors.color083458),
+        skipTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 16.sp),
       );
 
   @override
@@ -944,6 +945,10 @@ class LightModeTheme extends AppTheme {
         stepValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.white),
         textStyleColor: colors.color303538,
         dropDownTextStyle: interRegularTextStyle.copyWith(fontSize: 20.sp),
+        topSellingEleganceColor: colors.colorF7EEE9,
+        topSellingElegance2Color: colors.colorF2F2F6,
+        topSellingElegance3Color: colors.colorECECEA,
+        getInspiredSectionColor: colors.colorF2E6E0,
       );
 
   @override
@@ -1262,6 +1267,21 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
+  NoInternetScreenStyle get noInternetScreenStyle => NoInternetScreenStyle(
+      noInternetTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
+      noInternetSubtitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C));
+
+  @override
+  QRCodeDialogStyle get qrCodeDialogStyle => QRCodeDialogStyle(
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+        titleStyle: interBoldTextStyle.copyWith(fontSize: 20.sp),
+        subTitleStyle: interRegularTextStyle,
+        borderColor: colors.colorD3DAE0,
+        shadowColor: colors.black.withOpacity(0.1),
+      );
+
+  @override
   StyleDesignListStyle get styleDesignListStyle => StyleDesignListStyle(
         titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         subTitleStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp),
@@ -1270,8 +1290,6 @@ class LightModeTheme extends AppTheme {
       );
 
   @override
-  ConceptListingStyle get conceptListingStyle => ConceptListingStyle(
-    titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
-    borderColor: colors.colorD3DAE0
-  );
+  ConceptListingStyle get conceptListingStyle =>
+      ConceptListingStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp), borderColor: colors.colorD3DAE0);
 }
