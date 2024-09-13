@@ -177,4 +177,7 @@ class AppImages {
   static String icMoreVertical = 'assets/images/ic_more_vertical.svg';
   static String icImgSearch = 'assets/images/ic_img_search.png';
   static String icSearchImgThumbnail = 'assets/images/ic_search_img_thumbnail.svg';
+  static String icDelete = 'assets/images/ic_delete.png';
+  static String icAuctionLabel = 'assets/images/ic_auction_label.svg';
+  static String icBadge = 'assets/images/ic_badge.svg';
 }

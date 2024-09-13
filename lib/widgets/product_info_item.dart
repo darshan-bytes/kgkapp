@@ -14,22 +14,26 @@ class ProductInfoItem extends StatelessWidget {
   final void Function()? onTapImageViewer;
   final void Function()? onTapDNA;
   final bool? isShowMore;
+  final bool isAutoSizeText;
+  final bool isDiamond;
 
-  const ProductInfoItem({
-    super.key,
-    required this.productDetails,
-    this.onTap,
-    this.onTapMenuButton,
-    this.padding,
-    this.margin = EdgeInsets.zero,
-    this.onTap360View,
-    this.onTapCertificate,
-    this.onTapUSA,
-    this.onTapImageViewer,
-    this.onTapDNA,
-    this.isSelectedBackground = false,
-    this.selectedBackgroundColor,
-      this.isShowMore});
+  const ProductInfoItem(
+      {super.key,
+      required this.productDetails,
+      this.onTap,
+      this.onTapMenuButton,
+      this.padding,
+      this.margin = EdgeInsets.zero,
+      this.onTap360View,
+      this.onTapCertificate,
+      this.onTapUSA,
+      this.onTapImageViewer,
+      this.onTapDNA,
+      this.isSelectedBackground = false,
+      this.selectedBackgroundColor,
+      this.isShowMore,
+      this.isAutoSizeText = true,
+      this.isDiamond = false});
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +43,39 @@ class ProductInfoItem extends StatelessWidget {
     ProductInfoClarityChat chart = productDetails.productInfoClarityChat ?? ProductInfoClarityChat();
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: padding ?? EdgeInsets.all(16.0.w),
-        margin: margin,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.r),
-          color: isSelectedBackground ? (selectedBackgroundColor ?? style.selectedBackgroundColor) : style.backgroundColor,
-          border: Border.all(color: style.borderColor),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildProductNameView(chart, style),
-            _buildSlotFirstWidget(chart, style, productInfoItemStyle),
-            _buildSlotSecondWidget(chart, style, productInfoItemStyle),
-            _buildSlotThirdWidget(chart, style, productInfoItemStyle, showMoreDetails),
-            _buildSlotFourthWidget(chart, style)
-          ],
-        ),
+      child: Stack(
+        children: [
+          Container(
+            padding: padding ?? EdgeInsets.all(16.0.w),
+            margin: margin,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.r),
+              color: isSelectedBackground ? (selectedBackgroundColor ?? style.selectedBackgroundColor) : style.backgroundColor,
+              border: Border.all(color: style.borderColor),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (productDetails.isForAuction) SizedBox(height: 30.h),
+                _buildProductNameView(chart, style),
+                _buildSlotFirstWidget(chart, style, productInfoItemStyle),
+                _buildSlotSecondWidget(chart, style, productInfoItemStyle),
+                SizedBox(height: 16.h),
+                _buildSlotFourthWidget(chart, style, productInfoItemStyle)
+              ],
+            ),
+          ),
+          if (productDetails.isForAuction)
+            Positioned(
+                left: -3.w,
+                child: SmartImage(
+                  path: AppImages.icAuctionLabel,
+                  height: 32.w,
+                  width: 92.w,
+                  fit: BoxFit.fill,
+                  margin: EdgeInsets.only(top: 14.h),
+                )),
+        ],
       ),
     );
   }
@@ -72,7 +91,7 @@ class ProductInfoItem extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: style.headingStyle,
-            isAutoSizeText: true,
+            isAutoSizeText: isAutoSizeText,
           ),
         ),
         SizedBox(width: 8.w),
@@ -94,25 +113,27 @@ class ProductInfoItem extends StatelessWidget {
     TextStyle shapeTextStyle = productInfoItemStyle.stoneShapeTextStyle;
     return Column(children: [
       SizedBox(height: 16.h),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(
-              "${chart.cut?.substring(0, 2).toUpperCase()}/${chart.polish?.substring(0, 2).toUpperCase()}/${chart.symmetry?.substring(0, 2).toUpperCase()}",
-              isAutoSizeText: true,
-              style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
-          _buildDivider(style),
-          SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
-        ],
-      ),
-      SizedBox(height: 16.h),
+      if (isDiamond) ...[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
+            _buildDivider(style),
+            SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+            _buildDivider(style),
+            SmartText(
+                "${chart.cut?.substring(0, 2).toUpperCase()}/${chart.polish?.substring(0, 2).toUpperCase()}/${chart.symmetry?.substring(0, 2).toUpperCase()}",
+                isAutoSizeText: true,
+                style: shapeTextStyle),
+            _buildDivider(style),
+            SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+            _buildDivider(style),
+            SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
+          ],
+        ),
+        SizedBox(height: 16.h),
+      ],
       const Divider(),
       SizedBox(height: 16.h),
     ]);
@@ -120,10 +141,22 @@ class ProductInfoItem extends StatelessWidget {
 
   Widget _buildSlotSecondWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
     return SmartGridView(runSpacing: 8.h, items: [
-      _buildRowDetailItem(APPStrings.rapRate.tr, chart.rapRate, style, productInfoItemStyle),
-      _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
-      _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
-      _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
+      if (!isDiamond) ...[
+        _buildRowDetailItem(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.color.tr, chart.colour, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.origin.tr, chart.origin, style, productInfoItemStyle),
+      ],
+      if (isDiamond) ...[
+        _buildRowDetailItem(APPStrings.rapRate.tr, chart.rapRate, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
+      ],
+      if (!isDiamond) ...[
+        _buildRowDetailItem(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle),
+      ]
     ]);
   }
 
@@ -140,38 +173,47 @@ class ProductInfoItem extends StatelessWidget {
                 SizedBox(height: 16.h),
                 const Divider(),
                 SizedBox(height: 16.h),
-                SmartGridView(columns: 3, runSpacing: 8.h, items: [
-                  _buildDetailColumn(APPStrings.lotNo.tr, chart.lotNumber, style, productInfoItemStyle),
-                  _buildDetailColumn(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
-                  _buildDetailColumn(APPStrings.fluorescence.tr, chart.fluorescence, style, productInfoItemStyle),
-                  _buildDetailColumn(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
-                ]),
-              ],
-              InkWell(
-                onTap: () {
-                  showMoreDetails.value = !showMoreDetails.value;
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SmartText(
-                        showMoreDetails.value ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
-                        isAutoSizeText: true,
-                        style: productInfoItemStyle.moreDetailsTextStyle,
-                      ),
-                      SizedBox(width: 4.w),
-                      SmartImage(
-                        path: showMoreDetails.value ? AppImages.icArrowUp : AppImages.icArrowDown,
-                        height: 16.h,
-                        width: 16.w,
-                      ),
+                if (!isDiamond)
+                  SmartGridView(columns: 3, runSpacing: 8.h, items: [
+                    _buildDetailColumn(APPStrings.lotNo.tr, chart.lotNumber, style, productInfoItemStyle),
+                    _buildDetailColumn(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
+                    if (isDiamond) ...[
+                      _buildDetailColumn(APPStrings.fluorescence.tr, chart.fluorescence, style, productInfoItemStyle),
+                      _buildDetailColumn(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
                     ],
+                    _buildDetailColumn(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
+                    _buildDetailColumn(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle),
+                    _buildDetailColumn(APPStrings.color.tr, chart.colour, style, productInfoItemStyle),
+                    _buildDetailColumn(APPStrings.origin.tr, chart.origin, style, productInfoItemStyle),
+                  ]),
+              ],
+              if (!isDiamond)
+                InkWell(
+                  onTap: () {
+                    showMoreDetails.value = !showMoreDetails.value;
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SmartText(
+                          showMoreDetails.value ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+                          isAutoSizeText: true,
+                          style: productInfoItemStyle.moreDetailsTextStyle,
+                        ),
+                        SizedBox(width: 4.w),
+                        SmartImage(
+                          path: showMoreDetails.value ? AppImages.icArrowUp : AppImages.icArrowDown,
+                          height: 16.h,
+                          width: 16.w,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              )
+              if (isDiamond) SizedBox(height: 16.h),
             ],
           );
         },
@@ -179,9 +221,19 @@ class ProductInfoItem extends StatelessWidget {
     );
   }
 
-  Widget _buildSlotFourthWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style) {
+  Widget _buildSlotFourthWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
     return Column(
       children: [
+        if (!isDiamond) ...[
+          const Divider(),
+          SizedBox(height: 16.h),
+          SmartGridView(runSpacing: 8.h, items: [
+            _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
+            _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
+            _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
+          ]),
+          SizedBox(height: 16.h),
+        ],
         const Divider(),
         SizedBox(height: 16.h),
         _buildActionGrid(style),

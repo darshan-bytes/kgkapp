@@ -51,16 +51,11 @@ class ConceptListScreen extends StatelessWidget {
                                   builder: (context, state) {
                                     return Column(
                                       children: [
-                                        B2BListingItem(
+                                        ConceptItem(
+                                          conceptListModel: conceptListBloc.conceptList[index],
                                           onTap: () {
                                             showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
                                           },
-                                          onTapCircleWithText: () {
-                                            context.pushNamed(AppRoutes.presentationPage,
-                                                arguments: {RoutesData.conceptId: conceptListBloc.conceptList[index].id});
-                                          },
-                                          type: B2BListingType.conceptListingType,
-                                          listingItemModel: conceptListBloc.conceptList[index],
                                         ),
                                         if (state is ConceptListLoadingMoreState && index == conceptListBloc.conceptList.length - 1)
                                           const SmartCircularProgressIndicator(),
@@ -115,7 +110,7 @@ class ConceptListScreen extends StatelessWidget {
     );
   }
 
-  void showConceptDetailBottomSheet({required BuildContext context, required B2BCustomListingDataModel concept}) {
+  void showConceptDetailBottomSheet({required BuildContext context, required ConceptListModel concept}) {
     Utils.showSmartModalBottomSheet(
         context: context,
         builder: (context) {
@@ -128,7 +123,7 @@ class ConceptListScreen extends StatelessWidget {
               "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
               "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
             ],
-            conceptNo: concept.strConceptNumber ?? '',
+            conceptNo: concept.id ?? '',
             conceptDesc:
                 'A jewellery collection inspired by the moon\'s allure. Rings, necklaces, and earrings that capture its luminous beauty.',
           );

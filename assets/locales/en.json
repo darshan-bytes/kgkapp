@@ -672,5 +672,10 @@
   "validity": "Validity",
   "view_more": "View more",
   "shop_by_x": "Shop by {#}",
-  "manufacturing_status": "Manufacturing Status"
+  "manufacturing_status": "Manufacturing Status",
+  "cancel_item_list": "Cancel item list",
+  "commodity": "Commodity",
+  "origin": "Origin",
+  "on_hold" : "On hold",
+  "wip" : "WIP"
 }

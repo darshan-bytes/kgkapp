@@ -244,7 +244,12 @@ class StoneListingScreen extends StatelessWidget {
                         )
                       : ProductInfoItem(
                           onTap360View: () => printWrapped("onTap360View"),
-                          onTapDNA: () => printWrapped("onTapDNA"),
+                          onTapDNA: () {
+                            if(diamondListingBloc.screenIdentifier != ScreenIdentifier.productForGemstones){
+                              context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                            }
+                          },
                           onTapCertificate: () => printWrapped("onTapCertificate"),
                           onTapImageViewer: () => printWrapped("onTapImageViewer"),
                           onTapUSA: () => printWrapped("onTapUSA"),
@@ -272,9 +277,14 @@ class StoneListingScreen extends StatelessWidget {
                           },
                           productDetails: ProductDetails(
                             productInfoClarityChat: ProductInfoClarityChat(
+                              carat: "36.09",
+                                commodity: "Sapphire",
+                                origin: "Sri Lanka",
                                 rapRate: "\$35,500.00",
                                 productId: "1",
-                                productName: "1.00 Cts Round Diamond",
+                                productName: diamondListingBloc.screenIdentifier == ScreenIdentifier.productForGemstones
+                                    ? "0.35 Carat Super Premium Oval Moissanite"
+                                    : "1.00 Cts Round Diamond",
                                 ct: "10.04",
                                 shape: "Marquise",
                                 colour: "H",
@@ -282,7 +292,7 @@ class StoneListingScreen extends StatelessWidget {
                                 lotNumber: "MBFG716306",
                                 certificateNumber: "230000066395",
                                 measurements: "10.18 x 8.34 x 6.14",
-                                lab: "GIA",
+                                lab: "GRS",
                                 cut: "Excellent",
                                 polish: "Excellent",
                                 symmetry: "Excellent",
@@ -297,8 +307,16 @@ class StoneListingScreen extends StatelessWidget {
                             productId: "1",
                             diamond: "1.5 gram",
                             gram: "1.5 gram",
-                            imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
-                          )),
+                            imageUrl: diamondListingBloc.screenIdentifier == ScreenIdentifier.productForGemstones
+                                ? index % 2 == 0
+                                    ? "https://i.ibb.co/477f41r/Group-1410089379.png"
+                                    : "https://i.ibb.co/sggT4PJ/Group-1410089378.png"
+                                : "https://i.ibb.co/swb5gVs/Round.png",
+                            isForAuction: index % 2 == 0,
+                          ),
+                          isAutoSizeText: false,
+                          isDiamond: diamondListingBloc.screenIdentifier != ScreenIdentifier.productForGemstones,
+                        ),
                   separatorBuilder: (context, index) => SizedBox(height: 17.h),
                 ),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),

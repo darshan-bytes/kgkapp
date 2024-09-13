@@ -5,7 +5,7 @@ part 'concept_list_event.dart';
 part 'concept_list_state.dart';
 
 class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
-  List<B2BCustomListingDataModel> conceptList = [];
+  List<ConceptListModel> conceptList = [];
   TextEditingController searchController = TextEditingController();
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
@@ -37,19 +37,13 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     );
     conceptList = List.generate(
       10,
-      (index) => B2BCustomListingDataModel(
-        id: index.toString(),
-        strConceptNumber: (index + 1).toString(),
-        strPresentation: '1',
-        strConceptName: 'Concept Name',
-        status: ProjectStatus.blueInProgress,
-        strAssignTo: 'Jenny Wilson',
-        strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
-        strMarket: 'New York, USA',
-        strMarketFlagImageUrl: 'https://i.ibb.co/wYmW2ht/United-States-of-America-US.png',
-        strCreatedBy: 'Jenny Wilson',
-        strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        strCreatedOn: '23/03/2023, 10:46',
+      (index) => ConceptListModel(
+        id: "1456$index",
+        name: 'Full Blue moon',
+        designId: '01AA6545',
+        origin: 'New York, USA',
+        status: ProjectStatus.wip,
+        date: '23/03/2024',
       ),
     ).toList();
 
@@ -67,19 +61,13 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     conceptList.addAll(
       List.generate(
         10,
-        (index) => B2BCustomListingDataModel(
-          id: index.toString(),
-          strConceptNumber: ((paginationScrollController.currentPage * 10) + index + 1).toString(),
-          strPresentation: '1',
-          strConceptName: 'Concept Name',
-          status: ProjectStatus.blueInProgress,
-          strAssignTo: 'Jenny Wilson',
-          strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
-          strMarket: 'New York, USA',
-          strMarketFlagImageUrl: 'https://i.ibb.co/wYmW2ht/United-States-of-America-US.png',
-          strCreatedBy: 'Jenny Wilson',
-          strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-          strCreatedOn: '23/03/2023, 10:46',
+        (index) => ConceptListModel(
+          id: "1456$index",
+          name: 'Full Blue moon',
+          designId: '01AA6545',
+          origin: 'New York, USA',
+          status: ProjectStatus.wip,
+          date: '23/03/2024',
         ),
       ),
     );
@@ -92,19 +80,13 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     paginationScrollController.pullToRefresh();
     conceptList = List.generate(
       20,
-      (index) => B2BCustomListingDataModel(
-        id: index.toString(),
-        strConceptNumber: (index + 1).toString(),
-        strPresentation: '1',
-        strConceptName: 'Concept Name',
-        status: ProjectStatus.blueInProgress,
-        strAssignTo: 'Jenny Wilson',
-        strAssignToImageUrl: 'https://i.ibb.co/BLyLVHS/Frame-3978.png',
-        strMarket: 'New York, USA',
-        strMarketFlagImageUrl: 'https://i.ibb.co/wYmW2ht/United-States-of-America-US.png',
-        strCreatedBy: 'Jenny Wilson',
-        strCreatedByImageUrl: 'https://i.ibb.co/hy6pH4g/Frame-3977.png',
-        strCreatedOn: '23/03/2023, 10:46',
+      (index) => ConceptListModel(
+        id: "1456$index",
+        name: 'Full Blue moon',
+        designId: '01AA6545',
+        origin: 'New York, USA',
+        status: ProjectStatus.wip,
+        date: '23/03/2024',
       ),
     ).toList();
     refreshCompleter.complete(true);

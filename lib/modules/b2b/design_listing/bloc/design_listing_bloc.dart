@@ -12,8 +12,8 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   final TextEditingController designSearchController = TextEditingController();
 
   //List of designs
-  List<B2BCustomListingDataModel> designList = _generateDesignList();
   List<B2BCustomListingDataModel> designListForGrid = _generateDesignListForGrid();
+  List<StyleDesignModel> designNewList = _generateDesignNewList();
 
   //Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
@@ -54,16 +54,16 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
   void clearData() {
     isGrid = true;
     designSearchController.clear();
-    designList.clear();
+    designNewList.clear();
     designListForGrid.clear();
-    designList.addAll(_generateDesignList());
+    designNewList.addAll(_generateDesignNewList());
     designListForGrid.addAll(_generateDesignList());
   }
 
   Future<void> _onDesignListLoadMoreEvent(DesignListLoadMoreEvent event, Emitter<DesignListingState> emit) async {
     emit(const DesignListLoadingMoreState());
     await Future.delayed(const Duration(seconds: 2));
-    designList.addAll(_generateDesignList());
+    designNewList.addAll(_generateDesignNewList());
     designListForGrid.addAll(_generateDesignListForGrid());
     paginationScrollController.isPageLoaded.complete(event.currentPage == 4);
     emit(DesignListLoadedMoreState(event.currentPage + 1));
@@ -101,6 +101,29 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     });
   }
 
+  static List<StyleDesignModel> _generateDesignNewList() {
+    return List.generate(10, (index) {
+      return StyleDesignModel(
+          id: index.toString(),
+          designId: "903405",
+          numberOfProduct: "3",
+          styleId: "01AA6545",
+          productName: "Ring",
+          productImageUrl: 'https://i.ibb.co/HgjT1rt/Image.png',
+          userImageUrl: "https://i.ibb.co/1Lq3YpF/Frame-3977.png",
+          userName: "John",
+          diamondType: "Diamond classic",
+          diamondShape: "Moncao",
+          status: ProjectStatus.onHold,
+          firstType: "M",
+          secondType: "D",
+          thirdType: "C",
+          firstGram: "18K/0.75 g",
+          secondGram: "0.167cts/3",
+          thirdGram: "0.54/2");
+    });
+  }
+
   static List<B2BCustomListingDataModel> _generateDesignListForGrid() {
     return List.generate(10, (index) {
       return B2BCustomListingDataModel(
@@ -123,7 +146,7 @@ class DesignListingBloc extends Bloc<DesignListingEvent, DesignListingState> {
     emit(DesignListingReloadState());
     await Future.delayed(const Duration(seconds: 1));
     paginationScrollController.pullToRefresh();
-    designList = _generateDesignListForGrid();
+    designNewList = _generateDesignNewList();
     designListForGrid = _generateDesignListForGrid();
     refreshCompleter.complete(true);
     emit(const DesignListingLoadedState());

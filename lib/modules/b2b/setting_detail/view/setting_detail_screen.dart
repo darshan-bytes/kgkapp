@@ -6,6 +6,7 @@ class SettingDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingDetailBloc = BlocProvider.of<SettingDetailBloc>(context);
+    final style = AppTheme.of(context).settingDetailScreenStyle;
     return Scaffold(
       appBar: SmartAppBar(
         title: 'DIY',
@@ -32,13 +33,52 @@ class SettingDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: SmartButton(
-          margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
-          onTap: () {
-            context.pushNamed(AppRoutes.completeProductPage);
-          },
-          title: APPStrings.selectSetting.tr,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+        decoration: BoxDecoration(
+          color: style.whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 7.r,
+              blurRadius: 7.r,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartImage(path: settingDetailBloc.imgList.first, height: 55.w, width: 55.w),
+              Expanded(
+                flex: 4,
+                child : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SmartText(APPStrings.approxPrice.tr, style: style.approxPriceLabelStyle),
+                    SizedBox(height: 4.w),
+                    SmartText('\$1200.00', style: style.priceStyle),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                flex: 5,
+                child: SmartButton(
+                  onTap: () {
+                    context.pushNamed(AppRoutes.completeProductPage);
+                  },
+                  title: APPStrings.selectSetting.tr,
+                  height: 55.h,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -99,20 +139,6 @@ class SettingDetailScreen extends StatelessWidget {
               SizedBox(height: 10.h),
               Divider(height: 1.h),
               SizedBox(height: 16.h),
-              Row(
-                children: [
-                  SmartText(
-                    APPStrings.approxPrice.tr,
-                    style: style.approxPriceLabelStyle,
-                  ),
-                  SizedBox(width: 12.w),
-                  SmartText(
-                    '\$1200.00',
-                    style: style.priceStyle,
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.h),
               Row(
                 children: [
                   SmartText(

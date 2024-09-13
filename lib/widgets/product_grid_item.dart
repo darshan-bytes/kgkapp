@@ -16,6 +16,7 @@ class ProductGridItem extends StatelessWidget {
   final BoxFit fit;
   final bool isCustomisable;
   final bool isOutOfStock;
+  final bool isForAuction;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final bool isStoneWithPrice;
@@ -23,6 +24,7 @@ class ProductGridItem extends StatelessWidget {
   final double? imageSize;
   final bool isCommentSelected;
   final String? buttonText;
+  final bool isBadgeVisible;
 
   const ProductGridItem({
     super.key,
@@ -43,11 +45,13 @@ class ProductGridItem extends StatelessWidget {
     this.isStoneWithPrice = false,
     this.isCustomisable = false,
     this.isOutOfStock = false,
+    this.isForAuction = false,
     this.prefixImage,
     this.imageSize,
     this.onCommentTap,
     this.isCommentSelected = false,
     this.buttonText,
+    this.isBadgeVisible = false
   });
 
   @override
@@ -92,6 +96,12 @@ class ProductGridItem extends StatelessWidget {
             fit: fit,
           ),
         ),
+        if (productDetails.isForAuction)
+          Positioned(
+            top: 8.h,
+            left: -4.w,
+            child: SmartImage(path: AppImages.icAuctionLabel, height: 32.w, width: 92.w, fit: BoxFit.fill),
+          ),
         if (isOutOfStock)
           Positioned(
             top: 8.h,
@@ -150,20 +160,25 @@ class ProductGridItem extends StatelessWidget {
     return Bounceable(
       onTap: onTap,
       scaleFactor: 0.5,
-      child: Container(
-        decoration: BoxDecoration(
-            color: backgroundColor ?? style.backgroundColor,
-            borderRadius: BorderRadius.circular(4.r),
-            border: Border.all(color: borderColor ?? style.transparentColor)),
-        height: 24.w,
-        width: 24.w,
-        alignment: Alignment.center,
-        child: SmartImage(
-          path: path,
-          height: 16.w,
-          width: 16.w,
-          fit: BoxFit.contain,
-          color: iconColor,
+      child: Badge(
+        label: SmartText('2', style: style.badgeTextStyle),
+        backgroundColor: style.primaryColor,
+        isLabelVisible: isBadgeVisible,
+        child: Container(
+          decoration: BoxDecoration(
+              color: backgroundColor ?? style.backgroundColor,
+              borderRadius: BorderRadius.circular(4.r),
+              border: Border.all(color: borderColor ?? style.transparentColor)),
+          height: 24.w,
+          width: 24.w,
+          alignment: Alignment.center,
+          child: SmartImage(
+            path: path,
+            height: 20.w,
+            width: 20.w,
+            fit: BoxFit.contain,
+            color: iconColor,
+          ),
         ),
       ),
     );

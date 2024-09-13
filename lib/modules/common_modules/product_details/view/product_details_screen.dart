@@ -46,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,20 +64,30 @@ class ProductDetailsScreen extends StatelessWidget {
                         flex: 5,
                         child: SizedBox(
                           height: 60.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SmartText('\$1200.00', style: style.priceStyle),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SmartText('\$1600.00', style: style.originalPriceStyle),
-                                  SizedBox(width: 8.w),
-                                  SmartText('(3% OFF)', style: style.discountStyle),
-                                ],
-                              )
+                              SmartImage(path: productDetailsBloc.imgList.first, height: 54.w, width: 54.w),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SmartText('\$1200.00', style: style.priceStyle, maxLines: 1,isAutoSizeText: true),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SmartText('\$1600.00', style: style.originalPriceStyle),
+                                        SizedBox(width: 8.w),
+                                        SmartText('(3% OFF)', style: style.discountStyle),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -86,7 +96,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: SmartButton(
-                          height: 60.h,
+                          height: 54.h,
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {

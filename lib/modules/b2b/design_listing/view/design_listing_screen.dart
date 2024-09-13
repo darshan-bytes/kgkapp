@@ -114,7 +114,7 @@ class DesignListingScreen extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is DesignChangeListingTypeState || current is DesignListLoadedMoreState || current is DesignListLoadingMoreState,
       builder: (context, state) {
-        if (bloc.designList.isEmpty || bloc.designListForGrid.isEmpty) {
+        if (bloc.designNewList.isEmpty || bloc.designListForGrid.isEmpty) {
           return _buildEmptyState();
         }
         return _buildListOrGridView(bloc, state, context);
@@ -158,21 +158,13 @@ class DesignListingScreen extends StatelessWidget {
         shrinkWrap: true,
         key: bloc.paginationScrollController.listKey,
         controller: bloc.paginationScrollController.scrollController,
-        itemCount: bloc.designList.length,
+        itemCount: bloc.designNewList.length,
         itemBuilder: (context, index) {
-          B2BCustomListingDataModel designItem = bloc.designList[index];
+          StyleDesignModel designItem = bloc.designNewList[index];
           return Column(
             children: [
-              B2BListingItem(
-                type: B2BListingType.designListingType,
-                listingItemModel: designItem,
-                margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                onTapMenuButton: () {},
-                onTap: () {
-                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
-                },
-              ),
-              if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
+              SmartStyleDesignListing(listingItemModel: designItem),
+              if (index == bloc.designNewList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
             ],
           );
         },

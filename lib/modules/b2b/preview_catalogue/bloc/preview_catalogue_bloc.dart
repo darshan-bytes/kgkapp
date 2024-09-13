@@ -52,6 +52,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
                 : "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
             name: "Diamond Vine Ring in 18k Rose Gold",
             originalPrice: "\$5,000.00",
+            isCommentVisible: index % 2 == 0,
           ),
         );
       }
