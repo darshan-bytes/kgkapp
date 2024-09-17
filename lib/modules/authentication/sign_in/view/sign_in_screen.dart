@@ -19,8 +19,7 @@ class SignInScreen extends StatelessWidget {
             APPStrings.skip.tr,
             style: style.skipTextStyle,
             onTap: () {
-              BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
-              context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+              bloc.onSkipLogin(context);
             },
             textAlign: TextAlign.end,
           ),

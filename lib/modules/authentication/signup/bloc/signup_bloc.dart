@@ -4,6 +4,8 @@ part 'signup_event.dart';
 
 part 'signup_state.dart';
 
+enum ValidationFieldType { email, phoneNumber }
+
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   /// Indicates whether the SignUpBloc has been initialized.
   ///
@@ -69,6 +71,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpResetEvent>(_onSignUpResetEvent);
     on<SignUpChangeOfficeLocationEvent>(_onSignUpChangeOfficeLocationEvent);
     on<SignUpSubmitEvent>(_onSignUpSubmit);
+    on<SignUpEmailValidationEvent>(_onSignUpEmailValidationEvent);
+    on<SignUpPhoneNumberValidationEvent>(_onSignUpPhoneNumberValidationEvent);
   }
 
   Future<void> _onSignUpInitialEvent(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
@@ -121,6 +125,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
+    if (emailController.text.trim().isNotEmpty) {
+      add(SignUpEmailValidationEvent(email: emailController.text.trim(), context: event.context));
+    }
+    if (contactNumberController.text.trim().isNotEmpty) {
+      add(SignUpPhoneNumberValidationEvent(phoneNumber: contactNumberController.text.trim(), context: event.context));
+    }
     isIndividual = event.isIndividual;
     emit(SignUpChangeAccountTypeState(isIndividual));
   }
@@ -316,5 +326,46 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         Utils.showMessage(r.message ?? '');
       },
     );
+  }
+
+  Future<void> _onSignUpEmailValidationEvent(SignUpEmailValidationEvent event, Emitter<SignUpState> emit) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!emit.isDone) {
+      if (event.email.isNotEmpty && Utils.isValidEmail(event.email)) {
+        Map<String, dynamic> params = {ApiKey.email: event.email.trim()};
+        Either<ErrorResponse, CommonResponse>? emailValidationResponse = await UserRepository(event.context).validateEmail(params);
+
+        if (!emit.isDone) {
+          emailValidationResponse?.fold((l) {
+            Utils.showMessage(l.message ?? '');
+          }, (r) {
+            bool isEmailUsed = r.responseData['isEmailUsed'];
+            emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: isEmailUsed));
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _onSignUpPhoneNumberValidationEvent(SignUpPhoneNumberValidationEvent event, Emitter<SignUpState> emit) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!emit.isDone) {
+      if (event.phoneNumber.isNotEmpty && event.phoneNumber.length >= 10) {
+        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
+            await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
+
+        if (!emit.isDone) {
+          phoneNumberValidationResponse?.fold((l) {
+            Utils.showMessage(l.message ?? '');
+          }, (r) {
+            bool isPhoneNumberUsed = r.responseData;
+            emit(SignUpPhoneNumberValidationState(
+                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: isPhoneNumberUsed));
+          });
+        }
+      }
+    }
   }
 }
