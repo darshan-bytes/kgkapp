@@ -160,18 +160,10 @@ class DesignListingScreen extends StatelessWidget {
         controller: bloc.paginationScrollController.scrollController,
         itemCount: bloc.designList.length,
         itemBuilder: (context, index) {
-          B2BCustomListingDataModel designItem = bloc.designList[index];
+          StyleDesignModel designItem = bloc.designList[index];
           return Column(
             children: [
-              B2BListingItem(
-                type: B2BListingType.designListingType,
-                listingItemModel: designItem,
-                margin: EdgeInsets.only(bottom: state is DesignListLoadingMoreState ? 0 : 16.h),
-                onTapMenuButton: () {},
-                onTap: () {
-                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
-                },
-              ),
+              SmartStyleDesignListing(listingItemModel: designItem),
               if (index == bloc.designList.length - 1 && state is DesignListLoadingMoreState) const SmartCircularProgressIndicator(),
             ],
           );

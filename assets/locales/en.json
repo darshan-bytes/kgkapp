@@ -708,5 +708,10 @@
   "scan_this_qr_code_details": "Scan this QR code to get more product details",
   "logging_in": "Logging in...",
   "error_phone_number_already_used" : "* Phone number is already used.",
-  "error_email_already_used": "* Email is already used."
+  "error_email_already_used": "* Email is already used.",
+  "cancel_item_list": "Cancel item list",
+  "commodity": "Commodity",
+  "origin": "Origin",
+  "on_hold" : "On hold",
+  "wip" : "WIP"
 }

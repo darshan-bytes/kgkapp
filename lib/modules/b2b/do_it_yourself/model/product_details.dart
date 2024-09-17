@@ -42,6 +42,8 @@ class ProductDetailsModel {
   Commodity? commodity;
   bool isFavourite;
   String? wishlistId;
+  bool isForAuction;
+  bool isCommentVisible;
 
   ProductDetailsModel({
     this.productId,
@@ -85,6 +87,8 @@ class ProductDetailsModel {
     this.commodity,
     this.isFavourite = false,
     this.wishlistId,
+    this.isForAuction = false,
+    this.isCommentVisible = false,
   });
 }
 

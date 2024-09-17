@@ -71,9 +71,11 @@ class OrderDetailsProductItem extends StatelessWidget {
               top: 14.h,
               right: 14.w,
               child: SmartImage(
-                path: AppImages.icMoreHorizontal,
+                path: AppImages.icDelete,
                 onTap: onTapMenuButton,
-                padding: EdgeInsets.all(4.w),
+                height: 18.w,
+                width: 18.w,
+                padding: EdgeInsets.zero,
                 inkwellBorderRadius: BorderRadius.circular(4.0.r),
               ),
             ),

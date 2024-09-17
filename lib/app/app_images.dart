@@ -182,4 +182,7 @@ class AppImages {
   static const String icOneRing = 'assets/images/ic_one_ring.svg';
   static const String icTwoRing = 'assets/images/ic_two_ring.svg';
   static const String icThreeRing = 'assets/images/ic_three_ring.svg';
+  static const String icDelete = 'assets/images/ic_delete.png';
+  static const String icAuctionLabel = 'assets/images/ic_auction_label.svg';
+  static const String icBadge = 'assets/images/ic_badge.svg';
 }

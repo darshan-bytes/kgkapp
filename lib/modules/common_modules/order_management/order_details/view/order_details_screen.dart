@@ -36,7 +36,9 @@ class OrderDetailScreen extends StatelessWidget {
                     buildWhen: (previous, current) =>
                         current is OrderDetailsLoadedMoreProductsState || current is OrderDetailsLoadingMoreProductsState,
                     builder: (context, state) {
-                      return _buildOrderCreatorDetailsInfoCard(style);
+                      return state is OrderDetailsLoadedMoreProductsState && state.currentPage > 3
+                          ? _buildOrderCreatorDetailsInfoCard(style, bloc)
+                          : const SizedBox.shrink();
                     },
                   ),
                 ],
@@ -99,12 +101,63 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderCreatorDetailsInfoCard(OrderDetailScreenStyle style) {
+  Widget _buildOrderCreatorDetailsInfoCard(
+    OrderDetailScreenStyle style,
+    OrderDetailBloc bloc,
+  ) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 32.h),
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 22.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SmartText(APPStrings.cancelItemList.tr, style: style.orderIdStyle),
+          SizedBox(
+            height: 22.h,
+          ),
+          ListView.separated(
+            itemCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (bloc.userType == UserType.b2cUser) {
+                late ProductDetailsModel product;
+                if (bloc.userType == UserType.b2cUser) {
+                  product = bloc.orderProductList[index];
+                }
+                return CartProductItem(
+                  boxHeight: 72.w,
+                  boxWidth: 72.w,
+                  isDropDownEnable: false,
+                  isCheckboxShow: false,
+                  selectedQuality: product.productQuality,
+                  selectedQuantity: product.productQuantity,
+                  onRemoveTap: () {
+                    bloc.add(OrderDetailRemoveProductEvent(index: index));
+                  },
+                  onMoveToWishListTap: () {},
+                  productDetails: product,
+                  qualityOptionsList: product.cartProductQuality ?? [],
+                  quantityOptionsList: product.cartProductQuantity ?? [],
+                  onQualityChanged: (CartProductQuality value) {
+                    bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
+                  },
+                  onQuantityChanged: (CartProductQuantity value) {
+                    bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
+                  },
+                  priceTextStyle: style.priceTextStyle,
+                );
+              } else {
+                return OrderDetailsProductItem(
+                  productDetails: bloc.orderProductDetailsList[index],
+                  onTap: () {},
+                );
+              }
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 24.h),
+          ),
+          SizedBox(
+            height: 32.h,
+          ),
           _buildCreatorDetailItem(
               title: APPStrings.createdBy.tr,
               iconImage: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
@@ -176,9 +229,11 @@ class OrderDetailScreen extends StatelessWidget {
                     ? CartProductItem(
                         boxHeight: 72.w,
                         boxWidth: 72.w,
+                        isDropDownEnable: false,
                         isCheckboxShow: false,
                         selectedQuality: product.productQuality,
                         selectedQuantity: product.productQuantity,
+                        onDeleteTap: () {},
                         onRemoveTap: () {
                           bloc.add(OrderDetailRemoveProductEvent(index: index));
                         },

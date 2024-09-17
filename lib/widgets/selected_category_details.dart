@@ -35,7 +35,7 @@ class SelectedCategoryDetails extends StatelessWidget {
             child: ClipPath(
               clipper: TriangleClipper(arrowPosition: arrowPosition),
               child: Container(
-                color: categoryTileStyle.backgroundColor,
+                color: categoryTileStyle.colorD5E7F1,
                 height: 10.h,
                 width: 20.w,
               ),
@@ -46,7 +46,7 @@ class SelectedCategoryDetails extends StatelessWidget {
           width: double.infinity,
           margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
           constraints: BoxConstraints(maxHeight: 320.w),
-          color: categoryTileStyle.backgroundColor,
+          color: categoryTileStyle.colorD5E7F1,
           child: Scrollbar(
             trackVisibility: true,
             thumbVisibility: true,
