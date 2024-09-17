@@ -421,7 +421,7 @@ class JewelleryDataModel {
           ? []
           : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
       supplierCode: json["supplier_code"],
-      mspRateLocalCurrency: json["msp_rate_local_currency"],
+      mspRateLocalCurrency: json["msp_rate_local_currency"]?.toInt() ?? 0,
       kgkCollection2Suid: json["kgk_collection_2_suid"],
       kgkCollection3Name: json["kgk_collection_3_name"],
       receivedDateTime: DateTime.tryParse(json["received_date_time"] ?? ""),

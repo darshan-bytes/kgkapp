@@ -895,6 +895,8 @@ class APPStrings {
   static const String scanThisQRCode = 'scan_this_qr_code';
   static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
   static const String loggingIn = 'logging_in';
+  static const String phoneNumberAlreadyUsed = 'error_phone_number_already_used';
+  static const String emailAlreadyUsed = 'error_email_already_used';
   static const String cancelItemList = 'cancel_item_list';
   static const String commodity = 'commodity';
   static const String origin = 'origin';

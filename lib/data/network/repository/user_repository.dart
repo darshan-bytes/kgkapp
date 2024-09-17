@@ -68,4 +68,15 @@ class UserRepository extends ApiService {
     var response = await postMethod<UserResponse>(ApiClient.verifyQrCodeForAuth, params);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // For Validate Email
+  Future<Either<ErrorResponse, CommonResponse>?> validateEmail(Map<String, dynamic> params) async {
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.checkDuplicationEmail, params, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber({required String code,required String phoneNumber}) async {
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.checkDuplicationPhoneNumber(code, phoneNumber), withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }

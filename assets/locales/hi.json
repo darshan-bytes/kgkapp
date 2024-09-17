@@ -705,5 +705,7 @@
   "text_copied": "कॉपी किया गया",
   "scan_this_qr_code": "यह QR कोड स्कैन करें",
   "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें",
-  "logging_in": "Logging in..."
+  "logging_in": "Logging in...",
+  "error_phone_number_already_used" : "* Phone number is already used.",
+  "error_email_already_used": "* Email is already used."
 }

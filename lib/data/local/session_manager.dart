@@ -20,6 +20,7 @@ class StorageManager {
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
   final String _bagData = 'bagData';
+  final String _isSkipLogin = 'isSkipLogin';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -122,6 +123,7 @@ class StorageManager {
   Future<void> clearSession() async {
     String? locale = getLocale();
     List<CurrencyListModel>? currencyList = getCurrencyList();
+    bool isSkipLogin = getIsSkipLogin();
     await _box.clear();
 
     if (locale != null) {
@@ -129,6 +131,9 @@ class StorageManager {
     }
     if (currencyList.isNotNullNorEmpty) {
       await setCurrencyList(currencyList);
+    }
+    if (isSkipLogin) {
+      await setIsSkipLogin(isSkipLogin);
     }
   }
 
@@ -140,6 +145,16 @@ class StorageManager {
   // getLanguageLabels
   Map<String, dynamic> getLanguageLabels() {
     return jsonDecode(_box.get(_languageLabels) ?? '{}');
+  }
+
+  // setIsSkipLogin
+  Future<void> setIsSkipLogin(bool isSkipLogin) async {
+    await _box.put(_isSkipLogin, isSkipLogin);
+  }
+
+  // getIsSkipLogin
+  bool getIsSkipLogin() {
+    return _box.get(_isSkipLogin) ?? false;
   }
 
   Future<void> closeBox() async {

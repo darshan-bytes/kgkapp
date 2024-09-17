@@ -220,6 +220,7 @@ class LightModeTheme extends AppTheme {
         unselectedAccountTypeBorderColor: colors.colorD3DAE0,
         unselectedAccountTypeIconColor: colors.primary,
         unselectedAccountTypeTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        errorTextColor: colors.colorFF0000,
       );
 
   @override

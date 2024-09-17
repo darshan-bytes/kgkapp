@@ -429,6 +429,14 @@ class AppRepository extends ApiService {
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // mergeBag
+  Future<Either<ErrorResponse, CommonResponse>?> mergeBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await putMethod<Map<String, dynamic>>(ApiClient.mergeBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
