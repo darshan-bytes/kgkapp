@@ -16,6 +16,7 @@ class ManufacturerOrderDetailsModel {
   final String? orderProductYourPercentage;
   final String? orderProductYourRate;
   final String? orderProductYourValue;
+  bool isShowMore;
 
   ManufacturerOrderDetailsModel({
     this.id,
@@ -35,6 +36,7 @@ class ManufacturerOrderDetailsModel {
     this.orderProductYourPercentage,
     this.orderProductYourRate,
     this.orderProductYourValue,
+    this.isShowMore = false,
   });
 
   @override

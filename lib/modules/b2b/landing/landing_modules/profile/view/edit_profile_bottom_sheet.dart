@@ -166,8 +166,6 @@ class EditProfileBottomSheet extends StatelessWidget {
                 '+91',
                 style: AppTheme.of(context).textFieldStyle.textStyle,
               ),
-              // SizedBox(width: 4.w),
-              // const SmartImage(path: AppImages.icArrowDropDown),
             ],
           ),
         ),

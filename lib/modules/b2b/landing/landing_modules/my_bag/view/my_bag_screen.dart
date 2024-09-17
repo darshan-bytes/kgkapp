@@ -257,45 +257,121 @@ class MyBagScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             ProductDetailsModel product = bloc.myBagProductList[index];
             if (product.isDiamondProduct) {
-              return MyBagDiamondItem(
-                onTap: () {},
-                onTapMenuButton: () {
-                  handleDiamondMenuButtonTap(context, index, bloc, style);
-                },
-                productDetails: product,
-                margin: EdgeInsets.only(bottom: 17.h),
-                showMoreDetails: product.showMore,
-                onShowMorePress: () {
-                  bloc.add(MyBagToggleViewModeEvent(index: index));
-                },
+              return Column(
+                children: [
+                  ProductInfoItem(
+                    onTap360View: () => printWrapped("onTap360View"),
+                    onTapDNA: () {
+                      context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+                    },
+                    onTapCertificate: () => printWrapped("onTapCertificate"),
+                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                    onTapUSA: () => printWrapped("onTapUSA"),
+                    onTapMenuButton: () {
+                      Utils.showSmartModalBottomSheet(
+                        context: context,
+                        builder: (context) => const ProductMenuBottomSheet(),
+                      );
+                    },
+                    isSelectedBackground: false,
+                    onTap: () {},
+                    productDetails: ProductDetailsModel(
+                      productInfoClarityChat: ProductInfoClarityChat(
+                          carat: "36.09",
+                          commodity: "Sapphire",
+                          origin: "Sri Lanka",
+                          rapRate: "\$35,500.00",
+                          productId: "1",
+                          productName: "1.00 Cts Round Diamond",
+                          ct: "10.04",
+                          shape: "Marquise",
+                          colour: "H",
+                          clarity: "VVS1",
+                          lotNumber: "MBFG716306",
+                          certificateNumber: "230000066395",
+                          measurements: "10.18 x 8.34 x 6.14",
+                          lab: "GIA",
+                          cut: "Excellent",
+                          polish: "Excellent",
+                          symmetry: "Excellent",
+                          flourish: "O",
+                          tablePercentage: "50",
+                          depthPercentage: "50",
+                          rap: "\$24,850.00",
+                          discount: "-30.00",
+                          perCts: "\$24,850.00",
+                          amount: "\$1,24,995.50",
+                          fluorescence: '0'),
+                      productId: "1",
+                      diamond: "1.5 gram",
+                      gram: "1.5 gram",
+                      imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
+                      isForAuction: false,
+                    ),
+                    isAutoSizeText: false,
+                    isDiamond: true,
+                  ),
+                  SizedBox(height: 16.h),
+                ],
               );
             } else {
-              return CartProductItem(
-                selectedQuality: product.productQuality,
-                selectedQuantity: product.productQuantity,
-                onRemoveTap: () {
-                  bloc.add(MyBagRemoveProductEvent(index: index));
-                },
-                onMoveToWishListTap: () {},
-                margin: EdgeInsets.only(bottom: 24.h),
-                onEyeTap: () {},
-                onTap: () {
-                  context.pushNamed(AppRoutes.productDetailsPage,
-                      arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: ScreenIdentifier.productForRing});
-                },
-                productDetails: product,
-                qualityOptionsList: product.cartProductQuality ?? [],
-                quantityOptionsList: product.cartProductQuantity ?? [],
-                onQualityChanged: (CartProductQuality value) {
-                  bloc.add(MyBagChangeProductQuality(index: index, productQuality: value));
-                },
-                onQuantityChanged: (CartProductQuantity value) {
-                  bloc.add(MyBagChangeProductQuantity(index: index, productQuantity: value));
-                },
-                isSelectedProduct: product.isSelectedProduct,
-                onChangedCheckbox: (value) {
-                  bloc.add(MyBagSelectProductChangedEvent(index: index));
-                },
+              return Column(
+                children: [
+                  ProductInfoItem(
+                    onTap360View: () => printWrapped("onTap360View"),
+                    onTapDNA: () {},
+                    onTapCertificate: () => printWrapped("onTapCertificate"),
+                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                    onTapUSA: () => printWrapped("onTapUSA"),
+                    onTapMenuButton: () {
+                      Utils.showSmartModalBottomSheet(
+                        context: context,
+                        builder: (context) => const ProductMenuBottomSheet(),
+                      );
+                    },
+                    isSelectedBackground: false,
+                    onTap: () {},
+                    productDetails: ProductDetailsModel(
+                      productInfoClarityChat: ProductInfoClarityChat(
+                          carat: "36.09",
+                          commodity: "Sapphire",
+                          origin: "Sri Lanka",
+                          rapRate: "\$35,500.00",
+                          productId: "1",
+                          productName: "0.35 Carat Super Premium Oval Moissanite",
+                          ct: "10.04",
+                          shape: "Marquise",
+                          colour: "H",
+                          clarity: "VVS1",
+                          lotNumber: "MBFG716306",
+                          certificateNumber: "230000066395",
+                          measurements: "10.18 x 8.34 x 6.14",
+                          lab: "GIA",
+                          cut: "Excellent",
+                          polish: "Excellent",
+                          symmetry: "Excellent",
+                          flourish: "O",
+                          tablePercentage: "50",
+                          depthPercentage: "50",
+                          rap: "\$24,850.00",
+                          discount: "-30.00",
+                          perCts: "\$24,850.00",
+                          amount: "\$1,24,995.50",
+                          fluorescence: '0'),
+                      productId: "1",
+                      diamond: "1.5 gram",
+                      gram: "1.5 gram",
+                      imageUrl: index % 2 == 0
+                          ? "https://i.ibb.co/477f41r/Group-1410089379.png"
+                          : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",
+                      isForAuction: false,
+                    ),
+                    isAutoSizeText: false,
+                    isDiamond: false,
+                  ),
+                  SizedBox(height: 16.h),
+                ],
               );
             }
           },

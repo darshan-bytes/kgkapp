@@ -17,10 +17,10 @@ class LoadMoreWishlistEvent extends WishlistEvent {
   final BuildContext context;
   final int currentPage;
 
-  const LoadMoreWishlistEvent(this.context,this.currentPage);
+  const LoadMoreWishlistEvent(this.context, this.currentPage);
 
   @override
-  List<Object> get props => [context,currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 final class WishlistPullToRefreshEvent extends WishlistEvent {

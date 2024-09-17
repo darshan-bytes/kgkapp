@@ -70,14 +70,10 @@ class StylesListingScreen extends StatelessWidget {
               return BlocBuilder<StylesListingBloc, StylesListingState>(
                 buildWhen: (previous, current) => current is StylesListingLoadingMoreState || current is StylesListingLoadedMoreState,
                 builder: (context, state) {
-                  B2BCustomListingDataModel stylesItem = stylesListingBloc.stylesList[index];
+                  StyleDesignModel stylesItem = stylesListingBloc.stylesList[index];
                   return Column(
                     children: [
-                      B2BListingItem(
-                        type: B2BListingType.stylesListingType,
-                        listingItemModel: stylesItem,
-                        onTapMenuButton: () {},
-                      ),
+                      SmartStyleDesignListing(listingItemModel: stylesItem),
                       if (state is StylesListingLoadingMoreState && index == stylesListingBloc.stylesList.length - 1)
                         const SmartCircularProgressIndicator(),
                     ],

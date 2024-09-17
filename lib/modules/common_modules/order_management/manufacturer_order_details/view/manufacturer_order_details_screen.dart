@@ -64,7 +64,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildManufacturerOrderListItem(ManufacturerOrderDetailsBloc bloc, BuildContext context, int index) {
+  Widget _buildManufacturerOrderListItem(ManufacturerOrderDetailsBloc bloc, BuildContext context, int index,
+      {bool showDeleteButton = true}) {
     final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     ManufacturerOrderDetailsModel model = bloc.orderList[index];
     return GestureDetector(
@@ -77,80 +78,131 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
           color: style.backgroundColor,
           border: Border.all(color: style.borderColor),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+        child: BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+          buildWhen: (prev, current) => current is ManufacturerOrderDetailsShowMoreState,
+          builder: (context, state) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
-                SizedBox(width: 8.w),
-                Expanded(
-                  child: SmartText(
-                    model.orderId ?? '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: style.headingStyle,
+                Row(
+                  children: [
+                    SmartImage(path: model.orderProductImage ?? '', height: 32.w, width: 32.w),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: SmartText(
+                        model.orderId ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: style.headingStyle,
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    if (showDeleteButton)
+                      SmartImage(
+                        path: AppImages.icDelete,
+                        onTap: () {},
+                        height: 18.w,
+                        width: 18.w,
+                      ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
+                    Expanded(
+                        child: _buildManufacturerDetailColumn(
+                            APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
+                    Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                InkWell(
+                  onTap: () {
+                    bloc.add(ManufacturerOrderDetailsShowMoreEvent(index));
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SmartText(
+                          bloc.orderList[index].isShowMore ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+                          isAutoSizeText: true,
+                          style: style.moreDetailsTextStyle,
+                        ),
+                        SizedBox(width: 4.w),
+                        SmartImage(
+                          path: bloc.orderList[index].isShowMore ? AppImages.icArrowUp : AppImages.icArrowDown,
+                          height: 16.h,
+                          width: 16.w,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(width: 8.w),
-                SmartImage(path: AppImages.icMoreHorizontal, onTap: () {})
+                bloc.orderList[index].isShowMore ? SizedBox(height: 16.h) : const SizedBox.shrink(),
+                AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    child: bloc.orderList[index].isShowMore
+                        ? Column(children: [
+                            const Divider(),
+                            SizedBox(height: 16.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
+                                Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
+                                Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
+                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
+                              ],
+                            ),
+                            SizedBox(height: 16.h),
+                            const Divider(),
+                            SizedBox(height: 16.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
+                                Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style,
+                                        isDiscount: true)),
+                                Expanded(
+                                    child:
+                                        _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
+                              ],
+                            ),
+                            SizedBox(height: 16.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: _buildManufacturerDetailColumn(
+                                        APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
+                                        isTextFormField: true)),
+                                Expanded(
+                                    child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
+                                Expanded(
+                                    child:
+                                        _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
+                              ],
+                            ),
+                          ])
+                        : const SizedBox.shrink()),
               ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.shape.tr, model.orderProductShape ?? '', style)),
-                Expanded(
-                    child:
-                        _buildManufacturerDetailColumn(APPStrings.certificateNumber.tr, model.orderProductCertificateNumber ?? '', style)),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.measurements.tr, model.orderProductMeasurements ?? '', style)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.lab.tr, model.orderProductLab ?? '', style)),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            const Divider(),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.ct.tr, model.orderProductCt ?? '', style)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.colour.tr, model.orderProductColour ?? '', style)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.clarity.tr, model.orderProductClarity ?? '', style)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.cut.tr, model.orderProductCut ?? '', style)),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            const Divider(),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.rap.tr, model.orderProductRap ?? '', style)),
-                Expanded(
-                    child:
-                        _buildManufacturerDetailColumn(APPStrings.discount.tr, model.orderProductDiscount ?? '', style, isDiscount: true)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.kgkAmount.tr, model.orderProductKgkAmount ?? '', style)),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: _buildManufacturerDetailColumn(APPStrings.yourPercentage.tr, model.orderProductYourPercentage ?? '', style,
-                        isTextFormField: true)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourRate.tr, model.orderProductYourRate ?? '', style)),
-                Expanded(child: _buildManufacturerDetailColumn(APPStrings.yourValue.tr, model.orderProductYourValue ?? '', style)),
-              ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -468,6 +520,30 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SmartText(APPStrings.cancelItemList.tr, style: style.cancelListTextStyle),
+          SizedBox(
+            height: 22.h,
+          ),
+          BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+            buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState,
+            builder: (context, state) {
+              return ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return BlocBuilder<ManufacturerOrderDetailsBloc, ManufacturerOrderDetailsState>(
+                    buildWhen: (prev, current) => current is ManufacturerOrderDataFetchedState,
+                    builder: (context, state) {
+                      return state is ManufacturerOrderDataFetchedState
+                          ? _buildManufacturerOrderListItem(bloc, context, 0, showDeleteButton: false)
+                          : Container();
+                    },
+                  );
+                },
+              );
+            },
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

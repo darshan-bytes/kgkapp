@@ -126,8 +126,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       response = await AppRepository(context).getJewelleryYouMayLike(productId,
           limit: limit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
     } else if (productNavigation == AppConst.recentlyViewed) {
-      response = await AppRepository(context)
-          .getRecentlyViewedProductList(limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
+      response = await AppRepository(context).getRecentlyViewedProductList(
+          limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
     } else {
       response = await AppRepository(context).fetchJewelleryList(
           page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');

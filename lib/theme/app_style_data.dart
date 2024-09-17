@@ -166,6 +166,7 @@ class LightModeTheme extends AppTheme {
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
       primaryColor: colors.primary,
+      colorD5E7F1: colors.colorD5E7F1,
       whiteColor: colors.white);
 
   @override
@@ -186,6 +187,7 @@ class LightModeTheme extends AppTheme {
         descStyle: interRegularTextStyle,
         timeLabelStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         dotColor: colors.primary,
+        clearAllStyle: interMediumBoldTextStyle.copyWith(color: colors.primary, decoration: TextDecoration.underline),
         searchHintStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
       );
 
@@ -241,16 +243,15 @@ class LightModeTheme extends AppTheme {
         borderColor: colors.colorD3DAE0,
         buttonTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 12.sp),
         diamondTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C, fontSize: 12.sp),
-        buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(
-          color: colors.white,
-          fontSize: 16.sp,
-        ),
+        buttonWithIconTextStyle: interMediumBoldTextStyle.copyWith(color: colors.white, fontSize: 16.sp),
         transparentColor: colors.transparent,
         removeBagTextStyle: interMediumBoldTextStyle.copyWith(color: colors.color083458),
         myBagDividerColor: colors.colorD3DAE0,
         outOfStockBackgroundColor: colors.colorDDECF4,
         outOfStockStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         commentSelectedColor: colors.color303538,
+        primaryColor: colors.primary,
+        badgeTextStyle: interRegularTextStyle.copyWith(fontSize: 10.sp, color: colors.white),
       );
 
   @override
@@ -313,11 +314,12 @@ class LightModeTheme extends AppTheme {
         skuStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         diamondNameStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 28.sp, fontWeight: FontWeight.w400, color: colors.color303538),
         reviewStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        priceStyle: interBoldTextStyle.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        priceStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         seeProductStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         orderSampleStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
         diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
         shippingStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        colorWhite: colors.white,
         selectDiamondStyle: interBoldTextStyle.copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500, color: colors.white),
       );
 
@@ -327,7 +329,7 @@ class LightModeTheme extends AppTheme {
         ringCodeStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         ringNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, fontWeight: FontWeight.w400, color: colors.color303538),
         reviewStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
-        priceStyle: interBoldTextStyle.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500, color: colors.color303538),
+        priceStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         metalHeaderStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500, color: colors.color303538),
         metalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         selectedMetalNameStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
@@ -345,6 +347,7 @@ class LightModeTheme extends AppTheme {
         selectedSettingBorderColor: colors.primary,
         selectedSettingStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         settingSelectionValueStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
+        whiteColor: colors.white,
       );
 
   @override
@@ -395,9 +398,10 @@ class LightModeTheme extends AppTheme {
         dotColor: colors.color8C8C8C,
         productNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         ratingGlowColor: colors.primary,
-        priceStyle: interSemiBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
+        priceStyle: interBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         detailsHeaderStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
+        whiteColor: colors.white,
       );
 
   @override
@@ -434,6 +438,7 @@ class LightModeTheme extends AppTheme {
         textInfoValueStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         menuBorderColor: colors.colorD3DAE0,
         menuIconColor: colors.primary,
+        cancelListTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
       );
 
   @override
@@ -553,6 +558,7 @@ class LightModeTheme extends AppTheme {
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         richTextStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
         selectedBackgroundColor: colors.colorF7F9FA,
+        moreDetailsTextStyle: interRegularTextStyle.copyWith(color: colors.primary),
       );
 
   @override
@@ -664,6 +670,8 @@ class LightModeTheme extends AppTheme {
         lostTextColor: colors.colorE83535,
         blueInProgressBackgroundColor: colors.colorDFF2FF,
         blueInProgressTextColor: colors.color006FBB,
+        yellowBgColor: colors.colorEEC200.withOpacity(0.1),
+        yellowTextColor: colors.colorEEC200,
       );
 
   @override
@@ -1273,4 +1281,16 @@ class LightModeTheme extends AppTheme {
         borderColor: colors.colorD3DAE0,
         shadowColor: colors.black.withOpacity(0.1),
       );
+
+  @override
+  StyleDesignListStyle get styleDesignListStyle => StyleDesignListStyle(
+        titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
+        subTitleStyle: interSemiBoldTextStyle.copyWith(fontSize: 16.sp),
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
+      );
+
+  @override
+  ConceptListingStyle get conceptListingStyle =>
+      ConceptListingStyle(titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp), borderColor: colors.colorD3DAE0);
 }

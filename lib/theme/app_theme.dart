@@ -249,6 +249,10 @@ abstract class AppTheme {
   NoInternetScreenStyle get noInternetScreenStyle;
 
   QRCodeDialogStyle get qrCodeDialogStyle;
+
+  StyleDesignListStyle get styleDesignListStyle;
+
+  ConceptListingStyle get conceptListingStyle;
 }
 
 class PrimaryButtonStyle {
@@ -406,6 +410,7 @@ class CategoryTileStyle {
   final Color dividerLineColor;
   final Color whiteColor;
   final Color primaryColor;
+  final Color colorD5E7F1;
 
   CategoryTileStyle({
     required this.labelStyle,
@@ -414,6 +419,7 @@ class CategoryTileStyle {
     required this.dividerLineColor,
     required this.whiteColor,
     required this.primaryColor,
+    required this.colorD5E7F1,
   });
 }
 
@@ -434,6 +440,7 @@ class AllNotificationViewStyle {
   final TextStyle descStyle;
   final TextStyle timeLabelStyle;
   final TextStyle searchHintStyle;
+  final TextStyle clearAllStyle;
   final Color dotColor;
 
   AllNotificationViewStyle({
@@ -441,6 +448,7 @@ class AllNotificationViewStyle {
     required this.descStyle,
     required this.timeLabelStyle,
     required this.searchHintStyle,
+    required this.clearAllStyle,
     required this.dotColor,
   });
 }
@@ -549,6 +557,8 @@ class ProductItemStyle {
   final Color myBagDividerColor;
   final TextStyle outOfStockStyle;
   final Color commentSelectedColor;
+  final Color primaryColor;
+  final TextStyle badgeTextStyle;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -567,6 +577,8 @@ class ProductItemStyle {
     required this.outOfStockBackgroundColor,
     required this.outOfStockStyle,
     required this.commentSelectedColor,
+    required this.primaryColor,
+    required this.badgeTextStyle,
   });
 }
 
@@ -666,6 +678,7 @@ class DiamondDetailScreenStyle {
   final TextStyle diamondPurityStyle;
   final TextStyle shippingStyle;
   final TextStyle selectDiamondStyle;
+  final Color colorWhite;
 
   DiamondDetailScreenStyle({
     required this.skuStyle,
@@ -677,6 +690,7 @@ class DiamondDetailScreenStyle {
     required this.diamondPurityStyle,
     required this.shippingStyle,
     required this.selectDiamondStyle,
+    required this.colorWhite,
   });
 }
 
@@ -703,6 +717,7 @@ class SettingDetailScreenStyle {
   final Color settingSelectionButtonColor;
   final TextStyle settingSelectionValueStyle;
   final TextStyle selectedSettingStyle;
+  final Color whiteColor;
 
   SettingDetailScreenStyle({
     required this.ringTypeStyle,
@@ -725,6 +740,7 @@ class SettingDetailScreenStyle {
     required this.settingHeaderStyle,
     required this.selectedSettingBorderColor,
     required this.settingSelectionButtonColor,
+    required this.whiteColor,
     required this.settingSelectionValueStyle,
     required this.selectedSettingStyle,
   });
@@ -811,6 +827,7 @@ class CompleteProductStyle {
   final TextStyle priceStyle;
   final TextStyle detailsHeaderStyle;
   final TextStyle diamondPurityStyle;
+  final Color whiteColor;
 
   CompleteProductStyle({
     required this.productTypeStyle,
@@ -821,6 +838,7 @@ class CompleteProductStyle {
     required this.priceStyle,
     required this.detailsHeaderStyle,
     required this.diamondPurityStyle,
+    required this.whiteColor,
   });
 }
 
@@ -943,6 +961,7 @@ class MyBagScreenStyle {
   final TextStyle bottomBarTotalAmountTextStyle;
   final TextStyle bottomBarMoreLessTextStyle;
   final TextStyle textInfoValueStyle;
+  final TextStyle cancelListTextStyle;
   final Color menuBorderColor;
   final Color menuIconColor;
 
@@ -957,6 +976,7 @@ class MyBagScreenStyle {
     required this.bottomBarTotalAmountTextStyle,
     required this.bottomBarMoreLessTextStyle,
     required this.textInfoValueStyle,
+    required this.cancelListTextStyle,
     required this.menuBorderColor,
     required this.menuIconColor,
   });
@@ -1101,6 +1121,7 @@ class MyBagDiamondItemStyle {
   final TextStyle subTitleStyle;
   final TextStyle richTextStyle;
   final Color selectedBackgroundColor;
+  final TextStyle moreDetailsTextStyle;
 
   MyBagDiamondItemStyle({
     required this.backgroundColor,
@@ -1110,6 +1131,7 @@ class MyBagDiamondItemStyle {
     required this.subTitleStyle,
     required this.richTextStyle,
     required this.selectedBackgroundColor,
+    required this.moreDetailsTextStyle,
   });
 }
 
@@ -1290,18 +1312,21 @@ class StatusBadgeStyle {
   final Color lostTextColor;
   final Color blueInProgressBackgroundColor;
   final Color blueInProgressTextColor;
+  final Color yellowTextColor;
+  final Color yellowBgColor;
 
-  StatusBadgeStyle({
-    required this.orangeInProgressBackgroundColor,
-    required this.orangeInProgressTextColor,
-    required this.activeBackgroundColor,
-    required this.activeTextColor,
-    required this.statusTextStyle,
-    required this.lostBackgroundColor,
-    required this.lostTextColor,
-    required this.blueInProgressBackgroundColor,
-    required this.blueInProgressTextColor,
-  });
+  StatusBadgeStyle(
+      {required this.orangeInProgressBackgroundColor,
+      required this.orangeInProgressTextColor,
+      required this.activeBackgroundColor,
+      required this.activeTextColor,
+      required this.statusTextStyle,
+      required this.lostBackgroundColor,
+      required this.lostTextColor,
+      required this.blueInProgressBackgroundColor,
+      required this.blueInProgressTextColor,
+      required this.yellowTextColor,
+      required this.yellowBgColor});
 }
 
 class OrderCancelPopupStyle {
@@ -2371,5 +2396,29 @@ class QRCodeDialogStyle {
     required this.subTitleStyle,
     required this.shadowColor,
     required this.borderColor,
+  });
+}
+
+class StyleDesignListStyle {
+  final TextStyle titleStyle;
+  final TextStyle subTitleStyle;
+  final Color borderColor;
+  final Color primaryColor;
+
+  StyleDesignListStyle({
+    required this.titleStyle,
+    required this.subTitleStyle,
+    required this.borderColor,
+    required this.primaryColor,
+  });
+}
+
+class ConceptListingStyle {
+  final Color borderColor;
+  final TextStyle titleStyle;
+
+  ConceptListingStyle({
+    required this.borderColor,
+    required this.titleStyle,
   });
 }

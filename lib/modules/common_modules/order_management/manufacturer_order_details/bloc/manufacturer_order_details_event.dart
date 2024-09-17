@@ -21,3 +21,12 @@ class ManufacturerOrderCancellationReasonsEvent extends ManufacturerOrderDetails
   @override
   List<Object> get props => [cancellationReasonModel];
 }
+
+class ManufacturerOrderDetailsShowMoreEvent extends ManufacturerOrderDetailsEvent {
+  final int index;
+
+  const ManufacturerOrderDetailsShowMoreEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}

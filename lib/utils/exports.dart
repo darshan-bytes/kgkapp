@@ -447,3 +447,7 @@ export 'package:share_plus/share_plus.dart';
 export 'package:kgk/app/wishlist_updater_service/wishlist_updater_service_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/my_bag_data_model.dart';
 export 'package:device_info_plus/device_info_plus.dart';
+export 'package:kgk/model/style_design_model.dart';
+export 'package:kgk/widgets/smart_style_design_listing.dart';
+export 'package:kgk/widgets/concept_item.dart';
+export 'package:kgk/modules/b2b/concept_list/model/concept_list_model.dart';

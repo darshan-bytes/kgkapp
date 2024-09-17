@@ -212,6 +212,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             commodity: Commodity.gemstone,
             isFavourite: gemstoneDatumList[index].isFavorite,
             wishlistId: gemstoneDatumList[index].wishlistID,
+            isForAuction: index % 2 == 0,
           ),
         ),
       );
@@ -223,6 +224,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) async {
     emit(StoneProductReloadState());
     isInitialToggle = event.isInitialToggle;
+    paginationScrollController.pullToRefresh();
     await _generateProductList(event.context, emit);
     emit(StoneChangeTypeState(isInitialToggle));
   }

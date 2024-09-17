@@ -78,7 +78,7 @@ class WishlistDatum {
   }
 }
 
-extension WishlistDatumExtension on WishlistDatum{
+extension WishlistDatumExtension on WishlistDatum {
   Commodity get displayCommodity =>
       Commodity.values.firstWhereOrNull((element) => element.value == listingName?.toLowerCase()) ?? Commodity.diamond;
 }
