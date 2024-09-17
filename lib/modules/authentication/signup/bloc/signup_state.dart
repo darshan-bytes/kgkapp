@@ -105,3 +105,23 @@ final class SignUpSuccessState extends SignUpState {
   @override
   List<Object> get props => [];
 }
+
+final class SignUpEmailValidationState extends SignUpState {
+  final ValidationFieldType emailValidationFieldType;
+  final bool isError;
+
+  const SignUpEmailValidationState({required this.emailValidationFieldType,required this.isError});
+
+  @override
+  List<Object> get props => [emailValidationFieldType, isError];
+}
+
+final class SignUpPhoneNumberValidationState extends SignUpState {
+  final ValidationFieldType phoneNumberValidationFieldType;
+  final bool isError;
+
+  const SignUpPhoneNumberValidationState({required this.phoneNumberValidationFieldType,required this.isError});
+
+  @override
+  List<Object> get props => [phoneNumberValidationFieldType, isError];
+}

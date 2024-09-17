@@ -14,12 +14,13 @@ final class SignUpInitialEvent extends SignUpEvent {
 }
 
 final class SignUpChangeAccountTypeEvent extends SignUpEvent {
+  final BuildContext context;
   final bool isIndividual;
 
-  const SignUpChangeAccountTypeEvent(this.isIndividual);
+  const SignUpChangeAccountTypeEvent(this.context, this.isIndividual);
 
   @override
-  List<Object> get props => [isIndividual];
+  List<Object> get props => [context, isIndividual];
 }
 
 final class SignUpChangeCountryCodeEvent extends SignUpEvent {
@@ -93,4 +94,24 @@ final class SignUpSubmitEvent extends SignUpEvent {
 
   @override
   List<Object> get props => [context];
+}
+
+final class SignUpEmailValidationEvent extends SignUpEvent {
+  final BuildContext context;
+  final String email;
+
+  const SignUpEmailValidationEvent({required this.context, required this.email});
+
+  @override
+  List<Object> get props => [context, email];
+}
+
+final class SignUpPhoneNumberValidationEvent extends SignUpEvent {
+  final BuildContext context;
+  final String phoneNumber;
+
+  const SignUpPhoneNumberValidationEvent({required this.context, required this.phoneNumber});
+
+  @override
+  List<Object> get props => [context, phoneNumber];
 }

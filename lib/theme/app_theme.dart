@@ -480,6 +480,7 @@ class SignUpStyle {
   final Color selectedAccountTypeColor;
   final Color selectedAccountTypeBorderColor;
   final Color selectedAccountTypeIconColor;
+  final Color errorTextColor;
   final TextStyle selectedAccountTypeTextStyle;
   final Color unselectedAccountTypeColor;
   final Color unselectedAccountTypeBorderColor;
@@ -494,6 +495,7 @@ class SignUpStyle {
     required this.selectedAccountTypeColor,
     required this.selectedAccountTypeBorderColor,
     required this.selectedAccountTypeIconColor,
+    required this.errorTextColor,
     required this.selectedAccountTypeTextStyle,
     required this.unselectedAccountTypeColor,
     required this.unselectedAccountTypeBorderColor,
