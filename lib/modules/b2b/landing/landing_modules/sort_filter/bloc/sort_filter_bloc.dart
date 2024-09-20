@@ -15,154 +15,15 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
 
   SortData selectedSortData = SortData(name: 'What’s new', code: 'new');
 
-  List<FilterData> filterData = [
-    FilterData(
-      name: 'Jewellery',
-      code: 'jewellery',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Metal',
-      code: 'metal',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Diamond',
-      code: 'diamond',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Carat',
-      code: 'carat',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Size',
-      code: 'size',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Colour',
-      code: 'colour',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Clarity',
-      code: 'clarity',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Gemstone',
-      code: 'gemstone',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Price',
-      code: 'price',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: 'Collection',
-      code: 'collection',
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Rings', code: 'rings'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-        SecondaryFilterData(name: 'Earrings', code: 'earrings'),
-        SecondaryFilterData(name: 'Bracelets', code: 'bracelets'),
-        SecondaryFilterData(name: 'Necklaces', code: 'necklaces'),
-      ],
-    ),
-    FilterData(
-      name: APPStrings.status.tr,
-      code: APPStrings.status.tr,
-      secondaryFilterData: [
-        SecondaryFilterData(name: APPStrings.blueInProgress.tr, code: APPStrings.blueInProgress.tr),
-        SecondaryFilterData(name: APPStrings.approved.tr, code: APPStrings.approved.tr),
-        SecondaryFilterData(name: APPStrings.pending.tr, code: APPStrings.pending.tr),
-      ],
-    ),
-    FilterData(
-      name: APPStrings.createdBy.tr,
-      code: APPStrings.status.tr.toLowerCase(),
-      secondaryFilterData: [
-        SecondaryFilterData(name: 'Jenny Wilson', code: 'jenny wilson'),
-        SecondaryFilterData(name: 'John Samanta', code: 'john samanta'),
-        SecondaryFilterData(name: 'Alex Williams', code: 'alex williams'),
-      ],
-    ),
-    FilterData(
-      name: APPStrings.createdOn.tr,
-      code: APPStrings.createdOn.tr.toLowerCase(),
-      secondaryFilterData: [
-        SecondaryFilterData(name: "24/03/2023", code: "24/03/2023"),
-        SecondaryFilterData(name: "25/03/2023", code: "25/03/2023"),
-        SecondaryFilterData(name: "26/03/2023", code: "26/03/2023"),
-      ],
-    ),
-  ];
+  List<FilterData> filterData = [];
+  bool isLoading = false;
 
-  late FilterData selectedFilterData;
+  FilterData? selectedFilterData;
   List<SecondaryFilterData> secondaryFilterDataDisplay = [];
 
   final TextEditingController searchController = TextEditingController();
 
   SortFilterBloc() : super(SortFilterInitial()) {
-    selectedFilterData = filterData.first;
-    secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData ?? [];
     searchController.addListener(searchChange);
     on<SelectSortDataEvent>(_onSelectSortDataEvent);
     on<SelectFilterDataEvent>(_onSelectFilterDataEvent);
@@ -170,6 +31,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     on<SearchFilterDataEvent>(_onSearchFilterDataEvent);
     on<ClearAllFilterDataEvent>(_onClearAllFilterDataEvent);
     on<ApplyFilterDataEvent>(_onApplyFilterDataEvent);
+    on<AddSortFilterDataEvent>(_onAddSortFilterDataEvent);
   }
 
   void searchChange() {
@@ -188,27 +50,32 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       selectedFilterData = event.filterData;
       searchController.text = '';
       add(const SearchFilterDataEvent(searchQuery: ''));
-      emit(FilterDataSelectedState(selectedFilterData));
+      if (selectedFilterData != null) {
+        emit(FilterDataSelectedState(selectedFilterData!));
+      }
     }
   }
 
   void _onSelectSecondaryFilterDataEvent(SelectSecondaryFilterDataEvent event, Emitter<SortFilterState> emit) {
     emit(SortReloadState());
-    final int index = (selectedFilterData.secondaryFilterData ?? []).indexWhere((element) => element == event.secondaryFilterData);
-    if (index != -1) {
-      selectedFilterData.secondaryFilterData?[index].isSelected = !selectedFilterData.secondaryFilterData![index].isSelected;
-      emit(SelectSecondaryFilterDataState(selectedFilterData.secondaryFilterData![index]));
+    final int index = (selectedFilterData?.secondaryFilterData ?? []).indexWhere((element) => element == event.secondaryFilterData);
+    if (index != -1 && selectedFilterData != null) {
+      selectedFilterData?.secondaryFilterData?[index].isSelected = !selectedFilterData!.secondaryFilterData![index].isSelected;
+      emit(SelectSecondaryFilterDataState(selectedFilterData!.secondaryFilterData![index]));
     }
   }
 
   void _onSearchFilterDataEvent(SearchFilterDataEvent event, Emitter<SortFilterState> emit) {
     emit(SortReloadState());
+    if (selectedFilterData == null) {
+      return;
+    }
     if (searchController.text.isNotEmpty) {
-      secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData!
+      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData!
           .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.toLowerCase()))
           .toList();
     } else {
-      secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData ?? [];
+      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
     }
     emit(SearchFilterDataState(secondaryFilterDataDisplay));
   }
@@ -222,11 +89,72 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       });
     }
     selectedFilterData = filterData.first;
-    secondaryFilterDataDisplay = selectedFilterData.secondaryFilterData ?? [];
-    emit(FilterDataSelectedState(selectedFilterData));
+    if (selectedFilterData != null) {
+      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
+      emit(FilterDataSelectedState(selectedFilterData!));
+    }
   }
 
   void _onApplyFilterDataEvent(ApplyFilterDataEvent event, Emitter<SortFilterState> emit) {
     //TODO: Implement apply filter logic
+  }
+
+  Future<void> _onAddSortFilterDataEvent(AddSortFilterDataEvent event, Emitter<SortFilterState> emit) async {
+    filterData.clear();
+    for (var gemstone in event.gemstoneFilterList) {
+      filterData.add(FilterData(
+        name: gemstone.name,
+        code: gemstone.slug,
+        secondaryFilterData: [],
+      ));
+    }
+    if(filterData.isNotEmpty){
+      selectedFilterData = filterData.first;
+      await fetchSecondaryFilterData(
+        context: event.context,
+        emit: emit,
+        slug: selectedFilterData!.code!,
+        needToFetchData: true
+      );
+      secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
+    }
+  }
+
+  Future<void> fetchSecondaryFilterData(
+      {required BuildContext context,
+      required Emitter<SortFilterState> emit,
+      required String slug,
+      required bool needToFetchData}) async {
+    if (!needToFetchData) {
+      return;
+    }
+    isLoading = true;
+
+    const String codes =
+        'PEAR,EMERALD,CUSHION BRILLIANT,PRINCESS,ROUND D/C,ROUND,SQUARE CUSHION,SQUARE P/C,HEART,ASSCHER,Square E/C,MARQUISE,BAGUETTE,E/C,OVAL,RADIANT,MIX,CUSHION,OCTAGON,TRILLION,CAB MIX,TRIANGLE,CAB ROUND';
+
+    final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
+
+    response?.fold(
+      (l) => Utils.showMessage(l.message ?? ""),
+      (r) async {
+        final filteredData = filterData.where((item) => item.code == slug).toList();
+
+        if (filteredData.isNotEmpty) {
+          for (final item in r) {
+            filteredData.first.secondaryFilterData?.add(
+              SecondaryFilterData(
+                name: item.value,
+                code: item.label,
+                image: 'https://i.ibb.co/80xk2MK/Frame-1410088948-5.png',
+              ),
+            );
+          }
+        }
+
+        isLoading = false;
+        emit(SelectSecondaryDiamondSortFilterDataState(r));
+      },
+    );
   }
 }

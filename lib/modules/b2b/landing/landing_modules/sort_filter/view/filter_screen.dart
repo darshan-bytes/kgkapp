@@ -43,7 +43,7 @@ class FilterScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SmartTextField.search(
-                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData.name?.toLowerCase()]),
+                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase()]),
                           controller: filterBloc.searchController,
                           textInputAction: TextInputAction.search,
                           onTapOutside: (event) {},
@@ -143,49 +143,54 @@ class FilterScreen extends StatelessWidget {
 
   Widget _buildSubFilterList(BuildContext context, SortFilterBloc filterBloc, FilterStyle style) {
     return BlocBuilder<SortFilterBloc, SortFilterState>(
-      buildWhen: (previous, current) => current is SearchFilterDataState || current is FilterDataSelectedState,
+      buildWhen: (previous, current) =>
+          current is SearchFilterDataState || current is FilterDataSelectedState || current is SelectSecondaryDiamondSortFilterDataState,
       builder: (context, state) {
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: filterBloc.secondaryFilterDataDisplay.length,
-          itemBuilder: (context, index) {
-            return BlocBuilder<SortFilterBloc, SortFilterState>(
-              buildWhen: (previous, current) => current is SelectSecondaryFilterDataState,
-              builder: (context, state) {
-                final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
-                return InkWell(
-                  onTap: () {
-                    handleOnChange(filterBloc, secondaryFilterData);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: style.itemBorderColor),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        SmartCheckbox(
-                            value: secondaryFilterData.isSelected,
-                            onChanged: (value) {
+        return filterBloc.isLoading
+            ? const SmartCircularProgressIndicator()
+            : filterBloc.secondaryFilterDataDisplay.isEmpty
+                ? const NoDataFoundWidget()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: filterBloc.secondaryFilterDataDisplay.length,
+                    itemBuilder: (context, index) {
+                      return BlocBuilder<SortFilterBloc, SortFilterState>(
+                        buildWhen: (previous, current) => current is SelectSecondaryFilterDataState,
+                        builder: (context, state) {
+                          final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
+                          return InkWell(
+                            onTap: () {
                               handleOnChange(filterBloc, secondaryFilterData);
-                            }),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: SmartText(
-                            secondaryFilterData.name,
-                            style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: style.itemBorderColor),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  SmartCheckbox(
+                                      value: secondaryFilterData.isSelected,
+                                      onChanged: (value) {
+                                        handleOnChange(filterBloc, secondaryFilterData);
+                                      }),
+                                  SizedBox(width: 8.w),
+                                  Expanded(
+                                    child: SmartText(
+                                      secondaryFilterData.name,
+                                      style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
       },
     );
   }

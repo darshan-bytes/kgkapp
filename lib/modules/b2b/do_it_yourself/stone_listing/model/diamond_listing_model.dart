@@ -555,7 +555,7 @@ class DiamondDataModel {
       datumCreatedAt: json["created_at"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      discountPrice: json["discount_price"],
+      discountPrice: json["discount_price"].toString(),
       rating: json["rating"],
       reviewCount: json["review_count"],
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
@@ -781,8 +781,8 @@ class DiamondPagination {
 
   factory DiamondPagination.fromJson(Map<String, dynamic> json) {
     return DiamondPagination(
-      limit: json["limit"],
-      page: json["page"],
+      limit: json["limit"].toString(),
+      page: json["page"].toString(),
     );
   }
 

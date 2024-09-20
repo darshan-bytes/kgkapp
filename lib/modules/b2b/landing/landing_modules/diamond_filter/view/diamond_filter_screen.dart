@@ -24,7 +24,7 @@ class DiamondFilterScreen extends StatelessWidget {
         ],
       ),
       body: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-        buildWhen: (previous, current) => current is DiamondFilterDataLoadedState,
+        buildWhen: (previous, current) => current is DiamondFilterDataLoadedState || current is SecondaryFilterDataFetchedState,
         builder: (context, state) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,13 +35,13 @@ class DiamondFilterScreen extends StatelessWidget {
                   padding: EdgeInsets.all(16.w),
                   color: style.backgroundColor,
                   child: BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-                    buildWhen: (previous, current) => current is DiamondFilterDataLoadedState || current is DiamondFilterDataSelectedState,
+                    buildWhen: (previous, current) => current is DiamondFilterDataLoadedState || current is DiamondFilterDataSelectedState || current is SecondaryFilterDataFetchedState,
                     builder: (context, state) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           SmartTextField.search(
-                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData.name?.toLowerCase()]),
+                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData?.name?.toLowerCase()]),
                             controller: diamondFilterBloc.searchController,
                             enabledBorderRadius: 8.r,
                           ),
@@ -117,7 +117,7 @@ class DiamondFilterScreen extends StatelessWidget {
                 onTap: isAdvanceFilter
                     ? null
                     : () {
-                        diamondFilterBloc.add(SelectDiamondFilterDataEvent(filterData: filterData));
+                        diamondFilterBloc.add(SelectDiamondFilterDataEvent(context: context,filterData: filterData));
                       },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -144,14 +144,14 @@ class DiamondFilterScreen extends StatelessWidget {
 
   Widget _buildSubFilterList(BuildContext context, DiamondFilterBloc diamondFilterBloc, FilterStyle style) {
     return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-      buildWhen: (previous, current) => current is SearchDiamondFilterDataState || current is DiamondFilterDataSelectedState,
+      buildWhen: (previous, current) => current is SearchDiamondFilterDataState || current is DiamondFilterDataSelectedState || current is SecondaryFilterDataFetchedState,
       builder: (context, state) {
-        return ListView.builder(
+        return diamondFilterBloc.isLoading ? const SmartCircularProgressIndicator() : ListView.builder(
           shrinkWrap: true,
           itemCount: diamondFilterBloc.secondaryFilterDataDisplay.length,
           itemBuilder: (context, index) {
             return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-              buildWhen: (previous, current) => current is SelectSecondaryDiamondFilterDataState,
+              buildWhen: (previous, current) => current is SelectSecondaryDiamondFilterDataState || current is SecondaryFilterDataFetchedState,
               builder: (context, state) {
                 final secondaryFilterData = diamondFilterBloc.secondaryFilterDataDisplay[index];
                 return InkWell(

@@ -50,4 +50,5 @@ class ApiKey {
   static const String qrToken = 'qr_token';
   static const String deviceId = 'device_id';
   static const String id = 'id';
+  static const String listType = 'listType';
 }

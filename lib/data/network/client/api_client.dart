@@ -64,6 +64,10 @@ class ApiClient {
   static const String deleteBag = '$apiBaseUrl/bag';
 
   static const String mergeBag = '$apiBaseUrl/bag/merge-bag';
+
+  static String gemstoneFilterOptions(String type) => '$apiBaseUrl/filter-options/$type';
+
+  static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

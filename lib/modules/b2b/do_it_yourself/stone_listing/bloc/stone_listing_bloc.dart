@@ -11,6 +11,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
+  List<GemstoneFilterModel> gemstoneFilterList = [];
+
   int? totalNumberOfPages;
   static const int limit = 10;
 
@@ -68,31 +70,24 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
       stoneListingAppbarTitle = APPStrings.diy.tr;
+      tabOneTitle = APPStrings.naturalDiamond.tr;
+      tabTwoTitle = APPStrings.looseDiamond.tr;
       productList.clear();
-      List.generate(
-        20,
-        (index) => productList.add(
-          ProductDetailsModel(
-            diamond: "2.5 crt",
-            gram: "1.5 grms",
-            imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-            name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-            originalPrice: "\$3,000.00",
-            discountPercentage: "Save UP TO 10%",
-          ),
-        ),
-      );
+      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'diamond');
+      await fetchDiamondList(context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       stoneListingAppbarTitle = APPStrings.gemstone.tr;
       tabOneTitle = APPStrings.precious.tr;
       tabTwoTitle = APPStrings.semiPrecious.tr;
       productList.clear();
+      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'gemstone');
       await fetchGemstoneList(context, emit, true);
     } else {
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
       productList.clear();
+      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'diamond');
       await fetchDiamondList(context, emit, true);
     }
   }
