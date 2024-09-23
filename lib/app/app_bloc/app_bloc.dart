@@ -250,6 +250,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {
     /// Implementing it later
   }
+
+  // Get gemstone filter option list
+  Future<List<GemstoneFilterModel>> getGemstoneFilterOptionList(BuildContext context, String type) async {
+    List<GemstoneFilterModel> gemstoneFilterList = [];
+    Either<ErrorResponse, List<GemstoneFilterModel>>? response;
+    response = await AppRepository(context).fetchGemstoneFilterOptionList(type: type);
+    response?.fold((l) {
+      Utils.showMessage(l.message ?? "");
+    }, (r) {
+      gemstoneFilterList = r;
+    });
+    return gemstoneFilterList;
+  }
 }
 
 extension LoadingExtension on BuildContext {

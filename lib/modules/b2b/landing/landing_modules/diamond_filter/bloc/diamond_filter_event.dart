@@ -12,12 +12,13 @@ final class LoadDiamondFilterDataEvent extends DiamondFilterEvent {
 }
 
 final class SelectDiamondFilterDataEvent extends DiamondFilterEvent {
+  final BuildContext context;
   final FilterData filterData;
 
-  const SelectDiamondFilterDataEvent({required this.filterData});
+  const SelectDiamondFilterDataEvent({required this.context,required this.filterData});
 
   @override
-  List<Object> get props => [filterData];
+  List<Object> get props => [context,filterData];
 }
 
 final class SelectSecondaryDiamondFilterDataEvent extends DiamondFilterEvent {
@@ -50,4 +51,14 @@ final class ApplyDiamondFilterDataEvent extends DiamondFilterEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class AddFilterDataEvent extends DiamondFilterEvent {
+  final BuildContext context;
+  final List<GemstoneFilterModel> gemstoneFilterList;
+
+  const AddFilterDataEvent({required this.context,required this.gemstoneFilterList});
+
+  @override
+  List<Object> get props => [context,gemstoneFilterList];
 }

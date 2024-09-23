@@ -11,6 +11,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
+  List<GemstoneFilterModel> gemstoneFilterList = [];
+
   int? totalNumberOfPages;
   static const int limit = 10;
 
@@ -66,33 +68,30 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
-    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      stoneListingAppbarTitle = APPStrings.diy.tr;
-      productList.clear();
-      List.generate(
-        20,
-        (index) => productList.add(
-          ProductDetailsModel(
-            diamond: "2.5 crt",
-            gram: "1.5 grms",
-            imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-            name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-            originalPrice: "\$3,000.00",
-            discountPercentage: "Save UP TO 10%",
-          ),
-        ),
-      );
-    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-      stoneListingAppbarTitle = APPStrings.gemstone.tr;
-      tabOneTitle = APPStrings.precious.tr;
-      tabTwoTitle = APPStrings.semiPrecious.tr;
-      productList.clear();
-      await fetchGemstoneList(context, emit, true);
+    productList.clear();
+
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.productForGemstones) {
+      stoneListingAppbarTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.diy.tr : APPStrings.gemstone.tr;
+
+      tabOneTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.naturalDiamond.tr : APPStrings.precious.tr;
+
+      tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
+
+      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
+          context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
+
+      if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+        await fetchDiamondList(context, emit, true);
+      } else {
+        await fetchGemstoneList(context, emit, true);
+      }
     } else {
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
-      productList.clear();
+
+      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+
       await fetchDiamondList(context, emit, true);
     }
   }

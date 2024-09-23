@@ -34,6 +34,8 @@ class ProductListScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
+                BlocProvider.of<SortFilterBloc>(context)
+                    .add(AddSortFilterDataEvent(gemstoneFilterList: bloc.gemstoneFilterList, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) => FilterScreen(
