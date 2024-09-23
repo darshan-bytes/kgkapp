@@ -15,7 +15,7 @@ class WishlistModel {
   int? page;
   int? limit;
 
-  factory WishlistModel.fromJson(Map<String, dynamic> json){
+  factory WishlistModel.fromJson(Map<String, dynamic> json) {
     return WishlistModel(
       filteredRecords: json["filteredRecords"],
       totalRecords: json["totalRecords"],
@@ -26,15 +26,15 @@ class WishlistModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "filteredRecords": filteredRecords,
-    "totalRecords": totalRecords,
-    "data": data.map((x) => x.toJson()).toList(),
-    "page": page,
-    "limit": limit,
-  };
+        "filteredRecords": filteredRecords,
+        "totalRecords": totalRecords,
+        "data": data.map((x) => x.toJson()).toList(),
+        "page": page,
+        "limit": limit,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$filteredRecords, $totalRecords, $data, $page, $limit, ";
   }
 }
@@ -54,7 +54,7 @@ class WishlistDatum {
   String? id;
   ProductData? productData;
 
-  factory WishlistDatum.fromJson(Map<String, dynamic> json){
+  factory WishlistDatum.fromJson(Map<String, dynamic> json) {
     return WishlistDatum(
       productId: json["product_id"],
       listingName: json["listing_name"],
@@ -65,20 +65,20 @@ class WishlistDatum {
   }
 
   Map<String, dynamic> toJson() => {
-    "product_id": productId,
-    "listing_name": listingName,
-    "customer_id": customerId,
-    "id": id,
-    "productData": productData?.toJson(),
-  };
+        "product_id": productId,
+        "listing_name": listingName,
+        "customer_id": customerId,
+        "id": id,
+        "productData": productData?.toJson(),
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$productId, $listingName, $customerId, $id, $productData, ";
   }
 }
 
-extension WishlistDatumExtension on WishlistDatum{
+extension WishlistDatumExtension on WishlistDatum {
   Commodity get displayCommodity =>
       Commodity.values.firstWhereOrNull((element) => element.value == listingName?.toLowerCase()) ?? Commodity.diamond;
 }
@@ -109,8 +109,9 @@ class ProductData {
     required this.metalColor1HexCode,
     required this.discountPercentage,
     required this.discountPrice,
-    required this.isFavorite,
+    this.isFavorite = true,
     required this.finalPrice,
+    required this.wishlistId,
   });
 
   String? exclusive;
@@ -137,10 +138,11 @@ class ProductData {
   String? metalColor1HexCode;
   int? discountPercentage;
   String? discountPrice;
-  dynamic isFavorite;
+  bool isFavorite;
   String? finalPrice;
+  String? wishlistId;
 
-  factory ProductData.fromJson(Map<String, dynamic> json){
+  factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(
       exclusive: json["exclusive"],
       id: json["id"],
@@ -156,8 +158,12 @@ class ProductData {
       metalKt: json["metal_kt"],
       brandName: json["brand_name"],
       market: json["market"],
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null ? [] : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
-      componentDetails: json["component_details"] == null ? [] : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
+      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
+          ? []
+          : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
+      componentDetails: json["component_details"] == null
+          ? []
+          : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
       suid: json["suid"],
       crt: json["crt"],
       gms: json["gms"],
@@ -166,42 +172,43 @@ class ProductData {
       metalColor1HexCode: json["metal_color_1_hex_code"],
       discountPercentage: json["discount_percentage"],
       discountPrice: json["discount_price"],
-      isFavorite: json["is_favorite"],
+      isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       finalPrice: json["final_price"],
+      wishlistId: json["is_favorite"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "exclusive": exclusive,
-    "id": id,
-    "product_description": productDescription,
-    "bin_group": binGroup,
-    "metal_color_1": metalColor1,
-    "currency": currency,
-    "csc_code": cscCode,
-    "certificate_no": certificateNo,
-    "diamond_grade": diamondGrade,
-    "new_arrival": newArrival,
-    "best_seller": bestSeller,
-    "metal_kt": metalKt,
-    "brand_name": brandName,
-    "market": market,
-    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
-    "component_details": componentDetails.map((x) => x.toJson()).toList(),
-    "suid": suid,
-    "crt": crt,
-    "gms": gms,
-    "rating": rating,
-    "review_count": reviewCount,
-    "metal_color_1_hex_code": metalColor1HexCode,
-    "discount_percentage": discountPercentage,
-    "discount_price": discountPrice,
-    "is_favorite": isFavorite,
-    "final_price": finalPrice,
-  };
+        "exclusive": exclusive,
+        "id": id,
+        "product_description": productDescription,
+        "bin_group": binGroup,
+        "metal_color_1": metalColor1,
+        "currency": currency,
+        "csc_code": cscCode,
+        "certificate_no": certificateNo,
+        "diamond_grade": diamondGrade,
+        "new_arrival": newArrival,
+        "best_seller": bestSeller,
+        "metal_kt": metalKt,
+        "brand_name": brandName,
+        "market": market,
+        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
+        "component_details": componentDetails.map((x) => x.toJson()).toList(),
+        "suid": suid,
+        "crt": crt,
+        "gms": gms,
+        "rating": rating,
+        "review_count": reviewCount,
+        "metal_color_1_hex_code": metalColor1HexCode,
+        "discount_percentage": discountPercentage,
+        "discount_price": discountPrice,
+        "is_favorite": isFavorite,
+        "final_price": finalPrice,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$exclusive, $id, $productDescription, $binGroup, $metalColor1, $currency, $cscCode, $certificateNo, $diamondGrade, $newArrival, $bestSeller, $metalKt, $brandName, $market, $multipleFinishedViewImage, $componentDetails, $suid, $crt, $gms, $rating, $reviewCount, $metalColor1HexCode, $discountPercentage, $discountPrice, $isFavorite, $finalPrice, ";
   }
 }

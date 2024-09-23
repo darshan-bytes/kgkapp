@@ -46,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,21 +64,32 @@ class ProductDetailsScreen extends StatelessWidget {
                         flex: 5,
                         child: SizedBox(
                           height: 60.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SmartText(bloc.productDetails?.displayPrice, style: style.priceStyle),
-                              if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                              SmartImage(path: bloc.imgList.isNotEmpty ? bloc.imgList.first : '', height: 54.w, width: 54.w),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
-                                    SizedBox(width: 8.w),
-                                    SmartText(bloc.productDetails?.discountPercentage, style: style.discountStyle),
+                                    SmartText(bloc.productDetails?.displayPrice,
+                                        style: style.priceStyle, maxLines: 1, isAutoSizeText: true),
+                                    if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
+                                          SizedBox(width: 8.w),
+                                          SmartText(bloc.productDetails?.discountPercentage, style: style.discountStyle),
+                                        ],
+                                      )
                                   ],
-                                )
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -87,7 +98,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: SmartButton(
-                          height: 60.h,
+                          height: 54.h,
                           prefixImage: AppImages.icShoppingBag,
                           title: APPStrings.addToBag.tr,
                           onTap: () {
@@ -260,7 +271,25 @@ class ProductDetailsScreen extends StatelessWidget {
                                       width: 42.w,
                                       padding: EdgeInsets.all(6.w),
                                       isSelected: false,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Utils.showSmartModalBottomSheet(
+                                          context: context,
+                                          enableDrag: false,
+                                          builder: (context) => ShareOptionSheet(
+                                            title: APPStrings.share.tr,
+                                            onTapQrCode: () {
+                                              context.pop();
+                                              _showQrCodeDialog(context: context, data: "https://dev.kgk.magnetoinfotech.com");
+                                            },
+                                            onTapCopy: () async {
+                                              bloc.onTapCopyLink(context: context);
+                                            },
+                                            onTapOther: () async {
+                                              bloc.onTapShareLink(context: context);
+                                            },
+                                          ),
+                                        );
+                                      },
                                       image: AppImages.icShare,
                                     ),
                                   ],
@@ -409,11 +438,7 @@ class ProductDetailsScreen extends StatelessWidget {
             if (bloc.suggestedProductList.isNotNullNorEmpty) SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
-            SizedBox(height: 32.h),
-            _buildRecentlyViewedProductList(bloc, style, context),
-          ]
+          _buildRecentlyViewedProductList(bloc, style, context),
         ],
       ),
     );
@@ -445,7 +470,7 @@ class ProductDetailsScreen extends StatelessWidget {
         : SmartText(bloc.productDetails?.productSku, style: style.productCodeStyle);
   }
 
-  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetails? productDetails) {
+  Widget _buildRatingBarAndReviews(ProductDetailsStyle style, ProductDetailsModel? productDetails) {
     return Row(
       children: [
         SmartRatingBar(
@@ -650,11 +675,15 @@ class ProductDetailsScreen extends StatelessWidget {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(
             title: APPStrings.youMayAlsoLike.tr,
-            onViewAllTap: () => bloc.navigateBasedOnScreenIdentifier(context),
+            onViewAllTap: bloc.suggestedProductList.length > 5
+                ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
+                : null,
             suggestedProductList: bloc.suggestedProductList,
             onProductTap: (product) {
-              context.pushNamed(AppRoutes.productDetailsPage,
-                  arguments: {RoutesData.productId: product.productId, RoutesData.isPageFor: bloc.screenIdentifier});
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.productId: product.productId,
+                RoutesData.isPageFor: bloc.screenIdentifier,
+              });
             },
             onEyeTap: () {},
             onFavTap: () {},
@@ -665,16 +694,41 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildRecentlyViewedProductList(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
-    return SmartSuggestionProductList(
-        title: APPStrings.recentlyViewed.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: bloc.recentlyViewedProductList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        isPaddingNeeded: false,
-        scrollController: bloc.recentViewScrollController);
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is ProductDetailsRecentlyViewedLoadedState,
+      builder: (context, state) {
+        if (bloc.recentlyViewedProductList.isNotNullNorEmpty) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 32.h),
+              SmartSuggestionProductList(
+                  title: APPStrings.recentlyViewed.tr,
+                  onViewAllTap: bloc.recentlyViewedProductList.length > 5
+                      ? () {
+                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
+                              productNavigation: AppConst.recentlyViewed);
+                        }
+                      : null,
+                  suggestedProductList: bloc.recentlyViewedProductList,
+                  onProductTap: (product) {
+                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                      RoutesData.productId: product.productId,
+                      RoutesData.isPageFor: bloc.screenIdentifier,
+                    });
+                  },
+                  onEyeTap: () {},
+                  onFavTap: () {},
+                  isPaddingNeeded: false,
+                  scrollController: bloc.recentViewScrollController),
+            ],
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
   }
 
   Widget getErrorWidget(ProductDetailsBloc bloc, BuildContext context) {
@@ -696,6 +750,67 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _showQrCodeDialog({required BuildContext context, required String data}) {
+    final QRCodeDialogStyle style = AppTheme.of(context).qrCodeDialogStyle;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: AnimatedScale(
+            scale: 1.0,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOutBack,
+            child: Stack(
+              alignment: Alignment.topRight,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(24.w),
+                  decoration: BoxDecoration(
+                    color: style.whiteColor,
+                    boxShadow: [
+                      BoxShadow(color: style.shadowColor, blurRadius: 15.0, spreadRadius: 5.0),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          height: 56.w,
+                          width: 56.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: style.borderColor),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Icon(Icons.qr_code_2_outlined, size: 42.w, color: style.primaryColor)),
+                      SizedBox(height: 16.h),
+                      SmartText(APPStrings.scanThisQRCode.tr, style: style.titleStyle),
+                      SizedBox(height: 8.h),
+                      SmartText(APPStrings.scanThisQRCodeDetails.tr, style: style.subTitleStyle, textAlign: TextAlign.center),
+                      SizedBox(height: 20.h),
+                      QrImageView(data: data, version: QrVersions.auto, size: 245.w, backgroundColor: style.whiteColor),
+                    ],
+                  ),
+                ),
+                PositionedDirectional(
+                  end: 20.w,
+                  top: 20.h,
+                  child: SmartImage(
+                    path: AppImages.icCross,
+                    height: 24.w,
+                    width: 24.w,
+                    color: style.primaryColor,
+                    onTap: () => context.pop(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

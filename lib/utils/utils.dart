@@ -112,6 +112,27 @@ class Utils {
     );
   }
 
+  static void showQrAuthLoadingDialog(BuildContext context) {
+    final style = AppTheme.of(context).profilePageScreenStyle;
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: 70.h, // Set the specific height here
+              width: context.width, // You can adjust the width as well
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7.r),
+                color: style.backgroundColor,
+              ),
+              child: Row(
+                children: [const SmartCircularProgressIndicator(), SmartText(APPStrings.loggingIn.tr)],
+              ),
+            ),
+          );
+        });
+  }
+
   static Future<T?> showSmartModalBottomSheet<T>({
     required BuildContext context,
     required WidgetBuilder builder,

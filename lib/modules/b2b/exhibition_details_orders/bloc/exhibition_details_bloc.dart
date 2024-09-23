@@ -18,7 +18,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   List<B2BCustomListingDataModel> exhibitionOrdersList = [];
 
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
 
   SmartPaginationScrollController orderScrollController = SmartPaginationScrollController();
   SmartPaginationScrollController productPaginationScrollController = SmartPaginationScrollController();
@@ -113,9 +113,9 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     return super.close();
   }
 
-  static List<ProductDetails> _generateProductList() {
+  static List<ProductDetailsModel> _generateProductList() {
     return List.generate(10, (index) {
-      return ProductDetails(
+      return ProductDetailsModel(
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',

@@ -70,6 +70,10 @@ class SmartStatusBadge extends StatelessWidget {
         return ProjectStatus.created.value;
       case ProjectStatus.inActive:
         return ProjectStatus.inActive.value;
+      case ProjectStatus.onHold:
+        return ProjectStatus.onHold.value;
+      case ProjectStatus.wip:
+        return ProjectStatus.wip.value;
     }
   }
 
@@ -101,6 +105,10 @@ class SmartStatusBadge extends StatelessWidget {
         return style.activeBackgroundColor;
       case ProjectStatus.inActive:
         return style.lostBackgroundColor;
+      case ProjectStatus.onHold:
+        return style.yellowBgColor;
+      case ProjectStatus.wip:
+        return style.blueInProgressBackgroundColor;
     }
   }
 
@@ -132,6 +140,10 @@ class SmartStatusBadge extends StatelessWidget {
         return style.activeTextColor;
       case ProjectStatus.inActive:
         return style.lostTextColor;
+      case ProjectStatus.onHold:
+        return style.yellowTextColor;
+      case ProjectStatus.wip:
+        return style.blueInProgressTextColor;
     }
   }
 }

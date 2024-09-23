@@ -39,7 +39,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   final List<AuctionListModel> shopByStyleList = _generateGetInspiredList(isGemstone: true);
 
   // Newly Launched Items List
-  final List<ProductDetails> newlyLaunchedItemsList = _generateNewlyLaunchedList();
+  final List<ProductDetailsModel> newlyLaunchedItemsList = _generateNewlyLaunchedList();
 
   // Shop by Metal List
   final ScrollController shopByMetalScrollController = ScrollController();
@@ -323,10 +323,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   // Generate Newly Launched List
-  static List<ProductDetails> _generateNewlyLaunchedList() {
+  static List<ProductDetailsModel> _generateNewlyLaunchedList() {
     return List.generate(
       20,
-      (index) => ProductDetails(
+      (index) => ProductDetailsModel(
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',

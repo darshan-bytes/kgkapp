@@ -67,3 +67,8 @@ class ProductRemoveFromFavoriteState extends AppState {
   @override
   List<Object> get props => [];
 }
+
+final class AppReloadState extends AppState {
+  @override
+  List<Object> get props => [];
+}

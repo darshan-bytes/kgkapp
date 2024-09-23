@@ -725,6 +725,7 @@ enum RoutesData {
   isWatchlistUpdated,
   commodity,
   collectionName,
+  productNavigation
 }
 
 enum ScreenIdentifier {

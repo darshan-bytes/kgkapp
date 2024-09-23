@@ -890,4 +890,16 @@ class APPStrings {
   static const String errorCompanyNameRequired = 'error_company_name_required';
   static const String errorOfficeLocationRequired = 'error_office_location_required';
   static const String errorBusinessTypeRequired = 'error_business_type_required';
+  static const String youHaveSavedX = 'you_have_saved_x';
+  static const String textCopied = 'text_copied';
+  static const String scanThisQRCode = 'scan_this_qr_code';
+  static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
+  static const String loggingIn = 'logging_in';
+  static const String phoneNumberAlreadyUsed = 'error_phone_number_already_used';
+  static const String emailAlreadyUsed = 'error_email_already_used';
+  static const String cancelItemList = 'cancel_item_list';
+  static const String commodity = 'commodity';
+  static const String origin = 'origin';
+  static const String onHold = 'on_hold';
+  static const String wip = 'wip';
 }

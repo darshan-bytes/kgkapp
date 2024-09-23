@@ -342,17 +342,103 @@ class AppRepository extends ApiService {
 
   // For Get Product Reviews
   Future<Either<ErrorResponse, PaginationData<ProductReviewModel>>?> productReviewsFilter(String productId,
-      {Map<String, dynamic>? query}) async {
-    context.setAppLoading(true);
+      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
     var response = await getMethod<PaginationData<ProductReviewModel>>(ApiClient.productReviewsFilter(productId), query: query);
-    context.setAppLoading(false);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   // Add Product into Bag
-  Future<Either<ErrorResponse, CommonResponse>?> addToBag({required Map<String, dynamic> body}) async {
+  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> addToBag({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await postMethod<Map<String, dynamic>>(ApiClient.addToBag, body, withFullResponse: true);
+    var response = await postMethod<MyBagDataModel>(ApiClient.addToBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // Delete Entire Bag
+  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> deleteBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, CommonResponse<MyBagDataModel>>>(ApiClient.deleteBag, withFullResponse: true, body: body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.jewelleryListing,
+      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //For Getting Product Details by ID
+  Future<Either<ErrorResponse, JewelleryDataModel>?> getProductDetailById(String id, {bool isLoadingShow = true}) async {
+    if (isLoadingShow) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryDataModel>(
+      ApiClient.productDetails(id),
+      query: {ApiKey.view: true},
+      withCurrencyHeader: true,
+    );
+    if (isLoadingShow) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Get Recently Viewed Product List for Diamond
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondRecentlyViewedProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<DiamondListingModel>(
+      ApiClient.diamondListing,
+      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Get Recently Viewed Product List for Gemstone
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneRecentlyViewedProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<GemstoneListingModel>(
+      ApiClient.gemstoneListing,
+      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // mergeBag
+  Future<Either<ErrorResponse, CommonResponse>?> mergeBag({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await putMethod<Map<String, dynamic>>(ApiClient.mergeBag, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

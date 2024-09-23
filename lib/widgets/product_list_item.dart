@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ProductListItem extends StatelessWidget {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final double? boxHeight;
   final double? boxWidth;
   final double? imageHeight;

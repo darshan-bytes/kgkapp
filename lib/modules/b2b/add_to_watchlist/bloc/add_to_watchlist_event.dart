@@ -7,7 +7,7 @@ sealed class AddToWatchlistEvent extends Equatable {
 }
 
 final class AddToWatchlistInitialEvent extends AddToWatchlistEvent {
-  final ProductDetails productDetails;
+  final ProductDetailsModel productDetails;
   final WatchlistActionType actionType;
   final BuildContext context;
   final WatchlistData? watchlistData;

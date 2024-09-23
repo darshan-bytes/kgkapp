@@ -54,12 +54,31 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         }
         if (r.userIdDetails?.userTypeEnum != null) {
           emit(const SignInSuccessState());
+          await StorageManager().setIsSkipLogin(false);
           BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+          await mergeCart(event.context);
           event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
         }
-        // event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
       });
     });
+  }
+
+  Future<void> mergeCart(BuildContext context) async {
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if(myBagDataModel != null) {
+      Map<String, dynamic> body = {
+        ApiKey.id: myBagDataModel.sId ?? '',
+      };
+      await AppRepository(context).mergeBag(body: body).then((value) {
+        value?.fold((l) {
+          Utils.showMessage(l.message ?? '');
+        }, (r) async {
+          if (r.responseData != null) {
+            await StorageManager().clearBagData();
+          }
+        });
+      });
+    }
   }
 
   /// Check email & password validations as needed
@@ -79,5 +98,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
 
     return true;
+  }
+
+  void onSkipLogin(BuildContext context) async{
+    await StorageManager().setIsSkipLogin(true);
+    BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
+    context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
   }
 }

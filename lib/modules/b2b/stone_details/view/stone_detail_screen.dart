@@ -6,6 +6,7 @@ class StoneDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final diamondBloc = context.read<StoneDetailBloc>();
+    final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Scaffold(
       appBar: SmartAppBar(
         title: '1.01 Carat Round Diamond',
@@ -39,13 +40,46 @@ class StoneDetailScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: SmartButton(
-          margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 17.w),
-          onTap: () {
-            context.pushNamed(AppRoutes.settingListingPage);
-          },
-          title: APPStrings.selectDiamond.tr,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+        decoration: BoxDecoration(
+          color: style.colorWhite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 7.r,
+              blurRadius: 7.r,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SmartImage(path: diamondBloc.imgList.first, height: 55.w, width: 55.w),
+              Expanded(
+                flex: 4,
+                child: SmartText(
+                  '\$3,020.00',
+                  style: style.priceStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(width: 10.w,),
+              Expanded(
+                flex: 4,
+                child: SmartButton(
+                  onTap: () {
+                    context.pushNamed(AppRoutes.settingListingPage);
+                  },
+                  padding: EdgeInsets.zero,
+                  title: APPStrings.selectDiamond.tr,
+                  height: 55.h,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -78,14 +112,7 @@ class StoneDetailScreen extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(height: 24.h),
-          const Divider(),
-          SizedBox(height: 24.h),
-          SmartText(
-            '\$3,020.00',
-            style: style.priceStyle,
-          ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 14.h),
           Row(
             children: [
               SmartText(
@@ -99,7 +126,7 @@ class StoneDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 24.h),
+          SizedBox(height: 14.h),
           const Divider(),
           SizedBox(height: 24.h),
           Row(

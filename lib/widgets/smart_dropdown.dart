@@ -17,6 +17,7 @@ class SmartDropDown<T> extends StatelessWidget {
   final Color? backgroundColor;
   final bool isIcArrowDropDown;
   final bool isExpanded;
+  final bool isChangeableValue;
 
   const SmartDropDown({
     super.key,
@@ -36,6 +37,7 @@ class SmartDropDown<T> extends StatelessWidget {
     this.backgroundColor,
     this.isIcArrowDropDown = true,
     this.isExpanded = true,
+    this.isChangeableValue = true,
   });
 
   @override
@@ -55,6 +57,9 @@ class SmartDropDown<T> extends StatelessWidget {
         InkWell(
           focusNode: focusNode,
           onTap: () {
+            if(!isChangeableValue) {
+              return;
+            }
             Utils.showSmartModalBottomSheet(
                 context: context,
                 isScrollControlled: scrollDirection == Axis.horizontal,

@@ -685,7 +685,7 @@
   "session_expired": "सत्र समाप्त हुआ",
   "session_expired_desc": "आपका सत्र समाप्त हो गया है। कृपया फिर भाग लें।",
   "dna": "DNA",
-  "percentage_off_interpolating": "({$}% OFF)",
+  "percentage_off_interpolating": "({#}% OFF)",
   "retry": "पुनः प्रयास करें",
   "please_select_watchlist": "कृपया वॉचलिस्ट का चयन करें",
   "no_products_added_in_watchlist": "वॉचलिस्ट में कोई प्रोडक्ट नहीं जोड़ा गया है",
@@ -700,5 +700,12 @@
   "error_country_required": "देश आवश्यक है",
   "error_password_required": "पासवर्ड आवश्यक है",
   "error_confirm_password_required": "पासवर्ड की पुष्टि करें आवश्यक है",
-  "error_password_not_match": "पासवर्ड मेल नहीं खाता"
+  "error_password_not_match": "पासवर्ड मेल नहीं खाता",
+  "you_have_saved_x": "आपने {#} बचाया ह",
+  "text_copied": "कॉपी किया गया",
+  "scan_this_qr_code": "यह QR कोड स्कैन करें",
+  "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें",
+  "logging_in": "Logging in...",
+  "error_phone_number_already_used" : "* Phone number is already used.",
+  "error_email_already_used": "* Email is already used."
 }

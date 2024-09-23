@@ -7,7 +7,7 @@ part 'watchlist_details_state.dart';
 class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsState> {
   WatchlistData watchlistDetailsModel = WatchlistData();
 
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   String get watchlistName => watchlistDetailsModel.name ?? '';
@@ -68,14 +68,14 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
     super.close();
   }
 
-  List<ProductDetails> _generateProductList() {
+  List<ProductDetailsModel> _generateProductList() {
     return List.generate(
       watchlistDetailsModel.products?.length ?? 0,
       (index) {
         WatchlistProducts product = watchlistDetailsModel.products![index];
         switch (product.displayCommodity) {
           case Commodity.jewellery:
-            return ProductDetails(
+            return ProductDetailsModel(
               productId: product.productId,
               imageUrl: product.jewelleryData?.multipleFinishedViewImage.isNotNullNorEmpty == true
                   ? product.jewelleryData!.multipleFinishedViewImage[0].imageUrl
@@ -91,7 +91,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               commodity: product.displayCommodity,
             );
           case Commodity.gemstone:
-            return ProductDetails(
+            return ProductDetailsModel(
               productId: product.productId,
               imageUrl: product.gemstoneData?.image.isNotNullNorEmpty == true ? product.gemstoneData!.image[0].url : "",
               name: product.gemstoneData?.rmDescription,
@@ -106,7 +106,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
             );
           case Commodity.diamond:
           default:
-            return ProductDetails(
+            return ProductDetailsModel(
               productId: product.productId,
               imageUrl: product.diamondData?.image.isNotNullNorEmpty == true ? product.diamondData!.image[0].url : "",
               name: product.diamondData?.rmDescription,

@@ -9,6 +9,10 @@ class ApiClient {
       'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
 
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
+  static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
+  static const String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
+  static String checkDuplicationPhoneNumber(String code, String phoneNumber) =>
+      '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
@@ -57,8 +61,12 @@ class ApiClient {
   static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
 
   static const String addToBag = '$apiBaseUrl/bag/create';
-  
+
   static const String collectionMaster = '$apiBaseUrl/collection-master';
+
+  static const String deleteBag = '$apiBaseUrl/bag';
+
+  static const String mergeBag = '$apiBaseUrl/bag/merge-bag';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

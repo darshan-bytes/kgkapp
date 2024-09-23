@@ -18,6 +18,7 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
   ManufacturerOrderDetailsBloc() : super(ManufacturerOrderDetailsInitial()) {
     on<ManufacturerOrderDetailsInitialEvent>(_manufacturerOrderDetailsInitialEvent);
     on<ManufacturerOrderCancellationReasonsEvent>(_onManufacturerOrderCancellationReasonsChange);
+    on<ManufacturerOrderDetailsShowMoreEvent>(_onManufacturerOrderDetailsShowMore);
   }
 
   void getRouteData(BuildContext context) async {
@@ -56,6 +57,18 @@ class ManufacturerOrderDetailsBloc extends Bloc<ManufacturerOrderDetailsEvent, M
 
     cancellationReasonsList = _generateCancellationReasonsList();
     emit(ManufacturerOrderDataFetchedState());
+  }
+
+  Future<void> _onManufacturerOrderDetailsShowMore(
+      ManufacturerOrderDetailsShowMoreEvent event, Emitter<ManufacturerOrderDetailsState> emit) async {
+    emit(ManufacturerOrderReloadState());
+
+    for (ManufacturerOrderDetailsModel e in orderList) {
+      e.isShowMore = false;
+    }
+    orderList[event.index].isShowMore = !orderList[event.index].isShowMore;
+
+    emit(const ManufacturerOrderDetailsShowMoreState());
   }
 
   Future<void> _onManufacturerOrderCancellationReasonsChange(

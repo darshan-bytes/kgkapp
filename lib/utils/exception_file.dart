@@ -1,4 +1,4 @@
-class KGKException implements Exception{
+class KGKException implements Exception {
   final String message;
   final String code;
 
