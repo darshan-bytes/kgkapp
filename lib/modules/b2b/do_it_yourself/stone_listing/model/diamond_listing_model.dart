@@ -781,8 +781,8 @@ class DiamondPagination {
 
   factory DiamondPagination.fromJson(Map<String, dynamic> json) {
     return DiamondPagination(
-      limit: json["limit"],
-      page: json["page"],
+      limit: json["limit"].toString(),
+      page: json["page"].toString(),
     );
   }
 

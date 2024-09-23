@@ -28,4 +28,9 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     });
     emit(CollectionMasterListLoadedState());
   }
+
+  void navigateToJewelleryListingScreen({required String collectionName, required BuildContext context}) {
+    context.pushNamed(AppRoutes.productListGridPage,
+        arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.collectionName: collectionName});
+  }
 }
