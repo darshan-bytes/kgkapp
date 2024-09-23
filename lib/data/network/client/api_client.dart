@@ -11,7 +11,8 @@ class ApiClient {
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
   static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
   static const String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
-  static String checkDuplicationPhoneNumber(String code, String phoneNumber) => '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
+  static String checkDuplicationPhoneNumber(String code, String phoneNumber) =>
+      '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
 
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
@@ -60,6 +61,8 @@ class ApiClient {
   static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
 
   static const String addToBag = '$apiBaseUrl/bag/create';
+
+  static const String collectionMaster = '$apiBaseUrl/collection-master';
 
   static const String deleteBag = '$apiBaseUrl/bag';
 

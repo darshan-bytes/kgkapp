@@ -441,6 +441,7 @@ export 'package:kgk/modules/common_modules/product_details/model/product_review_
 export 'package:http_parser/http_parser.dart';
 export 'package:mime_type/mime_type.dart';
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
+export 'package:kgk/modules/common_modules/collection/model/collection_data_model.dart';
 export 'package:kgk/widgets/share_option_sheet.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 export 'package:share_plus/share_plus.dart';
