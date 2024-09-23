@@ -48,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                             title: APPStrings.individual.tr,
                             image: AppImages.icUser,
                             onTap: () {
-                              signUpBloc.add(const SignUpChangeAccountTypeEvent(true));
+                              signUpBloc.add(SignUpChangeAccountTypeEvent(context, true));
                             },
                           ),
                         ),
@@ -60,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                             title: APPStrings.company.tr,
                             image: AppImages.icCompany,
                             onTap: () {
-                              signUpBloc.add(const SignUpChangeAccountTypeEvent(false));
+                              signUpBloc.add(SignUpChangeAccountTypeEvent(context, false));
                             },
                           ),
                         ),
@@ -68,9 +68,9 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 24.h),
                     if (signUpBloc.isIndividual)
-                      ...generateIndividualForm(signUpBloc, context)
+                      ...generateIndividualForm(signUpBloc, context, style)
                     else
-                      ...generateCompanyForm(signUpBloc, context),
+                      ...generateCompanyForm(signUpBloc, context, style),
                     SizedBox(height: 32.h),
                     _buildRegisterButton(context, signUpBloc),
                   ],
@@ -119,15 +119,15 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> generateIndividualForm(SignUpBloc signUpBloc, BuildContext context) {
+  List<Widget> generateIndividualForm(SignUpBloc signUpBloc, BuildContext context, SignUpStyle style) {
     return <Widget>[
       _buildFirstNameField(signUpBloc),
       SizedBox(height: 24.h),
       _buildLastNameField(signUpBloc),
       SizedBox(height: 24.h),
-      _buildEmailField(signUpBloc),
+      _buildEmailField(context, signUpBloc, style),
       SizedBox(height: 24.h),
-      _buildContactNumberField(signUpBloc, context),
+      _buildContactNumberField(signUpBloc, context, style),
       SizedBox(height: 24.h),
       _buildPasswordField(signUpBloc),
       SizedBox(height: 24.h),
@@ -135,7 +135,7 @@ class SignUpScreen extends StatelessWidget {
     ];
   }
 
-  List<Widget> generateCompanyForm(SignUpBloc signUpBloc, BuildContext context) {
+  List<Widget> generateCompanyForm(SignUpBloc signUpBloc, BuildContext context, SignUpStyle style) {
     return <Widget>[
       _buildCompanyNameField(signUpBloc),
       SizedBox(height: 24.h),
@@ -149,9 +149,9 @@ class SignUpScreen extends StatelessWidget {
       SizedBox(height: 24.h),
       _buildLastNameField(signUpBloc),
       SizedBox(height: 24.h),
-      _buildEmailField(signUpBloc),
+      _buildEmailField(context, signUpBloc, style),
       SizedBox(height: 24.h),
-      _buildContactNumberField(signUpBloc, context),
+      _buildContactNumberField(signUpBloc, context, style),
       SizedBox(height: 24.h),
       _buildCountryField(signUpBloc, context),
       SizedBox(height: 24.h),
@@ -185,18 +185,40 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEmailField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.email.tr,
-      hintText: APPStrings.hintEmail.tr,
-      controller: signUpBloc.emailController,
-      focusNode: signUpBloc.emailFocusNode,
-      nextFocus: signUpBloc.contactNumberFocusNode,
-      keyboardType: TextInputType.emailAddress,
+  Widget _buildEmailField(BuildContext context, SignUpBloc signUpBloc, SignUpStyle style) {
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) =>
+          current is SignUpEmailValidationState && current.emailValidationFieldType == ValidationFieldType.email,
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmartTextField(
+              labelText: APPStrings.email.tr,
+              hintText: APPStrings.hintEmail.tr,
+              controller: signUpBloc.emailController,
+              focusNode: signUpBloc.emailFocusNode,
+              nextFocus: signUpBloc.contactNumberFocusNode,
+              keyboardType: TextInputType.emailAddress,
+              onValueChanges: (value) {
+                signUpBloc.add(SignUpEmailValidationEvent(email: value, context: context));
+              },
+            ),
+            Visibility(
+              visible: state is SignUpEmailValidationState && state.isError,
+              child: SmartText(
+                APPStrings.emailAlreadyUsed.tr,
+                color: style.errorTextColor,
+                optionalPadding: EdgeInsets.only(top: 6.h),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildContactNumberField(SignUpBloc signUpBloc, BuildContext context) {
+  Widget _buildContactNumberField(SignUpBloc signUpBloc, BuildContext context, SignUpStyle style) {
     final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) => current is SignUpAddRemoveContactState,
@@ -219,7 +241,10 @@ class SignUpScreen extends StatelessWidget {
                       ? signUpBloc.passwordFocusNode
                       : signUpBloc.contactNumberFocusNodes[index + 1],
                   keyboardType: TextInputType.phone,
-                  textInputFormatter: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                  textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                  onValueChanges: (value) {
+                    signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
+                  },
                   prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
                     buildWhen: (previous, current) => current is SignUpChangeCountryCodeState,
                     builder: (context, state) {
@@ -280,6 +305,14 @@ class SignUpScreen extends StatelessWidget {
               separatorBuilder: (_, __) {
                 return SizedBox(height: 8.h);
               },
+            ),
+            Visibility(
+              visible: state is SignUpPhoneNumberValidationState && state.isError,
+              child: SmartText(
+                APPStrings.phoneNumberAlreadyUsed.tr,
+                color: style.errorTextColor,
+                optionalPadding: EdgeInsets.only(top: 6.h),
+              ),
             ),
             if (!signUpBloc.isIndividual && signUpBloc.contactNumberControllers.length < 2) ...[
               SizedBox(height: 8.h),
@@ -366,7 +399,7 @@ class SignUpScreen extends StatelessWidget {
           isEnabled: signUpBloc.isSignupButtonEnabled,
           title: APPStrings.register.tr,
           onTap: () {
-            context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
+            signUpBloc.add(SignUpSubmitEvent(context));
           },
         );
       },

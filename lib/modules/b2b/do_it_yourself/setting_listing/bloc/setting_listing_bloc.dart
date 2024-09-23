@@ -7,7 +7,7 @@ part 'setting_listing_state.dart';
 class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> {
   bool isInitialToggle = true;
   bool isGrid = true;
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
 
   String settingListingAppbarTitle = "DIY";
 
@@ -36,7 +36,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       List.generate(
           20,
           (index) => productList.add(
-                ProductDetails(
+                ProductDetailsModel(
                   diamond: "2.5 crt",
                   gram: "1.5 grms",
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/CHwFm51/image-7-3.png" : "https://i.ibb.co/PGFbmSy/image-7-2.png",
@@ -64,7 +64,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     List.generate(
         20,
         (index) => productList.add(
-              ProductDetails(
+              ProductDetailsModel(
                 diamond: "2.5 crt",
                 gram: "1.5 grms",
                 imageUrl: index % 2 == 0 ? "https://i.ibb.co/CHwFm51/image-7-3.png" : "https://i.ibb.co/PGFbmSy/image-7-2.png",
@@ -81,7 +81,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     await Future.delayed(const Duration(seconds: 1));
     productList = List.generate(
         10,
-        (index) => ProductDetails(
+        (index) => ProductDetailsModel(
               diamond: "2.5 crt",
               gram: "1.5 grms",
               imageUrl: index % 2 == 0 ? "https://i.ibb.co/CHwFm51/image-7-3.png" : "https://i.ibb.co/PGFbmSy/image-7-2.png",

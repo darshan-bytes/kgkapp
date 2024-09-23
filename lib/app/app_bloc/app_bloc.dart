@@ -130,7 +130,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapFavorite(context, {required ProductDetails productDetails}) {
+  void onTapFavorite(context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
@@ -141,7 +141,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapBag(context, {required ProductDetails productDetails}) {
+  void onTapBag(context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
@@ -150,6 +150,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   ///for add product to wishlist
   Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
+    emit(AppReloadState());
     Map<String, dynamic> body = {
       ApiKey.productId_: event.productDetails.productId,
       ApiKey.commodity: event.productDetails.commodity?.value
@@ -165,6 +166,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
             emit(const ProductAddToFavoriteState());
           },
         );
@@ -174,6 +177,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   ///for remove product from wishlist
   Future<void> _onProductRemoveFromWishlist(ProductRemoveFromFavoriteEvent event, Emitter<AppState> emit) async {
+    emit(AppReloadState());
     await AppRepository(event.context).deleteWishList(event.productDetails.wishlistId ?? '').then(
       (response) {
         response?.fold(
@@ -184,6 +188,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             Utils.showMessage(data.message ?? '');
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = null;
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
             emit(const ProductRemoveFromFavoriteState());
           },
         );
@@ -191,8 +197,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  // Add to bag event
   Future<void> _onProductAddToBagEvent(ProductAddToBagEvent event, Emitter<AppState> emit) async {
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
     String userId = StorageManager().getUserId() ?? '';
+
+    if (myBagDataModel != null && myBagDataModel.commodity != event.productDetails.commodity?.value) {
+      await _deleteAndRetryBag(event, emit, myBagDataModel.sId ?? '');
+    }
+    await _addToBag(event, userId);
+  }
+
+  // Add to bag
+  Future<void> _addToBag(ProductAddToBagEvent event, String userId) async {
     Map<String, dynamic> body = {
       ApiKey.commodity: event.productDetails.commodity?.value,
       ApiKey.quantity: 1,
@@ -200,20 +217,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ApiKey.userId: userId,
     };
 
-    await AppRepository(event.context).addToBag(body: body).then(
-      (response) {
-        response?.fold(
-          (l) {
-            Utils.showMessage(l.message ?? '');
-          },
-          (data) async {
-            String bagId = data.responseData['_id'];
-            await StorageManager().storeBagId(bagId);
-            Utils.showMessage(data.message ?? '');
-          },
-        );
-      },
-    );
+    await AppRepository(event.context).addToBag(body: body).then((response) {
+      response?.fold(
+        (l) => Utils.showMessage(l.message ?? ''),
+        (data) async {
+          MyBagDataModel myBagDataModel = data.responseData;
+          await StorageManager().storeBagData(myBagDataModel);
+          Utils.showMessage(data.message ?? '');
+        },
+      );
+    });
+  }
+
+  // Delete and retry bag
+  Future<void> _deleteAndRetryBag(ProductAddToBagEvent event, Emitter<AppState> emit, String bagId) async {
+    if (bagId.isNullOrEmpty) {
+      return;
+    }
+    Map<String, dynamic> body = {ApiKey.id: bagId};
+
+    await AppRepository(event.context).deleteBag(body: body).then((response) {
+      response?.fold(
+        (l) => Utils.showMessage(l.message ?? ''),
+        (data) async {
+          await StorageManager().clearBagData();
+          Utils.showMessage(data.message ?? '');
+        },
+      );
+    });
   }
 
   Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {

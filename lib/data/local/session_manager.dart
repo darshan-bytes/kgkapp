@@ -13,12 +13,14 @@ class StorageManager {
   late Box _box;
   final String _authTokenBoxName = 'auth_token';
   final String _userId = 'userId';
+  final String _userData = 'userData';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
   final String _selectedCurrency = 'selectedCurrency';
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
-  final String _bagId = 'bagId';
+  final String _bagData = 'bagData';
+  final String _isSkipLogin = 'isSkipLogin';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -42,6 +44,15 @@ class StorageManager {
 
   String? getUserId() {
     return _box.get(_userId);
+  }
+
+  Future<void> setUserData(UserIdDetails userIdDetails) async {
+    await _box.put(_userData, jsonEncode(userIdDetails.toJson()));
+  }
+
+  UserIdDetails? getUserData() {
+    String? userData = _box.get(_userData);
+    return userData.isNotNullNorEmpty ? UserIdDetails.fromJson(jsonDecode(userData!)) : null;
   }
 
   /// Set locale after login-signup
@@ -95,18 +106,24 @@ class StorageManager {
   }
 
   /// Set bag id for cart
-  Future<void> storeBagId(String badgeId) async {
-    await _box.put(_bagId, badgeId);
+  Future<void> storeBagData(MyBagDataModel badgeId) async {
+    await _box.put(_bagData, jsonEncode(badgeId.toJson()));
   }
 
-  String? getBagId() {
-    return _box.get(_bagId);
+  MyBagDataModel? getBagData() {
+    String? bagData = _box.get(_bagData);
+    return bagData.isNotNullNorEmpty ? MyBagDataModel.fromJson(jsonDecode(bagData!)) : null;
+  }
+
+  Future<void> clearBagData() async {
+    await _box.delete(_bagData);
   }
 
   /// Clear all data stored except _locale
   Future<void> clearSession() async {
     String? locale = getLocale();
     List<CurrencyListModel>? currencyList = getCurrencyList();
+    bool isSkipLogin = getIsSkipLogin();
     await _box.clear();
 
     if (locale != null) {
@@ -114,6 +131,9 @@ class StorageManager {
     }
     if (currencyList.isNotNullNorEmpty) {
       await setCurrencyList(currencyList);
+    }
+    if (isSkipLogin) {
+      await setIsSkipLogin(isSkipLogin);
     }
   }
 
@@ -125,6 +145,16 @@ class StorageManager {
   // getLanguageLabels
   Map<String, dynamic> getLanguageLabels() {
     return jsonDecode(_box.get(_languageLabels) ?? '{}');
+  }
+
+  // setIsSkipLogin
+  Future<void> setIsSkipLogin(bool isSkipLogin) async {
+    await _box.put(_isSkipLogin, isSkipLogin);
+  }
+
+  // getIsSkipLogin
+  bool getIsSkipLogin() {
+    return _box.get(_isSkipLogin) ?? false;
   }
 
   Future<void> closeBox() async {

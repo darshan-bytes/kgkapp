@@ -6,8 +6,8 @@ part 'search_result_state.dart';
 
 class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
   bool isGrid = true;
-  List<ProductDetails> productList = [];
-  List<ProductDetails> newlyLaunchedItems = [];
+  List<ProductDetailsModel> productList = [];
+  List<ProductDetailsModel> newlyLaunchedItems = [];
 
   List<AuctionListModel> shopDiamondsByShapeList = [];
 
@@ -59,7 +59,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     if (!isNoDataFound) {
       productList = List.generate(
           20,
-          (index) => ProductDetails(
+          (index) => ProductDetailsModel(
                 imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                 name: "Diamond Vine Ring in 18k Rose Gold",
                 originalPrice: '\$5,000.00',
@@ -87,7 +87,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
       List.generate(
           5,
           (index) => newlyLaunchedItems.add(
-                ProductDetails(
+                ProductDetailsModel(
                   imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                   name: "Diamond Vine Ring in 18k Rose Gold",
                   originalPrice: '\$5,000.00',
@@ -110,7 +110,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     List.generate(
         20,
         (index) => productList.add(
-              ProductDetails(
+              ProductDetailsModel(
                 imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
                 name: "Diamond Vine Ring in 18k Rose Gold",
                 originalPrice: '\$5,000.00',
@@ -126,7 +126,7 @@ class SearchResultBloc extends Bloc<SearchResultEvent, SearchResultState> {
     paginationScrollController.pullToRefresh();
     productList = List.generate(
         20,
-        (index) => ProductDetails(
+        (index) => ProductDetailsModel(
               imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
               name: "Diamond Vine Ring in 18k Rose Gold",
               originalPrice: '\$5,000.00',

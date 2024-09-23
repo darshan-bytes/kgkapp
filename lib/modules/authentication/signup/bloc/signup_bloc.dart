@@ -4,6 +4,8 @@ part 'signup_event.dart';
 
 part 'signup_state.dart';
 
+enum ValidationFieldType { email, phoneNumber }
+
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   /// Indicates whether the SignUpBloc has been initialized.
   ///
@@ -68,6 +70,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpRemoveContactEvent>(_onSignUpRemoveContactEvent);
     on<SignUpResetEvent>(_onSignUpResetEvent);
     on<SignUpChangeOfficeLocationEvent>(_onSignUpChangeOfficeLocationEvent);
+    on<SignUpSubmitEvent>(_onSignUpSubmit);
+    on<SignUpEmailValidationEvent>(_onSignUpEmailValidationEvent);
+    on<SignUpPhoneNumberValidationEvent>(_onSignUpPhoneNumberValidationEvent);
   }
 
   Future<void> _onSignUpInitialEvent(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
@@ -92,6 +97,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           },
           (r) {
             businessTypes = r;
+            selectFirstBusinessLocation();
             return true;
           },
         ) ??
@@ -119,6 +125,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
+    if (emailController.text.trim().isNotEmpty) {
+      add(SignUpEmailValidationEvent(email: emailController.text.trim(), context: event.context));
+    }
+    if (contactNumberController.text.trim().isNotEmpty) {
+      add(SignUpPhoneNumberValidationEvent(phoneNumber: contactNumberController.text.trim(), context: event.context));
+    }
     isIndividual = event.isIndividual;
     emit(SignUpChangeAccountTypeState(isIndividual));
   }
@@ -188,7 +200,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       element.isSelected = false;
     }
     isIndividual = true;
+    selectFirstBusinessLocation();
     emit(SignUpReloadState());
+  }
+
+  void selectFirstBusinessLocation() {
+    //TODO: Remove when business types UI is done
+    if (businessTypes.isNotEmpty) {
+      businessTypes.first.isSelected = true;
+    }
   }
 
   void _onSignUpChangeOfficeLocationEvent(SignUpChangeOfficeLocationEvent event, Emitter<SignUpState> emit) {
@@ -196,6 +216,156 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     selectedOfficeLocation = event.officeLocation;
     if (selectedOfficeLocation != null) {
       emit(SignUpChangeOfficeLocationState(selectedOfficeLocation!));
+    }
+  }
+
+  Future<void> _onSignUpSubmit(SignUpSubmitEvent event, Emitter<SignUpState> emit) async {
+    if (_validateForm()) {
+      emit(const SignUpLoadingState());
+      await _callSignUpApi(event: event);
+    }
+  }
+
+  bool _validateForm() {
+    if (isIndividual) {
+      if (firstNameController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
+        return false;
+      } else if (lastNameController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorLastNameRequired.tr);
+        return false;
+      } else if (emailController.text.isEmpty) {
+        Utils.showMessage(APPStrings.emailRequired.tr);
+        return false;
+      } else if (!Utils.isValidEmail(emailController.text)) {
+        Utils.showMessage(APPStrings.validEmail.tr);
+        return false;
+      } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
+        Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
+        return false;
+      } else if (passwordController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorPasswordRequired.tr);
+        return false;
+      } else if (confirmPasswordController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
+        return false;
+      } else if (passwordController.text != confirmPasswordController.text) {
+        Utils.showMessage(APPStrings.errorPasswordNotMatch.tr);
+        return false;
+      }
+
+      return true;
+    } else {
+      if (companyNameController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorCompanyNameRequired.tr);
+        return false;
+      } else if (selectedOfficeLocation == null) {
+        Utils.showMessage(APPStrings.errorOfficeLocationRequired.tr);
+        return false;
+      } else if (businessTypes.every((element) => !element.isSelected)) {
+        Utils.showMessage(APPStrings.errorBusinessTypeRequired.tr);
+        return false;
+      } else if (firstNameController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
+        return false;
+      } else if (lastNameController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorLastNameRequired.tr);
+        return false;
+      } else if (emailController.text.isEmpty) {
+        Utils.showMessage(APPStrings.emailRequired.tr);
+        return false;
+      } else if (!Utils.isValidEmail(emailController.text)) {
+        Utils.showMessage(APPStrings.validEmail.tr);
+        return false;
+      } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
+        Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
+        return false;
+      } else if (passwordController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorPasswordRequired.tr);
+        return false;
+      } else if (confirmPasswordController.text.isEmpty) {
+        Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
+        return false;
+      } else if (passwordController.text != confirmPasswordController.text) {
+        Utils.showMessage(APPStrings.errorPasswordNotMatch.tr);
+        return false;
+      }
+      return true;
+    }
+  }
+
+  Future<void> _callSignUpApi({required SignUpSubmitEvent event}) async {
+    Map<String, dynamic> params = {
+      ApiKey.accountType: isIndividual ? UserType.b2cUser.value : UserType.b2bUser.value,
+      ApiKey.userType: AccountType.customer.value,
+      ApiKey.firstName: firstNameController.text.trim(),
+      ApiKey.lastName: lastNameController.text.trim(),
+      ApiKey.email: emailController.text.trim(),
+      ApiKey.password: passwordController.text.trim(),
+      ApiKey.phone:
+          contactNumberControllers.map((e) => {ApiKey.phoneCode: selectedCountry.phoneCode, ApiKey.phoneNumber: e.text.trim()}).toList(),
+      ApiKey.businessType: businessTypes.where((element) => element.isSelected).map((e) => e.id).toList(),
+      ApiKey.countryCode: '',
+      ApiKey.status: 'pending',
+    };
+
+    if (!isIndividual) {
+      params[ApiKey.organizationName] = companyNameController.text.trim();
+      params[ApiKey.officeLocationCode] = selectedOfficeLocation?.code;
+      params[ApiKey.countryCode] = selectedCountry.countryCode;
+    }
+
+    Either<ErrorResponse, CommonResponse>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
+    signUpResponse?.fold(
+      (l) {
+        Utils.showMessage(l.message ?? '');
+      },
+      (r) {
+        add(const SignUpResetEvent());
+        event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
+        Utils.showMessage(r.message ?? '');
+      },
+    );
+  }
+
+  Future<void> _onSignUpEmailValidationEvent(SignUpEmailValidationEvent event, Emitter<SignUpState> emit) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!emit.isDone) {
+      if (event.email.isNotEmpty && Utils.isValidEmail(event.email)) {
+        Map<String, dynamic> params = {ApiKey.email: event.email.trim()};
+        Either<ErrorResponse, CommonResponse>? emailValidationResponse = await UserRepository(event.context).validateEmail(params);
+
+        if (!emit.isDone) {
+          emailValidationResponse?.fold((l) {
+            Utils.showMessage(l.message ?? '');
+          }, (r) {
+            bool isEmailUsed = r.responseData['isEmailUsed'];
+            emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: isEmailUsed));
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _onSignUpPhoneNumberValidationEvent(SignUpPhoneNumberValidationEvent event, Emitter<SignUpState> emit) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!emit.isDone) {
+      if (event.phoneNumber.isNotEmpty && event.phoneNumber.length >= 10) {
+        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
+            await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
+
+        if (!emit.isDone) {
+          phoneNumberValidationResponse?.fold((l) {
+            Utils.showMessage(l.message ?? '');
+          }, (r) {
+            bool isPhoneNumberUsed = r.responseData;
+            emit(SignUpPhoneNumberValidationState(
+                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: isPhoneNumberUsed));
+          });
+        }
+      }
     }
   }
 }

@@ -150,7 +150,7 @@ class SettingListingScreen extends StatelessWidget {
                     return Column(
                       children: [
                         SmartGridView(
-                            items: settingListingBloc.productList.map((ProductDetails productDetails) {
+                            items: settingListingBloc.productList.map((ProductDetailsModel productDetails) {
                           return ProductGridItem(
                             productDetails: productDetails,
                             onEyeTap: () {},

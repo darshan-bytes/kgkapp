@@ -164,7 +164,7 @@ class ProductListScreen extends StatelessWidget {
                   //     )
                   //   ),
                   // ],
-                  items: bloc.productList.map((ProductDetails productDetails) {
+                  items: bloc.productList.map((ProductDetailsModel productDetails) {
                 /// If need to  product customization icon then remove onCancel voidCallback
                 bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
                     bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&

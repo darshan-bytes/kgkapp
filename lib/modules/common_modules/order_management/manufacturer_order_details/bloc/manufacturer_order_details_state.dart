@@ -36,3 +36,11 @@ final class ManufacturerCancellationReasonsChangeState extends ManufacturerOrder
   @override
   List<Object> get props => [cancellationReasonModel];
 }
+
+final class ManufacturerOrderDetailsShowMoreState extends ManufacturerOrderDetailsState {
+
+  const ManufacturerOrderDetailsShowMoreState();
+
+  @override
+  List<Object> get props => [];
+}

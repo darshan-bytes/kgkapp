@@ -55,7 +55,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     APPStrings.huse,
     APPStrings.mirage,
   ];
-  final List<ProductDetails> luminousProductViewList = _generateTabViewList();
+  final List<ProductDetailsModel> luminousProductViewList = _generateTabViewList();
 
   //Create Your Own Signature piece
   OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Gemstone");
@@ -81,7 +81,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Deal of the day With Scroll controller
   final ScrollController dealOfTheDayScrollController = ScrollController();
-  final List<ProductDetails> dealOfTheDayList = _generateTabViewList(isOfferAvailable: true);
+  final List<ProductDetailsModel> dealOfTheDayList = _generateTabViewList(isOfferAvailable: true);
 
   //Get Inspired With Scroll controller
   // final List<AuctionListModel> getInspiredList = _generateGetInspireList();
@@ -93,7 +93,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Recently Viewed
   final ScrollController recentlyViewedScrollController = ScrollController();
-  final List<ProductDetails> recentlyViewList = _generateTabViewList();
+  final List<ProductDetailsModel> recentlyViewList = _generateTabViewList();
 
   int currentPageIndex = 0;
   PageController categoryPageController = PageController();
@@ -536,14 +536,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   //For Tab View
-  static List<ProductDetails> _generateTabViewList({bool isOfferAvailable = false}) {
+  static List<ProductDetailsModel> _generateTabViewList({bool isOfferAvailable = false}) {
     return List.generate(
       20,
-      (index) => ProductDetails(
+      (index) => ProductDetailsModel(
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
-        discountPercentage: isOfferAvailable ? "You have saved 10%" : null,
+        discountPercentage: isOfferAvailable ? APPStrings.youHaveSavedX.tr.interpolate(["10%"]) : null,
         offerPrice: isOfferAvailable ? '\$4,000.00' : null,
       ),
     );

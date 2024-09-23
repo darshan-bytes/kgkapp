@@ -3,12 +3,12 @@ import 'package:kgk/kgk.dart';
 class SmartSuggestionProductList extends StatelessWidget {
   final String title;
   final VoidCallback? onViewAllTap;
-  final List<ProductDetails> suggestedProductList;
+  final List<ProductDetailsModel> suggestedProductList;
   final VoidCallback onEyeTap;
   final VoidCallback onFavTap;
   final bool isPaddingNeeded;
   final ScrollController scrollController;
-  final Function(ProductDetails)? onProductTap;
+  final Function(ProductDetailsModel)? onProductTap;
 
   const SmartSuggestionProductList({
     super.key,

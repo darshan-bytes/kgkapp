@@ -30,4 +30,24 @@ class ApiKey {
   static const String quantity = 'quantity';
   static const String suid = 'suid';
   static const String userId = 'user_id';
+  static const String accountType = 'account_type';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
+  static const String phone = 'phone';
+  static const String phoneCode = 'phone_code';
+  static const String phoneNumber = 'phone_number';
+  static const String organizationName = 'organization_name';
+  static const String officeLocationCode = 'office_location_code';
+  static const String businessType_ = 'business_type';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String address = 'address';
+  static const String countryCode = 'country_code';
+  static const String zipCode = 'zip_code';
+  static const String status = 'status';
+  static const String userType = 'user_type';
+  static const String customFilter = 'customFilter';
+  static const String qrToken = 'qr_token';
+  static const String deviceId = 'device_id';
+  static const String id = 'id';
 }

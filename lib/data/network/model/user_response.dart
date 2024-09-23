@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class UserResponse {
   UserResponse({
     required this.accessToken,
@@ -50,7 +52,7 @@ class Role {
 
   factory Role.fromJson(Map<String, dynamic> json) {
     return Role(
-      id: json["id"],
+      id: json["id"]?.toString(),
       name: json["name"],
       slug: json["slug"],
     );
@@ -92,7 +94,7 @@ class UserIdDetails {
       firstname: json["firstname"],
       lastname: json["lastname"],
       profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
+      userAccountId: json["user_account_id"]?.toString(),
       email: json["email"],
       userType: json["user_type"],
       profilePicUrl: json["profile_pic_url"],
@@ -117,6 +119,8 @@ class UserIdDetails {
 
 extension UserIdDetailsExtension on UserIdDetails {
   String get fullName => "$firstname $lastname";
+
+  UserType get userTypeEnum => UserType.values.firstWhereOrNull((element) => element.value == userType) ?? UserType.b2cUser;
 }
 
 class UserPermissions {

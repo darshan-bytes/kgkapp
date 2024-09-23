@@ -149,7 +149,7 @@ class SearchResultScreen extends StatelessWidget {
               builder: (context, state) {
                 if (searchResultBloc.isGrid) {
                   return SmartGridView(
-                      items: searchResultBloc.productList.map((ProductDetails productDetails) {
+                      items: searchResultBloc.productList.map((ProductDetailsModel productDetails) {
                     return ProductGridItem(
                       productDetails: productDetails,
                       onEyeTap: () {},

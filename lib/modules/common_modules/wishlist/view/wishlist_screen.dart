@@ -45,7 +45,7 @@ class WishlistScreen extends StatelessWidget {
         return Column(
           children: [
             SmartGridView(
-                items: bloc.productList.map((ProductDetails productDetails) {
+                items: bloc.productList.map((ProductDetailsModel productDetails) {
               return ProductGridItem(
                 productDetails: productDetails,
                 onAddToBagTap: () {},

@@ -49,10 +49,36 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         printWrapped(r.toString());
         await StorageManager().setAuthToken(r.accessToken ?? '');
         await StorageManager().setUserId(r.userId ?? '');
-        emit(const SignInSuccessState());
-        event.context.pushNamedAndRemoveUntil(AppRoutes.userTypeSelection, (route) => false);
+        if (r.userIdDetails != null) {
+          await StorageManager().setUserData(r.userIdDetails!);
+        }
+        if (r.userIdDetails?.userTypeEnum != null) {
+          emit(const SignInSuccessState());
+          await StorageManager().setIsSkipLogin(false);
+          BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+          await mergeCart(event.context);
+          event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+        }
       });
     });
+  }
+
+  Future<void> mergeCart(BuildContext context) async {
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if(myBagDataModel != null) {
+      Map<String, dynamic> body = {
+        ApiKey.id: myBagDataModel.sId ?? '',
+      };
+      await AppRepository(context).mergeBag(body: body).then((value) {
+        value?.fold((l) {
+          Utils.showMessage(l.message ?? '');
+        }, (r) async {
+          if (r.responseData != null) {
+            await StorageManager().clearBagData();
+          }
+        });
+      });
+    }
   }
 
   /// Check email & password validations as needed
@@ -60,7 +86,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (emailController.text.trim().isEmpty) {
       Utils.showMessage(APPStrings.emailRequired.tr);
       return false;
-    } else if (!Utils.isEmail(emailController.text.trim())) {
+    } else if (!Utils.isValidEmail(emailController.text.trim())) {
       Utils.showMessage(APPStrings.validEmail.tr);
       return false;
     } else if (passwordController.text.trim().isEmpty) {
@@ -72,5 +98,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
 
     return true;
+  }
+
+  void onSkipLogin(BuildContext context) async{
+    await StorageManager().setIsSkipLogin(true);
+    BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
+    context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
   }
 }

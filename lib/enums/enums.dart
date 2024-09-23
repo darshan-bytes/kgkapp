@@ -34,6 +34,8 @@ enum ProjectStatus {
   onTime('on_time'),
   created('created'),
   inActive('in_active'),
+  onHold('on_hold'),
+  wip('wip'),
   ;
 
   final String value;
@@ -42,11 +44,20 @@ enum ProjectStatus {
 }
 
 enum UserType {
-  b2cUser('customer'),
-  b2bUser('business'),
+  b2cUser('individual'),
+  b2bUser('company'),
   ;
 
   const UserType(this.value);
+
+  final String value;
+}
+
+enum AccountType {
+  customer('customer'),
+  ;
+
+  const AccountType(this.value);
 
   final String value;
 }

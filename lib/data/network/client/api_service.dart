@@ -69,7 +69,8 @@ class ApiService implements ApiProvider {
           break;
         case _ApiType.delete:
           response = await http.delete(Uri.parse(url),
-              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader));
+              headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
+              body: body == null ? null : jsonEncode(body));
           break;
         default:
           throw Exception('Unsupported HTTP method');
@@ -132,8 +133,9 @@ class ApiService implements ApiProvider {
   // Implement deleteMethod using sendRequest
   @override
   Future<Either<ErrorResponse, dynamic>?> deleteMethod<T>(String url,
-      {Map<String, dynamic>? query, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
-    return _sendRequest<T>(_ApiType.delete, url, query: query, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse);
+      {Map<String, dynamic>? body, Map<String, dynamic>? query, bool withCurrencyHeader = false, bool withFullResponse = false}) async {
+    return _sendRequest<T>(_ApiType.delete, url,
+        query: query, withCurrencyHeader: withCurrencyHeader, withFullResponse: withFullResponse, body: body);
   }
 
   @override

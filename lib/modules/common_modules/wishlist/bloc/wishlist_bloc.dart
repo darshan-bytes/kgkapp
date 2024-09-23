@@ -1,12 +1,11 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/common_modules/wishlist/model/wishlist_model.dart';
 
 part 'wishlist_event.dart';
 
 part 'wishlist_state.dart';
 
 class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
-  List<ProductDetails> productList = [];
+  List<ProductDetailsModel> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
   List<WishlistDatum> wishlistDataList = [];
@@ -58,7 +57,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         productList = [
           for (var element in wishlistModel.data)
             if (element.productData != null)
-              ProductDetails(
+              ProductDetailsModel(
                 productId: element.productId ?? '',
                 imageUrl: element.productData!.multipleFinishedViewImage.isNotNullNorEmpty
                     ? element.productData!.multipleFinishedViewImage.first.imageUrl
@@ -66,6 +65,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
                 name: element.productData!.productDescription ?? "",
                 originalPrice: element.productData!.discountPrice?.setCurrency,
                 commodity: element.displayCommodity,
+                isFavourite: element.productData?.isFavorite ?? true,
+                wishlistId: element.productData?.wishlistId ?? "",
               )
         ];
       });
