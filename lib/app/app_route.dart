@@ -129,7 +129,13 @@ class AppRoutes {
         break;
 
       case collectionPage:
-        builder = (context) => const CollectionScreen();
+        builder = (context) {
+          return BlocProvider<CollectionBloc>(
+            lazy: false,
+            create: (context) => CollectionBloc()..add(CollectionInitialEvent(context: context)),
+            child: const CollectionScreen(),
+          );
+        };
         break;
 
       case productListGridPage:
