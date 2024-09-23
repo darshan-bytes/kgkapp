@@ -450,6 +450,18 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // For Gemstone Filter Option
+  Future<Either<ErrorResponse, List<GemstoneFilterModel>>?> fetchGemstoneFilterOptionList({required String type}) async {
+    var response = await getMethod<GemstoneFilterModel>(ApiClient.gemstoneFilterOptions(type));
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Gemstone Filter Secondary Option
+  Future<Either<ErrorResponse, List<SecondaryFilterModel>>?> getSecondaryFilterData({required String slug, required String codes}) async {
+    var response = await getMethod<SecondaryFilterModel>(ApiClient.secondaryFilterOptions(slug, codes));
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

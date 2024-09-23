@@ -49,3 +49,12 @@ final class SearchFilterDataState extends SortFilterState {
   @override
   List<Object> get props => [secondaryFilterDataDisplay];
 }
+
+final class SelectSecondaryDiamondSortFilterDataState extends SortFilterState {
+  final List<SecondaryFilterModel> secondaryFilterData;
+
+  const SelectSecondaryDiamondSortFilterDataState(this.secondaryFilterData);
+
+  @override
+  List<Object> get props => [secondaryFilterData];
+}

@@ -452,3 +452,5 @@ export 'package:kgk/model/style_design_model.dart';
 export 'package:kgk/widgets/smart_style_design_listing.dart';
 export 'package:kgk/widgets/concept_item.dart';
 export 'package:kgk/modules/b2b/concept_list/model/concept_list_model.dart';
+export 'package:kgk/modules/b2b/product_list_grid/model/gemstone_filter_model.dart';
+export 'package:kgk/modules/b2b/product_list_grid/model/secondary_filter_model.dart';

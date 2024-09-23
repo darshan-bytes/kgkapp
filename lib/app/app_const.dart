@@ -26,4 +26,6 @@ class AppConst {
   static const String diamondNormal = "DIAMONDNORMAL";
   static const String youMayLike = "YOU_MAY_LIKE";
   static const String recentlyViewed = "RECENTLY_VIEWED";
+  static const String diamondFilter = "diamond";
+  static const String gemstoneFilter = "diamond";
 }

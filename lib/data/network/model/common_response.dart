@@ -87,6 +87,10 @@ class CommonResponse<T> {
         return CollectionDataModel.fromJson(json);
       case const (MyBagDataModel):
         return MyBagDataModel.fromJson(json);
+      case const (GemstoneFilterModel):
+        return GemstoneFilterModel.fromJson(json);
+      case const (SecondaryFilterModel):
+        return SecondaryFilterModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
