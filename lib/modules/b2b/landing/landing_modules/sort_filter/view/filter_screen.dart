@@ -43,7 +43,7 @@ class FilterScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SmartTextField.search(
-                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase()]),
+                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
                           controller: filterBloc.searchController,
                           textInputAction: TextInputAction.search,
                           onTapOutside: (event) {},
@@ -155,6 +155,7 @@ class FilterScreen extends StatelessWidget {
                     itemCount: filterBloc.secondaryFilterDataDisplay.length,
                     itemBuilder: (context, index) {
                       return BlocBuilder<SortFilterBloc, SortFilterState>(
+                        /// buildWhen Change after data comes
                         buildWhen: (previous, current) => current is SelectSecondaryFilterDataState,
                         builder: (context, state) {
                           final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
@@ -169,22 +170,15 @@ class FilterScreen extends StatelessWidget {
                                   bottom: BorderSide(color: style.itemBorderColor),
                                 ),
                               ),
-                              child: Row(
-                                children: [
-                                  SmartCheckbox(
-                                      value: secondaryFilterData.isSelected,
-                                      onChanged: (value) {
-                                        handleOnChange(filterBloc, secondaryFilterData);
-                                      }),
-                                  SizedBox(width: 8.w),
-                                  Expanded(
-                                    child: SmartText(
-                                      secondaryFilterData.name,
-                                      style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              /// Need to check this widget
+                              child: SmartCheckbox(
+                                  value: secondaryFilterData.isSelected,
+                                  label: secondaryFilterData.name,
+                                  labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                                  spaceBetweenLabelAndCheckbox: 8.w,
+                                  onChanged: (value) {
+                                    handleOnChange(filterBloc, secondaryFilterData);
+                                  }),
                             ),
                           );
                         },

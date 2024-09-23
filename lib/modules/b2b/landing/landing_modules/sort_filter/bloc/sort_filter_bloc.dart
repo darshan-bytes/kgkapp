@@ -72,7 +72,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     }
     if (searchController.text.isNotEmpty) {
       secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData!
-          .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.toLowerCase()))
+          .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
           .toList();
     } else {
       secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
@@ -130,6 +130,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     }
     isLoading = true;
 
+    /// Add filter codes
     const String codes =
         'PEAR,EMERALD,CUSHION BRILLIANT,PRINCESS,ROUND D/C,ROUND,SQUARE CUSHION,SQUARE P/C,HEART,ASSCHER,Square E/C,MARQUISE,BAGUETTE,E/C,OVAL,RADIANT,MIX,CUSHION,OCTAGON,TRILLION,CAB MIX,TRIANGLE,CAB ROUND';
 

@@ -135,12 +135,17 @@ class AppRepository extends ApiService {
 
   /// Fetches jewellery list
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList(
-      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+      {required String limit, required String page, bool isLoadMore = false, required String type, Map<String, String>? query}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing,
-        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+
+    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page};
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -434,6 +439,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> mergeBag({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     var response = await putMethod<Map<String, dynamic>>(ApiClient.mergeBag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Collections listing
+  Future<Either<ErrorResponse, List<CollectionDataModel>>?> collectionMasterList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<CollectionDataModel>(ApiClient.collectionMaster);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

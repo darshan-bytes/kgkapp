@@ -4,6 +4,14 @@ part 'product_list_event.dart';
 
 part 'product_list_state.dart';
 
+// Using this enum identifies different fetch scenarios
+enum FetchScenario {
+  productId,
+  collectionName,
+  regularList,
+  recentlyViewed,
+}
+
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -26,6 +34,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   String productId = "";
   String productNavigation = '';
+
+  String collectionName = "";
 
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
@@ -51,6 +61,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
       productId = data[RoutesData.productId] ?? "";
+      collectionName = data[RoutesData.collectionName] ?? "";
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
     }
   }
@@ -76,7 +87,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(event.context, 'jewellery');
+      gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getGemstoneFilterOptionList(event.context, 'jewellery');
       await fetchJewelleriesList(event.context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
@@ -120,19 +131,62 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(const ProductListLoadedState());
   }
 
+  FetchScenario determineFetchScenario({String? productId, String? collectionName}) {
+    if (productId.isNotNullNorEmpty) {
+      return FetchScenario.productId;
+    } else if (collectionName.isNotNullNorEmpty) {
+      return FetchScenario.collectionName;
+    } else if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
+      return FetchScenario.recentlyViewed;
+    } else {
+      return FetchScenario.regularList;
+    }
+  }
+
   Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
 
     Either<ErrorResponse, JewelleryListingModel>? response;
-    if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
-      response = await AppRepository(context).getJewelleryYouMayLike(productId,
-          limit: limit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
-    } else if (productNavigation == AppConst.recentlyViewed) {
-      response = await AppRepository(context).getRecentlyViewedProductList(
-          limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
-    } else {
-      response = await AppRepository(context).fetchJewelleryList(
-          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore, limit: limit.toString(), type: '');
+
+    FetchScenario scenario = determineFetchScenario(productId: productId, collectionName: collectionName);
+
+    switch (scenario) {
+      case FetchScenario.productId:
+        // For You May Like API
+        response = await AppRepository(context).getJewelleryYouMayLike(
+          productId,
+          limit: limit.toString(),
+          isLoadMore: true,
+          page: paginationScrollController.currentPage.toString(),
+        );
+        break;
+
+      case FetchScenario.collectionName:
+        // For collection filter API
+        response = await AppRepository(context).fetchJewelleryList(
+          page: paginationScrollController.currentPage.toString(),
+          isLoadMore: isLoadMore,
+          limit: limit.toString(),
+          type: '',
+          query: {ApiKey.kgkCollection: collectionName},
+        );
+        break;
+
+      case FetchScenario.regularList:
+        // For jewellery list API
+        response = await AppRepository(context).fetchJewelleryList(
+          page: paginationScrollController.currentPage.toString(),
+          isLoadMore: isLoadMore,
+          limit: limit.toString(),
+          type: '',
+        );
+        break;
+
+      case FetchScenario.recentlyViewed:
+        // For jewellery list API
+        response = await AppRepository(context).getRecentlyViewedProductList(
+            limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
+        break;
     }
 
     response?.fold((l) {

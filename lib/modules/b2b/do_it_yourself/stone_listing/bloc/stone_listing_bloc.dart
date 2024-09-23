@@ -68,26 +68,30 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
-    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      stoneListingAppbarTitle = APPStrings.diy.tr;
-      tabOneTitle = APPStrings.naturalDiamond.tr;
-      tabTwoTitle = APPStrings.looseDiamond.tr;
-      productList.clear();
-      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'diamond');
-      await fetchDiamondList(context, emit, true);
-    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-      stoneListingAppbarTitle = APPStrings.gemstone.tr;
-      tabOneTitle = APPStrings.precious.tr;
-      tabTwoTitle = APPStrings.semiPrecious.tr;
-      productList.clear();
-      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'gemstone');
-      await fetchGemstoneList(context, emit, true);
+    productList.clear();
+
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.productForGemstones) {
+      stoneListingAppbarTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.diy.tr : APPStrings.gemstone.tr;
+
+      tabOneTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.naturalDiamond.tr : APPStrings.precious.tr;
+
+      tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
+
+      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
+          context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
+
+      if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+        await fetchDiamondList(context, emit, true);
+      } else {
+        await fetchGemstoneList(context, emit, true);
+      }
     } else {
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
-      productList.clear();
-      gemstoneFilterList = await AppBloc().getGemstoneFilterOptionList(context, 'diamond');
+
+      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+
       await fetchDiamondList(context, emit, true);
     }
   }
