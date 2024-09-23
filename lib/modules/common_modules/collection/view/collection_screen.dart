@@ -41,61 +41,6 @@ class CollectionScreen extends StatelessWidget {
             ),
           ),
           _buildCollectionItemList(bloc: bloc, style: style)
-          // Container(
-          //   margin: EdgeInsets.symmetric(horizontal: 14.w),
-          //   child: ListView.builder(
-          //       itemBuilder: (context, index) {
-          //         return Column(
-          //           children: [
-          //             SmartText(
-          //               "Love & passion on January",
-          //               style: style.collectionListTitleStyle,
-          //             ),
-          //             SizedBox(
-          //               height: 20.h,
-          //             ),
-          //             ListView.builder(
-          //                 itemCount: 4,
-          //                 shrinkWrap: true,
-          //                 physics: const NeverScrollableScrollPhysics(),
-          //                 itemBuilder: (context, index) {
-          //                   return GestureDetector(
-          //                     onTap: () {
-          //                       /// Make navigation as per screen config
-          //                       if (index == 0) {
-          //                         context.pushNamed(AppRoutes.productListGridPage,
-          //                             arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-          //                       } else if (index == 1) {
-          //                         context.pushNamed(AppRoutes.stoneListingPage,
-          //                             arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
-          //                       } else if (index == 2) {
-          //                         context.pushNamed(AppRoutes.stoneListingPage,
-          //                             arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-          //                       }
-          //                     },
-          //                     child: Container(
-          //                       margin: EdgeInsets.only(bottom: 14.h),
-          //                       child: SmartImage(
-          //                         path: index == 0 || index == 3
-          //                             ? "https://i.ibb.co/CQCRPFy/Banner.png"
-          //                             : "https://i.ibb.co/k4n8Qry/Banner.png",
-          //                         height: index == 0 || index == 3 ? 200.h : 140.h,
-          //                         width: context.width,
-          //                         fit: BoxFit.fill,
-          //                       ),
-          //                     ),
-          //                   );
-          //                 }),
-          //             SizedBox(
-          //               height: 20.h,
-          //             ),
-          //           ],
-          //         );
-          //       },
-          //       itemCount: 2,
-          //       shrinkWrap: true,
-          //       physics: const NeverScrollableScrollPhysics()),
-          // ),
         ]),
       ),
     );
@@ -141,6 +86,7 @@ class CollectionScreen extends StatelessWidget {
           collectionDataModel.items?.length ?? 0,
           (subIndex) {
             CollectionDataItemsModel item = collectionDataModel.items?[subIndex] ?? CollectionDataItemsModel();
+            // TODO: If an image exists, display SmartImage otherwise, show the "NO IMAGE FOUND" text.
             if (item.image.isNotNullNorEmpty) {
               return SmartImage(path: item.image ?? '', width: context.width, fit: BoxFit.fill, margin: EdgeInsets.only(bottom: 16.h));
             } else {
