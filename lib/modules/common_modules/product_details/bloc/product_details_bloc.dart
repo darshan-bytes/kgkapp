@@ -203,7 +203,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -239,7 +239,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -282,7 +282,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -354,7 +354,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -387,7 +387,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (error) {
         isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (jewelleryData) {
@@ -422,7 +422,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -451,7 +451,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -483,7 +483,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {
@@ -515,7 +515,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {

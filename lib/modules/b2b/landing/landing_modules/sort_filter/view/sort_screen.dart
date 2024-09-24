@@ -27,7 +27,7 @@ class SortScreen extends StatelessWidget {
               actions: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    context.pop();
                   },
                   child: const SmartImage(path: AppImages.icCross),
                 ),
@@ -42,19 +42,19 @@ class SortScreen extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     sortFilterBloc.add(SelectSortDataEvent(sortData: sortData));
-                    Navigator.of(context).pop();
+                    context.pop(arguments: {RoutesData.sortData: sortData});
                   },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     child: Row(
                       children: [
                         Expanded(
                           child: SmartText(
-                            sortData.name,
+                            sortData.name.tr,
                             style: style.itemTitleStyle,
                           ),
                         ),
-                        if (sortFilterBloc.selectedSortData.code == sortData.code) const SmartImage(path: AppImages.icCheck),
+                        if (sortFilterBloc.selectedSortData.name == sortData.name) const SmartImage(path: AppImages.icCheck),
                       ],
                     ),
                   ),

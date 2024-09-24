@@ -92,7 +92,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     return businessTypeResponse?.fold(
           (l) {
             emit(SignUpErrorState(l.message ?? ''));
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
             return false;
           },
           (r) {
@@ -109,7 +109,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     return officeLocationResponse?.fold(
           (l) {
             emit(SignUpErrorState(l.message ?? ''));
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
             return false;
           },
           (r) {
@@ -318,12 +318,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Either<ErrorResponse, CommonResponse>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
     signUpResponse?.fold(
       (l) {
-        Utils.showMessage(l.message ?? '');
+        Utils.showMessage(l.message);
       },
       (r) {
         add(const SignUpResetEvent());
         event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
-        Utils.showMessage(r.message ?? '');
+        Utils.showMessage(r.message);
       },
     );
   }
@@ -338,7 +338,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
         if (!emit.isDone) {
           emailValidationResponse?.fold((l) {
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
           }, (r) {
             bool isEmailUsed = r.responseData['isEmailUsed'];
             emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: isEmailUsed));
@@ -358,7 +358,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
         if (!emit.isDone) {
           phoneNumberValidationResponse?.fold((l) {
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
           }, (r) {
             bool isPhoneNumberUsed = r.responseData;
             emit(SignUpPhoneNumberValidationState(

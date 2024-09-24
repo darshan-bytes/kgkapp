@@ -5,9 +5,9 @@ class Utils {
   Utils._();
 
   /// Show common snack bar messages
-  static Future<void> showMessage(String message) async {
+  static Future<void> showMessage(String? message) async {
     await Flushbar(
-      message: message,
+      message: message ?? '',
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
       animationDuration: const Duration(milliseconds: 1300),

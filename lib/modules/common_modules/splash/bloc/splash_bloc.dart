@@ -33,7 +33,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await UserRepository(context).getCurrencies().then((value) async {
       await value?.fold((l) {
         // Show error message if API call fails
-        Utils.showMessage(l.message ?? '');
+        Utils.showMessage(l.message);
       }, (r) async {
         // Store currency list in local storage if API call succeeds
         await StorageManager().setCurrencyList(r);
@@ -46,7 +46,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await UserRepository(context).getLanguageLabels().then((value) async {
       await value?.fold((l) {
         // Show error message if API call fails
-        Utils.showMessage(l.message ?? '');
+        Utils.showMessage(l.message);
       }, (r) async {
         // Store language labels in local storage if API call succeeds
         await StorageManager().setLanguageLabels(r.responseData);

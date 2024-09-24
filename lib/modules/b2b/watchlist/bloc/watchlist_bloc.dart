@@ -89,7 +89,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     );
     response?.fold(
       (l) {
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       },
       (r) {
         r.totalRecords ??= 0;
@@ -200,7 +200,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).deleteWatchList(watchlistDataList[index].sId!);
     await response?.fold(
       (l) {
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       },
       (r) async {
         event.context.pop();
@@ -215,7 +215,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
         }
         emit(const WatchlistDeleteState());
         if (r.message != null) {
-          Utils.showMessage(r.message ?? "");
+          Utils.showMessage(r.message);
         }
       },
     );
@@ -237,7 +237,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     );
     response?.fold(
       (l) {
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       },
       (r) {
         allWatchlistFull.complete((r.dataList ?? []) as List<WatchlistData>);

@@ -42,7 +42,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     await UserRepository(event.context).loginUser(params).then((value) async {
       await value?.fold((l) {
         ErrorResponse errorModel = l;
-        Utils.showMessage(errorModel.message ?? '');
+        Utils.showMessage(errorModel.message);
         emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
         printWrapped('$value');
       }, (r) async {
@@ -51,6 +51,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         await StorageManager().setUserId(r.userId ?? '');
         if (r.userIdDetails != null) {
           await StorageManager().setUserData(r.userIdDetails!);
+        }
+        if(r.bagId != null){
+          await StorageManager().setBagId(r.bagId!);
         }
         if (r.userIdDetails?.userTypeEnum != null) {
           emit(const SignInSuccessState());
@@ -71,7 +74,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       };
       await AppRepository(context).mergeBag(body: body).then((value) {
         value?.fold((l) {
-          Utils.showMessage(l.message ?? '');
+          Utils.showMessage(l.message);
         }, (r) async {
           if (r.responseData != null) {
             await StorageManager().clearBagData();

@@ -50,7 +50,7 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         }
       },
       (data) {

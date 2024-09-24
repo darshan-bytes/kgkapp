@@ -63,13 +63,13 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
         : await AppRepository(event.context).createWatchlist(body: body);
 
     response?.fold(
-      (error) => Utils.showMessage(error.message ?? ''),
+      (error) => Utils.showMessage(error.message),
       (data) {
         nameController.clear();
         final Map<RoutesData, bool> popArguments = isEdit ? {RoutesData.isWatchlistUpdated: true} : {RoutesData.isWatchlistCreated: true};
 
         event.context.pop(arguments: popArguments);
-        Utils.showMessage(data.message ?? '');
+        Utils.showMessage(data.message);
       },
     );
   }

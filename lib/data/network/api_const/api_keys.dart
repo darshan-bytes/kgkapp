@@ -52,4 +52,6 @@ class ApiKey {
   static const String deviceId = 'device_id';
   static const String id = 'id';
   static const String listType = 'listType';
+  static const String sortKey = 'sort_key';
+  static const String sortValue = 'sort_value';
 }

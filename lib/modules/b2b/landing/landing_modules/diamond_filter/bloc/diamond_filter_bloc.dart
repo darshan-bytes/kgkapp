@@ -138,7 +138,7 @@ class DiamondFilterBloc extends Bloc<DiamondFilterEvent, DiamondFilterState> {
     final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
 
     response?.fold(
-          (l) => Utils.showMessage(l.message ?? ""),
+          (l) => Utils.showMessage(l.message),
           (r) async {
         final filteredData = filterData.where((item) => item.code == slug).toList();
 
