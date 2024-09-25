@@ -8,7 +8,7 @@ class Utils {
   static Future<void> showMessage(String? message) async {
     if(message == null) return;
     await Flushbar(
-      message: message ?? '',
+      message: message,
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
       animationDuration: const Duration(milliseconds: 1300),
