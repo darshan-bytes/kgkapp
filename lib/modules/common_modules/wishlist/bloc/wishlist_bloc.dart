@@ -49,7 +49,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   Future<void> fetchWishlistData(BuildContext context, Emitter<WishlistState> emit) async {
     await AppRepository(context).fetchWishList(limit: limit.toString(), page: currentPage.toString()).then((value) {
       value?.fold((l) {
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       }, (r) {
         r.totalRecords ??= 0;
         WishlistModel wishlistModel = r;

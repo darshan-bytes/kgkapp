@@ -98,7 +98,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
     }
 
     await response?.fold((ErrorResponse error) {
-      Utils.showMessage(error.message ?? '');
+      Utils.showMessage(error.message);
     }, (CommonResponse response) async {
       // Resets the watchlist full list to get updated data when the user clicks on the add to watchlist button for the same product again.
       // This requires calling the update product API.
@@ -111,7 +111,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
           event.context.pop();
       }
       await Future.delayed(const Duration(milliseconds: 500));
-      Utils.showMessage(response.message ?? '');
+      Utils.showMessage(response.message);
     });
   }
 }

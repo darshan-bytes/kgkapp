@@ -22,6 +22,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
   String productId = '';
   String productNavigation = '';
+  String sortKey = AppConst.sortKeySuid;
+  String sortValue = AppConst.sortValueAsc;
 
   String stoneListingAppbarTitle = "";
 
@@ -36,6 +38,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     on<StoneListLoadMoreEvent>(_onStoneListLoadMoreEvent);
     on<StoneListPullToRefreshEvent>(_onStoneListPullToRefresh);
     on<StoneListAddToWatchListEvent>(_onStoneListAddToWatchList);
+    on<StoneSortEvent>(_onStoneSortEvent);
   }
 
   bool get displaySelection => productId.isEmpty;
@@ -68,8 +71,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
-    productList.clear();
-
     if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.productForGemstones) {
       stoneListingAppbarTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.diy.tr : APPStrings.gemstone.tr;
 
@@ -111,13 +112,20 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       }
     } else {
       response = await AppRepository(context).fetchDiamondList(
-          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
+        page: paginationScrollController.currentPage.toString(),
+        isLoadMore: isLoadMore ?? false,
+        limit: limit.toString(),
+        type: type,
+        sortValue: sortValue,
+        sortKey: sortKey,
+      );
     }
 
     response?.fold((l) {
-      Utils.showMessage(l.message ?? "");
+      Utils.showMessage(l.message);
     }, (r) {
       diamondDatumList = r.data;
+      productList.clear();
       r.totalRecords ??= 0;
       totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
       List.generate(
@@ -175,11 +183,17 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       }
     } else {
       response = await AppRepository(context).fetchGemstoneList(
-          page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: limit.toString(), type: type);
+          page: paginationScrollController.currentPage.toString(),
+          isLoadMore: isLoadMore ?? false,
+          limit: limit.toString(),
+          type: type,
+          sortKey: sortKey,
+          sortValue: sortValue);
     }
     response?.fold((l) {
-      Utils.showMessage(l.message ?? "");
+      Utils.showMessage(l.message);
     }, (r) {
+      productList.clear();
       gemstoneDatumList = r.data;
       r.totalRecords ??= 0;
       totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
@@ -237,7 +251,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _onStoneListLoadMoreEvent(StoneListLoadMoreEvent event, Emitter<StoneListingState> emit) async {
     emit(StoneListLoadingMoreState());
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      await Future.delayed(const Duration(seconds: 2));
       List.generate(
           10,
           (index) => productList.add(
@@ -259,7 +272,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
-    await Future.delayed(const Duration(seconds: 3));
     paginationScrollController.pullToRefresh();
     await _generateProductList(event.context, emit);
     refreshCompleter.complete(true);
@@ -287,5 +299,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         builder: (context) => const AddWatchlistScreen(),
       );
     }
+  }
+
+  /// Sort event for stone listing
+  Future<void> _onStoneSortEvent(StoneSortEvent event, Emitter<StoneListingState> emit) async {
+    sortKey = event.sortData.sortKey;
+    sortValue = event.sortData.sortValue;
+    pullToRefresh(event.context);
   }
 }

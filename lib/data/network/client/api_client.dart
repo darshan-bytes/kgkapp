@@ -26,6 +26,7 @@ class ApiClient {
   static const String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
   static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
   static const String wishlist = '$apiBaseUrl/wishlist/filters';
+  static const String bagListData = '$apiBaseUrl/bag/list';
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
 

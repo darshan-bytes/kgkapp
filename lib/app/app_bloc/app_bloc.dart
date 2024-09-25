@@ -123,7 +123,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _languageLabelApiCall(BuildContext context) async {
     await UserRepository(context).getLanguageLabels(showLoader: true).then((value) async {
       await value?.fold((l) {
-        Utils.showMessage(l.message ?? '');
+        Utils.showMessage(l.message);
       }, (r) async {
         StorageManager().setLanguageLabels(r.responseData);
       });
@@ -159,10 +159,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (response) {
         response?.fold(
           (l) {
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
           },
           (data) {
-            Utils.showMessage(data.message ?? '');
+            Utils.showMessage(data.message);
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
@@ -182,10 +182,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (response) {
         response?.fold(
           (l) {
-            Utils.showMessage(l.message ?? '');
+            Utils.showMessage(l.message);
           },
           (data) {
-            Utils.showMessage(data.message ?? '');
+            Utils.showMessage(data.message);
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = null;
             BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
@@ -219,11 +219,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     await AppRepository(event.context).addToBag(body: body).then((response) {
       response?.fold(
-        (l) => Utils.showMessage(l.message ?? ''),
+        (l) => Utils.showMessage(l.message),
         (data) async {
           MyBagDataModel myBagDataModel = data.responseData;
           await StorageManager().storeBagData(myBagDataModel);
-          Utils.showMessage(data.message ?? '');
+          Utils.showMessage(data.message);
         },
       );
     });
@@ -238,10 +238,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     await AppRepository(event.context).deleteBag(body: body).then((response) {
       response?.fold(
-        (l) => Utils.showMessage(l.message ?? ''),
+        (l) => Utils.showMessage(l.message),
         (data) async {
           await StorageManager().clearBagData();
-          Utils.showMessage(data.message ?? '');
+          Utils.showMessage(data.message);
         },
       );
     });
@@ -257,7 +257,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Either<ErrorResponse, List<GemstoneFilterModel>>? response;
     response = await AppRepository(context).fetchGemstoneFilterOptionList(type: type);
     response?.fold((l) {
-      Utils.showMessage(l.message ?? "");
+      Utils.showMessage(l.message);
     }, (r) {
       gemstoneFilterList = r;
     });

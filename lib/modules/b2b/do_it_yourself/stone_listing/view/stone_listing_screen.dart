@@ -36,17 +36,24 @@ class StoneListingScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: diamondListingBloc.paginationScrollController.controller,
               onFilterTap: () {
-                BlocProvider.of<DiamondFilterBloc>(context).add(AddFilterDataEvent(context: context,gemstoneFilterList: diamondListingBloc.gemstoneFilterList));
+                BlocProvider.of<DiamondFilterBloc>(context)
+                    .add(AddFilterDataEvent(context: context, gemstoneFilterList: diamondListingBloc.gemstoneFilterList));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) => DiamondFilterScreen(onApply: () {}),
                 );
               },
               onSortTap: () {
+                BlocProvider.of<SortFilterBloc>(context)
+                    .add(SortFilterScreenTypeEvent(screenIdentifier: diamondListingBloc.screenIdentifier));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) => const SortScreen(),
-                );
+                ).then((onValue) {
+                  if (onValue != null) {
+                    diamondListingBloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
+                  }
+                });
               },
             );
           } else {

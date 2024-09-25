@@ -28,4 +28,13 @@ class AppConst {
   static const String recentlyViewed = "RECENTLY_VIEWED";
   static const String diamondFilter = "diamond";
   static const String gemstoneFilter = "diamond";
+
+  static const String sortKeyBestSeller = "best_seller";
+  static const String sortKeyNewArrival = "new_arrival";
+  static const String sortKeySuid = "suid";
+  static const String sortKeyMspRateLocalCurrency = "msp_rate_local_currency";
+  static const String sortKeyViewCount = "view_count";
+
+  static const String sortValueAsc = "asc";
+  static const String sortValueDesc = "desc";
 }

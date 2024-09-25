@@ -12,7 +12,7 @@ class GemstoneFilterModel {
   final String? slug;
   final dynamic defaultValue;
   final String? inputType;
-  final List<String> data;
+  final dynamic data;
   final int? id;
 
   GemstoneFilterModel copyWith({
@@ -20,7 +20,7 @@ class GemstoneFilterModel {
     String? slug,
     dynamic defaultValue,
     String? inputType,
-    List<String>? data,
+    dynamic data,
     int? id,
   }) {
     return GemstoneFilterModel(
@@ -39,7 +39,7 @@ class GemstoneFilterModel {
       slug: json["slug"],
       defaultValue: json["default_value"],
       inputType: json["input_type"],
-      data: json["data"] == null ? [] : List<String>.from(json["data"]!.map((x) => x.toString())),
+      data: json["data"] ?? [],
       id: json["id"],
     );
   }

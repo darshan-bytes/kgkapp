@@ -20,7 +20,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     emit(CollectionReloadState());
     Either<ErrorResponse, List<CollectionDataModel>>? response = await AppRepository(event.context).collectionMasterList();
     response?.fold((l) {
-      Utils.showMessage(l.message ?? "");
+      Utils.showMessage(l.message);
     }, (r) {
       if (r.isNotNullNorEmpty) {
         collectionMasterList = r;
