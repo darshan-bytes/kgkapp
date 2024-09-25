@@ -21,6 +21,7 @@ class StorageManager {
   final String _selectedCurrencySymbol = 'selectedCurrencySymbol';
   final String _bagData = 'bagData';
   final String _isSkipLogin = 'isSkipLogin';
+  final String _bagId = 'bagId';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -103,6 +104,15 @@ class StorageManager {
 
   String getThemeData() {
     return _box.get('themeData') ?? 'light';
+  }
+
+  /// Set bag id for cart
+  Future<void> setBagId(String? bagId) async {
+    await _box.put(_bagId, bagId);
+  }
+
+  String? getBagId() {
+    return _box.get(_bagId);
   }
 
   /// Set bag id for cart

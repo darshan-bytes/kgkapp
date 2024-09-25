@@ -123,7 +123,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     await AppRepository(context).fetchStrapiDiamondLandingData().then((value) {
       value.fold((l) {
         emit(DiamondStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       }, (r) {
         diamondStrapiList = r;
       });
@@ -136,7 +136,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     await AppRepository(context).fetchStrapiGemstoneLandingData().then((value) {
       value.fold((l) {
         emit(GemstoneStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       }, (r) {
         gemstoneStrapiList = r;
       });
@@ -149,7 +149,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     await AppRepository(context).fetchStrapiJewelleryLandingData().then((value) {
       value.fold((l) {
         emit(JewelleryStrapiDataErrorState(errorResponse: l));
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       }, (r) {
         jewelleryStrapiList.clear();
         jewelleryStrapiList = r;

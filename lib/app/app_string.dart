@@ -112,6 +112,11 @@ class APPStrings {
   static const String popularity = 'popularity';
   static const String priceHighToLow = 'price_high_to_low';
   static const String priceLowToHigh = 'price_low_to_high';
+  static const String ascending = 'ascending';
+  static const String descending = 'descending';
+  static const String mostViewed = 'most_viewed';
+  static const String bestSeller = 'best_seller';
+  static const String newArrival = 'new_arrival';
 
   //Diamond Detail Screen
   static const String selectDiamond = 'select_diamond';

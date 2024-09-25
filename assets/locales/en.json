@@ -713,5 +713,10 @@
   "commodity": "Commodity",
   "origin": "Origin",
   "on_hold" : "On hold",
-  "wip" : "WIP"
+  "wip" : "WIP",
+  "ascending" : "Ascending",
+  "descending" : "Descending",
+  "most_viewed" : "Most Viewed",
+  "best_seller" : "Best Seller",
+  "new_arrival" : "New Arrival"
 }

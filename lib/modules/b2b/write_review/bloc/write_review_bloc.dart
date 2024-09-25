@@ -137,11 +137,11 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     Either<ErrorResponse, CommonResponse<ProductReviewModel>>? response =
         await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
     await response?.fold((error) {
-      Utils.showMessage(error.message ?? '');
+      Utils.showMessage(error.message);
     }, (data) async {
       event.context.pop();
       await Future.delayed(const Duration(milliseconds: 500));
-      Utils.showMessage(data.message ?? '');
+      Utils.showMessage(data.message);
     });
   }
 }

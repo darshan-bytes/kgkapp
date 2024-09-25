@@ -707,5 +707,15 @@
   "scan_this_qr_code_details": "कृपया यह QR कोड स्कैन करें",
   "logging_in": "Logging in...",
   "error_phone_number_already_used" : "* Phone number is already used.",
-  "error_email_already_used": "* Email is already used."
+  "error_email_already_used": "* Email is already used.",
+  "cancel_item_list": "Cancel item list",
+  "commodity": "Commodity",
+  "origin": "Origin",
+  "on_hold" : "On hold",
+  "wip" : "WIP",
+  "ascending" : "Ascending",
+  "descending" : "Descending",
+  "most_viewed" : "Most Viewed",
+  "best_seller" : "Best Seller",
+  "new_arrival" : "New Arrival"
 }

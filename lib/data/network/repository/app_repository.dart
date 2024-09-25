@@ -107,12 +107,18 @@ class AppRepository extends ApiService {
 
   /// Fetches diamond list
   Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList(
-      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+      {required String limit,
+      required String page,
+      required String sortKey,
+      required String sortValue,
+      bool isLoadMore = false,
+      required String type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing,
-        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.type: type}, withCurrencyHeader: true);
+        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.type: type, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue},
+        withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -121,12 +127,17 @@ class AppRepository extends ApiService {
 
   /// Fetches gemstone list
   Future<Either<ErrorResponse, GemstoneListingModel>?> fetchGemstoneList(
-      {required String limit, required String page, bool isLoadMore = false, required String type}) async {
+      {required String limit,
+      required String page,
+      required String sortKey,
+      required String sortValue,
+      bool isLoadMore = false,
+      required String type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing,
-        query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue}, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -135,12 +146,18 @@ class AppRepository extends ApiService {
 
   /// Fetches jewellery list
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList(
-      {required String limit, required String page, bool isLoadMore = false, required String type, Map<String, String>? query}) async {
+      {required String limit,
+      required String page,
+      required String sortKey,
+      required String sortValue,
+      bool isLoadMore = false,
+      required String type,
+      Map<String, String>? query}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
 
-    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page};
+    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue};
     if (query != null) {
       queryParams.addAll(query);
     }
@@ -460,6 +477,20 @@ class AppRepository extends ApiService {
   // For Gemstone Filter Secondary Option
   Future<Either<ErrorResponse, List<SecondaryFilterModel>>?> getSecondaryFilterData({required String slug, required String codes}) async {
     var response = await getMethod<SecondaryFilterModel>(ApiClient.secondaryFilterOptions(slug, codes));
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // Fetch Bag List Data
+  Future<Either<ErrorResponse, BagListDataModel>?> getBagListData(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response =
+        await getMethod<BagListDataModel>(ApiClient.bagListData, query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

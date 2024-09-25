@@ -6,14 +6,14 @@ part 'sort_filter_state.dart';
 
 class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   List<SortData> sortData = [
-    SortData(name: APPStrings.whatsNew.tr, code: 'new'),
-    SortData(name: APPStrings.discount.tr, code: 'discount'),
-    SortData(name: APPStrings.popularity.tr, code: 'popularity'),
-    SortData(name: APPStrings.priceHighToLow.tr, code: 'price_asc'),
-    SortData(name: APPStrings.priceLowToHigh.tr, code: 'price_desc'),
+    SortData(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc),
+    SortData(name: APPStrings.descending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueDesc),
+    SortData(name: APPStrings.priceHighToLow, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueDesc),
+    SortData(name: APPStrings.priceLowToHigh, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueAsc),
+    SortData(name: APPStrings.mostViewed, sortKey: AppConst.sortKeyViewCount, sortValue: AppConst.sortValueDesc),
   ];
 
-  SortData selectedSortData = SortData(name: 'What’s new', code: 'new');
+  SortData selectedSortData = SortData(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc);
 
   List<FilterData> filterData = [];
   bool isLoading = false;
@@ -32,6 +32,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     on<ClearAllFilterDataEvent>(_onClearAllFilterDataEvent);
     on<ApplyFilterDataEvent>(_onApplyFilterDataEvent);
     on<AddSortFilterDataEvent>(_onAddSortFilterDataEvent);
+    on<SortFilterScreenTypeEvent>(_onSortFilterScreenTypeEvent);
   }
 
   void searchChange() {
@@ -108,23 +109,15 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
         secondaryFilterData: [],
       ));
     }
-    if(filterData.isNotEmpty){
+    if (filterData.isNotEmpty) {
       selectedFilterData = filterData.first;
-      await fetchSecondaryFilterData(
-        context: event.context,
-        emit: emit,
-        slug: selectedFilterData!.code!,
-        needToFetchData: true
-      );
+      await fetchSecondaryFilterData(context: event.context, emit: emit, slug: selectedFilterData!.code!, needToFetchData: true);
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }
   }
 
   Future<void> fetchSecondaryFilterData(
-      {required BuildContext context,
-      required Emitter<SortFilterState> emit,
-      required String slug,
-      required bool needToFetchData}) async {
+      {required BuildContext context, required Emitter<SortFilterState> emit, required String slug, required bool needToFetchData}) async {
     if (!needToFetchData) {
       return;
     }
@@ -137,7 +130,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
 
     response?.fold(
-      (l) => Utils.showMessage(l.message ?? ""),
+      (l) => Utils.showMessage(l.message),
       (r) async {
         final filteredData = filterData.where((item) => item.code == slug).toList();
 
@@ -157,5 +150,19 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
         emit(SelectSecondaryDiamondSortFilterDataState(r));
       },
     );
+  }
+
+  /// This method is used to show/hide sort data based on screen type
+  void _onSortFilterScreenTypeEvent(SortFilterScreenTypeEvent event, Emitter<SortFilterState> emit) {
+    selectedSortData = sortData.first;
+    List<SortData> iterable = [
+      SortData(name: APPStrings.bestSeller, sortKey: AppConst.sortKeyBestSeller, sortValue: AppConst.sortValueDesc),
+      SortData(name: APPStrings.newArrival, sortKey: AppConst.sortKeyNewArrival, sortValue: AppConst.sortValueDesc),
+    ];
+    if (event.screenIdentifier == ScreenIdentifier.productForRing) {
+      sortData.addAll(iterable);
+    } else {
+      sortData.removeWhere((item) => iterable.contains(item));
+    }
   }
 }

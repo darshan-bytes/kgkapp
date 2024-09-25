@@ -31,7 +31,7 @@ class QrCodeScanLoginBloc extends Bloc<QrCodeScanLoginEvent, QrCodeScanLoginStat
       await UserRepository(context).verifyQrCodeForAuth(params).then((value) async {
         await value?.fold((l) {
           ErrorResponse errorModel = l;
-          Utils.showMessage(errorModel.message ?? '');
+          Utils.showMessage(errorModel.message);
           emit(QrCodeScanLoginError(errorMessage: errorModel.message ?? ''));
         }, (r) async {
           context.popUntil((route) => (route.settings.name == AppRoutes.landingPage));

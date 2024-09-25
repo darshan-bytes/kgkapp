@@ -146,6 +146,22 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     //TODO: Write code get Data from API
   }
 
+  /// TODO: In Future Implementation
+  /// Fetch Bag Data Because Add Logic For Add To Bag
+  Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+    Either<ErrorResponse, BagListDataModel>? response;
+    response = await AppRepository(context).getBagListData(isLoadMore: false, limit: "10", page: "1");
+    response?.fold((l){
+      Utils.showMessage(l.message);
+    }, (r) async {
+      String? bagId = StorageManager().getBagId();
+      if(r.result.isNotEmpty && bagId.isNotNullNorEmpty){
+        MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
+        await StorageManager().storeBagData(myBagDataModel);
+      }
+    });
+  }
+
   void _onMyBagChangeProductQuality(MyBagChangeProductQuality event, Emitter<MyBagState> emit) {
     emit(MyBagReloadState());
     if (myBagProductList[event.index].productQuality?.name != event.productQuality.name) {

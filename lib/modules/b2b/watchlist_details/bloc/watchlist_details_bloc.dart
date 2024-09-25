@@ -41,7 +41,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
       response?.fold(
         (error) {
           event.context.pop();
-          Utils.showMessage(error.message ?? '');
+          Utils.showMessage(error.message);
         },
         (data) {
           watchlistDetailsModel = data;

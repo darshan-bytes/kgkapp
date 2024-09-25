@@ -63,3 +63,12 @@ final class AddSortFilterDataEvent extends SortFilterEvent {
   @override
   List<Object> get props => [gemstoneFilterList];
 }
+
+final class SortFilterScreenTypeEvent extends SortFilterEvent {
+  final ScreenIdentifier screenIdentifier;
+
+  const SortFilterScreenTypeEvent({required this.screenIdentifier});
+
+  @override
+  List<Object> get props => [screenIdentifier];
+}

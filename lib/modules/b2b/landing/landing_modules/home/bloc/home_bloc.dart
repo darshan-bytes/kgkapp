@@ -126,8 +126,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     refreshCompleter.complete(true);
   }
 
+  /// Fetch Bag Data Because Add Logic For Add To Bag
+  Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+    Either<ErrorResponse, BagListDataModel>? response;
+    response = await AppRepository(context).getBagListData(isLoadMore: false, limit: "10", page: "1");
+    response?.fold((l){
+      Utils.showMessage(l.message);
+    }, (r) async {
+      String? bagId = StorageManager().getBagId();
+      if(r.result.isNotEmpty && bagId.isNotNullNorEmpty){
+        MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
+        await StorageManager().storeBagData(myBagDataModel);
+      }
+    });
+  }
+
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async {
     currentPageIndex = 0;
+    await fetchListOfBag(event.context, emit);
     await fetchStrapiData(event.context, emit);
     if (refreshCompleter.isCompleted) {
       refreshCompleter = Completer<bool>();
@@ -765,7 +781,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await AppRepository(context).fetchStrapiHomeData().then((value) async {
       value.fold((l) {
         emit(HomeErrorState(errorMessage: l.message ?? ""));
-        Utils.showMessage(l.message ?? "");
+        Utils.showMessage(l.message);
       }, (r) {
         homeStrapiList = r;
       });

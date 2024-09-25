@@ -34,6 +34,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   String productId = "";
   String productNavigation = '';
+  String sortKey = AppConst.sortKeySuid;
+  String sortValue = AppConst.sortValueAsc;
 
   String collectionName = "";
 
@@ -47,6 +49,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     on<ProductChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<ProductListPullToRefreshEvent>(_onProductListPullToRefresh);
     on<ProductListAddToWatchListEvent>(_onProductListAddToWatchList);
+    on<ProductSortEvent>(_onProductSortEvent);
   }
 
   @override
@@ -168,6 +171,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           isLoadMore: isLoadMore,
           limit: limit.toString(),
           type: '',
+          sortKey: sortKey,
+          sortValue: sortValue,
           query: {ApiKey.kgkCollection: collectionName},
         );
         break;
@@ -179,6 +184,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           isLoadMore: isLoadMore,
           limit: limit.toString(),
           type: '',
+          sortKey: sortKey,
+          sortValue: sortValue,
         );
         break;
 
@@ -190,7 +197,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
 
     response?.fold((l) {
-      Utils.showMessage(l.message ?? "");
+      Utils.showMessage(l.message);
     }, (r) {
       jewelleryDatumList = r.data;
       r.totalRecords ??= 0;
@@ -357,5 +364,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         }
       }
     });
+  }
+
+  Future<void> _onProductSortEvent(ProductSortEvent event, Emitter<ProductListState> emit) async {
+    sortKey = event.sortData.sortKey;
+    sortValue = event.sortData.sortValue;
+    pullToRefresh(event.context);
   }
 }

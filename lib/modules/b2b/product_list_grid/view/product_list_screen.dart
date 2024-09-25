@@ -44,10 +44,15 @@ class ProductListScreen extends StatelessWidget {
                 );
               },
               onSortTap: () {
+                BlocProvider.of<SortFilterBloc>(context).add(SortFilterScreenTypeEvent(screenIdentifier: bloc.screenIdentifier));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) => const SortScreen(),
-                );
+                ).then((onValue) {
+                  if (onValue != null) {
+                    bloc.add(ProductSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
+                  }
+                });
               },
             );
           } else {

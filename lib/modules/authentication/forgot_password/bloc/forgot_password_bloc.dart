@@ -33,14 +33,14 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     await UserRepository(event.context).forgotPassword(params).then(
       (result) {
         result?.fold((l) {
-          Utils.showMessage(l.message ?? '');
+          Utils.showMessage(l.message);
         }, (r) async {
           emit(ForgotPasswordSuccessState());
           if (!event.isFromResend) {
             event.context.pushNamed(AppRoutes.emailSentPage);
             await Future.delayed(const Duration(milliseconds: 500));
           }
-          Utils.showMessage(r.message ?? '');
+          Utils.showMessage(r.message);
         });
       },
     );
