@@ -6,6 +6,7 @@ class Utils {
 
   /// Show common snack bar messages
   static Future<void> showMessage(String? message) async {
+    if(message == null) return;
     await Flushbar(
       message: message ?? '',
       duration: const Duration(seconds: 3),
