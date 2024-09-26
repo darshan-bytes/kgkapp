@@ -217,6 +217,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ApiKey.userId: userId,
     };
 
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if (myBagDataModel != null) {
+      String id = myBagDataModel.sId ?? '';
+      body[ApiKey.id] = id;
+    }
+
     await AppRepository(event.context).addToBag(body: body).then((response) {
       response?.fold(
         (l) => Utils.showMessage(l.message),
