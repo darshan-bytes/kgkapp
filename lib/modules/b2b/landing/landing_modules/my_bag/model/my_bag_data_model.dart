@@ -25,7 +25,7 @@ class MyBagDataModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     commodity = json['commodity'];
-    userId = json['user_id'];
+    userId = json['user_id'].toString();
     status = json['status'];
     if (json['products'] != null) {
       products = <MyBagProductData>[];
