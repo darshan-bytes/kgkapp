@@ -327,6 +327,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       params[ApiKey.organizationName] = companyNameController.text.trim();
       params[ApiKey.officeLocationCode] = selectedOfficeLocation?.code;
       params[ApiKey.countryCode] = selectedCountry.countryCode;
+      params[ApiKey.city] = cityController.text;
+      params[ApiKey.address] = addressController.text;
+      params[ApiKey.zipCode] = zipcodeController.text;
+      params[ApiKey.state] = stateController.text;
     }
 
     Either<ErrorResponse, CommonResponse>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
