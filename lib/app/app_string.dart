@@ -907,4 +907,8 @@ class APPStrings {
   static const String origin = 'origin';
   static const String onHold = 'on_hold';
   static const String wip = 'wip';
+
+  static const String address = 'address';
+  static const String zipcode = 'zipcode';
+
 }

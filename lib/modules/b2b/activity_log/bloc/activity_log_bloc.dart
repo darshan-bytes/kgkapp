@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'activity_log_event.dart';
-
 part 'activity_log_state.dart';
 
 class ActivityLogBloc extends Bloc<ActivityLogEvent, ActivityLogState> {
