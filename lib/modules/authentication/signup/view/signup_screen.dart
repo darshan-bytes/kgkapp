@@ -153,6 +153,14 @@ class SignUpScreen extends StatelessWidget {
       SizedBox(height: 24.h),
       _buildContactNumberField(signUpBloc, context, style),
       SizedBox(height: 24.h),
+      _buildAddressField(signUpBloc),
+      SizedBox(height: 24.h),
+      _buildCityField(signUpBloc),
+      SizedBox(height: 24.h),
+      _buildStateField(signUpBloc),
+      SizedBox(height: 24.h),
+      _buildZipcodeField(signUpBloc),
+      SizedBox(height: 24.h),
       _buildCountryField(signUpBloc, context),
       SizedBox(height: 24.h),
       _buildPasswordField(signUpBloc),
@@ -182,6 +190,57 @@ class SignUpScreen extends StatelessWidget {
       nextFocus: signUpBloc.emailFocusNode,
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  // build address field
+  Widget _buildAddressField(SignUpBloc signUpBloc) {
+    return SmartTextField(
+      labelText: APPStrings.address.tr,
+      hintText: APPStrings.address.tr,
+      controller: signUpBloc.addressController,
+      focusNode: signUpBloc.addressFocusNode,
+      nextFocus: signUpBloc.cityFocusNode,
+      keyboardType: TextInputType.streetAddress,
+      textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  // build city field
+  Widget _buildCityField(SignUpBloc signUpBloc) {
+    return SmartTextField(
+      labelText: APPStrings.city.tr,
+      hintText: APPStrings.city.tr,
+      controller: signUpBloc.cityController,
+      focusNode: signUpBloc.cityFocusNode,
+      nextFocus: signUpBloc.stateFocusNode,
+      keyboardType: TextInputType.streetAddress,
+      textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  // build state field
+  Widget _buildStateField(SignUpBloc signUpBloc) {
+    return SmartTextField(
+      labelText: APPStrings.state.tr,
+      hintText: APPStrings.state.tr,
+      controller: signUpBloc.stateController,
+      focusNode: signUpBloc.stateFocusNode,
+      nextFocus: signUpBloc.zipcodeFocusNode,
+      keyboardType: TextInputType.streetAddress,
+      textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  // build zipcode field
+  Widget _buildZipcodeField(SignUpBloc signUpBloc) {
+    return SmartTextField(
+      labelText: APPStrings.zipcode.tr,
+      hintText: APPStrings.zipcode.tr,
+      controller: signUpBloc.zipcodeController,
+      focusNode: signUpBloc.zipcodeFocusNode,
+      nextFocus: signUpBloc.officeLocationFocusNode,
+      keyboardType: TextInputType.number,
     );
   }
 
@@ -238,7 +297,7 @@ class SignUpScreen extends StatelessWidget {
                   controller: signUpBloc.contactNumberControllers[index],
                   focusNode: signUpBloc.contactNumberFocusNodes[index],
                   nextFocus: (index == signUpBloc.contactNumberControllers.length - 1)
-                      ? signUpBloc.passwordFocusNode
+                      ? signUpBloc.addressFocusNode
                       : signUpBloc.contactNumberFocusNodes[index + 1],
                   keyboardType: TextInputType.phone,
                   textInputFormatter: [FilteringTextInputFormatter.digitsOnly],

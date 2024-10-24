@@ -717,5 +717,7 @@
   "descending" : "Descending",
   "most_viewed" : "Most Viewed",
   "best_seller" : "Best Seller",
-  "new_arrival" : "New Arrival"
+  "new_arrival" : "New Arrival",
+  "address": "Address",
+  "zipcode": "Zipcode"
 }
