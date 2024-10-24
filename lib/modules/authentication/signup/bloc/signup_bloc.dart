@@ -24,6 +24,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController companyNameController = TextEditingController();
   TextEditingController officeLocationController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController zipcodeController = TextEditingController();
 
   FocusNode firstNameFocusNode = FocusNode();
   FocusNode lastNameFocusNode = FocusNode();
@@ -34,6 +38,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   FocusNode confirmPasswordFocusNode = FocusNode();
   FocusNode companyNameFocusNode = FocusNode();
   FocusNode officeLocationFocusNode = FocusNode();
+  FocusNode addressFocusNode = FocusNode();
+  FocusNode cityFocusNode = FocusNode();
+  FocusNode stateFocusNode = FocusNode();
+  FocusNode zipcodeFocusNode = FocusNode();
 
   List<Country> selectedCountryCodes = [
     Country.from(json: {
@@ -143,8 +151,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _onSignUpBusinessTypeChangedEvent(SignUpBusinessTypeChangedEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
-    businessTypes[event.index].isSelected = event.isSelected;
-    emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+
+    if (event.index == 2 && (!businessTypes[0].isSelected || !businessTypes[1].isSelected)) {
+      businessTypes[event.index].isSelected = event.isSelected;
+      emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+    } else if (event.index != 2 && !businessTypes[2].isSelected) {
+      businessTypes[event.index].isSelected = event.isSelected;
+      emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+    }
   }
 
   void _onSignUpChangeCountryEvent(SignUpChangeCountryEvent event, Emitter<SignUpState> emit) {
