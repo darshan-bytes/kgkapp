@@ -43,7 +43,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> _languageLabelApiCall(BuildContext context, Emitter<SplashState> emit) async {
     // Fetch language labels from the user repository
-    await UserRepository(context).getLanguageLabels().then((value) async {
+    await UserRepository(context).getLanguageLabels(language: StorageManager().getLocale() ?? APPStrings.languageEn).then((value) async {
       await value?.fold((l) {
         // Show error message if API call fails
         Utils.showMessage(l.message);

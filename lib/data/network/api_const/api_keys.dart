@@ -54,4 +54,11 @@ class ApiKey {
   static const String listType = 'listType';
   static const String sortKey = 'sort_key';
   static const String sortValue = 'sort_value';
+  static const String pagination = 'pagination';
+  static const String filters = 'filters';
+  static const String sort = 'sort';
+  static const String dynamicObject = 'dynamicObject';
+  static const String field = 'field';
+  static const String dir = 'dir';
+  static const String fromMobile = 'fromMobile';
 }

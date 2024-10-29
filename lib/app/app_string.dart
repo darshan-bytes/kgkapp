@@ -4,911 +4,910 @@ class APPStrings {
   /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
-  static const String languageFr = 'fr';
+  // static const String languageTh = 'th';
+  static const String languageZh = 'zh';
+  static const String languageJa = 'ja';
   static const String languageHi = 'hi';
+  static const String languageAr = 'ar';
   static const String plusMinus = '+/-';
   static const String percentage = '%';
 
-  static const String forgotPassword = 'forgot_password';
-  static const String signIn = 'sign_in';
-  static const String error = 'error';
-  static const String email = 'email';
-  static const String home = 'home';
-  static const String categories = 'categories';
-  static const String myBag = 'my_bag';
-  static const String support = 'support';
-  static const String profile = 'profile';
+  static const String forgotPassword = 'mob_forgot_password';
+  static const String signIn = 'mob_sign_in';
+  static const String error = 'mob_error';
+  static const String email = 'mob_email';
+  static const String home = 'mob_home';
+  static const String categories = 'mob_categories';
+  static const String myBag = 'mob_my_bag';
+  static const String support = 'mob_support';
+  static const String profile = 'mob_profile';
 
   // splash screen
-  static const String login = 'login';
-  static const String register = 'register';
-  static const String skip = 'skip';
+  static const String login = 'mob_login';
+  static const String register = 'mob_register';
+  static const String skip = 'mob_skip';
 
-  static const String somethingWrong = 'something_wrong';
-  static const String checkInternet = 'check_internet';
-  static const String failedFetchData = 'failed_fetch_data';
+  static const String somethingWrong = 'mob_something_wrong';
+  static const String checkInternet = 'mob_check_internet';
+  static const String failedFetchData = 'mob_failed_fetch_data';
 
   // Login Screen
-  static const String enterYourAccountDetails = 'enter_your_account_details';
-  static const String orLoginWith = 'or_login_with';
-  static const String dontHaveAccount = 'dont_have_account';
+  static const String enterYourAccountDetails = 'mob_enter_your_account_details';
+  static const String orLoginWith = 'mob_or_login_with';
+  static const String dontHaveAccount = 'mob_dont_have_account';
 
   // Forgot Password Screen
-  static const String submit = 'submit';
-  static const String forgotPasswordDescription = 'forgot_password_description';
-  static const String emailHasBeenSendSuccessfully = 'email_has_been_send_successfully_to_your_email_address';
-  static const String didNotReceivedEmail = 'did_not_received_email';
-  static const String resend = 'resend';
+  static const String submit = 'mob_submit';
+  static const String forgotPasswordDescription = 'mob_forgot_password_description';
+  static const String emailHasBeenSendSuccessfully = 'mob_email_has_been_send_successfully_to_your_email_address';
+  static const String didNotReceivedEmail = 'mob_did_not_received_email';
+  static const String resend = 'mob_resend';
 
   // reset password screen
-  static const String resetPassword = 'reset_password';
-  static const String newPassword = 'new_password';
-  static const String confirmPassword = 'confirm_password';
-  static const String resetPasswordDescription = 'reset_password_description';
-  static const String confirmAndLogIn = 'confirm_and_log_in';
+  static const String resetPassword = 'mob_reset_password';
+  static const String newPassword = 'mob_new_password';
+  static const String confirmPassword = 'mob_confirm_password';
+  static const String resetPasswordDescription = 'mob_reset_password_description';
+  static const String confirmAndLogIn = 'mob_confirm_and_log_in';
 
   // Notifications
-  static const String notification = 'notification';
-  static const String notificationSettings = 'notification_settings';
-  static const String allNotification = 'all_notification';
-  static const String settings = 'settings';
+  static const String notification = 'mob_notification';
+  static const String notificationSettings = 'mob_notification_settings';
+  static const String allNotification = 'mob_all_notification';
+  static const String settings = 'mob_settings';
 
   //All Notification
-  static const String searchNotification = 'search_notification';
+  static const String searchNotification = 'mob_search_notification';
 
   //Setting
-  static const String announcements = 'announcements';
-  static const String notifyMeForEveryAnnouncement = 'notify_me_for_every_announcement';
-  static const String fileSharedBySalesman = 'file_shared_by_salesman';
-  static const String shareBySalesmanDesc = 'share_by_salesman_desc';
-  static const String orderStatusUpdate = 'order_status_update';
-  static const String changeInOrderStatus = 'change_in_order_status';
+  static const String announcements = 'mob_announcements';
+  static const String notifyMeForEveryAnnouncement = 'mob_notify_me_for_every_announcement';
+  static const String fileSharedBySalesman = 'mob_file_shared_by_salesman';
+  static const String shareBySalesmanDesc = 'mob_share_by_salesman_desc';
+  static const String orderStatusUpdate = 'mob_order_status_update';
+  static const String changeInOrderStatus = 'mob_change_in_order_status';
 
   // Collection
-  static const String collection = 'collection';
+  static const String collection = 'mob_collection';
 
   //SignUp
-  static const String createAccount = 'create_account';
-  static const String enterAccountDetails = 'enter_account_details';
-  static const String selectAccountType = 'select_account_type';
-  static const String individual = 'individual';
-  static const String firstName = 'first_name';
-  static const String lastName = 'last_name';
-  static const String contactNumber = 'contact_number';
-  static const String password = 'password';
-  static const String company = 'company';
-  static const String companyName = 'company_name';
-  static const String viewDashboard = 'view_dashboard';
-  static const String officeLocation = 'office_location';
-  static const String businessType = 'business_type';
-  static const String diamond = 'diamond';
-  static const String gemstone = 'gemstone';
-  static const String jewellery = 'jewellery';
-  static const String plusAdd = 'plus_add';
-  static const String country = 'country';
+  static const String createAccount = 'mob_create_account';
+  static const String enterAccountDetails = 'mob_enter_account_details';
+  static const String selectAccountType = 'mob_select_account_type';
+  static const String individual = 'mob_individual';
+  static const String firstName = 'mob_first_name';
+  static const String lastName = 'mob_last_name';
+  static const String contactNumber = 'mob_contact_number';
+  static const String password = 'mob_password';
+  static const String company = 'mob_company';
+  static const String companyName = 'mob_company_name';
+  static const String viewDashboard = 'mob_view_dashboard';
+  static const String officeLocation = 'mob_office_location';
+  static const String businessType = 'mob_business_type';
+  static const String diamond = 'mob_diamond';
+  static const String gemstone = 'mob_gemstone';
+  static const String jewellery = 'mob_jewellery';
+  static const String plusAdd = 'mob_plus_add';
+  static const String country = 'mob_country';
 
   //product list grid
-  static const String previous = 'previous';
-  static const String next = 'next';
-  static const String precious = 'precious';
-  static const String semiPrecious = 'semi_precious';
+  static const String previous = 'mob_previous';
+  static const String next = 'mob_next';
+  static const String precious = 'mob_precious';
+  static const String semiPrecious = 'mob_semi_precious';
 
   //Product item
-  static const String addToBag = 'add_to_bag';
-  static const String select = 'select';
-  static const String ring = 'ring';
-  static const String remove = 'remove';
-  static const String moveToWishlist = 'move_to_wishlist';
+  static const String addToBag = 'mob_add_to_bag';
+  static const String select = 'mob_select';
+  static const String ring = 'mob_ring';
+  static const String remove = 'mob_remove';
+  static const String moveToWishlist = 'mob_move_to_wishlist';
 
   //Sort Filter
-  static const String filters = 'filters';
-  static const String clearAll = 'clear_all';
-  static const String close = 'close';
-  static const String apply = 'apply';
-  static const String sortBy = 'sort_by';
-  static const String searchByX = 'search_by_x';
-  static const String whatsNew = 'whats_new';
-  static const String discount = 'discount';
-  static const String popularity = 'popularity';
-  static const String priceHighToLow = 'price_high_to_low';
-  static const String priceLowToHigh = 'price_low_to_high';
-  static const String ascending = 'ascending';
-  static const String descending = 'descending';
-  static const String mostViewed = 'most_viewed';
-  static const String bestSeller = 'best_seller';
-  static const String newArrival = 'new_arrival';
+  static const String filters = 'mob_filters';
+  static const String clearAll = 'mob_clear_all';
+  static const String close = 'mob_close';
+  static const String apply = 'mob_apply';
+  static const String sortBy = 'mob_sort_by';
+  static const String searchByX = 'mob_search_by_x';
+  static const String whatsNew = 'mob_whats_new';
+  static const String discount = 'mob_discount';
+  static const String popularity = 'mob_popularity';
+  static const String priceHighToLow = 'mob_price_high_to_low';
+  static const String priceLowToHigh = 'mob_price_low_to_high';
+  static const String ascending = 'mob_ascending';
+  static const String descending = 'mob_descending';
+  static const String mostViewed = 'mob_most_viewed';
+  static const String bestSeller = 'mob_best_seller';
+  static const String newArrival = 'mob_new_arrival';
 
   //Diamond Detail Screen
-  static const String selectDiamond = 'select_diamond';
-  static const String reviewsX = 'reviews_x';
-  static const String reviews = 'reviews';
-  static const String wantToSeeProductPhysically = 'want_to_see_product_physically';
-  static const String orderSample = 'order_sample';
-  static const String diamondPurityYouCanTrust = 'diamond_purity_you_can_trust';
-  static const String shippingAcrossAllCountries = 'shipping_across_all_countries';
-  static const String haveAQuestion = 'have_a_question';
-  static const String reachoutToOurExpert = 'reachout_to_our_expert';
+  static const String selectDiamond = 'mob_select_diamond';
+  static const String reviewsX = 'mob_reviews_x';
+  static const String reviews = 'mob_reviews';
+  static const String wantToSeeProductPhysically = 'mob_want_to_see_product_physically';
+  static const String orderSample = 'mob_order_sample';
+  static const String diamondPurityYouCanTrust = 'mob_diamond_purity_you_can_trust';
+  static const String shippingAcrossAllCountries = 'mob_shipping_across_all_countries';
+  static const String haveAQuestion = 'mob_have_a_question';
+  static const String reachoutToOurExpert = 'mob_reachout_to_our_expert';
 
   //Ring Detail Screen
-  static const String selectSetting = 'select_setting';
-  static const String approxPrice = 'approx_price';
-  static const String buyingInBulk = 'buying_in_bulk';
-  static const String askForQuotation = 'ask_for_quotation';
-  static const String approxPriceNote = 'approx_price_note';
-  static const String settingDetails = 'setting_details';
-  static const String productType = 'product_type';
-  static const String brand = 'brand';
-  static const String meleeWeight = 'melee_weight';
-  static const String metal = 'metal';
+  static const String selectSetting = 'mob_select_setting';
+  static const String approxPrice = 'mob_approx_price';
+  static const String buyingInBulk = 'mob_buying_in_bulk';
+  static const String askForQuotation = 'mob_ask_for_quotation';
+  static const String approxPriceNote = 'mob_approx_price_note';
+  static const String settingDetails = 'mob_setting_details';
+  static const String productType = 'mob_product_type';
+  static const String brand = 'mob_brand';
+  static const String meleeWeight = 'mob_melee_weight';
+  static const String metal = 'mob_metal';
 
   // Diamond Listing
-  static const String filter = 'filter';
-  static const String sort = 'sort';
-  static const String naturalDiamond = 'natural_diamond';
-  static const String looseDiamond = 'loose_diamond';
-  static const String emptyProducts = 'empty_products';
-  static const String showingListLengthX = 'showing_list_length_x';
-  static const String diy = 'diy';
-  static const String compareProduct = 'compare_product';
-  static const String change = 'change';
+  static const String filter = 'mob_filter';
+  static const String sort = 'mob_sort';
+  static const String naturalDiamond = 'mob_natural_diamond';
+  static const String looseDiamond = 'mob_loose_diamond';
+  static const String emptyProducts = 'mob_empty_products';
+  static const String showingListLengthX = 'mob_showing_list_length_x';
+  static const String diy = 'mob_diy';
+  static const String compareProduct = 'mob_compare_product';
+  static const String change = 'mob_change';
 
-  static const String shape = 'shape';
-  static const String quantity = 'quantity';
-  static const String totalCarat = 'total_carat';
-  static const String color = 'color';
-  static const String clarity = 'clarity';
-  static const String setting = 'setting';
+  static const String shape = 'mob_shape';
+  static const String quantity = 'mob_quantity';
+  static const String totalCarat = 'mob_total_carat';
+  static const String color = 'mob_color';
+  static const String clarity = 'mob_clarity';
+  static const String setting = 'mob_setting';
 
-  static const String diamondShape = 'diamond_shape';
-  static const String metalKaratage = 'metal_karatage';
-  static const String diamondQuality = 'diamond_quality';
-  static const String ringSize = 'ring_size';
-  static const String customiseDescription = 'customise_description';
-  static const String craftingDescription = 'crafting_description';
+  static const String diamondShape = 'mob_diamond_shape';
+  static const String metalKaratage = 'mob_metal_karatage';
+  static const String diamondQuality = 'mob_diamond_quality';
+  static const String ringSize = 'mob_ring_size';
+  static const String customiseDescription = 'mob_customise_description';
+  static const String craftingDescription = 'mob_crafting_description';
 
-  static const String customerReviews = 'customer_reviews';
-  static const String writeAReview = 'write_a_review';
-  static const String readMore = 'read_more';
-  static const String readLess = 'read_less';
-  static const String viewAllXReviews = 'view_all_x_reviews';
-  static const String youMayAlsoLike = 'you_may_also_like';
-  static const String recentlyViewed = 'recently_viewed';
-  static const String compare = 'compare';
-  static const String rateUs = 'rate_us';
+  static const String customerReviews = 'mob_customer_reviews';
+  static const String writeAReview = 'mob_write_a_review';
+  static const String readMore = 'mob_read_more';
+  static const String readLess = 'mob_read_less';
+  static const String viewAllXReviews = 'mob_view_all_x_reviews';
+  static const String youMayAlsoLike = 'mob_you_may_also_like';
+  static const String recentlyViewed = 'mob_recently_viewed';
+  static const String compare = 'mob_compare';
+  static const String rateUs = 'mob_rate_us';
 
   //Add account
-  static const String shippingBillingAddress = 'shipping_billing_address';
-  static const String payment = 'payment';
-  static const String billingAddressSame = 'billing_address_same';
-  static const String streetAddress = 'street_address';
-  static const String apartmentSuite = 'apartment_suite';
-  static const String city = 'city';
-  static const String state = 'state';
-  static const String postalCode = 'postal_code';
-  static const String phoneNumber = 'phone_number';
-  static const String savedAddress = 'saved_address';
-  static const String search = 'search';
-  static const String startTypingToSearch = 'start_typing_to_search';
+  static const String shippingBillingAddress = 'mob_shipping_billing_address';
+  static const String payment = 'mob_payment';
+  static const String billingAddressSame = 'mob_billing_address_same';
+  static const String streetAddress = 'mob_street_address';
+  static const String apartmentSuite = 'mob_apartment_suite';
+  static const String city = 'mob_city';
+  static const String state = 'mob_state';
+  static const String postalCode = 'mob_postal_code';
+  static const String phoneNumber = 'mob_phone_number';
+  static const String savedAddress = 'mob_saved_address';
+  static const String search = 'mob_search';
+  static const String startTypingToSearch = 'mob_start_typing_to_search';
 
   // Wishlist
-  static const String myWishlist = 'my_wishlist';
-  static const String productX = 'product_x';
-  static const String total = 'total';
+  static const String myWishlist = 'mob_my_wishlist';
+  static const String productX = 'mob_product_x';
+  static const String total = 'mob_total';
 
   // My Bag
-  static const String myBagEmpty = 'my_bag_empty';
-  static const String checkout = 'checkout';
-  static const String selectProductItemX = 'select_product_item_x';
-  static const String mostPurchasedDiamonds = "most_purchased_diamonds";
+  static const String myBagEmpty = 'mob_my_bag_empty';
+  static const String checkout = 'mob_checkout';
+  static const String selectProductItemX = 'mob_select_product_item_x';
+  static const String mostPurchasedDiamonds = 'mob_most_purchased_diamonds';
 
   // Compare Product
-  static const String metalType = 'metal_type';
-  static const String settingType = 'setting_type';
-  static const String certified = 'certified';
-  static const String orderSummary = 'order_summary';
-  static const String addPromoCode = 'add_promo_code';
-  static const String unhappyWithPricing = 'unhappy_with_pricing';
-  static const String selectQuality = 'select_quality';
-  static const String selectQuantity = 'select_quantity';
+  static const String metalType = 'mob_metal_type';
+  static const String settingType = 'mob_setting_type';
+  static const String certified = 'mob_certified';
+  static const String orderSummary = 'mob_order_summary';
+  static const String addPromoCode = 'mob_add_promo_code';
+  static const String unhappyWithPricing = 'mob_unhappy_with_pricing';
+  static const String selectQuality = 'mob_select_quality';
+  static const String selectQuantity = 'mob_select_quantity';
 
   //order confirmation
-  static const String thankYouForYourPurchase = 'thank_you_for_your_purchase';
-  static const String yourOrderNumber = 'your_order_number';
-  static const String orderConfirmWithTrackInfo = 'order_confirm_with_track_info';
-  static const String continueShopping = 'continue_shopping';
+  static const String thankYouForYourPurchase = 'mob_thank_you_for_your_purchase';
+  static const String yourOrderNumber = 'mob_your_order_number';
+  static const String orderConfirmWithTrackInfo = 'mob_order_confirm_with_track_info';
+  static const String continueShopping = 'mob_continue_shopping';
 
-  static const String subTotal = 'sub_total';
-  static const String head = 'head';
-  static const String totalApproxPrice = 'total_approx_price';
-  static const String customiseProduct = 'customise_product';
+  static const String subTotal = 'mob_sub_total';
+  static const String head = 'mob_head';
+  static const String totalApproxPrice = 'mob_total_approx_price';
+  static const String customiseProduct = 'mob_customise_product';
 
   //Payment
-  static const String paypal = 'paypal';
-  static const String upi = 'upi';
+  static const String paypal = 'mob_paypal';
+  static const String upi = 'mob_upi';
 
   //Price Details
-  static const String priceDetails = 'price_details';
-  static const String subtotal = 'subtotal';
-  static const String shipping = 'shipping';
-  static const String salesTax = 'sales_tax';
-  static const String placeOrder = 'place_order';
+  static const String priceDetails = 'mob_price_details';
+  static const String subtotal = 'mob_subtotal';
+  static const String shipping = 'mob_shipping';
+  static const String salesTax = 'mob_sales_tax';
+  static const String placeOrder = 'mob_place_order';
 
   //Write Review
-  static const String stars = 'stars';
-  static const String title = 'title';
-  static const String review = 'review';
-  static const String images = 'images';
-  static const String errorMaximumFiveImages = 'error_maximum_five_images';
-  static const String errorSelectUpToFiveImages = 'error_select_up_to_five_images';
-  static const String camera = 'camera';
-  static const String gallery = 'gallery';
+  static const String stars = 'mob_stars';
+  static const String title = 'mob_title';
+  static const String review = 'mob_review';
+  static const String images = 'mob_images';
+  static const String errorMaximumFiveImages = 'mob_error_maximum_five_images';
+  static const String errorSelectUpToFiveImages = 'mob_error_select_up_to_five_images';
+  static const String camera = 'mob_camera';
+  static const String gallery = 'mob_gallery';
 
   //My bag diamond item
-  static const String ct = 'ct';
-  static const String colour = 'colour';
-  static const String lotNumber = 'lot_number';
-  static const String certificateNumber = 'certificate_number';
-  static const String measurements = 'measurements';
-  static const String lab = 'lab';
-  static const String cut = 'cut';
-  static const String polish = 'polish';
-  static const String symmetry = 'symmetry';
-  static const String flourish = 'flourish';
-  static const String table = 'table';
-  static const String tablePercentage = 'table_percentage';
-  static const String rap = 'rap';
-  static const String depth = 'depth';
-  static const String depthPercentage = 'depth_percentage';
-  static const String kgkAmount = 'kgk_amount';
-  static const String your = 'your';
-  static const String yourPercentage = 'your_percentage';
-  static const String yourRate = 'your_rate';
-  static const String yourValue = 'your_value';
-  static const String dash = 'dash';
-  static const String addAddress = 'add_address';
+  static const String ct = 'mob_ct';
+  static const String colour = 'mob_colour';
+  static const String lotNumber = 'mob_lot_number';
+  static const String certificateNumber = 'mob_certificate_number';
+  static const String measurements = 'mob_measurements';
+  static const String lab = 'mob_lab';
+  static const String cut = 'mob_cut';
+  static const String polish = 'mob_polish';
+  static const String symmetry = 'mob_symmetry';
+  static const String flourish = 'mob_flourish';
+  static const String table = 'mob_table';
+  static const String tablePercentage = 'mob_table_percentage';
+  static const String rap = 'mob_rap';
+  static const String depth = 'mob_depth';
+  static const String depthPercentage = 'mob_depth_percentage';
+  static const String kgkAmount = 'mob_kgk_amount';
+  static const String your = 'mob_your';
+  static const String yourPercentage = 'mob_your_percentage';
+  static const String yourRate = 'mob_your_rate';
+  static const String yourValue = 'mob_your_value';
+  static const String dash = 'mob_dash';
+  static const String addAddress = 'mob_add_address';
 
-  //Product menu bottom sheet
-  static const String buyNow = 'buy_now';
-  static const String discuss = 'discuss';
-  static const String meeting = 'meeting';
-  static const String quotation = 'quotation';
-  static const String export = 'export';
-  static const String more = 'more';
-  static const String moreDetails = 'more_details';
-  static const String lessDetails = 'less_details';
-  static const String totalDiamonds = 'total_diamonds';
-  static const String totalCarats = 'total_carats';
-  static const String averageDiscount = 'average_discount';
-  static const String round = 'round';
-  static const String oval = 'oval';
-  static const String marquise = 'marquise';
+  static const String myOrders = 'mob_my_orders';
+  static const String searchOrder = 'mob_search_order';
+  static const String orderId = 'mob_order_id';
+  static const String orderStatus = 'mob_order_status';
+  static const String orderedOn = 'mob_ordered_on';
+  static const String totalAmount = 'mob_total_amount';
+  static const String items = 'mob_items';
+  static const String qty = 'mob_qty';
+  static const String removeLot = 'mob_remove_lot';
 
-  //Diamonds info popup
-  static const String diamonds = 'diamonds';
-  static const String basicInfo = 'basic_info';
-  static const String inclusionInfo = 'inclusion_info';
-  static const String other = 'other';
-  static const String priceDetailsTitle = 'price_details_title';
-  static const String certificate = 'certificate';
-  static const String purityGuaranteed = 'purity_guaranteed';
-  static const String viewMoreDetails = 'view_more_details';
-  static const String lotNo = 'lot_no';
-  static const String certificateNo = 'certificate_no';
-  static const String size = 'size';
-  static const String carat = 'carat';
-  static const String fluorescence = 'fluorescence';
-  static const String location = 'location';
-  static const String length = 'length';
-  static const String width = 'width';
-  static const String crownAngle = 'crown_angle';
-  static const String crownHeight = 'crown_height';
-  static const String pavilionAngle = 'pavilion_angle';
-  static const String pavilionDepth = 'pavilion_depth';
-  static const String girdle = 'girdle';
-  static const String culetSize = 'culet_size';
-  static const String girdleCondition = 'girdle_condition';
-  static const String laserInclusion = 'laser_inclusion';
-  static const String lowerHalf = 'lower_half';
-  static const String starLength = 'star_length';
-  static const String girdlePercentage = 'girdle_percentage';
-  static const String colorGrading = 'color_grading';
-  static const String clarityGrading = 'clarity_grading';
-  static const String blackTable = 'black_table';
-  static const String blackCrown = 'black_crown';
-  static const String crownOpen = 'crown_open';
-  static const String tableOpen = 'table_open';
-  static const String pavOpen = 'pav_open';
-  static const String milkey = 'milkey';
-  static const String heartAndArrow = 'heart_and_arrow';
-  static const String noBGM = 'no_bgm';
-  static const String girdleInclusion = 'girdle_inclusion';
-  static const String whiteInCenter = 'white_in_center';
-  static const String whiteInCrown = 'white_in_crown';
-  static const String countryOfOrigin = 'country_of_origin';
-  static const String keyToSymbol = 'key_to_symbol';
-  static const String reportComments = 'report_comments';
-  static const String disc = 'disc';
-  static const String pricePerCrt = 'price_per_crt';
-  static const String amount = 'amount';
-  static const String requestSubmitted = 'request_submitted';
-  static const String requestSubmittedDesc = 'request_submitted_desc';
-  static const String outOfStock = 'out_of_stock';
-  static const String ok = 'ok';
-  static const String cancel = 'cancel';
-  static const String errorAllowCameraSettings = 'error_allow_camera_settings';
-  static const String startingBidPrice = 'starting_bid_price';
-  static const String perCts = 'per_cts';
-  static const String recentBid = 'recent_bid';
-  static const String viewAll = 'view_all';
-  static const String auctionEndIn = 'auction_end_in';
-  static const String allBids = 'all_bids';
-  static const String myBid = 'my_bid';
-  static const String placeBid = 'place_bid';
-  static const String enterBidAmountHigherThanX = 'enter_bid_amount_higher_than_x';
-  static const String yourBidOf = 'your_bid_of';
-  static const String hasBeenPlaced = 'has_been_placed';
-  static const String diamondDetails = 'diamond_details';
-  static const String productDetails = 'product_details';
-  static const String strContinue = 'continue';
-  static const String paymentCondition = 'payment_condition';
-  static const String commentQuestion = 'comment_question';
-  static const String totalStones = 'total_stones';
-  static const String origTotalDiscount = 'orig_total_discount';
-  static const String contactEmail = 'contact_email';
-  static const String contactPhone = 'contact_phone';
-  static const String totalPriceAfterDiscount = 'total_price_after_discount';
-  static const String totalWeight = 'total_weight';
-  static const String avgPricePerCarat = 'avg_price_per_carat';
-  static const String originalRatePerCarat = 'original_rate_per_carat';
-  static const String totalRequestedDiscount = 'total_requested_discount';
-  static const String totalValueAfterDiscount = 'total_value_after_discount';
+// my order details screen
+  static const String createdBy = 'mob_created_by';
+  static const String contactInfo = 'mob_contact_info';
+  static const String billingAddress = 'mob_billing_address';
+  static const String shippingAddress = 'mob_shipping_address';
 
-  //my order screen
-  static const String myOrders = 'my_orders';
-  static const String searchOrder = 'search_order';
-  static const String orderId = 'order_id';
-  static const String orderStatus = 'order_status';
-  static const String orderedOn = 'ordered_on';
-  static const String totalAmount = 'total_amount';
-  static const String items = 'items';
-  static const String qty = 'Qty';
-  static const String removeLot = 'remove_lot';
+// order details popup
+  static const String trackOrder = 'mob_track_order';
+  static const String viewTimeline = 'mob_view_timeline';
+  static const String cancelOrder = 'mob_cancel_order';
 
-  // my order details screen
-  static const String createdBy = 'created_by';
-  static const String contactInfo = 'contact_info';
-  static const String billingAddress = 'billing_address';
-  static const String shippingAddress = 'shipping_address';
-
-  //order details popup
-  static const String trackOrder = 'track_order';
-  static const String viewTimeline = 'view_timeline';
-  static const String cancelOrder = 'cancel_order';
-
-  //order cancel popup
-  static const String areYouSure = 'are_you_sure';
-  static const String orderWillBeCancelledX = 'order_will_be_cancelled_x';
-  static const String cancelOrderDesc = 'cancel_order_desc';
-  static const String refundAmount = 'refund_amount';
-  static const String refundTo = 'refund_to';
-  static const String save = 'save';
-  static const String cancellationReason = 'cancellation_reason';
-  static const String addReason = 'add_reason';
+// order cancel popup
+  static const String areYouSure = 'mob_are_you_sure';
+  static const String orderWillBeCancelledX = 'mob_order_will_be_cancelled_x';
+  static const String cancelOrderDesc = 'mob_cancel_order_desc';
+  static const String refundAmount = 'mob_refund_amount';
+  static const String refundTo = 'mob_refund_to';
+  static const String save = 'mob_save';
+  static const String cancellationReason = 'mob_cancellation_reason';
+  static const String addReason = 'mob_add_reason';
 
   // Auction List
-  static const String auctions = 'auctions';
-  static const String searchAuction = 'search_auction';
-  static const String skuNo = 'sku_no';
-  static const String type = 'type';
-  static const String bidAmount = 'bid_amount';
-  static const String bidPlacedOn = 'bid_placed_on';
+  static const String auctions = 'mob_auctions';
+  static const String searchAuction = 'mob_search_auction';
+  static const String skuNo = 'mob_sku_no';
+  static const String type = 'mob_type';
+  static const String bidAmount = 'mob_bid_amount';
+  static const String bidPlacedOn = 'mob_bid_placed_on';
 
-  //Profile Page Screen
-  static const String myAccount = 'my_account';
-  static const String myOrder = 'my_orders';
-  static const String listOfAllTheOrdersYouPlaced = 'list_of_all_the_orders_you_placed';
-  static const String listOfAuctionsYouAppliedTo = 'list_of_auctions_you_applied_to';
-  static const String myInquiries = 'my_inquiries';
-  static const String yourSubmittedInquiries = 'your_submitted_inquiries';
-  static const String newsFeed = 'news_feed';
-  static const String createAndSeeNewsFeeds = 'create_and_see_news_feeds';
-  static const String findAStore = 'find_a_store';
-  static const String searchYourNearbyStores = 'search_your_nearby_stores';
-  static const String listOfAllYourSavedAddresses = 'list_of_all_your_saved_addresses';
-  static const String changePassword = 'change_password';
-  static const String changeYourExistingPassword = 'change_your_existing_password';
-  static const String preferences = 'preferences';
-  static const String defaultCountryLanguageAndCurrency = 'default_country_language_and_currency';
-  static const String aboutUs = 'about_us';
-  static const String education = 'education';
-  static const String policies = 'policies';
-  static const String logout = 'logout';
-  static const String deleteAccount = 'delete_account';
-  static const String labCreatedDiamonds = 'lab_created_diamonds';
-  static const String metals = 'metals';
-  static const String ringSizer = 'ring_sizer';
-  static const String orderTimeline = 'order_timeline';
-  static const String today = 'today';
-  static const String yesterday = 'yesterday';
-  static const String logoutAsk = 'logout_ask';
-  static const String logoutMsg = 'logout_msg';
-  static const String editProfile = 'edit_profile';
-  static const String advanceFilters = 'advance_filters';
-  static const String currentPassword = 'current_password';
-  static const String confirm = 'confirm';
-  static const String fullName = 'full_name';
-  static const String comment = 'comment';
-  static const String inquiryType = 'inquiry_type';
-  static const String selectProduct = 'select_product';
-  static const String deleteAccountAsk = 'delete_account_ask';
-  static const String deleteAccountDesc = 'delete_account_desc';
-  static const String delete = 'delete';
+  static const String buyNow = 'mob_buy_now';
+  static const String discuss = 'mob_discuss';
+  static const String meeting = 'mob_meeting';
+  static const String quotation = 'mob_quotation';
+  static const String export = 'mob_export';
+  static const String more = 'mob_more';
+  static const String moreDetails = 'mob_more_details';
+  static const String lessDetails = 'mob_less_details';
+  static const String totalDiamonds = 'mob_total_diamonds';
+  static const String totalCarats = 'mob_total_carats';
+  static const String averageDiscount = 'mob_average_discount';
+  static const String round = 'mob_round';
+  static const String oval = 'mob_oval';
+  static const String marquise = 'mob_marquise';
 
-  //Make an inquiry
-  static const String makeAnInquiry = 'make_an_inquiry';
-  static const String toLogInToSiteWithQr = 'to_log_in_to_site_with_qr';
-  static const String popularSearches = 'popular_searches';
-  static const String recentSearches = 'recent_searches';
-  static const String searchResult = 'search_result';
-  static const String resultFoundFor = 'result_found_for';
-  static const String searchResultNotFoundDesc = 'search_result_not_found_desc';
-  static const String needHelp = 'need_help';
-  static const String reachOutToOurCustomerService = "reach_out_to_our_customer_service";
-  static const String makeInquiryFaqContactUs = 'make_inquiry_faq_contact_us';
-  static const String changeNotificationSettings = 'change_notification_settings';
-  static const String adminSection = 'admin_section';
-  static const String orderManagement = 'order_management';
-  static const String calendar = 'calendar';
-  static const String meetingsTasksAllInOnePlace = 'meetings_tasks_all_in_one_place';
-  static const String messages = 'messages';
-  static const String conversationsYouAreHaving = 'conversations_you_are_having';
-  static const String masters = 'masters';
-  static const String masterDataOfUserAndNewsLetter = 'master_data_of_user_and_newsletter';
-  static const String dashboard = 'dashboard';
-  static const String listOfDashboard = 'list_of_dashboard';
-  static const String watchlist = 'watchlist';
-  static const String listOfProductsAddedToWatchlist = 'list_of_products_added_to_watchlist';
-  static const String exhibition = 'exhibition';
-  static const String listOfExhibitionsOfKGK = 'list_of_exhibitions_of_KGK';
-  static const String activityLog = 'activity_log';
-  static const String getLogOnTheAccount = 'get_log_on_the_account';
-  static const String enterProductSku = 'enter_product_sku';
+  //Diamonds info popup
+  static const String diamonds = 'mob_diamonds';
+  static const String basicInfo = 'mob_basic_info';
+  static const String inclusionInfo = 'mob_inclusion_info';
+  static const String other = 'mob_other';
+  static const String priceDetailsTitle = 'mob_price_details_title';
+  static const String certificate = 'mob_certificate';
+  static const String purityGuaranteed = 'mob_purity_guaranteed';
+  static const String viewMoreDetails = 'mob_view_more_details';
+  static const String lotNo = 'mob_lot_no';
+  static const String certificateNo = 'mob_certificate_no';
+  static const String size = 'mob_size';
+  static const String carat = 'mob_carat';
+  static const String fluorescence = 'mob_fluorescence';
+  static const String location = 'mob_location';
+  static const String length = 'mob_length';
+  static const String width = 'mob_width';
+  static const String crownAngle = 'mob_crown_angle';
+  static const String crownHeight = 'mob_crown_height';
+  static const String pavilionAngle = 'mob_pavilion_angle';
+  static const String pavilionDepth = 'mob_pavilion_depth';
+  static const String girdle = 'mob_girdle';
+  static const String culetSize = 'mob_culet_size';
+  static const String girdleCondition = 'mob_girdle_condition';
+  static const String laserInclusion = 'mob_laser_inclusion';
+  static const String lowerHalf = 'mob_lower_half';
+  static const String starLength = 'mob_star_length';
+  static const String girdlePercentage = 'mob_girdle_percentage';
+  static const String colorGrading = 'mob_color_grading';
+  static const String clarityGrading = 'mob_clarity_grading';
+  static const String blackTable = 'mob_black_table';
+  static const String blackCrown = 'mob_black_crown';
+  static const String crownOpen = 'mob_crown_open';
+  static const String tableOpen = 'mob_table_open';
+  static const String pavOpen = 'mob_pav_open';
+  static const String milkey = 'mob_milkey';
+  static const String heartAndArrow = 'mob_heart_and_arrow';
+  static const String noBGM = 'mob_no_bgm';
+  static const String girdleInclusion = 'mob_girdle_inclusion';
+  static const String whiteInCenter = 'mob_white_in_center';
+  static const String whiteInCrown = 'mob_white_in_crown';
+  static const String countryOfOrigin = 'mob_country_of_origin';
+  static const String keyToSymbol = 'mob_key_to_symbol';
+  static const String reportComments = 'mob_report_comments';
+  static const String disc = 'mob_disc';
+  static const String pricePerCrt = 'mob_price_per_crt';
+  static const String amount = 'mob_amount';
+  static const String requestSubmitted = 'mob_request_submitted';
+  static const String requestSubmittedDesc = 'mob_request_submitted_desc';
+  static const String outOfStock = 'mob_out_of_stock';
+  static const String ok = 'mob_ok';
+  static const String cancel = 'mob_cancel';
+  static const String errorAllowCameraSettings = 'mob_error_allow_camera_settings';
+  static const String startingBidPrice = 'mob_starting_bid_price';
+  static const String perCts = 'mob_per_cts';
+  static const String recentBid = 'mob_recent_bid';
+  static const String viewAll = 'mob_view_all';
+  static const String auctionEndIn = 'mob_auction_end_in';
+  static const String allBids = 'mob_all_bids';
+  static const String myBid = 'mob_my_bid';
+  static const String placeBid = 'mob_place_bid';
+  static const String enterBidAmountHigherThanX = 'mob_enter_bid_amount_higher_than_x';
+  static const String yourBidOf = 'mob_your_bid_of';
+  static const String hasBeenPlaced = 'mob_has_been_placed';
+  static const String diamondDetails = 'mob_diamond_details';
+  static const String productDetails = 'mob_product_details';
+  static const String strContinue = 'mob_continue';
+  static const String paymentCondition = 'mob_payment_condition';
+  static const String commentQuestion = 'mob_comment_question';
+  static const String totalStones = 'mob_total_stones';
+  static const String origTotalDiscount = 'mob_orig_total_discount';
+  static const String contactEmail = 'mob_contact_email';
+  static const String contactPhone = 'mob_contact_phone';
+  static const String totalPriceAfterDiscount = 'mob_total_price_after_discount';
+  static const String totalWeight = 'mob_total_weight';
+  static const String avgPricePerCarat = 'mob_avg_price_per_carat';
+  static const String originalRatePerCarat = 'mob_original_rate_per_carat';
+  static const String totalRequestedDiscount = 'mob_total_requested_discount';
+  static const String totalValueAfterDiscount = 'mob_total_value_after_discount';
 
-  //Support screen
-  static const String repliesWithin24Hours = 'replies_within_24_hours';
-  static const String call = 'call';
-  static const String frequentlyAskedQuestion = "frequently_asked_questions";
-  static const String contactUs = "contact_us";
-  static const String getInTouchWithUs = "get_in_touch_with_us";
-  static const String searchByCategory = "search_by_category";
-  static const String selectACompany = 'select_a_company';
+  static const String myAccount = 'mob_my_account';
+  static const String myOrder = 'mob_my_orders';
+  static const String listOfAllTheOrdersYouPlaced = 'mob_list_of_all_the_orders_you_placed';
+  static const String listOfAuctionsYouAppliedTo = 'mob_list_of_auctions_you_applied_to';
+  static const String myInquiries = 'mob_my_inquiries';
+  static const String yourSubmittedInquiries = 'mob_your_submitted_inquiries';
+  static const String newsFeed = 'mob_news_feed';
+  static const String createAndSeeNewsFeeds = 'mob_create_and_see_news_feeds';
+  static const String findAStore = 'mob_find_a_store';
+  static const String searchYourNearbyStores = 'mob_search_your_nearby_stores';
+  static const String listOfAllYourSavedAddresses = 'mob_list_of_all_your_saved_addresses';
+  static const String changePassword = 'mob_change_password';
+  static const String changeYourExistingPassword = 'mob_change_your_existing_password';
+  static const String preferences = 'mob_preferences';
+  static const String defaultCountryLanguageAndCurrency = 'mob_default_country_language_and_currency';
+  static const String aboutUs = 'mob_about_us';
+  static const String education = 'mob_education';
+  static const String policies = 'mob_policies';
+  static const String logout = 'mob_logout';
+  static const String deleteAccount = 'mob_delete_account';
+  static const String labCreatedDiamonds = 'mob_lab_created_diamonds';
+  static const String metals = 'mob_metals';
+  static const String ringSizer = 'mob_ring_sizer';
+  static const String orderTimeline = 'mob_order_timeline';
+  static const String today = 'mob_today';
+  static const String yesterday = 'mob_yesterday';
+  static const String logoutAsk = 'mob_logout_ask';
+  static const String logoutMsg = 'mob_logout_msg';
+  static const String editProfile = 'mob_edit_profile';
+  static const String advanceFilters = 'mob_advance_filters';
+  static const String currentPassword = 'mob_current_password';
+  static const String confirm = 'mob_confirm';
+  static const String fullName = 'mob_full_name';
+  static const String comment = 'mob_comment';
+  static const String inquiryType = 'mob_inquiry_type';
+  static const String selectProduct = 'mob_select_product';
+  static const String deleteAccountAsk = 'mob_delete_account_ask';
+  static const String deleteAccountDesc = 'mob_delete_account_desc';
+  static const String delete = 'mob_delete';
 
-  static const String business = 'business';
-  static const String generalQuestions = 'general_questions';
-  static const String faqs = 'faqs';
-  static const String moreFaq = 'more_faq';
-  static const String stillNeedHelp = 'still_need_help';
-  static const String byPhone = 'by_phone';
-  static const String byEmail = 'by_email';
-  static const String questionOrQueriesGetInTouch = 'question_or_queries_get_in_touch';
-  static const String findYourNearestXStore = 'find_your_nearest_X_store';
-  static const String storeDirectory = 'store_directory';
+//Make an inquiry
+  static const String makeAnInquiry = 'mob_make_an_inquiry';
+  static const String toLogInToSiteWithQr = 'mob_to_log_in_to_site_with_qr';
+  static const String popularSearches = 'mob_popular_searches';
+  static const String recentSearches = 'mob_recent_searches';
+  static const String searchResult = 'mob_search_result';
+  static const String resultFoundFor = 'mob_result_found_for';
+  static const String searchResultNotFoundDesc = 'mob_search_result_not_found_desc';
+  static const String needHelp = 'mob_need_help';
+  static const String reachOutToOurCustomerService = 'mob_reach_out_to_our_customer_service';
+  static const String makeInquiryFaqContactUs = 'mob_make_inquiry_faq_contact_us';
+  static const String changeNotificationSettings = 'mob_change_notification_settings';
+  static const String adminSection = 'mob_admin_section';
+  static const String orderManagement = 'mob_order_management';
+  static const String calendar = 'mob_calendar';
+  static const String meetingsTasksAllInOnePlace = 'mob_meetings_tasks_all_in_one_place';
+  static const String messages = 'mob_messages';
+  static const String conversationsYouAreHaving = 'mob_conversations_you_are_having';
+  static const String masters = 'mob_masters';
+  static const String masterDataOfUserAndNewsLetter = 'mob_master_data_of_user_and_newsletter';
+  static const String dashboard = 'mob_dashboard';
+  static const String listOfDashboard = 'mob_list_of_dashboard';
+  static const String watchlist = 'mob_watchlist';
+  static const String listOfProductsAddedToWatchlist = 'mob_list_of_products_added_to_watchlist';
+  static const String exhibition = 'mob_exhibition';
+  static const String listOfExhibitionsOfKGK = 'mob_list_of_exhibitions_of_KGK';
+  static const String activityLog = 'mob_activity_log';
+  static const String getLogOnTheAccount = 'mob_get_log_on_the_account';
+  static const String enterProductSku = 'mob_enter_product_sku';
 
-  static const String language = 'language';
-  static const String currency = 'currency';
+//Support screen
+  static const String repliesWithin24Hours = 'mob_replies_within_24_hours';
+  static const String call = 'mob_call';
+  static const String frequentlyAskedQuestion = 'mob_frequently_asked_questions';
+  static const String contactUs = 'mob_contact_us';
+  static const String getInTouchWithUs = 'mob_get_in_touch_with_us';
+  static const String searchByCategory = 'mob_search_by_category';
+  static const String selectACompany = 'mob_select_a_company';
+
+  static const String business = 'mob_business';
+  static const String generalQuestions = 'mob_general_questions';
+  static const String faqs = 'mob_faqs';
+  static const String moreFaq = 'mob_more_faq';
+  static const String stillNeedHelp = 'mob_still_need_help';
+  static const String byPhone = 'mob_by_phone';
+  static const String byEmail = 'mob_by_email';
+  static const String questionOrQueriesGetInTouch = 'mob_question_or_queries_get_in_touch';
+  static const String findYourNearestXStore = 'mob_find_your_nearest_X_store';
+  static const String storeDirectory = 'mob_store_directory';
+
+  static const String language = 'mob_language';
+  static const String currency = 'mob_currency';
 
   //Compared to
-  static const String comparedToX = 'compared_to_X';
+  static const String comparedToX = 'mob_compared_to_X';
 
   //Contact us
-  static const String dropUsANote = 'drop_us_a_note';
+  static const String dropUsANote = 'mob_drop_us_a_note';
 
   //Concept
-  static const String conceptNoX = 'concept_no_x';
-  static const String newlyLaunched = 'newly_launched';
-  static const String exploreNewlyLaunchedProducts = 'explore_newly_launched_products';
-  static const String exploreNow = 'explore_now';
-  static const String exploreOurDigitalJewelleryCatalog = 'explore_our_digital_jewellery_catalog';
-  static const String browseOurDigitalJewelryCatalog = 'browse_our_digital_jewelry_catalog';
-  static const String viewNow = 'view_now';
+  static const String conceptNoX = 'mob_concept_no_x';
+  static const String newlyLaunched = 'mob_newly_launched';
+  static const String exploreNewlyLaunchedProducts = 'mob_explore_newly_launched_products';
+  static const String exploreNow = 'mob_explore_now';
+  static const String exploreOurDigitalJewelleryCatalog = 'mob_explore_our_digital_jewellery_catalog';
+  static const String browseOurDigitalJewelryCatalog = 'mob_browse_our_digital_jewelry_catalog';
+  static const String viewNow = 'mob_view_now';
 
   //Concept Listing type
-  static const String conceptNumber = 'concept_number';
-  static const String presentation = 'presentation';
-  static const String conceptName = 'concept_name';
-  static const String status = 'status';
-  static const String assignTo = 'assign_to';
-  static const String assignedTo = 'assigned_to';
-  static const String market = 'market';
-  static const String createdOn = 'created_on';
+  static const String conceptNumber = 'mob_concept_number';
+  static const String presentation = 'mob_presentation';
+  static const String conceptName = 'mob_concept_name';
+  static const String status = 'mob_status';
+  static const String assignTo = 'mob_assign_to';
+  static const String assignedTo = 'mob_assigned_to';
+  static const String market = 'mob_market';
+  static const String createdOn = 'mob_created_on';
 
   //Presentation type
-  static const String presentationNumber = 'presentation_number';
-  static const String approvedBy = 'approved_by';
-  static const String project = 'project';
+  static const String presentationNumber = 'mob_presentation_number';
+  static const String approvedBy = 'mob_approved_by';
+  static const String project = 'mob_project';
 
-  //Project Listing type
-  static const String projectNumber = 'project_number';
-  static const String projectName = 'project_name';
-  static const String design = 'design';
-  static const String holdStatus = 'hold_status';
-  static const String customer = 'customer';
+//Project Listing type
+  static const String projectNumber = 'mob_project_number';
+  static const String projectName = 'mob_project_name';
+  static const String design = 'mob_design';
+  static const String holdStatus = 'mob_hold_status';
+  static const String customer = 'mob_customer';
 
   //Design brief type
-  static const String dbfNumber = 'dbf_number';
-  static const String subJewelleryType = 'sub_jewellery_type';
-  static const String jewelleryType = 'jewellery_type';
+  static const String dbfNumber = 'mob_dbf_number';
+  static const String subJewelleryType = 'mob_sub_jewellery_type';
+  static const String jewelleryType = 'mob_jewellery_type';
 
   //Design Listing type
-  static const String version = 'version';
-  static const String designNumber = 'design_number';
-  static const String salesman = 'salesman';
-  static const String stylesStatus = 'styles_status';
-  static const String designApproval = 'design_approval';
+  static const String version = 'mob_version';
+  static const String designNumber = 'mob_design_number';
+  static const String salesman = 'mob_salesman';
+  static const String stylesStatus = 'mob_styles_status';
+  static const String designApproval = 'mob_design_approval';
 
   //Style Listing type
-  static const String styleNumber = 'style_number';
-  static const String stoneCardLocked = 'stone_card_locked';
-  static const String exclusive = 'exclusive';
-  static const String exclusiveCustomer = 'exclusive_customer';
+  static const String styleNumber = 'mob_style_number';
+  static const String stoneCardLocked = 'mob_stone_card_locked';
+  static const String exclusive = 'mob_exclusive';
+  static const String exclusiveCustomer = 'mob_exclusive_customer';
 
   //Monitoring Dbf Type
-  static const String designCreation = 'design_creation';
-  static const String revisedDate = 'revised_date';
-  static const String dbfApproval = 'dbf_approval';
-  static const String designer = 'designer';
-  static const String approvedOn = "approved_on";
+  static const String designCreation = 'mob_design_creation';
+  static const String revisedDate = 'mob_revised_date';
+  static const String dbfApproval = 'mob_dbf_approval';
+  static const String designer = 'mob_designer';
+  static const String approvedOn = "mob_approved_on";
 
   //Watchlist type
-  static const String name = 'name';
-  static const String from = 'from';
-  static const String to = 'to';
-  static const String remainingTime = 'remaining_time';
-  static const String numberOfProduct = 'number_of_product';
+  static const String name = 'mob_name';
+  static const String from = 'mob_from';
+  static const String to = 'mob_to';
+  static const String remainingTime = 'mob_remaining_time';
+  static const String numberOfProduct = 'mob_number_of_product';
 
   //Exhibition DetailPage Products Type
-  static const String itemsSold = 'items_sold';
-  static const String orderReceived = 'order_received';
-  static const String totalSell = 'total_sell';
-  static const String leads = 'leads';
+  static const String itemsSold = 'mob_items_sold';
+  static const String orderReceived = 'mob_order_received';
+  static const String totalSell = 'mob_total_sell';
+  static const String leads = 'mob_leads';
 
   //Remaining B2B Listing Type
-  static const String quality = 'quality';
-  static const String orderOn = 'order_on';
-  static const String customerName = 'customer_name';
-  static const String mobileNumber = 'mobile_number';
-  static const String salesOrder = 'sales_order';
-  static const String orderName = 'order_name';
-  static const String companyRepresentative = 'company_representative';
-  static const String addedOn = 'added_on';
-  static const String purchaseOrder = 'purchase_order';
-  static const String orderedBy = 'ordered_by';
-  static const String noAuctionsFound = 'no_auctions_found';
-  static const String noDataFound = 'no_data_found';
+  static const String quality = 'mob_quality';
+  static const String orderOn = 'mob_order_on';
+  static const String customerName = 'mob_customer_name';
+  static const String mobileNumber = 'mob_mobile_number';
+  static const String salesOrder = 'mob_sales_order';
+  static const String orderName = 'mob_order_name';
+  static const String companyRepresentative = 'mob_company_representative';
+  static const String addedOn = 'mob_added_on';
+  static const String purchaseOrder = 'mob_purchase_order';
+  static const String orderedBy = 'mob_ordered_by';
+  static const String noAuctionsFound = 'mob_no_auctions_found';
+  static const String noDataFound = 'mob_no_data_found';
 
   //Concepts
-  static const String concepts = 'concepts';
-  static const String searchConcept = 'search_concept';
-  static const String noConceptFound = 'no_concept_found';
+  static const String concepts = 'mob_concepts';
+  static const String searchConcept = 'mob_search_concept';
+  static const String noConceptFound = 'mob_no_concept_found';
 
-  static const String presentations = 'presentations';
-  static const String searchPresentation = 'search_presentation';
+  static const String presentations = 'mob_presentations';
+  static const String searchPresentation = 'mob_search_presentation';
 
   //Edit Address
-  static const String editAddress = 'edit_address';
-  static const String noDiamondProductFound = 'no_diamond_product_found';
+  static const String editAddress = 'mob_edit_address';
+  static const String noDiamondProductFound = 'mob_no_diamond_product_found';
 
   //Monitoring
-  static const String monitoring = 'monitoring';
-  static const String dbf = 'dbf';
-  static const String designs = 'designs';
-  static const String styles = 'styles';
-  static const String searchX = 'search_x';
-  static const String noPresentationFound = 'no_presentation_found';
-  static const String addNew = 'add_new';
-  static const String sameAsShipping = 'same_as_shipping';
-  static const String noDesignerFound = 'no_designer_found';
-  static const String selectDesigner = 'select_designer';
-  static const String enterDesignerName = 'enter_designer_name';
-  static const String assignDesigner = 'assign_designer';
+  static const String monitoring = 'mob_monitoring';
+  static const String dbf = 'mob_dbf';
+  static const String designs = 'mob_designs';
+  static const String styles = 'mob_styles';
+  static const String searchX = 'mob_search_x';
+  static const String noPresentationFound = 'mob_no_presentation_found';
+  static const String addNew = 'mob_add_new';
+  static const String sameAsShipping = 'mob_same_as_shipping';
+  static const String noDesignerFound = 'mob_no_designer_found';
+  static const String selectDesigner = 'mob_select_designer';
+  static const String enterDesignerName = 'mob_enter_designer_name';
+  static const String assignDesigner = 'mob_assign_designer';
 
   // Home Screen
-  static const String shopDiamonds = 'shop_diamonds';
-  static const String shopGemstones = 'shop_gemstones';
-  static const String topSellingCategories = 'top_selling_categories';
-  static const String kgkCouture = 'kgk_couture';
-  static const String viewAllCollections = 'view_all_collections';
-  static const String luminous = "luminous";
-  static const String elan = "elan";
-  static const String huse = "huse";
-  static const String mirage = "mirage";
-  static const String dealOfTheDay = "deal_of_the_day";
-  static const String getInspired = "get_inspired";
-  static const String shopByStyle = "shop_by_style";
-  static const String createOwnSignaturePiece = "create_own_signature_piece";
-  static const String personaliseJewellery = 'personalise_jewellery';
-  static const String stepX = 'step_x';
-  static const String selectStone = 'select_stone';
-  static const String selectJewellery = 'select_jewellery';
-  static const String customiseViewPrice = "customise_view_price";
-  static const String getStarted = 'get_started';
-  static const String txtDefault = 'default';
-  static const String add = 'add';
-  static const String shopDiamondsByShape = 'shop_diamonds_by_shape';
-  static const String productLibrary = 'product_library';
-  static const String shopByBrands = 'shop_by_brands';
+  static const String shopDiamonds = 'mob_shop_diamonds';
+  static const String shopGemstones = 'mob_shop_gemstones';
+  static const String topSellingCategories = 'mob_top_selling_categories';
+  static const String kgkCouture = 'mob_kgk_couture';
+  static const String viewAllCollections = 'mob_view_all_collections';
+  static const String luminous = "mob_luminous";
+  static const String elan = "mob_elan";
+  static const String huse = "mob_huse";
+  static const String mirage = "mob_mirage";
+  static const String dealOfTheDay = "mob_deal_of_the_day";
+  static const String getInspired = "mob_get_inspired";
+  static const String shopByStyle = "mob_shop_by_style";
+  static const String createOwnSignaturePiece = "mob_create_own_signature_piece";
+  static const String personaliseJewellery = 'mob_personalise_jewellery';
+  static const String stepX = 'mob_step_x';
+  static const String selectStone = 'mob_select_stone';
+  static const String selectJewellery = 'mob_select_jewellery';
+  static const String customiseViewPrice = "mob_customise_view_price";
+  static const String getStarted = 'mob_get_started';
+  static const String txtDefault = 'mob_default';
+  static const String add = 'mob_add';
+  static const String shopDiamondsByShape = 'mob_shop_diamonds_by_shape';
+  static const String productLibrary = 'mob_product_library';
+  static const String shopByBrands = 'mob_shop_by_brands';
 
   //Project Listing
-  static const String projects = 'projects';
-  static const String searchProjects = 'search_projects';
-  static const String noProjectsFound = 'no_projects_found';
-  static const String designBriefs = 'design_briefs';
-  static const String noDesignBriefsFound = 'no_design_briefs_found';
-  static const String noDesignsFound = 'no_designs_found';
+  static const String projects = 'mob_projects';
+  static const String searchProjects = 'mob_search_projects';
+  static const String noProjectsFound = 'mob_no_projects_found';
+  static const String designBriefs = 'mob_design_briefs';
+  static const String noDesignBriefsFound = 'mob_no_design_briefs_found';
+  static const String noDesignsFound = 'mob_no_designs_found';
 
   // Presentation Preview
-  static const String approve = 'approve';
+  static const String approve = 'mob_approve';
 
   //Styles Listing
-  static const String noStylesFound = 'no_styles_found';
-  static const String sharePresentation = 'share_presentation';
-  static const String qrCode = 'qr_code';
-  static const String whatsapp = 'whatsapp';
-  static const String facebook = 'facebook';
-  static const String copyLink = 'copy_link';
-  static const String enterEmailAddress = 'enter_email_address';
-  static const String peopleWithAccess = 'people_with_access';
-  static const String owner = 'owner';
-  static const String editor = 'editor';
-  static const String viewer = 'viewer';
-  static const String generalAccess = 'general_access';
-  static const String anyoneWithTheLink = 'anyone_with_the_link';
-  static const String anyoneWithTheLinkDesc = 'anyone_with_the_link_desc';
-  static const String share = 'share';
-  static const String shareCatalogue = 'share_catalogue';
+  static const String noStylesFound = 'mob_no_styles_found';
+  static const String sharePresentation = 'mob_share_presentation';
+  static const String qrCode = 'mob_qr_code';
+  static const String whatsapp = 'mob_whatsapp';
+  static const String facebook = 'mob_facebook';
+  static const String copyLink = 'mob_copy_link';
+  static const String enterEmailAddress = 'mob_enter_email_address';
+  static const String peopleWithAccess = 'mob_people_with_access';
+  static const String owner = 'mob_owner';
+  static const String editor = 'mob_editor';
+  static const String viewer = 'mob_viewer';
+  static const String generalAccess = 'mob_general_access';
+  static const String anyoneWithTheLink = 'mob_anyone_with_the_link';
+  static const String anyoneWithTheLinkDesc = 'mob_anyone_with_the_link_desc';
+  static const String share = 'mob_share';
+  static const String shareCatalogue = 'mob_share_catalogue';
 
   // Digital Catalogue
-  static const String catalogue = 'catalogue';
-  static const String searchCatalogue = 'search_digital_catalogue';
-  static const String xProducts = 'x_products';
+  static const String catalogue = 'mob_catalogue';
+  static const String searchCatalogue = 'mob_search_digital_catalogue';
+  static const String xProducts = 'mob_x_products';
 
   //Project status
-  static const String blueInProgress = 'blue_in_progress';
-  static const String orangeInProgress = 'orange_in_progress';
-  static const String active = 'active';
-  static const String onGoing = 'on_going';
-  static const String winner = 'winner';
-  static const String lost = 'lost';
-  static const String approved = 'approved';
-  static const String released = 'released';
-  static const String approval = 'approval';
-  static const String styleCreated = 'style_created';
-  static const String onTime = 'on_time';
-  static const String created = 'created';
-  static const String inActive = 'in_active';
-  static const String rapRate = 'rap_rate';
-  static const String rate = 'rate';
-  static const String discountPercentage = 'discount_percentage';
-  static const String amt = 'amt';
+  static const String blueInProgress = 'mob_blue_in_progress';
+  static const String orangeInProgress = 'mob_orange_in_progress';
+  static const String active = 'mob_active';
+  static const String onGoing = 'mob_on_going';
+  static const String winner = 'mob_winner';
+  static const String lost = 'mob_lost';
+  static const String approved = 'mob_approved';
+  static const String released = 'mob_released';
+  static const String approval = 'mob_approval';
+  static const String styleCreated = 'mob_style_created';
+  static const String onTime = 'mob_on_time';
+  static const String created = 'mob_created';
+  static const String inActive = 'mob_in_active';
+  static const String rapRate = 'mob_rap_rate';
+  static const String rate = 'mob_rate';
+  static const String discountPercentage = 'mob_discount_percentage';
+  static const String amt = 'mob_amt';
 
-  static const String hintEmail = 'hint_email';
-  static const String hintFirstName = 'hint_first_name';
-  static const String hintLastName = 'hint_last_name';
-  static const String hintContactNumber = 'hint_contact_number';
-  static const String hintCompanyName = 'hint_company_name';
-  static const String versionHistory = 'version_history';
+  static const String hintEmail = 'mob_hint_email';
+  static const String hintFirstName = 'mob_hint_first_name';
+  static const String hintLastName = 'mob_hint_last_name';
+  static const String hintContactNumber = 'mob_hint_contact_number';
+  static const String hintCompanyName = 'mob_hint_company_name';
+  static const String versionHistory = 'mob_version_history';
 
   //Find store
-  static const String findStore = 'find_store';
-  static const String enterAnAddressOrZipCodeToFindARetailerNearYou = 'enter_an_address_or_zip_code_to_find_a_retailer_near_you';
-  static const String enterAddressOrPincode = 'enter_address_or_pincode';
-  static const String useCurrentLocation = 'use_current_location';
-  static const String getDirections = 'get_directions';
-  static const String fromYourLocationX = 'from_your_location_x';
+  static const String findStore = 'mob_find_store';
+  static const String enterAnAddressOrZipCodeToFindARetailerNearYou = 'mob_enter_an_address_or_zip_code_to_find_a_retailer_near_you';
+  static const String enterAddressOrPincode = 'mob_enter_address_or_pincode';
+  static const String useCurrentLocation = 'mob_use_current_location';
+  static const String getDirections = 'mob_get_directions';
+  static const String fromYourLocationX = 'mob_from_your_location_x';
 
   // CAD Library
-  static const String cadLibrary = 'cad_library';
-  static const String noCadLibraryFound = 'no_cad_library_found';
+  static const String cadLibrary = 'mob_cad_library';
+  static const String noCadLibraryFound = 'mob_no_cad_library_found';
 
   //Edit watchlist
   //Create watchlist
-  static const String createWatchlist = 'create_watchlist';
-  static const String editWatchlist = 'edit_watchlist';
-  static const String watchListDesc = 'watch_list_desc';
-  static const String theProductWillBeRemovedWhenTheTimeIsUp = 'the_product_will_be_removed_when_the_time_is_up';
-  static const String hintWatchlistName = 'hint_watchlist_name';
-  static const String duration = 'duration';
-  static const String mins = 'mins';
-  static const String searchWatchlist = 'search_watchlist';
-  static const String noWatchlistFound = 'no_watchlist_found';
-  static const String removeWatchlist = 'remove_watchlist';
-  static const String removeWatchlistName = 'remove_watchlist_name';
-  static const String addedXProductsWillBeRemoved = 'added_x_products_will_be_removed';
+  static const String createWatchlist = 'mob_create_watchlist';
+  static const String editWatchlist = 'mob_edit_watchlist';
+  static const String watchListDesc = 'mob_watch_list_desc';
+  static const String theProductWillBeRemovedWhenTheTimeIsUp = 'mob_the_product_will_be_removed_when_the_time_is_up';
+  static const String hintWatchlistName = 'mob_hint_watchlist_name';
+  static const String duration = 'mob_duration';
+  static const String mins = 'mob_mins';
+  static const String searchWatchlist = 'mob_search_watchlist';
+  static const String noWatchlistFound = 'mob_no_watchlist_found';
+  static const String removeWatchlist = 'mob_remove_watchlist';
+  static const String removeWatchlistName = 'mob_remove_watchlist_name';
+  static const String addedXProductsWillBeRemoved = 'mob_added_x_products_will_be_removed';
 
   // Duration Picker
-  static const String selectDuration = 'select_duration';
-  static const String days = 'days';
-  static const String hours = 'hours';
-  static const String minutes = 'minutes';
+  static const String selectDuration = 'mob_select_duration';
+  static const String days = 'mob_days';
+  static const String hours = 'mob_hours';
+  static const String minutes = 'mob_minutes';
 
   // Design Library
-  static const String addAComment = 'add_a_comment';
+  static const String addAComment = 'mob_add_a_comment';
 
   // Exhibitions
-  static const String exhibitions = 'exhibitions';
+  static const String exhibitions = 'mob_exhibitions';
 
   //All Review Screen
-  static const String allReviews = 'all_reviews';
-  static const String hintPromoCode = 'hint_promo_code';
+  static const String allReviews = 'mob_all_reviews';
+  static const String hintPromoCode = 'mob_hint_promo_code';
 
   //Diamond Landing
-  static const String shopNaturalDiamonds = 'shop_natural_diamonds';
-  static const String shopLabDiamonds = 'shop_lab_diamonds';
-  static const String startWithAGemstone = 'start_with_a_gemstone';
-  static const String startWithASetting = "start_with_a_setting";
-  static const String originOfDiamonds = 'origin_of_diamonds';
-  static const String startWithANaturalDiamond = "start_with_a_natural_diamond";
-  static const String startWithALabDiamond = "start_with_a_lab_diamond";
-  static const String diamondFAQs = "diamond_faqs";
-  static const String gemstonesFAQs = "gemstones_faqs";
-  static const String shopByGemstones = 'shop_by_gemstones';
-  static const String aboutOurDiamonds = 'about_our_diamonds';
-  static const String aboutOurGemstones = 'about_our_gemstones';
-  static const String learnMore = 'learn_more';
-  static const String shopByMetal = 'shop_by_metal';
-  static const String or = 'or';
-  static const String startWithSetting = 'start_with_setting';
-  static const String startWithDiamond = 'start_with_diamond';
-  static const String create = 'create';
+  static const String shopNaturalDiamonds = 'mob_shop_natural_diamonds';
+  static const String shopLabDiamonds = 'mob_shop_lab_diamonds';
+  static const String startWithAGemstone = 'mob_start_with_a_gemstone';
+  static const String startWithASetting = "mob_start_with_a_setting";
+  static const String originOfDiamonds = 'mob_origin_of_diamonds';
+  static const String startWithANaturalDiamond = "mob_start_with_a_natural_diamond";
+  static const String startWithALabDiamond = "mob_start_with_a_lab_diamond";
+  static const String diamondFAQs = "mob_diamond_faqs";
+  static const String gemstonesFAQs = "mob_gemstones_faqs";
+  static const String shopByGemstones = 'mob_shop_by_gemstones';
+  static const String aboutOurDiamonds = 'mob_about_our_diamonds';
+  static const String aboutOurGemstones = 'mob_about_our_gemstones';
+  static const String learnMore = 'mob_learn_more';
+  static const String shopByMetal = 'mob_shop_by_metal';
+  static const String or = 'mob_or';
+  static const String startWithSetting = 'mob_start_with_setting';
+  static const String startWithDiamond = 'mob_start_with_diamond';
+  static const String create = 'mob_create';
 
-  static const String selectAndComment = 'select_and_comments';
+  static const String selectAndComment = 'mob_select_and_comments';
 
   // Watchlist
-  static const String addToWatchList = 'add_to_watchlist';
-  static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'select_the_watchlist_you_would_like_product_to_be_added';
+  static const String addToWatchList = 'mob_add_to_watchlist';
+  static const String selectTheWatchlistYouWouldLikeProductToBeAdded = 'mob_select_the_watchlist_you_would_like_product_to_be_added';
 
   //Design library
-  static const String designLibrary = 'design_library';
-  static const String noDesignLibraryFound = 'no_design_library_found';
+  static const String designLibrary = 'mob_design_library';
+  static const String noDesignLibraryFound = 'mob_no_design_library_found';
 
   // Activity Log
-  static const String exploreChronologicalRecordYourUserActivities = 'explore_chronological_record_your_user_activities';
-  static const String module = 'module';
-  static const String dateRange = 'date_range';
+  static const String exploreChronologicalRecordYourUserActivities = 'mob_explore_chronological_record_your_user_activities';
+  static const String module = 'mob_module';
+  static const String dateRange = 'mob_date_range';
 
   //Watchlist Detail
-  static const String noOfProducts = 'no_of_products';
-  static const String edit = 'edit';
+  static const String noOfProducts = 'mob_no_of_products';
+  static const String edit = 'mob_edit';
 
-  static const String notifyWhenProductIsInStock = 'notify_when_product_is_in_stock';
-  static const String notifyWhenPriceDrops = 'notify_when_price_drops';
-  static const String notifyWhenDiscountApplied = 'notify_when_discount_applied';
-  static const String removeProduct = 'remove_product';
-  static const String removeProductDesc = 'remove_product_desc';
+  static const String notifyWhenProductIsInStock = 'mob_notify_when_product_is_in_stock';
+  static const String notifyWhenPriceDrops = 'mob_notify_when_price_drops';
+  static const String notifyWhenDiscountApplied = 'mob_notify_when_discount_applied';
+  static const String removeProduct = 'mob_remove_product';
+  static const String removeProductDesc = 'mob_remove_product_desc';
 
   // Order Management
-  static const String noOrderListFound = 'no_order_list_found';
+  static const String noOrderListFound = 'mob_no_order_list_found';
 
-  static const String deliveryDate = 'delivery_date';
+  static const String deliveryDate = 'mob_delivery_date';
 
   //User master
-  static const String userMaster = 'user_master';
-  static const String noUserFound = 'no_user_found';
-  static const String searchUser = 'search_user';
+  static const String userMaster = 'mob_user_master';
+  static const String noUserFound = 'mob_no_user_found';
+  static const String searchUser = 'mob_search_user';
 
   //Orion
-  static const String orion = 'orion';
-  static const String selectDiamondShape = 'select_diamond_shape';
-  static const String preferredPriceRange = 'preferred_price_range';
+  static const String orion = 'mob_orion';
+  static const String selectDiamondShape = 'mob_select_diamond_shape';
+  static const String preferredPriceRange = 'mob_preferred_price_range';
 
   // Messages
-  static const String noMessageFound = 'no_message_found';
-  static const String inbox = 'inbox';
-  static const String sent = 'sent';
-  static const String trash = 'trash';
-  static const String favourite = 'favourite';
-  static const String toX = 'to_X';
-  static const String me = 'Me';
-  static const String priority = 'priority';
-  static const String startDate = 'start_date';
-  static const String dueDate = 'due_date';
-  static const String description = 'description';
-  static const String assignFrom = 'assign_from';
+  static const String noMessageFound = 'mob_no_message_found';
+  static const String inbox = 'mob_inbox';
+  static const String sent = 'mob_sent';
+  static const String trash = 'mob_trash';
+  static const String favourite = 'mob_favourite';
+  static const String toX = 'mob_to_X';
+  static const String me = 'mob_Me';
+  static const String priority = 'mob_priority';
+  static const String startDate = 'mob_start_date';
+  static const String dueDate = 'mob_due_date';
+  static const String description = 'mob_description';
+  static const String assignFrom = 'mob_assign_from';
 
-  static const String orders = 'orders';
-  static const String products = 'products';
-  static const String ordersReceived = 'orders_received';
-  static const String avgOrderValue = 'avg_order_value';
+  static const String orders = 'mob_orders';
+  static const String products = 'mob_products';
+  static const String ordersReceived = 'mob_orders_received';
+  static const String avgOrderValue = 'mob_avg_order_value';
 
-  static const String returnProduct = 'return_product';
-  static const String xReturn = 'xReturn';
-  static const String imSure = 'im_sure';
-  static const String searchDesign = 'search_design';
-  static const String searchCAD = 'search_cad';
-  static const String pending = 'pending';
+  static const String returnProduct = 'mob_return_product';
+  static const String xReturn = 'mob_xReturn';
+  static const String imSure = 'mob_im_sure';
+  static const String searchDesign = 'mob_search_design';
+  static const String searchCAD = 'mob_search_cad';
+  static const String pending = 'mob_pending';
 
-  static const String day = 'day';
-  static const String week = 'week';
-  static const String month = 'month';
-  static const String year = 'year';
+  static const String day = 'mob_day';
+  static const String week = 'mob_week';
+  static const String month = 'mob_month';
+  static const String year = 'mob_year';
 
-  static const String viewColon = 'view_colon';
+  static const String viewColon = 'mob_view_colon';
 
-  static const String all = 'all';
-  static const String tasks = 'tasks';
-  static const String meetings = 'meetings';
-  static const String sku = 'sku';
+  static const String all = 'mob_all';
+  static const String tasks = 'mob_tasks';
+  static const String meetings = 'mob_meetings';
+  static const String sku = 'mob_sku';
 
   // Newsletter
-  static const String newsletter = 'newsletter';
-  static const String template = "template";
-  static const String subscribers = "subscribers";
+  static const String newsletter = 'mob_newsletter';
+  static const String template = "mob_template";
+  static const String subscribers = "mob_subscribers";
 
-  static const String searchSubscribers = 'search_subscribers';
-  static const String searchCategory = "search_category";
-  static const String searchTemplate = "search_template";
-  static const String validity = "validity";
-  static const String viewMore = 'view_more';
+  static const String searchSubscribers = 'mob_search_subscribers';
+  static const String searchCategory = "mob_search_category";
+  static const String searchTemplate = "mob_search_template";
+  static const String validity = "mob_validity";
+  static const String viewMore = 'mob_view_more';
 
-  static const String shopByX = 'shop_by_x';
-  static const String manufacturingStatus = 'manufacturing_status';
+  static const String shopByX = 'mob_shop_by_x';
+  static const String manufacturingStatus = 'mob_manufacturing_status';
 
   //Home
-  static const String shopEngagementRing = 'shop_engagement_ring';
-  static const String eligance = 'eligance';
-  static const String shopByCategory = 'shop_by_category';
-  static const String trendingNow = 'trending_now';
-  static const String shopLatestCollection = 'shop_latest_collection';
+  static const String shopEngagementRing = 'mob_shop_engagement_ring';
+  static const String eligance = 'mob_eligance';
+  static const String shopByCategory = 'mob_shop_by_category';
+  static const String trendingNow = 'mob_trending_now';
+  static const String shopLatestCollection = 'mob_shop_latest_collection';
 
   //Email validation key
-  static const String emailRequired = "email_required";
-  static const String validEmail = "valid_email";
+  static const String emailRequired = "mob_email_required";
+  static const String validEmail = "mob_valid_email";
 
   //Password validation key
-  static const String passwordRequired = "password_required";
-  static const String validPassword = "valid_password";
+  static const String passwordRequired = "mob_password_required";
+  static const String validPassword = "mob_valid_password";
 
   //No internet screen
-  static const String noInternetConnectionFound = "no_internet_connection_found";
-  static const String pleaseCheckYourInternetConnection = "please_check_your_internet_connection";
-  static const String tryAgain = "try_again";
+  static const String noInternetConnectionFound = "mob_no_internet_connection_found";
+  static const String pleaseCheckYourInternetConnection = "mob_please_check_your_internet_connection";
+  static const String tryAgain = "mob_try_again";
 
   // Session Expired
-  static const String sessionExpired = 'session_expired';
-  static const String sessionExpiredDesc = 'session_expired_desc';
-  static const String dna = 'dna';
+  static const String sessionExpired = 'mob_session_expired';
+  static const String sessionExpiredDesc = 'mob_session_expired_desc';
+  static const String dna = 'mob_dna';
 
-  static const String percentageOffInterpolating = 'percentage_off_interpolating';
-  static const String retry = 'retry';
-  static const String pleaseSelectWatchlist = 'please_select_watchlist';
-  static const String noProductsAddedInWatchlist = 'no_products_added_in_watchlist';
+  static const String percentageOffInterpolating = 'mob_percentage_off_interpolating';
+  static const String retry = 'mob_retry';
+  static const String pleaseSelectWatchlist = 'mob_please_select_watchlist';
+  static const String noProductsAddedInWatchlist = 'mob_no_products_added_in_watchlist';
 
-  static const String errorTitleRequired = 'error_title_required';
-  static const String errorReviewRequired = 'error_review_required';
+  static const String errorTitleRequired = 'mob_error_title_required';
+  static const String errorReviewRequired = 'mob_error_review_required';
 
-  static const String errorFirstNameRequired = 'error_first_name_required';
-  static const String errorLastNameRequired = 'error_last_name_required';
-  static const String errorContactNumberRequired = 'error_contact_number_required';
-  static const String errorPasswordRequired = 'error_password_required';
-  static const String errorConfirmPasswordRequired = 'error_confirm_password_required';
-  static const String errorPasswordNotMatch = 'error_password_not_match';
-  static const String errorCompanyNameRequired = 'error_company_name_required';
-  static const String errorOfficeLocationRequired = 'error_office_location_required';
-  static const String errorBusinessTypeRequired = 'error_business_type_required';
-  static const String youHaveSavedX = 'you_have_saved_x';
-  static const String textCopied = 'text_copied';
-  static const String scanThisQRCode = 'scan_this_qr_code';
-  static const String scanThisQRCodeDetails = 'scan_this_qr_code_details';
-  static const String loggingIn = 'logging_in';
-  static const String phoneNumberAlreadyUsed = 'error_phone_number_already_used';
-  static const String emailAlreadyUsed = 'error_email_already_used';
-  static const String cancelItemList = 'cancel_item_list';
-  static const String commodity = 'commodity';
-  static const String origin = 'origin';
-  static const String onHold = 'on_hold';
-  static const String wip = 'wip';
+  static const String errorFirstNameRequired = 'mob_error_first_name_required';
+  static const String errorLastNameRequired = 'mob_error_last_name_required';
+  static const String errorContactNumberRequired = 'mob_error_contact_number_required';
+  static const String errorPasswordRequired = 'mob_error_password_required';
+  static const String errorConfirmPasswordRequired = 'mob_error_confirm_password_required';
+  static const String errorPasswordNotMatch = 'mob_error_password_not_match';
+  static const String errorCompanyNameRequired = 'mob_error_company_name_required';
+  static const String errorOfficeLocationRequired = 'mob_error_office_location_required';
+  static const String errorBusinessTypeRequired = 'mob_error_business_type_required';
+  static const String youHaveSavedX = 'mob_you_have_saved_x';
+  static const String textCopied = 'mob_text_copied';
+  static const String scanThisQRCode = 'mob_scan_this_qr_code';
+  static const String scanThisQRCodeDetails = 'mob_scan_this_qr_code_details';
+  static const String loggingIn = 'mob_logging_in';
+  static const String phoneNumberAlreadyUsed = 'mob_error_phone_number_already_used';
+  static const String emailAlreadyUsed = 'mob_error_email_already_used';
+  static const String cancelItemList = 'mob_cancel_item_list';
+  static const String commodity = 'mob_commodity';
+  static const String origin = 'mob_origin';
+  static const String onHold = 'mob_on_hold';
+  static const String wip = 'mob_wip';
 
-  static const String address = 'address';
-  static const String zipcode = 'zipcode';
-
+  static const String address = 'mob_address';
+  static const String zipcode = 'mob_zipcode';
 }

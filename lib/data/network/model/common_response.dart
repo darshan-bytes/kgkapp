@@ -93,6 +93,8 @@ class CommonResponse<T> {
         return SecondaryFilterModel.fromJson(json);
       case const (BagListDataModel):
         return BagListDataModel.fromJson(json);
+      case const (LanguageListModel):
+        return LanguageListModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

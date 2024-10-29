@@ -455,3 +455,4 @@ export 'package:kgk/modules/b2b/concept_list/model/concept_list_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/gemstone_filter_model.dart';
 export 'package:kgk/modules/b2b/product_list_grid/model/secondary_filter_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_list_data_model.dart';
+export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';

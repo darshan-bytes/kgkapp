@@ -5,6 +5,7 @@ part 'preferences_event.dart';
 part 'preferences_state.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
+  bool isIntialized = false;
   List<CountryModel> countryList = [];
   List<LanguageModel> languageList = [];
   List<CurrencyModel> currencyList = [];
@@ -21,9 +22,8 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     on<PreferencesSaveEvent>(_onSaveEvent);
   }
 
-  void _onInitialEvent(PreferencesInitialEvent event, Emitter<PreferencesState> emit) {
+  void _onInitialEvent(PreferencesInitialEvent event, Emitter<PreferencesState> emit) async {
     countryList.clear();
-    languageList.clear();
     currencyList.clear();
 
     countryList.add(CountryModel(name: "United States", code: "Usa"));
@@ -31,8 +31,10 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     countryList.add(CountryModel(name: "India", code: "In"));
     countryList.add(CountryModel(name: "Australia", code: "AU"));
 
-    languageList.add(LanguageModel(name: "English", symbol: "en"));
-    languageList.add(LanguageModel(name: "French", symbol: "fr"));
+    if(!isIntialized){
+      await _fetchLanguageData(event, emit);
+      isIntialized = true;
+    }
 
     StorageManager().getCurrencyList().forEach((element) {
       currencyList.add(CurrencyModel(name: element.name ?? '', symbol: element.symbol ?? '\$'));
@@ -43,10 +45,32 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     selectedCurrency =
         currencyList.firstWhereOrNull((element) => element.name == (StorageManager().getSelectedCurrency() ?? currencyList.first.name));
 
+    emit (PreferencesDataFetchedState());
     emit(PreferencesReloadState());
     emit(PreferencesChangeCountryState());
     emit(PreferencesChangeLanguageState());
     emit(PreferencesChangeCurrencyState());
+  }
+
+  Future<void> _fetchLanguageData(PreferencesInitialEvent event, Emitter<PreferencesState> emit) async {
+    emit (PreferencesLoadingState());
+    Map<String, dynamic> body = {
+      ApiKey.filters: {ApiKey.dynamicObject: {}},
+      ApiKey.pagination: {ApiKey.limit: 50, ApiKey.page: 1},
+      ApiKey.search: "",
+      ApiKey.sort: {ApiKey.field: "", ApiKey.dir: ""}
+    };
+
+    await AppRepository(event.context).getLanguageList(body: body).then((response) {
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (data) {
+        languageList.clear();
+        for (var element in data.languageData) {
+          languageList.add(LanguageModel(name: element.name ?? '', symbol: element.code ?? ''));
+        }
+      });
+    });
   }
 
   void _onChangeCountryEvent(PreferencesChangeCountryEvent event, Emitter<PreferencesState> emit) {
