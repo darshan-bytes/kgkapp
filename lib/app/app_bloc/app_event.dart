@@ -5,17 +5,22 @@ sealed class AppEvent extends Equatable {
 }
 
 class LoadAppEvent extends AppEvent {
+  final BuildContext context;
+
+  const LoadAppEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class ChangeThemeEvent extends AppEvent {
+  final BuildContext context;
   final String theme;
 
-  const ChangeThemeEvent(this.theme);
+  const ChangeThemeEvent({required this.context, required this.theme});
 
   @override
-  List<Object> get props => [theme];
+  List<Object> get props => [context, theme];
 }
 
 class ConnectivityChangedEvent extends AppEvent {

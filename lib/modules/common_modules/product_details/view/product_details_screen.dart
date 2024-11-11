@@ -421,13 +421,18 @@ class ProductDetailsScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 32.h),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              primary: false,
-              itemCount: bloc.reviewList.length > 5 ? 5 : bloc.reviewList.length,
-              itemBuilder: (context, index) => ProductCustomerReviewWidget(reviewDataModel: bloc.reviewList[index]),
-              separatorBuilder: (_, __) => Divider(height: 32.h),
+            BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+              buildWhen: (previous, current) => current is ProductDetailsRecentlyViewedLoadedState,
+              builder: (context, state) {
+                return ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: bloc.reviewList.length > 5 ? 5 : bloc.reviewList.length,
+                  itemBuilder: (context, index) => ProductCustomerReviewWidget(reviewDataModel: bloc.reviewList[index]),
+                  separatorBuilder: (_, __) => Divider(height: 32.h),
+                );
+              },
             ),
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),

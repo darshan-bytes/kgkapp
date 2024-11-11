@@ -128,17 +128,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   /// Fetch Bag Data Because Add Logic For Add To Bag
   Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
-    Either<ErrorResponse, BagListDataModel>? response;
-    response = await AppRepository(context).getBagListData(isLoadMore: false, limit: "10", page: "1");
-    response?.fold((l){
-      Utils.showMessage(l.message);
-    }, (r) async {
-      String? bagId = StorageManager().getBagId();
-      if(r.result.isNotEmpty && bagId.isNotNullNorEmpty){
-        MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
-        await StorageManager().storeBagData(myBagDataModel);
-      }
-    });
+    try {
+      Either<ErrorResponse, BagListDataModel>? response;
+      response = await AppRepository(context).getBagListData(isLoadMore: false, limit: "10", page: "1");
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (r) async {
+        String? bagId = StorageManager().getBagId();
+        if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+          MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
+          await StorageManager().storeBagData(myBagDataModel);
+        }
+      });
+    } catch (e) {
+      Utils.showMessage(e.toString());
+    }
   }
 
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async {

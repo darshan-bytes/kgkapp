@@ -49,7 +49,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         if (r.userIdDetails != null) {
           await StorageManager().setUserData(r.userIdDetails!);
         }
-        if(r.bagId != null){
+        if (r.bagId != null) {
           await StorageManager().setBagId(r.bagId!);
         }
         if (r.userIdDetails?.userTypeEnum != null) {
@@ -66,7 +66,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   Future<void> mergeCart(BuildContext context) async {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    if(myBagDataModel != null) {
+    if (myBagDataModel != null) {
       Map<String, dynamic> body = {
         ApiKey.id: myBagDataModel.sId ?? '',
       };
@@ -101,7 +101,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     return true;
   }
 
-  void onSkipLogin(BuildContext context) async{
+  void onSkipLogin(BuildContext context) async {
     await StorageManager().setIsSkipLogin(true);
     BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
     context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);

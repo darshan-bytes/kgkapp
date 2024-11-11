@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
       designSize: AppConst.designSize,
       builder: (context, child) {
         return MultiBlocProvider(
-          providers: BlocGenerator.generateBlocList(),
+          providers: BlocGenerator.generateBlocList(context),
           child: BlocBuilder<AppBloc, AppState>(
             builder: (context, appState) {
               AppBloc appBloc = BlocProvider.of<AppBloc>(context);

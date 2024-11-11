@@ -390,7 +390,7 @@ class DiamondDataModel {
     return DiamondDataModel(
       id: json["id"],
       avgWeight: json["avg_weight"],
-      backRate: json["back_rate"].toDouble(),
+      backRate: json["back_rate"]?.toDouble(),
       blackCrown: json["black_crown"],
       blackCrownRefSuid: json["black_crown_ref_suid"],
       blackCrownSuid: json["black_crown_suid"],
@@ -426,7 +426,7 @@ class DiamondDataModel {
       crownOpenSuid: json["crown_open_suid"],
       crownAngle: json["crown_angle"],
       crownHeight: json["crown_height"],
-      ctsOrGms: json["cts_or_gms"].toDouble(),
+      ctsOrGms: json["cts_or_gms"]?.toDouble(),
       culet: json["culet"],
       culetCondRefSuid: json["culet_cond_ref_suid"],
       culetCondSuid: json["culet_cond_suid"],

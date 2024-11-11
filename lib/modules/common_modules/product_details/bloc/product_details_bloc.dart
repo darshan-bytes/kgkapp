@@ -614,8 +614,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 // Handle wishlist update events
   void _handleWishlistUpdate(WishlistUpdaterServiceState state) {
     if (state is WishListUpdateProductState) {
-      _updateProductList(state);
-      _updateRecentlyViewedList(state);
+      try {
+        _updateProductList(state);
+        _updateRecentlyViewedList(state);
+      } catch (e) {
+        printWrapped(e.toString());
+      }
     }
   }
 

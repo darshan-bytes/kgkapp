@@ -1,11 +1,11 @@
 import 'package:kgk/kgk.dart';
 
 class BlocGenerator {
-  static List<BlocProvider> generateBlocList() {
+  static List<BlocProvider> generateBlocList(BuildContext context) {
     return [
       BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
-      BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent()), lazy: false),
+      BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent(context: context)), lazy: false),
       BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
       BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
@@ -64,7 +64,7 @@ class BlocGenerator {
       BlocProvider<OrionBloc>(create: (_) => OrionBloc()),
       BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
-      BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc()),
+      BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc(), lazy: false),
     ];
   }
 }
