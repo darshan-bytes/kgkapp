@@ -493,6 +493,12 @@ class AppRepository extends ApiService {
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // getLanguageList
+  Future<Either<ErrorResponse, LanguageListModel>?> getLanguageList({required Map<String, dynamic> body}) async {
+    var response = await postMethod<LanguageListModel>(ApiClient.languageList, body);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

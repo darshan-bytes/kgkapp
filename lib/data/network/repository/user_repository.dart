@@ -44,11 +44,12 @@ class UserRepository extends ApiService {
   }
 
   // get Language Labels
-  Future<Either<ErrorResponse, CommonResponse>?> getLanguageLabels({bool showLoader = false}) async {
+  Future<Either<ErrorResponse, CommonResponse>?> getLanguageLabels({bool showLoader = false, String? language}) async {
     if (showLoader) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<Map<String, dynamic>>(ApiClient.languageLabels, withFullResponse: true);
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.languageLabels,
+        headers: {ApiKey.acceptLanguage: language ?? APPStrings.languageEn}, query: {ApiKey.fromMobile: true}, withFullResponse: true);
     if (showLoader) {
       context.setAppLoading(false);
     }
@@ -75,7 +76,7 @@ class UserRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber({required String code,required String phoneNumber}) async {
+  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber({required String code, required String phoneNumber}) async {
     var response = await getMethod<Map<String, dynamic>>(ApiClient.checkDuplicationPhoneNumber(code, phoneNumber), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

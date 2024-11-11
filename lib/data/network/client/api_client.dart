@@ -72,6 +72,8 @@ class ApiClient {
   static String gemstoneFilterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
   static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
+
+  static const String languageList = '$apiBaseUrl/language/filter';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

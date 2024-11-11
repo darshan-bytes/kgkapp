@@ -28,3 +28,13 @@ final class PreferencesChangeCurrencyState extends PreferencesState {
   @override
   List<Object> get props => [];
 }
+
+final class PreferencesLoadingState extends PreferencesState {
+  @override
+  List<Object> get props => [];
+}
+
+final class PreferencesDataFetchedState extends PreferencesState {
+  @override
+  List<Object> get props => [];
+}

@@ -10,8 +10,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late Stream<List<ConnectivityResult>> _connectivityStream;
   List<Locale> supportedLocales = const [
     Locale(APPStrings.languageEn, ''), // English
-    Locale(APPStrings.languageFr, ''),
+    Locale(APPStrings.languageAr, ''),
     Locale(APPStrings.languageHi, ''),
+    Locale(APPStrings.languageJa, ''),
+    // Locale(APPStrings.languageTh, ''),
+    Locale(APPStrings.languageZh, ''),
   ];
   List<LocalizationsDelegate<Object>> localizationsDelegates = const [
     GlobalMaterialLocalizations.delegate,
@@ -121,7 +124,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _languageLabelApiCall(BuildContext context) async {
-    await UserRepository(context).getLanguageLabels(showLoader: true).then((value) async {
+    await UserRepository(context).getLanguageLabels(showLoader: true, language: StorageManager().getLocale() ?? APPStrings.languageEn).then((value) async {
       await value?.fold((l) {
         Utils.showMessage(l.message);
       }, (r) async {
