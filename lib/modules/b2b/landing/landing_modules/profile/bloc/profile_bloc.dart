@@ -219,6 +219,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               context.pushNamed(AppRoutes.makeInquiryPage);
             }),
         ProfileListModel(
+            image: AppImages.icWatchlist,
+            title: APPStrings.watchlist,
+            subTitle: APPStrings.listOfProductsAddedToWatchlist,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.watchListPage);
+            }),
+        ProfileListModel(
             image: AppImages.icNewsFeed,
             title: APPStrings.newsFeed,
             subTitle: APPStrings.createAndSeeNewsFeeds,

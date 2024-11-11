@@ -470,7 +470,9 @@ class AppRepository extends ApiService {
 
   // For Gemstone Filter Option
   Future<Either<ErrorResponse, List<GemstoneFilterModel>>?> fetchGemstoneFilterOptionList({required String type}) async {
+    context.setAppLoading(true);
     var response = await getMethod<GemstoneFilterModel>(ApiClient.gemstoneFilterOptions(type));
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

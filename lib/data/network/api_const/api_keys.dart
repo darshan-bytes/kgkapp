@@ -61,4 +61,5 @@ class ApiKey {
   static const String field = 'field';
   static const String dir = 'dir';
   static const String fromMobile = 'fromMobile';
+  static const String products = 'products';
 }

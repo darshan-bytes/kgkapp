@@ -80,12 +80,26 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       Utils.showMessage(APPStrings.pleaseSelectWatchlist.tr);
       return;
     }
-    Map<String, dynamic> body = {
-      ApiKey.productId: productDetails?.productId,
-      ApiKey.commodity: productDetails?.commodity?.value,
-      ApiKey.notifyOnPriceDrop: _arrSelectedWatchlist[1].isSelected,
-      ApiKey.notifyOnDiscount: _arrSelectedWatchlist[2].isSelected,
-    };
+    Map<String, dynamic> body = {};
+    if (selectedWatchlist?.products?.map((WatchlistProducts e) => e.productId).contains(productDetails?.productId) == false) {
+      body = {
+        ApiKey.products: [
+          {
+            ApiKey.productId: productDetails?.productId,
+            ApiKey.commodity: productDetails?.commodity?.value,
+            ApiKey.notifyOnPriceDrop: _arrSelectedWatchlist[1].isSelected,
+            ApiKey.notifyOnDiscount: _arrSelectedWatchlist[2].isSelected,
+          }
+        ],
+      };
+    } else {
+      body = {
+        ApiKey.productId: productDetails?.productId,
+        ApiKey.commodity: productDetails?.commodity?.value,
+        ApiKey.notifyOnPriceDrop: _arrSelectedWatchlist[1].isSelected,
+        ApiKey.notifyOnDiscount: _arrSelectedWatchlist[2].isSelected,
+      };
+    }
 
     Either<ErrorResponse, CommonResponse>? response;
     if (actionType == WatchlistActionType.remove) {
