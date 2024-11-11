@@ -169,8 +169,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
-            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
+            if (event.context.mounted) {
+              BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                  .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
+            }
             emit(const ProductAddToFavoriteState());
           },
         );
@@ -190,9 +192,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           (data) {
             Utils.showMessage(data.message);
             event.productDetails.isFavourite = false;
-            event.productDetails.wishlistId = null;
-            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
+            event.productDetails.wishlistId = "";
+            if (event.context.mounted) {
+              BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
+                  .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
+            }
             emit(const ProductRemoveFromFavoriteState());
           },
         );
