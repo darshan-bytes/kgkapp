@@ -353,7 +353,7 @@ class AppRoutes {
 
       case preferencesPage:
         builder = (context) {
-          BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent());
+          BlocProvider.of<PreferencesBloc>(context).add(PreferencesInitialEvent(context));
           return const PreferencesScreen();
         };
         break;

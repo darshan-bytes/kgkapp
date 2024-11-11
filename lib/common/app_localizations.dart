@@ -22,19 +22,19 @@ class AppLocalizations {
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
 
-    // Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
-    //
-    // if (languageLabels.isNotEmpty) {
-    //   _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
-    //   return true;
-    // }
+    Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
 
-    String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    if (languageLabels.isNotEmpty) {
+      _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
+      return true;
+    }else{
+      String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
 
-    _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      return true;
+    }
 
-    return true;
   }
 
   /// If the localized strings map is not null, return the value of the key in the map
@@ -72,14 +72,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
     /// Include all of your supported language codes here
     return [
       APPStrings.languageEn,
-      APPStrings.languageFr,
+      APPStrings.languageAr,
       APPStrings.languageHi,
+      APPStrings.languageJa,
+      // APPStrings.languageTh,
+      APPStrings.languageZh,
     ].contains(locale.languageCode);
   }
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
     /// AppLocalizations class is where the JSON loading actually runs
+    Locale locale = Locale(StorageManager().getLocale() ?? APPStrings.languageEn);
     AppLocalizations localizations = AppLocalizations(locale);
     await localizations.load();
     return localizations;

@@ -43,9 +43,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         ErrorResponse errorModel = l;
         Utils.showMessage(errorModel.message);
         emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
-        printWrapped('$value');
       }, (r) async {
-        printWrapped(r.toString());
         await StorageManager().setAuthToken(r.accessToken ?? '');
         await StorageManager().setUserId(r.userId ?? '');
         if (r.userIdDetails != null) {
@@ -55,6 +53,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           await StorageManager().setBagId(r.bagId!);
         }
         if (r.userIdDetails?.userTypeEnum != null) {
+          clearAllFields();
           emit(const SignInSuccessState());
           await StorageManager().setIsSkipLogin(false);
           BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
@@ -106,5 +105,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     await StorageManager().setIsSkipLogin(true);
     BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
     context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+  }
+
+  /// Clear all fields
+  clearAllFields() {
+    emailController.clear();
+    passwordController.clear();
   }
 }

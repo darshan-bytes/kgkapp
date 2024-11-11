@@ -5,6 +5,10 @@ sealed class PreferencesEvent extends Equatable {
 }
 
 class PreferencesInitialEvent extends PreferencesEvent {
+  final BuildContext context;
+
+  const PreferencesInitialEvent(this.context);
+
   @override
   List<Object> get props => [];
 }
