@@ -39,15 +39,21 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       return;
     }
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+
     switch (userType) {
       case UserType.b2cUser:
         _initializeB2CUser(event.context);
         break;
       case UserType.b2bUser:
+      case UserType.internal:
         _initializeB2BUser(event.context);
         break;
     }
     blocList[0].add(HomeInitialEvent(context: event.context));
+    if (userType == UserType.internal && (StorageManager().getSelectedCsc() == null)) {
+      currentIndex = companyIndex;
+      blocList[companyIndex].add(InitialCompanyListEvent(context: event.context));
+    }
     emit(LandingLoadedState(userType: userType, pages: pages, blocList: blocList));
     _isInitialized = true;
   }
@@ -177,7 +183,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
             blocList[currentIndex].add(InitialProfileListEvent(context: event.context));
             break;
         }
-      } else if (userType == UserType.b2bUser) {
+      } else if (userType == UserType.b2bUser || userType == UserType.internal) {
         switch (event.index) {
           case homeIndex:
             blocList[currentIndex].add(HomeInitialEvent(context: event.context));

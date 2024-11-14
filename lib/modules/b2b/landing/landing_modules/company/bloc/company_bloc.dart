@@ -5,29 +5,60 @@ part 'company_event.dart';
 part 'company_state.dart';
 
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
-  CompanyListModel? selectData;
+  bool _isInitialized = false;
+  CscDetails? selectData;
 
-  List<CompanyListModel> companyList = [];
+  List<CscDetails> companyList = [];
 
   CompanyBloc() : super(CompanyInitialState()) {
     on<InitialCompanyListEvent>(_onInitialCompanyListEvent);
     on<SelectCompanyListEvent>(_onSelectCompanyListEvent);
   }
 
-  void _onInitialCompanyListEvent(InitialCompanyListEvent event, Emitter<CompanyState> emit) {
-    companyList = [
-      CompanyListModel(image: 'https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png', title: 'KGK'),
-      CompanyListModel(image: 'https://i.ibb.co/hB38mv2/Entice.png', title: 'Entice'),
-      CompanyListModel(image: 'https://i.ibb.co/8M7vLPs/Martin-Flyer.png', title: 'Martin Flyer')
-    ];
-    selectData = companyList[0];
+  Future<void> _onInitialCompanyListEvent(InitialCompanyListEvent event, Emitter<CompanyState> emit) async {
+    if (_isInitialized) return;
+    selectData = StorageManager().getSelectedCsc();
+    if (companyList.isEmpty) {
+      await loadCompanyList(event.context, emit);
+      if (selectData == null) {
+        UserResponse? userResponse = StorageManager().getUserResponse();
+        if (userResponse?.defaultCscCode != null) {
+          String? defaultCscCode = userResponse?.defaultCscCode;
+          selectData = companyList.firstWhereOrNull((element) => element.cscCode == defaultCscCode);
+
+          if (selectData != null) {
+            await StorageManager().setSelectedCsc(selectData!);
+          }
+        }
+      }
+    }
     emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
+    if (selectData != null) {
+      companyList.remove(selectData);
+      companyList.insert(0, selectData!);
+    }
+    if (companyList.isNotEmpty) {
+      _isInitialized = true;
+    }
   }
 
-  void _onSelectCompanyListEvent(SelectCompanyListEvent event, Emitter<CompanyState> emit) {
+  Future<void> _onSelectCompanyListEvent(SelectCompanyListEvent event, Emitter<CompanyState> emit) async {
     emit(CompanyReloadState());
-    int oldIndex = companyList.indexOf(selectData ?? CompanyListModel());
+    int oldIndex = selectData == null ? -1 : companyList.indexOf(selectData!);
     selectData = companyList[event.index];
+    if (selectData != null) {
+      await StorageManager().setSelectedCsc(selectData!);
+    }
     emit(SelectCompanyListState(event.index, oldIndex));
+  }
+
+  Future<void> loadCompanyList(BuildContext context, Emitter<CompanyState> emit) async {
+    final response = await UserRepository(context).getCscMastersList();
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+    }, (companyList) {
+      this.companyList = companyList;
+      emit(CompanyListLoadedState(companyList: companyList, selectedData: selectData));
+    });
   }
 }

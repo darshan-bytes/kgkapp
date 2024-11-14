@@ -14,6 +14,7 @@ class StorageManager {
   final String _authTokenBoxName = 'auth_token';
   final String _userId = 'userId';
   final String _userData = 'userData';
+  final String _userResponse = 'userResponse';
   final String _locale = 'locale';
   final String _currency = 'currency';
   final String _languageLabels = 'languageLabels';
@@ -22,6 +23,7 @@ class StorageManager {
   final String _bagData = 'bagData';
   final String _isSkipLogin = 'isSkipLogin';
   final String _bagId = 'bagId';
+  final String _selectedCsc = 'selectedCsc';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -45,6 +47,17 @@ class StorageManager {
 
   String? getUserId() {
     return _box.get(_userId);
+  }
+
+  /// Set user data after login-signup
+
+  Future<void> setUserResponse(UserResponse userResponse) async {
+    await _box.put(_userResponse, jsonEncode(userResponse.toJson()));
+  }
+
+  UserResponse? getUserResponse() {
+    String? userResponse = _box.get(_userResponse);
+    return userResponse.isNotNullNorEmpty ? UserResponse.fromJson(jsonDecode(userResponse!)) : null;
   }
 
   Future<void> setUserData(UserIdDetails userIdDetails) async {
@@ -123,6 +136,16 @@ class StorageManager {
   MyBagDataModel? getBagData() {
     String? bagData = _box.get(_bagData);
     return bagData.isNotNullNorEmpty ? MyBagDataModel.fromJson(jsonDecode(bagData!)) : null;
+  }
+
+  /// Set selected csc
+  Future<void> setSelectedCsc(CscDetails cscDetails) async {
+    await _box.put(_selectedCsc, jsonEncode(cscDetails.toJson()));
+  }
+
+  CscDetails? getSelectedCsc() {
+    String? selectedCsc = _box.get(_selectedCsc);
+    return selectedCsc.isNotNullNorEmpty ? CscDetails.fromJson(jsonDecode(selectedCsc!)) : null;
   }
 
   Future<void> clearBagData() async {

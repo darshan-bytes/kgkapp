@@ -74,6 +74,8 @@ class ApiClient {
   static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
 
   static const String languageList = '$apiBaseUrl/language/filter';
+
+  static const String cscMastersList = '$apiBaseUrl/csc-masters/list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

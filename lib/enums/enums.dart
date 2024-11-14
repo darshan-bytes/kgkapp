@@ -46,6 +46,7 @@ enum ProjectStatus {
 enum UserType {
   b2cUser('individual'),
   b2bUser('company'),
+  internal('internal'),
   ;
 
   const UserType(this.value);

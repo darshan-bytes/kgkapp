@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class BagListDataModel {
   BagListDataModel({
     required this.result,
@@ -8,14 +10,14 @@ class BagListDataModel {
 
   final List<Result> result;
   final int? totalRecords;
-  final String? page;
-  final String? limit;
+  final int? page;
+  final int? limit;
 
   BagListDataModel copyWith({
     List<Result>? result,
     int? totalRecords,
-    String? page,
-    String? limit,
+    int? page,
+    int? limit,
   }) {
     return BagListDataModel(
       result: result ?? this.result,
@@ -25,24 +27,24 @@ class BagListDataModel {
     );
   }
 
-  factory BagListDataModel.fromJson(Map<String, dynamic> json){
+  factory BagListDataModel.fromJson(Map<String, dynamic> json) {
     return BagListDataModel(
       result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
       totalRecords: json["totalRecords"],
-      page: json["page"],
-      limit: json["limit"],
+      page: json["page"]?.toString().toInt,
+      limit: json["limit"]?.toString().toInt,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "result": result.map((x) => x.toJson()).toList(),
-    "totalRecords": totalRecords,
-    "page": page,
-    "limit": limit,
-  };
+        "result": result.map((x) => x.toJson()).toList(),
+        "totalRecords": totalRecords,
+        "page": page,
+        "limit": limit,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$result, $totalRecords, $page, $limit, ";
   }
 }
@@ -158,7 +160,7 @@ class Result {
     );
   }
 
-  factory Result.fromJson(Map<String, dynamic> json){
+  factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       suid: json["suid"],
       quantity: json["quantity"],
@@ -168,7 +170,7 @@ class Result {
       productId: json["productId"],
       image: json["image"],
       commodity: json["commodity"],
-      discountPrice: json["discount_price"],
+      discountPrice: json["discount_price"]?.toString(),
       discountPercentage: json["discount_percentage"]?.toDouble(),
       lotCode: json["lot_code"],
       shape: json["shape"],
@@ -189,35 +191,35 @@ class Result {
   }
 
   Map<String, dynamic> toJson() => {
-    "suid": suid,
-    "quantity": quantity,
-    "totalPrice": totalPrice,
-    "rate": rate,
-    "jewellery_name": jewelleryName,
-    "productId": productId,
-    "image": image,
-    "commodity": commodity,
-    "discount_price": discountPrice,
-    "discount_percentage": discountPercentage,
-    "lot_code": lotCode,
-    "shape": shape,
-    "labs": labs,
-    "cut": cut,
-    "color": color,
-    "clarity": clarity,
-    "cts_or_gms": ctsOrGms,
-    "polish": polish,
-    "symmetry": symmetry,
-    "depth": depth,
-    "table": table,
-    "measurements": measurements,
-    "rappaport_price": rappaportPrice,
-    "location": location,
-    "status": status,
-  };
+        "suid": suid,
+        "quantity": quantity,
+        "totalPrice": totalPrice,
+        "rate": rate,
+        "jewellery_name": jewelleryName,
+        "productId": productId,
+        "image": image,
+        "commodity": commodity,
+        "discount_price": discountPrice,
+        "discount_percentage": discountPercentage,
+        "lot_code": lotCode,
+        "shape": shape,
+        "labs": labs,
+        "cut": cut,
+        "color": color,
+        "clarity": clarity,
+        "cts_or_gms": ctsOrGms,
+        "polish": polish,
+        "symmetry": symmetry,
+        "depth": depth,
+        "table": table,
+        "measurements": measurements,
+        "rappaport_price": rappaportPrice,
+        "location": location,
+        "status": status,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$suid, $quantity, $totalPrice, $rate, $jewelleryName, $productId, $image, $commodity, $discountPrice, $discountPercentage, $lotCode, $shape, $labs, $cut, $color, $clarity, $ctsOrGms, $polish, $symmetry, $depth, $table, $measurements, $rappaportPrice, $location, $status, ";
   }
 }

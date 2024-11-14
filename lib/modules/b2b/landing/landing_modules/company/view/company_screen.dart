@@ -19,20 +19,26 @@ class CompanyScreen extends StatelessWidget {
         },
       ),
       body: SafeArea(
-        child: SmartSingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 14.0.w, horizontal: 14.0.w),
-                child: SmartText(
-                  APPStrings.selectACompany.tr,
-                  style: style.titleStyle,
-                ),
+        child: BlocBuilder<CompanyBloc, CompanyState>(
+          buildWhen: (previous, current) => current is CompanyListLoadedState,
+          builder: (context, state) {
+            if (state is! CompanyListLoadedState) return const SizedBox.shrink();
+            return SmartSingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0.w, horizontal: 14.0.w),
+                    child: SmartText(
+                      APPStrings.selectACompany.tr,
+                      style: style.titleStyle,
+                    ),
+                  ),
+                  _buildCompanyList(style, bloc),
+                ],
               ),
-              _buildCompanyList(style, bloc),
-            ],
-          ),
+            );
+          },
         ),
       ),
       bottomNavigationBar: Padding(
@@ -56,7 +62,7 @@ class CompanyScreen extends StatelessWidget {
         padding: EdgeInsets.only(top: 16.h, bottom: 8.h),
         primary: false,
         itemBuilder: (context, index) {
-          final CompanyListModel companyListData = bloc.companyList[index];
+          final CscDetails companyListData = bloc.companyList[index];
           return Column(
             children: [
               BlocBuilder<CompanyBloc, CompanyState>(
@@ -71,15 +77,16 @@ class CompanyScreen extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SmartImage(
+                          // Below code is commented because the image is not available
+                          /*SmartImage(
                             path: bloc.companyList[index].image ?? '',
                             height: 40.w,
                             width: 40.w,
                           ),
-                          SizedBox(width: 12.0.w),
+                          SizedBox(width: 12.0.w),*/
                           Expanded(
                             child: SmartText(
-                              bloc.companyList[index].title,
+                              bloc.companyList[index].cscName,
                               style: style.textStyle,
                             ),
                           ),
