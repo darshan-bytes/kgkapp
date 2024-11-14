@@ -25,8 +25,8 @@ final class SelectCompanyListState extends CompanyState {
 }
 
 final class CompanyListLoadedState extends CompanyState {
-  final List<CompanyListModel> companyList;
-  final CompanyListModel? selectedData;
+  final List<CscDetails> companyList;
+  final CscDetails? selectedData;
 
   const CompanyListLoadedState({
     required this.companyList,

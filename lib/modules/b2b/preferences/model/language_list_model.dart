@@ -16,20 +16,20 @@ class LanguageListModel {
   LanguageListModel copyWith({
     int? filteredRecords,
     int? totalRecords,
-    List<LanguageDatum>? data,
+    List<LanguageDatum>? languageData,
     int? limit,
     int? page,
   }) {
     return LanguageListModel(
       filteredRecords: filteredRecords ?? this.filteredRecords,
       totalRecords: totalRecords ?? this.totalRecords,
-      languageData: data ?? this.languageData,
+      languageData: languageData ?? this.languageData,
       limit: limit ?? this.limit,
       page: page ?? this.page,
     );
   }
 
-  factory LanguageListModel.fromJson(Map<String, dynamic> json){
+  factory LanguageListModel.fromJson(Map<String, dynamic> json) {
     return LanguageListModel(
       filteredRecords: json["filteredRecords"],
       totalRecords: json["totalRecords"],
@@ -40,15 +40,15 @@ class LanguageListModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "filteredRecords": filteredRecords,
-    "totalRecords": totalRecords,
-    "data": languageData.map((x) => x.toJson()).toList(),
-    "limit": limit,
-    "page": page,
-  };
+        "filteredRecords": filteredRecords,
+        "totalRecords": totalRecords,
+        "data": languageData.map((x) => x.toJson()).toList(),
+        "limit": limit,
+        "page": page,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$filteredRecords, $totalRecords, $languageData, $limit, $page, ";
   }
 }
@@ -124,7 +124,7 @@ class LanguageDatum {
     );
   }
 
-  factory LanguageDatum.fromJson(Map<String, dynamic> json){
+  factory LanguageDatum.fromJson(Map<String, dynamic> json) {
     return LanguageDatum(
       name: json["name"],
       slug: json["slug"],
@@ -145,25 +145,25 @@ class LanguageDatum {
   }
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "slug": slug,
-    "code": code,
-    "text_direction": textDirection,
-    "date_format": dateFormat,
-    "created_by": createdBy,
-    "updated_by": updatedBy,
-    "status": status,
-    "is_default": isDefault,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "id": id,
-    "flag_icon": flagIcon,
-    "created_by_details": createdByDetails?.toJson(),
-    "updated_by_details": updatedByDetails?.toJson(),
-  };
+        "name": name,
+        "slug": slug,
+        "code": code,
+        "text_direction": textDirection,
+        "date_format": dateFormat,
+        "created_by": createdBy,
+        "updated_by": updatedBy,
+        "status": status,
+        "is_default": isDefault,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "id": id,
+        "flag_icon": flagIcon,
+        "created_by_details": createdByDetails?.toJson(),
+        "updated_by_details": updatedByDetails?.toJson(),
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$name, $slug, $code, $textDirection, $dateFormat, $createdBy, $updatedBy, $status, $isDefault, $createdAt, $updatedAt, $id, $flagIcon, $createdByDetails, $updatedByDetails, ";
   }
 }
@@ -219,7 +219,7 @@ class LanguageAtedByDetails {
     );
   }
 
-  factory LanguageAtedByDetails.fromJson(Map<String, dynamic> json){
+  factory LanguageAtedByDetails.fromJson(Map<String, dynamic> json) {
     return LanguageAtedByDetails(
       firstname: json["firstname"],
       lastname: json["lastname"],
@@ -235,20 +235,20 @@ class LanguageAtedByDetails {
   }
 
   Map<String, dynamic> toJson() => {
-    "firstname": firstname,
-    "lastname": lastname,
-    "profile_pic": profilePic,
-    "user_account_id": userAccountId,
-    "email": email,
-    "user_type": userType,
-    "account_type": accountType,
-    "phone_code": phoneCode,
-    "phone": phone,
-    "profile_pic_url": profilePicUrl,
-  };
+        "firstname": firstname,
+        "lastname": lastname,
+        "profile_pic": profilePic,
+        "user_account_id": userAccountId,
+        "email": email,
+        "user_type": userType,
+        "account_type": accountType,
+        "phone_code": phoneCode,
+        "phone": phone,
+        "profile_pic_url": profilePicUrl,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $accountType, $phoneCode, $phone, $profilePicUrl, ";
   }
 }

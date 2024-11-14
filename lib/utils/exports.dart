@@ -134,7 +134,6 @@ export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categori
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categories_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/bloc/company_bloc.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/company/model/company_list_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/view/company_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/diamond_filter/bloc/diamond_filter_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/diamond_filter/view/diamond_filter_screen.dart';
@@ -456,3 +455,4 @@ export 'package:kgk/modules/b2b/product_list_grid/model/gemstone_filter_model.da
 export 'package:kgk/modules/b2b/product_list_grid/model/secondary_filter_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_list_data_model.dart';
 export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/company/model/csc_details_model.dart';

@@ -7,6 +7,7 @@ class UserResponse {
     required this.userPermissions,
     required this.role,
     required this.bagId,
+    required this.defaultCscCode,
     required this.userIdDetails,
   });
 
@@ -15,6 +16,7 @@ class UserResponse {
   final UserPermissions? userPermissions;
   final Role? role;
   final String? bagId;
+  final String? defaultCscCode;
   final UserIdDetails? userIdDetails;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class UserResponse {
       userId: json["user_id"],
       userPermissions: json["user_permissions"] == null ? null : UserPermissions.fromJson(json["user_permissions"]),
       role: json["role"] == null ? null : Role.fromJson(json["role"]),
+      defaultCscCode: json["default_csc_code"],
       userIdDetails: json["user_id_details"] == null ? null : UserIdDetails.fromJson(json["user_id_details"]),
       bagId: json["bag_id"],
     );
@@ -33,13 +36,14 @@ class UserResponse {
         "user_id": userId,
         "user_permissions": userPermissions?.toJson(),
         "role": role?.toJson(),
+        "default_csc_code": defaultCscCode,
         "user_id_details": userIdDetails?.toJson(),
         "bag_id": bagId,
       };
 
   @override
   String toString() {
-    return "$accessToken, $userId, $userPermissions, $role, $userIdDetails, $bagId, ";
+    return "$accessToken, $userId, $userPermissions, $role, $userIdDetails, $bagId, $defaultCscCode, ";
   }
 }
 

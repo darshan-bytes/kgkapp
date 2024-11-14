@@ -141,21 +141,24 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(const MyBagToggleViewModeState());
   }
 
-  void _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) {
+  Future<void> _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) async {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     //TODO: Write code get Data from API
+    await fetchListOfBag(event.context, emit);
   }
 
   /// TODO: In Future Implementation
   /// Fetch Bag Data Because Add Logic For Add To Bag
-  Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+  Future<void> fetchListOfBag(BuildContext context, Emitter<MyBagState> emit) async {
+    String id = StorageManager().getBagId() ?? "";
+    if (id.isNullOrEmpty) return;
     Either<ErrorResponse, BagListDataModel>? response;
-    response = await AppRepository(context).getBagListData(isLoadMore: false, limit: "10", page: "1");
-    response?.fold((l){
+    response = await AppRepository(context).getBagListData(id: id, isShowLoader: false);
+    response?.fold((l) {
       Utils.showMessage(l.message);
     }, (r) async {
       String? bagId = StorageManager().getBagId();
-      if(r.result.isNotEmpty && bagId.isNotNullNorEmpty){
+      if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
         MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
         await StorageManager().storeBagData(myBagDataModel);
       }
