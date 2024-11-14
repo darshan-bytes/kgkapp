@@ -483,14 +483,12 @@ class AppRepository extends ApiService {
   }
 
   // Fetch Bag List Data
-  Future<Either<ErrorResponse, BagListDataModel>?> getBagListData(
-      {required String limit, required String page, bool isLoadMore = false}) async {
-    if (isLoadMore) {
+  Future<Either<ErrorResponse, BagListDataModel>?> getBagListData({required String id, bool isShowLoader = false}) async {
+    if (isShowLoader) {
       context.setAppLoading(true);
     }
-    var response =
-        await getMethod<BagListDataModel>(ApiClient.bagListData, query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
-    if (isLoadMore) {
+    var response = await getMethod<BagListDataModel>(ApiClient.bagListData, query: {ApiKey.id_: id}, withCurrencyHeader: true);
+    if (isShowLoader) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));

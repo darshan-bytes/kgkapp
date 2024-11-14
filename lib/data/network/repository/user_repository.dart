@@ -80,4 +80,11 @@ class UserRepository extends ApiService {
     var response = await getMethod<Map<String, dynamic>>(ApiClient.checkDuplicationPhoneNumber(code, phoneNumber), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, List<CscDetails>>?> getCscMastersList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<CscDetails>(ApiClient.cscMastersList);
+    context.setAppLoading(false);
+    return response?.fold((error) => Left(error), (cscMastersList) => Right(cscMastersList as List<CscDetails>));
+  }
 }
