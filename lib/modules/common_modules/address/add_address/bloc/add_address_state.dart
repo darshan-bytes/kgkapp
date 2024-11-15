@@ -33,14 +33,17 @@ final class AddAddressReloadState extends AddAddressState {
 }
 
 final class AddAddressChangeCountryState extends AddAddressState {
-  const AddAddressChangeCountryState();
+  final Country selectedCountry;
+  final List<CountryStateModel> arrStates;
+
+  const AddAddressChangeCountryState({required this.selectedCountry, required this.arrStates});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [selectedCountry, arrStates];
 }
 
 final class AddAddressChangeCityState extends AddAddressState {
-  final City selectedCity;
+  final String selectedCity;
 
   const AddAddressChangeCityState(this.selectedCity);
 
@@ -49,7 +52,7 @@ final class AddAddressChangeCityState extends AddAddressState {
 }
 
 final class AddAddressChangeStateState extends AddAddressState {
-  final StateModel selectedState;
+  final CountryStateModel selectedState;
 
   const AddAddressChangeStateState(this.selectedState);
 

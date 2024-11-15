@@ -30,30 +30,26 @@ final class AddAddressAddressSameEvent extends AddAddressEvent {
 }
 
 final class AddAddressChangeCountryEvent extends AddAddressEvent {
+  final BuildContext context;
   final Country selectedCountry;
 
-  const AddAddressChangeCountryEvent(this.selectedCountry);
+  const AddAddressChangeCountryEvent({
+    required this.context,
+    required this.selectedCountry,
+  });
 
   @override
-  List<Object> get props => [selectedCountry];
-}
-
-final class AddAddressChangeCityEvent extends AddAddressEvent {
-  final City selectedCity;
-
-  const AddAddressChangeCityEvent(this.selectedCity);
-
-  @override
-  List<Object> get props => [selectedCity];
+  List<Object> get props => [context, selectedCountry];
 }
 
 final class AddAddressChangeStateEvent extends AddAddressEvent {
-  final StateModel selectedState;
+  final BuildContext context;
+  final CountryStateModel selectedState;
 
-  const AddAddressChangeStateEvent(this.selectedState);
+  const AddAddressChangeStateEvent(this.context, this.selectedState);
 
   @override
-  List<Object> get props => [selectedState];
+  List<Object> get props => [context, selectedState];
 }
 
 final class SaveAddressEvent extends AddAddressEvent {

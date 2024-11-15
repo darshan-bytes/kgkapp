@@ -527,6 +527,29 @@ class AppRepository extends ApiService {
     var response = await postMethod<LanguageListModel>(ApiClient.languageList, body);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, List<CountryStateModel>>?> fetchCountryList({bool isShowLoader = true}) async {
+    if (isShowLoader) context.setAppLoading(true);
+    var response = await getMethod<CountryStateModel>(ApiClient.countryMasters);
+    if (isShowLoader) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<CountryStateModel>>?> fetchStateByCountry(
+      {required String countryCode, bool isShowLoader = true}) async {
+    if (isShowLoader) context.setAppLoading(true);
+    var response = await getMethod<CountryStateModel>(ApiClient.stateMasters(countryCode));
+    if (isShowLoader) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Save Address
+  Future<Either<ErrorResponse, CommonResponse<AddressDetails>>?> saveAddress({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<AddressDetails>(ApiClient.customerAddress, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

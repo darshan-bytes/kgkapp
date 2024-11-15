@@ -157,6 +157,8 @@ class StorageManager {
     String? locale = getLocale();
     List<CurrencyListModel>? currencyList = getCurrencyList();
     bool isSkipLogin = getIsSkipLogin();
+    String guestBagId = getBagId() ?? '';
+    MyBagDataModel? guestBagData = getBagData();
     await _box.clear();
 
     if (locale != null) {
@@ -167,6 +169,12 @@ class StorageManager {
     }
     if (isSkipLogin) {
       await setIsSkipLogin(isSkipLogin);
+      if (guestBagId.isNotEmpty) {
+        await setBagId(guestBagId);
+      }
+      if (guestBagData != null) {
+        await storeBagData(guestBagData);
+      }
     }
   }
 

@@ -13,43 +13,47 @@ class SavedAddressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(SavedAddressStyle style, SavedAddressBloc savedAddressBloc, BuildContext context) {
+  Widget _buildBody(SavedAddressStyle style, SavedAddressBloc bloc, BuildContext context) {
     return BlocBuilder<SavedAddressBloc, SavedAddressState>(
       buildWhen: (previous, current) => current is SavedAddressLoadedState,
       builder: (context, state) {
         return SmartSingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SavedAddressWidget(
-                isShippingAddress: true,
-                addressDetails: savedAddressBloc.defaultShippingAddress ?? AddressDetails(),
-                onChange: () {
-                  savedAddressBloc.add(SavedAddressChangeShippingAddressEvent(context, isShipping: true));
-                },
-                onAddNew: () {
-                  savedAddressBloc.add(SavedAddressAddNewAddressEvent(context, isShipping: true));
-                },
-              ),
-              SizedBox(height: 24.h),
-              SavedAddressWidget(
-                addressDetails: savedAddressBloc.defaultBillingAddress ?? AddressDetails(),
-                onChange: () {
-                  savedAddressBloc.add(SavedAddressChangeShippingAddressEvent(context));
-                },
-                onAddNew: () {
-                  savedAddressBloc.add(SavedAddressAddNewAddressEvent(context));
-                },
-                isSameAsShippingAddress: savedAddressBloc.isBillingAddressSameAsShippingAddress,
-                onShippingAddressChange: (value) {
-                  if (value == true) {
-                    savedAddressBloc.add(SavedAddressChangeBillingAddressSameEvent(value!));
-                  }
-                },
-              ),
-            ],
-          ),
+          child: bloc.addressList.isEmpty
+              ? NoDataFoundWidget(
+                  text: APPStrings.noSavedAddressFound.tr,
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SavedAddressWidget(
+                      isShippingAddress: true,
+                      addressDetails: bloc.defaultShippingAddress ?? AddressDetails(),
+                      onChange: () {
+                        bloc.add(SavedAddressChangeShippingAddressEvent(context, isShipping: true));
+                      },
+                      onAddNew: () {
+                        bloc.add(SavedAddressAddNewAddressEvent(context, isShipping: true));
+                      },
+                    ),
+                    SizedBox(height: 24.h),
+                    SavedAddressWidget(
+                      addressDetails: bloc.defaultBillingAddress ?? AddressDetails(),
+                      onChange: () {
+                        bloc.add(SavedAddressChangeShippingAddressEvent(context));
+                      },
+                      onAddNew: () {
+                        bloc.add(SavedAddressAddNewAddressEvent(context));
+                      },
+                      isSameAsShippingAddress: bloc.isBillingAddressSameAsShippingAddress,
+                      onShippingAddressChange: (value) {
+                        if (value == true) {
+                          bloc.add(SavedAddressChangeBillingAddressSameEvent(value!));
+                        }
+                      },
+                    ),
+                  ],
+                ),
         );
       },
     );

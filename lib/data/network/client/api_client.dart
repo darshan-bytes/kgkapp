@@ -78,6 +78,12 @@ class ApiClient {
   static const String languageList = '$apiBaseUrl/language/filter';
 
   static const String cscMastersList = '$apiBaseUrl/csc-masters/list';
+
+  static const String customerAddress = '$apiBaseUrl/customer/address';
+
+  static const String countryMasters = '$apiBaseUrl/country-masters';
+
+  static String stateMasters(String countryCode) => '$apiBaseUrl/state-masters/country/$countryCode';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

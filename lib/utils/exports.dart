@@ -251,7 +251,6 @@ export 'package:kgk/modules/b2b/write_review/bloc/write_review_bloc.dart';
 export 'package:kgk/modules/b2b/write_review/view/write_review_screen.dart';
 export 'package:kgk/modules/common_modules/address/add_address/bloc/add_address_bloc.dart';
 export 'package:kgk/modules/common_modules/address/add_address/model/address_details_model.dart';
-export 'package:kgk/modules/common_modules/address/add_address/model/city_selection_model.dart';
 export 'package:kgk/modules/common_modules/address/add_address/model/state_selection_model.dart';
 export 'package:kgk/modules/common_modules/address/add_address/view/add_address_screen.dart';
 export 'package:kgk/modules/common_modules/address/address_list/bloc/address_list_bloc.dart';

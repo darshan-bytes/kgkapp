@@ -99,6 +99,10 @@ class CommonResponse<T> {
         return AuctionListingModel.fromJson(json);
       case const (CscDetails):
         return CscDetails.fromJson(json);
+      case const (CountryStateModel):
+        return CountryStateModel.fromJson(json);
+      case const (AddressDetails):
+        return AddressDetails.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

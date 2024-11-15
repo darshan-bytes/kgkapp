@@ -21,12 +21,17 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   AddressDetails? selectedAddress;
   List<AddressDetails> addressList = [
     AddressDetails(
-      id: 1,
+      id: '1',
       firstName: "Gautam",
       lastName: "Singhania",
-      contactNumber: "+91-850-427-9498",
-      addressLine1: "123, ABC Colony",
-      addressLine2: "Near XYZ Park",
+      phone: [
+        CustomerPhoneNumber(
+          phoneCode: "+91",
+          phoneNumber: "8504279498",
+        ),
+      ],
+      apartment: "123, ABC Colony",
+      streetAddress: "Near XYZ Park",
       city: "Delhi",
       state: "Delhi",
       country: "India",
@@ -34,12 +39,17 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       isDefaultShipping: true,
     ),
     AddressDetails(
-      id: 2,
+      id: '2',
       firstName: "Rahul",
       lastName: "Sharma",
-      contactNumber: "+91-850-427-9498",
-      addressLine1: "123, ABC Colony",
-      addressLine2: "Near XYZ Park",
+      phone: [
+        CustomerPhoneNumber(
+          phoneCode: "+91",
+          phoneNumber: "8504279498",
+        ),
+      ],
+      apartment: "123, ABC Colony",
+      streetAddress: "Near XYZ Park",
       city: "Mumbai",
       state: "Maharashtra",
       country: "India",

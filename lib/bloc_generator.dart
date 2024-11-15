@@ -23,7 +23,6 @@ class BlocGenerator {
       BlocProvider<StoneListingBloc>(create: (_) => StoneListingBloc()),
       BlocProvider<CompleteProductBloc>(create: (_) => CompleteProductBloc()),
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
-      BlocProvider<AddAddressBloc>(create: (_) => AddAddressBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
       BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),

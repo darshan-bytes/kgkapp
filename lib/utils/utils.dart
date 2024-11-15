@@ -6,7 +6,7 @@ class Utils {
 
   /// Show common snack bar messages
   static Future<void> showMessage(String? message) async {
-    if(message == null) return;
+    if (message.isNullOrEmpty) return;
     await Flushbar(
       message: message,
       duration: const Duration(seconds: 3),
@@ -23,11 +23,13 @@ class Utils {
     required CountryPickerStyle countryPickerStyle,
     required Function(Country) onSelect,
     bool showPhoneCode = false,
+    List<String>? countryFilter,
   }) {
     showCountryPicker(
       context: context,
       showPhoneCode: showPhoneCode,
       useRootNavigator: true,
+      countryFilter: countryFilter,
       countryListTheme: CountryListThemeData(
         flagSize: 25.w,
         backgroundColor: countryPickerStyle.backgroundColor,

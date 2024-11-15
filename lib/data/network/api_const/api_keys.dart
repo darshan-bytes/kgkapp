@@ -63,4 +63,9 @@ class ApiKey {
   static const String fromMobile = 'fromMobile';
   static const String products = 'products';
   static const String id_ = '_id';
+  static const String apartment = 'apartment';
+  static const String streetAddress = 'street_address';
+  static const String isDefaultShipping = 'is_shipping_default';
+  static const String isDefaultBilling = 'is_billing_default';
+  static const String country = 'country';
 }
