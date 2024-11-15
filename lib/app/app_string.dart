@@ -4,6 +4,7 @@ class APPStrings {
   /// NOTE: Below strings will not be translated/changed in any language so we will use it directly and not use .tr extension to translate it.
   static const String appName = 'KGK';
   static const String languageEn = 'en';
+
   // static const String languageTh = 'th';
   static const String languageZh = 'zh';
   static const String languageJa = 'ja';
@@ -910,4 +911,11 @@ class APPStrings {
 
   static const String address = 'mob_address';
   static const String zipcode = 'mob_zipcode';
+  static const String noSavedAddressFound = 'mob_no_saved_address_found';
+  static const String errorApartmentRequired = 'mob_error_apartment_required';
+  static const String errorStreetAddressRequired = 'mob_error_street_address_required';
+  static const String errorCityRequired = 'mob_error_city_required';
+  static const String errorStateRequired = 'mob_error_state_required';
+  static const String errorCountryRequired = 'mob_error_country_required';
+  static const String errorZipCodeRequired = 'mob_error_zip_code_required';
 }

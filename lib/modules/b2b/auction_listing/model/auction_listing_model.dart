@@ -44,7 +44,7 @@ class AuctionListingModel {
   Map<String, dynamic> toJson() => {
         "filteredRecords": filteredRecords,
         "totalRecords": totalRecords,
-        "data": data.map((x) => x?.toJson()).toList(),
+        "data": data.map((x) => x.toJson()).toList(),
         "page": page,
         "limit": limit,
       };

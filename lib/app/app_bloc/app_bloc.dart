@@ -35,6 +35,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ///For wishlist
   Timer? _debounce;
 
+  List<CountryStateModel> countryList = [];
+
+  Map<String, List<CountryStateModel>> countryStateMap = {};
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
@@ -124,7 +128,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _languageLabelApiCall(BuildContext context) async {
-    await UserRepository(context).getLanguageLabels(showLoader: true, language: StorageManager().getLocale() ?? APPStrings.languageEn).then((value) async {
+    await UserRepository(context)
+        .getLanguageLabels(showLoader: true, language: StorageManager().getLocale() ?? APPStrings.languageEn)
+        .then((value) async {
       await value?.fold((l) {
         Utils.showMessage(l.message);
       }, (r) async {
@@ -275,6 +281,36 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       gemstoneFilterList = r;
     });
     return gemstoneFilterList;
+  }
+
+  Future<List<CountryStateModel>> getCountries(BuildContext context, {bool isShowLoader = true}) async {
+    if (countryList.isEmpty) {
+      Either<ErrorResponse, List<CountryStateModel>>? response;
+      response = await AppRepository(context).fetchCountryList();
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (r) {
+        countryList = r;
+      });
+    }
+    return countryList;
+  }
+
+  Future<List<CountryStateModel>> getStateByCountryCode(BuildContext context, String countryCode, {bool isShowLoader = true}) async {
+    List<CountryStateModel> stateList = [];
+    if (countryStateMap.containsKey(countryCode) && countryStateMap[countryCode].isNotNullNorEmpty) {
+      stateList = countryStateMap[countryCode]!;
+      return stateList;
+    }
+    Either<ErrorResponse, List<CountryStateModel>>? response;
+    response = await AppRepository(context).fetchStateByCountry(countryCode: countryCode, isShowLoader: isShowLoader);
+    response?.fold((l) {
+      Utils.showMessage(l.message);
+    }, (r) {
+      stateList = r;
+      countryStateMap[countryCode] = r;
+    });
+    return stateList;
   }
 }
 

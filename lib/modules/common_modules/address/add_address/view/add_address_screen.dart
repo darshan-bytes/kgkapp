@@ -77,9 +77,9 @@ class AddAddressScreen extends StatelessWidget {
           SizedBox(height: 24.h),
           _buildLastNameField(bloc),
           SizedBox(height: 24.h),
-          _buildStreetAddressField(bloc),
-          SizedBox(height: 24.h),
           _buildApartmentField(bloc),
+          SizedBox(height: 24.h),
+          _buildStreetAddressField(bloc),
           SizedBox(height: 24.h),
           _buildCityField(bloc),
           SizedBox(height: 24.h),
@@ -119,9 +119,20 @@ class AddAddressScreen extends StatelessWidget {
       hintText: APPStrings.lastName.tr,
       controller: bloc.lastNameController,
       focusNode: bloc.lastNameFocusNode,
-      nextFocus: bloc.streetAddressFocusNode,
+      nextFocus: bloc.apartmentFocusNode,
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
+    );
+  }
+
+  Widget _buildApartmentField(AddAddressBloc bloc) {
+    return SmartTextField(
+      labelText: APPStrings.apartmentSuite.tr,
+      hintText: APPStrings.apartmentSuite.tr,
+      controller: bloc.apartmentController,
+      focusNode: bloc.apartmentFocusNode,
+      nextFocus: bloc.streetAddressFocusNode,
+      keyboardType: TextInputType.streetAddress,
     );
   }
 
@@ -136,57 +147,30 @@ class AddAddressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildApartmentField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.apartmentSuite.tr,
-      hintText: APPStrings.apartmentSuite.tr,
-      controller: bloc.apartmentController,
-      focusNode: bloc.apartmentFocusNode,
-      nextFocus: bloc.cityFocusNode,
-      keyboardType: TextInputType.streetAddress,
-    );
-  }
-
   Widget _buildCityField(AddAddressBloc bloc) {
-    return BlocBuilder<AddAddressBloc, AddAddressState>(
-      buildWhen: (previous, current) => current is AddAddressChangeCityState,
-      builder: (context, state) {
-        return SmartDropDown<City>(
-          hintText: APPStrings.city.tr,
-          labelText: APPStrings.city.tr,
-          items: bloc.arrCity.map((City city) {
-            return SmartDropDownItem<City>(
-              value: city,
-              title: city.name,
-            );
-          }).toList(),
-          onChanged: (city) {
-            if (city != null) {
-              bloc.add(AddAddressChangeCityEvent(city));
-            }
-          },
-          selectedItem: bloc.selectedCity,
-        );
-      },
+    return SmartTextField(
+      labelText: APPStrings.city.tr,
+      hintText: APPStrings.city.tr,
+      controller: bloc.cityController,
+      focusNode: bloc.cityFocusNode,
+      nextFocus: bloc.stateFocusNode,
+      keyboardType: TextInputType.name,
     );
   }
 
   Widget _buildStateField(AddAddressBloc bloc) {
     return BlocBuilder<AddAddressBloc, AddAddressState>(
-      buildWhen: (previous, current) => current is AddAddressChangeStateState,
+      buildWhen: (previous, current) => current is AddAddressChangeStateState || current is AddAddressChangeCountryState,
       builder: (context, state) {
-        return SmartDropDown<StateModel>(
+        return SmartDropDown<CountryStateModel>(
           hintText: APPStrings.state.tr,
           labelText: APPStrings.state.tr,
-          items: bloc.arrState.map((StateModel state) {
-            return SmartDropDownItem<StateModel>(
-              value: state,
-              title: state.name,
-            );
+          items: bloc.arrState.map((CountryStateModel state) {
+            return SmartDropDownItem<CountryStateModel>(value: state, title: state.name ?? '');
           }).toList(),
           onChanged: (state) {
             if (state != null) {
-              bloc.add(AddAddressChangeStateEvent(state));
+              bloc.add(AddAddressChangeStateEvent(context, state));
             }
           },
           selectedItem: bloc.selectedState,
@@ -212,8 +196,9 @@ class AddAddressScreen extends StatelessWidget {
                 Utils.showCountryPickerModel(
                   context: context,
                   countryPickerStyle: countryPickerStyle,
+                  countryFilter: bloc.countryList.map((CountryStateModel country) => country.code ?? '').toList(),
                   onSelect: (Country country) {
-                    bloc.add(AddAddressChangeCountryEvent(country));
+                    bloc.add(AddAddressChangeCountryEvent(context: context, selectedCountry: country));
                   },
                 );
               },
