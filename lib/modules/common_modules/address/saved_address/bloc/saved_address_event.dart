@@ -5,10 +5,12 @@ sealed class SavedAddressEvent extends Equatable {
 }
 
 final class SavedAddressInitialEvent extends SavedAddressEvent {
-  const SavedAddressInitialEvent();
+  final BuildContext context;
+
+  const SavedAddressInitialEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class SavedAddressChangeBillingAddressSameEvent extends SavedAddressEvent {

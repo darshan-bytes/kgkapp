@@ -5,60 +5,34 @@ part 'saved_address_event.dart';
 part 'saved_address_state.dart';
 
 class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
+  bool _isInitialised = false;
+  late AppBloc appBloc;
   List<AddressDetails> addressList = [];
 
   SavedAddressBloc() : super(const SavedAddressInitial()) {
-    on<SavedAddressInitialEvent>(_onSavedAddressInitialEvent);
+    on<SavedAddressInitialEvent>(
+      _onSavedAddressInitialEvent,
+    );
     on<SavedAddressChangeBillingAddressSameEvent>(_onSavedAddressChangeBillingAddressSameEvent);
     on<SavedAddressChangeShippingAddressEvent>(_onSavedAddressChangeShippingAddressEvent);
     on<SavedAddressAddNewAddressEvent>(_onSavedAddressAddNewAddressEvent);
   }
 
-  AddressDetails? get defaultShippingAddress => addressList.firstWhereOrNull((element) => element.isDefaultShipping == true);
+  AddressDetails? get defaultShippingAddress =>
+      addressList.firstWhereOrNull((element) => element.isDefaultShipping == true) ?? addressList.firstOrNull;
 
-  AddressDetails? get defaultBillingAddress => addressList.firstWhereOrNull((element) => element.isDefaultBilling == true);
+  AddressDetails? get defaultBillingAddress =>
+      addressList.firstWhereOrNull((element) => element.isDefaultBilling == true) ?? addressList.firstOrNull;
 
   bool get isBillingAddressSameAsShippingAddress => defaultBillingAddress == defaultShippingAddress;
 
-  void _onSavedAddressInitialEvent(SavedAddressInitialEvent event, Emitter<SavedAddressState> emit) {
-    addressList = [
-      AddressDetails(
-        firstName: "Gautam",
-        lastName: "Singhania",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Delhi",
-        state: "Delhi",
-        country: "India",
-        zipCode: "110001",
-        isDefaultShipping: true,
-      ),
-      AddressDetails(
-        firstName: "Rahul",
-        lastName: "Sharma",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Mumbai",
-        state: "Maharashtra",
-        country: "India",
-        zipCode: "400001",
-        isDefaultBilling: true,
-      ),
-    ];
+  Future<void> _onSavedAddressInitialEvent(SavedAddressInitialEvent event, Emitter<SavedAddressState> emit) async {
+    if (_isInitialised) return;
+    appBloc = BlocProvider.of<AppBloc>(event.context);
+    addressList = await appBloc.fetchAddressList(event.context, isForceFetch: true);
 
     emit(const SavedAddressLoadedState());
+    _isInitialised = true;
   }
 
   void _onSavedAddressChangeBillingAddressSameEvent(SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) {

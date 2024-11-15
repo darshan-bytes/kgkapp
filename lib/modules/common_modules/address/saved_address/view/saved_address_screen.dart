@@ -17,6 +17,9 @@ class SavedAddressScreen extends StatelessWidget {
     return BlocBuilder<SavedAddressBloc, SavedAddressState>(
       buildWhen: (previous, current) => current is SavedAddressLoadedState,
       builder: (context, state) {
+        if (state is! SavedAddressLoadedState) {
+          return const SizedBox.shrink();
+        }
         return SmartSingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
           child: bloc.addressList.isEmpty
