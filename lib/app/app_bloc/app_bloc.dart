@@ -39,6 +39,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Map<String, List<CountryStateModel>> countryStateMap = {};
 
+  List<AddressDetails> savedAddressList = [];
+
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
@@ -311,6 +313,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       countryStateMap[countryCode] = r;
     });
     return stateList;
+  }
+
+  Future<List<AddressDetails>> fetchAddressList(BuildContext context, {bool isShowLoader = true, bool isForceFetch = false}) async {
+    if (savedAddressList.isEmpty || isForceFetch) {
+      Either<ErrorResponse, List<AddressDetails>>? response;
+      response = await AppRepository(context).fetchAddressList();
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (r) {
+        savedAddressList = r;
+      });
+    }
+    return savedAddressList;
   }
 }
 

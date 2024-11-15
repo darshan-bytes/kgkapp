@@ -550,6 +550,14 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // For Get Address List
+  Future<Either<ErrorResponse, List<AddressDetails>>?> fetchAddressList({bool isShowLoader = true}) async {
+    if (isShowLoader) context.setAppLoading(true);
+    var response = await getMethod<AddressDetails>(ApiClient.customerAddressFilters);
+    if (isShowLoader) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

@@ -5,6 +5,7 @@ part 'shipping_address_event.dart';
 part 'shipping_address_state.dart';
 
 class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressState> {
+  late AppBloc appBloc;
   List<AddressDetails> addressList = [];
   AddressDetails? selectedAddress;
   String title = '';
@@ -23,84 +24,15 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     on<AddShippingAddressEvent>(_onAddShippingAddressEvent);
   }
 
-  void _onShippingAddressInitialEvent(ShippingAddressInitialEvent event, Emitter<ShippingAddressState> emit) {
+  Future<void> _onShippingAddressInitialEvent(ShippingAddressInitialEvent event, Emitter<ShippingAddressState> emit) async {
     emit(const ShippingAddressReloadState());
+    appBloc = BlocProvider.of<AppBloc>(event.context);
     isShipping = event.context.routesData?[RoutesData.isShippingAddress] ?? false;
     title = (isShipping ? APPStrings.shippingAddress : APPStrings.billingAddress).tr;
-    addressList = [
-      AddressDetails(
-        id: '1',
-        firstName: "Gautam",
-        lastName: "Singhania",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Delhi",
-        state: "Delhi",
-        country: "India",
-        zipCode: "110001",
-        isDefaultShipping: true,
-      ),
-      AddressDetails(
-        id: '2',
-        firstName: "Rahul",
-        lastName: "Sharma",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Mumbai",
-        state: "Maharashtra",
-        country: "India",
-        zipCode: "400001",
-        isDefaultBilling: true,
-      ),
-      AddressDetails(
-        id: '3',
-        firstName: "Rahul",
-        lastName: "Singhania",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Mumbai",
-        state: "Maharashtra",
-        country: "India",
-        zipCode: "400001",
-      ),
-      AddressDetails(
-        id: '4',
-        firstName: "Gautam",
-        lastName: "Sharma",
-        phone: [
-          CustomerPhoneNumber(
-            phoneCode: "+91",
-            phoneNumber: "8504279498",
-          ),
-        ],
-        apartment: "123, ABC Colony",
-        streetAddress: "Near XYZ Park",
-        city: "Mumbai",
-        state: "Maharashtra",
-        country: "India",
-        zipCode: "400001",
-      ),
-    ];
+    addressList = await appBloc.fetchAddressList(event.context);
     selectedAddress =
-        addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling) ?? false);
+        addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling) ?? false) ??
+            addressList.firstOrNull;
     emit(const ShippingAddressLoadedState());
   }
 
