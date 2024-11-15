@@ -25,9 +25,14 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
       AddressDetails(
         firstName: "Gautam",
         lastName: "Singhania",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Delhi",
         state: "Delhi",
         country: "India",
@@ -37,9 +42,14 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
       AddressDetails(
         firstName: "Rahul",
         lastName: "Sharma",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Mumbai",
         state: "Maharashtra",
         country: "India",

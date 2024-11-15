@@ -27,14 +27,13 @@ class AppLocalizations {
     if (languageLabels.isNotEmpty) {
       _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
       return true;
-    }else{
+    } else {
       String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
       Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
       return true;
     }
-
   }
 
   /// If the localized strings map is not null, return the value of the key in the map
@@ -45,7 +44,7 @@ class AppLocalizations {
   /// Returns:
   ///   The value of the key in the map.
   String? translate(String key) {
-    if(!key.startsWith('mob_')) key = 'mob_$key';
+    if (!key.startsWith('mob_')) key = 'mob_$key';
     return _localizedStrings![key];
   }
 

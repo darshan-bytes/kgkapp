@@ -184,8 +184,10 @@ class AppRoutes {
 
       case addAddressPage:
         builder = (context) {
-          BlocProvider.of<AddAddressBloc>(context).add(AddAddressInitialEvent(context));
-          return const AddAddressScreen();
+          return BlocProvider<AddAddressBloc>(
+            create: (context) => AddAddressBloc()..add(AddAddressInitialEvent(context)),
+            child: const AddAddressScreen(),
+          );
         };
         break;
 

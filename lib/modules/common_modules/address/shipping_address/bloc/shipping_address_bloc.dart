@@ -29,12 +29,17 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     title = (isShipping ? APPStrings.shippingAddress : APPStrings.billingAddress).tr;
     addressList = [
       AddressDetails(
-        id: 1,
+        id: '1',
         firstName: "Gautam",
         lastName: "Singhania",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Delhi",
         state: "Delhi",
         country: "India",
@@ -42,12 +47,17 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
         isDefaultShipping: true,
       ),
       AddressDetails(
-        id: 2,
+        id: '2',
         firstName: "Rahul",
         lastName: "Sharma",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Mumbai",
         state: "Maharashtra",
         country: "India",
@@ -55,24 +65,34 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
         isDefaultBilling: true,
       ),
       AddressDetails(
-        id: 3,
+        id: '3',
         firstName: "Rahul",
         lastName: "Singhania",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Mumbai",
         state: "Maharashtra",
         country: "India",
         zipCode: "400001",
       ),
       AddressDetails(
-        id: 4,
+        id: '4',
         firstName: "Gautam",
         lastName: "Sharma",
-        contactNumber: "+91-850-427-9498",
-        addressLine1: "123, ABC Colony",
-        addressLine2: "Near XYZ Park",
+        phone: [
+          CustomerPhoneNumber(
+            phoneCode: "+91",
+            phoneNumber: "8504279498",
+          ),
+        ],
+        apartment: "123, ABC Colony",
+        streetAddress: "Near XYZ Park",
         city: "Mumbai",
         state: "Maharashtra",
         country: "India",
