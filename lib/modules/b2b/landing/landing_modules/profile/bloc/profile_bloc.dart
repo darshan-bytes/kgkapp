@@ -291,6 +291,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               RoutesData.cmsPageData: CmsWebViewDataModel(
                 url: AppConst.profileAboutUsWebViewURL,
                 title: APPStrings.aboutUs,
+                attribute: Attributes.aboutUsPage, // For future use
               )
             });
           }),

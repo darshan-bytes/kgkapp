@@ -456,3 +456,4 @@ export 'package:kgk/modules/b2b/product_list_grid/model/secondary_filter_model.d
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_list_data_model.dart';
 export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/model/csc_details_model.dart';
+export 'package:kgk/modules/b2b/auction_listing/model/auction_listing_model.dart';

@@ -95,6 +95,8 @@ class CommonResponse<T> {
         return BagListDataModel.fromJson(json);
       case const (LanguageListModel):
         return LanguageListModel.fromJson(json);
+      case const (AuctionListingModel):
+        return AuctionListingModel.fromJson(json);
       case const (CscDetails):
         return CscDetails.fromJson(json);
       case const (Map<String, dynamic>):

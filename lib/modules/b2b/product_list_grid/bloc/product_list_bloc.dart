@@ -30,7 +30,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Completer<bool> refreshCompleter = Completer<bool>();
 
   int? totalNumberOfPages;
-  int limit = 10;
 
   String productId = "";
   String productNavigation = '';
@@ -158,7 +157,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         // For You May Like API
         response = await AppRepository(context).getJewelleryYouMayLike(
           productId,
-          limit: limit.toString(),
+          limit: AppConst.pageLimit.toString(),
           isLoadMore: true,
           page: paginationScrollController.currentPage.toString(),
         );
@@ -169,7 +168,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await AppRepository(context).fetchJewelleryList(
           page: paginationScrollController.currentPage.toString(),
           isLoadMore: isLoadMore,
-          limit: limit.toString(),
+          limit: AppConst.pageLimit.toString(),
           type: '',
           sortKey: sortKey,
           sortValue: sortValue,
@@ -182,7 +181,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await AppRepository(context).fetchJewelleryList(
           page: paginationScrollController.currentPage.toString(),
           isLoadMore: isLoadMore,
-          limit: limit.toString(),
+          limit: AppConst.pageLimit.toString(),
           type: '',
           sortKey: sortKey,
           sortValue: sortValue,
@@ -192,7 +191,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       case FetchScenario.recentlyViewed:
         // For jewellery list API
         response = await AppRepository(context).getRecentlyViewedProductList(
-            limit: limit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
+            limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
         break;
     }
 
@@ -201,7 +200,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }, (r) {
       jewelleryDatumList = r.data;
       r.totalRecords ??= 0;
-      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
+      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
 
       List.generate(jewelleryDatumList.length, (index) {
         productList.add(ProductDetailsModel(

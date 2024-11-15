@@ -44,16 +44,20 @@ class AppRepository extends ApiService {
         List<DiamondData> diamondStrapiList = diamondsStrapiModel.data.first.attributes?.diamonds ?? [];
         return Right(diamondStrapiList);
       } else {
-        return Left(ErrorResponse(
-          code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
-        ));
+        return Left(
+          ErrorResponse(
+            code: response.statusCode,
+            message: response.reasonPhrase ?? 'Unknown error',
+          ),
+        );
       }
     } catch (e) {
-      return Left(ErrorResponse(
-        code: 500,
-        message: 'An error occurred',
-      ));
+      return Left(
+        ErrorResponse(
+          code: 500,
+          message: 'An error occurred',
+        ),
+      );
     }
   }
 
@@ -103,6 +107,13 @@ class AppRepository extends ApiService {
         message: 'An error occurred',
       ));
     }
+  }
+
+  /// Either<ErrorResponse, dynamic>
+  Future<void> fetchStrapiDataFroAboutUs(String? attribute) async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.aboutUsPage, attribute: attribute ?? '');
+
+    /// TODO :: Implement this letter
   }
 
   /// Fetches diamond list
@@ -180,6 +191,23 @@ class AppRepository extends ApiService {
       context.setAppLoading(false);
     }
     return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  // getAuctionList
+  Future<Either<ErrorResponse, AuctionListingModel>?> getAuctionList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<AuctionListingModel>(
+      ApiClient.auctionListing,
+      query: {ApiKey.limit: limit, ApiKey.page: page},
+      withCurrencyHeader: true,
+    );
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   //For Getting Diamond Details by ID

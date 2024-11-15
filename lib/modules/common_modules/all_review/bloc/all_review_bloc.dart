@@ -9,7 +9,6 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
   List<ProductReviewModel> productReviewListAPI = [];
   String productId = '';
   int? totalNumberOfPages;
-  static const int limit = 10;
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   AllReviewBloc() : super(AllReviewInitial()) {
@@ -42,7 +41,7 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
 
   Future<void> productReviewsFilter(BuildContext context, String productId) async {
     Map<String, dynamic> query = {
-      ApiKey.limit: limit,
+      ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: paginationScrollController.currentPage,
     };
     Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
@@ -54,7 +53,7 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
         }
       },
       (data) {
-        totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords, limit);
+        totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords, AppConst.pageLimit);
         List<ProductReviewModel> localList = data.dataList as List<ProductReviewModel>? ?? [];
         productReviewListAPI.addAll(localList);
         for (ProductReviewModel e in localList) {
