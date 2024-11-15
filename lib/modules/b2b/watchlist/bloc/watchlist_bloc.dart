@@ -13,7 +13,6 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   String searchQuery = '';
 
   int? totalNumberOfPages;
-  int limit = 10;
 
   List<WatchlistData> watchlistDataList = [];
   Completer<List<WatchlistData>> allWatchlistFull = Completer<List<WatchlistData>>();
@@ -83,7 +82,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     }
     Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(context).getWatchList(
       page: currentPage.toString(),
-      limit: limit.toString(),
+      limit: AppConst.pageLimit.toString(),
       isLoadMore: isLoadMore ?? false,
       searchQuery: searchQuery,
     );
@@ -93,7 +92,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
       },
       (r) {
         r.totalRecords ??= 0;
-        totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, limit);
+        totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
         List<WatchlistData> dataList = (r.dataList ?? []) as List<WatchlistData>;
         if (currentPage == 1) {
           watchlistDataList.clear();
@@ -231,7 +230,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     }
     Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(event.context).getWatchList(
       page: "1",
-      limit: limit.toString(),
+      limit: AppConst.pageLimit.toString(),
       isLoadMore: false,
       isFullList: true,
     );
