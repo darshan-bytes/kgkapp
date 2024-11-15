@@ -52,6 +52,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   List<CountryStateModel> arrState = [];
 
+  List<AddressDetails> addressList = [];
+
   AddAddressBloc() : super(const AddAddressInitial()) {
     on<AddAddressInitialEvent>(_onInitAddAddressEvent);
     on<AddAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
@@ -76,6 +78,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     getScreenIdentifier(event.context);
 
     addAddressAppbarTitle = isEditAddress ? APPStrings.editAddress.tr : APPStrings.checkout.tr;
+    addressList = await appBloc.fetchAddressList(event.context);
     countryList = await appBloc.getCountries(event.context);
     if (!isEditAddress) {
       firstNameController.clear();
@@ -274,6 +277,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   Future<CommonResponse<AddressDetails>?> saveAddressAPI(BuildContext context) async {
     try {
+      bool isFirstAddress = addressList.isEmpty;
       final Map<String, dynamic> body = {
         ApiKey.firstName: firstNameController.text.trim(),
         ApiKey.lastName: lastNameController.text.trim(),
@@ -289,8 +293,10 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
             ApiKey.phoneNumber: phoneController.text.trim(),
           }
         ],
-        ApiKey.isDefaultShipping: false,
-        ApiKey.isDefaultBilling: false,
+
+        //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+        ApiKey.isDefaultShipping: isFirstAddress,
+        ApiKey.isDefaultBilling: isFirstAddress,
       };
 
       final response = await AppRepository(context).saveAddress(body: body);

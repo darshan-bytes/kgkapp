@@ -405,15 +405,19 @@ class AppRoutes {
 
       case savedAddressPage:
         builder = (context) {
-          BlocProvider.of<SavedAddressBloc>(context).add(const SavedAddressInitialEvent());
-          return const SavedAddressScreen();
+          return BlocProvider<SavedAddressBloc>(
+            create: (context) => SavedAddressBloc()..add(SavedAddressInitialEvent(context)),
+            child: const SavedAddressScreen(),
+          );
         };
         break;
 
       case shippingAddressPage:
         builder = (context) {
-          BlocProvider.of<ShippingAddressBloc>(context).add(ShippingAddressInitialEvent(context));
-          return const ShippingAddressScreen();
+          return BlocProvider<ShippingAddressBloc>(
+            create: (context) => ShippingAddressBloc()..add(ShippingAddressInitialEvent(context)),
+            child: const ShippingAddressScreen(),
+          );
         };
         break;
 
