@@ -45,6 +45,7 @@ class AppLocalizations {
   /// Returns:
   ///   The value of the key in the map.
   String? translate(String key) {
+    if(!key.startsWith('mob_')) key = 'mob_$key';
     return _localizedStrings![key];
   }
 

@@ -277,7 +277,7 @@ class AppRoutes {
       case auctionListingPage:
         builder = (context) {
           return BlocProvider<AuctionListingBloc>(
-            create: (context) => AuctionListingBloc()..add(const InitialAuctionListingEvent()),
+            create: (context) => AuctionListingBloc()..add(InitialAuctionListingEvent(context)),
             child: const AuctionListingScreen(),
           );
         };

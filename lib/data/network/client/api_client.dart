@@ -11,6 +11,7 @@ class ApiClient {
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
   static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
   static const String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
+
   static String checkDuplicationPhoneNumber(String code, String phoneNumber) =>
       '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
 
@@ -27,6 +28,7 @@ class ApiClient {
   static const String jewelleryListing = '$apiBaseUrl/jewelleries/filters';
   static const String wishlist = '$apiBaseUrl/wishlist/filters';
   static const String bagListData = '$apiBaseUrl/bag/list';
+  static const String auctionListing = '$apiBaseUrl/auctions/customer/filter';
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
 
@@ -80,7 +82,7 @@ class ApiClient {
 
 /// All api endpoints are defined here for the Strapi CMS
 class StrapiEndPoints {
-  static const String baseUrl = 'https://strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
+  static const String baseUrl = 'https://qa-strapi-cms.kgk.magnetoinfotech.com/api'; // Replace with your actual base URL
 
   static String get aboutUsPage => '$baseUrl/about-uses';
 
