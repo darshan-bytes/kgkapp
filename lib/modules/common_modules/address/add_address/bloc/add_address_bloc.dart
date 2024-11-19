@@ -54,6 +54,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   List<AddressDetails> addressList = [];
 
+  AddressDetails? address;
+
   AddAddressBloc() : super(const AddAddressInitial()) {
     on<AddAddressInitialEvent>(_onInitAddAddressEvent);
     on<AddAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
@@ -66,8 +68,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
-    String? addressId = data?[RoutesData.addressId];
-    isEditAddress = addressId != null;
+    address = data?[RoutesData.addressDetails];
+    isEditAddress = address != null;
     isFromCheckout = data?[RoutesData.isFromCheckout] ?? false;
   }
 
@@ -102,34 +104,36 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         "display_name_no_e164_cc": "India (IN)",
         "e164_key": "91-IN-0",
       });
+      if (selectedCountry != null) {
+        add(AddAddressChangeCountryEvent(context: event.context, selectedCountry: selectedCountry!));
+      }
     } else {
-      firstNameController.text = "Gautam";
-      lastNameController.text = "Singhania";
-      apartmentController.text = "Apt 2";
-      streetAddressController.text = "431 School House Road";
-      cityController.text = "Fort Wayne";
-      selectedState = arrState.first;
-      selectedCountry = Country.from(json: {
-        "e164_cc": "91",
-        "iso2_cc": "IN",
-        "e164_sc": 0,
-        "geographic": true,
-        "level": 1,
-        "name": "India",
-        "example": "9123456789",
-        "display_name": "India (IN) [+91]",
-        "full_example_with_plus_sign": "+919123456789",
-        "display_name_no_e164_cc": "India (IN)",
-        "e164_key": "91-IN-0",
-      });
-      zipCodeController.text = "46802";
-      phoneController.text = "8504279498";
+      if (address == null) return;
+
+      firstNameController.text = address!.firstName ?? "";
+      lastNameController.text = address!.lastName ?? "";
+      apartmentController.text = address!.apartment ?? "";
+      streetAddressController.text = address!.streetAddress ?? "";
+      cityController.text = address!.city ?? "";
+      zipCodeController.text = address!.zipCode ?? "";
+      if (address!.phone.isNotEmpty) {
+        phoneController.text = address!.phone.first.phoneNumber ?? "";
+        selectedCountryCodes = Country.tryParse(address!.phone.first.phoneCode ?? '') ?? selectedCountryCodes;
+      }
+      CountryStateModel? countryStateModel =
+          countryList.firstWhereOrNull((element) => element.name == address!.country || element.code == address!.country);
+      if (countryStateModel != null) {
+        selectedCountry = Country.tryParse(countryStateModel.code ?? '');
+        if (selectedCountry != null) {
+          arrState = await appBloc.getStateByCountryCode(event.context, selectedCountry!.countryCode);
+          selectedState =
+              arrState.firstWhereOrNull((element) => element.name == address!.state) ?? (arrState.isNotEmpty ? arrState.first : null);
+        }
+      }
     }
 
     emit(const AddAddressInitial());
-    if (selectedCountry != null) {
-      add(AddAddressChangeCountryEvent(context: event.context, selectedCountry: selectedCountry!));
-    }
+
     _isInitialised = true;
   }
 
@@ -167,27 +171,19 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   Future<void> _onSaveAddressEvent(SaveAddressEvent event, Emitter<AddAddressState> emit) async {
     emit(AddAddressReloadState());
-    //TODO: Implement the logic to save the address and navigate to the previous screen with the saved address
-    // here I've commented the code to pop the screen and pass the addressDetails to the previous screen. Uncomment when validation added
-    // AddressDetails addressDetails = AddressDetails(
-    //   firstName: firstNameController.text,
-    //   lastName: lastNameController.text,
-    //   contactNumber: phoneController.text,
-    //   addressLine1: streetAddressController.text,
-    //   addressLine2: apartmentController.text,
-    //   city: selectedCity?.name ?? "",
-    //   state: selectedState?.name ?? "",
-    //   country: selectedCountry.name,
-    //   zipCode: zipCodeController.text,
-    // );
-    // clearFormData();
-    // event.context.pop(arguments: {RoutesData.addressDetails: addressDetails});
-    // event.context.pop();
-    // emit(const AddAddressChangeAddressState());
 
     if (_validateAddress()) {
       //TODO: Implement the logic to save the address and navigate to the previous screen with the saved address
-      CommonResponse<AddressDetails>? addressDetails = await saveAddressAPI(event.context);
+      CommonResponse<AddressDetails>? addressDetails;
+      if (isEditAddress) {
+        if (address == null || address!.id.isNullOrEmpty) {
+          // Utils.showMessage(APPStrings.somethingWrong.tr);
+          return;
+        }
+        addressDetails = await updateAddressAPI(event.context, address!.id ?? "");
+      } else {
+        addressDetails = await saveAddressAPI(event.context);
+      }
       if (addressDetails != null && addressDetails.responseData != null) {
         clearFormData();
         try {
@@ -304,6 +300,57 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
         Utils.showMessage(l.message);
         return null;
       }, (r) => r);
+    } catch (e) {
+      Utils.showMessage(e.toString());
+    }
+    return null;
+  }
+
+  //updateAddressAPI
+  Future<CommonResponse<AddressDetails>?> updateAddressAPI(BuildContext context, String addressId) async {
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.id: address?.id,
+        ApiKey.firstName: firstNameController.text.trim(),
+        ApiKey.lastName: lastNameController.text.trim(),
+        ApiKey.apartment: apartmentController.text.trim(),
+        ApiKey.streetAddress: streetAddressController.text.trim(),
+        ApiKey.city: cityController.text.trim(),
+        ApiKey.state: selectedState?.name,
+        ApiKey.country: selectedCountry?.countryCode,
+        ApiKey.zipCode: zipCodeController.text.trim(),
+        ApiKey.phone: [
+          {
+            ApiKey.phoneCode: selectedCountryCodes.phoneCode,
+            ApiKey.phoneNumber: phoneController.text.trim(),
+          }
+        ],
+      };
+
+      final response = await AppRepository(context).updateAddress(addressId, body: body);
+      return response?.fold((l) {
+        Utils.showMessage(l.message);
+
+        return null;
+      }, (CommonResponse r) {
+        address = address?.copyWith(
+          firstName: firstNameController.text.trim(),
+          lastName: lastNameController.text.trim(),
+          apartment: apartmentController.text.trim(),
+          streetAddress: streetAddressController.text.trim(),
+          city: cityController.text.trim(),
+          state: selectedState?.name,
+          country: selectedCountry?.countryCode,
+          zipCode: zipCodeController.text.trim(),
+          phone: [
+            CustomerPhoneNumber(
+              phoneCode: selectedCountryCodes.phoneCode,
+              phoneNumber: phoneController.text.trim(),
+            ),
+          ],
+        );
+        return CommonResponse<AddressDetails>(message: r.message, responseData: address, statusCode: r.statusCode);
+      });
     } catch (e) {
       Utils.showMessage(e.toString());
     }

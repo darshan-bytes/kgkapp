@@ -193,8 +193,10 @@ class AppRoutes {
 
       case addressListPage:
         builder = (context) {
-          BlocProvider.of<AddressListBloc>(context).add(const LoadAddressListEvent());
-          return const AddressListScreen();
+          return BlocProvider<AddressListBloc>(
+            create: (context) => AddressListBloc()..add(LoadAddressListEvent(context)),
+            child: const AddressListScreen(),
+          );
         };
         break;
 
@@ -718,7 +720,6 @@ enum RoutesData {
   searchResultData,
   cmsPageData,
   isNoDataFound,
-  addressId,
   isShippingAddress,
   isFromCheckout,
   presentationId,

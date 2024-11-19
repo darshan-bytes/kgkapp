@@ -130,6 +130,53 @@ class AddressDetails {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AddressDetails &&
+          runtimeType == other.runtimeType &&
+          customerOrgId == other.customerOrgId &&
+          firstName == other.firstName &&
+          lastName == other.lastName &&
+          streetAddress == other.streetAddress &&
+          apartment == other.apartment &&
+          city == other.city &&
+          state == other.state &&
+          country == other.country &&
+          zipCode == other.zipCode &&
+          phone == other.phone &&
+          createdBy == other.createdBy &&
+          isDefaultShipping == other.isDefaultShipping &&
+          isDefaultBilling == other.isDefaultBilling &&
+          id == other.id &&
+          isDeleted == other.isDeleted &&
+          deletedAt == other.deletedAt &&
+          createdAt == other.createdAt &&
+          updatedAt == other.updatedAt &&
+          v == other.v;
+
+  @override
+  int get hashCode =>
+      customerOrgId.hashCode ^
+      firstName.hashCode ^
+      lastName.hashCode ^
+      streetAddress.hashCode ^
+      apartment.hashCode ^
+      city.hashCode ^
+      state.hashCode ^
+      country.hashCode ^
+      zipCode.hashCode ^
+      phone.hashCode ^
+      createdBy.hashCode ^
+      isDefaultShipping.hashCode ^
+      isDefaultBilling.hashCode ^
+      id.hashCode ^
+      isDeleted.hashCode ^
+      deletedAt.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode ^
+      v.hashCode;
 }
 
 extension AddressDetailsExtension on AddressDetails {

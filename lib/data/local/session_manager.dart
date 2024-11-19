@@ -24,6 +24,7 @@ class StorageManager {
   final String _isSkipLogin = 'isSkipLogin';
   final String _bagId = 'bagId';
   final String _selectedCsc = 'selectedCsc';
+  final String _customerOrganizationId = 'customerOrganizationId';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -67,6 +68,14 @@ class StorageManager {
   UserIdDetails? getUserData() {
     String? userData = _box.get(_userData);
     return userData.isNotNullNorEmpty ? UserIdDetails.fromJson(jsonDecode(userData!)) : null;
+  }
+
+  Future<void> setCustomerOrgId(String customerOrganizationId) async {
+    await _box.put(_customerOrganizationId, customerOrganizationId);
+  }
+
+  String? getCustomerOrgId() {
+    return _box.get(_customerOrganizationId);
   }
 
   /// Set locale after login-signup
