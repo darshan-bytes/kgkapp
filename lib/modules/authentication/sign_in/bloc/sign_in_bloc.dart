@@ -47,6 +47,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         await StorageManager().setAuthToken(r.accessToken ?? '');
         await StorageManager().setUserId(r.userId ?? '');
         await StorageManager().setUserResponse(r);
+        if (r.customerOrganizationId.isNotNullNorEmpty) {
+          await StorageManager().setCustomerOrgId(r.customerOrganizationId!.toString());
+        }
         if (r.userIdDetails != null) {
           await StorageManager().setUserData(r.userIdDetails!);
         }

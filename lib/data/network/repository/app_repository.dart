@@ -558,6 +558,14 @@ class AppRepository extends ApiService {
     if (isShowLoader) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // Update Address
+  Future<Either<ErrorResponse, CommonResponse>?> updateAddress(String addressId, {required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await putMethod<Map<String, dynamic>>(ApiClient.customerAddressById(addressId), body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

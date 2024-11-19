@@ -1,3 +1,3 @@
-library kgk;
+library;
 
 export 'utils/exports.dart';

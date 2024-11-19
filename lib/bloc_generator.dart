@@ -25,7 +25,6 @@ class BlocGenerator {
       BlocProvider<CompareProductBloc>(create: (_) => CompareProductBloc()),
       BlocProvider<WishlistBloc>(create: (_) => WishlistBloc()),
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
-      BlocProvider<AddressListBloc>(create: (_) => AddressListBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
       BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),

@@ -5,10 +5,12 @@ sealed class AddressListEvent extends Equatable {
 }
 
 final class LoadAddressListEvent extends AddressListEvent {
-  const LoadAddressListEvent();
+  final BuildContext context;
+
+  const LoadAddressListEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ChangeSelectedAddressEvent extends AddressListEvent {

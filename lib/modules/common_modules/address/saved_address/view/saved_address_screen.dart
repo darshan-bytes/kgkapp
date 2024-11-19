@@ -23,8 +23,21 @@ class SavedAddressScreen extends StatelessWidget {
         return SmartSingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
           child: bloc.addressList.isEmpty
-              ? NoDataFoundWidget(
-                  text: APPStrings.noSavedAddressFound.tr,
+              ? Column(
+                  children: [
+                    NoDataFoundWidget(text: APPStrings.noSavedAddressFound.tr),
+                    SizedBox(height: 24.h),
+                    SmartButton.white(
+                      borderColor: style.borderColor,
+                      onTap: () {
+                        bloc.add(SavedAddressAddNewAddressEvent(context));
+                      },
+                      title: APPStrings.addNew.tr,
+                      prefixImage: AppImages.icPlus,
+                      imageSize: 24.w,
+                      titleStyle: style.addressNameStyle,
+                    ),
+                  ],
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

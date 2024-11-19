@@ -9,6 +9,7 @@ class UserResponse {
     required this.bagId,
     required this.defaultCscCode,
     required this.userIdDetails,
+    required this.customerOrganizationId,
   });
 
   final String? accessToken;
@@ -19,6 +20,9 @@ class UserResponse {
   final String? defaultCscCode;
   final UserIdDetails? userIdDetails;
 
+  //customer_organization_id
+  final String? customerOrganizationId;
+
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
       accessToken: json["access_token"],
@@ -28,6 +32,7 @@ class UserResponse {
       defaultCscCode: json["default_csc_code"],
       userIdDetails: json["user_id_details"] == null ? null : UserIdDetails.fromJson(json["user_id_details"]),
       bagId: json["bag_id"],
+      customerOrganizationId: json["customer_organization_id"],
     );
   }
 
@@ -39,6 +44,7 @@ class UserResponse {
         "default_csc_code": defaultCscCode,
         "user_id_details": userIdDetails?.toJson(),
         "bag_id": bagId,
+        "customer_organization_id": customerOrganizationId?.toString(),
       };
 
   @override

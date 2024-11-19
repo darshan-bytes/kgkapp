@@ -317,8 +317,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<List<AddressDetails>> fetchAddressList(BuildContext context, {bool isShowLoader = true, bool isForceFetch = false}) async {
     if (savedAddressList.isEmpty || isForceFetch) {
-      Either<ErrorResponse, List<AddressDetails>>? response;
-      response = await AppRepository(context).fetchAddressList();
+      Either<ErrorResponse, List<AddressDetails>>? response = await AppRepository(context).fetchAddressList();
       response?.fold((l) {
         Utils.showMessage(l.message);
       }, (r) {
