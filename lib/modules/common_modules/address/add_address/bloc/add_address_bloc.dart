@@ -275,8 +275,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     try {
       bool isFirstAddress = addressList.isEmpty;
       final Map<String, dynamic> body = {
-        ApiKey.firstName: firstNameController.text.trim(),
-        ApiKey.lastName: lastNameController.text.trim(),
+        ApiKey.firstName_: firstNameController.text.trim(),
+        ApiKey.lastName_: lastNameController.text.trim(),
         ApiKey.apartment: apartmentController.text.trim(),
         ApiKey.streetAddress: streetAddressController.text.trim(),
         ApiKey.city: cityController.text.trim(),
@@ -311,8 +311,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     try {
       final Map<String, dynamic> body = {
         ApiKey.id: address?.id,
-        ApiKey.firstName: firstNameController.text.trim(),
-        ApiKey.lastName: lastNameController.text.trim(),
+        ApiKey.firstName_: firstNameController.text.trim(),
+        ApiKey.lastName_: lastNameController.text.trim(),
         ApiKey.apartment: apartmentController.text.trim(),
         ApiKey.streetAddress: streetAddressController.text.trim(),
         ApiKey.city: cityController.text.trim(),

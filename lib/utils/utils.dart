@@ -198,6 +198,13 @@ class Utils {
     return regExp.hasMatch(email);
   }
 
+  /// Check password validation
+  static bool isValidPassword(String newPassword) {
+    String regex = r'^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$';
+    RegExp regExp = RegExp(regex);
+    return regExp.hasMatch(newPassword);
+  }
+
   /// Parse HTML string to plain text
   static String parseHtmlString(String htmlString) {
     // Parse the HTML string

@@ -43,11 +43,12 @@ class ProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SmartText('Alex Williams', style: style.titleStyle),
+                          SmartText(bloc.userIdDetails?.fullName, style: style.titleStyle, maxLines: 2, overflow: TextOverflow.ellipsis),
                           SizedBox(height: 1.h),
-                          SmartText('+1 (323) 654 - 8542', style: style.subTextStyle),
+                          SmartText(bloc.userIdDetails?.phoneNumber,
+                              style: style.subTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
                           SizedBox(height: 1.h),
-                          SmartText('someone@example.com', style: style.subTextStyle)
+                          SmartText(bloc.userIdDetails?.email, style: style.subTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis)
                         ],
                       ),
                     ),

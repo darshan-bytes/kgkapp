@@ -41,3 +41,42 @@ final class DeleteProfileEvent extends ProfileEvent {
   @override
   List<Object?> get props => [context];
 }
+
+final class EditProfileChangeCountryCodeEvent extends ProfileEvent {
+  final Country country;
+
+  const EditProfileChangeCountryCodeEvent({
+    required this.country,
+  });
+
+  @override
+  List<Object> get props => [country];
+}
+
+final class EditProfileSaveEvent extends ProfileEvent {
+  final BuildContext context;
+
+  const EditProfileSaveEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class EditProfilePhoneNumberValidationEvent extends ProfileEvent {
+  final BuildContext context;
+  final String phoneNumber;
+
+  const EditProfilePhoneNumberValidationEvent({required this.context, required this.phoneNumber});
+
+  @override
+  List<Object> get props => [context, phoneNumber];
+}
+
+final class ChangePasswordEvent extends ProfileEvent {
+  final BuildContext context;
+
+  const ChangePasswordEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}

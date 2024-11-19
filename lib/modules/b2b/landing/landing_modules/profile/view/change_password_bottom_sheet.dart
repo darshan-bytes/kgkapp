@@ -8,16 +8,17 @@ class ChangePasswordBottomSheet extends StatelessWidget {
     final ProfileScreenStyle style = AppTheme.of(context).profilePageScreenStyle;
     final ProfileBloc profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SmartSingleChildScrollView(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 16.h),
-          decoration: BoxDecoration(
-            color: style.backgroundColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12.r),
-              topRight: Radius.circular(12.r),
-            ),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 16.h),
+        decoration: BoxDecoration(
+          color: style.backgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12.r),
+            topRight: Radius.circular(12.r),
           ),
+        ),
+        child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -25,10 +26,12 @@ class ChangePasswordBottomSheet extends StatelessWidget {
               SizedBox(height: 24.h),
               ...generateChangePasswordForm(profileBloc),
               SizedBox(height: 24.h),
-              _buildConfirmButton(context),
+              _buildConfirmButton(context, profileBloc),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildAppBar(ProfileScreenStyle style, BuildContext context) {
@@ -101,11 +104,11 @@ class ChangePasswordBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmButton(BuildContext context) {
+  Widget _buildConfirmButton(BuildContext context, ProfileBloc profileBloc) {
     return SmartButton(
       title: APPStrings.confirm.tr,
       onTap: () {
-        context.pop();
+        profileBloc.add(ChangePasswordEvent(context: context));
       },
     );
   }

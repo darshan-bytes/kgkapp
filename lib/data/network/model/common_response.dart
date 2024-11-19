@@ -103,6 +103,8 @@ class CommonResponse<T> {
         return CountryStateModel.fromJson(json);
       case const (AddressDetails):
         return AddressDetails.fromJson(json);
+      case const (UserIdDetails):
+        return UserIdDetails.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

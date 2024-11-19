@@ -726,5 +726,8 @@
   "mob_error_street_address_required": "Street address is required",
   "mob_error_city_required": "City is required",
   "mob_error_state_required": "State is required",
-  "mob_error_zip_code_required": "Zip code is required"
+  "mob_error_zip_code_required": "Zip code is required",
+  "mob_passwords_do_not_match": "Passwords do not match",
+  "mob_error_current_password_required": "Current password is required",
+  "mob_error_new_password_required": "New password is required"
 }

@@ -88,6 +88,10 @@ class ApiClient {
   static const String customerAddressFilters = '$apiBaseUrl/address/filters';
 
   static String customerAddressById(String id) => '$apiBaseUrl/address/$id';
+
+  static const String editUserProfile = '$apiBaseUrl/customer/profile';
+
+  static const String changePassword = '$apiBaseUrl/users/change-password';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
