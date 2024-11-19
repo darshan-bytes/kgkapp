@@ -45,7 +45,21 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
 
   Future<void> _onEditShippingAddressEvent(EditShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
     await event.context.pushNamed(AppRoutes.addAddressPage,
-        arguments: {RoutesData.addressId: selectedAddress?.id?.toString(), RoutesData.isShippingAddress: isShipping});
+        arguments: {RoutesData.addressDetails: addressList[event.index], RoutesData.isShippingAddress: isShipping}).then(
+      (value) {
+        if (value != null) {
+          try {
+            selectedAddress = value[RoutesData.addressDetails];
+            if (selectedAddress != null) {
+              addressList[event.index] = selectedAddress!;
+            }
+            emit(const ShippingAddressLoadedState());
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+        }
+      },
+    );
   }
 
   void _onDeleteShippingAddressEvent(DeleteShippingAddressEvent event, Emitter<ShippingAddressState> emit) {
@@ -53,10 +67,34 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
   }
 
   Future<void> _onSaveShippingAddressEvent(SaveShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
-    await event.context.pop(arguments: {RoutesData.addressDetails: selectedAddress, RoutesData.isShippingAddress: isShipping});
+    if (selectedAddress == null) return;
+    Map<String, dynamic> body = {};
+    body = {
+      isShipping ? ApiKey.isDefaultShipping : ApiKey.isDefaultBilling: true,
+    };
+    bool isSuccess = await _saveAddress(event.context, body: body, addressId: selectedAddress!.id ?? '');
+    if (isSuccess) {
+      selectedAddress = isShipping ? selectedAddress!.copyWith(isShippingDefault: true) : selectedAddress!.copyWith(isBillingDefault: true);
+      await event.context.pop(arguments: {RoutesData.addressDetails: selectedAddress, RoutesData.isShippingAddress: isShipping});
+    }
   }
 
   Future<void> _onAddShippingAddressEvent(AddShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
     await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: isShipping});
+  }
+
+  Future<bool> _saveAddress(BuildContext context, {required String addressId, required Map<String, dynamic> body}) async {
+    bool result = false;
+    if (addressId.isNotEmpty) {
+      try {
+        final response = await AppRepository(context).updateAddress(addressId, body: body);
+        response?.fold((l) {}, (r) {
+          result = true;
+        });
+      } catch (e) {
+        result = false;
+      }
+    }
+    return result;
   }
 }

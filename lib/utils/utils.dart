@@ -7,15 +7,19 @@ class Utils {
   /// Show common snack bar messages
   static Future<void> showMessage(String? message) async {
     if (message.isNullOrEmpty) return;
-    await Flushbar(
-      message: message,
-      duration: const Duration(seconds: 3),
-      flushbarPosition: FlushbarPosition.TOP,
-      animationDuration: const Duration(milliseconds: 1300),
-      backgroundColor: AppThemes().appColor.primary,
-      margin: EdgeInsets.all(10.w),
-      borderRadius: BorderRadius.all(Radius.circular(10.r)),
-    ).show(NavigatorKey.navigatorKey.currentContext!);
+    try {
+      await Flushbar(
+        message: message,
+        duration: const Duration(seconds: 3),
+        flushbarPosition: FlushbarPosition.TOP,
+        animationDuration: const Duration(milliseconds: 1300),
+        backgroundColor: AppThemes().appColor.primary,
+        margin: EdgeInsets.all(10.w),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+      ).show(NavigatorKey.navigatorKey.currentContext!);
+    } catch (e) {
+      printWrapped(e.toString());
+    }
   }
 
   static void showCountryPickerModel({

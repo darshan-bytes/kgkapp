@@ -10,47 +10,51 @@ class AddressListScreen extends StatelessWidget {
     return Scaffold(
         appBar: SmartAppBar(title: APPStrings.checkout.tr),
         body: SafeArea(
-          child: SmartSingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const CheckoutHeaderProgressbar(),
-                const SizedBox(height: 22),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildAddressList(addressListBloc, style),
-                      const Divider(height: 48),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+          child: BlocBuilder<AddressListBloc, AddressListState>(
+            buildWhen: (previous, current) => current is AddressListLoadedState,
+            builder: (context, state) {
+              if (state is! AddressListLoadedState) return const SizedBox.shrink();
+              return SmartSingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const CheckoutHeaderProgressbar(),
+                    SizedBox(height: 22.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SelectionButton(
-                            onTap: () {
-                              addressListBloc.add(AddNewAddressEvent(context));
-                            },
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            isSelected: false,
-                            title: APPStrings.addAddress.tr,
-                            image: AppImages.icPlus,
-                            selectedButtonBorderColor: style.whiteColor,
-                            unselectedButtonBorderColor: style.whiteColor,
+                          _buildAddressList(addressListBloc, style),
+                          Divider(height: 48.h),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SelectionButton(
+                                onTap: () {
+                                  addressListBloc.add(AddNewAddressEvent(context));
+                                },
+                                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                                isSelected: false,
+                                title: APPStrings.addAddress.tr,
+                                image: AppImages.icPlus,
+                                selectedButtonBorderColor: style.whiteColor,
+                                unselectedButtonBorderColor: style.whiteColor,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                Divider(color: style.backgroundColor, thickness: 8, height: 56),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    children: [
-                      _buildIsBillingAddressSameAsSelected(addressListBloc, style),
+                    ),
+                    Divider(color: style.backgroundColor, thickness: 8.h, height: 56.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Column(
+                        children: [
+                          _buildIsBillingAddressSameAsSelected(addressListBloc, style),
 
-                      /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
-                      /*SmartExpansionTile(
+                          /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
+                          /*SmartExpansionTile(
                         key: addressListBloc.productsListExpansionKey,
                         initiallyExpanded: addressListBloc.isProductListExpanded,
                         title: SmartText(APPStrings.productX.tr.interpolate([addressListBloc.productList.length]),
@@ -86,17 +90,19 @@ class AddressListScreen extends StatelessWidget {
                           ),
                         ],
                       ),*/
-                    ],
-                  ),
+                        ],
+                      ),
+                    ),
+                    _buildOrderSummary(style)
+                  ],
                 ),
-                _buildOrderSummary(style)
-              ],
-            ),
+              );
+            },
           ),
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -106,7 +112,7 @@ class AddressListScreen extends StatelessWidget {
                   },
                   title: APPStrings.strContinue.tr,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
               ],
             ),
           ),
@@ -144,7 +150,7 @@ class AddressListScreen extends StatelessWidget {
               },
             );
           },
-          separatorBuilder: (context, index) => const Divider(height: 48),
+          separatorBuilder: (context, index) => Divider(height: 48.h),
         );
       },
     );

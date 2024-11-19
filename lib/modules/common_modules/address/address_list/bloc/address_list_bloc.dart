@@ -15,54 +15,25 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     on<ChangeProductListExpansionEvent>(_onChangeProductListExpansionEvent);
   }
 
+  late AppBloc appBloc;
+
   GlobalKey<SmartExpansionTileState> productsListExpansionKey = GlobalKey();
+
   bool isProductListExpanded = false;
 
   AddressDetails? selectedAddress;
-  List<AddressDetails> addressList = [
-    AddressDetails(
-      id: '1',
-      firstName: "Gautam",
-      lastName: "Singhania",
-      phone: [
-        CustomerPhoneNumber(
-          phoneCode: "+91",
-          phoneNumber: "8504279498",
-        ),
-      ],
-      apartment: "123, ABC Colony",
-      streetAddress: "Near XYZ Park",
-      city: "Delhi",
-      state: "Delhi",
-      country: "India",
-      zipCode: "110001",
-      isDefaultShipping: true,
-    ),
-    AddressDetails(
-      id: '2',
-      firstName: "Rahul",
-      lastName: "Sharma",
-      phone: [
-        CustomerPhoneNumber(
-          phoneCode: "+91",
-          phoneNumber: "8504279498",
-        ),
-      ],
-      apartment: "123, ABC Colony",
-      streetAddress: "Near XYZ Park",
-      city: "Mumbai",
-      state: "Maharashtra",
-      country: "India",
-      zipCode: "400001",
-      isDefaultBilling: true,
-    ),
-  ];
+  List<AddressDetails> addressList = [];
 
   bool isBillingAndShippingSame = true;
 
-  void _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) {
-    selectedAddress = addressList.first;
-    emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
+  Future<void> _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) async {
+    appBloc = BlocProvider.of<AppBloc>(event.context);
+    await appBloc.fetchAddressList(event.context);
+    addressList = appBloc.savedAddressList;
+    selectedAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling ?? false) ?? addressList.firstOrNull;
+    if (selectedAddress != null) {
+      emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
+    }
   }
 
   void _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) {
@@ -81,7 +52,23 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   Future<void> _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressId: addressList[event.index].id?.toString()});
+    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressDetails: addressList[event.index]}).then(
+      (value) {
+        if (value != null) {
+          try {
+            AddressDetails? addressDetails = value[RoutesData.addressDetails];
+
+            if (addressDetails != null) {
+              addressList[event.index] = addressDetails;
+            }
+            selectedAddress = addressList[event.index];
+            emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
+          } catch (e) {
+            printWrapped('Error in updating address: $e');
+          }
+        }
+      },
+    );
   }
 
   Future<void> _onAddNewAddressEvent(AddNewAddressEvent event, Emitter<AddressListState> emit) async {

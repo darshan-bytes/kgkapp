@@ -10,9 +10,7 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   List<AddressDetails> addressList = [];
 
   SavedAddressBloc() : super(const SavedAddressInitial()) {
-    on<SavedAddressInitialEvent>(
-      _onSavedAddressInitialEvent,
-    );
+    on<SavedAddressInitialEvent>(_onSavedAddressInitialEvent);
     on<SavedAddressChangeBillingAddressSameEvent>(_onSavedAddressChangeBillingAddressSameEvent);
     on<SavedAddressChangeShippingAddressEvent>(_onSavedAddressChangeShippingAddressEvent);
     on<SavedAddressAddNewAddressEvent>(_onSavedAddressAddNewAddressEvent);
@@ -45,11 +43,27 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     Map<RoutesData, dynamic>? result =
         await event.context.pushNamed(AppRoutes.shippingAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
     if (result != null) {
-      //TODO: Handle changes
+      AddressDetails? address = result[RoutesData.addressDetails] as AddressDetails?;
+      if (address != null) {
+        int index = addressList.indexWhere((element) => element.id == address.id);
+        if (index != -1) {
+          addressList[index] =
+              event.isShipping ? addressList[index].copyWith(isShippingDefault: true) : addressList[index].copyWith(isBillingDefault: true);
+
+          emit(const SavedAddressLoadedState());
+        }
+      }
     }
   }
 
   Future<void> _onSavedAddressAddNewAddressEvent(SavedAddressAddNewAddressEvent event, Emitter<SavedAddressState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
+    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then(
+      (value) {
+        if (value != null && value is AddressDetails) {
+          addressList.add(value);
+          emit(const SavedAddressLoadedState());
+        }
+      },
+    );
   }
 }
