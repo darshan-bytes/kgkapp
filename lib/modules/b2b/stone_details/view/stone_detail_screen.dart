@@ -57,7 +57,7 @@ class StoneDetailScreen extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SmartImage(path: diamondBloc.imgList.first, height: 55.w, width: 55.w),
+              SmartImage(path: diamondBloc.imgList.isNotNullNorEmpty ? diamondBloc.imgList.first : '', height: 55.w, width: 55.w),
               Expanded(
                 flex: 4,
                 child: SmartText(
@@ -66,7 +66,7 @@ class StoneDetailScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(width: 10.w,),
+              SizedBox(width: 10.w),
               Expanded(
                 flex: 4,
                 child: SmartButton(
