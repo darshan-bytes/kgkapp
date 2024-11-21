@@ -30,7 +30,7 @@ class ProductListScreen extends StatelessWidget {
       bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
         buildWhen: (previous, current) => current is ProductListLoadedState,
         builder: (context, state) {
-          if (state is ProductListLoadedState) {
+          if (state is ProductListLoadedState && bloc.productList.isNotEmpty) {
             return FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {

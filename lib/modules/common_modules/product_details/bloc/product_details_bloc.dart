@@ -256,7 +256,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           productDetails = ProductDetailsModel(
             productId: productId,
             name: productName,
-            offerPrice: isDiscounted ? gemstoneData?.discountPrice?.setCurrency : null,
+            offerPrice: isDiscounted ? (gemstoneData?.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: gemstoneData?.finalPrice?.setCurrency,
             discountPercentage:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
@@ -331,7 +331,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
             discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
@@ -525,7 +525,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
             discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
