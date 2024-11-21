@@ -30,7 +30,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     appBloc = BlocProvider.of<AppBloc>(event.context);
     await appBloc.fetchAddressList(event.context);
     addressList = appBloc.savedAddressList;
-    selectedAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling ?? false) ?? addressList.firstOrNull;
+    selectedAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? addressList.firstOrNull;
     if (selectedAddress != null) {
       emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
     }
@@ -42,12 +42,25 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     emit(ChangeSelectedAddressState(event.index, oldIndex));
   }
 
-  void _onDeleteAddressEvent(DeleteAddressEvent event, Emitter<AddressListState> emit) {
+  Future<void> _onDeleteAddressEvent(DeleteAddressEvent event, Emitter<AddressListState> emit) async {
     emit(const AddressListReloadState());
-    if (selectedAddress == addressList[event.index] && addressList.length > 1) {
-      selectedAddress = addressList.first;
-    }
-    addressList.removeAt(event.index);
+
+    AddressDetails address = addressList[event.index];
+
+    final response = await AppRepository(event.context).deleteAddress(address.id ?? '');
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        if (selectedAddress == address && addressList.length > 1 && event.index != 0) {
+          selectedAddress = addressList.first;
+        }
+        addressList.removeAt(event.index);
+        emit(AddressListLoadedState(addressList, selectedAddress!, isBillingAndShippingSame));
+      },
+    );
+
     emit(const DeleteAddressState());
   }
 

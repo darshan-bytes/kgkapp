@@ -566,6 +566,14 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // Delete Address by ID
+  Future<Either<ErrorResponse, CommonResponse>?> deleteAddress(String addressId) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.customerAddressById(addressId), withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

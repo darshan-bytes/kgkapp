@@ -57,13 +57,17 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   }
 
   Future<void> _onSavedAddressAddNewAddressEvent(SavedAddressAddNewAddressEvent event, Emitter<SavedAddressState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then(
-      (value) {
-        if (value != null && value is AddressDetails) {
-          addressList.add(value);
-          emit(const SavedAddressLoadedState());
-        }
-      },
-    );
+    try {
+      await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then(
+        (value) {
+          if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
+            addressList.add(value[RoutesData.addressDetails]);
+            emit(const SavedAddressLoadedState());
+          }
+        },
+      );
+    } catch (e) {
+      Utils.showMessage(e.toString());
+    }
   }
 }

@@ -33,12 +33,13 @@ final class EditShippingAddressEvent extends ShippingAddressEvent {
 }
 
 final class DeleteShippingAddressEvent extends ShippingAddressEvent {
+  final BuildContext context;
   final int index;
 
-  const DeleteShippingAddressEvent(this.index);
+  const DeleteShippingAddressEvent({required this.context, required this.index});
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [context, index];
 }
 
 final class SaveShippingAddressEvent extends ShippingAddressEvent {

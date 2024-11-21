@@ -136,6 +136,7 @@ class AddressListScreen extends StatelessWidget {
                 final AddressDetails address = addressListBloc.addressList[index];
                 return AddressSelectionWidget(
                   address: address,
+                  isDefault: (address.isDefaultBilling || address.isDefaultShipping),
                   onTap: () {
                     addressListBloc.add(ChangeSelectedAddressEvent(index));
                   },
@@ -144,7 +145,22 @@ class AddressListScreen extends StatelessWidget {
                     addressListBloc.add(EditAddressEvent(index, context));
                   },
                   onDelete: () {
-                    addressListBloc.add(DeleteAddressEvent(index));
+                    Utils.showSmartModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                        ),
+                        builder: (builderContext) => ConfirmationDialog(
+                              title: APPStrings.deleteAddress.tr,
+                              message: APPStrings.deleteAddressMsg.tr,
+                              onApproved: () {
+                                builderContext.pop();
+                                addressListBloc.add(DeleteAddressEvent(context: context, index: index));
+                              },
+                              onDenied: () => builderContext.pop(),
+                              onApprovedText: APPStrings.delete.tr,
+                              onDeniedText: APPStrings.cancel.tr,
+                            ));
                   },
                 );
               },

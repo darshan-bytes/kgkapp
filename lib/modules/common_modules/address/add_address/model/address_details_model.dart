@@ -11,8 +11,8 @@ class AddressDetails {
     this.zipCode,
     this.phone = const [],
     this.createdBy,
-    this.isDefaultShipping,
-    this.isDefaultBilling,
+    this.isDefaultShipping = false,
+    this.isDefaultBilling = false,
     this.id,
     this.isDeleted,
     this.deletedAt,
@@ -32,8 +32,8 @@ class AddressDetails {
   final String? zipCode;
   final List<CustomerPhoneNumber> phone;
   final int? createdBy;
-  final bool? isDefaultShipping;
-  final bool? isDefaultBilling;
+  final bool isDefaultShipping;
+  final bool isDefaultBilling;
   final String? id;
   final bool? isDeleted;
   final dynamic deletedAt;

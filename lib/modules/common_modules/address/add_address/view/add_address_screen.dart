@@ -239,6 +239,7 @@ class AddAddressScreen extends StatelessWidget {
       focusNode: bloc.zipCodeFocusNode,
       nextFocus: bloc.phoneFocusNode,
       keyboardType: TextInputType.name,
+      textCapitalization: TextCapitalization.words,
     );
   }
 

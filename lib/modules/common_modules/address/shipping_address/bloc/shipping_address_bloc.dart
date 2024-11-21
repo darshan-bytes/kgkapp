@@ -13,7 +13,7 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
   bool isShipping = false;
 
   AddressDetails? get defaultAddress =>
-      addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling) ?? false);
+      addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling));
 
   ShippingAddressBloc() : super(const ShippingAddressInitial()) {
     on<ShippingAddressInitialEvent>(_onShippingAddressInitialEvent);
@@ -30,9 +30,8 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     isShipping = event.context.routesData?[RoutesData.isShippingAddress] ?? false;
     title = (isShipping ? APPStrings.shippingAddress : APPStrings.billingAddress).tr;
     addressList = await appBloc.fetchAddressList(event.context);
-    selectedAddress =
-        addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling) ?? false) ??
-            addressList.firstOrNull;
+    selectedAddress = addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling)) ??
+        addressList.firstOrNull;
     emit(const ShippingAddressLoadedState());
   }
 
@@ -62,8 +61,16 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     );
   }
 
-  void _onDeleteShippingAddressEvent(DeleteShippingAddressEvent event, Emitter<ShippingAddressState> emit) {
-    //TODO: Implement Delete Shipping Address
+  Future<void> _onDeleteShippingAddressEvent(DeleteShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
+    final response = await AppRepository(event.context).deleteAddress(addressList[event.index].id ?? '');
+    response?.fold((l) {
+      Utils.showMessage(l.message);
+    }, (r) {
+      AddressDetails address = addressList[event.index];
+      addressList.removeAt(event.index);
+      appBloc.savedAddressList.remove(address);
+      emit(const ShippingAddressLoadedState());
+    });
   }
 
   Future<void> _onSaveShippingAddressEvent(SaveShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
@@ -80,7 +87,14 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
   }
 
   Future<void> _onAddShippingAddressEvent(AddShippingAddressEvent event, Emitter<ShippingAddressState> emit) async {
-    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: isShipping});
+    await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: isShipping}).then(
+      (value) {
+        if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
+          appBloc.savedAddressList.add(value[RoutesData.addressDetails]);
+          emit(const ShippingAddressLoadedState());
+        }
+      },
+    );
   }
 
   Future<bool> _saveAddress(BuildContext context, {required String addressId, required Map<String, dynamic> body}) async {
