@@ -36,4 +36,11 @@ abstract class ApiProvider {
     Map<String, String>? headers,
     List<ModelMultiPartFile>? files,
   });
+
+  Future<Either<ErrorResponse, dynamic>?> putMultipartMethod<T>(
+    String url,
+    Map<String, dynamic> body, {
+    Map<String, String>? headers,
+    List<ModelMultiPartFile>? files,
+  });
 }

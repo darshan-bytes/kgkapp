@@ -31,8 +31,8 @@ class ApiKey {
   static const String suid = 'suid';
   static const String userId = 'user_id';
   static const String accountType = 'account_type';
-  static const String firstName = 'first_name';
-  static const String lastName = 'last_name';
+  static const String firstName_ = 'first_name';
+  static const String lastName_ = 'last_name';
   static const String phone = 'phone';
   static const String phoneCode = 'phone_code';
   static const String phoneNumber = 'phone_number';
@@ -68,4 +68,9 @@ class ApiKey {
   static const String isDefaultShipping = 'is_shipping_default';
   static const String isDefaultBilling = 'is_billing_default';
   static const String country = 'country';
+  static const String firstname = 'firstname';
+  static const String lastname = 'lastname';
+  static const String oldPassword = 'oldPassword';
+  static const String newPassword = 'newPassword';
+  static const String isAdminChange = 'isAdminChange';
 }

@@ -87,4 +87,16 @@ class UserRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((error) => Left(error), (cscMastersList) => Right(cscMastersList as List<CscDetails>));
   }
+
+  Future<Either<ErrorResponse, CommonResponse<UserIdDetails>>?> editUserProfile(Map<String, dynamic> params) async {
+    context.setAppLoading(true);
+    var response = await putMultipartMethod<UserIdDetails>(ApiClient.editUserProfile, params, withFullResponse: true, files: []);
+    context.setAppLoading(false);
+    return response?.fold((ErrorResponse l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> changePasswordApi(Map<String, dynamic> params) async {
+    var response = await postMethod<CommonResponse>(ApiClient.changePassword, params, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }

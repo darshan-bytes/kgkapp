@@ -726,5 +726,8 @@
   "mob_error_street_address_required": "सड़क पता आवश्यक है",
   "mob_error_city_required": "शहर आवश्यक है",
   "mob_error_state_required": "राज्य आवश्यक है",
-  "mob_error_zip_code_required": "ज़िप कोड आवश्यक है"
+  "mob_error_zip_code_required": "ज़िप कोड आवश्यक है",
+  "mob_passwords_do_not_match": "पासवर्ड मेल नहीं खाता",
+  "mob_error_current_password_required": "वर्ती पासवर्ड आवश्यक है",
+  "mob_error_new_password_required": "नया पासवर्ड आवश्यक है"
 }
