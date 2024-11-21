@@ -23,12 +23,13 @@ final class ChangeSelectedAddressEvent extends AddressListEvent {
 }
 
 final class DeleteAddressEvent extends AddressListEvent {
+  final BuildContext context;
   final int index;
 
-  const DeleteAddressEvent(this.index);
+  const DeleteAddressEvent({required this.context, required this.index});
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [context, index];
 }
 
 final class EditAddressEvent extends AddressListEvent {

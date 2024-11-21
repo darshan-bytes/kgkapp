@@ -729,5 +729,7 @@
   "mob_error_zip_code_required": "Zip code is required",
   "mob_passwords_do_not_match": "Passwords do not match",
   "mob_error_current_password_required": "Current password is required",
-  "mob_error_new_password_required": "New password is required"
+  "mob_error_new_password_required": "New password is required",
+  "mob_delete_address": "Delete address",
+  "mob_delete_address_msg": "Are you sure you want to delete this address?"
 }

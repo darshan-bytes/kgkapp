@@ -69,7 +69,7 @@ class AddressSelectionWidget extends StatelessWidget {
             onTap: onEdit,
           ),
         ],
-        if (onDelete != null) ...[
+        if (onDelete != null && !isDefault) ...[
           SizedBox(width: 8.w),
           SmartImage(
             path: AppImages.icCross,
