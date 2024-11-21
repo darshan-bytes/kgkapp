@@ -98,7 +98,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               originalPrice: product.gemstoneData?.finalPrice,
               productSku: product.gemstoneData?.lotCode,
               lotCode: product.gemstoneData?.lotCode,
-              discountPrice: product.gemstoneData?.discountPrice,
+              discountPrice: (product.gemstoneData?.discountPrice ?? 0).toString(),
               discountPercentage: (product.gemstoneData?.discountPercentage != null && product.gemstoneData!.discountPercentage! > 0)
                   ? product.gemstoneData?.discountPercentage?.toString()
                   : null,

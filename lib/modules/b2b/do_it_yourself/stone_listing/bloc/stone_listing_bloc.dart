@@ -209,7 +209,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             ctsOrGms: gemstoneDatumList[index].ctsOrGms,
             rappaportPrice: gemstoneDatumList[index].rappaportPrice,
             priceCts: gemstoneDatumList[index].priceCts,
-            discountPrice: gemstoneDatumList[index].discountPrice?.setCurrency,
+            discountPrice: (gemstoneDatumList[index].discountPrice ?? 0).toString().setCurrency,
             finalPrice: gemstoneDatumList[index].finalPrice?.setCurrency,
             lotCode: gemstoneDatumList[index].lotCode,
             shape: gemstoneDatumList[index].shape,
