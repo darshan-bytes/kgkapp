@@ -53,7 +53,22 @@ class ShippingAddressScreen extends StatelessWidget {
                     shippingAddressBloc.add(EditShippingAddressEvent(index, context));
                   },
                   onDelete: () {
-                    shippingAddressBloc.add(DeleteShippingAddressEvent(index));
+                    Utils.showSmartModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                        ),
+                        builder: (builderContext) => ConfirmationDialog(
+                              title: APPStrings.deleteAddress.tr,
+                              message: APPStrings.deleteAddressMsg.tr,
+                              onApproved: () {
+                                builderContext.pop();
+                                shippingAddressBloc.add(DeleteShippingAddressEvent(context: context, index: index));
+                              },
+                              onDenied: () => builderContext.pop(),
+                              onApprovedText: APPStrings.delete.tr,
+                              onDeniedText: APPStrings.cancel.tr,
+                            ));
                   },
                 );
               },
