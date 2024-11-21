@@ -918,4 +918,7 @@ class APPStrings {
   static const String errorStateRequired = 'mob_error_state_required';
   static const String errorCountryRequired = 'mob_error_country_required';
   static const String errorZipCodeRequired = 'mob_error_zip_code_required';
+  static const String errorCurrentPasswordRequired = 'mob_error_current_password_required';
+  static const String errorNewPasswordRequired = 'mob_error_new_password_required';
+  static const String passwordsDoNotMatch = 'mob_passwords_do_not_match';
 }

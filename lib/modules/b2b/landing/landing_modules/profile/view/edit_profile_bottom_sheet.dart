@@ -130,6 +130,7 @@ class EditProfileBottomSheet extends StatelessWidget {
 
   Widget _buildEmailField(ProfileBloc profileBloc) {
     return SmartTextField(
+      isEnabled: false,
       labelText: APPStrings.email.tr,
       hintText: APPStrings.email.tr,
       controller: profileBloc.emailController,
@@ -140,35 +141,56 @@ class EditProfileBottomSheet extends StatelessWidget {
   }
 
   Widget _buildContactNumberField(ProfileBloc profileBloc, BuildContext context) {
+    final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
     return SmartTextField(
       labelText: APPStrings.contactNumber.tr,
-      hintText: APPStrings.contactNumber.tr,
+      hintText: APPStrings.hintContactNumber.tr,
       controller: profileBloc.contactNumberController,
       focusNode: profileBloc.contactNumberFocusNode,
       keyboardType: TextInputType.phone,
-      prefixIcon: SizedBox(
-        width: 95.w,
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(12.w),
-          margin: EdgeInsets.only(right: 12.w),
-          decoration: BoxDecoration(
-            border: Border(
-              right: BorderSide(
-                color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+      onValueChanges: (value) {
+        profileBloc.add(EditProfilePhoneNumberValidationEvent(context: context, phoneNumber: value));
+      },
+      prefixIcon: BlocBuilder<ProfileBloc, ProfileState>(
+        buildWhen: (previous, current) => current is EditProfileChangeCountryCodeState,
+        builder: (context, state) {
+          return InkWell(
+            onTap: () {
+              Utils.showCountryPickerModel(
+                context: context,
+                countryPickerStyle: countryPickerStyle,
+                showPhoneCode: true,
+                onSelect: (Country country) {
+                  profileBloc.add(EditProfileChangeCountryCodeEvent(country: country));
+                },
+              );
+            },
+            child: SizedBox(
+              width: 95.w,
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(12.w),
+                margin: EdgeInsets.only(right: 12.w),
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SmartText(
+                      '+${profileBloc.selectedCountry.phoneCode}',
+                      style: AppTheme.of(context).textFieldStyle.textStyle,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SmartText(
-                '+91',
-                style: AppTheme.of(context).textFieldStyle.textStyle,
-              ),
-            ],
-          ),
-        ),
+          );
+        },
       ),
       onTap: () {
         profileBloc.scrollController.animateTo(
@@ -186,7 +208,7 @@ class EditProfileBottomSheet extends StatelessWidget {
       key: bloc.saveBtnKey,
       title: APPStrings.save.tr,
       onTap: () {
-        context.pop();
+        bloc.add(EditProfileSaveEvent(context: context));
       },
     );
   }

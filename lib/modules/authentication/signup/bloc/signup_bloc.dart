@@ -312,8 +312,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Map<String, dynamic> params = {
       ApiKey.accountType: isIndividual ? UserType.b2cUser.value : UserType.b2bUser.value,
       ApiKey.userType: AccountType.customer.value,
-      ApiKey.firstName: firstNameController.text.trim(),
-      ApiKey.lastName: lastNameController.text.trim(),
+      ApiKey.firstName_: firstNameController.text.trim(),
+      ApiKey.lastName_: lastNameController.text.trim(),
       ApiKey.email: emailController.text.trim(),
       ApiKey.password: passwordController.text.trim(),
       ApiKey.phone:

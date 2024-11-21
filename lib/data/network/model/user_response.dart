@@ -93,6 +93,9 @@ class UserIdDetails {
     required this.email,
     required this.userType,
     required this.profilePicUrl,
+    required this.phoneCode,
+    required this.phone,
+    required this.organisationName,
   });
 
   final String? firstname;
@@ -102,6 +105,9 @@ class UserIdDetails {
   final String? email;
   final String? userType;
   final String? profilePicUrl;
+  String? phoneCode;
+  String? phone;
+  String? organisationName;
 
   factory UserIdDetails.fromJson(Map<String, dynamic> json) {
     return UserIdDetails(
@@ -112,6 +118,9 @@ class UserIdDetails {
       email: json["email"],
       userType: json["user_type"],
       profilePicUrl: json["profile_pic_url"],
+      phoneCode: json["phone_code"],
+      phone: json["phone"],
+      organisationName: json["org_name"],
     );
   }
 
@@ -123,16 +132,32 @@ class UserIdDetails {
         "email": email,
         "user_type": userType,
         "profile_pic_url": profilePicUrl,
+        "phone_code": phoneCode,
+        "phone": phone,
+        "org_name": organisationName,
       };
 
   @override
   String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, ";
+    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, ";
   }
 }
 
 extension UserIdDetailsExtension on UserIdDetails {
   String get fullName => "$firstname $lastname";
+
+  String get phoneNumber {
+    final String? validPhoneCode = phoneCode?.trim().isNotEmpty == true ? phoneCode : "";
+    final String? validPhone = phone?.trim().isNotEmpty == true ? phone : "";
+
+    if (validPhoneCode.isNullOrEmpty && validPhone.isNullOrEmpty) {
+      return "-";
+    } else {
+      return "$validPhoneCode $validPhone";
+    }
+  }
+
+  String get orgName => organisationName ?? "-";
 
   UserType get userTypeEnum => UserType.values.firstWhereOrNull((element) => element.value == userType) ?? UserType.b2cUser;
 }
