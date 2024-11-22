@@ -247,8 +247,8 @@ class DiamondDataModel {
   String? crownOpen;
   String? crownOpenRefSuid;
   String? crownOpenSuid;
-  String? crownAngle;
-  String? crownHeight;
+  double? crownAngle;
+  double? crownHeight;
   double? ctsOrGms;
   String? culet;
   dynamic culetCondRefSuid;
@@ -256,7 +256,7 @@ class DiamondDataModel {
   dynamic culetSizeRefSuid;
   dynamic culetSizeSuid;
   dynamic culetCond;
-  String? culetRefSuid;
+  double? culetRefSuid;
   dynamic culetSize;
   String? culetSuid;
   String? culetGia;
@@ -320,8 +320,8 @@ class DiamondDataModel {
   String? pavOpen;
   String? pavOpenRefSuid;
   String? pavOpenSuid;
-  String? pavilionAngle;
-  String? pavilionDepth;
+  double? pavilionAngle;
+  double? pavilionDepth;
   int? pcs;
   String? polish;
   int? price;
@@ -343,7 +343,7 @@ class DiamondDataModel {
   dynamic sizeRange;
   String? importedFrom;
   dynamic specialOffer;
-  String? starLength;
+  double? starLength;
   String? status;
   String? stone;
   dynamic subTypeCode;
@@ -424,8 +424,8 @@ class DiamondDataModel {
       crownOpen: json["crown_open"],
       crownOpenRefSuid: json["crown_open_ref_suid"],
       crownOpenSuid: json["crown_open_suid"],
-      crownAngle: json["crown_angle"],
-      crownHeight: json["crown_height"],
+      crownAngle: json["crown_angle"]?.toDouble(),
+      crownHeight: json["crown_height"]?.toDouble(),
       ctsOrGms: json["cts_or_gms"]?.toDouble(),
       culet: json["culet"],
       culetCondRefSuid: json["culet_cond_ref_suid"],
@@ -433,7 +433,7 @@ class DiamondDataModel {
       culetSizeRefSuid: json["culet_size_ref_suid"],
       culetSizeSuid: json["culet_size_suid"],
       culetCond: json["culet_cond"],
-      culetRefSuid: json["culet_ref_suid"],
+      culetRefSuid: json["culet_ref_suid"]?.toDouble(),
       culetSize: json["culet_size"],
       culetSuid: json["culet_suid"],
       culetGia: json["culet_gia"],
@@ -497,8 +497,8 @@ class DiamondDataModel {
       pavOpen: json["pav_open"],
       pavOpenRefSuid: json["pav_open_ref_suid"],
       pavOpenSuid: json["pav_open_suid"],
-      pavilionAngle: json["pavilion_angle"],
-      pavilionDepth: json["pavilion_depth"],
+      pavilionAngle: json["pavilion_angle"]?.toDouble(),
+      pavilionDepth: json["pavilion_depth"]?.toDouble(),
       pcs: json["pcs"],
       polish: json["polish"],
       price: json["price"],
@@ -520,7 +520,7 @@ class DiamondDataModel {
       sizeRange: json["size_range"],
       importedFrom: json["imported_from"],
       specialOffer: json["special_offer"],
-      starLength: json["star_length"],
+      starLength: json["star_length"]?.toDouble(),
       status: json["status"],
       stone: json["stone"],
       subTypeCode: json["sub_type_code"],

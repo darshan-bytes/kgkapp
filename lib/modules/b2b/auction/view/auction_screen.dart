@@ -448,9 +448,10 @@ class AuctionScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: SizedBox(
-                          height: 48.w,
+                          height: 42.h,
                           child: TextFormField(
                             decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                                 hintText: '',
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
@@ -463,7 +464,6 @@ class AuctionScreen extends StatelessWidget {
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide(color: style.textFieldBorderColor),
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r))),
-                                // contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.6.w),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                                   borderSide: BorderSide(color: style.textFieldBorderColor),
