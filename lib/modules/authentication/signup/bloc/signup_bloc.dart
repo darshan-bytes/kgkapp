@@ -152,12 +152,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   void _onSignUpBusinessTypeChangedEvent(SignUpBusinessTypeChangedEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
 
-    if (event.index == 2 && (!businessTypes[0].isSelected || !businessTypes[1].isSelected)) {
-      businessTypes[event.index].isSelected = event.isSelected;
-      emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
-    } else if (event.index != 2 && !businessTypes[2].isSelected) {
-      businessTypes[event.index].isSelected = event.isSelected;
-      emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+    if (event.index == 2) {
+      if (!businessTypes[0].isSelected && !businessTypes[1].isSelected) {
+        businessTypes[event.index].isSelected = event.isSelected;
+        emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+      }
+    } else {
+      if (!businessTypes[2].isSelected) {
+        businessTypes[event.index].isSelected = event.isSelected;
+        emit(SignUpBusinessTypeChangedState(event.index, event.isSelected));
+      }
     }
   }
 
@@ -257,10 +261,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
         Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
         return false;
-      } else if (passwordController.text.isEmpty) {
+      } else if (passwordController.text.trim().isEmpty) {
         Utils.showMessage(APPStrings.errorPasswordRequired.tr);
         return false;
-      } else if (confirmPasswordController.text.isEmpty) {
+      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
+        Utils.showMessage(APPStrings.validPassword.tr);
+        return false;
+      } else if (confirmPasswordController.text.trim().isEmpty) {
         Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
         return false;
       } else if (passwordController.text != confirmPasswordController.text) {
@@ -294,10 +301,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
         Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
         return false;
-      } else if (passwordController.text.isEmpty) {
+      } else if (passwordController.text.trim().isEmpty) {
         Utils.showMessage(APPStrings.errorPasswordRequired.tr);
         return false;
-      } else if (confirmPasswordController.text.isEmpty) {
+      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
+        Utils.showMessage(APPStrings.validPassword.tr);
+        return false;
+      } else if (confirmPasswordController.text.trim().isEmpty) {
         Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
         return false;
       } else if (passwordController.text != confirmPasswordController.text) {

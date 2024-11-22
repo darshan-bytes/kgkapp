@@ -679,7 +679,7 @@
   "mob_email_required": "कृपया ईमेल दर्ज करें",
   "mob_valid_email": "कृपया वैध ईमेल दर्ज करें",
   "mob_password_required": "कृपया पासवर्ड दर्ज करें",
-  "mob_valid_password": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए",
+  "mob_valid_password": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए और इसमें कम से कम एक अपरकेस और एक नंबर होना चाहिए और एक विशेष वर्ण होना चाहिए",
   "mob_no_internet_connection_found": "कोई इंटरनेट कनेक्शन नहीं मिला",
   "mob_please_check_your_internet_connection": "कृपया अपने इंटरनेट कनेक्शन की जाँच करें",
   "mob_try_again": "पुनः प्रयास करें",
