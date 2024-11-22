@@ -679,7 +679,7 @@
   "mob_email_required": "Please enter email",
   "mob_valid_email": "Please enter valid email",
   "mob_password_required": "Please enter password",
-  "mob_valid_password": "Password must be at least 8 characters",
+  "mob_valid_password": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
   "mob_no_internet_connection_found": "No internet connection found",
   "mob_please_check_your_internet_connection": "Please check your internet connection",
   "mob_try_again": "Try again",
