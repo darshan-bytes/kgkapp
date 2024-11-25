@@ -731,5 +731,6 @@
   "mob_error_current_password_required": "वर्ती पासवर्ड आवश्यक है",
   "mob_error_new_password_required": "नया पासवर्ड आवश्यक है",
   "mob_delete_address": "पता हटाएं",
-  "mob_delete_address_msg": "क्या आप वाकई इस पते को हटाना चाहते हैं?"
+  "mob_delete_address_msg": "क्या आप वाकई इस पते को हटाना चाहते हैं?",
+  "mob_no_catalogue_found": "कोई कैटलॉग नहीं मिला"
 }

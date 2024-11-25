@@ -92,6 +92,7 @@ class UserIdDetails {
     required this.userAccountId,
     required this.email,
     required this.userType,
+    required this.accountType,
     required this.profilePicUrl,
     required this.phoneCode,
     required this.phone,
@@ -104,6 +105,7 @@ class UserIdDetails {
   final String? userAccountId;
   final String? email;
   final String? userType;
+  final String? accountType;
   final String? profilePicUrl;
   String? phoneCode;
   String? phone;
@@ -121,6 +123,7 @@ class UserIdDetails {
       phoneCode: json["phone_code"],
       phone: json["phone"],
       organisationName: json["org_name"],
+      accountType: json["account_type"],
     );
   }
 
@@ -135,11 +138,12 @@ class UserIdDetails {
         "phone_code": phoneCode,
         "phone": phone,
         "org_name": organisationName,
+        "account_type": accountType,
       };
 
   @override
   String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, ";
+    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, $accountType, ";
   }
 }
 
@@ -159,7 +163,16 @@ extension UserIdDetailsExtension on UserIdDetails {
 
   String get orgName => organisationName ?? "-";
 
-  UserType get userTypeEnum => UserType.values.firstWhereOrNull((element) => element.value == userType) ?? UserType.b2cUser;
+  UserType get userTypeEnum {
+    switch (userType) {
+      case "customer":
+        return UserType.values.firstWhereOrNull((element) => element.value == accountType) ?? UserType.b2cUser;
+      case "internal":
+        return UserType.internal;
+      default:
+        return UserType.b2cUser;
+    }
+  }
 }
 
 class UserPermissions {
