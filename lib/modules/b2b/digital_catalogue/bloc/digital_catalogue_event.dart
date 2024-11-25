@@ -5,10 +5,12 @@ sealed class DigitalCatalogueEvent extends Equatable {
 }
 
 final class DigitalCatalogueInitialEvent extends DigitalCatalogueEvent {
-  const DigitalCatalogueInitialEvent();
+  final BuildContext context;
+
+  const DigitalCatalogueInitialEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class DigitalCataloguePullToRefreshEvent extends DigitalCatalogueEvent {
@@ -16,4 +18,23 @@ final class DigitalCataloguePullToRefreshEvent extends DigitalCatalogueEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class DigitalCatalogueLoadMoreEvent extends DigitalCatalogueEvent {
+  final BuildContext context;
+  final int currentPage;
+
+  const DigitalCatalogueLoadMoreEvent({required this.context, required this.currentPage});
+
+  @override
+  List<Object> get props => [context, currentPage];
+}
+
+final class DigitalCatalogueSearchEvent extends DigitalCatalogueEvent {
+  final BuildContext context;
+
+  const DigitalCatalogueSearchEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
 }
