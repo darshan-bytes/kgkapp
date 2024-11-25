@@ -731,5 +731,6 @@
   "mob_error_current_password_required": "Current password is required",
   "mob_error_new_password_required": "New password is required",
   "mob_delete_address": "Delete address",
-  "mob_delete_address_msg": "Are you sure you want to delete this address?"
+  "mob_delete_address_msg": "Are you sure you want to delete this address?",
+  "mob_no_catalogue_found": "No catalogue found"
 }

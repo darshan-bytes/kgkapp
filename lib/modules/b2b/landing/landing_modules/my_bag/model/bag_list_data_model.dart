@@ -165,7 +165,7 @@ class Result {
       suid: json["suid"],
       quantity: json["quantity"],
       totalPrice: json["totalPrice"].toDouble(),
-      rate: json["rate"],
+      rate: json["rate"]?.toString(),
       jewelleryName: json["jewellery_name"],
       productId: json["productId"],
       image: json["image"],

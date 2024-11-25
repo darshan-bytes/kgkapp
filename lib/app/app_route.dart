@@ -453,7 +453,7 @@ class AppRoutes {
 
       case digitalCataloguePage:
         builder = (context) {
-          BlocProvider.of<DigitalCatalogueBloc>(context).add(const DigitalCatalogueInitialEvent());
+          BlocProvider.of<DigitalCatalogueBloc>(context).add(DigitalCatalogueInitialEvent(context: context));
           return const DigitalCatalogueListingScreen();
         };
         break;

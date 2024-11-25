@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class CurrencyListModel {
   CurrencyListModel({
     required this.name,
@@ -36,8 +38,8 @@ class CurrencyListModel {
   final DateTime? updatedAt;
   final int? id;
   final String? updatedBy;
-  final AtedByDetails? createdByDetails;
-  final AtedByDetails? updatedByDetails;
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
 
   factory CurrencyListModel.fromJson(Map<String, dynamic> json) {
     return CurrencyListModel(
@@ -57,8 +59,8 @@ class CurrencyListModel {
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
       id: json["id"],
       updatedBy: json["updated_by"],
-      createdByDetails: json["created_by_details"] == null ? null : AtedByDetails.fromJson(json["created_by_details"]),
-      updatedByDetails: json["updated_by_details"] == null ? null : AtedByDetails.fromJson(json["updated_by_details"]),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
     );
   }
 
@@ -86,52 +88,5 @@ class CurrencyListModel {
   @override
   String toString() {
     return "$name, $slug, $code, $symbol, $isDefault, $symbolPosition, $decimalSeparator, $thousandSeparator, $decimalDigits, $conversionType, $status, $createdBy, $createdAt, $updatedAt, $id, $updatedBy, $createdByDetails, $updatedByDetails, ";
-  }
-}
-
-class AtedByDetails {
-  AtedByDetails({
-    required this.firstname,
-    required this.lastname,
-    required this.profilePic,
-    required this.userAccountId,
-    required this.email,
-    required this.userType,
-    required this.profilePicUrl,
-  });
-
-  final String? firstname;
-  final String? lastname;
-  final String? profilePic;
-  final String? userAccountId;
-  final String? email;
-  final String? userType;
-  final String? profilePicUrl;
-
-  factory AtedByDetails.fromJson(Map<String, dynamic> json) {
-    return AtedByDetails(
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-      profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
-      email: json["email"],
-      userType: json["user_type"],
-      profilePicUrl: json["profile_pic_url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "profile_pic": profilePic,
-        "user_account_id": userAccountId,
-        "email": email,
-        "user_type": userType,
-        "profile_pic_url": profilePicUrl,
-      };
-
-  @override
-  String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, ";
   }
 }

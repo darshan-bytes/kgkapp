@@ -731,5 +731,6 @@
   "mob_error_current_password_required": "需要當前密碼",
   "mob_error_new_password_required": "需要新密碼",
   "mob_delete_address": "刪除地址",
-  "mob_delete_address_msg": "您確定要刪除該地址嗎？"
+  "mob_delete_address_msg": "您確定要刪除該地址嗎？",
+  "mob_no_catalogue_found": "沒有找到目錄"
 }
