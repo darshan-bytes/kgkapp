@@ -485,8 +485,10 @@ class AppRoutes {
 
       case cadLibraryListingPage:
         builder = (context) {
-          BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
-          return const CadLibraryListingScreen();
+          return BlocProvider<CadLibraryListingBloc>(
+            create: (context) => CadLibraryListingBloc()..add(InitialCadListingEvent(context: context)),
+            child: const CadLibraryListingScreen(),
+          );
         };
         break;
 

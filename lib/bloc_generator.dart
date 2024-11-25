@@ -44,7 +44,6 @@ class BlocGenerator {
       BlocProvider<DigitalCatalogueBloc>(create: (_) => DigitalCatalogueBloc()),
       BlocProvider<MonitoringBloc>(create: (_) => MonitoringBloc()),
       BlocProvider<FindStoreBloc>(create: (_) => FindStoreBloc()),
-      BlocProvider<CadLibraryListingBloc>(create: (_) => CadLibraryListingBloc()),
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
       BlocProvider<DesignLibraryFeedbackBloc>(create: (_) => DesignLibraryFeedbackBloc()),
       BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),
