@@ -13,8 +13,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInInitial()) {
     if (kDebugMode) {
       //B2C
-      emailController.text = "ankita7@gmail.com";
-      passwordController.text = "Test@123";
+      emailController.text = "joseph.murphy@yopmail.com";
+      passwordController.text = "Admin@123";
 
       //B2B
       emailController.text = "joseph.murphy@yopmail.com";

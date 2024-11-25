@@ -44,6 +44,7 @@ class ProductDetailsModel {
   String? wishlistId;
   bool isForAuction;
   bool isCommentVisible;
+  String? auctionId;
 
   ProductDetailsModel({
     this.productId,
@@ -89,6 +90,7 @@ class ProductDetailsModel {
     this.wishlistId,
     this.isForAuction = false,
     this.isCommentVisible = false,
+    this.auctionId,
   });
 }
 

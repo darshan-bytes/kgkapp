@@ -29,6 +29,7 @@ class ApiClient {
   static const String wishlist = '$apiBaseUrl/wishlist/filters';
   static const String bagListData = '$apiBaseUrl/bag/list';
   static const String auctionListing = '$apiBaseUrl/auctions/customer/filter';
+  static const String createBid = '$apiBaseUrl/auctions/create-bid';
 
   static String diamondDetails(String id) => '$apiBaseUrl/commodity/diamond/$id/view';
 
@@ -62,6 +63,8 @@ class ApiClient {
   static const String productReviews = '$apiBaseUrl/product/reviews';
 
   static String productReviewsFilter(String productId) => '$apiBaseUrl/product/reviews/filter/$productId';
+
+  static String auctionDetails(String auctionId) => '$apiBaseUrl/auctions/$auctionId';
 
   static const String addToBag = '$apiBaseUrl/bag/create';
 

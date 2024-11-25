@@ -73,4 +73,6 @@ class ApiKey {
   static const String oldPassword = 'oldPassword';
   static const String newPassword = 'newPassword';
   static const String isAdminChange = 'isAdminChange';
+  static const String auctionId = 'auction_id';
+  static const String bidAmount = 'bid_amount';
 }

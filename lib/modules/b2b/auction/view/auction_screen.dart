@@ -9,19 +9,24 @@ class AuctionScreen extends StatelessWidget {
     final AuctionScreenStyle style = AppTheme.of(context).auctionScreenStyle;
     return Scaffold(
       appBar: SmartAppBar(
-        title: '1.01 Carat Round Diamond',
+        title: bloc.productDetails?.name,
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
       ),
-      body: ListView(
-        controller: bloc.listScrollController,
-        shrinkWrap: true,
-        children: [
-          _buildImageSlider(bloc),
-          SizedBox(height: 39.h),
-          _productDetail(context, bloc, style),
-        ],
+      body: BlocBuilder<AuctionBloc, AuctionState>(
+        buildWhen: (_, current) => current is AuctionInitial,
+        builder: (context, state) {
+          return ListView(
+            controller: bloc.listScrollController,
+            shrinkWrap: true,
+            children: [
+              _buildImageSlider(bloc),
+              SizedBox(height: 39.h),
+              _productDetail(context, bloc, style),
+            ],
+          );
+        },
       ),
       floatingActionButton: _buildCompareButton(bloc, style),
       bottomNavigationBar: Padding(
@@ -87,13 +92,13 @@ class AuctionScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildProductHeader(diamondDetailScreenStyle),
+          _buildProductHeader(bloc, diamondDetailScreenStyle),
           SizedBox(height: 8.h),
           _buildRatingSection(diamondDetailScreenStyle, style),
           SizedBox(height: 16.h),
           _compareWidget(bloc),
           SizedBox(height: 24.h),
-          _priceSection(style),
+          _priceSection(bloc, style),
           SizedBox(height: 12.h),
           _auctionRecentBidSection(bloc, style),
           SizedBox(height: 24.h),
@@ -113,7 +118,7 @@ class AuctionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductHeader(DiamondDetailScreenStyle style) {
+  Widget _buildProductHeader(AuctionBloc bloc, DiamondDetailScreenStyle style) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,12 +127,12 @@ class AuctionScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmartText(
-                'SKU 14178065',
+                bloc.productDetails?.productSku,
                 style: style.skuStyle,
               ),
               SizedBox(height: 8.h),
               SmartText(
-                '1.01 Carat Round Diamond',
+                bloc.productDetails?.name,
                 style: style.diamondNameStyle,
               ),
             ],
@@ -186,14 +191,14 @@ class AuctionScreen extends StatelessWidget {
     );
   }
 
-  Widget _priceSection(AuctionScreenStyle style) {
+  Widget _priceSection(AuctionBloc bloc, AuctionScreenStyle style) {
     return Row(
       children: [
         SmartText(APPStrings.startingBidPrice.tr, style: style.bidPriceLableStyle),
         SizedBox(width: 8.w),
         Expanded(
           child: SmartText(
-            "\$1200.00",
+            bloc.startingBidPrice,
             style: style.bidPriceStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -285,7 +290,7 @@ class AuctionScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         return _buildResetBidsItem(
-                            isMyBid: bloc.isMyBidPlaced && index == 2 ? true : false,
+                            isMyBid: bloc.recentBidList[index]['is_my_bid'],
                             labelText: bloc.recentBidList[index]['date_time'],
                             value: bloc.recentBidList[index]['price'],
                             style: style);
@@ -311,7 +316,7 @@ class AuctionScreen extends StatelessWidget {
                     ],
                   )
                 : SmartText(
-                    APPStrings.enterBidAmountHigherThanX.tr.interpolate(["\$9000.00"]),
+                    APPStrings.enterBidAmountHigherThanX.tr.interpolate([bloc.startingBidPrice]),
                     style: style.auctionTimerStyle,
                   ),
           ],
@@ -421,6 +426,7 @@ class AuctionScreen extends StatelessWidget {
         if (state is AuctionPlaceBidState) {
           return const SizedBox.shrink();
         } else {
+          if (bloc.isBidPlaced) return const SizedBox.shrink();
           return Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
@@ -440,7 +446,7 @@ class AuctionScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SmartText(
-                    APPStrings.enterBidAmountHigherThanX.tr.interpolate(["\$9000.00"]),
+                    APPStrings.enterBidAmountHigherThanX.tr.interpolate([bloc.startingBidPrice]),
                     style: style.auctionTimerStyle,
                   ),
                   SizedBox(height: 8.h),
@@ -481,7 +487,7 @@ class AuctionScreen extends StatelessWidget {
                         width: 134.w,
                         onTap: () {
                           if (bloc.bidAmountController.text.isNotNullNorEmpty) {
-                            bloc.add(const AuctionPlaceBidEvent());
+                            bloc.add(AuctionPlaceBidEvent(context, bloc.bidAmountController.text));
                           }
                         },
                         title: APPStrings.placeBid.tr,

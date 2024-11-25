@@ -55,8 +55,11 @@ final class AuctionUpdateTimerEvent extends AuctionEvent {
 }
 
 final class AuctionPlaceBidEvent extends AuctionEvent {
-  const AuctionPlaceBidEvent();
+  final BuildContext context;
+  final String amount;
+
+  const AuctionPlaceBidEvent(this.context, this.amount);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context, amount];
 }
