@@ -575,6 +575,15 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getCadLibraryList(
+      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response =
+        await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.cadLibraryListing, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters(
       {required Map<String, dynamic> body, bool isLoadMore = false}) async {
     if (!isLoadMore) {
