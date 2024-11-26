@@ -737,7 +737,8 @@ enum RoutesData {
   commodity,
   collectionName,
   productNavigation,
-  sortData
+  sortData,
+  auctionModelData
 }
 
 enum ScreenIdentifier {

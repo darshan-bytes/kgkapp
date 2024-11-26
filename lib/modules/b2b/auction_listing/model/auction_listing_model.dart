@@ -62,6 +62,7 @@ class AuctionDatum {
     required this.productImage,
     required this.type,
     required this.productSku,
+    required this.productId,
     required this.createdAt,
     required this.auctionStatus,
     required this.bidAmount,
@@ -73,6 +74,7 @@ class AuctionDatum {
   final String? productImage;
   final String? type;
   final String? productSku;
+  final String? productId;
   final DateTime? createdAt;
   final String? auctionStatus;
   final String? bidAmount;
@@ -84,6 +86,7 @@ class AuctionDatum {
     String? productImage,
     String? type,
     String? productSku,
+    String? productId,
     DateTime? createdAt,
     String? auctionStatus,
     String? bidAmount,
@@ -95,6 +98,7 @@ class AuctionDatum {
       productImage: productImage ?? this.productImage,
       type: type ?? this.type,
       productSku: productSku ?? this.productSku,
+      productId: productId ?? this.productId,
       createdAt: createdAt ?? this.createdAt,
       auctionStatus: auctionStatus ?? this.auctionStatus,
       bidAmount: bidAmount ?? this.bidAmount,
@@ -109,6 +113,7 @@ class AuctionDatum {
       productImage: json["product_image"],
       type: json["type"],
       productSku: json["product_sku"],
+      productId: json["product_id"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       auctionStatus: json["auction_status"],
       bidAmount: json["bid_amount"]?.toString().toDouble?.toStringAsFixed(2),
@@ -122,6 +127,7 @@ class AuctionDatum {
         "product_image": productImage,
         "type": type,
         "product_sku": productSku,
+        "product_id": productId,
         "created_at": createdAt?.toIso8601String(),
         "auction_status": auctionStatus,
         "bid_amount": bidAmount,
@@ -130,6 +136,6 @@ class AuctionDatum {
 
   @override
   String toString() {
-    return "$auctionId, $productDescription, $productImage, $type, $productSku, $createdAt, $auctionStatus, $bidAmount, $status, ";
+    return "$auctionId, $productDescription, $productImage, $type, $productSku, $productId, $createdAt, $auctionStatus, $bidAmount, $status, ";
   }
 }

@@ -78,7 +78,7 @@ class AuctionListingScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
                   return AuctionListItem(
-                    onTap: () => context.pushNamed(AppRoutes.auctionPage),
+                    onTap: () => context.pushNamed(AppRoutes.auctionPage, arguments: {RoutesData.auctionModelData: auctionListModel}),
                     auctionListModel: auctionListModel,
                     stoneTypeImage: AppImages.icRingThin,
                   );

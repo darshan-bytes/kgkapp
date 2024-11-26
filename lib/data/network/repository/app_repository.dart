@@ -210,6 +210,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // createBidForAuction
+  Future<Either<ErrorResponse, CommonResponse>?> createBidForAuction(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CommonResponse>(ApiClient.createBid, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   //For Getting Diamond Details by ID
   Future<Either<ErrorResponse, DiamondDataModel>?> getDiamondDetailById(String id) async {
     context.setAppLoading(true);
@@ -593,6 +601,14 @@ class AppRepository extends ApiService {
     if (!isLoadMore) {
       context.setAppLoading(false);
     }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // getAuctionDetails
+  Future<Either<ErrorResponse, AuctionDataModel>?> getAuctionDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<AuctionDataModel>(ApiClient.auctionDetails(id));
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
