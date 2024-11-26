@@ -124,7 +124,7 @@ class CadLibraryListingScreen extends StatelessWidget {
         if (bloc.cadList.isEmpty) {
           return _buildEmptyState();
         }
-        return _buildListOrGridView(bloc, state);
+        return _buildListOrGridView(bloc, state, context: context);
       },
     );
   }
@@ -133,18 +133,18 @@ class CadLibraryListingScreen extends StatelessWidget {
     return NoDataFoundWidget(text: APPStrings.noCadLibraryFound.tr);
   }
 
-  Widget _buildListOrGridView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
+  Widget _buildListOrGridView(CadLibraryListingBloc bloc, CadLibraryListingState state, {required BuildContext context}) {
     return Expanded(
-      child: bloc.isGrid ? _buildGridView(bloc, state) : _buildListView(bloc, state),
+      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context),
     );
   }
 
-  Widget _buildGridView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
+  Widget _buildGridView(CadLibraryListingBloc bloc, CadLibraryListingState state, BuildContext context) {
     return SmartSingleChildScrollView(
       key: bloc.gridPaginationScrollController.gridKey,
       controller: bloc.gridPaginationScrollController.controller,
       onRefresh: () async {
-        await bloc.pullToRefresh();
+        await bloc.pullToRefresh(context: context);
       },
       child: SmartGridView(
         items: bloc.cadList.map((item) => DesignListingGridItem.cadLibrary(designModel: item)).toList(),
@@ -153,10 +153,10 @@ class CadLibraryListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListView(CadLibraryListingBloc bloc, CadLibraryListingState state) {
+  Widget _buildListView(CadLibraryListingBloc bloc, CadLibraryListingState state, BuildContext context) {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        await bloc.pullToRefresh();
+        await bloc.pullToRefresh(context: context);
       },
       child: ListView.builder(
         shrinkWrap: true,
