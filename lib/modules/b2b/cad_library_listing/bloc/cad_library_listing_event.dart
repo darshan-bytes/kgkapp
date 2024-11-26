@@ -23,17 +23,21 @@ final class CadChangeListingTypeEvent extends CadLibraryListingEvent {
 }
 
 final class CadListLoadMoreEvent extends CadLibraryListingEvent {
+  final BuildContext context;
+
   final int currentPage;
 
-  const CadListLoadMoreEvent(this.currentPage);
+  const CadListLoadMoreEvent(this.context, this.currentPage);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 final class CadListPullToRefreshEvent extends CadLibraryListingEvent {
-  const CadListPullToRefreshEvent();
+  final BuildContext context;
+
+  const CadListPullToRefreshEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }

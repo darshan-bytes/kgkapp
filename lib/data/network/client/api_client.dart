@@ -96,8 +96,11 @@ class ApiClient {
 
   static const String changePassword = '$apiBaseUrl/users/change-password';
 
-  //v1/digital-catalogue/filters
+  static const String cadLibraryListing = '$apiBaseUrl/jewelleries/library/cad/filters';
+
   static const String digitalCatalogueFilters = '$apiBaseUrl/digital-catalogue/filters';
+
+  static const String designLibraryListing = '$apiBaseUrl/jewelleries/library/design/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

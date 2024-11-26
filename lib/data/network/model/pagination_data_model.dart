@@ -52,8 +52,12 @@ class PaginationData<T> {
         return WatchlistData.fromJson(json);
       case const (ProductReviewModel):
         return ProductReviewModel.fromJson(json);
+      case const (CadLibraryListItemDataModel):
+        return CadLibraryListItemDataModel.fromJson(json);
       case const (DigitalCatalogueDetails):
         return DigitalCatalogueDetails.fromJson(json);
+      case const (DesignLibraryListItemDataModel):
+        return DesignLibraryListItemDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

@@ -5,20 +5,12 @@ part 'cad_library_listing_state.dart';
 part 'cad_library_listing_event.dart';
 
 class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListingState> {
-  // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
-
-  //Controller for grid
   bool isGrid = true;
-
-  //List of cad library
-  List<B2BCustomListingDataModel> cadList = _generateCadList();
-
+  List<B2BCustomListingDataModel> cadList = [];
+  int? totalNumberOfPages;
   final TextEditingController cadLibrarySearchController = TextEditingController();
-
-  //Pagination controller
-  SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
-
+  final SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
 
   CadLibraryListingBloc() : super(CadListingInitial()) {
@@ -28,38 +20,53 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     on<CadListPullToRefreshEvent>(_onCadListPullToRefresh);
   }
 
-  void _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) {
+  Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
+    emit(CadListingReloadState());
+    clearData();
     userType = BlocProvider.of<AppBloc>(event.context).userType;
-    if (gridPaginationScrollController.isInitialised) {
-      gridPaginationScrollController.dispose();
-      gridPaginationScrollController = SmartPaginationScrollController();
-    }
     gridPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
-        add(CadListLoadMoreEvent(currentPage));
+        add(CadListLoadMoreEvent(event.context, currentPage));
       },
     );
-
-    if (!refreshCompleter.isCompleted) {
-      refreshCompleter.complete(true);
-    }
-    clearData();
+    await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     emit(CadListingLoadedState());
   }
 
-  void clearData() {
-    isGrid = true;
-    cadList = _generateCadList();
+  Future<void> _callCadLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
+    final Map<String, dynamic> params = {
+      ApiKey.limit: AppConst.pageLimit50,
+      ApiKey.page: gridPaginationScrollController.currentPage,
+    };
+    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
+        await AppRepository(context).getCadLibraryList(query: params, isLoadMore: isLoadMore);
+
+    response?.fold((error) {
+      if (error.message.isNotNullNorEmpty) {
+        Utils.showMessage(error.message);
+      }
+    }, (success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      final localList = success.dataList ?? [];
+      cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+    });
+    gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
+  }
+
+  B2BCustomListingDataModel convertToB2BCustomListingDataModel({required CadLibraryListItemDataModel sourceModel}) {
+    return B2BCustomListingDataModel(
+      id: sourceModel.sId,
+      strCADLibraryImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
+      strCADLibraryNumber: sourceModel.designCreatedDt,
+      strCADLibraryProductName: sourceModel.kgkCollectionName,
+    );
   }
 
   Future<void> _onCadListLoadMoreEvent(CadListLoadMoreEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(const CadListLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-    cadList.addAll(_generateCadList());
-    gridPaginationScrollController.isPageLoaded.complete(event.currentPage == 4);
-
-    emit(CadListLoadedMoreState(event.currentPage + 1));
+    await _callCadLibraryListingApi(context: event.context);
+    emit(CadListLoadedMoreState());
   }
 
   void _onCadChangeListingTypeEvent(CadChangeListingTypeEvent event, Emitter<CadLibraryListingState> emit) {
@@ -68,40 +75,30 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     emit(const CadChangeListingTypeState());
   }
 
-  @override
-  Future<void> close() {
-    gridPaginationScrollController.dispose();
-
-    return super.close();
-  }
-
-  static List<B2BCustomListingDataModel> _generateCadList() {
-    return List.generate(10, (index) {
-      return B2BCustomListingDataModel(
-        id: index.toString(),
-        strCADLibraryImageUrl: index % 2 == 0 ? "https://i.ibb.co/LghRtxf/Image.png" : "https://i.ibb.co/FVHfPPB/cad.png",
-        strCADLibraryNumber: 'CG-0288-23/04',
-        strCADLibraryProductName: 'Diamond Vine Ring in 18k Rose Gold',
-      );
-    });
-  }
-
   Future<void> _onCadListPullToRefresh(CadListPullToRefreshEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(CadListingReloadState());
     gridPaginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 1));
-    cadList = _generateCadList();
+    cadList.clear();
+    await _callCadLibraryListingApi(context: event.context, isLoadMore: true);
     refreshCompleter.complete(true);
     emit(CadListingLoadedState());
   }
 
-  Future<bool> pullToRefresh() async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
+  Future<bool> pullToRefresh({required BuildContext context}) async {
     refreshCompleter = Completer<bool>();
-    add(const CadListPullToRefreshEvent());
-    bool result = await refreshCompleter.future;
-    return result;
+    add(CadListPullToRefreshEvent(context: context));
+    return refreshCompleter.future;
+  }
+
+  void clearData() {
+    isGrid = true;
+    cadList.clear();
+  }
+
+  @override
+  Future<void> close() {
+    cadLibrarySearchController.dispose();
+    gridPaginationScrollController.dispose();
+    return super.close();
   }
 }
