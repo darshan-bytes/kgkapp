@@ -540,8 +540,10 @@ class AppRoutes {
 
       case designLibraryScreen:
         builder = (context) {
-          BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
-          return const DesignLibraryScreen();
+          return BlocProvider<DesignLibraryBloc>(
+            create: (context) => DesignLibraryBloc()..add(DesignLibraryInitialEvent(context: context)),
+            child: const DesignLibraryScreen(),
+          );
         };
         break;
 

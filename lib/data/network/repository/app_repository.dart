@@ -595,6 +595,12 @@ class AppRepository extends ApiService {
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<DesignLibraryListItemDataModel>>?> getDesignLibraryList({Map<String, dynamic>? query}) async {
+    var response = await getMethod<PaginationData<DesignLibraryListItemDataModel>>(ApiClient.designLibraryListing,
+        query: query, withCurrencyHeader: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

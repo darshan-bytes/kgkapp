@@ -47,82 +47,95 @@ class CadLibraryListItemDataModel {
   String? referenceId;
   String? createdAt;
   String? updatedAt;
-  List<String>? findingDetails;
+  List<FindingDetails>? findingDetails;
   List<String>? imageCadRender;
   List<StoneCardDetails>? stoneCardDetails;
   String? imageCad;
   String? businessCategory;
   String? kgkCollectionName;
-  int? crt;
-  int? gms;
+  String? crt;
+  String? gms;
   String? businessCategoryName;
   String? jewelleryTypeName;
   String? kgkCollection;
   List<String>? images;
   bool? isAddedToCart;
+  String? autoDescription;
+  String? styleNumber;
+  double? diamondWeight;
+  double? metalWeight;
+  String? contractNoSkuNo;
+  String? productDescription;
 
-  CadLibraryListItemDataModel(
-      {this.sId,
-      this.approximateModelWeight,
-      this.businessCategoryCode,
-      this.cancelHoldStatus,
-      this.customerCode,
-      this.customerCodeRefSuid,
-      this.customerCodeSuid,
-      this.customerCollection,
-      this.customerCollectionSuid,
-      this.customerStyleReferenceNumber,
-      this.designCreatedDt,
-      this.designNumber,
-      this.designerName,
-      this.imageSketch,
-      this.isExclusive,
-      this.isFindingRequired,
-      this.isHighend,
-      this.isModelApproved,
-      this.isStoneCardLocked,
-      this.isVariation,
-      this.jewelleryGroup,
-      this.jewelleryGroupRefSuid,
-      this.jewelleryGroupSuid,
-      this.jewelleryType,
-      this.kgkCollectionRefSuid,
-      this.kgkCollectionSuid,
-      this.linksCount,
-      this.msrp,
-      this.market,
-      this.marketRefSuid,
-      this.marketSuid,
-      this.miraclePlate,
-      this.modelPartsCount,
-      this.receivedDateTime,
-      this.refSuid,
-      this.refSuidStyleNumber,
-      this.salesPrice,
-      this.software,
-      this.styleCreatedDate,
-      this.subareaCode,
-      this.subareaId,
-      this.suid,
-      this.suidStyleNumber,
-      this.uom,
-      this.updatedDateTime,
-      this.referenceId,
-      this.createdAt,
-      this.updatedAt,
-      this.findingDetails,
-      this.imageCadRender,
-      this.stoneCardDetails,
-      this.imageCad,
-      this.businessCategory,
-      this.kgkCollectionName,
-      this.crt,
-      this.gms,
-      this.businessCategoryName,
-      this.jewelleryTypeName,
-      this.kgkCollection,
-      this.images,
-      this.isAddedToCart});
+  CadLibraryListItemDataModel({
+    this.sId,
+    this.approximateModelWeight,
+    this.businessCategoryCode,
+    this.cancelHoldStatus,
+    this.customerCode,
+    this.customerCodeRefSuid,
+    this.customerCodeSuid,
+    this.customerCollection,
+    this.customerCollectionSuid,
+    this.customerStyleReferenceNumber,
+    this.designCreatedDt,
+    this.designNumber,
+    this.designerName,
+    this.imageSketch,
+    this.isExclusive,
+    this.isFindingRequired,
+    this.isHighend,
+    this.isModelApproved,
+    this.isStoneCardLocked,
+    this.isVariation,
+    this.jewelleryGroup,
+    this.jewelleryGroupRefSuid,
+    this.jewelleryGroupSuid,
+    this.jewelleryType,
+    this.kgkCollectionRefSuid,
+    this.kgkCollectionSuid,
+    this.linksCount,
+    this.msrp,
+    this.market,
+    this.marketRefSuid,
+    this.marketSuid,
+    this.miraclePlate,
+    this.modelPartsCount,
+    this.receivedDateTime,
+    this.refSuid,
+    this.refSuidStyleNumber,
+    this.salesPrice,
+    this.software,
+    this.styleCreatedDate,
+    this.subareaCode,
+    this.subareaId,
+    this.suid,
+    this.suidStyleNumber,
+    this.uom,
+    this.updatedDateTime,
+    this.referenceId,
+    this.createdAt,
+    this.updatedAt,
+    this.findingDetails,
+    this.imageCadRender,
+    this.stoneCardDetails,
+    this.imageCad,
+    this.businessCategory,
+    this.kgkCollectionName,
+    this.crt,
+    this.gms,
+    this.businessCategoryName,
+    this.jewelleryTypeName,
+    this.kgkCollection,
+    this.images,
+    this.isAddedToCart,
+    this.autoDescription,
+    this.styleNumber,
+    this.diamondWeight,
+    this.metalWeight,
+    this.contractNoSkuNo,
+    this.productDescription,
+  });
 
   CadLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -173,7 +186,12 @@ class CadLibraryListItemDataModel {
     referenceId = json['reference_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    findingDetails = json['finding_details'].cast<String>();
+    if (json['finding_details'] != null) {
+      findingDetails = <FindingDetails>[];
+      json['finding_details'].forEach((v) {
+        findingDetails!.add(FindingDetails.fromJson(v));
+      });
+    }
     imageCadRender = json['image_cad_render'].cast<String>();
     if (json['stone_card_details'] != null) {
       stoneCardDetails = <StoneCardDetails>[];
@@ -184,13 +202,19 @@ class CadLibraryListItemDataModel {
     imageCad = json['image_cad'];
     businessCategory = json['business_category'];
     kgkCollectionName = json['kgk_collection_name'];
-    crt = json['crt'];
-    gms = json['gms'];
+    crt = json['crt']?.toString();
+    gms = json['gms']?.toString();
     businessCategoryName = json['business_category_name'];
     jewelleryTypeName = json['jewellery_type_name'];
     kgkCollection = json['kgk_collection'];
     images = json['images'].cast<String>();
     isAddedToCart = json['isAddedToCart'];
+    autoDescription = json['auto_description'];
+    styleNumber = json['style_number'];
+    diamondWeight = json['diamond_weight']?.toDouble();
+    metalWeight = json['metal_weight']?.toDouble();
+    contractNoSkuNo = json['contract_no_sku_no'];
+    productDescription = json['product_description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -258,6 +282,51 @@ class CadLibraryListItemDataModel {
     data['kgk_collection'] = kgkCollection;
     data['images'] = images;
     data['isAddedToCart'] = isAddedToCart;
+    return data;
+  }
+}
+
+class FindingDetails {
+  String? findingName;
+  String? findingDescription;
+  String? findingWeight;
+  String? sizeLength;
+  String? laserLinking;
+  String? tourchShoulder;
+  String? remarks;
+  String? sId;
+
+  FindingDetails(
+      {this.findingName,
+      this.findingDescription,
+      this.findingWeight,
+      this.sizeLength,
+      this.laserLinking,
+      this.tourchShoulder,
+      this.remarks,
+      this.sId});
+
+  FindingDetails.fromJson(Map<String, dynamic> json) {
+    findingName = json['FindingName'];
+    findingDescription = json['FindingDescription'];
+    findingWeight = json['FindingWeight'];
+    sizeLength = json['SizeLength'];
+    laserLinking = json['LaserLinking'];
+    tourchShoulder = json['TourchShoulder'];
+    remarks = json['Remarks'];
+    sId = json['_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['FindingName'] = findingName;
+    data['FindingDescription'] = findingDescription;
+    data['FindingWeight'] = findingWeight;
+    data['SizeLength'] = sizeLength;
+    data['LaserLinking'] = laserLinking;
+    data['TourchShoulder'] = tourchShoulder;
+    data['Remarks'] = remarks;
+    data['_id'] = sId;
     return data;
   }
 }
