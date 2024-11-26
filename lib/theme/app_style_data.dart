@@ -283,6 +283,11 @@ class LightModeTheme extends AppTheme {
 
   @override
   FilterStyle get filterStyle => FilterStyle(
+        selectionTitleStyle: interMediumBoldTextStyle,
+        rangeSliderTrackColor: colors.color303538,
+        sliderThumbBorderColor: colors.colorD3DAE0,
+        sliderThumbColor: colors.white,
+        propertySelectionSubtitleStyle: interRegularTextStyle,
         backgroundColor: colors.white,
         subFilterBackgroundColor: colors.colorF7F9FA,
         titleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
@@ -296,6 +301,7 @@ class LightModeTheme extends AppTheme {
         selectedImageColor: colors.primary,
         advancedFilterBackgroundColor: colors.colorD3DAE0,
         advancedFilterTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color303538),
+        sliderLabelTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp),
       );
 
   @override

@@ -58,7 +58,7 @@ final class AddSortFilterDataEvent extends SortFilterEvent {
   final BuildContext context;
   final List<GemstoneFilterModel> gemstoneFilterList;
 
-  const AddSortFilterDataEvent({required this.context,required this.gemstoneFilterList});
+  const AddSortFilterDataEvent({required this.context, required this.gemstoneFilterList});
 
   @override
   List<Object> get props => [gemstoneFilterList];
@@ -71,4 +71,23 @@ final class SortFilterScreenTypeEvent extends SortFilterEvent {
 
   @override
   List<Object> get props => [screenIdentifier];
+}
+
+final class SortAndFilterPriceRangeChangedEvent extends SortFilterEvent {
+  final SfRangeValues values;
+  final bool isFromTextField;
+  final bool isMin;
+  const SortAndFilterPriceRangeChangedEvent(this.values, {this.isFromTextField = false, this.isMin = true});
+
+  @override
+  List<Object> get props => [values, isFromTextField, isMin];
+}
+
+final class SortAndFilterPriceRangeEditEvent extends SortFilterEvent {
+  final bool isMin;
+
+  const SortAndFilterPriceRangeEditEvent({this.isMin = true});
+
+  @override
+  List<Object> get props => [isMin];
 }

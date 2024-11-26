@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'stone_listing_event.dart';
-
 part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
@@ -77,8 +76,20 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
       tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
 
-      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
-          context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
+      /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
+      // gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
+      //     context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
+
+      gemstoneFilterList = List.generate(
+          5,
+          (index) => GemstoneFilterModel(
+                name: index % 2 == 0 ? "Shape" : "Type",
+                slug: index % 2 == 0 ? "shape" : "type",
+                defaultValue: null,
+                inputType: index % 2 == 0 ? "checkbox" : "slider",
+                data: [],
+                id: index,
+              ));
 
       if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
         await fetchDiamondList(context, emit, true);
@@ -90,7 +101,18 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
 
-      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+      /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
+      // gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+      gemstoneFilterList = List.generate(
+          10,
+          (index) => GemstoneFilterModel(
+                name: index % 2 == 0 ? "Shape" : "Type",
+                slug: index % 2 == 0 ? "shape" : "type",
+                defaultValue: null,
+                inputType: index % 2 == 0 ? "checkbox" : "slider",
+                data: [],
+                id: index,
+              ));
 
       await fetchDiamondList(context, emit, true);
     }

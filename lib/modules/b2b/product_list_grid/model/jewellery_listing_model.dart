@@ -297,7 +297,7 @@ class JewelleryDataModel {
   String? customer;
   String? crt;
   String? gms;
-  int? rating;
+  double? rating;
   int? reviewCount;
   String? metalColor1HexCode;
   String? metalColor2HexCode;
@@ -439,7 +439,7 @@ class JewelleryDataModel {
       customer: json["customer"],
       crt: json["crt"]?.toString(),
       gms: json["gms"]?.toString(),
-      rating: json["rating"],
+      rating: json["rating"]?.toString().toDouble ?? 0.0,
       reviewCount: json["review_count"],
       metalColor1HexCode: json["metal_color_1_hex_code"],
       metalColor2HexCode: json["metal_color_2_hex_code"],
