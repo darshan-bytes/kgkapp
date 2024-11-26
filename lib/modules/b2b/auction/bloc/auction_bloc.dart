@@ -171,7 +171,6 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     await response?.fold(
       (error) {
-        // isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message);
         }
@@ -179,7 +178,6 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
       (data) async {
         diamondData = data;
         if (diamondData != null) {
-          // isErrorInLoadingData = false;
           bool isDiscounted =
               diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
           productName = diamondData!.rmDescription ?? '';
