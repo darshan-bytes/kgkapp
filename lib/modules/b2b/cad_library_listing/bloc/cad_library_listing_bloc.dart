@@ -30,7 +30,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         add(CadListLoadMoreEvent(event.context, currentPage));
       },
     );
-    await _callCadLibraryListingApi(context: event.context, isLoadMore: true);
+    await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     emit(CadListingLoadedState());
   }
 
@@ -47,7 +47,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         Utils.showMessage(error.message);
       }
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
       final localList = success.dataList ?? [];
       cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
     });
@@ -65,7 +65,6 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   Future<void> _onCadListLoadMoreEvent(CadListLoadMoreEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(const CadListLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
     await _callCadLibraryListingApi(context: event.context);
     emit(CadListLoadedMoreState());
   }

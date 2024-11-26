@@ -125,7 +125,7 @@ class DesignLibraryScreen extends StatelessWidget {
   }
 
   Widget _buildListOrGridView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
-    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state));
+    return Expanded(child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context));
   }
 
   Widget _buildGridView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
@@ -133,7 +133,7 @@ class DesignLibraryScreen extends StatelessWidget {
       key: bloc.paginationScrollController.gridKey,
       controller: bloc.paginationScrollController.scrollController,
       onRefresh: () async {
-        await bloc.pullToRefresh();
+        await bloc.pullToRefresh(context: context);
       },
       child: SmartGridView(
         items: List.generate(
@@ -150,7 +150,7 @@ class DesignLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListView(DesignLibraryBloc bloc, DesignLibraryState state) {
+  Widget _buildListView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
     return RefreshIndicator.adaptive(
       child: ListView.builder(
         key: bloc.paginationScrollController.listKey,
@@ -174,7 +174,7 @@ class DesignLibraryScreen extends StatelessWidget {
         },
       ),
       onRefresh: () async {
-        await bloc.pullToRefresh();
+        await bloc.pullToRefresh(context: context);
       },
     );
   }
