@@ -460,3 +460,4 @@ export 'package:kgk/modules/b2b/cad_library_listing/model/cad_library_list_item_
 export 'package:kgk/modules/b2b/digital_catalogue/model/digital_catalogue_details.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:kgk/app/bloc_event_debouncer.dart';
+export 'package:kgk/modules/b2b/design_library/model/design_library_list_item_response_model.dart';
