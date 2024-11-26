@@ -12,6 +12,7 @@ class AuctionListModel {
   String? percentageOff;
   String? redirectTo;
   String? redirectionType;
+  String? productId;
 
   AuctionListModel({
     this.id,
@@ -25,5 +26,6 @@ class AuctionListModel {
     this.percentageOff,
     this.redirectTo,
     this.redirectionType,
+    this.productId,
   });
 }

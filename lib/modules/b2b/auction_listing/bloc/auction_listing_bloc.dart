@@ -62,6 +62,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
             bidAmount: auctionListingModel.data[i].bidAmount?.setCurrency,
             bidPlacedOn: auctionListingModel.data[i].createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
             type: auctionListingModel.data[i].type,
+            productId: auctionListingModel.data[i].productId,
           ));
         }
       });

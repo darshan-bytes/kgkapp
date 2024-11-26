@@ -39,4 +39,8 @@ class AppConst {
 
   static const String sortValueAsc = "asc";
   static const String sortValueDesc = "desc";
+
+  static const String  dateTimeKey = "date_time";
+  static const String  priceKey = "price";
+  static const String  isMyBidKey = "is_my_bid";
 }

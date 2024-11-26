@@ -11,6 +11,13 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   int current = 0;
   bool isCompare = false;
   bool isMyBidPlaced = false;
+  bool isInitialised = false;
+
+  DiamondDataModel? diamondData;
+  ProductDetailsModel? productDetails;
+  String productName = '';
+  String startingBidPrice = '';
+  bool isBidPlaced = true;
 
   Timer? _timer;
   Duration auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
@@ -20,28 +27,11 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   final ScrollController listScrollController = ScrollController();
   final ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey();
+  AuctionListModel auctionModel = AuctionListModel();
 
-  final List<String> imgList = [
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-  ];
+  List<String> imgList = [];
 
-  List<Map<String, dynamic>> recentBidList = [
-    {"date_time": "17/03/23 10:00 PM", "price": "\$9000.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$8500.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$8000.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$7500.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$7000.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$6500.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$6000.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$5500.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$5000.00"},
-    {"date_time": "17/03/23 10:00 PM", "price": "\$4500.00"},
-  ];
+  List<Map<String, dynamic>> recentBidList = [];
 
   List<ProductDetailsModel> youMayAlisLikeProductList = List.generate(
     8,
@@ -66,6 +56,11 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
 
   void _onInitEvent(AuctionInitialEvent event, Emitter<AuctionState> emit) async {
     emit(const AuctionReloadState());
+    auctionModel = event.context.routesData?[RoutesData.auctionModelData];
+    if (!isInitialised && auctionModel.productId != null) {
+      isInitialised = true;
+      await getDiamondsDetails(emit, event.context, auctionModel.productId!);
+    }
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     resetData();
     emit(AuctionInitial());
@@ -75,7 +70,6 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     _timer?.cancel();
     bidAmountController.clear();
     isCompare = false;
-    auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
     isMyBidPlaced = false;
     add(const AuctionStartTimerEvent());
   }
@@ -113,12 +107,29 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     emit(const AuctionTimerCompletedState());
   }
 
-  void _onPlaceBidEvent(AuctionPlaceBidEvent event, Emitter<AuctionState> emit) {
+  Future<void> _onPlaceBidEvent(AuctionPlaceBidEvent event, Emitter<AuctionState> emit) async {
     emit(const AuctionReloadState());
-    isMyBidPlaced = true;
-    bidAmountController.clear();
-    _scrollToRecentBids();
+    await createBidForAuction(event.context);
     emit(const AuctionPlaceBidState());
+  }
+
+  /// Create bid for auction
+  Future<void> createBidForAuction(BuildContext context) async {
+    if (auctionModel.id == null) return;
+    Map<String, dynamic> body = {ApiKey.auctionId: int.parse(auctionModel.id!), ApiKey.bidAmount: bidAmountController.text};
+    await AppRepository(context).createBidForAuction(body).then(
+          (r) => r?.fold(
+            (l) {
+              Utils.showMessage(l.message);
+            },
+            (r) {
+              Utils.showMessage(r.message);
+              isMyBidPlaced = true;
+              bidAmountController.clear();
+              _scrollToRecentBids();
+            },
+          ),
+        );
   }
 
   String formatDuration(Duration duration) {
@@ -154,5 +165,75 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
       duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
+  }
+
+  Future<void> getDiamondsDetails(Emitter<AuctionState> emit, BuildContext context, String productId) async {
+    Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
+    await response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) async {
+        diamondData = data;
+        if (diamondData != null) {
+          bool isDiscounted =
+              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
+          productName = diamondData!.rmDescription ?? '';
+          imgList = diamondData!.image.map((e) => e.url ?? '').toList();
+          productDetails = ProductDetailsModel(
+            productId: productId,
+            name: productName,
+            offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
+            originalPrice: diamondData!.finalPrice?.setCurrency,
+            discountPercentage:
+                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
+            productSku: diamondData!.lotCode,
+            reviewCount: diamondData!.reviewCount,
+            rating: diamondData!.rating?.toDouble(),
+            commodity: Commodity.diamond,
+            isFavourite: diamondData?.isFavorite ?? false,
+            wishlistId: diamondData?.wishlistID,
+            auctionId: diamondData?.auctionId,
+          );
+
+          if (productDetails != null && productDetails?.auctionId != null) {
+            await fetchAuctionDetails(emit, context, productDetails!.auctionId!);
+          }
+        }
+      },
+    );
+  }
+
+  Future<void> fetchAuctionDetails(Emitter<AuctionState> emit, BuildContext context, String auctionId) async {
+    Either<ErrorResponse, AuctionDataModel>? response = await AppRepository(context).getAuctionDetails(id: auctionId);
+    await response?.fold((error) => Utils.showMessage(error.message), (data) {
+      startingBidPrice = data.startingPrice?.setCurrency ?? '';
+
+      // Determine if any bid has `isMyBid == true` before the loop
+      isBidPlaced = data.bids.any((bid) => bid.isMyBid == true);
+
+      // Populate `recentBidList` by iterating over `data.bids`
+      for (int i = 0; i < data.bids.length; i++) {
+        recentBidList.add({
+          AppConst.dateTimeKey: data.bids[i].createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
+          AppConst.priceKey: data.bids[i].bidAmount?.setCurrency,
+          AppConst.isMyBidKey: data.bids[i].isMyBid,
+        });
+      }
+
+      // Emit the state after processing all bids
+      emit(const AuctionPlaceBidState());
+
+      DateTime currentDate = DateTime.now(); // Current date
+      DateTime endDate = DateTime.parse(data.endDate.toString()); // Provided end date
+
+      Duration duration = endDate.difference(currentDate); // Calculate duration
+
+      auctionEndDuration = duration;
+      isMyBidPlaced = false;
+      add(const AuctionStartTimerEvent());
+    });
   }
 }
