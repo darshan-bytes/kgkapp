@@ -20,7 +20,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   bool isBidPlaced = true;
 
   Timer? _timer;
-  Duration auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
+  Duration auctionEndDuration = Duration.zero;
 
   TextEditingController bidAmountController = TextEditingController();
   final CarouselSliderController controller = CarouselSliderController();
@@ -171,7 +171,6 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
     Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     await response?.fold(
       (error) {
-        // isErrorInLoadingData = true;
         if (error.message.isNotNullNorEmpty) {
           Utils.showMessage(error.message);
         }
@@ -179,7 +178,6 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
       (data) async {
         diamondData = data;
         if (diamondData != null) {
-          // isErrorInLoadingData = false;
           bool isDiscounted =
               diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
           productName = diamondData!.rmDescription ?? '';

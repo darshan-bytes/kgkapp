@@ -2,7 +2,9 @@
 class ApiClient {
   ApiClient._();
 
-  static const String apiBaseUrl = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
+  static const String apiBaseUrl = qaApiBase;
   static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
   static const String strapiHomeApiUrl =
