@@ -34,10 +34,8 @@ final class CadChangeListingTypeState extends CadLibraryListingState {
 }
 
 final class CadListLoadedMoreState extends CadLibraryListingState {
-  final int currentPage;
-
-  const CadListLoadedMoreState(this.currentPage);
+  const CadListLoadedMoreState();
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [];
 }

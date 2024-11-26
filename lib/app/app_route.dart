@@ -485,8 +485,10 @@ class AppRoutes {
 
       case cadLibraryListingPage:
         builder = (context) {
-          BlocProvider.of<CadLibraryListingBloc>(context).add(InitialCadListingEvent(context: context));
-          return const CadLibraryListingScreen();
+          return BlocProvider<CadLibraryListingBloc>(
+            create: (context) => CadLibraryListingBloc()..add(InitialCadListingEvent(context: context)),
+            child: const CadLibraryListingScreen(),
+          );
         };
         break;
 
@@ -538,8 +540,10 @@ class AppRoutes {
 
       case designLibraryScreen:
         builder = (context) {
-          BlocProvider.of<DesignLibraryBloc>(context).add(const DesignLibraryInitialEvent());
-          return const DesignLibraryScreen();
+          return BlocProvider<DesignLibraryBloc>(
+            create: (context) => DesignLibraryBloc()..add(DesignLibraryInitialEvent(context: context)),
+            child: const DesignLibraryScreen(),
+          );
         };
         break;
 

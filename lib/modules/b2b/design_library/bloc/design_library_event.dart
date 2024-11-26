@@ -5,10 +5,12 @@ sealed class DesignLibraryEvent extends Equatable {
 }
 
 final class DesignLibraryInitialEvent extends DesignLibraryEvent {
-  const DesignLibraryInitialEvent();
+  final BuildContext context;
+
+  const DesignLibraryInitialEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class DesignLibraryChangeListingTypeEvent extends DesignLibraryEvent {
@@ -21,17 +23,20 @@ final class DesignLibraryChangeListingTypeEvent extends DesignLibraryEvent {
 }
 
 final class DesignLibraryLoadMoreEvent extends DesignLibraryEvent {
+  final BuildContext context;
   final int currentPage;
 
-  const DesignLibraryLoadMoreEvent(this.currentPage);
+  const DesignLibraryLoadMoreEvent({required this.context, required this.currentPage});
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 final class DesignLibraryPullToRefreshEvent extends DesignLibraryEvent {
-  const DesignLibraryPullToRefreshEvent();
+  final BuildContext context;
+
+  const DesignLibraryPullToRefreshEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }

@@ -215,7 +215,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
             shape: gemstoneDatumList[index].shape,
             fluorescence: gemstoneDatumList[index].fluorescence,
             labs: gemstoneDatumList[index].labs,
-            lsp: gemstoneDatumList[index].lsp,
+            lsp: gemstoneDatumList[index].lsp?.toString(),
             color: gemstoneDatumList[index].color,
             clarity: gemstoneDatumList[index].clarity,
             cut: gemstoneDatumList[index].cut,

@@ -456,7 +456,9 @@ export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_list_da
 export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/company/model/csc_details_model.dart';
 export 'package:kgk/modules/b2b/auction_listing/model/auction_listing_model.dart';
+export 'package:kgk/modules/b2b/cad_library_listing/model/cad_library_list_item_response_model.dart';
 export 'package:kgk/modules/b2b/auction/model/auction_data_model.dart';
 export 'package:kgk/modules/b2b/digital_catalogue/model/digital_catalogue_details.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:kgk/app/bloc_event_debouncer.dart';
+export 'package:kgk/modules/b2b/design_library/model/design_library_list_item_response_model.dart';
