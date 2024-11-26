@@ -198,7 +198,12 @@ class CadLibraryListingScreen extends StatelessWidget {
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder: (context) => const SortScreen(),
-              );
+              ).then((onValue) {
+                if (onValue != null) {
+                  bloc.add(CadSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
+                }
+              });
+              ;
             },
           );
         } else {

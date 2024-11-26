@@ -13,11 +13,15 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   final SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
 
+  String sortKey = AppConst.sortKeyNERPBS;
+  String sortValue = AppConst.sortValueDesc;
+
   CadLibraryListingBloc() : super(CadListingInitial()) {
     on<InitialCadListingEvent>(_onInitialCadLibraryListEvent);
     on<CadListLoadMoreEvent>(_onCadListLoadMoreEvent);
     on<CadChangeListingTypeEvent>(_onCadChangeListingTypeEvent);
     on<CadListPullToRefreshEvent>(_onCadListPullToRefresh);
+    on<CadSortEvent>(_onCadSortEvent);
   }
 
   Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
@@ -38,6 +42,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     final Map<String, dynamic> params = {
       ApiKey.limit: AppConst.pageLimit50,
       ApiKey.page: gridPaginationScrollController.currentPage,
+      ApiKey.sortValue: sortValue,
+      ApiKey.sortKey: sortKey
     };
     Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
         await AppRepository(context).getCadLibraryList(query: params, isLoadMore: isLoadMore);
@@ -58,8 +64,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     return B2BCustomListingDataModel(
       id: sourceModel.sId,
       strCADLibraryImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
-      strCADLibraryNumber: sourceModel.designCreatedDt,
-      strCADLibraryProductName: sourceModel.kgkCollectionName,
+      strCADLibraryNumber: sourceModel.styleNumber,
+      strCADLibraryProductName: sourceModel.autoDescription,
     );
   }
 
@@ -82,6 +88,14 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     await _callCadLibraryListingApi(context: event.context, isLoadMore: true);
     refreshCompleter.complete(true);
     emit(CadListingLoadedState());
+  }
+
+  // _onCadSortEvent
+  Future<void> _onCadSortEvent(CadSortEvent event, Emitter<CadLibraryListingState> emit) async {
+    emit(CadListingReloadState());
+    sortKey = event.sortData.sortKey;
+    sortValue = event.sortData.sortValue;
+    await pullToRefresh(context: event.context);
   }
 
   Future<bool> pullToRefresh({required BuildContext context}) async {

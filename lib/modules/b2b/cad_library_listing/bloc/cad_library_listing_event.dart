@@ -41,3 +41,13 @@ final class CadListPullToRefreshEvent extends CadLibraryListingEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class CadSortEvent extends CadLibraryListingEvent {
+  final BuildContext context;
+  final SortData sortData;
+
+  const CadSortEvent({required this.context, required this.sortData});
+
+  @override
+  List<Object> get props => [context, sortData];
+}
