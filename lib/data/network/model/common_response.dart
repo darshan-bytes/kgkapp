@@ -107,6 +107,8 @@ class CommonResponse<T> {
         return UserIdDetails.fromJson(json);
       case const (PaginationData<CadLibraryListItemDataModel>):
         return PaginationData<CadLibraryListItemDataModel>.fromJson(json);
+      case const (PaginationData<DigitalCatalogueDetails>):
+        return PaginationData<DigitalCatalogueDetails>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

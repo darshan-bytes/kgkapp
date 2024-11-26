@@ -923,4 +923,5 @@ class APPStrings {
   static const String passwordsDoNotMatch = 'mob_passwords_do_not_match';
   static const String deleteAddress = 'mob_delete_address';
   static const String deleteAddressMsg = 'mob_delete_address_msg';
+  static const String noCatalogueFound = 'mob_no_catalogue_found';
 }

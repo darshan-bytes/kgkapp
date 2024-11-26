@@ -583,6 +583,18 @@ class AppRepository extends ApiService {
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<DigitalCatalogueDetails>>(ApiClient.digitalCatalogueFilters, body);
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

@@ -54,6 +54,8 @@ class PaginationData<T> {
         return ProductReviewModel.fromJson(json);
       case const (CadLibraryListItemDataModel):
         return CadLibraryListItemDataModel.fromJson(json);
+      case const (DigitalCatalogueDetails):
+        return DigitalCatalogueDetails.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

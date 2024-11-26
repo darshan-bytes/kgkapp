@@ -22,3 +22,17 @@ final class DigitalCatalogueLoadedState extends DigitalCatalogueState {
   @override
   List<Object> get props => [];
 }
+
+final class DigitalCatalogueLoadingMoreState extends DigitalCatalogueState {
+  const DigitalCatalogueLoadingMoreState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class DigitalCatalogueLoadMoreState extends DigitalCatalogueState {
+  const DigitalCatalogueLoadMoreState();
+
+  @override
+  List<Object> get props => [];
+}

@@ -93,7 +93,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   void clearData() {
     isGrid = true;
-    cadList = [];
+    cadList.clear();
   }
 
   @override

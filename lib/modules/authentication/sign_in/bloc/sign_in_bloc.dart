@@ -17,8 +17,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       passwordController.text = "Test@123";
 
       //B2B
-      // emailController.text = "rakesh.abjewellers+18@yopmail.com";
-      // passwordController.text = "123";
+      emailController.text = "joseph.murphy@yopmail.com";
+      passwordController.text = "Admin@123";
     }
     on<SignInButtonPressedEvent>(signInApiCall);
   }
