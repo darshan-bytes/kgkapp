@@ -45,6 +45,7 @@ class ProductDetailsModel {
   bool isForAuction;
   bool isCommentVisible;
   String? auctionId;
+  bool isAddedToCart;
 
   ProductDetailsModel({
     this.productId,
@@ -91,7 +92,107 @@ class ProductDetailsModel {
     this.isForAuction = false,
     this.isCommentVisible = false,
     this.auctionId,
+    this.isAddedToCart = false,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductDetailsModel &&
+          runtimeType == other.runtimeType &&
+          productId == other.productId &&
+          name == other.name &&
+          offerPrice == other.offerPrice &&
+          originalPrice == other.originalPrice &&
+          imageUrl == other.imageUrl &&
+          discountPercentage == other.discountPercentage &&
+          gram == other.gram &&
+          diamond == other.diamond &&
+          productQuality == other.productQuality &&
+          productQuantity == other.productQuantity &&
+          cartProductQuality == other.cartProductQuality &&
+          cartProductQuantity == other.cartProductQuantity &&
+          isSelectedProduct == other.isSelectedProduct &&
+          isDiamondProduct == other.isDiamondProduct &&
+          diamondClarityChart == other.diamondClarityChart &&
+          productInfoClarityChat == other.productInfoClarityChat &&
+          isOutOfStock == other.isOutOfStock &&
+          company == other.company &&
+          productSku == other.productSku &&
+          showMore == other.showMore &&
+          ctsOrGms == other.ctsOrGms &&
+          rappaportPrice == other.rappaportPrice &&
+          priceCts == other.priceCts &&
+          discountPrice == other.discountPrice &&
+          finalPrice == other.finalPrice &&
+          lotCode == other.lotCode &&
+          shape == other.shape &&
+          fluorescence == other.fluorescence &&
+          labs == other.labs &&
+          lsp == other.lsp &&
+          color == other.color &&
+          clarity == other.clarity &&
+          cut == other.cut &&
+          certificateFile == other.certificateFile &&
+          openDnaUrl == other.openDnaUrl &&
+          reviewCount == other.reviewCount &&
+          rating == other.rating &&
+          brandName == other.brandName &&
+          commodity == other.commodity &&
+          isFavourite == other.isFavourite &&
+          wishlistId == other.wishlistId &&
+          isForAuction == other.isForAuction &&
+          isCommentVisible == other.isCommentVisible &&
+          auctionId == other.auctionId &&
+          isAddedToCart == other.isAddedToCart;
+
+  @override
+  int get hashCode =>
+      productId.hashCode ^
+      name.hashCode ^
+      offerPrice.hashCode ^
+      originalPrice.hashCode ^
+      imageUrl.hashCode ^
+      discountPercentage.hashCode ^
+      gram.hashCode ^
+      diamond.hashCode ^
+      productQuality.hashCode ^
+      productQuantity.hashCode ^
+      cartProductQuality.hashCode ^
+      cartProductQuantity.hashCode ^
+      isSelectedProduct.hashCode ^
+      isDiamondProduct.hashCode ^
+      diamondClarityChart.hashCode ^
+      productInfoClarityChat.hashCode ^
+      isOutOfStock.hashCode ^
+      company.hashCode ^
+      productSku.hashCode ^
+      showMore.hashCode ^
+      ctsOrGms.hashCode ^
+      rappaportPrice.hashCode ^
+      priceCts.hashCode ^
+      discountPrice.hashCode ^
+      finalPrice.hashCode ^
+      lotCode.hashCode ^
+      shape.hashCode ^
+      fluorescence.hashCode ^
+      labs.hashCode ^
+      lsp.hashCode ^
+      color.hashCode ^
+      clarity.hashCode ^
+      cut.hashCode ^
+      certificateFile.hashCode ^
+      openDnaUrl.hashCode ^
+      reviewCount.hashCode ^
+      rating.hashCode ^
+      brandName.hashCode ^
+      commodity.hashCode ^
+      isFavourite.hashCode ^
+      wishlistId.hashCode ^
+      isForAuction.hashCode ^
+      isCommentVisible.hashCode ^
+      auctionId.hashCode ^
+      isAddedToCart.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {

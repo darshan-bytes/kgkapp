@@ -10,7 +10,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
-  List<GemstoneFilterModel> gemstoneFilterList = [];
+  List<FilterOptionModel> filterList = [];
 
   int? totalNumberOfPages;
 
@@ -77,12 +77,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
 
       /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
-      // gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
+      // filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(
       //     context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
 
-      gemstoneFilterList = List.generate(
+      filterList = List.generate(
           5,
-          (index) => GemstoneFilterModel(
+          (index) => FilterOptionModel(
                 name: index % 2 == 0 ? "Shape" : "Type",
                 slug: index % 2 == 0 ? "shape" : "type",
                 defaultValue: null,
@@ -102,10 +102,10 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabTwoTitle = APPStrings.looseDiamond.tr;
 
       /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
-      // gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
-      gemstoneFilterList = List.generate(
+      // filterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+      filterList = List.generate(
           10,
-          (index) => GemstoneFilterModel(
+          (index) => FilterOptionModel(
                 name: index % 2 == 0 ? "Shape" : "Type",
                 slug: index % 2 == 0 ? "shape" : "type",
                 defaultValue: null,

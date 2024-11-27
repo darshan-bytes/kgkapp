@@ -185,6 +185,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
       buildWhen: (previous, current) => current is ProductCompareToggleState,
       builder: (context, state) {
+        final compareProductBloc = BlocProvider.of<CompareProductBloc>(context);
         return bloc.isCompare
             ? ElevatedButton(
                 onPressed: () {
@@ -208,7 +209,13 @@ class ProductDetailsScreen extends StatelessWidget {
                         color: style.compareCountBGColor,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
-                      child: SmartText('3', style: AppTheme.of(context).primaryButtonStyle.titleStyle),
+                      child: BlocBuilder<CompareProductBloc, CompareProductState>(
+                        buildWhen: (previous, current) => current is CompareProductAddedState,
+                        builder: (context, state) {
+                          return SmartText(compareProductBloc.productIdList.length.toString(),
+                              style: AppTheme.of(context).primaryButtonStyle.titleStyle);
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -500,7 +507,7 @@ class ProductDetailsScreen extends StatelessWidget {
         return SmartCheckbox(
           value: bloc.isCompare,
           onChanged: (value) {
-            bloc.add(const ToggleCompareProductEvent());
+            bloc.add(ToggleCompareProductEvent(context: context));
           },
           label: APPStrings.compareProduct.tr,
           labelStyle: style.compareProductStyle,

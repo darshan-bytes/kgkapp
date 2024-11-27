@@ -112,6 +112,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   List<ReviewDataModel> reviewList = [];
 
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
+  StreamSubscription<CompareProductState>? compareProductStream;
 
   ProductDetailsBloc() : super(ProductDetailsInitialState()) {
     on<LoadProductDetailsEvent>(_onLoadProductDetails);
@@ -127,6 +128,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   @override
   Future<void> close() async {
     wishlistUpdaterServiceStream?.cancel();
+    compareProductStream?.cancel();
     super.close();
   }
 
@@ -134,6 +136,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     if (isInitialized) return;
     isInitialized = true;
     emit(ProductDetailsLoadingState());
+    initCompareProductChangesStream(event.context);
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
 
@@ -145,6 +148,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       suggestedProductList.clear();
       await getDiamondsDetails(event.context, productId);
       if (productDetails != null) {
+        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
         emit(ProductDetailsLoadedState(productDetails!));
       }
       await getDiamondYouMayLike(event.context, productId);
@@ -156,6 +160,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       recentlyViewedProductList.clear();
       await getGemstoneDetails(event.context, productId);
       if (productDetails != null) {
+        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
         emit(ProductDetailsLoadedState(productDetails!));
       }
       await getGemstoneYouMayLike(event.context, productId);
@@ -167,6 +172,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
       await getProductDetails(event.context, productId);
       if (productDetails != null) {
+        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
         emit(ProductDetailsLoadedState(productDetails!));
       }
       await productReviewsFilter(event.context, productId);
@@ -547,8 +553,27 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {
-    isCompare = !isCompare;
-    emit(ProductCompareToggleState(isCompare));
+    try {
+      if (productDetails == null) return;
+      if (event.context != null) {
+        if (!isCompare) {
+          BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductAddProductEvent(
+            context: event.context!,
+            product: productDetails!,
+          ));
+        } else {
+          BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductRemoveProductEvent(
+            context: event.context!,
+            productId: productDetails?.productId ?? '',
+          ));
+        }
+      } else if (event.isCompare != null) {
+        isCompare = event.isCompare!;
+        emit(ProductCompareToggleState(isCompare));
+      }
+    } catch (e) {
+      printWrapped("Error in _onToggleCompareProduct: $e");
+    }
   }
 
   void _onOnProductCustomizationChange(ProductCustomizationChangeEvent event, Emitter<ProductDetailsState> emit) {
@@ -683,5 +708,18 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> onTapShareLink({required BuildContext context}) async {
     context.pop();
     await Share.share("https://dev.kgk.magnetoinfotech.com");
+  }
+
+  void initCompareProductChangesStream(BuildContext context) {
+    compareProductStream = BlocProvider.of<CompareProductBloc>(context).stream.listen((state) {
+      if (state is CompareProductAddedState) {
+        if (state.productIdList.contains(productDetails?.productId)) {
+          isCompare = true;
+        } else {
+          isCompare = false;
+        }
+        add(ToggleCompareProductEvent(isCompare: isCompare));
+      }
+    });
   }
 }

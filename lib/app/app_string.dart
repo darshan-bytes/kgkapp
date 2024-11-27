@@ -928,4 +928,6 @@ class APPStrings {
   static const String min = 'min';
   static const String max = 'max';
   static const String maxRangeShouldBeLessThanX = 'mob_max_range_should_be_less_than_x';
+  static const String cantCompareDifferentCommodities = 'mob_cant_compare_different_commodities';
+  static const String differentCommoditiesSelected = 'mob_different_commodities_selected';
 }

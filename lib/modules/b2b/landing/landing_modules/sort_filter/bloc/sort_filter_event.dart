@@ -56,7 +56,7 @@ final class ApplyFilterDataEvent extends SortFilterEvent {
 
 final class AddSortFilterDataEvent extends SortFilterEvent {
   final BuildContext context;
-  final List<GemstoneFilterModel> gemstoneFilterList;
+  final List<FilterOptionModel> gemstoneFilterList;
 
   const AddSortFilterDataEvent({required this.context, required this.gemstoneFilterList});
 

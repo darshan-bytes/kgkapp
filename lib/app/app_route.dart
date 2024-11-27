@@ -208,7 +208,10 @@ class AppRoutes {
         break;
 
       case compareProductPage:
-        builder = (context) => const CompareProductScreen();
+        builder = (context) {
+          BlocProvider.of<CompareProductBloc>(context).add(CompareProductGenerateTableEvent(context: context));
+          return const CompareProductScreen();
+        };
         break;
 
       case paymentPage:
@@ -738,7 +741,8 @@ enum RoutesData {
   collectionName,
   productNavigation,
   sortData,
-  auctionModelData
+  auctionModelData,
+  isContinueClearCompare,
 }
 
 enum ScreenIdentifier {

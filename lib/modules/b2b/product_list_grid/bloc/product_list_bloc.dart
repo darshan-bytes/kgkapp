@@ -39,7 +39,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
-  List<GemstoneFilterModel> gemstoneFilterList = [];
+  List<FilterOptionModel> gemstoneFilterList = [];
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -124,7 +124,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       ];
 
       /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
-      // gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getGemstoneFilterOptionList(event.context, 'jewellery');
+      // gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, 'jewellery');
       await fetchJewelleriesList(event.context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
