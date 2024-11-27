@@ -87,8 +87,8 @@ class CommonResponse<T> {
         return CollectionDataModel.fromJson(json);
       case const (MyBagDataModel):
         return MyBagDataModel.fromJson(json);
-      case const (GemstoneFilterModel):
-        return GemstoneFilterModel.fromJson(json);
+      case const (FilterOptionModel):
+        return FilterOptionModel.fromJson(json);
       case const (SecondaryFilterModel):
         return SecondaryFilterModel.fromJson(json);
       case const (BagListDataModel):
@@ -113,6 +113,8 @@ class CommonResponse<T> {
         return PaginationData<DesignLibraryListItemDataModel>.fromJson(json);
       case const (AuctionDataModel):
         return AuctionDataModel.fromJson(json);
+      case const (CompareProductDetails):
+        return CompareProductDetails.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

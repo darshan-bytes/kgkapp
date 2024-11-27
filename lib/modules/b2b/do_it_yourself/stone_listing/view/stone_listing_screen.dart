@@ -37,7 +37,7 @@ class StoneListingScreen extends StatelessWidget {
               controller: diamondListingBloc.paginationScrollController.controller,
               onFilterTap: () {
                 BlocProvider.of<DiamondFilterBloc>(context)
-                    .add(AddFilterDataEvent(context: context, gemstoneFilterList: diamondListingBloc.gemstoneFilterList));
+                    .add(AddFilterDataEvent(context: context, gemstoneFilterList: diamondListingBloc.filterList));
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   builder: (context) => DiamondFilterScreen(onApply: () {}),

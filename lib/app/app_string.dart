@@ -924,4 +924,10 @@ class APPStrings {
   static const String deleteAddress = 'mob_delete_address';
   static const String deleteAddressMsg = 'mob_delete_address_msg';
   static const String noCatalogueFound = 'mob_no_catalogue_found';
+  static const String pleaseEnterValidPriceRangeX = 'mob_please_enter_valid_price_range_x';
+  static const String min = 'min';
+  static const String max = 'max';
+  static const String maxRangeShouldBeLessThanX = 'mob_max_range_should_be_less_than_x';
+  static const String cantCompareDifferentCommodities = 'mob_cant_compare_different_commodities';
+  static const String differentCommoditiesSelected = 'mob_different_commodities_selected';
 }

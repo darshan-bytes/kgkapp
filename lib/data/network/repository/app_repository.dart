@@ -505,9 +505,9 @@ class AppRepository extends ApiService {
   }
 
   // For Gemstone Filter Option
-  Future<Either<ErrorResponse, List<GemstoneFilterModel>>?> fetchGemstoneFilterOptionList({required String type}) async {
+  Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({required String type}) async {
     context.setAppLoading(true);
-    var response = await getMethod<GemstoneFilterModel>(ApiClient.gemstoneFilterOptions(type));
+    var response = await getMethod<FilterOptionModel>(ApiClient.filterOptions(type));
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -601,6 +601,13 @@ class AppRepository extends ApiService {
     if (!isLoadMore) {
       context.setAppLoading(false);
     }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<Map<String, dynamic>>>?> compareProducts({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.compareProducts, body);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

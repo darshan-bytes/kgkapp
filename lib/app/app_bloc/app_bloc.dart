@@ -273,16 +273,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   // Get gemstone filter option list
-  Future<List<GemstoneFilterModel>> getGemstoneFilterOptionList(BuildContext context, String type) async {
-    List<GemstoneFilterModel> gemstoneFilterList = [];
-    Either<ErrorResponse, List<GemstoneFilterModel>>? response;
-    response = await AppRepository(context).fetchGemstoneFilterOptionList(type: type);
+  Future<List<FilterOptionModel>> getFilterOptionList(BuildContext context, String type) async {
+    List<FilterOptionModel> filterList = [];
+    Either<ErrorResponse, List<FilterOptionModel>>? response;
+    response = await AppRepository(context).fetchFilterOptionList(type: type);
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (r) {
-      gemstoneFilterList = r;
+      filterList = r;
     });
-    return gemstoneFilterList;
+    return filterList;
   }
 
   Future<List<CountryStateModel>> getCountries(BuildContext context, {bool isShowLoader = true}) async {

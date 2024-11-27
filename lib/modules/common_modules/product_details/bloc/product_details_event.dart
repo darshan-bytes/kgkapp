@@ -14,10 +14,18 @@ final class LoadProductDetailsEvent extends ProductDetailsEvent {
 }
 
 final class ToggleCompareProductEvent extends ProductDetailsEvent {
-  const ToggleCompareProductEvent();
+  final bool? isCompare;
+  final BuildContext? context;
+
+  const ToggleCompareProductEvent({this.context, this.isCompare});
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [context, isCompare];
+
+  @override
+  String toString() {
+    return 'ToggleCompareProductEvent{isCompare: $isCompare, context: $context}';
+  }
 }
 
 final class ProductCustomizationChangeEvent extends ProductDetailsEvent {
