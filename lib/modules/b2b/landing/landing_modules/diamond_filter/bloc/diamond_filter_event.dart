@@ -62,3 +62,22 @@ final class AddFilterDataEvent extends DiamondFilterEvent {
   @override
   List<Object> get props => [context, gemstoneFilterList];
 }
+
+final class FilterPriceRangeChangedEvent extends DiamondFilterEvent {
+  final SfRangeValues values;
+  final bool isFromTextField;
+  final bool isMin;
+  const FilterPriceRangeChangedEvent(this.values, {this.isFromTextField = false, this.isMin = true});
+
+  @override
+  List<Object> get props => [values, isFromTextField, isMin];
+}
+
+final class FilterPriceRangeEditEvent extends DiamondFilterEvent {
+  final bool isMin;
+
+  const FilterPriceRangeEditEvent({this.isMin = true});
+
+  @override
+  List<Object> get props => [isMin];
+}

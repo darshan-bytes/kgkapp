@@ -168,4 +168,5 @@ class Attributes {
   static const String educationRingSizerPage = 'ring_sizers';
   static const String educationLabGrownDiamondPage = 'lab_grown_diamonds';
   static const String findAStorePage = 'Find_a_store';
+  static const String checkbox = 'checkbox';
 }

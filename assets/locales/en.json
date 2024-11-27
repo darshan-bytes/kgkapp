@@ -733,6 +733,10 @@
   "mob_delete_address": "Delete address",
   "mob_delete_address_msg": "Are you sure you want to delete this address?",
   "mob_no_catalogue_found": "No catalogue found",
+  "mob_please_enter_valid_price_range_x": "Please enter price range between {#} to {#}",
+  "mob_min": "Min",
+  "mob_max": "Max",
+  "mob_max_range_should_be_less_than_x": "Max range should be less than {#}",
   "mob_cant_compare_different_commodities": "You cannot compare products from different categories. Do you want to proceed? This will remove the products from the previous category.",
   "mob_different_commodities_selected": "Different commodities selected"
 }
