@@ -1,5 +1,5 @@
-class GemstoneFilterModel {
-  GemstoneFilterModel({
+class FilterOptionModel {
+  FilterOptionModel({
     required this.name,
     required this.slug,
     required this.defaultValue,
@@ -15,7 +15,7 @@ class GemstoneFilterModel {
   final dynamic data;
   final int? id;
 
-  GemstoneFilterModel copyWith({
+  FilterOptionModel copyWith({
     String? name,
     String? slug,
     dynamic defaultValue,
@@ -23,7 +23,7 @@ class GemstoneFilterModel {
     dynamic data,
     int? id,
   }) {
-    return GemstoneFilterModel(
+    return FilterOptionModel(
       name: name ?? this.name,
       slug: slug ?? this.slug,
       defaultValue: defaultValue ?? this.defaultValue,
@@ -33,8 +33,8 @@ class GemstoneFilterModel {
     );
   }
 
-  factory GemstoneFilterModel.fromJson(Map<String, dynamic> json){
-    return GemstoneFilterModel(
+  factory FilterOptionModel.fromJson(Map<String, dynamic> json) {
+    return FilterOptionModel(
       name: json["name"],
       slug: json["slug"],
       defaultValue: json["default_value"],
@@ -45,16 +45,16 @@ class GemstoneFilterModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "slug": slug,
-    "default_value": defaultValue,
-    "input_type": inputType,
-    "data": data.map((x) => x).toList(),
-    "id": id,
-  };
+        "name": name,
+        "slug": slug,
+        "default_value": defaultValue,
+        "input_type": inputType,
+        "data": data.map((x) => x).toList(),
+        "id": id,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$name, $slug, $defaultValue, $inputType, $data, $id, ";
   }
 }

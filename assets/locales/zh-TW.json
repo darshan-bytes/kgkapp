@@ -736,5 +736,6 @@
   "mob_please_enter_valid_price_range_x": "請輸入 {#} 到 {#} 之間的價格範圍",
   "mob_min": "最小",
   "mob_max": "最大",
-  "mob_max_range_should_be_less_than_x": "最大範圍應該小於 {#}"
+  "mob_max_range_should_be_less_than_x": "最大範圍應該小於 {#}",
+  "mob_cant_compare_different_commodities": "您無法比較不同商品的產品"
 }

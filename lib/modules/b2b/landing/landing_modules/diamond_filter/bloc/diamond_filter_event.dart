@@ -55,7 +55,7 @@ final class ApplyDiamondFilterDataEvent extends DiamondFilterEvent {
 
 final class AddFilterDataEvent extends DiamondFilterEvent {
   final BuildContext context;
-  final List<GemstoneFilterModel> gemstoneFilterList;
+  final List<FilterOptionModel> gemstoneFilterList;
 
   const AddFilterDataEvent({required this.context, required this.gemstoneFilterList});
 

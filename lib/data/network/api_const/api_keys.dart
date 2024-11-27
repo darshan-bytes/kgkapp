@@ -75,4 +75,6 @@ class ApiKey {
   static const String isAdminChange = 'isAdminChange';
   static const String auctionId = 'auction_id';
   static const String bidAmount = 'bid_amount';
+  static const String collectionType = 'collection_type';
+  static const String isAddedToCart = 'isAddedToCart';
 }

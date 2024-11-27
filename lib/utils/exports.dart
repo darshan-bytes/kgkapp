@@ -106,6 +106,7 @@ export 'package:kgk/modules/b2b/calendar/model/calendar_data_model.dart';
 export 'package:kgk/modules/b2b/calendar/model/calendar_event_type_model.dart';
 export 'package:kgk/modules/b2b/calendar/view/calendar_screen.dart';
 export 'package:kgk/modules/b2b/compare_product/bloc/compare_product_bloc.dart';
+export 'package:kgk/modules/b2b/compare_product/model/compare_products_details_model.dart';
 export 'package:kgk/modules/b2b/compare_product/view/compare_product_screen.dart';
 export 'package:kgk/modules/b2b/concept/view/concept_info_popup_screen.dart';
 export 'package:kgk/modules/b2b/concept_list/bloc/concept_list_bloc.dart';
@@ -154,6 +155,7 @@ export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_listing_mode
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_listing_screen.dart';
 export 'package:kgk/modules/b2b/landing/bloc/landing_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/bloc/categories_bloc.dart';
+
 //model
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/model/categories_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/categories/view/categories_screen.dart';
@@ -304,6 +306,7 @@ export 'package:kgk/modules/common_modules/cms_web_view/view/cms_web_view_screen
 export 'package:kgk/modules/common_modules/collection/bloc/collection_bloc.dart';
 export 'package:kgk/modules/common_modules/collection/model/collection_data_model.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_screen.dart';
+
 // bloc
 export 'package:kgk/modules/common_modules/faq/bloc/faq_bloc.dart';
 export 'package:kgk/modules/common_modules/faq/view/faq_screen.dart';
