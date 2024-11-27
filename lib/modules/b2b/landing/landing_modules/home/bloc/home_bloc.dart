@@ -50,12 +50,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<String> kgkCoutureButtonsTitle = [
     APPStrings.all,
-    APPStrings.luminous,
-    APPStrings.elan,
-    APPStrings.huse,
-    APPStrings.mirage,
   ];
-  final List<ProductDetailsModel> luminousProductViewList = _generateTabViewList();
+  List<ProductDetailsModel> luminousProductViewList = [];
 
   //Create Your Own Signature piece
   OrderStoneTypeModel selectedStep1StoneType = const OrderStoneTypeModel(name: "Gemstone");
@@ -121,8 +117,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _onHomePullToRefreshEvent(HomePullToRefreshEvent event, Emitter<HomeState> emit) async {
-    emit(HomeReloadState());
+    emit(const HomeReloadState());
+    kgkCoutureSelectedIndex = 0;
     await fetchStrapiData(event.context, emit);
+    await fetchKgkCoutureData(event.context);
+    emit(const HomeStrapiDataFetchedState());
     refreshCompleter.complete(true);
   }
 
@@ -149,8 +148,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async {
     currentPageIndex = 0;
+    kgkCoutureSelectedIndex = 0;
     await fetchListOfBag(event.context, emit);
     await fetchStrapiData(event.context, emit);
+    await fetchKgkCoutureData(event.context);
+
+    emit(const HomeReloadState());
+    emit(const HomeStrapiDataFetchedState());
     if (refreshCompleter.isCompleted) {
       refreshCompleter = Completer<bool>();
     }
@@ -159,32 +163,34 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _onHomeJewelleryImagePageChangeEvent(HomeJewelleryImagePageChangeEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
+    emit(const HomeReloadState());
     currentCarouselIndex = event.index;
     emit(HomeJewelleryImagePageChangeState());
   }
 
   void _onChangeHomeStep1StoneTypeEvent(HomeSelectStoneChangeTypeEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
+    emit(const HomeReloadState());
     selectedStep1StoneType = event.selectedStep1StoneType;
     emit(HomeSelectStoneTypeChangeState());
   }
 
   void _onChangeHomeStep2StoneTypeEvent(HomeSelectJewelleryChangeTypeEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
+    emit(const HomeReloadState());
     selectedStep2RingType = event.selectedStep2RingType;
     emit(HomeSelectJewelleryTypeChangeState());
   }
 
-  void _onHomeKgkCoutureSelectionChangeEvent(HomeKgkCoutureSelectionChangeEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
+  Future<void> _onHomeKgkCoutureSelectionChangeEvent(HomeKgkCoutureSelectionChangeEvent event, Emitter<HomeState> emit) async {
+    emit(const HomeReloadState());
     int old = kgkCoutureSelectedIndex;
-    kgkCoutureSelectedIndex = event.selectedIndex;
+    kgkCoutureSelectedIndex = event.index;
     emit(HomeKgkCoutureSelectionChangeState(kgkCoutureSelectedIndex, old));
+    await fetchKgkCoutureData(event.context);
+    emit(const HomeStrapiDataFetchedState());
   }
 
   void _onHomeCategoryPageChangeEvent(HomeCategoryPageChangeEvent event, Emitter<HomeState> emit) {
-    emit(HomeReloadState());
+    emit(const HomeReloadState());
     currentPageIndex = event.index;
     emit(HomeCategoryPageChangeState(event.index));
   }
@@ -881,6 +887,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       case HomeSlug.unknown:
       default:
+        //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
         return const SizedBox.shrink();
     }
   }
@@ -913,6 +920,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     context.pushNamed(routeName, arguments: arguments);
+  }
+
+  Future<void> fetchKgkCoutureData(BuildContext context) async {
+    try {
+      String? kgkCollection = kgkCoutureSelectedIndex == 0 ? null : kgkCoutureButtonsTitle[kgkCoutureSelectedIndex];
+      final response = await AppRepository(context).homePageKgkCoutureCollections(page: '1', limit: '10', kgkCollection: kgkCollection);
+      response?.fold(
+        (l) {
+          Utils.showMessage(l.message);
+        },
+        (r) {
+          kgkCoutureButtonsTitle = [
+            APPStrings.all,
+            ...(r.kgkCollectionList ?? []),
+          ];
+          luminousProductViewList = List.generate(
+            r.dataList?.length ?? 0,
+            (index) {
+              KgkCoutureDetails item = r.dataList![index];
+              return ProductDetailsModel(
+                productId: item.suid ?? 'EFGSTOCK5030018249',
+                commodity: Commodity.jewellery,
+                imageUrl: item.multipleFinishedViewImage ?? '',
+                name: item.productDescription ?? '',
+                originalPrice: item.finalPrice?.toString().setCurrency ?? '',
+                offerPrice: item.discountPrice?.toString().setCurrency ?? '',
+              );
+            },
+          );
+        },
+      );
+    } catch (e) {
+      Utils.showMessage(e.toString());
+    }
   }
 }
 

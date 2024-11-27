@@ -706,7 +706,7 @@ Widget _buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, {
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
                     isSelected: isSelected,
                     onTap: () {
-                      homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index));
+                      homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index: index, context: context));
                     },
                     title: homeBloc.kgkCoutureButtonsTitle[index].tr,
                   );
