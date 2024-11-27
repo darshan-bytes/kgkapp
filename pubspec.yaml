@@ -43,13 +43,13 @@ dependencies:
   # For Path Provider for File Path
   path_provider: ^2.1.5
 
-  equatable: ^2.0.5
+  equatable: ^2.0.7
 
   # For Snackbar Message
   another_flushbar: ^1.12.30
 
   # For SVG Image File
-  flutter_svg: ^2.0.14
+  flutter_svg: ^2.0.16
 
   # For Cached Network Image
   cached_network_image: ^3.4.1
@@ -82,19 +82,19 @@ dependencies:
   intl: ^0.19.0
 
   #For Qr Code Scanner
-  mobile_scanner: ^5.2.3
+  mobile_scanner: ^6.0.2
 
   #For Webview
   webview_flutter: ^4.10.0
 
   #For Google Map
-  google_maps_flutter: ^2.9.0
+  google_maps_flutter: ^2.10.0
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^27.2.2
+  syncfusion_flutter_sliders: ^27.2.4
 
   #For Calendar
-  syncfusion_flutter_calendar: ^27.2.2
+  syncfusion_flutter_calendar: ^27.2.4
 
   #For QR Code
   qr_flutter: ^4.1.0
@@ -102,7 +102,7 @@ dependencies:
   #For Share
   share_plus: ^10.1.2
 
-  syncfusion_flutter_charts: ^27.2.2
+  syncfusion_flutter_charts: ^27.2.4
 
   #For Bounce animation
   flutter_bounceable: ^1.1.0

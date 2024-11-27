@@ -203,7 +203,6 @@ class CadLibraryListingScreen extends StatelessWidget {
                   bloc.add(CadSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
                 }
               });
-              ;
             },
           );
         } else {
