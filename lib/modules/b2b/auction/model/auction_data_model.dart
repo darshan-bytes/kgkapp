@@ -99,7 +99,7 @@ class AuctionDataModel {
     );
   }
 
-  factory AuctionDataModel.fromJson(Map<String, dynamic> json){
+  factory AuctionDataModel.fromJson(Map<String, dynamic> json) {
     return AuctionDataModel(
       businessType: json["business_type"],
       productId: json["product_id"],
@@ -127,32 +127,32 @@ class AuctionDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "business_type": businessType,
-    "product_id": productId,
-    "product_sku": productSku,
-    "product_description": productDescription,
-    "product_image": productImage,
-    "start_date": startDate?.toIso8601String(),
-    "end_date": endDate?.toIso8601String(),
-    "starting_price": startingPrice,
-    "created_by": createdBy,
-    "status": status,
-    "currency": currency,
-    "csc_codes": cscCodes,
-    "id": id,
-    "last_bid_amount": lastBidAmount,
-    "updated_by": updatedBy,
-    "created_at": createdAt?.toIso8601String(),
-    "bids": bids.map((x) => x?.toJson()).toList(),
-    "show_place_bid": showPlaceBid,
-    "my_bid_value": myBidValue,
-    "total_bid": totalBid,
-    "created_by_details": createdByDetails?.toJson(),
-    "updated_by_details": updatedByDetails?.toJson(),
-  };
+        "business_type": businessType,
+        "product_id": productId,
+        "product_sku": productSku,
+        "product_description": productDescription,
+        "product_image": productImage,
+        "start_date": startDate?.toIso8601String(),
+        "end_date": endDate?.toIso8601String(),
+        "starting_price": startingPrice,
+        "created_by": createdBy,
+        "status": status,
+        "currency": currency,
+        "csc_codes": cscCodes,
+        "id": id,
+        "last_bid_amount": lastBidAmount,
+        "updated_by": updatedBy,
+        "created_at": createdAt?.toIso8601String(),
+        "bids": bids.map((x) => x.toJson()).toList(),
+        "show_place_bid": showPlaceBid,
+        "my_bid_value": myBidValue,
+        "total_bid": totalBid,
+        "created_by_details": createdByDetails?.toJson(),
+        "updated_by_details": updatedByDetails?.toJson(),
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$businessType, $productId, $productSku, $productDescription, $productImage, $startDate, $endDate, $startingPrice, $createdBy, $status, $currency, $cscCodes, $id, $lastBidAmount, $updatedBy, $createdAt, $bids, $showPlaceBid, $myBidValue, $totalBid, $createdByDetails, $updatedByDetails, ";
   }
 }
@@ -196,7 +196,7 @@ class Bid {
     );
   }
 
-  factory Bid.fromJson(Map<String, dynamic> json){
+  factory Bid.fromJson(Map<String, dynamic> json) {
     return Bid(
       auctionId: json["auction_id"],
       bidAmount: json["bid_amount"].toString().toDouble?.toStringAsFixed(2),
@@ -209,17 +209,17 @@ class Bid {
   }
 
   Map<String, dynamic> toJson() => {
-    "auction_id": auctionId,
-    "bid_amount": bidAmount,
-    "country": country,
-    "id": id,
-    "is_winner": isWinner,
-    "created_at": createdAt?.toIso8601String(),
-    "is_my_bid": isMyBid,
-  };
+        "auction_id": auctionId,
+        "bid_amount": bidAmount,
+        "country": country,
+        "id": id,
+        "is_winner": isWinner,
+        "created_at": createdAt?.toIso8601String(),
+        "is_my_bid": isMyBid,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$auctionId, $bidAmount, $country, $id, $isWinner, $createdAt, $isMyBid, ";
   }
 }
@@ -252,13 +252,13 @@ class CreatedByDetails {
   CreatedByDetails copyWith({
     String? firstname,
     String? lastname,
-    dynamic? profilePic,
+    dynamic profilePic,
     String? userAccountId,
     String? email,
     String? userType,
     String? accountType,
-    dynamic? phoneCode,
-    dynamic? phone,
+    dynamic phoneCode,
+    dynamic phone,
     String? profilePicUrl,
   }) {
     return CreatedByDetails(
@@ -275,7 +275,7 @@ class CreatedByDetails {
     );
   }
 
-  factory CreatedByDetails.fromJson(Map<String, dynamic> json){
+  factory CreatedByDetails.fromJson(Map<String, dynamic> json) {
     return CreatedByDetails(
       firstname: json["firstname"],
       lastname: json["lastname"],
@@ -291,20 +291,20 @@ class CreatedByDetails {
   }
 
   Map<String, dynamic> toJson() => {
-    "firstname": firstname,
-    "lastname": lastname,
-    "profile_pic": profilePic,
-    "user_account_id": userAccountId,
-    "email": email,
-    "user_type": userType,
-    "account_type": accountType,
-    "phone_code": phoneCode,
-    "phone": phone,
-    "profile_pic_url": profilePicUrl,
-  };
+        "firstname": firstname,
+        "lastname": lastname,
+        "profile_pic": profilePic,
+        "user_account_id": userAccountId,
+        "email": email,
+        "user_type": userType,
+        "account_type": accountType,
+        "phone_code": phoneCode,
+        "phone": phone,
+        "profile_pic_url": profilePicUrl,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $accountType, $phoneCode, $phone, $profilePicUrl, ";
   }
 }
@@ -321,9 +321,9 @@ class UpdatedByDetails {
   final dynamic lastname;
 
   UpdatedByDetails copyWith({
-    dynamic? profilePicUrl,
-    dynamic? firstname,
-    dynamic? lastname,
+    dynamic profilePicUrl,
+    dynamic firstname,
+    dynamic lastname,
   }) {
     return UpdatedByDetails(
       profilePicUrl: profilePicUrl ?? this.profilePicUrl,
@@ -332,7 +332,7 @@ class UpdatedByDetails {
     );
   }
 
-  factory UpdatedByDetails.fromJson(Map<String, dynamic> json){
+  factory UpdatedByDetails.fromJson(Map<String, dynamic> json) {
     return UpdatedByDetails(
       profilePicUrl: json["profile_pic_url"],
       firstname: json["firstname"],
@@ -341,13 +341,13 @@ class UpdatedByDetails {
   }
 
   Map<String, dynamic> toJson() => {
-    "profile_pic_url": profilePicUrl,
-    "firstname": firstname,
-    "lastname": lastname,
-  };
+        "profile_pic_url": profilePicUrl,
+        "firstname": firstname,
+        "lastname": lastname,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$profilePicUrl, $firstname, $lastname, ";
   }
 }

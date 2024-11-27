@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'product_list_event.dart';
+
 part 'product_list_state.dart';
 
 // Using this enum identifies different fetch scenarios
@@ -39,7 +40,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
-  List<FilterOptionModel> gemstoneFilterList = [];
+  List<FilterOptionModel> filterList = [];
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -88,8 +89,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      gemstoneFilterList = [
-        GemstoneFilterModel(
+      filterList = [
+        FilterOptionModel(
           name: "Type",
           slug: "type",
           defaultValue: "",
@@ -97,7 +98,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           data: [],
           id: 1,
         ),
-        GemstoneFilterModel(
+        FilterOptionModel(
           name: "Color",
           slug: "color",
           defaultValue: "",
@@ -105,7 +106,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           data: [],
           id: 2,
         ),
-        GemstoneFilterModel(
+        FilterOptionModel(
           name: "Clarity",
           slug: "clarity",
           defaultValue: "",
@@ -113,7 +114,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           data: [],
           id: 3,
         ),
-        GemstoneFilterModel(
+        FilterOptionModel(
           name: "Shape",
           slug: "shape",
           defaultValue: "",
