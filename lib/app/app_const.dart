@@ -37,6 +37,8 @@ class AppConst {
   static const String sortKeyMspRateLocalCurrency = "msp_rate_local_currency";
   static const String sortKeyViewCount = "view_count";
 
+  static const String sortKeyNERPBS = "NERPBS";
+
   static const String sortValueAsc = "asc";
   static const String sortValueDesc = "desc";
 

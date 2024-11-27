@@ -20,7 +20,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   bool isBidPlaced = true;
 
   Timer? _timer;
-  Duration auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
+  Duration auctionEndDuration = Duration.zero;
 
   TextEditingController bidAmountController = TextEditingController();
   final CarouselSliderController controller = CarouselSliderController();
