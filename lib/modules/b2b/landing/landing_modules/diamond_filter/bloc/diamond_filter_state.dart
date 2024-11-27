@@ -58,3 +58,10 @@ final class SecondaryFilterDataFetchedState extends DiamondFilterState {
   @override
   List<Object> get props => [secondaryFilterData];
 }
+
+final class FilterPriceRangeChangedState extends DiamondFilterState {
+  const FilterPriceRangeChangedState();
+
+  @override
+  List<Object> get props => [];
+}

@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'product_list_event.dart';
-
 part 'product_list_state.dart';
 
 // Using this enum identifies different fetch scenarios
@@ -89,7 +88,43 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getGemstoneFilterOptionList(event.context, 'jewellery');
+      gemstoneFilterList = [
+        GemstoneFilterModel(
+          name: "Type",
+          slug: "type",
+          defaultValue: "",
+          inputType: "checkbox",
+          data: [],
+          id: 1,
+        ),
+        GemstoneFilterModel(
+          name: "Color",
+          slug: "color",
+          defaultValue: "",
+          inputType: "slider",
+          data: [],
+          id: 2,
+        ),
+        GemstoneFilterModel(
+          name: "Clarity",
+          slug: "clarity",
+          defaultValue: "",
+          inputType: "checkbox",
+          data: [],
+          id: 3,
+        ),
+        GemstoneFilterModel(
+          name: "Shape",
+          slug: "shape",
+          defaultValue: "",
+          inputType: "slider",
+          data: [],
+          id: 4,
+        )
+      ];
+
+      /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
+      // gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getGemstoneFilterOptionList(event.context, 'jewellery');
       await fetchJewelleriesList(event.context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;

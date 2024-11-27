@@ -5,13 +5,9 @@ class FilterData {
   String? code;
   List<SecondaryFilterData>? secondaryFilterData;
   bool? isAdvanceFilter;
+  String? inputType;
 
-  FilterData({
-    this.name,
-    this.code,
-    this.secondaryFilterData,
-    this.isAdvanceFilter,
-  });
+  FilterData({this.name, this.code, this.secondaryFilterData, this.isAdvanceFilter, this.inputType});
 
   @override
   bool operator ==(Object other) {
