@@ -42,13 +42,15 @@ class FilterScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SmartTextField.search(
-                          hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
-                          controller: filterBloc.searchController,
-                          textInputAction: TextInputAction.search,
-                          onTapOutside: (event) {},
-                        ),
-                        SizedBox(height: 4.h),
+                        if (filterBloc.isCheckbox) ...[
+                          SmartTextField.search(
+                            hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
+                            controller: filterBloc.searchController,
+                            textInputAction: TextInputAction.search,
+                            onTapOutside: (event) {},
+                          ),
+                          SizedBox(height: 4.h),
+                        ],
                         Expanded(
                           child: _buildSubFilterList(context, filterBloc, style),
                         ),
@@ -146,45 +148,77 @@ class FilterScreen extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is SearchFilterDataState || current is FilterDataSelectedState || current is SelectSecondaryDiamondSortFilterDataState,
       builder: (context, state) {
-        return filterBloc.isLoading
-            ? const SmartCircularProgressIndicator()
-            : filterBloc.secondaryFilterDataDisplay.isEmpty
-                ? const NoDataFoundWidget()
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: filterBloc.secondaryFilterDataDisplay.length,
-                    itemBuilder: (context, index) {
-                      return BlocBuilder<SortFilterBloc, SortFilterState>(
-                        /// buildWhen Change after data comes
-                        buildWhen: (previous, current) => current is SelectSecondaryFilterDataState,
-                        builder: (context, state) {
-                          final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
-                          return InkWell(
-                            onTap: () {
-                              handleOnChange(filterBloc, secondaryFilterData);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(color: style.itemBorderColor),
-                                ),
-                              ),
-                              /// Need to check this widget
-                              child: SmartCheckbox(
-                                  value: secondaryFilterData.isSelected,
-                                  label: secondaryFilterData.name,
-                                  labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                                  spaceBetweenLabelAndCheckbox: 8.w,
-                                  onChanged: (value) {
-                                    handleOnChange(filterBloc, secondaryFilterData);
-                                  }),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
+        if (filterBloc.isLoading) {
+          return SmartCircularProgressIndicator();
+        } else if (filterBloc.secondaryFilterDataDisplay.isEmpty) {
+          return const NoDataFoundWidget();
+        }
+        return filterBloc.isCheckbox ? _buildOptionList(filterBloc, style) : _buildPriceRangeSlide(filterBloc, style);
+      },
+    );
+  }
+
+  Widget _buildPriceRangeSlide(SortFilterBloc bloc, FilterStyle style) {
+    return BlocBuilder<SortFilterBloc, SortFilterState>(
+      buildWhen: (previous, current) => previous != current && current is SortAndFilterPriceRangeChangedState,
+      builder: (context, state) {
+        return SmartSfRangeSlider(
+          title: APPStrings.preferredPriceRange.tr,
+          titleStyle: style.selectionTitleStyle,
+          values: bloc.values,
+          minMaxValues: bloc.minMaxValues,
+          minPriceController: bloc.minPriceController,
+          maxPriceController: bloc.maxPriceController,
+          rangeSliderTrackColor: style.rangeSliderTrackColor,
+          propertySelectionSubtitleStyle: style.propertySelectionSubtitleStyle,
+          sliderLabelTextStyle: style.sliderLabelTextStyle,
+          sliderThumbBorderColor: style.sliderThumbBorderColor,
+          sliderThumbColor: style.sliderThumbColor,
+          onMinControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent()),
+          onMinControllerEditingComplete: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent()),
+          onMaxControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
+          onMaxControllerEditingComplete: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
+          onChanged: (SfRangeValues values) => bloc.add(SortAndFilterPriceRangeChangedEvent(values)),
+        );
+      },
+    );
+  }
+
+  Widget _buildOptionList(SortFilterBloc filterBloc, FilterStyle style) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: filterBloc.secondaryFilterDataDisplay.length,
+      itemBuilder: (context, index) {
+        return BlocBuilder<SortFilterBloc, SortFilterState>(
+          /// buildWhen Change after data comes
+          buildWhen: (previous, current) => current is SelectSecondaryFilterDataState,
+          builder: (context, state) {
+            final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
+            return InkWell(
+              onTap: () {
+                handleOnChange(filterBloc, secondaryFilterData);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: style.itemBorderColor),
+                  ),
+                ),
+
+                /// Need to check this widget
+                child: SmartCheckbox(
+                    value: secondaryFilterData.isSelected,
+                    label: secondaryFilterData.name,
+                    labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                    spaceBetweenLabelAndCheckbox: 8.w,
+                    onChanged: (value) {
+                      handleOnChange(filterBloc, secondaryFilterData);
+                    }),
+              ),
+            );
+          },
+        );
       },
     );
   }

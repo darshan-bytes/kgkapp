@@ -1,7 +1,6 @@
 import 'package:kgk/kgk.dart';
 
 part 'sort_filter_event.dart';
-
 part 'sort_filter_state.dart';
 
 class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
@@ -23,6 +22,11 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
 
   final TextEditingController searchController = TextEditingController();
 
+  TextEditingController minPriceController = TextEditingController(text: '500');
+  TextEditingController maxPriceController = TextEditingController(text: '10000');
+  SfRangeValues minMaxValues = const SfRangeValues(500, 10000);
+  SfRangeValues values = const SfRangeValues(500, 10000);
+
   SortFilterBloc() : super(SortFilterInitial()) {
     searchController.addListener(searchChange);
     on<SelectSortDataEvent>(_onSelectSortDataEvent);
@@ -33,6 +37,8 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     on<ApplyFilterDataEvent>(_onApplyFilterDataEvent);
     on<AddSortFilterDataEvent>(_onAddSortFilterDataEvent);
     on<SortFilterScreenTypeEvent>(_onSortFilterScreenTypeEvent);
+    on<SortAndFilterPriceRangeChangedEvent>(_onSortAndFilterPriceRangeChangedEvent);
+    on<SortAndFilterPriceRangeEditEvent>(_onSortAndFilterPriceRangeEditEvent);
   }
 
   void searchChange() {
@@ -106,15 +112,23 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       filterData.add(FilterData(
         name: gemstone.name,
         code: gemstone.slug,
-        secondaryFilterData: [],
+        inputType: gemstone.inputType,
+        secondaryFilterData: [
+          SecondaryFilterData(name: gemstone.name, code: gemstone.slug),
+          SecondaryFilterData(name: gemstone.name, code: gemstone.slug),
+          SecondaryFilterData(name: gemstone.name, code: gemstone.slug)
+        ],
       ));
     }
     if (filterData.isNotEmpty) {
       selectedFilterData = filterData.first;
-      await fetchSecondaryFilterData(context: event.context, emit: emit, slug: selectedFilterData!.code!, needToFetchData: true);
+      // await fetchSecondaryFilterData(context: event.context, emit: emit, slug: selectedFilterData!.code!, needToFetchData: true);
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }
   }
+
+  // created getter for inputType
+  bool get isCheckbox => selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox;
 
   Future<void> fetchSecondaryFilterData(
       {required BuildContext context, required Emitter<SortFilterState> emit, required String slug, required bool needToFetchData}) async {
@@ -163,6 +177,84 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       sortData.addAll(iterable);
     } else {
       sortData.removeWhere((item) => iterable.contains(item));
+    }
+  }
+
+  void _onSortAndFilterPriceRangeChangedEvent(SortAndFilterPriceRangeChangedEvent event, Emitter<SortFilterState> emit) {
+    emit(SortReloadState());
+    values = event.values;
+    minPriceController.text = '${values.start.toStringAsFixed(0)}';
+    maxPriceController.text = '${values.end.toStringAsFixed(0)}';
+    emit(const SortAndFilterPriceRangeChangedState());
+  }
+
+  void _onSortAndFilterPriceRangeEditEvent(SortAndFilterPriceRangeEditEvent event, Emitter<SortFilterState> emit) {
+    if (event.isMin) {
+      handleMinPriceChange();
+    } else {
+      handleMaxPriceChange();
+    }
+  }
+
+  /// Handles the change in the minimum price value from the text field.
+  ///
+  /// This method is triggered when there is a change in the text field for the minimum price.
+  /// It parses the text field value to a double and validates it against the predefined minimum and maximum values.
+  /// If the new minimum value is within the valid range and not greater than the current maximum value,
+  /// it updates the price range and triggers a [OrionPriceRangeChangedEvent].
+  /// If the new minimum value is greater than the current maximum value, it adjusts the maximum value to match the minimum,
+  /// ensuring the range is valid. If the parsed value is not within the valid range, it resets the text field
+  /// to the current minimum value of the price range.
+  ///
+  /// The method uses [minPriceController] to read and update the text field value,
+  /// [minMaxValues] to check against the valid range, and [values] to update the current price range.
+  void handleMinPriceChange() {
+    double min = double.tryParse(minPriceController.text) ?? 0; // Attempt to parse the minimum price from the text field.
+    if (min >= minMaxValues.start && min <= minMaxValues.end) {
+      // Check if the parsed value is within the valid range.
+      SfRangeValues values = SfRangeValues(min, this.values.end); // Create a new range with the updated minimum value.
+      if (min >= this.values.end) {
+        // Adjust the maximum value if the new minimum is greater than the current maximum.
+        values = SfRangeValues(min, min);
+      }
+      add(SortAndFilterPriceRangeChangedEvent(values, isFromTextField: true, isMin: true)); // Trigger an event to update the price range.
+    } else {
+      Utils.showMessage(APPStrings.pleaseEnterValidPriceRangeX.tr.interpolate(['500', '10000']));
+      minPriceController.text = '${values.start.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
+    }
+  }
+
+  /// Handles the change in the maximum price value from the text field.
+  ///
+  /// This method is invoked when there is a change in the text field for the maximum price.
+  /// It attempts to parse the text field value to a double and validates it against the predefined
+  /// minimum and maximum values defined in [minMaxValues]. If the parsed value is within the valid range,
+  /// it updates the price range slider's maximum value accordingly. If the new maximum value is less than
+  /// or equal to the current minimum value, it adjusts the minimum value to match the new maximum,
+  /// ensuring the range is valid. If the parsed value is not within the valid range, it resets the text field
+  /// to the current maximum value of the price range.
+  ///
+  /// The method uses [maxPriceController] to read and update the text field value,
+  /// [minMaxValues] to check against the valid range, and [values] to update the current price range.
+  void handleMaxPriceChange() {
+    double max = double.tryParse(maxPriceController.text) ?? 0; // Attempt to parse the maximum price from the text field.
+    if (max < (double.tryParse(minPriceController.text) ?? 0)) {
+      maxPriceController.text = '${values.end.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
+      Utils.showMessage(APPStrings.maxRangeShouldBeLessThanX.tr.interpolate([minPriceController.text]));
+      return;
+    }
+    if (max >= minMaxValues.start && max <= minMaxValues.end) {
+      // Check if the parsed value is within the valid range.
+      SfRangeValues values = SfRangeValues(this.values.start, max); // Create a new range with the updated maximum value.
+      if (max <= this.values.start) {
+        // Adjust the minimum value if the new maximum is less than or equal to the current minimum.
+        values = SfRangeValues(max, max);
+      }
+      add(SortAndFilterPriceRangeChangedEvent(values, isFromTextField: true, isMin: false)); // Trigger an event to update the price range.
+    } else {
+      // add String with Amount
+      Utils.showMessage(APPStrings.pleaseEnterValidPriceRangeX.tr.interpolate(['500', '10000']));
+      maxPriceController.text = '${values.end.toStringAsFixed(0)}'; // Reset the text field if the value is out of range.
     }
   }
 }

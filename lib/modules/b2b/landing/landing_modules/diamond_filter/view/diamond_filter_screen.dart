@@ -43,12 +43,15 @@ class DiamondFilterScreen extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SmartTextField.search(
-                            hintText: APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
-                            controller: diamondFilterBloc.searchController,
-                            enabledBorderRadius: 8.r,
-                          ),
-                          SizedBox(height: 16.h),
+                          if (diamondFilterBloc.isCheckbox) ...[
+                            SmartTextField.search(
+                              hintText:
+                                  APPStrings.searchByX.tr.interpolate([diamondFilterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
+                              controller: diamondFilterBloc.searchController,
+                              enabledBorderRadius: 8.r,
+                            ),
+                            SizedBox(height: 16.h),
+                          ],
                           Expanded(
                             child: _buildSubFilterList(context, diamondFilterBloc, style),
                           ),
@@ -152,64 +155,94 @@ class DiamondFilterScreen extends StatelessWidget {
           current is DiamondFilterDataSelectedState ||
           current is SecondaryFilterDataFetchedState,
       builder: (context, state) {
-        return diamondFilterBloc.isLoading
-            ? const SmartCircularProgressIndicator()
-            : diamondFilterBloc.secondaryFilterDataDisplay.isEmpty
-                ? const NoDataFoundWidget()
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: diamondFilterBloc.secondaryFilterDataDisplay.length,
-                    itemBuilder: (context, index) {
-                      return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
-                        buildWhen: (previous, current) =>
-                            current is SelectSecondaryDiamondFilterDataState || current is SecondaryFilterDataFetchedState,
-                        builder: (context, state) {
-                          final secondaryFilterData = diamondFilterBloc.secondaryFilterDataDisplay[index];
-                          return InkWell(
-                            onTap: () {
-                              handleOnChange(diamondFilterBloc, secondaryFilterData);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(color: style.itemBorderColor),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  SmartCheckbox(
-                                      value: secondaryFilterData.isSelected,
-                                      onChanged: (value) {
-                                        handleOnChange(diamondFilterBloc, secondaryFilterData);
-                                      }),
-                                  SizedBox(width: 8.w),
-                                  if (secondaryFilterData.image.isNotNullNorEmpty) ...[
-                                    Padding(
-                                      padding: EdgeInsets.all(4.w),
-                                      child: SmartImage(
-                                        path: secondaryFilterData.image ?? '',
-                                        height: 24.w,
-                                        width: 24.w,
-                                        color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8.w),
-                                  ],
-                                  Expanded(
-                                    child: SmartText(
-                                      secondaryFilterData.name,
-                                      style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
+        if (diamondFilterBloc.isLoading) {
+          return const SmartCircularProgressIndicator();
+        } else if (diamondFilterBloc.secondaryFilterDataDisplay.isEmpty) {
+          const NoDataFoundWidget();
+        }
+        return diamondFilterBloc.isCheckbox ? _buildOptionList(diamondFilterBloc, style) : _buildPriceRangeSlide(diamondFilterBloc, style);
+      },
+    );
+  }
+
+  Widget _buildPriceRangeSlide(DiamondFilterBloc bloc, FilterStyle style) {
+    return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
+      buildWhen: (previous, current) => previous != current && current is FilterPriceRangeChangedState,
+      builder: (context, state) {
+        return SmartSfRangeSlider(
+          title: APPStrings.preferredPriceRange.tr,
+          titleStyle: style.selectionTitleStyle,
+          values: bloc.values!,
+          minMaxValues: bloc.minMaxValues,
+          minPriceController: bloc.minPriceController,
+          maxPriceController: bloc.maxPriceController,
+          rangeSliderTrackColor: style.rangeSliderTrackColor,
+          propertySelectionSubtitleStyle: style.propertySelectionSubtitleStyle,
+          sliderLabelTextStyle: style.sliderLabelTextStyle,
+          sliderThumbBorderColor: style.sliderThumbBorderColor,
+          sliderThumbColor: style.sliderThumbColor,
+          onMinControllerTapOutside: (p) => bloc.add(const FilterPriceRangeEditEvent()),
+          onMinControllerEditingComplete: (p) => bloc.add(const FilterPriceRangeEditEvent()),
+          onMaxControllerTapOutside: (p) => bloc.add(const FilterPriceRangeEditEvent(isMin: false)),
+          onMaxControllerEditingComplete: (p) => bloc.add(const FilterPriceRangeEditEvent(isMin: false)),
+          onChanged: (SfRangeValues values) => bloc.add(FilterPriceRangeChangedEvent(values)),
+        );
+      },
+    );
+  }
+
+  Widget _buildOptionList(DiamondFilterBloc diamondFilterBloc, FilterStyle style) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: diamondFilterBloc.secondaryFilterDataDisplay.length,
+      itemBuilder: (context, index) {
+        return BlocBuilder<DiamondFilterBloc, DiamondFilterState>(
+          buildWhen: (previous, current) => current is SelectSecondaryDiamondFilterDataState || current is SecondaryFilterDataFetchedState,
+          builder: (context, state) {
+            final secondaryFilterData = diamondFilterBloc.secondaryFilterDataDisplay[index];
+            return InkWell(
+              onTap: () {
+                handleOnChange(diamondFilterBloc, secondaryFilterData);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: style.itemBorderColor),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    SmartCheckbox(
+                        value: secondaryFilterData.isSelected,
+                        onChanged: (value) {
+                          handleOnChange(diamondFilterBloc, secondaryFilterData);
+                        }),
+                    SizedBox(width: 8.w),
+                    if (secondaryFilterData.image.isNotNullNorEmpty) ...[
+                      Padding(
+                        padding: EdgeInsets.all(4.w),
+                        child: SmartImage(
+                          path: secondaryFilterData.image ?? '',
+                          height: 24.w,
+                          width: 24.w,
+                          color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                    ],
+                    Expanded(
+                      child: SmartText(
+                        secondaryFilterData.name,
+                        style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
       },
     );
   }

@@ -15,10 +15,10 @@ final class SelectDiamondFilterDataEvent extends DiamondFilterEvent {
   final BuildContext context;
   final FilterData filterData;
 
-  const SelectDiamondFilterDataEvent({required this.context,required this.filterData});
+  const SelectDiamondFilterDataEvent({required this.context, required this.filterData});
 
   @override
-  List<Object> get props => [context,filterData];
+  List<Object> get props => [context, filterData];
 }
 
 final class SelectSecondaryDiamondFilterDataEvent extends DiamondFilterEvent {
@@ -55,10 +55,29 @@ final class ApplyDiamondFilterDataEvent extends DiamondFilterEvent {
 
 final class AddFilterDataEvent extends DiamondFilterEvent {
   final BuildContext context;
-  final List<GemstoneFilterModel> gemstoneFilterList;
+  final List<FilterOptionModel> gemstoneFilterList;
 
-  const AddFilterDataEvent({required this.context,required this.gemstoneFilterList});
+  const AddFilterDataEvent({required this.context, required this.gemstoneFilterList});
 
   @override
-  List<Object> get props => [context,gemstoneFilterList];
+  List<Object> get props => [context, gemstoneFilterList];
+}
+
+final class FilterPriceRangeChangedEvent extends DiamondFilterEvent {
+  final SfRangeValues values;
+  final bool isFromTextField;
+  final bool isMin;
+  const FilterPriceRangeChangedEvent(this.values, {this.isFromTextField = false, this.isMin = true});
+
+  @override
+  List<Object> get props => [values, isFromTextField, isMin];
+}
+
+final class FilterPriceRangeEditEvent extends DiamondFilterEvent {
+  final bool isMin;
+
+  const FilterPriceRangeEditEvent({this.isMin = true});
+
+  @override
+  List<Object> get props => [isMin];
 }
