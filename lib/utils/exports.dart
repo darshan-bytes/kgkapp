@@ -462,3 +462,4 @@ export 'package:kgk/modules/b2b/digital_catalogue/model/digital_catalogue_detail
 export 'package:rxdart/rxdart.dart';
 export 'package:kgk/app/bloc_event_debouncer.dart';
 export 'package:kgk/modules/b2b/design_library/model/design_library_list_item_response_model.dart';
+export 'package:kgk/modules/b2b/compare_product/model/compare_products_details_model.dart';

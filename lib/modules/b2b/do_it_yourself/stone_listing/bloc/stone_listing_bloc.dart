@@ -11,7 +11,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
-  List<GemstoneFilterModel> gemstoneFilterList = [];
+  List<FilterOptionModel> filterList = [];
 
   int? totalNumberOfPages;
 
@@ -77,7 +77,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
       tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
 
-      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(
+      filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(
           context, screenIdentifier == ScreenIdentifier.diamondForDIY ? AppConst.diamondFilter : AppConst.gemstoneFilter);
 
       if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
@@ -90,7 +90,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
 
-      gemstoneFilterList = await BlocProvider.of<AppBloc>(context).getGemstoneFilterOptionList(context, AppConst.diamondFilter);
+      filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.diamondFilter);
 
       await fetchDiamondList(context, emit, true);
     }

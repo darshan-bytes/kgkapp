@@ -924,4 +924,6 @@ class APPStrings {
   static const String deleteAddress = 'mob_delete_address';
   static const String deleteAddressMsg = 'mob_delete_address_msg';
   static const String noCatalogueFound = 'mob_no_catalogue_found';
+  static const String cantCompareDifferentCommodities = 'mob_cant_compare_different_commodities';
+  static const String differentCommoditiesSelected = 'mob_different_commodities_selected';
 }

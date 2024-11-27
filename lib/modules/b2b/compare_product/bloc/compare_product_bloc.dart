@@ -5,17 +5,125 @@ part 'compare_product_event.dart';
 part 'compare_product_state.dart';
 
 class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> {
+  Commodity? commodity;
+  List<FilterOptionModel> filterList = [];
+  final List<ProductDetailsModel> productList = [];
+  final List<String> productIdList = [];
+  List<Map<String, dynamic>> compareResult = [];
+
+  bool _isInitialized = false;
+
   CompareProductBloc() : super(CompareProductInitial()) {
-    on<CompareProductEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<CompareProductAddProductEvent>(_onCompareProductAddProduct);
+    on<CompareProductRemoveProductEvent>(_onCompareProductRemoveProduct);
+    on<CompareProductClearEvent>(_onCompareProductClear);
+    on<CompareProductGenerateTableEvent>(_onCompareProductGenerateTable);
   }
 
-  Map<int, FixedColumnWidth> generateTableColumnWidths(int length, double width) {
-    Map<int, FixedColumnWidth> columnWidths = {};
-    for (int i = 0; i < length; i++) {
-      columnWidths[i] = FixedColumnWidth(width);
+  /// Generates a map of column widths for a table
+  Map<int, FixedColumnWidth> generateTableColumnWidths(int length, double width) =>
+      {for (int i = 0; i < length; i++) i: FixedColumnWidth(width)};
+
+  /// Handles adding a product to the comparison list
+  Future<void> _onCompareProductAddProduct(CompareProductAddProductEvent event, Emitter<CompareProductState> emit) async {
+    // Initialize the commodity if null
+    Commodity productCommodity = event.product.commodity ?? Commodity.jewellery;
+    if (commodity == null) {
+      commodity ??= productCommodity;
+      filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
     }
-    return columnWidths;
+
+    // Handle different commodities case
+    if (commodity != productCommodity) {
+      final result = await Utils.showSmartModalBottomSheet(
+        context: event.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+        ),
+        builder: (context) => ConfirmationDialog(
+          title: APPStrings.differentCommoditiesSelected.tr,
+          message: APPStrings.cantCompareDifferentCommodities.tr,
+          onApproved: () => context.pop(arguments: {RoutesData.isContinueClearCompare: true}),
+          onDenied: () => context.pop(),
+          onApprovedText: APPStrings.strContinue.tr,
+          onDeniedText: APPStrings.cancel.tr,
+        ),
+      );
+
+      if (result?[RoutesData.isContinueClearCompare] == true) {
+        commodity = productCommodity;
+        filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
+        productIdList.clear();
+      } else {
+        return;
+      }
+    }
+
+    // Add the product if not already present
+    if (event.product.productId.isNotNullNorEmpty && !productIdList.contains(event.product.productId)) {
+      productIdList.add(event.product.productId!); // Add product explicitly
+      productList.add(event.product); // Add product to the list
+      emit(CompareProductReloadState());
+      emit(CompareProductAddedState(productIdList: List.unmodifiable(productIdList)));
+    }
+  }
+
+  /// Handles removing a product from the comparison list
+  void _onCompareProductRemoveProduct(CompareProductRemoveProductEvent event, Emitter<CompareProductState> emit) {
+    int index = productIdList.indexOf(event.productId);
+    if (index > -1) {
+      productIdList.removeAt(index);
+      productList.removeAt(index);
+      compareResult.removeAt(index);
+      emit(CompareProductReloadState());
+      emit(CompareProductAddedState(productIdList: List.unmodifiable(productIdList)));
+      if (event.isFromCompareScreen) {
+        if (productIdList.isNotEmpty) {
+          emit(CompareProductsLoadedState());
+        } else {
+          event.context.pop();
+        }
+      }
+    }
+  }
+
+  /// Clears all products from the comparison list
+  void _onCompareProductClear(CompareProductClearEvent event, Emitter<CompareProductState> emit) {
+    productIdList.clear();
+    emit(CompareProductReloadState());
+    emit(CompareProductAddedState(productIdList: List.unmodifiable(productIdList)));
+  }
+
+  /// Stub for table generation logic
+  Future<void> _onCompareProductGenerateTable(CompareProductGenerateTableEvent event, Emitter<CompareProductState> emit) async {
+    if (_isInitialized) return;
+    _isInitialized = true;
+    emit(CompareProductLoadingState());
+
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.products: productIdList.map((e) => {ApiKey.id: e, ApiKey.collectionType: commodity?.value}).toList(),
+      };
+
+      final response = await AppRepository(event.context).compareProducts(body: body);
+      response?.fold(
+        (l) {
+          emit(CompareProductErrorState(message: l.message ?? ''));
+        },
+        (r) {
+          compareResult = r;
+          for (int i = 0; i < compareResult.length; i++) {
+            productList[i].isAddedToCart = compareResult[i][ApiKey.isAddedToCart] ?? false;
+          }
+          emit(CompareProductsLoadedState());
+        },
+      );
+    } catch (e) {
+      emit(CompareProductErrorState(message: e.toString()));
+    }
+  }
+
+  void setInitialized(bool bool) {
+    _isInitialized = bool;
   }
 }

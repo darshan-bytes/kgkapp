@@ -2,7 +2,9 @@
 class ApiClient {
   ApiClient._();
 
-  static const String apiBaseUrl = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
+  static const String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
+  static const String apiBaseUrl = devApiBase;
   static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
   static const String strapiHomeApiUrl =
@@ -74,7 +76,7 @@ class ApiClient {
 
   static const String mergeBag = '$apiBaseUrl/bag/merge-bag';
 
-  static String gemstoneFilterOptions(String type) => '$apiBaseUrl/filter-options/$type';
+  static String filterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
   static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';
 
@@ -101,6 +103,8 @@ class ApiClient {
   static const String digitalCatalogueFilters = '$apiBaseUrl/digital-catalogue/filters';
 
   static const String designLibraryListing = '$apiBaseUrl/jewelleries/library/design/filters';
+
+  static const String compareProducts = '$apiBaseUrl/compare-products';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
