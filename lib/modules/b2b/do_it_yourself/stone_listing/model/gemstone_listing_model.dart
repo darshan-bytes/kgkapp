@@ -560,7 +560,7 @@ class GemstoneDatum {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       viewCount: json["view_count"],
-      discountPrice: json["discount_price"],
+      discountPrice: json["discount_price"]?.toString(),
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       rating: json["rating"],
       reviewCount: json["review_count"],

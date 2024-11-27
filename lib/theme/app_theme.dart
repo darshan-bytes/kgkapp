@@ -617,6 +617,11 @@ class SortStyle {
 }
 
 class FilterStyle {
+  final TextStyle selectionTitleStyle;
+  final Color rangeSliderTrackColor;
+  final TextStyle propertySelectionSubtitleStyle;
+  final Color sliderThumbColor;
+  final Color sliderThumbBorderColor;
   final Color backgroundColor;
   final Color subFilterBackgroundColor;
   final TextStyle titleStyle;
@@ -630,8 +635,14 @@ class FilterStyle {
   final Color selectedImageColor;
   final TextStyle advancedFilterTitleStyle;
   final Color advancedFilterBackgroundColor;
+  final TextStyle sliderLabelTextStyle;
 
   FilterStyle({
+    required this.selectionTitleStyle,
+    required this.rangeSliderTrackColor,
+    required this.propertySelectionSubtitleStyle,
+    required this.sliderThumbColor,
+    required this.sliderThumbBorderColor,
     required this.backgroundColor,
     required this.subFilterBackgroundColor,
     required this.titleStyle,
@@ -645,6 +656,7 @@ class FilterStyle {
     required this.selectedImageColor,
     required this.advancedFilterBackgroundColor,
     required this.advancedFilterTitleStyle,
+    required this.sliderLabelTextStyle,
   });
 }
 

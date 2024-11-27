@@ -58,3 +58,10 @@ final class SelectSecondaryDiamondSortFilterDataState extends SortFilterState {
   @override
   List<Object> get props => [secondaryFilterData];
 }
+
+final class SortAndFilterPriceRangeChangedState extends SortFilterState {
+  const SortAndFilterPriceRangeChangedState();
+
+  @override
+  List<Object> get props => [];
+}

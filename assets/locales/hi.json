@@ -732,5 +732,9 @@
   "mob_error_new_password_required": "नया पासवर्ड आवश्यक है",
   "mob_delete_address": "पता हटाएं",
   "mob_delete_address_msg": "क्या आप वाकई इस पते को हटाना चाहते हैं?",
-  "mob_no_catalogue_found": "कोई कैटलॉग नहीं मिला"
+  "mob_no_catalogue_found": "कोई कैटलॉग नहीं मिला",
+  "mob_please_enter_valid_price_range_x": "कृपया {#} से {#} के बीच मूल्य सीमा दर्ज करें",
+  "mob_min": "न्यूनतम",
+  "mob_max": "अधिकतम",
+  "mob_max_range_should_be_less_than_x": "अधिकतम सीमा कम से कम {#} होना चाहिए"
 }
