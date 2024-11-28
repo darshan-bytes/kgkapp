@@ -20,7 +20,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is PreviewCatalogueLoadedState,
         builder: (context, state) {
           return SmartAppBar(
-            title: bloc.title,
+            title: bloc.titleOfCatalogue,
             onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
             onSearch: () => context.pushNamed(AppRoutes.searchPage),
           );
@@ -179,6 +179,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
                           current is PreviewCatalogueCommentState || current is PreviewCatalogueCommentProductSelectState,
                       builder: (context, state) {
                         return ProductGridItem(
+                          forPreviewCatalogue: true,
                           productDetails: bloc.productList[index],
                           isBadgeVisible: true,
                           onCommentTap: bloc.productList[index].isCommentVisible
