@@ -41,12 +41,16 @@ final class HomeSelectJewelleryChangeTypeEvent extends HomeEvent {
 }
 
 final class HomeKgkCoutureSelectionChangeEvent extends HomeEvent {
-  final int selectedIndex;
+  final int index;
+  final BuildContext context;
 
-  const HomeKgkCoutureSelectionChangeEvent(this.selectedIndex);
+  const HomeKgkCoutureSelectionChangeEvent({
+    required this.context,
+    required this.index,
+  });
 
   @override
-  List<Object> get props => [selectedIndex];
+  List<Object> get props => [context, index];
 }
 
 final class HomeCategoryPageChangeEvent extends HomeEvent {

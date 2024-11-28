@@ -7,12 +7,14 @@ class PaginationData<T> {
   ///[avgRating] is used to store the average rating of the product mainly used in the product review data. Added it in this model because all other data in the response are common with pagination data.
   double? avgRating;
   List<dynamic>? dataList;
+  List<String>? kgkCollectionList;
 
   PaginationData({
     this.filteredRecords,
     this.dataList,
     this.avgRating,
     this.totalRecords,
+    this.kgkCollectionList,
   });
 
   PaginationData.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class PaginationData<T> {
     totalRecords = json['totalRecords']?.toString().toInt;
     avgRating = json['avgRating']?.toString().toDouble;
     dataList = json.containsKey('data') && json['data'] != null ? getResponseData(json['data']) : null;
+    kgkCollectionList = json['kgk_collections']?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +33,7 @@ class PaginationData<T> {
     if (dataList != null) {
       data['data'] = dataList?.map((x) => x?.toJson()).toList();
     }
+    data['kgk_collections'] = kgkCollectionList;
     return data;
   }
 
@@ -58,6 +62,8 @@ class PaginationData<T> {
         return DigitalCatalogueDetails.fromJson(json);
       case const (DesignLibraryListItemDataModel):
         return DesignLibraryListItemDataModel.fromJson(json);
+      case const (KgkCoutureDetails):
+        return KgkCoutureDetails.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

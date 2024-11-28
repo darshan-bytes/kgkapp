@@ -318,7 +318,7 @@ class JewelleryDataModel {
       customerCollectionRefSuid: json["customer_collection_ref_suid"],
       metalColor1Suid: json["metal_color_1_suid"],
       ageRange: json["age_range"],
-      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"].toDouble() : 0.0,
+      productPriceLocalCurrency: json["product_price_local_currency"] != null ? json["product_price_local_currency"]?.toDouble() : 0.0,
       setName: json["set_name"],
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
       exclusive: json["exclusive"],
@@ -340,7 +340,7 @@ class JewelleryDataModel {
       productSize: json["product_size"],
       metalColor2RefSuid: json["metal_color_2_ref_suid"],
       kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"],
-      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"].toDouble() : 0.0,
+      productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"]?.toDouble() : 0.0,
       stockTypeRefSuid: json["stock_type_ref_suid"],
       customerAliasName: json["customer_alias_name"],
       mspRateIntlCurrency: json["msp_rate_intl_currency"]?.toString(),
@@ -449,7 +449,7 @@ class JewelleryDataModel {
       jewelleryTypeName: json["jewellery_type_name"],
       finalPrice: json["final_price"]?.toString(),
       discountPrice: json["discount_price"]?.toString(),
-      isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
+      isFavorite: (json["is_favorite"] != null && (json["is_favorite"]?.toString() ?? '').isNotEmpty) ? true : false,
       wishlistID: json["is_favorite"],
     );
   }
@@ -732,16 +732,16 @@ class ComponentDetail {
   factory ComponentDetail.fromJson(Map<String, dynamic> json) {
     return ComponentDetail(
       consumedQty2: json["ConsumedQty2"]?.toString() ?? "0",
-      brokenQty1: json["BrokenQty1"].toDouble(),
+      brokenQty1: json["BrokenQty1"]?.toDouble(),
       shape: json["Shape"],
       consumedQty1: json["ConsumedQty1"]?.toString() ?? "0",
       mmSize: json["MMSize"],
-      totalQty2: json["TotalQty2"].toDouble(),
+      totalQty2: json["TotalQty2"]?.toDouble(),
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
       sieveSize: json["SieveSize"],
       lotId: json["LotId"],
       commodityNameRefSuid: json["CommodityNameRefSuid"]?.toString() ?? "0",
-      localCurrencyAmount: json["LocalCurrencyAmount"].toDouble(),
+      localCurrencyAmount: json["LocalCurrencyAmount"]?.toDouble(),
       internalQualitySuid: json["InternalQualitySuid"],
       commodity: json["Commodity"],
       internalQualityRefSuid: json["InternalQualityRefSuid"],
@@ -836,8 +836,8 @@ class Pagination {
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
-      limit: json["limit"].toString(),
-      page: json["page"].toString(),
+      limit: json["limit"]?.toString(),
+      page: json["page"]?.toString(),
     );
   }
 
