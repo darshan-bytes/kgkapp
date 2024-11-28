@@ -10,6 +10,8 @@ final class HomeInitial extends HomeState {
 }
 
 final class HomeReloadState extends HomeState {
+  const HomeReloadState();
+
   @override
   List<Object> get props => [];
 }

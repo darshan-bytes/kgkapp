@@ -585,7 +585,7 @@ class HomeWidgets {
                       padding: EdgeInsets.symmetric(horizontal: 18.w),
                       isSelected: isSelected,
                       onTap: () {
-                        homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index));
+                        homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index: index, context: context));
                       },
                       title: homeBloc.kgkCoutureButtonsTitle[index].tr,
                     );
@@ -604,8 +604,20 @@ class HomeWidgets {
                           ? EdgeInsets.only(right: 17.w)
                           : EdgeInsets.zero,
                   productDetails: homeBloc.luminousProductViewList[index],
-                  onEyeTap: () {},
-                  onFavTap: () {},
+                  onEyeTap: () async {
+                    ProductDetailsModel? productDetails = homeBloc.luminousProductViewList[index];
+
+                    BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails, context));
+                    await Utils.showSmartModalBottomSheet(
+                      context: context,
+                      enableDrag: false,
+                      useRootNavigator: true,
+                      builder: (context) => const AddWatchlistScreen(),
+                    );
+                  },
+                  onFavTap: () {
+                    BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(homeBloc.luminousProductViewList[index], context));
+                  },
                   onTap: () {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                       RoutesData.productId: homeBloc.luminousProductViewList[index].productId ?? '',

@@ -115,6 +115,8 @@ class CommonResponse<T> {
         return AuctionDataModel.fromJson(json);
       case const (CompareProductDetails):
         return CompareProductDetails.fromJson(json);
+      case const (PaginationData<KgkCoutureDetails>):
+        return PaginationData<KgkCoutureDetails>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

@@ -624,6 +624,30 @@ class AppRepository extends ApiService {
         query: query, withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<KgkCoutureDetails>>?> homePageKgkCoutureCollections({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+    String? kgkCollection,
+  }) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<KgkCoutureDetails>>(
+      ApiClient.homePageKgkCoutureCollections,
+      query: {
+        ApiKey.limit: limit,
+        ApiKey.page: page,
+        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
+      },
+      withCurrencyHeader: true,
+    );
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
