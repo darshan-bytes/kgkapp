@@ -465,3 +465,5 @@ export 'package:syncfusion_flutter_sliders/sliders.dart';
 export 'package:video_player/video_player.dart';
 export 'package:webview_flutter/webview_flutter.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/home/mode/kgk_couture_collections_model.dart';
+export 'package:kgk/modules/b2b/preview_catalogue/model/preview_catalogue_data_model.dart';
+export 'package:kgk/modules/b2b/preview_catalogue/model/sku_product_model.dart';

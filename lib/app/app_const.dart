@@ -42,7 +42,16 @@ class AppConst {
   static const String sortValueAsc = "asc";
   static const String sortValueDesc = "desc";
 
-  static const String  dateTimeKey = "date_time";
-  static const String  priceKey = "price";
-  static const String  isMyBidKey = "is_my_bid";
+  static const String dateTimeKey = "date_time";
+  static const String priceKey = "price";
+  static const String isMyBidKey = "is_my_bid";
+
+  /// Commodity key
+  static const String diamond = "diamond";
+  static const String gemstone = "gemstone";
+  static const String jewellery = "jewellery";
+  static const String cadLibrary = "cad_library";
+  static const String designLibrary = "design_library";
+  static const String styleLibrary = "style_library";
+  static const String skuLibrary = "sku_library";
 }

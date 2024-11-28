@@ -310,7 +310,7 @@ class GemstoneDatum {
   String? lotCodeSuid;
   String? lotCode;
   dynamic lowerHalf;
-  int? lsp;
+  dynamic lsp;
   String? maxSize;
   dynamic measurements;
   dynamic milky;

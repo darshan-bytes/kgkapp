@@ -46,6 +46,13 @@ class ProductDetailsModel {
   bool isCommentVisible;
   String? auctionId;
   bool isAddedToCart;
+  String? title;
+  String? subTitle;
+  String? kgkCollectionName;
+  String? businessCategoryName;
+  String? gms;
+  String? cts;
+  List<String>? colorsCode;
 
   ProductDetailsModel({
     this.productId,
@@ -93,6 +100,13 @@ class ProductDetailsModel {
     this.isCommentVisible = false,
     this.auctionId,
     this.isAddedToCart = false,
+    this.title,
+    this.subTitle,
+    this.gms,
+    this.kgkCollectionName,
+    this.businessCategoryName,
+    this.cts,
+    this.colorsCode,
   });
 
   @override
@@ -144,7 +158,14 @@ class ProductDetailsModel {
           isForAuction == other.isForAuction &&
           isCommentVisible == other.isCommentVisible &&
           auctionId == other.auctionId &&
-          isAddedToCart == other.isAddedToCart;
+          isAddedToCart == other.isAddedToCart &&
+          title == other.title &&
+          subTitle == other.subTitle &&
+          gms == other.gms &&
+          kgkCollectionName == other.kgkCollectionName &&
+          businessCategoryName == other.businessCategoryName &&
+          cts == other.cts &&
+          colorsCode == other.colorsCode;
 
   @override
   int get hashCode =>
@@ -192,9 +213,31 @@ class ProductDetailsModel {
       isForAuction.hashCode ^
       isCommentVisible.hashCode ^
       auctionId.hashCode ^
-      isAddedToCart.hashCode;
+      isAddedToCart.hashCode ^
+      title.hashCode ^
+      subTitle.hashCode ^
+      gms.hashCode ^
+      kgkCollectionName.hashCode ^
+      businessCategoryName.hashCode ^
+      cts.hashCode ^
+      colorsCode.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {
   String get displayPrice => offerPrice ?? originalPrice ?? '';
+
+  Color get getCatalogueBadgeColor {
+    if (colorsCode.isNullOrEmpty) return Colors.transparent;
+    for (String color in (colorsCode ?? [])) {
+      if (color.isNotEmpty && color.startsWith('#')) {
+        return _convertToColor(color);
+      }
+    }
+    return Colors.transparent;
+  }
+
+  Color _convertToColor(String color) {
+    String hexColor = color.replaceAll('#', '');
+    return Color(int.parse('0xFF$hexColor'));
+  }
 }

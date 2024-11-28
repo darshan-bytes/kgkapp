@@ -25,34 +25,35 @@ class ProductGridItem extends StatelessWidget {
   final bool isCommentSelected;
   final String? buttonText;
   final bool isBadgeVisible;
+  final bool forPreviewCatalogue;
 
-  const ProductGridItem({
-    super.key,
-    this.boxHeight,
-    this.boxWidth,
-    this.imageHeight,
-    this.imageWidth,
-    this.onTap,
-    required this.productDetails,
-    this.fit = BoxFit.cover,
-    this.isFavourite = false,
-    this.onFavTap,
-    this.onAddToBagTap,
-    this.onEyeTap,
-    this.onCancelTap,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
-    this.isStoneWithPrice = false,
-    this.isCustomisable = false,
-    this.isOutOfStock = false,
-    this.isForAuction = false,
-    this.prefixImage,
-    this.imageSize,
-    this.onCommentTap,
-    this.isCommentSelected = false,
-    this.buttonText,
-    this.isBadgeVisible = false
-  });
+  const ProductGridItem(
+      {super.key,
+      this.boxHeight,
+      this.boxWidth,
+      this.imageHeight,
+      this.imageWidth,
+      this.onTap,
+      required this.productDetails,
+      this.fit = BoxFit.cover,
+      this.isFavourite = false,
+      this.onFavTap,
+      this.onAddToBagTap,
+      this.onEyeTap,
+      this.onCancelTap,
+      this.padding = EdgeInsets.zero,
+      this.margin = EdgeInsets.zero,
+      this.isStoneWithPrice = false,
+      this.isCustomisable = false,
+      this.isOutOfStock = false,
+      this.isForAuction = false,
+      this.prefixImage,
+      this.imageSize,
+      this.onCommentTap,
+      this.isCommentSelected = false,
+      this.buttonText,
+      this.isBadgeVisible = false,
+      this.forPreviewCatalogue = false});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,9 @@ class ProductGridItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             productImageSection(productItemWidth, style, context),
-            productDetailsSection(productItemWidth, style),
+            forPreviewCatalogue
+                ? previewCatalogueProductDetailsSection(productItemWidth, style)
+                : productDetailsSection(productItemWidth, style),
           ],
         ),
       ),
@@ -279,6 +282,158 @@ class ProductGridItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget previewCatalogueProductDetailsSection(double width, ProductItemStyle style) {
+    return Flexible(
+      child: Container(
+        width: width,
+        color: style.backgroundColor,
+        padding: EdgeInsets.all(12.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmartText(
+              productDetails.title,
+              style: style.priceTextStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(
+              height: 38.h,
+              child: SmartText(
+                productDetails.subTitle,
+                style: style.productNameStyle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (productDetails.kgkCollectionName.isNotNullNorEmpty)
+              SmartText(
+                productDetails.kgkCollectionName,
+                style: style.priceTextStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                optionalPadding: EdgeInsets.only(top: 8.h),
+              ),
+            if (productDetails.businessCategoryName.isNotNullNorEmpty)
+              SmartText(
+                productDetails.businessCategoryName,
+                style: style.productNameStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            if (productDetails.originalPrice.isNotNullNorEmpty) ...[
+              SizedBox(height: 8.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        SmartText(
+                          productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
+                          style: style.priceTextStyle,
+                          optionalPadding: EdgeInsets.only(right: 8.w),
+                        ),
+                        if (productDetails.finalPrice.isNotNullNorEmpty) ...[
+                          SmartText(
+                            productDetails.originalPrice,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: style.checkedPriceStyle,
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+                  if (isStoneWithPrice && productDetails.ctsOrGms != null)
+                    SmartImage(
+                      path: productDetails.ctsOrGms! > 0.1
+                          ? AppImages.icOneRing
+                          : productDetails.ctsOrGms! > 0.2
+                              ? AppImages.icTwoRing
+                              : AppImages.icThreeRing,
+                      height: 20.w,
+                      width: 20.w,
+                      fit: BoxFit.fill,
+                    )
+                ],
+              )
+            ],
+            if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[
+              SizedBox(height: 4.h),
+              diamondAndGramSection(style),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget diamondAndGramSection(ProductItemStyle style) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          height: 14.w,
+          width: 14.w,
+          decoration: BoxDecoration(
+            color: productDetails.getCatalogueBadgeColor,
+            borderRadius: BorderRadius.circular(32.r),
+          ),
+        ),
+        SizedBox(width: 8.w),
+        Flexible(
+          child: Row(
+            children: [
+              if (productDetails.cts.isNotNullNorEmpty) ...[
+                Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                      SizedBox(width: 4.w),
+                      Flexible(
+                        child: SmartText(
+                          productDetails.cts,
+                          style: style.diamondTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 8.w),
+              ],
+              if (productDetails.gms.isNotNullNorEmpty)
+                Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                      SizedBox(width: 4.w),
+                      Flexible(
+                        child: SmartText(
+                          productDetails.gms,
+                          style: style.diamondTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
