@@ -57,11 +57,11 @@ class UserRepository extends ApiService {
   }
 
   // For User SignUp
-  Future<Either<ErrorResponse, CommonResponse>?> signUpCustomer(Map<String, dynamic> params) async {
+  Future<Either<ErrorResponse, CommonResponse<UserResponse>>?> signUpCustomer(Map<String, dynamic> params) async {
     context.setAppLoading(true);
-    var response = await postMethod<CommonResponse>(ApiClient.signUpCustomer, params, withFullResponse: true);
+    var response = await postMethod<UserResponse>(ApiClient.signUpCustomer, params, withFullResponse: true);
     context.setAppLoading(false);
-    return response?.fold((l) => Left(l), (r) => Right(r as CommonResponse));
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
   // For QR Code Login
