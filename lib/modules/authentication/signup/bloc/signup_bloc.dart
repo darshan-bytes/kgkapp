@@ -343,14 +343,37 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       params[ApiKey.state] = stateController.text;
     }
 
-    Either<ErrorResponse, CommonResponse>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
+    Either<ErrorResponse, CommonResponse<UserResponse>>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
     signUpResponse?.fold(
       (l) {
         Utils.showMessage(l.message);
       },
-      (r) {
+      (r) async {
         add(const SignUpResetEvent());
-        event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
+        if (isIndividual) {
+          UserResponse userResponse = r.responseData;
+          await StorageManager().setAuthToken(userResponse.accessToken ?? '');
+          await StorageManager().setUserId(userResponse.userId ?? '');
+          await StorageManager().setUserResponse(userResponse);
+          if (userResponse.customerOrganizationId.isNotNullNorEmpty) {
+            await StorageManager().setCustomerOrgId(userResponse.customerOrganizationId!.toString());
+          }
+          if (userResponse.userIdDetails != null) {
+            await StorageManager().setUserData(userResponse.userIdDetails!);
+          }
+          if (userResponse.bagId != null) {
+            await StorageManager().setBagId(userResponse.bagId!);
+          }
+          if (userResponse.userIdDetails?.userTypeEnum != null) {
+            await StorageManager().setIsSkipLogin(false);
+            BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(userResponse.userIdDetails!.userTypeEnum));
+            await mergeCart(event.context);
+            event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+          }
+        } else {
+          event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
+        }
+
         Utils.showMessage(r.message);
       },
     );
@@ -394,6 +417,24 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           });
         }
       }
+    }
+  }
+
+  Future<void> mergeCart(BuildContext context) async {
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if (myBagDataModel != null) {
+      Map<String, dynamic> body = {
+        ApiKey.id: myBagDataModel.sId ?? '',
+      };
+      await AppRepository(context).mergeBag(body: body).then((value) {
+        value?.fold((l) {
+          Utils.showMessage(l.message);
+        }, (r) async {
+          if (r.responseData != null) {
+            await StorageManager().clearBagData();
+          }
+        });
+      });
     }
   }
 }

@@ -107,6 +107,8 @@ class ApiClient {
   static const String compareProducts = '$apiBaseUrl/compare-products';
 
   static const String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';
+
+  static const String shapeMasterFilters = '$apiBaseUrl/shape-master/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
