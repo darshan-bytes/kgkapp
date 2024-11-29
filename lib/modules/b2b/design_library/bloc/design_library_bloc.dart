@@ -56,6 +56,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     final Map<String, dynamic> params = {
       ApiKey.limit: AppConst.pageLimit50,
       ApiKey.page: paginationScrollController.currentPage,
+      ApiKey.sortKey: AppConst.sortKeyNERPBS,
+      ApiKey.sortValue: AppConst.sortValueDesc
     };
 
     /// Makes the API request and handles the response.
