@@ -64,7 +64,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     return B2BCustomListingDataModel(
       id: sourceModel.sId,
       strCADLibraryImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
-      strCADLibraryNumber: sourceModel.styleNumber,
+      strCADLibraryNumber: sourceModel.designCreatedDt,
       strCADLibraryProductName: sourceModel.autoDescription,
     );
   }

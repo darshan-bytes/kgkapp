@@ -117,6 +117,8 @@ class CommonResponse<T> {
         return CompareProductDetails.fromJson(json);
       case const (PaginationData<KgkCoutureDetails>):
         return PaginationData<KgkCoutureDetails>.fromJson(json);
+      case const (PreviewCatalogueDataModel):
+        return PreviewCatalogueDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

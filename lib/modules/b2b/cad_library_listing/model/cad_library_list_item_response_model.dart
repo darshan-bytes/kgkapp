@@ -66,76 +66,77 @@ class CadLibraryListItemDataModel {
   double? metalWeight;
   String? contractNoSkuNo;
   String? productDescription;
+  String? brand;
 
-  CadLibraryListItemDataModel({
-    this.sId,
-    this.approximateModelWeight,
-    this.businessCategoryCode,
-    this.cancelHoldStatus,
-    this.customerCode,
-    this.customerCodeRefSuid,
-    this.customerCodeSuid,
-    this.customerCollection,
-    this.customerCollectionSuid,
-    this.customerStyleReferenceNumber,
-    this.designCreatedDt,
-    this.designNumber,
-    this.designerName,
-    this.imageSketch,
-    this.isExclusive,
-    this.isFindingRequired,
-    this.isHighend,
-    this.isModelApproved,
-    this.isStoneCardLocked,
-    this.isVariation,
-    this.jewelleryGroup,
-    this.jewelleryGroupRefSuid,
-    this.jewelleryGroupSuid,
-    this.jewelleryType,
-    this.kgkCollectionRefSuid,
-    this.kgkCollectionSuid,
-    this.linksCount,
-    this.msrp,
-    this.market,
-    this.marketRefSuid,
-    this.marketSuid,
-    this.miraclePlate,
-    this.modelPartsCount,
-    this.receivedDateTime,
-    this.refSuid,
-    this.refSuidStyleNumber,
-    this.salesPrice,
-    this.software,
-    this.styleCreatedDate,
-    this.subareaCode,
-    this.subareaId,
-    this.suid,
-    this.suidStyleNumber,
-    this.uom,
-    this.updatedDateTime,
-    this.referenceId,
-    this.createdAt,
-    this.updatedAt,
-    this.findingDetails,
-    this.imageCadRender,
-    this.stoneCardDetails,
-    this.imageCad,
-    this.businessCategory,
-    this.kgkCollectionName,
-    this.crt,
-    this.gms,
-    this.businessCategoryName,
-    this.jewelleryTypeName,
-    this.kgkCollection,
-    this.images,
-    this.isAddedToCart,
-    this.autoDescription,
-    this.styleNumber,
-    this.diamondWeight,
-    this.metalWeight,
-    this.contractNoSkuNo,
-    this.productDescription,
-  });
+  CadLibraryListItemDataModel(
+      {this.sId,
+      this.approximateModelWeight,
+      this.businessCategoryCode,
+      this.cancelHoldStatus,
+      this.customerCode,
+      this.customerCodeRefSuid,
+      this.customerCodeSuid,
+      this.customerCollection,
+      this.customerCollectionSuid,
+      this.customerStyleReferenceNumber,
+      this.designCreatedDt,
+      this.designNumber,
+      this.designerName,
+      this.imageSketch,
+      this.isExclusive,
+      this.isFindingRequired,
+      this.isHighend,
+      this.isModelApproved,
+      this.isStoneCardLocked,
+      this.isVariation,
+      this.jewelleryGroup,
+      this.jewelleryGroupRefSuid,
+      this.jewelleryGroupSuid,
+      this.jewelleryType,
+      this.kgkCollectionRefSuid,
+      this.kgkCollectionSuid,
+      this.linksCount,
+      this.msrp,
+      this.market,
+      this.marketRefSuid,
+      this.marketSuid,
+      this.miraclePlate,
+      this.modelPartsCount,
+      this.receivedDateTime,
+      this.refSuid,
+      this.refSuidStyleNumber,
+      this.salesPrice,
+      this.software,
+      this.styleCreatedDate,
+      this.subareaCode,
+      this.subareaId,
+      this.suid,
+      this.suidStyleNumber,
+      this.uom,
+      this.updatedDateTime,
+      this.referenceId,
+      this.createdAt,
+      this.updatedAt,
+      this.findingDetails,
+      this.imageCadRender,
+      this.stoneCardDetails,
+      this.imageCad,
+      this.businessCategory,
+      this.kgkCollectionName,
+      this.crt,
+      this.gms,
+      this.businessCategoryName,
+      this.jewelleryTypeName,
+      this.kgkCollection,
+      this.images,
+      this.isAddedToCart,
+      this.autoDescription,
+      this.styleNumber,
+      this.diamondWeight,
+      this.metalWeight,
+      this.contractNoSkuNo,
+      this.productDescription,
+      this.brand});
 
   CadLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -192,7 +193,7 @@ class CadLibraryListItemDataModel {
         findingDetails!.add(FindingDetails.fromJson(v));
       });
     }
-    imageCadRender = json['image_cad_render'].cast<String>();
+    imageCadRender = json['image_cad_render']?.cast<String>();
     if (json['stone_card_details'] != null) {
       stoneCardDetails = <StoneCardDetails>[];
       json['stone_card_details'].forEach((v) {
@@ -207,7 +208,7 @@ class CadLibraryListItemDataModel {
     businessCategoryName = json['business_category_name'];
     jewelleryTypeName = json['jewellery_type_name'];
     kgkCollection = json['kgk_collection'];
-    images = json['images'].cast<String>();
+    images = json['images']?.cast<String>();
     isAddedToCart = json['isAddedToCart'];
     autoDescription = json['auto_description'];
     styleNumber = json['style_number'];
@@ -215,6 +216,7 @@ class CadLibraryListItemDataModel {
     metalWeight = json['metal_weight']?.toDouble();
     contractNoSkuNo = json['contract_no_sku_no'];
     productDescription = json['product_description'];
+    brand = json['brand'];
   }
 
   Map<String, dynamic> toJson() {
@@ -337,7 +339,7 @@ class StoneCardDetails {
   String? stoneCardNumber;
   String? styleSkuNumber;
   List<String>? image;
-  List<ComponentDetails>? componentDetails;
+  List<PreviewCatalogueComponentDetails>? componentDetails;
   String? sId;
   String? cADRenderImageAvailable;
 
@@ -356,11 +358,11 @@ class StoneCardDetails {
     stoneCardRefSuid = json['StoneCardRefSuid'];
     stoneCardNumber = json['StoneCardNumber'];
     styleSkuNumber = json['StyleSkuNumber'];
-    image = json['Image'].cast<String>();
+    image = json['Image']?.cast<String>();
     if (json['ComponentDetails'] != null) {
-      componentDetails = <ComponentDetails>[];
+      componentDetails = <PreviewCatalogueComponentDetails>[];
       json['ComponentDetails'].forEach((v) {
-        componentDetails!.add(ComponentDetails.fromJson(v));
+        componentDetails!.add(PreviewCatalogueComponentDetails.fromJson(v));
       });
     }
     sId = json['_id'];
@@ -383,7 +385,7 @@ class StoneCardDetails {
   }
 }
 
-class ComponentDetails {
+class PreviewCatalogueComponentDetails {
   String? rM;
   String? commodity;
   String? origin;
@@ -402,7 +404,7 @@ class ComponentDetails {
   String? clientStone;
   String? sId;
 
-  ComponentDetails(
+  PreviewCatalogueComponentDetails(
       {this.rM,
       this.commodity,
       this.origin,
@@ -421,7 +423,7 @@ class ComponentDetails {
       this.clientStone,
       this.sId});
 
-  ComponentDetails.fromJson(Map<String, dynamic> json) {
+  PreviewCatalogueComponentDetails.fromJson(Map<String, dynamic> json) {
     rM = json['RM'];
     commodity = json['Commodity'];
     origin = json['Origin'];
