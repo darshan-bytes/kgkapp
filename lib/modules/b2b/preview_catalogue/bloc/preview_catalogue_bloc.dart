@@ -95,7 +95,6 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   /// Generates a product list for the preview catalogue.
   void _generateProductList(PreviewCatalogueDataModel model) {
     printWrapped("catalogue => ${model.catalogueType}");
-
     switch (model.catalogueType) {
       case AppConst.diamond:
         _populateDiamondProductList(model.diamondDataList ?? []);
