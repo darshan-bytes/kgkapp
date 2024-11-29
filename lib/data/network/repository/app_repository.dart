@@ -655,6 +655,31 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<ShapeMasterDetails>>?> shapeMasterFilters(
+      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<ShapeMasterDetails>>(ApiClient.shapeMasterFilters, body);
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
+      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<CommodityMasterDetails>>(ApiClient.commodityMasterFilters, body);
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
