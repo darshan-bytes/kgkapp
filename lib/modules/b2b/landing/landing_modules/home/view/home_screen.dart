@@ -20,7 +20,9 @@ class HomeScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is HomeStrapiDataFetchedState,
           builder: (context, state) {
             if (homeBloc.homeStrapiList.isEmpty) {
-              return const SmartCircularProgressIndicator();
+              // Here I've commented below code because We need to release build for Auth Module and home page was not completely implemented so it was showing loader in the home screen.
+              // return const SmartCircularProgressIndicator();
+              return const SizedBox.shrink();
             }
             return RefreshIndicator.adaptive(
               onRefresh: () async {
@@ -533,8 +535,9 @@ Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
         ),
         imagePadding: EdgeInsets.all(12.w),
         titleMaxLines: 1,
-        fit: BoxFit.fill,
+        fit: BoxFit.contain,
         imageUrl: item.imageUrl ?? '',
+        imageWidth: 72.w,
       );
     },
   );

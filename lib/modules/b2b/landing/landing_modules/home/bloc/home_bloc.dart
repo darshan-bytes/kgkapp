@@ -6,6 +6,8 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  late AppBloc appBloc;
+
   //Jewellery List
   final List<AuctionListModel> jewelleryList = _generateJewelleryList();
 
@@ -21,13 +23,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<AuctionListModel> exploreFancyColorDiamondsList = _generateFancyColorDiamondsList();
 
   //Shop Diamonds List
-  final List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
+  List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
 
   //Shop Rings List
   final List<AuctionListModel> shopByBrands = _generateShopByBrands();
 
   //Shop Gemstones List
-  final List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
+  List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
 
   //Shop Gemstones2 List
   final List<AuctionListModel> shopGemstones2List = _generateShopGemstones2List();
@@ -133,7 +135,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Either<ErrorResponse, BagListDataModel>? response;
       response = await AppRepository(context).getBagListData(id: id, isShowLoader: false);
       response?.fold((l) {
-        Utils.showMessage(l.message);
+        //Utils.showMessage(l.message);
       }, (r) async {
         String? bagId = StorageManager().getBagId();
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
@@ -142,15 +144,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       });
     } catch (e) {
-      Utils.showMessage(e.toString());
+      // Utils.showMessage(e.toString());
     }
   }
 
   void _onHomeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async {
+    appBloc = BlocProvider.of<AppBloc>(event.context);
     currentPageIndex = 0;
     kgkCoutureSelectedIndex = 0;
     await fetchListOfBag(event.context, emit);
     await fetchStrapiData(event.context, emit);
+    await shapeMasterFilters(event.context);
+    await fetchCommodityMasterFilters(event.context);
     await fetchKgkCoutureData(event.context);
 
     emit(const HomeReloadState());
@@ -792,8 +797,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     homeStrapiList.clear();
     await AppRepository(context).fetchStrapiHomeData().then((value) async {
       value.fold((l) {
-        emit(HomeErrorState(errorMessage: l.message ?? ""));
-        Utils.showMessage(l.message);
+        // emit(HomeErrorState(errorMessage: l.message ?? ""));
+        //Utils.showMessage(l.message);
       }, (r) {
         homeStrapiList = r;
       });
@@ -888,6 +893,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.unknown:
       default:
         //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
+
+        // TODO: For shop by diamond _buildShopDiamondSection(homeBloc, style)
         return const SizedBox.shrink();
     }
   }
@@ -925,10 +932,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> fetchKgkCoutureData(BuildContext context) async {
     try {
       String? kgkCollection = kgkCoutureSelectedIndex == 0 ? null : kgkCoutureButtonsTitle[kgkCoutureSelectedIndex];
-      final response = await AppRepository(context).homePageKgkCoutureCollections(page: '1', limit: '10', kgkCollection: kgkCollection);
+      final response = await AppRepository(context)
+          .homePageKgkCoutureCollections(page: '1', limit: '10', kgkCollection: kgkCollection, isLoadMore: true);
       response?.fold(
         (l) {
-          Utils.showMessage(l.message);
+          //Utils.showMessage(l.message);
         },
         (r) {
           kgkCoutureButtonsTitle = [
@@ -952,7 +960,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         },
       );
     } catch (e) {
-      Utils.showMessage(e.toString());
+      // Utils.showMessage(e.toString());
+    }
+  }
+
+  Future<void> shapeMasterFilters(BuildContext context) async {
+    try {
+      final response = await appBloc.fetchShapeMasterFilters(context);
+      shopDiamondsList = List.generate(response.length, (index) {
+        ShapeMasterDetails item = response[index];
+        return AuctionListModel(
+          id: item.id?.toString() ?? '',
+          name: item.shapeName,
+          imageUrl: item.imgPath?.setMediaUrl ?? '',
+          redirectTo: RedirectionTo.diamond.toString(),
+        );
+      });
+    } catch (e) {
+      // Utils.showMessage(e.toString());
+      printWrapped('Error in fetching shape master filters: $e');
+    }
+  }
+
+  Future<void> fetchCommodityMasterFilters(BuildContext context) async {
+    try {
+      final response = await appBloc.fetchCommodityMasterFilters(context);
+      shopGemstonesList = List.generate(response.length, (index) {
+        CommodityMasterDetails item = response[index];
+        return AuctionListModel(
+          id: item.id?.toString() ?? '',
+          name: item.name,
+          imageUrl: item.imgPath,
+          redirectTo: RedirectionTo.jewellery.toString(),
+        );
+      });
+    } catch (e) {
+      // Utils.showMessage(e.toString());
+      printWrapped('Error in fetching shape master filters: $e');
     }
   }
 }

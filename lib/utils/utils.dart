@@ -7,7 +7,15 @@ class Utils {
   /// Show common snack bar messages
   static Future<void> showMessage(String? message) async {
     if (message.isNullOrEmpty) return;
+
     try {
+      /// Below 4 lines is used to hide toast message from home screen as we are releasing the build of the Auth Module
+      /// and home screen is not yet completed and showing some error messages because of API issues.
+      if (NavigatorKey.navigatorKey.currentContext == null) return;
+      final context = NavigatorKey.navigatorKey.currentContext!;
+      String routeName = ModalRoute.of(context)?.settings.name ?? '';
+      if (routeName == AppRoutes.landingPage && BlocProvider.of<LandingBloc>(context).currentIndex == 0) return;
+
       await Flushbar(
         message: message,
         duration: const Duration(seconds: 3),
