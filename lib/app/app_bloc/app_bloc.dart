@@ -52,6 +52,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
     on<ProductAddToBagEvent>(_onProductAddToBagEvent);
     on<ProductRemoveFromBagEvent>(_onProductRemoveFromBagEvent);
+    on<ProductSortOptionsEvent>(_onProductSortOptionsEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -251,11 +252,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   // Delete and retry bag
-  Future<void> _deleteAndRetryBag(ProductAddToBagEvent event, Emitter<AppState> emit, String bagId) async {
+  Future<void> _deleteAndRetryBag(ProductAddToBagEvent event, Emitter<AppState> emit, String bagId, {String suid = ''}) async {
     if (bagId.isNullOrEmpty) {
       return;
     }
-    Map<String, dynamic> body = {ApiKey.id: bagId};
+    Map<String, dynamic> body = {ApiKey.id: bagId, ApiKey.suid: suid};
 
     await AppRepository(event.context).deleteBag(body: body).then((response) {
       response?.fold(
@@ -268,8 +269,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  Future<void> _onProductRemoveFromBagEvent(ProductRemoveFromBagEvent event, Emitter<AppState> emit) async {
+  Future<void> _onProductRemoveFromBagEvent(event, Emitter<AppState> emit) async {
     /// Implementing it later
+
+    if (event.productDetails.productId.isNullOrEmpty) {
+      return;
+    }
+
+    /// TODO :: Temporary added static bag id here
+    await _deleteAndRetryBag(event, emit, "674982171e6515593f727ec6", suid: "DIS268");
   }
 
   // Get gemstone filter option list
@@ -370,6 +378,29 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       printWrapped(e.toString());
     }
     return commodityMasterDetails;
+  }
+
+  Future<void> _onProductSortOptionsEvent(ProductSortOptionsEvent event, Emitter<AppState> emit) async {
+    emit(AppReloadState());
+    Either<ErrorResponse, List<SortOptionsModel>>? response;
+    response = await AppRepository(event.context).getSortingOptions();
+
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+    }, (sortingOptions) async {
+      /// Create a temporary Map to store sorting data by type
+      Map<String, List<SortOptions>> sortingData = {};
+
+      /// Populate the map
+      for (final option in sortingOptions) {
+        if (option.commodity != null) {
+          sortingData[option.commodity!] = option.data;
+        }
+      }
+
+      /// Store the entire map in local storage
+      await StorageManager().setSortingData(sortingData);
+    });
   }
 }
 

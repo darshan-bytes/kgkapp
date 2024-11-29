@@ -25,6 +25,7 @@ class StorageManager {
   final String _bagId = 'bagId';
   final String _selectedCsc = 'selectedCsc';
   final String _customerOrganizationId = 'customerOrganizationId';
+  final String _sortingData = 'sortingData';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -117,6 +118,23 @@ class StorageManager {
       currencyList.add(CurrencyListModel.fromJson(element));
     });
     return currencyList;
+  }
+
+  /// Store sorting data in local storage
+  Future<void> setSortingData(Map<String, List<SortOptions>> data) async {
+    final serializedData = data.map(
+      (key, value) => MapEntry(key, value.map((e) => e.toJson()).toList()),
+    );
+    await _box.put(_sortingData, serializedData);
+  }
+
+  /// Fetch sorting list for a specific type
+  Future<List<SortOptions>> getSortingList(String type) async {
+    final storedData = _box.get(_sortingData, defaultValue: {});
+    if (storedData is Map<String, dynamic> && storedData.containsKey(type)) {
+      return (storedData[type] as List).map((e) => SortOptions.fromJson(e)).toList();
+    }
+    return [];
   }
 
   /// Set theme data

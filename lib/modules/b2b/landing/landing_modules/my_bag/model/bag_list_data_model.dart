@@ -222,4 +222,6 @@ class Result {
   String toString() {
     return "$suid, $quantity, $totalPrice, $rate, $jewelleryName, $productId, $image, $commodity, $discountPrice, $discountPercentage, $lotCode, $shape, $labs, $cut, $color, $clarity, $ctsOrGms, $polish, $symmetry, $depth, $table, $measurements, $rappaportPrice, $location, $status, ";
   }
+
+  Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;
 }

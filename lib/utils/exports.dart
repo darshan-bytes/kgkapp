@@ -469,3 +469,4 @@ export 'package:kgk/modules/b2b/preview_catalogue/model/preview_catalogue_data_m
 export 'package:kgk/modules/b2b/preview_catalogue/model/sku_product_model.dart';
 export 'package:kgk/model/shape_master_details_model.dart';
 export 'package:kgk/model/commodity_master_details_model.dart';
+export 'package:kgk/model/sort_options_model.dart';
