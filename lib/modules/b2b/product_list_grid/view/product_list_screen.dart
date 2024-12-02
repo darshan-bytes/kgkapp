@@ -42,11 +42,10 @@ class ProductListScreen extends StatelessWidget {
                   ),
                 );
               },
-              onSortTap: () {
-                BlocProvider.of<SortFilterBloc>(context).add(SortFilterScreenTypeEvent(screenIdentifier: bloc.screenIdentifier));
+              onSortTap: () async {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => const SortScreen(),
+                  builder: (context) => SortScreen(sortData: bloc.sortOptions),
                 ).then((onValue) {
                   if (onValue != null) {
                     bloc.add(ProductSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
@@ -66,7 +65,7 @@ class ProductListScreen extends StatelessWidget {
             return SmartSingleChildScrollView(
               controller: bloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await bloc.pullToRefresh(context);
+                bloc.add(ProductListPullToRefreshEvent(context));
               },
               child: SafeArea(
                 child: Padding(

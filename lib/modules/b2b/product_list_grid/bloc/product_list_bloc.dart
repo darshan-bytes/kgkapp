@@ -4,7 +4,7 @@ part 'product_list_event.dart';
 
 part 'product_list_state.dart';
 
-// Using this enum identifies different fetch scenarios
+/// Enum for Fetch Scenarios
 enum FetchScenario {
   productId,
   collectionName,
@@ -13,16 +13,9 @@ enum FetchScenario {
 }
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
-  // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
-
-  // For Product List view
   bool isGrid = true;
-
-  // For Watchlist
-
   String appbarTitle = APPStrings.ring.tr;
-
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
 
   List<ProductDetailsModel> productList = [];
@@ -30,17 +23,17 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Completer<bool> refreshCompleter = Completer<bool>();
 
   int? totalNumberOfPages;
-
   String productId = "";
   String productNavigation = '';
   String sortKey = AppConst.sortKeySuid;
   String sortValue = AppConst.sortValueAsc;
-
   String collectionName = "";
 
+  List<FilterOptionModel> filterList = [];
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
-  List<FilterOptionModel> filterList = [];
+
+  List<SortOptions> sortOptions = [];
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -58,6 +51,46 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     return super.close();
   }
 
+  /// Event handlers
+  Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
+    await _initializeBloc(event.context, emit);
+  }
+
+  Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
+    await _handleLoadMore(event.context, emit, event.currentPage);
+  }
+
+  Future<void> _onProductListPullToRefresh(ProductListPullToRefreshEvent event, Emitter<ProductListState> emit) async {
+    await _handlePullToRefresh(event.context, emit);
+  }
+
+  void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
+    _toggleViewType(emit);
+  }
+
+  Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
+    await _addToWatchList(event.context, event.productId);
+  }
+
+  Future<void> _onProductSortEvent(ProductSortEvent event, Emitter<ProductListState> emit) async {
+    sortKey = event.sortData.sortKey ?? "";
+    sortValue = event.sortData.sortValue ?? "";
+    _handlePullToRefresh(event.context, emit);
+  }
+
+  ///Initialization Logic
+  Future<void> _initializeBloc(BuildContext context, Emitter<ProductListState> emit) async {
+    userType = BlocProvider.of<AppBloc>(context).userType;
+    _initWishlistUpdaterServiceBloc(context);
+    await _sortOptionListApiCall(context);
+    if (!refreshCompleter.isCompleted) refreshCompleter.complete(true);
+    emit(ReloadProductState());
+    _initializePagination(context);
+    getRouteData(context);
+    await _loadInitialData(context, emit);
+    emit(const ProductListLoadedState());
+  }
+
   void getRouteData(BuildContext context) async {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
@@ -65,317 +98,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productId = data[RoutesData.productId] ?? "";
       collectionName = data[RoutesData.collectionName] ?? "";
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
-    }
-  }
-
-  Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
-    // assigning current userType
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
-    _initWishlistUpdaterServiceBloc(event.context);
-    _sortOptionListApiCall(event.context);
-
-    if (!refreshCompleter.isCompleted) {
-      refreshCompleter.complete(true);
-    }
-
-    emit(ReloadProductState());
-    paginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(ProductListLoadMoreEvent(currentPage, event.context));
-      },
-    );
-    isGrid = true;
-    getRouteData(event.context);
-
-    if (screenIdentifier == ScreenIdentifier.productForRing) {
-      appbarTitle = APPStrings.ring.tr;
-      productList.clear();
-      filterList = [
-        FilterOptionModel(
-          name: "Type",
-          slug: "type",
-          defaultValue: "",
-          inputType: "checkbox",
-          data: [],
-          id: 1,
-        ),
-        FilterOptionModel(
-          name: "Color",
-          slug: "color",
-          defaultValue: "",
-          inputType: "slider",
-          data: [],
-          id: 2,
-        ),
-        FilterOptionModel(
-          name: "Clarity",
-          slug: "clarity",
-          defaultValue: "",
-          inputType: "checkbox",
-          data: [],
-          id: 3,
-        ),
-        FilterOptionModel(
-          name: "Shape",
-          slug: "shape",
-          defaultValue: "",
-          inputType: "slider",
-          data: [],
-          id: 4,
-        )
-      ];
-
-      /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
-      // gemstoneFilterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, 'jewellery');
-      await fetchJewelleriesList(event.context, emit, true);
-    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
-      appbarTitle = APPStrings.diamonds.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  diamond: "2.5 crt",
-                  gram: "1.5 grms",
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-                  name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-                  originalPrice: "\$3,000.00",
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                  name: "Diamond Vine Ring in 18k Rose Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
-                  name: "Diamond Vine Ring in 18k Yellow Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
-    }
-    emit(const ProductListLoadedState());
-  }
-
-  FetchScenario determineFetchScenario({String? productId, String? collectionName}) {
-    if (productId.isNotNullNorEmpty) {
-      return FetchScenario.productId;
-    } else if (collectionName.isNotNullNorEmpty) {
-      return FetchScenario.collectionName;
-    } else if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
-      return FetchScenario.recentlyViewed;
-    } else {
-      return FetchScenario.regularList;
-    }
-  }
-
-  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
-    String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
-
-    Either<ErrorResponse, JewelleryListingModel>? response;
-
-    FetchScenario scenario = determineFetchScenario(productId: productId, collectionName: collectionName);
-
-    switch (scenario) {
-      case FetchScenario.productId:
-        // For You May Like API
-        response = await AppRepository(context).getJewelleryYouMayLike(
-          productId,
-          limit: AppConst.pageLimit.toString(),
-          isLoadMore: true,
-          page: paginationScrollController.currentPage.toString(),
-        );
-        break;
-
-      case FetchScenario.collectionName:
-        // For collection filter API
-        response = await AppRepository(context).fetchJewelleryList(
-          page: paginationScrollController.currentPage.toString(),
-          isLoadMore: isLoadMore,
-          limit: AppConst.pageLimit.toString(),
-          type: '',
-          sortKey: sortKey,
-          sortValue: sortValue,
-          query: {ApiKey.kgkCollection: collectionName},
-        );
-        break;
-
-      case FetchScenario.regularList:
-        // For jewellery list API
-        response = await AppRepository(context).fetchJewelleryList(
-          page: paginationScrollController.currentPage.toString(),
-          isLoadMore: isLoadMore,
-          limit: AppConst.pageLimit.toString(),
-          type: '',
-          sortKey: sortKey,
-          sortValue: sortValue,
-        );
-        break;
-
-      case FetchScenario.recentlyViewed:
-        // For jewellery list API
-        response = await AppRepository(context).getRecentlyViewedProductList(
-            limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
-        break;
-    }
-
-    response?.fold((l) {
-      Utils.showMessage(l.message);
-    }, (r) {
-      jewelleryDatumList = r.data;
-      r.totalRecords ??= 0;
-      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
-
-      List.generate(jewelleryDatumList.length, (index) {
-        productList.add(ProductDetailsModel(
-          imageUrl: jewelleryDatumList[index].multipleFinishedViewImage.isNotNullNorEmpty
-              ? jewelleryDatumList[index].multipleFinishedViewImage[0].imageUrl
-              : "",
-          name: jewelleryDatumList[index].productDescription ?? "",
-          originalPrice: jewelleryDatumList[index].finalPrice?.setCurrency,
-          discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryDatumList[index].discountPercentage]),
-          offerPrice: jewelleryDatumList[index].discountPrice?.setCurrency,
-          productId: jewelleryDatumList[index].id ?? "",
-          commodity: Commodity.jewellery,
-          productSku: jewelleryDatumList[index].contractNoSkuNo,
-          company: jewelleryDatumList[index].brandName,
-          isFavourite: jewelleryDatumList[index].isFavorite,
-          wishlistId: jewelleryDatumList[index].wishlistID,
-        ));
-      });
-
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-    });
-  }
-
-  Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
-    emit(ProductListLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-    if (screenIdentifier == ScreenIdentifier.productForRing) {
-      await fetchJewelleriesList(event.context, emit, false);
-    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
-      List.generate(
-          10,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  diamond: "2.5 crt",
-                  gram: "1.5 grms",
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-                  name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-                  originalPrice: "\$3,000.00",
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-      List.generate(
-          10,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                  name: "Diamond Vine Ring in 18k Rose Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-      List.generate(
-          10,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
-                  name: "Diamond Vine Ring in 18k Yellow Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
-    }
-    paginationScrollController.isPageLoaded.complete(event.currentPage == totalNumberOfPages);
-    emit(ProductListLoadedMoreState(event.currentPage + 1));
-  }
-
-  Future<void> _onProductListPullToRefresh(ProductListPullToRefreshEvent event, Emitter<ProductListState> emit) async {
-    paginationScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 1));
-    if (screenIdentifier == ScreenIdentifier.productForRing) {
-      appbarTitle = APPStrings.ring.tr;
-      productList.clear();
-      await fetchJewelleriesList(event.context, emit, true);
-    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
-      appbarTitle = APPStrings.diamonds.tr;
-      productList.clear();
-      productList = List.generate(
-        20,
-        (index) => ProductDetailsModel(
-          diamond: "2.5 crt",
-          gram: "1.5 grms",
-          imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-          name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-          originalPrice: "\$3,000.00",
-        ),
-      ).toList();
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      productList = List.generate(
-          20,
-          (index) => ProductDetailsModel(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                name: "Diamond Vine Ring in 18k Rose Gold",
-                originalPrice: '\$5,000.00',
-              )).toList();
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      productList = List.generate(
-          20,
-          (index) => ProductDetailsModel(
-                imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
-                name: "Diamond Vine Ring in 18k Yellow Gold",
-                originalPrice: '\$5,000.00',
-              )).toList();
-    }
-    refreshCompleter.complete(true);
-    emit(const ProductListLoadedState());
-  }
-
-  Future<bool> pullToRefresh(BuildContext context) async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
-    add(ProductListPullToRefreshEvent(context));
-    bool result = await refreshCompleter.future;
-    return result;
-  }
-
-  void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
-    emit(ReloadProductState());
-    isGrid = !isGrid;
-    emit(ProductChangeListingTypeState());
-  }
-
-  Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
-    if (screenIdentifier == ScreenIdentifier.productForRing) {
-      ProductDetailsModel? productDetails = productList.firstWhereOrNull((element) => element.productId == event.productId);
-      if (productDetails != null) {
-        BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(productDetails, event.context));
-        await Utils.showSmartModalBottomSheet(
-          context: event.context,
-          enableDrag: false,
-          useRootNavigator: true,
-          builder: (context) => const AddWatchlistScreen(),
-        );
-      }
     }
   }
 
@@ -406,14 +128,173 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     });
   }
 
-  Future<void> _onProductSortEvent(ProductSortEvent event, Emitter<ProductListState> emit) async {
-    sortKey = event.sortData.sortKey;
-    sortValue = event.sortData.sortValue;
-    pullToRefresh(event.context);
-  }
-
   Future<void> _sortOptionListApiCall(BuildContext context) async {
     ///fetch sort options
-    StorageManager().getSortingList(Commodity.diamond.value);
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.jewellery.value);
+    if (sortOptionsList.isNotNullNorEmpty) {
+      sortOptions = sortOptionsList;
+      SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
+      sortKey = defaultSortOption.sortKey ?? "";
+      sortValue = defaultSortOption.sortValue ?? "";
+    }
+  }
+
+  void _initializePagination(BuildContext context) {
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(ProductListLoadMoreEvent(currentPage, context));
+      },
+    );
+  }
+
+  Future<void> _loadInitialData(BuildContext context, Emitter<ProductListState> emit) async {
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      appbarTitle = APPStrings.ring.tr;
+      productList.clear();
+      _setupFilters();
+      await fetchJewelleriesList(context, emit, true);
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
+      appbarTitle = APPStrings.diamonds.tr;
+      productList.clear();
+      List.generate(
+          20,
+          (index) => productList.add(
+                ProductDetailsModel(
+                  diamond: "2.5 crt",
+                  gram: "1.5 grms",
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
+                  name: "2.00 Carat H VS1 Excellent Cut Round Setting",
+                  originalPrice: "\$3,000.00",
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      List.generate(
+          20,
+          (index) => productList.add(
+                ProductDetailsModel(
+                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
+                  name: "Diamond Vine Ring in 18k Rose Gold",
+                  originalPrice: '\$5,000.00',
+                ),
+              ));
+    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+      appbarTitle = APPStrings.productLibrary.tr;
+      productList.clear();
+      List.generate(
+        20,
+        (index) => productList.add(
+          ProductDetailsModel(
+            imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
+            name: "Diamond Vine Ring in 18k Yellow Gold",
+            originalPrice: '\$5,000.00',
+          ),
+        ),
+      );
+    }
+  }
+
+  void _setupFilters() {
+    filterList = [
+      FilterOptionModel(name: "Type", slug: "type", defaultValue: "", inputType: "checkbox", data: [], id: 1),
+      FilterOptionModel(name: "Color", slug: "color", defaultValue: "", inputType: "slider", data: [], id: 2),
+      FilterOptionModel(name: "Clarity", slug: "clarity", defaultValue: "", inputType: "checkbox", data: [], id: 3),
+      FilterOptionModel(name: "Shape", slug: "shape", defaultValue: "", inputType: "slider", data: [], id: 4),
+    ];
+  }
+
+  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
+    Either<ErrorResponse, JewelleryListingModel>? response;
+    FetchScenario scenario = determineFetchScenario();
+
+    switch (scenario) {
+      case FetchScenario.productId:
+        response = await AppRepository(context).getJewelleryYouMayLike(productId,
+            limit: AppConst.pageLimit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
+        break;
+      case FetchScenario.collectionName:
+        response = await AppRepository(context).fetchJewelleryList(
+            page: paginationScrollController.currentPage.toString(),
+            isLoadMore: isLoadMore,
+            limit: AppConst.pageLimit.toString(),
+            type: '',
+            sortKey: sortKey,
+            sortValue: sortValue,
+            query: {ApiKey.kgkCollection: collectionName});
+        break;
+      case FetchScenario.regularList:
+        response = await AppRepository(context).fetchJewelleryList(
+            page: paginationScrollController.currentPage.toString(),
+            isLoadMore: isLoadMore,
+            limit: AppConst.pageLimit.toString(),
+            type: '',
+            sortKey: sortKey,
+            sortValue: sortValue);
+        break;
+      case FetchScenario.recentlyViewed:
+        response = await AppRepository(context).getRecentlyViewedProductList(
+            limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
+        break;
+    }
+
+    response?.fold(
+      (error) => Utils.showMessage(error.message),
+      (success) => _handleSuccessfulFetch(success),
+    );
+  }
+
+  void _handleSuccessfulFetch(JewelleryListingModel data) {
+    jewelleryDatumList = data.data;
+    totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords ?? 0, AppConst.pageLimit);
+
+    for (var item in jewelleryDatumList) {
+      productList.add(ProductDetailsModel(
+        imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+        name: item.productDescription ?? "",
+        originalPrice: item.finalPrice?.setCurrency,
+        offerPrice: item.discountPrice?.setCurrency,
+        discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
+        productId: item.id ?? "",
+        commodity: Commodity.jewellery,
+        isFavourite: item.isFavorite,
+        wishlistId: item.wishlistID,
+      ));
+    }
+  }
+
+  FetchScenario determineFetchScenario() {
+    if (productId.isNotNullNorEmpty) return FetchScenario.productId;
+    if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
+    if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) return FetchScenario.recentlyViewed;
+    return FetchScenario.regularList;
+  }
+
+  void _toggleViewType(Emitter<ProductListState> emit) {
+    emit(ReloadProductState());
+    isGrid = !isGrid;
+    emit(ProductChangeListingTypeState());
+  }
+
+  Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
+    emit(ProductListLoadingMoreState());
+    await fetchJewelleriesList(context, emit, false);
+    paginationScrollController.isPageLoaded.complete(currentPage == totalNumberOfPages);
+    emit(ProductListLoadedMoreState(currentPage + 1));
+  }
+
+  Future<void> _handlePullToRefresh(BuildContext context, Emitter<ProductListState> emit) async {
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+    await _loadInitialData(context, emit);
+    emit(const ProductListLoadedState());
+  }
+
+  Future<void> _addToWatchList(BuildContext context, String productId) async {
+    ProductDetailsModel? product = productList.firstWhereOrNull((element) => element.productId == productId);
+    if (product != null) {
+      BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
+      await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
+    }
   }
 }

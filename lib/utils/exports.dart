@@ -184,7 +184,6 @@ export 'package:kgk/modules/b2b/landing/landing_modules/qr_code_scan_login/bloc/
 export 'package:kgk/modules/b2b/landing/landing_modules/qr_code_scan_login/view/qr_scanner_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/sort_filter/bloc/sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/sort_filter/model/filter_data_model.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/sort_filter/model/sort_data_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/sort_filter/view/filter_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/sort_filter/view/sort_screen.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/support/bloc/support_bloc.dart';

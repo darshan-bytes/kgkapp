@@ -44,7 +44,7 @@ final class CadListPullToRefreshEvent extends CadLibraryListingEvent {
 
 final class CadSortEvent extends CadLibraryListingEvent {
   final BuildContext context;
-  final SortData sortData;
+  final SortOptions sortData;
 
   const CadSortEvent({required this.context, required this.sortData});
 

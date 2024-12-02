@@ -16,6 +16,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   String sortKey = AppConst.sortKeyNERPBS;
   String sortValue = AppConst.sortValueDesc;
 
+  List<SortOptions> sortOptions = [];
+
   CadLibraryListingBloc() : super(CadListingInitial()) {
     on<InitialCadListingEvent>(_onInitialCadLibraryListEvent);
     on<CadListLoadMoreEvent>(_onCadListLoadMoreEvent);
@@ -26,8 +28,10 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(CadListingReloadState());
+
     clearData();
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    await _initializeSortOptions();
     gridPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
@@ -36,6 +40,16 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     );
     await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     emit(CadListingLoadedState());
+  }
+
+  Future<void> _initializeSortOptions() async {
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.cadLibrary.value);
+    if (sortOptionsList.isNotNullNorEmpty) {
+      sortOptions = sortOptionsList;
+      SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
+      sortKey = defaultSortOption.sortKey ?? "";
+      sortValue = defaultSortOption.sortValue ?? "";
+    }
   }
 
   Future<void> _callCadLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
@@ -93,8 +107,8 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   // _onCadSortEvent
   Future<void> _onCadSortEvent(CadSortEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(CadListingReloadState());
-    sortKey = event.sortData.sortKey;
-    sortValue = event.sortData.sortValue;
+    sortKey = event.sortData.sortKey ?? "";
+    sortValue = event.sortData.sortValue ?? "";
     await pullToRefresh(context: event.context);
   }
 

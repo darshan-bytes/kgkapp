@@ -64,10 +64,10 @@ final class StoneListAddToWatchListEvent extends StoneListingEvent {
 
 final class StoneSortEvent extends StoneListingEvent {
   final BuildContext context;
-  final SortData sortData;
+  final SortOptions sortData;
 
-  const StoneSortEvent({required this.context ,required this.sortData});
+  const StoneSortEvent({required this.context, required this.sortData});
 
   @override
-  List<Object> get props => [context,sortData];
+  List<Object> get props => [context, sortData];
 }

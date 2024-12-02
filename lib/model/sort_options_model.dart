@@ -31,39 +31,26 @@ class SortOptionsModel {
 }
 
 class SortOptions {
-  SortOptions({
-    required this.label,
-    required this.sortKey,
-    required this.sortValue,
-  });
+  String? name;
+  String? sortKey;
+  String? sortValue;
+  bool? isDefault;
 
-  final String? label;
-  final String? sortKey;
-  final String? sortValue;
+  SortOptions({this.name, this.sortKey, this.sortValue, this.isDefault});
 
-  SortOptions copyWith({
-    String? label,
-    String? sortKey,
-    String? sortValue,
-  }) {
-    return SortOptions(
-      label: label ?? this.label,
-      sortKey: sortKey ?? this.sortKey,
-      sortValue: sortValue ?? this.sortValue,
-    );
+  SortOptions.fromJson(Map<String, dynamic> json) {
+    name = json['label'];
+    sortKey = json['sort_key'];
+    sortValue = json['sort_value'];
+    isDefault = json['is_default'];
   }
 
-  factory SortOptions.fromJson(Map<String, dynamic> json) {
-    return SortOptions(
-      label: json["label"],
-      sortKey: json["sort_key"],
-      sortValue: json["sort_value"],
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['label'] = name;
+    data['sort_key'] = sortKey;
+    data['sort_value'] = sortValue;
+    data['is_default'] = isDefault;
+    return data;
   }
-
-  Map<String, dynamic> toJson() => {
-        "label": label,
-        "sort_key": sortKey,
-        "sort_value": sortValue,
-      };
 }

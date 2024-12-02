@@ -1,7 +1,9 @@
 import 'package:kgk/kgk.dart';
 
 class SortScreen extends StatelessWidget {
-  const SortScreen({super.key});
+  final List<SortOptions> sortData;
+
+  const SortScreen({super.key, required this.sortData});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +38,12 @@ class SortScreen extends StatelessWidget {
             ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 16),
               shrinkWrap: true,
-              itemCount: sortFilterBloc.sortData.length,
+              itemCount: sortData.length,
               itemBuilder: (context, index) {
-                final sortData = sortFilterBloc.sortData[index];
                 return InkWell(
                   onTap: () {
-                    sortFilterBloc.add(SelectSortDataEvent(sortData: sortData));
-                    context.pop(arguments: {RoutesData.sortData: sortData});
+                    sortFilterBloc.add(SelectSortDataEvent(sortData: sortData[index]));
+                    context.pop(arguments: {RoutesData.sortData: sortData[index]});
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -50,11 +51,11 @@ class SortScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SmartText(
-                            sortData.name.tr,
+                            sortData[index].name?.tr,
                             style: style.itemTitleStyle,
                           ),
                         ),
-                        if (sortFilterBloc.selectedSortData.name == sortData.name) const SmartImage(path: AppImages.icCheck),
+                        if (sortFilterBloc.selectedSortData.name == sortData[index].name) const SmartImage(path: AppImages.icCheck),
                       ],
                     ),
                   ),
