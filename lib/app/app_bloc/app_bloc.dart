@@ -52,7 +52,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
     on<ProductAddToBagEvent>(_onProductAddToBagEvent);
     on<ProductRemoveFromBagEvent>(_onProductRemoveFromBagEvent);
-    on<ProductSortOptionsEvent>(_onProductSortOptionsEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -378,29 +377,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       printWrapped(e.toString());
     }
     return commodityMasterDetails;
-  }
-
-  Future<void> _onProductSortOptionsEvent(ProductSortOptionsEvent event, Emitter<AppState> emit) async {
-    emit(AppReloadState());
-    Either<ErrorResponse, List<SortOptionsModel>>? response;
-    response = await AppRepository(event.context).getSortingOptions();
-
-    response?.fold((error) {
-      Utils.showMessage(error.message);
-    }, (sortingOptions) async {
-      /// Create a temporary Map to store sorting data by type
-      Map<String, List<SortOptions>> sortingData = {};
-
-      /// Populate the map
-      for (final option in sortingOptions) {
-        if (option.commodity != null) {
-          sortingData[option.commodity!] = option.data;
-        }
-      }
-
-      /// Store the entire map in local storage
-      await StorageManager().setSortingData(sortingData);
-    });
   }
 }
 
