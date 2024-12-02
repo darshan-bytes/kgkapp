@@ -179,6 +179,10 @@ class StorageManager {
     await _box.delete(_bagData);
   }
 
+  Future<void> clearSortingData() async {
+    await _box.delete(_sortingData);
+  }
+
   /// Clear all data stored except _locale
   Future<void> clearSession() async {
     String? locale = getLocale();
