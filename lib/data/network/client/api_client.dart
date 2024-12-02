@@ -112,6 +112,10 @@ class ApiClient {
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
 
+  static const String digitalCatalogueAddComment = '$apiBaseUrl/digital-catalogue/add-comment';
+
+  static const String previewCatalogueCommentsList = '$apiBaseUrl/digital-catalogue/comments';
+  
   static const String commodityMasterFilters = '$apiBaseUrl/commodity-master/filters';
 
   static const String productsShare = '$apiBaseUrl/products-share';
