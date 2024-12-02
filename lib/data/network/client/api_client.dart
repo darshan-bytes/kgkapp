@@ -117,6 +117,10 @@ class ApiClient {
   static const String previewCatalogueCommentsList = '$apiBaseUrl/digital-catalogue/comments';
   
   static const String commodityMasterFilters = '$apiBaseUrl/commodity-master/filters';
+
+  static const String productsShare = '$apiBaseUrl/products-share';
+
+  static const String sortingData = '$apiBaseUrl/common-modules/sorting-data';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

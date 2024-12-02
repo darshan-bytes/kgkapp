@@ -49,7 +49,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         yourValue: "\$24,850.00",
       ),
       isDiamondProduct: index < 6,
-      productId: index.toString(),
+
+      /// Added static Product id here as my bag screen listing data is static
+      productId: "DIS10", //index.toString(),
       diamond: "2.5 crt",
       gram: "1.5 grms",
       imageUrl: index < 3
@@ -127,6 +129,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagPaymentConditionChangedEvent>(_onMyBagPaymentConditionChangedEvent);
     on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
     on<MyBagToggleViewModeEvent>(_onMyBagToggleViewModeEvent);
+    on<MyBagAddToWatchlistEvent>(_onMyBagAddToWatchlistEvent);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -161,6 +164,13 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
         MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
         await StorageManager().storeBagData(myBagDataModel);
+        myBagProductList = List.generate(r.result.length, (index) {
+          final item = r.result[index];
+          return ProductDetailsModel(
+            productId: item.productId,
+            commodity: item.displayCommodity,
+          );
+        });
       }
     });
   }
@@ -181,13 +191,34 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     }
   }
 
-  void _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) {
+  Future<void> _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
-    if (myBagProductList[event.index].isSelectedProduct) {
-      selectedProductCount -= 1;
-    }
-    myBagProductList.removeAt(event.index);
+    AppBloc appBloc = BlocProvider.of<AppBloc>(event.context);
+    appBloc.add(ProductRemoveFromBagEvent(myBagProductList[event.index], event.context));
+
+    // Temporary commented static logic
+    // if (myBagProductList[event.index].isSelectedProduct) {
+    //   selectedProductCount -= 1;
+    // }
+    // myBagProductList.removeAt(event.index);
     emit(MyBagProductRemovedState(index: event.index));
+  }
+
+  Future<void> _onMyBagAddToWatchlistEvent(MyBagAddToWatchlistEvent event, Emitter<MyBagState> emit) async {
+    BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(
+
+        ///TODO : Make below data dynamic in future
+        ProductDetailsModel(
+          productId: "DS10",
+          commodity: Commodity.diamond,
+        ),
+        event.context));
+    await Utils.showSmartModalBottomSheet(
+      context: event.context,
+      enableDrag: false,
+      useRootNavigator: true,
+      builder: (context) => const AddWatchlistScreen(),
+    );
   }
 
   void _onMyBagSelectAllProductChangedEvent(MyBagSelectAllProductChangedEvent event, Emitter<MyBagState> emit) {

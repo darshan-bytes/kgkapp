@@ -72,6 +72,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     // assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     _initWishlistUpdaterServiceBloc(event.context);
+    _sortOptionListApiCall(event.context);
 
     if (!refreshCompleter.isCompleted) {
       refreshCompleter.complete(true);
@@ -409,5 +410,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     sortKey = event.sortData.sortKey;
     sortValue = event.sortData.sortValue;
     pullToRefresh(event.context);
+  }
+
+  Future<void> _sortOptionListApiCall(BuildContext context) async {
+    ///fetch sort options
+    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+    appBloc.add(ProductSortOptionsEvent(context));
   }
 }

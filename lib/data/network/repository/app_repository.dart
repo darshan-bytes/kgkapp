@@ -694,6 +694,12 @@ class AppRepository extends ApiService {
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  // get Sorting List
+  Future<Either<ErrorResponse, List<SortOptionsModel>>?> getSortingOptions() async {
+    var response = await getMethod<SortOptionsModel>(ApiClient.sortingData);
+    return response?.fold((error) => Left(error), (sortOptions) => Right(sortOptions as List<SortOptionsModel>));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
