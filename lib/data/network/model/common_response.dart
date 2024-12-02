@@ -121,6 +121,10 @@ class CommonResponse<T> {
         return PreviewCatalogueDataModel.fromJson(json);
       case const (CommentsAddedResponseModel):
         return CommentsAddedResponseModel.fromJson(json);
+      case const (PaginationData<ShapeMasterDetails>):
+        return PaginationData<ShapeMasterDetails>.fromJson(json);
+      case const (PaginationData<CommodityMasterDetails>):
+        return PaginationData<CommodityMasterDetails>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

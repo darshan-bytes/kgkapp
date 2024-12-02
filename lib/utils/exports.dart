@@ -470,3 +470,5 @@ export 'package:kgk/modules/b2b/preview_catalogue/model/sku_product_model.dart';
 export 'package:kgk/modules/b2b/comment_listing/model/comment_response_model.dart';
 export 'package:kgk/modules/b2b/comment_listing/view/catalogue_comment_listing_screen.dart';
 export 'package:kgk/modules/b2b/comment_listing/bloc/comment_listing_bloc.dart';
+export 'package:kgk/model/shape_master_details_model.dart';
+export 'package:kgk/model/commodity_master_details_model.dart';

@@ -739,7 +739,7 @@ class ComponentDetail {
       totalQty2: json["TotalQty2"]?.toDouble(),
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
       sieveSize: json["SieveSize"],
-      lotId: json["LotId"],
+      lotId: json["LotId"]?.toString(),
       commodityNameRefSuid: json["CommodityNameRefSuid"]?.toString() ?? "0",
       localCurrencyAmount: json["LocalCurrencyAmount"]?.toDouble(),
       internalQualitySuid: json["InternalQualitySuid"],

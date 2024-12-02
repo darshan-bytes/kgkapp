@@ -95,8 +95,7 @@ class AppRoutes {
 
       case signUpPage:
         builder = (context) {
-          BlocProvider.of<SignUpBloc>(context).add(SignUpInitialEvent(context));
-          return const SignUpScreen();
+          return BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)), child: const SignUpScreen());
         };
         break;
 

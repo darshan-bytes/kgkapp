@@ -326,6 +326,51 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     return savedAddressList;
   }
+
+  Future<List<ShapeMasterDetails>> fetchShapeMasterFilters(BuildContext context,
+      {bool isShowLoader = true, bool isForceFetch = false}) async {
+    List<ShapeMasterDetails> shapeMasterDetails = [];
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.filters: {ApiKey.dynamicObject: {}},
+        ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
+        ApiKey.search: "",
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc}
+      };
+      Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response = await AppRepository(context).shapeMasterFilters(body: body);
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (PaginationData<ShapeMasterDetails> r) {
+        shapeMasterDetails = (r.dataList as List<ShapeMasterDetails>?) ?? [];
+      });
+    } catch (e) {
+      printWrapped(e.toString());
+    }
+    return shapeMasterDetails;
+  }
+
+  Future<List<CommodityMasterDetails>> fetchCommodityMasterFilters(BuildContext context,
+      {bool isShowLoader = true, bool isForceFetch = false}) async {
+    List<CommodityMasterDetails> commodityMasterDetails = [];
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.filters: {ApiKey.dynamicObject: {}},
+        ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
+        ApiKey.search: "",
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc}
+      };
+      Either<ErrorResponse, PaginationData<CommodityMasterDetails>>? response =
+          await AppRepository(context).commodityMasterFilters(body: body);
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (PaginationData<CommodityMasterDetails> r) {
+        commodityMasterDetails = (r.dataList as List<CommodityMasterDetails>?) ?? [];
+      });
+    } catch (e) {
+      printWrapped(e.toString());
+    }
+    return commodityMasterDetails;
+  }
 }
 
 extension LoadingExtension on BuildContext {
