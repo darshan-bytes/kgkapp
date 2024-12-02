@@ -5,7 +5,7 @@ sealed class SortFilterEvent extends Equatable {
 }
 
 final class SelectSortDataEvent extends SortFilterEvent {
-  final SortData sortData;
+  final SortOptions sortData;
 
   const SelectSortDataEvent({required this.sortData});
 
@@ -77,6 +77,7 @@ final class SortAndFilterPriceRangeChangedEvent extends SortFilterEvent {
   final SfRangeValues values;
   final bool isFromTextField;
   final bool isMin;
+
   const SortAndFilterPriceRangeChangedEvent(this.values, {this.isFromTextField = false, this.isMin = true});
 
   @override

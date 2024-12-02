@@ -197,7 +197,7 @@ class CadLibraryListingScreen extends StatelessWidget {
             onSortTap: () async {
               await Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => const SortScreen(),
+                builder: (context) => SortScreen(sortData: bloc.sortOptions),
               ).then((onValue) {
                 if (onValue != null) {
                   bloc.add(CadSortEvent(context: context, sortData: onValue[RoutesData.sortData]));

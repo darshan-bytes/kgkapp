@@ -51,10 +51,10 @@ final class ProductListAddToWatchListEvent extends ProductListEvent {
 
 final class ProductSortEvent extends ProductListEvent {
   final BuildContext context;
-  final SortData sortData;
+  final SortOptions sortData;
 
-  const ProductSortEvent({required this.context ,required this.sortData});
+  const ProductSortEvent({required this.context, required this.sortData});
 
   @override
-  List<Object> get props => [context,sortData];
+  List<Object> get props => [context, sortData];
 }

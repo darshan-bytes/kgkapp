@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 part 'stone_listing_event.dart';
+
 part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
@@ -324,8 +325,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Sort event for stone listing
   Future<void> _onStoneSortEvent(StoneSortEvent event, Emitter<StoneListingState> emit) async {
-    sortKey = event.sortData.sortKey;
-    sortValue = event.sortData.sortValue;
+    sortKey = event.sortData.sortKey ?? "";
+    sortValue = event.sortData.sortValue ?? "";
     pullToRefresh(event.context);
   }
 }

@@ -26,6 +26,11 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// Completer to handle pull-to-refresh actions.
   Completer<bool> refreshCompleter = Completer<bool>();
 
+  String sortKey = AppConst.sortKeyNERPBS;
+  String sortValue = AppConst.sortValueDesc;
+
+  List<SortOptions> sortOptions = [];
+
   DesignLibraryBloc() : super(const DesignLibraryInitial()) {
     on<DesignLibraryInitialEvent>(_onDesignLibraryInitialEvent);
     on<DesignLibraryLoadMoreEvent>(_onDesignLibraryLoadMoreEvent);
@@ -38,6 +43,8 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     emit(const DesignLibraryReloadState());
     clearData();
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    sortOptions = await StorageManager().getSortingList(Commodity.designLibrary.value);
+    await _initializeSortOptions();
 
     /// Initializes the pagination controller with a load action.
     paginationScrollController.init(
@@ -49,6 +56,16 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
 
     await _callDesignLibraryApi(context: event.context);
     emit(const DesignLibraryLoadedState());
+  }
+
+  Future<void> _initializeSortOptions() async {
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.cadLibrary.value);
+    if (sortOptionsList.isNotNullNorEmpty) {
+      sortOptions = sortOptionsList;
+      SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
+      sortKey = defaultSortOption.sortKey ?? "";
+      sortValue = defaultSortOption.sortValue ?? "";
+    }
   }
 
   /// Fetches data from the design library API.
