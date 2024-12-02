@@ -17,35 +17,14 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
   /// Determines if the catalogue should be displayed in a WebView.
   bool get isWebView => digitalCatalogueListingModel?.isWebView ?? false;
 
-  /// Index of the currently displayed page.
-  int currentPage = 0;
-
-  /// List of pages available in the catalogue.
-  List<int> pageList = [];
-
   /// List of product details displayed in the catalogue.
   List<ProductDetailsModel> productList = [];
 
   /// Controller for managing WebView actions and events.
   late WebViewController webViewController;
 
-  /// Indicates whether the comment section is visible.
-  bool isCommentVisible = false;
-
-  /// Index of the selected product for commenting.
-  int selectedCommentIndex = -1;
-
-  /// Controller for handling comment input text.
-  final TextEditingController commentController = TextEditingController();
-
-  /// Focus node for the comment input field to manage focus.
-  final FocusNode commentFocusNode = FocusNode();
-
   PreviewCatalogueBloc() : super(const PreviewCatalogueInitial()) {
     on<InitialPreviewCatalogueEvent>(_onInitialPreviewCatalogueEvent);
-    on<PreviewCataloguePreviousNextPageEvent>(_onPreviewCataloguePreviousNextPageEvent);
-    on<PreviewCatalogueCommentEvent>(_onPreviewCatalogueCommentEvent);
-    on<PreviewCatalogueCommentProductSelectEvent>(_onPreviewCatalogueCommentProductSelectEvent);
   }
 
   /// Handles the initial loading of the preview catalogue.
@@ -64,7 +43,6 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     if (context.routesData == null) return;
     digitalCatalogueListingModel = context.routesData?[RoutesData.catalogueData];
     titleOfCatalogue = digitalCatalogueListingModel?.name ?? '';
-    pageList = List.generate(3, (index) => index);
   }
 
   /// Initializes the WebView controller and sets up the navigation delegate
@@ -124,11 +102,12 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       diamondDataList.length,
       (index) => ProductDetailsModel(
+        productId: diamondDataList[index].id,
         imageUrl: (diamondDataList[index].image.isNotNullNorEmpty) ? diamondDataList[index].image.first.url : '',
         title: diamondDataList[index].lotCode,
         subTitle: diamondDataList[index].rmDescription,
         originalPrice: diamondDataList[index].discountPrice,
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -138,6 +117,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       jewelleryDataList.length,
       (index) => ProductDetailsModel(
+        productId: jewelleryDataList[index].id,
         imageUrl: (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
             ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
             : '',
@@ -153,7 +133,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
           jewelleryDataList[index].metalColor2HexCode ?? "",
           jewelleryDataList[index].metalColor3HexCode ?? "",
         ],
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -163,11 +143,12 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       gemstoneDataList.length,
       (index) => ProductDetailsModel(
+        productId: gemstoneDataList[index].id,
         imageUrl: (gemstoneDataList[index].image.isNotNullNorEmpty) ? gemstoneDataList[index].image.first.url : '',
         title: gemstoneDataList[index].lotCode,
         subTitle: gemstoneDataList[index].rmDescription,
         originalPrice: (gemstoneDataList[index].discountPrice ?? 0).toString(),
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -177,13 +158,14 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       cadLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
+        productId: cadLibraryListItemDataList[index].sId,
         imageUrl:
             (cadLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false) ? cadLibraryListItemDataList[index].images?.first : '',
         title: cadLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: cadLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: cadLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: cadLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -193,6 +175,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       designLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
+        productId: designLibraryListItemDataList[index].sId,
         imageUrl: (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
             ? designLibraryListItemDataList[index].images?.first
             : '',
@@ -200,7 +183,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: designLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: designLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -210,6 +193,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       styleLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
+        productId: styleLibraryListItemDataList[index].sId,
         imageUrl: (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
             ? styleLibraryListItemDataList[index].images?.first
             : '',
@@ -217,7 +201,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: styleLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
   }
@@ -227,6 +211,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       skuProductList.length,
       (index) => ProductDetailsModel(
+        productId: skuProductList[index].sId,
         imageUrl: (skuProductList[index].multipleFinishedViewImage?.isNotNullNorEmpty ?? false)
             ? skuProductList[index].multipleFinishedViewImage?.first.imageUrl
             : '',
@@ -235,46 +220,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         kgkCollectionName: skuProductList[index].kgkCollection ?? "\n",
         businessCategoryName: skuProductList[index].businessCategoryName ?? "\n",
         originalPrice: skuProductList[index].discountPrice,
-        isCommentVisible: false,
+        isCommentVisible: true,
       ),
     );
-  }
-
-  /// Handles switching between previous and next pages of the catalogue.
-  void _onPreviewCataloguePreviousNextPageEvent(PreviewCataloguePreviousNextPageEvent event, Emitter<PreviewCatalogueState> emit) {
-    emit(const PreviewCatalogueReloadState());
-    _updateCurrentPage(event.isNext);
-    emit(PreviewCataloguePreviousNextPageState(event.isNext));
-  }
-
-  /// Updates the current page index based on navigation direction.
-  void _updateCurrentPage(bool isNext) {
-    if (isNext) {
-      if (currentPage < pageList.length - 1) {
-        currentPage++;
-      }
-    } else {
-      if (currentPage > 0) {
-        currentPage--;
-      }
-    }
-  }
-
-  /// Toggles the visibility of the comment section.
-  void _onPreviewCatalogueCommentEvent(PreviewCatalogueCommentEvent event, Emitter<PreviewCatalogueState> emit) {
-    emit(const PreviewCatalogueReloadState());
-    isCommentVisible = !isCommentVisible;
-    if (!isCommentVisible) {
-      commentFocusNode.unfocus();
-    }
-    emit(const PreviewCatalogueCommentState());
-  }
-
-  /// Handles selecting a specific product for commenting.
-  void _onPreviewCatalogueCommentProductSelectEvent(PreviewCatalogueCommentProductSelectEvent event, Emitter<PreviewCatalogueState> emit) {
-    emit(const PreviewCatalogueReloadState());
-    selectedCommentIndex = event.index;
-    commentFocusNode.requestFocus();
-    emit(const PreviewCatalogueCommentProductSelectState());
   }
 }

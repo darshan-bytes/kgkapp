@@ -119,6 +119,8 @@ class CommonResponse<T> {
         return PaginationData<KgkCoutureDetails>.fromJson(json);
       case const (PreviewCatalogueDataModel):
         return PreviewCatalogueDataModel.fromJson(json);
+      case const (CommentsAddedResponseModel):
+        return CommentsAddedResponseModel.fromJson(json);
       case const (PaginationData<ShapeMasterDetails>):
         return PaginationData<ShapeMasterDetails>.fromJson(json);
       case const (PaginationData<CommodityMasterDetails>):
