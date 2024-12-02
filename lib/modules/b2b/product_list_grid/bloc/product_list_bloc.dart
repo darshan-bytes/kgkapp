@@ -414,7 +414,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> _sortOptionListApiCall(BuildContext context) async {
     ///fetch sort options
-    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
-    appBloc.add(ProductSortOptionsEvent(context));
+    StorageManager().getSortingList(Commodity.diamond.value);
   }
 }
