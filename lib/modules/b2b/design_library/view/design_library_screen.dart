@@ -194,10 +194,10 @@ class DesignLibraryScreen extends StatelessWidget {
                 ),
               );
             },
-            onSortTap: () {
+            onSortTap: () async {
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => const SortScreen(),
+                builder: (context) => SortScreen(sortData: bloc.sortOptions),
               );
             },
           );

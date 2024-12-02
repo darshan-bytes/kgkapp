@@ -1,18 +1,19 @@
 import 'package:kgk/kgk.dart';
 
 part 'sort_filter_event.dart';
+
 part 'sort_filter_state.dart';
 
 class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
-  List<SortData> sortData = [
-    SortData(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc),
-    SortData(name: APPStrings.descending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueDesc),
-    SortData(name: APPStrings.priceHighToLow, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueDesc),
-    SortData(name: APPStrings.priceLowToHigh, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueAsc),
-    SortData(name: APPStrings.mostViewed, sortKey: AppConst.sortKeyViewCount, sortValue: AppConst.sortValueDesc),
+  List<SortOptions> sortData = [
+    SortOptions(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc),
+    SortOptions(name: APPStrings.descending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueDesc),
+    SortOptions(name: APPStrings.priceHighToLow, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueDesc),
+    SortOptions(name: APPStrings.priceLowToHigh, sortKey: AppConst.sortKeyMspRateLocalCurrency, sortValue: AppConst.sortValueAsc),
+    SortOptions(name: APPStrings.mostViewed, sortKey: AppConst.sortKeyViewCount, sortValue: AppConst.sortValueDesc),
   ];
 
-  SortData selectedSortData = SortData(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc);
+  SortOptions selectedSortData = SortOptions(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc);
 
   List<FilterData> filterData = [];
   bool isLoading = false;
@@ -169,9 +170,9 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   /// This method is used to show/hide sort data based on screen type
   void _onSortFilterScreenTypeEvent(SortFilterScreenTypeEvent event, Emitter<SortFilterState> emit) {
     selectedSortData = sortData.first;
-    List<SortData> iterable = [
-      SortData(name: APPStrings.bestSeller, sortKey: AppConst.sortKeyBestSeller, sortValue: AppConst.sortValueDesc),
-      SortData(name: APPStrings.newArrival, sortKey: AppConst.sortKeyNewArrival, sortValue: AppConst.sortValueDesc),
+    List<SortOptions> iterable = [
+      SortOptions(name: APPStrings.bestSeller, sortKey: AppConst.sortKeyBestSeller, sortValue: AppConst.sortValueDesc),
+      SortOptions(name: APPStrings.newArrival, sortKey: AppConst.sortKeyNewArrival, sortValue: AppConst.sortValueDesc),
     ];
     if (event.screenIdentifier == ScreenIdentifier.productForRing) {
       sortData.addAll(iterable);

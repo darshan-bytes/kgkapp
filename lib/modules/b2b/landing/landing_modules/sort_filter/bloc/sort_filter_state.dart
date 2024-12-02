@@ -15,7 +15,7 @@ final class SortReloadState extends SortFilterState {
 }
 
 final class SortDataSelectedState extends SortFilterState {
-  final SortData sortData;
+  final SortOptions sortData;
 
   const SortDataSelectedState(this.sortData);
 

@@ -46,9 +46,11 @@ class StoneListingScreen extends StatelessWidget {
               onSortTap: () {
                 BlocProvider.of<SortFilterBloc>(context)
                     .add(SortFilterScreenTypeEvent(screenIdentifier: diamondListingBloc.screenIdentifier));
+
+                /// TODO : Fetch this from local and pass here as sortData based on commodity type
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => const SortScreen(),
+                  builder: (context) => SortScreen(sortData: []),
                 ).then((onValue) {
                   if (onValue != null) {
                     diamondListingBloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));

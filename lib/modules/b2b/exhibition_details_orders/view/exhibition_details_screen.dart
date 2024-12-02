@@ -170,9 +170,10 @@ class ExhibitionDetailsScreen extends StatelessWidget {
         );
       },
       onSortTap: () {
+        /// TODO: Fetch this from local and pass here as sortData based on commodity type
         Utils.showSmartModalBottomSheet(
           context: context,
-          builder: (context) => const SortScreen(),
+          builder: (context) => SortScreen(sortData: []),
         );
       },
     );
