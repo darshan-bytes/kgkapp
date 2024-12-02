@@ -467,3 +467,6 @@ export 'package:webview_flutter/webview_flutter.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/home/mode/kgk_couture_collections_model.dart';
 export 'package:kgk/modules/b2b/preview_catalogue/model/preview_catalogue_data_model.dart';
 export 'package:kgk/modules/b2b/preview_catalogue/model/sku_product_model.dart';
+export 'package:kgk/modules/b2b/comment_listing/model/comment_response_model.dart';
+export 'package:kgk/modules/b2b/comment_listing/view/catalogue_comment_listing_screen.dart';
+export 'package:kgk/modules/b2b/comment_listing/bloc/comment_listing_bloc.dart';

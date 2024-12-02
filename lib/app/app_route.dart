@@ -78,6 +78,7 @@ class AppRoutes {
   static const presentationPage = '/presentationPage';
   static const newsletterPage = '/newsletterPage';
   static const imageSearchPage = '/imageSearchPage';
+  static const commentListingPage = '/commentListingPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -666,6 +667,13 @@ class AppRoutes {
         };
         break;
 
+      case commentListingPage:
+        builder = (context) {
+          BlocProvider.of<CommentListingBloc>(context).add(InitialCommentListingEvent(context: context));
+          return CatalogueCommentListingScreen();
+        };
+        break;
+
       default:
         return _errorRoute();
     }
@@ -743,6 +751,7 @@ enum RoutesData {
   sortData,
   auctionModelData,
   isContinueClearCompare,
+  catalogueId,
 }
 
 enum ScreenIdentifier {

@@ -655,6 +655,20 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>?> digitalCatalogueAddComment(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CommentsAddedResponseModel>(ApiClient.digitalCatalogueAddComment, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommentsAddedResponseModel>?> getPreviewCatalogueCommentList(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CommentsAddedResponseModel>(ApiClient.previewCatalogueCommentsList, query: body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

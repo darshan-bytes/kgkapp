@@ -111,6 +111,10 @@ class ApiClient {
   static const String shapeMasterFilters = '$apiBaseUrl/shape-master/filters';
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
+
+  static const String digitalCatalogueAddComment = '$apiBaseUrl/digital-catalogue/add-comment';
+
+  static const String previewCatalogueCommentsList = '$apiBaseUrl/digital-catalogue/comments';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

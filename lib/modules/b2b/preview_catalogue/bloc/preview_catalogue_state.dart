@@ -18,45 +18,8 @@ final class PreviewCatalogueReloadState extends PreviewCatalogueState {
   List<Object> get props => [];
 }
 
-final class PreviewCatalogueLoadingState extends PreviewCatalogueState {
-  const PreviewCatalogueLoadingState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class PreviewCatalogueErrorState extends PreviewCatalogueState {
-  const PreviewCatalogueErrorState();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class PreviewCatalogueLoadedState extends PreviewCatalogueState {
   const PreviewCatalogueLoadedState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class PreviewCataloguePreviousNextPageState extends PreviewCatalogueState {
-  final bool isNext;
-
-  const PreviewCataloguePreviousNextPageState(this.isNext);
-
-  @override
-  List<Object> get props => [isNext];
-}
-
-final class PreviewCatalogueCommentState extends PreviewCatalogueState {
-  const PreviewCatalogueCommentState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class PreviewCatalogueCommentProductSelectState extends PreviewCatalogueState {
-  const PreviewCatalogueCommentProductSelectState();
 
   @override
   List<Object> get props => [];

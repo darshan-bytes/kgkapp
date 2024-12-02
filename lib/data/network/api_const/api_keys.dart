@@ -77,4 +77,6 @@ class ApiKey {
   static const String bidAmount = 'bid_amount';
   static const String collectionType = 'collection_type';
   static const String isAddedToCart = 'isAddedToCart';
+  static const String message = 'message';
+  static const String catalogueId = 'catalogue_id';
 }
