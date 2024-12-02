@@ -99,3 +99,12 @@ class ProductRemoveFromBagEvent extends AppEvent {
   @override
   List<Object> get props => [productDetails, context];
 }
+
+class ProductSortOptionsEvent extends AppEvent {
+  final BuildContext context;
+
+  const ProductSortOptionsEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

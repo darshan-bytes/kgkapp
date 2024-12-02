@@ -269,10 +269,12 @@ class MyBagScreen extends StatelessWidget {
                     onTapImageViewer: () => printWrapped("onTapImageViewer"),
                     onTapUSA: () => printWrapped("onTapUSA"),
                     onTapMenuButton: () {
-                      Utils.showSmartModalBottomSheet(
-                        context: context,
-                        builder: (context) => const ProductMenuBottomSheet(),
-                      );
+                      //currently opened bottom sheet for remove lot and add to watchlist
+                      handleDiamondMenuButtonTap(context, index, bloc, style);
+                      // Utils.showSmartModalBottomSheet(
+                      //   context: context,
+                      //   builder: (context) => const ProductMenuBottomSheet(),
+                      // );
                     },
                     isSelectedBackground: false,
                     onTap: () {},
@@ -580,30 +582,40 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  void handleDiamondMenuButtonTap(BuildContext context, int index, MyBagBloc bloc, MyBagScreenStyle style) {
+  void handleDiamondMenuButtonTap(BuildContext mainContext, int index, MyBagBloc bloc, MyBagScreenStyle style) {
     Utils.showSmartModalBottomSheet(
-        context: context,
+        context: mainContext,
         backgroundColor: style.backgroundColor,
         builder: (BuildContext context) {
-          return buildDiamondMenuPopUp(context, index, bloc);
+          return buildDiamondMenuPopUp(context, index, bloc, mainContext);
         });
   }
 
-  Widget buildDiamondMenuPopUp(BuildContext context, int index, MyBagBloc bloc) {
+  Widget buildDiamondMenuPopUp(BuildContext context, int index, MyBagBloc bloc, BuildContext mainContext) {
     final MyBagDiamondItemStyle style = AppTheme.of(context).myBagDiamondItemStyle;
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildRowButton(style, () {
-            //TODO: Add to wishlist functionality
-            context.pop();
-          }, APPStrings.moveToWishlist.tr, AppImages.icHeart),
+          buildRowButton(
+            style,
+            () {
+              // implemented add to watchlist instead of add to wishlist
+              context.pop();
+              if (bloc.myBagProductList[index].productId != null) {
+                bloc.add(MyBagAddToWatchlistEvent(index: index, context: mainContext));
+              }
+            },
+            APPStrings.addToWatchList.tr,
+            AppImages.icWatchlist,
+          ),
           Divider(indent: 16.w, endIndent: 16.w),
-          buildRowButton(style, () {
-            bloc.add(MyBagRemoveProductEvent(index: index));
-            context.pop();
-          }, APPStrings.removeLot.tr, AppImages.icRemove),
+          buildRowButton(
+            style,
+            () => bloc.add(MyBagRemoveProductEvent(index: index, context: mainContext)),
+            APPStrings.removeLot.tr,
+            AppImages.icRemove,
+          ),
         ],
       ),
     );

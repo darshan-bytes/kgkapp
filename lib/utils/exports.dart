@@ -472,3 +472,4 @@ export 'package:kgk/modules/b2b/comment_listing/view/catalogue_comment_listing_s
 export 'package:kgk/modules/b2b/comment_listing/bloc/comment_listing_bloc.dart';
 export 'package:kgk/model/shape_master_details_model.dart';
 export 'package:kgk/model/commodity_master_details_model.dart';
+export 'package:kgk/model/sort_options_model.dart';
