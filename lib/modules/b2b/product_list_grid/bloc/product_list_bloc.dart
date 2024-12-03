@@ -29,7 +29,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   String sortValue = AppConst.sortValueAsc;
   String collectionName = "";
 
-  List<FilterOptionModel> filterList = [];
+  List<FilterData> filterData = [];
   List<JewelleryDataModel> jewelleryDatumList = [];
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
 
@@ -42,6 +42,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     on<ProductListPullToRefreshEvent>(_onProductListPullToRefresh);
     on<ProductListAddToWatchListEvent>(_onProductListAddToWatchList);
     on<ProductSortEvent>(_onProductSortEvent);
+    on<ProductFilterEvent>(_onProductFilterEvent);
   }
 
   @override
@@ -151,7 +152,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      _setupFilters(context);
+      if (filterData.isEmpty) {
+        await _setupFilters(context);
+      }
       await fetchJewelleriesList(context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
@@ -195,13 +198,54 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
   }
 
-  void _setupFilters(BuildContext context) async {
-    filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
+  Future<void> _setupFilters(BuildContext context) async {
+    final filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
+    filterData.clear();
+    for (FilterOptionModel filterOption in filterList) {
+      if (filterOption.data.isNotEmpty) {
+        FilterData filter = FilterData(
+          name: filterOption.name,
+          code: filterOption.slug,
+          inputType: filterOption.inputType,
+          filterType: filterOption.filterType,
+          subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
+          secondaryFilterData: [],
+        );
+        if (filter.filterType == FilterType.range) {
+          if (filterOption.data.isNotEmpty) {
+            filter.rangeValues = SfRangeValues(0, filterOption.data.first.toDouble());
+            filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
+          } else {
+            continue;
+          }
+        }
+        filterData.add(filter);
+      }
+    }
   }
 
-  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {
+  Future<void> fetchJewelleriesList(
+    BuildContext context,
+    Emitter<ProductListState> emit,
+    bool isLoadMore, {
+    Map<String, String>? query,
+  }) async {
     Either<ErrorResponse, JewelleryListingModel>? response;
     FetchScenario scenario = determineFetchScenario();
+    query ??= {};
+    filterData
+        .where(
+            (element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) || element.filterType == FilterType.range)
+        .forEach(
+      (element) {
+        if (element.filterType == FilterType.range) {
+          query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+        } else {
+          query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+        }
+      },
+    );
 
     switch (scenario) {
       case FetchScenario.productId:
@@ -220,12 +264,14 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         break;
       case FetchScenario.regularList:
         response = await AppRepository(context).fetchJewelleryList(
-            page: paginationScrollController.currentPage.toString(),
-            isLoadMore: isLoadMore,
-            limit: AppConst.pageLimit.toString(),
-            type: '',
-            sortKey: sortKey,
-            sortValue: sortValue);
+          page: paginationScrollController.currentPage.toString(),
+          isLoadMore: isLoadMore,
+          limit: AppConst.pageLimit.toString(),
+          type: '',
+          sortKey: sortKey,
+          sortValue: sortValue,
+          query: query,
+        );
         break;
       case FetchScenario.recentlyViewed:
         response = await AppRepository(context).getRecentlyViewedProductList(
@@ -242,7 +288,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   void _handleSuccessfulFetch(JewelleryListingModel data) {
     jewelleryDatumList = data.data;
     totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords ?? 0, AppConst.pageLimit);
-
+    paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
     for (var item in jewelleryDatumList) {
       productList.add(ProductDetailsModel(
         imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
@@ -274,7 +320,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
     emit(ProductListLoadingMoreState());
     await fetchJewelleriesList(context, emit, false);
-    paginationScrollController.isPageLoaded.complete(currentPage == totalNumberOfPages);
     emit(ProductListLoadedMoreState(currentPage + 1));
   }
 
@@ -291,5 +336,15 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
       await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
     }
+  }
+
+  Future<void> _onProductFilterEvent(ProductFilterEvent event, Emitter<ProductListState> emit) async {
+    emit(ReloadProductState());
+    filterData = event.filterData;
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+
+    await fetchJewelleriesList(event.context, emit, true);
+    emit(const ProductListLoadedState());
   }
 }

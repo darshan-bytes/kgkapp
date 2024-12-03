@@ -18,7 +18,10 @@ class FilterScreen extends StatelessWidget {
           SmartText(
             APPStrings.clearAll.tr,
             onTap: () {
-              filterBloc.add(const ClearAllFilterDataEvent());
+              filterBloc.add(ClearAllFilterDataEvent(
+                context: context,
+                onApply: onApply,
+              ));
             },
           ),
         ],
@@ -42,7 +45,7 @@ class FilterScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (!(filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)) ...[
+                        if ((filterBloc.selectedFilterData?.filterType == FilterType.checkbox)) ...[
                           SmartTextField.search(
                             hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
                             controller: filterBloc.searchController,
@@ -91,7 +94,7 @@ class FilterScreen extends StatelessWidget {
                     title: APPStrings.apply.tr,
                     onTap: () {
                       filterBloc.add(const ApplyFilterDataEvent());
-                      onApply();
+                      onApply(filterBloc.filterData);
                       context.pop();
                     },
                   ),
@@ -154,25 +157,37 @@ class FilterScreen extends StatelessWidget {
       builder: (context, state) {
         if (filterBloc.isLoading) {
           return SmartCircularProgressIndicator();
-        } else if (filterBloc.secondaryFilterDataDisplay.isEmpty) {
+        } else if (filterBloc.selectedFilterData?.filterType != FilterType.range && filterBloc.secondaryFilterDataDisplay.isEmpty) {
           return const NoDataFoundWidget();
         }
-        return !(filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)
+        switch (filterBloc.selectedFilterData?.filterType) {
+          case FilterType.range:
+            return _buildPriceRangeSlide(filterBloc, style);
+          case FilterType.checkbox:
+            return _buildOptionList(filterBloc, style);
+          case FilterType.undefined:
+          default:
+            return const NoDataFoundWidget(text: "This type is not yet added");
+        }
+        /*return (filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)
             ? _buildOptionList(filterBloc, style)
-            : _buildOptionList(filterBloc, style);
+            : _buildPriceRangeSlide(filterBloc, style);*/
       },
     );
   }
 
   Widget _buildPriceRangeSlide(SortFilterBloc bloc, FilterStyle style) {
+    if (bloc.selectedFilterData?.rangeValues == null || bloc.selectedFilterData?.minMaxValues == null) {
+      return const NoDataFoundWidget(text: "This type is not yet added");
+    }
     return BlocBuilder<SortFilterBloc, SortFilterState>(
       buildWhen: (previous, current) => previous != current && current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         return SmartSfRangeSlider(
           title: APPStrings.preferredPriceRange.tr,
           titleStyle: style.selectionTitleStyle,
-          values: bloc.values,
-          minMaxValues: bloc.minMaxValues,
+          values: bloc.selectedFilterData?.rangeValues ?? bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
+          minMaxValues: bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
           minPriceController: bloc.minPriceController,
           maxPriceController: bloc.maxPriceController,
           rangeSliderTrackColor: style.rangeSliderTrackColor,

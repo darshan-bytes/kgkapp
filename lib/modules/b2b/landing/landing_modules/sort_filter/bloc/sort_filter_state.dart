@@ -51,7 +51,7 @@ final class SearchFilterDataState extends SortFilterState {
 }
 
 final class SelectSecondaryDiamondSortFilterDataState extends SortFilterState {
-  final List<SecondaryFilterModel> secondaryFilterData;
+  final List<SecondaryFilterData> secondaryFilterData;
 
   const SelectSecondaryDiamondSortFilterDataState(this.secondaryFilterData);
 

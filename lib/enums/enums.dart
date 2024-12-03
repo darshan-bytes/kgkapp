@@ -118,3 +118,14 @@ enum Commodity {
 
   final String value;
 }
+
+enum FilterType {
+  undefined('undefined'),
+  checkbox('checkbox'),
+  range('range'),
+  ;
+
+  const FilterType(this.value);
+
+  final String value;
+}

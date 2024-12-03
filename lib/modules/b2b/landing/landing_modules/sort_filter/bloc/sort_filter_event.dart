@@ -42,10 +42,16 @@ final class SearchFilterDataEvent extends SortFilterEvent {
 }
 
 final class ClearAllFilterDataEvent extends SortFilterEvent {
-  const ClearAllFilterDataEvent();
+  final Function onApply;
+  final BuildContext context;
+
+  const ClearAllFilterDataEvent({required this.context, required this.onApply});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        context,
+        onApply,
+      ];
 }
 
 final class ApplyFilterDataEvent extends SortFilterEvent {
@@ -57,12 +63,12 @@ final class ApplyFilterDataEvent extends SortFilterEvent {
 
 final class AddSortFilterDataEvent extends SortFilterEvent {
   final BuildContext context;
-  final List<FilterOptionModel> gemstoneFilterList;
+  final List<FilterData> filterOptionList;
 
-  const AddSortFilterDataEvent({required this.context, required this.gemstoneFilterList});
+  const AddSortFilterDataEvent({required this.context, required this.filterOptionList});
 
   @override
-  List<Object> get props => [gemstoneFilterList];
+  List<Object> get props => [filterOptionList];
 }
 
 final class SortFilterScreenTypeEvent extends SortFilterEvent {
