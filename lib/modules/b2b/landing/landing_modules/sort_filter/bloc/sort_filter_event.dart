@@ -15,8 +15,9 @@ final class SelectSortDataEvent extends SortFilterEvent {
 
 final class SelectFilterDataEvent extends SortFilterEvent {
   final FilterData filterData;
+  final BuildContext context;
 
-  const SelectFilterDataEvent({required this.filterData});
+  const SelectFilterDataEvent({required this.filterData, required this.context});
 
   @override
   List<Object> get props => [filterData];

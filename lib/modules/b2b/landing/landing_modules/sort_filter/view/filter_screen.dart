@@ -42,7 +42,7 @@ class FilterScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (filterBloc.isCheckbox) ...[
+                        if (!(filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)) ...[
                           SmartTextField.search(
                             hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
                             controller: filterBloc.searchController,
@@ -118,7 +118,7 @@ class FilterScreen extends StatelessWidget {
               bool isSelected = filterBloc.selectedFilterData == filterData;
               return InkWell(
                 onTap: () {
-                  filterBloc.add(SelectFilterDataEvent(filterData: filterData));
+                  filterBloc.add(SelectFilterDataEvent(filterData: filterData, context: context));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -146,14 +146,20 @@ class FilterScreen extends StatelessWidget {
   Widget _buildSubFilterList(BuildContext context, SortFilterBloc filterBloc, FilterStyle style) {
     return BlocBuilder<SortFilterBloc, SortFilterState>(
       buildWhen: (previous, current) =>
-          current is SearchFilterDataState || current is FilterDataSelectedState || current is SelectSecondaryDiamondSortFilterDataState,
+          current is SearchFilterDataState ||
+          current is FilterDataSelectedState ||
+          current is SelectSecondaryDiamondSortFilterDataState ||
+          current is SelectSecondaryFilterDataState ||
+          current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         if (filterBloc.isLoading) {
           return SmartCircularProgressIndicator();
         } else if (filterBloc.secondaryFilterDataDisplay.isEmpty) {
           return const NoDataFoundWidget();
         }
-        return filterBloc.isCheckbox ? _buildOptionList(filterBloc, style) : _buildPriceRangeSlide(filterBloc, style);
+        return !(filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)
+            ? _buildOptionList(filterBloc, style)
+            : _buildOptionList(filterBloc, style);
       },
     );
   }

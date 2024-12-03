@@ -151,7 +151,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       appbarTitle = APPStrings.ring.tr;
       productList.clear();
-      _setupFilters();
+      _setupFilters(context);
       await fetchJewelleriesList(context, emit, true);
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       appbarTitle = APPStrings.diamonds.tr;
@@ -195,13 +195,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
   }
 
-  void _setupFilters() {
-    filterList = [
-      FilterOptionModel(name: "Type", slug: "type", defaultValue: "", inputType: "checkbox", data: [], id: 1),
-      FilterOptionModel(name: "Color", slug: "color", defaultValue: "", inputType: "slider", data: [], id: 2),
-      FilterOptionModel(name: "Clarity", slug: "clarity", defaultValue: "", inputType: "checkbox", data: [], id: 3),
-      FilterOptionModel(name: "Shape", slug: "shape", defaultValue: "", inputType: "slider", data: [], id: 4),
-    ];
+  void _setupFilters(BuildContext context) async {
+    filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
   }
 
   Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore) async {

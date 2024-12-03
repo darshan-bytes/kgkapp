@@ -52,14 +52,22 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     emit(SortDataSelectedState(selectedSortData));
   }
 
-  void _onSelectFilterDataEvent(SelectFilterDataEvent event, Emitter<SortFilterState> emit) {
+  Future<void> _onSelectFilterDataEvent(SelectFilterDataEvent event, Emitter<SortFilterState> emit) async {
     if (selectedFilterData != event.filterData) {
       emit(SortReloadState());
+      printWrapped("selectedFilterData => ${selectedFilterData?.inputType}");
       selectedFilterData = event.filterData;
       searchController.text = '';
       add(const SearchFilterDataEvent(searchQuery: ''));
       if (selectedFilterData != null) {
         emit(FilterDataSelectedState(selectedFilterData!));
+        await fetchSecondaryFilterData(
+          context: event.context,
+          emit: emit,
+          slug: selectedFilterData?.code ?? '',
+          needToFetchData: true,
+        );
+        secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
       }
     }
   }
@@ -83,7 +91,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
           .where((element) => (element.name ?? '').toLowerCase().contains(searchController.text.trim().toLowerCase()))
           .toList();
     } else {
-      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
+      secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }
     emit(SearchFilterDataState(secondaryFilterDataDisplay));
   }
@@ -98,8 +106,8 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     }
     selectedFilterData = filterData.first;
     if (selectedFilterData != null) {
-      secondaryFilterDataDisplay = selectedFilterData!.secondaryFilterData ?? [];
-      emit(FilterDataSelectedState(selectedFilterData!));
+      secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
+      emit(FilterDataSelectedState(selectedFilterData ?? FilterData()));
     }
   }
 
@@ -109,39 +117,38 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
 
   Future<void> _onAddSortFilterDataEvent(AddSortFilterDataEvent event, Emitter<SortFilterState> emit) async {
     filterData.clear();
-    for (var gemstone in event.gemstoneFilterList) {
-      filterData.add(FilterData(
-        name: gemstone.name,
-        code: gemstone.slug,
-        inputType: gemstone.inputType,
-        secondaryFilterData: [
-          SecondaryFilterData(name: gemstone.name, code: gemstone.slug),
-          SecondaryFilterData(name: gemstone.name, code: gemstone.slug),
-          SecondaryFilterData(name: gemstone.name, code: gemstone.slug)
-        ],
-      ));
+    for (FilterOptionModel gemstone in event.gemstoneFilterList) {
+      if (gemstone.data.isNotEmpty) {
+        filterData.add(FilterData(
+          name: gemstone.name,
+          code: gemstone.slug,
+          inputType: gemstone.inputType,
+          secondaryFilterData: [],
+        ));
+      }
     }
     if (filterData.isNotEmpty) {
       selectedFilterData = filterData.first;
-      // await fetchSecondaryFilterData(context: event.context, emit: emit, slug: selectedFilterData!.code!, needToFetchData: true);
+      // Fetch secondary filter data for the first filter
+      await fetchSecondaryFilterData(
+        context: event.context,
+        emit: emit,
+        slug: selectedFilterData?.code ?? '',
+        needToFetchData: true,
+      );
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
     }
   }
 
-  // created getter for inputType
-  bool get isCheckbox => selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox;
-
   Future<void> fetchSecondaryFilterData(
       {required BuildContext context, required Emitter<SortFilterState> emit, required String slug, required bool needToFetchData}) async {
-    if (!needToFetchData) {
-      return;
-    }
+    if (!needToFetchData) return;
     isLoading = true;
 
     /// Add filter codes
     const String codes =
         'PEAR,EMERALD,CUSHION BRILLIANT,PRINCESS,ROUND D/C,ROUND,SQUARE CUSHION,SQUARE P/C,HEART,ASSCHER,Square E/C,MARQUISE,BAGUETTE,E/C,OVAL,RADIANT,MIX,CUSHION,OCTAGON,TRILLION,CAB MIX,TRIANGLE,CAB ROUND';
-
+    printWrapped("Called");
     final response = await AppRepository(context).getSecondaryFilterData(slug: slug, codes: codes);
 
     response?.fold(
@@ -150,7 +157,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
         final filteredData = filterData.where((item) => item.code == slug).toList();
 
         if (filteredData.isNotEmpty) {
-          for (final item in r) {
+          for (final SecondaryFilterModel item in r) {
             filteredData.first.secondaryFilterData?.add(
               SecondaryFilterData(
                 name: item.value,
