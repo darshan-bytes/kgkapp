@@ -131,7 +131,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         false;
   }
 
-  void _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) {
+  Future<void> _onSignUpChangeAccountTypeEvent(SignUpChangeAccountTypeEvent event, Emitter<SignUpState> emit) async {
     emit(SignUpReloadState());
     if (emailController.text.trim().isNotEmpty) {
       add(SignUpEmailValidationEvent(email: emailController.text.trim(), context: event.context));
@@ -139,8 +139,29 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (contactNumberController.text.trim().isNotEmpty) {
       add(SignUpPhoneNumberValidationEvent(phoneNumber: contactNumberController.text.trim(), context: event.context));
     }
-    isIndividual = event.isIndividual;
-    emit(SignUpChangeAccountTypeState(isIndividual));
+    if (isIndividual == event.isIndividual) return;
+    await Utils.showSmartModalBottomSheet(
+      context: event.context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
+      ),
+      builder: (context) => Padding(
+        padding: EdgeInsets.all(8.0.h),
+        child: ConfirmationDialog(
+          title: APPStrings.areYouSureChangeAccountType.tr,
+          onApproved: () {
+            context.pop();
+            clearField();
+            clearField();
+            isIndividual = event.isIndividual;
+            emit(SignUpChangeAccountTypeState(isIndividual));
+          },
+          onDenied: () => context.pop(),
+          onApprovedText: APPStrings.yes.tr,
+          onDeniedText: APPStrings.no.tr,
+        ),
+      ),
+    );
   }
 
   void _onSignUpChangeCountryCodeEvent(SignUpChangeCountryCodeEvent event, Emitter<SignUpState> emit) {
@@ -436,5 +457,23 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         });
       });
     }
+  }
+
+  void clearField() {
+    firstNameController.clear();
+    lastNameController.clear();
+    emailController.clear();
+    contactNumberControllers = [TextEditingController()];
+    contactNumberController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    selectedOfficeLocation = null;
+    companyNameController.clear();
+    addressController.clear();
+    cityController.clear();
+    stateController.clear();
+    zipcodeController.clear();
+    selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
+    selectFirstBusinessLocation();
   }
 }
