@@ -79,4 +79,6 @@ class ApiKey {
   static const String isAddedToCart = 'isAddedToCart';
   static const String message = 'message';
   static const String catalogueId = 'catalogue_id';
+  static const String month = 'month';
+  static const String year = 'year';
 }

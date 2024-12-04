@@ -17,7 +17,6 @@ class CategoryTile extends StatelessWidget {
       margin: EdgeInsets.only(top: 6.0.h, bottom: 6.0.h, right: 6.0.w, left: 6.0.w),
       decoration: BoxDecoration(
         color: categoryTileStyle.whiteColor,
-        border: isSelected ? Border.all(color: categoryTileStyle.primaryColor, width: 2.w) : null,
       ),
       child: Stack(
         children: [
@@ -26,6 +25,7 @@ class CategoryTile extends StatelessWidget {
             height: 134.w,
             width: context.width,
             fit: BoxFit.fill,
+            border: isSelected ? Border.all(color: categoryTileStyle.primaryColor, width: 2.w) : null,
           ),
           Container(
             margin: EdgeInsets.all(8.0.w),
