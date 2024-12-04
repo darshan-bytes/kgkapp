@@ -49,8 +49,8 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
         if (index != -1) {
           addressList[index] =
               event.isShipping ? addressList[index].copyWith(isShippingDefault: true) : addressList[index].copyWith(isBillingDefault: true);
-
-          emit(const SavedAddressLoadedState());
+          _isInitialised = false;
+          add(SavedAddressInitialEvent(event.context));
         }
       }
     }
