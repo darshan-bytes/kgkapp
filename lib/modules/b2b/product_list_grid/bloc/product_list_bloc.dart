@@ -83,7 +83,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     userType = BlocProvider.of<AppBloc>(context).userType;
     _initWishlistUpdaterServiceBloc(context);
     await _sortOptionListApiCall(context);
-    if (!refreshCompleter.isCompleted) refreshCompleter.complete(true);
     emit(ReloadProductState());
     _initializePagination(context);
     getRouteData(context);
@@ -211,7 +210,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     switch (scenario) {
       case FetchScenario.productId:
         response = await AppRepository(context).getJewelleryYouMayLike(productId,
-            limit: AppConst.pageLimit.toString(), isLoadMore: true, page: paginationScrollController.currentPage.toString());
+            limit: AppConst.pageLimit50.toString(), isLoadMore: false, page: paginationScrollController.currentPage.toString());
         break;
       case FetchScenario.collectionName:
         response = await AppRepository(context).fetchJewelleryList(
@@ -238,30 +237,50 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         break;
     }
 
-    response?.fold(
-      (error) => Utils.showMessage(error.message),
-      (success) => _handleSuccessfulFetch(success),
-    );
+    response?.fold((error) => Utils.showMessage(error.message), (success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      final localList = success.data;
+      productList.addAll(localList
+          .map((item) => ProductDetailsModel(
+                imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+                name: item.productDescription ?? "",
+                originalPrice: item.finalPrice?.setCurrency,
+                offerPrice: item.discountPrice?.setCurrency,
+                finalPrice: item.discountPrice?.setCurrency,
+                discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
+                productId: item.id ?? "",
+                commodity: Commodity.jewellery,
+                isFavourite: item.isFavorite,
+                wishlistId: item.wishlistID,
+              ))
+          .toList());
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      emit(const ProductListLoadedState());
+    });
   }
 
-  void _handleSuccessfulFetch(JewelleryListingModel data) {
-    jewelleryDatumList = data.data;
-    totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords ?? 0, AppConst.pageLimit);
-
-    for (var item in jewelleryDatumList) {
-      productList.add(ProductDetailsModel(
-        imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
-        name: item.productDescription ?? "",
-        originalPrice: item.finalPrice?.setCurrency,
-        offerPrice: item.discountPrice?.setCurrency,
-        discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
-        productId: item.id ?? "",
-        commodity: Commodity.jewellery,
-        isFavourite: item.isFavorite,
-        wishlistId: item.wishlistID,
-      ));
-    }
-  }
+  // void _handleSuccessfulFetch(JewelleryListingModel data) {
+  //   jewelleryDatumList = data.data;
+  //   totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords ?? 0, AppConst.pageLimit);
+  //   paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+  //
+  //   for (JewelleryDataModel item in jewelleryDatumList) {
+  //     productList.add(
+  //       ProductDetailsModel(
+  //         imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+  //         name: item.productDescription ?? "",
+  //         originalPrice: item.finalPrice?.setCurrency,
+  //         offerPrice: item.discountPrice?.setCurrency,
+  //         finalPrice: item.discountPrice?.setCurrency,
+  //         discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
+  //         productId: item.id ?? "",
+  //         commodity: Commodity.jewellery,
+  //         isFavourite: item.isFavorite,
+  //         wishlistId: item.wishlistID,
+  //       ),
+  //     );
+  //   }
+  // }
 
   FetchScenario determineFetchScenario() {
     if (productId.isNotNullNorEmpty) return FetchScenario.productId;
@@ -279,7 +298,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
     emit(ProductListLoadingMoreState());
     await fetchJewelleriesList(context, emit, false);
-    paginationScrollController.isPageLoaded.complete(currentPage == totalNumberOfPages);
     emit(ProductListLoadedMoreState(currentPage + 1));
   }
 

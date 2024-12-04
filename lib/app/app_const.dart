@@ -6,7 +6,7 @@ class AppConst {
   static Size designSize = const Size(390, 844);
   static double defaultAppBarHeight = 52.0.h;
   static const int maxImagesCount = 5;
-  static const int pageLimit = 10;
+  static const int pageLimit = 50;
   static const int pageLimit50 = 50;
   static const double defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
   static const String strapiApiToken =
@@ -26,6 +26,8 @@ class AppConst {
   static const String appCurrency = "INR";
   static const String diamondSinglestone = "DIAMONDSINGLESTONE";
   static const String diamondNormal = "DIAMONDNORMAL";
+  static const String precious = "PRECIOUS";
+  static const String semiPrecious = "SEMIPRECIOUS";
   static const String youMayLike = "YOU_MAY_LIKE";
   static const String recentlyViewed = "RECENTLY_VIEWED";
   static const String diamondFilter = "diamond";
