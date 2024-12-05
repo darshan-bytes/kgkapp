@@ -472,3 +472,5 @@ export 'package:kgk/modules/b2b/comment_listing/bloc/comment_listing_bloc.dart';
 export 'package:kgk/model/shape_master_details_model.dart';
 export 'package:kgk/model/commodity_master_details_model.dart';
 export 'package:kgk/model/sort_options_model.dart';
+export 'package:kgk/modules/common_modules/collection/view/collection_month_widget.dart';
+export 'package:kgk/modules/common_modules/collection/model/collection_month_tab.dart';

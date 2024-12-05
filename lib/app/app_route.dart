@@ -131,7 +131,6 @@ class AppRoutes {
       case collectionPage:
         builder = (context) {
           return BlocProvider<CollectionBloc>(
-            lazy: false,
             create: (context) => CollectionBloc()..add(CollectionInitialEvent(context: context)),
             child: const CollectionScreen(),
           );
