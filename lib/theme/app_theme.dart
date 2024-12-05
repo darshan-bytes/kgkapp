@@ -472,12 +472,17 @@ class CollectionViewStyle {
   final TextStyle headerTitleStyle;
   final TextStyle headerSubTitleStyle;
   final TextStyle collectionListTitleStyle;
+  final Color selectedTabColor;
+  final Color unSelectedTabColor;
 
-  CollectionViewStyle(
-      {required this.headerBgColor,
-      required this.headerTitleStyle,
-      required this.headerSubTitleStyle,
-      required this.collectionListTitleStyle});
+  CollectionViewStyle({
+    required this.headerBgColor,
+    required this.headerTitleStyle,
+    required this.headerSubTitleStyle,
+    required this.collectionListTitleStyle,
+    required this.selectedTabColor,
+    required this.unSelectedTabColor,
+  });
 }
 
 class SignUpStyle {

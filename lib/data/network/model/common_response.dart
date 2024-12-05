@@ -83,8 +83,8 @@ class CommonResponse<T> {
         return WishlistModel.fromJson(json);
       case const (PaginationData<ProductReviewModel>):
         return PaginationData<ProductReviewModel>.fromJson(json);
-      case const (CollectionDataModel):
-        return CollectionDataModel.fromJson(json);
+      case const (PaginationData<CollectionDataItemsModel>):
+        return PaginationData<CollectionDataItemsModel>.fromJson(json);
       case const (MyBagDataModel):
         return MyBagDataModel.fromJson(json);
       case const (FilterOptionModel):
