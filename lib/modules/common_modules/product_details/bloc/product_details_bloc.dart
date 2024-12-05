@@ -416,7 +416,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
         imgList = jewelleryData.multipleFinishedViewImage.map((e) {
-          print("Image URL for jewellery: ${e.imageUrl}");
           return e.imageUrl ?? '';
         }).toList();
 
@@ -588,7 +587,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {
     try {
-      print("Product details ${productDetails}");
       if (productDetails == null) return;
       if (event.context != null) {
         if (!isCompare) {
