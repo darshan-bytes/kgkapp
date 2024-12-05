@@ -342,7 +342,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
         ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
         ApiKey.search: "",
-        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc}
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
       Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response = await AppRepository(context).shapeMasterFilters(body: body);
       response?.fold((l) {
@@ -364,7 +364,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
         ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
         ApiKey.search: "",
-        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc}
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
       Either<ErrorResponse, PaginationData<CommodityMasterDetails>>? response =
           await AppRepository(context).commodityMasterFilters(body: body);

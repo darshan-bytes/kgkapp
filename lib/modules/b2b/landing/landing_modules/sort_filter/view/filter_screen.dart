@@ -18,7 +18,10 @@ class FilterScreen extends StatelessWidget {
           SmartText(
             APPStrings.clearAll.tr,
             onTap: () {
-              filterBloc.add(const ClearAllFilterDataEvent());
+              filterBloc.add(ClearAllFilterDataEvent(
+                context: context,
+                onApply: onApply,
+              ));
             },
           ),
         ],
@@ -42,7 +45,7 @@ class FilterScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (filterBloc.isCheckbox) ...[
+                        if ((filterBloc.selectedFilterData?.filterType == FilterType.checkbox)) ...[
                           SmartTextField.search(
                             hintText: APPStrings.searchByX.tr.interpolate([filterBloc.selectedFilterData?.name?.toLowerCase() ?? '']),
                             controller: filterBloc.searchController,
@@ -91,7 +94,7 @@ class FilterScreen extends StatelessWidget {
                     title: APPStrings.apply.tr,
                     onTap: () {
                       filterBloc.add(const ApplyFilterDataEvent());
-                      onApply();
+                      onApply(filterBloc.filterData);
                       context.pop();
                     },
                   ),
@@ -118,7 +121,7 @@ class FilterScreen extends StatelessWidget {
               bool isSelected = filterBloc.selectedFilterData == filterData;
               return InkWell(
                 onTap: () {
-                  filterBloc.add(SelectFilterDataEvent(filterData: filterData));
+                  filterBloc.add(SelectFilterDataEvent(filterData: filterData, context: context));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -146,27 +149,45 @@ class FilterScreen extends StatelessWidget {
   Widget _buildSubFilterList(BuildContext context, SortFilterBloc filterBloc, FilterStyle style) {
     return BlocBuilder<SortFilterBloc, SortFilterState>(
       buildWhen: (previous, current) =>
-          current is SearchFilterDataState || current is FilterDataSelectedState || current is SelectSecondaryDiamondSortFilterDataState,
+          current is SearchFilterDataState ||
+          current is FilterDataSelectedState ||
+          current is SelectSecondaryDiamondSortFilterDataState ||
+          current is SelectSecondaryFilterDataState ||
+          current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         if (filterBloc.isLoading) {
           return SmartCircularProgressIndicator();
-        } else if (filterBloc.secondaryFilterDataDisplay.isEmpty) {
+        } else if (filterBloc.selectedFilterData?.filterType != FilterType.range && filterBloc.secondaryFilterDataDisplay.isEmpty) {
           return const NoDataFoundWidget();
         }
-        return filterBloc.isCheckbox ? _buildOptionList(filterBloc, style) : _buildPriceRangeSlide(filterBloc, style);
+        switch (filterBloc.selectedFilterData?.filterType) {
+          case FilterType.range:
+            return _buildPriceRangeSlide(filterBloc, style);
+          case FilterType.checkbox:
+            return _buildOptionList(filterBloc, style);
+          case FilterType.undefined:
+          default:
+            return const NoDataFoundWidget(text: "This type is not yet added");
+        }
+        /*return (filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)
+            ? _buildOptionList(filterBloc, style)
+            : _buildPriceRangeSlide(filterBloc, style);*/
       },
     );
   }
 
   Widget _buildPriceRangeSlide(SortFilterBloc bloc, FilterStyle style) {
+    if (bloc.selectedFilterData?.rangeValues == null || bloc.selectedFilterData?.minMaxValues == null) {
+      return const NoDataFoundWidget(text: "This type is not yet added");
+    }
     return BlocBuilder<SortFilterBloc, SortFilterState>(
       buildWhen: (previous, current) => previous != current && current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         return SmartSfRangeSlider(
           title: APPStrings.preferredPriceRange.tr,
           titleStyle: style.selectionTitleStyle,
-          values: bloc.values,
-          minMaxValues: bloc.minMaxValues,
+          values: bloc.selectedFilterData?.rangeValues ?? bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
+          minMaxValues: bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
           minPriceController: bloc.minPriceController,
           maxPriceController: bloc.maxPriceController,
           rangeSliderTrackColor: style.rangeSliderTrackColor,

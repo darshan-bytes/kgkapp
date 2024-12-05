@@ -30,15 +30,19 @@ class ProductListScreen extends StatelessWidget {
       bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
         buildWhen: (previous, current) => current is ProductListLoadedState,
         builder: (context, state) {
-          if (state is ProductListLoadedState && bloc.productList.isNotEmpty) {
+          if (state is ProductListLoadedState) {
             return FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
-                BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(gemstoneFilterList: bloc.filterList, context: context));
+                BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
+                  builder: (_) => FilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        bloc.add(ProductFilterEvent(context: context, filterData: value));
+                      }
+                    },
                   ),
                 );
               },

@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class FilterOptionModel {
   FilterOptionModel({
     required this.name,
@@ -8,20 +10,20 @@ class FilterOptionModel {
     required this.id,
   });
 
-  final String? name;
-  final String? slug;
-  final dynamic defaultValue;
-  final String? inputType;
-  final dynamic data;
-  final int? id;
+  int? id;
+  String? name;
+  String? slug;
+  dynamic defaultValue;
+  String? inputType;
+  List<dynamic> data;
 
   FilterOptionModel copyWith({
+    int? id,
     String? name,
     String? slug,
     dynamic defaultValue,
     String? inputType,
     dynamic data,
-    int? id,
   }) {
     return FilterOptionModel(
       name: name ?? this.name,
@@ -35,12 +37,12 @@ class FilterOptionModel {
 
   factory FilterOptionModel.fromJson(Map<String, dynamic> json) {
     return FilterOptionModel(
+      id: json["id"],
       name: json["name"],
       slug: json["slug"],
       defaultValue: json["default_value"],
       inputType: json["input_type"],
       data: json["data"] ?? [],
-      id: json["id"],
     );
   }
 
@@ -57,4 +59,9 @@ class FilterOptionModel {
   String toString() {
     return "$name, $slug, $defaultValue, $inputType, $data, $id, ";
   }
+}
+
+extension FilterOptionModelExtension on FilterOptionModel {
+  FilterType get filterType =>
+      FilterType.values.firstWhereOrNull((element) => element.value.toLowerCase() == inputType?.toLowerCase()) ?? FilterType.undefined;
 }

@@ -6,17 +6,49 @@ class FilterData {
   List<SecondaryFilterData>? secondaryFilterData;
   bool? isAdvanceFilter;
   String? inputType;
+  FilterType? filterType;
+  String? subFilterCodes;
+  SfRangeValues? rangeValues;
+  SfRangeValues? minMaxValues;
 
-  FilterData({this.name, this.code, this.secondaryFilterData, this.isAdvanceFilter, this.inputType});
+  FilterData({
+    this.name,
+    this.code,
+    this.secondaryFilterData,
+    this.isAdvanceFilter,
+    this.inputType,
+    this.filterType,
+    this.subFilterCodes,
+    this.rangeValues,
+    this.minMaxValues,
+  });
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is FilterData && other.name == name && other.code == code && other.secondaryFilterData == secondaryFilterData;
+    return other is FilterData &&
+        other.name == name &&
+        other.code == code &&
+        other.secondaryFilterData == secondaryFilterData &&
+        other.isAdvanceFilter == isAdvanceFilter &&
+        other.inputType == inputType &&
+        other.filterType == filterType &&
+        other.subFilterCodes == subFilterCodes &&
+        other.rangeValues == rangeValues &&
+        other.minMaxValues == minMaxValues;
   }
 
   @override
-  int get hashCode => name.hashCode ^ code.hashCode ^ secondaryFilterData.hashCode;
+  int get hashCode =>
+      name.hashCode ^
+      code.hashCode ^
+      secondaryFilterData.hashCode ^
+      isAdvanceFilter.hashCode ^
+      inputType.hashCode ^
+      filterType.hashCode ^
+      subFilterCodes.hashCode ^
+      rangeValues.hashCode ^
+      minMaxValues.hashCode;
 }
 
 class SecondaryFilterData {
@@ -44,4 +76,9 @@ class SecondaryFilterData {
 
   @override
   int get hashCode => name.hashCode ^ code.hashCode ^ image.hashCode ^ isSelected.hashCode;
+
+  @override
+  String toString() {
+    return 'SecondaryFilterData{name: $name, code: $code, image: $image, isSelected: $isSelected}';
+  }
 }

@@ -58,3 +58,13 @@ final class ProductSortEvent extends ProductListEvent {
   @override
   List<Object> get props => [context, sortData];
 }
+
+final class ProductFilterEvent extends ProductListEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const ProductFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}

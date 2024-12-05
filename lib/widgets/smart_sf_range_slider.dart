@@ -26,6 +26,7 @@ class SmartSfRangeSlider extends StatelessWidget {
   final double? stepSize;
   final double? interval;
   final bool? showDividers;
+
   const SmartSfRangeSlider({
     super.key,
     this.style,
@@ -72,9 +73,8 @@ class SmartSfRangeSlider extends StatelessWidget {
           values: values,
           min: minMaxValues?.start,
           max: minMaxValues?.end,
-          interval: interval ?? 100,
-          numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0),
-          stepSize: stepSize ?? 1,
+          interval: interval ?? 1,
+          stepSize: stepSize ?? 0.001,
           activeColor: rangeSliderTrackColor,
           startThumbIcon: startThumbIcon ?? _buildSliderThumb(),
           endThumbIcon: endThumbIcon ?? _buildSliderThumb(),
@@ -96,15 +96,17 @@ class SmartSfRangeSlider extends StatelessWidget {
                     children: [
                       SmartTextField(
                         padding: EdgeInsets.symmetric(vertical: 4.h),
-                        prefixText: currencySymbol ?? "".setCurrency,
+                        // prefixText: currencySymbol ?? "".setCurrency,
                         height: 40.h,
                         contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                         textAlign: TextAlign.center,
                         controller: minPriceController,
                         keyboardType: TextInputType.number,
                         style: propertySelectionSubtitleStyle,
-                        onTapOutside: (p) => onMinControllerTapOutside!(p), // bloc.add(const FilterPriceRangeEditEvent()),
-                        onEditingComplete: () => onMinControllerEditingComplete, // bloc.add(const FilterPriceRangeEditEvent()),
+                        onTapOutside: (p) => onMinControllerTapOutside!(p),
+                        // bloc.add(const FilterPriceRangeEditEvent()),
+                        onEditingComplete: () => onMinControllerEditingComplete,
+                        // bloc.add(const FilterPriceRangeEditEvent()),
                         textInputAction: TextInputAction.done,
                       ),
                       SmartText(
@@ -122,7 +124,7 @@ class SmartSfRangeSlider extends StatelessWidget {
                   children: [
                     SmartTextField(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
-                      prefixText: currencySymbol ?? "".setCurrency,
+                      // prefixText: currencySymbol ?? "".setCurrency,
                       height: 40.h,
                       contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                       textAlign: TextAlign.center,
