@@ -382,6 +382,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 extension LoadingExtension on BuildContext {
   void setAppLoading(bool isLoading) {
-    BlocProvider.of<AppBloc>(this).add(SetAppLoadingEvent(isLoading));
+    BlocProvider.of<AppBloc>(mounted ? this : getNavigatorKeyContext).add(SetAppLoadingEvent(isLoading));
   }
 }

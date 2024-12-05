@@ -246,11 +246,14 @@ class AppRepository extends ApiService {
   ///For Getting Diamond You May Like by ID
   Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
+    context.setAppLoading(true);
+
     var response = await getMethod<DiamondListingModel>(
       ApiClient.diamondYouMayLike(id),
       query: {ApiKey.page: page, ApiKey.limit: limit},
       withCurrencyHeader: true,
     );
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -300,11 +303,13 @@ class AppRepository extends ApiService {
   ///For Getting Gemstone You May Like by ID
   Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
     var response = await getMethod<GemstoneListingModel>(
       ApiClient.gemstoneYouMayAlsoLike(id),
       query: {ApiKey.page: page, ApiKey.limit: limit},
       withCurrencyHeader: true,
     );
+    if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

@@ -71,3 +71,13 @@ final class StoneSortEvent extends StoneListingEvent {
   @override
   List<Object> get props => [context, sortData];
 }
+
+final class StoneListingFilterEvent extends StoneListingEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const StoneListingFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}
