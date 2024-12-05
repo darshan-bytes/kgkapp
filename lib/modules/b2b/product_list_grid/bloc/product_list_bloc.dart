@@ -210,7 +210,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     switch (scenario) {
       case FetchScenario.productId:
         response = await AppRepository(context).getJewelleryYouMayLike(productId,
-            limit: AppConst.pageLimit50.toString(), isLoadMore: false, page: paginationScrollController.currentPage.toString());
+            limit: AppConst.pageLimit.toString(), isLoadMore: false, page: paginationScrollController.currentPage.toString());
         break;
       case FetchScenario.collectionName:
         response = await AppRepository(context).fetchJewelleryList(
@@ -238,49 +238,38 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
 
     response?.fold((error) => Utils.showMessage(error.message), (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       final localList = success.data;
       productList.addAll(localList
           .map((item) => ProductDetailsModel(
-                imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
-                name: item.productDescription ?? "",
-                originalPrice: item.finalPrice?.setCurrency,
-                offerPrice: item.discountPrice?.setCurrency,
-                finalPrice: item.discountPrice?.setCurrency,
-                discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
-                productId: item.id ?? "",
-                commodity: Commodity.jewellery,
-                isFavourite: item.isFavorite,
-                wishlistId: item.wishlistID,
-              ))
+                  imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+                  name: item.productDescription ?? "",
+                  originalPrice: item.finalPrice?.setCurrency,
+                  offerPrice: item.discountPrice?.setCurrency,
+                  finalPrice: item.discountPrice?.setCurrency,
+                  discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
+                  productId: item.id ?? "",
+                  commodity: Commodity.jewellery,
+                  isFavourite: item.isFavorite,
+                  wishlistId: item.wishlistID,
+                  productSku: item.contractNoSkuNo,
+                  title: item.contractNoSkuNo ?? '',
+                  subTitle: item.productDescription ?? '',
+                  kgkCollectionName: item.kgkCollection ?? "\n",
+                  businessCategoryName: item.businessCategoryName ?? "\n",
+                  cts: item.crt,
+                  gms: item.gms,
+                  brandName: item.brandName,
+                  colorsCode: [
+                    item.metalColor1HexCode ?? "",
+                    item.metalColor2HexCode ?? "",
+                    item.metalColor3HexCode ?? "",
+                  ]))
           .toList());
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const ProductListLoadedState());
     });
   }
-
-  // void _handleSuccessfulFetch(JewelleryListingModel data) {
-  //   jewelleryDatumList = data.data;
-  //   totalNumberOfPages = Utils.calculateTotalPages(data.totalRecords ?? 0, AppConst.pageLimit);
-  //   paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-  //
-  //   for (JewelleryDataModel item in jewelleryDatumList) {
-  //     productList.add(
-  //       ProductDetailsModel(
-  //         imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
-  //         name: item.productDescription ?? "",
-  //         originalPrice: item.finalPrice?.setCurrency,
-  //         offerPrice: item.discountPrice?.setCurrency,
-  //         finalPrice: item.discountPrice?.setCurrency,
-  //         discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
-  //         productId: item.id ?? "",
-  //         commodity: Commodity.jewellery,
-  //         isFavourite: item.isFavorite,
-  //         wishlistId: item.wishlistID,
-  //       ),
-  //     );
-  //   }
-  // }
 
   FetchScenario determineFetchScenario() {
     if (productId.isNotNullNorEmpty) return FetchScenario.productId;

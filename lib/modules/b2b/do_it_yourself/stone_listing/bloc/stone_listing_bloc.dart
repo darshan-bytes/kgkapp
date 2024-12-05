@@ -21,14 +21,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
   String productId = '';
   String productNavigation = '';
-  String sortKey = AppConst.sortKeySuid;
-  String sortValue = AppConst.sortValueAsc;
+  String sortKey = AppConst.sortKeyUpdatedDateTime;
+  String sortValue = AppConst.sortValueDesc;
 
   String stoneListingAppbarTitle = "";
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-
-  Completer<bool> refreshCompleter = Completer<bool>();
 
   StoneListingBloc() : super(const StoneListingInitial()) {
     on<GetStoneProductListEvent>(_onGetStoneProductListEvent);
@@ -64,9 +62,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       },
     );
     await _generateProductList(event.context, emit);
-
-    refreshCompleter.complete(true);
-
     emit(const StoneProductLoadedState());
   }
 
@@ -77,6 +72,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabOneTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.naturalDiamond.tr : APPStrings.precious.tr;
 
       tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
+
+      productList.clear();
 
       /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
       // filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(
@@ -99,6 +96,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         await fetchGemstoneList(context, emit, true);
       }
     } else {
+      productList.clear();
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
@@ -128,9 +126,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     if (productId.isNotEmpty && productNavigation.isNotEmpty) {
       if (productNavigation == AppConst.youMayLike) {
         response = await AppRepository(context).getDiamondYouMayLike(productId,
-            page: paginationScrollController.currentPage.toString(),
-            isLoadMore: isLoadMore ?? false,
-            limit: AppConst.pageLimit50.toString());
+            page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: AppConst.pageLimit.toString());
       } else if (productNavigation == AppConst.recentlyViewed) {
         response = await AppRepository(context).getDiamondRecentlyViewedProductList(
             limit: AppConst.pageLimit.toString(), isLoadMore: isLoadMore ?? false, page: paginationScrollController.currentPage.toString());
@@ -139,7 +135,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       response = await AppRepository(context).fetchDiamondList(
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore ?? false,
-        limit: AppConst.pageLimit50.toString(),
+        limit: AppConst.pageLimit.toString(),
         type: type,
         sortValue: sortValue,
         sortKey: sortKey,
@@ -149,7 +145,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       final localList = success.data;
       productList.addAll(localList.map((e) => _convertDiamondDataModelToProductDetailsModel(diamond: e)).toList());
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
@@ -176,7 +172,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       response = await AppRepository(context).fetchGemstoneList(
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore ?? false,
-        limit: AppConst.pageLimit50.toString(),
+        limit: AppConst.pageLimit.toString(),
         type: type,
         sortKey: sortKey,
         sortValue: sortValue,
@@ -185,7 +181,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       final localList = success.data;
       productList.addAll(localList.map((e) => _convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList());
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
@@ -222,13 +218,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       company: diamond.id,
       isFavourite: diamond.isFavorite,
       wishlistId: diamond.wishlistID,
+      title: diamond.lotCode ?? "",
+      subTitle: diamond.rmDescription ?? "",
+      isForAuction: diamond.isAuction,
     );
   }
 
   /// Helper Function: Convert Gemstone Data to ProductDetailsModel
   ProductDetailsModel _convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
     return ProductDetailsModel(
-      title: gemstone.rmDescription ?? "",
       productId: gemstone.id,
       diamond: "2.5 crt",
       gram: "1.5 grms",
@@ -254,6 +252,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       isFavourite: gemstone.isFavorite,
       wishlistId: gemstone.wishlistID,
       isForAuction: false,
+      title: gemstone.lotCode ?? "",
+      subTitle: gemstone.rmDescription ?? "",
     );
   }
 
@@ -299,14 +299,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     paginationScrollController.pullToRefresh();
     productList.clear();
     await _generateProductList(event.context, emit);
-    refreshCompleter.complete(true);
     emit(const StoneProductLoadedState());
   }
 
-  Future<bool> pullToRefresh(BuildContext context) async {
-    refreshCompleter = Completer<bool>();
+  Future<void> pullToRefresh(BuildContext context) async {
     add(StoneListPullToRefreshEvent(context));
-    return refreshCompleter.future;
   }
 
   Future<void> _onStoneListAddToWatchList(StoneListAddToWatchListEvent event, Emitter<StoneListingState> emit) async {
