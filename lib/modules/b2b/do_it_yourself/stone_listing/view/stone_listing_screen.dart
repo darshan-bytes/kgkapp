@@ -86,7 +86,15 @@ class StoneListingScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   _buildProductFilterCount(style, diamondListingBloc),
                   SizedBox(height: 24.h),
-                  _buildProductList(style, diamondListingBloc),
+                  BlocBuilder<StoneListingBloc, StoneListingState>(
+                    builder: (context, state) {
+                      if (state is StoneProductReloadState) {
+                        return const SizedBox.shrink();
+                      } else {
+                        return _buildProductList(style, diamondListingBloc);
+                      }
+                    },
+                  ),
                 ],
               ),
             ));
@@ -198,6 +206,7 @@ class StoneListingScreen extends StatelessWidget {
   Widget _buildProductList(DiamondListingStyle style, StoneListingBloc diamondListingBloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
       buildWhen: (previous, current) =>
+          current is StoneDiamondListLoadedState ||
           current is StoneProductLoadedState ||
           current is StoneChangeListingTypeState ||
           current is StoneListLoadingMoreState ||
@@ -205,7 +214,7 @@ class StoneListingScreen extends StatelessWidget {
       builder: (context, state) {
         if (diamondListingBloc.productList.isEmpty &&
             (state is StoneDiamondListLoadedState || state is StoneProductLoadedState || state is StoneChangeListingTypeState)) {
-          return NoDataFoundWidget(text: APPStrings.noDiamondProductFound.tr);
+          return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
         } else {
           if (diamondListingBloc.isGrid) {
             return Column(
@@ -356,7 +365,7 @@ class StoneListingScreen extends StatelessWidget {
                                       ? "https://i.ibb.co/477f41r/Group-1410089379.png"
                                       : "https://i.ibb.co/sggT4PJ/Group-1410089378.png")
                                   : product.imageUrl ?? "https://i.ibb.co/swb5gVs/Round.png",
-                              isForAuction: index % 2 == 0,
+                              isForAuction: product.isForAuction,
                             ),
                             isAutoSizeText: false,
                             isDiamond: diamondListingBloc.screenIdentifier != ScreenIdentifier.productForGemstones,

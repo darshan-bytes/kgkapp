@@ -73,12 +73,7 @@ class ProductGridItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            productImageSection(productItemWidth, style, context),
-            forPreviewCatalogue
-                ? previewCatalogueProductDetailsSection(productItemWidth, style)
-                : productDetailsSection(productItemWidth, style),
-          ],
+          children: [productImageSection(productItemWidth, style, context), previewCatalogueProductDetailsSection(productItemWidth, style)],
         ),
       ),
     );

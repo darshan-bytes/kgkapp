@@ -71,7 +71,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// Fetches data from the design library API.
   Future<void> _callDesignLibraryApi({required BuildContext context}) async {
     final Map<String, dynamic> params = {
-      ApiKey.limit: AppConst.pageLimit50,
+      ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: paginationScrollController.currentPage,
       ApiKey.sortKey: AppConst.sortKeyNERPBS,
       ApiKey.sortValue: AppConst.sortValueDesc
@@ -86,7 +86,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
         Utils.showMessage(error.message);
       }
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       final localList = success.dataList ?? [];
       designLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
     });

@@ -165,8 +165,8 @@ class ProductData {
           ? []
           : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
       suid: json["suid"],
-      crt: json["crt"],
-      gms: json["gms"],
+      crt: json["crt"].toString(),
+      gms: json["gms"].toString(),
       rating: json["rating"],
       reviewCount: json["review_count"],
       metalColor1HexCode: json["metal_color_1_hex_code"],
