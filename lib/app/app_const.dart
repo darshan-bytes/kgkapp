@@ -6,8 +6,7 @@ class AppConst {
   static Size designSize = const Size(390, 844);
   static double defaultAppBarHeight = 52.0.h;
   static const int maxImagesCount = 5;
-  static const int pageLimit = 10;
-  static const int pageLimit50 = 50;
+  static const int pageLimit = 50;
   static const double defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
   static const String strapiApiToken =
       "209f75da6d6df7f6e575d7b80779e6ad6fa47720601d5a5f10b3e13616e0c164579ac11c65d0e51d2102db8bdb14d64a0cdc6c922e12c32e73194a7ce816822676c5c8db2da64eb3cda85f23b589b6536c88c937f4e11da29996b3dc216967d61428b25317654d4b061fba344fa0a3970dcfe9df18ee7dba9658ce1cf1a8edc1";
@@ -26,6 +25,8 @@ class AppConst {
   static const String appCurrency = "INR";
   static const String diamondSinglestone = "DIAMONDSINGLESTONE";
   static const String diamondNormal = "DIAMONDNORMAL";
+  static const String precious = "PRECIOUS";
+  static const String semiPrecious = "SEMIPRECIOUS";
   static const String youMayLike = "YOU_MAY_LIKE";
   static const String recentlyViewed = "RECENTLY_VIEWED";
   static const String diamondFilter = "diamond";
@@ -36,6 +37,7 @@ class AppConst {
   static const String sortKeySuid = "suid";
   static const String sortKeyMspRateLocalCurrency = "msp_rate_local_currency";
   static const String sortKeyViewCount = "view_count";
+  static const String sortKeyUpdatedDateTime = "updated_date_time";
 
   static const String sortKeyNERPBS = "NERPBS";
 

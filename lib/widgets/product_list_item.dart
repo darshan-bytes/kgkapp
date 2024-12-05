@@ -152,6 +152,33 @@ class ProductListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SmartText(
+                  productDetails.brandName,
+                  style: style.diamondTextStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (productDetails.brandName.isNotNullNorEmpty)
+                  SmartText(
+                    "|",
+                    style: style.diamondTextStyle,
+                    optionalPadding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                  ),
+                SmartText(
+                  productDetails.productSku,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: style.diamondTextStyle,
+                ),
+              ],
+            ),
             SmartText(
               productDetails.name,
               style: style.productNameStyle,
@@ -164,18 +191,38 @@ class ProductListItem extends StatelessWidget {
             ],
             if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
-              diamondAndGramSection(style, context),
+              diamondAndGramSection(style),
             ],
-            if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (productDetails.kgkCollectionName.isNotNullNorEmpty)
+                  Expanded(
+                    child: SmartText(
+                      productDetails.kgkCollectionName,
+                      style: style.priceTextStyle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      optionalPadding: EdgeInsets.only(top: 8.h),
+                    ),
+                  ),
+                if (productDetails.businessCategoryName.isNotNullNorEmpty)
+                  Expanded(
+                    child: SmartText(
+                      productDetails.businessCategoryName,
+                      style: style.productNameStyle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+              ],
+            ),
+            if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
-              SmartText(
-                productDetails.discountPercentage,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: style.discountTextStyle,
-              ),
-              SizedBox(height: 8.h),
+              diamondAndGramSection(style),
             ],
+            SizedBox(height: 4.h),
             if (onAddToBagTap != null)
               SmartButton(
                 margin: productDetails.discountPercentage.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
@@ -216,47 +263,63 @@ class ProductListItem extends StatelessWidget {
     );
   }
 
-  Widget diamondAndGramSection(ProductItemStyle style, BuildContext context) {
+  Widget diamondAndGramSection(ProductItemStyle style) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        if (productDetails.diamond.isNotNullNorEmpty) ...[
-          Flexible(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
-                SizedBox(width: 4.w),
+        Container(
+          height: 14.w,
+          width: 14.w,
+          decoration: BoxDecoration(
+            color: productDetails.getCatalogueBadgeColor,
+            borderRadius: BorderRadius.circular(32.r),
+          ),
+        ),
+        SizedBox(width: 8.w),
+        Flexible(
+          child: Row(
+            children: [
+              if (productDetails.cts.isNotNullNorEmpty) ...[
                 Flexible(
-                  child: SmartText(
-                    productDetails.diamond,
-                    style: style.diamondTextStyle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                      SizedBox(width: 4.w),
+                      Flexible(
+                        child: SmartText(
+                          productDetails.cts,
+                          style: style.diamondTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                SizedBox(width: 8.w),
               ],
-            ),
-          ),
-          SizedBox(width: 8.w),
-        ],
-        if (productDetails.gram.isNotNullNorEmpty)
-          Flexible(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
-                SizedBox(width: 4.w),
+              if (productDetails.gms.isNotNullNorEmpty)
                 Flexible(
-                  child: SmartText(
-                    productDetails.gram,
-                    style: style.diamondTextStyle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                      SizedBox(width: 4.w),
+                      Flexible(
+                        child: SmartText(
+                          productDetails.gms,
+                          style: style.diamondTextStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
+        ),
       ],
     );
   }

@@ -21,14 +21,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
   String productId = '';
   String productNavigation = '';
-  String sortKey = AppConst.sortKeySuid;
-  String sortValue = AppConst.sortValueAsc;
+  String sortKey = AppConst.sortKeyUpdatedDateTime;
+  String sortValue = AppConst.sortValueDesc;
 
   String stoneListingAppbarTitle = "";
 
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-
-  Completer<bool> refreshCompleter = Completer<bool>();
 
   StoneListingBloc() : super(const StoneListingInitial()) {
     on<GetStoneProductListEvent>(_onGetStoneProductListEvent);
@@ -56,16 +54,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
+    getScreenIdentifier(event.context);
     paginationScrollController.init(
+      isSecondaryView: true,
       loadAction: (int currentPage) async {
         add(StoneListLoadMoreEvent(event.context, currentPage));
       },
     );
-    getScreenIdentifier(event.context);
     await _generateProductList(event.context, emit);
-
-    refreshCompleter.complete(true);
-
     emit(const StoneProductLoadedState());
   }
 
@@ -76,6 +72,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       tabOneTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.naturalDiamond.tr : APPStrings.precious.tr;
 
       tabTwoTitle = screenIdentifier == ScreenIdentifier.diamondForDIY ? APPStrings.looseDiamond.tr : APPStrings.semiPrecious.tr;
+
+      productList.clear();
 
       /// TODO :: THIS API IS COMMENTED TEMPORARY TO GET STATIC DATA OF FILTER OPTIONS
       // filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(
@@ -98,6 +96,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         await fetchGemstoneList(context, emit, true);
       }
     } else {
+      productList.clear();
       stoneListingAppbarTitle = APPStrings.diamonds.tr;
       tabOneTitle = APPStrings.naturalDiamond.tr;
       tabTwoTitle = APPStrings.looseDiamond.tr;
@@ -145,46 +144,10 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
     response?.fold((l) {
       Utils.showMessage(l.message);
-    }, (r) {
-      diamondDatumList = r.data;
-      productList.clear();
-      r.totalRecords ??= 0;
-      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
-      List.generate(
-        diamondDatumList.length,
-        (index) {
-          productList.add(
-            ProductDetailsModel(
-              productId: diamondDatumList[index].id,
-              diamond: "2.5 crt",
-              gram: "1.5 grms",
-              imageUrl: diamondDatumList[index].image.first.url,
-              name: diamondDatumList[index].rmDescription ?? "",
-              originalPrice: (diamondDatumList[index].price ?? 0).toString().setCurrency,
-              ctsOrGms: diamondDatumList[index].ctsOrGms,
-              rappaportPrice: diamondDatumList[index].rappaportPrice,
-              priceCts: diamondDatumList[index].priceCts,
-              discountPrice: diamondDatumList[index].discountPrice?.setCurrency,
-              finalPrice: diamondDatumList[index].finalPrice?.setCurrency,
-              lotCode: diamondDatumList[index].lotCode,
-              productSku: diamondDatumList[index].lotCode,
-              shape: diamondDatumList[index].shape,
-              fluorescence: diamondDatumList[index].fluorescence,
-              labs: diamondDatumList[index].labs,
-              lsp: diamondDatumList[index].lsp,
-              color: diamondDatumList[index].color,
-              clarity: diamondDatumList[index].clarity,
-              cut: diamondDatumList[index].cut,
-              certificateFile: diamondDatumList[index].certificateFile,
-              openDnaUrl: diamondDatumList[index].openDnaUrl,
-              commodity: Commodity.diamond,
-              company: diamondDatumList[index].id,
-              isFavourite: diamondDatumList[index].isFavorite,
-              wishlistId: diamondDatumList[index].wishlistID,
-            ),
-          );
-        },
-      );
+    }, (success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      final localList = success.data;
+      productList.addAll(localList.map((e) => _convertDiamondDataModelToProductDetailsModel(diamond: e)).toList());
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
@@ -192,68 +155,106 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   Future<void> fetchGemstoneList(BuildContext context, Emitter<StoneListingState> emit, bool? isLoadMore) async {
     String currency = StorageManager().getSelectedCurrencySymbol() ?? "";
-    String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
+    String type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     Either<ErrorResponse, GemstoneListingModel>? response;
 
     if (productId.isNotEmpty && productNavigation.isNotEmpty) {
       if (productNavigation == AppConst.youMayLike) {
+        context.setAppLoading(true);
         response = await AppRepository(context).getGemstoneYouMayLike(productId,
             page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore ?? false, limit: AppConst.pageLimit.toString());
+        context.setAppLoading(false);
       } else if (productNavigation == AppConst.recentlyViewed) {
         response = await AppRepository(context).getGemstoneRecentlyViewedProductList(
             limit: AppConst.pageLimit.toString(), isLoadMore: isLoadMore ?? false, page: paginationScrollController.currentPage.toString());
       }
     } else {
       response = await AppRepository(context).fetchGemstoneList(
-          page: paginationScrollController.currentPage.toString(),
-          isLoadMore: isLoadMore ?? false,
-          limit: AppConst.pageLimit.toString(),
-          type: type,
-          sortKey: sortKey,
-          sortValue: sortValue);
+        page: paginationScrollController.currentPage.toString(),
+        isLoadMore: isLoadMore ?? false,
+        limit: AppConst.pageLimit.toString(),
+        type: type,
+        sortKey: sortKey,
+        sortValue: sortValue,
+      );
     }
     response?.fold((l) {
       Utils.showMessage(l.message);
-    }, (r) {
-      productList.clear();
-      gemstoneDatumList = r.data;
-      r.totalRecords ??= 0;
-      totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
-      List.generate(
-        gemstoneDatumList.length,
-        (index) => productList.add(
-          ProductDetailsModel(
-            productId: gemstoneDatumList[index].id,
-            diamond: "2.5 crt",
-            gram: "1.5 grms",
-            imageUrl: gemstoneDatumList[index].image.isNotNullNorEmpty ? gemstoneDatumList[index].image.first.url : null,
-            name: gemstoneDatumList[index].rmDescription ?? "",
-            originalPrice: (gemstoneDatumList[index].price ?? 0).toString().setCurrency,
-            ctsOrGms: gemstoneDatumList[index].ctsOrGms,
-            rappaportPrice: gemstoneDatumList[index].rappaportPrice,
-            priceCts: gemstoneDatumList[index].priceCts,
-            discountPrice: (gemstoneDatumList[index].discountPrice ?? 0).toString().setCurrency,
-            finalPrice: gemstoneDatumList[index].finalPrice?.setCurrency,
-            lotCode: gemstoneDatumList[index].lotCode,
-            shape: gemstoneDatumList[index].shape,
-            fluorescence: gemstoneDatumList[index].fluorescence,
-            labs: gemstoneDatumList[index].labs,
-            lsp: gemstoneDatumList[index].lsp?.toString(),
-            color: gemstoneDatumList[index].color,
-            clarity: gemstoneDatumList[index].clarity,
-            cut: gemstoneDatumList[index].cut,
-            certificateFile: gemstoneDatumList[index].certificateFile,
-            openDnaUrl: gemstoneDatumList[index].openDnaUrl,
-            commodity: Commodity.gemstone,
-            isFavourite: gemstoneDatumList[index].isFavorite,
-            wishlistId: gemstoneDatumList[index].wishlistID,
-            isForAuction: index % 2 == 0,
-          ),
-        ),
-      );
+    }, (success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      final localList = success.data;
+      productList.addAll(localList.map((e) => _convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList());
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
+  }
+
+  /// Helper Function: Convert Gemstone Data to ProductDetailsModel
+  ProductDetailsModel _convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
+    return ProductDetailsModel(
+      productId: diamond.id,
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
+      imageUrl: diamond.image.first.url,
+      name: diamond.rmDescription ?? "",
+      originalPrice: (diamond.finalPrice ?? 0).toString().setCurrency,
+      ctsOrGms: diamond.ctsOrGms,
+      rappaportPrice: diamond.rappaportPrice,
+      priceCts: diamond.priceCts,
+      discountPrice: diamond.discountPrice?.setCurrency,
+      finalPrice: diamond.discountPrice?.setCurrency,
+      lotCode: diamond.lotCode,
+      productSku: diamond.lotCode,
+      shape: diamond.shape,
+      fluorescence: diamond.fluorescence,
+      labs: diamond.labs,
+      lsp: diamond.lsp,
+      color: diamond.color,
+      clarity: diamond.clarity,
+      cut: diamond.cut,
+      certificateFile: diamond.certificateFile,
+      openDnaUrl: diamond.openDnaUrl,
+      commodity: Commodity.diamond,
+      company: diamond.id,
+      isFavourite: diamond.isFavorite,
+      wishlistId: diamond.wishlistID,
+      title: diamond.lotCode ?? "",
+      subTitle: diamond.rmDescription ?? "",
+      isForAuction: diamond.isAuction,
+    );
+  }
+
+  /// Helper Function: Convert Gemstone Data to ProductDetailsModel
+  ProductDetailsModel _convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
+    return ProductDetailsModel(
+      productId: gemstone.id,
+      diamond: "2.5 crt",
+      gram: "1.5 grms",
+      imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
+      name: gemstone.rmDescription ?? "",
+      originalPrice: (gemstone.finalPrice ?? 0).toString().setCurrency,
+      ctsOrGms: gemstone.ctsOrGms,
+      rappaportPrice: gemstone.rappaportPrice,
+      priceCts: gemstone.priceCts,
+      discountPrice: (gemstone.discountPrice ?? 0).toString().setCurrency,
+      finalPrice: gemstone.discountPrice?.setCurrency,
+      lotCode: gemstone.lotCode,
+      shape: gemstone.shape,
+      fluorescence: gemstone.fluorescence,
+      labs: gemstone.labs,
+      lsp: gemstone.lsp?.toString(),
+      color: gemstone.color,
+      clarity: gemstone.clarity,
+      cut: gemstone.cut,
+      certificateFile: gemstone.certificateFile,
+      openDnaUrl: gemstone.openDnaUrl,
+      commodity: Commodity.gemstone,
+      isFavourite: gemstone.isFavorite,
+      wishlistId: gemstone.wishlistID,
+      isForAuction: false,
+      title: gemstone.lotCode ?? "",
+      subTitle: gemstone.rmDescription ?? "",
+    );
   }
 
   Future<void> _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) async {
@@ -294,20 +295,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
+    emit(StoneProductReloadState());
     paginationScrollController.pullToRefresh();
+    productList.clear();
     await _generateProductList(event.context, emit);
-    refreshCompleter.complete(true);
     emit(const StoneProductLoadedState());
   }
 
-  Future<bool> pullToRefresh(BuildContext context) async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
+  Future<void> pullToRefresh(BuildContext context) async {
     add(StoneListPullToRefreshEvent(context));
-    bool result = await refreshCompleter.future;
-    return result;
   }
 
   Future<void> _onStoneListAddToWatchList(StoneListAddToWatchListEvent event, Emitter<StoneListingState> emit) async {

@@ -54,7 +54,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   Future<void> _callCadLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
     final Map<String, dynamic> params = {
-      ApiKey.limit: AppConst.pageLimit50,
+      ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: gridPaginationScrollController.currentPage,
       ApiKey.sortValue: sortValue,
       ApiKey.sortKey: sortKey
@@ -67,7 +67,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         Utils.showMessage(error.message);
       }
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       final localList = success.dataList ?? [];
       cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
     });

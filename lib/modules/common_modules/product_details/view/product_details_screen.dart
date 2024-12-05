@@ -46,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +61,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        flex: 5,
+                        flex: 6,
                         child: SizedBox(
                           height: 60.h,
                           child: Row(
@@ -83,7 +83,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
-                                          SizedBox(width: 8.w),
+                                          SizedBox(width: 2.w),
                                           SmartText(bloc.productDetails?.discountPercentage, style: style.discountStyle),
                                         ],
                                       )
@@ -94,7 +94,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8.w),
+                      SizedBox(width: 4.w),
                       Expanded(
                         flex: 4,
                         child: SmartButton(
