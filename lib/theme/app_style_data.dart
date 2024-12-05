@@ -204,6 +204,8 @@ class LightModeTheme extends AppTheme {
         headerTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         headerSubTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp, color: colors.color303538),
         collectionListTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, color: colors.color303538),
+        selectedTabColor: colors.primary,
+        unSelectedTabColor: colors.transparent,
       );
 
   @override

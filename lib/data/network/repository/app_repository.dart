@@ -498,10 +498,11 @@ class AppRepository extends ApiService {
   }
 
   // For Collections listing
-  Future<Either<ErrorResponse, List<CollectionDataModel>>?> collectionMasterList() async {
-    context.setAppLoading(true);
-    var response = await getMethod<CollectionDataModel>(ApiClient.collectionMaster);
-    context.setAppLoading(false);
+  Future<Either<ErrorResponse, PaginationData<CollectionDataItemsModel>>?> collectionMasterList(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<PaginationData<CollectionDataItemsModel>>(ApiClient.collectionMaster, query: body);
+    if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
