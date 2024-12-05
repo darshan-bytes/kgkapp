@@ -738,5 +738,8 @@
   "mob_max": "Max",
   "mob_max_range_should_be_less_than_x": "Max range should be less than {#}",
   "mob_cant_compare_different_commodities": "You cannot compare products from different categories. Do you want to proceed? This will remove the products from the previous category.",
-  "mob_different_commodities_selected": "Different commodities selected"
+  "mob_different_commodities_selected": "Different commodities selected",
+  "mob_yes": "Yes",
+  "mob_no": "No",
+  "mob_are_you_sure_change_account_type": "Are you sure you want to change account type?"
 }

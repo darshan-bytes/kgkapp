@@ -263,20 +263,21 @@ class ProfileScreen extends StatelessWidget {
 
   void _buildLogoutPopup(BuildContext context, ProfileBloc bloc) {
     Utils.showSmartModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
-        ),
-        builder: (context) => ConfirmationDialog(
-              title: APPStrings.logoutAsk.tr,
-              message: APPStrings.logoutMsg.tr,
-              onApproved: () {
-                bloc.add(LogoutEvent(context: context));
-              },
-              onDenied: () => context.pop(),
-              onApprovedText: APPStrings.logout.tr,
-              onDeniedText: APPStrings.cancel.tr,
-            ));
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.logoutAsk.tr,
+        message: APPStrings.logoutMsg.tr,
+        onApproved: () {
+          bloc.add(LogoutEvent(context: context));
+        },
+        onDenied: () => context.pop(),
+        onApprovedText: APPStrings.logout.tr,
+        onDeniedText: APPStrings.cancel.tr,
+      ),
+    );
   }
 
   void _buildDeletePopup(BuildContext context, ProfileBloc bloc) {
