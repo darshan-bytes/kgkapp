@@ -36,21 +36,23 @@ class StoneListingScreen extends StatelessWidget {
             return FilterBottomActionBar(
               controller: diamondListingBloc.paginationScrollController.controller,
               onFilterTap: () {
-                BlocProvider.of<DiamondFilterBloc>(context)
-                    .add(AddFilterDataEvent(context: context, gemstoneFilterList: diamondListingBloc.filterList));
+                BlocProvider.of<SortFilterBloc>(context)
+                    .add(AddSortFilterDataEvent(filterOptionList: diamondListingBloc.filterData, context: context));
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => DiamondFilterScreen(onApply: () {}),
+                  builder: (context) => FilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        diamondListingBloc.add(StoneListingFilterEvent(context: context, filterData: value));
+                      }
+                    },
+                  ),
                 );
               },
               onSortTap: () {
-                BlocProvider.of<SortFilterBloc>(context)
-                    .add(SortFilterScreenTypeEvent(screenIdentifier: diamondListingBloc.screenIdentifier));
-
-                /// TODO : Fetch this from local and pass here as sortData based on commodity type
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => SortScreen(sortData: []),
+                  builder: (context) => SortScreen(sortData: diamondListingBloc.sortOptions),
                 ).then((onValue) {
                   if (onValue != null) {
                     diamondListingBloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
@@ -71,7 +73,7 @@ class StoneListingScreen extends StatelessWidget {
                 child: SmartSingleChildScrollView(
               controller: diamondListingBloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await diamondListingBloc.pullToRefresh(context);
+                diamondListingBloc.add(StoneListPullToRefreshEvent(context));
               },
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
