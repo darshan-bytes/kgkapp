@@ -596,6 +596,26 @@ class JewelleryDataModel {
   }
 }
 
+// Extension to provide flexible mapping
+extension RMNameCategoryExtension on CommodityDetails {
+  static CommodityDetails fromString(String rmName) {
+    // Mapping dictionary for various RMName variations
+    final Map<String, CommodityDetails> categoryMap = {
+      'Diamonds': CommodityDetails.diamond,
+      'Metal': CommodityDetails.metal,
+      'Chain': CommodityDetails.metal,
+      'Finding': CommodityDetails.metal,
+      'Others': CommodityDetails.others,
+      'Other Stones': CommodityDetails.colorStone,
+      'Semi Precious Stones': CommodityDetails.colorStone,
+      'Precious Color Stones': CommodityDetails.colorStone,
+      'Pearls': CommodityDetails.colorStone,
+    };
+    // Direct match or default to Others
+    return categoryMap[rmName] ?? CommodityDetails.others;
+  }
+}
+
 class MultipleFinishedViewImage {
   MultipleFinishedViewImage({
     required this.highRes3,
@@ -606,6 +626,7 @@ class MultipleFinishedViewImage {
     required this.highRes1,
     required this.highRes2,
     required this.imageUrl,
+    required this.multiAngleUrl,
   });
 
   dynamic highRes3;
@@ -616,6 +637,7 @@ class MultipleFinishedViewImage {
   dynamic highRes1;
   dynamic highRes2;
   String? imageUrl;
+  final List<MultiAngleUrl> multiAngleUrl;
 
   factory MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
     return MultipleFinishedViewImage(
@@ -627,6 +649,8 @@ class MultipleFinishedViewImage {
       highRes1: json["high_res1"],
       highRes2: json["high_res2"],
       imageUrl: json["IMAGE_URL"],
+      multiAngleUrl:
+          json["MULTI_ANGLE_URL"] == null ? [] : List<MultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrl.fromJson(x))),
     );
   }
 
@@ -639,95 +663,116 @@ class MultipleFinishedViewImage {
         "high_res1": highRes1,
         "high_res2": highRes2,
         "IMAGE_URL": imageUrl,
+        "MULTI_ANGLE_URL": multiAngleUrl
+      };
+}
+
+class MultiAngleUrl {
+  MultiAngleUrl({
+    required this.url,
+  });
+
+  final String? url;
+
+  factory MultiAngleUrl.fromJson(Map<String, dynamic> json) {
+    return MultiAngleUrl(
+      url: json["url"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "url": url,
       };
 }
 
 class ComponentDetail {
-  ComponentDetail({
-    required this.consumedQty2,
-    required this.brokenQty1,
-    required this.shape,
-    required this.consumedQty1,
-    required this.mmSize,
-    required this.totalQty2,
-    required this.certificateFile,
-    required this.sieveSize,
-    required this.lotId,
-    required this.commodityNameRefSuid,
-    required this.localCurrencyAmount,
-    required this.internalQualitySuid,
-    required this.commodity,
-    required this.internalQualityRefSuid,
-    required this.shapeRefSuid,
-    required this.internationalQuality,
-    required this.colorRefSuid,
-    required this.internalQualityName,
-    required this.shapeSuid,
-    required this.cut,
-    required this.colorSuid,
-    required this.color,
-    required this.intCurrencyAmount,
-    required this.rmName,
-    required this.rmNameSuid,
-    required this.claritySuid,
-    required this.commodityNameSuid,
-    required this.rmNameRefSuid,
-    required this.internationalQualityRefSuid,
-    required this.clarity,
-    required this.internationalQualitySuid,
-    required this.localCurrencyRate,
-    required this.intCurrencyRate,
-    required this.totalQty1,
-    required this.lotCode,
-    required this.uom2,
-    required this.uom1,
-    required this.clarityRefSuid,
-    required this.karatage,
-    required this.lossQty1,
-    required this.id,
-  });
+  ComponentDetail(
+      {this.consumedQty2,
+      this.brokenQty1,
+      this.shape,
+      this.consumedQty1,
+      this.mmSize,
+      this.totalQty2,
+      this.certificateFile = const [],
+      this.sieveSize,
+      this.lotId,
+      this.commodityNameRefSuid,
+      this.localCurrencyAmount,
+      this.internalQualitySuid,
+      this.commodity,
+      this.internalQualityRefSuid,
+      this.shapeRefSuid,
+      this.internationalQuality,
+      this.colorRefSuid,
+      this.internalQualityName,
+      this.shapeSuid,
+      this.cut,
+      this.colorSuid,
+      this.color,
+      this.intCurrencyAmount,
+      this.rmName,
+      this.rmNameSuid,
+      this.claritySuid,
+      this.commodityNameSuid,
+      this.rmNameRefSuid,
+      this.internationalQualityRefSuid,
+      this.clarity,
+      this.internationalQualitySuid,
+      this.localCurrencyRate,
+      this.intCurrencyRate,
+      this.totalQty1,
+      this.lotCode,
+      this.uom2,
+      this.uom1,
+      this.clarityRefSuid,
+      this.karatage,
+      this.lossQty1,
+      this.id,
+      List<ComponentDetail>? arrComponentDetail})
+      : arrComponentDetail = arrComponentDetail ?? [];
 
-  String? consumedQty2;
-  double? brokenQty1;
-  String? shape;
-  String? consumedQty1;
-  String? mmSize;
-  double? totalQty2;
-  List<dynamic> certificateFile;
-  String? sieveSize;
-  String? lotId;
-  String? commodityNameRefSuid;
-  double? localCurrencyAmount;
-  dynamic internalQualitySuid;
-  String? commodity;
-  dynamic internalQualityRefSuid;
-  String? shapeRefSuid;
-  String? internationalQuality;
-  int? colorRefSuid;
-  String? internalQualityName;
-  String? shapeSuid;
-  dynamic cut;
-  String? colorSuid;
-  String? color;
-  String? intCurrencyAmount;
-  String? rmName;
-  String? rmNameSuid;
-  String? claritySuid;
-  String? commodityNameSuid;
-  String? rmNameRefSuid;
-  int? internationalQualityRefSuid;
-  String? clarity;
-  String? internationalQualitySuid;
-  String? localCurrencyRate;
-  String? intCurrencyRate;
-  String? totalQty1;
-  String? lotCode;
-  String? uom2;
-  String? uom1;
-  int? clarityRefSuid;
-  String? karatage;
-  String? lossQty1;
-  String? id;
+  final String? consumedQty2;
+  final double? brokenQty1;
+  final String? shape;
+  final String? consumedQty1;
+  final String? mmSize;
+  final double? totalQty2;
+  final List<dynamic>? certificateFile;
+  final String? sieveSize;
+  final String? lotId;
+  final String? commodityNameRefSuid;
+  final double? localCurrencyAmount;
+  final dynamic internalQualitySuid;
+  final String? commodity;
+  final dynamic internalQualityRefSuid;
+  final String? shapeRefSuid;
+  final String? internationalQuality;
+  final int? colorRefSuid;
+  final String? internalQualityName;
+  final String? shapeSuid;
+  final dynamic cut;
+  final String? colorSuid;
+  final String? color;
+  final String? intCurrencyAmount;
+  final String? rmName;
+  final String? rmNameSuid;
+  final String? claritySuid;
+  final String? commodityNameSuid;
+  final String? rmNameRefSuid;
+  final int? internationalQualityRefSuid;
+  final String? clarity;
+  final String? internationalQualitySuid;
+  final String? localCurrencyRate;
+  final String? intCurrencyRate;
+  final String? totalQty1;
+  final String? lotCode;
+  final String? uom2;
+  final String? uom1;
+  final int? clarityRefSuid;
+  final String? karatage;
+  final String? lossQty1;
+  final String? id;
+  final List<ComponentDetail>? arrComponentDetail;
 
   factory ComponentDetail.fromJson(Map<String, dynamic> json) {
     return ComponentDetail(
@@ -782,7 +827,7 @@ class ComponentDetail {
         "ConsumedQty1": consumedQty1,
         "MMSize": mmSize,
         "TotalQty2": totalQty2,
-        "CertificateFile": certificateFile.map((x) => x).toList(),
+        "CertificateFile": certificateFile?.map((x) => x).toList(),
         "SieveSize": sieveSize,
         "LotId": lotId,
         "CommodityNameRefSuid": commodityNameRefSuid,

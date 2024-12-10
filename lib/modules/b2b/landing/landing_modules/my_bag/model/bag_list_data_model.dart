@@ -178,7 +178,7 @@ class Result {
       cut: json["cut"],
       color: json["color"],
       clarity: json["clarity"],
-      ctsOrGms: json["cts_or_gms"],
+      ctsOrGms: json["cts_or_gms"]?.toDouble(),
       polish: json["polish"],
       symmetry: json["symmetry"],
       depth: json["depth"],

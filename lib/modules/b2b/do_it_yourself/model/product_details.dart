@@ -53,6 +53,18 @@ class ProductDetailsModel {
   String? gms;
   String? cts;
   List<String>? colorsCode;
+  List<ComponentDetail>? componentDetails;
+  String? certificate;
+  String? depth;
+  String? table;
+  String? polish;
+  String? symmetry;
+  String? pavAngle;
+  String? starLength;
+  String? girdlePercentage;
+  String? pavDepth;
+  String? lowerHalf;
+  String? carat;
 
   ProductDetailsModel({
     this.productId,
@@ -107,6 +119,18 @@ class ProductDetailsModel {
     this.businessCategoryName,
     this.cts,
     this.colorsCode,
+    this.componentDetails,
+    this.certificate,
+    this.depth,
+    this.table,
+    this.polish,
+    this.symmetry,
+    this.pavAngle,
+    this.starLength,
+    this.girdlePercentage,
+    this.pavDepth,
+    this.lowerHalf,
+    this.carat,
   });
 
   @override
@@ -165,7 +189,19 @@ class ProductDetailsModel {
           kgkCollectionName == other.kgkCollectionName &&
           businessCategoryName == other.businessCategoryName &&
           cts == other.cts &&
-          colorsCode == other.colorsCode;
+          colorsCode == other.colorsCode &&
+          componentDetails == other.componentDetails &&
+          certificate == other.certificate &&
+          depth == other.depth &&
+          table == other.table &&
+          polish == other.polish &&
+          symmetry == other.symmetry &&
+          pavAngle == other.pavAngle &&
+          starLength == other.starLength &&
+          girdlePercentage == other.girdlePercentage &&
+          pavDepth == other.pavDepth &&
+          lowerHalf == other.lowerHalf &&
+          carat == other.carat;
 
   @override
   int get hashCode =>
@@ -220,7 +256,19 @@ class ProductDetailsModel {
       kgkCollectionName.hashCode ^
       businessCategoryName.hashCode ^
       cts.hashCode ^
-      colorsCode.hashCode;
+      colorsCode.hashCode ^
+      componentDetails.hashCode ^
+      certificate.hashCode ^
+      depth.hashCode ^
+      table.hashCode ^
+      polish.hashCode ^
+      symmetry.hashCode ^
+      pavAngle.hashCode ^
+      starLength.hashCode ^
+      girdlePercentage.hashCode ^
+      pavDepth.hashCode ^
+      lowerHalf.hashCode ^
+      carat.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {

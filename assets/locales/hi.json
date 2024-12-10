@@ -740,5 +740,10 @@
   "mob_cant_compare_different_commodities": "विभिन्न मालों की तुलना नहीं की जा सकती",
   "mob_yes": "हाँ",
   "mob_no": "नहीं",
-  "mob_are_you_sure_change_account_type": "क्या आप वाकई खाता प्रकार बदलना चाहते हैं?"
+  "mob_are_you_sure_change_account_type": "क्या आप वाकई खाता प्रकार बदलना चाहते हैं?",
+  "mob_intl_quality": "अंतर्राष्ट्री क्यालिटी",
+  "mob_grams": "ग्राम",
+  "mob_karatage": "काराटेज",
+  "mob_details": "विवरण",
+  "mob_no_of_color_stones": "कॉलर स्टोन की संख्या"
 }

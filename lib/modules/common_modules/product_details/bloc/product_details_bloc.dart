@@ -96,7 +96,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   ];
 
   bool isRingDetailsOpen = false;
-  GlobalKey<SmartExpansionTileState> ringDetailsKey = GlobalKey();
   bool isDiamondDetailsOpen = false;
   bool isGemstoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
@@ -110,6 +109,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   List<ProductDetailsModel> recentlyViewedProductList = [];
 
   List<ReviewDataModel> reviewList = [];
+
+  ///For component details
+  List<ComponentDetail> componentDetailsView = <ComponentDetail>[];
 
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
   StreamSubscription<CompareProductState>? compareProductStream;
@@ -402,6 +404,115 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
+  ///New Code
+  List<ComponentDetail> _groupComponentDetails(JewelleryDataModel componentDetails) {
+    Map<CommodityDetails, List<ComponentDetail>> groupedMap = {};
+
+    // Group by categorized RMName
+    for (ComponentDetail item in componentDetails.componentDetails) {
+      String rmNameString = item.rmName ?? 'Unknown';
+      CommodityDetails categorizedRMName = RMNameCategoryExtension.fromString(rmNameString);
+
+      if (!groupedMap.containsKey(categorizedRMName)) {
+        groupedMap[categorizedRMName] = [];
+      }
+      groupedMap[categorizedRMName]!.add(item);
+    }
+
+    // Convert grouped map to list of ComponentDetail
+    return groupedMap.entries.map((entry) => ComponentDetail(rmName: entry.key.value, arrComponentDetail: entry.value)).toList();
+  }
+
+  List<Widget> getComponentDetails(ComponentDetail componentDetail, BuildContext context) {
+    final arrComponentDetail = componentDetail.arrComponentDetail ?? [];
+
+    switch (componentDetail.rmName) {
+      case 'Diamonds':
+        return _buildDiamondDetails(arrComponentDetail, context);
+      case 'Metal':
+        return _buildMetalDetails(arrComponentDetail, context);
+      case 'Color Stone':
+        return _buildColorStoneDetails(arrComponentDetail, context);
+      default:
+        return _buildOtherDetails(arrComponentDetail, context);
+    }
+  }
+
+  List<Widget> _buildDiamondDetails(List<ComponentDetail> details, BuildContext context) {
+    return _buildDetailList(details, context, [
+      DetailItem(APPStrings.shape.tr, (detail) => detail.shape),
+      DetailItem(APPStrings.color.tr, (detail) => detail.color),
+      DetailItem(APPStrings.cut.tr, (detail) => detail.cut),
+      DetailItem(APPStrings.size.tr, (detail) => detail.sieveSize),
+      DetailItem(APPStrings.intlQuality.tr, (detail) => detail.internalQualityName),
+      DetailItem('No of Diamonds', (detail) => detail.totalQty2.toString()),
+      DetailItem(APPStrings.carat.tr, (detail) => detail.consumedQty1),
+      DetailItem('APPStrings.rmname.tr', (detail) => detail.rmName),
+    ]);
+  }
+
+  List<Widget> _buildMetalDetails(List<ComponentDetail> details, BuildContext context) {
+    return _buildDetailList(details, context, [
+      DetailItem(APPStrings.color.tr, (detail) => detail.color),
+      DetailItem(APPStrings.karatage.tr, (detail) => detail.karatage),
+      DetailItem(APPStrings.grams.tr, (detail) => detail.totalQty1),
+    ]);
+  }
+
+  List<Widget> _buildColorStoneDetails(List<ComponentDetail> details, BuildContext context) {
+    return _buildDetailList(details, context, [
+      DetailItem(APPStrings.commodity.tr, (detail) => detail.commodity),
+      DetailItem(APPStrings.shape.tr, (detail) => detail.shape),
+      DetailItem(APPStrings.color.tr, (detail) => detail.color),
+      DetailItem(APPStrings.size.tr, (detail) => detail.sieveSize),
+      DetailItem(APPStrings.noOfColorStones.tr, (detail) => detail.consumedQty2.toString()),
+      DetailItem(APPStrings.carat.tr, (detail) => detail.consumedQty1),
+    ]);
+  }
+
+  List<Widget> _buildOtherDetails(List<ComponentDetail> details, BuildContext context) {
+    ///TODO :: Add data for Other Details Tab
+    return _buildDetailList(details, context, [
+      DetailItem(APPStrings.color.tr, (detail) => detail.commodity),
+      DetailItem(APPStrings.karatage.tr, (detail) => detail.karatage),
+      DetailItem(APPStrings.grams.tr, (detail) => detail.totalQty1),
+    ]);
+  }
+
+  List<Widget> _buildDetailList(List<ComponentDetail> details, BuildContext context, List<DetailItem> detailItems) {
+    return List.generate(details.length, (subIndex) {
+      final detail = details[subIndex];
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: detailItems
+                  .expand((item) => [
+                        _settingWidget(item.label, item.getValue(detail) ?? 'N/A', context),
+                        const SizedBox(height: 14),
+                      ])
+                  .toList(),
+            ),
+          ),
+          if (subIndex != details.length - 1) const Divider(),
+        ],
+      );
+    });
+  }
+
+  Widget _settingWidget(String type, String value, BuildContext context) {
+    final style = AppTheme.of(context).settingDetailScreenStyle;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SmartText(type, style: style.settingTypeStyle),
+        SmartText(value, style: style.settingValueStyle),
+      ],
+    );
+  }
+
   Future<void> getProductDetails(BuildContext context, String productId) async {
     Either<ErrorResponse, JewelleryDataModel>? response = await AppRepository(context).getProductDetailById(productId, isLoadingShow: true);
     response?.fold(
@@ -412,6 +523,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (jewelleryData) {
+        componentDetailsView = _groupComponentDetails(jewelleryData);
         isErrorInLoadingData = false;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
@@ -419,6 +531,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           return e.imageUrl ?? '';
         }).toList();
 
+        imgList = [];
+        for (var element in jewelleryData.multipleFinishedViewImage) {
+          for (var element in element.multiAngleUrl) {
+            imgList.add(element.url ?? "");
+          }
+        }
         productDetails = ProductDetailsModel(
           productId: productId,
           name: productName,
@@ -434,6 +552,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           commodity: Commodity.jewellery,
           isFavourite: jewelleryData.isFavorite,
           wishlistId: jewelleryData.wishlistID,
+          componentDetails: jewelleryData.componentDetails,
         );
       },
     );
@@ -755,4 +874,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       }
     });
   }
+}
+
+class DetailItem {
+  final String label;
+  final String? Function(ComponentDetail) getValue;
+
+  DetailItem(this.label, this.getValue);
 }

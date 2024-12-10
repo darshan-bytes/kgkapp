@@ -221,7 +221,7 @@ class AppRoutes {
         builder = (context) {
           return BlocProvider<ProductDetailsBloc>(
             create: (context) => ProductDetailsBloc()..add(LoadProductDetailsEvent(context)),
-            child: const ProductDetailsScreen(),
+            child: ProductDetailsScreen(),
           );
         };
         break;

@@ -129,3 +129,15 @@ enum FilterType {
 
   final String value;
 }
+
+enum CommodityDetails {
+  diamond('Diamonds'),
+  metal('Metal'),
+  colorStone('Color Stone'),
+  others('Others'),
+  ;
+
+  const CommodityDetails(this.value);
+
+  final String value;
+}

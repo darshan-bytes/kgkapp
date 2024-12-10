@@ -277,19 +277,25 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     final MyBagScreenStyle myBagScreenStyle = AppTheme.of(context).myBagScreenStyle;
     return Column(
       children: [
-        Row(
-          children: [
-            SmartImage(
-              path: AppImages.icCertificate,
-              height: 24.w,
-              width: 24.w,
-            ),
-            SizedBox(width: 16.w),
-            SmartText(
-              APPStrings.certificate.tr,
-              style: myBagScreenStyle.diamondPurityStyle,
-            )
-          ],
+        GestureDetector(
+          onTap: () {
+            /// TODO :: FILE REDIRECT
+            ///
+          },
+          child: Row(
+            children: [
+              SmartImage(
+                path: AppImages.icCertificate,
+                height: 24.w,
+                width: 24.w,
+              ),
+              SizedBox(width: 16.w),
+              SmartText(
+                APPStrings.certificate.tr,
+                style: myBagScreenStyle.diamondPurityStyle,
+              )
+            ],
+          ),
         ),
         SizedBox(height: 16.h),
         Row(

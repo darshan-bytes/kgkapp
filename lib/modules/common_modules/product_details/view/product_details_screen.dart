@@ -373,12 +373,17 @@ class ProductDetailsScreen extends StatelessWidget {
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             SizedBox(height: 24.h),
             const Divider(),
-            _ringDetails(bloc, style),
+            _getDetailsWidget(bloc, style),
             const Divider(),
-            _diamondDetails(bloc, style),
-            const Divider(),
-            _gemstoneDetails(bloc, style),
-            const Divider(),
+
+            // _metalDetails(bloc, style),
+            // const Divider(),
+            // _diamondDetails(bloc, style),
+            // const Divider(),
+            // _colorStoneDetails(bloc, style),
+            // const Divider(),
+            // _otherDetails(bloc, style),
+            // const Divider(),
           ],
           if (bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
@@ -559,74 +564,22 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _ringDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is RingDetailsToggleState,
-      builder: (context, state) {
-        return Padding(
-          padding: bloc.isRingDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            key: bloc.ringDetailsKey,
-            title: SmartText(
-              'Ring details',
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: (bloc.isRingDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
-            onExpansionChanged: (value) {
-              bloc.add(const RingDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.brand.tr, 'Flyerfit', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.meleeWeight.tr, 'SA-.25cts Dia-0.28cts', context),
-            ],
+  Widget _getDetailsWidget(ProductDetailsBloc bloc, ProductDetailsStyle style) {
+    return ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: bloc.componentDetailsView.length,
+      itemBuilder: (context, index) {
+        ComponentDetail componentDetail = bloc.componentDetailsView[index];
+        return SmartExpansionTile(
+          title: Text(
+            '${componentDetail.rmName!} Details',
+            style: style.settingSelectionTitleStyle,
           ),
+          children: bloc.getComponentDetails(componentDetail, context),
         );
       },
-    );
-  }
-
-  Widget _diamondDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is ProductDiamondDetailsToggleState,
-      builder: (context, state) {
-        return Padding(
-          padding: bloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            initiallyExpanded: bloc.isDiamondDetailsOpen,
-            key: bloc.diamondDetailsKey,
-            title: SmartText(
-              bloc.screenIdentifier == ScreenIdentifier.productForRing ? APPStrings.diamondDetails.tr : APPStrings.productDetails.tr,
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: (bloc.isDiamondDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
-            onExpansionChanged: (value) {
-              bloc.add(const ProductDiamondDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color.tr, 'F-G', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
-            ],
-          ),
-        );
-      },
+      separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
 
@@ -640,7 +593,7 @@ class ProductDetailsScreen extends StatelessWidget {
             initiallyExpanded: bloc.isGemstoneDetailsOpen,
             key: bloc.gemstoneDetailsKey,
             title: SmartText(
-              'Gemstone details',
+              APPStrings.productDetails.tr,
               style: style.settingSelectionTitleStyle,
             ),
             trailing: (bloc.isGemstoneDetailsOpen)
@@ -650,18 +603,25 @@ class ProductDetailsScreen extends StatelessWidget {
               bloc.add(const GemstoneDetailsToggleEvent());
             },
             children: [
-              SizedBox(height: 16.h),
+              _settingWidget(APPStrings.certificate.tr, bloc.productDetails?.certificate ?? '-', context),
               _settingWidget(APPStrings.shape.tr, bloc.productDetails?.shape ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, bloc.productDetails?.productQuantity?.name ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat.tr, '1', context),
-              SizedBox(height: 14.h),
+              _settingWidget(APPStrings.carat.tr, bloc.productDetails?.carat ?? '-', context),
+              _settingWidget(APPStrings.cut.tr, bloc.productDetails?.cut ?? '-', context),
               _settingWidget(APPStrings.color.tr, bloc.productDetails?.color ?? '-', context),
-              SizedBox(height: 14.h),
+              SizedBox(height: 16.h),
+              Divider(),
               _settingWidget(APPStrings.clarity.tr, bloc.productDetails?.clarity ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
+              _settingWidget(APPStrings.depthPercentage.tr, bloc.productDetails?.depth ?? '-', context),
+              _settingWidget(APPStrings.tablePercentage.tr, bloc.productDetails?.table ?? '-', context),
+              _settingWidget(APPStrings.polish.tr, bloc.productDetails?.polish ?? '-', context),
+              _settingWidget(APPStrings.symmetry.tr, bloc.productDetails?.symmetry ?? '-', context),
+              SizedBox(height: 16.h),
+              Divider(),
+              _settingWidget(APPStrings.pavilionAngle.tr, bloc.productDetails?.pavAngle ?? '-', context),
+              _settingWidget(APPStrings.starLength.tr, bloc.productDetails?.starLength ?? '-', context),
+              _settingWidget(APPStrings.girdlePercentage.tr, bloc.productDetails?.girdlePercentage ?? '-', context),
+              _settingWidget(APPStrings.pavilionDepth.tr, bloc.productDetails?.pavDepth ?? '-', context),
+              _settingWidget(APPStrings.lowerHalf.tr, bloc.productDetails?.lowerHalf ?? '-', context),
             ],
           ),
         );
@@ -671,11 +631,16 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _settingWidget(String type, String value, BuildContext context) {
     final style = AppTheme.of(context).settingDetailScreenStyle;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        SmartText(type, style: style.settingTypeStyle),
-        SmartText(value, style: style.settingValueStyle),
+        SizedBox(height: 14.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SmartText(type, style: style.settingTypeStyle),
+            SmartText(value, style: style.settingValueStyle),
+          ],
+        ),
       ],
     );
   }
@@ -690,7 +655,8 @@ class ProductDetailsScreen extends StatelessWidget {
             onViewAllTap: bloc.suggestedProductList.length > 5
                 ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
                 : null,
-            suggestedProductList: bloc.suggestedProductList,
+            suggestedProductList:
+                bloc.suggestedProductList.length > 5 ? bloc.suggestedProductList.sublist(0, 5) : bloc.suggestedProductList,
             onProductTap: (product) {
               context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                 RoutesData.productId: product.productId,
@@ -823,6 +789,48 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class ExpansionTileData {
+  final String title;
+  final List<CategoryData> categories;
+
+  ExpansionTileData({required this.title, required this.categories});
+
+  factory ExpansionTileData.fromJson(Map<String, dynamic> json) {
+    return ExpansionTileData(
+      title: json['title'] as String,
+      categories: (json['categories'] as List<dynamic>).map((category) => CategoryData.fromJson(category)).toList(),
+    );
+  }
+}
+
+class CategoryData {
+  final String subTitle;
+  final List<ItemData> items;
+
+  CategoryData({required this.subTitle, required this.items});
+
+  factory CategoryData.fromJson(Map<String, dynamic> json) {
+    return CategoryData(
+      subTitle: json['subTitle'] as String,
+      items: (json['items'] as List<dynamic>).map((item) => ItemData.fromJson(item)).toList(),
+    );
+  }
+}
+
+class ItemData {
+  final String key;
+  final String value;
+
+  ItemData({required this.key, required this.value});
+
+  factory ItemData.fromJson(Map<String, dynamic> json) {
+    return ItemData(
+      key: json['key'] as String,
+      value: json['value'] as String,
     );
   }
 }

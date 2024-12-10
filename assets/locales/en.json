@@ -741,5 +741,11 @@
   "mob_different_commodities_selected": "Different commodities selected",
   "mob_yes": "Yes",
   "mob_no": "No",
-  "mob_are_you_sure_change_account_type": "Are you sure you want to change account type?"
+  "mob_are_you_sure_change_account_type": "Are you sure you want to change account type?",
+  "mob_intl_quality": "Intl.Quality",
+  "mob_grams": "Grams",
+  "mob_karatage": "Karatage",
+  "mob_details": "Details",
+  "mob_no_of_color_stones": "No of color stones"
+
 }

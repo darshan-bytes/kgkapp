@@ -133,7 +133,7 @@ class ProductData {
   String? suid;
   String? crt;
   String? gms;
-  int? rating;
+  double? rating;
   int? reviewCount;
   String? metalColor1HexCode;
   int? discountPercentage;
@@ -167,7 +167,7 @@ class ProductData {
       suid: json["suid"],
       crt: json["crt"].toString(),
       gms: json["gms"].toString(),
-      rating: json["rating"],
+      rating: json["rating"]?.toDouble(),
       reviewCount: json["review_count"],
       metalColor1HexCode: json["metal_color_1_hex_code"],
       discountPercentage: json["discount_percentage"],

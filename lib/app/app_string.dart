@@ -933,4 +933,9 @@ class APPStrings {
   static const String yes = 'mob_yes';
   static const String no = 'mob_no';
   static const String areYouSureChangeAccountType = "mob_are_you_sure_change_account_type";
+  static const String intlQuality = "mob_intl_quality";
+  static const String grams = "mob_grams";
+  static const String karatage = "mob_karatage";
+  static const String details = "mob_details";
+  static const String noOfColorStones = "mob_no_of_color_stones";
 }
