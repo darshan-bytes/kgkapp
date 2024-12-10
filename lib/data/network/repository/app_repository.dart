@@ -123,13 +123,23 @@ class AppRepository extends ApiService {
       required String sortKey,
       required String sortValue,
       bool isLoadMore = false,
+      Map<String, String>? query,
       required String type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing,
-        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.type: type, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue},
-        withCurrencyHeader: true);
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      ApiKey.sortKey: sortKey,
+      ApiKey.sortValue: sortValue,
+      ApiKey.type: type
+    };
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -137,19 +147,30 @@ class AppRepository extends ApiService {
   }
 
   /// Fetches gemstone list
-  Future<Either<ErrorResponse, GemstoneListingModel>?> fetchGemstoneList(
-      {required String limit,
-      required String page,
-      required String sortKey,
-      required String sortValue,
-      bool isLoadMore = false,
-      required String type}) async {
+  Future<Either<ErrorResponse, GemstoneListingModel>?> fetchGemstoneList({
+    required String limit,
+    required String page,
+    required String sortKey,
+    required String sortValue,
+    bool isLoadMore = false,
+    required String type,
+    Map<String, String>? query,
+  }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing,
-        query: {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue, ApiKey.subTypeCode: type},
-        withCurrencyHeader: true);
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      ApiKey.sortKey: sortKey,
+      ApiKey.sortValue: sortValue,
+      ApiKey.subTypeCode: type
+    };
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -706,6 +727,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, List<SortOptionsModel>>?> getSortingOptions() async {
     var response = await getMethod<SortOptionsModel>(ApiClient.sortingData);
     return response?.fold((error) => Left(error), (sortOptions) => Right(sortOptions as List<SortOptionsModel>));
+  }
+
+  // For Wishlist Filter Option
+  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchWishlistFilterOptionList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
 

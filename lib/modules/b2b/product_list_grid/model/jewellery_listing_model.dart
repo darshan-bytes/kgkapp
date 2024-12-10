@@ -15,7 +15,7 @@ class JewelleryListingModel {
 
   factory JewelleryListingModel.fromJson(Map<String, dynamic> json) {
     return JewelleryListingModel(
-      data: json["data"] == null ? [] : List<JewelleryDataModel>.from(json["data"]!.map((x) => JewelleryDataModel.fromJson(x))),
+      data: json["data"] == null ? [] : List<JewelleryDataModel>.from(json["data"]?.map((x) => JewelleryDataModel.fromJson(x))),
       filteredRecords: json["filteredRecords"],
       pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
       totalRecords: json["totalRecords"],

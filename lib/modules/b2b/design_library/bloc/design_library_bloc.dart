@@ -86,7 +86,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
         Utils.showMessage(error.message);
       }
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final localList = success.dataList ?? [];
       designLibraryList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
     });

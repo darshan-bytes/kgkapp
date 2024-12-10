@@ -67,7 +67,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         Utils.showMessage(error.message);
       }
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final localList = success.dataList ?? [];
       cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
     });

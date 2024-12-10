@@ -127,6 +127,8 @@ class CommonResponse<T> {
         return PaginationData<CommodityMasterDetails>.fromJson(json);
       case const (SortOptionsModel):
         return SortOptionsModel.fromJson(json);
+      case const (WishlistFilterOptionModel):
+        return WishlistFilterOptionModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

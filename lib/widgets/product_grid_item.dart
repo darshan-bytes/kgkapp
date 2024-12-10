@@ -129,8 +129,8 @@ class ProductGridItem extends StatelessWidget {
                     return buildIcon(
                         path: productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
                         onTap: () {
-                          onFavTap?.call();
                           BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                          onFavTap?.call();
                         },
                         style: style);
                   },
@@ -228,13 +228,15 @@ class ProductGridItem extends StatelessWidget {
                           style: style.priceTextStyle,
                           optionalPadding: EdgeInsets.only(right: 8.w),
                         ),
-                        if (productDetails.finalPrice.isNotNullNorEmpty) ...[
+                        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
                           SmartText(
                             productDetails.originalPrice,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: style.checkedPriceStyle,
                           ),
+                        ] else ...[
+                          SmartText("\n")
                         ]
                       ],
                     ),
@@ -262,18 +264,6 @@ class ProductGridItem extends StatelessWidget {
                 style: style.discountTextStyle,
               ),
             ],
-            if (onAddToBagTap != null)
-              SmartButton(
-                height: 32.w,
-                margin: EdgeInsets.only(top: 8.h),
-                padding: EdgeInsets.symmetric(vertical: 8.h),
-                titleStyle: style.buttonTextStyle,
-                onTap: onAddToBagTap!,
-                title: buttonText ?? APPStrings.addToBag.tr,
-                prefixImage: prefixImage,
-                isShadow: false,
-                imageSize: imageSize ?? 16.w,
-              ),
           ],
         ),
       ),
@@ -329,20 +319,22 @@ class ProductGridItem extends StatelessWidget {
                   Expanded(
                     child: Wrap(
                       alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.start,
                       children: <Widget>[
                         SmartText(
                           productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
                           style: style.priceTextStyle,
                           optionalPadding: EdgeInsets.only(right: 8.w),
                         ),
-                        if (productDetails.finalPrice.isNotNullNorEmpty) ...[
+                        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
                           SmartText(
                             productDetails.originalPrice,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: style.checkedPriceStyle,
                           ),
+                        ] else ...[
+                          SmartText("\n")
                         ]
                       ],
                     ),
@@ -361,10 +353,28 @@ class ProductGridItem extends StatelessWidget {
                 ],
               )
             ],
-            if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[
+            if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
-              diamondAndGramSection(style),
+              SmartText(
+                productDetails.discountPercentage,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: style.discountTextStyle,
+              ),
             ],
+            diamondAndGramSection(style),
+            if (onAddToBagTap != null)
+              SmartButton(
+                height: 32.w,
+                margin: EdgeInsets.only(top: 8.h),
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                titleStyle: style.buttonTextStyle,
+                onTap: onAddToBagTap!,
+                title: buttonText ?? APPStrings.addToBag.tr,
+                prefixImage: prefixImage,
+                isShadow: false,
+                imageSize: imageSize ?? 16.w,
+              ),
           ],
         ),
       ),
@@ -372,63 +382,66 @@ class ProductGridItem extends StatelessWidget {
   }
 
   Widget diamondAndGramSection(ProductItemStyle style) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Container(
-          height: 14.w,
-          width: 14.w,
-          decoration: BoxDecoration(
-            color: productDetails.getCatalogueBadgeColor,
-            borderRadius: BorderRadius.circular(32.r),
+    return Padding(
+      padding: EdgeInsets.only(top: 4.0.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: 14.w,
+            width: 14.w,
+            decoration: BoxDecoration(
+              color: productDetails.getCatalogueBadgeColor,
+              borderRadius: BorderRadius.circular(32.r),
+            ),
           ),
-        ),
-        SizedBox(width: 8.w),
-        Flexible(
-          child: Row(
-            children: [
-              if (productDetails.cts.isNotNullNorEmpty) ...[
-                Flexible(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
-                      SizedBox(width: 4.w),
-                      Flexible(
-                        child: SmartText(
-                          productDetails.cts,
-                          style: style.diamondTextStyle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+          SizedBox(width: 8.w),
+          Flexible(
+            child: Row(
+              children: [
+                if (productDetails.cts.isNotNullNorEmpty) ...[
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SmartImage(path: AppImages.icBlankDiamond, height: 16.w, width: 16.w),
+                        SizedBox(width: 4.w),
+                        Flexible(
+                          child: SmartText(
+                            productDetails.cts,
+                            style: style.diamondTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(width: 8.w),
+                  SizedBox(width: 8.w),
+                ],
+                if (productDetails.gms.isNotNullNorEmpty)
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
+                        SizedBox(width: 4.w),
+                        Flexible(
+                          child: SmartText(
+                            productDetails.gms,
+                            style: style.diamondTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
-              if (productDetails.gms.isNotNullNorEmpty)
-                Flexible(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SmartImage(path: AppImages.icGram, height: 16.w, width: 16.w),
-                      SizedBox(width: 4.w),
-                      Flexible(
-                        child: SmartText(
-                          productDetails.gms,
-                          style: style.diamondTextStyle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

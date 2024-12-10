@@ -201,8 +201,10 @@ class AppRoutes {
 
       case wishListPage:
         builder = (context) {
-          BlocProvider.of<WishlistBloc>(context).add(InitialWishlistEvent(context));
-          return const WishlistScreen();
+          return BlocProvider<WishlistBloc>(
+            create: (context) => WishlistBloc()..add(InitialWishlistEvent(context)),
+            child: const WishlistScreen(),
+          );
         };
         break;
 

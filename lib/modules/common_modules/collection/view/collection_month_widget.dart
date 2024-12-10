@@ -8,7 +8,7 @@ class MonthTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 14.h),
+      padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 14.h, bottom: 7.h),
       child: Tab(
         child: Column(
           children: [

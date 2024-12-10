@@ -93,6 +93,8 @@ class ApiService implements ApiProvider {
           : Left(ErrorResponse.fromJson(jsonDecode(response.body)));
     } on KGKException catch (e) {
       return Left(ErrorResponse(code: 0, message: e.message));
+    } on SocketException catch (e) {
+      return Left(ErrorResponse(code: 0, message: e.message));
     } catch (e) {
       return Left(ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr));
     }
