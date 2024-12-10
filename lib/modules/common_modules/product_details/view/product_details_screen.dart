@@ -261,8 +261,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                           isSelected: false,
                                           onTap: () {
                                             if (bloc.productDetails != null) {
-                                              BlocProvider.of<AppBloc>(context)
-                                                  .onTapFavorite(context, productDetails: bloc.productDetails!);
+                                              BlocProvider.of<AppBloc>(context).onTapFavorite(
+                                                context,
+                                                productDetails: bloc.productDetails!,
+                                              );
                                             }
                                           },
                                           imageWidth: 20.w,

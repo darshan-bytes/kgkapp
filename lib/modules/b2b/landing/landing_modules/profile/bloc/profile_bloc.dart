@@ -419,18 +419,30 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   /// Logout event to clear session and navigate to login page
   void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
-    BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
-    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
-    await StorageManager().clearSession();
-    event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+    Either<ErrorResponse, CommonResponse<String>>? response = await UserRepository(event.context).logoutUser({});
+    await response?.fold((l) {
+      ErrorResponse errorModel = l;
+      Utils.showMessage(errorModel.message);
+    }, (r) async {
+      BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
+      BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
+      await StorageManager().clearSession();
+      event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+    });
   }
 
   /// Delete profile event to clear session and navigate to login page
   void _onDeleteProfileEvent(DeleteProfileEvent event, Emitter<ProfileState> emit) async {
-    BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
-    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
-    await StorageManager().clearSession();
-    event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+    Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).deleteAccount();
+    await response?.fold((l) {
+      ErrorResponse errorModel = l;
+      Utils.showMessage(errorModel.message);
+    }, (r) async {
+      BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
+      BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
+      await StorageManager().clearSession();
+      event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
+    });
   }
 
   void _fetchUserDetails() {

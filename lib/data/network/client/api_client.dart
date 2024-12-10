@@ -123,6 +123,10 @@ class ApiClient {
   static const String sortingData = '$apiBaseUrl/common-modules/sorting-data';
 
   static const String wishlistFilterOptions = '$apiBaseUrl/wishlist/filter-list';
+
+  static const String logoutUser = '$apiBaseUrl/users/logout';
+
+  static const String deleteUser = '$apiBaseUrl/users';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
