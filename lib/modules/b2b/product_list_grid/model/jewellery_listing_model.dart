@@ -606,6 +606,7 @@ class MultipleFinishedViewImage {
     required this.highRes1,
     required this.highRes2,
     required this.imageUrl,
+    required this.multiAngleUrl,
   });
 
   dynamic highRes3;
@@ -616,6 +617,7 @@ class MultipleFinishedViewImage {
   dynamic highRes1;
   dynamic highRes2;
   String? imageUrl;
+  final List<MultiAngleUrl> multiAngleUrl;
 
   factory MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
     return MultipleFinishedViewImage(
@@ -627,6 +629,8 @@ class MultipleFinishedViewImage {
       highRes1: json["high_res1"],
       highRes2: json["high_res2"],
       imageUrl: json["IMAGE_URL"],
+      multiAngleUrl:
+          json["MULTI_ANGLE_URL"] == null ? [] : List<MultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrl.fromJson(x))),
     );
   }
 
@@ -639,6 +643,25 @@ class MultipleFinishedViewImage {
         "high_res1": highRes1,
         "high_res2": highRes2,
         "IMAGE_URL": imageUrl,
+        "MULTI_ANGLE_URL": multiAngleUrl
+      };
+}
+
+class MultiAngleUrl {
+  MultiAngleUrl({
+    required this.url,
+  });
+
+  final String? url;
+
+  factory MultiAngleUrl.fromJson(Map<String, dynamic> json) {
+    return MultiAngleUrl(
+      url: json["url"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "url": url,
       };
 }
 

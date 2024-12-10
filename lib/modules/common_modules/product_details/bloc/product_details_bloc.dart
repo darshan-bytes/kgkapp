@@ -415,9 +415,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         isErrorInLoadingData = false;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
-        imgList = jewelleryData.multipleFinishedViewImage.map((e) {
-          return e.imageUrl ?? '';
-        }).toList();
+
+        imgList = [];
+        for (var element in jewelleryData.multipleFinishedViewImage) {
+          for (var e in element.multiAngleUrl) {
+            if (element.imageAvailable?.toLowerCase() == ApiKey.yes) {
+              if (e.url.isNotNullNorEmpty) {
+                imgList.add(e.url!);
+              }
+            }
+          }
+        }
 
         productDetails = ProductDetailsModel(
           productId: productId,
