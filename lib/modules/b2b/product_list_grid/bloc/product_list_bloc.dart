@@ -66,7 +66,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
-    _toggleViewType(emit);
+    _toggleViewType(emit: emit, isGridValue: event.isGrid);
   }
 
   Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
@@ -279,7 +279,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
 
     response?.fold((error) => Utils.showMessage(error.message), (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final localList = success.data;
       productList.addAll(localList
           .map((item) => ProductDetailsModel(
@@ -319,9 +319,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     return FetchScenario.regularList;
   }
 
-  void _toggleViewType(Emitter<ProductListState> emit) {
+  void _toggleViewType({bool isGridValue = false, required Emitter<ProductListState> emit}) {
     emit(ReloadProductState());
-    isGrid = !isGrid;
+    isGrid = isGridValue;
     emit(ProductChangeListingTypeState());
   }
 
@@ -348,10 +348,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> _onProductFilterEvent(ProductFilterEvent event, Emitter<ProductListState> emit) async {
     emit(ReloadProductState());
-    filterData = event.filterData;
     paginationScrollController.pullToRefresh();
     productList.clear();
-
+    filterData = event.filterData;
     await fetchJewelleriesList(event.context, emit, true);
     emit(const ProductListLoadedState());
   }

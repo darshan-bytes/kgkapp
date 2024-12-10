@@ -546,6 +546,7 @@ class CustomPageIndicatorStyle {
 }
 
 class ProductItemStyle {
+  final Color whiteColor;
   final Color backgroundColor;
   final Color productBackgroundColor;
   final Color borderColor;
@@ -584,6 +585,7 @@ class ProductItemStyle {
     required this.commentSelectedColor,
     required this.primaryColor,
     required this.badgeTextStyle,
+    required this.whiteColor,
   });
 }
 

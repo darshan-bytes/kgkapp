@@ -254,6 +254,7 @@ class LightModeTheme extends AppTheme {
         commentSelectedColor: colors.color303538,
         primaryColor: colors.primary,
         badgeTextStyle: interRegularTextStyle.copyWith(fontSize: 10.sp, color: colors.white),
+        whiteColor: colors.white,
       );
 
   @override

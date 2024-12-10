@@ -14,10 +14,12 @@ final class InitialProductListEvent extends ProductListEvent {
 }
 
 final class ProductChangeListingTypeEvent extends ProductListEvent {
-  const ProductChangeListingTypeEvent();
+  final bool isGrid;
+
+  const ProductChangeListingTypeEvent({required this.isGrid});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isGrid];
 }
 
 final class ProductListLoadMoreEvent extends ProductListEvent {
