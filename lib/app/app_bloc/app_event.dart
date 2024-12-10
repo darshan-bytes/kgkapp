@@ -63,21 +63,23 @@ class SetUserTypeEvent extends AppEvent {
 class ProductAddToFavoriteEvent extends AppEvent {
   final ProductDetailsModel productDetails;
   final BuildContext context;
+  final Function()? onFavTap;
 
-  const ProductAddToFavoriteEvent(this.productDetails, this.context);
+  const ProductAddToFavoriteEvent(this.productDetails, this.context, {this.onFavTap});
 
   @override
-  List<Object> get props => [productDetails, context];
+  List<Object?> get props => [productDetails, context, onFavTap];
 }
 
 class ProductRemoveFromFavoriteEvent extends AppEvent {
   final ProductDetailsModel productDetails;
   final BuildContext context;
+  final Function()? onFavTap;
 
-  const ProductRemoveFromFavoriteEvent(this.productDetails, this.context);
+  const ProductRemoveFromFavoriteEvent(this.productDetails, this.context, {this.onFavTap});
 
   @override
-  List<Object> get props => [productDetails, context];
+  List<Object?> get props => [productDetails, context, onFavTap];
 }
 
 class ProductAddToBagEvent extends AppEvent {

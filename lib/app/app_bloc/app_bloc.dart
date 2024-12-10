@@ -141,13 +141,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  void onTapFavorite(context, {required ProductDetailsModel productDetails}) {
+  void onTapFavorite(context, {required ProductDetailsModel productDetails, Function()? onFavTap}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
-        BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(productDetails, context));
+        BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(productDetails, context, onFavTap: onFavTap));
       } else {
-        BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(productDetails, context));
+        BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(productDetails, context, onFavTap: onFavTap));
       }
     });
   }
@@ -181,6 +181,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
               BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
                   .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
             }
+            event.onFavTap?.call();
             emit(const ProductAddToFavoriteState());
           },
         );
@@ -205,6 +206,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
               BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
                   .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
             }
+            event.onFavTap?.call();
             emit(const ProductRemoveFromFavoriteState());
           },
         );
