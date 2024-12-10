@@ -82,4 +82,5 @@ class ApiKey {
   static const String subTypeCode = 'sub_type_code';
   static const String month = 'month';
   static const String year = 'year';
+  static const String yes = 'yes';
 }
