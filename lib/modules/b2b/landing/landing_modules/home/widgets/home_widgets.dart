@@ -616,7 +616,11 @@ class HomeWidgets {
                     );
                   },
                   onFavTap: () {
-                    BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(homeBloc.luminousProductViewList[index], context));
+                    BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(
+                      homeBloc.luminousProductViewList[index],
+                      context,
+                      onFavTap: () {},
+                    ));
                   },
                   onTap: () {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {

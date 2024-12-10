@@ -99,4 +99,20 @@ class UserRepository extends ApiService {
     var response = await postMethod<CommonResponse>(ApiClient.changePassword, params, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  /// For User Logout
+  Future<Either<ErrorResponse, CommonResponse<String>>?> logoutUser(Map<String, dynamic> params) async {
+    context.setAppLoading(true);
+    var response = await postMethod<String>(ApiClient.logoutUser, params, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// delete account
+  Future<Either<ErrorResponse, CommonResponse>?> deleteAccount() async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<CommonResponse>(ApiClient.deleteUser, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }

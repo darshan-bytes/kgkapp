@@ -129,8 +129,11 @@ class ProductGridItem extends StatelessWidget {
                     return buildIcon(
                         path: productDetails.isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
                         onTap: () {
-                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
-                          onFavTap?.call();
+                          BlocProvider.of<AppBloc>(context).onTapFavorite(
+                            context,
+                            productDetails: productDetails,
+                            onFavTap: onFavTap,
+                          );
                         },
                         style: style);
                   },
