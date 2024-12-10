@@ -120,7 +120,16 @@ class ProductGridItem extends StatelessWidget {
           right: 8.w,
           child: Row(
             children: [
-              if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
+              if (onEyeTap != null)
+                buildIcon(
+                    path: AppImages.icAddEye,
+                    onTap: () {
+                      BlocProvider.of<AppBloc>(context).onTapWatchList(
+                        context,
+                        productDetails: productDetails,
+                      );
+                    },
+                    style: style),
               SizedBox(width: 8.w),
               if (onFavTap != null)
                 BlocBuilder<AppBloc, AppState>(

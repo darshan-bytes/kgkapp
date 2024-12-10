@@ -143,6 +143,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     getScreenIdentifier(event.context);
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
+      await StorageManager().setRecentlyViewedDiamonds(productId);
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
@@ -154,6 +155,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       await getDiamondYouMayLike(event.context, productId);
       await getDiamondsRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+      await StorageManager().setRecentlyViewedGemstones(productId);
       productCustomizations.clear();
       imgList.clear();
       suggestedProductList.clear();
@@ -166,6 +168,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       await getGemstoneYouMayLike(event.context, productId);
       await getGemstoneRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
+      await StorageManager().setRecentlyViewedJewellery(productId);
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
@@ -283,8 +286,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
-    Either<ErrorResponse, DiamondListingModel>? response =
-        await AppRepository(context).getDiamondYouMayLike(productId, limit: '10', page: '1');
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
+        .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -320,8 +323,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
-    final Either<ErrorResponse, GemstoneListingModel>? response =
-        await AppRepository(context).getGemstoneYouMayLike(productId, page: '1', limit: '10');
+    final Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
+        .getGemstoneYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
 
     response?.fold(
       (error) {
@@ -359,8 +362,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getProductYouMayLike(BuildContext context, String productId) async {
-    Either<ErrorResponse, JewelleryListingModel>? response =
-        await AppRepository(context).getJewelleryYouMayLike(productId, page: '1', limit: '10');
+    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context)
+        .getJewelleryYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -479,7 +482,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
     Either<ErrorResponse, JewelleryListingModel>? response =
-        await AppRepository(context).getRecentlyViewedProductList(page: "1", limit: "10");
+        await AppRepository(context).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -521,8 +524,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondsRecentlyViewed(BuildContext context, String productId) async {
-    Either<ErrorResponse, DiamondListingModel>? response =
-        await AppRepository(context).getDiamondRecentlyViewedProductList(page: "1", limit: "10");
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
+        .getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -555,8 +558,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getGemstoneRecentlyViewed(BuildContext context, String productId) async {
-    Either<ErrorResponse, GemstoneListingModel>? response =
-        await AppRepository(context).getGemstoneRecentlyViewedProductList(page: "1", limit: "10");
+    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
+        .getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {

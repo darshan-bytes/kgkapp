@@ -244,11 +244,7 @@ class StoneListingScreen extends StatelessWidget {
                         });
                       }
                     },
-                    onEyeTap: () {
-                      if (productDetails.productId != null) {
-                        diamondListingBloc.add(StoneListAddToWatchListEvent(productDetails.productId!, context));
-                      }
-                    },
+                    onEyeTap: () {},
                     isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
                   );
