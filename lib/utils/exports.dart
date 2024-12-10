@@ -474,3 +474,4 @@ export 'package:kgk/model/commodity_master_details_model.dart';
 export 'package:kgk/model/sort_options_model.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_month_widget.dart';
 export 'package:kgk/modules/common_modules/collection/model/collection_month_tab.dart';
+export 'package:kgk/modules/common_modules/wishlist/model/wishlist_filter_option_model.dart';

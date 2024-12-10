@@ -198,6 +198,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         type: type,
         sortKey: sortKey,
         sortValue: sortValue,
+        query: query,
       );
     }
 
@@ -210,7 +211,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     response?.fold((error) {
       Utils.showMessage(error.message);
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final diamondList = success.data;
       productList.addAll(
         diamondList.map((diamond) => _convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
@@ -225,7 +226,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       {required bool isLoadMore, Map<String, String>? query}) async {
     final String type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     Either<ErrorResponse, GemstoneListingModel>? response;
-
     query ??= {};
     filterData
         .where(
@@ -264,6 +264,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         type: type,
         sortKey: sortKey,
         sortValue: sortValue,
+        query: query,
       );
     }
 
@@ -276,7 +277,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     response?.fold((error) {
       Utils.showMessage(error.message);
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final gemstoneList = success.data;
       productList.addAll(
         gemstoneList.map((gemstone) => _convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
@@ -422,7 +423,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       filterKey = AppConst.gemstoneFilter;
     }
-    if (filterKey.isNullOrEmpty) return;
     final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {

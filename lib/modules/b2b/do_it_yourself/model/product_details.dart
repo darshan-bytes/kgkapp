@@ -240,4 +240,13 @@ extension ProductDetailsExtension on ProductDetailsModel {
     String hexColor = color.replaceAll('#', '');
     return Color(int.parse('0xFF$hexColor'));
   }
+
+  bool get isShowDiscountPrice {
+    if (finalPrice.isNotNullNorEmpty && originalPrice.isNotNullNorEmpty) {
+      if ((finalPrice ?? "") == (originalPrice ?? "")) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

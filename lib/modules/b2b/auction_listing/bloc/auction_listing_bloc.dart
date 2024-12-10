@@ -51,7 +51,7 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
       }, (r) {
         AuctionListingModel auctionListingModel = r;
         r.totalRecords ??= 0;
-        totalNumberOfPages = Utils.calculateTotalPages(r.totalRecords, AppConst.pageLimit);
+        totalNumberOfPages = Utils.calculateTotalPages(r.filteredRecords, AppConst.pageLimit);
         for (int i = 0; i < auctionListingModel.data.length; i++) {
           auctionList.add(AuctionListModel(
             id: auctionListingModel.data[i].auctionId,

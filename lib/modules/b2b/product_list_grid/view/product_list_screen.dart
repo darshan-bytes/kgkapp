@@ -120,7 +120,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonBorderColor: style.listBorderColor,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                       onTap: () {
-                        bloc.add(const ProductChangeListingTypeEvent());
+                        bloc.add(const ProductChangeListingTypeEvent(isGrid: true));
                       },
                     ),
                     SelectionButton(
@@ -135,7 +135,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonBorderColor: style.listBorderColor,
                       borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                       onTap: () {
-                        bloc.add(const ProductChangeListingTypeEvent());
+                        bloc.add(const ProductChangeListingTypeEvent(isGrid: false));
                       },
                     ),
                   ],
@@ -159,129 +159,117 @@ class ProductListScreen extends StatelessWidget {
           current is ProductAddToFavoriteState ||
           current is ProductRemoveFromFavoriteState,
       builder: (context, state) {
-        if (bloc.isGrid) {
-          return Column(
-            children: [
-              SmartGridView(
-                  // additionalWidgets: [
-                  //   (
-                  //     index: bloc.productList.length,
-                  //     child: SmartImage(
-                  //       path: "https://i.ibb.co/PN51B9q/Banner.png",
-                  //       fit: BoxFit.fitWidth,
-                  //       padding: EdgeInsets.symmetric(vertical: 32.h),
-                  //     )
-                  //   ),
-                  // ],
-                  items: bloc.productList.map((ProductDetailsModel productDetails) {
-                /// If need to  product customization icon then remove onCancel voidCallback
-                bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                    bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                    bloc.productList[0] == productDetails;
-                bool isStoneWithPrice = bloc.screenIdentifier != ScreenIdentifier.productForRing &&
-                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
-                    bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
-
-                Function()? getAddToBagTap(ProductListBloc bloc) {
-                  return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
-                          bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
-                      ? () {}
-                      : null;
-                }
-
-                return ProductGridItem(
-                  productDetails: productDetails,
-                  isCustomisable: isCustomisable,
-                  isOutOfStock: productDetails.isOutOfStock,
-                  onAddToBagTap: getAddToBagTap(bloc),
-                  onEyeTap: () {
-                    if (productDetails.productId != null) {
-                      bloc.add(ProductListAddToWatchListEvent(productDetails.productId!, context));
-                    }
-                  },
-                  isFavourite: productDetails.isFavourite,
-                  onFavTap: () {},
-                  prefixImage: AppImages.icShoppingBag,
-                  imageSize: 16.w,
-                  isStoneWithPrice: isStoneWithPrice,
-                  onTap: () {
-                    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                      context.pushNamed(AppRoutes.productDetailsPage,
-                          arguments: {RoutesData.productId: productDetails.productId ?? '', RoutesData.isPageFor: bloc.screenIdentifier});
-                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-                      // Navigation to product details page
-                    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-                      // Navigation to product details page
-                    } else {
-                      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: bloc.screenIdentifier});
-                    }
-                  },
-                );
-              }).toList()),
-              if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
-              SizedBox(
-                height: 17.h,
-              )
-            ],
-          );
-        } else {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return BlocBuilder<ProductListBloc, ProductListState>(
-                buildWhen: (previous, current) =>
-                    (current is ProductListLoadingMoreState && index == bloc.productList.length - 1) ||
-                    current is ProductListLoadedMoreState,
-                builder: (context, state) {
-                  bool isCustomisable = bloc.screenIdentifier == ScreenIdentifier.productForRing &&
-                      bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey &&
-                      bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum &&
-                      index == 0;
-                  return Column(
-                    children: [
-                      ProductListItem(
-                        margin: EdgeInsets.only(bottom: 17.h),
-                        onEyeTap: () {},
-                        onFavTap: () {},
-                        isOutOfStock: bloc.productList[index].isOutOfStock,
-                        onAddToBagTap: () {},
-                        isCustomisable: isCustomisable,
-                        onTap: () {
-                          if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
-                            context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                              RoutesData.productId: bloc.productList[index].productId ?? '',
-                              RoutesData.isPageFor: bloc.screenIdentifier
-                            });
-                          } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-                            // Navigation to product details page
-                          } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-                            // Navigation to product details page
-                          } else {
-                            context.pushNamed(AppRoutes.stoneDetailPage);
-                          }
-                        },
-                        productDetails: bloc.productList[index],
-                      ),
-                      if (index == 13)
-                        SmartImage(
-                          path: "https://i.ibb.co/PN51B9q/Banner.png",
-                          fit: BoxFit.fitWidth,
-                          padding: EdgeInsets.symmetric(vertical: 32.h),
-                        ),
-                      if (index == bloc.productList.length - 1 && state is ProductListLoadingMoreState)
-                        const SmartCircularProgressIndicator(),
-                    ],
-                  );
-                },
-              );
-            },
-            itemCount: bloc.productList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-          );
-        }
+        return bloc.isGrid ? _buildGridView(bloc, state, context: context) : _buildListView(bloc, state);
       },
     );
+  }
+
+  Widget _buildGridView(ProductListBloc bloc, ProductListState state, {required BuildContext context}) {
+    return Column(
+      children: [
+        SmartGridView(
+          items: bloc.productList.map((productDetails) {
+            return ProductGridItem(
+              productDetails: productDetails,
+              isCustomisable: _isCustomisable(bloc, productDetails),
+              isOutOfStock: productDetails.isOutOfStock,
+              onAddToBagTap: _getAddToBagTap(bloc),
+              onEyeTap: () => _onEyeTap(context, bloc, productDetails),
+              isFavourite: productDetails.isFavourite,
+              onFavTap: () {
+                /// We have implemented this feature in the ProductGridItem
+                /// so that we can use the same widget for both grid and list view and here we don't need to implement it
+              },
+              prefixImage: AppImages.icShoppingBag,
+              imageSize: 16.w,
+              isStoneWithPrice: _isStoneWithPrice(bloc),
+              onTap: () => _onProductTap(context, bloc, productDetails),
+            );
+          }).toList(),
+        ),
+        if (state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
+        SizedBox(height: 17.h),
+      ],
+    );
+  }
+
+  Widget _buildListView(ProductListBloc bloc, ProductListState state) {
+    return ListView.builder(
+      itemCount: bloc.productList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        ProductDetailsModel productDetails = bloc.productList[index];
+        return Column(
+          children: [
+            ProductListItem(
+              boxHeight: 190.h,
+              margin: EdgeInsets.only(bottom: 17.h),
+              productDetails: productDetails,
+              isCustomisable: _isCustomisable(bloc, productDetails, index),
+              isOutOfStock: productDetails.isOutOfStock,
+              onAddToBagTap: _getAddToBagTap(bloc),
+              isFavourite: productDetails.isFavourite,
+              onEyeTap: () => _onEyeTap(context, bloc, productDetails),
+              onFavTap: () {
+                /// We have implemented this feature in the ProductGridItem
+                /// so that we can use the same widget for both grid and list view and here we don't need to implement it
+              },
+              onTap: () => _onProductTap(context, bloc, productDetails),
+            ),
+            if (index == 13)
+              SmartImage(
+                path: "https://i.ibb.co/PN51B9q/Banner.png",
+                fit: BoxFit.fitWidth,
+                padding: EdgeInsets.symmetric(vertical: 32.h),
+              ),
+            if (index == bloc.productList.length - 1 && state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
+          ],
+        );
+      },
+    );
+  }
+
+  bool _isCustomisable(ProductListBloc bloc, ProductDetailsModel productDetails, [int index = 0]) {
+    return bloc.screenIdentifier == ScreenIdentifier.productForRing &&
+        (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+            bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) &&
+        (index == 0 || bloc.productList[0] == productDetails);
+  }
+
+  bool _isStoneWithPrice(ProductListBloc bloc) {
+    return bloc.screenIdentifier != ScreenIdentifier.productForRing &&
+        bloc.screenIdentifier != ScreenIdentifier.productForLibraryGrey &&
+        bloc.screenIdentifier != ScreenIdentifier.productForLibraryPlatinum;
+  }
+
+  Function()? _getAddToBagTap(ProductListBloc bloc) {
+    return (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
+            bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+            bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum)
+        ? () {}
+        : null;
+  }
+
+  void _onEyeTap(BuildContext context, ProductListBloc bloc, ProductDetailsModel productDetails) {
+    if (productDetails.productId != null) {
+      bloc.add(ProductListAddToWatchListEvent(productDetails.productId!, context));
+    }
+  }
+
+  void _onProductTap(BuildContext context, ProductListBloc bloc, ProductDetailsModel productDetails) {
+    if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
+      context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+        RoutesData.productId: productDetails.productId ?? '',
+        RoutesData.isPageFor: bloc.screenIdentifier,
+      });
+    } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
+        bloc.screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
+      // Navigation to product details page
+    } else {
+      context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
+        RoutesData.isPageFor: bloc.screenIdentifier,
+      });
+    }
   }
 }

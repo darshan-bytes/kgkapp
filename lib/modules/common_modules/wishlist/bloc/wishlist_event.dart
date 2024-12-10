@@ -31,3 +31,12 @@ final class WishlistPullToRefreshEvent extends WishlistEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class ProductRemoveFromWishlistEvent extends WishlistEvent {
+  final ProductDetailsModel productDetails;
+
+  const ProductRemoveFromWishlistEvent(this.productDetails);
+
+  @override
+  List<Object> get props => [productDetails];
+}

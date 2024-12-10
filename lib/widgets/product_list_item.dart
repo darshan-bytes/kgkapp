@@ -66,8 +66,8 @@ class ProductListItem extends StatelessWidget {
         Container(
           height: boxHeight ?? 144.w,
           width: boxWidth ?? 144.w,
-          alignment: Alignment.center,
-          color: style.productBackgroundColor,
+          alignment: Alignment.topCenter,
+          color: style.whiteColor,
           child: SmartImage(
             path: productDetails.imageUrl ?? '',
             height: imageHeight,
@@ -248,7 +248,7 @@ class ProductListItem extends StatelessWidget {
             style: style.priceTextStyle,
           ),
         ),
-        if (productDetails.offerPrice.isNotNullNorEmpty) ...[
+        if (productDetails.offerPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
           SizedBox(width: 10.w),
           Flexible(
             child: SmartText(

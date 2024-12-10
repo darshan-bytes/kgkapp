@@ -112,6 +112,8 @@ class ProductData {
     this.isFavorite = true,
     required this.finalPrice,
     required this.wishlistId,
+    required this.rmDescription,
+    required this.lotCode,
   });
 
   String? exclusive;
@@ -133,7 +135,7 @@ class ProductData {
   String? suid;
   String? crt;
   String? gms;
-  int? rating;
+  double? rating;
   int? reviewCount;
   String? metalColor1HexCode;
   int? discountPercentage;
@@ -141,6 +143,8 @@ class ProductData {
   bool isFavorite;
   String? finalPrice;
   String? wishlistId;
+  String? rmDescription;
+  String? lotCode;
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(
@@ -167,7 +171,7 @@ class ProductData {
       suid: json["suid"],
       crt: json["crt"].toString(),
       gms: json["gms"].toString(),
-      rating: json["rating"],
+      rating: json["rating"]?.toString().toDouble ?? 0.0,
       reviewCount: json["review_count"],
       metalColor1HexCode: json["metal_color_1_hex_code"],
       discountPercentage: json["discount_percentage"],
@@ -175,6 +179,8 @@ class ProductData {
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       finalPrice: json["final_price"],
       wishlistId: json["is_favorite"],
+      lotCode: json["lot_code"],
+      rmDescription: json["rm_description"],
     );
   }
 
