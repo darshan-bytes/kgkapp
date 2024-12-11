@@ -101,9 +101,9 @@ class UserRepository extends ApiService {
   }
 
   /// For User Logout
-  Future<Either<ErrorResponse, CommonResponse<String>>?> logoutUser(Map<String, dynamic> params) async {
+  Future<Either<ErrorResponse, CommonResponse>?> logoutUser(Map<String, dynamic> params) async {
     context.setAppLoading(true);
-    var response = await postMethod<String>(ApiClient.logoutUser, params, withFullResponse: true);
+    var response = await postMethod<CommonResponse>(ApiClient.logoutUser, params, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

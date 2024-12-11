@@ -129,8 +129,6 @@ class CommonResponse<T> {
         return SortOptionsModel.fromJson(json);
       case const (WishlistFilterOptionModel):
         return WishlistFilterOptionModel.fromJson(json);
-      case const (String):
-        return json;
       case const (Map<String, dynamic>):
         return json;
       default:

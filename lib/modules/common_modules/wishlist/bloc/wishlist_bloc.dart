@@ -24,6 +24,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     on<LoadMoreWishlistEvent>(_onLoadMoreWishlistEvent);
     on<WishlistPullToRefreshEvent>(_onWishlistPullToRefreshEvent);
     on<ProductRemoveFromWishlistEvent>(_onRemoveFromWishlistEvent);
+    on<WishlistFilterEvent>(_onWishlistFilterEvent);
   }
 
   @override
@@ -50,15 +51,27 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     emit(WishlistDataFetchedState());
   }
 
+  Future<void> _onWishlistFilterEvent(WishlistFilterEvent event, Emitter<WishlistState> emit) async {
+    emit(WishlistLoadingState());
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+    filterData = event.filterData;
+    await fetchWishlistData(event.context, emit, isLoadMore: false);
+    emit(WishlistDataFetchedState());
+  }
+
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<WishlistState> emit) async {
-    emit(WishlistReloadState());
+    emit(WishlistLoadingState());
     _initializePagination(context);
     if (filterData.isEmpty) {
-      _setupFilters(context);
+      await _setupFilters(context);
+
+      ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
+      BlocProvider.of<WishlistSortFilterBloc>(context).add(AddWishlistSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
-      await fetchWishlistData(context, emit);
+      await fetchWishlistData(isLoadMore: false, context, emit);
     }
     emit(WishlistDataFetchedState());
   }
@@ -73,9 +86,21 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }
 
   /// Fetch wishlist data
-  Future<void> fetchWishlistData(BuildContext context, Emitter<WishlistState> emit) async {
-    Either<ErrorResponse, WishlistModel>? response = await AppRepository(context)
-        .fetchWishList(limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString());
+  Future<void> fetchWishlistData(BuildContext context, Emitter<WishlistState> emit,
+      {bool isLoadMore = false, Map<String, String>? query}) async {
+    query ??= {};
+    filterData.where((element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false)).forEach(
+      (element) {
+        query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+      },
+    );
+
+    Either<ErrorResponse, WishlistModel>? response = await AppRepository(context).fetchWishList(
+      limit: AppConst.pageLimit.toString(),
+      page: paginationScrollController.currentPage.toString(),
+      query: query,
+      isLoadMore: isLoadMore,
+    );
     response?.fold((error) {
       Utils.showMessage(error.message);
     }, (success) {
@@ -91,18 +116,18 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   Future<void> _handleLoadMore(BuildContext context, Emitter<WishlistState> emit, int currentPage) async {
     if (currentPage <= totalNumberOfPages!) {
       emit(WishlistLoadingMoreState());
-      await fetchWishlistData(context, emit);
+      await fetchWishlistData(context, emit, isLoadMore: false);
       emit(WishlistLoadedMoreState(currentPage + 1));
     }
   }
 
   /// Handle pull to refresh
   Future<void> _handlePullToRefresh(BuildContext context, Emitter<WishlistState> emit) async {
-    emit(WishlistReloadState());
+    emit(WishlistLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
     wishlistDataList.clear();
-    await fetchWishlistData(context, emit);
+    await fetchWishlistData(context, emit, isLoadMore: false);
     emit(WishlistDataFetchedState());
   }
 
@@ -184,7 +209,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
             code: filterOption.key,
             inputType: filterOption.type,
             filterType: FilterType.checkbox,
-            // secondaryFilterData: secondaryData,
+            secondaryFilterData: secondaryData,
           );
           filterData.add(filter);
         }

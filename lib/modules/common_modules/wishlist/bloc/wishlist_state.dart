@@ -32,3 +32,8 @@ final class WishlistLoadedMoreState extends WishlistState {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class WishlistLoadingState extends WishlistState {
+  @override
+  List<Object> get props => [];
+}

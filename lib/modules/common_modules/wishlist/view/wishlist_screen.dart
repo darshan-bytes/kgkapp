@@ -11,9 +11,15 @@ class WishlistScreen extends StatelessWidget {
           title: APPStrings.myWishlist.tr,
         ),
         body: BlocBuilder<WishlistBloc, WishlistState>(
-          buildWhen: (previous, current) => current is WishlistDataFetchedState,
+          buildWhen: (previous, current) => current is WishlistDataFetchedState || current is WishlistLoadingState,
           builder: (context, state) {
+            if (state is WishlistLoadingState) {
+              return const SmartCircularProgressIndicator();
+            }
             if (state is WishlistDataFetchedState) {
+              if (bloc.productList.isEmpty) {
+                return NoDataFoundWidget();
+              }
               return SmartSingleChildScrollView(
                 onRefresh: () async {
                   bloc.add(WishlistPullToRefreshEvent(context));
@@ -29,9 +35,8 @@ class WishlistScreen extends StatelessWidget {
                   ],
                 ),
               );
-            } else {
-              return const SmartCircularProgressIndicator();
             }
+            return SizedBox.shrink();
           },
         ),
         bottomNavigationBar: BlocBuilder<WishlistBloc, WishlistState>(
@@ -41,12 +46,13 @@ class WishlistScreen extends StatelessWidget {
               return FilterBottomActionBar(
                 controller: bloc.paginationScrollController.controller,
                 onFilterTap: () {
-                  BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
                   Utils.showSmartModalBottomSheet(
                     context: context,
-                    builder: (_) => FilterScreen(
+                    builder: (_) => WishlistFilterScreen(
                       onApply: (value) {
-                        if (value != null && value is List<FilterData>) {}
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(WishlistFilterEvent(filterData: value, context: context));
+                        }
                       },
                     ),
                   );
