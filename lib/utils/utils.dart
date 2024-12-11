@@ -196,6 +196,26 @@ class Utils {
     );
   }
 
+  static Future<void> showPermissionDeniedDialog(
+      {required BuildContext context, required void Function(BuildContext context) onOkPressed}) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: SmartText(APPStrings.permissionDenied.tr),
+          content: SmartText(APPStrings.pleaseEnableLocation.tr),
+          actions: [
+            SmartText(APPStrings.ok.tr, onTap: () {
+              onOkPressed(context);
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// Check email validation
   static bool isValidEmail(String email) {
     String regex =
@@ -229,6 +249,10 @@ class Utils {
     final String? parsedString = parse(doc.body?.text).documentElement?.text;
 
     return parsedString ?? "";
+  }
+
+  static String getGoogleMapUrl({required double latitude, required double longitude}) {
+    return 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
   }
 
   /// Calculates the total number of pages based on the total number of records and the limit per page.

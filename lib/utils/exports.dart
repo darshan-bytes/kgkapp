@@ -477,3 +477,5 @@ export 'package:kgk/modules/common_modules/collection/model/collection_month_tab
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_filter_option_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/bloc/wishlist_sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/view/wishlist_filter_screen.dart';
+export 'package:kgk/modules/common_modules/find_a_store/model/retail_store_model.dart';
+export 'package:url_launcher/url_launcher.dart';

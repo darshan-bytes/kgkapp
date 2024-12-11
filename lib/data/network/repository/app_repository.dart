@@ -755,6 +755,14 @@ class AppRepository extends ApiService {
     var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  /// Find a Retail Store near your Location
+  Future<Either<ErrorResponse, PaginationData<RetailStoreModel>>?> getRetailStore({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<PaginationData<RetailStoreModel>>(ApiClient.findRetailerStore, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

@@ -127,6 +127,8 @@ class ApiClient {
   static const String logoutUser = '$apiBaseUrl/users/logout';
 
   static const String deleteUser = '$apiBaseUrl/users';
+
+  static String get findRetailerStore => '$apiBaseUrl/retailer-stores/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
