@@ -101,3 +101,13 @@ class ProductRemoveFromBagEvent extends AppEvent {
   @override
   List<Object> get props => [productDetails, context];
 }
+
+class ProductAddToWatchListEvent extends AppEvent {
+  final ProductDetailsModel productDetails;
+  final BuildContext context;
+
+  const ProductAddToWatchListEvent(this.productDetails, this.context);
+
+  @override
+  List<Object> get props => [productDetails, context];
+}

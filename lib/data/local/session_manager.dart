@@ -26,6 +26,9 @@ class StorageManager {
   final String _selectedCsc = 'selectedCsc';
   final String _customerOrganizationId = 'customerOrganizationId';
   final String _sortingData = 'sortingData';
+  final String _recentlyViewedJewellery = 'recentlyViewedJewellery';
+  final String _recentlyViewedDiamonds = 'recentlyViewedDiamonds';
+  final String _recentlyViewedGemstones = 'recentlyViewedGemstones';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -227,6 +230,56 @@ class StorageManager {
   // getIsSkipLogin
   bool getIsSkipLogin() {
     return _box.get(_isSkipLogin) ?? false;
+  }
+
+  Future<List<String>> setRecentlyViewedJewellery(String productId) async {
+    List<String> list = _box.get(_recentlyViewedJewellery) ?? [];
+    if (list.contains(productId)) {
+      list.remove(productId);
+    }
+    list.insert(0, productId);
+    await _box.put(_recentlyViewedJewellery, list);
+    return list;
+  }
+
+  Future<List<String>> setRecentlyViewedDiamonds(String productId) async {
+    List<String> list = _box.get(_recentlyViewedDiamonds) ?? [];
+    if (list.contains(productId)) {
+      list.remove(productId);
+    }
+    list.insert(0, productId);
+
+    await _box.put(_recentlyViewedDiamonds, list);
+    return list;
+  }
+
+  Future<List<String>> setRecentlyViewedGemstones(String productId) async {
+    List<String> list = _box.get(_recentlyViewedGemstones) ?? [];
+    if (list.contains(productId)) {
+      list.remove(productId);
+    }
+    list.insert(0, productId);
+
+    await _box.put(_recentlyViewedGemstones, list);
+    return list;
+  }
+
+  String getRecentlyViewedJewellery() {
+    // convert to list to String with comma separated
+    List<String> list = _box.get(_recentlyViewedJewellery) ?? [];
+    return list.join(',');
+  }
+
+  String getRecentlyViewedDiamond() {
+    // convert to list to String with comma separated
+    List<String> list = _box.get(_recentlyViewedDiamonds) ?? [];
+    return list.join(',');
+  }
+
+  String getRecentlyViewedGemstone() {
+    // convert to list to String with comma separated
+    List<String> list = _box.get(_recentlyViewedGemstones) ?? [];
+    return list.join(',');
   }
 
   Future<void> closeBox() async {

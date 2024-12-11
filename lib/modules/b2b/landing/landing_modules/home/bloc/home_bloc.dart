@@ -91,7 +91,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Recently Viewed
   final ScrollController recentlyViewedScrollController = ScrollController();
-  final List<ProductDetailsModel> recentlyViewList = _generateTabViewList();
+  List<ProductDetailsModel> recentlyViewedJewelleryList = [];
+  List<ProductDetailsModel> recentlyViewDiamondList = [];
+  List<ProductDetailsModel> recentlyViewGemstoneList = [];
 
   int currentPageIndex = 0;
   PageController categoryPageController = PageController();
@@ -157,7 +159,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await shapeMasterFilters(event.context);
     await fetchCommodityMasterFilters(event.context);
     await fetchKgkCoutureData(event.context);
-
+    await getJewelleryProductRecentlyViewed(event.context, emit);
+    await getDiamondProductRecentlyViewed(event.context, emit);
+    await getGemstoneProductRecentlyViewed(event.context, emit);
     emit(const HomeReloadState());
     emit(const HomeStrapiDataFetchedState());
     if (refreshCompleter.isCompleted) {
@@ -582,6 +586,136 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
+  Future<void> getJewelleryProductRecentlyViewed(BuildContext context, emit) async {
+    String recentlyViewedJewellery = StorageManager().getRecentlyViewedJewellery();
+
+    String? token = StorageManager().getAuthToken();
+
+    if (token.isNullOrEmpty && recentlyViewedJewellery.isNullOrEmpty) return;
+
+    Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getRecentlyViewedProductList(
+        page: AppConst.page1.toString(),
+        limit: AppConst.pageLimit10.toString(),
+        suids: token.isNullOrEmpty ? recentlyViewedJewellery : null);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        recentlyViewedJewelleryList = data.data.map((e) {
+          return ProductDetailsModel(
+              productId: e.id,
+              name: e.productDescription ?? '',
+              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+              offerPrice: e.discountPrice?.setCurrency,
+              originalPrice: e.finalPrice?.setCurrency,
+              discountPercentage:
+                  e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+              productSku: e.contractNoSkuNo,
+              reviewCount: e.reviewCount,
+              rating: e.rating?.toDouble(),
+              isFavourite: e.isFavorite,
+              wishlistId: e.wishlistID,
+              commodity: Commodity.jewellery,
+              subTitle: e.productDescription ?? '',
+              title: e.contractNoSkuNo ?? '',
+              kgkCollectionName: e.kgkCollection ?? "\n",
+              businessCategoryName: e.businessCategoryName ?? "\n",
+              cts: e.crt,
+              gms: e.gms,
+              brandName: e.brandName,
+              colorsCode: [
+                e.metalColor1HexCode ?? "",
+                e.metalColor2HexCode ?? "",
+                e.metalColor3HexCode ?? "",
+              ]);
+        }).toList();
+        emit(HomeStrapiDataFetchedState());
+      },
+    );
+  }
+
+  Future<void> getDiamondProductRecentlyViewed(BuildContext context, emit) async {
+    String recentlyViewedDiamond = StorageManager().getRecentlyViewedDiamond();
+
+    String? token = StorageManager().getAuthToken();
+    if (token.isNullOrEmpty && recentlyViewedDiamond.isNullOrEmpty) return;
+    Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context).getDiamondRecentlyViewedProductList(
+        page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString(), suids: token.isNullOrEmpty ? recentlyViewedDiamond : null);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        recentlyViewDiamondList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+          return ProductDetailsModel(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.diamond,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            subTitle: e.rmDescription ?? '',
+            title: e.lotCode ?? '',
+          );
+        }).toList();
+        emit(HomeStrapiDataFetchedState());
+      },
+    );
+  }
+
+  Future<void> getGemstoneProductRecentlyViewed(BuildContext context, emit) async {
+    String recentlyViewedGemstone = StorageManager().getRecentlyViewedGemstone();
+
+    String? token = StorageManager().getAuthToken();
+    if (token.isNullOrEmpty && recentlyViewedGemstone.isNullOrEmpty) return;
+
+    Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context).getGemstoneRecentlyViewedProductList(
+        page: AppConst.page1.toString(),
+        limit: AppConst.pageLimit10.toString(),
+        suids: token.isNullOrEmpty ? recentlyViewedGemstone : null);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        recentlyViewGemstoneList = data.data.map((e) {
+          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage! > 0;
+          return ProductDetailsModel(
+            productId: e.suid ?? '',
+            name: e.rmDescription ?? '',
+            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+            offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.lotCode,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            commodity: Commodity.gemstone,
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            title: e.suid,
+            subTitle: e.rmDescription,
+          );
+        }).toList();
+        emit(HomeStrapiDataFetchedState());
+      },
+    );
+  }
+
   //For Get Inspired
   static List<AuctionListModel> _generateGetInspireList() {
     List<String> imageList = [
@@ -932,8 +1066,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> fetchKgkCoutureData(BuildContext context) async {
     try {
       String? kgkCollection = kgkCoutureSelectedIndex == 0 ? null : kgkCoutureButtonsTitle[kgkCoutureSelectedIndex];
-      final response = await AppRepository(context)
-          .homePageKgkCoutureCollections(page: '1', limit: '10', kgkCollection: kgkCollection, isLoadMore: true);
+      final response = await AppRepository(context).homePageKgkCoutureCollections(
+          page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString(), kgkCollection: kgkCollection, isLoadMore: true);
       response?.fold(
         (l) {
           //Utils.showMessage(l.message);

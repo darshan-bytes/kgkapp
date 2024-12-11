@@ -28,18 +28,36 @@ class HomeScreen extends StatelessWidget {
               onRefresh: () async {
                 await homeBloc.pullToRefresh(context);
               },
-              child: ListView.builder(
-                itemCount: homeBloc.homeStrapiList.length,
+              child: ListView(
                 shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return homeBloc.getWidgetsForHomeSlug(
-                    context,
-                    (homeBloc.homeStrapiList[index].slug)?.homeSlug ?? HomeSlug.unknown,
-                    homeBloc,
-                    style,
-                    index,
-                  );
-                },
+                children: [
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: homeBloc.homeStrapiList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return homeBloc.getWidgetsForHomeSlug(
+                        context,
+                        (homeBloc.homeStrapiList[index].slug)?.homeSlug ?? HomeSlug.unknown,
+                        homeBloc,
+                        style,
+                        index,
+                      );
+                    },
+                  ),
+                  if (homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty)
+                    _buildRecentlyViewedSection(APPStrings.recentlyViewedJewellery.tr, homeBloc, style,
+                        homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
+                        context: context),
+                  if (homeBloc.recentlyViewDiamondList.isNotNullNorEmpty)
+                    _buildRecentlyViewedSection(APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList,
+                        ScreenIdentifier.productForDiamonds,
+                        context: context),
+                  if (homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty)
+                    _buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style, homeBloc.recentlyViewGemstoneList,
+                        ScreenIdentifier.productForGemstones,
+                        context: context),
+                ],
               ),
             );
           },
@@ -1033,18 +1051,38 @@ Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
   );
 }
 
-Widget _buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
+Widget _buildRecentlyViewedSection(
+    String title, HomeBloc homeBloc, HomeScreenStyle style, List<ProductDetailsModel> productList, ScreenIdentifier commodity,
+    {required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
-      title: APPStrings.recentlyViewed.tr,
-      onViewAllTap: () {
-        context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+      title: title,
+      onViewAllTap: productList.length > 5
+          ? () {
+              context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: commodity});
+            }
+          : null,
+      suggestedProductList: productList,
+      onEyeTap: () {
+        // homeBloc.add(ProductAddToWatchListEvent(context: context, productId: productList[0].productId, productList: productList));
+
+        // Future<void> _addToWatchList(BuildContext context, String productId) async {
+        //   ProductDetailsModel? product = productList.firstWhereOrNull((element) => element.productId == productId);
+        //   if (product != null) {
+        //     BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
+        //     await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
+        //   }
+        // }
       },
-      suggestedProductList: homeBloc.recentlyViewList,
-      onEyeTap: () {},
       onFavTap: () {},
       scrollController: homeBloc.recentlyViewedScrollController,
+      onProductTap: (model) {
+        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+          RoutesData.productId: model.productId ?? '',
+          RoutesData.isPageFor: commodity,
+        });
+      },
     ),
   );
 }

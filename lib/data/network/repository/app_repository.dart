@@ -450,13 +450,19 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
+    Map<String, dynamic>? query;
+    if (suids != null) {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
+    } else {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
+    }
     var response = await getMethod<JewelleryListingModel>(
       ApiClient.jewelleryListing,
-      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadMore) {
@@ -483,13 +489,19 @@ class AppRepository extends ApiService {
 
   // For Get Recently Viewed Product List for Diamond
   Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
+    Map<String, dynamic>? query;
+    if (suids != null) {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
+    } else {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
+    }
     var response = await getMethod<DiamondListingModel>(
       ApiClient.diamondListing,
-      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadMore) {
@@ -500,13 +512,19 @@ class AppRepository extends ApiService {
 
   // For Get Recently Viewed Product List for Gemstone
   Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
+    Map<String, dynamic>? query;
+    if (suids != null) {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
+    } else {
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
+    }
     var response = await getMethod<GemstoneListingModel>(
       ApiClient.gemstoneListing,
-      query: {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadMore) {
