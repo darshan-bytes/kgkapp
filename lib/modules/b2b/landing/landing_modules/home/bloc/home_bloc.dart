@@ -1082,7 +1082,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             (index) {
               KgkCoutureDetails item = r.dataList![index];
               return ProductDetailsModel(
-                productId: item.suid ?? 'EFGSTOCK5030018249',
+                productId: item.suid ?? '',
                 commodity: Commodity.jewellery,
                 imageUrl: item.multipleFinishedViewImage ?? '',
                 name: item.productDescription ?? '',

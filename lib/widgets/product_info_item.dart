@@ -63,7 +63,8 @@ class ProductInfoItem extends StatelessWidget {
                 _buildProductNameView(chart, style),
                 _buildSlotFirstWidget(chart, style, productInfoItemStyle),
                 _buildSlotSecondWidget(chart, style, productInfoItemStyle),
-                SizedBox(height: 16.h),
+                _buildSlotThirdWidget(chart, style, productInfoItemStyle, showMoreDetails),
+                // SizedBox(height: 16.h),
                 _buildSlotFourthWidget(chart, style, productInfoItemStyle)
               ],
             ),
@@ -132,18 +133,21 @@ class ProductInfoItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
-            _buildDivider(style),
-            SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+            SmartText(chart.colour ?? '-', isAutoSizeText: true, style: shapeTextStyle),
             _buildDivider(style),
             SmartText(
-                "${chart.cut?.substring(0, 2).toUpperCase()}/${chart.polish?.substring(0, 2).toUpperCase()}/${chart.symmetry?.substring(0, 2).toUpperCase()}",
-                isAutoSizeText: true,
-                style: shapeTextStyle),
+              (chart.clarity.isNotNullNorEmpty || chart.cut.isNotNullNorEmpty)
+                  ? '${chart.clarity ?? ''}${(chart.clarity.isNotNullNorEmpty) && (chart.cut.isNotNullNorEmpty) ? '/' : ''}${chart.cut ?? ''}'
+                  : '-',
+              isAutoSizeText: true,
+              style: shapeTextStyle,
+            ),
             _buildDivider(style),
-            SmartText(chart.clarity, isAutoSizeText: true, style: shapeTextStyle),
+            SmartText(chart.polish ?? '-', isAutoSizeText: true, style: shapeTextStyle),
             _buildDivider(style),
-            SmartText(chart.colour, isAutoSizeText: true, style: shapeTextStyle),
+            SmartText(chart.symmetry ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+            _buildDivider(style),
+            SmartText(chart.lab ?? '-', isAutoSizeText: true, style: shapeTextStyle),
           ],
         ),
         SizedBox(height: 16.h),
@@ -164,7 +168,7 @@ class ProductInfoItem extends StatelessWidget {
       ],
       if (isDiamond) ...[
         _buildRowDetailItem(APPStrings.rapRate.tr, chart.rapRate, style, productInfoItemStyle),
-        _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
+        _buildRowDetailItem(APPStrings.rate.tr, chart.perCts, style, productInfoItemStyle),
         _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
         _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
       ],
@@ -187,7 +191,7 @@ class ProductInfoItem extends StatelessWidget {
                 SizedBox(height: 16.h),
                 const Divider(),
                 SizedBox(height: 16.h),
-                if (!isDiamond)
+                if (isDiamond)
                   SmartGridView(columns: 3, runSpacing: 8.h, items: [
                     _buildDetailColumn(APPStrings.lotNo.tr, chart.lotNumber, style, productInfoItemStyle),
                     _buildDetailColumn(APPStrings.shape.tr, chart.shape, style, productInfoItemStyle),
@@ -195,13 +199,14 @@ class ProductInfoItem extends StatelessWidget {
                       _buildDetailColumn(APPStrings.fluorescence.tr, chart.fluorescence, style, productInfoItemStyle),
                       _buildDetailColumn(APPStrings.lab.tr, chart.lab, style, productInfoItemStyle),
                     ],
-                    _buildDetailColumn(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
-                    _buildDetailColumn(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle),
-                    _buildDetailColumn(APPStrings.color.tr, chart.colour, style, productInfoItemStyle),
-                    _buildDetailColumn(APPStrings.origin.tr, chart.origin, style, productInfoItemStyle),
+                    _buildDetailColumn(APPStrings.stock.tr, chart.stock, style, productInfoItemStyle),
+                    // _buildDetailColumn(APPStrings.commodity.tr, chart.commodity, style, productInfoItemStyle),
+                    // _buildDetailColumn(APPStrings.carat.tr, chart.carat, style, productInfoItemStyle),
+                    // _buildDetailColumn(APPStrings.color.tr, chart.colour, style, productInfoItemStyle),
+                    // _buildDetailColumn(APPStrings.origin.tr, chart.origin, style, productInfoItemStyle),
                   ]),
               ],
-              if (!isDiamond)
+              if (isDiamond)
                 InkWell(
                   onTap: () {
                     showMoreDetails.value = !showMoreDetails.value;
@@ -227,7 +232,7 @@ class ProductInfoItem extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (isDiamond) SizedBox(height: 16.h),
+              // if (isDiamond) SizedBox(height: 16.h),
             ],
           );
         },

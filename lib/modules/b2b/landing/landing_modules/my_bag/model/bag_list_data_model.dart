@@ -3,24 +3,28 @@ import 'package:kgk/kgk.dart';
 class BagListDataModel {
   BagListDataModel({
     required this.result,
+    required this.summary,
     required this.totalRecords,
     required this.page,
     required this.limit,
   });
 
   final List<Result> result;
+  final BagSummary? summary;
   final int? totalRecords;
   final int? page;
   final int? limit;
 
   BagListDataModel copyWith({
     List<Result>? result,
+    BagSummary? summary,
     int? totalRecords,
     int? page,
     int? limit,
   }) {
     return BagListDataModel(
       result: result ?? this.result,
+      summary: summary ?? this.summary,
       totalRecords: totalRecords ?? this.totalRecords,
       page: page ?? this.page,
       limit: limit ?? this.limit,
@@ -30,6 +34,7 @@ class BagListDataModel {
   factory BagListDataModel.fromJson(Map<String, dynamic> json) {
     return BagListDataModel(
       result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
+      summary: json["summary"] == null ? null : BagSummary.fromJson(json["summary"]),
       totalRecords: json["totalRecords"],
       page: json["page"]?.toString().toInt,
       limit: json["limit"]?.toString().toInt,
@@ -38,6 +43,7 @@ class BagListDataModel {
 
   Map<String, dynamic> toJson() => {
         "result": result.map((x) => x.toJson()).toList(),
+        "summary": summary?.toJson(),
         "totalRecords": totalRecords,
         "page": page,
         "limit": limit,
@@ -76,6 +82,11 @@ class Result {
     required this.rappaportPrice,
     required this.location,
     required this.status,
+    required this.finalPrice,
+    required this.shapeImage,
+    required this.certificateFile,
+    required this.openDnaUrl,
+    required this.fluorescence,
   });
 
   final String? suid;
@@ -86,7 +97,7 @@ class Result {
   final String? productId;
   final String? image;
   final String? commodity;
-  final String? discountPrice;
+  final double? discountPrice;
   final double? discountPercentage;
   final String? lotCode;
   final String? shape;
@@ -103,6 +114,16 @@ class Result {
   final String? rappaportPrice;
   final String? location;
   final String? status;
+  final String? finalPrice;
+
+  // "shape_image": "shape-masters/image/HS/heart_1727767612993.webp",
+  // "certificate_file": "http://diamond.viewdna.cc/images/certificates/30000003979.png",
+  // "open_dna_url": "http://diamond.viewdna.cc/v/colorstone/imaged/30000003979/still.jpg",
+  // "fluorescence": "NON",
+  final String? shapeImage;
+  final String? certificateFile;
+  final String? openDnaUrl;
+  final String? fluorescence;
 
   Result copyWith({
     String? suid,
@@ -113,7 +134,7 @@ class Result {
     String? productId,
     String? image,
     String? commodity,
-    String? discountPrice,
+    double? discountPrice,
     double? discountPercentage,
     String? lotCode,
     String? shape,
@@ -130,6 +151,11 @@ class Result {
     String? rappaportPrice,
     String? location,
     String? status,
+    String? finalPrice,
+    String? shapeImage,
+    String? certificateFile,
+    String? openDnaUrl,
+    String? fluorescence,
   }) {
     return Result(
       suid: suid ?? this.suid,
@@ -157,6 +183,11 @@ class Result {
       rappaportPrice: rappaportPrice ?? this.rappaportPrice,
       location: location ?? this.location,
       status: status ?? this.status,
+      finalPrice: finalPrice ?? this.finalPrice,
+      shapeImage: shapeImage ?? this.shapeImage,
+      certificateFile: certificateFile ?? this.certificateFile,
+      openDnaUrl: openDnaUrl ?? this.openDnaUrl,
+      fluorescence: fluorescence ?? this.fluorescence,
     );
   }
 
@@ -170,7 +201,7 @@ class Result {
       productId: json["productId"],
       image: json["image"],
       commodity: json["commodity"],
-      discountPrice: json["discount_price"]?.toString(),
+      discountPrice: json["discount_price"]?.toString().toDouble,
       discountPercentage: json["discount_percentage"]?.toDouble(),
       lotCode: json["lot_code"],
       shape: json["shape"],
@@ -178,7 +209,7 @@ class Result {
       cut: json["cut"],
       color: json["color"],
       clarity: json["clarity"],
-      ctsOrGms: json["cts_or_gms"],
+      ctsOrGms: json["cts_or_gms"]?.toString().toDouble,
       polish: json["polish"],
       symmetry: json["symmetry"],
       depth: json["depth"],
@@ -187,6 +218,11 @@ class Result {
       rappaportPrice: json["rappaport_price"],
       location: json["location"],
       status: json["status"],
+      finalPrice: json["final_price"]?.toString(),
+      fluorescence: json["fluorescence"],
+      certificateFile: json["certificate_file"],
+      openDnaUrl: json["open_dna_url"],
+      shapeImage: json["shape_image"],
     );
   }
 
@@ -216,6 +252,11 @@ class Result {
         "rappaport_price": rappaportPrice,
         "location": location,
         "status": status,
+        "final_price": finalPrice,
+        "shape_image": shapeImage,
+        "certificate_file": certificateFile,
+        "open_dna_url": openDnaUrl,
+        "fluorescence": fluorescence,
       };
 
   @override
@@ -224,4 +265,54 @@ class Result {
   }
 
   Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;
+}
+
+class BagSummary {
+  BagSummary({
+    this.totalItems,
+    this.totalCarats,
+    this.originalAmount,
+    this.discountPercentage,
+    this.discountAmount,
+  });
+
+  final int? totalItems;
+  final double? totalCarats;
+  final String? originalAmount;
+  final double? discountPercentage;
+  final String? discountAmount;
+
+  BagSummary copyWith({
+    int? totalItems,
+    double? totalCarats,
+    String? originalAmount,
+    double? discountPercentage,
+    String? discountAmount,
+  }) {
+    return BagSummary(
+      totalItems: totalItems ?? this.totalItems,
+      totalCarats: totalCarats ?? this.totalCarats,
+      originalAmount: originalAmount ?? this.originalAmount,
+      discountPercentage: discountPercentage ?? this.discountPercentage,
+      discountAmount: discountAmount ?? this.discountAmount,
+    );
+  }
+
+  factory BagSummary.fromJson(Map<String, dynamic> json) {
+    return BagSummary(
+      totalItems: json["total_items"],
+      totalCarats: json["total_carats"]?.toDouble(),
+      originalAmount: json["original_amount"],
+      discountPercentage: json["discount_percentage"]?.toString().toDouble,
+      discountAmount: json["discount_amount"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "total_items": totalItems,
+        "total_carats": totalCarats,
+        "original_amount": originalAmount,
+        "discount_percentage": discountPercentage,
+        "discount_amount": discountAmount,
+      };
 }

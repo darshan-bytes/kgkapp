@@ -745,5 +745,6 @@
   "mob_recently_viewed_jewellery": "Recently Viewed Jewellery",
   "mob_recently_viewed_diamond": "Recently Viewed Diamonds",
   "mob_recently_viewed_gemstone": "Recently Viewed Gemstones",
-  "mob_all_filters_cleared": "Already cleared all filters"
+  "mob_all_filters_cleared": "Already cleared all filters",
+  "mob_stock": "Stock"
 }

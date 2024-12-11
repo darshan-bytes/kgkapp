@@ -937,4 +937,5 @@ class APPStrings {
   static const String recentlyViewedDiamond = "mob_recently_viewed_diamond";
   static const String recentlyViewedGemstone = "mob_recently_viewed_gemstone";
   static const String allFiltersCleared = 'mob_all_filters_cleared';
+  static const String stock = 'mob_stock';
 }
