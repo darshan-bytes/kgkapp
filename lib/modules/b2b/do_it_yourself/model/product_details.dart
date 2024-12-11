@@ -2,6 +2,8 @@ import 'package:kgk/kgk.dart';
 
 class ProductDetailsModel {
   String? productId;
+  String? suid;
+  int? quantity;
   String? name;
   String? offerPrice;
   String? originalPrice;
@@ -53,9 +55,19 @@ class ProductDetailsModel {
   String? gms;
   String? cts;
   List<String>? colorsCode;
+  String? polish;
+  String? measurements;
+  String? certificateNumber;
+  String? table;
+  String? depth;
+  String? totalPrice;
+  String? perCaratPrice;
+  String? shapeImage;
 
   ProductDetailsModel({
     this.productId,
+    this.suid,
+    this.quantity,
     this.name,
     this.offerPrice,
     this.originalPrice,
@@ -107,6 +119,14 @@ class ProductDetailsModel {
     this.businessCategoryName,
     this.cts,
     this.colorsCode,
+    this.polish,
+    this.measurements,
+    this.certificateNumber,
+    this.table,
+    this.depth,
+    this.totalPrice,
+    this.perCaratPrice,
+    this.shapeImage,
   });
 
   @override
@@ -115,6 +135,7 @@ class ProductDetailsModel {
       other is ProductDetailsModel &&
           runtimeType == other.runtimeType &&
           productId == other.productId &&
+          quantity == other.quantity &&
           name == other.name &&
           offerPrice == other.offerPrice &&
           originalPrice == other.originalPrice &&
@@ -165,12 +186,19 @@ class ProductDetailsModel {
           kgkCollectionName == other.kgkCollectionName &&
           businessCategoryName == other.businessCategoryName &&
           cts == other.cts &&
-          colorsCode == other.colorsCode;
+          colorsCode == other.colorsCode &&
+          polish == other.polish &&
+          measurements == other.measurements &&
+          certificateNumber == other.certificateNumber &&
+          table == other.table &&
+          depth == other.depth;
 
   @override
   int get hashCode =>
       productId.hashCode ^
       name.hashCode ^
+      quantity.hashCode ^
+      suid.hashCode ^
       offerPrice.hashCode ^
       originalPrice.hashCode ^
       imageUrl.hashCode ^
@@ -220,7 +248,12 @@ class ProductDetailsModel {
       kgkCollectionName.hashCode ^
       businessCategoryName.hashCode ^
       cts.hashCode ^
-      colorsCode.hashCode;
+      colorsCode.hashCode ^
+      polish.hashCode ^
+      measurements.hashCode ^
+      certificateNumber.hashCode ^
+      table.hashCode ^
+      depth.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {

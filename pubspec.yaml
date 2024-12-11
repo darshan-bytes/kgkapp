@@ -118,6 +118,7 @@ dependencies:
 
   # For Bloc Event Transformer
   rxdart: ^0.28.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

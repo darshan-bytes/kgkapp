@@ -2,7 +2,9 @@ import 'package:kgk/kgk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   await StorageManager().init();
+
   runApp(const MyApp());
 }
 

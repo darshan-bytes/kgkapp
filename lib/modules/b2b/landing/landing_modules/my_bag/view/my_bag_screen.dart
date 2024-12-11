@@ -146,7 +146,7 @@ class MyBagScreen extends StatelessWidget {
   Widget _getBody(MyBagBloc bloc, MyBagScreenStyle style) {
     return SafeArea(
       child: BlocBuilder<MyBagBloc, MyBagState>(
-        buildWhen: (_, current) => current is MyBagReloadState,
+        buildWhen: (_, current) => current is MyBagLoadedState,
         builder: (context, state) {
           if (bloc.myBagProductList.isEmpty) {
             return Center(child: SmartText(APPStrings.myBagEmpty.tr));
@@ -165,10 +165,14 @@ class MyBagScreen extends StatelessWidget {
                 _buildOrderSummary(bloc, style, context),
                 SizedBox(height: 32.h),
                 _buildInquirySection(bloc, style),
-                SizedBox(height: 24.h),
-                _buildSuggestedProductList(bloc, style, context),
-                SizedBox(height: 24.h),
-                _buildMostPurchaseProductList(bloc, style, context)
+                if (bloc.suggestedProductList.isNotEmpty) ...[
+                  SizedBox(height: 24.h),
+                  _buildSuggestedProductList(bloc, style, context),
+                ],
+                if (bloc.mostPurchaseProductList.isNotEmpty) ...[
+                  SizedBox(height: 24.h),
+                  _buildMostPurchaseProductList(bloc, style, context),
+                ],
               ],
             ),
           );
@@ -256,6 +260,87 @@ class MyBagScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
             ProductDetailsModel product = bloc.myBagProductList[index];
+            switch (bloc.commodity) {
+              case Commodity.diamond:
+                return Column(
+                  children: [
+                    ProductInfoItem(
+                      onTap360View: () => printWrapped("onTap360View"),
+                      onTapDNA: product.openDnaUrl != null
+                          ? () {
+                              Utils.launchUrlFromString(product.openDnaUrl!).then((value) {
+                                printWrapped("openDnaUrl: ${product.openDnaUrl} $value");
+                              });
+                              // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                              //     arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+                            }
+                          : null,
+                      onTapCertificate: product.certificateFile != null
+                          ? () {
+                              Utils.launchUrlFromString(product.certificateFile!);
+                            }
+                          : null,
+                      onTapImageViewer: product.shapeImage != null
+                          ? () {
+                              Utils.launchUrlFromString(product.shapeImage!);
+                            }
+                          : null,
+                      onTapUSA: () => printWrapped("onTapUSA"),
+                      onTapMenuButton: () {
+                        //currently opened bottom sheet for remove lot and add to watchlist
+                        handleDiamondMenuButtonTap(context, index, bloc, style);
+                        // Utils.showSmartModalBottomSheet(
+                        //   context: context,
+                        //   builder: (context) => const ProductMenuBottomSheet(),
+                        // );
+                      },
+                      isSelectedBackground: false,
+                      onTap: () {},
+                      productDetails: ProductDetailsModel(
+                        productInfoClarityChat: ProductInfoClarityChat(
+                          // carat: "36.09",
+                          commodity: product.commodity?.value,
+                          // origin: "Sri Lanka",
+
+                          rapRate: product.rappaportPrice?.setCurrency,
+                          productId: product.productId,
+                          productName: product.name,
+                          ct: product.cut,
+                          shape: product.shape,
+                          colour: product.color,
+                          clarity: product.clarity,
+                          lotNumber: product.lotCode,
+                          certificateNumber: product.certificateNumber,
+                          measurements: product.measurements,
+                          lab: product.labs,
+                          cut: product.cut,
+                          polish: product.polish,
+                          fluorescence: product.fluorescence,
+                          tablePercentage: product.table,
+                          depthPercentage: product.depth,
+                          rap: product.rappaportPrice,
+                          discount: product.discountPercentage,
+                          perCts: product.perCaratPrice?.setCurrency,
+                          amount: product.totalPrice?.setCurrency,
+                        ),
+                        productId: product.productId,
+                        // diamond: "1.5 gram",
+                        // gram: "1.5 gram",
+                        imageUrl: product.imageUrl,
+                        isForAuction: false,
+                      ),
+                      isAutoSizeText: false,
+                      isDiamond: true,
+                    ),
+                    SizedBox(height: 16.h),
+                  ],
+                );
+              case Commodity.gemstone:
+              case Commodity.jewellery:
+              default:
+                break;
+              // return const SizedBox.shrink();
+            }
             if (product.isDiamondProduct) {
               return Column(
                 children: [
@@ -341,7 +426,7 @@ class MyBagScreen extends StatelessWidget {
                           origin: "Sri Lanka",
                           rapRate: "\$35,500.00",
                           productId: "1",
-                          productName: "0.35 Carat Super Premium Oval Moissanite",
+                          productName: "asdfghdhksj",
                           ct: "10.04",
                           shape: "Marquise",
                           colour: "H",
@@ -386,17 +471,36 @@ class MyBagScreen extends StatelessWidget {
   }
 
   Widget _buildOrderSummary(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
-    return OrderSummary(
-      onTapCheckout: () {
-        context.pushNamed(AppRoutes.addressListPage);
+    return BlocBuilder<MyBagBloc, MyBagState>(
+      buildWhen: (previous, current) => current is MyBagOrderSummaryDataLoadedState,
+      builder: (context, state) {
+        if (state is! MyBagOrderSummaryDataLoadedState) {
+          return const SizedBox.shrink();
+        }
+        BagOrderSummaryDataModel? bagOrderSummary = bloc.bagOrderSummaryData;
+        return OrderSummary(
+          promoCode: bagOrderSummary?.promoCode,
+          onApplyPromoCode: (promoCode) {
+            bloc.add(MyBagApplyPromoCodeEvent(context: context, promoCode: promoCode));
+          },
+          onTapRemovePromoCode: () {
+            bloc.add(MyBagRemovePromoCodeEvent(context));
+          },
+          onTapCheckout: () {
+            context.pushNamed(AppRoutes.addressListPage);
+          },
+          items: bagOrderSummary?.charges
+                  .map(
+                    (e) => OrderSummaryItem(
+                      title: e.title ?? '',
+                      value: e.displayValue?.setCurrency ?? '',
+                    ),
+                  )
+                  .toList() ??
+              [],
+          totalPrice: bagOrderSummary?.totalAmount?.setCurrency ?? '',
+        );
       },
-      items: const [
-        // Here String come from API
-        OrderSummaryItem(title: "Subtotal", value: "\$11,900.00"),
-        OrderSummaryItem(title: "Shipping", value: "\$0.00"),
-        OrderSummaryItem(title: "Sales tax", value: "\$0.00"),
-      ],
-      totalPrice: "\$35,700.00",
     );
   }
 
@@ -477,86 +581,106 @@ class MyBagScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTextInfoColumn(APPStrings.totalStones.tr, '15', style),
+              _buildTextInfoColumn(APPStrings.totalStones.tr, bloc.bagListDataModel?.summary?.totalItems?.toString() ?? '-', style),
               SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.origTotalDiscount.tr, '-0.45%', style)
+              _buildTextInfoColumn(
+                  APPStrings.origTotalDiscount.tr, '${bloc.bagListDataModel?.summary?.discountPercentage?.toString() ?? '0.0'}%', style)
             ],
           ),
-          SizedBox(height: 12.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextInfoColumn(APPStrings.contactEmail.tr, 'jasons@example.com', style),
-              SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.contactPhone.tr, '66362389', style),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextInfoColumn(APPStrings.totalPriceAfterDiscount.tr, '\$3,00,540.00', style),
-              SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.totalWeight.tr, '20.120', style),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38', style),
-              SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38', style),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
-              SizedBox(width: 12.w),
-              _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
-            ],
-          ),
-          SizedBox(height: 24.h),
           BlocBuilder<MyBagBloc, MyBagState>(
-            buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+            buildWhen: (previous, current) => current is MyBagSalesmanListLoadedState,
             builder: (context, state) {
-              return SmartDropDown(
-                focusNode: bloc.paymentConditionFocusNode,
-                onChanged: (value) {
-                  if (value != null) {
-                    bloc.variationFocusNode.requestFocus();
-                    bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
-                  }
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                primary: false,
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                itemCount: bloc.salesmanList.length,
+                itemBuilder: (context, index) {
+                  AssignClient? salesman = bloc.salesmanList[index].assignClient;
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTextInfoColumn(APPStrings.contactEmail.tr, salesman?.email ?? '-', style),
+                      SizedBox(width: 12.w),
+                      _buildTextInfoColumn(APPStrings.contactPhone.tr, salesman?.internalUser?.phoneNumber ?? '-', style),
+                    ],
+                  );
                 },
-                items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
-                selectedItem: bloc.selectedPaymentCondition,
-                hintText: APPStrings.paymentCondition.tr,
-                labelText: APPStrings.paymentCondition.tr,
+                separatorBuilder: (context, index) => SizedBox(height: 12.h),
               );
             },
           ),
-          SizedBox(height: 24.h),
-          SmartTextField(
-            suffixText: APPStrings.percentage,
-            labelText: APPStrings.plusMinus,
-            hintText: APPStrings.plusMinus,
-            controller: bloc.variationController,
-            focusNode: bloc.variationFocusNode,
-            nextFocus: bloc.noteFocusNode,
-            textInputFormatter: [DoubleInputFormatter()],
-            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(
+                  APPStrings.totalPriceAfterDiscount.tr, bloc.bagListDataModel?.summary?.discountAmount?.setCurrency ?? '-', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.totalWeight.tr, bloc.bagListDataModel?.summary?.totalCarats?.toString() ?? '-', style),
+            ],
           ),
-          SizedBox(height: 24.h),
-          SmartTextField(
-            labelText: APPStrings.commentQuestion.tr,
-            hintText: APPStrings.commentQuestion.tr,
-            controller: bloc.noteController,
-            focusNode: bloc.noteFocusNode,
-            maxLines: 3,
-            textInputAction: TextInputAction.newline,
+          SizedBox(height: 12.h),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextInfoColumn(APPStrings.avgPricePerCarat.tr, '\$14,937.38 (S)', style),
+              SizedBox(width: 12.w),
+              _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38 (S)', style),
+            ],
           ),
+
+          /// Below code is conditioned as it is will be only available for B2B users
+          if (bloc.userType == UserType.b2bUser) ...[
+            SizedBox(height: 12.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
+                SizedBox(width: 12.w),
+                _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
+              ],
+            ),
+            SizedBox(height: 24.h),
+            BlocBuilder<MyBagBloc, MyBagState>(
+              buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+              builder: (context, state) {
+                return SmartDropDown(
+                  focusNode: bloc.paymentConditionFocusNode,
+                  onChanged: (value) {
+                    if (value != null) {
+                      bloc.variationFocusNode.requestFocus();
+                      bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
+                    }
+                  },
+                  items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
+                  selectedItem: bloc.selectedPaymentCondition,
+                  hintText: APPStrings.paymentCondition.tr,
+                  labelText: APPStrings.paymentCondition.tr,
+                );
+              },
+            ),
+            SizedBox(height: 24.h),
+            SmartTextField(
+              suffixText: APPStrings.percentage,
+              labelText: APPStrings.plusMinus,
+              hintText: APPStrings.plusMinus,
+              controller: bloc.variationController,
+              focusNode: bloc.variationFocusNode,
+              nextFocus: bloc.noteFocusNode,
+              textInputFormatter: [DoubleInputFormatter()],
+              keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+            ),
+            SizedBox(height: 24.h),
+            SmartTextField(
+              labelText: APPStrings.commentQuestion.tr,
+              hintText: APPStrings.commentQuestion.tr,
+              controller: bloc.noteController,
+              focusNode: bloc.noteFocusNode,
+              maxLines: 3,
+              textInputAction: TextInputAction.newline,
+            ),
+          ],
         ],
       ),
     );
@@ -612,7 +736,10 @@ class MyBagScreen extends StatelessWidget {
           Divider(indent: 16.w, endIndent: 16.w),
           buildRowButton(
             style,
-            () => bloc.add(MyBagRemoveProductEvent(index: index, context: mainContext)),
+            () {
+              context.pop();
+              bloc.add(MyBagRemoveProductEvent(index: index, context: mainContext));
+            },
             APPStrings.removeLot.tr,
             AppImages.icRemove,
           ),

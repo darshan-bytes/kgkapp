@@ -31,7 +31,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     countryList.add(CountryModel(name: "India", code: "In"));
     countryList.add(CountryModel(name: "Australia", code: "AU"));
 
-    if(!isIntialized){
+    if (!isIntialized) {
       await _fetchLanguageData(event, emit);
       isIntialized = true;
     }
@@ -45,7 +45,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     selectedCurrency =
         currencyList.firstWhereOrNull((element) => element.name == (StorageManager().getSelectedCurrency() ?? currencyList.first.name));
 
-    emit (PreferencesDataFetchedState());
+    emit(PreferencesDataFetchedState());
     emit(PreferencesReloadState());
     emit(PreferencesChangeCountryState());
     emit(PreferencesChangeLanguageState());
@@ -53,7 +53,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   }
 
   Future<void> _fetchLanguageData(PreferencesInitialEvent event, Emitter<PreferencesState> emit) async {
-    emit (PreferencesLoadingState());
+    emit(PreferencesLoadingState());
     Map<String, dynamic> body = {
       ApiKey.filters: {ApiKey.dynamicObject: {}},
       ApiKey.pagination: {ApiKey.limit: 50, ApiKey.page: 1},
@@ -85,12 +85,12 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     emit(PreferencesChangeLanguageState());
   }
 
-  void _onChangeCurrencyEvent(PreferencesChangeCurrencyEvent event, Emitter<PreferencesState> emit) {
+  Future<void> _onChangeCurrencyEvent(PreferencesChangeCurrencyEvent event, Emitter<PreferencesState> emit) async {
     emit(PreferencesReloadState());
     selectedCurrency = event.currency;
     if (selectedCurrency != null) {
-      StorageManager().setSelectedCurrency(selectedCurrency!.name);
-      StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
+      await StorageManager().setSelectedCurrency(selectedCurrency!.name);
+      await StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
     }
     emit(PreferencesChangeCurrencyState());
   }

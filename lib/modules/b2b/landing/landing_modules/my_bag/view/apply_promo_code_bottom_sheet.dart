@@ -1,7 +1,11 @@
 import 'package:kgk/kgk.dart';
 
 class ApplyPromoCodeBottomSheet extends StatelessWidget {
-  const ApplyPromoCodeBottomSheet({super.key});
+  final Function(String) onApplyPromoCode;
+
+  ApplyPromoCodeBottomSheet({super.key, required this.onApplyPromoCode});
+
+  final TextEditingController promoCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,17 @@ class ApplyPromoCodeBottomSheet extends StatelessWidget {
                     SmartText(APPStrings.addPromoCode.tr, style: style.titleStyle),
                     SizedBox(height: 16.h),
                     SmartTextField(
+                      controller: promoCodeController,
                       hintText: APPStrings.hintPromoCode.tr,
                       textInputAction: TextInputAction.done,
                     ),
                     SizedBox(height: 16.h),
                     SmartButton(
                       title: APPStrings.apply.tr,
-                      onTap: () {},
+                      onTap: () async {
+                        await onApplyPromoCode(promoCodeController.text);
+                        context.pop();
+                      },
                     ),
                   ],
                 ),

@@ -24,6 +24,7 @@ class ProductInfoClarityChat {
   String? commodity;
   String? carat;
   String? origin;
+  String? stock;
 
   ProductInfoClarityChat({
     this.productId,
@@ -51,61 +52,6 @@ class ProductInfoClarityChat {
     this.commodity,
     this.carat,
     this.origin,
+    this.stock,
   });
-
-  factory ProductInfoClarityChat.fromJson(Map<String, dynamic> json) => ProductInfoClarityChat(
-        productId: json["product_id"],
-        productName: json["product_name"],
-        ct: json["ct"],
-        shape: json["shape"],
-        colour: json["colour"],
-        clarity: json["clarity"],
-        lotNumber: json["lot_number"],
-        certificateNumber: json["certificate_number"],
-        measurements: json["measurements"],
-        lab: json["lab"],
-        cut: json["cut"],
-        polish: json["polish"],
-        symmetry: json["symmetry"],
-        flourish: json["flourish"],
-        perCts: json["per_cts"],
-        rap: json["rap"],
-        discount: json["discount"],
-        amount: json["amount"],
-        depthPercentage: json["depth_percentage"],
-        tablePercentage: json["table_percentage"],
-        rapRate: json["rap_rate"],
-        fluorescence: json["fluorescence"],
-        commodity: json["commodity"],
-        carat: json["carat"],
-        origin: json["origin"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "product_id": productId,
-        "product_name": productName,
-        "ct": ct,
-        "shape": shape,
-        "colour": colour,
-        "clarity": clarity,
-        "lot_number": lotNumber,
-        "certificate_number": certificateNumber,
-        "measurements": measurements,
-        "lab": lab,
-        "cut": cut,
-        "polish": polish,
-        "symmetry": symmetry,
-        "flourish": flourish,
-        "per_cts": perCts,
-        "rap": rap,
-        "discount": discount,
-        "amount": amount,
-        "depth_percentage": depthPercentage,
-        "table_percentage": tablePercentage,
-        "rap_rate": rapRate,
-        "fluorescence": fluorescence,
-        "commodity": commodity,
-        "carat": carat,
-        "origin": origin,
-      };
 }
