@@ -419,7 +419,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   /// Logout event to clear session and navigate to login page
   void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
-    Either<ErrorResponse, CommonResponse<String>>? response = await UserRepository(event.context).logoutUser({});
+    Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).logoutUser({});
     await response?.fold((l) {
       ErrorResponse errorModel = l;
       Utils.showMessage(errorModel.message);
