@@ -737,5 +737,8 @@
   "mob_min": "最小",
   "mob_max": "最大",
   "mob_max_range_should_be_less_than_x": "最大範圍應該小於 {#}",
-  "mob_cant_compare_different_commodities": "您無法比較不同商品的產品"
+  "mob_cant_compare_different_commodities": "您無法比較不同商品的產品",
+  "mob_recently_viewed_jewellery": "最近觀看的珠寶",
+  "mob_recently_viewed_diamond": "最近觀看的鑽石",
+  "mob_recently_viewed_gemstone": "最近觀看的寶石"
 }

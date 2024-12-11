@@ -174,7 +174,7 @@ class ProductListScreen extends StatelessWidget {
               isCustomisable: _isCustomisable(bloc, productDetails),
               isOutOfStock: productDetails.isOutOfStock,
               onAddToBagTap: _getAddToBagTap(bloc),
-              onEyeTap: () => _onEyeTap(context, bloc, productDetails),
+              onEyeTap: () => {},
               isFavourite: productDetails.isFavourite,
               onFavTap: () {
                 /// We have implemented this feature in the ProductGridItem
@@ -210,7 +210,7 @@ class ProductListScreen extends StatelessWidget {
               isOutOfStock: productDetails.isOutOfStock,
               onAddToBagTap: _getAddToBagTap(bloc),
               isFavourite: productDetails.isFavourite,
-              onEyeTap: () => _onEyeTap(context, bloc, productDetails),
+              onEyeTap: () {},
               onFavTap: () {
                 /// We have implemented this feature in the ProductGridItem
                 /// so that we can use the same widget for both grid and list view and here we don't need to implement it

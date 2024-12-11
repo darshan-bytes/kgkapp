@@ -933,4 +933,7 @@ class APPStrings {
   static const String yes = 'mob_yes';
   static const String no = 'mob_no';
   static const String areYouSureChangeAccountType = "mob_are_you_sure_change_account_type";
+  static const String recentlyViewedJewellery = "mob_recently_viewed_jewellery";
+  static const String recentlyViewedDiamond = "mob_recently_viewed_diamond";
+  static const String recentlyViewedGemstone = "mob_recently_viewed_gemstone";
 }

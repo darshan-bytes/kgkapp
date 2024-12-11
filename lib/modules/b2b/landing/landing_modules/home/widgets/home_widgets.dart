@@ -932,20 +932,4 @@ class HomeWidgets {
       ]),
     );
   }
-
-  static Widget buildRecentlyViewedSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
-    return Padding(
-      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-      child: SmartSuggestionProductList(
-        title: APPStrings.recentlyViewed.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: homeBloc.recentlyViewList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        scrollController: homeBloc.recentlyViewedScrollController,
-      ),
-    );
-  }
 }

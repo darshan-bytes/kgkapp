@@ -741,5 +741,8 @@
   "mob_different_commodities_selected": "Different commodities selected",
   "mob_yes": "Yes",
   "mob_no": "No",
-  "mob_are_you_sure_change_account_type": "Are you sure you want to change account type?"
+  "mob_are_you_sure_change_account_type": "Are you sure you want to change account type?",
+  "mob_recently_viewed_jewellery": "Recently Viewed Jewellery",
+  "mob_recently_viewed_diamond": "Recently Viewed Diamonds",
+  "mob_recently_viewed_gemstone": "Recently Viewed Gemstones"
 }

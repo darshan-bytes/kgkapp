@@ -52,6 +52,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
     on<ProductAddToBagEvent>(_onProductAddToBagEvent);
     on<ProductRemoveFromBagEvent>(_onProductRemoveFromBagEvent);
+    on<ProductAddToWatchListEvent>(_onProductAddToWatchListEvent);
   }
 
   void _onLoadAppEvent(LoadAppEvent event, Emitter<AppState> emit) async {
@@ -145,17 +146,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (productDetails.isFavourite && productDetails.wishlistId.isNotNullNorEmpty) {
-        BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(productDetails, context, onFavTap: onFavTap));
+        add(ProductRemoveFromFavoriteEvent(productDetails, context, onFavTap: onFavTap));
       } else {
-        BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(productDetails, context, onFavTap: onFavTap));
+        add(ProductAddToFavoriteEvent(productDetails, context, onFavTap: onFavTap));
       }
+    });
+  }
+
+  void onTapWatchList(
+    context, {
+    required ProductDetailsModel productDetails,
+  }) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      add(ProductAddToWatchListEvent(productDetails, context));
     });
   }
 
   void onTapBag(context, {required ProductDetailsModel productDetails}) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+      add(ProductAddToBagEvent(productDetails, context));
     });
   }
 
@@ -279,6 +290,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     /// TODO :: Temporary added static bag id here
     await _deleteAndRetryBag(event, emit, "674982171e6515593f727ec6", suid: "DIS268");
+  }
+
+  Future<void> _onProductAddToWatchListEvent(ProductAddToWatchListEvent event, Emitter<AppState> emit) async {
+    if (event.productDetails.productId.isNullOrEmpty) {
+      return;
+    }
+
+    BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(event.productDetails, event.context));
+    Utils.showSmartModalBottomSheet(
+      context: event.context,
+      enableDrag: false,
+      useRootNavigator: true,
+      builder: (context) => const AddWatchlistScreen(),
+    );
   }
 
   // Get gemstone filter option list
