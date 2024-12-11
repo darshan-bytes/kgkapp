@@ -40,3 +40,13 @@ final class ProductRemoveFromWishlistEvent extends WishlistEvent {
   @override
   List<Object> get props => [productDetails];
 }
+
+final class WishlistFilterEvent extends WishlistEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const WishlistFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}

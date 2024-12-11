@@ -743,5 +743,6 @@
   "mob_are_you_sure_change_account_type": "क्या आप वाकई खाता प्रकार बदलना चाहते हैं?",
   "mob_recently_viewed_jewellery": "हाल ही में देखा गया आभूषण",
   "mob_recently_viewed_diamond": "हाल ही में देखा गया डायमंड",
-  "mob_recently_viewed_gemstone": "हाल ही में देखा गया रत्न"
+  "mob_recently_viewed_gemstone": "हाल ही में देखा गया रत्न",
+  "mob_all_filters_cleared": "सभी फ़िल्टर पहले ही साफ़ कर दिए गए हैं"
 }

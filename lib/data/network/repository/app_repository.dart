@@ -203,12 +203,15 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, WishlistModel>?> fetchWishList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
+      {required String limit, required String page, bool isLoadMore = false, Map<String, String>? query}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response =
-        await getMethod<WishlistModel>(ApiClient.wishlist, query: {ApiKey.limit: limit, ApiKey.page: page}, withCurrencyHeader: true);
+    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page};
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+    var response = await getMethod<WishlistModel>(ApiClient.wishlist, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -749,9 +752,7 @@ class AppRepository extends ApiService {
 
   // For Wishlist Filter Option
   Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchWishlistFilterOptionList() async {
-    context.setAppLoading(true);
     var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
-    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
