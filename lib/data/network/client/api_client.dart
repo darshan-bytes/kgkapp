@@ -135,6 +135,10 @@ class ApiClient {
   static const String applyPromoCode = '$apiBaseUrl/promo-code/apply';
 
   static const String removePromoCode = '$apiBaseUrl/promo-code/remove';
+
+  static const String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
+
+  static const String rmDealOfTheDay = '$apiBaseUrl/homepage-collections/rm-deal-of-the-day';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

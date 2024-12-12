@@ -776,6 +776,35 @@ class AppRepository extends ApiService {
     var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryDealOfTheDayProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryDealOfTheDay,
+        query: {ApiKey.page: page, ApiKey.limit: limit}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondDealOfTheDayProductList(
+      {Map<String, String>? query, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<DiamondListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneDealOfTheDayProductList(
+      {Map<String, String>? query, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<GemstoneListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

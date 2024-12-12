@@ -190,6 +190,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           page: paginationScrollController.currentPage.toString(),
         );
       }
+    } else if (productNavigation == AppConst.diamondsDealsOfTheDayParam) {
+      Map<String, String> queryParam = {
+        ApiKey.page: paginationScrollController.currentPage.toString(),
+        ApiKey.limit: AppConst.pageLimit.toString(),
+        ApiKey.stone: AppConst.diamondsDealsOfTheDayParam
+      };
+      queryParam.addAll(query);
+      response = await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
     } else {
       response = await AppRepository(context).fetchDiamondList(
         page: paginationScrollController.currentPage.toString(),
@@ -256,6 +264,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           page: paginationScrollController.currentPage.toString(),
         );
       }
+    } else if (productNavigation == AppConst.gemstoneDealsOfTheDayParam) {
+      Map<String, String> queryParam = {
+        ApiKey.page: paginationScrollController.currentPage.toString(),
+        ApiKey.limit: AppConst.pageLimit.toString(),
+        ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
+      };
+      queryParam.addAll(query);
+      response = await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
     } else {
       response = await AppRepository(context).fetchGemstoneList(
         page: paginationScrollController.currentPage.toString(),
@@ -295,12 +311,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       gram: "1.5 grms",
       imageUrl: diamond.image.first.url,
       name: diamond.rmDescription ?? "",
-      originalPrice: (diamond.finalPrice ?? 0).toString().setCurrency,
+      originalPrice: (diamond.discountPrice ?? 0).toString().setCurrency,
       ctsOrGms: diamond.ctsOrGms,
       rappaportPrice: diamond.rappaportPrice,
       priceCts: diamond.priceCts,
-      discountPrice: diamond.discountPrice?.setCurrency,
-      finalPrice: diamond.discountPrice?.setCurrency,
+      discountPrice: diamond.finalPrice?.setCurrency,
+      finalPrice: (diamond.finalPrice ?? 0).toString().setCurrency,
+      offerPrice: diamond.discountPrice?.setCurrency,
       lotCode: diamond.lotCode,
       productSku: diamond.lotCode,
       shape: diamond.shape,
@@ -330,12 +347,12 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       gram: "1.5 grms",
       imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
       name: gemstone.rmDescription ?? "",
-      originalPrice: (gemstone.finalPrice ?? 0).toString().setCurrency,
+      originalPrice: (gemstone.discountPrice ?? 0).toString().setCurrency,
       ctsOrGms: gemstone.ctsOrGms,
       rappaportPrice: gemstone.rappaportPrice,
       priceCts: gemstone.priceCts,
       discountPrice: (gemstone.discountPrice ?? 0).toString().setCurrency,
-      finalPrice: gemstone.discountPrice?.setCurrency,
+      finalPrice: gemstone.finalPrice?.setCurrency,
       lotCode: gemstone.lotCode,
       shape: gemstone.shape,
       fluorescence: gemstone.fluorescence,
@@ -373,15 +390,17 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Handle load more
   Future<void> _handleLoadMore(BuildContext context, Emitter<StoneListingState> emit, int currentPage) async {
-    emit(StoneListLoadingMoreState());
-    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
-      await fetchDiamondList(context, emit, isLoadMore: false);
-    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-      await fetchGemstoneList(context, emit, isLoadMore: false);
-    } else {
-      await fetchDiamondList(context, emit, isLoadMore: false);
+    if (currentPage <= totalNumberOfPages!) {
+      emit(StoneListLoadingMoreState());
+      if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+        await fetchDiamondList(context, emit, isLoadMore: false);
+      } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+        await fetchGemstoneList(context, emit, isLoadMore: false);
+      } else {
+        await fetchDiamondList(context, emit, isLoadMore: false);
+      }
+      emit(StoneListLoadedMoreState(currentPage + 1));
     }
-    emit(StoneListLoadedMoreState(currentPage + 1));
   }
 
   /// Handle pull to refresh

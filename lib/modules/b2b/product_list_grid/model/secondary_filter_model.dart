@@ -17,20 +17,20 @@ class SecondaryFilterModel {
     );
   }
 
-  factory SecondaryFilterModel.fromJson(Map<String, dynamic> json){
+  factory SecondaryFilterModel.fromJson(Map<String, dynamic> json) {
     return SecondaryFilterModel(
-      value: json["value"],
-      label: json["label"],
+      value: json["value"]?.toString(),
+      label: json["label"]?.toString(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "value": value,
-    "label": label,
-  };
+        "value": value,
+        "label": label,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$value, $label, ";
   }
 }

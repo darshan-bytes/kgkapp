@@ -30,12 +30,16 @@ class SmartSuggestionProductList extends StatelessWidget {
       children: [
         Row(
           children: [
-            SmartText(
-              title,
-              style: style.titleStyle,
-              optionalPadding: isPaddingNeeded ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+            Expanded(
+              child: SmartText(
+                title,
+                style: style.titleStyle,
+                optionalPadding: isPaddingNeeded ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            const Spacer(),
+            SizedBox(width: 15.w),
             if (onViewAllTap != null)
               SmartText(
                 APPStrings.viewAll.tr,
