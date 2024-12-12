@@ -172,7 +172,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       imgList.clear();
       suggestedProductList.clear();
       recentlyViewedProductList.clear();
-
       await getProductDetails(event.context, productId);
       if (productDetails != null) {
         isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
@@ -414,7 +413,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           Utils.showMessage(error.message);
         }
       },
-      (jewelleryData) {
+      (JewelleryDataModel jewelleryData) {
         isErrorInLoadingData = false;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
@@ -445,6 +444,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           commodity: Commodity.jewellery,
           isFavourite: jewelleryData.isFavorite,
           wishlistId: jewelleryData.wishlistID,
+          components: jewelleryData.components,
         );
       },
     );

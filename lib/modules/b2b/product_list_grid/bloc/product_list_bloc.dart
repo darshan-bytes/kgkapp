@@ -294,6 +294,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       final localList = success.data;
       productList.addAll(localList
           .map((item) => ProductDetailsModel(
+                  suid: item.suid ?? "",
                   imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
                   name: item.productDescription ?? "",
                   originalPrice: item.finalPrice?.setCurrency,

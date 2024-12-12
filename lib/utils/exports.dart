@@ -481,3 +481,4 @@ export 'package:kgk/data/network/my_http_overrides.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/customer_salesman_data_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_order_summary_data_model.dart';
 export 'package:url_launcher/url_launcher.dart';
+export 'package:kgk/modules/common_modules/product_details/view/jewellery_details_component_view.dart';
