@@ -93,7 +93,7 @@ class KgkCoutureDetails {
   final dynamic customerScopeRefSuid;
   final String? guestUser;
   final dynamic customerScope;
-  final List<ComponentDetail> componentDetails;
+  final List<ComponentDetailShopByMetal> componentDetails;
   final double? finalPrice;
   final double? discountPrice;
 
@@ -141,7 +141,7 @@ class KgkCoutureDetails {
     dynamic customerScopeRefSuid,
     String? guestUser,
     dynamic customerScope,
-    List<ComponentDetail>? componentDetails,
+    List<ComponentDetailShopByMetal>? componentDetails,
     double? finalPrice,
     double? discountPrice,
   }) {
@@ -242,7 +242,7 @@ class KgkCoutureDetails {
       customerScope: json["customer_scope"],
       componentDetails: json["component_details"] == null
           ? []
-          : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
+          : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
       finalPrice: json["final_price"]?.toString().toDouble,
       discountPrice: json["discount_price"]?.toString().toDouble,
     );
