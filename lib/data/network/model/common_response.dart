@@ -129,6 +129,10 @@ class CommonResponse<T> {
         return SortOptionsModel.fromJson(json);
       case const (WishlistFilterOptionModel):
         return WishlistFilterOptionModel.fromJson(json);
+      case const (CustomerSalesmanModel):
+        return CustomerSalesmanModel.fromJson(json);
+      case const (BagOrderSummaryDataModel):
+        return BagOrderSummaryDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

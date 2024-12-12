@@ -445,9 +445,9 @@ class AppRepository extends ApiService {
   }
 
   // Delete Entire Bag
-  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> deleteBag({required Map<String, dynamic> body}) async {
+  Future<Either<ErrorResponse, CommonResponse>?> deleteBag({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await deleteMethod<Map<String, CommonResponse<MyBagDataModel>>>(ApiClient.deleteBag, withFullResponse: true, body: body);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteBag, withFullResponse: true, body: body);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -753,6 +753,27 @@ class AppRepository extends ApiService {
   // For Wishlist Filter Option
   Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchWishlistFilterOptionList() async {
     var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<CustomerSalesmanModel>>?> customerSalesman() async {
+    var response = await getMethod<CustomerSalesmanModel>(ApiClient.customerSalesman);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, BagOrderSummaryDataModel>?> getBagOrderSummaryData({required String id}) async {
+    var response = await getMethod<BagOrderSummaryDataModel>(ApiClient.bagOrderSummaryById(id), withCurrencyHeader: true);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> applyPromoCode(Map<String, dynamic> body) async {
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.applyPromoCode, body, withFullResponse: true, withCurrencyHeader: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode() async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

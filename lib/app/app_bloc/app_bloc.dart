@@ -395,11 +395,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       };
       Either<ErrorResponse, PaginationData<CommodityMasterDetails>>? response =
           await AppRepository(context).commodityMasterFilters(body: body);
-      response?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (PaginationData<CommodityMasterDetails> r) {
-        commodityMasterDetails = (r.dataList as List<CommodityMasterDetails>?) ?? [];
-      });
+      response?.fold(
+        (l) {},
+        (PaginationData<CommodityMasterDetails> r) {
+          commodityMasterDetails = (r.dataList as List<CommodityMasterDetails>?) ?? [];
+        },
+      );
     } catch (e) {
       printWrapped(e.toString());
     }

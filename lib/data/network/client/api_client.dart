@@ -127,6 +127,14 @@ class ApiClient {
   static const String logoutUser = '$apiBaseUrl/users/logout';
 
   static const String deleteUser = '$apiBaseUrl/users';
+
+  static const String customerSalesman = '$apiBaseUrl/customer/salesman';
+
+  static String bagOrderSummaryById(String id) => '$apiBaseUrl/bag/order-summary/$id';
+
+  static const String applyPromoCode = '$apiBaseUrl/promo-code/apply';
+
+  static const String removePromoCode = '$apiBaseUrl/promo-code/remove';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

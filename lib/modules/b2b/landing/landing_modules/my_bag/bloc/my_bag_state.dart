@@ -10,6 +10,15 @@ final class MyBagInitial extends MyBagState {
 }
 
 final class MyBagReloadState extends MyBagState {
+  const MyBagReloadState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class MyBagLoadedState extends MyBagState {
+  const MyBagLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -87,6 +96,20 @@ final class MyBagToggleReadMoreDetailsState extends MyBagState {
 
 final class MyBagToggleViewModeState extends MyBagState {
   const MyBagToggleViewModeState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class MyBagSalesmanListLoadedState extends MyBagState {
+  const MyBagSalesmanListLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class MyBagOrderSummaryDataLoadedState extends MyBagState {
+  const MyBagOrderSummaryDataLoadedState();
 
   @override
   List<Object> get props => [];

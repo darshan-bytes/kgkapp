@@ -102,3 +102,22 @@ final class MyBagAddToWatchlistEvent extends MyBagEvent {
   @override
   List<Object> get props => [index, context];
 }
+
+final class MyBagRemovePromoCodeEvent extends MyBagEvent {
+  final BuildContext context;
+
+  const MyBagRemovePromoCodeEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class MyBagApplyPromoCodeEvent extends MyBagEvent {
+  final String promoCode;
+  final BuildContext context;
+
+  const MyBagApplyPromoCodeEvent({required this.promoCode, required this.context});
+
+  @override
+  List<Object> get props => [promoCode, context];
+}
