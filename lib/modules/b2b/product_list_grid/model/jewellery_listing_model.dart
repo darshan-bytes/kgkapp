@@ -37,6 +37,7 @@ class JewelleryListingModel {
 
 class JewelleryDataModel {
   JewelleryDataModel({
+    required this.components,
     required this.metalColor3RefSuid,
     required this.tagPriceLocalCurrency,
     required this.settingType,
@@ -309,149 +310,151 @@ class JewelleryDataModel {
   String? discountPrice;
   bool isFavorite;
   String? wishlistID;
+  List<Component> components;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
-      metalColor3RefSuid: json["metal_color_3_ref_suid"],
-      tagPriceLocalCurrency: json["tag_price_local_currency"],
-      settingType: json["setting_type"],
-      customerCollectionRefSuid: json["customer_collection_ref_suid"],
-      metalColor1Suid: json["metal_color_1_suid"],
-      ageRange: json["age_range"],
+      metalColor3RefSuid: json["metal_color_3_ref_suid"]?.toString(),
+      tagPriceLocalCurrency: json["tag_price_local_currency"]?.toString(),
+      settingType: json["setting_type"]?.toString(),
+      customerCollectionRefSuid: json["customer_collection_ref_suid"]?.toString(),
+      metalColor1Suid: json["metal_color_1_suid"]?.toString(),
+      ageRange: json["age_range"]?.toString(),
       productPriceLocalCurrency:
           json["product_price_local_currency"] != null ? json["product_price_local_currency"]?.toString().toDouble : 0.0,
-      setName: json["set_name"],
+      setName: json["set_name"]?.toString(),
       manufactureDate: DateTime.tryParse(json["manufacture_date"] ?? ""),
-      exclusive: json["exclusive"],
-      styleNo: json["style_no"],
-      id: json["id"] ?? json["_id"],
-      huidNo2: json["huid_no_2"],
-      productDescription: json["product_description"],
-      coordinatorSalesmanSuid: json["coordinator_salesman_suid"],
-      huidNo1: json["huid_no_1"],
-      lspRateIntlCurrency: json["lsp_rate_intl_currency"],
+      exclusive: json["exclusive"]?.toString(),
+      styleNo: json["style_no"]?.toString(),
+      id: json["id"] ?? json["_id"]?.toString(),
+      huidNo2: json["huid_no_2"]?.toString(),
+      productDescription: json["product_description"]?.toString(),
+      coordinatorSalesmanSuid: json["coordinator_salesman_suid"]?.toString(),
+      huidNo1: json["huid_no_1"]?.toString(),
+      lspRateIntlCurrency: json["lsp_rate_intl_currency"]?.toString(),
       ageDays: json["age_days"],
-      businessCategory: json["business_category"],
-      marketSuid: json["market_suid"],
+      businessCategory: json["business_category"]?.toString(),
+      marketSuid: json["market_suid"]?.toString(),
       bestSellerQuantity: json["best_seller_quantity"],
       businessCategoryRefSuid: json["business_category_ref_suid"],
-      goodOrigin: json["good_origin"],
-      kgkCollection3RefSuid: json["kgk_collection_3_ref_suid"],
-      jewelleryTypeGroupSuid: json["jewellery_type_group_suid"],
-      productSize: json["product_size"],
-      metalColor2RefSuid: json["metal_color_2_ref_suid"],
-      kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"],
+      goodOrigin: json["good_origin"]?.toString(),
+      kgkCollection3RefSuid: json["kgk_collection_3_ref_suid"]?.toString(),
+      jewelleryTypeGroupSuid: json["jewellery_type_group_suid"]?.toString(),
+      productSize: json["product_size"]?.toString(),
+      metalColor2RefSuid: json["metal_color_2_ref_suid"]?.toString(),
+      kgkCollection2RefSuid: json["kgk_collection_2_ref_suid"]?.toString(),
       productPriceIntCurrency: json["product_price_int_currency"] != null ? json["product_price_int_currency"]?.toString().toDouble : 0.0,
       stockTypeRefSuid: json["stock_type_ref_suid"],
-      customerAliasName: json["customer_alias_name"],
+      customerAliasName: json["customer_alias_name"]?.toString(),
       mspRateIntlCurrency: json["msp_rate_intl_currency"]?.toString(),
-      metalCommodity: json["metal_commodity"],
-      jewelleryTypeSuid: json["jewellery_type_suid"],
-      binGroup: json["bin_group"],
-      metalColor1: json["metal_color_1"],
-      metalColor2: json["metal_color_2"],
-      cut: json["cut"],
-      metalColor3: json["metal_color_3"],
-      customization: json["customization"],
+      metalCommodity: json["metal_commodity"]?.toString(),
+      jewelleryTypeSuid: json["jewellery_type_suid"]?.toString(),
+      binGroup: json["bin_group"]?.toString(),
+      metalColor1: json["metal_color_1"]?.toString(),
+      metalColor2: json["metal_color_2"]?.toString(),
+      cut: json["cut"]?.toString(),
+      metalColor3: json["metal_color_3"]?.toString(),
+      customization: json["customization"]?.toString(),
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
-      updatedDateTime: json["updated_date_time"],
-      metalCommoditySuid: json["metal_commodity_suid"],
+      updatedDateTime: json["updated_date_time"]?.toString(),
+      metalCommoditySuid: json["metal_commodity_suid"]?.toString(),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      lspRateLocalCurrency: json["lsp_rate_local_currency"],
-      currency: json["currency"],
-      collectionGroupNameRefSuid: json["collection_group_name_ref_suid"],
-      marketRefSuid: json["market_ref_suid"],
-      metalCommodityRefSuid: json["metal_commodity_ref_suid"],
-      supplierName: json["supplier_name"],
-      metalColor3Suid: json["metal_color_3_suid"],
-      metalKtRefSuid: json["metal_kt_ref_suid"],
-      cscCode: json["csc_code"],
+      lspRateLocalCurrency: json["lsp_rate_local_currency"]?.toString(),
+      currency: json["currency"]?.toString(),
+      collectionGroupNameRefSuid: json["collection_group_name_ref_suid"]?.toString(),
+      marketRefSuid: json["market_ref_suid"]?.toString(),
+      metalCommodityRefSuid: json["metal_commodity_ref_suid"]?.toString(),
+      supplierName: json["supplier_name"]?.toString(),
+      metalColor3Suid: json["metal_color_3_suid"]?.toString(),
+      metalKtRefSuid: json["metal_kt_ref_suid"]?.toString(),
+      cscCode: json["csc_code"]?.toString(),
       grossPriceLocalCurrency: json["gross_price_local_currency"],
-      subAreaName: json["sub_area_name"],
-      kgkCollection3Suid: json["kgk_collection_3_suid"],
-      stockType: json["stock_type"],
-      kgkCollectionSuid: json["kgk_collection_suid"],
-      subJewelleryType: json["sub_jewellery_type"],
+      subAreaName: json["sub_area_name"]?.toString(),
+      kgkCollection3Suid: json["kgk_collection_3_suid"]?.toString(),
+      stockType: json["stock_type"]?.toString(),
+      kgkCollectionSuid: json["kgk_collection_suid"]?.toString(),
+      subJewelleryType: json["sub_jewellery_type"]?.toString(),
       deleted: json["deleted"],
-      ctsOrGms: json["cts_or_gms"],
-      customerCollectionSuid: json["customer_collection_suid"],
-      jewelleryTypeGroup: json["jewellery_type_group"],
-      certificateNo: json["certificate_no"],
-      diamondGrade: json["diamond_grade"],
+      ctsOrGms: json["cts_or_gms"]?.toString(),
+      customerCollectionSuid: json["customer_collection_suid"]?.toString(),
+      jewelleryTypeGroup: json["jewellery_type_group"]?.toString(),
+      certificateNo: json["certificate_no"]?.toString(),
+      diamondGrade: json["diamond_grade"]?.toString(),
       viewCount: json["view_count"],
-      coordinatorSalesman: json["coordinator_salesman"],
-      newArrival: json["new_arrival"],
-      bestSeller: json["best_seller"],
-      singleStone: json["single_stone"],
-      customerSuid: json["customer_suid"],
-      referenceId: json["reference_id"],
-      customerPoNo: json["customer_po_no"],
-      cscName: json["csc_name"],
-      tagPriceIntlCurrency: json["tag_price_intl_currency"],
+      coordinatorSalesman: json["coordinator_salesman"]?.toString(),
+      newArrival: json["new_arrival"]?.toString(),
+      bestSeller: json["best_seller"]?.toString(),
+      singleStone: json["single_stone"]?.toString(),
+      customerSuid: json["customer_suid"]?.toString(),
+      referenceId: json["reference_id"]?.toString(),
+      customerPoNo: json["customer_po_no"]?.toString(),
+      cscName: json["csc_name"]?.toString(),
+      tagPriceIntlCurrency: json["tag_price_intl_currency"]?.toString(),
       grossPriceIntlCurrency: json["gross_price_intl_currency"],
-      collectionGroupName: json["collection_group_name"],
-      contractNoSkuNo: json["contract_no_sku_no"],
-      metalKt: json["metal_kt"],
-      styleSuid: json["style_suid"],
-      customerSku: json["customer_sku"],
+      collectionGroupName: json["collection_group_name"]?.toString(),
+      contractNoSkuNo: json["contract_no_sku_no"]?.toString(),
+      metalKt: json["metal_kt"]?.toString(),
+      styleSuid: json["style_suid"]?.toString(),
+      customerSku: json["customer_sku"]?.toString(),
       jewelleryTypeRefSuid: json["jewellery_type_ref_suid"],
       cscId: json["csc_id"],
-      styleRefSuid: json["style_ref_suid"],
-      headSalesmanSuid: json["head_salesman_suid"],
+      styleRefSuid: json["style_ref_suid"]?.toString(),
+      headSalesmanSuid: json["head_salesman_suid"]?.toString(),
       subAreaId: json["sub_area_id"],
-      combination: json["combination"],
-      businessCategorySuid: json["business_category_suid"],
-      stockTypeSuid: json["stock_type_suid"],
+      combination: json["combination"]?.toString(),
+      businessCategorySuid: json["business_category_suid"]?.toString(),
+      stockTypeSuid: json["stock_type_suid"]?.toString(),
       customerRefSuid: json["customer_ref_suid"],
-      guestUser: json["guest_user"],
-      importedFrom: json["imported_from"],
-      brandName: json["brand_name"],
-      productName: json["product_name"],
-      market: json["market"],
+      guestUser: json["guest_user"]?.toString(),
+      importedFrom: json["imported_from"]?.toString(),
+      brandName: json["brand_name"]?.toString(),
+      productName: json["product_name"]?.toString(),
+      market: json["market"]?.toString(),
       multipleFinishedViewImage: json["multiple_finished_view_image"] == null
           ? []
           : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
-      setsPart: json["sets_part"],
-      kgkCollection2Name: json["kgk_collection_2_name"],
+      setsPart: json["sets_part"]?.toString(),
+      kgkCollection2Name: json["kgk_collection_2_name"]?.toString(),
       refSuid: json["ref_suid"],
       qty: json["qty"],
-      metalKtSuid: json["metal_kt_suid"],
+      metalKtSuid: json["metal_kt_suid"]?.toString(),
       metalColor1RefSuid: json["metal_color_1_ref_suid"],
-      setNo: json["set_no"],
+      setNo: json["set_no"]?.toString(),
       componentDetails: json["component_details"] == null
           ? []
           : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
-      supplierCode: json["supplier_code"],
+      supplierCode: json["supplier_code"]?.toString(),
       mspRateLocalCurrency: json["msp_rate_local_currency"]?.toInt() ?? 0,
-      kgkCollection2Suid: json["kgk_collection_2_suid"],
-      kgkCollection3Name: json["kgk_collection_3_name"],
+      kgkCollection2Suid: json["kgk_collection_2_suid"]?.toString(),
+      kgkCollection3Name: json["kgk_collection_3_name"]?.toString(),
       receivedDateTime: DateTime.tryParse(json["received_date_time"] ?? ""),
-      suid: json["suid"],
-      customerCollectionName: json["customer_collection_name"],
-      jewelleryType: json["jewellery_type"],
-      headSalesman: json["head_salesman"],
+      suid: json["suid"]?.toString(),
+      customerCollectionName: json["customer_collection_name"]?.toString(),
+      jewelleryType: json["jewellery_type"]?.toString(),
+      headSalesman: json["head_salesman"]?.toString(),
       headSalesmanRefSuid: json["head_salesman_ref_suid"],
-      kgkCollectionRefSuid: json["kgk_collection_ref_suid"],
+      kgkCollectionRefSuid: json["kgk_collection_ref_suid"]?.toString(),
       coordinatorSalesmanRefSuid: json["coordinator_salesman_ref_suid"],
-      customerGroupName: json["customer_group_name"],
-      kgkCollection: json["kgk_collection"],
-      metalColor2Suid: json["metal_color_2_suid"],
-      location: json["location"],
-      customer: json["customer"],
+      customerGroupName: json["customer_group_name"]?.toString(),
+      kgkCollection: json["kgk_collection"]?.toString(),
+      metalColor2Suid: json["metal_color_2_suid"]?.toString(),
+      location: json["location"]?.toString(),
+      customer: json["customer"]?.toString(),
       crt: json["crt"]?.toString(),
       gms: json["gms"]?.toString(),
       rating: json["rating"]?.toString().toDouble ?? 0.0,
       reviewCount: json["review_count"],
-      metalColor1HexCode: json["metal_color_1_hex_code"],
-      metalColor2HexCode: json["metal_color_2_hex_code"],
-      metalColor3HexCode: json["metal_color_3_hex_code"],
+      metalColor1HexCode: json["metal_color_1_hex_code"]?.toString(),
+      metalColor2HexCode: json["metal_color_2_hex_code"]?.toString(),
+      metalColor3HexCode: json["metal_color_3_hex_code"]?.toString(),
       discountPercentage: double.tryParse(json["discount_percentage"]?.toString() ?? ""),
-      businessCategoryName: json["business_category_name"],
-      jewelleryTypeName: json["jewellery_type_name"],
+      businessCategoryName: json["business_category_name"]?.toString(),
+      jewelleryTypeName: json["jewellery_type_name"]?.toString(),
       finalPrice: json["final_price"]?.toString(),
       discountPrice: json["discount_price"]?.toString(),
       isFavorite: (json["is_favorite"] != null && (json["is_favorite"]?.toString() ?? '').isNotEmpty) ? true : false,
-      wishlistID: json["is_favorite"],
+      wishlistID: json["is_favorite"]?.toString(),
+      components: json["components"] == null ? [] : List<Component>.from(json["components"]!.map((x) => Component.fromJson(x))),
     );
   }
 
@@ -622,14 +625,14 @@ class MultipleFinishedViewImage {
 
   factory MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
     return MultipleFinishedViewImage(
-      highRes3: json["high_res3"],
-      highRes4: json["high_res4"],
-      contractNo: json["ContractNo"],
-      imageAvailable: json["IMAGE_AVAILABLE"],
-      imageAvailableMa: json["IMAGE_AVAILABLE_MA"],
-      highRes1: json["high_res1"],
-      highRes2: json["high_res2"],
-      imageUrl: json["IMAGE_URL"],
+      highRes3: json["high_res3"]?.toString(),
+      highRes4: json["high_res4"]?.toString(),
+      contractNo: json["ContractNo"]?.toString(),
+      imageAvailable: json["IMAGE_AVAILABLE"]?.toString(),
+      imageAvailableMa: json["IMAGE_AVAILABLE_MA"]?.toString(),
+      highRes1: json["high_res1"]?.toString(),
+      highRes2: json["high_res2"]?.toString(),
+      imageUrl: json["IMAGE_URL"]?.toString(),
       multiAngleUrl:
           json["MULTI_ANGLE_URL"] == null ? [] : List<MultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrl.fromJson(x))),
     );
@@ -657,7 +660,7 @@ class MultiAngleUrl {
 
   factory MultiAngleUrl.fromJson(Map<String, dynamic> json) {
     return MultiAngleUrl(
-      url: json["url"],
+      url: json["url"]?.toString(),
     );
   }
 
@@ -757,45 +760,45 @@ class ComponentDetail {
     return ComponentDetail(
       consumedQty2: json["ConsumedQty2"]?.toString() ?? "0",
       brokenQty1: json["BrokenQty1"]?.toString().toDouble,
-      shape: json["Shape"],
+      shape: json["Shape"]?.toString(),
       consumedQty1: json["ConsumedQty1"]?.toString() ?? "0",
-      mmSize: json["MMSize"],
+      mmSize: json["MMSize"]?.toString(),
       totalQty2: json["TotalQty2"]?.toString().toDouble,
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
-      sieveSize: json["SieveSize"],
+      sieveSize: json["SieveSize"]?.toString(),
       lotId: json["LotId"]?.toString(),
       commodityNameRefSuid: json["CommodityNameRefSuid"]?.toString() ?? "0",
       localCurrencyAmount: json["LocalCurrencyAmount"]?.toString().toDouble,
-      internalQualitySuid: json["InternalQualitySuid"],
-      commodity: json["Commodity"],
-      internalQualityRefSuid: json["InternalQualityRefSuid"],
+      internalQualitySuid: json["InternalQualitySuid"]?.toString(),
+      commodity: json["Commodity"]?.toString(),
+      internalQualityRefSuid: json["InternalQualityRefSuid"]?.toString(),
       shapeRefSuid: json["ShapeRefSuid"]?.toString() ?? "0",
-      internationalQuality: json["InternationalQuality"],
+      internationalQuality: json["InternationalQuality"]?.toString(),
       colorRefSuid: json["ColorRefSuid"],
-      internalQualityName: json["InternalQualityName"],
-      shapeSuid: json["ShapeSuid"],
-      cut: json["Cut"],
-      colorSuid: json["ColorSuid"],
-      color: json["Color"],
+      internalQualityName: json["InternalQualityName"]?.toString(),
+      shapeSuid: json["ShapeSuid"]?.toString(),
+      cut: json["Cut"]?.toString(),
+      colorSuid: json["ColorSuid"]?.toString(),
+      color: json["Color"]?.toString(),
       intCurrencyAmount: json["IntCurrencyAmount"]?.toString() ?? "0",
-      rmName: json["RMName"],
-      rmNameSuid: json["RMNameSuid"],
-      claritySuid: json["ClaritySuid"],
-      commodityNameSuid: json["CommodityNameSuid"],
+      rmName: json["RMName"]?.toString(),
+      rmNameSuid: json["RMNameSuid"]?.toString(),
+      claritySuid: json["ClaritySuid"]?.toString(),
+      commodityNameSuid: json["CommodityNameSuid"]?.toString(),
       rmNameRefSuid: json["RMNameRefSuid"]?.toString() ?? "0",
       internationalQualityRefSuid: json["InternationalQualityRefSuid"],
-      clarity: json["Clarity"],
-      internationalQualitySuid: json["InternationalQualitySuid"],
+      clarity: json["Clarity"]?.toString(),
+      internationalQualitySuid: json["InternationalQualitySuid"]?.toString(),
       localCurrencyRate: json["LocalCurrencyRate"]?.toString() ?? "0",
       intCurrencyRate: json["IntCurrencyRate"]?.toString() ?? "0",
       totalQty1: json["TotalQty1"]?.toString() ?? "0",
-      lotCode: json["LotCode"],
-      uom2: json["UOM2"],
-      uom1: json["UOM1"],
+      lotCode: json["LotCode"]?.toString(),
+      uom2: json["UOM2"]?.toString(),
+      uom1: json["UOM1"]?.toString(),
       clarityRefSuid: json["ClarityRefSuid"],
-      karatage: json["Karatage"],
+      karatage: json["Karatage"]?.toString(),
       lossQty1: json["LossQty1"]?.toString() ?? "0",
-      id: json["_id"],
+      id: json["_id"]?.toString(),
     );
   }
 
@@ -874,4 +877,63 @@ class Pagination {
   String toString() {
     return "$limit, $page, ";
   }
+}
+
+class Component extends Equatable {
+  const Component({
+    required this.title,
+    required this.values,
+  });
+
+  final String? title;
+  final List<List<ValueElement>> values;
+
+  factory Component.fromJson(Map<String, dynamic> json) {
+    return Component(
+      title: json["title"]?.toString(),
+      values: json["values"] == null
+          ? []
+          : List<List<ValueElement>>.from(
+              json["values"]!.map((x) => x == null ? [] : List<ValueElement>.from(x!.map((x) => ValueElement.fromJson(x))))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "values": values.map((x) => x.map((x) => x.toJson()).toList()).toList(),
+      };
+
+  @override
+  List<Object?> get props => [
+        title,
+        values,
+      ];
+}
+
+class ValueElement extends Equatable {
+  const ValueElement({
+    required this.title,
+    required this.value,
+  });
+
+  final String? title;
+  final String? value;
+
+  factory ValueElement.fromJson(Map<String, dynamic> json) {
+    return ValueElement(
+      title: json["title"]?.toString(),
+      value: json["value"]?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "value": value,
+      };
+
+  @override
+  List<Object?> get props => [
+        title,
+        value,
+      ];
 }
