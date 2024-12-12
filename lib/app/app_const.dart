@@ -60,4 +60,10 @@ class AppConst {
   static const String skuLibrary = "sku_library";
 
   static const int noOfMonths = 12;
+
+  /// For diamond Deals of the day api parameters values
+  static const String diamondsDealsOfTheDayParam = "DIAMONDSINGLESTONE";
+
+  /// For gemstone Deals of the day api parameters values
+  static const String gemstoneDealsOfTheDayParam = "CERTIFIEDCOLORSTONE";
 }

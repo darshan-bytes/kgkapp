@@ -849,7 +849,7 @@ class HomeWidgets {
           onViewAllTap: () {
             context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
           },
-          suggestedProductList: homeBloc.dealOfTheDayList,
+          suggestedProductList: homeBloc.dealOfTheDayJewelleryList,
           onEyeTap: () {},
           onFavTap: () {},
           scrollController: homeBloc.dealOfTheDayScrollController),
