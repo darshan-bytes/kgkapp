@@ -57,6 +57,36 @@ class HomeScreen extends StatelessWidget {
                     _buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style, homeBloc.recentlyViewGemstoneList,
                         ScreenIdentifier.productForGemstones,
                         context: context),
+
+                  /// Deal of the day for jewellery
+                  if (homeBloc.dealOfTheDayJewelleryList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForRing,
+                      arrProductList: homeBloc.dealOfTheDayJewelleryList,
+                      context: context,
+                    ),
+
+                  /// Deal of the day for diamond
+                  if (homeBloc.dealOfTheDayDiamondList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForDiamonds,
+                      arrProductList: homeBloc.dealOfTheDayDiamondList,
+                      context: context,
+                    ),
+
+                  /// Deal of the day for gemstone
+                  if (homeBloc.dealOfTheDayGemstoneList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForGemstones,
+                      arrProductList: homeBloc.dealOfTheDayGemstoneList,
+                      context: context,
+                    )
                 ],
               ),
             );
@@ -965,18 +995,41 @@ Widget _buildOwnSignaturePieceSteps(String image, String steps, String title, Ho
   );
 }
 
-Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
+Widget _buildDealOfTheDaySection(
+    {required HomeBloc homeBloc,
+    required HomeScreenStyle style,
+    required ScreenIdentifier screenIdentifier,
+    required BuildContext context,
+    required List<ProductDetailsModel> arrProductList}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
-        title: APPStrings.dealOfTheDay.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: homeBloc.dealOfTheDayList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        scrollController: homeBloc.dealOfTheDayScrollController),
+      title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
+      onViewAllTap: arrProductList.length > 5
+          ? () {
+              if (screenIdentifier == ScreenIdentifier.productForRing) {
+                context.pushNamed(AppRoutes.productListGridPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.dealsOfTheDay: FetchScenario.dealOfTheDay});
+              } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
+                context.pushNamed(AppRoutes.stoneListingPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.diamondsDealsOfTheDayParam});
+              } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+                context.pushNamed(AppRoutes.stoneListingPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.gemstoneDealsOfTheDayParam});
+              }
+            }
+          : null,
+      onProductTap: (ProductDetailsModel model) {
+        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+          RoutesData.productId: model.productId ?? '',
+          RoutesData.isPageFor: screenIdentifier,
+        });
+      },
+      suggestedProductList: arrProductList,
+      onEyeTap: () {},
+      onFavTap: () {},
+      scrollController: homeBloc.dealOfTheDayScrollController,
+    ),
   );
 }
 

@@ -509,7 +509,7 @@ class GemstoneDatum {
       quality: json["quality"],
       rmDescription: json["rm_description"],
       rappaportDate: json["rappaport_date"],
-      rappaportPrice: json["rappaport_price"],
+      rappaportPrice: json["rappaport_price"]?.toString(),
       rawMaterial: json["raw_material"],
       rawMaterialRefSuid: json["raw_material_ref_suid"],
       rawMaterialSuid: json["raw_material_suid"],

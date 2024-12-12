@@ -752,6 +752,7 @@ enum RoutesData {
   auctionModelData,
   isContinueClearCompare,
   catalogueId,
+  dealsOfTheDay,
 }
 
 enum ScreenIdentifier {
