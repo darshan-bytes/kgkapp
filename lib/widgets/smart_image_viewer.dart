@@ -125,6 +125,7 @@ class SmartImage extends StatelessWidget {
                     height: height,
                     width: width,
                     fit: fit,
+                    errorListener: (error) {},
                     errorWidget: (context, url, error) => Image.asset(
                           AppImages.icPlaceholder,
                           height: height,
@@ -149,7 +150,7 @@ class SmartImage extends StatelessWidget {
                         ),
                     imageUrl: path),
           );
-        }
+      }
     }
 
     return onTap != null

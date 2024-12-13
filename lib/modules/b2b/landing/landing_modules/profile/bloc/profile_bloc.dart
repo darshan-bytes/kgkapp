@@ -420,9 +420,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Logout event to clear session and navigate to login page
   void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
     Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).logoutUser({});
-    await response?.fold((l) {
+    await response?.fold((l) async {
       ErrorResponse errorModel = l;
-      Utils.showMessage(errorModel.message);
+      BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
+      BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
+      await StorageManager().clearSession();
+      event.context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
     }, (r) async {
       BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
       BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));

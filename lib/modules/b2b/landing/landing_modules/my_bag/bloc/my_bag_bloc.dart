@@ -143,6 +143,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagAddToWatchlistEvent>(_onMyBagAddToWatchlistEvent);
     on<MyBagRemovePromoCodeEvent>(_onMyBagRemovePromoCode);
     on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
+    on<MyBagCheckoutEvent>(_onMyBagCheckout);
+    on<MyBagProductQuantityChangedEvent>(_onMyBagProductQuantityChanged);
+    on<ClearMyBagEvent>(_onClearMyBag);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -186,6 +189,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         myBagProductList = List.generate(r.result.length, (index) {
           final item = r.result[index];
           return ProductDetailsModel(
+            stockQty: item.stockQty,
             productId: item.productId,
             suid: item.suid,
             quantity: item.quantity,
@@ -212,6 +216,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
             certificateFile: item.certificateFile,
             fluorescence: item.fluorescence,
             shapeImage: item.shapeImage?.setMediaUrl,
+            isOutOfStock: item.stockQty == 0,
+            labs: item.labs,
+            location: item.location,
           );
         });
       }
@@ -235,7 +242,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> fetchBagOrderSummaryData(BuildContext context, Emitter<MyBagState> emit) async {
-    //getBagOrderSummaryData
     String id = StorageManager().getBagId() ?? "";
     if (id.isNullOrEmpty) return;
     final response = await AppRepository(context).getBagOrderSummaryData(id: id);
@@ -386,5 +392,70 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       event.context.setAppLoading(false);
       Utils.showMessage(e.toString());
     }
+  }
+
+  Future<void> _handleCheckoutClick(BuildContext context) async {
+    bool isAbleToCheckout = false;
+
+    final response = await AppRepository(context).checkoutStatus();
+
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+        isAbleToCheckout = false;
+      },
+      (r) {
+        isAbleToCheckout = true;
+      },
+    );
+
+    if (!isAbleToCheckout) {
+      return;
+    }
+
+    context.pushNamed(AppRoutes.addressListPage);
+  }
+
+  Future<void> _onMyBagCheckout(MyBagCheckoutEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
+    // Below code will be used in future implementation for B2B checkout
+    // context.pushNamed(AppRoutes.addressListPage);
+    await _handleCheckoutClick(event.context);
+    emit(const MyBagCheckoutState());
+  }
+
+  Future<void> _onMyBagProductQuantityChanged(MyBagProductQuantityChangedEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
+    myBagProductList[event.index].quantity = event.quantity;
+    emit(MyBagLoadedState());
+    final Map<String, dynamic> body = {
+      ApiKey.id: StorageManager().getBagId(),
+      ApiKey.suid: myBagProductList[event.index].suid,
+      ApiKey.quantity: event.quantity,
+      ApiKey.commodity: myBagProductList[event.index].commodity?.value,
+    };
+
+    final response = await AppRepository(event.context).updateBagItem(body);
+    await response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        await fetchBagOrderSummaryData(event.context, emit);
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
+    // emit(MyBagProductQuantityChangedState(index: event.index, quantity: event.quantity));
+  }
+
+  Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
+    await StorageManager().setBagId('');
+    await StorageManager().clearBagData();
+    bagListDataModel = null;
+    commodity = null;
+    myBagProductList.clear();
+    salesmanList.clear();
+    bagOrderSummaryData = null;
   }
 }

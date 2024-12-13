@@ -87,6 +87,7 @@ class Result {
     required this.certificateFile,
     required this.openDnaUrl,
     required this.fluorescence,
+    required this.stockQty,
   });
 
   final String? suid;
@@ -115,15 +116,11 @@ class Result {
   final String? location;
   final String? status;
   final String? finalPrice;
-
-  // "shape_image": "shape-masters/image/HS/heart_1727767612993.webp",
-  // "certificate_file": "http://diamond.viewdna.cc/images/certificates/30000003979.png",
-  // "open_dna_url": "http://diamond.viewdna.cc/v/colorstone/imaged/30000003979/still.jpg",
-  // "fluorescence": "NON",
   final String? shapeImage;
   final String? certificateFile;
   final String? openDnaUrl;
   final String? fluorescence;
+  final int? stockQty;
 
   Result copyWith({
     String? suid,
@@ -156,6 +153,7 @@ class Result {
     String? certificateFile,
     String? openDnaUrl,
     String? fluorescence,
+    int? stockQty,
   }) {
     return Result(
       suid: suid ?? this.suid,
@@ -188,6 +186,7 @@ class Result {
       certificateFile: certificateFile ?? this.certificateFile,
       openDnaUrl: openDnaUrl ?? this.openDnaUrl,
       fluorescence: fluorescence ?? this.fluorescence,
+      stockQty: stockQty ?? this.stockQty,
     );
   }
 
@@ -195,14 +194,14 @@ class Result {
     return Result(
       suid: json["suid"],
       quantity: json["quantity"],
-      totalPrice: json["totalPrice"].toDouble(),
+      totalPrice: json["totalPrice"]?.toString().toDouble,
       rate: json["rate"]?.toString(),
       jewelleryName: json["jewellery_name"],
       productId: json["productId"],
       image: json["image"],
       commodity: json["commodity"],
       discountPrice: json["discount_price"]?.toString().toDouble,
-      discountPercentage: json["discount_percentage"]?.toDouble(),
+      discountPercentage: json["discount_percentage"]?.toString().toDouble,
       lotCode: json["lot_code"],
       shape: json["shape"],
       labs: json["labs"],
@@ -223,6 +222,7 @@ class Result {
       certificateFile: json["certificate_file"],
       openDnaUrl: json["open_dna_url"],
       shapeImage: json["shape_image"],
+      stockQty: json["stock_qty"],
     );
   }
 
@@ -301,7 +301,7 @@ class BagSummary {
   factory BagSummary.fromJson(Map<String, dynamic> json) {
     return BagSummary(
       totalItems: json["total_items"],
-      totalCarats: json["total_carats"]?.toDouble(),
+      totalCarats: json["total_carats"]?.toString().toDouble,
       originalAmount: json["original_amount"],
       discountPercentage: json["discount_percentage"]?.toString().toDouble,
       discountAmount: json["discount_amount"],
