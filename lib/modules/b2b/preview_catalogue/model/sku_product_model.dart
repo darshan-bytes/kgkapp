@@ -3,7 +3,7 @@ import 'package:kgk/kgk.dart';
 class SkuProductModel {
   String? sId;
   String? contractNumber;
-  List<MultipleFinishedViewImage>? multipleFinishedViewImage;
+  List<MultipleFinishedViewImageShopByMetal>? multipleFinishedViewImage;
   String? productDescription;
   double? productPriceIntCurrency;
   String? businessCategoryCode;
@@ -42,9 +42,9 @@ class SkuProductModel {
     sId = json['_id'];
     contractNumber = json['contract_number'];
     if (json['multiple_finished_view_image'] != null) {
-      multipleFinishedViewImage = <MultipleFinishedViewImage>[];
+      multipleFinishedViewImage = <MultipleFinishedViewImageShopByMetal>[];
       json['multiple_finished_view_image'].forEach((v) {
-        multipleFinishedViewImage!.add(MultipleFinishedViewImage.fromJson(v));
+        multipleFinishedViewImage!.add(MultipleFinishedViewImageShopByMetal.fromJson(v));
       });
     }
     productDescription = json['product_description'];

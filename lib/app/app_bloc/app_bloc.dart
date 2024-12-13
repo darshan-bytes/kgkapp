@@ -383,6 +383,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     return shapeMasterDetails;
   }
 
+  Future<List<HomeNewLanuchesDatum>> fetchNewlyLaunchesData(BuildContext context, {bool isShowLoader = true}) async {
+    List<HomeNewLanuchesDatum> newLaunchedList = [];
+    try {
+      Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>? response = await AppRepository(context).homePageNewlyLaunches();
+      response?.fold((l) {
+        Utils.showMessage(l.message);
+      }, (PaginationData<HomeNewLanuchesDatum> r) {
+        newLaunchedList = (r.dataList as List<HomeNewLanuchesDatum>?) ?? [];
+      });
+    } catch (e) {
+      printWrapped(e.toString());
+    }
+    return newLaunchedList;
+  }
+
   Future<List<CommodityMasterDetails>> fetchCommodityMasterFilters(BuildContext context,
       {bool isShowLoader = true, bool isForceFetch = false}) async {
     List<CommodityMasterDetails> commodityMasterDetails = [];

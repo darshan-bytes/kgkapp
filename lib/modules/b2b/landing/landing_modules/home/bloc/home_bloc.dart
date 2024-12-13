@@ -23,13 +23,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<AuctionListModel> exploreFancyColorDiamondsList = _generateFancyColorDiamondsList();
 
   //Shop Diamonds List
-  List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
+  List<AuctionListModel> shopDiamondsList = [];
 
   //Shop Rings List
   final List<AuctionListModel> shopByBrands = _generateShopByBrands();
 
   //Shop Gemstones List
-  List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
+  List<AuctionListModel> shopGemstonesList = [];
 
   //Shop Gemstones2 List
   final List<AuctionListModel> shopGemstones2List = _generateShopGemstones2List();
@@ -277,51 +277,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  //For Shop by Style List
-  static List<AuctionListModel> _generateShopDiamondList() {
-    List<String> nameList = [
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant",
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant",
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant"
-    ];
-    List<String> imageList = [
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-    ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
-    );
-  }
-
   static List<AuctionListModel> _generateShopByBrands() {
     List<String> nameList = [
       "Martin Flyer",
@@ -363,67 +318,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ];
     return List.generate(
       nameList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
-    );
-  }
-
-  //For Shop gemstones List
-  static List<AuctionListModel> _generateShopGemstonesList() {
-    List<String> nameList = [
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari"
-    ];
-    List<String> imageList = [
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-    ];
-    return List.generate(
-      20,
       (index) => AuctionListModel(
         id: index.toString(),
         name: nameList[index],
@@ -1004,11 +898,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           subTitle: subTitle,
         );
 
+      case HomeSlug.kgkDiamondShape:
+        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+
+      case HomeSlug.kgkGemstone:
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
+
       case HomeSlug.unknown:
       default:
         //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
 
         // TODO: For shop by diamond _buildShopDiamondSection(homeBloc, style)
+
         return const SizedBox.shrink();
     }
   }
@@ -1104,7 +1005,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return AuctionListModel(
           id: item.id?.toString() ?? '',
           name: item.name,
-          imageUrl: item.imgPath,
+          imageUrl: item.imgPath?.setMediaUrl,
           redirectTo: RedirectionTo.jewellery.toString(),
         );
       });
@@ -1256,6 +1157,8 @@ enum HomeSlug {
   mobileGetInspired('mobile-get-inspired'),
   mobileShopByStyle('mobile-shop-by-style'),
   mobileDIYGuidance('mobile-diy-guidance'),
+  kgkDiamondShape('kgk-diamond-shape'),
+  kgkGemstone('kgk-gemstone'),
   unknown('unknown');
 
   const HomeSlug(this.value);

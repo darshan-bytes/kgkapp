@@ -108,6 +108,8 @@ class ApiClient {
 
   static const String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';
 
+  static const String homePageNewlyLaunches = '$apiBaseUrl/homepage-collections/home-page-newlylaunches';
+
   static const String shapeMasterFilters = '$apiBaseUrl/shape-master/filters';
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
