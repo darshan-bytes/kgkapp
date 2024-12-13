@@ -939,4 +939,5 @@ class APPStrings {
   static const String allFiltersCleared = 'mob_all_filters_cleared';
   static const String permissionDenied = 'mob_permission_denied';
   static const String pleaseEnableLocation = 'mob_please_enable_location';
+  static const String stock = 'mob_stock';
 }

@@ -72,6 +72,8 @@ class PaginationData<T> {
         return CollectionDataItemsModel.fromJson(json);
       case const (RetailStoreModel):
         return RetailStoreModel.fromJson(json);
+      case const (HomeNewLanuchesDatum):
+        return HomeNewLanuchesDatum.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

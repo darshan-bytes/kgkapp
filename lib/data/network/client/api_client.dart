@@ -108,6 +108,8 @@ class ApiClient {
 
   static const String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';
 
+  static const String homePageNewlyLaunches = '$apiBaseUrl/homepage-collections/home-page-newlylaunches';
+
   static const String shapeMasterFilters = '$apiBaseUrl/shape-master/filters';
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
@@ -129,6 +131,18 @@ class ApiClient {
   static const String deleteUser = '$apiBaseUrl/users';
 
   static String get findRetailerStore => '$apiBaseUrl/retailer-stores/filters';
+
+  static const String customerSalesman = '$apiBaseUrl/customer/salesman';
+
+  static String bagOrderSummaryById(String id) => '$apiBaseUrl/bag/order-summary/$id';
+
+  static const String applyPromoCode = '$apiBaseUrl/promo-code/apply';
+
+  static const String removePromoCode = '$apiBaseUrl/promo-code/remove';
+
+  static const String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
+
+  static const String rmDealOfTheDay = '$apiBaseUrl/homepage-collections/rm-deal-of-the-day';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

@@ -230,8 +230,6 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.purchaseOrder.tr, orderStatus: model.purchaseOrderStatus),
         ];
 
-      default:
-        return [];
-    }
+      }
   }
 }

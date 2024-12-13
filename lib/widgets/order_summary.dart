@@ -5,9 +5,12 @@ class OrderSummary extends StatelessWidget {
   final List<OrderSummaryItem> items;
   final String totalPrice;
   final void Function()? onTapCheckout;
+  final void Function()? onTapRemovePromoCode;
+  final Function(String)? onApplyPromoCode;
   final bool isPromoCodeApplied;
   final TextStyle? titleStyle;
   final TextStyle? totalStyle;
+  final BagOrderCharge? promoCode;
 
   const OrderSummary({
     this.title,
@@ -18,6 +21,9 @@ class OrderSummary extends StatelessWidget {
     this.isPromoCodeApplied = true,
     this.titleStyle,
     this.totalStyle,
+    this.promoCode,
+    this.onTapRemovePromoCode,
+    this.onApplyPromoCode,
   });
 
   @override
@@ -74,18 +80,36 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return InkWell(
-      onTap: () {
-        Utils.showSmartModalBottomSheet(context: context, builder: (context) => const ApplyPromoCodeBottomSheet());
-      },
+      onTap: promoCode == null && onApplyPromoCode != null
+          ? () {
+              Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => ApplyPromoCodeBottomSheet(
+                        onApplyPromoCode: (promoCode) {
+                          onApplyPromoCode?.call(promoCode);
+                        },
+                      ));
+            }
+          : null,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.h),
         child: Row(
           children: [
-            Expanded(child: SmartText(APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle)),
+            Expanded(
+              child: SmartText(
+                promoCode?.title ?? APPStrings.addPromoCode.tr,
+                style: style.addPromoCodeStyle,
+              ),
+            ),
             SizedBox(width: 17.w),
             SmartText(
-              APPStrings.apply.tr,
+              promoCode == null ? APPStrings.apply.tr : APPStrings.remove.tr,
               style: totalStyle ?? style.totalPriceStyle,
+              onTap: promoCode != null
+                  ? () {
+                      onTapRemovePromoCode?.call();
+                    }
+                  : null,
             )
           ],
         ),

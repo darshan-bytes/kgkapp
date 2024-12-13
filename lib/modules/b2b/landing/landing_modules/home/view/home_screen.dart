@@ -57,6 +57,36 @@ class HomeScreen extends StatelessWidget {
                     _buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style, homeBloc.recentlyViewGemstoneList,
                         ScreenIdentifier.productForGemstones,
                         context: context),
+
+                  /// Deal of the day for jewellery
+                  if (homeBloc.dealOfTheDayJewelleryList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForRing,
+                      arrProductList: homeBloc.dealOfTheDayJewelleryList,
+                      context: context,
+                    ),
+
+                  /// Deal of the day for diamond
+                  if (homeBloc.dealOfTheDayDiamondList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForDiamonds,
+                      arrProductList: homeBloc.dealOfTheDayDiamondList,
+                      context: context,
+                    ),
+
+                  /// Deal of the day for gemstone
+                  if (homeBloc.dealOfTheDayGemstoneList.isNotNullNorEmpty)
+                    _buildDealOfTheDaySection(
+                      homeBloc: homeBloc,
+                      style: style,
+                      screenIdentifier: ScreenIdentifier.productForGemstones,
+                      arrProductList: homeBloc.dealOfTheDayGemstoneList,
+                      context: context,
+                    )
                 ],
               ),
             );
@@ -429,8 +459,8 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
-                                  style.primaryColor.withOpacity(0.6),
-                                  style.primaryColor.withOpacity(0.9),
+                                  style.primaryColor.withValues(alpha:0.6),
+                                  style.primaryColor.withValues(alpha:0.9),
                                 ],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),
@@ -522,79 +552,6 @@ Widget _buildImageIndicator(HomeBloc homeBloc,
         ),
       );
     }).toList(),
-  );
-}
-
-Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
-  return SmartHorizontalItemBuilder(
-    title: APPStrings.shopDiamonds.tr,
-    scrollController: homeBloc.shopDiamondsScrollController,
-    isScrollbarVisible: false,
-    titleStyle: style.bannerTitleStyle,
-    itemCount: homeBloc.shopDiamondsList.length,
-    itemBetweenSpace: 17.w,
-    spacingBetweenTitleAndItems: 12.h,
-    titleOptionalPadding: EdgeInsets.only(left: 17.w),
-    listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-    padding: EdgeInsets.symmetric(vertical: 22.h),
-    itemBuilder: (context, index) {
-      final AuctionListModel item = homeBloc.shopDiamondsList[index];
-      return SmartImageTitleColumn(
-        onTap: () {
-          context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
-        },
-        width: 72.w,
-        title: item.name ?? '',
-        titleStyle: style.shopGemstoneTitleStyle,
-        imageBetweenSpacing: 8.h,
-        margin: EdgeInsets.only(
-          left: index == 0 ? 17.w : 0,
-          right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
-        ),
-        imagePadding: EdgeInsets.all(12.w),
-        titleMaxLines: 1,
-        fit: BoxFit.contain,
-        imageUrl: item.imageUrl ?? '',
-        imageWidth: 72.w,
-      );
-    },
-  );
-}
-
-Widget _buildShopGemstoneSection(HomeBloc homeBloc, HomeScreenStyle style,
-    {required List<AuctionListModel> imgList, required double width, required String title}) {
-  return SmartHorizontalItemBuilder(
-    title: title,
-    titleStyle: style.bannerTitleStyle,
-    isScrollbarVisible: false,
-    scrollController: homeBloc.shopGemstonesScrollController,
-    itemCount: imgList.length,
-    //homeBloc.shopGemstonesList
-    backgroundColor: style.shopGemstoneBgColor,
-    itemBetweenSpace: 17.w,
-    spacingBetweenTitleAndItems: 12.h,
-    titleOptionalPadding: EdgeInsets.only(left: 17.w),
-    listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-    padding: EdgeInsets.symmetric(vertical: 22.h),
-    itemBuilder: (context, index) {
-      final AuctionListModel item = imgList[index];
-      return SmartImageTitleColumn(
-        onTap: () {
-          context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-        },
-        width: width,
-        title: item.name ?? '',
-        titleStyle: style.shopGemstoneTitleStyle,
-        imageBetweenSpacing: 8.h,
-        margin: EdgeInsets.only(
-          left: index == 0 ? 17.w : 0,
-          right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
-        ),
-        titleMaxLines: 1,
-        fit: BoxFit.fill,
-        imageUrl: item.imageUrl ?? '',
-      );
-    },
   );
 }
 
@@ -965,18 +922,41 @@ Widget _buildOwnSignaturePieceSteps(String image, String steps, String title, Ho
   );
 }
 
-Widget _buildDealOfTheDaySection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
+Widget _buildDealOfTheDaySection(
+    {required HomeBloc homeBloc,
+    required HomeScreenStyle style,
+    required ScreenIdentifier screenIdentifier,
+    required BuildContext context,
+    required List<ProductDetailsModel> arrProductList}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
-        title: APPStrings.dealOfTheDay.tr,
-        onViewAllTap: () {
-          context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-        },
-        suggestedProductList: homeBloc.dealOfTheDayList,
-        onEyeTap: () {},
-        onFavTap: () {},
-        scrollController: homeBloc.dealOfTheDayScrollController),
+      title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
+      onViewAllTap: arrProductList.length > 5
+          ? () {
+              if (screenIdentifier == ScreenIdentifier.productForRing) {
+                context.pushNamed(AppRoutes.productListGridPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.dealsOfTheDay: FetchScenario.dealOfTheDay});
+              } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
+                context.pushNamed(AppRoutes.stoneListingPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.diamondsDealsOfTheDayParam});
+              } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+                context.pushNamed(AppRoutes.stoneListingPage,
+                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.gemstoneDealsOfTheDayParam});
+              }
+            }
+          : null,
+      onProductTap: (ProductDetailsModel model) {
+        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+          RoutesData.productId: model.productId ?? '',
+          RoutesData.isPageFor: screenIdentifier,
+        });
+      },
+      suggestedProductList: arrProductList,
+      onEyeTap: () {},
+      onFavTap: () {},
+      scrollController: homeBloc.dealOfTheDayScrollController,
+    ),
   );
 }
 

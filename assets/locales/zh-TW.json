@@ -738,10 +738,15 @@
   "mob_max": "最大",
   "mob_max_range_should_be_less_than_x": "最大範圍應該小於 {#}",
   "mob_cant_compare_different_commodities": "您無法比較不同商品的產品",
+  "mob_different_commodities_selected": "不同商品選擇",
+  "mob_yes": "是的",
+  "mob_no": "不",
+  "mob_are_you_sure_change_account_type": "您確定要變更帳戶類型嗎？",
   "mob_recently_viewed_jewellery": "最近觀看的珠寶",
   "mob_recently_viewed_diamond": "最近觀看的鑽石",
   "mob_recently_viewed_gemstone": "最近觀看的寶石",
   "mob_all_filters_cleared": "已清除所有篩選條件",
   "mob_permission_denied": "權限拒絕",
-  "mob_please_enable_location": "請在應用程式設定中啟用位置權限以取得您的目前位置"
+  "mob_please_enable_location": "請在應用程式設定中啟用位置權限以取得您的目前位置",
+  "mob_stock": "庫存"
 }

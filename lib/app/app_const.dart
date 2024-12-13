@@ -23,6 +23,7 @@ class AppConst {
 
   static String splashScreenVideoUrl = Platform.isAndroid ? 'assets/images/splash_video_url.mp4' : 'assets/images/splash_video_url_ios.mp4';
   static String strapiImgBaseUrl = "https://strapi-cms.kgk.magnetoinfotech.com";
+  static String strapiQaEnvImgBaseUrl = "https://qa-strapi-cms.kgk.magnetoinfotech.com";
   static const int passwordLength = 8;
   static const String appCurrency = "INR";
   static const String diamondSinglestone = "DIAMONDSINGLESTONE";
@@ -60,4 +61,10 @@ class AppConst {
   static const String skuLibrary = "sku_library";
 
   static const int noOfMonths = 12;
+
+  /// For diamond Deals of the day api parameters values
+  static const String diamondsDealsOfTheDayParam = "DIAMONDSINGLESTONE";
+
+  /// For gemstone Deals of the day api parameters values
+  static const String gemstoneDealsOfTheDayParam = "CERTIFIEDCOLORSTONE";
 }

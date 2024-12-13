@@ -738,6 +738,7 @@
   "mob_max": "अधिकतम",
   "mob_max_range_should_be_less_than_x": "अधिकतम सीमा कम से कम {#} होना चाहिए",
   "mob_cant_compare_different_commodities": "विभिन्न मालों की तुलना नहीं की जा सकती",
+  "mob_different_commodities_selected": "विभिन्न वस्तुओं का चयन किया गया",
   "mob_yes": "हाँ",
   "mob_no": "नहीं",
   "mob_are_you_sure_change_account_type": "क्या आप वाकई खाता प्रकार बदलना चाहते हैं?",
@@ -746,5 +747,6 @@
   "mob_recently_viewed_gemstone": "हाल ही में देखा गया रत्न",
   "mob_all_filters_cleared": "सभी फ़िल्टर पहले ही साफ़ कर दिए गए हैं",
   "mob_permission_denied": "अनुमति नहीं दी गई",
-  "mob_please_enable_location" :"कृपया अपना वर्तमान स्थान जानने के लिए ऐप सेटिंग में स्थान अनुमति सक्षम करें"
+  "mob_please_enable_location" :"कृपया अपना वर्तमान स्थान जानने के लिए ऐप सेटिंग में स्थान अनुमति सक्षम करें",
+  "mob_stock": "स्टॉक"
 }

@@ -5,6 +5,11 @@ part 'my_bag_event.dart';
 part 'my_bag_state.dart';
 
 class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
+  Commodity? commodity;
+  BagListDataModel? bagListDataModel;
+  List<CustomerSalesmanModel> salesmanList = [];
+  BagOrderSummaryDataModel? bagOrderSummaryData;
+
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
@@ -23,7 +28,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   bool showMoreDetails = false;
   String subTotalAmount = "\$90,000.00";
 
-  List<ProductDetailsModel> myBagProductList = List.generate(
+  List<ProductDetailsModel> myBagProductList = [];
+
+  /*List<ProductDetailsModel> myBagProductList = List.generate(
     9,
     (index) => ProductDetailsModel(
       diamondClarityChart: DiamondClarityChart(
@@ -76,8 +83,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
       showMore: false,
     ),
-  );
-  List<ProductDetailsModel> suggestedProductList = List.generate(
+  );*/
+  List<ProductDetailsModel> suggestedProductList = [];
+
+  /*List<ProductDetailsModel> suggestedProductList = List.generate(
     8,
     (index) => ProductDetailsModel(
       diamond: "2.5 crt",
@@ -86,9 +95,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       name: "2.00 Carat H VS1 Excellent Cut Round Setting",
       originalPrice: "\$3,000.00",
     ),
-  );
+  );*/
 
-  List<ProductDetailsModel> mostPurchaseProductList = List.generate(
+  List<ProductDetailsModel> mostPurchaseProductList = [];
+
+  /*List<ProductDetailsModel> mostPurchaseProductList = List.generate(
     8,
     (index) => ProductDetailsModel(
       diamond: "1.5 gram",
@@ -97,7 +108,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
       originalPrice: "\$ 5,000.00",
     ),
-  );
+  );*/
 
   List<PaymentCondition> paymentConditionList = [
     PaymentCondition(id: "1", title: "7 days"),
@@ -130,6 +141,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
     on<MyBagToggleViewModeEvent>(_onMyBagToggleViewModeEvent);
     on<MyBagAddToWatchlistEvent>(_onMyBagAddToWatchlistEvent);
+    on<MyBagRemovePromoCodeEvent>(_onMyBagRemovePromoCode);
+    on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -145,9 +158,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onInitialMyBagEvent(InitialMyBagEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
     userType = BlocProvider.of<AppBloc>(event.context).userType;
-    //TODO: Write code get Data from API
     await fetchListOfBag(event.context, emit);
+    emit(const MyBagLoadedState());
+    await fetchSalesmanList(event.context, emit);
+    await fetchBagOrderSummaryData(event.context, emit);
   }
 
   /// TODO: In Future Implementation
@@ -156,23 +172,83 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     String id = StorageManager().getBagId() ?? "";
     if (id.isNullOrEmpty) return;
     Either<ErrorResponse, BagListDataModel>? response;
-    response = await AppRepository(context).getBagListData(id: id, isShowLoader: false);
+    response = await AppRepository(context).getBagListData(id: id, isShowLoader: true);
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (r) async {
       String? bagId = StorageManager().getBagId();
+      myBagProductList.clear();
+      bagListDataModel = r;
       if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+        commodity = r.result[0].displayCommodity;
         MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
         await StorageManager().storeBagData(myBagDataModel);
         myBagProductList = List.generate(r.result.length, (index) {
           final item = r.result[index];
           return ProductDetailsModel(
             productId: item.productId,
+            suid: item.suid,
+            quantity: item.quantity,
+            name: item.jewelleryName,
             commodity: item.displayCommodity,
+            imageUrl: item.image,
+            shape: item.shape,
+            color: item.color,
+            lotCode: item.lotCode,
+            discountPercentage: item.discountPercentage != null
+                ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
+                : "",
+            clarity: item.clarity,
+            ctsOrGms: item.ctsOrGms,
+            rappaportPrice: item.rappaportPrice,
+            polish: item.polish,
+            measurements: item.measurements,
+            table: item.table,
+            depth: item.depth,
+            totalPrice: item.totalPrice?.toStringAsFixed(2),
+            discountPrice: item.discountPrice?.toStringAsFixed(2),
+            perCaratPrice: item.rate,
+            openDnaUrl: item.openDnaUrl,
+            certificateFile: item.certificateFile,
+            fluorescence: item.fluorescence,
+            shapeImage: item.shapeImage?.setMediaUrl,
           );
         });
       }
     });
+  }
+
+  Future<void> fetchSalesmanList(BuildContext context, Emitter<MyBagState> emit) async {
+    Either<ErrorResponse, List<CustomerSalesmanModel>>? response;
+    response = await AppRepository(context).customerSalesman();
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        if (r.isNotEmpty) {
+          salesmanList = r.where((element) => element.assignClient != null).toList();
+          emit(MyBagSalesmanListLoadedState());
+        }
+      },
+    );
+  }
+
+  Future<void> fetchBagOrderSummaryData(BuildContext context, Emitter<MyBagState> emit) async {
+    //getBagOrderSummaryData
+    String id = StorageManager().getBagId() ?? "";
+    if (id.isNullOrEmpty) return;
+    final response = await AppRepository(context).getBagOrderSummaryData(id: id);
+
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        bagOrderSummaryData = r;
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
   }
 
   void _onMyBagChangeProductQuality(MyBagChangeProductQuality event, Emitter<MyBagState> emit) {
@@ -193,8 +269,27 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
-    AppBloc appBloc = BlocProvider.of<AppBloc>(event.context);
-    appBloc.add(ProductRemoveFromBagEvent(myBagProductList[event.index], event.context));
+    String bagId = StorageManager().getBagId() ?? "";
+    String suid = myBagProductList[event.index].suid ?? "";
+    if (bagId.isEmpty || suid.isEmpty) return;
+    final Map<String, dynamic> body = {
+      ApiKey.id: bagId,
+      ApiKey.suid: suid,
+    };
+    final result = await AppRepository(event.context).deleteBag(body: body);
+    await result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        await fetchListOfBag(event.context, emit);
+        emit(const MyBagLoadedState());
+        await fetchSalesmanList(event.context, emit);
+        emit(MyBagSalesmanListLoadedState());
+        await fetchBagOrderSummaryData(event.context, emit);
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
 
     // Temporary commented static logic
     // if (myBagProductList[event.index].isSelectedProduct) {
@@ -205,14 +300,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagAddToWatchlistEvent(MyBagAddToWatchlistEvent event, Emitter<MyBagState> emit) async {
-    BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(
-
-        ///TODO : Make below data dynamic in future
-        ProductDetailsModel(
-          productId: "DS10",
-          commodity: Commodity.diamond,
-        ),
-        event.context));
+    BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(myBagProductList[event.index], event.context));
     await Utils.showSmartModalBottomSheet(
       context: event.context,
       enableDrag: false,
@@ -258,5 +346,45 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   void _onMyBagToggleReadMoreDetailsEvent(MyBagToggleReadMoreDetailsEvent event, Emitter<MyBagState> emit) {
     isReadMoreDetailsOpen = !isReadMoreDetailsOpen;
     emit(MyBagToggleReadMoreDetailsState(isReadMoreDetailsOpen));
+  }
+
+  Future<void> _onMyBagRemovePromoCode(MyBagRemovePromoCodeEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
+    event.context.setAppLoading(true);
+    final response = await AppRepository(event.context).removePromoCode();
+    await response?.fold(
+      (l) {
+        event.context.setAppLoading(false);
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        await fetchBagOrderSummaryData(event.context, emit);
+        event.context.setAppLoading(false);
+      },
+    );
+  }
+
+  Future<void> _onMyBagApplyPromoCode(MyBagApplyPromoCodeEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagReloadState());
+    try {
+      event.context.setAppLoading(true);
+      final Map<String, dynamic> body = {
+        ApiKey.promoCode_: event.promoCode,
+      };
+      final response = await AppRepository(event.context).applyPromoCode(body);
+      await response?.fold(
+        (l) {
+          event.context.setAppLoading(false);
+          Utils.showMessage(l.message);
+        },
+        (r) async {
+          await fetchBagOrderSummaryData(event.context, emit);
+          event.context.setAppLoading(false);
+        },
+      );
+    } catch (e) {
+      event.context.setAppLoading(false);
+      Utils.showMessage(e.toString());
+    }
   }
 }

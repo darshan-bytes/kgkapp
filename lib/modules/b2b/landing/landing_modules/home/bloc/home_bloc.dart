@@ -23,13 +23,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<AuctionListModel> exploreFancyColorDiamondsList = _generateFancyColorDiamondsList();
 
   //Shop Diamonds List
-  List<AuctionListModel> shopDiamondsList = _generateShopDiamondList();
+  List<AuctionListModel> shopDiamondsList = [];
 
   //Shop Rings List
   final List<AuctionListModel> shopByBrands = _generateShopByBrands();
 
   //Shop Gemstones List
-  List<AuctionListModel> shopGemstonesList = _generateShopGemstonesList();
+  List<AuctionListModel> shopGemstonesList = [];
 
   //Shop Gemstones2 List
   final List<AuctionListModel> shopGemstones2List = _generateShopGemstones2List();
@@ -79,7 +79,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Deal of the day With Scroll controller
   final ScrollController dealOfTheDayScrollController = ScrollController();
-  final List<ProductDetailsModel> dealOfTheDayList = _generateTabViewList(isOfferAvailable: true);
+
+  /// Deal of the day for the jewellery
+  List<ProductDetailsModel> dealOfTheDayJewelleryList = [];
+
+  /// Deal of the day for the diamonds
+  List<ProductDetailsModel> dealOfTheDayDiamondList = [];
+
+  /// Deal of the day for the gemstones
+  List<ProductDetailsModel> dealOfTheDayGemstoneList = [];
 
   //Get Inspired With Scroll controller
   // final List<AuctionListModel> getInspiredList = _generateGetInspireList();
@@ -162,6 +170,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await getJewelleryProductRecentlyViewed(event.context, emit);
     await getDiamondProductRecentlyViewed(event.context, emit);
     await getGemstoneProductRecentlyViewed(event.context, emit);
+    await _getJewelleryDealOfTheDayAPICall(event.context, emit);
+    await _getDiamondDealOfTheDayAPICall(event.context, emit);
+    await _getGemstoneDealOfTheDayAPICall(event.context, emit);
     emit(const HomeReloadState());
     emit(const HomeStrapiDataFetchedState());
     if (refreshCompleter.isCompleted) {
@@ -213,27 +224,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return refreshCompleter.future;
   }
 
-  // //For Jewellery List
-  // static List<AuctionListModel> _generateJewelleryList() {
-  //   List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant", "XYZ"];
-  //   List<String> imageList = [
-  //     "https://i.ibb.co/TcT6YBX/Category8.png",
-  //     "https://i.ibb.co/M1s88cn/Category7.png",
-  //     "https://i.ibb.co/YfxWQ2X/Category6.jpg",
-  //     "https://i.ibb.co/1sn6WX0/Category5.jpg",
-  //     "https://i.ibb.co/0KKw83x/Category4.jpg",
-  //     "https://i.ibb.co/qBYqg0B/Category3.jpg",
-  //   ];
-  //   return List.generate(
-  //     5,
-  //         (index) => AuctionListModel(
-  //       id: index.toString(),
-  //       name: nameList[index],
-  //       imageUrl: imageList[index],
-  //     ),
-  //   );
-  // }
-
   //For Jewellery List
   static List<AuctionListModel> _generateJewelleryList() {
     List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
@@ -257,11 +247,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   //For Engagement List
   static List<AuctionListModel> _generateEngagementList() {
     List<String> imageList = [
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
       "https://i.ibb.co/tXQzK2j/Main-Banner1.jpg",
       "https://i.ibb.co/5cCtJPM/Main-Banner2.jpg",
       "https://i.ibb.co/4sSxLwF/Main-Banner3.jpg",
@@ -278,11 +263,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   static List<AuctionListModel> _generateLatestCollection() {
     List<String> imageList = [
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
-      // "https://i.ibb.co/P5w4MHq/Banner.png",
       "https://i.ibb.co/1fckq7Y/Single-Banner3.png",
       "https://i.ibb.co/GJC8rbV/Single-Banner4.png",
       "https://i.ibb.co/1fckq7Y/Single-Banner3.png",
@@ -292,51 +272,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       imageList.length,
       (index) => AuctionListModel(
         id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
-  }
-
-  //For Shop by Style List
-  static List<AuctionListModel> _generateShopDiamondList() {
-    List<String> nameList = [
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant",
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant",
-      "Round",
-      "Oval",
-      "Cushion",
-      "Pear",
-      "Pendant"
-    ];
-    List<String> imageList = [
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-      "https://i.ibb.co/6RGVXbh/Mask-group-3.png",
-      "https://i.ibb.co/8g83JhC/Mask-group.png",
-      "https://i.ibb.co/KrzYdKc/Mask-group-1.png",
-      "https://i.ibb.co/85Xqqqc/Mask-group-2.png",
-    ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
         imageUrl: imageList[index],
       ),
     );
@@ -383,67 +318,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ];
     return List.generate(
       nameList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
-    );
-  }
-
-  //For Shop gemstones List
-  static List<AuctionListModel> _generateShopGemstonesList() {
-    List<String> nameList = [
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari",
-      "Emeralds",
-      "Ruby",
-      "Peridot",
-      "Citrine",
-      "Aquamari"
-    ];
-    List<String> imageList = [
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-      "https://i.ibb.co/HdDPk1L/Image-1.png",
-      "https://i.ibb.co/dt4GVp5/Image-2.png",
-      "https://i.ibb.co/82W97Cb/Image-3.png",
-      "https://i.ibb.co/ym2pkwD/Image.png",
-    ];
-    return List.generate(
-      20,
       (index) => AuctionListModel(
         id: index.toString(),
         name: nameList[index],
@@ -1024,11 +898,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           subTitle: subTitle,
         );
 
+      case HomeSlug.kgkDiamondShape:
+        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+
+      case HomeSlug.kgkGemstone:
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
+
       case HomeSlug.unknown:
-      default:
-        //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
+      //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
 
         // TODO: For shop by diamond _buildShopDiamondSection(homeBloc, style)
+
         return const SizedBox.shrink();
     }
   }
@@ -1055,8 +935,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.unknown:
-      default:
-        printWrapped('Unknown redirection');
+      printWrapped('Unknown redirection');
         return; // Exit early for unknown redirection
     }
 
@@ -1082,7 +961,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             (index) {
               KgkCoutureDetails item = r.dataList![index];
               return ProductDetailsModel(
-                productId: item.suid ?? 'EFGSTOCK5030018249',
+                productId: item.suid ?? '',
                 commodity: Commodity.jewellery,
                 imageUrl: item.multipleFinishedViewImage ?? '',
                 name: item.productDescription ?? '',
@@ -1124,13 +1003,147 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return AuctionListModel(
           id: item.id?.toString() ?? '',
           name: item.name,
-          imageUrl: item.imgPath,
+          imageUrl: item.imgPath?.setMediaUrl,
           redirectTo: RedirectionTo.jewellery.toString(),
         );
       });
     } catch (e) {
       // Utils.showMessage(e.toString());
       printWrapped('Error in fetching shape master filters: $e');
+    }
+  }
+
+  Future<void> _getJewelleryDealOfTheDayAPICall(BuildContext context, emit) async {
+    final Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getJewelleryDealOfTheDayProductList(
+      page: AppConst.page1.toString(),
+      limit: AppConst.pageLimit10.toString(),
+    );
+
+    response?.fold(
+      (error) {
+        if (error.message?.isNotEmpty == true) {
+          Utils.showMessage(error.message!);
+        }
+      },
+      (data) {
+        dealOfTheDayJewelleryList = data.data.map((e) {
+          final isDiscounted = e.discountPercentage != null && e.discountPercentage! > 0;
+          return ProductDetailsModel(
+            productId: e.id,
+            name: e.productDescription ?? '',
+            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? e.multipleFinishedViewImage.first.imageUrl ?? '' : '',
+            offerPrice: e.discountPrice?.setCurrency,
+            originalPrice: e.finalPrice?.setCurrency,
+            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            productSku: e.contractNoSkuNo,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            commodity: Commodity.jewellery,
+            subTitle: e.productDescription ?? '',
+            title: e.contractNoSkuNo ?? '',
+            cts: e.crt,
+            gms: e.gms,
+            brandName: e.brandName,
+            colorsCode: [
+              e.metalColor1HexCode ?? "",
+              e.metalColor2HexCode ?? "",
+              e.metalColor3HexCode ?? "",
+            ],
+          );
+        }).toList();
+        emit(HomeStrapiDataFetchedState());
+      },
+    );
+  }
+
+  Future<void> _getGemstoneDealOfTheDayAPICall(BuildContext context, emit) async {
+    Map<String, String> queryParams = {
+      ApiKey.page: AppConst.page1.toString(),
+      ApiKey.limit: AppConst.pageLimit10.toString(),
+      ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
+    };
+
+    final Either<ErrorResponse, GemstoneListingModel>? response =
+        await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParams);
+
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+    }, (success) {
+      final List<GemstoneDatum> diamondList = success.data;
+      dealOfTheDayGemstoneList = diamondList.map((e) {
+        bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
+        return ProductDetailsModel(
+          productId: e.suid ?? '',
+          name: e.rmDescription ?? '',
+          imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+          offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+          originalPrice: e.discountPrice?.setCurrency,
+          finalPrice: e.finalPrice?.setCurrency,
+          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+          productSku: e.lotCode,
+          reviewCount: e.reviewCount,
+          rating: e.rating?.toDouble(),
+          commodity: Commodity.diamond,
+          isFavourite: e.isFavorite,
+          wishlistId: e.wishlistID,
+          subTitle: e.rmDescription ?? '',
+          title: e.lotCode ?? '',
+        );
+      }).toList();
+      emit(HomeStrapiDataFetchedState());
+    });
+  }
+
+  Future<void> _getDiamondDealOfTheDayAPICall(BuildContext context, emit) async {
+    Map<String, String> queryParams = {
+      ApiKey.page: AppConst.page1.toString(),
+      ApiKey.limit: AppConst.pageLimit10.toString(),
+      ApiKey.stone: AppConst.diamondsDealsOfTheDayParam
+    };
+
+    final Either<ErrorResponse, DiamondListingModel>? response =
+        await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParams);
+
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+    }, (success) {
+      final List<DiamondDataModel> diamondList = success.data;
+      dealOfTheDayDiamondList = diamondList.map((e) {
+        bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+        return ProductDetailsModel(
+          productId: e.suid ?? '',
+          name: e.rmDescription ?? '',
+          imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
+          offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
+          finalPrice: e.finalPrice?.setCurrency,
+          originalPrice: e.discountPrice?.setCurrency,
+          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+          productSku: e.lotCode,
+          reviewCount: e.reviewCount,
+          rating: e.rating?.toDouble(),
+          commodity: Commodity.diamond,
+          isFavourite: e.isFavorite,
+          wishlistId: e.wishlistID,
+          subTitle: e.rmDescription ?? '',
+          title: e.lotCode ?? '',
+        );
+      }).toList();
+      emit(HomeStrapiDataFetchedState());
+    });
+  }
+
+  String getTitleForDealOfTheDay(ScreenIdentifier screenIdentifier) {
+    switch (screenIdentifier) {
+      case ScreenIdentifier.productForRing:
+        return ('${APPStrings.jewellery.tr} ${APPStrings.dealOfTheDay.tr}');
+      case ScreenIdentifier.productForDiamonds:
+        return ('${APPStrings.diamond.tr} ${APPStrings.dealOfTheDay.tr}');
+      case ScreenIdentifier.productForGemstones:
+        return ('${APPStrings.gemstone.tr} ${APPStrings.dealOfTheDay.tr}');
+      default:
+        return '';
     }
   }
 }
@@ -1142,6 +1155,8 @@ enum HomeSlug {
   mobileGetInspired('mobile-get-inspired'),
   mobileShopByStyle('mobile-shop-by-style'),
   mobileDIYGuidance('mobile-diy-guidance'),
+  kgkDiamondShape('kgk-diamond-shape'),
+  kgkGemstone('kgk-gemstone'),
   unknown('unknown');
 
   const HomeSlug(this.value);

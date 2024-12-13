@@ -1,5 +1,6 @@
 import 'package:kgk/kgk.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Utils {
   Utils._();
@@ -263,5 +264,14 @@ class Utils {
   static int calculateTotalPages(int? totalRecords, int limit) {
     totalRecords ??= 0;
     return (totalRecords % limit == 0) ? totalRecords ~/ limit : (totalRecords ~/ limit) + 1;
+  }
+
+  static Future<bool> launchUrlFromString(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

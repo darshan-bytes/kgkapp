@@ -10,6 +10,7 @@ enum FetchScenario {
   collectionName,
   regularList,
   recentlyViewed,
+  dealOfTheDay,
 }
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
@@ -28,6 +29,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   String sortKey = AppConst.sortKeySuid;
   String sortValue = AppConst.sortValueAsc;
   String collectionName = "";
+  FetchScenario fetchScenario = FetchScenario.dealOfTheDay;
 
   List<FilterData> filterData = [];
   List<JewelleryDataModel> jewelleryDatumList = [];
@@ -98,6 +100,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productId = data[RoutesData.productId] ?? "";
       collectionName = data[RoutesData.collectionName] ?? "";
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
+      fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.dealOfTheDay;
     }
   }
 
@@ -276,6 +279,14 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await AppRepository(context).getRecentlyViewedProductList(
             limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
         break;
+
+      case FetchScenario.dealOfTheDay:
+        response = await AppRepository(context).getJewelleryDealOfTheDayProductList(
+          page: paginationScrollController.currentPage.toString(),
+          limit: AppConst.pageLimit.toString(),
+          isLoadMore: isLoadMore,
+        );
+        break;
     }
 
     response?.fold((error) => Utils.showMessage(error.message), (success) {
@@ -283,6 +294,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       final localList = success.data;
       productList.addAll(localList
           .map((item) => ProductDetailsModel(
+                  suid: item.suid ?? "",
                   imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
                   name: item.productDescription ?? "",
                   originalPrice: item.finalPrice?.setCurrency,
@@ -316,6 +328,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (productId.isNotNullNorEmpty) return FetchScenario.productId;
     if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
     if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) return FetchScenario.recentlyViewed;
+    if (fetchScenario == FetchScenario.dealOfTheDay) return FetchScenario.dealOfTheDay;
     return FetchScenario.regularList;
   }
 
@@ -326,9 +339,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
-    emit(ProductListLoadingMoreState());
-    await fetchJewelleriesList(context, emit, false);
-    emit(ProductListLoadedMoreState(currentPage + 1));
+    if (currentPage <= totalNumberOfPages!) {
+      emit(ProductListLoadingMoreState());
+      await fetchJewelleriesList(context, emit, false);
+      emit(ProductListLoadedMoreState(currentPage + 1));
+    }
   }
 
   Future<void> _handlePullToRefresh(BuildContext context, Emitter<ProductListState> emit) async {

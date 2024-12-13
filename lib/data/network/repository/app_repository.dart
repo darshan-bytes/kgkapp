@@ -445,9 +445,9 @@ class AppRepository extends ApiService {
   }
 
   // Delete Entire Bag
-  Future<Either<ErrorResponse, CommonResponse<MyBagDataModel>>?> deleteBag({required Map<String, dynamic> body}) async {
+  Future<Either<ErrorResponse, CommonResponse>?> deleteBag({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await deleteMethod<Map<String, CommonResponse<MyBagDataModel>>>(ApiClient.deleteBag, withFullResponse: true, body: body);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteBag, withFullResponse: true, body: body);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -732,6 +732,11 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
+    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches, query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
       {Map<String, dynamic>? body, bool isLoadMore = false}) async {
     if (!isLoadMore) {
@@ -762,6 +767,56 @@ class AppRepository extends ApiService {
     var response = await postMethod<PaginationData<RetailStoreModel>>(ApiClient.findRetailerStore, body);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, List<CustomerSalesmanModel>>?> customerSalesman() async {
+    var response = await getMethod<CustomerSalesmanModel>(ApiClient.customerSalesman);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, BagOrderSummaryDataModel>?> getBagOrderSummaryData({required String id}) async {
+    var response = await getMethod<BagOrderSummaryDataModel>(ApiClient.bagOrderSummaryById(id), withCurrencyHeader: true);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> applyPromoCode(Map<String, dynamic> body) async {
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.applyPromoCode, body, withFullResponse: true, withCurrencyHeader: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode() async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> getJewelleryDealOfTheDayProductList(
+      {required String limit, required String page, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryDealOfTheDay,
+        query: {ApiKey.page: page, ApiKey.limit: limit}, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondDealOfTheDayProductList(
+      {Map<String, String>? query, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<DiamondListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneDealOfTheDayProductList(
+      {Map<String, String>? query, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<GemstoneListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((error) => Left(error), (r) => Right(r));
   }
 }
 

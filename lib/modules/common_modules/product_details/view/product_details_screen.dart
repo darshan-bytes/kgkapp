@@ -37,7 +37,7 @@ class ProductDetailsScreen extends StatelessWidget {
             color: style.whiteColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.grey.withValues(alpha:0.5),
                 spreadRadius: 7.r,
                 blurRadius: 7.r,
                 offset: const Offset(0, 3), // changes position of shadow
@@ -375,12 +375,7 @@ class ProductDetailsScreen extends StatelessWidget {
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             SizedBox(height: 24.h),
             const Divider(),
-            _ringDetails(bloc, style),
-            const Divider(),
-            _diamondDetails(bloc, style),
-            const Divider(),
-            _gemstoneDetails(bloc, style),
-            const Divider(),
+            JewelleryDetailsComponentsView(components: bloc.productDetails?.components ?? []),
           ],
           if (bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
@@ -558,38 +553,6 @@ class ProductDetailsScreen extends StatelessWidget {
       itemCount: bloc.productCustomizations.length,
       itemBuilder: (context, index) => ProductDetailsCustomizations(index: index),
       separatorBuilder: (_, __) => Divider(height: 48.h),
-    );
-  }
-
-  Widget _ringDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is RingDetailsToggleState,
-      builder: (context, state) {
-        return Padding(
-          padding: bloc.isRingDetailsOpen ? EdgeInsets.only(bottom: 28.h) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            key: bloc.ringDetailsKey,
-            title: SmartText(
-              'Ring details',
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: (bloc.isRingDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24.w, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24.w, color: style.ratingGlowColor),
-            onExpansionChanged: (value) {
-              bloc.add(const RingDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.productType.tr, 'Engagement Ring', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.brand.tr, 'Flyerfit', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.meleeWeight.tr, 'SA-.25cts Dia-0.28cts', context),
-            ],
-          ),
-        );
-      },
     );
   }
 

@@ -271,8 +271,8 @@ class HomeWidgets {
                             borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
-                                  style.primaryColor.withOpacity(0.6),
-                                  style.primaryColor.withOpacity(0.9),
+                                  style.primaryColor.withValues(alpha:0.6),
+                                  style.primaryColor.withValues(alpha:0.9),
                                 ],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),
@@ -849,7 +849,7 @@ class HomeWidgets {
           onViewAllTap: () {
             context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
           },
-          suggestedProductList: homeBloc.dealOfTheDayList,
+          suggestedProductList: homeBloc.dealOfTheDayJewelleryList,
           onEyeTap: () {},
           onFavTap: () {},
           scrollController: homeBloc.dealOfTheDayScrollController),
@@ -930,6 +930,42 @@ class HomeWidgets {
                     ))
                 .toList())
       ]),
+    );
+  }
+
+  static Widget _buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
+    return SmartHorizontalItemBuilder(
+      title: APPStrings.shopDiamonds.tr,
+      scrollController: homeBloc.shopDiamondsScrollController,
+      isScrollbarVisible: false,
+      titleStyle: style.bannerTitleStyle,
+      itemCount: homeBloc.shopDiamondsList.length,
+      itemBetweenSpace: 17.w,
+      spacingBetweenTitleAndItems: 12.h,
+      titleOptionalPadding: EdgeInsets.only(left: 17.w),
+      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
+      padding: EdgeInsets.symmetric(vertical: 22.h),
+      itemBuilder: (context, index) {
+        final AuctionListModel item = homeBloc.shopDiamondsList[index];
+        return SmartImageTitleColumn(
+          onTap: () {
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+          },
+          width: 72.w,
+          title: item.name ?? '',
+          titleStyle: style.shopGemstoneTitleStyle,
+          imageBetweenSpacing: 8.h,
+          margin: EdgeInsets.only(
+            left: index == 0 ? 17.w : 0,
+            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          ),
+          imagePadding: EdgeInsets.all(12.w),
+          titleMaxLines: 1,
+          fit: BoxFit.contain,
+          imageUrl: item.imageUrl ?? '',
+          imageWidth: 72.w,
+        );
+      },
     );
   }
 }

@@ -83,4 +83,6 @@ class ApiKey {
   static const String month = 'month';
   static const String year = 'year';
   static const String yes = 'yes';
+  static const String promoCode_ = 'promo_code';
+  static const String stone = 'stone';
 }
