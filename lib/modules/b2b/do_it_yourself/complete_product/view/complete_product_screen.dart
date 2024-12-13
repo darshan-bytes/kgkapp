@@ -42,7 +42,7 @@ class CompleteProductScreen extends StatelessWidget {
         color: style.whiteColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha:0.5),
             spreadRadius: 7.r,
             blurRadius: 7.r,
             offset: const Offset(0, 3), // changes position of shadow

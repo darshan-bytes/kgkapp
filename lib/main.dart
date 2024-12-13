@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
               if (appBloc.isLoading) // Top level loading ( used while api calls)
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withValues(alpha: 0.5),
                   child: const Center(
                     child: CircularProgressIndicator(),
                   ),

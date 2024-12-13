@@ -126,7 +126,7 @@ class LightModeTheme extends AppTheme {
         indicatorColor: colors.primary,
         backgroundColor: colors.white,
         borderColor: colors.colorD3DAE0,
-        boxShadowColor: colors.black.withOpacity(0.17),
+        boxShadowColor: colors.black.withValues(alpha:0.17),
       );
 
   @override
@@ -161,7 +161,7 @@ class LightModeTheme extends AppTheme {
 
   @override
   CategoryTileStyle get categoryTileStyle => CategoryTileStyle(
-      backgroundColor: colors.colorC5DEEB.withOpacity(0.38),
+      backgroundColor: colors.colorC5DEEB.withValues(alpha:0.38),
       dividerLineColor: colors.colorD3DAE0,
       labelStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
       detailStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp),
@@ -440,7 +440,7 @@ class LightModeTheme extends AppTheme {
         itemSelectedStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
         totalAmountStyle: interMediumBoldTextStyle,
         diamondPurityStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color8C8C8C),
-        bottomNavBarShadowColor: colors.black.withOpacity(0.08),
+        bottomNavBarShadowColor: colors.black.withValues(alpha:0.08),
         bottomBarTotalTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         bottomBarTotalAmountTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         bottomBarMoreLessTextStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
@@ -481,7 +481,7 @@ class LightModeTheme extends AppTheme {
   @override
   CountryPickerStyle get countryPickerStyle => CountryPickerStyle(
       backgroundColor: colors.white,
-      searchBorderColor: colors.color8C98A8.withOpacity(0.2),
+      searchBorderColor: colors.color8C98A8.withValues(alpha:0.2),
       inputBorderColor: colors.colorD3DAE0,
       inputTextStyle: interRegularTextStyle,
       inputLableStyle: interRegularTextStyle.copyWith(
@@ -679,7 +679,7 @@ class LightModeTheme extends AppTheme {
         lostTextColor: colors.colorE83535,
         blueInProgressBackgroundColor: colors.colorDFF2FF,
         blueInProgressTextColor: colors.color006FBB,
-        yellowBgColor: colors.colorEEC200.withOpacity(0.1),
+        yellowBgColor: colors.colorEEC200.withValues(alpha:0.1),
         yellowTextColor: colors.colorEEC200,
       );
 
@@ -842,7 +842,7 @@ class LightModeTheme extends AppTheme {
   @override
   QrScannerStyle get qrScannerStyle => QrScannerStyle(
         titleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
-        overLayColor: colors.black.withOpacity(0.5),
+        overLayColor: colors.black.withValues(alpha:0.5),
       );
 
   @override
@@ -931,7 +931,7 @@ class LightModeTheme extends AppTheme {
         whiteColor: colors.white,
         primaryColor: colors.primary,
         boxShadow: BoxShadow(
-          color: colors.black.withOpacity(0.2),
+          color: colors.black.withValues(alpha:0.2),
           offset: const Offset(0, 2),
           blurRadius: 8.r,
           spreadRadius: 0,
@@ -945,7 +945,7 @@ class LightModeTheme extends AppTheme {
         borderColor: colors.colorD3DAE0,
         bannerTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         shopGemstoneBgColor: colors.colorF7F9FA,
-        viewAllCollectionsBgColor: colors.black.withOpacity(0.3),
+        viewAllCollectionsBgColor: colors.black.withValues(alpha:0.3),
         viewAllCollectionsTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp, color: colors.white),
         createOwnSignatureTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, color: colors.white),
         createOwnSignatureSubTitleStyle: interRegularTextStyle.copyWith(color: colors.white),
@@ -1097,13 +1097,13 @@ class LightModeTheme extends AppTheme {
         sparkleTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 32.sp),
         sparkleSubTitleStyle: interRegularTextStyle,
         craftedSectionTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp),
-        originSectionBgColor: colors.colorC5DEEB.withOpacity(0.2),
+        originSectionBgColor: colors.colorC5DEEB.withValues(alpha:0.2),
         originSectionSubTitleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         designOwnEarringTextStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 20.sp),
         designYourOwnStoneBgColor: colors.colorF7F9FA,
         learnMoreTextStyle: interMediumBoldTextStyle.copyWith(color: colors.primary),
         newlyLaunchedStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
-        newlyLaunchedBackgroundColor: colors.colorC5DEEB.withOpacity(0.2),
+        newlyLaunchedBackgroundColor: colors.colorC5DEEB.withValues(alpha:0.2),
         jewelleryCreateOwnSubTitleStyle: interRegularTextStyle.copyWith(fontSize: 16.sp),
       );
 
@@ -1118,7 +1118,7 @@ class LightModeTheme extends AppTheme {
         selectedStepTextStyle: interRegularTextStyle.copyWith(fontSize: 18.sp, color: colors.primary),
         whiteColor: colors.white,
         boxShadow: BoxShadow(
-          color: colors.black.withOpacity(0.1),
+          color: colors.black.withValues(alpha:0.1),
           offset: Offset(0, -4.h),
           blurRadius: 24.r,
           spreadRadius: 0,
@@ -1173,7 +1173,7 @@ class LightModeTheme extends AppTheme {
         selectedDiamondSelectionTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp),
         diamondSelectionValueStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         selectedDiamondSelectionValueStyle: interMediumBoldTextStyle.copyWith(color: colors.color8C8C8C),
-        selectedDiamondSelectionBackgroundColor: colors.primary.withOpacity(0.1),
+        selectedDiamondSelectionBackgroundColor: colors.primary.withValues(alpha:0.1),
         rangeSliderTrackColor: colors.color303538,
         sliderThumbBorderColor: colors.colorD3DAE0,
         sliderThumbColor: colors.white,
@@ -1288,7 +1288,7 @@ class LightModeTheme extends AppTheme {
         titleStyle: interBoldTextStyle.copyWith(fontSize: 20.sp),
         subTitleStyle: interRegularTextStyle,
         borderColor: colors.colorD3DAE0,
-        shadowColor: colors.black.withOpacity(0.1),
+        shadowColor: colors.black.withValues(alpha:0.1),
       );
 
   @override

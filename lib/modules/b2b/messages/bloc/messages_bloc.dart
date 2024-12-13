@@ -294,8 +294,6 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
         return favouriteList;
       case MessagesTab.trash:
         return trashList;
-      default:
-        return []; // Default case
     }
   }
 

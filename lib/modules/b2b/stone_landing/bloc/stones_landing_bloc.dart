@@ -994,7 +994,6 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         break;
 
       case RedirectionTo.unknown:
-      default:
         printWrapped('Unknown redirection');
         return; // Exit early for unknown redirection
     }
