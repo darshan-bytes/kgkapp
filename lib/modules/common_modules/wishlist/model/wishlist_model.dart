@@ -130,8 +130,8 @@ class ProductData {
   String? metalKt;
   dynamic brandName;
   String? market;
-  List<MultipleFinishedViewImage> multipleFinishedViewImage;
-  List<ComponentDetail> componentDetails;
+  List<MultipleFinishedViewImageShopByMetal> multipleFinishedViewImage;
+  List<ComponentDetailShopByMetal> componentDetails;
   String? suid;
   String? crt;
   String? gms;
@@ -164,10 +164,10 @@ class ProductData {
       market: json["market"],
       multipleFinishedViewImage: json["multiple_finished_view_image"] == null
           ? []
-          : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
+          : List<MultipleFinishedViewImageShopByMetal>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x))),
       componentDetails: json["component_details"] == null
           ? []
-          : List<ComponentDetail>.from(json["component_details"]!.map((x) => ComponentDetail.fromJson(x))),
+          : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
       suid: json["suid"],
       crt: json["crt"].toString(),
       gms: json["gms"].toString(),

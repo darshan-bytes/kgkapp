@@ -61,45 +61,6 @@ class JewelleryLandingScreen extends StatelessWidget {
     // );
   }
 
-  Widget _buildNewlyLaunchedSection(StonesLandingBloc bloc, StonesLandingScreenStyle style) {
-    return Container(
-      color: style.newlyLaunchedBackgroundColor,
-      padding: EdgeInsets.symmetric(
-        vertical: 32.h,
-        horizontal: 17.w,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(APPStrings.newlyLaunched.tr, style: style.newlyLaunchedStyle),
-          SizedBox(height: 4.h),
-          SmartText(APPStrings.exploreNewlyLaunchedProducts.tr, style: style.sparkleSubTitleStyle),
-          SizedBox(height: 24.h),
-          SmartGridView(
-            items: List.generate(
-              bloc.newlyLaunchedItemsList.length > 4
-                  ? 4
-                  : (bloc.newlyLaunchedItemsList.length % 2 == 0
-                      ? bloc.newlyLaunchedItemsList.length
-                      : bloc.newlyLaunchedItemsList.length - 1),
-              (index) => ProductGridItem(
-                productDetails: bloc.newlyLaunchedItemsList[index],
-                onEyeTap: () {},
-                onFavTap: () {},
-                onTap: () {},
-              ),
-            ),
-          ),
-          SizedBox(height: 24.h),
-          SmartButton(
-            onTap: () {},
-            title: APPStrings.exploreNow.tr,
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _buildShopByMetalSection({
     required StonesLandingBloc bloc,
     required HomeScreenStyle homeScreenStyle,

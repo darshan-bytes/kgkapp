@@ -475,6 +475,7 @@ export 'package:kgk/model/sort_options_model.dart';
 export 'package:kgk/modules/common_modules/collection/view/collection_month_widget.dart';
 export 'package:kgk/modules/common_modules/collection/model/collection_month_tab.dart';
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_filter_option_model.dart';
+export 'package:kgk/modules/b2b/stone_landing/model/shop_by_metal_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/bloc/wishlist_sort_filter_bloc.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/view/wishlist_filter_screen.dart';
 export 'package:kgk/data/network/my_http_overrides.dart';
@@ -482,3 +483,4 @@ export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/customer_sa
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_order_summary_data_model.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:kgk/modules/common_modules/product_details/view/jewellery_details_component_view.dart';
+export 'package:kgk/modules/b2b/stone_landing/model/newly_lanuches_model.dart';
