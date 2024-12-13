@@ -414,8 +414,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
         return designsList;
       case MonitoringTab.styles:
         return stylesList;
-      default:
-        return presentationList; // Default case
     }
   }
 
@@ -431,8 +429,6 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
         return B2BListingType.monitoringDesignsType;
       case MonitoringTab.styles:
         return B2BListingType.monitoringStylesType;
-      default:
-        return B2BListingType.monitoringPresentationGridType; // Default case
     }
   }
 

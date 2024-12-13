@@ -459,8 +459,8 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
-                                  style.primaryColor.withOpacity(0.6),
-                                  style.primaryColor.withOpacity(0.9),
+                                  style.primaryColor.withValues(alpha:0.6),
+                                  style.primaryColor.withValues(alpha:0.9),
                                 ],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),

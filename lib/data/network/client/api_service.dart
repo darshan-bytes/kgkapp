@@ -74,9 +74,7 @@ class ApiService implements ApiProvider {
               headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
               body: body == null ? null : jsonEncode(body));
           break;
-        default:
-          throw Exception('Unsupported HTTP method');
-      }
+        }
 
       kgk_logger.log('Request URL: $url Response: ${response.body} StatusCode: ${response.statusCode}');
 

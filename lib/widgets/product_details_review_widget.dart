@@ -60,7 +60,7 @@ class ProductReviewsDetails extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: 0.8,
                             color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withOpacity(0.2),
+                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
                           ),
                         ),
                       ],
@@ -74,7 +74,7 @@ class ProductReviewsDetails extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: 0.5,
                             color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withOpacity(0.2),
+                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
                           ),
                         ),
                       ],
@@ -88,7 +88,7 @@ class ProductReviewsDetails extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: 0.0,
                             color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withOpacity(0.2),
+                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
                           ),
                         ),
                       ],
@@ -102,7 +102,7 @@ class ProductReviewsDetails extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: 0.1,
                             color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withOpacity(0.2),
+                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
                           ),
                         ),
                       ],
@@ -116,7 +116,7 @@ class ProductReviewsDetails extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: 0.2,
                             color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withOpacity(0.2),
+                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
                           ),
                         ),
                       ],

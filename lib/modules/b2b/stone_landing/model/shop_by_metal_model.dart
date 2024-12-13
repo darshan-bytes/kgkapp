@@ -32,7 +32,7 @@ class NewLaunchedModel {
   Map<String, dynamic> toJson() => {
     "totalRecords": totalRecords,
     "filteredRecords": filteredRecords,
-    "data": data.map((x) => x?.toJson()).toList(),
+    "data": data.map((x) => x.toJson()).toList(),
   };
 
   @override
@@ -168,8 +168,8 @@ class ShopByMetalDatum {
     "csc_code": cscCode,
     "customer_code": customerCode,
     "product_description": productDescription,
-    "component_details": componentDetails.map((x) => x?.toJson()).toList(),
-    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x?.toJson()).toList(),
+    "component_details": componentDetails.map((x) => x.toJson()).toList(),
+    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
     "final_price": finalPrice,
     "discount_price": discountPrice,
   };
@@ -407,7 +407,7 @@ class MultipleFinishedViewImageShopByMetal {
     "high_res2": highRes2,
     "high_res3": highRes3,
     "high_res4": highRes4,
-    "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x?.toJson()).toList(),
+    "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
   };
 
   @override
