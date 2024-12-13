@@ -63,6 +63,7 @@ class ProductDetailsModel {
   String? totalPrice;
   String? perCaratPrice;
   String? shapeImage;
+  List<Component>? components;
 
   ProductDetailsModel({
     this.productId,
@@ -127,6 +128,7 @@ class ProductDetailsModel {
     this.totalPrice,
     this.perCaratPrice,
     this.shapeImage,
+    this.components,
   });
 
   @override

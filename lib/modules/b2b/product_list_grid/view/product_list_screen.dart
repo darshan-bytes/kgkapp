@@ -260,7 +260,7 @@ class ProductListScreen extends StatelessWidget {
   void _onProductTap(BuildContext context, ProductListBloc bloc, ProductDetailsModel productDetails) {
     if (bloc.screenIdentifier == ScreenIdentifier.productForRing) {
       context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-        RoutesData.productId: productDetails.productId ?? '',
+        RoutesData.productId: productDetails.suid ?? '',
         RoutesData.isPageFor: bloc.screenIdentifier,
       });
     } else if (bloc.screenIdentifier == ScreenIdentifier.productForLibraryGrey ||
