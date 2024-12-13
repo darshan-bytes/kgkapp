@@ -433,7 +433,7 @@ class AuctionScreen extends StatelessWidget {
               color: style.whiteColor,
               boxShadow: [
                 BoxShadow(
-                  color: style.boxShadowColor.withOpacity(0.17),
+                  color: style.boxShadowColor.withValues(alpha:0.17),
                   spreadRadius: 0.r,
                   blurRadius: 16.r,
                   offset: const Offset(0, -2),

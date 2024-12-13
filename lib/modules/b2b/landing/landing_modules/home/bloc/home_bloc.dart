@@ -905,8 +905,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
 
       case HomeSlug.unknown:
-      default:
-        //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
+      //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
 
         // TODO: For shop by diamond _buildShopDiamondSection(homeBloc, style)
 
@@ -936,8 +935,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.unknown:
-      default:
-        printWrapped('Unknown redirection');
+      printWrapped('Unknown redirection');
         return; // Exit early for unknown redirection
     }
 

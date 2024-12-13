@@ -149,25 +149,7 @@ class SmartImage extends StatelessWidget {
                         ),
                     imageUrl: path),
           );
-        default:
-          child = Container(
-            height: height,
-            width: width,
-            padding: padding,
-            margin: margin,
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: imageBorderRadius,
-              border: border,
-            ),
-            child: Image.asset(
-              AppImages.icPlaceholder,
-              height: height,
-              width: width,
-              fit: fit ?? BoxFit.cover,
-            ),
-          );
-      }
+        }
     }
 
     return onTap != null

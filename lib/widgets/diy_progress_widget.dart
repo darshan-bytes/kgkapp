@@ -35,7 +35,7 @@ class DiyProgressWidget extends StatelessWidget {
       {required bool isSelected, required String title, required int index, required String subTitle, double? padding}) {
     final style = AppTheme.of(context).diyProgressViewStyle;
 
-    Color backgroundColor = style.unselectedBorderColor.withOpacity(0.5);
+    Color backgroundColor = style.unselectedBorderColor.withValues(alpha:0.5);
     TextStyle textStyle = style.selectedIndexStyle.copyWith(color: Colors.black);
 
     /// Set Style and Color According to Indexes
@@ -43,7 +43,7 @@ class DiyProgressWidget extends StatelessWidget {
       backgroundColor = style.backgroundChevronColor;
       textStyle = style.selectedIndexStyle;
     } else if (index == selectedStep + 1) {
-      backgroundColor = style.backgroundChevronColor.withOpacity(0.5);
+      backgroundColor = style.backgroundChevronColor.withValues(alpha:0.5);
       textStyle = style.selectedIndexStyle;
     }
 

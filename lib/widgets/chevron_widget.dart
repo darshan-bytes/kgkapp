@@ -105,9 +105,7 @@ class PointClipper extends CustomClipper<Path> {
         return _getBottomPath(size);
       case Edge.left:
         return _getLeftPath(size);
-      default:
-        return _getRightPath(size);
-    }
+      }
   }
 
   Path _getTopPath(Size size) {
@@ -180,9 +178,7 @@ class ChevronClipper extends CustomClipper<Path> {
         return _getBottomPath(size);
       case Edge.left:
         return _getLeftPath(size);
-      default:
-        return _getRightPath(size);
-    }
+      }
   }
 
   Path _getTopPath(Size size) {
@@ -258,9 +254,7 @@ class LabelClipper extends CustomClipper<Path> {
         return _getBottomPath(size);
       case Edge.left:
         return _getLeftPath(size);
-      default:
-        return _getRightPath(size);
-    }
+      }
   }
 
   Path _getTopPath(Size size) {
