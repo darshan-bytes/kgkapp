@@ -9,40 +9,47 @@ class FaqScreen extends StatelessWidget {
     final FAQStyle style = AppTheme.of(context).faqStyle;
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.faqs.tr),
-      body: SafeArea(
-        child: SmartSingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 24.h),
-                SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
-                SizedBox(height: 24.h),
-                SmartTextField(
-                  controller: faqBloc.searchController,
-                  suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
-                ),
-                SizedBox(height: 16.h),
-                BlocBuilder<FaqBloc, FaqState>(
-                  buildWhen: (previous, current) => current is FaqLoadedState,
-                  builder: (context, state) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      primary: false,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: faqBloc.faq.length,
-                      itemBuilder: (_, index) => _buildFAQSection(faqBloc, style, index),
-                      separatorBuilder: (_, index) => SizedBox(height: 24.h),
-                    );
-                  },
-                ),
-                SizedBox(height: 32.h),
-                _buildStillNeedSection(style),
-              ],
-            ),
-          ),
-        ),
+      body: BlocBuilder<FaqBloc, FaqState>(
+        buildWhen: (previous, current) => current is FaqLoadedState,
+        builder: (context, state) {
+          return SafeArea(
+            child: faqBloc.isLoading
+                ? SmartCircularProgressIndicator()
+                : SmartSingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(height: 24.h),
+                          SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
+                          SizedBox(height: 24.h),
+                          SmartTextField(
+                            controller: faqBloc.searchController,
+                            suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
+                          ),
+                          SizedBox(height: 16.h),
+                          BlocBuilder<FaqBloc, FaqState>(
+                            buildWhen: (previous, current) => current is FaqLoadedState,
+                            builder: (context, state) {
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                primary: false,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: faqBloc.faq.length,
+                                itemBuilder: (_, index) => _buildFAQSection(faqBloc, style, index),
+                                separatorBuilder: (_, index) => SizedBox(height: 24.h),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 32.h),
+                          _buildStillNeedSection(style),
+                        ],
+                      ),
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }

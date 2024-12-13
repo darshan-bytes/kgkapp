@@ -35,6 +35,33 @@ class AppRepository extends ApiService {
   }
 
   /// Fetches the diamond data from the Strapi CMS
+  Future<Either<ErrorResponse, List<FaqData>>> fetchStrapiFaqData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.faqPage, attribute: Attributes.faqPage);
+    try {
+      final response = await http.get(Uri.parse(url),  headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
+      if (response.statusCode == 200) {
+        final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
+        List<FaqData> faqStrapiList = faqStrapiModel.data.first.attributes?.faqs ?? [];
+        return Right(faqStrapiList);
+      } else {
+        return Left(
+          ErrorResponse(
+            code: response.statusCode,
+            message: response.reasonPhrase ?? 'Unknown error',
+          ),
+        );
+      }
+    } catch (e) {
+      return Left(
+        ErrorResponse(
+          code: 500,
+          message: 'An error occurred',
+        ),
+      );
+    }
+  }
+
+  /// Fetches the diamond data from the Strapi CMS
   Future<Either<ErrorResponse, List<DiamondData>>> fetchStrapiDiamondLandingData() async {
     String url = await buildUrl(endpoint: StrapiEndPoints.diamondPage, attribute: Attributes.diamondPage);
     try {
