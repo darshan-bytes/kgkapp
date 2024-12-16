@@ -121,3 +121,30 @@ final class MyBagApplyPromoCodeEvent extends MyBagEvent {
   @override
   List<Object> get props => [promoCode, context];
 }
+
+final class MyBagCheckoutEvent extends MyBagEvent {
+  final BuildContext context;
+
+  const MyBagCheckoutEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class MyBagProductQuantityChangedEvent extends MyBagEvent {
+  final BuildContext context;
+  final int index;
+  final int quantity;
+
+  const MyBagProductQuantityChangedEvent({required this.context, required this.index, required this.quantity});
+
+  @override
+  List<Object> get props => [context, index, quantity];
+}
+
+final class ClearMyBagEvent extends MyBagEvent {
+  const ClearMyBagEvent();
+
+  @override
+  List<Object> get props => [];
+}

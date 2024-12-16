@@ -64,6 +64,8 @@ class ProductDetailsModel {
   String? perCaratPrice;
   String? shapeImage;
   List<Component>? components;
+  String? location;
+  int? stockQty;
 
   ProductDetailsModel({
     this.productId,
@@ -129,6 +131,8 @@ class ProductDetailsModel {
     this.perCaratPrice,
     this.shapeImage,
     this.components,
+    this.location,
+    this.stockQty,
   });
 
   @override

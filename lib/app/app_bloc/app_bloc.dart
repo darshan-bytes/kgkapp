@@ -257,6 +257,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (data) async {
           MyBagDataModel myBagDataModel = data.responseData;
           await StorageManager().storeBagData(myBagDataModel);
+          await StorageManager().setBagId(myBagDataModel.sId ?? '');
           Utils.showMessage(data.message);
         },
       );
@@ -283,13 +284,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<void> _onProductRemoveFromBagEvent(event, Emitter<AppState> emit) async {
     /// Implementing it later
-
+    ProductDetailsModel productDetails = event.productDetails;
     if (event.productDetails.productId.isNullOrEmpty) {
       return;
     }
 
     /// TODO :: Temporary added static bag id here
-    await _deleteAndRetryBag(event, emit, "674982171e6515593f727ec6", suid: "DIS268");
+    await _deleteAndRetryBag(event, emit, "674982171e6515593f727ec6", suid: productDetails.suid ?? '');
   }
 
   Future<void> _onProductAddToWatchListEvent(ProductAddToWatchListEvent event, Emitter<AppState> emit) async {
