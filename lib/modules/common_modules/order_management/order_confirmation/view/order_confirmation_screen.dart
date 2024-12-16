@@ -57,13 +57,21 @@ class OrderConfirmationScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SmartText(
-          APPStrings.yourOrderNumber.tr,
-          style: style.subTitleStyle,
-        ),
-        SmartText(
-          orderNumber,
-          style: style.orderNumberStyle,
+        Expanded(
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: APPStrings.yourOrderNumber.tr,
+              style: style.subTitleStyle,
+              children: [
+                WidgetSpan(child: SizedBox(width: 4.w)),
+                TextSpan(
+                  text: orderNumber,
+                  style: style.orderNumberStyle,
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );

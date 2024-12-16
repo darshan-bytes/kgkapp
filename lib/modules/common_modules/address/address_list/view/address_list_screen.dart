@@ -25,7 +25,8 @@ class AddressListScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          _buildAddressList(addressListBloc, style),
+                          SmartText(APPStrings.shippingAddress.tr, style: style.footerTotalAmountStyle),
+                          _buildShippingAddressList(addressListBloc, style),
                           Divider(height: 48.h),
                           Row(
                             mainAxisSize: MainAxisSize.min,
@@ -43,18 +44,19 @@ class AddressListScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          Divider(height: 48.h),
+                          _buildIsBillingAddressSameAsSelected(addressListBloc, style),
                         ],
                       ),
                     ),
-                    Divider(color: style.backgroundColor, thickness: 8.h, height: 56.h),
-                    Padding(
+                    // Divider(color: style.backgroundColor, thickness: 8.h, height: 56.h),
+
+                    /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
+                    /* Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: Column(
                         children: [
-                          _buildIsBillingAddressSameAsSelected(addressListBloc, style),
-
-                          /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
-                          /*SmartExpansionTile(
+                          SmartExpansionTile(
                         key: addressListBloc.productsListExpansionKey,
                         initiallyExpanded: addressListBloc.isProductListExpanded,
                         title: SmartText(APPStrings.productX.tr.interpolate([addressListBloc.productList.length]),
@@ -89,10 +91,10 @@ class AddressListScreen extends StatelessWidget {
                             }).toList()),
                           ),
                         ],
-                      ),*/
+                      ),
                         ],
                       ),
-                    ),
+                    ),*/
                     _buildOrderSummary(style)
                   ],
                 ),
@@ -108,7 +110,8 @@ class AddressListScreen extends StatelessWidget {
               children: [
                 SmartButton(
                   onTap: () {
-                    context.pushNamed(AppRoutes.paymentPage);
+                    // context.pushNamed(AppRoutes.paymentPage);
+                    addressListBloc.add(ContinueToPaymentEvent(context: context));
                   },
                   title: APPStrings.strContinue.tr,
                 ),
@@ -119,28 +122,83 @@ class AddressListScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildAddressList(AddressListBloc addressListBloc, AddressListStyle style) {
+  Widget _buildShippingAddressList(AddressListBloc addressListBloc, AddressListStyle style) {
     return BlocBuilder<AddressListBloc, AddressListState>(
       buildWhen: (previous, current) => current is DeleteAddressState || current is AddNewAddressState,
       builder: (context, state) {
         return ListView.separated(
           shrinkWrap: true,
           itemCount: addressListBloc.addressList.length,
+          padding: EdgeInsets.symmetric(vertical: 12.h),
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
           itemBuilder: (context, index) {
             return BlocBuilder<AddressListBloc, AddressListState>(
               buildWhen: (previous, current) =>
-                  current is ChangeSelectedAddressState && (current.index == index || current.oldIndex == index),
+                  current is ChangeSelectedAddressState && !current.isBilling && (current.index == index || current.oldIndex == index),
               builder: (context, state) {
                 final AddressDetails address = addressListBloc.addressList[index];
                 return AddressSelectionWidget(
                   address: address,
-                  isDefault: (address.isDefaultBilling || address.isDefaultShipping),
+                  isDefault: address.isDefaultShipping,
                   onTap: () {
                     addressListBloc.add(ChangeSelectedAddressEvent(index));
                   },
-                  groupValue: addressListBloc.selectedAddress,
+                  groupValue: addressListBloc.selectedShippingAddress,
+                  onEdit: () {
+                    addressListBloc.add(EditAddressEvent(index, context));
+                  },
+                  onDelete: () {
+                    Utils.showSmartModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                        ),
+                        builder: (builderContext) => ConfirmationDialog(
+                              title: APPStrings.deleteAddress.tr,
+                              message: APPStrings.deleteAddressMsg.tr,
+                              onApproved: () {
+                                builderContext.pop();
+                                addressListBloc.add(DeleteAddressEvent(context: context, index: index));
+                              },
+                              onDenied: () => builderContext.pop(),
+                              onApprovedText: APPStrings.delete.tr,
+                              onDeniedText: APPStrings.cancel.tr,
+                            ));
+                  },
+                );
+              },
+            );
+          },
+          separatorBuilder: (context, index) => Divider(height: 48.h),
+        );
+      },
+    );
+  }
+
+  Widget _buildBillingAddressList(AddressListBloc addressListBloc, AddressListStyle style) {
+    return BlocBuilder<AddressListBloc, AddressListState>(
+      buildWhen: (previous, current) => current is DeleteAddressState || current is AddNewAddressState,
+      builder: (context, state) {
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: addressListBloc.addressList.length,
+          padding: EdgeInsets.symmetric(vertical: 12.h),
+          physics: const NeverScrollableScrollPhysics(),
+          primary: false,
+          itemBuilder: (context, index) {
+            return BlocBuilder<AddressListBloc, AddressListState>(
+              buildWhen: (previous, current) =>
+                  current is ChangeSelectedAddressState && current.isBilling && (current.index == index || current.oldIndex == index),
+              builder: (context, state) {
+                final AddressDetails address = addressListBloc.addressList[index];
+                return AddressSelectionWidget(
+                  address: address,
+                  isDefault: address.isDefaultBilling,
+                  onTap: () {
+                    addressListBloc.add(ChangeSelectedAddressEvent(index, isBilling: true));
+                  },
+                  groupValue: addressListBloc.selectedBillingAddress,
                   onEdit: () {
                     addressListBloc.add(EditAddressEvent(index, context));
                   },
@@ -176,12 +234,23 @@ class AddressListScreen extends StatelessWidget {
     return BlocBuilder<AddressListBloc, AddressListState>(
       buildWhen: (previous, current) => current is ToggleBillingAndShippingSameState,
       builder: (context, state) {
-        return SmartCheckbox(
-          value: addressListBloc.isBillingAndShippingSame,
-          onChanged: (value) {
-            addressListBloc.add(const ToggleBillingAndShippingSameEvent());
-          },
-          label: APPStrings.billingAddressSame.tr,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SmartCheckbox(
+              value: addressListBloc.isBillingAndShippingSame,
+              onChanged: (value) {
+                addressListBloc.add(const ToggleBillingAndShippingSameEvent());
+              },
+              label: APPStrings.billingAddressSame.tr,
+            ),
+            SizedBox(height: 24.h),
+            if (!addressListBloc.isBillingAndShippingSame) ...[
+              Divider(height: 24.h),
+              SmartText(APPStrings.billingAddress.tr, style: style.footerTotalAmountStyle),
+              _buildBillingAddressList(addressListBloc, style),
+            ],
+          ],
         );
       },
     );

@@ -55,7 +55,7 @@ class CartProductItem extends StatelessWidget {
       this.onQuantityChanged,
       this.isSelectedProduct = false,
       this.onChangedCheckbox,
-      this.isCheckboxShow = true,
+      this.isCheckboxShow = false,
       this.isDropDownEnable = true,
       this.priceTextStyle});
 
@@ -81,7 +81,41 @@ class CartProductItem extends StatelessWidget {
                 productDetailsSection(style, context),
               ],
             ),
-            const Divider()
+            SizedBox(height: 32.h),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: SmartButton(
+                    activeBackgroundColor: style.backgroundColor,
+                    title: APPStrings.remove.tr,
+                    titleStyle: style.removeBagTextStyle,
+                    borderRadius: const BorderRadius.all(Radius.zero),
+                    onTap: () {
+                      if (onRemoveTap != null) {
+                        onRemoveTap!();
+                      }
+                    },
+                  )),
+                  Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
+                  Expanded(
+                      child: SmartButton(
+                          activeBackgroundColor: style.backgroundColor,
+                          title: APPStrings.addToWatchList.tr,
+                          titleStyle: style.removeBagTextStyle,
+                          borderRadius: const BorderRadius.all(Radius.zero),
+                          onTap: () {
+                            if (onMoveToWishListTap != null) {
+                              onMoveToWishListTap!();
+                            }
+                          })),
+                ],
+              ),
+            ),
+            Divider(height: 32.h),
           ],
         ),
       ),
@@ -166,13 +200,13 @@ class CartProductItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if(onDeleteTap != null)
-                GestureDetector(
-                  onTap: onDeleteTap,
-                  child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
-                      child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w)),
-                ),
+                if (onDeleteTap != null)
+                  GestureDetector(
+                    onTap: onDeleteTap,
+                    child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                        child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w)),
+                  ),
               ],
             ),
             if (productDetails.originalPrice.isNotNullNorEmpty) ...[
@@ -186,17 +220,47 @@ class CartProductItem extends StatelessWidget {
             if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
               SmartText(
-                productDetails.discountPercentage,
+                "${productDetails.discountPercentage}%",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
               ),
             ],
-            SizedBox(height: 8.h),
-            SmartText(selectedQuality?.name ?? '', style: style.productNameStyle),
-            SizedBox(height: 8.h),
-            SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
-            SizedBox(height: 12.h),
+            // SizedBox(height: 8.h),
+            // SmartText(selectedQuality?.name ?? '', style: style.productNameStyle),
+            // SizedBox(height: 8.h),
+            // SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
+            // SizedBox(height: 12.h),
+            //padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
+            Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Expanded(
+                  //   flex: 2,
+                  //   child: SmartDropDown<CartProductQuality>(
+                  //     selectedItem: selectedQuality,
+                  //     items: qualityOptionsList.map((e) => SmartDropDownItem<CartProductQuality>(value: e, title: e.name ?? '')).toList(),
+                  //     hintText: APPStrings.selectQuality.tr,
+                  //     onChanged: (newValue) => onQualityChanged?.call(newValue!),
+                  //   ),
+                  // ),
+                  // SizedBox(width: 8.w),
+                  Expanded(
+                    flex: 1,
+                    child: SmartDropDown<CartProductQuantity>(
+                      labelText: APPStrings.qty.tr,
+                      scrollDirection: Axis.horizontal,
+                      selectedItem: selectedQuantity,
+                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
+                      items: quantityOptionsList.map((e) => SmartDropDownItem<CartProductQuantity>(value: e, title: e.name ?? '')).toList(),
+                      hintText: APPStrings.selectQuantity.tr,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

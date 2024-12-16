@@ -733,7 +733,8 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
-    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches, query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches,
+        query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -809,6 +810,35 @@ class AppRepository extends ApiService {
     var response = await getMethod<GemstoneListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<Map<String, dynamic>>>?> checkoutStatus() async {
+    context.setAppLoading(true);
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.checkoutStatus, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> bagUserAddress(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await putMethod<Map<String, dynamic>>(ApiClient.bagUserAddress, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<IndividualPlaceOrderResponse>>?> orderIndividual(
+      {Map<String, dynamic> body = const {}}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<IndividualPlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> updateBagItem(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await updateMethod<Map<String, dynamic>>(ApiClient.bag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
 

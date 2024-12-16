@@ -147,8 +147,6 @@ class AddressDetails {
           zipCode == other.zipCode &&
           phone == other.phone &&
           createdBy == other.createdBy &&
-          isDefaultShipping == other.isDefaultShipping &&
-          isDefaultBilling == other.isDefaultBilling &&
           id == other.id &&
           isDeleted == other.isDeleted &&
           deletedAt == other.deletedAt &&
@@ -169,8 +167,6 @@ class AddressDetails {
       zipCode.hashCode ^
       phone.hashCode ^
       createdBy.hashCode ^
-      isDefaultShipping.hashCode ^
-      isDefaultBilling.hashCode ^
       id.hashCode ^
       isDeleted.hashCode ^
       deletedAt.hashCode ^
