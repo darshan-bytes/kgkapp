@@ -7,6 +7,13 @@ class FaqWrapper {
     this.faqs,
   });
 
+  factory FaqWrapper.fromJson(String title, List<Map<String, dynamic>> jsonList) {
+    return FaqWrapper(
+      title: title,
+      faqs: jsonList.map((faq) => FAQ.fromJson(faq)).toList(),
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     return other is FaqWrapper && other.title == title && other.faqs == faqs;
@@ -24,6 +31,13 @@ class FAQ {
     this.question,
     this.answer,
   });
+
+  factory FAQ.fromJson(Map<String, dynamic> json) {
+    return FAQ(
+      question: json['question'] ?? '',
+      answer: json['answer'] ?? '',
+    );
+  }
 
   @override
   bool operator ==(Object other) {

@@ -634,6 +634,7 @@ class Poster {
     required this.redirecTo,
     required this.redirectionType,
     required this.image,
+    required this.mobileImage,
   });
 
   final int? id;
@@ -643,6 +644,7 @@ class Poster {
   final String? redirecTo;
   final dynamic redirectionType;
   final BannerImage? image;
+  final BannerImage? mobileImage;
 
   factory Poster.fromJson(Map<String, dynamic> json) {
     return Poster(
@@ -653,6 +655,7 @@ class Poster {
       redirecTo: json["RedirecTo"],
       redirectionType: json["RedirectionType"],
       image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
+      mobileImage: json["mobile_image"] == null ? null : BannerImage.fromJson(json["mobile_image"]),
     );
   }
 
@@ -664,11 +667,12 @@ class Poster {
         "RedirecTo": redirecTo,
         "RedirectionType": redirectionType,
         "image": image?.toJson(),
+        "mobileImage": mobileImage?.toJson(),
       };
 
   @override
   String toString() {
-    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, $mobileImage, ";
   }
 }
 

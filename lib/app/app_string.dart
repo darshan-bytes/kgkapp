@@ -939,4 +939,6 @@ class APPStrings {
   static const String allFiltersCleared = 'mob_all_filters_cleared';
   static const String stock = 'mob_stock';
   static const String totalItems = 'mob_total_items';
+  static const String unknownError = 'mob_unknown_error';
+  static const String errorOccurred = 'mob_error_occurred';
 }
