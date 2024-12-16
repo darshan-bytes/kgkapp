@@ -376,8 +376,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = diamondStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(diamondStrapiList[index].poster?.description ?? '');
-        String? image = (diamondStrapiList[index].poster?.image?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].poster?.image?.data.first.attributes?.url
+        String? image = (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+            ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
             : '';
 
         List<Widget> buttonList = [];
@@ -407,8 +407,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
       case LandingSlug.jewelstonePoster:
         String buttonTitle = diamondStrapiList[index].button.first.label ?? '';
-        String backgroundImage = (diamondStrapiList[index].poster?.image?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].poster?.image?.data.first.attributes?.url ?? ''
+        String backgroundImage = (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+            ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url ?? ''
             : '';
         String title = diamondStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString((diamondStrapiList[index].poster?.description ?? ''));
@@ -439,7 +439,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             AuctionListModel(
               id: i.toString(),
               name: diamondStrapiList[index].country[i].title ?? '',
-              imageUrl: '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image?.data.first.attributes?.url}',
+              imageUrl: (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}' : "",
               redirectTo: diamondStrapiList[index].country[i].redirecTo ?? '',
               redirectionType: diamondStrapiList[index].country[i].redirectionType ?? '',
             ),
@@ -799,8 +799,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = jewelleryStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(jewelleryStrapiList[index].poster?.description ?? '');
-        String? image = (jewelleryStrapiList[index].poster?.image?.data).isNotNullNorEmpty
-            ? jewelleryStrapiList[index].poster?.image?.data.first.attributes?.url
+        String? image = (jewelleryStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+            ? jewelleryStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
             : '';
         List<Widget> buttonList = [];
         for (int i = 0; i < jewelleryStrapiList[index].button.length; i++) {
@@ -867,6 +867,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         if (jewelleryStrapiList[index].banner.isNotNullNorEmpty) {
           for (int i = 0; i < jewelleryStrapiList[index].banner.length; i++) {
+            if (jewelleryStrapiList[index].banner[i].title.isNullOrEmpty ||
+                jewelleryStrapiList[index].banner[i].description.isNullOrEmpty) {
+              continue;
+            }
+
             String title = jewelleryStrapiList[index].banner[i].title ?? '';
             String description = Utils.parseHtmlString(jewelleryStrapiList[index].banner[i].description ?? '');
             String? image = (jewelleryStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
@@ -893,7 +898,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                         redirectionType: getRedirectionTypeFromString(jewelleryStrapiList[index].button[i].redirectionType ?? ""),
                       );
                     },
-                    title: buttonTitle),
+                    title: "buttonTitle"),
               ],
             ));
           }

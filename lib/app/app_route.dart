@@ -354,8 +354,10 @@ class AppRoutes {
 
       case faqPage:
         builder = (context) {
-          BlocProvider.of<FaqBloc>(context).add(const FaqInitialEvent());
-          return const FaqScreen();
+          return BlocProvider<FaqBloc>(
+            create: (context) => FaqBloc()..add(FaqInitialEvent(context)),
+            child: const FaqScreen(),
+          );
         };
         break;
 

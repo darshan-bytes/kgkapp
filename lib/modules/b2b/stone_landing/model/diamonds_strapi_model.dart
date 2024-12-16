@@ -744,6 +744,7 @@ class Country {
     required this.redirecTo,
     required this.redirectionType,
     required this.image,
+    required this.mobileImage,
   });
 
   final int? id;
@@ -753,6 +754,7 @@ class Country {
   final String? redirecTo;
   final dynamic redirectionType;
   final CountryImage? image;
+  final CountryImage? mobileImage;
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
@@ -763,6 +765,7 @@ class Country {
       redirecTo: json["RedirecTo"],
       redirectionType: json["RedirectionType"],
       image: json["image"] == null ? null : CountryImage.fromJson(json["image"]),
+      mobileImage: json["mobile_image"] == null ? null : CountryImage.fromJson(json["mobile_image"]),
     );
   }
 
@@ -774,11 +777,12 @@ class Country {
         "RedirecTo": redirecTo,
         "RedirectionType": redirectionType,
         "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
       };
 
   @override
   String toString() {
-    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, $mobileImage";
   }
 }
 
@@ -1040,6 +1044,7 @@ class Poster {
     required this.redirecTo,
     required this.redirectionType,
     required this.image,
+    required this.mobileImage,
   });
 
   final int? id;
@@ -1049,6 +1054,7 @@ class Poster {
   final String? redirecTo;
   final String? redirectionType;
   final BannerImage? image;
+  final BannerImage? mobileImage;
 
   factory Poster.fromJson(Map<String, dynamic> json) {
     return Poster(
@@ -1059,6 +1065,8 @@ class Poster {
       redirecTo: json["RedirecTo"],
       redirectionType: json["RedirectionType"],
       image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
+      mobileImage: json["mobile_image"] == null ? null : BannerImage.fromJson(json["mobile_image"]),
+
     );
   }
 
@@ -1070,11 +1078,12 @@ class Poster {
         "RedirecTo": redirecTo,
         "RedirectionType": redirectionType,
         "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
       };
 
   @override
   String toString() {
-    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
+    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, $mobileImage";
   }
 }
 

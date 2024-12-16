@@ -5,8 +5,10 @@ sealed class FaqEvent extends Equatable {
 }
 
 final class FaqInitialEvent extends FaqEvent {
-  const FaqInitialEvent();
+  final BuildContext context;
+
+  const FaqInitialEvent(this.context);
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [context];
 }

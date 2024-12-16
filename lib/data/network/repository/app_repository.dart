@@ -23,14 +23,41 @@ class AppRepository extends ApiService {
       } else {
         return Left(ErrorResponse(
           code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
         ));
       }
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
+    }
+  }
+
+  /// Fetches the diamond data from the Strapi CMS
+  Future<Either<ErrorResponse, List<FaqData>>> fetchStrapiFaqData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.faqPage, attribute: Attributes.faqPage);
+    try {
+      final response = await http.get(Uri.parse(url),  headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
+      if (response.statusCode == 200) {
+        final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
+        List<FaqData> faqStrapiList = faqStrapiModel.data.first.attributes?.faqs ?? [];
+        return Right(faqStrapiList);
+      } else {
+        return Left(
+          ErrorResponse(
+            code: response.statusCode,
+            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
+          ),
+        );
+      }
+    } catch (e) {
+      return Left(
+        ErrorResponse(
+          code: 500,
+          message: APPStrings.errorOccurred.tr,
+        ),
+      );
     }
   }
 
@@ -47,7 +74,7 @@ class AppRepository extends ApiService {
         return Left(
           ErrorResponse(
             code: response.statusCode,
-            message: response.reasonPhrase ?? 'Unknown error',
+            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
           ),
         );
       }
@@ -55,7 +82,7 @@ class AppRepository extends ApiService {
       return Left(
         ErrorResponse(
           code: 500,
-          message: 'An error occurred',
+          message: APPStrings.errorOccurred.tr,
         ),
       );
     }
@@ -74,13 +101,13 @@ class AppRepository extends ApiService {
       } else {
         return Left(ErrorResponse(
           code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
         ));
       }
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
     }
   }
@@ -104,7 +131,7 @@ class AppRepository extends ApiService {
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
     }
   }

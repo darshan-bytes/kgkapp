@@ -747,5 +747,7 @@
   "mob_recently_viewed_gemstone": "Recently Viewed Gemstones",
   "mob_all_filters_cleared": "Already cleared all filters",
   "mob_stock": "Stock",
-  "mob_total_items": "Total items"
+  "mob_total_items": "Total items",
+  "mob_unknown_error": "Unknown error",
+  "mob_error_occurred": "An error occurred"
 }
