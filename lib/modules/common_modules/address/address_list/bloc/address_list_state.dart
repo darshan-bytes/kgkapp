@@ -11,17 +11,19 @@ final class AddressListInitial extends AddressListState {
 
 final class AddressListLoadedState extends AddressListState {
   final List<AddressDetails> addressList;
-  final AddressDetails selectedAddress;
+  final AddressDetails selectedShippingAddress;
+  final AddressDetails selectedBillingAddress;
   final bool isBillingAndShippingSame;
 
   const AddressListLoadedState(
     this.addressList,
-    this.selectedAddress,
+    this.selectedShippingAddress,
+    this.selectedBillingAddress,
     this.isBillingAndShippingSame,
   );
 
   @override
-  List<Object> get props => [addressList, selectedAddress, isBillingAndShippingSame];
+  List<Object> get props => [addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame];
 }
 
 final class AddressListReloadState extends AddressListState {
@@ -35,7 +37,9 @@ final class ChangeSelectedAddressState extends AddressListState {
   final int index;
   final int oldIndex;
 
-  const ChangeSelectedAddressState(this.index, this.oldIndex);
+  final bool isBilling;
+
+  const ChangeSelectedAddressState(this.index, this.oldIndex, {this.isBilling = false});
 
   @override
   List<Object> get props => [index, oldIndex];

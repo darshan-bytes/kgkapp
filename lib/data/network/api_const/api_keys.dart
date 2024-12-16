@@ -85,4 +85,6 @@ class ApiKey {
   static const String yes = 'yes';
   static const String promoCode_ = 'promo_code';
   static const String stone = 'stone';
+  static const String isBillingAddress = 'is_billing_address';
+  static const String isShippingAddress = 'is_shipping_address';
 }

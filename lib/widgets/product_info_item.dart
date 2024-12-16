@@ -247,7 +247,7 @@ class ProductInfoItem extends StatelessWidget {
           const Divider(),
           SizedBox(height: 16.h),
           SmartGridView(runSpacing: 8.h, items: [
-            _buildRowDetailItem(APPStrings.rate.tr, chart.rap, style, productInfoItemStyle),
+            _buildRowDetailItem(APPStrings.rate.tr, chart.perCts, style, productInfoItemStyle),
             _buildRowDetailItem(APPStrings.amt.tr, chart.amount, style, productInfoItemStyle),
             _buildRowDetailItem(APPStrings.discountPercentage.tr, chart.discount, style, productInfoItemStyle, isDiscount: true),
           ]),

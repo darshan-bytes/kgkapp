@@ -746,5 +746,6 @@
   "mob_recently_viewed_diamond": "हाल ही में देखा गया डायमंड",
   "mob_recently_viewed_gemstone": "हाल ही में देखा गया रत्न",
   "mob_all_filters_cleared": "सभी फ़िल्टर पहले ही साफ़ कर दिए गए हैं",
-  "mob_stock": "स्टॉक"
+  "mob_stock": "स्टॉक",
+  "mob_total_items": "कुल आइटम"
 }

@@ -10,14 +10,14 @@ class GemstoneListingModel {
 
   List<GemstoneDatum> data;
   int? filteredRecords;
-  FaqPagination? pagination;
+  Pagination? pagination;
   int? totalRecords;
 
   factory GemstoneListingModel.fromJson(Map<String, dynamic> json) {
     return GemstoneListingModel(
       data: json["data"] == null ? [] : List<GemstoneDatum>.from(json["data"]!.map((x) => GemstoneDatum.fromJson(x))),
       filteredRecords: json["filteredRecords"],
-      pagination: json["pagination"] == null ? null : FaqPagination.fromJson(json["pagination"]),
+      pagination: json["pagination"] == null ? null : Pagination.fromJson(json["pagination"]),
       totalRecords: json["totalRecords"],
     );
   }
