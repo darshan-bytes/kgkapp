@@ -14,10 +14,12 @@ final class DigitalCatalogueInitialEvent extends DigitalCatalogueEvent {
 }
 
 final class DigitalCataloguePullToRefreshEvent extends DigitalCatalogueEvent {
-  const DigitalCataloguePullToRefreshEvent();
+  final BuildContext context;
+
+  const DigitalCataloguePullToRefreshEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class DigitalCatalogueLoadMoreEvent extends DigitalCatalogueEvent {
@@ -37,4 +39,14 @@ final class DigitalCatalogueSearchEvent extends DigitalCatalogueEvent {
 
   @override
   List<Object> get props => [context];
+}
+
+final class DigitalCatalogueFilterEvent extends DigitalCatalogueEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const DigitalCatalogueFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
 }

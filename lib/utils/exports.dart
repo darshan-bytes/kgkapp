@@ -476,8 +476,8 @@ export 'package:kgk/modules/common_modules/collection/view/collection_month_widg
 export 'package:kgk/modules/common_modules/collection/model/collection_month_tab.dart';
 export 'package:kgk/modules/common_modules/wishlist/model/wishlist_filter_option_model.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/shop_by_metal_model.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/bloc/wishlist_sort_filter_bloc.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/wishlist_sort_and_filter/view/wishlist_filter_screen.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/advance_sort_and_filter/bloc/advance_sort_filter_bloc.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/advance_sort_and_filter/view/advance_filter_screen.dart';
 export 'package:kgk/data/network/my_http_overrides.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/customer_salesman_data_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_order_summary_data_model.dart';

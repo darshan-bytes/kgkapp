@@ -4,7 +4,7 @@ sealed class DigitalCatalogueState extends Equatable {
   const DigitalCatalogueState();
 }
 
-final class DigitalCatalogueIntial extends DigitalCatalogueState {
+final class DigitalCatalogueInitial extends DigitalCatalogueState {
   @override
   List<Object?> get props => [];
 }
@@ -31,7 +31,16 @@ final class DigitalCatalogueLoadingMoreState extends DigitalCatalogueState {
 }
 
 final class DigitalCatalogueLoadMoreState extends DigitalCatalogueState {
-  const DigitalCatalogueLoadMoreState();
+  final int currentPage;
+
+  const DigitalCatalogueLoadMoreState({required this.currentPage});
+
+  @override
+  List<Object> get props => [currentPage];
+}
+
+final class DigitalCatalogueLoadingState extends DigitalCatalogueState {
+  const DigitalCatalogueLoadingState();
 
   @override
   List<Object> get props => [];
