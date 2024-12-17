@@ -39,7 +39,6 @@ class BlocGenerator {
       BlocProvider<DesignBriefsBloc>(create: (_) => DesignBriefsBloc()),
       BlocProvider<DesignListingBloc>(create: (_) => DesignListingBloc()),
       BlocProvider<StylesListingBloc>(create: (_) => StylesListingBloc()),
-      BlocProvider<DigitalCatalogueBloc>(create: (_) => DigitalCatalogueBloc()),
       BlocProvider<MonitoringBloc>(create: (_) => MonitoringBloc()),
       BlocProvider<FindStoreBloc>(create: (_) => FindStoreBloc()),
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
@@ -58,7 +57,7 @@ class BlocGenerator {
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
       BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc(), lazy: false),
       BlocProvider<CommentListingBloc>(create: (_) => CommentListingBloc()),
-      BlocProvider<WishlistSortFilterBloc>(create: (_) => WishlistSortFilterBloc()),
+      BlocProvider<AdvanceSortFilterBloc>(create: (_) => AdvanceSortFilterBloc()),
     ];
   }
 }

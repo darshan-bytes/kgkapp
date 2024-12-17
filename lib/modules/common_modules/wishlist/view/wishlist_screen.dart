@@ -48,7 +48,7 @@ class WishlistScreen extends StatelessWidget {
                 onFilterTap: () {
                   Utils.showSmartModalBottomSheet(
                     context: context,
-                    builder: (_) => WishlistFilterScreen(
+                    builder: (_) => AdvanceFilterScreen(
                       onApply: (value) {
                         if (value != null && value is List<FilterData>) {
                           bloc.add(WishlistFilterEvent(filterData: value, context: context));

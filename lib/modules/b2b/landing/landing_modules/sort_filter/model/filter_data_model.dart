@@ -10,6 +10,7 @@ class FilterData {
   String? subFilterCodes;
   SfRangeValues? rangeValues;
   SfRangeValues? minMaxValues;
+  DateTimeRange? dateRange;
 
   FilterData({
     this.name,
@@ -21,6 +22,7 @@ class FilterData {
     this.subFilterCodes,
     this.rangeValues,
     this.minMaxValues,
+    this.dateRange,
   });
 
   @override
@@ -35,7 +37,8 @@ class FilterData {
         other.filterType == filterType &&
         other.subFilterCodes == subFilterCodes &&
         other.rangeValues == rangeValues &&
-        other.minMaxValues == minMaxValues;
+        other.minMaxValues == minMaxValues &&
+        other.dateRange == dateRange;
   }
 
   @override
@@ -49,6 +52,25 @@ class FilterData {
       subFilterCodes.hashCode ^
       rangeValues.hashCode ^
       minMaxValues.hashCode;
+}
+
+extension FilterDataExtension on FilterData {
+  FilterType getFilterType({String? filterType}) {
+    switch (filterType) {
+      case "dropdown":
+        return FilterType.checkbox;
+      case "range":
+        return FilterType.range;
+      case "date":
+        return FilterType.date;
+      case "date_range":
+        return FilterType.dateRange;
+      case "created_by_search":
+        return FilterType.checkbox;
+      default:
+        return FilterType.undefined;
+    }
+  }
 }
 
 class SecondaryFilterData {

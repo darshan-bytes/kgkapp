@@ -68,7 +68,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       await _setupFilters(context);
 
       ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
-      BlocProvider.of<WishlistSortFilterBloc>(context).add(AddWishlistSortFilterDataEvent(filterOptionList: filterData, context: context));
+      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await fetchWishlistData(isLoadMore: false, context, emit);
