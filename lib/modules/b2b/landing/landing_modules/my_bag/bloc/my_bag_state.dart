@@ -114,3 +114,10 @@ final class MyBagOrderSummaryDataLoadedState extends MyBagState {
   @override
   List<Object> get props => [];
 }
+
+final class MyBagCheckoutState extends MyBagState {
+  const MyBagCheckoutState();
+
+  @override
+  List<Object> get props => [];
+}

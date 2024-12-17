@@ -15,11 +15,12 @@ final class LoadAddressListEvent extends AddressListEvent {
 
 final class ChangeSelectedAddressEvent extends AddressListEvent {
   final int index;
+  final bool isBilling;
 
-  const ChangeSelectedAddressEvent(this.index);
+  const ChangeSelectedAddressEvent(this.index, {this.isBilling = false});
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [index, isBilling];
 }
 
 final class DeleteAddressEvent extends AddressListEvent {
@@ -63,4 +64,13 @@ final class ChangeProductListExpansionEvent extends AddressListEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class ContinueToPaymentEvent extends AddressListEvent {
+  final BuildContext context;
+
+  const ContinueToPaymentEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
 }

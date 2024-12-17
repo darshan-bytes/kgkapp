@@ -23,14 +23,41 @@ class AppRepository extends ApiService {
       } else {
         return Left(ErrorResponse(
           code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
         ));
       }
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
+    }
+  }
+
+  /// Fetches the diamond data from the Strapi CMS
+  Future<Either<ErrorResponse, List<FaqData>>> fetchStrapiFaqData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.faqPage, attribute: Attributes.faqPage);
+    try {
+      final response = await http.get(Uri.parse(url),  headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
+      if (response.statusCode == 200) {
+        final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
+        List<FaqData> faqStrapiList = faqStrapiModel.data.first.attributes?.faqs ?? [];
+        return Right(faqStrapiList);
+      } else {
+        return Left(
+          ErrorResponse(
+            code: response.statusCode,
+            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
+          ),
+        );
+      }
+    } catch (e) {
+      return Left(
+        ErrorResponse(
+          code: 500,
+          message: APPStrings.errorOccurred.tr,
+        ),
+      );
     }
   }
 
@@ -47,7 +74,7 @@ class AppRepository extends ApiService {
         return Left(
           ErrorResponse(
             code: response.statusCode,
-            message: response.reasonPhrase ?? 'Unknown error',
+            message: response.reasonPhrase ?? APPStrings.unknownError.tr,
           ),
         );
       }
@@ -55,7 +82,7 @@ class AppRepository extends ApiService {
       return Left(
         ErrorResponse(
           code: 500,
-          message: 'An error occurred',
+          message: APPStrings.errorOccurred.tr,
         ),
       );
     }
@@ -74,13 +101,13 @@ class AppRepository extends ApiService {
       } else {
         return Left(ErrorResponse(
           code: response.statusCode,
-          message: response.reasonPhrase ?? 'Unknown error',
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
         ));
       }
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
     }
   }
@@ -104,7 +131,7 @@ class AppRepository extends ApiService {
     } catch (e) {
       return Left(ErrorResponse(
         code: 500,
-        message: 'An error occurred',
+        message: APPStrings.errorOccurred.tr,
       ));
     }
   }
@@ -733,7 +760,8 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
-    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches, query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches,
+        query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -817,6 +845,35 @@ class AppRepository extends ApiService {
     var response = await getMethod<GemstoneListingModel>(ApiClient.rmDealOfTheDay, query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<Map<String, dynamic>>>?> checkoutStatus() async {
+    context.setAppLoading(true);
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.checkoutStatus, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> bagUserAddress(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await putMethod<Map<String, dynamic>>(ApiClient.bagUserAddress, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<IndividualPlaceOrderResponse>>?> orderIndividual(
+      {Map<String, dynamic> body = const {}}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<IndividualPlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> updateBagItem(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await updateMethod<Map<String, dynamic>>(ApiClient.bag, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
 

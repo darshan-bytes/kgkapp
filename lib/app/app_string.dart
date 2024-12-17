@@ -940,4 +940,7 @@ class APPStrings {
   static const String permissionDenied = 'mob_permission_denied';
   static const String pleaseEnableLocation = 'mob_please_enable_location';
   static const String stock = 'mob_stock';
+  static const String totalItems = 'mob_total_items';
+  static const String unknownError = 'mob_unknown_error';
+  static const String errorOccurred = 'mob_error_occurred';
 }

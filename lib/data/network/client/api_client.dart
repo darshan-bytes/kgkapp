@@ -143,6 +143,14 @@ class ApiClient {
   static const String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
 
   static const String rmDealOfTheDay = '$apiBaseUrl/homepage-collections/rm-deal-of-the-day';
+
+  static const String checkoutStatus = '$apiBaseUrl/checkout/status';
+
+  static const String bagUserAddress = '$apiBaseUrl/bag/user/address';
+
+  static const String orderIndividual = '$apiBaseUrl/orders/individual';
+
+  static const String bag = '$apiBaseUrl/bag';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
