@@ -123,6 +123,9 @@ enum FilterType {
   undefined('undefined'),
   checkbox('checkbox'),
   range('range'),
+  dateRange('date_range'),
+  date('date'),
+  createdBySearch('created_by_search'),
   ;
 
   const FilterType(this.value);

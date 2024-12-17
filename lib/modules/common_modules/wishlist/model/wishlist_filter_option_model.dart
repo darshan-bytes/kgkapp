@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class WishlistFilterOptionModel {
   String? sId;
   String? moduleName;
@@ -62,6 +64,25 @@ class Filters {
       data['options'] = options!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+}
+
+extension FiltersExtension on Filters {
+  FilterType getFilterType({String? filterType}) {
+    switch (filterType) {
+      case "dropdown":
+        return FilterType.checkbox;
+      case "range":
+        return FilterType.range;
+      case "date":
+        return FilterType.date;
+      case "date_range":
+        return FilterType.dateRange;
+      case "created_by_search":
+        return FilterType.checkbox;
+      default:
+        return FilterType.undefined;
+    }
   }
 }
 

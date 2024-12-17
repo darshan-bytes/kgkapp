@@ -21,12 +21,16 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is DigitalCatalogueLoadedState) {
             return FilterBottomActionBar(
-              controller: digitalCatalogueBloc.digitalCatalogueScrollController.controller,
+              controller: digitalCatalogueBloc.paginationScrollController.controller,
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
+                  builder: (_) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        digitalCatalogueBloc.add(DigitalCatalogueFilterEvent(filterData: value, context: context));
+                      }
+                    },
                   ),
                 );
               },
@@ -37,32 +41,38 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
         },
       ),
       body: SafeArea(
-          child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
-              buildWhen: (previous, current) => current is DigitalCatalogueLoadedState,
-              builder: (context, state) {
-                if (state is DigitalCatalogueLoadedState) {
-                  return Column(
-                    children: [
-                      SmartTextField(
-                        controller: digitalCatalogueBloc.searchController,
-                        hintText: APPStrings.searchCatalogue.tr,
-                        suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-                        padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
-                        onTapOutside: (value) => FocusScope.of(context).unfocus(),
-                        onValueChanges: (value) {
-                          digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
-                        },
-                        onFieldSubmitted: (value) {
-                          digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
-                        },
-                      ),
-                      _digitalCatalogueList(digitalCatalogueBloc, context),
-                    ],
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              })),
+        child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
+          buildWhen: (previous, current) => current is DigitalCatalogueLoadedState || current is DigitalCatalogueLoadingState,
+          builder: (context, state) {
+            if (state is DigitalCatalogueLoadingState) {
+              return const SmartCircularProgressIndicator();
+            }
+            if (state is DigitalCatalogueLoadedState) {
+              return Column(
+                children: [
+                  SmartTextField(
+                    focusNode: digitalCatalogueBloc.focusNode,
+                    controller: digitalCatalogueBloc.searchController,
+                    hintText: APPStrings.searchCatalogue.tr,
+                    suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+                    padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
+                    onTapOutside: (value) => FocusScope.of(context).unfocus(),
+                    onValueChanges: (value) {
+                      digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
+                    },
+                    onFieldSubmitted: (value) {
+                      digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
+                    },
+                  ),
+                  _digitalCatalogueList(digitalCatalogueBloc, context),
+                ],
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
+      ),
     );
   }
 
@@ -71,7 +81,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
     return Expanded(
       child: SmartRefreshIndicator(
         onRefresh: () async {
-          await digitalCatalogueBloc.pullToRefresh();
+          digitalCatalogueBloc.add(DigitalCataloguePullToRefreshEvent(context: context));
         },
         child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
           bloc: digitalCatalogueBloc,
@@ -82,14 +92,10 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
               return NoDataFoundWidget(text: APPStrings.noCatalogueFound.tr);
             }
             return ListView.separated(
-              controller: digitalCatalogueBloc.digitalCatalogueScrollController.controller,
+              controller: digitalCatalogueBloc.paginationScrollController.controller,
               itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: 24.h,
-                );
-              },
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+              padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 100.h),
               itemBuilder: (context, index) {
                 return BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
                   buildWhen: (previous, current) => current is DigitalCatalogueLoadingMoreState || current is DigitalCatalogueLoadMoreState,
