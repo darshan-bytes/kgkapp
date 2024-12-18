@@ -881,6 +881,18 @@ class AppRepository extends ApiService {
     var response = await getMethod<WishlistFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<PaymentCondition>>?> getPaymentTermsFilter(
+      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<PaymentCondition>>(ApiClient.paymentTermsFilter, body);
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

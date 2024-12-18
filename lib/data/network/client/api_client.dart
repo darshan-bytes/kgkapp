@@ -153,6 +153,8 @@ class ApiClient {
   static const String bag = '$apiBaseUrl/bag';
 
   static const String digitalCatalogueFilterOptions = '$apiBaseUrl/digital-catalogue/filter-list';
+
+  static const String paymentTermsFilter = '$apiBaseUrl/payment-terms/filter';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

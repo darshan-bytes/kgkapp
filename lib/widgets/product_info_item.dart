@@ -17,8 +17,11 @@ class ProductInfoItem extends StatelessWidget {
   final List<String>? productFeaturesList;
   final bool isAutoSizeText;
   final bool isDiamond;
+  final void Function(String?)? onYourDiscountChange;
 
-  const ProductInfoItem({
+  final TextEditingController yourDiscountController = TextEditingController();
+
+  ProductInfoItem({
     super.key,
     required this.productDetails,
     this.onTap,
@@ -36,7 +39,12 @@ class ProductInfoItem extends StatelessWidget {
     this.productFeaturesList,
     this.isAutoSizeText = true,
     this.isDiamond = false,
-  });
+    this.onYourDiscountChange,
+  }) {
+    if (productDetails.productInfoClarityChat?.your?.isNotNullNorEmpty == true) {
+      yourDiscountController.text = productDetails.productInfoClarityChat?.your ?? '0';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +72,9 @@ class ProductInfoItem extends StatelessWidget {
                 _buildSlotFirstWidget(chart, style, productInfoItemStyle),
                 _buildSlotSecondWidget(chart, style, productInfoItemStyle),
                 _buildSlotThirdWidget(chart, style, productInfoItemStyle, showMoreDetails),
-                // SizedBox(height: 16.h),
-                _buildSlotFourthWidget(chart, style, productInfoItemStyle)
+                _buildSlotFourthWidget(chart, style, productInfoItemStyle),
+                Divider(height: 32.h),
+                _buildSlotFiveWidget(chart, style, productInfoItemStyle),
               ],
             ),
           ),
@@ -260,6 +269,17 @@ class ProductInfoItem extends StatelessWidget {
     );
   }
 
+  Widget _buildSlotFiveWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: _buildDetailColumn(APPStrings.yourPercentage.tr, chart.your, style, productInfoItemStyle, isTextFormField: true)),
+        Expanded(child: _buildDetailColumn(APPStrings.yourRate.tr, chart.yourRate, style, productInfoItemStyle)),
+        Expanded(child: _buildDetailColumn(APPStrings.yourValue.tr, chart.yourValue, style, productInfoItemStyle)),
+      ],
+    );
+  }
+
   Widget _buildDivider(MyBagDiamondItemStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 18.12.w),
@@ -286,16 +306,25 @@ class ProductInfoItem extends StatelessWidget {
             isAutoSizeText: true,
           ),
           SizedBox(height: 4.h),
-          isTextFormField && value != null
+          isTextFormField
               ? SizedBox(
                   width: 56.w,
                   child: SmartTextField(
                     height: 32.h,
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                    isEnabled: false,
-                    controller: TextEditingController(text: value),
+                    controller: yourDiscountController,
                     disabledBorderColor: style.borderColor,
                     style: style.subTitleStyle,
+                    cursorHeight: 20.h,
+                    textInputFormatter: [DoubleInputFormatter()],
+                    keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
+                    textInputAction: TextInputAction.done,
+                    onTapOutside: (p0) {
+                      onYourDiscountChange?.call(yourDiscountController.text);
+                    },
+                    onEditingComplete: () {
+                      onYourDiscountChange?.call(yourDiscountController.text);
+                    },
                   ),
                 )
               : SmartText(

@@ -148,3 +148,14 @@ final class ClearMyBagEvent extends MyBagEvent {
   @override
   List<Object> get props => [];
 }
+
+final class MyBagYourDiscountChangedEvent extends MyBagEvent {
+  final BuildContext context;
+  final int index;
+  final String yourDiscount;
+
+  const MyBagYourDiscountChangedEvent({required this.context, required this.index, required this.yourDiscount});
+
+  @override
+  List<Object> get props => [context, index, yourDiscount];
+}

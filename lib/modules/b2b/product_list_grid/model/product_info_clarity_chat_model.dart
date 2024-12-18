@@ -25,6 +25,9 @@ class ProductInfoClarityChat {
   String? carat;
   String? origin;
   String? stock;
+  String? your;
+  String? yourRate;
+  String? yourValue;
 
   ProductInfoClarityChat({
     this.productId,
@@ -53,5 +56,8 @@ class ProductInfoClarityChat {
     this.carat,
     this.origin,
     this.stock,
+    this.your,
+    this.yourRate,
+    this.yourValue,
   });
 }
