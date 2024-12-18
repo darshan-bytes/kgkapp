@@ -1,14 +1,14 @@
 import 'package:kgk/kgk.dart';
 
-class WishlistFilterOptionModel {
+class AdvanceFilterOptionModel {
   String? sId;
   String? moduleName;
   List<Filters>? filters;
   List<String>? sortFields;
 
-  WishlistFilterOptionModel({this.sId, this.moduleName, this.filters, this.sortFields});
+  AdvanceFilterOptionModel({this.sId, this.moduleName, this.filters, this.sortFields});
 
-  WishlistFilterOptionModel.fromJson(Map<String, dynamic> json) {
+  AdvanceFilterOptionModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     moduleName = json['module_name'];
     if (json['filters'] != null) {
