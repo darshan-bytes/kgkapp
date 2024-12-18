@@ -12,7 +12,6 @@ class FindStoreScreen extends StatelessWidget {
         title: APPStrings.findStore.tr,
       ),
       body: SmartSingleChildScrollView(
-        // physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
         child: Column(
           children: [
@@ -69,29 +68,26 @@ class FindStoreScreen extends StatelessWidget {
             BlocBuilder<FindStoreBloc, FindStoreState>(
               buildWhen: (previous, current) => current is FindStoreAddressLoadedState,
               builder: (context, state) {
-                return bloc.myCameraPosition != null
-                    ? SizedBox(
-                        height: 452.h,
-                        child: GoogleMap(
-                          mapType: MapType.hybrid,
-                          initialCameraPosition: bloc.myCameraPosition!,
-                          onMapCreated: (GoogleMapController controller) {
-                            bloc.mapController.complete(controller);
-                          },
-                          myLocationButtonEnabled: true,
-                          myLocationEnabled: true,
-                          markers: bloc.markers,
-                          gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-                            Factory<EagerGestureRecognizer>(
-                              () => EagerGestureRecognizer(),
-                            ),
-                            Factory<PanGestureRecognizer>(
-                              () => PanGestureRecognizer(),
-                            ),
-                          },
-                        ),
-                      )
-                    : SizedBox.shrink();
+                return SizedBox(
+                  height: 452.h,
+                  child: GoogleMap(
+                    mapType: MapType.hybrid,
+                    initialCameraPosition: bloc.myCameraPosition ?? CameraPosition(target: LatLng(0.0, 0.0)),
+                    onMapCreated: (GoogleMapController controller) {
+                      bloc.mapController.complete(controller);
+                    },
+                    myLocationEnabled: true,
+                    markers: bloc.markers,
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                      Factory<EagerGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      ),
+                      Factory<PanGestureRecognizer>(
+                        () => PanGestureRecognizer(),
+                      ),
+                    },
+                  ),
+                );
               },
             ),
             SizedBox(

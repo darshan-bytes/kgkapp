@@ -198,7 +198,9 @@ class Utils {
   }
 
   static Future<void> showPermissionDeniedDialog(
-      {required BuildContext context, required void Function(BuildContext context) onOkPressed}) {
+      {required BuildContext context,
+      required void Function(BuildContext context) onOkPressed,
+      required void Function(BuildContext context) onCancelPressed}) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -208,9 +210,16 @@ class Utils {
           title: SmartText(APPStrings.permissionDenied.tr),
           content: SmartText(APPStrings.pleaseEnableLocation.tr),
           actions: [
-            SmartText(APPStrings.ok.tr, onTap: () {
+            SmartText(APPStrings.ok.tr, optionalPadding: EdgeInsets.all(10.w), onTap: () {
               onOkPressed(context);
             }),
+            SmartText(
+              APPStrings.cancel.tr,
+              optionalPadding: EdgeInsets.all(10.w),
+              onTap: () {
+                onCancelPressed(context);
+              },
+            )
           ],
         ),
       ),

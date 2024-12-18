@@ -14,8 +14,8 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
   CameraPosition? myCameraPosition;
   Set<Marker> markers = {};
-  double? currentLat, currentLong;
   FocusNode searchFocusNode = FocusNode();
+  final LocationService locationManager = LocationService();
 
   FindStoreBloc() : super(FindStoreInitial()) {
     on<FindStoreInitialEvent>(_findStoreInitialEvent);
@@ -27,12 +27,15 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
   Future<void> _getStoreListingEvent(FindRetailStoreEvent event, Emitter<FindStoreState> emit) async {
     emit(FindReloadState());
 
-    List<RetailStoreModel> dataList = await findRetailStore(event.context, useCurrentLocation: event.useCurrentLocation);
+    geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
+
+    if (position == null || (!event.useCurrentLocation && addressSearchController.text.isNullOrEmpty)) return;
+
+    List<RetailStoreModel> dataList = await findRetailStore(event.context, position, useCurrentLocation: event.useCurrentLocation);
     addressList = dataList.map((e) {
       double distanceInKm = geoloc.Geolocator.distanceBetween(
-              currentLat ?? 0.0, currentLong ?? 0.0, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) /
+              position.latitude, position.longitude, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) /
           1000;
-
       _addMarker(e.latitude, e.longitude, e.name);
       return AddressModel(
           storeName: e.name,
@@ -43,6 +46,14 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
           latitude: e.latitude,
           longitude: e.longitude);
     }).toList();
+    if (event.useCurrentLocation) {
+      myCameraPosition = CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: AppConst.zoomPosition,
+      );
+      final GoogleMapController controller = await mapController.future;
+      await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
+    }
     searchFocusNode.unfocus();
     emit(FindStoreAddressLoadedState());
   }
@@ -68,68 +79,27 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
   Future<void> _findStoreInitialEvent(FindStoreInitialEvent event, Emitter<FindStoreState> emit) async {
     emit(FindReloadState());
-    await getLocation(event.context);
+
+    geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
+
+    if (position != null) {
+      myCameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: AppConst.zoomPosition);
+
+      final GoogleMapController controller = await mapController.future;
+
+      await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
+    }
     emit(FindStoreAddressLoadedState());
   }
 
-  Future<void> getLocation(BuildContext mainContext) async {
-    geoloc.LocationPermission permission;
-
-    // Request permission initially
-    permission = await geoloc.Geolocator.requestPermission();
-
-    mainContext.setAppLoading(true); // Start loading
-
-    try {
-      // Handle "Denied" scenario
-      if (permission == geoloc.LocationPermission.denied || permission == geoloc.LocationPermission.deniedForever) {
-        permission = await geoloc.Geolocator.requestPermission();
-        if (permission == geoloc.LocationPermission.denied || permission == geoloc.LocationPermission.deniedForever) {
-          mainContext.setAppLoading(false); // Stop loading
-          await Utils.showPermissionDeniedDialog(
-              context: mainContext,
-              onOkPressed: (context) async {
-                if (permission == geoloc.LocationPermission.deniedForever || permission == geoloc.LocationPermission.denied) {
-                  await geoloc.Geolocator.openAppSettings();
-                  Navigator.pop(context);
-                }
-                await getLocation(mainContext);
-              });
-          return; // Exit early
-        }
-      }
-
-      geoloc.Position position = await geoloc.Geolocator.getCurrentPosition(
-        locationSettings: geoloc.LocationSettings(accuracy: geoloc.LocationAccuracy.high),
-      );
-
-      currentLat = position.latitude;
-      currentLong = position.longitude;
-
-      LatLng location = LatLng(currentLat!, currentLong!);
-      myCameraPosition = CameraPosition(
-        target: location,
-        zoom: 14.4746,
-      );
-
-      _addMarker(currentLat.toString(), currentLong.toString(), '');
-
-      mainContext.setAppLoading(false);
-      final GoogleMapController controller = await mapController.future;
-      await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
-    } catch (e) {
-      debugPrint('Error fetching location: $e');
-    }
-  }
-
-  Future<List<RetailStoreModel>> findRetailStore(BuildContext context,
+  Future<List<RetailStoreModel>> findRetailStore(BuildContext context, geoloc.Position position,
       {bool useCurrentLocation = false, bool isShowLoader = true, bool isForceFetch = false}) async {
     List<RetailStoreModel> dataList = [];
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {
           ApiKey.dynamicObject: {
-            ApiKey.zipCode: useCurrentLocation ? LatLng(currentLat ?? 0.0, currentLong ?? 0.0) : addressSearchController.text
+            ApiKey.zipCode: useCurrentLocation ? LatLng(position.latitude, position.longitude) : addressSearchController.text
           }
         },
         ApiKey.search: "",

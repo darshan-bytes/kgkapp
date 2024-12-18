@@ -746,10 +746,10 @@
   "mob_recently_viewed_diamond": "最近觀看的鑽石",
   "mob_recently_viewed_gemstone": "最近觀看的寶石",
   "mob_all_filters_cleared": "已清除所有篩選條件",
-  "mob_permission_denied": "權限拒絕",
-  "mob_please_enable_location": "請在應用程式設定中啟用位置權限以取得您的目前位置",
   "mob_stock": "庫存",
   "mob_total_items": "總項目",
   "mob_unknown_error": "未知错误",
-  "mob_error_occurred": "发生错误"
+  "mob_error_occurred": "发生错误",
+  "mob_permission_denied": "權限拒絕",
+  "mob_please_enable_location": "請在應用程式設定中啟用位置權限以取得您的目前位置"
 }

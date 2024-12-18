@@ -40,7 +40,6 @@ class BlocGenerator {
       BlocProvider<DesignListingBloc>(create: (_) => DesignListingBloc()),
       BlocProvider<StylesListingBloc>(create: (_) => StylesListingBloc()),
       BlocProvider<MonitoringBloc>(create: (_) => MonitoringBloc()),
-      BlocProvider<FindStoreBloc>(create: (_) => FindStoreBloc()),
       BlocProvider<EditWatchlistBloc>(create: (_) => EditWatchlistBloc()),
       BlocProvider<DesignLibraryFeedbackBloc>(create: (_) => DesignLibraryFeedbackBloc()),
       BlocProvider<ExhibitionListingBloc>(create: (_) => ExhibitionListingBloc()),

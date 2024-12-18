@@ -745,11 +745,11 @@
   "mob_recently_viewed_jewellery": "Recently Viewed Jewellery",
   "mob_recently_viewed_diamond": "Recently Viewed Diamonds",
   "mob_recently_viewed_gemstone": "Recently Viewed Gemstones",
-  "mob_permission_denied": "Permission Denied",
-  "mob_please_enable_location": "Please enable location permission in app settings to get your current location",
   "mob_all_filters_cleared": "Already cleared all filters",
   "mob_stock": "Stock",
   "mob_total_items": "Total items",
   "mob_unknown_error": "Unknown error",
-  "mob_error_occurred": "An error occurred"
+  "mob_error_occurred": "An error occurred",
+  "mob_permission_denied": "Permission Denied",
+  "mob_please_enable_location": "Please enable location permission in app settings to get your current location"
 }
