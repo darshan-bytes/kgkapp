@@ -5,133 +5,241 @@ part 'digital_catalogue_event.dart';
 part 'digital_catalogue_state.dart';
 
 class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueState> {
-  bool _isInitialised = false;
-
+  /// This controller is used to control the search
   final TextEditingController searchController = TextEditingController();
+
+  /// This list is used to show the digital catalogues in screen view
   List<DigitalCatalogueListingModel> digitalCatalogueList = [];
 
-  SmartPaginationScrollController digitalCatalogueScrollController = SmartPaginationScrollController();
-  Completer<bool> refreshCompleter = Completer<bool>();
+  /// paginationScrollController is used to control the pagination
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  /// totalNumberOfPages is used to store the total number of pages
   int? totalNumberOfPages;
 
-  DigitalCatalogueBloc() : super(DigitalCatalogueIntial()) {
-    on<DigitalCatalogueInitialEvent>(_onDashboardInitialEvent);
-    on<DigitalCataloguePullToRefreshEvent>(_digitalCataloguePullToRefresh);
-    on<DigitalCatalogueLoadMoreEvent>(_onDigitalCatalogueLoadMore);
-    on<DigitalCatalogueSearchEvent>(_onDigitalCatalogueSearch, transformer: BlocEventDeBouncer.debounceTransformer());
+  /// Focus node is used to control the focus
+  FocusNode focusNode = FocusNode();
+
+  /// This filterData is used to store the filter data
+  List<FilterData> filterData = [];
+
+  DigitalCatalogueBloc() : super(DigitalCatalogueInitial()) {
+    on<DigitalCatalogueInitialEvent>(_onInitialDigitalCatalogueEvent);
+    on<DigitalCatalogueLoadMoreEvent>(_onLoadMoreDigitalCatalogueEvent);
+    on<DigitalCataloguePullToRefreshEvent>(_onDigitalCataloguePullToRefreshEvent);
+    on<DigitalCatalogueSearchEvent>(_onDigitalCatalogueSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
+    on<DigitalCatalogueFilterEvent>(_onDigitalCatalogueFilterEvent);
   }
 
-  Future<void> _onDashboardInitialEvent(DigitalCatalogueInitialEvent event, Emitter<DigitalCatalogueState> emit) async {
-    if (_isInitialised) return;
-    _isInitialised = true;
-    emit(const DigitalCatalogueReloadState());
-    digitalCatalogueList.clear();
-    if (refreshCompleter.isCompleted) {
-      refreshCompleter = Completer<bool>();
+  @override
+  Future<void> close() {
+    paginationScrollController.dispose();
+    return super.close();
+  }
+
+  Future<void> _onInitialDigitalCatalogueEvent(DigitalCatalogueInitialEvent event, Emitter<DigitalCatalogueState> emit) async {
+    await _initializeBloc(event.context, emit);
+  }
+
+  Future<void> _onLoadMoreDigitalCatalogueEvent(DigitalCatalogueLoadMoreEvent event, Emitter<DigitalCatalogueState> emit) async {
+    await _handleLoadMore(event.context, emit, event.currentPage);
+  }
+
+  Future<void> _onDigitalCataloguePullToRefreshEvent(DigitalCataloguePullToRefreshEvent event, Emitter<DigitalCatalogueState> emit) async {
+    await _handlePullToRefresh(event.context, emit);
+  }
+
+  Future<void> _onDigitalCatalogueFilterEvent(DigitalCatalogueFilterEvent event, Emitter<DigitalCatalogueState> emit) async {
+    await _handleApplyFilter(event.context, emit, event.filterData);
+  }
+
+  /// Initialization Logic
+  Future<void> _initializeBloc(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
+    emit(DigitalCatalogueLoadingState());
+    _initializePagination(context);
+    _fetchFilterData(context, emit);
+    if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
+      await fetchDigitalCatalogueList(context, emit, isLoadMore: false);
     }
-    if (digitalCatalogueScrollController.isInitialised) {
-      digitalCatalogueScrollController.dispose();
-      digitalCatalogueScrollController = SmartPaginationScrollController();
+    emit(DigitalCatalogueLoadedState());
+  }
+
+  void _fetchFilterData(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
+    if (filterData.isEmpty) {
+      await _setupFilters(context);
+
+      ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
+      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
     }
-    digitalCatalogueScrollController.init(
+  }
+
+  /// Initialize pagination
+  void _initializePagination(BuildContext context) {
+    paginationScrollController.init(
       loadAction: (int currentPage) async {
-        add(DigitalCatalogueLoadMoreEvent(context: event.context, currentPage: currentPage));
-      },
-    );
-
-    await fetchDigitalCatalogueList(event.context);
-    refreshCompleter.complete(true);
-
-    emit(const DigitalCatalogueLoadedState());
-  }
-
-  Future<void> _digitalCataloguePullToRefresh(DigitalCataloguePullToRefreshEvent event, Emitter<DigitalCatalogueState> emit) async {
-    digitalCatalogueScrollController.pullToRefresh();
-    await Future.delayed(const Duration(seconds: 1));
-
-    refreshCompleter.complete(true);
-    emit(const DigitalCatalogueLoadedState());
-  }
-
-  Future<bool> pullToRefresh() async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
-    add(const DigitalCataloguePullToRefreshEvent());
-    bool result = await refreshCompleter.future;
-    return result;
-  }
-
-  Future<void> fetchDigitalCatalogueList(
-    BuildContext context, {
-    int page = 1,
-    bool isLoadMore = false,
-  }) async {
-    final Map<String, dynamic> body = {
-      ApiKey.filters: {
-        ApiKey.dynamicObject: {},
-      },
-      ApiKey.pagination: {
-        ApiKey.page: page,
-        ApiKey.limit: AppConst.pageLimit,
-      },
-      ApiKey.search: searchController.text,
-      ApiKey.sort: {
-        ApiKey.field: 'id',
-        ApiKey.dir: 'DESC',
-      },
-    };
-
-    final response = await AppRepository(context).digitalCatalogueFilters(body: body, isLoadMore: isLoadMore);
-    response?.fold(
-      (l) {
-        Utils.showMessage(l.message);
-      },
-      (r) {
-        r.totalRecords ??= 0;
-        r.filteredRecords ??= 0;
-        totalNumberOfPages = Utils.calculateTotalPages(r.filteredRecords, AppConst.pageLimit);
-
-        if ((r.dataList as List<DigitalCatalogueDetails>).isNotNullNorEmpty) {
-          digitalCatalogueList.addAll(List.generate(r.dataList!.length, (index) {
-            DigitalCatalogueDetails digitalCatalogueDetails = r.dataList![index];
-            return DigitalCatalogueListingModel(
-              id: digitalCatalogueDetails.id,
-              name: digitalCatalogueDetails.name,
-              description: digitalCatalogueDetails.cscCode,
-              image: digitalCatalogueDetails.catalogueCoverImage?.setMediaUrl,
-              productCount: digitalCatalogueDetails.products.length.toString(),
-              date: digitalCatalogueDetails.updatedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
-              isWebView: false,
-              webUrl: null,
-            );
-          }));
-        }
-
-        digitalCatalogueScrollController.isPageLoaded.complete(page == totalNumberOfPages);
+        add(DigitalCatalogueLoadMoreEvent(context: context, currentPage: currentPage));
       },
     );
   }
 
-  Future<void> _onDigitalCatalogueLoadMore(DigitalCatalogueLoadMoreEvent event, Emitter<DigitalCatalogueState> emit) async {
-    emit(const DigitalCatalogueLoadingMoreState());
-    await fetchDigitalCatalogueList(event.context, page: event.currentPage, isLoadMore: true);
-    emit(const DigitalCatalogueLoadMoreState());
-  }
-
-  Future<void> _onDigitalCatalogueSearch(DigitalCatalogueSearchEvent event, Emitter<DigitalCatalogueState> emit) async {
-    emit(const DigitalCatalogueReloadState());
+  Future<void> _onDigitalCatalogueSearchEvent(DigitalCatalogueSearchEvent event, Emitter<DigitalCatalogueState> emit) async {
+    emit(DigitalCatalogueLoadingState());
+    paginationScrollController.pullToRefresh();
     digitalCatalogueList.clear();
-    if (refreshCompleter.isCompleted) {
-      refreshCompleter = Completer<bool>();
+    await fetchDigitalCatalogueList(event.context, emit, isLoadMore: false, searchString: searchController.text);
+    if (searchController.text.isNotNullNorEmpty) focusNode.requestFocus();
+    emit(DigitalCatalogueLoadedState());
+  }
+
+  /// Build the filters dynamically
+  Map<String, dynamic> buildFilters(List<FilterData> filterData) {
+    Map<String, dynamic> filters = {ApiKey.dynamicObject: {}};
+
+    for (FilterData element in filterData) {
+      switch (element.filterType) {
+        case FilterType.dateRange:
+          if (element.dateRange != null) {
+            filters[ApiKey.dynamicObject]?[element.code ?? ''] = [
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+            ];
+          }
+          break;
+        case FilterType.createdBySearch:
+        case FilterType.checkbox:
+          List<String?>? selectedCodes = element.secondaryFilterData?.where((e) => e.isSelected).map((e) => e.code).toList();
+          if (selectedCodes != null && selectedCodes.isNotEmpty) {
+            filters[ApiKey.dynamicObject]?[element.code ?? ''] = selectedCodes;
+          }
+          break;
+
+        default:
+          break;
+      }
     }
-    digitalCatalogueScrollController.pullToRefresh();
 
-    await fetchDigitalCatalogueList(event.context);
-    refreshCompleter.complete(true);
+    return filters;
+  }
 
-    emit(const DigitalCatalogueLoadedState());
+  /// Build the complete query dynamically
+  Map<String, dynamic> buildQuery({
+    required List<FilterData> filterData,
+    required String searchString,
+    required int currentPage,
+    required int pageLimit,
+  }) {
+    Map<String, dynamic> query = {};
+    query[ApiKey.filters] = buildFilters(filterData);
+
+    /// Add pagination, search, and sorting parameters
+    query.addAll({
+      ApiKey.pagination: {ApiKey.page: currentPage, ApiKey.limit: pageLimit},
+      ApiKey.search: searchString,
+      ApiKey.sort: {
+        ApiKey.field: ApiKey.id,
+        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
+      },
+    });
+    return query;
+  }
+
+  /// Fetch digital catalogue data
+  Future<void> fetchDigitalCatalogueList(BuildContext context, Emitter<DigitalCatalogueState> emit,
+      {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
+    /// Build the query dynamically
+    query = buildQuery(
+      filterData: filterData,
+      searchString: searchString,
+      currentPage: paginationScrollController.currentPage,
+      pageLimit: AppConst.pageLimit,
+    );
+
+    Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>? response =
+        await AppRepository(context).digitalCatalogueFilters(body: query, isLoadMore: isLoadMore);
+
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+    }, (PaginationData<DigitalCatalogueDetails> success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      List<DigitalCatalogueDetails> dataList = (success.dataList as List<DigitalCatalogueDetails>?) ?? [];
+      digitalCatalogueList.addAll(_populateDigitalCatalogueList(dataList));
+      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      emit(DigitalCatalogueLoadedState());
+    });
+  }
+
+  /// Handle load more
+  Future<void> _handleLoadMore(BuildContext context, Emitter<DigitalCatalogueState> emit, int currentPage) async {
+    if (currentPage <= totalNumberOfPages!) {
+      emit(DigitalCatalogueLoadingMoreState());
+      await fetchDigitalCatalogueList(context, emit, isLoadMore: false);
+      emit(DigitalCatalogueLoadMoreState(currentPage: currentPage));
+    }
+  }
+
+  /// Handle pull to refresh
+  Future<void> _handlePullToRefresh(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
+    emit(DigitalCatalogueLoadingState());
+    paginationScrollController.pullToRefresh();
+    digitalCatalogueList.clear();
+    await fetchDigitalCatalogueList(context, emit, isLoadMore: false);
+    emit(DigitalCatalogueLoadedState());
+  }
+
+  Future<void> _handleApplyFilter(BuildContext context, Emitter<DigitalCatalogueState> emit, List<FilterData> appliedFilterData) async {
+    emit(DigitalCatalogueLoadingState());
+    paginationScrollController.pullToRefresh();
+    digitalCatalogueList.clear();
+    filterData = appliedFilterData;
+    await fetchDigitalCatalogueList(context, emit, isLoadMore: false);
+    emit(DigitalCatalogueLoadedState());
+  }
+
+  /// Populate digital catalogue list
+  List<DigitalCatalogueListingModel> _populateDigitalCatalogueList(List<DigitalCatalogueDetails> dataList) {
+    return dataList.map((data) {
+      return DigitalCatalogueListingModel(
+        id: data.id,
+        name: data.name,
+        description: data.cscCode,
+        image: data.catalogueCoverImage?.setMediaUrl,
+        productCount: data.products.length.toString(),
+        date: data.updatedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        isWebView: false,
+        webUrl: null,
+      );
+    }).toList();
+  }
+
+  Future<void> _setupFilters(BuildContext context) async {
+    Either<ErrorResponse, WishlistFilterOptionModel>? response;
+    response = await AppRepository(context).fetchDigitalCatalogueFilterOptionList();
+    response?.fold((l) {
+      Utils.showMessage(l.message);
+    }, (WishlistFilterOptionModel success) {
+      filterData.clear();
+      if (success.filters.isNotNullNorEmpty) {
+        for (Filters filterOption in success.filters ?? []) {
+          FilterData filter = FilterData(
+            name: filterOption.title,
+            code: filterOption.key,
+            inputType: filterOption.type,
+            filterType: filterOption.getFilterType(filterType: filterOption.type),
+            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+          );
+          filterData.add(filter);
+        }
+      }
+    });
+  }
+
+  /// Get secondary filter data
+  List<SecondaryFilterData> _getSecondaryFilterData({required Filters filterOption}) {
+    FilterType filterType = filterOption.getFilterType(filterType: filterOption.type);
+    List<SecondaryFilterData> tempSecondaryData = [];
+    if (filterType == FilterType.checkbox) {
+      tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
+    }
+    return tempSecondaryData;
   }
 }

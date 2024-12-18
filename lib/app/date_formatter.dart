@@ -15,4 +15,5 @@ abstract class DateFormatter {
   static const String dateFormatDDMMYYYYHHMMA = "dd/MM/yyyy, hh:mm a";
   static const String dateFormatDDMMYYYYHHMM = "dd/MM/yyyy, hh:mm";
   static const String dateFormatMMMM = "MMMM";
+  static const String dateFormatDDMMMYY = "dd MMM, yy";
 }

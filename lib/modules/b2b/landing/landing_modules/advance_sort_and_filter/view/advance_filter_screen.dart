@@ -1,14 +1,14 @@
 import 'package:kgk/kgk.dart';
 
-class WishlistFilterScreen extends StatelessWidget {
+class AdvanceFilterScreen extends StatelessWidget {
   final Function onApply;
 
-  const WishlistFilterScreen({super.key, required this.onApply});
+  const AdvanceFilterScreen({super.key, required this.onApply});
 
   @override
   Widget build(BuildContext context) {
     final FilterStyle style = AppTheme.of(context).filterStyle;
-    final WishlistSortFilterBloc filterBloc = BlocProvider.of<WishlistSortFilterBloc>(context);
+    final AdvanceSortFilterBloc filterBloc = BlocProvider.of<AdvanceSortFilterBloc>(context);
     return Scaffold(
       backgroundColor: style.backgroundColor,
       appBar: SmartAppBar(
@@ -18,7 +18,7 @@ class WishlistFilterScreen extends StatelessWidget {
           SmartText(
             APPStrings.clearAll.tr,
             onTap: () {
-              filterBloc.add(ClearAllWishlistFilterDataEvent(
+              filterBloc.add(ClearAllAdvanceFilterDataEvent(
                 context: context,
                 onApply: (List<FilterData> data) {
                   onApply(data);
@@ -41,8 +41,8 @@ class WishlistFilterScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(16.w),
                 color: style.backgroundColor,
-                child: BlocBuilder<WishlistSortFilterBloc, WishlistSortFilterState>(
-                  buildWhen: (previous, current) => current is WishlistFilterDataSelectedState,
+                child: BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
+                  buildWhen: (previous, current) => current is AdvanceFilterDataSelectedState,
                   builder: (context, state) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +95,7 @@ class WishlistFilterScreen extends StatelessWidget {
                   child: SmartButton(
                     title: APPStrings.apply.tr,
                     onTap: () {
-                      filterBloc.add(ApplyWishlistFilterDataEvent());
+                      filterBloc.add(ApplyAdvanceFilterDataEvent());
                       onApply(filterBloc.filterData);
                       context.pop();
                     },
@@ -109,21 +109,21 @@ class WishlistFilterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterList(BuildContext context, WishlistSortFilterBloc filterBloc, FilterStyle style) {
+  Widget _buildFilterList(BuildContext context, AdvanceSortFilterBloc filterBloc, FilterStyle style) {
     return Container(
       color: style.subFilterBackgroundColor,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: filterBloc.filterData.length,
         itemBuilder: (context, index) {
-          return BlocBuilder<WishlistSortFilterBloc, WishlistSortFilterState>(
-            buildWhen: (previous, current) => current is WishlistFilterDataSelectedState,
+          return BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
+            buildWhen: (previous, current) => current is AdvanceFilterDataSelectedState,
             builder: (context, state) {
               final filterData = filterBloc.filterData[index];
               bool isSelected = filterBloc.selectedFilterData == filterData;
               return InkWell(
                 onTap: () {
-                  filterBloc.add(SelectWishlistFilterDataEvent(filterData: filterData, context: context));
+                  filterBloc.add(SelectAdvanceFilterDataEvent(filterData: filterData, context: context));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -148,21 +148,25 @@ class WishlistFilterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSubFilterList(BuildContext context, WishlistSortFilterBloc filterBloc, FilterStyle style) {
-    return BlocBuilder<WishlistSortFilterBloc, WishlistSortFilterState>(
+  Widget _buildSubFilterList(BuildContext context, AdvanceSortFilterBloc filterBloc, FilterStyle style) {
+    return BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
       buildWhen: (previous, current) =>
-          current is WishlistFilterDataSelectedState ||
-          current is WishlistSelectSecondaryFilterDataState ||
-          current is WishlistSortAndFilterPriceRangeChangedState,
+          current is AdvanceFilterDataSelectedState ||
+          current is AdvanceSelectSecondaryFilterDataState ||
+          current is AdvanceSortAndFilterPriceRangeChangedState ||
+          current is SearchAdvanceFilterDataState,
       builder: (context, state) {
-        if (filterBloc.selectedFilterData?.filterType != FilterType.range && filterBloc.secondaryFilterDataDisplay.isEmpty) {
-          return const NoDataFoundWidget();
-        }
         switch (filterBloc.selectedFilterData?.filterType) {
           case FilterType.range:
             return SizedBox();
           case FilterType.checkbox:
-            return _buildOptionList(filterBloc, style);
+            if (filterBloc.secondaryFilterDataDisplay.isNotNullNorEmpty) {
+              return _buildOptionList(filterBloc, style);
+            } else {
+              return NoDataFoundWidget();
+            }
+          case FilterType.dateRange:
+            return _buildDateRangeSlide(filterBloc, style, context);
           case FilterType.undefined:
           default:
             return const NoDataFoundWidget(text: "This type is not yet added");
@@ -171,13 +175,13 @@ class WishlistFilterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOptionList(WishlistSortFilterBloc filterBloc, FilterStyle style) {
+  Widget _buildOptionList(AdvanceSortFilterBloc filterBloc, FilterStyle style) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: filterBloc.secondaryFilterDataDisplay.length,
       itemBuilder: (context, index) {
-        return BlocBuilder<WishlistSortFilterBloc, WishlistSortFilterState>(
-          buildWhen: (previous, current) => current is WishlistSelectSecondaryFilterDataState,
+        return BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
+          buildWhen: (previous, current) => current is AdvanceSelectSecondaryFilterDataState,
           builder: (context, state) {
             final secondaryFilterData = filterBloc.secondaryFilterDataDisplay[index];
             return InkWell(
@@ -207,7 +211,41 @@ class WishlistFilterScreen extends StatelessWidget {
     );
   }
 
-  void handleOnChange(WishlistSortFilterBloc filterBloc, SecondaryFilterData secondaryFilterData) {
-    filterBloc.add(SelectWishlistSecondaryFilterDataEvent(secondaryFilterData: secondaryFilterData));
+  void handleOnChange(AdvanceSortFilterBloc filterBloc, SecondaryFilterData secondaryFilterData) {
+    filterBloc.add(SelectAdvanceSecondaryFilterDataEvent(secondaryFilterData: secondaryFilterData));
+  }
+
+  Widget _buildDateRangeSlide(AdvanceSortFilterBloc filterBloc, FilterStyle style, BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () async {
+            await showDateRangePicker(
+              context: context,
+              initialDateRange: filterBloc.selectedFilterData?.dateRange,
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2200),
+            ).then(
+              (value) {
+                if (value != null) {
+                  filterBloc.add(ChangeAdvanceDateRangeEvent(dateRange: value));
+                }
+              },
+            );
+          },
+          child: SmartTextField(
+            suffixIcon: Icon(Icons.calendar_month),
+            isEnabled: false,
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+            hintText: "${APPStrings.createdOn.tr} - ",
+            disabledBorderColor: style.itemBorderColor,
+            controller: TextEditingController(
+              text: filterBloc.selectedFilterData?.dateRange?.formatDateRange(),
+            ),
+            onTap: () async {},
+          ),
+        )
+      ],
+    );
   }
 }

@@ -65,3 +65,11 @@ extension DateTimeExt on DateTime {
     return DateFormat.MMMM().format(this);
   }
 }
+
+extension DateTimeRangeExt on DateTimeRange {
+  formatDateRange() {
+    final start = this.start;
+    final end = this.end;
+    return '${start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)} to ${end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)}';
+  }
+}

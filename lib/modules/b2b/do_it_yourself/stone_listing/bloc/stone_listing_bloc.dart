@@ -309,7 +309,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       productId: diamond.id,
       diamond: "2.5 crt",
       gram: "1.5 grms",
-      imageUrl: diamond.image.first.url,
+      imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
       name: diamond.rmDescription ?? "",
       originalPrice: (diamond.discountPrice ?? 0).toString().setCurrency,
       ctsOrGms: diamond.ctsOrGms,

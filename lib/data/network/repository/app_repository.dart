@@ -38,7 +38,7 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, List<FaqData>>> fetchStrapiFaqData() async {
     String url = await buildUrl(endpoint: StrapiEndPoints.faqPage, attribute: Attributes.faqPage);
     try {
-      final response = await http.get(Uri.parse(url),  headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
+      final response = await http.get(Uri.parse(url), headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
       if (response.statusCode == 200) {
         final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
         List<FaqData> faqStrapiList = faqStrapiModel.data.first.attributes?.faqs ?? [];
@@ -670,11 +670,11 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters(
       {required Map<String, dynamic> body, bool isLoadMore = false}) async {
-    if (!isLoadMore) {
+    if (isLoadMore) {
       context.setAppLoading(true);
     }
     var response = await postMethod<PaginationData<DigitalCatalogueDetails>>(ApiClient.digitalCatalogueFilters, body);
-    if (!isLoadMore) {
+    if (isLoadMore) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
@@ -873,6 +873,12 @@ class AppRepository extends ApiService {
     context.setAppLoading(true);
     var response = await updateMethod<Map<String, dynamic>>(ApiClient.bag, body, withFullResponse: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For DigitalCatalogue Filter Option
+  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchDigitalCatalogueFilterOptionList() async {
+    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
