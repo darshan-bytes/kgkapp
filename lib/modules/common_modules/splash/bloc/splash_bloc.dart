@@ -42,7 +42,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         await StorageManager().setCurrencyList(r);
         String? currency = StorageManager().getSelectedCurrency();
         if (currency.isNullOrEmpty) {
-          await StorageManager().setSelectedCurrencySymbol(r.first.symbol!);
+          await StorageManager().setSelectedCurrency(r.first.name ?? '');
+          await StorageManager().setSelectedCurrencySymbol(r.first.symbol ?? '');
         }
       });
     });
