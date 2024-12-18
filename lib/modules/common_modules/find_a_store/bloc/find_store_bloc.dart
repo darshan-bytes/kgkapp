@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart' as geoloc;
 import 'package:kgk/kgk.dart';
 
 part 'find_store_event.dart';
@@ -11,14 +12,50 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
   final Completer<GoogleMapController> mapController = Completer<GoogleMapController>();
 
-  CameraPosition myCameraPosition = const CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  CameraPosition? myCameraPosition;
+  Set<Marker> markers = {};
+  FocusNode searchFocusNode = FocusNode();
+  final LocationService locationManager = LocationService();
 
   FindStoreBloc() : super(FindStoreInitial()) {
     on<FindStoreInitialEvent>(_findStoreInitialEvent);
     on<FindStoreShowFullAddressEvent>(_findStoreShowFullAddressEvent);
+    on<FindRetailStoreEvent>(_getStoreListingEvent);
+    on<GetDirectionEvent>(_getDirectionEvent);
+  }
+
+  Future<void> _getStoreListingEvent(FindRetailStoreEvent event, Emitter<FindStoreState> emit) async {
+    emit(FindReloadState());
+
+    geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
+
+    if (position == null || (!event.useCurrentLocation && addressSearchController.text.isNullOrEmpty)) return;
+
+    List<RetailStoreModel> dataList = await findRetailStore(event.context, position, useCurrentLocation: event.useCurrentLocation);
+    addressList = dataList.map((e) {
+      double distanceInKm = geoloc.Geolocator.distanceBetween(
+              position.latitude, position.longitude, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) /
+          1000;
+      _addMarker(e.latitude, e.longitude, e.name);
+      return AddressModel(
+          storeName: e.name,
+          storeDistance: distanceInKm.toStringAsFixed(2),
+          storeAddress: "${e.address2 ?? ''}, ${e.address1 ?? ''}",
+          isExpanded: false,
+          addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
+          latitude: e.latitude,
+          longitude: e.longitude);
+    }).toList();
+    if (event.useCurrentLocation) {
+      myCameraPosition = CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: AppConst.zoomPosition,
+      );
+      final GoogleMapController controller = await mapController.future;
+      await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
+    }
+    searchFocusNode.unfocus();
+    emit(FindStoreAddressLoadedState());
   }
 
   void _findStoreShowFullAddressEvent(FindStoreShowFullAddressEvent event, Emitter<FindStoreState> emit) {
@@ -40,16 +77,66 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     emit(FindStoreShowFullAddressState(event.index, oldIndex, event.isExpanded));
   }
 
-  void _findStoreInitialEvent(FindStoreInitialEvent event, Emitter<FindStoreState> emit) {
+  Future<void> _findStoreInitialEvent(FindStoreInitialEvent event, Emitter<FindStoreState> emit) async {
     emit(FindReloadState());
-    addressList = List.generate(
-        3,
-        (index) => AddressModel(
-            storeName: 'KGK Diamonds Pvt. Ltd.',
-            storeDistance: '1.5 km',
-            storeAddress: 'Bank of India Aditya, G Block Bkc, Bandra Kurla Complex, Bandra East, Mumbai, Maharashtra 400051',
-            isExpanded: false,
-            addressDetailsKey: GlobalKey<SmartExpansionTileState>()));
+
+    geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
+
+    if (position != null) {
+      myCameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: AppConst.zoomPosition);
+
+      final GoogleMapController controller = await mapController.future;
+
+      await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
+    }
     emit(FindStoreAddressLoadedState());
+  }
+
+  Future<List<RetailStoreModel>> findRetailStore(BuildContext context, geoloc.Position position,
+      {bool useCurrentLocation = false, bool isShowLoader = true, bool isForceFetch = false}) async {
+    List<RetailStoreModel> dataList = [];
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.filters: {
+          ApiKey.dynamicObject: {
+            ApiKey.zipCode: useCurrentLocation ? LatLng(position.latitude, position.longitude) : addressSearchController.text
+          }
+        },
+        ApiKey.search: "",
+        ApiKey.pagination: {ApiKey.limit: AppConst.pageLimit, ApiKey.page: AppConst.page1},
+        ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
+      };
+      Either<ErrorResponse, PaginationData<RetailStoreModel>>? response = await AppRepository(context).getRetailStore(body: body);
+      response?.fold((l) {
+        dataList = [];
+        Utils.showMessage(l.message);
+      }, (success) {
+        dataList = success.dataList as List<RetailStoreModel>;
+      });
+    } catch (e) {
+      printWrapped(e.toString());
+    }
+    return dataList;
+  }
+
+  void _addMarker(String? lat, String? long, String? title) {
+    Marker marker = Marker(
+      markerId: MarkerId(title ?? ''),
+      infoWindow: InfoWindow(title: title),
+      position: LatLng(lat.toDouble ?? 0.0, long.toDouble ?? 0.0),
+    );
+    markers.add(marker);
+  }
+
+  void _getDirectionEvent(GetDirectionEvent event, Emitter<FindStoreState> emit) async {
+    String googleUrl = Utils.getGoogleMapUrl(latitude: event.latitude, longitude: event.longitude);
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(
+        Uri.parse(googleUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }
