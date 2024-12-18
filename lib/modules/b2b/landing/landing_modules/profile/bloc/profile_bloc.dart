@@ -421,7 +421,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
     Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).logoutUser({});
     await response?.fold((l) async {
-      ErrorResponse errorModel = l;
       BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
       BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
       await StorageManager().clearSession();

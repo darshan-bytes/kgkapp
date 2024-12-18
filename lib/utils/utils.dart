@@ -250,4 +250,15 @@ class Utils {
       return false;
     }
   }
+
+  static ActivityLogs? getPermissionByModuleName({required ModuleKey moduleName}) {
+    final userResponse = StorageManager().getUserResponse();
+    if (userResponse?.userPermissions?.permissions != null) {
+      Map<String, dynamic>? moduleData = userResponse?.userPermissions?.permissions?.toJson()[moduleName.value];
+      if (moduleData is Map<String, dynamic>) {
+        return ActivityLogs.fromJson(moduleData);
+      }
+    }
+    return null;
+  }
 }
