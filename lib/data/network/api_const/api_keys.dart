@@ -87,4 +87,5 @@ class ApiKey {
   static const String stone = 'stone';
   static const String isBillingAddress = 'is_billing_address';
   static const String isShippingAddress = 'is_shipping_address';
+  static const String percentage = 'percentage';
 }

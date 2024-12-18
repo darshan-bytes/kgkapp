@@ -168,7 +168,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
           AppRoutes.orderConfirmationPage,
           (route) => route.settings.name != AppRoutes.landingPage,
           arguments: {
-            RoutesData.orderNumber: orderResponse.id,
+            RoutesData.orderNumber: orderResponse.uniqueId,
           },
         );
       },
