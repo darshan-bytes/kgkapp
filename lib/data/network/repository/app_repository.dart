@@ -245,20 +245,11 @@ class AppRepository extends ApiService {
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  // getAuctionList
-  Future<Either<ErrorResponse, AuctionListingModel>?> getAuctionList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
-    if (isLoadMore) {
-      context.setAppLoading(true);
-    }
-    var response = await getMethod<AuctionListingModel>(
-      ApiClient.auctionListing,
-      query: {ApiKey.limit: limit, ApiKey.page: page},
-      withCurrencyHeader: true,
-    );
-    if (isLoadMore) {
-      context.setAppLoading(false);
-    }
+  /// getAuctionList
+  Future<Either<ErrorResponse, AuctionListingModel>?> getAuctionList({required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<AuctionListingModel>(ApiClient.auctionListing, query: body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -784,8 +775,8 @@ class AppRepository extends ApiService {
   }
 
   // For Wishlist Filter Option
-  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchWishlistFilterOptionList() async {
-    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchWishlistFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.wishlistFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -877,8 +868,14 @@ class AppRepository extends ApiService {
   }
 
   /// For DigitalCatalogue Filter Option
-  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchDigitalCatalogueFilterOptionList() async {
-    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchDigitalCatalogueFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Auction listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchAuctionListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.auctionListingFilterOption);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

@@ -6,8 +6,8 @@ class ApiService implements ApiProvider {
   // Common method to get headers
   Map<String, String> _getCommonHeaders({Map<String, String>? additionalHeaders, required bool withCurrencyHeader}) {
     String? token = StorageManager().getAuthToken();
-   // Ankita User Token
-   // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM4OTIiLCJpc19hZG1pbiI6dHJ1ZSwidXNlcl90eXBlIjoiY3VzdG9tZXIiLCJjb3VudHJ5X2NvZGUiOiJJTiIsInJvbGUiOiJpbmRpdmlkdWFsLXJvbGUiLCJjdXN0b21lcl9vcmdhbml6YXRpb25faWQiOiIzMTcxOCIsImlhdCI6MTczMzkyNjEyOSwiZXhwIjoxNzM0NTMwOTI5fQ.SbFMhmBCEjFE1D2uoTlGxXMAmHx0c3r0BfCDaEEx4Yg';
+    // Ankita User Token
+    // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM4OTIiLCJpc19hZG1pbiI6dHJ1ZSwidXNlcl90eXBlIjoiY3VzdG9tZXIiLCJjb3VudHJ5X2NvZGUiOiJJTiIsInJvbGUiOiJpbmRpdmlkdWFsLXJvbGUiLCJjdXN0b21lcl9vcmdhbml6YXRpb25faWQiOiIzMTcxOCIsImlhdCI6MTczMzkyNjEyOSwiZXhwIjoxNzM0NTMwOTI5fQ.SbFMhmBCEjFE1D2uoTlGxXMAmHx0c3r0BfCDaEEx4Yg';
     String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
     String? acceptLanguage = StorageManager().getLocale();
     String? currency = StorageManager().getSelectedCurrency();
@@ -74,7 +74,7 @@ class ApiService implements ApiProvider {
               headers: _getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader),
               body: body == null ? null : jsonEncode(body));
           break;
-        }
+      }
 
       kgk_logger.log('Request URL: $url Response: ${response.body} StatusCode: ${response.statusCode}');
 
