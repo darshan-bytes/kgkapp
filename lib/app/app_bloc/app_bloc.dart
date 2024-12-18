@@ -246,8 +246,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     };
 
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    if (myBagDataModel != null) {
-      String id = myBagDataModel.sId ?? '';
+    String id = myBagDataModel?.sId ?? '';
+    if (id.isNotEmpty) {
       body[ApiKey.id] = id;
     }
 

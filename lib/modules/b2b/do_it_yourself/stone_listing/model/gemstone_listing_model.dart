@@ -518,7 +518,7 @@ class GemstoneDatum {
       sscWebsiteLotNo: json["ssc_website_lot_no"],
       shape: json["shape"],
       shapeCode: json["shape_code"],
-      shapeRefSuid: json["shape_ref_suid"],
+      shapeRefSuid: json["shape_ref_suid"]?.toString(),
       shapeSuid: json["shape_suid"],
       size: json["size"],
       sizeRange: json["size_range"],

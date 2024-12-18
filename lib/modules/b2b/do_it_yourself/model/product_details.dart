@@ -66,6 +66,9 @@ class ProductDetailsModel {
   List<Component>? components;
   String? location;
   int? stockQty;
+  double? yourDiscount;
+  String? yourRate;
+  String? yourAmount;
 
   ProductDetailsModel({
     this.productId,
@@ -133,6 +136,9 @@ class ProductDetailsModel {
     this.components,
     this.location,
     this.stockQty,
+    this.yourRate,
+    this.yourAmount,
+    this.yourDiscount,
   });
 
   @override
