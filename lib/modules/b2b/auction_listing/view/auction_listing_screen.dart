@@ -26,21 +26,20 @@ class AuctionListingScreen extends StatelessWidget {
   Widget _getBody(AuctionListingBloc auctionListingBloc) {
     return SafeArea(
       child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
-        buildWhen: (previous, current) => current is AuctionListingLoadedState || current is AuctionListingReloadingState,
+        buildWhen: (previous, current) =>
+            current is AuctionListingLoadedState || current is AuctionListingReloadingState || current is AuctionListingLoadingState,
         builder: (context, state) {
+          if (state is AuctionListingLoadingState) {
+            return const SmartCircularProgressIndicator();
+          }
           if (state is AuctionListingLoadedState || state is AuctionListingReloadingState) {
-            return SmartSingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              onRefresh: () async {
-                await auctionListingBloc.pullToRefresh();
-              },
-              controller: auctionListingBloc.paginationScrollController.scrollController,
+            return Padding(
               padding: EdgeInsets.symmetric(horizontal: 17.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 24.h),
-                  _buildSearchTextField(auctionListingBloc),
+                  _buildSearchTextField(auctionListingBloc, context),
                   SizedBox(height: 24.h),
                   _buildAuctionList(auctionListingBloc),
                 ],
@@ -54,42 +53,58 @@ class AuctionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchTextField(AuctionListingBloc auctionListingBloc) {
+  Widget _buildSearchTextField(AuctionListingBloc auctionListingBloc, BuildContext context) {
     return SmartTextField.search(
       height: 48.h,
       hintText: APPStrings.searchAuction.tr,
       controller: auctionListingBloc.auctionSearchController,
+      onTapOutside: (value) => FocusScope.of(context).unfocus(),
+      onValueChanges: (value) {
+        auctionListingBloc.add(AuctionListSearchEvent(context: context));
+      },
+      onFieldSubmitted: (value) {
+        auctionListingBloc.add(AuctionListSearchEvent(context: context));
+      },
     );
   }
 
   Widget _buildAuctionList(AuctionListingBloc auctionListingBloc) {
-    return BlocBuilder<AuctionListingBloc, AuctionListingState>(
-      buildWhen: (previous, current) => current is AuctionListLoadedMoreState || current is AuctionListLoadingMoreState,
-      builder: (context, state) {
-        return Column(
-          children: [
-            if (auctionListingBloc.auctionList.isEmpty)
-              NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr)
-            else
-              ListView.separated(
-                itemCount: auctionListingBloc.auctionList.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
-                  return AuctionListItem(
-                    onTap: () => context.pushNamed(AppRoutes.auctionPage, arguments: {RoutesData.auctionModelData: auctionListModel}),
-                    auctionListModel: auctionListModel,
-                    stoneTypeImage: AppImages.icRingThin,
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              ),
-            if (state is AuctionListLoadingMoreState) const SmartCircularProgressIndicator(),
-            SizedBox(height: 17.h),
-          ],
-        );
-      },
+    return Expanded(
+      child: BlocBuilder<AuctionListingBloc, AuctionListingState>(
+        buildWhen: (previous, current) => current is AuctionListLoadedMoreState || current is AuctionListLoadingMoreState,
+        builder: (context, state) {
+          if (auctionListingBloc.auctionList.isEmpty) {
+            return NoDataFoundWidget(text: APPStrings.noAuctionsFound.tr);
+          }
+          return SmartSingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            onRefresh: () async {
+              auctionListingBloc.add(AuctionListPullToRefreshEvent(context: context));
+            },
+            controller: auctionListingBloc.paginationScrollController.scrollController,
+            child: Column(
+              children: [
+                ListView.separated(
+                  itemCount: auctionListingBloc.auctionList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    AuctionListModel auctionListModel = auctionListingBloc.auctionList[index];
+                    return AuctionListItem(
+                      onTap: () => context.pushNamed(AppRoutes.auctionPage, arguments: {RoutesData.auctionModelData: auctionListModel}),
+                      auctionListModel: auctionListModel,
+                      stoneTypeImage: AppImages.icRingThin,
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                ),
+                if (state is AuctionListLoadingMoreState) const SmartCircularProgressIndicator(),
+                SizedBox(height: 17.h),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -104,8 +119,12 @@ class AuctionListingScreen extends StatelessWidget {
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
+                  builder: (context) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        auctionListingBloc.add(AuctionListFilterEvent(filterData: value, context: context));
+                      }
+                    },
                   ),
                 );
               },
