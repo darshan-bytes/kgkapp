@@ -26,7 +26,10 @@ class FindStoreScreen extends StatelessWidget {
               controller: bloc.addressSearchController,
               labelText: APPStrings.enterAddressOrPincode.tr,
               labelStyle: style.enterAddressStyle,
-              onFieldSubmitted: (value) {},
+              focusNode: bloc.searchFocusNode,
+              onFieldSubmitted: (value) {
+                bloc.add(FindRetailStoreEvent(context: context));
+              },
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
                 padding: EdgeInsets.all(14.w),
@@ -35,43 +38,58 @@ class FindStoreScreen extends StatelessWidget {
             SizedBox(
               height: 12.h,
             ),
-            Row(
-              children: [
-                SmartImage(
-                  path: AppImages.icFindStorePin,
-                  color: style.primaryColor,
-                  height: 24.w,
-                  width: 24.w,
-                ),
-                SizedBox(
-                  width: 6.w,
-                ),
-                SmartText(
-                  APPStrings.useCurrentLocation.tr,
-                  style: style.useCurrentLocationStyle,
-                )
-              ],
+            GestureDetector(
+              onTap: () {
+                bloc.add(FindRetailStoreEvent(context: context, useCurrentLocation: true));
+              },
+              child: Row(
+                children: [
+                  SmartImage(
+                    path: AppImages.icFindStorePin,
+                    color: style.primaryColor,
+                    height: 24.w,
+                    width: 24.w,
+                  ),
+                  SizedBox(
+                    width: 6.w,
+                  ),
+                  SmartText(
+                    APPStrings.useCurrentLocation.tr,
+                    style: style.useCurrentLocationStyle,
+                  )
+                ],
+              ),
             ),
             SizedBox(
               height: 24.h,
             ),
-            SmartImage(
-              path: "https://i.ibb.co/h1wRHJ3/Map.png",
-              height: 452.w,
-              width: double.infinity,
-            ),
 
             /// When api is ready to use this code will be used
-            // SizedBox(
-            //   height: 452.h,
-            //   child: GoogleMap(
-            //     mapType: MapType.hybrid,
-            //     initialCameraPosition: bloc.myCameraPosition,
-            //     onMapCreated: (GoogleMapController controller) {
-            //       bloc.mapController.complete(controller);
-            //     },
-            //   ),
-            // ),
+            BlocBuilder<FindStoreBloc, FindStoreState>(
+              buildWhen: (previous, current) => current is FindStoreAddressLoadedState,
+              builder: (context, state) {
+                return SizedBox(
+                  height: 452.h,
+                  child: GoogleMap(
+                    mapType: MapType.hybrid,
+                    initialCameraPosition: bloc.myCameraPosition ?? CameraPosition(target: LatLng(0.0, 0.0)),
+                    onMapCreated: (GoogleMapController controller) {
+                      bloc.mapController.complete(controller);
+                    },
+                    myLocationEnabled: true,
+                    markers: bloc.markers,
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                      Factory<EagerGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      ),
+                      Factory<PanGestureRecognizer>(
+                        () => PanGestureRecognizer(),
+                      ),
+                    },
+                  ),
+                );
+              },
+            ),
             SizedBox(
               height: 24.h,
             ),
@@ -92,7 +110,7 @@ class FindStoreScreen extends StatelessWidget {
                               SmartExpansionTile(
                                 key: bloc.addressList[index].addressDetailsKey,
                                 onExpansionChanged: (value) {
-                                  bloc.add(FindStoreShowFullAddressEvent(index: index, isExpanded: value));
+                                  bloc.add(FindStoreShowFullAddressEvent(context: context, index: index, isExpanded: value));
                                 },
                                 trailing: bloc.addressList[index].isExpanded
                                     ? null
@@ -132,7 +150,13 @@ class FindStoreScreen extends StatelessWidget {
                                         SizedBox(
                                           height: 16.h,
                                         ),
-                                        SmartButton(onTap: () {}, title: APPStrings.getDirections.tr),
+                                        SmartButton(
+                                            onTap: () {
+                                              bloc.add(GetDirectionEvent(
+                                                  latitude: bloc.addressList[index].latitude.toDouble ?? 0.0,
+                                                  longitude: bloc.addressList[index].longitude.toDouble ?? 0.0));
+                                            },
+                                            title: APPStrings.getDirections.tr),
                                         SizedBox(
                                           height: 16.h,
                                         ),

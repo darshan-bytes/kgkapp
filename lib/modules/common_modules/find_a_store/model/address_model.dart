@@ -4,10 +4,19 @@ class AddressModel {
   String? storeName;
   String? storeDistance;
   String? storeAddress;
+  String? latitude;
+  String? longitude;
   bool isExpanded;
   GlobalKey<SmartExpansionTileState> addressDetailsKey;
 
-  AddressModel({this.storeName, this.storeDistance, this.storeAddress, this.isExpanded = false, required this.addressDetailsKey});
+  AddressModel(
+      {this.storeName,
+      this.storeDistance,
+      this.storeAddress,
+      this.isExpanded = false,
+      required this.addressDetailsKey,
+      this.latitude,
+      this.longitude});
 
   @override
   bool operator ==(Object other) =>
@@ -18,9 +27,17 @@ class AddressModel {
           storeDistance == other.storeDistance &&
           storeAddress == other.storeAddress &&
           isExpanded == other.isExpanded &&
-          addressDetailsKey == other.addressDetailsKey;
+          addressDetailsKey == other.addressDetailsKey &&
+          latitude == other.latitude &&
+          longitude == other.longitude;
 
   @override
   int get hashCode =>
-      storeName.hashCode ^ storeDistance.hashCode ^ storeAddress.hashCode ^ isExpanded.hashCode ^ addressDetailsKey.hashCode;
+      storeName.hashCode ^
+      storeDistance.hashCode ^
+      storeAddress.hashCode ^
+      isExpanded.hashCode ^
+      addressDetailsKey.hashCode ^
+      latitude.hashCode ^
+      longitude.hashCode;
 }

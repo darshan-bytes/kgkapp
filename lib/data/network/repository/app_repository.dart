@@ -789,6 +789,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  /// Find a Retail Store near your Location
+  Future<Either<ErrorResponse, PaginationData<RetailStoreModel>>?> getRetailStore({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<PaginationData<RetailStoreModel>>(ApiClient.findRetailerStore, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, List<CustomerSalesmanModel>>?> customerSalesman() async {
     var response = await getMethod<CustomerSalesmanModel>(ApiClient.customerSalesman);
     return response?.fold((l) => Left(l), (r) => Right(r));

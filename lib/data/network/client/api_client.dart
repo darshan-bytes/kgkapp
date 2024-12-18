@@ -130,6 +130,8 @@ class ApiClient {
 
   static const String deleteUser = '$apiBaseUrl/users';
 
+  static String get findRetailerStore => '$apiBaseUrl/retailer-stores/filters';
+
   static const String customerSalesman = '$apiBaseUrl/customer/salesman';
 
   static String bagOrderSummaryById(String id) => '$apiBaseUrl/bag/order-summary/$id';
