@@ -132,3 +132,15 @@ enum FilterType {
 
   final String value;
 }
+
+enum Priority {
+  low('low', 1),
+  medium('medium', 2),
+  high('high', 3),
+  undefined('undefined', 0);
+
+  const Priority(this.stringValue, this.intValue);
+
+  final String stringValue;
+  final int intValue;
+}
