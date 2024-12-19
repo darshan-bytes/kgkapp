@@ -402,6 +402,7 @@ class BagSummary {
     this.yourDiscount,
     this.yourRate,
     this.yourAmount,
+    this.totalAmount,
   });
 
   final int? totalItems;
@@ -412,6 +413,7 @@ class BagSummary {
   final double? yourDiscount;
   final String? yourRate;
   final String? yourAmount;
+  final double? totalAmount;
 
   BagSummary copyWith({
     int? totalItems,
@@ -422,6 +424,7 @@ class BagSummary {
     double? yourDiscount,
     String? yourRate,
     String? yourAmount,
+    double? totalAmount,
   }) {
     return BagSummary(
       totalItems: totalItems ?? this.totalItems,
@@ -432,6 +435,7 @@ class BagSummary {
       yourAmount: yourAmount ?? this.yourAmount,
       yourRate: yourRate ?? this.yourRate,
       yourDiscount: yourDiscount ?? this.yourDiscount,
+      totalAmount: totalAmount ?? this.totalAmount,
     );
   }
 
@@ -445,6 +449,7 @@ class BagSummary {
       yourAmount: json["your_amount"]?.toString(),
       yourRate: json["your_rate"]?.toString(),
       yourDiscount: json["your_discount"]?.toString().toDouble,
+      totalAmount: json["total_amount"]?.toString().toDouble,
     );
   }
 
@@ -457,5 +462,6 @@ class BagSummary {
         "your_discount": yourDiscount,
         "your_rate": yourRate,
         "your_amount": yourAmount,
+        "total_amount": totalAmount,
       };
 }

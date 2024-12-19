@@ -852,10 +852,9 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<IndividualPlaceOrderResponse>>?> orderIndividual(
-      {Map<String, dynamic> body = const {}}) async {
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderIndividual({Map<String, dynamic> body = const {}}) async {
     context.setAppLoading(true);
-    var response = await postMethod<IndividualPlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -879,15 +878,16 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<PaymentCondition>>?> getPaymentTermsFilter(
-      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
-    if (!isLoadMore) {
-      context.setAppLoading(true);
-    }
+  Future<Either<ErrorResponse, PaginationData<PaymentCondition>>?> getPaymentTermsFilter({Map<String, dynamic>? body}) async {
     var response = await postMethod<PaginationData<PaymentCondition>>(ApiClient.paymentTermsFilter, body);
-    if (!isLoadMore) {
-      context.setAppLoading(false);
-    }
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> placeB2BOrder(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.placeB2BOrder, body, withFullResponse: true);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

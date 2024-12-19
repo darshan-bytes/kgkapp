@@ -88,4 +88,19 @@ class ApiKey {
   static const String isBillingAddress = 'is_billing_address';
   static const String isShippingAddress = 'is_shipping_address';
   static const String percentage = 'percentage';
+  static const String meta = 'meta';
+  static const String paymentCondition = 'paymentCondition';
+  static const String discount = 'discount';
+  static const String comments = 'comments';
+  static const String totalDiscount = 'total_discount';
+  static const String totalPrice = 'total_price';
+  static const String shippingAddressId = 'shipping_address_id';
+  static const String billingAddressId = 'billing_address_id';
+  static const String discountPercentage = 'discount_percentage';
+  static const String image = 'image';
+  static const String yourAmount = 'your_amount';
+  static const String yourRate = 'your_rate';
+  static const String yourDiscount = 'your_discount';
+  static const String orderContextId = 'order_context_id';
+  static const String orderContext = 'order_context';
 }

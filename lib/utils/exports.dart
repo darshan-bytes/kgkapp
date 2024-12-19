@@ -488,3 +488,4 @@ export 'package:kgk/modules/common_modules/find_a_store/model/retail_store_model
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_individual_order_model.dart';
 export 'package:kgk/modules/common_modules/faq/model/faq_strapi_model.dart';
 export 'package:kgk/app/location_service.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_order_product_request.dart';
