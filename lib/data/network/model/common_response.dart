@@ -143,6 +143,8 @@ class CommonResponse<T> {
         return PlaceOrderResponse.fromJson(json);
       case const (PaginationData<PaymentCondition>):
         return PaginationData<PaymentCondition>.fromJson(json);
+      case const (CalendarDataModel):
+        return CalendarDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

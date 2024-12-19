@@ -19,7 +19,7 @@ class CalendarScreen extends StatelessWidget {
             children: [
               _buildHeaderRow(bloc, style, context),
               SizedBox(height: 24.h),
-              _buildSearchFieldAndMenuButton(bloc, style),
+              _buildSearchFieldAndMenuButton(context, bloc, style),
               SizedBox(height: 24.h),
               Container(
                 height: 40.h,
@@ -40,7 +40,7 @@ class CalendarScreen extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             title: APPStrings.day.tr,
                             onTap: () {
-                              bloc.add(const CalendarViewChangeEvent(CalendarView.day));
+                              bloc.add(CalendarViewChangeEvent(CalendarView.day, context));
                             },
                             isWhite: bloc.calendarView != CalendarView.day,
                             titleStyle: style.calendarViewChangeButtonStyle,
@@ -52,7 +52,7 @@ class CalendarScreen extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             title: APPStrings.week.tr,
                             onTap: () {
-                              bloc.add(const CalendarViewChangeEvent(CalendarView.week));
+                              bloc.add(CalendarViewChangeEvent(CalendarView.week, context));
                             },
                             isWhite: bloc.calendarView != CalendarView.week,
                             titleStyle: style.calendarViewChangeButtonStyle,
@@ -64,7 +64,7 @@ class CalendarScreen extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             title: APPStrings.month.tr,
                             onTap: () {
-                              bloc.add(const CalendarViewChangeEvent(CalendarView.month));
+                              bloc.add(CalendarViewChangeEvent(CalendarView.month, context));
                             },
                             isWhite: bloc.calendarView != CalendarView.month,
                             titleStyle: style.calendarViewChangeButtonStyle,
@@ -103,8 +103,7 @@ class CalendarScreen extends StatelessWidget {
                         return CustomMonthYearPicker(
                             initialDate: bloc.selectedMonth,
                             onDateChanged: (date) {
-                              bloc.selectedMonth = date;
-                              bloc.calendarController.displayDate = date;
+                              bloc.add(InitialCalendarEvent(context, selectedDate: date));
                             });
                       });
                 },
@@ -153,7 +152,7 @@ class CalendarScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchFieldAndMenuButton(CalendarBloc bloc, CalendarStyle style) {
+  Widget _buildSearchFieldAndMenuButton(BuildContext context, CalendarBloc bloc, CalendarStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Row(
@@ -166,17 +165,22 @@ class CalendarScreen extends StatelessWidget {
               controller: bloc.searchController,
               textInputAction: TextInputAction.search,
               onTapOutside: (p) {},
+              onValueChanges: (p) {
+                bloc.add(CalenderSearchEvent(context));
+              },
             ),
           ),
-          SizedBox(width: 16.w),
-          SelectionButton(
-            width: 48.w,
-            imageHeight: 24.5.w,
-            imageWidth: 24.5.w,
-            isSelected: false,
-            image: AppImages.icMenu,
-            onTap: () {},
-          ),
+
+          /// NOTE :: MENU BUTTON IS HIDDEN AS OF NOW TO KEEP SIMILARITY WITH WEB
+          // SizedBox(width: 16.w),
+          // SelectionButton(
+          //   width: 48.w,
+          //   imageHeight: 24.5.w,
+          //   imageWidth: 24.5.w,
+          //   isSelected: false,
+          //   image: AppImages.icMenu,
+          //   onTap: () {},
+          // ),
         ],
       ),
     );
@@ -189,7 +193,7 @@ class CalendarScreen extends StatelessWidget {
         return Container(
           constraints: BoxConstraints(maxHeight: 600.h),
           child: SfCalendar(
-            onViewChanged: (viewChangeDetails) => bloc.add(CalendarOnViewChangedEvent(viewChangeDetails)),
+            onViewChanged: (viewChangeDetails) => bloc.add(CalendarOnViewChangedEvent(viewChangeDetails, context)),
             dataSource: bloc.meetingDataSource,
             view: bloc.calendarView,
             controller: bloc.calendarController,
@@ -226,7 +230,7 @@ class CalendarScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
         ),
-        builder: (context) {
+        builder: (subContext) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
@@ -240,12 +244,12 @@ class CalendarScreen extends StatelessWidget {
                   (index) {
                     CalendarEventTypeModel eventType = bloc.calendarEventTypeList[index];
                     return _buildPopupOption(
-                      context,
+                      subContext,
                       text: eventType.title ?? '-',
                       style: orderPopupStyle.optionTextStyle,
-                      onTap: () {
-                        bloc.add(CalendarEventTypeChangeEvent(eventType));
-                        context.pop();
+                      onTap: () async {
+                        bloc.add(CalendarEventTypeChangeEvent(eventType, context));
+                        subContext.pop();
                       },
                     );
                   },
