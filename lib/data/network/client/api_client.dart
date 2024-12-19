@@ -159,6 +159,8 @@ class ApiClient {
   static const String auctionListingFilterOption = '$apiBaseUrl/auctions/customer/filter-list';
 
   static const String placeB2BOrder = '$apiBaseUrl/orders';
+
+  static const String getCalenderEvents = '$apiBaseUrl/calendar/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
