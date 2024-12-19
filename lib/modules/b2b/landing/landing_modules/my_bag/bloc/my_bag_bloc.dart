@@ -9,6 +9,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   BagListDataModel? bagListDataModel;
   List<CustomerSalesmanModel> salesmanList = [];
   BagOrderSummaryDataModel? bagOrderSummaryData;
+  List<PlaceOrderProductRequest> placeOrderProductRequestList = [];
 
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -453,6 +454,22 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       return;
     }
 
+    if (userType == UserType.b2bUser) {
+      placeOrderProductRequestList = List.generate(myBagProductList.length, (index) {
+        ProductDetailsModel product = myBagProductList[index];
+        return PlaceOrderProductRequest(
+          name: product.name,
+          image: product.imageUrl,
+          suid: product.suid,
+          quantity: product.quantity,
+          discountPercentage: product.discountPercentage?.toDouble,
+          yourDiscount: product.yourDiscount,
+          yourRate: product.yourRate,
+          yourAmount: product.yourAmount,
+        );
+      });
+    }
+
     context.pushNamed(AppRoutes.addressListPage);
   }
 
@@ -516,7 +533,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
-    await StorageManager().setBagId('');
     await StorageManager().clearBagData();
     bagListDataModel = null;
     commodity = null;

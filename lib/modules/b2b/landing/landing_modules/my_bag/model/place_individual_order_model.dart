@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
-class IndividualPlaceOrderResponse {
-  IndividualPlaceOrderResponse({
+class PlaceOrderResponse {
+  PlaceOrderResponse({
     required this.createdAt,
     required this.updatedAt,
     required this.orderFor,
@@ -49,7 +49,7 @@ class IndividualPlaceOrderResponse {
   final String? productDescription;
   final String? createdBy;
   final String? orderStatus;
-  final dynamic metaInfo;
+  final MetaInfo? metaInfo;
   final String? name;
   final String? email;
   final String? phone;
@@ -63,7 +63,7 @@ class IndividualPlaceOrderResponse {
   final String? uniqueId;
   final String? v;
 
-  IndividualPlaceOrderResponse copyWith({
+  PlaceOrderResponse copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     String? orderFor,
@@ -80,7 +80,7 @@ class IndividualPlaceOrderResponse {
     dynamic productDescription,
     String? createdBy,
     String? orderStatus,
-    dynamic metaInfo,
+    MetaInfo? metaInfo,
     String? name,
     String? email,
     String? phone,
@@ -94,7 +94,7 @@ class IndividualPlaceOrderResponse {
     String? uniqueId,
     String? v,
   }) {
-    return IndividualPlaceOrderResponse(
+    return PlaceOrderResponse(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       orderFor: orderFor ?? this.orderFor,
@@ -127,8 +127,8 @@ class IndividualPlaceOrderResponse {
     );
   }
 
-  factory IndividualPlaceOrderResponse.fromJson(Map<String, dynamic> json) {
-    return IndividualPlaceOrderResponse(
+  factory PlaceOrderResponse.fromJson(Map<String, dynamic> json) {
+    return PlaceOrderResponse(
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       orderFor: json["order_for"],
@@ -145,7 +145,7 @@ class IndividualPlaceOrderResponse {
       productDescription: json["product_description"],
       createdBy: json["created_by"]?.toString(),
       orderStatus: json["order_status"],
-      metaInfo: json["meta_info"],
+      metaInfo: json["meta_info"] == null ? null : MetaInfo.fromJson(json["meta_info"]),
       name: json["name"],
       email: json["email"],
       phone: json["phone"],
@@ -178,7 +178,7 @@ class IndividualPlaceOrderResponse {
         "product_description": productDescription,
         "created_by": createdBy,
         "order_status": orderStatus,
-        "meta_info": metaInfo,
+        "meta_info": metaInfo?.toJson(),
         "name": name,
         "email": email,
         "phone": phone,
@@ -191,6 +191,44 @@ class IndividualPlaceOrderResponse {
         "deletedAt": deletedAt,
         "unique_id": uniqueId,
         "__v": v,
+      };
+}
+
+class MetaInfo {
+  MetaInfo({
+    required this.paymentCondition,
+    required this.discount,
+    required this.comments,
+  });
+
+  final String? paymentCondition;
+  final double? discount;
+  final String? comments;
+
+  MetaInfo copyWith({
+    String? paymentCondition,
+    double? discount,
+    String? comments,
+  }) {
+    return MetaInfo(
+      paymentCondition: paymentCondition ?? this.paymentCondition,
+      discount: discount ?? this.discount,
+      comments: comments ?? this.comments,
+    );
+  }
+
+  factory MetaInfo.fromJson(Map<String, dynamic> json) {
+    return MetaInfo(
+      paymentCondition: json["paymentCondition"],
+      discount: json["discount"]?.toString().toDouble,
+      comments: json["comments"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "paymentCondition": paymentCondition,
+        "discount": discount,
+        "comments": comments,
       };
 }
 
