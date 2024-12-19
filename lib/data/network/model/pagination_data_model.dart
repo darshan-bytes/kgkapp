@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 
 class PaginationData<T> {
   int? filteredRecords;
@@ -76,6 +77,8 @@ class PaginationData<T> {
         return HomeNewLanuchesDatum.fromJson(json);
       case const (PaymentCondition):
         return PaymentCondition.fromJson(json);
+      case const (OrderItem):
+        return OrderItem.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

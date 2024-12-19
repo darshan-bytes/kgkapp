@@ -3,6 +3,7 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
+import 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
@@ -888,6 +889,13 @@ class AppRepository extends ApiService {
     if (!isLoadMore) {
       context.setAppLoading(false);
     }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<OrderItem>>?> getMyOrderList({Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await postMethod<PaginationData<OrderItem>>(ApiClient.myOrders, body);
+    if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

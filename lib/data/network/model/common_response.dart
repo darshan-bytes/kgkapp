@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 
 /// Common response model
 class CommonResponse<T> {
@@ -143,6 +144,8 @@ class CommonResponse<T> {
         return IndividualPlaceOrderResponse.fromJson(json);
       case const (PaginationData<PaymentCondition>):
         return PaginationData<PaymentCondition>.fromJson(json);
+      case const (PaginationData<OrderItem>):
+        return PaginationData<OrderItem>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
