@@ -383,7 +383,7 @@ class DiamondDataModel {
   DateTime? createdAt;
   DateTime? updatedAt;
   String? discountPrice;
-  int? rating;
+  double? rating;
   int? reviewCount;
   String? auctionId;
   bool isFavorite;

@@ -110,4 +110,5 @@ class ApiKey {
   static const String meeting = 'meeting';
   static const String day = 'day';
   static const String week = 'week';
+  static const String cartId_ = 'cart_id';
 }
