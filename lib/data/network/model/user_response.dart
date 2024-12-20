@@ -183,7 +183,7 @@ extension UserIdDetailsExtension on UserIdDetails {
   }
 }
 
-class UserPermissions extends Equatable {
+class UserPermissions {
   const UserPermissions({
     required this.id,
     required this.userId,
@@ -235,20 +235,6 @@ class UserPermissions extends Equatable {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
       };
-
-  @override
-  List<Object?> get props => [
-        id,
-        userId,
-        permissions,
-        jewellery,
-        gemstone,
-        diamond,
-        deleted,
-        createdAt,
-        updatedAt,
-        v,
-      ];
 }
 
 class Diamond {
@@ -342,7 +328,7 @@ class Comment {
   }
 }
 
-class Permissions extends Equatable {
+class Permissions {
   const Permissions({
     this.activityLogs,
     this.exhibitions,
@@ -554,63 +540,9 @@ class Permissions extends Equatable {
         "wishlist": wishlist?.toJson(),
         "gemstone_shapes": gemstoneShapes?.toJson(),
       };
-
-  @override
-  List<Object?> get props => [
-        activityLogs,
-        exhibitions,
-        assetMgmt,
-        reviewFeedbacks,
-        digitalCatalogue,
-        calendars,
-        messages,
-        cmsPageBuilder,
-        companies,
-        currency,
-        leads,
-        request,
-        department,
-        systemTemplates,
-        diamondCategories,
-        jewelleryCategories,
-        gemstoneCategories,
-        paymentTerms,
-        filterOptions,
-        diamondShapes,
-        diamondColors,
-        jewelleryMetalColors,
-        faqs,
-        tasks,
-        meetings,
-        inquiries,
-        language,
-        auctions,
-        orders,
-        newsletterSubscribers,
-        internalNoteTypes,
-        projects,
-        designs,
-        styles,
-        concepts,
-        presentations,
-        retailerStores,
-        roles,
-        deals,
-        customerGroups,
-        users,
-        orion,
-        cadLibrary,
-        designLibrary,
-        finishedGoodLibrary,
-        skuLibrary,
-        styleLibrary,
-        watchlist,
-        wishlist,
-        gemstoneShapes,
-      ];
 }
 
-class PermissionData extends Equatable {
+class PermissionData {
   const PermissionData({
     required this.list,
     required this.activityLogsExport,
@@ -658,19 +590,6 @@ class PermissionData extends Equatable {
         "update": update?.toJson(),
         "view": view?.toJson(),
       };
-
-  @override
-  List<Object?> get props => [
-        list,
-        activityLogsExport,
-        comment,
-        create,
-        delete,
-        activityLogsImport,
-        share,
-        update,
-        view,
-      ];
 }
 
 class CmsPageBuilder extends Equatable {
