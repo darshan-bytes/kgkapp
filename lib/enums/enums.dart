@@ -133,6 +133,63 @@ enum FilterType {
   final String value;
 }
 
+enum ModuleKey {
+  activityLogs('activity_logs'),
+  exhibitions('exhibitions'),
+  assetMgmt('asset_mgmt'),
+  reviewFeedbacks('review_feedbacks'),
+  digitalCatalogue('digital_catalogue'),
+  calendars('calendars'),
+  messages('messages'),
+  cmsPageBuilder('cms_page_builder'),
+  companies('companies'),
+  currency('currency'),
+  leads('leads'),
+  request('request'),
+  department('department'),
+  systemTemplates('system_templates'),
+  diamondCategories('diamond_categories'),
+  jewelleryCategories('jewellery_categories'),
+  gemstoneCategories('gemstone_categories'),
+  paymentTerms('payment_terms'),
+  filterOptions('filter_options'),
+  diamondShapes('diamond_shapes'),
+  diamondColors('diamond_colors'),
+  jewelleryMetalColors('jewellery_metal_colors'),
+  faqs('faqs'),
+  tasks('tasks'),
+  meetings('meetings'),
+  inquiries('inquiries'),
+  language('language'),
+  auctions('auctions'),
+  orders('orders'),
+  newsletterSubscribers('newsletter_subscribers'),
+  internalNoteTypes('internal_note_types'),
+  projects('projects'),
+  designs('designs'),
+  styles('styles'),
+  concepts('concepts'),
+  presentations('presentations'),
+  retailerStores('retailer_stores'),
+  roles('roles'),
+  deals('deals'),
+  customerGroups('customer_groups'),
+  users('users'),
+  orion('orion'),
+  cadLibrary('cad_library'),
+  designLibrary('design_library'),
+  finishedGoodLibrary('finished_good_library'),
+  skuLibrary('sku_library'),
+  styleLibrary('style_library'),
+  watchlist('watchlist'),
+  wishlist('wishlist'),
+  gemstoneShapes('gemstone_shapes');
+
+  const ModuleKey(this.value);
+
+  final String value;
+}
+
 enum Priority {
   low('low', 1),
   medium('medium', 2),
