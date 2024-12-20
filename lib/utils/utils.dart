@@ -284,12 +284,12 @@ class Utils {
     }
   }
 
-  static ActivityLogs? getPermissionByModuleName({required ModuleKey moduleName}) {
+  static PermissionData? getPermissionByModuleName({required ModuleKey moduleName}) {
     final userResponse = StorageManager().getUserResponse();
     if (userResponse?.userPermissions?.permissions != null) {
       Map<String, dynamic>? moduleData = userResponse?.userPermissions?.permissions?.toJson()[moduleName.value];
       if (moduleData is Map<String, dynamic>) {
-        return ActivityLogs.fromJson(moduleData);
+        return PermissionData.fromJson(moduleData);
       }
     }
     return null;

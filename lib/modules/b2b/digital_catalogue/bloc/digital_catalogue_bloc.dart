@@ -24,7 +24,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   List<FilterData> filterData = [];
 
   /// This modulePermission is used to store the module permission
-  ActivityLogs? modulePermission;
+  PermissionData? modulePermission;
 
   DigitalCatalogueBloc() : super(DigitalCatalogueInitial()) {
     on<DigitalCatalogueInitialEvent>(_onInitialDigitalCatalogueEvent);
@@ -78,7 +78,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   }
 
   void _fetchModulePermission() async {
-    ActivityLogs? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.digitalCatalogue);
+    PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.digitalCatalogue);
     if (permission != null) {
       modulePermission = permission;
     }

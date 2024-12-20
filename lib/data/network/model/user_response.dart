@@ -396,109 +396,109 @@ class Permissions extends Equatable {
     this.gemstoneShapes,
   });
 
-  final ActivityLogs? activityLogs;
-  final ActivityLogs? exhibitions;
-  final ActivityLogs? assetMgmt;
-  final ActivityLogs? reviewFeedbacks;
-  final ActivityLogs? digitalCatalogue;
-  final ActivityLogs? calendars;
-  final ActivityLogs? messages;
+  final PermissionData? activityLogs;
+  final PermissionData? exhibitions;
+  final PermissionData? assetMgmt;
+  final PermissionData? reviewFeedbacks;
+  final PermissionData? digitalCatalogue;
+  final PermissionData? calendars;
+  final PermissionData? messages;
   final CmsPageBuilder? cmsPageBuilder;
-  final ActivityLogs? companies;
-  final ActivityLogs? currency;
-  final ActivityLogs? leads;
-  final ActivityLogs? request;
-  final ActivityLogs? department;
-  final ActivityLogs? systemTemplates;
-  final ActivityLogs? diamondCategories;
-  final ActivityLogs? jewelleryCategories;
-  final ActivityLogs? gemstoneCategories;
-  final ActivityLogs? paymentTerms;
-  final ActivityLogs? filterOptions;
-  final ActivityLogs? diamondShapes;
-  final ActivityLogs? diamondColors;
-  final ActivityLogs? jewelleryMetalColors;
+  final PermissionData? companies;
+  final PermissionData? currency;
+  final PermissionData? leads;
+  final PermissionData? request;
+  final PermissionData? department;
+  final PermissionData? systemTemplates;
+  final PermissionData? diamondCategories;
+  final PermissionData? jewelleryCategories;
+  final PermissionData? gemstoneCategories;
+  final PermissionData? paymentTerms;
+  final PermissionData? filterOptions;
+  final PermissionData? diamondShapes;
+  final PermissionData? diamondColors;
+  final PermissionData? jewelleryMetalColors;
   final CmsPageBuilder? faqs;
-  final ActivityLogs? tasks;
-  final ActivityLogs? meetings;
-  final ActivityLogs? inquiries;
-  final ActivityLogs? language;
-  final ActivityLogs? auctions;
-  final ActivityLogs? orders;
-  final ActivityLogs? newsletterSubscribers;
-  final ActivityLogs? internalNoteTypes;
-  final ActivityLogs? projects;
-  final ActivityLogs? designs;
-  final ActivityLogs? styles;
-  final ActivityLogs? concepts;
-  final ActivityLogs? presentations;
-  final ActivityLogs? retailerStores;
-  final ActivityLogs? roles;
-  final ActivityLogs? deals;
-  final ActivityLogs? customerGroups;
-  final ActivityLogs? users;
+  final PermissionData? tasks;
+  final PermissionData? meetings;
+  final PermissionData? inquiries;
+  final PermissionData? language;
+  final PermissionData? auctions;
+  final PermissionData? orders;
+  final PermissionData? newsletterSubscribers;
+  final PermissionData? internalNoteTypes;
+  final PermissionData? projects;
+  final PermissionData? designs;
+  final PermissionData? styles;
+  final PermissionData? concepts;
+  final PermissionData? presentations;
+  final PermissionData? retailerStores;
+  final PermissionData? roles;
+  final PermissionData? deals;
+  final PermissionData? customerGroups;
+  final PermissionData? users;
   final Orion? orion;
-  final ActivityLogs? cadLibrary;
-  final ActivityLogs? designLibrary;
-  final ActivityLogs? finishedGoodLibrary;
-  final ActivityLogs? skuLibrary;
-  final ActivityLogs? styleLibrary;
-  final ActivityLogs? watchlist;
-  final ActivityLogs? wishlist;
-  final ActivityLogs? gemstoneShapes;
+  final PermissionData? cadLibrary;
+  final PermissionData? designLibrary;
+  final PermissionData? finishedGoodLibrary;
+  final PermissionData? skuLibrary;
+  final PermissionData? styleLibrary;
+  final PermissionData? watchlist;
+  final PermissionData? wishlist;
+  final PermissionData? gemstoneShapes;
 
   factory Permissions.fromJson(Map<String, dynamic> json) {
     return Permissions(
-      activityLogs: json["activity_logs"] == null ? null : ActivityLogs.fromJson(json["activity_logs"]),
-      exhibitions: json["exhibitions"] == null ? null : ActivityLogs.fromJson(json["exhibitions"]),
-      assetMgmt: json["asset_mgmt"] == null ? null : ActivityLogs.fromJson(json["asset_mgmt"]),
-      reviewFeedbacks: json["review_feedbacks"] == null ? null : ActivityLogs.fromJson(json["review_feedbacks"]),
-      digitalCatalogue: json["digital_catalogue"] == null ? null : ActivityLogs.fromJson(json["digital_catalogue"]),
-      calendars: json["calendars"] == null ? null : ActivityLogs.fromJson(json["calendars"]),
-      messages: json["messages"] == null ? null : ActivityLogs.fromJson(json["messages"]),
+      activityLogs: json["activity_logs"] == null ? null : PermissionData.fromJson(json["activity_logs"]),
+      exhibitions: json["exhibitions"] == null ? null : PermissionData.fromJson(json["exhibitions"]),
+      assetMgmt: json["asset_mgmt"] == null ? null : PermissionData.fromJson(json["asset_mgmt"]),
+      reviewFeedbacks: json["review_feedbacks"] == null ? null : PermissionData.fromJson(json["review_feedbacks"]),
+      digitalCatalogue: json["digital_catalogue"] == null ? null : PermissionData.fromJson(json["digital_catalogue"]),
+      calendars: json["calendars"] == null ? null : PermissionData.fromJson(json["calendars"]),
+      messages: json["messages"] == null ? null : PermissionData.fromJson(json["messages"]),
       cmsPageBuilder: json["cms_page_builder"] == null ? null : CmsPageBuilder.fromJson(json["cms_page_builder"]),
-      companies: json["companies"] == null ? null : ActivityLogs.fromJson(json["companies"]),
-      currency: json["currency"] == null ? null : ActivityLogs.fromJson(json["currency"]),
-      leads: json["leads"] == null ? null : ActivityLogs.fromJson(json["leads"]),
-      request: json["request"] == null ? null : ActivityLogs.fromJson(json["request"]),
-      department: json["department"] == null ? null : ActivityLogs.fromJson(json["department"]),
-      systemTemplates: json["system_templates"] == null ? null : ActivityLogs.fromJson(json["system_templates"]),
-      diamondCategories: json["diamond_categories"] == null ? null : ActivityLogs.fromJson(json["diamond_categories"]),
-      jewelleryCategories: json["jewellery_categories"] == null ? null : ActivityLogs.fromJson(json["jewellery_categories"]),
-      gemstoneCategories: json["gemstone_categories"] == null ? null : ActivityLogs.fromJson(json["gemstone_categories"]),
-      paymentTerms: json["payment_terms"] == null ? null : ActivityLogs.fromJson(json["payment_terms"]),
-      filterOptions: json["filter_options"] == null ? null : ActivityLogs.fromJson(json["filter_options"]),
-      diamondShapes: json["diamond_shapes"] == null ? null : ActivityLogs.fromJson(json["diamond_shapes"]),
-      diamondColors: json["diamond_colors"] == null ? null : ActivityLogs.fromJson(json["diamond_colors"]),
-      jewelleryMetalColors: json["jewellery_metal_colors"] == null ? null : ActivityLogs.fromJson(json["jewellery_metal_colors"]),
+      companies: json["companies"] == null ? null : PermissionData.fromJson(json["companies"]),
+      currency: json["currency"] == null ? null : PermissionData.fromJson(json["currency"]),
+      leads: json["leads"] == null ? null : PermissionData.fromJson(json["leads"]),
+      request: json["request"] == null ? null : PermissionData.fromJson(json["request"]),
+      department: json["department"] == null ? null : PermissionData.fromJson(json["department"]),
+      systemTemplates: json["system_templates"] == null ? null : PermissionData.fromJson(json["system_templates"]),
+      diamondCategories: json["diamond_categories"] == null ? null : PermissionData.fromJson(json["diamond_categories"]),
+      jewelleryCategories: json["jewellery_categories"] == null ? null : PermissionData.fromJson(json["jewellery_categories"]),
+      gemstoneCategories: json["gemstone_categories"] == null ? null : PermissionData.fromJson(json["gemstone_categories"]),
+      paymentTerms: json["payment_terms"] == null ? null : PermissionData.fromJson(json["payment_terms"]),
+      filterOptions: json["filter_options"] == null ? null : PermissionData.fromJson(json["filter_options"]),
+      diamondShapes: json["diamond_shapes"] == null ? null : PermissionData.fromJson(json["diamond_shapes"]),
+      diamondColors: json["diamond_colors"] == null ? null : PermissionData.fromJson(json["diamond_colors"]),
+      jewelleryMetalColors: json["jewellery_metal_colors"] == null ? null : PermissionData.fromJson(json["jewellery_metal_colors"]),
       faqs: json["faqs"] == null ? null : CmsPageBuilder.fromJson(json["faqs"]),
-      tasks: json["tasks"] == null ? null : ActivityLogs.fromJson(json["tasks"]),
-      meetings: json["meetings"] == null ? null : ActivityLogs.fromJson(json["meetings"]),
-      inquiries: json["inquiries"] == null ? null : ActivityLogs.fromJson(json["inquiries"]),
-      language: json["language"] == null ? null : ActivityLogs.fromJson(json["language"]),
-      auctions: json["auctions"] == null ? null : ActivityLogs.fromJson(json["auctions"]),
-      orders: json["orders"] == null ? null : ActivityLogs.fromJson(json["orders"]),
-      newsletterSubscribers: json["newsletter_subscribers"] == null ? null : ActivityLogs.fromJson(json["newsletter_subscribers"]),
-      internalNoteTypes: json["internal_note_types"] == null ? null : ActivityLogs.fromJson(json["internal_note_types"]),
-      projects: json["projects"] == null ? null : ActivityLogs.fromJson(json["projects"]),
-      designs: json["designs"] == null ? null : ActivityLogs.fromJson(json["designs"]),
-      styles: json["styles"] == null ? null : ActivityLogs.fromJson(json["styles"]),
-      concepts: json["concepts"] == null ? null : ActivityLogs.fromJson(json["concepts"]),
-      presentations: json["presentations"] == null ? null : ActivityLogs.fromJson(json["presentations"]),
-      retailerStores: json["retailer_stores"] == null ? null : ActivityLogs.fromJson(json["retailer_stores"]),
-      roles: json["roles"] == null ? null : ActivityLogs.fromJson(json["roles"]),
-      deals: json["deals"] == null ? null : ActivityLogs.fromJson(json["deals"]),
-      customerGroups: json["customer_groups"] == null ? null : ActivityLogs.fromJson(json["customer_groups"]),
-      users: json["users"] == null ? null : ActivityLogs.fromJson(json["users"]),
+      tasks: json["tasks"] == null ? null : PermissionData.fromJson(json["tasks"]),
+      meetings: json["meetings"] == null ? null : PermissionData.fromJson(json["meetings"]),
+      inquiries: json["inquiries"] == null ? null : PermissionData.fromJson(json["inquiries"]),
+      language: json["language"] == null ? null : PermissionData.fromJson(json["language"]),
+      auctions: json["auctions"] == null ? null : PermissionData.fromJson(json["auctions"]),
+      orders: json["orders"] == null ? null : PermissionData.fromJson(json["orders"]),
+      newsletterSubscribers: json["newsletter_subscribers"] == null ? null : PermissionData.fromJson(json["newsletter_subscribers"]),
+      internalNoteTypes: json["internal_note_types"] == null ? null : PermissionData.fromJson(json["internal_note_types"]),
+      projects: json["projects"] == null ? null : PermissionData.fromJson(json["projects"]),
+      designs: json["designs"] == null ? null : PermissionData.fromJson(json["designs"]),
+      styles: json["styles"] == null ? null : PermissionData.fromJson(json["styles"]),
+      concepts: json["concepts"] == null ? null : PermissionData.fromJson(json["concepts"]),
+      presentations: json["presentations"] == null ? null : PermissionData.fromJson(json["presentations"]),
+      retailerStores: json["retailer_stores"] == null ? null : PermissionData.fromJson(json["retailer_stores"]),
+      roles: json["roles"] == null ? null : PermissionData.fromJson(json["roles"]),
+      deals: json["deals"] == null ? null : PermissionData.fromJson(json["deals"]),
+      customerGroups: json["customer_groups"] == null ? null : PermissionData.fromJson(json["customer_groups"]),
+      users: json["users"] == null ? null : PermissionData.fromJson(json["users"]),
       orion: json["orion"] == null ? null : Orion.fromJson(json["orion"]),
-      cadLibrary: json["cad_library"] == null ? null : ActivityLogs.fromJson(json["cad_library"]),
-      designLibrary: json["design_library"] == null ? null : ActivityLogs.fromJson(json["design_library"]),
-      finishedGoodLibrary: json["finished_good_library"] == null ? null : ActivityLogs.fromJson(json["finished_good_library"]),
-      skuLibrary: json["sku_library"] == null ? null : ActivityLogs.fromJson(json["sku_library"]),
-      styleLibrary: json["style_library"] == null ? null : ActivityLogs.fromJson(json["style_library"]),
-      watchlist: json["watchlist"] == null ? null : ActivityLogs.fromJson(json["watchlist"]),
-      wishlist: json["wishlist"] == null ? null : ActivityLogs.fromJson(json["wishlist"]),
-      gemstoneShapes: json["gemstone_shapes"] == null ? null : ActivityLogs.fromJson(json["gemstone_shapes"]),
+      cadLibrary: json["cad_library"] == null ? null : PermissionData.fromJson(json["cad_library"]),
+      designLibrary: json["design_library"] == null ? null : PermissionData.fromJson(json["design_library"]),
+      finishedGoodLibrary: json["finished_good_library"] == null ? null : PermissionData.fromJson(json["finished_good_library"]),
+      skuLibrary: json["sku_library"] == null ? null : PermissionData.fromJson(json["sku_library"]),
+      styleLibrary: json["style_library"] == null ? null : PermissionData.fromJson(json["style_library"]),
+      watchlist: json["watchlist"] == null ? null : PermissionData.fromJson(json["watchlist"]),
+      wishlist: json["wishlist"] == null ? null : PermissionData.fromJson(json["wishlist"]),
+      gemstoneShapes: json["gemstone_shapes"] == null ? null : PermissionData.fromJson(json["gemstone_shapes"]),
     );
   }
 
@@ -610,8 +610,8 @@ class Permissions extends Equatable {
       ];
 }
 
-class ActivityLogs extends Equatable {
-  const ActivityLogs({
+class PermissionData extends Equatable {
+  const PermissionData({
     required this.list,
     required this.activityLogsExport,
     required this.comment,
@@ -633,8 +633,8 @@ class ActivityLogs extends Equatable {
   final Comment? update;
   final Comment? view;
 
-  factory ActivityLogs.fromJson(Map<String, dynamic> json) {
-    return ActivityLogs(
+  factory PermissionData.fromJson(Map<String, dynamic> json) {
+    return PermissionData(
       list: json["list"] == null ? null : Comment.fromJson(json["list"]),
       activityLogsExport: json["export"] == null ? null : Comment.fromJson(json["export"]),
       comment: json["comment"] == null ? null : Comment.fromJson(json["comment"]),
