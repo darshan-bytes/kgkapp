@@ -161,6 +161,8 @@ class ApiClient {
   static const String myOrders = '$apiBaseUrl/orders';
 
   static const String placeB2BOrder = '$apiBaseUrl/orders';
+
+  static const String orderFilterList = '$apiBaseUrl/orders/filter-list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

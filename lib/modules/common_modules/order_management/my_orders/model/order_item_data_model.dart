@@ -11,7 +11,7 @@ class OrderItem {
   int? uniqueId;
   int? items;
   int? totalQuantity;
-  CreatedByDetails? createdByDetails;
+  OrderItemCreatedByDetails? createdByDetails;
 
   OrderItem(
       {this.sId,
@@ -41,7 +41,7 @@ class OrderItem {
     uniqueId = json['unique_id'];
     items = json['items'];
     totalQuantity = json['total_quantity'];
-    createdByDetails = json['created_by_details'] != null ? CreatedByDetails.fromJson(json['created_by_details']) : null;
+    createdByDetails = json['created_by_details'] != null ? OrderItemCreatedByDetails.fromJson(json['created_by_details']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -65,7 +65,7 @@ class OrderItem {
   }
 }
 
-class CreatedByDetails {
+class OrderItemCreatedByDetails {
   String? firstname;
   String? lastname;
   String? profilePic;
@@ -80,7 +80,7 @@ class CreatedByDetails {
   String? customerCode;
   String? profilePicUrl;
 
-  CreatedByDetails(
+  OrderItemCreatedByDetails(
       {this.firstname,
       this.lastname,
       this.profilePic,
@@ -95,7 +95,7 @@ class CreatedByDetails {
       this.customerCode,
       this.profilePicUrl});
 
-  CreatedByDetails.fromJson(Map<String, dynamic> json) {
+  OrderItemCreatedByDetails.fromJson(Map<String, dynamic> json) {
     firstname = json['firstname'];
     lastname = json['lastname'];
     profilePic = json['profile_pic'];

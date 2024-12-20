@@ -14,8 +14,8 @@ class DiamondTabView extends StatelessWidget {
     );
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: ordersBloc.currentScrollController.canScrollToTop,
-        onTap: ordersBloc.currentScrollController.scrollToTop,
+        canScrollToTop: ordersBloc.orderPaginationScrollController.canScrollToTop,
+        onTap: ordersBloc.orderPaginationScrollController.scrollToTop,
       ),
       body: Column(
         children: [
@@ -29,41 +29,58 @@ class DiamondTabView extends StatelessWidget {
                       child: SmartTextField.search(
                         height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
-                        controller: ordersBloc.diamondSearchController,
+                        controller: ordersBloc.orderSearchController,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                         customFocusedBorder: outlineInputBorder,
                         customDisabledBorder: outlineInputBorder,
                         customErrorBorder: outlineInputBorder,
                         customFocusedErrorBorder: outlineInputBorder,
+                        onTapOutside: (value) => FocusScope.of(context).unfocus(),
+                        onValueChanges: (value) {
+                          ordersBloc.add(OrdersListSearchEvent(context: context));
+                        },
+                        onFieldSubmitted: (value) {
+                          ordersBloc.add(OrdersListSearchEvent(context: context));
+                        },
                       ),
                     ),
-                    _buildStoneDropDownField(ordersBloc, style),
+
+                    /// TODO: selected stone type for filter is currently not in use as discussed with JD.
+                    // _buildStoneDropDownField(ordersBloc, style),
                   ],
                 ),
               ),
-              SizedBox(width: 16.0.w),
-              SelectionButton(
-                width: 48.w,
-                imageHeight: 24.5.w,
-                imageWidth: 24.5.w,
-                isSelected: false,
-                image: AppImages.icMenu,
-                onTap: () {},
-              ),
+
+              /// TODO: three dot button is currently not in use as discussed with JD.
+              // SizedBox(width: 16.0.w),
+              // SelectionButton(
+              //   width: 48.w,
+              //   imageHeight: 24.5.w,
+              //   imageWidth: 24.5.w,
+              //   isSelected: false,
+              //   image: AppImages.icMenu,
+              //   onTap: () {},
+              // ),
             ],
           ),
           SizedBox(height: 24.h),
           Expanded(
             child: BlocBuilder<OrdersBloc, OrdersState>(
               buildWhen: (previous, current) =>
-                  current is OrdersListLoadedState || current is OrdersListLoadedMoreState || current is OrdersLoadingMoreState,
+                  current is OrdersListLoadedState ||
+                  current is OrdersListLoadedMoreState ||
+                  current is OrdersLoadingMoreState ||
+                  current is OrdersLoadingState,
               builder: (context, state) {
-                if (ordersBloc.diamondList.isEmpty) {
+                if (state is OrdersLoadingState) {
+                  return Center(child: const SmartCircularProgressIndicator());
+                }
+                if (ordersBloc.filteredOrderList.isEmpty) {
                   return NoDataFoundWidget(text: APPStrings.noDataFound.tr); // Adjust text based on the selected tab if necessary
                 }
                 return OrderListBuilder(
-                  currentScrollController: ordersBloc.currentScrollController,
-                  ordersList: ordersBloc.diamondList,
+                  currentScrollController: ordersBloc.orderPaginationScrollController,
+                  ordersList: ordersBloc.filteredOrderList,
                   onTap: (index) {
                     context.pushNamed(AppRoutes.orderDetailsPage);
                   },
@@ -77,33 +94,34 @@ class DiamondTabView extends StatelessWidget {
     );
   }
 
-  Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
-    return BlocBuilder<OrdersBloc, OrdersState>(
-      buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
-      builder: (context, state) {
-        return SizedBox(
-          width: 120.w,
-          child: SmartDropDown<OrderStoneTypeModel>(
-            border: Border(
-                right: BorderSide(color: style.dividerColor),
-                top: BorderSide(color: style.dividerColor),
-                bottom: BorderSide(color: style.dividerColor)),
-            borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-            items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
-              return SmartDropDownItem<OrderStoneTypeModel>(
-                value: type,
-                title: type.name,
-              );
-            }).toList(),
-            onChanged: (type) {
-              if (type != null) {
-                ordersBloc.add(ChangeOrdersStoneTypeEvent(type));
-              }
-            },
-            selectedItem: ordersBloc.selectedStoneType,
-          ),
-        );
-      },
-    );
-  }
+  /// TODO: selected stone type for filter is currently not in use as discussed with JD.
+// Widget _buildStoneDropDownField(OrdersBloc ordersBloc, FilterBottomActionBarStyle style) {
+//   return BlocBuilder<OrdersBloc, OrdersState>(
+//     buildWhen: (previous, current) => current is ChangeOrdersStoneTypeState,
+//     builder: (context, state) {
+//       return SizedBox(
+//         width: 120.w,
+//         child: SmartDropDown<OrderStoneTypeModel>(
+//           border: Border(
+//               right: BorderSide(color: style.dividerColor),
+//               top: BorderSide(color: style.dividerColor),
+//               bottom: BorderSide(color: style.dividerColor)),
+//           borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+//           items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
+//             return SmartDropDownItem<OrderStoneTypeModel>(
+//               value: type,
+//               title: type.name,
+//             );
+//           }).toList(),
+//           onChanged: (type) {
+//             if (type != null) {
+//               ordersBloc.add(ChangeOrdersStoneTypeEvent(type));
+//             }
+//           },
+//           selectedItem: ordersBloc.selectedStoneType,
+//         ),
+//       );
+//     },
+//   );
+// }
 }
