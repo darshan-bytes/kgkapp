@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class TaskDetailsBottomSheet extends StatelessWidget {
-  final CalendarData calendarData;
+  final CalenderEventDetailsDataModel calendarData;
 
   const TaskDetailsBottomSheet({super.key, required this.calendarData});
 
@@ -45,16 +45,22 @@ class TaskDetailsBottomSheet extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SmartText(calendarData.title, style: style.headerTitleStyle),
-                  SizedBox(height: 4.h),
-                  SmartText(calendarData.categoryName, style: style.headerSubTitleStyle),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SmartText(
+                      calendarData.name?.toUpperCamelCase,
+                      style: style.headerTitleStyle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4.h),
+                    SmartText(calendarData.categoryName, style: style.headerSubTitleStyle),
+                  ],
+                ),
               ),
-              const Spacer(),
               SmartImage(
                 path: AppImages.icMenu,
                 onTap: () {
@@ -75,7 +81,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
       children: [
         _buildStatusColumn(style),
         SizedBox(width: 16.w),
-        _buildPriorityColumn(style),
+        _buildPriorityColumn(style, calendarData.priority ?? ''),
       ],
     );
   }
@@ -97,14 +103,14 @@ class TaskDetailsBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(width: 8.w),
-            SmartText(calendarData.status, style: style.statusStyle),
+            SmartText(calendarData.status?.toUpperCamelCase, style: style.statusStyle),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildPriorityColumn(TaskDetailsStyle style) {
+  Widget _buildPriorityColumn(TaskDetailsStyle style, String priority) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -112,11 +118,11 @@ class TaskDetailsBottomSheet extends StatelessWidget {
         SmartText(APPStrings.priority.tr, style: style.headerSubTitleStyle),
         Row(
           children: [
-            _buildPriorityIndicator(style.activeColor),
-            _buildPriorityIndicator(style.disableColor),
-            _buildPriorityIndicator(style.disableColor),
+            _buildPriorityIndicator(_getPriorityColor(1, style.activeColor, style.disableColor)),
+            _buildPriorityIndicator(_getPriorityColor(2, style.activeColor, style.disableColor)),
+            _buildPriorityIndicator(_getPriorityColor(3, style.activeColor, style.disableColor)),
             SizedBox(width: 8.w),
-            SmartText(calendarData.priority, style: style.statusStyle),
+            SmartText(priority.toUpperCamelCase, style: style.statusStyle),
           ],
         ),
       ],
@@ -135,6 +141,11 @@ class TaskDetailsBottomSheet extends StatelessWidget {
     );
   }
 
+  /// Determines the color for the priority indicator based on the priority level
+  Color _getPriorityColor(int position, Color activeColor, Color disableColor) {
+    return position <= calendarData.getPriority.intValue ? activeColor : disableColor;
+  }
+
   Widget _buildDetails(TaskDetailsStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -146,21 +157,20 @@ class TaskDetailsBottomSheet extends StatelessWidget {
             children: [
               _detailWidget(
                   title: APPStrings.startDate.tr,
-                  subTitle: calendarData.start?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS) ?? '',
+                  subTitle: calendarData.startDate?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ) ?? '',
                   style: style),
               SizedBox(width: 32.w),
               _detailWidget(
                   title: APPStrings.dueDate.tr,
-                  subTitle: calendarData.end?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS) ?? '',
+                  subTitle: calendarData.endDate?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ) ?? '',
                   style: style),
             ],
           ),
-          _detailWidget(
-            title: APPStrings.assignTo.tr.toUpperCamelCase,
-            subTitle: calendarData.assignedTo ?? '',
-            style: style,
-            profileImg: calendarData.assignedToImage,
-          ),
+          if (calendarData.assignedToDetails.isNotNullNorEmpty)
+            _assignToDetailWidget(
+              assignToDetails: calendarData.assignedToDetails!,
+              style: style,
+            ),
           _detailWidget(
             title: APPStrings.description.tr,
             subTitle: calendarData.description ?? '',
@@ -168,15 +178,13 @@ class TaskDetailsBottomSheet extends StatelessWidget {
           ),
           _detailWidget(
             title: APPStrings.assignFrom.tr,
-            subTitle: calendarData.assignedBy ?? '',
+            subTitle: calendarData.createdByDetails?.firstname ?? '',
             style: style,
-            profileImg: calendarData.assignedByImage,
+            profileImg: calendarData.createdByDetails?.profilePicUrl?.setMediaUrl,
           ),
           _detailWidget(
             title: APPStrings.createdOn.tr,
-            subTitle: calendarData.createdDate?.changeDateFormat(
-                    inputDateFormat: DateFormatter.dateFormatYYYYMMDDHHMMSS, outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ??
-                '',
+            subTitle: calendarData.createdOn?.changeDateFormat(inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ) ?? '',
             style: style,
           )
         ],
@@ -209,6 +217,46 @@ class TaskDetailsBottomSheet extends StatelessWidget {
                 ],
               )
             : SmartText(subTitle, style: style.userNameStyle),
+        SizedBox(height: 24.h),
+      ],
+    );
+  }
+
+  Widget _assignToDetailWidget({
+    required List<UserIdDetails> assignToDetails,
+    required TaskDetailsStyle style,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SmartText(
+          APPStrings.assignTo.tr.toUpperCamelCase,
+          style: style.headerSubTitleStyle,
+        ),
+        SizedBox(height: 4.h),
+        ...assignToDetails.map((details) {
+          final hasProfilePic = details.profilePicUrl.isNotNullNorEmpty;
+          return Padding(
+            padding: EdgeInsets.only(bottom: 8.h),
+            child: Row(
+              children: [
+                if (hasProfilePic) ...[
+                  SmartImage(
+                    path: details.profilePicUrl!.setMediaUrl,
+                    height: 24.w,
+                    width: 24.w,
+                  ),
+                  SizedBox(width: 4.w),
+                ],
+                SmartText(
+                  details.fullName,
+                  style: style.userNameStyle,
+                ),
+              ],
+            ),
+          );
+        }),
         SizedBox(height: 24.h),
       ],
     );

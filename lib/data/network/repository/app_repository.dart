@@ -802,8 +802,11 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode() async {
-    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode, withFullResponse: true);
+  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode({required String bagId}) async {
+    var response = await deleteMethod<Map<String, dynamic>>(
+      ApiClient.removePromoCode(bagId),
+      withFullResponse: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -899,6 +902,60 @@ class AppRepository extends ApiService {
   /// For order listing filter option
   Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchOrderListingFilterOptionList() async {
     var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.orderFilterList);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get a Calendar Events
+  Future<Either<ErrorResponse, List<CalendarDataModel>>?> getCalenderEvent({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CalendarDataModel>(ApiClient.getCalenderEvents, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get a Calendar Event Details
+  Future<Either<ErrorResponse, CalenderEventDetailsDataModel>?> getCalenderEventDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CalenderEventDetailsDataModel>(ApiClient.getCalenderEventDetailsById(id));
+    context.setAppLoading(false);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondListingModel>?> diyFilters({
+    required String limit,
+    required String page,
+    required String sortKey,
+    required String sortValue,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+    required String type,
+  }) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      ApiKey.sortKey: sortKey,
+      ApiKey.sortValue: sortValue,
+      ApiKey.type: type
+    };
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    var response = await getMethod<DiamondListingModel>(ApiClient.diyFilters, query: queryParams, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondDataModel>?> diyDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

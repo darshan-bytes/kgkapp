@@ -69,6 +69,51 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     appBloc = BlocProvider.of<AppBloc>(event.context);
     userType = appBloc.userType;
     profileActionList.clear();
+    if (userType == UserType.internal) {
+      profileAdminList = [
+        ProfileListModel(
+            image: AppImages.icMyOrders,
+            title: APPStrings.orderManagement,
+            subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.manufacturerOrderListingPage);
+            }),
+        ProfileListModel(
+          image: AppImages.icProfileCalendar,
+          title: APPStrings.calendar,
+          subTitle: APPStrings.meetingsTasksAllInOnePlace,
+          trailingIcon: AppImages.icArrowRight,
+          onTap: (context) {
+            context.pushNamed(AppRoutes.calendarPage);
+          },
+        ),
+        ProfileListModel(
+            image: AppImages.icMessages,
+            title: APPStrings.messages,
+            subTitle: APPStrings.conversationsYouAreHaving,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.messagesPage);
+            }),
+        ProfileListModel(
+            image: AppImages.icMasters,
+            title: APPStrings.masters,
+            subTitle: APPStrings.masterDataOfUserAndNewsLetter,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.userMasterListingPage);
+            }),
+        ProfileListModel(
+            image: AppImages.icStore,
+            title: APPStrings.dashboard,
+            subTitle: APPStrings.listOfDashboard,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.dashboardPage);
+            }),
+      ];
+    }
     if (userType == UserType.b2bUser) {
       profileActionList = [
         ProfileListModel(
@@ -172,49 +217,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             trailingIcon: AppImages.icArrowRight,
             onTap: (context) {
               context.pushNamed(AppRoutes.notificationSettingsPage);
-            }),
-      ];
-      profileAdminList = [
-        ProfileListModel(
-            image: AppImages.icMyOrders,
-            title: APPStrings.orderManagement,
-            subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
-            trailingIcon: AppImages.icArrowRight,
-            onTap: (context) {
-              context.pushNamed(AppRoutes.manufacturerOrderListingPage);
-            }),
-        ProfileListModel(
-          image: AppImages.icProfileCalendar,
-          title: APPStrings.calendar,
-          subTitle: APPStrings.meetingsTasksAllInOnePlace,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.calendarPage);
-          },
-        ),
-        ProfileListModel(
-            image: AppImages.icMessages,
-            title: APPStrings.messages,
-            subTitle: APPStrings.conversationsYouAreHaving,
-            trailingIcon: AppImages.icArrowRight,
-            onTap: (context) {
-              context.pushNamed(AppRoutes.messagesPage);
-            }),
-        ProfileListModel(
-            image: AppImages.icMasters,
-            title: APPStrings.masters,
-            subTitle: APPStrings.masterDataOfUserAndNewsLetter,
-            trailingIcon: AppImages.icArrowRight,
-            onTap: (context) {
-              context.pushNamed(AppRoutes.userMasterListingPage);
-            }),
-        ProfileListModel(
-            image: AppImages.icStore,
-            title: APPStrings.dashboard,
-            subTitle: APPStrings.listOfDashboard,
-            trailingIcon: AppImages.icArrowRight,
-            onTap: (context) {
-              context.pushNamed(AppRoutes.dashboardPage);
             }),
       ];
     } else {

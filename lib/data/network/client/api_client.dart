@@ -138,7 +138,7 @@ class ApiClient {
 
   static const String applyPromoCode = '$apiBaseUrl/promo-code/apply';
 
-  static const String removePromoCode = '$apiBaseUrl/promo-code/remove';
+  static String removePromoCode(String id) => '$apiBaseUrl/promo-code/remove/$id';
 
   static const String jewelleryDealOfTheDay = '$apiBaseUrl/homepage-collections/jewellery-deal-of-the-day';
 
@@ -163,6 +163,14 @@ class ApiClient {
   static const String placeB2BOrder = '$apiBaseUrl/orders';
 
   static const String orderFilterList = '$apiBaseUrl/orders/filter-list';
+
+  static const String getCalenderEvents = '$apiBaseUrl/calendar/filters';
+
+  static String getCalenderEventDetailsById(String id) => '$apiBaseUrl/tasks/$id';
+
+  static const String diyFilters = '$apiBaseUrl/diy/filters';
+
+  static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

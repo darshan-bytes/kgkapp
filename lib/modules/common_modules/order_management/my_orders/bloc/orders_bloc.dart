@@ -296,13 +296,18 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     return dataList.map<MyOrderDetailsModel>((OrderItem data) {
       return MyOrderDetailsModel(
         id: data.sId,
-        orderId: data.sId,
+        orderId: data.uniqueId?.toString(),
         orderStatus: ProjectStatus.orangeInProgress,
-        orderDate: data.createdAt,
+        orderDate: data.createdAt?.changeDateFormat(
+            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY),
         orderTotal: data.totalPrice,
         orderItems: data.items?.toString(),
         orderQuantity: data.totalQuantity?.toString(),
-        deliveryDate: data.createdByDetails?.accountType,
+
+        /// need to discuss for delivery date
+        deliveryDate: "deliveryDate",
+
+        /// need to discuss for Image
         orderImages: [data.createdByDetails?.profilePic ?? ''],
       );
     }).toList();

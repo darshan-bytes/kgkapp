@@ -6,8 +6,9 @@ sealed class CalendarEvent extends Equatable {
 
 final class InitialCalendarEvent extends CalendarEvent {
   final BuildContext context;
+  final DateTime? selectedDate;
 
-  const InitialCalendarEvent(this.context);
+  const InitialCalendarEvent(this.context, {this.selectedDate});
 
   @override
   List<Object> get props => [context];
@@ -15,20 +16,21 @@ final class InitialCalendarEvent extends CalendarEvent {
 
 final class CalendarViewChangeEvent extends CalendarEvent {
   final CalendarView calendarView;
-
-  const CalendarViewChangeEvent(this.calendarView);
+  final BuildContext context;
+  const CalendarViewChangeEvent(this.calendarView, this.context);
 
   @override
-  List<Object> get props => [calendarView];
+  List<Object> get props => [calendarView, context];
 }
 
 final class CalendarOnViewChangedEvent extends CalendarEvent {
   final ViewChangedDetails viewChangeDetails;
+  final BuildContext context;
 
-  const CalendarOnViewChangedEvent(this.viewChangeDetails);
+  const CalendarOnViewChangedEvent(this.viewChangeDetails, this.context);
 
   @override
-  List<Object> get props => [viewChangeDetails];
+  List<Object> get props => [viewChangeDetails, context];
 }
 
 final class CalendarOnCellTapEvent extends CalendarEvent {
@@ -43,9 +45,19 @@ final class CalendarOnCellTapEvent extends CalendarEvent {
 
 final class CalendarEventTypeChangeEvent extends CalendarEvent {
   final CalendarEventTypeModel calendarEventType;
+  final BuildContext context;
 
-  const CalendarEventTypeChangeEvent(this.calendarEventType);
+  const CalendarEventTypeChangeEvent(this.calendarEventType, this.context);
 
   @override
   List<Object> get props => [calendarEventType];
+}
+
+final class CalenderSearchEvent extends CalendarEvent {
+  final BuildContext context;
+
+  const CalenderSearchEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
 }

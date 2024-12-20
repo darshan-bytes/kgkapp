@@ -103,4 +103,12 @@ class ApiKey {
   static const String yourDiscount = 'your_discount';
   static const String orderContextId = 'order_context_id';
   static const String orderContext = 'order_context';
+  static const String date = 'date';
+  static const String formatType = 'format_type';
+  static const String all = 'all';
+  static const String task = 'task';
+  static const String meeting = 'meeting';
+  static const String day = 'day';
+  static const String week = 'week';
+  static const String cartId_ = 'cart_id';
 }

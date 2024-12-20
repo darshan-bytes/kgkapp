@@ -108,9 +108,13 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     emit(SortReloadState());
     searchController.text = '';
     for (var element in filterData) {
-      element.secondaryFilterData?.forEach((element) {
-        element.isSelected = false;
-      });
+      if (element.filterType == FilterType.range) {
+        element.rangeValues = null;
+      } else {
+        element.secondaryFilterData?.forEach((element) {
+          element.isSelected = false;
+        });
+      }
     }
     selectedFilterData = filterData.first;
     if (selectedFilterData != null) {

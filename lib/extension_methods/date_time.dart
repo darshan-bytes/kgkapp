@@ -73,3 +73,43 @@ extension DateTimeRangeExt on DateTimeRange {
     return '${start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)} to ${end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYY)}';
   }
 }
+
+/// Getter to Get Week Number of the Year
+extension ISOWeekOfYear on DateTime {
+  String get isoWeekOfYear {
+    // Find the first day of the year for the given date
+    DateTime firstDayOfYear = DateTime(year, 1, 1);
+
+    // Find the first week of the year (week containing January 4th)
+    DateTime firstWeekStart = firstDayOfYear;
+    while (firstWeekStart.weekday != DateTime.monday) {
+      firstWeekStart = firstWeekStart.subtract(const Duration(days: 1));
+    }
+
+    // Calculate the difference in days from the start of the first week
+    int daysFromFirstWeekStart = difference(firstWeekStart).inDays;
+
+    // Calculate the ISO week number
+    int weekNumber = (daysFromFirstWeekStart / 7).floor() + 1;
+
+    // Handle case where the week number is less than 1 (belongs to the last week of the previous year)
+    if (weekNumber < 1) {
+      DateTime lastDayOfPreviousYear = DateTime(year - 1, 12, 31);
+      return lastDayOfPreviousYear.isoWeekOfYear;
+    }
+
+    // Handle case where the week number exceeds 52 (belongs to the first week of the next year)
+    if (weekNumber > 52) {
+      DateTime firstDayOfNextYear = DateTime(year + 1, 1, 1);
+      while (firstDayOfNextYear.weekday != DateTime.monday) {
+        firstDayOfNextYear = firstDayOfNextYear.subtract(const Duration(days: 1));
+      }
+      if (isAfter(firstDayOfNextYear.subtract(const Duration(days: 3)))) {
+        return '1/${year + 1}';
+      }
+    }
+
+    // Return the ISO week number and year
+    return '$weekNumber/$year';
+  }
+}

@@ -162,8 +162,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
     filterData
-        .where(
-            (element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) || element.filterType == FilterType.range)
+        .where((element) =>
+            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+            (element.filterType == FilterType.range && element.rangeValues != null))
         .forEach(
       (element) {
         if (element.filterType == FilterType.range) {
@@ -198,6 +199,16 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       };
       queryParam.addAll(query);
       response = await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      response = await AppRepository(context).diyFilters(
+        page: paginationScrollController.currentPage.toString(),
+        isLoadMore: isLoadMore,
+        limit: AppConst.pageLimit.toString(),
+        type: type,
+        sortKey: sortKey,
+        sortValue: sortValue,
+        query: query,
+      );
     } else {
       response = await AppRepository(context).fetchDiamondList(
         page: paginationScrollController.currentPage.toString(),
@@ -236,8 +247,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     Either<ErrorResponse, GemstoneListingModel>? response;
     query ??= {};
     filterData
-        .where(
-            (element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) || element.filterType == FilterType.range)
+        .where((element) =>
+            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+            (element.filterType == FilterType.range && element.rangeValues != null))
         .forEach(
       (element) {
         if (element.filterType == FilterType.range) {
@@ -438,6 +450,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _setupFilters(BuildContext context, ScreenIdentifier screenIdentifier) async {
     String filterKey = "";
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      filterKey = AppConst.diamondForDIYFilter;
+    } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       filterKey = AppConst.diamondFilter;
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       filterKey = AppConst.gemstoneFilter;
@@ -455,7 +469,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           secondaryFilterData: [],
         );
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
-          filter.rangeValues = SfRangeValues(0, filterOption.data.first.toDouble());
           filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
         }
         filterData.add(filter);
