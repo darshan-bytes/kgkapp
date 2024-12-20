@@ -911,6 +911,19 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  /// Get Exhibition Listing Data
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<ExhibitionListDataModel>>(ApiClient.getExhibitionList, body);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, DiamondListingModel>?> diyFilters({
     required String limit,
     required String page,
@@ -945,6 +958,12 @@ class AppRepository extends ApiService {
     context.setAppLoading(true);
     var response = await getMethod<DiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Exhibition listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchExhibitionListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.getExhibitionFilterListOption);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

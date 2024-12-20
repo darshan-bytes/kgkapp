@@ -12,18 +12,28 @@ class ExhibitionListingScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(exhibitionListingBloc, context),
       body: SafeArea(
         child: BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
-          buildWhen: (previous, current) => current is ExhibitionListingLoadedState,
+          buildWhen: (previous, current) =>
+              current is ExhibitionListingLoadedState ||
+              current is ExhibitionListingLoadingState ||
+              current is ExhibitionListLoadingMoreState ||
+              current is ExhibitionListLoadMoreState,
           builder: (context, state) {
+            if (state is ExhibitionListingLoadingState) {
+              return const SmartCircularProgressIndicator();
+            }
             if (state is ExhibitionListingLoadedState) {
               return SmartSingleChildScrollView(
-                controller: exhibitionListingBloc.paginationScrollController.controller,
+                onRefresh: () async {
+                  exhibitionListingBloc.add(ExhibitionListingPullToRefreshEvent(context: context));
+                },
+                controller: exhibitionListingBloc.paginationScrollController.scrollController,
                 child: Column(
                   children: [
                     _buildImageAndText(exhibitionListingBloc, style),
                     SizedBox(
                       height: 24.h,
                     ),
-                    _buildCatalogueExhibitionList(exhibitionListingBloc, style),
+                    _buildCatalogueExhibitionList(context, state, exhibitionListingBloc, style),
                   ],
                 ),
               );
@@ -50,19 +60,25 @@ class ExhibitionListingScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(ExhibitionListingBloc bloc, BuildContext context) {
     return BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
-      buildWhen: (previous, current) => current is ExhibitionListingLoadedState,
+      buildWhen: (previous, current) => current is ExhibitionFilterListLoadedState,
       builder: (context, state) {
-        if (state is ExhibitionListingLoadedState) {
-          return FilterBottomActionBar(
-            controller: bloc.paginationScrollController.controller,
-            onFilterTap: () {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
-              );
-            },
+        if (state is ExhibitionFilterListLoadedState && bloc.filterData.isNotNullNorEmpty) {
+          return SafeArea(
+            child: FilterBottomActionBar(
+              controller: bloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        bloc.add(ExhibitionListingFilterEvent(filterData: value, context: context));
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
           );
         } else {
           return const SizedBox.shrink();
@@ -106,7 +122,8 @@ class ExhibitionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCatalogueExhibitionList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+  Widget _buildCatalogueExhibitionList(
+      BuildContext context, ExhibitionListingState state, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.0.w),
       child: Column(
@@ -120,129 +137,144 @@ class ExhibitionListingScreen extends StatelessWidget {
             height: 16.h,
           ),
           SmartTextField(
+            focusNode: bloc.focusNode,
+            controller: bloc.searchController,
             hintText: APPStrings.searchX.tr.interpolate([APPStrings.exhibition.tr.toLowerCase()]),
             prefixIcon: SmartImage(
               path: AppImages.icSearchThin,
               padding: EdgeInsets.all(17.w),
             ),
+            onTapOutside: (value) => FocusScope.of(context).unfocus(),
+            onValueChanges: (value) {
+              bloc.add(ExhibitionListingSearchEvent(context: context));
+            },
+            onFieldSubmitted: (value) {
+              bloc.add(ExhibitionListingSearchEvent(context: context));
+            },
           ),
           SizedBox(
             height: 24.h,
           ),
-          _buildExhibitionCatalogueList(bloc, style),
+          _buildExhibitionCatalogueList(bloc, state, style),
           _buildExhibitionSubList(bloc, style),
         ],
       ),
     );
   }
 
-  Widget _buildExhibitionCatalogueList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
-    return ListView.builder(
-      itemCount: bloc.exhibitionCatalogueList.length,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final ExhibitionListingModel item = bloc.exhibitionCatalogueList[index];
-        return Container(
-          margin: EdgeInsets.only(bottom: 32.0.h),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: style.borderColor,
-              width: 1.w,
-            ),
-          ),
-          child: InkWell(
-            onTap: () {
-              context.pushNamed(AppRoutes.exhibitionDetailsPage);
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Stack(
+  Widget _buildExhibitionCatalogueList(ExhibitionListingBloc bloc, ExhibitionListingState state, ExhibitionListingItemStyle style) {
+    return Column(
+      children: [
+        ListView.builder(
+          itemCount: bloc.exhibitionCatalogueList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final ExhibitionListingModel item = bloc.exhibitionCatalogueList[index];
+            return Container(
+              margin: EdgeInsets.only(bottom: 32.0.h),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: style.borderColor,
+                  width: 1.w,
+                ),
+              ),
+              child: InkWell(
+                onTap: () {
+                  context.pushNamed(AppRoutes.exhibitionDetailsPage);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SmartImage(
-                      path: item.image ?? "",
-                      height: 200.h,
-                      width: context.width,
+                    Stack(
+                      children: [
+                        SmartImage(
+                          path: item.image ?? "",
+                          height: 200.h,
+                          width: context.width,
+                        ),
+                        if (item.status != null)
+                          Positioned(
+                            top: 16.h,
+                            left: 16.w,
+                            child: _buildStatusBadge(style, item.status!),
+                          ),
+                      ],
                     ),
-                    if (item.status != null)
-                      Positioned(
-                        top: 16.h,
-                        left: 16.w,
-                        child: _buildStatusBadge(style, item.status!),
+                    Padding(
+                      padding: EdgeInsets.all(16.0.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SmartText(
+                            item.name,
+                            style: style.listTitleStyle,
+                          ),
+                          SizedBox(height: 2.h),
+                          SmartText(
+                            item.author,
+                            style: style.listAuthorStyle,
+                          ),
+                          SizedBox(height: 12.h),
+                          Row(
+                            children: [
+                              SmartImage(
+                                path: AppImages.icCalendar,
+                                height: 16.h,
+                                width: 16.w,
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              SmartText(
+                                item.date,
+                                style: style.listSubTitleStyle,
+                              ),
+                              const Spacer(),
+                              SmartImage(
+                                path: AppImages.icClock,
+                                height: 16.h,
+                                width: 16.w,
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              SmartText(
+                                item.time,
+                                style: style.listSubTitleStyle,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            children: [
+                              SmartImage(
+                                path: AppImages.icMapPin,
+                                height: 16.h,
+                                width: 16.w,
+                                color: style.iconColor,
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              SmartText(
+                                item.location,
+                                style: style.listSubTitleStyle,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
+                    )
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.all(16.0.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SmartText(
-                        item.name,
-                        style: style.listTitleStyle,
-                      ),
-                      SizedBox(height: 2.h),
-                      SmartText(
-                        item.author,
-                        style: style.listAuthorStyle,
-                      ),
-                      SizedBox(height: 12.h),
-                      Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icCalendar,
-                            height: 16.h,
-                            width: 16.w,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          SmartText(
-                            item.date,
-                            style: style.listSubTitleStyle,
-                          ),
-                          const Spacer(),
-                          SmartImage(
-                            path: AppImages.icClock,
-                            height: 16.h,
-                            width: 16.w,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          SmartText(
-                            item.time,
-                            style: style.listSubTitleStyle,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4.h),
-                      Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icMapPin,
-                            height: 16.h,
-                            width: 16.w,
-                            color: style.iconColor,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          SmartText(
-                            item.location,
-                            style: style.listSubTitleStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+            );
+          },
+        ),
+        if (state is ExhibitionListLoadingMoreState) const SmartCircularProgressIndicator(),
+        SizedBox(height: 17.h),
+      ],
     );
   }
 

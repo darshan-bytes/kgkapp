@@ -76,6 +76,8 @@ class PaginationData<T> {
         return HomeNewLanuchesDatum.fromJson(json);
       case const (PaymentCondition):
         return PaymentCondition.fromJson(json);
+      case const (ExhibitionListDataModel):
+        return ExhibitionListDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

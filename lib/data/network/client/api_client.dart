@@ -167,6 +167,10 @@ class ApiClient {
   static const String diyFilters = '$apiBaseUrl/diy/filters';
 
   static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
+
+  static const String getExhibitionList = '$apiBaseUrl/exhibition/filters';
+
+  static const String getExhibitionFilterListOption = '$apiBaseUrl/exhibition/filter-list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
