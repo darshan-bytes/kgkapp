@@ -9,6 +9,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   BagListDataModel? bagListDataModel;
   List<CustomerSalesmanModel> salesmanList = [];
   BagOrderSummaryDataModel? bagOrderSummaryData;
+  List<PlaceOrderProductRequest> placeOrderProductRequestList = [];
 
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -110,13 +111,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     ),
   );*/
 
-  List<PaymentCondition> paymentConditionList = [
-    PaymentCondition(id: "1", title: "7 days"),
-    PaymentCondition(id: "2", title: "15 days"),
-    PaymentCondition(id: "3", title: "30 days"),
-    PaymentCondition(id: "4", title: "45 days"),
-    PaymentCondition(id: "5", title: "60 days"),
-  ];
+  List<PaymentCondition> paymentConditionList = [];
 
   PaymentCondition? selectedPaymentCondition;
 
@@ -145,6 +140,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
     on<MyBagCheckoutEvent>(_onMyBagCheckout);
     on<MyBagProductQuantityChangedEvent>(_onMyBagProductQuantityChanged);
+    on<MyBagYourDiscountChangedEvent>(_onMyBagYourDiscountChanged);
     on<ClearMyBagEvent>(_onClearMyBag);
   }
 
@@ -165,64 +161,109 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     await fetchListOfBag(event.context, emit);
     emit(const MyBagLoadedState());
+    if (myBagProductList.isEmpty) return;
     await fetchSalesmanList(event.context, emit);
     await fetchBagOrderSummaryData(event.context, emit);
+    await getPaymentTermsFilter(event.context, emit);
   }
 
   /// TODO: In Future Implementation
   /// Fetch Bag Data Because Add Logic For Add To Bag
-  Future<void> fetchListOfBag(BuildContext context, Emitter<MyBagState> emit) async {
+  Future<void> fetchListOfBag(BuildContext context, Emitter<MyBagState> emit, {bool isRetry = false}) async {
     String id = StorageManager().getBagId() ?? "";
     if (id.isNullOrEmpty) return;
     Either<ErrorResponse, BagListDataModel>? response;
     response = await AppRepository(context).getBagListData(id: id, isShowLoader: true);
-    response?.fold((l) {
-      Utils.showMessage(l.message);
+    await response?.fold((l) {
+      if (isRetry) {
+        Utils.showMessage(l.message);
+      }
     }, (r) async {
-      String? bagId = StorageManager().getBagId();
-      myBagProductList.clear();
-      bagListDataModel = r;
-      if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
-        commodity = r.result[0].displayCommodity;
-        MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
-        await StorageManager().storeBagData(myBagDataModel);
-        myBagProductList = List.generate(r.result.length, (index) {
-          final item = r.result[index];
-          return ProductDetailsModel(
-            stockQty: item.stockQty,
-            productId: item.productId,
-            suid: item.suid,
-            quantity: item.quantity,
-            name: item.jewelleryName,
-            commodity: item.displayCommodity,
-            imageUrl: item.image,
-            shape: item.shape,
-            color: item.color,
-            lotCode: item.lotCode,
-            discountPercentage: item.discountPercentage != null
-                ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
-                : "",
-            clarity: item.clarity,
-            ctsOrGms: item.ctsOrGms,
-            rappaportPrice: item.rappaportPrice,
-            polish: item.polish,
-            measurements: item.measurements,
-            table: item.table,
-            depth: item.depth,
-            totalPrice: item.totalPrice?.toStringAsFixed(2),
-            discountPrice: item.discountPrice?.toStringAsFixed(2),
-            perCaratPrice: item.rate,
-            openDnaUrl: item.openDnaUrl,
-            certificateFile: item.certificateFile,
-            fluorescence: item.fluorescence,
-            shapeImage: item.shapeImage?.setMediaUrl,
-            isOutOfStock: item.stockQty == 0,
-            labs: item.labs,
-            location: item.location,
-          );
-        });
+      if (r.isExpired == true) {
+        await StorageManager().setBagId(r.bagId ?? '');
+        await StorageManager().clearBagData();
+        bagListDataModel = null;
+        commodity = null;
+        myBagProductList.clear();
+        bagOrderSummaryData = null;
+        await fetchListOfBag(context, emit, isRetry: true);
+      } else {
+        String? bagId = StorageManager().getBagId();
+        myBagProductList.clear();
+        bagListDataModel = r;
+        if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+          commodity = r.result.first.displayCommodity;
+          MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result.first.commodity, sId: bagId);
+          await StorageManager().storeBagData(myBagDataModel);
+          myBagProductList = List.generate(r.result.length, (index) {
+            final item = r.result[index];
+
+            return ProductDetailsModel(
+              stockQty: item.stockQty,
+              productId: item.productId,
+              suid: item.suid,
+              quantity: item.quantity,
+              name: item.jewelleryName,
+              commodity: item.displayCommodity,
+              imageUrl: item.image,
+              shape: item.shape,
+              color: item.color,
+              lotCode: item.lotCode,
+              discountPercentage: item.discountPercentage != null
+                  ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
+                  : "",
+              clarity: item.clarity,
+              ctsOrGms: item.ctsOrGms,
+              rappaportPrice: item.rappaportPrice,
+              polish: item.polish,
+              measurements: item.measurements,
+              table: item.table,
+              depth: item.depth,
+              totalPrice: item.totalPrice?.toStringAsFixed(2),
+              discountPrice: item.discountPrice?.toStringAsFixed(2),
+              perCaratPrice: item.rate,
+              openDnaUrl: item.openDnaUrl,
+              certificateFile: item.certificateFile,
+              fluorescence: item.fluorescence,
+              shapeImage: item.shapeImage?.setMediaUrl,
+              isOutOfStock: item.stockQty == 0,
+              labs: item.labs,
+              location: item.location,
+              yourRate: item.yourRate,
+              yourAmount: item.yourAmount,
+              yourDiscount: item.yourDiscount,
+            );
+          });
+        }
       }
     });
+  }
+
+  //getPaymentTermsFilter
+  Future<void> getPaymentTermsFilter(BuildContext context, Emitter<MyBagState> emit) async {
+    if (userType != UserType.b2bUser) return;
+    final Map<String, dynamic> body = {
+      ApiKey.filters: {
+        ApiKey.dynamicObject: {},
+      },
+      ApiKey.pagination: {},
+      ApiKey.search: "",
+      ApiKey.sort: {
+        ApiKey.field: ApiKey.id,
+        ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
+      },
+    };
+    Either<ErrorResponse, PaginationData<PaymentCondition>>? response = await AppRepository(context).getPaymentTermsFilter(body: body);
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (PaginationData<PaymentCondition> r) {
+        List<PaymentCondition> paymentConditions = r.dataList as List<PaymentCondition>;
+        paymentConditionList = paymentConditions;
+        emit(MyBagPaymentConditionsLoadedState());
+      },
+    );
   }
 
   Future<void> fetchSalesmanList(BuildContext context, Emitter<MyBagState> emit) async {
@@ -356,8 +397,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onMyBagRemovePromoCode(MyBagRemovePromoCodeEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
+    String id = StorageManager().getBagId() ?? "";
+    if (id.isEmpty) return;
     event.context.setAppLoading(true);
-    final response = await AppRepository(event.context).removePromoCode();
+    final response = await AppRepository(event.context).removePromoCode(bagId: id);
     await response?.fold(
       (l) {
         event.context.setAppLoading(false);
@@ -373,9 +416,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   Future<void> _onMyBagApplyPromoCode(MyBagApplyPromoCodeEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
     try {
+      String id = StorageManager().getBagId() ?? "";
+      if (id.isEmpty) return;
       event.context.setAppLoading(true);
       final Map<String, dynamic> body = {
         ApiKey.promoCode_: event.promoCode,
+        ApiKey.cartId_: id,
       };
       final response = await AppRepository(event.context).applyPromoCode(body);
       await response?.fold(
@@ -413,6 +459,22 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       return;
     }
 
+    if (userType == UserType.b2bUser) {
+      placeOrderProductRequestList = List.generate(myBagProductList.length, (index) {
+        ProductDetailsModel product = myBagProductList[index];
+        return PlaceOrderProductRequest(
+          name: product.name,
+          image: product.imageUrl,
+          suid: product.suid,
+          quantity: product.quantity,
+          discountPercentage: product.discountPercentage?.toDouble,
+          yourDiscount: product.yourDiscount,
+          yourRate: product.yourRate,
+          yourAmount: product.yourAmount,
+        );
+      });
+    }
+
     context.pushNamed(AppRoutes.addressListPage);
   }
 
@@ -445,12 +507,37 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         emit(MyBagOrderSummaryDataLoadedState());
       },
     );
-    // emit(MyBagProductQuantityChangedState(index: event.index, quantity: event.quantity));
+  }
+
+  Future<void> _onMyBagYourDiscountChanged(MyBagYourDiscountChangedEvent event, Emitter<MyBagState> emit) async {
+    emit(MyBagLoadedState());
+    double percentage = event.yourDiscount.toDouble ?? 0.0;
+    myBagProductList[event.index].yourDiscount = percentage;
+    emit(MyBagLoadedState());
+    final Map<String, dynamic> body = {
+      ApiKey.id: StorageManager().getBagId(),
+      ApiKey.suid: myBagProductList[event.index].suid,
+      ApiKey.percentage: percentage,
+      ApiKey.commodity: myBagProductList[event.index].commodity?.value,
+    };
+
+    final response = await AppRepository(event.context).updateBagItem(body);
+    await response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        emit(MyBagLoadedState());
+        await fetchListOfBag(event.context, emit);
+        emit(MyBagLoadedState());
+        await fetchBagOrderSummaryData(event.context, emit);
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
   }
 
   Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
-    await StorageManager().setBagId('');
     await StorageManager().clearBagData();
     bagListDataModel = null;
     commodity = null;

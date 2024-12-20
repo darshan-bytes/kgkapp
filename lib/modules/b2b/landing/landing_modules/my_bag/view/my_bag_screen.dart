@@ -8,30 +8,29 @@ class MyBagScreen extends StatelessWidget {
     final MyBagBloc bloc = BlocProvider.of<MyBagBloc>(context);
     final MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
-        child: BlocBuilder<MyBagBloc, MyBagState>(
-          builder: (context, state) {
-            return SmartAppBar(
-              title: APPStrings.myBag.tr,
-              isBack: false,
-              onSearch: () {
-                context.pushNamed(AppRoutes.searchPage);
-              },
-              onFavorite: () {
-                context.pushNamed(AppRoutes.wishListPage);
-              },
-            );
-          },
-        ),
-      ),
-      body: _getBody(bloc, style),
-      bottomNavigationBar: buildCheckoutButton(context, style, bloc),
+    return BlocBuilder<MyBagBloc, MyBagState>(
+      buildWhen: (previous, current) => current is MyBagLoadedState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: SmartAppBar(
+            appBarHeight: AppConst.appBarHeight.height,
+            title: APPStrings.myBag.tr,
+            isBack: false,
+            onSearch: () {
+              context.pushNamed(AppRoutes.searchPage);
+            },
+            onFavorite: () {
+              context.pushNamed(AppRoutes.wishListPage);
+            },
+          ),
+          body: _getBody(bloc, style),
+          bottomNavigationBar: bloc.myBagProductList.isEmpty ? null : buildCheckoutButton(context, style, bloc),
+        );
+      },
     );
   }
 
-  Widget buildBottomNavBar(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
+  Widget? buildBottomNavBar(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -72,7 +71,7 @@ class MyBagScreen extends StatelessWidget {
                                       bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
                                     }
                                   },
-                                  items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
+                                  items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.name ?? '', value: e)).toList(),
                                   selectedItem: bloc.selectedPaymentCondition,
                                   hintText: APPStrings.paymentCondition.tr,
                                   labelText: APPStrings.paymentCondition.tr,
@@ -291,12 +290,16 @@ class MyBagScreen extends StatelessWidget {
                       },
                       isSelectedBackground: false,
                       onTap: () {},
+                      onYourDiscountChange: (value) {
+                        FocusScope.of(context).unfocus();
+                        if (value != null) {
+                          bloc.add(MyBagYourDiscountChangedEvent(context: context, index: index, yourDiscount: value));
+                        }
+                      },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
                           carat: product.ctsOrGms?.toString(),
                           commodity: product.commodity?.value,
-                          // origin: "Sri Lanka",
-
                           rapRate: product.rappaportPrice?.setCurrency,
                           productId: product.productId,
                           productName: product.name,
@@ -317,6 +320,9 @@ class MyBagScreen extends StatelessWidget {
                           discount: product.discountPercentage,
                           perCts: product.perCaratPrice?.setCurrency,
                           amount: product.totalPrice?.setCurrency,
+                          your: product.yourDiscount?.toString(),
+                          yourRate: product.yourRate?.setCurrency,
+                          yourValue: product.yourAmount?.setCurrency,
                         ),
                         productId: product.productId,
                         // diamond: "1.5 gram",
@@ -363,66 +369,35 @@ class MyBagScreen extends StatelessWidget {
                       onTap: () {},
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
-                            carat: product.ctsOrGms?.toString(),
-                            commodity: product.commodity?.value,
-                            // origin: "Sri Lanka",
-
-                            rapRate: product.rappaportPrice?.setCurrency,
-                            productId: product.productId,
-                            productName: product.name,
-                            ct: product.cut,
-                            shape: product.shape,
-                            colour: product.color,
-                            clarity: product.clarity,
-                            lotNumber: product.lotCode,
-                            certificateNumber: product.certificateNumber,
-                            measurements: product.measurements,
-                            lab: product.labs,
-                            cut: product.cut,
-                            polish: product.polish,
-                            fluorescence: product.fluorescence,
-                            tablePercentage: product.table,
-                            depthPercentage: product.depth,
-                            rap: product.rappaportPrice,
-                            discount: product.discountPercentage,
-                            perCts: product.perCaratPrice?.setCurrency,
-                            amount: product.totalPrice?.setCurrency,
-                            origin: product.location),
+                          carat: product.ctsOrGms?.toString(),
+                          commodity: product.commodity?.value,
+                          rapRate: product.rappaportPrice?.setCurrency,
+                          productId: product.productId,
+                          productName: product.name,
+                          ct: product.cut,
+                          shape: product.shape,
+                          colour: product.color,
+                          clarity: product.clarity,
+                          lotNumber: product.lotCode,
+                          certificateNumber: product.certificateNumber,
+                          measurements: product.measurements,
+                          lab: product.labs,
+                          cut: product.cut,
+                          polish: product.polish,
+                          fluorescence: product.fluorescence,
+                          tablePercentage: product.table,
+                          depthPercentage: product.depth,
+                          rap: product.rappaportPrice,
+                          discount: product.discountPercentage,
+                          perCts: product.perCaratPrice?.setCurrency,
+                          amount: product.totalPrice?.setCurrency,
+                          origin: product.location,
+                          your: product.yourDiscount?.toString(),
+                          yourRate: product.yourRate?.setCurrency,
+                          yourValue: product.yourAmount?.setCurrency,
+                        ),
                         productId: product.productId,
-                        // diamond: "1.5 gram",
-                        // gram: "1.5 gram",
                         imageUrl: product.imageUrl,
-                        /*carat: "36.09",
-                            commodity: Commodity.gemstone.value,
-                            origin: "Sri Lanka",
-                            rapRate: product.rappaportPrice,
-                            productId: product.productId,
-                            productName: product.name,
-                            ct: "10.04",
-                            shape: "Marquise",
-                            colour: "H",
-                            clarity: "VVS1",
-                            lotNumber: "MBFG716306",
-                            certificateNumber: "230000066395",
-                            measurements: "10.18 x 8.34 x 6.14",
-                            lab: "GIA",
-                            cut: "Excellent",
-                            polish: "Excellent",
-                            symmetry: "Excellent",
-                            flourish: "O",
-                            tablePercentage: "50",
-                            depthPercentage: "50",
-                            rap: "\$24,850.00",
-                            discount: "-30.00",
-                            perCts: "\$24,850.00",
-                            amount: "\$1,24,995.50",
-                            fluorescence: '0'),
-                        productId: "1",
-                        diamond: "1.5 gram",
-                        gram: "1.5 gram",
-                        imageUrl: index % 2 == 0
-                            ? "https://i.ibb.co/477f41r/Group-1410089379.png"
-                            : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",*/
                         isForAuction: false,
                       ),
                       isAutoSizeText: false,
@@ -742,58 +717,70 @@ class MyBagScreen extends StatelessWidget {
               _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38 (S)', style),
             ],
           ),
-
-          /// Below code is conditioned as it is will be only available for B2B users
           if (bloc.userType == UserType.b2bUser) ...[
             SizedBox(height: 12.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildTextInfoColumn(APPStrings.totalRequestedDiscount.tr, '-0.45', style),
+                _buildTextInfoColumn(
+                    APPStrings.totalRequestedDiscount.tr, "${bloc.bagListDataModel?.summary?.yourDiscount?.toString() ?? '0'}%", style),
                 SizedBox(width: 12.w),
-                _buildTextInfoColumn(APPStrings.totalValueAfterDiscount.tr, '\$3,00,540.00', style),
+                _buildTextInfoColumn(
+                    APPStrings.totalValueAfterDiscount.tr, bloc.bagListDataModel?.summary?.yourAmount?.setCurrency ?? '', style),
               ],
             ),
             SizedBox(height: 24.h),
+          ],
+          if (bloc.userType == UserType.b2bUser)
             BlocBuilder<MyBagBloc, MyBagState>(
-              buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+              buildWhen: (previous, current) => current is MyBagPaymentConditionsLoadedState,
               builder: (context, state) {
-                return SmartDropDown(
-                  focusNode: bloc.paymentConditionFocusNode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      bloc.variationFocusNode.requestFocus();
-                      bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
-                    }
-                  },
-                  items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.title ?? '', value: e)).toList(),
-                  selectedItem: bloc.selectedPaymentCondition,
-                  hintText: APPStrings.paymentCondition.tr,
-                  labelText: APPStrings.paymentCondition.tr,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    BlocBuilder<MyBagBloc, MyBagState>(
+                      buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
+                      builder: (context, state) {
+                        return SmartDropDown(
+                          focusNode: bloc.paymentConditionFocusNode,
+                          onChanged: (value) {
+                            if (value != null) {
+                              bloc.variationFocusNode.requestFocus();
+                              bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
+                            }
+                          },
+                          items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.name ?? '', value: e)).toList(),
+                          selectedItem: bloc.selectedPaymentCondition,
+                          hintText: APPStrings.paymentCondition.tr,
+                          labelText: APPStrings.paymentCondition.tr,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 24.h),
+                    SmartTextField(
+                      suffixText: APPStrings.percentage,
+                      labelText: APPStrings.plusMinus,
+                      hintText: APPStrings.plusMinus,
+                      controller: bloc.variationController,
+                      focusNode: bloc.variationFocusNode,
+                      nextFocus: bloc.noteFocusNode,
+                      textInputFormatter: [DoubleInputFormatter()],
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                    ),
+                    SizedBox(height: 24.h),
+                    SmartTextField(
+                      labelText: APPStrings.commentQuestion.tr,
+                      hintText: APPStrings.commentQuestion.tr,
+                      controller: bloc.noteController,
+                      focusNode: bloc.noteFocusNode,
+                      maxLines: 3,
+                      textInputAction: TextInputAction.newline,
+                    ),
+                  ],
                 );
               },
             ),
-            SizedBox(height: 24.h),
-            SmartTextField(
-              suffixText: APPStrings.percentage,
-              labelText: APPStrings.plusMinus,
-              hintText: APPStrings.plusMinus,
-              controller: bloc.variationController,
-              focusNode: bloc.variationFocusNode,
-              nextFocus: bloc.noteFocusNode,
-              textInputFormatter: [DoubleInputFormatter()],
-              keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-            ),
-            SizedBox(height: 24.h),
-            SmartTextField(
-              labelText: APPStrings.commentQuestion.tr,
-              hintText: APPStrings.commentQuestion.tr,
-              controller: bloc.noteController,
-              focusNode: bloc.noteFocusNode,
-              maxLines: 3,
-              textInputAction: TextInputAction.newline,
-            ),
-          ],
         ],
       ),
     );

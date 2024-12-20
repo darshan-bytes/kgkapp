@@ -23,17 +23,9 @@ class StoneDetailScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
-                  const DiyProgressWidget(
-                    selectedStep: 1,
-                  ),
-                SmartCarouselSlider(
-                  imgList: diamondBloc.imgList,
-                  controller: diamondBloc.controller,
-                ),
-                SizedBox(
-                  height: 40.h,
-                ),
+                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) const DiyProgressWidget(selectedStep: 1),
+                SmartCarouselSlider(imgList: diamondBloc.imgList, controller: diamondBloc.controller),
+                SizedBox(height: 40.h),
                 _productDetail(context, diamondBloc)
               ],
             );
@@ -46,7 +38,7 @@ class StoneDetailScreen extends StatelessWidget {
           color: style.colorWhite,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha:0.5),
+              color: Colors.grey.withValues(alpha: 0.5),
               spreadRadius: 7.r,
               blurRadius: 7.r,
               offset: const Offset(0, 3), // changes position of shadow

@@ -908,7 +908,6 @@ class APPStrings {
   static const String origin = 'mob_origin';
   static const String onHold = 'mob_on_hold';
   static const String wip = 'mob_wip';
-
   static const String address = 'mob_address';
   static const String zipcode = 'mob_zipcode';
   static const String noSavedAddressFound = 'mob_no_saved_address_found';
@@ -941,4 +940,9 @@ class APPStrings {
   static const String totalItems = 'mob_total_items';
   static const String unknownError = 'mob_unknown_error';
   static const String errorOccurred = 'mob_error_occurred';
+  static const String openSettings = 'mob_open_settings';
+  static const String requiresLocationPermission = 'mob_requires_location_permission';
+  static const String permissionDenied = 'mob_permission_denied';
+  static const String pleaseEnableLocation = 'mob_please_enable_location';
+  static const String thisTypeIsNotYetAdded = 'mob_this_type_is_not_yet_added';
 }

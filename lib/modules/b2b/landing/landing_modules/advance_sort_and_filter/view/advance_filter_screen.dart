@@ -169,7 +169,7 @@ class AdvanceFilterScreen extends StatelessWidget {
             return _buildDateRangeSlide(filterBloc, style, context);
           case FilterType.undefined:
           default:
-            return const NoDataFoundWidget(text: "This type is not yet added");
+            return NoDataFoundWidget(text: APPStrings.thisTypeIsNotYetAdded.tr);
         }
       },
     );

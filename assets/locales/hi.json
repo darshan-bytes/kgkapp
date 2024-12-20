@@ -747,5 +747,8 @@
   "mob_recently_viewed_gemstone": "हाल ही में देखा गया रत्न",
   "mob_all_filters_cleared": "सभी फ़िल्टर पहले ही साफ़ कर दिए गए हैं",
   "mob_stock": "स्टॉक",
-  "mob_total_items": "कुल आइटम"
+  "mob_total_items": "कुल आइटम",
+  "mob_permission_denied": "अनुमति नहीं दी गई",
+  "mob_please_enable_location": "कृपया अपना वर्तमान स्थान जानने के लिए ऐप सेटिंग में स्थान अनुमति सक्षम करें",
+  "mob_this_type_is_not_yet_added": "यह प्रकार अभी तक जोड़ा नहीं गया है"
 }

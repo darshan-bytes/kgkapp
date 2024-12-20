@@ -223,11 +223,11 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   }
 
   Future<void> _setupFilters(BuildContext context) async {
-    Either<ErrorResponse, WishlistFilterOptionModel>? response;
+    Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchDigitalCatalogueFilterOptionList();
     response?.fold((l) {
       Utils.showMessage(l.message);
-    }, (WishlistFilterOptionModel success) {
+    }, (AdvanceFilterOptionModel success) {
       filterData.clear();
       if (success.filters.isNotNullNorEmpty) {
         for (Filters filterOption in success.filters ?? []) {

@@ -13,7 +13,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   List<CalendarEventTypeModel> calendarEventTypeList = [];
   CalendarEventTypeModel? selectedCalendarEventType;
   List<CalendarData> calendarDataList = [];
-  List<Meeting<CalendarData>> meetingList = [];
+  List<CalenderEvent<CalendarData>> meetingList = [];
 
   MeetingDataSource meetingDataSource = MeetingDataSource([]);
 
@@ -23,24 +23,29 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     on<CalendarOnViewChangedEvent>(_onCalendarOnViewChangedEvent);
     on<CalendarOnCellTapEvent>(_onCalendarOnCellTapEvent);
     on<CalendarEventTypeChangeEvent>(_onCalendarEventTypeChangeEvent);
+    on<CalenderSearchEvent>(_onCalendarSearchEvent);
   }
 
-  void _onInitialCalendarEvent(InitialCalendarEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onInitialCalendarEvent(InitialCalendarEvent event, Emitter<CalendarState> emit) async {
+    if (event.selectedDate != null) {
+      selectedMonth = event.selectedDate!;
+      calendarController.displayDate = event.selectedDate;
+    } else {
+      selectedMonth = calendarController.displayDate ?? DateTime.now();
+    }
     final CalendarStyle style = AppTheme.of(event.context).calendarStyle;
     calendarEventTypeList = _generateCalendarEventTypeList();
     selectedCalendarEventType = calendarEventTypeList.first;
-    calendarDataList = _generateCalendarDataList();
-    meetingList = _convertToMeeting(style);
-    meetingDataSource = MeetingDataSource(meetingList);
-    selectedMonth = calendarController.displayDate ?? DateTime.now();
+    await getCalendarData(event.context);
     emit(const CalendarLoadedState());
   }
 
-  void _onCalendarViewChangeEvent(CalendarViewChangeEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onCalendarViewChangeEvent(CalendarViewChangeEvent event, Emitter<CalendarState> emit) async {
     emit(const CalendarReloadState());
     calendarView = event.calendarView;
     calendarController.view = calendarView;
     selectedMonth = DateTime.now();
+    await getCalendarData(event.context);
     emit(const CalendarViewChangeState());
   }
 
@@ -64,7 +69,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   ///   event (CalendarOnViewChangedEvent): The event containing details about the view change,
   ///                                        including the list of currently visible dates.
   ///   emit (Emitter<CalendarState>): The function to emit new states to the calendar bloc.
-  void _onCalendarOnViewChangedEvent(CalendarOnViewChangedEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onCalendarOnViewChangedEvent(CalendarOnViewChangedEvent event, Emitter<CalendarState> emit) async {
     emit(const CalendarReloadState());
 
     if (event.viewChangeDetails.visibleDates.first.month == event.viewChangeDetails.visibleDates.last.month) {
@@ -104,23 +109,97 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       });
     }
 
+    await getCalendarData(event.context);
     emit(const CalendarOnViewChangedState());
   }
 
-  void _onCalendarOnCellTapEvent(CalendarOnCellTapEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onCalendarOnCellTapEvent(CalendarOnCellTapEvent event, Emitter<CalendarState> emit) async {
     if (event.details.targetElement == CalendarElement.calendarCell) {
       handleCalendarCellClick(event.context, event.details, emit);
     } else if (event.details.targetElement == CalendarElement.appointment) {
       if (event.details.appointments != null && event.details.appointments!.isNotEmpty) {
-        handleAppointmentClick(event.context, event.details.appointments?.first);
+        await getCalenderEventDetails(event.context, emit, event.details.appointments?.first);
       }
     }
   }
 
-  void _onCalendarEventTypeChangeEvent(CalendarEventTypeChangeEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onCalendarEventTypeChangeEvent(CalendarEventTypeChangeEvent event, Emitter<CalendarState> emit) async {
     emit(const CalendarReloadState());
     selectedCalendarEventType = event.calendarEventType;
+    await getCalendarData(event.context);
     emit(const CalendarEventTypeChangeState());
+  }
+
+  Future<void> _onCalendarSearchEvent(CalenderSearchEvent event, Emitter<CalendarState> emit) async {
+    emit(const CalendarReloadState());
+    await getCalendarData(event.context);
+    emit(const CalendarLoadedState());
+  }
+
+  String? get formattedDate {
+    switch (calendarView.name) {
+      case ApiKey.month:
+        return selectedMonth.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatMMYYYY);
+      case ApiKey.day:
+        return selectedMonth.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYY);
+      case ApiKey.week:
+        return selectedMonth.isoWeekOfYear;
+      default:
+        return null;
+    }
+  }
+
+  Future<void> getCalendarData(BuildContext context, {bool isShowLoader = true, bool isForceFetch = false}) async {
+    List<CalendarDataModel> dataList = [];
+    try {
+      final Map<String, dynamic> body = {
+        ApiKey.search: searchController.text,
+        ApiKey.date: formattedDate ?? '',
+        ApiKey.type: selectedCalendarEventType?.key,
+        ApiKey.formatType: calendarView.name,
+      };
+      Either<ErrorResponse, List<CalendarDataModel>>? response = await AppRepository(context).getCalenderEvent(body: body);
+      response?.fold((l) {
+        dataList = [];
+        Utils.showMessage(l.message);
+      }, (success) {
+        dataList.clear();
+        final CalendarStyle style = AppTheme.of(context).calendarStyle;
+
+        dataList = success;
+        calendarDataList.clear();
+        calendarDataList = List.generate(
+          dataList.length,
+          (index) {
+            return CalendarData(
+                id: dataList[index].id ?? '',
+                title: dataList[index].title,
+                type: dataList[index].type,
+                start: dataList[index].startDate.toString(),
+                end: dataList[index].endDate.toString());
+          },
+        );
+        meetingList = _convertToMeeting(style);
+        meetingDataSource = MeetingDataSource(meetingList);
+      });
+    } catch (e) {
+      printWrapped(e.toString());
+    }
+  }
+
+  Future<void> getCalenderEventDetails(BuildContext context, Emitter<CalendarState> emit, CalenderEvent<CalendarData> calenderEvent) async {
+    emit(const CalendarReloadState());
+    final response = await AppRepository(context).getCalenderEventDetails(id: calenderEvent.value.id ?? '');
+
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        handleAppointmentClick(context, r);
+        emit(CalendarLoadedState());
+      },
+    );
   }
 
   void handleCalendarCellClick(BuildContext context, CalendarTapDetails details, Emitter<CalendarState> emit) {
@@ -131,7 +210,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     emit(const CalendarViewChangeState());
   }
 
-  void handleAppointmentClick(BuildContext context, Meeting<CalendarData> meeting) {
+  void handleAppointmentClick(BuildContext context, CalenderEventDetailsDataModel eventDetail) {
     /// To get the data model of the calendar data received from API use: meeting.value
     Utils.showSmartModalBottomSheet(
       context: context,
@@ -139,14 +218,14 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
       ),
-      builder: (context) => TaskDetailsBottomSheet(calendarData: meeting.value),
+      builder: (context) => TaskDetailsBottomSheet(calendarData: eventDetail),
     );
   }
 
   ///Data Class Wrapper method to convert data received from api to required data model type Meeting.
-  List<Meeting<CalendarData>> _convertToMeeting(CalendarStyle style) {
+  List<CalenderEvent<CalendarData>> _convertToMeeting(CalendarStyle style) {
     return calendarDataList
-        .map((e) => Meeting<CalendarData>(
+        .map((e) => CalenderEvent<CalendarData>(
               value: e,
               eventName: e.title ?? '',
               from: e.start!.stringToDateTime() ?? DateTime.now(),
@@ -159,111 +238,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         .toList();
   }
 
-  String generateMeetingTitle() {
-    // Expanded lists of adjectives and nouns
-    final List<String> adjectives = [
-      'Strategic',
-      'Creative',
-      'Innovative',
-      'Dynamic',
-      'Collaborative',
-      'Productive',
-      'Visionary',
-      'Impactful',
-      'Proactive',
-      'Effective',
-      'Efficient',
-      'Insightful',
-      'Focused',
-      'Inspirational',
-      'Engaging',
-      'Interactive',
-      'Comprehensive',
-      'Synergistic',
-      'Holistic',
-      'Pioneering',
-      'Agile',
-      'Inclusive',
-      'Transparent',
-      'Data-Driven',
-      'Optimized',
-    ];
-
-    final List<String> nouns = [
-      'Brainstorm',
-      'Discussion',
-      'Planning',
-      'Sync',
-      'Huddle',
-      'Debrief',
-      'Session',
-      'Workshop',
-      'Review',
-      'Check-In',
-      'Kickoff',
-      'Standup',
-      'Retrospective',
-      'Alignment',
-      'Strategy',
-      'Sprint',
-      'Catch-Up',
-      'Forum',
-      'Roundtable',
-      'Focus Group',
-      'Consultation',
-      'Q&A',
-      'Update',
-      'Dialogue',
-      'Briefing',
-    ];
-
-    // Create a random number generator
-    final Random random = Random();
-
-    // Select a random adjective and noun
-    String adjective = adjectives[random.nextInt(adjectives.length)];
-    String noun = nouns[random.nextInt(nouns.length)];
-
-    // Combine and return the meeting title
-    return '$adjective $noun';
-  }
-
-  ///Helper Methods
-  List<CalendarData> _generateCalendarDataList() {
-    return List.generate(
-      170,
-      (index) {
-        int date = Random().nextInt(30);
-        int start = Random().nextInt(10);
-        int end = start + Random().nextInt(3);
-        int month = DateTime.now().month;
-        return CalendarData(
-          id: index,
-          title: generateMeetingTitle(),
-          description:
-              'Lorem ipsum dolor sit amet consectetur. At velit in morbi integer. Nullam suspendisse pulvinar aliquet lacus morbi accumsan. Egestas enim consectetur convallis ut egestas. Volutpat ultrices ullamcorper hendrerit risus',
-          type: [CalenderEventType.meeting.value, CalenderEventType.task.value].randomValue,
-          start:
-              '2024-${month < 10 ? '0$month' : month}-${date < 9 ? '0${date + 1}' : '${date + 1}'} ${start < 10 ? '0$start' : '$start'}:00:00',
-          end: '2024-${month < 10 ? '0$month' : month}-${date < 9 ? '0${date + 1}' : '${date + 1}'} ${end < 10 ? '0$end' : '$end'}:00:00',
-          assignedTo: 'Jason Smith',
-          assignedToImage: 'https://i.ibb.co/SJDj2Pj/Frame-3977.png',
-          assignedBy: 'Jason Smith',
-          assignedByImage: 'https://i.ibb.co/SJDj2Pj/Frame-3977.png',
-          categoryName: 'Category ${date + 1}',
-          status: ['Pending', 'Completed', 'In Progress'].randomValue,
-          priority: ['High', 'Medium', 'Low'].randomValue,
-          createdDate: '2024-${month < 11 ? '0${month - 1}' : month - 1}-${date < 9 ? '0${date + 1}' : '${date + 1}'} 10:00:00',
-        );
-      },
-    );
-  }
-
   List<CalendarEventTypeModel> _generateCalendarEventTypeList() {
     return [
-      CalendarEventTypeModel(id: 1, title: APPStrings.all.tr),
-      CalendarEventTypeModel(id: 3, title: APPStrings.tasks.tr),
-      CalendarEventTypeModel(id: 2, title: APPStrings.meetings.tr),
+      CalendarEventTypeModel(title: APPStrings.all.tr, key: ApiKey.all),
+      CalendarEventTypeModel(title: APPStrings.tasks.tr, key: ApiKey.task),
+      CalendarEventTypeModel(title: APPStrings.meetings.tr, key: ApiKey.meeting),
     ];
   }
 }

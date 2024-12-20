@@ -1,7 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class CalendarData {
-  int? id;
+  String? id;
   String? title;
   String? description;
   String? type;
@@ -78,8 +78,8 @@ extension CalendarDataExtension on CalendarData {
       CalenderEventType.values.firstWhereOrNull((element) => element.value == type) ?? CalenderEventType.undefined;
 }
 
-class MeetingDataSource extends CalendarDataSource<Meeting<CalendarData>> {
-  MeetingDataSource(List<Meeting<CalendarData>> source) {
+class MeetingDataSource extends CalendarDataSource<CalenderEvent<CalendarData>> {
+  MeetingDataSource(List<CalenderEvent<CalendarData>> source) {
     appointments = source;
   }
 
@@ -109,8 +109,8 @@ class MeetingDataSource extends CalendarDataSource<Meeting<CalendarData>> {
   }
 }
 
-class Meeting<T> {
-  Meeting({
+class CalenderEvent<T> {
+  CalenderEvent({
     required this.eventName,
     required this.from,
     required this.to,

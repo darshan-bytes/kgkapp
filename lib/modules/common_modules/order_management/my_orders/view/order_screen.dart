@@ -22,7 +22,7 @@ class OrderScreen extends StatelessWidget {
                     // Here TabController is initialized
                     ordersBloc.tabController = tabController;
                   },
-                  onTapTab: (int index) => ordersBloc.add(const ChangeOrderTabsEvent()),
+                  onTapTab: (int index) => ordersBloc.add(ChangeOrderTabsEvent(index: index, context: context)),
                   tabs: ordersBloc.tabs,
                   tabBarView: _buildTabBarView(ordersBloc),
                 ),
@@ -48,10 +48,22 @@ class OrderScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is OrdersListLoadedState || state is ChangeOrderTabsState) {
           return SafeArea(
-              child: FilterBottomActionBar(
-            controller: ordersBloc.currentScrollController.controller,
-            onFilterTap: () {},
-          ));
+            child: FilterBottomActionBar(
+              controller: ordersBloc.orderPaginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (context) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        ordersBloc.add(OrdersListFilterEvent(filterData: value, context: context));
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
+          );
         } else {
           return const SizedBox.shrink();
         }

@@ -215,7 +215,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         );
         if (filter.filterType == FilterType.range) {
           if (filterOption.data.isNotEmpty) {
-            filter.rangeValues = SfRangeValues(0, filterOption.data.first.toDouble());
             filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
           } else {
             continue;
@@ -236,8 +235,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     FetchScenario scenario = determineFetchScenario();
     query ??= {};
     filterData
-        .where(
-            (element) => (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) || element.filterType == FilterType.range)
+        .where((element) =>
+            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+            (element.filterType == FilterType.range && element.rangeValues != null))
         .forEach(
       (element) {
         if (element.filterType == FilterType.range) {
@@ -297,9 +297,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                   suid: item.suid ?? "",
                   imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
                   name: item.productDescription ?? "",
-                  originalPrice: item.finalPrice?.setCurrency,
-                  offerPrice: item.discountPrice?.setCurrency,
-                  finalPrice: item.discountPrice?.setCurrency,
+                  originalPrice: item.finalPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
+                  offerPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
+                  finalPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
                   discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
                   productId: item.id ?? "",
                   commodity: Commodity.jewellery,

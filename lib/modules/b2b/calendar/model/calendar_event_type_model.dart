@@ -1,21 +1,21 @@
 class CalendarEventTypeModel {
-  int? id;
   String? title;
+  String? key;
 
   CalendarEventTypeModel({
-    this.id,
     this.title,
+    this.key,
   });
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CalendarEventTypeModel && other.id == id && other.title == title;
+    return other is CalendarEventTypeModel && other.title == title && other.key == key;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ title.hashCode;
+    return title.hashCode ^ key.hashCode;
   }
 }

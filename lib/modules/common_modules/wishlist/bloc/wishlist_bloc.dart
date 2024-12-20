@@ -194,11 +194,11 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }
 
   Future<void> _setupFilters(BuildContext context) async {
-    Either<ErrorResponse, WishlistFilterOptionModel>? response;
+    Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     response = await AppRepository(context).fetchWishlistFilterOptionList();
     response?.fold((l) {
       Utils.showMessage(l.message);
-    }, (WishlistFilterOptionModel success) {
+    }, (AdvanceFilterOptionModel success) {
       filterData.clear();
       if (success.filters.isNotNullNorEmpty) {
         for (Filters filterOption in success.filters ?? []) {

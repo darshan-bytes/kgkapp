@@ -131,14 +131,24 @@ class CommonResponse<T> {
         return PaginationData<HomeNewLanuchesDatum>.fromJson(json);
       case const (SortOptionsModel):
         return SortOptionsModel.fromJson(json);
-      case const (WishlistFilterOptionModel):
-        return WishlistFilterOptionModel.fromJson(json);
+      case const (PaginationData<RetailStoreModel>):
+        return PaginationData<RetailStoreModel>.fromJson(json);
+      case const (AdvanceFilterOptionModel):
+        return AdvanceFilterOptionModel.fromJson(json);
       case const (CustomerSalesmanModel):
         return CustomerSalesmanModel.fromJson(json);
       case const (BagOrderSummaryDataModel):
         return BagOrderSummaryDataModel.fromJson(json);
-      case const (IndividualPlaceOrderResponse):
-        return IndividualPlaceOrderResponse.fromJson(json);
+      case const (PlaceOrderResponse):
+        return PlaceOrderResponse.fromJson(json);
+      case const (PaginationData<PaymentCondition>):
+        return PaginationData<PaymentCondition>.fromJson(json);
+      case const (PaginationData<OrderItem>):
+        return PaginationData<OrderItem>.fromJson(json);
+      case const (CalendarDataModel):
+        return CalendarDataModel.fromJson(json);
+      case const (CalenderEventDetailsDataModel):
+        return CalenderEventDetailsDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

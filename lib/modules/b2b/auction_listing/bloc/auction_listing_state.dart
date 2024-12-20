@@ -33,7 +33,7 @@ final class AuctionListLoadingMoreState extends AuctionListingState {
 final class AuctionListLoadedMoreState extends AuctionListingState {
   final int currentPage;
 
-  const AuctionListLoadedMoreState(this.currentPage);
+  const AuctionListLoadedMoreState({required this.currentPage});
 
   @override
   List<Object> get props => [currentPage];
@@ -41,6 +41,13 @@ final class AuctionListLoadedMoreState extends AuctionListingState {
 
 final class AuctionListingReloadingState extends AuctionListingState {
   const AuctionListingReloadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class AuctionListingLoadingState extends AuctionListingState {
+  const AuctionListingLoadingState();
 
   @override
   List<Object> get props => [];

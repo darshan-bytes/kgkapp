@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
 class AppRepository extends ApiService {
@@ -136,7 +135,6 @@ class AppRepository extends ApiService {
     }
   }
 
-  /// Either<ErrorResponse, dynamic>
   Future<void> fetchStrapiDataFroAboutUs(String? attribute) async {
     String url = await buildUrl(endpoint: StrapiEndPoints.aboutUsPage, attribute: attribute ?? '');
 
@@ -245,20 +243,11 @@ class AppRepository extends ApiService {
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  // getAuctionList
-  Future<Either<ErrorResponse, AuctionListingModel>?> getAuctionList(
-      {required String limit, required String page, bool isLoadMore = false}) async {
-    if (isLoadMore) {
-      context.setAppLoading(true);
-    }
-    var response = await getMethod<AuctionListingModel>(
-      ApiClient.auctionListing,
-      query: {ApiKey.limit: limit, ApiKey.page: page},
-      withCurrencyHeader: true,
-    );
-    if (isLoadMore) {
-      context.setAppLoading(false);
-    }
+  /// getAuctionList
+  Future<Either<ErrorResponse, AuctionListingModel>?> getAuctionList({required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<AuctionListingModel>(ApiClient.auctionListing, query: body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -784,8 +773,16 @@ class AppRepository extends ApiService {
   }
 
   // For Wishlist Filter Option
-  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchWishlistFilterOptionList() async {
-    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.wishlistFilterOptions);
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchWishlistFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.wishlistFilterOptions);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Find a Retail Store near your Location
+  Future<Either<ErrorResponse, PaginationData<RetailStoreModel>>?> getRetailStore({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<PaginationData<RetailStoreModel>>(ApiClient.findRetailerStore, body);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -805,8 +802,11 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode() async {
-    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removePromoCode, withFullResponse: true);
+  Future<Either<ErrorResponse, CommonResponse>?> removePromoCode({required String bagId}) async {
+    var response = await deleteMethod<Map<String, dynamic>>(
+      ApiClient.removePromoCode(bagId),
+      withFullResponse: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -853,10 +853,9 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse<IndividualPlaceOrderResponse>>?> orderIndividual(
-      {Map<String, dynamic> body = const {}}) async {
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderIndividual({Map<String, dynamic> body = const {}}) async {
     context.setAppLoading(true);
-    var response = await postMethod<IndividualPlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -869,8 +868,94 @@ class AppRepository extends ApiService {
   }
 
   /// For DigitalCatalogue Filter Option
-  Future<Either<ErrorResponse, WishlistFilterOptionModel>?> fetchDigitalCatalogueFilterOptionList() async {
-    var response = await getMethod<WishlistFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchDigitalCatalogueFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.digitalCatalogueFilterOptions);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Auction listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchAuctionListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.auctionListingFilterOption);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<PaymentCondition>>?> getPaymentTermsFilter({Map<String, dynamic>? body}) async {
+    var response = await postMethod<PaginationData<PaymentCondition>>(ApiClient.paymentTermsFilter, body);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> placeB2BOrder(Map<String, dynamic> body) async {
+    context.setAppLoading(true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.placeB2BOrder, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<OrderItem>>?> getMyOrderList({Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<PaginationData<OrderItem>>(ApiClient.myOrders, query: body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For order listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchOrderListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.orderFilterList);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get a Calendar Events
+  Future<Either<ErrorResponse, List<CalendarDataModel>>?> getCalenderEvent({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<CalendarDataModel>(ApiClient.getCalenderEvents, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get a Calendar Event Details
+  Future<Either<ErrorResponse, CalenderEventDetailsDataModel>?> getCalenderEventDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CalenderEventDetailsDataModel>(ApiClient.getCalenderEventDetailsById(id));
+    context.setAppLoading(false);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondListingModel>?> diyFilters({
+    required String limit,
+    required String page,
+    required String sortKey,
+    required String sortValue,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+    required String type,
+  }) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      ApiKey.sortKey: sortKey,
+      ApiKey.sortValue: sortValue,
+      ApiKey.type: type
+    };
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    var response = await getMethod<DiamondListingModel>(ApiClient.diyFilters, query: queryParams, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((error) => Left(error), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiamondDataModel>?> diyDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

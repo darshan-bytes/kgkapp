@@ -17,6 +17,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   late AppBloc appBloc;
+  UserType userType = UserType.b2cUser;
 
   GlobalKey<SmartExpansionTileState> productsListExpansionKey = GlobalKey();
 
@@ -30,6 +31,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   Future<void> _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) async {
     appBloc = BlocProvider.of<AppBloc>(event.context);
+    userType = appBloc.userType;
     await appBloc.fetchAddressList(event.context, isForceFetch: true);
     addressList = appBloc.savedAddressList;
     selectedShippingAddress = addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? addressList.firstOrNull;
@@ -145,7 +147,11 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
           //TODO: Place order API
           // Below line is commented because the Payment flow is not yet available from the backend side.
           // event.context.pushNamed(AppRoutes.paymentPage);
-          await placeIndividualOrderAPI(event.context);
+          if (userType == UserType.b2cUser) {
+            await placeIndividualOrderAPI(event.context);
+          } else {
+            await placeB2BUserOrderAPI(event.context);
+          }
         },
       );
     } catch (e) {
@@ -154,23 +160,61 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   Future<void> placeIndividualOrderAPI(BuildContext context) async {
-    final Either<ErrorResponse, CommonResponse<IndividualPlaceOrderResponse>>? response = await AppRepository(context).orderIndividual();
+    final Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response = await AppRepository(context).orderIndividual();
 
     await response?.fold(
       (l) {
         Utils.showMessage(l.message);
       },
       (r) async {
-        BlocProvider.of<MyBagBloc>(context).add(ClearMyBagEvent());
-        Utils.showMessage(r.message);
-        IndividualPlaceOrderResponse orderResponse = r.responseData;
-        context.pushNamedAndRemoveUntil(
-          AppRoutes.orderConfirmationPage,
-          (route) => route.settings.name != AppRoutes.landingPage,
-          arguments: {
-            RoutesData.orderNumber: orderResponse.id,
-          },
-        );
+        handleNavigateToOrderSuccessAndClearCart(context, message: r.message, uniqueId: r.responseData?.uniqueId);
+      },
+    );
+  }
+
+  Future<void> placeB2BUserOrderAPI(BuildContext context) async {
+    final MyBagBloc myBagBloc = BlocProvider.of<MyBagBloc>(context);
+    List<PlaceOrderProductRequest> placeOrderProductRequestList = myBagBloc.placeOrderProductRequestList;
+    BagListDataModel? bagListDataModel = myBagBloc.bagListDataModel;
+    BagOrderSummaryDataModel? bagOrderSummaryData = myBagBloc.bagOrderSummaryData;
+    String? currency = StorageManager().getSelectedCurrency();
+    final Map<String, dynamic> body = {
+      ApiKey.commodity: myBagBloc.commodity?.value,
+      ApiKey.billingAddressId: selectedBillingAddress?.id,
+      ApiKey.shippingAddressId: selectedShippingAddress?.id,
+      ApiKey.currency: currency,
+      ApiKey.products: placeOrderProductRequestList.map((e) => e.toJson()).toList(),
+      ApiKey.orderContext: AppConst.orderContext,
+      ApiKey.orderContextId: StorageManager().getBagId(),
+      ApiKey.totalDiscount: bagListDataModel?.summary?.discountPercentage,
+      ApiKey.totalPrice: bagListDataModel?.summary?.totalAmount,
+      ApiKey.meta: {
+        ApiKey.paymentCondition: myBagBloc.selectedPaymentCondition?.slug,
+        ApiKey.discount: myBagBloc.variationController.text,
+        ApiKey.comments: myBagBloc.noteController.text.trim(),
+      },
+    };
+
+    final response = await AppRepository(context).placeB2BOrder(body);
+
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        handleNavigateToOrderSuccessAndClearCart(context, message: r.message, uniqueId: r.responseData?.uniqueId);
+      },
+    );
+  }
+
+  void handleNavigateToOrderSuccessAndClearCart(BuildContext context, {String? message, String? uniqueId}) {
+    BlocProvider.of<MyBagBloc>(context).add(ClearMyBagEvent());
+    Utils.showMessage(message);
+    context.pushNamedAndRemoveUntil(
+      AppRoutes.orderConfirmationPage,
+      (route) => route.settings.name != AppRoutes.landingPage,
+      arguments: {
+        RoutesData.orderNumber: uniqueId,
       },
     );
   }
