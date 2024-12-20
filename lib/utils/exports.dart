@@ -490,4 +490,5 @@ export 'package:kgk/modules/common_modules/faq/model/faq_strapi_model.dart';
 export 'package:kgk/app/location_service.dart';
 export 'package:kgk/modules/b2b/calendar/model/calendar_search_data_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_order_product_request.dart';
+export 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 export '../../../modules/b2b/calendar/model/calender_event_details_data_model.dart';

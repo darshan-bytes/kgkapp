@@ -20,7 +20,7 @@ class OrderListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return SmartRefreshIndicator(
       onRefresh: () async {
-        await bloc.pullToRefresh();
+        bloc.add(OrdersListPullToRefreshEvent(context: context));
       },
       child: ListView.separated(
         itemCount: ordersList.length,
