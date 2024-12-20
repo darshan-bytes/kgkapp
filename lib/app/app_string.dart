@@ -944,4 +944,5 @@ class APPStrings {
   static const String requiresLocationPermission = 'mob_requires_location_permission';
   static const String permissionDenied = 'mob_permission_denied';
   static const String pleaseEnableLocation = 'mob_please_enable_location';
+  static const String thisTypeIsNotYetAdded = 'mob_this_type_is_not_yet_added';
 }

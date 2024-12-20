@@ -47,8 +47,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Diamond', image: ''),
+    ProductDetailModel(name: 'Gemstone', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: ''),
     ProductDetailModel(name: 'Occasion Offer', image: ''),
     ProductDetailModel(name: 'Deals', image: ''),
@@ -116,8 +116,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
-    ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
+    ProductDetailModel(name: 'Diamond', image: ''),
+    ProductDetailModel(name: 'Gemstone', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: ''),
     ProductDetailModel(name: 'Occasion Offer', image: ''),
     ProductDetailModel(name: 'Deals', image: ''),
@@ -413,7 +413,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   String? _getDoItYourselfRouteNameForB2C(String? categorySubName) {
     switch (categorySubName) {
-      case 'Collection':
+      case 'Diamond':
         return AppRoutes.stoneListingPage;
 
       default:
@@ -622,7 +622,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   String? _getDoItYourselfRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
-      case 'Collection':
+      case 'Diamond':
         return AppRoutes.stoneListingPage;
       default:
         return defaultAction();
@@ -631,7 +631,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
-      case 'Collection':
+      case 'Diamond':
         return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
       default:
         return null;

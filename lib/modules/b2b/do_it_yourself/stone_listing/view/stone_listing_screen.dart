@@ -227,8 +227,10 @@ class StoneListingScreen extends StatelessWidget {
                     productDetails: productDetails,
                     onTap: () {
                       if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
-                        context
-                            .pushNamed(AppRoutes.stoneDetailPage, arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                        context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
+                          RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
+                          RoutesData.productId: productDetails.productId
+                        });
                       } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                           RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,

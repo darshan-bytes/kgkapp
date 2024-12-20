@@ -167,18 +167,15 @@ class FilterScreen extends StatelessWidget {
             return _buildOptionList(filterBloc, style);
           case FilterType.undefined:
           default:
-            return const NoDataFoundWidget(text: "This type is not yet added");
+            return NoDataFoundWidget(text: APPStrings.thisTypeIsNotYetAdded.tr);
         }
-        /*return (filterBloc.selectedFilterData?.inputType?.trim().toLowerCase() == Attributes.checkbox)
-            ? _buildOptionList(filterBloc, style)
-            : _buildPriceRangeSlide(filterBloc, style);*/
       },
     );
   }
 
   Widget _buildPriceRangeSlide(SortFilterBloc bloc, FilterStyle style) {
-    if (bloc.selectedFilterData?.rangeValues == null || bloc.selectedFilterData?.minMaxValues == null) {
-      return const NoDataFoundWidget(text: "This type is not yet added");
+    if (bloc.selectedFilterData?.minMaxValues == null) {
+      return NoDataFoundWidget(text: APPStrings.thisTypeIsNotYetAdded.tr);
     }
     return BlocBuilder<SortFilterBloc, SortFilterState>(
       buildWhen: (previous, current) => previous != current && current is SortAndFilterPriceRangeChangedState,
