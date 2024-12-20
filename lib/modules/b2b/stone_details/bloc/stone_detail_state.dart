@@ -9,7 +9,9 @@ final class StoneDetailInitial extends StoneDetailState {
   List<Object> get props => [];
 }
 
-final class StoneDetailReloadedState extends StoneDetailState {
+final class StoneDetailLoadedState extends StoneDetailState {
+  const StoneDetailLoadedState();
+
   @override
   List<Object> get props => [];
 }

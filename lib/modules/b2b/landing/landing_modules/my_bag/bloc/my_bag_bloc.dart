@@ -397,8 +397,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onMyBagRemovePromoCode(MyBagRemovePromoCodeEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
+    String id = StorageManager().getBagId() ?? "";
+    if (id.isEmpty) return;
     event.context.setAppLoading(true);
-    final response = await AppRepository(event.context).removePromoCode();
+    final response = await AppRepository(event.context).removePromoCode(bagId: id);
     await response?.fold(
       (l) {
         event.context.setAppLoading(false);
@@ -414,9 +416,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   Future<void> _onMyBagApplyPromoCode(MyBagApplyPromoCodeEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
     try {
+      String id = StorageManager().getBagId() ?? "";
+      if (id.isEmpty) return;
       event.context.setAppLoading(true);
       final Map<String, dynamic> body = {
         ApiKey.promoCode_: event.promoCode,
+        ApiKey.cartId_: id,
       };
       final response = await AppRepository(event.context).applyPromoCode(body);
       await response?.fold(

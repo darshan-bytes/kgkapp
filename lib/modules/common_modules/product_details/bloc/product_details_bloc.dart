@@ -231,7 +231,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
-            rating: diamondData!.rating?.toDouble(),
+            rating: diamondData!.rating,
             commodity: Commodity.diamond,
             isFavourite: diamondData?.isFavorite ?? false,
             wishlistId: diamondData?.wishlistID,
