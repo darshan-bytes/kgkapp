@@ -268,8 +268,10 @@ class AppRoutes {
 
       case orderPage:
         builder = (context) {
-          BlocProvider.of<OrdersBloc>(context).add(OrdersInitialEvent(context));
-          return const OrderScreen();
+          return BlocProvider<OrdersBloc>(
+            create: (context) => OrdersBloc()..add(OrdersInitialEvent(context)),
+            child: const OrderScreen(),
+          );
         };
         break;
 

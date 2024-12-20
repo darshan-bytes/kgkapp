@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
-
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
 
 class AppRepository extends ApiService {
@@ -136,7 +135,6 @@ class AppRepository extends ApiService {
     }
   }
 
-  /// Either<ErrorResponse, dynamic>
   Future<void> fetchStrapiDataFroAboutUs(String? attribute) async {
     String url = await buildUrl(endpoint: StrapiEndPoints.aboutUsPage, attribute: attribute ?? '');
 
@@ -891,6 +889,19 @@ class AppRepository extends ApiService {
     context.setAppLoading(true);
     var response = await postMethod<PlaceOrderResponse>(ApiClient.placeB2BOrder, body, withFullResponse: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<OrderItem>>?> getMyOrderList({Map<String, dynamic>? body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<PaginationData<OrderItem>>(ApiClient.myOrders, query: body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For order listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchOrderListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.orderFilterList);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

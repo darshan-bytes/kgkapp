@@ -35,12 +35,10 @@ final class ChangeOrderTabsState extends OrdersState {
 }
 
 class OrdersLoadingMoreState extends OrdersState {
-  final MyOrdersTab listType;
-
-  const OrdersLoadingMoreState(this.listType);
+  const OrdersLoadingMoreState();
 
   @override
-  List<Object> get props => [listType];
+  List<Object> get props => [];
 }
 
 class OrdersListLoadedState extends OrdersState {
@@ -52,10 +50,16 @@ class OrdersListLoadedState extends OrdersState {
 
 class OrdersListLoadedMoreState extends OrdersState {
   final int currentPage;
-  final MyOrdersTab listType;
 
-  const OrdersListLoadedMoreState(this.currentPage, this.listType);
+  const OrdersListLoadedMoreState(this.currentPage);
 
   @override
-  List<Object> get props => [currentPage, listType];
+  List<Object> get props => [currentPage];
+}
+
+class OrdersLoadingState extends OrdersState {
+  const OrdersLoadingState();
+
+  @override
+  List<Object> get props => [];
 }
