@@ -113,13 +113,12 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     emit(const CalendarOnViewChangedState());
   }
 
-  void _onCalendarOnCellTapEvent(CalendarOnCellTapEvent event, Emitter<CalendarState> emit) {
+  Future<void> _onCalendarOnCellTapEvent(CalendarOnCellTapEvent event, Emitter<CalendarState> emit) async {
     if (event.details.targetElement == CalendarElement.calendarCell) {
       handleCalendarCellClick(event.context, event.details, emit);
     } else if (event.details.targetElement == CalendarElement.appointment) {
       if (event.details.appointments != null && event.details.appointments!.isNotEmpty) {
-        /// TODO :: MAKE API CALL TO GET APPOINTMENT DETAILS
-        // handleAppointmentClick(event.context, event.details.appointments?.first);
+        await getCalenderEventDetails(event.context, emit, event.details.appointments?.first);
       }
     }
   }
@@ -172,25 +171,12 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         calendarDataList = List.generate(
           dataList.length,
           (index) {
-            /// NOTE : KEEPING THIS DATA STATIC AS OF NOW AS EVENT DETAILS WILL BE FETCHED FROM API
             return CalendarData(
-              id: dataList[index].id ?? '',
-              title: dataList[index].title,
-              description:
-                  'Lorem ipsum dolor sit amet consectetur. At velit in morbi integer. Nullam suspendisse pulvinar aliquet lacus morbi accumsan. Egestas enim consectetur convallis ut egestas. Volutpat ultrices ullamcorper hendrerit risus',
-              type: dataList[index].type,
-              start: dataList[index].startDate.toString(),
-              end: dataList[index].endDate.toString(),
-              assignedTo: 'Jason Smith',
-              assignedToImage: 'https://i.ibb.co/SJDj2Pj/Frame-3977.png',
-              assignedBy: 'Jason Smith',
-              assignedByImage: 'https://i.ibb.co/SJDj2Pj/Frame-3977.png',
-              categoryName: 'Category ${dataList[index].startDate?.day ?? 0 + 1}',
-              status: ['Pending', 'Completed', 'In Progress'].randomValue,
-              priority: ['High', 'Medium', 'Low'].randomValue,
-              createdDate:
-                  '2024-${(dataList[index].startDate?.month ?? 0) < 11 ? '0${(dataList[index].startDate?.month ?? 0) - 1}' : (dataList[index].startDate?.month ?? 0) - 1}-${(dataList[index].startDate?.day ?? 0) < 9 ? '0${(dataList[index].startDate?.day ?? 0) + 1}' : '${(dataList[index].startDate?.day ?? 0) + 1}'} 10:00:00',
-            );
+                id: dataList[index].id ?? '',
+                title: dataList[index].title,
+                type: dataList[index].type,
+                start: dataList[index].startDate.toString(),
+                end: dataList[index].endDate.toString());
           },
         );
         meetingList = _convertToMeeting(style);
@@ -201,6 +187,21 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     }
   }
 
+  Future<void> getCalenderEventDetails(BuildContext context, Emitter<CalendarState> emit, CalenderEvent<CalendarData> calenderEvent) async {
+    emit(const CalendarReloadState());
+    final response = await AppRepository(context).getCalenderEventDetails(id: calenderEvent.value.id ?? '');
+
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        handleAppointmentClick(context, r);
+        emit(CalendarLoadedState());
+      },
+    );
+  }
+
   void handleCalendarCellClick(BuildContext context, CalendarTapDetails details, Emitter<CalendarState> emit) {
     emit(const CalendarReloadState());
     calendarController.selectedDate = details.date;
@@ -209,7 +210,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     emit(const CalendarViewChangeState());
   }
 
-  void handleAppointmentClick(BuildContext context, CalenderEvent<CalendarData> meeting) {
+  void handleAppointmentClick(BuildContext context, CalenderEventDetailsDataModel eventDetail) {
     /// To get the data model of the calendar data received from API use: meeting.value
     Utils.showSmartModalBottomSheet(
       context: context,
@@ -217,7 +218,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
       ),
-      builder: (context) => TaskDetailsBottomSheet(calendarData: meeting.value),
+      builder: (context) => TaskDetailsBottomSheet(calendarData: eventDetail),
     );
   }
 

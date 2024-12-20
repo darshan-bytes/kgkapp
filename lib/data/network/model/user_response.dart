@@ -97,6 +97,8 @@ class UserIdDetails {
     required this.phoneCode,
     required this.phone,
     required this.organisationName,
+    this.customerAliasName,
+    this.customerCode,
   });
 
   final String? firstname;
@@ -110,6 +112,8 @@ class UserIdDetails {
   String? phoneCode;
   String? phone;
   String? organisationName;
+  String? customerAliasName;
+  String? customerCode;
 
   factory UserIdDetails.fromJson(Map<String, dynamic> json) {
     return UserIdDetails(
@@ -124,6 +128,8 @@ class UserIdDetails {
       phone: json["phone"],
       organisationName: json["org_name"],
       accountType: json["account_type"],
+      customerAliasName: json["customer_alias_name"],
+      customerCode: json["customer_code"],
     );
   }
 
@@ -139,11 +145,13 @@ class UserIdDetails {
         "phone": phone,
         "org_name": organisationName,
         "account_type": accountType,
+        "customer_alias_name": customerAliasName,
+        "customer_code": customerCode,
       };
 
   @override
   String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, $accountType, ";
+    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $profilePicUrl, $phoneCode, $phone, $organisationName, $accountType, $customerAliasName, $customerCode, ";
   }
 }
 
