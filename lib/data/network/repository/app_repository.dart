@@ -898,6 +898,15 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  /// Get a Calendar Event Details
+  Future<Either<ErrorResponse, CalenderEventDetailsDataModel>?> getCalenderEventDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CalenderEventDetailsDataModel>(ApiClient.getCalenderEventDetailsById(id));
+    context.setAppLoading(false);
+
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
