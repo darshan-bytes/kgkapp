@@ -213,6 +213,7 @@ class DiamondDataModel {
     required this.priceCts,
     required this.finalPrice,
     this.isAuction = false,
+    required this.components,
   });
 
   String? id;
@@ -391,6 +392,7 @@ class DiamondDataModel {
   String? priceCts;
   String? finalPrice;
   bool isAuction;
+  List<StoneElement> components;
 
   factory DiamondDataModel.fromJson(Map<String, dynamic> json) {
     return DiamondDataModel(
@@ -562,7 +564,7 @@ class DiamondDataModel {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       discountPrice: json["discount_price"].toString(),
-      rating: json["rating"],
+      rating: json["rating"]?.toString().toDouble,
       reviewCount: json["review_count"],
       auctionId: json["auction_id"],
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
@@ -570,6 +572,7 @@ class DiamondDataModel {
       finalPrice: json["final_price"]?.toString(),
       wishlistID: json["is_favorite"],
       isAuction: json["is_auction"] ?? false,
+      components: json["components"] == null ? [] : List<StoneElement>.from(json["components"]!.map((x) => StoneElement.fromJson(x))),
     );
   }
 

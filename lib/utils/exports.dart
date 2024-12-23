@@ -482,7 +482,7 @@ export 'package:kgk/data/network/my_http_overrides.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/customer_salesman_data_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/bag_order_summary_data_model.dart';
 export 'package:url_launcher/url_launcher.dart';
-export 'package:kgk/modules/common_modules/product_details/view/jewellery_details_component_view.dart';
+export 'package:kgk/modules/common_modules/product_details/view/product_details_component_view.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/newly_lanuches_model.dart';
 export 'package:kgk/modules/common_modules/find_a_store/model/retail_store_model.dart';
 export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_individual_order_model.dart';

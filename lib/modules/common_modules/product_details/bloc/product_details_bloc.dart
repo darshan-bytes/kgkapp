@@ -235,6 +235,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             commodity: Commodity.diamond,
             isFavourite: diamondData?.isFavorite ?? false,
             wishlistId: diamondData?.wishlistID,
+            stoneElements: diamondData?.components,
           );
         }
       },
@@ -278,6 +279,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             commodity: Commodity.gemstone,
             isFavourite: gemstoneData?.isFavorite ?? false,
             wishlistId: gemstoneData?.wishlistID,
+            stoneElements: gemstoneData?.components,
           );
         }
       },
