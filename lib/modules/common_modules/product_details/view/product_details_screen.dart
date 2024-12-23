@@ -37,7 +37,7 @@ class ProductDetailsScreen extends StatelessWidget {
             color: style.whiteColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withValues(alpha:0.5),
+                color: Colors.grey.withValues(alpha: 0.5),
                 spreadRadius: 7.r,
                 blurRadius: 7.r,
                 offset: const Offset(0, 3), // changes position of shadow
@@ -372,16 +372,14 @@ class ProductDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
+          if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
+              bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
             SizedBox(height: 24.h),
             const Divider(),
-            JewelleryDetailsComponentsView(components: bloc.productDetails?.components ?? []),
-          ],
-          if (bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
-            SizedBox(height: 24.h),
-            const Divider(),
-            _gemstoneDetails(bloc, style),
-            const Divider(),
+            ProductDetailsComponentsView(
+                commodity: bloc.productDetails?.commodity ?? Commodity.jewellery,
+                components: bloc.productDetails?.components,
+                stoneElements: bloc.productDetails?.stoneElements),
           ],
           if (bloc.screenIdentifier == ScreenIdentifier.productForDiamonds) ...[
             SizedBox(height: 24.h),
@@ -553,84 +551,6 @@ class ProductDetailsScreen extends StatelessWidget {
       itemCount: bloc.productCustomizations.length,
       itemBuilder: (context, index) => ProductDetailsCustomizations(index: index),
       separatorBuilder: (_, __) => Divider(height: 48.h),
-    );
-  }
-
-  Widget _diamondDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is ProductDiamondDetailsToggleState,
-      builder: (context, state) {
-        return Padding(
-          padding: bloc.isDiamondDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            initiallyExpanded: bloc.isDiamondDetailsOpen,
-            key: bloc.diamondDetailsKey,
-            title: SmartText(
-              bloc.screenIdentifier == ScreenIdentifier.productForRing ? APPStrings.diamondDetails.tr : APPStrings.productDetails.tr,
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: (bloc.isDiamondDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
-            onExpansionChanged: (value) {
-              bloc.add(const ProductDiamondDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color.tr, 'F-G', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _gemstoneDetails(ProductDetailsBloc bloc, ProductDetailsStyle style) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is GemstoneDetailsToggleState,
-      builder: (context, state) {
-        return Padding(
-          padding: bloc.isGemstoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            initiallyExpanded: bloc.isGemstoneDetailsOpen,
-            key: bloc.gemstoneDetailsKey,
-            title: SmartText(
-              'Gemstone details',
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: (bloc.isGemstoneDetailsOpen)
-                ? Icon(Icons.keyboard_arrow_up, size: 24, color: style.ratingGlowColor)
-                : Icon(Icons.keyboard_arrow_down, size: 24, color: style.ratingGlowColor),
-            onExpansionChanged: (value) {
-              bloc.add(const GemstoneDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.shape.tr, bloc.productDetails?.shape ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, bloc.productDetails?.productQuantity?.name ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color.tr, bloc.productDetails?.color ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity.tr, bloc.productDetails?.clarity ?? '-', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
-            ],
-          ),
-        );
-      },
     );
   }
 
