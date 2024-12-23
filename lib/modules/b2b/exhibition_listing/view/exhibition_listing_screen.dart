@@ -12,11 +12,7 @@ class ExhibitionListingScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(exhibitionListingBloc, context),
       body: SafeArea(
         child: BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
-          buildWhen: (previous, current) =>
-              current is ExhibitionListingLoadedState ||
-              current is ExhibitionListingLoadingState ||
-              current is ExhibitionListLoadingMoreState ||
-              current is ExhibitionListLoadMoreState,
+          buildWhen: (previous, current) => current is ExhibitionListingLoadedState || current is ExhibitionListingLoadingState,
           builder: (context, state) {
             if (state is ExhibitionListingLoadingState) {
               return const SmartCircularProgressIndicator();
@@ -33,7 +29,7 @@ class ExhibitionListingScreen extends StatelessWidget {
                     SizedBox(
                       height: 24.h,
                     ),
-                    _buildCatalogueExhibitionList(context, state, exhibitionListingBloc, style),
+                    _buildCatalogueExhibitionList(context, exhibitionListingBloc, style),
                   ],
                 ),
               );
@@ -122,8 +118,7 @@ class ExhibitionListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCatalogueExhibitionList(
-      BuildContext context, ExhibitionListingState state, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+  Widget _buildCatalogueExhibitionList(BuildContext context, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.0.w),
       child: Column(
@@ -155,126 +150,139 @@ class ExhibitionListingScreen extends StatelessWidget {
           SizedBox(
             height: 24.h,
           ),
-          _buildExhibitionCatalogueList(bloc, state, style),
+          _buildExhibitionCatalogueList(bloc, style),
           _buildExhibitionSubList(bloc, style),
         ],
       ),
     );
   }
 
-  Widget _buildExhibitionCatalogueList(ExhibitionListingBloc bloc, ExhibitionListingState state, ExhibitionListingItemStyle style) {
-    return Column(
-      children: [
-        ListView.builder(
-          itemCount: bloc.exhibitionCatalogueList.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            final ExhibitionListingModel item = bloc.exhibitionCatalogueList[index];
-            return Container(
-              margin: EdgeInsets.only(bottom: 32.0.h),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: style.borderColor,
-                  width: 1.w,
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  context.pushNamed(AppRoutes.exhibitionDetailsPage);
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Stack(
-                      children: [
-                        SmartImage(
-                          path: item.image ?? "",
-                          height: 200.h,
-                          width: context.width,
-                        ),
-                        if (item.status != null)
-                          Positioned(
-                            top: 16.h,
-                            left: 16.w,
-                            child: _buildStatusBadge(style, item.status!),
-                          ),
-                      ],
+  Widget _buildExhibitionCatalogueList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+    return BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
+      buildWhen: (previous, current) =>
+          current is ExhibitionListingLoadedState || current is ExhibitionListingReloadState || current is ExhibitionListingLoadingState,
+      builder: (context, state) {
+        if (state is ExhibitionListingLoadingState) {
+          return const SmartCircularProgressIndicator();
+        }
+        if (state is ExhibitionListingLoadedState) {
+          return Column(
+            children: [
+              ListView.builder(
+                itemCount: bloc.exhibitionCatalogueList.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final ExhibitionListingModel item = bloc.exhibitionCatalogueList[index];
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 32.0.h),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: style.borderColor,
+                        width: 1.w,
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(16.0.w),
+                    child: InkWell(
+                      onTap: () {
+                        context.pushNamed(AppRoutes.exhibitionDetailsPage);
+                      },
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SmartText(
-                            item.name,
-                            style: style.listTitleStyle,
-                          ),
-                          SizedBox(height: 2.h),
-                          SmartText(
-                            item.author,
-                            style: style.listAuthorStyle,
-                          ),
-                          SizedBox(height: 12.h),
-                          Row(
+                          Stack(
                             children: [
                               SmartImage(
-                                path: AppImages.icCalendar,
-                                height: 16.h,
-                                width: 16.w,
+                                path: item.image ?? "",
+                                height: 200.h,
+                                width: context.width,
                               ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SmartText(
-                                item.date,
-                                style: style.listSubTitleStyle,
-                              ),
-                              const Spacer(),
-                              SmartImage(
-                                path: AppImages.icClock,
-                                height: 16.h,
-                                width: 16.w,
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SmartText(
-                                item.time,
-                                style: style.listSubTitleStyle,
-                              ),
+                              if (item.status != null)
+                                Positioned(
+                                  top: 16.h,
+                                  left: 16.w,
+                                  child: _buildStatusBadge(style, item.status!),
+                                ),
                             ],
                           ),
-                          SizedBox(height: 4.h),
-                          Row(
-                            children: [
-                              SmartImage(
-                                path: AppImages.icMapPin,
-                                height: 16.h,
-                                width: 16.w,
-                                color: style.iconColor,
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SmartText(
-                                item.location,
-                                style: style.listSubTitleStyle,
-                              ),
-                            ],
-                          ),
+                          Padding(
+                            padding: EdgeInsets.all(16.0.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SmartText(
+                                  item.name,
+                                  style: style.listTitleStyle,
+                                ),
+                                SizedBox(height: 2.h),
+                                SmartText(
+                                  item.author,
+                                  style: style.listAuthorStyle,
+                                ),
+                                SizedBox(height: 12.h),
+                                Row(
+                                  children: [
+                                    SmartImage(
+                                      path: AppImages.icCalendar,
+                                      height: 16.h,
+                                      width: 16.w,
+                                    ),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    SmartText(
+                                      item.date,
+                                      style: style.listSubTitleStyle,
+                                    ),
+                                    const Spacer(),
+                                    SmartImage(
+                                      path: AppImages.icClock,
+                                      height: 16.h,
+                                      width: 16.w,
+                                    ),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    SmartText(
+                                      item.time,
+                                      style: style.listSubTitleStyle,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.h),
+                                Row(
+                                  children: [
+                                    SmartImage(
+                                      path: AppImages.icMapPin,
+                                      height: 16.h,
+                                      width: 16.w,
+                                      color: style.iconColor,
+                                    ),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    SmartText(
+                                      item.location,
+                                      style: style.listSubTitleStyle,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-        if (state is ExhibitionListLoadingMoreState) const SmartCircularProgressIndicator(),
-        SizedBox(height: 17.h),
-      ],
+              if (state is ExhibitionListLoadingMoreState) const SmartCircularProgressIndicator(),
+              SizedBox(height: 17.h),
+            ],
+          );
+        } else {
+          return SmartCircularProgressIndicator();
+        }
+      },
     );
   }
 

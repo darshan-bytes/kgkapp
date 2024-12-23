@@ -12,6 +12,11 @@ final class ExhibitionListingInitialState extends ExhibitionListingState {
   List<Object?> get props => [];
 }
 
+final class ExhibitionListingReloadState extends ExhibitionListingState {
+  @override
+  List<Object?> get props => [];
+}
+
 final class ExhibitionListingLoadedState extends ExhibitionListingState {
   @override
   List<Object?> get props => [];

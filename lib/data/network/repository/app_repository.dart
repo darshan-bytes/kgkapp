@@ -923,15 +923,8 @@ class AppRepository extends ApiService {
   }
 
   /// Get Exhibition Listing Data
-  Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing(
-      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
-    if (isLoadMore) {
-      context.setAppLoading(true);
-    }
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing({required Map<String, dynamic> body}) async {
     var response = await postMethod<PaginationData<ExhibitionListDataModel>>(ApiClient.getExhibitionList, body);
-    if (isLoadMore) {
-      context.setAppLoading(false);
-    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

@@ -78,7 +78,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   }
 
   Future<void> _onExhibitionListingSearchEvent(ExhibitionListingSearchEvent event, Emitter<ExhibitionListingState> emit) async {
-    emit(ExhibitionListingLoadingState());
+    emit(ExhibitionListingReloadState());
     paginationScrollController.pullToRefresh();
     exhibitionCatalogueList.clear();
     await fetchExhibitionListingData(event.context, emit, isLoadMore: false);
@@ -143,7 +143,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     );
 
     Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response =
-        await AppRepository(context).getExhibitionListing(body: query, isLoadMore: isLoadMore);
+        await AppRepository(context).getExhibitionListing(body: query);
 
     response?.fold((error) {
       Utils.showMessage(error.message);
