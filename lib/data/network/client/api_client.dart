@@ -158,7 +158,11 @@ class ApiClient {
 
   static const String auctionListingFilterOption = '$apiBaseUrl/auctions/customer/filter-list';
 
+  static const String myOrders = '$apiBaseUrl/orders';
+
   static const String placeB2BOrder = '$apiBaseUrl/orders';
+
+  static const String orderFilterList = '$apiBaseUrl/orders/filter-list';
 
   static const String getCalenderEvents = '$apiBaseUrl/calendar/filters';
 

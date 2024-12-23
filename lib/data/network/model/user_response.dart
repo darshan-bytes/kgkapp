@@ -184,64 +184,57 @@ extension UserIdDetailsExtension on UserIdDetails {
 }
 
 class UserPermissions {
-  UserPermissions({
+  const UserPermissions({
     required this.id,
-    required this.createdAt,
-    required this.updatedAt,
     required this.userId,
     required this.permissions,
-    required this.diamond,
-    required this.gemstone,
     required this.jewellery,
+    required this.gemstone,
+    required this.diamond,
     required this.deleted,
+    required this.createdAt,
+    required this.updatedAt,
     required this.v,
   });
 
   final String? id;
+  final int? userId;
+  final Permissions? permissions;
+  final Diamond? jewellery;
+  final Diamond? gemstone;
+  final Diamond? diamond;
+  final bool? deleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? userId;
-  final Map<String, KGKPermission> permissions;
-  final Diamond? diamond;
-  final Diamond? gemstone;
-  final Diamond? jewellery;
-  final bool? deleted;
   final int? v;
 
   factory UserPermissions.fromJson(Map<String, dynamic> json) {
     return UserPermissions(
       id: json["_id"],
+      userId: json["user_id"],
+      permissions: json["permissions"] == null ? null : Permissions.fromJson(json["permissions"]),
+      jewellery: json["jewellery"] == null ? null : Diamond.fromJson(json["jewellery"]),
+      gemstone: json["gemstone"] == null ? null : Diamond.fromJson(json["gemstone"]),
+      diamond: json["diamond"] == null ? null : Diamond.fromJson(json["diamond"]),
+      deleted: json["deleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      userId: json["user_id"],
-      permissions: json["permissions"] == null
-          ? {}
-          : Map.from(json["permissions"]).map((k, v) => MapEntry<String, KGKPermission>(k, KGKPermission.fromJson(v))),
-      diamond: json["diamond"] == null ? null : Diamond.fromJson(json["diamond"]),
-      gemstone: json["gemstone"] == null ? null : Diamond.fromJson(json["gemstone"]),
-      jewellery: json["jewellery"] == null ? null : Diamond.fromJson(json["jewellery"]),
-      deleted: json["deleted"],
       v: json["__v"],
     );
   }
 
   Map<String, dynamic> toJson() => {
         "_id": id,
+        "user_id": userId,
+        "permissions": permissions?.toJson(),
+        "jewellery": jewellery?.toJson(),
+        "gemstone": gemstone?.toJson(),
+        "diamond": diamond?.toJson(),
+        "deleted": deleted,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "user_id": userId,
-        "permissions": Map.from(permissions).map((k, v) => MapEntry<String, dynamic>(k, v?.toJson())),
-        "diamond": diamond?.toJson(),
-        "gemstone": gemstone?.toJson(),
-        "jewellery": jewellery?.toJson(),
-        "deleted": deleted,
         "__v": v,
       };
-
-  @override
-  String toString() {
-    return "$id, $createdAt, $updatedAt, $userId, $permissions, $diamond, $gemstone, $jewellery, $deleted, $v, ";
-  }
 }
 
 class Diamond {
@@ -312,61 +305,6 @@ class VisibilityAndSequence {
   }
 }
 
-class KGKPermission {
-  KGKPermission({
-    required this.list,
-    required this.permissionExport,
-    required this.comment,
-    required this.create,
-    required this.delete,
-    required this.permissionImport,
-    required this.share,
-    required this.update,
-    required this.view,
-  });
-
-  final Comment? list;
-  final Comment? permissionExport;
-  final Comment? comment;
-  final Comment? create;
-  final Comment? delete;
-  final Comment? permissionImport;
-  final Comment? share;
-  final Comment? update;
-  final Comment? view;
-
-  factory KGKPermission.fromJson(Map<String, dynamic> json) {
-    return KGKPermission(
-      list: json["list"] == null ? null : Comment.fromJson(json["list"]),
-      permissionExport: json["export"] == null ? null : Comment.fromJson(json["export"]),
-      comment: json["comment"] == null ? null : Comment.fromJson(json["comment"]),
-      create: json["create"] == null ? null : Comment.fromJson(json["create"]),
-      delete: json["delete"] == null ? null : Comment.fromJson(json["delete"]),
-      permissionImport: json["import"] == null ? null : Comment.fromJson(json["import"]),
-      share: json["share"] == null ? null : Comment.fromJson(json["share"]),
-      update: json["update"] == null ? null : Comment.fromJson(json["update"]),
-      view: json["view"] == null ? null : Comment.fromJson(json["view"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "list": list?.toJson(),
-        "export": permissionExport?.toJson(),
-        "comment": comment?.toJson(),
-        "create": create?.toJson(),
-        "delete": delete?.toJson(),
-        "import": permissionImport?.toJson(),
-        "share": share?.toJson(),
-        "update": update?.toJson(),
-        "view": view?.toJson(),
-      };
-
-  @override
-  String toString() {
-    return "$list, $permissionExport, $comment, $create, $delete, $permissionImport, $share, $update, $view, ";
-  }
-}
-
 class Comment {
   Comment({
     required this.allowed,
@@ -388,4 +326,334 @@ class Comment {
   String toString() {
     return "$allowed, ";
   }
+}
+
+class Permissions {
+  const Permissions({
+    this.activityLogs,
+    this.exhibitions,
+    this.assetMgmt,
+    this.reviewFeedbacks,
+    this.digitalCatalogue,
+    this.calendars,
+    this.messages,
+    this.cmsPageBuilder,
+    this.companies,
+    this.currency,
+    this.leads,
+    this.request,
+    this.department,
+    this.systemTemplates,
+    this.diamondCategories,
+    this.jewelleryCategories,
+    this.gemstoneCategories,
+    this.paymentTerms,
+    this.filterOptions,
+    this.diamondShapes,
+    this.diamondColors,
+    this.jewelleryMetalColors,
+    this.faqs,
+    this.tasks,
+    this.meetings,
+    this.inquiries,
+    this.language,
+    this.auctions,
+    this.orders,
+    this.newsletterSubscribers,
+    this.internalNoteTypes,
+    this.projects,
+    this.designs,
+    this.styles,
+    this.concepts,
+    this.presentations,
+    this.retailerStores,
+    this.roles,
+    this.deals,
+    this.customerGroups,
+    this.users,
+    this.orion,
+    this.cadLibrary,
+    this.designLibrary,
+    this.finishedGoodLibrary,
+    this.skuLibrary,
+    this.styleLibrary,
+    this.watchlist,
+    this.wishlist,
+    this.gemstoneShapes,
+  });
+
+  final PermissionData? activityLogs;
+  final PermissionData? exhibitions;
+  final PermissionData? assetMgmt;
+  final PermissionData? reviewFeedbacks;
+  final PermissionData? digitalCatalogue;
+  final PermissionData? calendars;
+  final PermissionData? messages;
+  final CmsPageBuilder? cmsPageBuilder;
+  final PermissionData? companies;
+  final PermissionData? currency;
+  final PermissionData? leads;
+  final PermissionData? request;
+  final PermissionData? department;
+  final PermissionData? systemTemplates;
+  final PermissionData? diamondCategories;
+  final PermissionData? jewelleryCategories;
+  final PermissionData? gemstoneCategories;
+  final PermissionData? paymentTerms;
+  final PermissionData? filterOptions;
+  final PermissionData? diamondShapes;
+  final PermissionData? diamondColors;
+  final PermissionData? jewelleryMetalColors;
+  final CmsPageBuilder? faqs;
+  final PermissionData? tasks;
+  final PermissionData? meetings;
+  final PermissionData? inquiries;
+  final PermissionData? language;
+  final PermissionData? auctions;
+  final PermissionData? orders;
+  final PermissionData? newsletterSubscribers;
+  final PermissionData? internalNoteTypes;
+  final PermissionData? projects;
+  final PermissionData? designs;
+  final PermissionData? styles;
+  final PermissionData? concepts;
+  final PermissionData? presentations;
+  final PermissionData? retailerStores;
+  final PermissionData? roles;
+  final PermissionData? deals;
+  final PermissionData? customerGroups;
+  final PermissionData? users;
+  final Orion? orion;
+  final PermissionData? cadLibrary;
+  final PermissionData? designLibrary;
+  final PermissionData? finishedGoodLibrary;
+  final PermissionData? skuLibrary;
+  final PermissionData? styleLibrary;
+  final PermissionData? watchlist;
+  final PermissionData? wishlist;
+  final PermissionData? gemstoneShapes;
+
+  factory Permissions.fromJson(Map<String, dynamic> json) {
+    return Permissions(
+      activityLogs: json["activity_logs"] == null ? null : PermissionData.fromJson(json["activity_logs"]),
+      exhibitions: json["exhibitions"] == null ? null : PermissionData.fromJson(json["exhibitions"]),
+      assetMgmt: json["asset_mgmt"] == null ? null : PermissionData.fromJson(json["asset_mgmt"]),
+      reviewFeedbacks: json["review_feedbacks"] == null ? null : PermissionData.fromJson(json["review_feedbacks"]),
+      digitalCatalogue: json["digital_catalogue"] == null ? null : PermissionData.fromJson(json["digital_catalogue"]),
+      calendars: json["calendars"] == null ? null : PermissionData.fromJson(json["calendars"]),
+      messages: json["messages"] == null ? null : PermissionData.fromJson(json["messages"]),
+      cmsPageBuilder: json["cms_page_builder"] == null ? null : CmsPageBuilder.fromJson(json["cms_page_builder"]),
+      companies: json["companies"] == null ? null : PermissionData.fromJson(json["companies"]),
+      currency: json["currency"] == null ? null : PermissionData.fromJson(json["currency"]),
+      leads: json["leads"] == null ? null : PermissionData.fromJson(json["leads"]),
+      request: json["request"] == null ? null : PermissionData.fromJson(json["request"]),
+      department: json["department"] == null ? null : PermissionData.fromJson(json["department"]),
+      systemTemplates: json["system_templates"] == null ? null : PermissionData.fromJson(json["system_templates"]),
+      diamondCategories: json["diamond_categories"] == null ? null : PermissionData.fromJson(json["diamond_categories"]),
+      jewelleryCategories: json["jewellery_categories"] == null ? null : PermissionData.fromJson(json["jewellery_categories"]),
+      gemstoneCategories: json["gemstone_categories"] == null ? null : PermissionData.fromJson(json["gemstone_categories"]),
+      paymentTerms: json["payment_terms"] == null ? null : PermissionData.fromJson(json["payment_terms"]),
+      filterOptions: json["filter_options"] == null ? null : PermissionData.fromJson(json["filter_options"]),
+      diamondShapes: json["diamond_shapes"] == null ? null : PermissionData.fromJson(json["diamond_shapes"]),
+      diamondColors: json["diamond_colors"] == null ? null : PermissionData.fromJson(json["diamond_colors"]),
+      jewelleryMetalColors: json["jewellery_metal_colors"] == null ? null : PermissionData.fromJson(json["jewellery_metal_colors"]),
+      faqs: json["faqs"] == null ? null : CmsPageBuilder.fromJson(json["faqs"]),
+      tasks: json["tasks"] == null ? null : PermissionData.fromJson(json["tasks"]),
+      meetings: json["meetings"] == null ? null : PermissionData.fromJson(json["meetings"]),
+      inquiries: json["inquiries"] == null ? null : PermissionData.fromJson(json["inquiries"]),
+      language: json["language"] == null ? null : PermissionData.fromJson(json["language"]),
+      auctions: json["auctions"] == null ? null : PermissionData.fromJson(json["auctions"]),
+      orders: json["orders"] == null ? null : PermissionData.fromJson(json["orders"]),
+      newsletterSubscribers: json["newsletter_subscribers"] == null ? null : PermissionData.fromJson(json["newsletter_subscribers"]),
+      internalNoteTypes: json["internal_note_types"] == null ? null : PermissionData.fromJson(json["internal_note_types"]),
+      projects: json["projects"] == null ? null : PermissionData.fromJson(json["projects"]),
+      designs: json["designs"] == null ? null : PermissionData.fromJson(json["designs"]),
+      styles: json["styles"] == null ? null : PermissionData.fromJson(json["styles"]),
+      concepts: json["concepts"] == null ? null : PermissionData.fromJson(json["concepts"]),
+      presentations: json["presentations"] == null ? null : PermissionData.fromJson(json["presentations"]),
+      retailerStores: json["retailer_stores"] == null ? null : PermissionData.fromJson(json["retailer_stores"]),
+      roles: json["roles"] == null ? null : PermissionData.fromJson(json["roles"]),
+      deals: json["deals"] == null ? null : PermissionData.fromJson(json["deals"]),
+      customerGroups: json["customer_groups"] == null ? null : PermissionData.fromJson(json["customer_groups"]),
+      users: json["users"] == null ? null : PermissionData.fromJson(json["users"]),
+      orion: json["orion"] == null ? null : Orion.fromJson(json["orion"]),
+      cadLibrary: json["cad_library"] == null ? null : PermissionData.fromJson(json["cad_library"]),
+      designLibrary: json["design_library"] == null ? null : PermissionData.fromJson(json["design_library"]),
+      finishedGoodLibrary: json["finished_good_library"] == null ? null : PermissionData.fromJson(json["finished_good_library"]),
+      skuLibrary: json["sku_library"] == null ? null : PermissionData.fromJson(json["sku_library"]),
+      styleLibrary: json["style_library"] == null ? null : PermissionData.fromJson(json["style_library"]),
+      watchlist: json["watchlist"] == null ? null : PermissionData.fromJson(json["watchlist"]),
+      wishlist: json["wishlist"] == null ? null : PermissionData.fromJson(json["wishlist"]),
+      gemstoneShapes: json["gemstone_shapes"] == null ? null : PermissionData.fromJson(json["gemstone_shapes"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "activity_logs": activityLogs?.toJson(),
+        "exhibitions": exhibitions?.toJson(),
+        "asset_mgmt": assetMgmt?.toJson(),
+        "review_feedbacks": reviewFeedbacks?.toJson(),
+        "digital_catalogue": digitalCatalogue?.toJson(),
+        "calendars": calendars?.toJson(),
+        "messages": messages?.toJson(),
+        "cms_page_builder": cmsPageBuilder?.toJson(),
+        "companies": companies?.toJson(),
+        "currency": currency?.toJson(),
+        "leads": leads?.toJson(),
+        "request": request?.toJson(),
+        "department": department?.toJson(),
+        "system_templates": systemTemplates?.toJson(),
+        "diamond_categories": diamondCategories?.toJson(),
+        "jewellery_categories": jewelleryCategories?.toJson(),
+        "gemstone_categories": gemstoneCategories?.toJson(),
+        "payment_terms": paymentTerms?.toJson(),
+        "filter_options": filterOptions?.toJson(),
+        "diamond_shapes": diamondShapes?.toJson(),
+        "diamond_colors": diamondColors?.toJson(),
+        "jewellery_metal_colors": jewelleryMetalColors?.toJson(),
+        "faqs": faqs?.toJson(),
+        "tasks": tasks?.toJson(),
+        "meetings": meetings?.toJson(),
+        "inquiries": inquiries?.toJson(),
+        "language": language?.toJson(),
+        "auctions": auctions?.toJson(),
+        "orders": orders?.toJson(),
+        "newsletter_subscribers": newsletterSubscribers?.toJson(),
+        "internal_note_types": internalNoteTypes?.toJson(),
+        "projects": projects?.toJson(),
+        "designs": designs?.toJson(),
+        "styles": styles?.toJson(),
+        "concepts": concepts?.toJson(),
+        "presentations": presentations?.toJson(),
+        "retailer_stores": retailerStores?.toJson(),
+        "roles": roles?.toJson(),
+        "deals": deals?.toJson(),
+        "customer_groups": customerGroups?.toJson(),
+        "users": users?.toJson(),
+        "orion": orion?.toJson(),
+        "cad_library": cadLibrary?.toJson(),
+        "design_library": designLibrary?.toJson(),
+        "finished_good_library": finishedGoodLibrary?.toJson(),
+        "sku_library": skuLibrary?.toJson(),
+        "style_library": styleLibrary?.toJson(),
+        "watchlist": watchlist?.toJson(),
+        "wishlist": wishlist?.toJson(),
+        "gemstone_shapes": gemstoneShapes?.toJson(),
+      };
+}
+
+class PermissionData {
+  const PermissionData({
+    required this.list,
+    required this.activityLogsExport,
+    required this.comment,
+    required this.create,
+    required this.delete,
+    required this.activityLogsImport,
+    required this.share,
+    required this.update,
+    required this.view,
+  });
+
+  final Comment? list;
+  final Comment? activityLogsExport;
+  final Comment? comment;
+  final Comment? create;
+  final Comment? delete;
+  final Comment? activityLogsImport;
+  final Comment? share;
+  final Comment? update;
+  final Comment? view;
+
+  factory PermissionData.fromJson(Map<String, dynamic> json) {
+    return PermissionData(
+      list: json["list"] == null ? null : Comment.fromJson(json["list"]),
+      activityLogsExport: json["export"] == null ? null : Comment.fromJson(json["export"]),
+      comment: json["comment"] == null ? null : Comment.fromJson(json["comment"]),
+      create: json["create"] == null ? null : Comment.fromJson(json["create"]),
+      delete: json["delete"] == null ? null : Comment.fromJson(json["delete"]),
+      activityLogsImport: json["import"] == null ? null : Comment.fromJson(json["import"]),
+      share: json["share"] == null ? null : Comment.fromJson(json["share"]),
+      update: json["update"] == null ? null : Comment.fromJson(json["update"]),
+      view: json["view"] == null ? null : Comment.fromJson(json["view"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "list": list?.toJson(),
+        "export": activityLogsExport?.toJson(),
+        "comment": comment?.toJson(),
+        "create": create?.toJson(),
+        "delete": delete?.toJson(),
+        "import": activityLogsImport?.toJson(),
+        "share": share?.toJson(),
+        "update": update?.toJson(),
+        "view": view?.toJson(),
+      };
+}
+
+class CmsPageBuilder extends Equatable {
+  const CmsPageBuilder({
+    required this.create,
+    required this.delete,
+    required this.list,
+    required this.update,
+    required this.share,
+  });
+
+  final Comment? create;
+  final Comment? delete;
+  final Comment? list;
+  final Comment? update;
+  final Comment? share;
+
+  factory CmsPageBuilder.fromJson(Map<String, dynamic> json) {
+    return CmsPageBuilder(
+      create: json["create"] == null ? null : Comment.fromJson(json["create"]),
+      delete: json["delete"] == null ? null : Comment.fromJson(json["delete"]),
+      list: json["list"] == null ? null : Comment.fromJson(json["list"]),
+      update: json["update"] == null ? null : Comment.fromJson(json["update"]),
+      share: json["share"] == null ? null : Comment.fromJson(json["share"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "create": create?.toJson(),
+        "delete": delete?.toJson(),
+        "list": list?.toJson(),
+        "update": update?.toJson(),
+        "share": share?.toJson(),
+      };
+
+  @override
+  List<Object?> get props => [
+        create,
+        delete,
+        list,
+        update,
+        share,
+      ];
+}
+
+class Orion extends Equatable {
+  const Orion({
+    required this.view,
+  });
+
+  final Comment? view;
+
+  factory Orion.fromJson(Map<String, dynamic> json) {
+    return Orion(
+      view: json["view"] == null ? null : Comment.fromJson(json["view"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "view": view?.toJson(),
+      };
+
+  @override
+  List<Object?> get props => [
+        view,
+      ];
 }

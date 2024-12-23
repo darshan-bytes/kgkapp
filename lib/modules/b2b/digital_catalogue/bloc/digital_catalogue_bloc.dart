@@ -23,6 +23,9 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   /// This filterData is used to store the filter data
   List<FilterData> filterData = [];
 
+  /// This modulePermission is used to store the module permission
+  PermissionData? modulePermission;
+
   DigitalCatalogueBloc() : super(DigitalCatalogueInitial()) {
     on<DigitalCatalogueInitialEvent>(_onInitialDigitalCatalogueEvent);
     on<DigitalCatalogueLoadMoreEvent>(_onLoadMoreDigitalCatalogueEvent);
@@ -56,6 +59,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<DigitalCatalogueState> emit) async {
     emit(DigitalCatalogueLoadingState());
+    _fetchModulePermission();
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
@@ -70,6 +74,13 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
 
       ///Here we will add the wishlist sort and filter data using this event in wishlist filter bloc
       BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
+    }
+  }
+
+  void _fetchModulePermission() async {
+    PermissionData? permission = Utils.getPermissionByModuleName(moduleName: ModuleKey.digitalCatalogue);
+    if (permission != null) {
+      modulePermission = permission;
     }
   }
 

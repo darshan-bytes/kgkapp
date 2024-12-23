@@ -25,7 +25,6 @@ class BlocGenerator {
       BlocProvider<PaymentBloc>(create: (_) => PaymentBloc()),
       BlocProvider<DiamondFilterBloc>(create: (_) => DiamondFilterBloc()..add(const LoadDiamondFilterDataEvent())),
       BlocProvider<AuctionBloc>(create: (_) => AuctionBloc()),
-      BlocProvider<OrdersBloc>(create: (_) => OrdersBloc()),
       BlocProvider<SearchBloc>(create: (_) => SearchBloc()),
       BlocProvider<NotificationSettingsBloc>(create: (_) => NotificationSettingsBloc()),
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
