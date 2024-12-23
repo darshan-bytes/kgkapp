@@ -151,6 +151,10 @@ class CommonResponse<T> {
         return CalenderEventDetailsDataModel.fromJson(json);
       case const (PaginationData<ExhibitionListDataModel>):
         return PaginationData<ExhibitionListDataModel>.fromJson(json);
+      case const (ExhibitionListDataModel):
+        return ExhibitionListDataModel.fromJson(json);
+      case const (ExhibitionProductDetailsDataModel):
+        return ExhibitionProductDetailsDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

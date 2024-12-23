@@ -970,6 +970,23 @@ class AppRepository extends ApiService {
     var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.getExhibitionFilterListOption);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  /// For Exhibition Details page
+  Future<Either<ErrorResponse, ExhibitionListDataModel>?> fetchExhibitionDetails({required String id}) async {
+    var response = await getMethod<ExhibitionListDataModel>(ApiClient.getExhibitionDetails(id));
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Exhibition Product Details page
+  Future<Either<ErrorResponse, ExhibitionProductDetailsDataModel>?> fetchExhibitionProductDetails({
+    required String id,
+  }) async {
+    var response = await getMethod<ExhibitionProductDetailsDataModel>(
+      ApiClient.getExhibitionProductsDetails,
+      query: {ApiKey.orderContextId: id},
+    );
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

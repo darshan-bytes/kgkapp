@@ -27,18 +27,28 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   ValueNotifier<bool> canScrollToTop = ValueNotifier<bool>(false);
 
+  ExhibitionListDataModel exhibitionDetails = ExhibitionListDataModel();
+  ExhibitionProductDetailsDataModel exhibitionProductDetailsData = ExhibitionProductDetailsDataModel();
+
   ExhibitionDetailsBloc() : super(const ExhibitionDetailsInitialsState()) {
     on<ExhibitionDetailsInitialEvent>(_onInitialEvent);
     on<ExhibitionChangeTabsEvent>(_onChangeTabEvent);
     on<ExhibitionListingLoadMoreEvent>(_onExhibitionListingLoadMoreEvent);
     on<ExhibitionChangeListingTypeEvent>(_onExhibitionChangeListingTypeEvent);
+    // on<ExhibitionProductDetailsEvent>(_onExhibitionProductDetailsEvent);
   }
 
-  void _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) {
+  Future<void> _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) async {
     emit(const ExhibitionDetailsReloadState());
-    appbarTitle = 'Sparkling Splendour: The Jewellery Spectacle';
     isGrid = true;
+    Map<RoutesData, dynamic>? data = event.context.routesData;
+    String exhibitionId = data?[RoutesData.exhibitionId] ?? '';
+
     _initScrollControllers();
+    await _getExhibitionDetails(event.context, exhibitionId);
+    appbarTitle = exhibitionDetails.name ?? '';
+    await _getExhibitionProductDetails(event.context, exhibitionId);
+
     productList.addAll(_generateProductList());
     exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
     emit(const ExhibitionDetailsLoadedState());
@@ -59,6 +69,12 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     productPaginationScrollController.onViewChange(!isGrid);
     scrollController.addListener(scrollToTopListener);
     emit(const ExhibitionChangeListingTypeState());
+  }
+
+  Future<void> _onExhibitionProductDetailsEvent(ExhibitionProductDetailsEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    emit(const ExhibitionDetailsReloadState());
+    // await _getExhibitionProductDetails(event.context, productId);
+    emit(const ExhibitionDetailsLoadedState());
   }
 
   Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
@@ -111,6 +127,35 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     productPaginationScrollController.dispose();
     orderScrollController.dispose();
     return super.close();
+  }
+
+  Future<void> _getExhibitionDetails(BuildContext context, String id) async {
+    Either<ErrorResponse, ExhibitionListDataModel>? response = await AppRepository(context).fetchExhibitionDetails(id: id);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        exhibitionDetails = data;
+      },
+    );
+  }
+
+  Future<void> _getExhibitionProductDetails(BuildContext context, String id) async {
+    Either<ErrorResponse, ExhibitionProductDetailsDataModel>? response = await AppRepository(context).fetchExhibitionProductDetails(id: id);
+    response?.fold(
+      (error) {
+        if (error.message.isNotNullNorEmpty) {
+          Utils.showMessage(error.message);
+        }
+      },
+      (data) {
+        exhibitionProductDetailsData = data;
+        print("ExhibitionProductDetailsDataModel: ${exhibitionProductDetailsData.toJson()}");
+      },
+    );
   }
 
   static List<ProductDetailsModel> _generateProductList() {

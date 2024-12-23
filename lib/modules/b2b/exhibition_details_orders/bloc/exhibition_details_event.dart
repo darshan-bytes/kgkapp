@@ -5,10 +5,11 @@ sealed class ExhibitionDetailsEvent extends Equatable {
 }
 
 final class ExhibitionDetailsInitialEvent extends ExhibitionDetailsEvent {
-  const ExhibitionDetailsInitialEvent();
+  final BuildContext context;
+  const ExhibitionDetailsInitialEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ExhibitionChangeTabsEvent extends ExhibitionDetailsEvent {
@@ -34,4 +35,14 @@ final class ExhibitionListingLoadMoreEvent extends ExhibitionDetailsEvent {
 
   @override
   List<Object> get props => [currentPage];
+}
+
+final class ExhibitionProductDetailsEvent extends ExhibitionDetailsEvent {
+  // final int currentPage;
+  final BuildContext context;
+
+  const ExhibitionProductDetailsEvent(this.context /*this.currentPage*/);
+
+  @override
+  List<Object> get props => [context /*currentPage*/];
 }
