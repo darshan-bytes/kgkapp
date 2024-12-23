@@ -171,6 +171,8 @@ class ApiClient {
   static const String diyFilters = '$apiBaseUrl/diy/filters';
 
   static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
+
+  static String orderDetails(String id) => '$apiBaseUrl/orders/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

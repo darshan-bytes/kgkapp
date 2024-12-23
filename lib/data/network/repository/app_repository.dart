@@ -958,6 +958,11 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<PlaceOrderResponse>>?> orderDetailsApiCall({required String id}) async {
+    var response = await getMethod<PaginationData<PlaceOrderResponse>>(ApiClient.orderDetails(id), withCurrencyHeader: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

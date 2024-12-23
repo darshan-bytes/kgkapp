@@ -82,6 +82,7 @@ class DiamondTabView extends StatelessWidget {
                   currentScrollController: ordersBloc.orderPaginationScrollController,
                   ordersList: ordersBloc.filteredOrderList,
                   onTap: (index) {
+                    printWrapped("orderid ${ordersBloc.filteredOrderList[index].id}");
                     context.pushNamed(AppRoutes.orderDetailsPage);
                   },
                   bloc: ordersBloc,

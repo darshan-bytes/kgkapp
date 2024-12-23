@@ -5,8 +5,8 @@ part 'order_details_event.dart';
 part 'order_details_state.dart';
 
 class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
-  late AppBloc appBloc;
   UserType userType = UserType.b2cUser;
+
   String? orderNumber;
 
   // controllers
@@ -36,8 +36,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
     emit(const OrderDetailReloadState());
     //TODO: Write code get Data from API
-    appBloc = BlocProvider.of<AppBloc>(event.context);
-    userType = appBloc.userType;
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
     orderNumber = event.context.routesData?[RoutesData.orderNumber];
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();

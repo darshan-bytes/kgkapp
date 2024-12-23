@@ -63,7 +63,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<ChangeOrderTabsEvent>(_onChangeTabEvent);
     on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<OrdersListPullToRefreshEvent>(_onListPullToRefreshEvent);
-    on<OrdersListSearchEvent>(_onListSearchEvent);
+    on<OrdersListSearchEvent>(_onListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<OrdersListFilterEvent>(_onListFilterEvent);
 
     /// TODO: selected stone type for filter is currently not in use as discussed with JD.
@@ -99,7 +99,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Handles the search event for order listings
   Future<void> _onListSearchEvent(OrdersListSearchEvent event, Emitter<OrdersState> emit) async {
-    _handleSearch(emit);
+    await _handleSearch(emit, context: event.context);
   }
 
   /// Handles the filter event for order listings
@@ -201,21 +201,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   /// Handles the search event locally
-  void _handleSearch(Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
-    if (orderSearchController.text.isNotEmpty) {
-      String query = orderSearchController.text.toLowerCase();
-      filteredOrderList = originalOrderList
-          .where((auction) =>
-              (auction.deliveryDate ?? '').toLowerCase().contains(query) ||
-              (auction.orderDate ?? '').toLowerCase().contains(query) ||
-              (auction.orderId ?? '').toLowerCase().contains(query) ||
-              (auction.orderItems ?? '').toLowerCase().contains(query) ||
-              (auction.orderQuantity ?? '').toLowerCase().contains(query))
-          .toList();
-    } else {
-      filteredOrderList = List.from(originalOrderList);
-    }
+  Future<void> _handleSearch(Emitter<OrdersState> emit, {required BuildContext context}) async {
+    emit(const OrdersLoadingState());
+    orderPaginationScrollController.pullToRefresh();
+    filteredOrderList.clear();
+    originalOrderList.clear();
+    await fetchOrderListData(context, emit, searchQuery: orderSearchController.text);
+    if (orderSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(const OrdersListLoadedState());
   }
 
@@ -253,10 +245,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     required int currentPage,
     required int pageLimit,
     required String commodity,
+    required String searchQuery,
   }) {
     Map<String, dynamic> query = {};
     query.addAll(buildFilters(filterData));
     query.addAll({
+      ApiKey.search: searchQuery,
       ApiKey.page: currentPage,
       ApiKey.limit: pageLimit,
       ApiKey.commodity: commodity,
@@ -266,13 +260,14 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Fetches the order list data from the API
   Future<void> fetchOrderListData(BuildContext context, Emitter<OrdersState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+      {bool isLoadMore = false, Map<String, dynamic>? query, String searchQuery = ''}) async {
     /// Here we need commodity base order data so we Get the commodity for the current tab
     String commodity = _getCommodityForTab(tabController.index);
 
     /// Build the query base on the current tab applied filters data
     query = buildQuery(
       filterData: appliedFilterData[tabController.index] ?? [],
+      searchQuery: searchQuery,
       currentPage: orderPaginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
       commodity: commodity,
@@ -331,6 +326,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           );
           filterData.add(filter);
         }
+
+        /// Parse the new filters list instead of referencing the map.
         List.generate(tabs.length, (index) {
           return appliedFilterData[index] = filterData.map((e) {
             FilterData filter = FilterData(
