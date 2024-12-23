@@ -212,6 +212,7 @@ class GemstoneDatum {
     required this.finalPrice,
     required this.priceCts,
     required this.wishlistID,
+    required this.components,
   });
 
   String? id;
@@ -389,6 +390,7 @@ class GemstoneDatum {
   String? finalPrice;
   String? priceCts;
   String? wishlistID;
+  List<StoneElement> components;
 
   factory GemstoneDatum.fromJson(Map<String, dynamic> json) {
     return GemstoneDatum(
@@ -567,6 +569,7 @@ class GemstoneDatum {
       finalPrice: json["final_price"] != null ? json["final_price"].toString() : "0",
       priceCts: json["price_cts"],
       wishlistID: json["is_favorite"],
+      components: json["components"] == null ? [] : List<StoneElement>.from(json["components"]!.map((x) => StoneElement.fromJson(x))),
     );
   }
 

@@ -1,0 +1,87 @@
+import 'package:kgk/kgk.dart';
+
+class ProductDetailsComponentsView extends StatelessWidget {
+  final Commodity commodity;
+  final List<Component>? components;
+  final List<StoneElement>? stoneElements;
+
+  const ProductDetailsComponentsView({super.key, required this.commodity, this.components, this.stoneElements});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = AppTheme.of(context).productDetailsStyle;
+
+    if (_isGemstoneOrDiamond()) {
+      return _buildGemstoneOrDiamondView(context, style);
+    } else {
+      return _buildJewelryComponentsView(context, style);
+    }
+  }
+
+  bool _isGemstoneOrDiamond() {
+    return commodity == Commodity.diamond || commodity == Commodity.gemstone;
+  }
+
+  Widget _buildGemstoneOrDiamondView(BuildContext context, ProductDetailsStyle style) {
+    if (stoneElements.isNullOrEmpty) {
+      return const SizedBox();
+    }
+    return SmartExpansionTile(
+      title: SmartText(commodity == Commodity.diamond ? APPStrings.diamondDetails : APPStrings.gemstoneDetails,
+          style: style.settingSelectionTitleStyle),
+      children: _buildStoneElementWidgets(stoneElements ?? [], context),
+    );
+  }
+
+  Widget _buildJewelryComponentsView(BuildContext context, ProductDetailsStyle style) {
+    if (components.isNullOrEmpty) {
+      return const SizedBox();
+    }
+
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: components!.length,
+      itemBuilder: (context, index) {
+        final component = components![index];
+        return SmartExpansionTile(
+          title: SmartText(component.title, style: style.settingSelectionTitleStyle),
+          children: _buildSubComponentWidgets(component.values, context),
+        );
+      },
+      separatorBuilder: (context, index) => const Divider(),
+    );
+  }
+
+  List<Widget> _buildSubComponentWidgets(List<List<ValueElement>> subComponents, BuildContext context) {
+    final widgets = <Widget>[];
+    for (final subComponentList in subComponents) {
+      for (final valueElement in subComponentList) {
+        widgets.add(_settingWidget(valueElement.title ?? '', valueElement.value ?? '', context));
+      }
+      if (subComponents.last != subComponentList) {
+        widgets.add(Divider(height: 32.h));
+      }
+    }
+    return widgets;
+  }
+
+  List<Widget> _buildStoneElementWidgets(List<StoneElement> stoneElements, BuildContext context) {
+    return stoneElements.map((element) => _settingWidget(element.title ?? '', element.value ?? '', context)).toList();
+  }
+
+  Widget _settingWidget(String type, String value, BuildContext context) {
+    final style = AppTheme.of(context).settingDetailScreenStyle;
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SmartText(type, style: style.settingTypeStyle),
+          SmartText(value.isNotNullNorEmpty ? value : APPStrings.dash.tr, style: style.settingValueStyle),
+        ],
+      ),
+    );
+  }
+}

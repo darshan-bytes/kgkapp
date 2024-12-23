@@ -56,7 +56,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     emit(ExhibitionListingLoadingState());
     _initializePagination(context);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
-      await fetchExhibitionListingData(context, emit, isLoadMore: false);
+      await fetchExhibitionListingData(context, emit);
     }
     emit(ExhibitionListingLoadedState());
     await _fetchFilterData(context, emit);
@@ -81,8 +81,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     emit(ExhibitionListingReloadState());
     paginationScrollController.pullToRefresh();
     exhibitionCatalogueList.clear();
-    await fetchExhibitionListingData(event.context, emit, isLoadMore: false);
-    if (searchController.text.isNotNullNorEmpty) focusNode.requestFocus();
+    await fetchExhibitionListingData(event.context, emit);
     emit(ExhibitionListingLoadedState());
   }
 
@@ -168,7 +167,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     emit(ExhibitionListingLoadingState());
     paginationScrollController.pullToRefresh();
     exhibitionCatalogueList.clear();
-    await fetchExhibitionListingData(context, emit, isLoadMore: false);
+    await fetchExhibitionListingData(context, emit);
     emit(ExhibitionListingLoadedState());
   }
 
@@ -177,7 +176,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     paginationScrollController.pullToRefresh();
     exhibitionCatalogueList.clear();
     filterData = appliedFilterData;
-    await fetchExhibitionListingData(context, emit, isLoadMore: false);
+    await fetchExhibitionListingData(context, emit);
     emit(ExhibitionListingLoadedState());
   }
 

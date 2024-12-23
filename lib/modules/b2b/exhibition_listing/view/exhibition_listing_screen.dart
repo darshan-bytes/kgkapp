@@ -19,6 +19,7 @@ class ExhibitionListingScreen extends StatelessWidget {
             }
             if (state is ExhibitionListingLoadedState) {
               return SmartSingleChildScrollView(
+                key: exhibitionListingBloc.paginationScrollController.listKey,
                 onRefresh: () async {
                   exhibitionListingBloc.add(ExhibitionListingPullToRefreshEvent(context: context));
                 },

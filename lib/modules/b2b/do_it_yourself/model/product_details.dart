@@ -69,6 +69,7 @@ class ProductDetailsModel {
   double? yourDiscount;
   String? yourRate;
   String? yourAmount;
+  List<StoneElement>? stoneElements;
 
   ProductDetailsModel({
     this.productId,
@@ -139,6 +140,7 @@ class ProductDetailsModel {
     this.yourRate,
     this.yourAmount,
     this.yourDiscount,
+    this.stoneElements,
   });
 
   @override
