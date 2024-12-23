@@ -34,6 +34,7 @@ class MyOrderNewItem extends StatelessWidget {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,14 +151,12 @@ class MyOrderNewItem extends StatelessWidget {
                     itemCount: model.orderImages?.length,
                     itemBuilder: (context, index) {
                       if (model.orderImages == null) return const SizedBox.shrink();
-                      return Center(
-                        child: SmartImage(
-                          path: model.orderImages![index],
-                          fit: BoxFit.fill,
-                          height: 50.w,
-                          width: 50.w,
-                          margin: EdgeInsets.only(right: 10.w),
-                        ),
+                      return SmartImage(
+                        path: model.orderImages![index],
+                        fit: BoxFit.fill,
+                        height: 50.w,
+                        width: 50.w,
+                        margin: EdgeInsets.only(right: 10.w),
                       );
                     },
                   ),

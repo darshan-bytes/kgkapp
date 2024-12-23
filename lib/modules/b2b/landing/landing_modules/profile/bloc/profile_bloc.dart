@@ -77,7 +77,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
             onTap: (context) {
-              context.pushNamed(AppRoutes.manufacturerOrderListingPage);
+              context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
           image: AppImages.icProfileCalendar,
@@ -122,7 +122,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
             onTap: (context) {
-              context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
+              context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
