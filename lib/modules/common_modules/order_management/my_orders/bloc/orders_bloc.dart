@@ -286,7 +286,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       originalOrderList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
       filteredOrderList = List.from(originalOrderList);
-      orderPaginationScrollController.isPageLoaded.complete(orderPaginationScrollController.currentPage == totalNumberOfPages);
+      if (!orderPaginationScrollController.isPageLoaded.isCompleted) {
+        orderPaginationScrollController.isPageLoaded.complete(orderPaginationScrollController.currentPage == totalNumberOfPages);
+      }
       emit(OrdersListLoadedState());
     });
   }
@@ -297,6 +299,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       return MyOrderDetailsModel(
         id: data.sId,
         orderId: data.uniqueId?.toString(),
+
+        /// need to discuss for show order status base on color
         orderStatus: ProjectStatus.orangeInProgress,
         orderDate: data.createdAt?.changeDateFormat(
             inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY),
