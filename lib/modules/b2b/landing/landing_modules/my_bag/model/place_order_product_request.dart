@@ -15,8 +15,8 @@ class PlaceOrderProductRequest {
   final String? suid;
   final String? image;
   final String? name;
-  final String? yourAmount;
-  final String? yourRate;
+  final double? yourAmount;
+  final double? yourRate;
   final double? yourDiscount;
   final int? quantity;
 
@@ -25,8 +25,8 @@ class PlaceOrderProductRequest {
     String? suid,
     String? image,
     String? name,
-    String? yourAmount,
-    String? yourRate,
+    double? yourAmount,
+    double? yourRate,
     double? yourDiscount,
     int? quantity,
   }) {
@@ -39,19 +39,6 @@ class PlaceOrderProductRequest {
       yourRate: yourRate ?? this.yourRate,
       yourDiscount: yourDiscount ?? this.yourDiscount,
       quantity: quantity ?? this.quantity,
-    );
-  }
-
-  factory PlaceOrderProductRequest.fromJson(Map<String, dynamic> json) {
-    return PlaceOrderProductRequest(
-      discountPercentage: json["discount_percentage"],
-      suid: json["suid"],
-      image: json["image"],
-      name: json["name"],
-      yourAmount: json["your_amount"],
-      yourRate: json["your_rate"],
-      yourDiscount: json["your_discount"],
-      quantity: json["quantity"],
     );
   }
 

@@ -227,7 +227,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
             originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentage:
+            discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,
@@ -267,7 +267,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             name: productName,
             offerPrice: isDiscounted ? (gemstoneData?.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: gemstoneData?.finalPrice?.setCurrency,
-            discountPercentage:
+            discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
             productSku: gemstoneData?.lotCode,
             reviewCount: gemstoneData?.reviewCount,
@@ -306,7 +306,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
               offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
               originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+              discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
               productSku: e.lotCode,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
@@ -345,7 +345,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -381,7 +381,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
               offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
               originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+              discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
               productSku: e.contractNoSkuNo,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
@@ -436,7 +436,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           name: productName,
           offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
           originalPrice: jewelleryData.finalPrice?.setCurrency,
-          discountPercentage:
+          discountPercentageString:
               isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
           productSku: jewelleryData.contractNoSkuNo,
           reviewCount: jewelleryData.reviewCount,
@@ -499,7 +499,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
               offerPrice: e.discountPrice?.setCurrency,
               originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage:
+              discountPercentageString:
                   e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
               productSku: e.contractNoSkuNo,
               reviewCount: e.reviewCount,
@@ -543,7 +543,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -577,7 +577,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),

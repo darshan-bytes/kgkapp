@@ -317,7 +317,7 @@ class MyBagScreen extends StatelessWidget {
                           tablePercentage: product.table,
                           depthPercentage: product.depth,
                           rap: product.rappaportPrice,
-                          discount: product.discountPercentage,
+                          discount: product.discountPercentageString,
                           perCts: product.perCaratPrice?.setCurrency,
                           amount: product.totalPrice?.setCurrency,
                           your: product.yourDiscount?.toString(),
@@ -325,8 +325,6 @@ class MyBagScreen extends StatelessWidget {
                           yourValue: product.yourAmount?.setCurrency,
                         ),
                         productId: product.productId,
-                        // diamond: "1.5 gram",
-                        // gram: "1.5 gram",
                         imageUrl: product.imageUrl,
                         isForAuction: false,
                       ),
@@ -388,7 +386,7 @@ class MyBagScreen extends StatelessWidget {
                           tablePercentage: product.table,
                           depthPercentage: product.depth,
                           rap: product.rappaportPrice,
-                          discount: product.discountPercentage,
+                          discount: product.discountPercentageString,
                           perCts: product.perCaratPrice?.setCurrency,
                           amount: product.totalPrice?.setCurrency,
                           origin: product.location,
@@ -428,126 +426,6 @@ class MyBagScreen extends StatelessWidget {
               default:
                 return const SizedBox.shrink();
             }
-            /*if (product.isDiamondProduct) {
-              return Column(
-                children: [
-                  ProductInfoItem(
-                    onTap360View: () => printWrapped("onTap360View"),
-                    onTapDNA: () {
-                      context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                          arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
-                    },
-                    onTapCertificate: () => printWrapped("onTapCertificate"),
-                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
-                    onTapUSA: () => printWrapped("onTapUSA"),
-                    onTapMenuButton: () {
-                      //currently opened bottom sheet for remove lot and add to watchlist
-                      handleDiamondMenuButtonTap(context, index, bloc, style);
-                      // Utils.showSmartModalBottomSheet(
-                      //   context: context,
-                      //   builder: (context) => const ProductMenuBottomSheet(),
-                      // );
-                    },
-                    isSelectedBackground: false,
-                    onTap: () {},
-                    productDetails: ProductDetailsModel(
-                      productInfoClarityChat: ProductInfoClarityChat(
-                          carat: "36.09",
-                          commodity: "Sapphire",
-                          origin: "Sri Lanka",
-                          rapRate: "\$35,500.00",
-                          productId: "1",
-                          productName: "1.00 Cts Round Diamond",
-                          ct: "10.04",
-                          shape: "Marquise",
-                          colour: "H",
-                          clarity: "VVS1",
-                          lotNumber: "MBFG716306",
-                          certificateNumber: "230000066395",
-                          measurements: "10.18 x 8.34 x 6.14",
-                          lab: "GIA",
-                          cut: "Excellent",
-                          polish: "Excellent",
-                          symmetry: "Excellent",
-                          flourish: "O",
-                          tablePercentage: "50",
-                          depthPercentage: "50",
-                          rap: "\$24,850.00",
-                          discount: "-30.00",
-                          perCts: "\$24,850.00",
-                          amount: "\$1,24,995.50",
-                          fluorescence: '0'),
-                      productId: "1",
-                      diamond: "1.5 gram",
-                      gram: "1.5 gram",
-                      imageUrl: "https://i.ibb.co/swb5gVs/Round.png",
-                      isForAuction: false,
-                    ),
-                    isAutoSizeText: false,
-                    isDiamond: true,
-                  ),
-                  SizedBox(height: 16.h),
-                ],
-              );
-            } else {
-              return Column(
-                children: [
-                  ProductInfoItem(
-                    onTap360View: () => printWrapped("onTap360View"),
-                    onTapDNA: () {},
-                    onTapCertificate: () => printWrapped("onTapCertificate"),
-                    onTapImageViewer: () => printWrapped("onTapImageViewer"),
-                    onTapUSA: () => printWrapped("onTapUSA"),
-                    onTapMenuButton: () {
-                      Utils.showSmartModalBottomSheet(
-                        context: context,
-                        builder: (context) => const ProductMenuBottomSheet(),
-                      );
-                    },
-                    isSelectedBackground: false,
-                    onTap: () {},
-                    productDetails: ProductDetailsModel(
-                      productInfoClarityChat: ProductInfoClarityChat(
-                          carat: "36.09",
-                          commodity: "Sapphire",
-                          origin: "Sri Lanka",
-                          rapRate: "\$35,500.00",
-                          productId: "1",
-                          productName: "AAAA",
-                          ct: "10.04",
-                          shape: "Marquise",
-                          colour: "H",
-                          clarity: "VVS1",
-                          lotNumber: "MBFG716306",
-                          certificateNumber: "230000066395",
-                          measurements: "10.18 x 8.34 x 6.14",
-                          lab: "GIA",
-                          cut: "Excellent",
-                          polish: "Excellent",
-                          symmetry: "Excellent",
-                          flourish: "O",
-                          tablePercentage: "50",
-                          depthPercentage: "50",
-                          rap: "\$24,850.00",
-                          discount: "-30.00",
-                          perCts: "\$24,850.00",
-                          amount: "\$1,24,995.50",
-                          fluorescence: '0'),
-                      productId: "1",
-                      diamond: "1.5 gram",
-                      gram: "1.5 gram",
-                      imageUrl: index % 2 == 0
-                          ? "https://i.ibb.co/477f41r/Group-1410089379.png"
-                          : "https://i.ibb.co/sggT4PJ/Group-1410089378.png",
-                      isForAuction: false,
-                    ),
-                    isAutoSizeText: false,
-                    isDiamond: false,
-                  ),
-                  SizedBox(height: 16.h),
-                ],
-              );
-            }*/
           },
           itemCount: bloc.myBagProductList.length,
           shrinkWrap: true,

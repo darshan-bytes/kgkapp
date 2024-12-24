@@ -48,8 +48,8 @@ class SmartBottomNavigationBar extends StatelessWidget {
                 );
               }
               return BottomNavigationBarItem(
-                icon: _getBottomNavigationBarIcon(model, landingBloc),
-                activeIcon: _getBottomNavigationBarIcon(model, landingBloc, isActiveIcon: true),
+                icon: _getBottomNavigationBarIcon(model, landingBloc, style: style),
+                activeIcon: _getBottomNavigationBarIcon(model, landingBloc, isActiveIcon: true, style: style),
                 label: model.label.tr,
               );
             }).toList(),
@@ -80,11 +80,30 @@ class SmartBottomNavigationBar extends StatelessWidget {
     );
   }
 
-  Widget _getBottomNavigationBarIcon(BottomNavigationBarDataModel model, LandingBloc bloc, {bool isActiveIcon = false}) {
-    Widget item = SmartImage(path: isActiveIcon ? model.activeIcon : model.icon);
-    if (model.notificationCount > 0) {
-      item = Badge.count(count: model.notificationCount, child: item);
-    }
-    return item;
+  Widget _getBottomNavigationBarIcon(
+    BottomNavigationBarDataModel model,
+    LandingBloc bloc, {
+    bool isActiveIcon = false,
+    required TabBarStyle style,
+  }) {
+    return BlocBuilder<LandingBloc, LandingState>(
+      buildWhen: (previous, current) => current is LandingChangeMyBagCountState,
+      builder: (context, state) {
+        final bloc = BlocProvider.of<LandingBloc>(context);
+        Widget item = SmartImage(path: isActiveIcon ? model.activeIcon : model.icon);
+        int notificationCount = model.notificationCount ?? 0;
+        if (notificationCount > 0) {
+          item = Badge(
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            label: SmartText(
+              notificationCount > 9 ? '9+' : notificationCount.toString(),
+              color: style.backgroundColor,
+            ),
+            child: item,
+          );
+        }
+        return item;
+      },
+    );
   }
 }
