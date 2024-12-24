@@ -185,7 +185,9 @@ class ExhibitionListingScreen extends StatelessWidget {
                     ),
                     child: InkWell(
                       onTap: () {
-                        context.pushNamed(AppRoutes.exhibitionDetailsPage);
+                        context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
+                          RoutesData.exhibitionId: bloc.exhibitionCatalogueList[index].id,
+                        });
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
