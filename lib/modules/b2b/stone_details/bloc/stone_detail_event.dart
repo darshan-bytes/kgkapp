@@ -19,3 +19,12 @@ final class StoneDetailsToggleEvent extends StoneDetailEvent {
   @override
   List<Object> get props => [];
 }
+
+final class StoneDetailSelectStoneForDIYEvent extends StoneDetailEvent {
+  final BuildContext context;
+
+  const StoneDetailSelectStoneForDIYEvent({required this.context});
+
+  @override
+  List<Object> get props => [];
+}

@@ -282,6 +282,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
     response?.fold((error) {
       Utils.showMessage(error.message);
+      emit(OrdersListLoadedState());
     }, (success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       originalOrderList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
