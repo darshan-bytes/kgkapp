@@ -958,10 +958,34 @@ class AppRepository extends ApiService {
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, DiamondDataModel>?> diyDetails({required String id}) async {
+  Future<Either<ErrorResponse, DiyDiamondDataModel>?> diyDetails({required String id}) async {
     context.setAppLoading(true);
-    var response = await getMethod<DiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
+    var response = await getMethod<DiyDiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<DiyStyleListModel>>?> diyStyleFilters({
+    required String limit,
+    required String page,
+    required String sortKey,
+    required String sortValue,
+    bool isLoadMore = false,
+    Map<String, String>? query,
+  }) async {
+    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue};
+    if (query != null) {
+      queryParams.addAll(query);
+    }
+
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response =
+        await getMethod<PaginationData<DiyStyleListModel>>(ApiClient.diyStyleFilters, query: queryParams, withCurrencyHeader: true);
+    if (!isLoadMore) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

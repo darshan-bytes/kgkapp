@@ -271,7 +271,7 @@ class ProductDetailsModel {
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {
-  String get displayPrice => offerPrice ?? originalPrice ?? '';
+  String get displayPrice => discountPrice ?? originalPrice ?? '';
 
   Color get getCatalogueBadgeColor {
     if (colorsCode.isNullOrEmpty) return Colors.transparent;

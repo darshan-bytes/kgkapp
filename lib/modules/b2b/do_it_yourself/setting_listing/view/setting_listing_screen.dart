@@ -57,7 +57,7 @@ class SettingListingScreen extends StatelessWidget {
                 child: SmartSingleChildScrollView(
               controller: settingListingBloc.paginationScrollController.scrollController,
               onRefresh: () async {
-                await settingListingBloc.pullToRefresh();
+                await settingListingBloc.pullToRefresh(context);
               },
               padding: EdgeInsets.symmetric(horizontal: 17.w),
               child: Column(
@@ -73,7 +73,7 @@ class SettingListingScreen extends StatelessWidget {
               ),
             ));
           } else {
-            return const SmartCircularProgressIndicator();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -151,21 +151,30 @@ class SettingListingScreen extends StatelessWidget {
                     return Column(
                       children: [
                         SmartGridView(
-                            items: settingListingBloc.productList.map((ProductDetailsModel productDetails) {
-                          return ProductGridItem(
-                            productDetails: productDetails,
-                            onEyeTap: () {},
-                            onFavTap: () {},
-                            onTap: () {
-                              context.pushNamed(AppRoutes.settingDetailPage);
+                          items: List.generate(
+                            settingListingBloc.productList.length,
+                            (index) {
+                              ProductDetailsModel productDetails = settingListingBloc.productList[index];
+                              return ProductGridItem(
+                                productDetails: productDetails,
+                                onEyeTap: () {},
+                                onFavTap: () {},
+                                onTap: () {
+                                  settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
+                                  context.pushNamed(AppRoutes.settingDetailPage);
+                                },
+                              );
                             },
-                          );
-                        }).toList()),
+                          ),
+                        ),
                       ],
                     );
                   } else {
                     return ListView.separated(
                       itemBuilder: (context, index) => ProductListItem(
+                        onTap: () {
+                          settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
+                        },
                         onEyeTap: () {},
                         onFavTap: () {},
                         productDetails: settingListingBloc.productList[index],

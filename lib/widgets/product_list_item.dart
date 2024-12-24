@@ -42,19 +42,22 @@ class ProductListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            productImageSection(style, context),
-            SizedBox(width: 16.w),
-            productDetailsSection(style, context),
-          ],
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          padding: padding,
+          margin: margin,
+          decoration: BoxDecoration(
+            color: style.backgroundColor,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              productImageSection(style, context),
+              SizedBox(width: 16.w),
+              productDetailsSection(style, context),
+            ],
+          ),
         ),
       ),
     );
@@ -99,7 +102,13 @@ class ProductListItem extends StatelessWidget {
           right: 8,
           child: Row(
             children: [
-              if (onEyeTap != null) buildIcon(path: AppImages.icAddEye, onTap: onEyeTap, style: style),
+              if (onEyeTap != null)
+                buildIcon(
+                    path: AppImages.icAddEye,
+                    onTap: () {
+                      BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                    },
+                    style: style),
               SizedBox(width: 8.w),
               if (onFavTap != null)
                 BlocBuilder<AppBloc, AppState>(
@@ -108,8 +117,7 @@ class ProductListItem extends StatelessWidget {
                     return buildIcon(
                         path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
                         onTap: () {
-                          onFavTap?.call();
-                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                          BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
                         },
                         style: style);
                   },

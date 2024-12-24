@@ -222,7 +222,7 @@ class ProductGridItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
-              height: 38.h,
+              height: style.productNameStyle.height,
               child: SmartText(
                 productDetails.subTitle,
                 style: style.productNameStyle,
