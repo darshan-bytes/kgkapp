@@ -5,11 +5,11 @@ class StoneDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diamondBloc = context.read<StoneDetailBloc>();
+    final bloc = BlocProvider.of<StoneDetailBloc>(context);
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Scaffold(
       appBar: SmartAppBar(
-        title: '1.01 Carat Round Diamond',
+        title: bloc.productName,
         onFavorite: () {
           context.pushNamed(AppRoutes.wishListPage);
         },
@@ -23,10 +23,10 @@ class StoneDetailScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (diamondBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) const DiyProgressWidget(selectedStep: 1),
-                SmartCarouselSlider(imgList: diamondBloc.imgList, controller: diamondBloc.controller),
+                if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) const DiyProgressWidget(selectedStep: 1),
+                SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                 SizedBox(height: 40.h),
-                _productDetail(context, diamondBloc)
+                _productDetail(context, bloc)
               ],
             );
           },
@@ -49,11 +49,11 @@ class StoneDetailScreen extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SmartImage(path: diamondBloc.imgList.isNotNullNorEmpty ? diamondBloc.imgList.first : '', height: 55.w, width: 55.w),
+              SmartImage(path: bloc.imgList.isNotNullNorEmpty ? bloc.imgList.first : '', height: 55.w, width: 55.w),
               Expanded(
                 flex: 4,
                 child: SmartText(
-                  '\$3,020.00',
+                  bloc.productDetails?.displayPrice,
                   style: style.priceStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -63,7 +63,7 @@ class StoneDetailScreen extends StatelessWidget {
                 flex: 4,
                 child: SmartButton(
                   onTap: () {
-                    context.pushNamed(AppRoutes.settingListingPage);
+                    bloc.add(StoneDetailSelectStoneForDIYEvent(context: context));
                   },
                   padding: EdgeInsets.zero,
                   title: APPStrings.selectDiamond.tr,
@@ -77,50 +77,25 @@ class StoneDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetail(BuildContext context, StoneDetailBloc diamondBloc) {
+  Widget _productDetail(BuildContext context, StoneDetailBloc bloc) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (bloc.productDetails?.lotCode != null) ...[
+            SmartText(
+              bloc.productDetails?.lotCode,
+              style: style.skuStyle,
+            ),
+            SizedBox(height: 8.h),
+          ],
           SmartText(
-            'SKU 14178065',
-            style: style.skuStyle,
-          ),
-          SizedBox(height: 8.h),
-          SmartText(
-            '1.01 Carat Round Diamond',
+            bloc.productName,
             style: style.diamondNameStyle,
           ),
-          SizedBox(height: 8.h),
-          Row(
-            children: [
-              SmartRatingBar(initialRating: 4, itemSize: 16.w, onRatingUpdate: (double value) {}),
-              SizedBox(width: 8.w),
-              SmartText(
-                APPStrings.reviewsX.tr.interpolate([4]),
-                style: style.reviewStyle,
-              )
-            ],
-          ),
           SizedBox(height: 14.h),
-          Row(
-            children: [
-              SmartText(
-                APPStrings.wantToSeeProductPhysically.tr,
-                style: style.seeProductStyle,
-              ),
-              SizedBox(width: 8.w),
-              SmartText(
-                APPStrings.orderSample.tr,
-                style: style.orderSampleStyle,
-              ),
-            ],
-          ),
-          SizedBox(height: 14.h),
-          const Divider(),
-          SizedBox(height: 24.h),
           Row(
             children: [
               SmartImage(
@@ -148,7 +123,7 @@ class StoneDetailScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           const Divider(),
-          _diamondDetails(diamondBloc),
+          _diamondDetails(bloc),
           Divider(height: 1.h),
           SizedBox(height: 24.h),
           const InquiryWidget(

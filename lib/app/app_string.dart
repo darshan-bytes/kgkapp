@@ -945,4 +945,5 @@ class APPStrings {
   static const String permissionDenied = 'mob_permission_denied';
   static const String pleaseEnableLocation = 'mob_please_enable_location';
   static const String thisTypeIsNotYetAdded = 'mob_this_type_is_not_yet_added';
+  static const String gemstoneDetails = 'mob_gemstone_details';
 }

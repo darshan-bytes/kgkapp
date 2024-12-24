@@ -51,7 +51,7 @@ class ApiService implements ApiProvider {
         url = uri.toString();
       }
       kgk_logger.log(
-          'Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
+          '🔷 Request URL: $url method: ${method.toString()} headers: ${_getCommonHeaders(additionalHeaders: headers, withCurrencyHeader: withCurrencyHeader)} Body:  ${jsonEncode(body)} Query: ${jsonEncode(query)}');
       switch (method) {
         case _ApiType.get:
           response = await http.get(Uri.parse(url),
@@ -76,7 +76,7 @@ class ApiService implements ApiProvider {
           break;
       }
 
-      kgk_logger.log('Request URL: $url Response: ${response.body} StatusCode: ${response.statusCode}');
+      kgk_logger.log('🔶 Request URL: $url Response: ${response.body} StatusCode: ${response.statusCode}');
 
       var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 

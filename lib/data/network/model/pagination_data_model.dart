@@ -78,6 +78,10 @@ class PaginationData<T> {
         return PaymentCondition.fromJson(json);
       case const (OrderItem):
         return OrderItem.fromJson(json);
+      case const (ExhibitionListDataModel):
+        return ExhibitionListDataModel.fromJson(json);
+      case const (DiyStyleListModel):
+        return DiyStyleListModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

@@ -69,6 +69,7 @@ class ProductDetailsModel {
   double? yourDiscount;
   String? yourRate;
   String? yourAmount;
+  List<StoneElement>? stoneElements;
 
   ProductDetailsModel({
     this.productId,
@@ -139,6 +140,7 @@ class ProductDetailsModel {
     this.yourRate,
     this.yourAmount,
     this.yourDiscount,
+    this.stoneElements,
   });
 
   @override
@@ -269,7 +271,7 @@ class ProductDetailsModel {
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {
-  String get displayPrice => offerPrice ?? originalPrice ?? '';
+  String get displayPrice => discountPrice ?? originalPrice ?? '';
 
   Color get getCatalogueBadgeColor {
     if (colorsCode.isNullOrEmpty) return Colors.transparent;

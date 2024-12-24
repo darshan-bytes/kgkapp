@@ -7,10 +7,10 @@ sealed class SettingListingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class GetSettingProductListEvent extends SettingListingEvent {
+final class SettingListingInitialEvent extends SettingListingEvent {
   final BuildContext context;
 
-  const GetSettingProductListEvent(this.context);
+  const SettingListingInitialEvent(this.context);
 
   @override
   List<Object> get props => [context];
@@ -25,16 +25,30 @@ final class SettingChangeListingTypeEvent extends SettingListingEvent {
 
 final class LoadMoreSettingProductListEvent extends SettingListingEvent {
   final int currentPage;
+  final BuildContext context;
 
-  const LoadMoreSettingProductListEvent(this.currentPage);
+  const LoadMoreSettingProductListEvent({required this.context, required this.currentPage});
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context, currentPage];
 }
 
 final class SettingListPullToRefreshEvent extends SettingListingEvent {
-  const SettingListPullToRefreshEvent();
+  final BuildContext context;
+
+  const SettingListPullToRefreshEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
+}
+
+//SettingListingOnTapEvent(context:context, index:index)
+final class SettingListingOnTapEvent extends SettingListingEvent {
+  final BuildContext context;
+  final int index;
+
+  const SettingListingOnTapEvent({required this.context, required this.index});
+
+  @override
+  List<Object> get props => [context, index];
 }

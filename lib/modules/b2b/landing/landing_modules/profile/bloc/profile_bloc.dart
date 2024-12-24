@@ -77,7 +77,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
             onTap: (context) {
-              context.pushNamed(AppRoutes.manufacturerOrderListingPage);
+              context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
           image: AppImages.icProfileCalendar,
@@ -122,7 +122,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             subTitle: APPStrings.listOfAllTheOrdersYouPlaced,
             trailingIcon: AppImages.icArrowRight,
             onTap: (context) {
-              context.pushNamed(AppRoutes.myOrderTypeSelectionPage);
+              context.pushNamed(AppRoutes.orderPage);
             }),
         ProfileListModel(
             image: AppImages.icActions,
@@ -423,7 +423,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
     Either<ErrorResponse, CommonResponse>? response = await UserRepository(event.context).logoutUser({});
     await response?.fold((l) async {
-      ErrorResponse errorModel = l;
       BlocProvider.of<LandingBloc>(event.context).add(const LandingLogoutEvent());
       BlocProvider.of<LandingBloc>(event.context).add(LandingChangeTabEvent(LandingBloc.homeIndex, context: event.context));
       await StorageManager().clearSession();

@@ -171,7 +171,7 @@ class AppRoutes {
       case settingListingPage:
         builder = (context) {
           return BlocProvider<SettingListingBloc>(
-            create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
+            create: (context) => SettingListingBloc()..add(SettingListingInitialEvent(context)),
             child: const SettingListingScreen(),
           );
         };
@@ -529,8 +529,10 @@ class AppRoutes {
 
       case exhibitionListingPage:
         builder = (context) {
-          BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
-          return const ExhibitionListingScreen();
+          return BlocProvider<ExhibitionListingBloc>(
+            create: (context) => ExhibitionListingBloc()..add(InitialExhibitionListingEvent(context: context)),
+            child: const ExhibitionListingScreen(),
+          );
         };
         break;
 
@@ -653,7 +655,7 @@ class AppRoutes {
       case exhibitionDetailsPage:
         builder = (context) {
           return BlocProvider<ExhibitionDetailsBloc>(
-            create: (context) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+            create: (context) => ExhibitionDetailsBloc()..add(ExhibitionDetailsInitialEvent(context)),
             child: const ExhibitionDetailsScreen(),
           );
         };
@@ -761,6 +763,7 @@ enum RoutesData {
   isContinueClearCompare,
   catalogueId,
   dealsOfTheDay,
+  exhibitionId
 }
 
 enum ScreenIdentifier {

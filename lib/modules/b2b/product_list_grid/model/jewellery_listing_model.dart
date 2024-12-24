@@ -937,3 +937,25 @@ class ValueElement extends Equatable {
         value,
       ];
 }
+
+class StoneElement {
+  const StoneElement({
+    required this.title,
+    required this.value,
+  });
+
+  final String? title;
+  final String? value;
+
+  factory StoneElement.fromJson(Map<String, dynamic> json) {
+    return StoneElement(
+      title: json["label"]?.toString(),
+      value: json["value"]?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "value": value,
+      };
+}

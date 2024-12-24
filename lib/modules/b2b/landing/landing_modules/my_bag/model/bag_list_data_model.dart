@@ -11,7 +11,7 @@ class BagListDataModel {
     required this.isExpired,
   });
 
-  final List<Result> result;
+  final List<MyBagResult> result;
   final BagSummary? summary;
   final int? totalRecords;
   final int? page;
@@ -20,7 +20,7 @@ class BagListDataModel {
   final bool? isExpired;
 
   BagListDataModel copyWith({
-    List<Result>? result,
+    List<MyBagResult>? result,
     BagSummary? summary,
     int? totalRecords,
     int? page,
@@ -41,7 +41,7 @@ class BagListDataModel {
 
   factory BagListDataModel.fromJson(Map<String, dynamic> json) {
     return BagListDataModel(
-      result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
+      result: json["result"] == null ? [] : List<MyBagResult>.from(json["result"]!.map((x) => MyBagResult.fromJson(x))),
       summary: json["summary"] == null ? null : BagSummary.fromJson(json["summary"]),
       totalRecords: json["totalRecords"],
       page: json["page"]?.toString().toInt,
@@ -84,8 +84,8 @@ class BagListDataModel {
       result.hashCode ^ summary.hashCode ^ totalRecords.hashCode ^ page.hashCode ^ limit.hashCode ^ bagId.hashCode ^ isExpired.hashCode;
 }
 
-class Result {
-  Result({
+class MyBagResult {
+  MyBagResult({
     required this.suid,
     required this.quantity,
     required this.totalPrice,
@@ -120,6 +120,9 @@ class Result {
     required this.yourRate,
     required this.yourAmount,
     required this.yourDiscount,
+    required this.originalYourRate,
+    required this.originalYourAmount,
+    required this.originalTotalPrice,
   });
 
   final String? suid;
@@ -156,8 +159,11 @@ class Result {
   final double? yourDiscount;
   final String? yourRate;
   final String? yourAmount;
+  final double? originalYourRate;
+  final double? originalYourAmount;
+  final double? originalTotalPrice;
 
-  Result copyWith({
+  MyBagResult copyWith({
     String? suid,
     int? quantity,
     double? totalPrice,
@@ -192,8 +198,11 @@ class Result {
     double? yourDiscount,
     String? yourRate,
     String? yourAmount,
+    double? originalYourRate,
+    double? originalYourAmount,
+    double? originalTotalPrice,
   }) {
-    return Result(
+    return MyBagResult(
       suid: suid ?? this.suid,
       quantity: quantity ?? this.quantity,
       totalPrice: totalPrice ?? this.totalPrice,
@@ -228,11 +237,14 @@ class Result {
       yourAmount: yourAmount ?? this.yourAmount,
       yourDiscount: yourDiscount ?? this.yourDiscount,
       yourRate: yourRate ?? this.yourRate,
+      originalYourRate: originalYourRate ?? this.originalYourRate,
+      originalYourAmount: originalYourAmount ?? this.originalYourAmount,
+      originalTotalPrice: originalTotalPrice ?? this.originalTotalPrice,
     );
   }
 
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
+  factory MyBagResult.fromJson(Map<String, dynamic> json) {
+    return MyBagResult(
       suid: json["suid"],
       quantity: json["quantity"],
       totalPrice: json["totalPrice"]?.toString().toDouble,
@@ -267,6 +279,9 @@ class Result {
       yourRate: json["your_rate"],
       yourAmount: json["your_amount"],
       yourDiscount: json["your_discount"]?.toString().toDouble,
+      originalYourRate: json["original_your_rate"],
+      originalYourAmount: json["original_your_amount"],
+      originalTotalPrice: json["original_totalPrice"],
     );
   }
 
@@ -305,17 +320,20 @@ class Result {
         "your_rate": yourRate,
         "your_amount": yourAmount,
         "your_discount": yourDiscount,
+        "original_your_rate": originalYourRate,
+        "original_your_amount": originalYourAmount,
+        "original_totalPrice": originalTotalPrice,
       };
 
   @override
   String toString() {
-    return 'Result{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount}';
+    return 'Result{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount, originalYourRate: $originalYourRate, originalYourAmount: $originalYourAmount, originalTotalPrice: $originalTotalPrice}';
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Result &&
+      other is MyBagResult &&
           runtimeType == other.runtimeType &&
           suid == other.suid &&
           quantity == other.quantity &&
@@ -350,7 +368,10 @@ class Result {
           stockQty == other.stockQty &&
           yourDiscount == other.yourDiscount &&
           yourRate == other.yourRate &&
-          yourAmount == other.yourAmount;
+          yourAmount == other.yourAmount &&
+          originalYourRate == other.originalYourRate &&
+          originalYourAmount == other.originalYourAmount &&
+          originalTotalPrice == other.originalTotalPrice;
 
   @override
   int get hashCode =>
@@ -387,7 +408,10 @@ class Result {
       stockQty.hashCode ^
       yourDiscount.hashCode ^
       yourRate.hashCode ^
-      yourAmount.hashCode;
+      yourAmount.hashCode ^
+      originalYourRate.hashCode ^
+      originalYourAmount.hashCode ^
+      originalTotalPrice.hashCode;
 
   Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;
 }
@@ -403,6 +427,9 @@ class BagSummary {
     this.yourRate,
     this.yourAmount,
     this.totalAmount,
+    required this.originalYourRate,
+    required this.originalYourAmount,
+    required this.originalTotalPrice,
   });
 
   final int? totalItems;
@@ -410,10 +437,13 @@ class BagSummary {
   final String? originalAmount;
   final double? discountPercentage;
   final String? discountAmount;
-  final double? yourDiscount;
+  final String? yourDiscount;
   final String? yourRate;
   final String? yourAmount;
   final double? totalAmount;
+  final double? originalYourRate;
+  final double? originalYourAmount;
+  final double? originalTotalPrice;
 
   BagSummary copyWith({
     int? totalItems,
@@ -421,10 +451,13 @@ class BagSummary {
     String? originalAmount,
     double? discountPercentage,
     String? discountAmount,
-    double? yourDiscount,
+    String? yourDiscount,
     String? yourRate,
     String? yourAmount,
     double? totalAmount,
+    double? originalYourRate,
+    double? originalYourAmount,
+    double? originalTotalPrice,
   }) {
     return BagSummary(
       totalItems: totalItems ?? this.totalItems,
@@ -436,6 +469,9 @@ class BagSummary {
       yourRate: yourRate ?? this.yourRate,
       yourDiscount: yourDiscount ?? this.yourDiscount,
       totalAmount: totalAmount ?? this.totalAmount,
+      originalYourRate: originalYourRate ?? this.originalYourRate,
+      originalYourAmount: originalYourAmount ?? this.originalYourAmount,
+      originalTotalPrice: originalTotalPrice ?? this.originalTotalPrice,
     );
   }
 
@@ -448,8 +484,11 @@ class BagSummary {
       discountAmount: json["discount_amount"],
       yourAmount: json["your_amount"]?.toString(),
       yourRate: json["your_rate"]?.toString(),
-      yourDiscount: json["your_discount"]?.toString().toDouble,
+      yourDiscount: json["your_discount"]?.toString(),
       totalAmount: json["total_amount"]?.toString().toDouble,
+      originalYourRate: json["original_your_rate"]?.toString().toDouble,
+      originalYourAmount: json["original_your_amount"]?.toString().toDouble,
+      originalTotalPrice: json["original_totalPrice"]?.toString().toDouble,
     );
   }
 
@@ -463,5 +502,8 @@ class BagSummary {
         "your_rate": yourRate,
         "your_amount": yourAmount,
         "total_amount": totalAmount,
+        "original_your_rate": originalYourRate,
+        "original_your_amount": originalYourAmount,
+        "original_totalPrice": originalTotalPrice,
       };
 }
