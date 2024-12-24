@@ -529,8 +529,10 @@ class AppRoutes {
 
       case exhibitionListingPage:
         builder = (context) {
-          BlocProvider.of<ExhibitionListingBloc>(context).add(InitialExhibitionListingEvent(context: context));
-          return const ExhibitionListingScreen();
+          return BlocProvider<ExhibitionListingBloc>(
+            create: (context) => ExhibitionListingBloc()..add(InitialExhibitionListingEvent(context: context)),
+            child: const ExhibitionListingScreen(),
+          );
         };
         break;
 
