@@ -35,7 +35,6 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     on<ExhibitionChangeTabsEvent>(_onChangeTabEvent);
     on<ExhibitionListingLoadMoreEvent>(_onExhibitionListingLoadMoreEvent);
     on<ExhibitionChangeListingTypeEvent>(_onExhibitionChangeListingTypeEvent);
-    // on<ExhibitionProductDetailsEvent>(_onExhibitionProductDetailsEvent);
   }
 
   Future<void> _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) async {
@@ -43,7 +42,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     isGrid = true;
     Map<RoutesData, dynamic>? data = event.context.routesData;
     String exhibitionId = data?[RoutesData.exhibitionId] ?? '';
-
+    if (exhibitionId.isNullOrEmpty) return;
     _initScrollControllers();
     await _getExhibitionDetails(event.context, exhibitionId);
     appbarTitle = exhibitionDetails.name ?? '';
@@ -69,12 +68,6 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     productPaginationScrollController.onViewChange(!isGrid);
     scrollController.addListener(scrollToTopListener);
     emit(const ExhibitionChangeListingTypeState());
-  }
-
-  Future<void> _onExhibitionProductDetailsEvent(ExhibitionProductDetailsEvent event, Emitter<ExhibitionDetailsState> emit) async {
-    emit(const ExhibitionDetailsReloadState());
-    // await _getExhibitionProductDetails(event.context, productId);
-    emit(const ExhibitionDetailsLoadedState());
   }
 
   Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
@@ -153,7 +146,6 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
       },
       (data) {
         exhibitionProductDetailsData = data;
-        print("ExhibitionProductDetailsDataModel: ${exhibitionProductDetailsData.toJson()}");
       },
     );
   }

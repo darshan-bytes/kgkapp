@@ -36,13 +36,3 @@ final class ExhibitionListingLoadMoreEvent extends ExhibitionDetailsEvent {
   @override
   List<Object> get props => [currentPage];
 }
-
-final class ExhibitionProductDetailsEvent extends ExhibitionDetailsEvent {
-  // final int currentPage;
-  final BuildContext context;
-
-  const ExhibitionProductDetailsEvent(this.context /*this.currentPage*/);
-
-  @override
-  List<Object> get props => [context /*currentPage*/];
-}

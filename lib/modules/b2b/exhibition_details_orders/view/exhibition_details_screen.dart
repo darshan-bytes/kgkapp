@@ -68,18 +68,6 @@ class ExhibitionDetailsScreen extends StatelessWidget {
     );
   }
 
-  // PreferredSizeWidget _buildAppBar(WatchlistDetailsBloc bloc) {
-  //   return PreferredSize(
-  //     preferredSize: AppConst.appBarHeight,
-  //     child: BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
-  //       buildWhen: (previous, current) => current is WatchlistDetailsLoaded,
-  //       builder: (context, state) {
-  //         return SmartAppBar(title: bloc.watchlistName);
-  //       },
-  //     ),
-  //   );
-  // }
-
   Widget _buildImageAndText(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
       buildWhen: (previous, current) =>
@@ -90,90 +78,88 @@ class ExhibitionDetailsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: style.primaryColor,
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
-              child: Column(
-                children: [
-                  SmartImage(
-                    path: bloc.exhibitionDetails.fileUrl?.setMediaUrl ?? '',
-                    width: 356.w,
-                    height: 200.h,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      SmartText(
-                        bloc.exhibitionDetails.name ?? '',
-                        style: style.titleStyle,
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      SmartText(
-                        bloc.exhibitionDetails.description ?? '',
-                        style: style.subTitleStyle,
-                      ),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icCalendar,
-                            height: 16.h,
-                            width: 16.w,
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          SmartText(
-                            bloc.exhibitionDetails.fullDate,
-                            style: style.listTextStyle,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-                      Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icClock,
-                            height: 16.h,
-                            width: 16.w,
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          SmartText(
-                            bloc.exhibitionDetails.fullTime,
-                            style: style.listTextStyle,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-                      Row(
-                        children: [
-                          SmartImage(
-                            path: AppImages.icMapPin,
-                            height: 16.h,
-                            width: 16.w,
-                            color: style.iconColor,
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          SmartText(
-                            bloc.exhibitionDetails.venue,
-                            style: style.listTextStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+            child: Column(
+              children: [
+                SmartImage(
+                  path: bloc.exhibitionDetails.fileUrl?.setMediaUrl ?? '',
+                  width: 356.w,
+                  height: 200.h,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    SmartText(
+                      bloc.exhibitionDetails.name ?? '',
+                      style: style.titleStyle,
+                    ),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    SmartText(
+                      bloc.exhibitionDetails.description ?? '',
+                      style: style.subTitleStyle,
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Row(
+                      children: [
+                        SmartImage(
+                          path: AppImages.icCalendar,
+                          height: 16.h,
+                          width: 16.w,
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        SmartText(
+                          bloc.exhibitionDetails.fullDate,
+                          style: style.listTextStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      children: [
+                        SmartImage(
+                          path: AppImages.icClock,
+                          height: 16.h,
+                          width: 16.w,
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        SmartText(
+                          bloc.exhibitionDetails.fullTime,
+                          style: style.listTextStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      children: [
+                        SmartImage(
+                          path: AppImages.icMapPin,
+                          height: 16.h,
+                          width: 16.w,
+                          color: style.iconColor,
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        SmartText(
+                          bloc.exhibitionDetails.venue,
+                          style: style.listTextStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
             ),
           );
         } else {

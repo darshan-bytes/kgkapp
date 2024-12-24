@@ -33,7 +33,7 @@ class OrderItem {
   OrderItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     createdAt = json['createdAt'];
-    totalPrice = json['total_price'];
+    totalPrice = json['total_price']?.toString();
     currency = json['currency'];
     createdBy = json['created_by'];
     orderStatus = json['order_status'];

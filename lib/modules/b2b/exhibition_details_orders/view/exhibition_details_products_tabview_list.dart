@@ -33,7 +33,6 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   Widget _buildProductDisplay(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
     return B2BListingItem(
         listingItemModel: B2BCustomListingDataModel(
-          id: 'bloc.exhibitionProductDetailsData.id',
           strItemSold: bloc.exhibitionProductDetailsData.itemsSold.toString(),
           strOrdersReceived: bloc.exhibitionProductDetailsData.totalOrders.toString(),
           strTotalSell: bloc.exhibitionProductDetailsData.totalSales?.setCurrency,

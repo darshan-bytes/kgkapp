@@ -981,10 +981,8 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, ExhibitionProductDetailsDataModel>?> fetchExhibitionProductDetails({
     required String id,
   }) async {
-    var response = await getMethod<ExhibitionProductDetailsDataModel>(
-      ApiClient.getExhibitionProductsDetails,
-      query: {ApiKey.orderContextId: id},
-    );
+    var response = await getMethod<ExhibitionProductDetailsDataModel>(ApiClient.getExhibitionProductsDetails,
+        query: {ApiKey.orderContextId: id}, withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
