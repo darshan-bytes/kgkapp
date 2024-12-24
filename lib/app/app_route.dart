@@ -655,7 +655,7 @@ class AppRoutes {
       case exhibitionDetailsPage:
         builder = (context) {
           return BlocProvider<ExhibitionDetailsBloc>(
-            create: (context) => ExhibitionDetailsBloc()..add(const ExhibitionDetailsInitialEvent()),
+            create: (context) => ExhibitionDetailsBloc()..add(ExhibitionDetailsInitialEvent(context)),
             child: const ExhibitionDetailsScreen(),
           );
         };
@@ -763,6 +763,7 @@ enum RoutesData {
   isContinueClearCompare,
   catalogueId,
   dealsOfTheDay,
+  exhibitionId
 }
 
 enum ScreenIdentifier {

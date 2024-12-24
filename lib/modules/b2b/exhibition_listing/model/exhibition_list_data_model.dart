@@ -98,17 +98,17 @@ class ExhibitionListDataModel {
 }
 
 extension ExhibitionListDataExtension on ExhibitionListDataModel {
-  String get fullDate => "${startDate!.changeDateFormat(
+  String get fullDate => "${startDate?.changeDateFormat(
         outputDateFormat: DateFormatter.dateFormatDD,
         inputDateFormat: DateFormatter.dateFormatYYYYMMDD,
-      )} - ${endDate!.changeDateFormat(
+      )} - ${endDate?.changeDateFormat(
         outputDateFormat: DateFormatter.dateFormatDDMMMYY,
         inputDateFormat: DateFormatter.dateFormatYYYYMMDD,
       )}";
-  String get fullTime => "${startTime!.changeDateFormat(
+  String get fullTime => "${startTime?.changeDateFormat(
         outputDateFormat: DateFormatter.timeFormatHA,
         inputDateFormat: DateFormatter.timeFormat,
-      )} - ${endTime!.changeDateFormat(
+      )} - ${endTime?.changeDateFormat(
         outputDateFormat: DateFormatter.timeFormatHA,
         inputDateFormat: DateFormatter.timeFormat,
       )}";

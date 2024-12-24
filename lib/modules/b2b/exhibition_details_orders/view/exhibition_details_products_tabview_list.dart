@@ -33,12 +33,11 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   Widget _buildProductDisplay(ExhibitionDetailsBloc bloc, ExhibitionDetailsItemStyle style) {
     return B2BListingItem(
         listingItemModel: B2BCustomListingDataModel(
-          id: "1",
-          strItemSold: '25',
-          strOrdersReceived: '15',
-          strTotalSell: '\$30,000.00',
-          strAverageOrderValue: '\$2,500.00',
-          strLeads: '10',
+          strItemSold: bloc.exhibitionProductDetailsData.itemsSold.toString(),
+          strOrdersReceived: bloc.exhibitionProductDetailsData.totalOrders.toString(),
+          strTotalSell: bloc.exhibitionProductDetailsData.totalSales?.setCurrency,
+          strAverageOrderValue: bloc.exhibitionProductDetailsData.avgOrder?.setCurrency,
+          strLeads: bloc.exhibitionProductDetailsData.leads.toString(),
         ),
         type: B2BListingType.exhibitionDetailPageProductsType);
   }
