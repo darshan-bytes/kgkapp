@@ -171,7 +171,7 @@ class AppRoutes {
       case settingListingPage:
         builder = (context) {
           return BlocProvider<SettingListingBloc>(
-            create: (context) => SettingListingBloc()..add(GetSettingProductListEvent(context)),
+            create: (context) => SettingListingBloc()..add(SettingListingInitialEvent(context)),
             child: const SettingListingScreen(),
           );
         };

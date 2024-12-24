@@ -385,7 +385,7 @@ class GemstoneDatum {
   int? viewCount;
   String? discountPrice;
   bool isFavorite;
-  int? rating;
+  double? rating;
   int? reviewCount;
   String? finalPrice;
   String? priceCts;
@@ -564,7 +564,7 @@ class GemstoneDatum {
       viewCount: json["view_count"],
       discountPrice: json["discount_price"]?.toString(),
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
-      rating: json["rating"],
+      rating: json["rating"]?.toString().toDouble,
       reviewCount: json["review_count"],
       finalPrice: json["final_price"] != null ? json["final_price"].toString() : "0",
       priceCts: json["price_cts"],

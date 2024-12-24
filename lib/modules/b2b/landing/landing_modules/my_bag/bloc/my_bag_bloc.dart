@@ -462,6 +462,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     if (userType == UserType.b2bUser) {
       placeOrderProductRequestList = List.generate(myBagProductList.length, (index) {
         ProductDetailsModel product = myBagProductList[index];
+
         return PlaceOrderProductRequest(
           name: product.name,
           image: product.imageUrl,
