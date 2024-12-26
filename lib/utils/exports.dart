@@ -493,7 +493,8 @@ export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_order
 export 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 export 'package:kgk/modules/b2b/calendar/model/calender_event_details_data_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_list_data_model.dart';
-export 'package:kgk/modules/b2b/calendar/model/calender_event_details_data_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/diy_diamond_data_model.dart';
 export 'package:kgk/modules/b2b/stone_details/model/diy_style_list_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_product_details_data_model.dart';
+export 'package:path_provider/path_provider.dart';
+export 'package:kgk/model/placeholder_data.dart';
