@@ -149,19 +149,6 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     return result;
   }
 
-  Future<void> createNewWatchlist(BuildContext context) async {
-    BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
-    final result = await Utils.showSmartModalBottomSheet(
-      context: context,
-      enableDrag: false,
-      builder: (context) => const EditWatchlistScreen(),
-    );
-
-    if (result?[RoutesData.isWatchlistCreated] == true) {
-      pullToRefresh(context: context);
-    }
-  }
-
   void _onWatchListClose(WatchListCloseEvent event, Emitter<WatchlistState> emit) {
     clearBlocData();
     emit(const WatchlistInitial());
