@@ -18,7 +18,7 @@ class AppLocalizations {
   /// > Load the language JSON file from the "lang" folder and return true if successful
   ///
   /// Returns:
-  ///   A Future<bool>
+  ///   A Future bool
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
 

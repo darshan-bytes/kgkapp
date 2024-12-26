@@ -493,7 +493,9 @@ export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_order
 export 'package:kgk/modules/common_modules/order_management/my_orders/model/order_item_data_model.dart';
 export 'package:kgk/modules/b2b/calendar/model/calender_event_details_data_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_list_data_model.dart';
-export 'package:kgk/modules/b2b/calendar/model/calender_event_details_data_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/model/diy_diamond_data_model.dart';
 export 'package:kgk/modules/b2b/stone_details/model/diy_style_list_model.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_product_details_data_model.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/bloc/apply_promo_code_bloc.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/view/apply_promo_code_screen.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/model/apply_promo_code_model.dart';

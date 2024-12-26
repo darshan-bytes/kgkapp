@@ -253,6 +253,8 @@ abstract class AppTheme {
   StyleDesignListStyle get styleDesignListStyle;
 
   ConceptListingStyle get conceptListingStyle;
+
+  ApplyPromoCodeStyle get applyPromoCodeStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2439,5 +2441,27 @@ class ConceptListingStyle {
   ConceptListingStyle({
     required this.borderColor,
     required this.titleStyle,
+  });
+}
+
+class ApplyPromoCodeStyle {
+  final Color backgroundColor;
+  final TextStyle titleStyle;
+  final TextStyle codeStyle;
+  final TextStyle activeApplyTextStyle;
+  final TextStyle inActiveApplyTextStyle;
+  final TextStyle descriptionStyle;
+  final Color whiteColor;
+  final Color orangeColor;
+
+  ApplyPromoCodeStyle({
+    required this.backgroundColor,
+    required this.titleStyle,
+    required this.codeStyle,
+    required this.activeApplyTextStyle,
+    required this.inActiveApplyTextStyle,
+    required this.whiteColor,
+    required this.descriptionStyle,
+    required this.orangeColor,
   });
 }
