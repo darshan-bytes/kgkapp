@@ -29,6 +29,7 @@ class StorageManager {
   final String _recentlyViewedJewellery = 'recentlyViewedJewellery';
   final String _recentlyViewedDiamonds = 'recentlyViewedDiamonds';
   final String _recentlyViewedGemstones = 'recentlyViewedGemstones';
+  final String _placeHolderImage = 'placeHolderImage';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -286,6 +287,17 @@ class StorageManager {
     // convert to list to String with comma separated
     List<String> list = _box.get(_recentlyViewedGemstones) ?? [];
     return list.join(',');
+  }
+
+  /// Set placeholder image
+  Future<void> setPlaceHolderImage(String placeholderImage) async {
+    String downloadedImage = await Utils.downloadAndSaveImage(placeholderImage);
+    await _box.put(_placeHolderImage, downloadedImage);
+  }
+
+  /// get placeholder image
+  String getPlaceHolderImage() {
+    return _box.get(_placeHolderImage) ?? '';
   }
 
   Future<void> closeBox() async {
