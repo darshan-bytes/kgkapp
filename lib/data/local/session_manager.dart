@@ -193,6 +193,8 @@ class StorageManager {
     bool isSkipLogin = getIsSkipLogin();
     String guestBagId = getBagId() ?? '';
     MyBagDataModel? guestBagData = getBagData();
+    String? selectedCurrency = getSelectedCurrency();
+    String? selectedCurrencySymbol = getSelectedCurrencySymbol();
     await _box.clear();
 
     if (locale != null) {
@@ -200,6 +202,10 @@ class StorageManager {
     }
     if (currencyList.isNotNullNorEmpty) {
       await setCurrencyList(currencyList);
+    }
+    if (selectedCurrency.isNotNullNorEmpty && selectedCurrencySymbol.isNotNullNorEmpty) {
+      await setSelectedCurrency(selectedCurrency!);
+      await setSelectedCurrencySymbol(selectedCurrencySymbol!);
     }
     if (isSkipLogin) {
       await setIsSkipLogin(isSkipLogin);
