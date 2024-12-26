@@ -30,6 +30,8 @@ class SmartImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // get placeholder image from box
+    String? placeholderImage = StorageManager().getPlaceHolderImage();
     Widget? child;
     if (path.isNullOrEmpty || !path.contains('/')) {
       child = Container(
@@ -126,12 +128,19 @@ class SmartImage extends StatelessWidget {
                     width: width,
                     fit: fit,
                     errorListener: (error) {},
-                    errorWidget: (context, url, error) => Image.asset(
-                          AppImages.icPlaceholder,
-                          height: height,
-                          width: width,
-                          fit: fit ?? BoxFit.cover,
-                        ),
+                    errorWidget: (context, url, error) => placeholderImage.isNotNullNorEmpty
+                        ? Image.file(
+                            File(placeholderImage),
+                            height: height,
+                            width: width,
+                            fit: fit ?? BoxFit.cover,
+                          )
+                        : Image.asset(
+                            AppImages.icPlaceholder,
+                            height: height,
+                            width: width,
+                            fit: fit ?? BoxFit.cover,
+                          ),
                     placeholder: (context, url) => SizedBox(
                           height: height ?? 50.w,
                           width: height ?? 50.w,
