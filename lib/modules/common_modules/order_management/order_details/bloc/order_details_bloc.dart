@@ -5,163 +5,164 @@ part 'order_details_event.dart';
 part 'order_details_state.dart';
 
 class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
+  /// The current user type (default is b2cUser).
   UserType userType = UserType.b2cUser;
 
-  String? orderNumber;
+  /// The order number for the current context.
+  String orderNumber = "";
 
-  // controllers
+  /// Holds the order details response.
+  PlaceOrderResponse? placeOrderResponse;
+
+  /// Controller for searching orders.
   final TextEditingController orderSearchController = TextEditingController();
 
+  /// Current track order index.
   int currentTrackOrderIndex = 2;
 
-  // Orders lists
+  /// List of products for B2C users.
   List<ProductDetailsModel> orderProductList = [];
+
+  /// List of products for B2B users.
   List<OrderDetailsProductModel> orderProductDetailsList = [];
+
+  /// Available cancellation reasons.
   List<CancellationReasonModel> cancellationReasonsList = [];
 
-  int get productListLength => userType == UserType.b2cUser ? orderProductList.length : orderProductDetailsList.length;
+  /// Selected cancellation reason.
   CancellationReasonModel? selectedReason;
 
-  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-
+  /// Constructor initializing the Bloc with event handlers.
   OrderDetailBloc() : super(const OrderDetailInitial()) {
-    on<InitialOrderDetailEvent>(_onInitialOrderDetailEvent);
-    on<OrderDetailChangeProductQuality>(_onOrderDetailChangeProductQuality);
-    on<OrderDetailChangeProductQuantity>(_onOrderDetailChangeProductQuantity);
-    on<OrderDetailRemoveProductEvent>(_onOrderDetailRemoveProduct);
-    on<OrderCancellationReasonsEvent>(_onOrderCancellationReasonsChange);
-    on<OrderDetailsLoadMoreProductsEvent>(_onLoadMoreProducts);
+    on<InitialOrderDetailEvent>(_initializeOrderDetails);
+    on<OrderDetailRemoveProductEvent>(_removeProduct);
+    on<OrderCancellationReasonsEvent>(_updateCancellationReason);
   }
 
-  void _onInitialOrderDetailEvent(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) {
-    emit(const OrderDetailReloadState());
-    //TODO: Write code get Data from API
+  /// Initialize order details based on context and load necessary data.
+  Future<void> _initializeOrderDetails(InitialOrderDetailEvent event, Emitter<OrderDetailState> emit) async {
+    emit(const OrderDetailsLoadingState());
+
+    /// Set the current user type.
     userType = BlocProvider.of<AppBloc>(event.context).userType;
-    orderNumber = event.context.routesData?[RoutesData.orderNumber];
-    if (paginationScrollController.isInitialised) {
-      paginationScrollController.dispose();
-      paginationScrollController = SmartPaginationScrollController();
-    }
-    if (userType == UserType.b2bUser) {
-      orderProductDetailsList = _generateOrdersDetailsProductList();
-    } else {
-      orderProductList = _generateOrdersDetailsList();
-    }
+
+    /// Extract order number from route data.
+    _getRouteData(event.context);
+
+    /// Generate cancellation reasons.
     cancellationReasonsList = _generateCancellationReasonsList();
-    paginationScrollController.init(loadAction: (int currentPage) async {
-      add(OrderDetailsLoadMoreProductsEvent(currentPage));
-    });
+
+    /// Order details api call.
+    await fetchOrderDetailsData(context: event.context, emit: emit, orderNumber: orderNumber);
+
+    /// Emit loaded state after initialization.
     emit(const OrderDetailsLoadedState());
   }
 
-  void _onOrderDetailChangeProductQuality(OrderDetailChangeProductQuality event, Emitter<OrderDetailState> emit) {
-    emit(const OrderDetailReloadState());
-    if (orderProductList[event.index].productQuality?.name != event.productQuality.name) {
-      orderProductList[event.index].productQuality = event.productQuality;
-      emit(OrderDetailProductQualityChangedState(index: event.index, productQuality: event.productQuality));
+  /// Extract order number from route data.
+  void _getRouteData(BuildContext context) {
+    String? routeOrderNumber = context.routesData?[RoutesData.orderNumber];
+    if (routeOrderNumber.isNotNullNorEmpty) {
+      orderNumber = routeOrderNumber ?? "";
     }
   }
 
-  void _onOrderDetailChangeProductQuantity(OrderDetailChangeProductQuantity event, Emitter<OrderDetailState> emit) {
-    emit(const OrderDetailReloadState());
-    if (orderProductList[event.index].productQuantity?.name != event.productQuantity.name) {
-      orderProductList[event.index].productQuantity = event.productQuantity;
-      emit(OrderDetailProductQuantityChangedState(index: event.index, productQuantity: event.productQuantity));
-    }
-  }
-
-  void _onOrderDetailRemoveProduct(OrderDetailRemoveProductEvent event, Emitter<OrderDetailState> emit) {
-    emit(const OrderDetailReloadState());
+  /// Handle removing a product from the order.
+  Future<void> _removeProduct(OrderDetailRemoveProductEvent event, Emitter<OrderDetailState> emit) async {
+    emit(const OrderDetailsLoadingState());
     orderProductList.removeAt(event.index);
     emit(OrderDetailProductRemovedState(index: event.index));
   }
 
-  Future<void> _onOrderCancellationReasonsChange(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) async {
-    emit(const OrderDetailReloadState());
+  /// Update the selected cancellation reason.
+  Future<void> _updateCancellationReason(OrderCancellationReasonsEvent event, Emitter<OrderDetailState> emit) async {
+    emit(const OrderDetailsLoadingState());
     selectedReason = event.cancellationReasonModel;
+
     if (selectedReason != null) {
       emit(OrderCancellationReasonsChangeState(selectedReason!));
     }
   }
 
-  Future<void> _onLoadMoreProducts(OrderDetailsLoadMoreProductsEvent event, Emitter<OrderDetailState> emit) async {
-    emit(const OrderDetailsLoadingMoreProductsState());
-    await Future.delayed(const Duration(seconds: 2));
-    if (userType == UserType.b2bUser) {
-      orderProductDetailsList.addAll(_generateOrdersDetailsProductList());
-    } else {
-      orderProductList.addAll(_generateOrdersDetailsList());
-    }
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-    emit(OrderDetailsLoadedMoreProductsState(event.currentPage + 1));
-  }
-
-  // Helper methods
-  List<ProductDetailsModel> _generateOrdersDetailsList() {
-    return List.generate(
-      8,
-      (index) => ProductDetailsModel(
-        productId: index.toString(),
-        imageUrl: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
-        name: "DERC03RDA 1${index + 4}k White & Gold Engagement Ring",
-        originalPrice: "\$2,300.00",
-        productQuality: const CartProductQuality(name: "18K Gold"),
-        productQuantity: const CartProductQuantity(name: "1"),
-        cartProductQuality: [
-          const CartProductQuality(name: "18K Gold"),
-          const CartProductQuality(name: "10K Gold"),
-          const CartProductQuality(name: "14K Gold"),
-          const CartProductQuality(name: "22K Gold"),
-          const CartProductQuality(name: "28K Gold"),
-          const CartProductQuality(name: "20K Gold"),
-          const CartProductQuality(name: "24K Gold"),
-          const CartProductQuality(name: "32K Gold"),
-        ],
-        cartProductQuantity: List.generate(99, (i) => CartProductQuantity(name: "$i")),
-      ),
-    );
-  }
-
-  List<CancellationReasonModel> _generateCancellationReasonsList() {
-    return List.generate(
-      3,
-      (index) {
-        if (index == 2) {
-          return CancellationReasonModel(
-            id: index,
-            name: "Other",
-          );
+  /// Fetches the order list data from the API
+  Future<void> fetchOrderDetailsData(
+      {required BuildContext context, required Emitter<OrderDetailState> emit, required String orderNumber}) async {
+    Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response = await AppRepository(context).orderDetailsApiCall(id: orderNumber);
+    response?.fold((error) {
+      Utils.showMessage(error.message);
+      emit(const OrderDetailsLoadedState());
+    }, (CommonResponse<PlaceOrderResponse> success) {
+      final responseData = success.responseData as List<PlaceOrderResponse>?;
+      if (responseData.isNotNullNorEmpty) {
+        placeOrderResponse = responseData?.first;
+        if (userType == UserType.b2bUser) {
+          orderProductDetailsList = _generateOrderDetailsProductListForB2B(orderProductList: placeOrderResponse?.products ?? []);
         } else {
-          return CancellationReasonModel(
-            id: index,
-            name: "Reason ${index + 1}",
-          );
+          orderProductList = _generateOrderDetailsListForB2C(orderProductList: placeOrderResponse?.products ?? []);
         }
+      }
+      emit(const OrderDetailsLoadedState());
+    });
+  }
+
+  /// Generate a list of product details for B2C users.
+  List<ProductDetailsModel> _generateOrderDetailsListForB2C({required List<OrderProduct> orderProductList}) {
+    return List.generate(
+      orderProductList.length,
+      (index) {
+        final product = orderProductList[index];
+        return ProductDetailsModel(
+          productId: product.productProductId,
+          imageUrl: product.image,
+          name: product.productDescription,
+          originalPrice: product.originalAmount,
+          productQuality: CartProductQuality(name: product.discPercentage?.toString()),
+          productQuantity: CartProductQuantity(name: product.quantity?.toString()),
+          cartProductQuality: [
+            const CartProductQuality(name: "18K Gold"),
+            const CartProductQuality(name: "10K Gold"),
+            const CartProductQuality(name: "14K Gold"),
+            const CartProductQuality(name: "22K Gold"),
+            const CartProductQuality(name: "28K Gold"),
+            const CartProductQuality(name: "20K Gold"),
+            const CartProductQuality(name: "24K Gold"),
+            const CartProductQuality(name: "32K Gold"),
+          ],
+          cartProductQuantity: List.generate(99, (i) => CartProductQuantity(name: "$i")),
+        );
       },
     );
   }
 
-  List<OrderDetailsProductModel> _generateOrdersDetailsProductList() {
+  /// Generate a list of product details for B2B users.
+  List<OrderDetailsProductModel> _generateOrderDetailsProductListForB2B({required List<OrderProduct> orderProductList}) {
     return List.generate(
-      8,
-      (index) => OrderDetailsProductModel(
-        id: index.toString(),
-        image: index % 2 == 0 ? "https://i.ibb.co/8xM4BxQ/image-7.png" : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
-        name: "Diamond Vine Ring in 18k Gold",
-        price: "\$2,300.00",
-        quantity: "${Random().nextInt(100)}",
-        sku: "1254875",
-        status: "orange_in_progress",
-        brand: "Martin Flyer",
-        deliveryDate: "12/12/2021",
-      ),
+      orderProductList.length,
+      (index) {
+        final product = orderProductList[index];
+        return OrderDetailsProductModel(
+          id: product.productProductId,
+          image: product.image,
+          name: product.productDescription,
+          price: product.originalAmount,
+          quantity: product.quantity?.toString(),
+          sku: product.suid,
+          status: ProjectStatus.orangeInProgress.value,
+          brand: product.productId,
+          deliveryDate: "deliveryDate",
+        );
+      },
     );
   }
 
-  @override
-  Future<void> close() {
-    orderSearchController.dispose();
-    paginationScrollController.dispose();
-    return super.close();
+  /// Generate a list of cancellation reasons.
+  List<CancellationReasonModel> _generateCancellationReasonsList() {
+    return List.generate(
+      3,
+      (index) => CancellationReasonModel(
+        id: index,
+        name: index == 2 ? "Other" : "Reason ${index + 1}",
+      ),
+    );
   }
 }

@@ -82,7 +82,8 @@ class JewelleryTabView extends StatelessWidget {
                   currentScrollController: ordersBloc.orderPaginationScrollController,
                   ordersList: ordersBloc.filteredOrderList,
                   onTap: (index) {
-                    context.pushNamed(AppRoutes.orderDetailsPage);
+                    context
+                        .pushNamed(AppRoutes.orderDetailsPage, arguments: {RoutesData.orderNumber: ordersBloc.filteredOrderList[index].id});
                   },
                   bloc: ordersBloc,
                 );

@@ -31,6 +31,8 @@ class PlaceOrderResponse {
     required this.deletedAt,
     required this.uniqueId,
     required this.v,
+    required this.filteredRecords,
+    required this.totalRecords,
   });
 
   final DateTime? createdAt;
@@ -62,6 +64,8 @@ class PlaceOrderResponse {
   final dynamic deletedAt;
   final String? uniqueId;
   final String? v;
+  final int? filteredRecords;
+  final int? totalRecords;
 
   PlaceOrderResponse copyWith({
     DateTime? createdAt,
@@ -93,6 +97,8 @@ class PlaceOrderResponse {
     dynamic deletedAt,
     String? uniqueId,
     String? v,
+    int? filteredRecords,
+    int? totalRecords,
   }) {
     return PlaceOrderResponse(
       createdAt: createdAt ?? this.createdAt,
@@ -124,6 +130,8 @@ class PlaceOrderResponse {
       deletedAt: deletedAt ?? this.deletedAt,
       uniqueId: uniqueId ?? this.uniqueId,
       v: v ?? this.v,
+      filteredRecords: filteredRecords ?? this.filteredRecords,
+      totalRecords: totalRecords ?? this.totalRecords,
     );
   }
 
@@ -158,6 +166,8 @@ class PlaceOrderResponse {
       deletedAt: json["deletedAt"],
       uniqueId: json["unique_id"]?.toString(),
       v: json["__v"]?.toString(),
+      filteredRecords: json['filteredRecords']?.toString().toInt,
+      totalRecords: json['totalRecords']?.toString().toInt,
     );
   }
 
@@ -191,6 +201,8 @@ class PlaceOrderResponse {
         "deletedAt": deletedAt,
         "unique_id": uniqueId,
         "__v": v,
+        "filteredRecords": filteredRecords,
+        "totalRecords": totalRecords
       };
 }
 

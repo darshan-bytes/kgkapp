@@ -17,47 +17,55 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _getBody(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
-      buildWhen: (previous, current) => current is OrderDetailsLoadedState,
+      buildWhen: (previous, current) => current is OrderDetailsLoadedState || current is OrderDetailsLoadingState,
       builder: (context, state) {
+        if (state is OrderDetailsLoadingState) {
+          return const SmartCircularProgressIndicator();
+        }
         if (state is OrderDetailsLoadedState) {
           return SafeArea(
             child: SmartSingleChildScrollView(
-              controller: bloc.paginationScrollController.controller,
               physics: const ClampingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildOrderDetailsInfoCard(bloc, style, context),
-                  SizedBox(height: 24.h),
-                  _buildSearchTextField(bloc),
-                  SizedBox(height: 24.h),
-                  _buildOrderList(bloc, style),
-                  BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                    buildWhen: (previous, current) =>
-                        current is OrderDetailsLoadedMoreProductsState || current is OrderDetailsLoadingMoreProductsState,
-                    builder: (context, state) {
-                      return state is OrderDetailsLoadedMoreProductsState && state.currentPage > 3
-                          ? _buildOrderCreatorDetailsInfoCard(style, bloc)
-                          : const SizedBox.shrink();
-                    },
-                  ),
+                  _buildOrderDetailsInfoCard(context: context, style: style, placeOrderResponse: bloc.placeOrderResponse),
+                  // _buildOrderCreatorDetailsInfoCard(style, bloc),
+                  // SizedBox(height: 24.h),
+                  // _buildSearchTextField(bloc),
+                  // SizedBox(height: 24.h),
+                  // _buildOrderList(bloc, style),
                 ],
               ),
             ),
           );
         }
-        return const SmartCircularProgressIndicator();
+        return SizedBox.shrink();
       },
     );
   }
 
-  Widget _buildOrderDetailsInfoCard(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
+  Widget _buildOrderDetailsInfoCard(
+      {PlaceOrderResponse? placeOrderResponse, required OrderDetailScreenStyle style, required BuildContext context}) {
     return Container(
       color: style.detailsTileColor,
       padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: placeOrderResponse!
+                .toJson()
+                .entries
+                .map(
+                  (entry) => SmartText(
+                    "${entry.key}: ${entry.value} \n\n\n",
+                  ),
+                )
+                .toList(),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +75,7 @@ class OrderDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SmartText(
-                      '#14567',
+                      placeOrderResponse?.orderContextId ?? "",
                       style: style.orderIdStyle,
                     ),
                     SizedBox(height: 4.h),
@@ -81,7 +89,7 @@ class OrderDetailScreen extends StatelessWidget {
               SmartImage(
                 path: AppImages.icMenu,
                 onTap: () {
-                  _showOrderDetailPopup(bloc, context);
+                  // _showOrderDetailPopup(bloc, context);
                 },
               ),
             ],
@@ -138,12 +146,6 @@ class OrderDetailScreen extends StatelessWidget {
                   productDetails: product,
                   qualityOptionsList: product.cartProductQuality ?? [],
                   quantityOptionsList: product.cartProductQuantity ?? [],
-                  onQualityChanged: (CartProductQuality value) {
-                    bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                  },
-                  onQuantityChanged: (CartProductQuantity value) {
-                    bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                  },
                   priceTextStyle: style.priceTextStyle,
                 );
               } else {
@@ -207,14 +209,10 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildOrderList(OrderDetailBloc bloc, OrderDetailScreenStyle style) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
-      buildWhen: (previous, current) =>
-          current is OrderDetailProductRemovedState ||
-          current is OrderDetailsLoadedState ||
-          current is OrderDetailsLoadingMoreProductsState ||
-          current is OrderDetailsLoadedMoreProductsState,
+      buildWhen: (previous, current) => current is OrderDetailProductRemovedState || current is OrderDetailsLoadedState,
       builder: (context, state) {
         return ListView.separated(
-          itemCount: bloc.productListLength,
+          itemCount: bloc.orderProductDetailsList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 17.w),
@@ -223,41 +221,29 @@ class OrderDetailScreen extends StatelessWidget {
             if (bloc.userType == UserType.b2cUser) {
               product = bloc.orderProductList[index];
             }
-            return Column(
-              children: [
-                (bloc.userType == UserType.b2cUser)
-                    ? CartProductItem(
-                        boxHeight: 72.w,
-                        boxWidth: 72.w,
-                        isDropDownEnable: false,
-                        isCheckboxShow: false,
-                        selectedQuality: product.productQuality,
-                        selectedQuantity: product.productQuantity,
-                        onDeleteTap: () {},
-                        onRemoveTap: () {
-                          bloc.add(OrderDetailRemoveProductEvent(index: index));
-                        },
-                        onMoveToWishListTap: () {},
-                        productDetails: product,
-                        qualityOptionsList: product.cartProductQuality ?? [],
-                        quantityOptionsList: product.cartProductQuantity ?? [],
-                        onQualityChanged: (CartProductQuality value) {
-                          bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                        },
-                        onQuantityChanged: (CartProductQuantity value) {
-                          bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                        },
-                        priceTextStyle: style.priceTextStyle,
-                      )
-                    : OrderDetailsProductItem(
-                        productDetails: bloc.orderProductDetailsList[index],
-                        onTap: () {},
-                        onTapMenuButton: () {},
-                      ),
-                if (state is OrderDetailsLoadingMoreProductsState && index == bloc.productListLength - 1)
-                  const SmartCircularProgressIndicator(),
-              ],
-            );
+            return (bloc.userType == UserType.b2cUser)
+                ? CartProductItem(
+                    boxHeight: 72.w,
+                    boxWidth: 72.w,
+                    isDropDownEnable: false,
+                    isCheckboxShow: false,
+                    selectedQuality: product.productQuality,
+                    selectedQuantity: product.productQuantity,
+                    onDeleteTap: () {},
+                    onRemoveTap: () {
+                      bloc.add(OrderDetailRemoveProductEvent(index: index));
+                    },
+                    onMoveToWishListTap: () {},
+                    productDetails: product,
+                    qualityOptionsList: product.cartProductQuality ?? [],
+                    quantityOptionsList: product.cartProductQuantity ?? [],
+                    priceTextStyle: style.priceTextStyle,
+                  )
+                : OrderDetailsProductItem(
+                    productDetails: bloc.orderProductDetailsList[index],
+                    onTap: () {},
+                    onTapMenuButton: () {},
+                  );
           },
           separatorBuilder: (context, index) => SizedBox(height: 24.h),
         );

@@ -206,7 +206,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     orderPaginationScrollController.pullToRefresh();
     filteredOrderList.clear();
     originalOrderList.clear();
-    await fetchOrderListData(context, emit, searchQuery: orderSearchController.text);
+    await fetchOrderListData(context, emit);
     if (orderSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(const OrdersListLoadedState());
   }
@@ -260,14 +260,14 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Fetches the order list data from the API
   Future<void> fetchOrderListData(BuildContext context, Emitter<OrdersState> emit,
-      {bool isLoadMore = false, Map<String, dynamic>? query, String searchQuery = ''}) async {
+      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
     /// Here we need commodity base order data so we Get the commodity for the current tab
     String commodity = _getCommodityForTab(tabController.index);
 
     /// Build the query base on the current tab applied filters data
     query = buildQuery(
       filterData: appliedFilterData[tabController.index] ?? [],
-      searchQuery: searchQuery,
+      searchQuery: orderSearchController.text,
       currentPage: orderPaginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
       commodity: commodity,
@@ -293,7 +293,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   List<MyOrderDetailsModel> _populateOrderList(List<OrderItem> dataList) {
     return dataList.map<MyOrderDetailsModel>((OrderItem data) {
       return MyOrderDetailsModel(
-        id: data.sId,
+        id: data.uniqueId?.toString(),
         orderId: data.uniqueId?.toString(),
 
         /// need to discuss for show order status base on color

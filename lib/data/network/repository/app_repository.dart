@@ -965,8 +965,8 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<PlaceOrderResponse>>?> orderDetailsApiCall({required String id}) async {
-    var response = await getMethod<PaginationData<PlaceOrderResponse>>(ApiClient.orderDetails(id), withCurrencyHeader: true);
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderDetailsApiCall({required String id}) async {
+    var response = await getMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), withCurrencyHeader: true, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
