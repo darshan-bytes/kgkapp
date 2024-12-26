@@ -111,29 +111,15 @@ class WatchlistScreen extends StatelessWidget {
           return SafeArea(
             child: ScrollToHideWidget(
               controller: bloc.paginationScrollController.controller,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 16.0.h),
-                    child: SmartButton(
-                        onTap: () {
-                          bloc.createNewWatchlist(context);
-                        },
-                        title: APPStrings.create.tr),
-                  ),
-                  FilterBottomActionBar(
-                    onFilterTap: () {
-                      Utils.showSmartModalBottomSheet(
-                        context: context,
-                        builder: (context) => FilterScreen(
-                          onApply: () {},
-                        ),
-                      );
-                    },
-                  )
-                ],
+              child: FilterBottomActionBar(
+                onFilterTap: () {
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    builder: (context) => FilterScreen(
+                      onApply: () {},
+                    ),
+                  );
+                },
               ),
             ),
           );
