@@ -79,6 +79,7 @@ class AppRoutes {
   static const newsletterPage = '/newsletterPage';
   static const imageSearchPage = '/imageSearchPage';
   static const commentListingPage = '/commentListingPage';
+  static const applyPromoCodeScreen = '/applyPromoCodeScreen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -684,6 +685,15 @@ class AppRoutes {
         };
         break;
 
+      case applyPromoCodeScreen:
+        builder = (context) {
+          return BlocProvider<ApplyPromoCodeBloc>(
+            create: (context) => ApplyPromoCodeBloc()..add(InitialApplyPromoCodeEvent(context: context)),
+            child: ApplyPromoCodeScreen(),
+          );
+        };
+        break;
+
       default:
         return _errorRoute();
     }
@@ -763,7 +773,8 @@ enum RoutesData {
   isContinueClearCompare,
   catalogueId,
   dealsOfTheDay,
-  exhibitionId
+  exhibitionId,
+  promoCode
 }
 
 enum ScreenIdentifier {

@@ -80,17 +80,16 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return InkWell(
-      onTap: promoCode == null && onApplyPromoCode != null
-          ? () {
-              Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => ApplyPromoCodeBottomSheet(
-                        onApplyPromoCode: (promoCode) {
-                          onApplyPromoCode?.call(promoCode);
-                        },
-                      ));
+      onTap: () async {
+        /// navigate to applyPromoCodeScreen
+        await context.pushNamed(AppRoutes.applyPromoCodeScreen).then(
+          (value) {
+            if (value != null) {
+              onApplyPromoCode?.call(value[RoutesData.promoCode]);
             }
-          : null,
+          },
+        );
+      },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.h),
         child: Row(

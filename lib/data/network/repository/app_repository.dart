@@ -1009,6 +1009,11 @@ class AppRepository extends ApiService {
         query: {ApiKey.orderContextId: id}, withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, CommonResponse<ApplyPromoCodeModel>>?> fetchPromoCodeList() async {
+    var response = await getMethod<ApplyPromoCodeModel>(ApiClient.promoCodeList, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
