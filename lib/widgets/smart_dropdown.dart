@@ -18,6 +18,8 @@ class SmartDropDown<T> extends StatelessWidget {
   final bool isIcArrowDropDown;
   final bool isExpanded;
   final bool isChangeableValue;
+  final Function(String)? onSearchEvent;
+  final bool canSearch;
 
   const SmartDropDown({
     super.key,
@@ -38,6 +40,8 @@ class SmartDropDown<T> extends StatelessWidget {
     this.isIcArrowDropDown = true,
     this.isExpanded = true,
     this.isChangeableValue = true,
+    this.onSearchEvent,
+    this.canSearch = false, // Default to false (no search)
   });
 
   @override
@@ -57,25 +61,28 @@ class SmartDropDown<T> extends StatelessWidget {
         InkWell(
           focusNode: focusNode,
           onTap: () {
-            if(!isChangeableValue) {
+            if (!isChangeableValue) {
               return;
             }
             Utils.showSmartModalBottomSheet(
-                context: context,
-                isScrollControlled: scrollDirection == Axis.horizontal,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
-                ),
-                builder: (context) {
-                  return SmartDropDownView(
-                    scrollDirection: scrollDirection,
-                    hintText: hintText,
-                    onTap: onChanged,
-                    items: items,
-                    selectedItem: selectedItem,
-                    height: selectionWindowHeight,
-                  );
-                });
+              context: context,
+              isScrollControlled: scrollDirection == Axis.horizontal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
+              ),
+              builder: (context) {
+                return SmartDropDownView(
+                  scrollDirection: scrollDirection,
+                  hintText: hintText,
+                  onTap: onChanged,
+                  items: items,
+                  selectedItem: selectedItem,
+                  height: selectionWindowHeight,
+                  onSearchEvent: onSearchEvent,
+                  canSearch: canSearch,
+                );
+              },
+            );
           },
           child: Container(
             height: !isExpanded ? null : buttonHeight ?? 48.w,
@@ -132,6 +139,9 @@ class SmartDropDownView<T> extends StatelessWidget {
   final double? height;
   final String? hintText;
   final Axis scrollDirection;
+  final Function(String)? onSearchEvent;
+  final bool canSearch;
+  final ValueNotifier<String> searchNotifier;
 
   SmartDropDownView({
     super.key,
@@ -141,15 +151,18 @@ class SmartDropDownView<T> extends StatelessWidget {
     this.height,
     this.hintText,
     this.scrollDirection = Axis.vertical,
-  });
+    this.onSearchEvent,
+    this.canSearch = false, // Default is false, meaning no search
+  }) : searchNotifier = ValueNotifier<String>('');
 
   final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     SmartDropDownStyle style = AppTheme.of(context).smartDropDownStyle;
-    Widget child = Container(
-      height: height,
+
+    return Container(
+      height: height ?? 500.h,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.only(
@@ -167,13 +180,35 @@ class SmartDropDownView<T> extends StatelessWidget {
               SmartText(hintText!, style: style.labelStyle),
               SizedBox(height: 16.h),
             ],
-            Flexible(child: _buildItemList(items, style, context)),
+            // Conditionally display the search field
+            if (canSearch) ...[
+              SmartTextField.search(
+                height: 48.h,
+                hintText: '${APPStrings.search.tr} ${hintText ?? ''}',
+                onValueChanges: (value) {
+                  searchNotifier.value = value;
+                  if (onSearchEvent != null) onSearchEvent!(value);
+                },
+              ),
+              SizedBox(height: 8.h),
+            ],
+            ValueListenableBuilder<String>(
+              valueListenable: searchNotifier,
+              builder: (context, query, child) {
+                final filteredItems = items.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
+                return filteredItems.isNotEmpty
+                    ? Flexible(child: _buildItemList(filteredItems, style, context))
+                    : Expanded(
+                        child: Center(
+                          child: SmartText(APPStrings.noStateFound.tr),
+                        ),
+                      );
+              },
+            ),
           ],
         ),
       ),
     );
-
-    return child;
   }
 
   Widget _buildItemList(List<SmartDropDownItem<T>> filteredList, SmartDropDownStyle style, BuildContext context) {
@@ -181,9 +216,9 @@ class SmartDropDownView<T> extends StatelessWidget {
       controller: _scrollController,
       scrollDirection: scrollDirection,
       shrinkWrap: true,
-      itemCount: items.length,
+      itemCount: filteredList.length,
       itemBuilder: (context, index) {
-        final item = items[index];
+        final item = filteredList[index];
         final bool isSelected = selectedItem != null && item.value == selectedItem;
         Widget child = GestureDetector(
           onTap: () {

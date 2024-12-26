@@ -332,9 +332,12 @@ class ProductDetailsScreen extends StatelessWidget {
           _buildRatingBarAndReviews(style, bloc.productDetails),
           SizedBox(height: 16.h),
           _compareWidget(bloc, style),
-          Divider(height: 48.h),
-          _buildCustomizationList(bloc),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing) Divider(height: 48.h),
+          SizedBox(height: 16.h),
+
+          /// NOTE : COMMENTED AS OF NOW TO MAKE IT SIMILAR WITH WEB
+          // Divider(height: 48.h),
+          // _buildCustomizationList(bloc),
+          // if (bloc.screenIdentifier == ScreenIdentifier.productForRing) Divider(height: 48.h),
           if (!bloc.isCustomisation && bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             ProductCustomiseDescriptionWidget(
               onTap: () {
