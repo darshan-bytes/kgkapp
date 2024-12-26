@@ -68,7 +68,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   /// Args:
   ///   event (CalendarOnViewChangedEvent): The event containing details about the view change,
   ///                                        including the list of currently visible dates.
-  ///   emit (Emitter<CalendarState>): The function to emit new states to the calendar bloc.
+  ///   emit (Emitter CalendarState): The function to emit new states to the calendar bloc.
   Future<void> _onCalendarOnViewChangedEvent(CalendarOnViewChangedEvent event, Emitter<CalendarState> emit) async {
     emit(const CalendarReloadState());
 

@@ -76,7 +76,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: style.whiteColor,
         borderRadius: BorderRadius.circular(16.w),
-        boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.2), blurRadius: 10, offset: Offset(0, 4))],
+        boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.2), blurRadius: 10.r, offset: Offset(0, 4))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
