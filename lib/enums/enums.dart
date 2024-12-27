@@ -36,6 +36,9 @@ enum ProjectStatus {
   inActive('in_active'),
   onHold('on_hold'),
   wip('wip'),
+  pending('pending'),
+  completed('completed'),
+  cancelled('cancelled'),
   ;
 
   final String value;

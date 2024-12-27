@@ -172,6 +172,8 @@ class ApiClient {
 
   static String diyDetails(String id) => '$apiBaseUrl/diy/$id/view';
 
+  static String orderDetails(String id) => '$apiBaseUrl/orders/$id';
+
   static const String getExhibitionList = '$apiBaseUrl/exhibition/filters';
 
   static const String getExhibitionFilterListOption = '$apiBaseUrl/exhibition/filter-list';

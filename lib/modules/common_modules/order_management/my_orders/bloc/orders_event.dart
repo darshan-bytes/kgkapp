@@ -69,3 +69,12 @@ final class OrdersListSearchEvent extends OrdersEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class NavigateToOrderDetailsEvent extends OrdersEvent {
+  final String uniqueId;
+  final BuildContext context;
+  const NavigateToOrderDetailsEvent({required this.context, required this.uniqueId});
+
+  @override
+  List<Object> get props => [uniqueId, context];
+}

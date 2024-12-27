@@ -74,6 +74,12 @@ class SmartStatusBadge extends StatelessWidget {
         return ProjectStatus.onHold.value;
       case ProjectStatus.wip:
         return ProjectStatus.wip.value;
+      case ProjectStatus.pending:
+        return ProjectStatus.pending.value;
+      case ProjectStatus.completed:
+        return ProjectStatus.completed.value;
+      case ProjectStatus.cancelled:
+        return ProjectStatus.cancelled.value;
     }
   }
 
@@ -109,6 +115,12 @@ class SmartStatusBadge extends StatelessWidget {
         return style.yellowBgColor;
       case ProjectStatus.wip:
         return style.blueInProgressBackgroundColor;
+      case ProjectStatus.pending:
+        return style.yellowBgColor;
+      case ProjectStatus.completed:
+        return style.activeBackgroundColor;
+      case ProjectStatus.cancelled:
+        return style.lostBackgroundColor;
     }
   }
 
@@ -144,6 +156,12 @@ class SmartStatusBadge extends StatelessWidget {
         return style.yellowTextColor;
       case ProjectStatus.wip:
         return style.blueInProgressTextColor;
+      case ProjectStatus.pending:
+        return style.yellowTextColor;
+      case ProjectStatus.completed:
+        return style.activeTextColor;
+      case ProjectStatus.cancelled:
+        return style.lostTextColor;
     }
   }
 }

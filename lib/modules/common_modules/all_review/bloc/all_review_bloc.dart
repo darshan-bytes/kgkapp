@@ -54,7 +54,7 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
       },
       (data) {
         totalNumberOfPages = Utils.calculateTotalPages(data.filteredRecords, AppConst.pageLimit);
-        List<ProductReviewModel> localList = data.dataList as List<ProductReviewModel>? ?? [];
+        List<ProductReviewModel> localList = data.dataList ?? [];
         productReviewListAPI.addAll(localList);
         for (ProductReviewModel e in localList) {
           reviewList.add(ReviewDataModel(

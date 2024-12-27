@@ -382,7 +382,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       response?.fold((l) {
         Utils.showMessage(l.message);
       }, (PaginationData<ShapeMasterDetails> r) {
-        shapeMasterDetails = (r.dataList as List<ShapeMasterDetails>?) ?? [];
+        shapeMasterDetails = r.dataList ?? [];
       });
     } catch (e) {
       printWrapped(e.toString());
@@ -397,7 +397,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       response?.fold((l) {
         Utils.showMessage(l.message);
       }, (PaginationData<HomeNewLanuchesDatum> r) {
-        newLaunchedList = (r.dataList as List<HomeNewLanuchesDatum>?) ?? [];
+        newLaunchedList = r.dataList ?? [];
       });
     } catch (e) {
       printWrapped(e.toString());
@@ -420,7 +420,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       response?.fold(
         (l) {},
         (PaginationData<CommodityMasterDetails> r) {
-          commodityMasterDetails = (r.dataList as List<CommodityMasterDetails>?) ?? [];
+          commodityMasterDetails = r.dataList ?? [];
         },
       );
     } catch (e) {
