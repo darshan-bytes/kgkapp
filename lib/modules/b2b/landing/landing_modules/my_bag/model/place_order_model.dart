@@ -31,6 +31,11 @@ class PlaceOrderResponse {
     required this.deletedAt,
     required this.uniqueId,
     required this.v,
+    required this.items,
+    required this.totalQuantity,
+    required this.createdByDetails,
+    required this.shippingAddressDetails,
+    required this.billingAddressDetails,
   });
 
   final DateTime? createdAt;
@@ -62,6 +67,11 @@ class PlaceOrderResponse {
   final dynamic deletedAt;
   final String? uniqueId;
   final String? v;
+  final int? items;
+  final int? totalQuantity;
+  final UserIdDetails? createdByDetails;
+  final AddressDetails? shippingAddressDetails;
+  final AddressDetails? billingAddressDetails;
 
   PlaceOrderResponse copyWith({
     DateTime? createdAt,
@@ -93,6 +103,13 @@ class PlaceOrderResponse {
     dynamic deletedAt,
     String? uniqueId,
     String? v,
+    int? filteredRecords,
+    int? totalRecords,
+    int? items,
+    int? totalQuantity,
+    UserIdDetails? createdByDetails,
+    AddressDetails? shippingAddressDetails,
+    AddressDetails? billingAddressDetails,
   }) {
     return PlaceOrderResponse(
       createdAt: createdAt ?? this.createdAt,
@@ -124,6 +141,11 @@ class PlaceOrderResponse {
       deletedAt: deletedAt ?? this.deletedAt,
       uniqueId: uniqueId ?? this.uniqueId,
       v: v ?? this.v,
+      items: items ?? this.items,
+      totalQuantity: totalQuantity ?? this.totalQuantity,
+      createdByDetails: createdByDetails ?? this.createdByDetails,
+      shippingAddressDetails: shippingAddressDetails ?? this.shippingAddressDetails,
+      billingAddressDetails: billingAddressDetails ?? this.billingAddressDetails,
     );
   }
 
@@ -158,6 +180,11 @@ class PlaceOrderResponse {
       deletedAt: json["deletedAt"],
       uniqueId: json["unique_id"]?.toString(),
       v: json["__v"]?.toString(),
+      items: json["total_items"],
+      totalQuantity: json["quantity"],
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      shippingAddressDetails: json["shipping_address_detail"] == null ? null : AddressDetails.fromJson(json["shipping_address_detail"]),
+      billingAddressDetails: json["billing_address_detail"] == null ? null : AddressDetails.fromJson(json["billing_address_detail"]),
     );
   }
 
@@ -191,6 +218,11 @@ class PlaceOrderResponse {
         "deletedAt": deletedAt,
         "unique_id": uniqueId,
         "__v": v,
+        "items": items,
+        "quantity": totalQuantity,
+        "created_by_details": createdByDetails?.toJson(),
+        "shipping_address_detail": shippingAddressDetails?.toJson(),
+        "billing_address_detail": billingAddressDetails?.toJson(),
       };
 }
 
@@ -334,4 +366,26 @@ class OrderProduct {
         "original_rate": originalRate,
         "image": image,
       };
+}
+
+extension PlaceOrderModelExt on PlaceOrderResponse {
+  String get getOrderDate {
+    if (createdAt == null) return '';
+    return createdAt!.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2);
+  }
+
+  ProjectStatus? get getOrderStatus {
+    switch (orderStatus) {
+      case "pending":
+        return ProjectStatus.pending;
+      case "completed":
+        return ProjectStatus.completed;
+      case "cancelled":
+        return ProjectStatus.cancelled;
+      case "on-going":
+        return ProjectStatus.onGoing;
+      default:
+        return null;
+    }
+  }
 }

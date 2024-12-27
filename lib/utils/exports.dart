@@ -485,7 +485,7 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:kgk/modules/common_modules/product_details/view/product_details_component_view.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/newly_lanuches_model.dart';
 export 'package:kgk/modules/common_modules/find_a_store/model/retail_store_model.dart';
-export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_individual_order_model.dart';
+export 'package:kgk/modules/b2b/landing/landing_modules/my_bag/model/place_order_model.dart';
 export 'package:kgk/modules/common_modules/faq/model/faq_strapi_model.dart';
 export 'package:kgk/app/location_service.dart';
 export 'package:kgk/modules/b2b/calendar/model/calendar_search_data_model.dart';
@@ -501,3 +501,4 @@ export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/view/ap
 export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/model/apply_promo_code_model.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:kgk/model/placeholder_data.dart';
+export 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';

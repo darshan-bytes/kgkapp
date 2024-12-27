@@ -123,7 +123,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       (error) => Utils.showMessage(error.message),
       (PaginationData<DiyStyleListModel> success) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        final List<DiyStyleListModel> localList = (success.dataList ?? []) as List<DiyStyleListModel>;
+        final List<DiyStyleListModel> localList = (success.dataList ?? []);
         diyStyleList.addAll(localList);
         productList.addAll(localList.map((item) {
           return ProductDetailsModel(

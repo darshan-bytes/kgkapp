@@ -25,26 +25,6 @@ final class OrderDetailsLoadedState extends OrderDetailState {
   List<Object> get props => [];
 }
 
-final class OrderDetailProductQualityChangedState extends OrderDetailState {
-  final int index;
-  final CartProductQuality productQuality;
-
-  const OrderDetailProductQualityChangedState({required this.index, required this.productQuality});
-
-  @override
-  List<Object> get props => [index, productQuality];
-}
-
-final class OrderDetailProductQuantityChangedState extends OrderDetailState {
-  final int index;
-  final CartProductQuantity productQuantity;
-
-  const OrderDetailProductQuantityChangedState({required this.index, required this.productQuantity});
-
-  @override
-  List<Object> get props => [index, productQuantity];
-}
-
 final class OrderDetailProductRemovedState extends OrderDetailState {
   final int index;
 
@@ -63,18 +43,9 @@ final class OrderCancellationReasonsChangeState extends OrderDetailState {
   List<Object> get props => [cancellationReasonModel];
 }
 
-final class OrderDetailsLoadingMoreProductsState extends OrderDetailState {
-  const OrderDetailsLoadingMoreProductsState();
+final class OrderDetailsLoadingState extends OrderDetailState {
+  const OrderDetailsLoadingState();
 
   @override
   List<Object> get props => [];
-}
-
-final class OrderDetailsLoadedMoreProductsState extends OrderDetailState {
-  final int currentPage;
-
-  const OrderDetailsLoadedMoreProductsState(this.currentPage);
-
-  @override
-  List<Object> get props => [currentPage];
 }

@@ -172,7 +172,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
       Utils.showMessage(error.message);
     }, (PaginationData<DigitalCatalogueDetails> success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<DigitalCatalogueDetails> dataList = (success.dataList as List<DigitalCatalogueDetails>?) ?? [];
+      List<DigitalCatalogueDetails> dataList = success.dataList ?? [];
       digitalCatalogueList.addAll(_populateDigitalCatalogueList(dataList));
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(DigitalCatalogueLoadedState());

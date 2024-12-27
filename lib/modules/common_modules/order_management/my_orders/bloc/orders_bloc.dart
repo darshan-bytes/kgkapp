@@ -63,8 +63,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<ChangeOrderTabsEvent>(_onChangeTabEvent);
     on<MyOrderListingLoadMoreEvent>(_onListingLoadMoreEvent);
     on<OrdersListPullToRefreshEvent>(_onListPullToRefreshEvent);
-    on<OrdersListSearchEvent>(_onListSearchEvent);
+    on<OrdersListSearchEvent>(_onListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<OrdersListFilterEvent>(_onListFilterEvent);
+    on<NavigateToOrderDetailsEvent>(_onNavigateToOrderDetailsEvent);
 
     /// TODO: selected stone type for filter is currently not in use as discussed with JD.
     // on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
@@ -99,12 +100,17 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Handles the search event for order listings
   Future<void> _onListSearchEvent(OrdersListSearchEvent event, Emitter<OrdersState> emit) async {
-    _handleSearch(emit);
+    await _handleSearch(emit, context: event.context);
   }
 
   /// Handles the filter event for order listings
   Future<void> _onListFilterEvent(OrdersListFilterEvent event, Emitter<OrdersState> emit) async {
     await _handleApplyFilter(event.context, emit, event.filterData);
+  }
+
+  /// Handles the navigate to order details event
+  Future<void> _onNavigateToOrderDetailsEvent(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
+    await _handleNavigateToOrderDetails(event, emit);
   }
 
   /// TODO: selected stone type for filter is currently not in use as discussed with JD.
@@ -201,22 +207,21 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   /// Handles the search event locally
-  void _handleSearch(Emitter<OrdersState> emit) {
-    emit(const OrdersReloadState());
-    if (orderSearchController.text.isNotEmpty) {
-      String query = orderSearchController.text.toLowerCase();
-      filteredOrderList = originalOrderList
-          .where((auction) =>
-              (auction.deliveryDate ?? '').toLowerCase().contains(query) ||
-              (auction.orderDate ?? '').toLowerCase().contains(query) ||
-              (auction.orderId ?? '').toLowerCase().contains(query) ||
-              (auction.orderItems ?? '').toLowerCase().contains(query) ||
-              (auction.orderQuantity ?? '').toLowerCase().contains(query))
-          .toList();
-    } else {
-      filteredOrderList = List.from(originalOrderList);
-    }
+  Future<void> _handleSearch(Emitter<OrdersState> emit, {required BuildContext context}) async {
+    emit(const OrdersLoadingState());
+    orderPaginationScrollController.pullToRefresh();
+    filteredOrderList.clear();
+    originalOrderList.clear();
+    await fetchOrderListData(context, emit);
+    if (orderSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(const OrdersListLoadedState());
+  }
+
+  /// Handles the navigate to order details event
+  Future<void> _handleNavigateToOrderDetails(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
+    event.context.pushNamed(AppRoutes.orderDetailsPage, arguments: {
+      RoutesData.orderNumber: event.uniqueId,
+    });
   }
 
   /// Builds the filters dynamically based on the filter data
@@ -253,10 +258,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     required int currentPage,
     required int pageLimit,
     required String commodity,
+    required String searchQuery,
   }) {
     Map<String, dynamic> query = {};
     query.addAll(buildFilters(filterData));
     query.addAll({
+      ApiKey.search: searchQuery,
       ApiKey.page: currentPage,
       ApiKey.limit: pageLimit,
       ApiKey.commodity: commodity,
@@ -273,6 +280,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     /// Build the query base on the current tab applied filters data
     query = buildQuery(
       filterData: appliedFilterData[tabController.index] ?? [],
+      searchQuery: orderSearchController.text,
       currentPage: orderPaginationScrollController.currentPage,
       pageLimit: AppConst.pageLimit,
       commodity: commodity,
@@ -298,7 +306,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   List<MyOrderDetailsModel> _populateOrderList(List<OrderItem> dataList) {
     return dataList.map<MyOrderDetailsModel>((OrderItem data) {
       return MyOrderDetailsModel(
-        id: data.sId,
+        id: data.uniqueId?.toString(),
         orderId: data.uniqueId?.toString(),
 
         /// need to discuss for show order status base on color
@@ -336,6 +344,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           );
           filterData.add(filter);
         }
+
+        /// Parse the new filters list instead of referencing the map.
         List.generate(tabs.length, (index) {
           return appliedFilterData[index] = filterData.map((e) {
             FilterData filter = FilterData(

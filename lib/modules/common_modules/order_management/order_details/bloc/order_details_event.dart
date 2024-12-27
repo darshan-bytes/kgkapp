@@ -13,26 +13,6 @@ final class InitialOrderDetailEvent extends OrderDetailEvent {
   List<Object> get props => [context];
 }
 
-final class OrderDetailChangeProductQuality extends OrderDetailEvent {
-  final int index;
-  final CartProductQuality productQuality;
-
-  const OrderDetailChangeProductQuality({required this.index, required this.productQuality});
-
-  @override
-  List<Object> get props => [index, productQuality];
-}
-
-final class OrderDetailChangeProductQuantity extends OrderDetailEvent {
-  final int index;
-  final CartProductQuantity productQuantity;
-
-  const OrderDetailChangeProductQuantity({required this.index, required this.productQuantity});
-
-  @override
-  List<Object> get props => [index, productQuantity];
-}
-
 final class OrderDetailRemoveProductEvent extends OrderDetailEvent {
   final int index;
 
@@ -49,13 +29,4 @@ class OrderCancellationReasonsEvent extends OrderDetailEvent {
 
   @override
   List<Object> get props => [cancellationReasonModel];
-}
-
-final class OrderDetailsLoadMoreProductsEvent extends OrderDetailEvent {
-  final int currentPage;
-
-  const OrderDetailsLoadMoreProductsEvent(this.currentPage);
-
-  @override
-  List<Object> get props => [currentPage];
 }

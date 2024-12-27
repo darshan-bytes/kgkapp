@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key});
@@ -11,170 +10,44 @@ class OrderDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.myOrders.tr),
-      body: _getBody(bloc, style, context),
-    );
-  }
-
-  Widget _getBody(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
-    return BlocBuilder<OrderDetailBloc, OrderDetailState>(
-      buildWhen: (previous, current) => current is OrderDetailsLoadedState,
-      builder: (context, state) {
-        if (state is OrderDetailsLoadedState) {
-          return SafeArea(
-            child: SmartSingleChildScrollView(
-              controller: bloc.paginationScrollController.controller,
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildOrderDetailsInfoCard(bloc, style, context),
-                  SizedBox(height: 24.h),
-                  _buildSearchTextField(bloc),
-                  SizedBox(height: 24.h),
-                  _buildOrderList(bloc, style),
-                  BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                    buildWhen: (previous, current) =>
-                        current is OrderDetailsLoadedMoreProductsState || current is OrderDetailsLoadingMoreProductsState,
-                    builder: (context, state) {
-                      return state is OrderDetailsLoadedMoreProductsState && state.currentPage > 3
-                          ? _buildOrderCreatorDetailsInfoCard(style, bloc)
-                          : const SizedBox.shrink();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-        return const SmartCircularProgressIndicator();
-      },
-    );
-  }
-
-  Widget _buildOrderDetailsInfoCard(OrderDetailBloc bloc, OrderDetailScreenStyle style, BuildContext context) {
-    return Container(
-      color: style.detailsTileColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SmartText(
-                      '#14567',
-                      style: style.orderIdStyle,
-                    ),
-                    SizedBox(height: 4.h),
-                    SmartText(
-                      "Ordered on: 17/03/23 10:00 PM",
-                      style: style.orderDateStyle,
-                    )
-                  ],
-                ),
-              ),
-              SmartImage(
-                path: AppImages.icMenu,
-                onTap: () {
-                  _showOrderDetailPopup(bloc, context);
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: 14.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildDetailColumn(APPStrings.status.tr, ProjectStatus.active.value, style, isOrderStatus: true)),
-              Expanded(child: _buildDetailColumn(APPStrings.items.tr, "15", style)),
-              Expanded(child: _buildDetailColumn(APPStrings.qty.tr, "250  ", style)),
-              Expanded(child: _buildDetailColumn(APPStrings.totalAmount.tr, "\$1,12,500", style, totalAmount: true)),
-            ],
-          ),
-        ],
+      body: BlocBuilder<OrderDetailBloc, OrderDetailState>(
+        buildWhen: (previous, current) => current is OrderDetailsLoadedState || current is OrderDetailsLoadingState,
+        builder: (context, state) {
+          if (state is OrderDetailsLoadingState) {
+            return const SmartCircularProgressIndicator();
+          }
+          if (state is OrderDetailsLoadedState) {
+            return _OrderDetailBody(bloc: bloc, style: style);
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
+}
 
-  Widget _buildOrderCreatorDetailsInfoCard(
-    OrderDetailScreenStyle style,
-    OrderDetailBloc bloc,
-  ) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 22.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(APPStrings.cancelItemList.tr, style: style.orderIdStyle),
-          SizedBox(
-            height: 22.h,
-          ),
-          ListView.separated(
-            itemCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              if (bloc.userType == UserType.b2cUser) {
-                late ProductDetailsModel product;
-                if (bloc.userType == UserType.b2cUser) {
-                  product = bloc.orderProductList[index];
-                }
-                return CartProductItem(
-                  boxHeight: 72.w,
-                  boxWidth: 72.w,
-                  isDropDownEnable: false,
-                  isCheckboxShow: false,
-                  selectedQuality: product.productQuality,
-                  selectedQuantity: product.productQuantity,
-                  onRemoveTap: () {
-                    bloc.add(OrderDetailRemoveProductEvent(index: index));
-                  },
-                  onMoveToWishListTap: () {},
-                  productDetails: product,
-                  qualityOptionsList: product.cartProductQuality ?? [],
-                  quantityOptionsList: product.cartProductQuantity ?? [],
-                  onQualityChanged: (CartProductQuality value) {
-                    bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                  },
-                  onQuantityChanged: (CartProductQuantity value) {
-                    bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                  },
-                  priceTextStyle: style.priceTextStyle,
-                );
-              } else {
-                return OrderDetailsProductItem(
-                  productDetails: bloc.orderProductDetailsList[index],
-                  onTap: () {},
-                );
-              }
-            },
-            separatorBuilder: (context, index) => SizedBox(height: 24.h),
-          ),
-          SizedBox(
-            height: 32.h,
-          ),
-          _buildCreatorDetailItem(
-              title: APPStrings.createdBy.tr,
-              iconImage: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-              value: "Michael Lee",
-              style: style),
-          SizedBox(height: 24.h),
-          _buildCreatorDetailItem(
-              title: APPStrings.contactInfo.tr, iconImage: AppImages.icMail, value: "business@domain.com", style: style),
-          SizedBox(height: 12.h),
-          _buildCreatorDetailItem(iconImage: AppImages.icPhone, value: "(406) 555-0120", style: style),
-          SizedBox(height: 24.h),
-          _buildCreatorDetailItem(
-              title: APPStrings.billingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
-          SizedBox(height: 12.h),
-          _buildCreatorDetailItem(
-              title: APPStrings.shippingAddress.tr, value: "2972 Westheimer Rd. Santa Ana, Illinois 85486 ", style: style),
-        ],
+class _OrderDetailBody extends StatelessWidget {
+  final OrderDetailBloc bloc;
+  final OrderDetailScreenStyle style;
+
+  const _OrderDetailBody({required this.bloc, required this.style});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: SmartSingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _OrderDetailsInfoCard(style: style, placeOrderResponse: bloc.placeOrderResponse),
+            _OrderCreatorDetailsCard(style: style, bloc: bloc, placeOrderResponse: bloc.placeOrderResponse),
+            SizedBox(height: 24.h),
+            _buildSearchTextField(bloc),
+            SizedBox(height: 24.h),
+            _buildOrderList(bloc, style)
+          ],
+        ),
       ),
     );
   }
@@ -191,15 +64,17 @@ class OrderDetailScreen extends StatelessWidget {
               controller: bloc.orderSearchController,
             ),
           ),
-          SizedBox(width: 16.0.w),
-          SelectionButton(
-            width: 48.w,
-            imageHeight: 24.5.w,
-            imageWidth: 24.5.w,
-            isSelected: false,
-            image: AppImages.icMenu,
-            onTap: () {},
-          ),
+
+          /// TODO: three dot button is currently not in use as discussed with JD.
+          // SizedBox(width: 16.0.w),
+          // SelectionButton(
+          //   width: 48.w,
+          //   imageHeight: 24.5.w,
+          //   imageWidth: 24.5.w,
+          //   isSelected: false,
+          //   image: AppImages.icMenu,
+          //   onTap: () {},
+          // ),
         ],
       ),
     );
@@ -207,136 +82,45 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildOrderList(OrderDetailBloc bloc, OrderDetailScreenStyle style) {
     return BlocBuilder<OrderDetailBloc, OrderDetailState>(
-      buildWhen: (previous, current) =>
-          current is OrderDetailProductRemovedState ||
-          current is OrderDetailsLoadedState ||
-          current is OrderDetailsLoadingMoreProductsState ||
-          current is OrderDetailsLoadedMoreProductsState,
+      buildWhen: (previous, current) => current is OrderDetailProductRemovedState || current is OrderDetailsLoadedState,
       builder: (context, state) {
         return ListView.separated(
-          itemCount: bloc.productListLength,
+          itemCount: bloc.userType == UserType.b2cUser ? bloc.orderProductList.length : bloc.orderProductDetailsList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
-            late ProductDetailsModel product;
             if (bloc.userType == UserType.b2cUser) {
-              product = bloc.orderProductList[index];
+              final ProductDetailsModel product = bloc.orderProductList[index];
+              return CartProductItem(
+                boxHeight: 72.w,
+                boxWidth: 72.w,
+                isDropDownEnable: false,
+                isCheckboxShow: false,
+                isEnableAddToWatchList: false,
+                selectedQuality: product.productQuality,
+                selectedQuantity: product.productQuantity,
+                onRemoveTap: () {
+                  bloc.add(OrderDetailRemoveProductEvent(index: index));
+                },
+                onMoveToWishListTap: null,
+                productDetails: product,
+                qualityOptionsList: product.cartProductQuality ?? [],
+                quantityOptionsList: product.cartProductQuantity ?? [],
+                priceTextStyle: style.priceTextStyle,
+              );
+            } else {
+              final productDetails = bloc.orderProductDetailsList[index];
+              return OrderDetailsProductItem(
+                productDetails: productDetails,
+                onTap: () {},
+                onTapMenuButton: () {},
+              );
             }
-            return Column(
-              children: [
-                (bloc.userType == UserType.b2cUser)
-                    ? CartProductItem(
-                        boxHeight: 72.w,
-                        boxWidth: 72.w,
-                        isDropDownEnable: false,
-                        isCheckboxShow: false,
-                        selectedQuality: product.productQuality,
-                        selectedQuantity: product.productQuantity,
-                        onDeleteTap: () {},
-                        onRemoveTap: () {
-                          bloc.add(OrderDetailRemoveProductEvent(index: index));
-                        },
-                        onMoveToWishListTap: () {},
-                        productDetails: product,
-                        qualityOptionsList: product.cartProductQuality ?? [],
-                        quantityOptionsList: product.cartProductQuantity ?? [],
-                        onQualityChanged: (CartProductQuality value) {
-                          bloc.add(OrderDetailChangeProductQuality(index: index, productQuality: value));
-                        },
-                        onQuantityChanged: (CartProductQuantity value) {
-                          bloc.add(OrderDetailChangeProductQuantity(index: index, productQuantity: value));
-                        },
-                        priceTextStyle: style.priceTextStyle,
-                      )
-                    : OrderDetailsProductItem(
-                        productDetails: bloc.orderProductDetailsList[index],
-                        onTap: () {},
-                        onTapMenuButton: () {},
-                      ),
-                if (state is OrderDetailsLoadingMoreProductsState && index == bloc.productListLength - 1)
-                  const SmartCircularProgressIndicator(),
-              ],
-            );
           },
           separatorBuilder: (context, index) => SizedBox(height: 24.h),
         );
       },
-    );
-  }
-
-  Widget _buildDetailColumn(String title, String? value, OrderDetailScreenStyle style,
-      {bool isOrderStatus = false, bool totalAmount = false}) {
-    return Padding(
-      padding: EdgeInsets.only(right: 6.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmartText(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: style.orderItemLabelStyle,
-          ),
-          SizedBox(height: 4.h),
-          isOrderStatus
-              ? SmartStatusBadge(currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value))
-              : SmartText(
-                  value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
-                ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCreatorDetailItem({String? title, String? value, required OrderDetailScreenStyle style, String? iconImage}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 120.w,
-          child: SmartText(
-            title,
-            style: style.orderItemLabelStyle,
-          ),
-        ),
-        SizedBox(
-          width: 16.w,
-        ),
-        Expanded(
-          child: Row(
-            children: [
-              if (iconImage != null)
-                Padding(
-                  padding: EdgeInsets.only(right: 4.w),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50.r),
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: SmartImage(
-                        path: iconImage,
-                        fit: BoxFit.fill,
-                        height: 24.w,
-                        width: 24.w,
-                      ),
-                    ),
-                  ),
-                ),
-              if (value != null)
-                Flexible(
-                  child: SmartText(
-                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                    style: style.orderItemValueStyle,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
@@ -445,6 +229,238 @@ class OrderDetailScreen extends StatelessWidget {
         padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
         child: SmartText(text, style: style),
       ),
+    );
+  }
+}
+
+class _OrderDetailsInfoCard extends StatelessWidget {
+  final OrderDetailScreenStyle style;
+  final PlaceOrderResponse? placeOrderResponse;
+
+  const _OrderDetailsInfoCard({required this.style, this.placeOrderResponse});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: style.detailsTileColor,
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if ((placeOrderResponse?.uniqueId).isNotNullNorEmpty) ...[
+                      SmartText(
+                        "#${placeOrderResponse?.uniqueId}",
+                        style: style.orderIdStyle,
+                      ),
+                      SizedBox(height: 4.h),
+                    ],
+                    SmartRichText(
+                      spans: [
+                        SmartTextSpan(text: APPStrings.orderOn.tr, style: style.orderDateStyle),
+                        SmartTextSpan(text: " : ", style: style.orderDateStyle),
+                        SmartTextSpan(text: placeOrderResponse!.getOrderDate, style: style.orderDateStyle),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SmartImage(
+                path: AppImages.icMenu,
+                onTap: () {
+                  // Handle menu tap
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 14.h),
+          Row(
+            children: [
+              _DetailColumn(
+                title: APPStrings.status.tr,
+                value: placeOrderResponse!.getOrderStatus?.value,
+                style: style,
+                isOrderStatus: true,
+              ),
+              _DetailColumn(
+                title: APPStrings.items.tr,
+                value: placeOrderResponse?.items?.toString(),
+                style: style,
+              ),
+              _DetailColumn(
+                title: APPStrings.qty.tr,
+                value: placeOrderResponse?.totalQuantity?.toString(),
+                style: style,
+              ),
+              _DetailColumn(
+                title: APPStrings.totalAmount.tr,
+                value: placeOrderResponse?.totalPrice,
+                style: style,
+                totalAmount: true,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrderCreatorDetailsCard extends StatelessWidget {
+  final OrderDetailScreenStyle style;
+  final OrderDetailBloc bloc;
+  final PlaceOrderResponse? placeOrderResponse;
+
+  const _OrderCreatorDetailsCard({required this.style, required this.bloc, required this.placeOrderResponse});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 22.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// Development pending form backend
+          _CreatorDetailItem(
+            title: APPStrings.createdBy.tr,
+            iconImage: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+            value: "Michael Lee",
+            style: style,
+          ),
+          SizedBox(height: 24.h),
+          _CreatorDetailItem(
+            title: APPStrings.contactInfo.tr,
+            iconImage: AppImages.icMail,
+            value: "business@domain.com",
+            style: style,
+          ),
+          SizedBox(height: 12.h),
+          _CreatorDetailItem(
+            iconImage: AppImages.icPhone,
+            value: "(406) 555-0120",
+            style: style,
+          ),
+          SizedBox(height: 24.h),
+          if ((placeOrderResponse?.billingAddressDetails?.fullAddress).isNotNullNorEmpty) ...[
+            _CreatorDetailItem(
+              title: APPStrings.billingAddress.tr,
+              value: placeOrderResponse?.billingAddressDetails?.fullAddress,
+              style: style,
+            ),
+            SizedBox(height: 12.h),
+          ],
+          if ((placeOrderResponse?.shippingAddressDetails?.fullAddress).isNotNullNorEmpty)
+            _CreatorDetailItem(
+              title: APPStrings.shippingAddress.tr,
+              value: placeOrderResponse?.shippingAddressDetails?.fullAddress,
+              style: style,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailColumn extends StatelessWidget {
+  final String title;
+  final String? value;
+  final OrderDetailScreenStyle style;
+  final bool isOrderStatus;
+  final bool totalAmount;
+
+  const _DetailColumn({
+    required this.title,
+    this.value,
+    required this.style,
+    this.isOrderStatus = false,
+    this.totalAmount = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(right: 6.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmartText(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: style.orderItemLabelStyle,
+            ),
+            SizedBox(height: 4.h),
+            isOrderStatus
+                ? SmartStatusBadge(
+                    currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value),
+                  )
+                : SmartText(
+                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CreatorDetailItem extends StatelessWidget {
+  final String? title;
+  final String? value;
+  final String? iconImage;
+  final OrderDetailScreenStyle style;
+
+  const _CreatorDetailItem({this.title, this.value, this.iconImage, required this.style});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 120.w,
+          child: SmartText(
+            title,
+            style: style.orderItemLabelStyle,
+          ),
+        ),
+        SizedBox(width: 16.w),
+        Expanded(
+          child: Row(
+            children: [
+              if (iconImage != null)
+                Padding(
+                  padding: EdgeInsets.only(right: 4.w),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.r),
+                    child: SmartImage(
+                      path: iconImage ?? '',
+                      fit: BoxFit.fill,
+                      height: 24.w,
+                      width: 24.w,
+                    ),
+                  ),
+                ),
+              if (value != null)
+                Flexible(
+                  child: SmartText(
+                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                    style: style.orderItemValueStyle,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

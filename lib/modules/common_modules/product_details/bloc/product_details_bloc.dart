@@ -463,7 +463,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
-        reviewList = (data.dataList as List<ProductReviewModel>?)?.map((e) {
+        reviewList = (data.dataList)?.map((e) {
               return ReviewDataModel(
                 id: e.id,
                 userName: e.userIdDetails?.fullName ?? '',

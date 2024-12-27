@@ -159,6 +159,8 @@ class CommonResponse<T> {
         return DiyDiamondDataModel.fromJson(json);
       case const (PaginationData<DiyStyleListModel>):
         return PaginationData<DiyStyleListModel>.fromJson(json);
+      case const (PaginationData<PlaceOrderResponse>):
+        return PaginationData<PlaceOrderResponse>.fromJson(json);
       case const (ApplyPromoCodeModel):
         return ApplyPromoCodeModel.fromJson(json);
       case const (Map<String, dynamic>):
