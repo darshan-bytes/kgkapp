@@ -28,6 +28,7 @@ class CartProductItem extends StatelessWidget {
   final bool isCheckboxShow;
   final TextStyle? priceTextStyle;
   final bool isDropDownEnable;
+  final bool isEnableAddToWatchList;
 
   const CartProductItem({
     super.key,
@@ -57,6 +58,7 @@ class CartProductItem extends StatelessWidget {
     this.onChangedCheckbox,
     this.isCheckboxShow = false,
     this.isDropDownEnable = true,
+    this.isEnableAddToWatchList = true,
     this.priceTextStyle,
   });
 
@@ -102,17 +104,18 @@ class CartProductItem extends StatelessWidget {
                     },
                   )),
                   Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
-                  Expanded(
-                      child: SmartButton(
-                          activeBackgroundColor: style.backgroundColor,
-                          title: APPStrings.addToWatchList.tr,
-                          titleStyle: style.removeBagTextStyle,
-                          borderRadius: const BorderRadius.all(Radius.zero),
-                          onTap: () {
-                            if (onMoveToWishListTap != null) {
-                              onMoveToWishListTap!();
-                            }
-                          })),
+                  if (isEnableAddToWatchList)
+                    Expanded(
+                        child: SmartButton(
+                            activeBackgroundColor: style.backgroundColor,
+                            title: APPStrings.addToWatchList.tr,
+                            titleStyle: style.removeBagTextStyle,
+                            borderRadius: const BorderRadius.all(Radius.zero),
+                            onTap: () {
+                              if (onMoveToWishListTap != null) {
+                                onMoveToWishListTap!();
+                              }
+                            })),
                 ],
               ),
             ),
@@ -251,6 +254,7 @@ class CartProductItem extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: SmartDropDown<CartProductQuantity>(
+                      isChangeableValue: isDropDownEnable,
                       labelText: APPStrings.qty.tr,
                       scrollDirection: Axis.horizontal,
                       selectedItem: selectedQuantity,

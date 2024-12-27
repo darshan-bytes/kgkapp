@@ -106,7 +106,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     }, (PaginationData<CollectionDataItemsModel> success) {
       if (success.dataList != null) {
         totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-        final localList = (success.dataList as List<CollectionDataItemsModel>?) ?? [];
+        final localList = success.dataList ?? [];
         collectionMasterList.addAll(localList);
       }
     });

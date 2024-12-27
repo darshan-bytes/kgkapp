@@ -148,7 +148,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
       Utils.showMessage(error.message);
     }, (PaginationData<ExhibitionListDataModel> success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      List<ExhibitionListDataModel> dataList = (success.dataList as List<ExhibitionListDataModel>?) ?? [];
+      List<ExhibitionListDataModel> dataList = success.dataList ?? [];
       exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(ExhibitionListingLoadedState());

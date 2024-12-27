@@ -65,6 +65,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<OrdersListPullToRefreshEvent>(_onListPullToRefreshEvent);
     on<OrdersListSearchEvent>(_onListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<OrdersListFilterEvent>(_onListFilterEvent);
+    on<NavigateToOrderDetailsEvent>(_onNavigateToOrderDetailsEvent);
 
     /// TODO: selected stone type for filter is currently not in use as discussed with JD.
     // on<ChangeOrdersStoneTypeEvent>(_onChangeStoneType);
@@ -105,6 +106,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   /// Handles the filter event for order listings
   Future<void> _onListFilterEvent(OrdersListFilterEvent event, Emitter<OrdersState> emit) async {
     await _handleApplyFilter(event.context, emit, event.filterData);
+  }
+
+  /// Handles the navigate to order details event
+  Future<void> _onNavigateToOrderDetailsEvent(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
+    await _handleNavigateToOrderDetails(event, emit);
   }
 
   /// TODO: selected stone type for filter is currently not in use as discussed with JD.
@@ -209,6 +215,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     await fetchOrderListData(context, emit);
     if (orderSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(const OrdersListLoadedState());
+  }
+
+  /// Handles the navigate to order details event
+  Future<void> _handleNavigateToOrderDetails(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
+    event.context.pushNamed(AppRoutes.orderDetailsPage, arguments: {
+      RoutesData.orderNumber: event.uniqueId,
+    });
   }
 
   /// Builds the filters dynamically based on the filter data
