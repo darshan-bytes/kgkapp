@@ -31,85 +31,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   List<ProductDetailsModel> myBagProductList = [];
 
-  /*List<ProductDetailsModel> myBagProductList = List.generate(
-    9,
-    (index) => ProductDetailsModel(
-      diamondClarityChart: DiamondClarityChart(
-        ct: "10.04",
-        shape: "Marquise",
-        colour: "H",
-        clarity: "VVS1",
-        lotNumber: "MBFG716306",
-        certificateNumber: "230000066395",
-        measurements: "10.18 x 8.34 x 6.14",
-        lab: "GIA",
-        cut: "Excellent",
-        polish: "Excellent",
-        symmetry: "Excellent",
-        flourish: "O",
-        table: "50",
-        depth: "50",
-        rap: "\$35,500.00",
-        discount: "-30.00",
-        kgkAmount: "\$24,850.00",
-        your: "40",
-        yourRate: "\$15,0600.00",
-        yourValue: "\$24,850.00",
-      ),
-      isDiamondProduct: index < 6,
-
-      /// Added static Product id here as my bag screen listing data is static
-      productId: "DIS10", //index.toString(),
-      diamond: "2.5 crt",
-      gram: "1.5 grms",
-      imageUrl: index < 3
-          ? "https://i.ibb.co/8xM4BxQ/image-7.png"
-          : index < 6
-              ? "https://i.ibb.co/yBHHpVV/image-419.png"
-              : "https://i.ibb.co/zZ6y0w4/image-7-4.png",
-      name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      originalPrice: "\$3,000.00",
-      productQuality: const CartProductQuality(name: "18K Gold"),
-      productQuantity: const CartProductQuantity(name: "1"),
-      cartProductQuality: [
-        const CartProductQuality(name: "18K Gold"),
-        const CartProductQuality(name: "10K Gold"),
-        const CartProductQuality(name: "14K Gold"),
-        const CartProductQuality(name: "22K Gold"),
-        const CartProductQuality(name: "28K Gold"),
-        const CartProductQuality(name: "20K Gold"),
-        const CartProductQuality(name: "24K Gold"),
-        const CartProductQuality(name: "32K Gold"),
-      ],
-      cartProductQuantity: List.generate(100, (i) => CartProductQuantity(name: "$i")),
-      showMore: false,
-    ),
-  );*/
   List<ProductDetailsModel> suggestedProductList = [];
 
-  /*List<ProductDetailsModel> suggestedProductList = List.generate(
-    8,
-    (index) => ProductDetailsModel(
-      diamond: "2.5 crt",
-      gram: "1.5 grms",
-      imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-      name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-      originalPrice: "\$3,000.00",
-    ),
-  );*/
-
   List<ProductDetailsModel> mostPurchaseProductList = [];
-
-  /*List<ProductDetailsModel> mostPurchaseProductList = List.generate(
-    8,
-    (index) => ProductDetailsModel(
-      diamond: "1.5 gram",
-      gram: "1.5 gram",
-      imageUrl: 'https://i.ibb.co/8s6hWz2/image-414.png',
-      name: "2.00 Carat H VS1 Excellent Cut Round Diamond",
-      originalPrice: "\$ 5,000.00",
-    ),
-  );*/
 
   List<PaymentCondition> paymentConditionList = [];
 
@@ -150,9 +74,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       myBagProductList[i].showMore = (i == event.index) ? !myBagProductList[i].showMore : false;
     }
 
-    // if(myBagProductList[event.index].showMore != null) {
-    //   myBagProductList[event.index].showMore = !myBagProductList[event.index].showMore!;
-    // }
     emit(const MyBagToggleViewModeState());
   }
 
@@ -191,6 +112,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         String? bagId = StorageManager().getBagId();
         myBagProductList.clear();
         bagListDataModel = r;
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
           commodity = r.result.first.displayCommodity;
           MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result.first.commodity, sId: bagId);
@@ -209,7 +131,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               shape: item.shape,
               color: item.color,
               lotCode: item.lotCode,
-              discountPercentage: item.discountPercentage != null
+              discountPercentageString: item.discountPercentage != null
                   ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
                   : "",
               clarity: item.clarity,
@@ -219,7 +141,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               measurements: item.measurements,
               table: item.table,
               depth: item.depth,
-              totalPrice: item.totalPrice?.toStringAsFixed(2),
+              totalPrice: item.totalPrice,
               discountPrice: item.discountPrice?.toStringAsFixed(2),
               perCaratPrice: item.rate,
               openDnaUrl: item.openDnaUrl,
@@ -232,6 +154,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               yourRate: item.yourRate,
               yourAmount: item.yourAmount,
               yourDiscount: item.yourDiscount,
+              discountPercentage: item.discountPercentage,
+              originalYourRate: item.originalYourRate,
+              originalYourAmount: item.originalYourAmount,
+              originalTotalPrice: item.originalTotalPrice,
+              originalFinalPrice: item.originalFinalPrice,
             );
           });
         }
@@ -468,10 +395,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
           image: product.imageUrl,
           suid: product.suid,
           quantity: product.quantity,
-          discountPercentage: product.discountPercentage?.toDouble,
+          discountPercentage: product.discountPercentage,
           yourDiscount: product.yourDiscount,
-          yourRate: product.yourRate,
-          yourAmount: product.yourAmount,
+          yourRate: product.originalYourRate,
+          yourAmount: product.originalYourAmount,
         );
       });
     }

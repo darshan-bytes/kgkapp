@@ -300,7 +300,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
                   originalPrice: item.finalPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
                   offerPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
                   finalPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
-                  discountPercentage: APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]),
+                  discountPercentageString: (item.discountPercentage ?? 0) > 0
+                      ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage])
+                      : null,
                   productId: item.id ?? "",
                   commodity: Commodity.jewellery,
                   isFavourite: item.isFavorite,

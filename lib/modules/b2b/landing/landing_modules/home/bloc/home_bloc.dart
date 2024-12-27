@@ -149,7 +149,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }, (r) async {
         String? bagId = StorageManager().getBagId();
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
+          BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
           MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
+
           await StorageManager().storeBagData(myBagDataModel);
         }
       });
@@ -454,7 +456,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
-        discountPercentage: isOfferAvailable ? APPStrings.youHaveSavedX.tr.interpolate(["10%"]) : null,
+        discountPercentageString: isOfferAvailable ? APPStrings.youHaveSavedX.tr.interpolate(["10%"]) : null,
         offerPrice: isOfferAvailable ? '\$4,000.00' : null,
       ),
     );
@@ -485,7 +487,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
               offerPrice: e.discountPrice?.setCurrency,
               originalPrice: e.finalPrice?.setCurrency,
-              discountPercentage:
+              discountPercentageString:
                   e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
               productSku: e.contractNoSkuNo,
               reviewCount: e.reviewCount,
@@ -533,7 +535,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -574,7 +576,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -905,7 +907,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
 
       case HomeSlug.unknown:
-      //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
+        //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
 
         // TODO: For shop by diamond _buildShopDiamondSection(homeBloc, style)
 
@@ -935,7 +937,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.unknown:
-      printWrapped('Unknown redirection');
+        printWrapped('Unknown redirection');
         return; // Exit early for unknown redirection
     }
 
@@ -1034,7 +1036,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             imageUrl: e.multipleFinishedViewImage.isNotEmpty ? e.multipleFinishedViewImage.first.imageUrl ?? '' : '',
             offerPrice: e.discountPrice?.setCurrency,
             originalPrice: e.finalPrice?.setCurrency,
-            discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
             productSku: e.contractNoSkuNo,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
@@ -1081,7 +1083,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
           originalPrice: e.discountPrice?.setCurrency,
           finalPrice: e.finalPrice?.setCurrency,
-          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+          discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
           productSku: e.lotCode,
           reviewCount: e.reviewCount,
           rating: e.rating?.toDouble(),
@@ -1119,7 +1121,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
           finalPrice: e.finalPrice?.setCurrency,
           originalPrice: e.discountPrice?.setCurrency,
-          discountPercentage: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+          discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
           productSku: e.lotCode,
           reviewCount: e.reviewCount,
           rating: e.rating?.toDouble(),

@@ -123,11 +123,14 @@ class MyBagResult {
     required this.originalYourRate,
     required this.originalYourAmount,
     required this.originalTotalPrice,
+    required this.originalFinalPrice,
+    required this.cscCode,
+    required this.certificate,
   });
 
   final String? suid;
   final int? quantity;
-  final double? totalPrice;
+  final String? totalPrice;
   final String? rate;
   final String? jewelleryName;
   final String? productId;
@@ -162,11 +165,14 @@ class MyBagResult {
   final double? originalYourRate;
   final double? originalYourAmount;
   final double? originalTotalPrice;
+  final String? cscCode;
+  final double? originalFinalPrice;
+  final String? certificate;
 
   MyBagResult copyWith({
     String? suid,
     int? quantity,
-    double? totalPrice,
+    String? totalPrice,
     String? rate,
     String? jewelleryName,
     String? productId,
@@ -201,6 +207,9 @@ class MyBagResult {
     double? originalYourRate,
     double? originalYourAmount,
     double? originalTotalPrice,
+    String? cscCode,
+    double? originalFinalPrice,
+    String? certificate,
   }) {
     return MyBagResult(
       suid: suid ?? this.suid,
@@ -240,6 +249,9 @@ class MyBagResult {
       originalYourRate: originalYourRate ?? this.originalYourRate,
       originalYourAmount: originalYourAmount ?? this.originalYourAmount,
       originalTotalPrice: originalTotalPrice ?? this.originalTotalPrice,
+      certificate: certificate ?? this.certificate,
+      cscCode: cscCode ?? this.cscCode,
+      originalFinalPrice: originalFinalPrice ?? this.originalFinalPrice,
     );
   }
 
@@ -247,7 +259,7 @@ class MyBagResult {
     return MyBagResult(
       suid: json["suid"],
       quantity: json["quantity"],
-      totalPrice: json["totalPrice"]?.toString().toDouble,
+      totalPrice: json["totalPrice"]?.toString(),
       rate: json["rate"]?.toString(),
       jewelleryName: json["jewellery_name"],
       productId: json["productId"],
@@ -282,13 +294,15 @@ class MyBagResult {
       originalYourRate: json["original_your_rate"],
       originalYourAmount: json["original_your_amount"],
       originalTotalPrice: json["original_totalPrice"],
+      originalFinalPrice: json["original_final_price"]?.toString().toDouble,
+      cscCode: json["csc_code"],
+      certificate: json["certificate"],
     );
   }
 
   Map<String, dynamic> toJson() => {
         "suid": suid,
         "quantity": quantity,
-        "totalPrice": totalPrice,
         "rate": rate,
         "jewellery_name": jewelleryName,
         "productId": productId,
@@ -309,26 +323,24 @@ class MyBagResult {
         "table": table,
         "measurements": measurements,
         "rappaport_price": rappaportPrice,
-        "location": location,
         "status": status,
+        "csc_code": cscCode,
+        "original_final_price": originalFinalPrice,
         "final_price": finalPrice,
+        "stock_qty": stockQty,
         "shape_image": shapeImage,
         "certificate_file": certificateFile,
         "open_dna_url": openDnaUrl,
         "fluorescence": fluorescence,
-        "stock_qty": stockQty,
-        "your_rate": yourRate,
-        "your_amount": yourAmount,
+        "certificate": certificate,
         "your_discount": yourDiscount,
         "original_your_rate": originalYourRate,
+        "your_rate": yourRate,
         "original_your_amount": originalYourAmount,
+        "your_amount": yourAmount,
         "original_totalPrice": originalTotalPrice,
+        "totalPrice": totalPrice,
       };
-
-  @override
-  String toString() {
-    return 'Result{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount, originalYourRate: $originalYourRate, originalYourAmount: $originalYourAmount, originalTotalPrice: $originalTotalPrice}';
-  }
 
   @override
   bool operator ==(Object other) =>
@@ -371,7 +383,10 @@ class MyBagResult {
           yourAmount == other.yourAmount &&
           originalYourRate == other.originalYourRate &&
           originalYourAmount == other.originalYourAmount &&
-          originalTotalPrice == other.originalTotalPrice;
+          originalTotalPrice == other.originalTotalPrice &&
+          cscCode == other.cscCode &&
+          originalFinalPrice == other.originalFinalPrice &&
+          certificate == other.certificate;
 
   @override
   int get hashCode =>
@@ -411,7 +426,15 @@ class MyBagResult {
       yourAmount.hashCode ^
       originalYourRate.hashCode ^
       originalYourAmount.hashCode ^
-      originalTotalPrice.hashCode;
+      originalTotalPrice.hashCode ^
+      cscCode.hashCode ^
+      originalFinalPrice.hashCode ^
+      certificate.hashCode;
+
+  @override
+  String toString() {
+    return 'MyBagResult{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount, originalYourRate: $originalYourRate, originalYourAmount: $originalYourAmount, originalTotalPrice: $originalTotalPrice, cscCode: $cscCode, originalFinalPrice: $originalFinalPrice, certificate: $certificate}';
+  }
 
   Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;
 }
@@ -427,9 +450,8 @@ class BagSummary {
     this.yourRate,
     this.yourAmount,
     this.totalAmount,
-    required this.originalYourRate,
-    required this.originalYourAmount,
-    required this.originalTotalPrice,
+    this.originalYourRate,
+    this.originalYourAmount,
   });
 
   final int? totalItems;
@@ -437,13 +459,12 @@ class BagSummary {
   final String? originalAmount;
   final double? discountPercentage;
   final String? discountAmount;
-  final String? yourDiscount;
+  final double? yourDiscount;
   final String? yourRate;
   final String? yourAmount;
   final double? totalAmount;
   final double? originalYourRate;
   final double? originalYourAmount;
-  final double? originalTotalPrice;
 
   BagSummary copyWith({
     int? totalItems,
@@ -451,13 +472,12 @@ class BagSummary {
     String? originalAmount,
     double? discountPercentage,
     String? discountAmount,
-    String? yourDiscount,
+    double? yourDiscount,
     String? yourRate,
     String? yourAmount,
     double? totalAmount,
     double? originalYourRate,
     double? originalYourAmount,
-    double? originalTotalPrice,
   }) {
     return BagSummary(
       totalItems: totalItems ?? this.totalItems,
@@ -471,7 +491,6 @@ class BagSummary {
       totalAmount: totalAmount ?? this.totalAmount,
       originalYourRate: originalYourRate ?? this.originalYourRate,
       originalYourAmount: originalYourAmount ?? this.originalYourAmount,
-      originalTotalPrice: originalTotalPrice ?? this.originalTotalPrice,
     );
   }
 
@@ -484,11 +503,10 @@ class BagSummary {
       discountAmount: json["discount_amount"],
       yourAmount: json["your_amount"]?.toString(),
       yourRate: json["your_rate"]?.toString(),
-      yourDiscount: json["your_discount"]?.toString(),
+      yourDiscount: json["your_discount"]?.toString().toDouble,
       totalAmount: json["total_amount"]?.toString().toDouble,
       originalYourRate: json["original_your_rate"]?.toString().toDouble,
       originalYourAmount: json["original_your_amount"]?.toString().toDouble,
-      originalTotalPrice: json["original_totalPrice"]?.toString().toDouble,
     );
   }
 
@@ -504,6 +522,5 @@ class BagSummary {
         "total_amount": totalAmount,
         "original_your_rate": originalYourRate,
         "original_your_amount": originalYourAmount,
-        "original_totalPrice": originalTotalPrice,
       };
 }

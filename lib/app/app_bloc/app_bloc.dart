@@ -259,6 +259,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (l) => Utils.showMessage(l.message),
         (data) async {
           MyBagDataModel myBagDataModel = data.responseData;
+          if (myBagDataModel.products.isNotNullNorEmpty) {
+            BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(myBagDataModel.products!.length));
+          }
           await StorageManager().storeBagData(myBagDataModel);
           await StorageManager().setBagId(myBagDataModel.sId ?? '');
           Utils.showMessage(data.message);
