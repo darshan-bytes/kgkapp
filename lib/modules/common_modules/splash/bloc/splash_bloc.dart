@@ -24,6 +24,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await CachedNetworkImageProvider.defaultCacheManager.emptyCache();
 
     // Perform API calls for currency and language labels
+    await _setPlaceholderImage();
     await _currencyApiCall(event.context, emit);
     await _languageLabelApiCall(event.context, emit);
     await _sortOptionListApiCall(event.context);
@@ -99,6 +100,22 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       /// Store the entire map in local storage
       await StorageManager().setSortingData(sortingData);
     });
+  }
+
+  Future<void> _setPlaceholderImage() async {
+    /// TODO :: CURRENTLY HARDCODED AS IT WILL BE IMPLEMENTED LATER
+    Map<String, dynamic> placeholderImage = {
+      "company_name": "KGK",
+      "image_url":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUZcwAnGzf6jqSF0KZ56DPv4-D5rmHk8g6dRJ4cJhx16gPZDtIntn9VbIotKcqkVQR9vI&usqp=CAU",
+    };
+
+    PlaceHolderData placeholderData = PlaceHolderData.fromJson(placeholderImage);
+    _updatePlaceholderImage(placeholderData.companyName, placeholderData.imageUrl);
+  }
+
+  Future<void> _updatePlaceholderImage(String companyNameStr, String imageUrl) async {
+    await StorageManager().setPlaceHolderImage(imageUrl);
   }
 
   @override

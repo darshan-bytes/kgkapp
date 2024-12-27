@@ -173,6 +173,7 @@ class AddAddressScreen extends StatelessWidget {
               bloc.add(AddAddressChangeStateEvent(context, state));
             }
           },
+          canSearch: true,
           selectedItem: bloc.selectedState,
         );
       },

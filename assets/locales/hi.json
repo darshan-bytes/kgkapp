@@ -751,5 +751,9 @@
   "mob_permission_denied": "अनुमति नहीं दी गई",
   "mob_please_enable_location": "कृपया अपना वर्तमान स्थान जानने के लिए ऐप सेटिंग में स्थान अनुमति सक्षम करें",
   "mob_this_type_is_not_yet_added": "यह प्रकार अभी तक जोड़ा नहीं गया है",
-  "mob_gemstone_details": "रत्न विवरण"
+  "mob_gemstone_details": "रत्न विवरण",
+  "mob_coupons": "कूपन",
+  "mob_offer_valid_till_x": "कूपन की अवधि {#}",
+  "mob_more_offers": "अधिक कूपन",
+  "mob_no_state_found": "कोई राज्य नहीं मिला"
 }

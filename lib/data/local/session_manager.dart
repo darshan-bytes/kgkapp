@@ -29,6 +29,7 @@ class StorageManager {
   final String _recentlyViewedJewellery = 'recentlyViewedJewellery';
   final String _recentlyViewedDiamonds = 'recentlyViewedDiamonds';
   final String _recentlyViewedGemstones = 'recentlyViewedGemstones';
+  final String _placeHolderImage = 'placeHolderImage';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -193,6 +194,8 @@ class StorageManager {
     bool isSkipLogin = getIsSkipLogin();
     String guestBagId = getBagId() ?? '';
     MyBagDataModel? guestBagData = getBagData();
+    String? selectedCurrency = getSelectedCurrency();
+    String? selectedCurrencySymbol = getSelectedCurrencySymbol();
     await _box.clear();
 
     if (locale != null) {
@@ -200,6 +203,10 @@ class StorageManager {
     }
     if (currencyList.isNotNullNorEmpty) {
       await setCurrencyList(currencyList);
+    }
+    if (selectedCurrency.isNotNullNorEmpty && selectedCurrencySymbol.isNotNullNorEmpty) {
+      await setSelectedCurrency(selectedCurrency!);
+      await setSelectedCurrencySymbol(selectedCurrencySymbol!);
     }
     if (isSkipLogin) {
       await setIsSkipLogin(isSkipLogin);
@@ -280,6 +287,17 @@ class StorageManager {
     // convert to list to String with comma separated
     List<String> list = _box.get(_recentlyViewedGemstones) ?? [];
     return list.join(',');
+  }
+
+  /// Set placeholder image
+  Future<void> setPlaceHolderImage(String placeholderImage) async {
+    String downloadedImage = await Utils.downloadAndSaveImage(placeholderImage);
+    await _box.put(_placeHolderImage, downloadedImage);
+  }
+
+  /// get placeholder image
+  String getPlaceHolderImage() {
+    return _box.get(_placeHolderImage) ?? '';
   }
 
   Future<void> closeBox() async {

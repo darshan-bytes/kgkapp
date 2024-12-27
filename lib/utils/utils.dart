@@ -1,6 +1,7 @@
 import 'package:kgk/kgk.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:http/http.dart' as http;
 
 class Utils {
   Utils._();
@@ -293,5 +294,33 @@ class Utils {
       }
     }
     return null;
+  }
+
+  static Future<String> downloadAndSaveImage(String imageUrl) async {
+    try {
+      // Get the device's local directory
+      final directory = await getApplicationDocumentsDirectory();
+
+      // Create a unique file name (using the last part of the URL)
+      final fileName = imageUrl.split('/').last;
+      final filePath = '${directory.path}/$fileName';
+
+      // Send a GET request to the image URL
+      final response = await http.get(Uri.parse(imageUrl));
+
+      // Check if the request was successful (HTTP 200)
+      if (response.statusCode == 200) {
+        // Save the image to the file system
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+
+        return filePath; // Return the local file path
+      } else {
+        throw Exception("Failed to download image");
+      }
+    } catch (e) {
+      debugPrint('Error downloading image: $e');
+      return '';
+    }
   }
 }

@@ -753,5 +753,9 @@
   "mob_permission_denied": "Permission Denied",
   "mob_please_enable_location": "Please enable location permission in app settings to get your current location",
   "mob_this_type_is_not_yet_added": "This type is not yet added",
-  "mob_gemstone_details": "Gemstone Details"
+  "mob_gemstone_details": "Gemstone Details",
+  "mob_coupons": "Coupons",
+  "mob_offer_valid_till_x": "Offer valid till {#}",
+  "mob_more_offers": "More Offers",
+  "mob_no_state_found": "No state found"
 }

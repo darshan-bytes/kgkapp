@@ -753,5 +753,9 @@
   "mob_permission_denied": "權限拒絕",
   "mob_please_enable_location": "請在應用程式設定中啟用位置權限以取得您的目前位置",
   "mob_this_type_is_not_yet_added": "尚未添加此類型",
-  "mob_gemstone_details": "寶石詳情"
+  "mob_gemstone_details": "寶石詳情",
+  "mob_coupons": "優惠券",
+  "mob_offer_valid_till_x": "優惠券有效期至 {#}",
+  "mob_more_offers": "更多優惠券",
+  "mob_no_state_found": "找不到狀態"
 }
