@@ -84,7 +84,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                         children: [
                                           SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
                                           SizedBox(width: 2.w),
-                                          SmartText(bloc.productDetails?.discountPercentage, style: style.discountStyle),
+                                          SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle),
                                         ],
                                       )
                                   ],

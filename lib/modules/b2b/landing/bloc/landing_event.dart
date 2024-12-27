@@ -32,3 +32,12 @@ final class LandingLogoutEvent extends LandingEvent {
   @override
   List<Object> get props => [];
 }
+
+final class LandingChangeMyBagCountEvent extends LandingEvent {
+  final int count;
+
+  const LandingChangeMyBagCountEvent(this.count);
+
+  @override
+  List<Object> get props => [count];
+}

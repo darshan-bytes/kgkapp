@@ -32,6 +32,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     on<LandingInitialEvent>(_onLandingInitialEvent);
     on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
     on<LandingLogoutEvent>(_onLandingLogoutEvent);
+    on<LandingChangeMyBagCountEvent>(_onLandingChangeMyBagCount);
   }
 
   void _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) {
@@ -91,7 +92,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.myBag,
-        notificationCount: 2,
+        notificationCount: 0,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icSupport,
@@ -140,7 +141,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
         label: APPStrings.myBag,
-        notificationCount: 2,
+        notificationCount: 0,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icCompanyBottomNavbar,
@@ -206,6 +207,12 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       }
       emit(LandingChangeTabState(event.index));
     }
+  }
+
+  void _onLandingChangeMyBagCount(LandingChangeMyBagCountEvent event, Emitter<LandingState> emit) {
+    if (bottomNavigationBarDataModel[myBagIndex].notificationCount == null) return;
+    bottomNavigationBarDataModel[myBagIndex].notificationCount = event.count;
+    emit(LandingChangeMyBagCountState(event.count));
   }
 
   void _onLandingLogoutEvent(LandingLogoutEvent event, Emitter<LandingState> emit) {

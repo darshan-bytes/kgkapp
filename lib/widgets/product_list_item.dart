@@ -233,9 +233,11 @@ class ProductListItem extends StatelessWidget {
             SizedBox(height: 4.h),
             if (onAddToBagTap != null)
               SmartButton(
-                margin: productDetails.discountPercentage.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
+                margin: productDetails.discountPercentageString.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
                 titleStyle: style.buttonWithIconTextStyle,
-                onTap: onAddToBagTap!,
+                onTap: () {
+                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                },
                 title: APPStrings.addToBag.tr,
                 prefixImage: AppImages.icShoppingBag,
               ),
