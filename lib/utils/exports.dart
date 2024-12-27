@@ -501,4 +501,7 @@ export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/view/ap
 export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/model/apply_promo_code_model.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:kgk/model/placeholder_data.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_places_tab_view.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_tab_view.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_list_location_data_model.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';

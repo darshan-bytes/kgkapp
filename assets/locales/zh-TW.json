@@ -757,5 +757,6 @@
   "mob_coupons": "優惠券",
   "mob_offer_valid_till_x": "優惠券有效期至 {#}",
   "mob_more_offers": "更多優惠券",
-  "mob_no_state_found": "找不到狀態"
+  "mob_no_state_found": "找不到狀態",
+  "mob_exhibitions_in_x" : "展覽在 {#}"
 }

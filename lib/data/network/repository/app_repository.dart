@@ -149,6 +149,7 @@ class AppRepository extends ApiService {
       required String sortValue,
       bool isLoadMore = false,
       Map<String, String>? query,
+      Map<String, String>? headers,
       required String type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
@@ -164,7 +165,8 @@ class AppRepository extends ApiService {
       queryParams.addAll(query);
     }
 
-    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: queryParams, withCurrencyHeader: true);
+    var response =
+        await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: queryParams, withCurrencyHeader: true, headers: headers);
     if (isLoadMore) {
       context.setAppLoading(false);
     }
@@ -925,6 +927,12 @@ class AppRepository extends ApiService {
   /// Get Exhibition Listing Data
   Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing({required Map<String, dynamic> body}) async {
     var response = await postMethod<PaginationData<ExhibitionListDataModel>>(ApiClient.getExhibitionList, body);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get Exhibition Listing Data by Locations
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>?> getExhibitionListingByLocations() async {
+    var response = await getMethod<PaginationData<ExhibitionListLocationDataModel>>(ApiClient.getExhibitionListByLocations);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

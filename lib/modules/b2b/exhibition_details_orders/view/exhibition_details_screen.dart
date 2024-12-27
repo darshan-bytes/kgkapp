@@ -36,7 +36,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                       onTabInitialized: (tabController) {
                         bloc.tabController = tabController;
                       },
-                      onTapTab: (int index) => bloc.add(const ExhibitionChangeTabsEvent()),
+                      onTapTab: (int index) => bloc.add(ExhibitionChangeTabsEvent(context: context)),
                       tabs: bloc.tabs,
                       tabBarView: _buildTabBarView(bloc),
                     ),

@@ -755,5 +755,6 @@
   "mob_coupons": "कूपन",
   "mob_offer_valid_till_x": "कूपन की अवधि {#}",
   "mob_more_offers": "अधिक कूपन",
-  "mob_no_state_found": "कोई राज्य नहीं मिला"
+  "mob_no_state_found": "कोई राज्य नहीं मिला",
+  "mob_exhibitions_in_x": "{#} में उद्घाटन"
 }

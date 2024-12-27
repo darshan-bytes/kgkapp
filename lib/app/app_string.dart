@@ -950,4 +950,5 @@ class APPStrings {
   static const String offerValidTillX = 'mob_offer_valid_till_x';
   static const String moreOffers = 'mob_more_offers';
   static const String noStateFound = 'mob_no_state_found';
+  static const String exhibitionsInX = 'mob_exhibitions_in_x';
 }

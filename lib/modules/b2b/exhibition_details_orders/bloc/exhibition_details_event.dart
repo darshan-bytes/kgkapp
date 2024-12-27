@@ -13,10 +13,11 @@ final class ExhibitionDetailsInitialEvent extends ExhibitionDetailsEvent {
 }
 
 final class ExhibitionChangeTabsEvent extends ExhibitionDetailsEvent {
-  const ExhibitionChangeTabsEvent();
+  final BuildContext context;
+  const ExhibitionChangeTabsEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ExhibitionChangeListingTypeEvent extends ExhibitionDetailsEvent {

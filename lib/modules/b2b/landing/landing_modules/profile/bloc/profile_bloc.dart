@@ -246,6 +246,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               context.pushNamed(AppRoutes.makeInquiryPage);
             }),
         ProfileListModel(
+            image: AppImages.icExhibition,
+            title: APPStrings.exhibition,
+            subTitle: APPStrings.listOfExhibitionsOfKGK,
+            trailingIcon: AppImages.icArrowRight,
+            onTap: (context) {
+              context.pushNamed(AppRoutes.exhibitionListingPage);
+            }),
+        ProfileListModel(
             image: AppImages.icWatchlist,
             title: APPStrings.watchlist,
             subTitle: APPStrings.listOfProductsAddedToWatchlist,
