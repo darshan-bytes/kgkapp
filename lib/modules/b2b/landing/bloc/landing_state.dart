@@ -36,3 +36,12 @@ final class LandingChangeTabState extends LandingState {
   @override
   List<Object> get props => [index];
 }
+
+final class LandingChangeMyBagCountState extends LandingState {
+  final int count;
+
+  const LandingChangeMyBagCountState(this.count);
+
+  @override
+  List<Object> get props => [count];
+}

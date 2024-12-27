@@ -8,7 +8,7 @@ class ProductDetailsModel {
   String? offerPrice;
   String? originalPrice;
   String? imageUrl;
-  String? discountPercentage;
+  String? discountPercentageString;
   String? gram;
   String? diamond;
   CartProductQuality? productQuality;
@@ -70,6 +70,11 @@ class ProductDetailsModel {
   String? yourRate;
   String? yourAmount;
   List<StoneElement>? stoneElements;
+  double? discountPercentage;
+  double? originalYourRate;
+  double? originalYourAmount;
+  double? originalTotalPrice;
+  double? originalFinalPrice;
 
   ProductDetailsModel({
     this.productId,
@@ -79,7 +84,7 @@ class ProductDetailsModel {
     this.offerPrice,
     this.originalPrice,
     this.imageUrl,
-    this.discountPercentage,
+    this.discountPercentageString,
     this.gram,
     this.diamond,
     this.productQuality,
@@ -141,6 +146,11 @@ class ProductDetailsModel {
     this.yourAmount,
     this.yourDiscount,
     this.stoneElements,
+    this.discountPercentage,
+    this.originalYourRate,
+    this.originalYourAmount,
+    this.originalTotalPrice,
+    this.originalFinalPrice,
   });
 
   @override
@@ -154,7 +164,7 @@ class ProductDetailsModel {
           offerPrice == other.offerPrice &&
           originalPrice == other.originalPrice &&
           imageUrl == other.imageUrl &&
-          discountPercentage == other.discountPercentage &&
+          discountPercentageString == other.discountPercentageString &&
           gram == other.gram &&
           diamond == other.diamond &&
           productQuality == other.productQuality &&
@@ -216,7 +226,7 @@ class ProductDetailsModel {
       offerPrice.hashCode ^
       originalPrice.hashCode ^
       imageUrl.hashCode ^
-      discountPercentage.hashCode ^
+      discountPercentageString.hashCode ^
       gram.hashCode ^
       diamond.hashCode ^
       productQuality.hashCode ^

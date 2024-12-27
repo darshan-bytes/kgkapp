@@ -351,7 +351,7 @@ class StoneListingScreen extends StatelessWidget {
                                 tablePercentage: "50",
                                 depthPercentage: "50",
                                 rap: product.lsp?.setCurrency ?? "\$24,850.00",
-                                discount: product.discountPercentage,
+                                discount: product.discountPercentageString,
                                 perCts: "\$24,850.00",
                                 amount: product.finalPrice?.setCurrency ?? "\$1,24,995.50",
                                 fluorescence: product.fluorescence ?? '0',

@@ -73,7 +73,10 @@ class ProductGridItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
-          children: [productImageSection(productItemWidth, style, context), previewCatalogueProductDetailsSection(productItemWidth, style)],
+          children: [
+            productImageSection(productItemWidth, style, context),
+            previewCatalogueProductDetailsSection(context, productItemWidth, style)
+          ],
         ),
       ),
     );
@@ -205,7 +208,7 @@ class ProductGridItem extends StatelessWidget {
     );
   }
 
-  Widget previewCatalogueProductDetailsSection(double width, ProductItemStyle style) {
+  Widget previewCatalogueProductDetailsSection(BuildContext context, double width, ProductItemStyle style) {
     return Flexible(
       child: Container(
         width: width,
@@ -288,10 +291,10 @@ class ProductGridItem extends StatelessWidget {
                 ],
               )
             ],
-            if (productDetails.discountPercentage.isNotNullNorEmpty) ...[
+            if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
               SmartText(
-                productDetails.discountPercentage,
+                productDetails.discountPercentageString,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: style.discountTextStyle,
@@ -304,7 +307,9 @@ class ProductGridItem extends StatelessWidget {
                 margin: EdgeInsets.only(top: 8.h),
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
-                onTap: onAddToBagTap!,
+                onTap: () {
+                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                },
                 title: buttonText ?? APPStrings.addToBag.tr,
                 prefixImage: prefixImage,
                 isShadow: false,

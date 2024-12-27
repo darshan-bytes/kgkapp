@@ -187,7 +187,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
             originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentage:
+            discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             reviewCount: diamondData!.reviewCount,

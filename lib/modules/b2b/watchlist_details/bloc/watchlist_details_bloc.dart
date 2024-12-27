@@ -85,9 +85,10 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               company: product.jewelleryData?.brandName,
               productSku: product.jewelleryData?.contractNoSkuNo,
               discountPrice: product.jewelleryData?.discountPrice,
-              discountPercentage: (product.jewelleryData?.discountPercentage != null && product.jewelleryData!.discountPercentage! > 0)
-                  ? product.jewelleryData?.discountPercentage?.toString()
-                  : null,
+              discountPercentageString:
+                  (product.jewelleryData?.discountPercentage != null && product.jewelleryData!.discountPercentage! > 0)
+                      ? product.jewelleryData?.discountPercentage?.toString()
+                      : null,
               commodity: product.displayCommodity,
             );
           case Commodity.gemstone:
@@ -99,7 +100,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               productSku: product.gemstoneData?.lotCode,
               lotCode: product.gemstoneData?.lotCode,
               discountPrice: (product.gemstoneData?.discountPrice ?? 0).toString(),
-              discountPercentage: (product.gemstoneData?.discountPercentage != null && product.gemstoneData!.discountPercentage! > 0)
+              discountPercentageString: (product.gemstoneData?.discountPercentage != null && product.gemstoneData!.discountPercentage! > 0)
                   ? product.gemstoneData?.discountPercentage?.toString()
                   : null,
               commodity: product.displayCommodity,
@@ -114,7 +115,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               productSku: product.diamondData?.lotCode,
               lotCode: product.diamondData?.lotCode,
               discountPrice: product.diamondData?.discountPrice,
-              discountPercentage: (product.diamondData?.discountPercentage != null && product.diamondData!.discountPercentage! > 0)
+              discountPercentageString: (product.diamondData?.discountPercentage != null && product.diamondData!.discountPercentage! > 0)
                   ? product.diamondData?.discountPercentage?.toString()
                   : null,
               commodity: product.displayCommodity,
