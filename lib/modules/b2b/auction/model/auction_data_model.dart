@@ -351,3 +351,18 @@ class UpdatedByDetails {
     return "$profilePicUrl, $firstname, $lastname, ";
   }
 }
+
+extension CreatedByDetailsExtension on CreatedByDetails {
+  String get fullName => "$firstname $lastname";
+
+  String get phoneNumber {
+    final String? validPhoneCode = phoneCode?.trim().isNotEmpty == true ? phoneCode : "";
+    final String? validPhone = phone?.trim().isNotEmpty == true ? phone : "";
+
+    if (validPhoneCode.isNullOrEmpty && validPhone.isNullOrEmpty) {
+      return "-";
+    } else {
+      return "$validPhoneCode $validPhone";
+    }
+  }
+}

@@ -110,24 +110,14 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     return List.generate(
       orderProductList.length,
       (index) {
-        final product = orderProductList[index];
+        final OrderProduct product = orderProductList[index];
         return ProductDetailsModel(
           productId: product.productProductId,
           imageUrl: product.image,
           name: product.productDescription,
-          originalPrice: product.originalAmount,
+          originalPrice: product.yourAmount,
           productQuality: CartProductQuality(name: product.discPercentage?.toString()),
           productQuantity: CartProductQuantity(name: product.quantity?.toString()),
-          cartProductQuality: [
-            const CartProductQuality(name: "18K Gold"),
-            const CartProductQuality(name: "10K Gold"),
-            const CartProductQuality(name: "14K Gold"),
-            const CartProductQuality(name: "22K Gold"),
-            const CartProductQuality(name: "28K Gold"),
-            const CartProductQuality(name: "20K Gold"),
-            const CartProductQuality(name: "24K Gold"),
-            const CartProductQuality(name: "32K Gold"),
-          ],
           cartProductQuantity: List.generate(99, (i) => CartProductQuantity(name: "$i")),
         );
       },
@@ -141,14 +131,20 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
       (index) {
         final product = orderProductList[index];
         return OrderDetailsProductModel(
-          id: product.productProductId,
+          id: product.id,
           image: product.image,
           name: product.productDescription,
-          price: product.originalAmount,
+          price: product.yourAmount,
           quantity: product.quantity?.toString(),
-          sku: product.suid,
-          status: ProjectStatus.orangeInProgress.value,
-          brand: product.productId,
+          sku: product.productProductId,
+
+          /// Here we have display the order status instead of product status as per the requirement
+          status: placeOrderResponse?.getOrderStatus?.value,
+
+          /// brand name is available only for jewellery
+          brand: product.brandName,
+
+          /// need to discuss for delivery date with jd
           deliveryDate: "deliveryDate",
         );
       },

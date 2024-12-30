@@ -43,8 +43,10 @@ class _OrderDetailBody extends StatelessWidget {
             _OrderDetailsInfoCard(style: style, placeOrderResponse: bloc.placeOrderResponse),
             _OrderCreatorDetailsCard(style: style, bloc: bloc, placeOrderResponse: bloc.placeOrderResponse),
             SizedBox(height: 24.h),
-            _buildSearchTextField(bloc),
-            SizedBox(height: 24.h),
+            if (bloc.orderProductList.isNotNullNorEmpty || bloc.orderProductDetailsList.isNotNullNorEmpty) ...[
+              _buildSearchTextField(bloc),
+              SizedBox(height: 24.h),
+            ],
             _buildOrderList(bloc, style)
           ],
         ),
@@ -325,27 +327,32 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Development pending form backend
-          _CreatorDetailItem(
-            title: APPStrings.createdBy.tr,
-            iconImage: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-            value: "Michael Lee",
-            style: style,
-          ),
-          SizedBox(height: 24.h),
-          _CreatorDetailItem(
-            title: APPStrings.contactInfo.tr,
-            iconImage: AppImages.icMail,
-            value: "business@domain.com",
-            style: style,
-          ),
-          SizedBox(height: 12.h),
-          _CreatorDetailItem(
-            iconImage: AppImages.icPhone,
-            value: "(406) 555-0120",
-            style: style,
-          ),
-          SizedBox(height: 24.h),
+          if ((placeOrderResponse?.createdByDetails?.fullName).isNotNullNorEmpty) ...[
+            _CreatorDetailItem(
+              title: APPStrings.createdBy.tr,
+              iconImage: placeOrderResponse?.createdByDetails?.profilePicUrl,
+              value: placeOrderResponse?.createdByDetails?.fullName,
+              style: style,
+            ),
+            SizedBox(height: 24.h),
+          ],
+          if ((placeOrderResponse?.createdByDetails?.email).isNotNullNorEmpty) ...[
+            _CreatorDetailItem(
+              title: APPStrings.contactInfo.tr,
+              iconImage: AppImages.icMail,
+              value: placeOrderResponse?.createdByDetails?.email,
+              style: style,
+            ),
+            SizedBox(height: 12.h),
+          ],
+          if ((placeOrderResponse?.createdByDetails?.phoneNumber).isNotNullNorEmpty) ...[
+            _CreatorDetailItem(
+              iconImage: AppImages.icPhone,
+              value: placeOrderResponse?.createdByDetails?.phoneNumber,
+              style: style,
+            ),
+            SizedBox(height: 24.h),
+          ],
           if ((placeOrderResponse?.billingAddressDetails?.fullAddress).isNotNullNorEmpty) ...[
             _CreatorDetailItem(
               title: APPStrings.billingAddress.tr,

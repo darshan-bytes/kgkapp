@@ -178,7 +178,18 @@ class AddressDetails {
 extension AddressDetailsExtension on AddressDetails {
   String get fullName => "$firstName $lastName";
 
-  String get fullAddress => "$apartment, $streetAddress, $city, $state, $country, $zipCode";
+  String get fullAddress {
+    final addressParts = [
+      apartment,
+      streetAddress,
+      city,
+      state,
+      country,
+      zipCode,
+    ];
+
+    return addressParts.where((part) => part != null && part.isNotEmpty).join(", ");
+  }
 
   String? get contactNumber => phone.isNotEmpty ? "${phone.first.phoneCode} ${phone.first.phoneNumber}" : null;
 }

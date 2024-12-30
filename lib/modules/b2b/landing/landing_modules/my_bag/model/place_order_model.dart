@@ -69,7 +69,7 @@ class PlaceOrderResponse {
   final String? v;
   final int? items;
   final int? totalQuantity;
-  final UserIdDetails? createdByDetails;
+  final CreatedByDetails? createdByDetails;
   final AddressDetails? shippingAddressDetails;
   final AddressDetails? billingAddressDetails;
 
@@ -107,7 +107,7 @@ class PlaceOrderResponse {
     int? totalRecords,
     int? items,
     int? totalQuantity,
-    UserIdDetails? createdByDetails,
+    CreatedByDetails? createdByDetails,
     AddressDetails? shippingAddressDetails,
     AddressDetails? billingAddressDetails,
   }) {
@@ -182,7 +182,7 @@ class PlaceOrderResponse {
       v: json["__v"]?.toString(),
       items: json["total_items"],
       totalQuantity: json["quantity"],
-      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      createdByDetails: json["created_by_details"] == null ? null : CreatedByDetails.fromJson(json["created_by_details"]),
       shippingAddressDetails: json["shipping_address_detail"] == null ? null : AddressDetails.fromJson(json["shipping_address_detail"]),
       billingAddressDetails: json["billing_address_detail"] == null ? null : AddressDetails.fromJson(json["billing_address_detail"]),
     );
@@ -280,6 +280,8 @@ class OrderProduct {
     required this.originalAmount,
     required this.originalRate,
     required this.image,
+    required this.brandName,
+    required this.kgkCollection,
   });
 
   final String? suid;
@@ -296,6 +298,8 @@ class OrderProduct {
   final String? originalAmount;
   final String? originalRate;
   final String? image;
+  final String? brandName;
+  final String? kgkCollection;
 
   OrderProduct copyWith({
     String? suid,
@@ -312,6 +316,8 @@ class OrderProduct {
     String? originalAmount,
     String? originalRate,
     String? image,
+    String? brandName,
+    String? kgkCollection,
   }) {
     return OrderProduct(
       suid: suid ?? this.suid,
@@ -328,6 +334,8 @@ class OrderProduct {
       originalAmount: originalAmount ?? this.originalAmount,
       originalRate: originalRate ?? this.originalRate,
       image: image ?? this.image,
+      brandName: brandName ?? this.brandName,
+      kgkCollection: kgkCollection ?? this.kgkCollection,
     );
   }
 
@@ -347,6 +355,8 @@ class OrderProduct {
       originalAmount: json["original_amount"]?.toString(),
       originalRate: json["original_rate"]?.toString(),
       image: json["image"],
+      brandName: json["brand_name"],
+      kgkCollection: json["kgk_collection"],
     );
   }
 
@@ -365,6 +375,8 @@ class OrderProduct {
         "original_amount": originalAmount,
         "original_rate": originalRate,
         "image": image,
+        "brand_name": brandName,
+        "kgk_collection": kgkCollection,
       };
 }
 
