@@ -204,3 +204,12 @@ enum Priority {
   final String stringValue;
   final int intValue;
 }
+
+enum BranchLinkTypeType {
+  productShare('product_share'),
+  ;
+
+  const BranchLinkTypeType(this.value);
+
+  final String value;
+}

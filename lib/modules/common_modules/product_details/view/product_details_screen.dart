@@ -291,6 +291,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                               _showQrCodeDialog(context: context, data: "https://dev.kgk.magnetoinfotech.com");
                                             },
                                             onTapCopy: () async {
+                                              if (bloc.productDetails != null) {
+                                                await bloc.appBloc
+                                                    .handleShareProduct(context: context, productDetails: bloc.productDetails!);
+                                              }
                                               bloc.onTapCopyLink(context: context);
                                             },
                                             onTapOther: () async {

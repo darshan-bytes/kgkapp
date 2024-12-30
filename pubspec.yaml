@@ -124,6 +124,7 @@ dependencies:
 
   # For Url Launcher
   url_launcher: ^6.3.1
+  flutter_branch_sdk: ^8.3.0
 
 dev_dependencies:
   flutter_test:

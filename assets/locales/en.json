@@ -757,5 +757,6 @@
   "mob_coupons": "Coupons",
   "mob_offer_valid_till_x": "Offer valid till {#}",
   "mob_more_offers": "More Offers",
-  "mob_no_state_found": "No state found"
+  "mob_no_state_found": "No state found",
+  "mob_failed_to_create_sharing_link": "Failed to create a sharing link. Please try again later."
 }
