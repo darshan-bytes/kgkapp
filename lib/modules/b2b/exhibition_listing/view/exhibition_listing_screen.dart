@@ -57,7 +57,6 @@ class ExhibitionListingScreen extends StatelessWidget {
     return BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
       buildWhen: (previous, current) => current is ExhibitionFilterListLoadedState,
       builder: (context, state) {
-        print("CURRENT INDEX : ${bloc.tabController.index}");
         if (state is ExhibitionFilterListLoadedState && bloc.filterData.isNotNullNorEmpty && bloc.tabController.index == 0) {
           return SafeArea(
             child: FilterBottomActionBar(

@@ -63,14 +63,14 @@ class ExhibitionPlacesTabView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmartText(
-                'Maximize your reach',
+                APPStrings.maximizeYourReach.tr,
                 style: style.titleStyle,
               ),
               SizedBox(
                 height: 4.0.h,
               ),
               SmartText(
-                'Showcase your jewellery exhibition to a global audience on our platform.',
+                APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
                 maxLines: 2,
                 style: style.subTitleStyle,
               ),
@@ -82,43 +82,15 @@ class ExhibitionPlacesTabView extends StatelessWidget {
   }
 
   Widget _buildCatalogueExhibitionList(BuildContext context, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
-    return
-        // Padding(
-        // // padding: EdgeInsets.symmetric(horizontal: 17.0.w),
-        // child:
-        Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // SmartText(
-        //   APPStrings.exhibitions.tr,
-        //   style: style.listTextStyle,
-        // ),
-        // SizedBox(
-        //   height: 16.h,
-        // ),
-        // SmartTextField(
-        //   focusNode: bloc.focusNode,
-        //   controller: bloc.searchController,
-        //   hintText: APPStrings.searchX.tr.interpolate([APPStrings.exhibition.tr.toLowerCase()]),
-        //   prefixIcon: SmartImage(
-        //     path: AppImages.icSearchThin,
-        //     padding: EdgeInsets.all(17.w),
-        //   ),
-        //   onTapOutside: (value) => FocusScope.of(context).unfocus(),
-        //   onValueChanges: (value) {
-        //     // bloc.add(ExhibitionListingSearchEvent(context: context));
-        //   },
-        //   onFieldSubmitted: (value) {
-        //     // bloc.add(ExhibitionListingSearchEvent(context: context));
-        //   },
-        // ),
         SizedBox(
           height: 24.h,
         ),
         _buildExhibitionSubList(bloc, style),
       ],
     );
-    // );
   }
 
   Widget _buildExhibitionSubList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {

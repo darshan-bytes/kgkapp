@@ -6,12 +6,7 @@ class ExhibitionTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).filterBottomActionBarStyle;
     ExhibitionListingItemStyle listingItemStyle = AppTheme.of(context).exhibitionListingItemStyle;
-    final outlineInputBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: style.dividerColor),
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-    );
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: exhibitionListingBloc.paginationScrollController.canScrollToTop,
@@ -64,14 +59,14 @@ class ExhibitionTabView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmartText(
-                'Maximize your reach',
+                APPStrings.maximizeYourReach.tr,
                 style: style.titleStyle,
               ),
               SizedBox(
                 height: 4.0.h,
               ),
               SmartText(
-                'Showcase your jewellery exhibition to a global audience on our platform.',
+                APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
                 maxLines: 2,
                 style: style.subTitleStyle,
               ),
@@ -137,7 +132,7 @@ class ExhibitionTabView extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
-                          RoutesData.exhibitionId: bloc.exhibitionCatalogueList[index].id,
+                          RoutesData.exhibitionId: item.id,
                         });
                       },
                       child: Column(

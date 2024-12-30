@@ -17,7 +17,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           _buildProductDisplay(bloc, style),
           SizedBox(height: 24.h),
           SmartText(
-            APPStrings.products.tr,
+            APPStrings.xProducts.tr.interpolate(["100"]),
             style: style.listStatusStyle,
           ),
           SizedBox(height: 24.h),

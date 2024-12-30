@@ -17,6 +17,9 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
 
   List<ExhibitionListingModel> exhibitionNameListing = [];
 
+  /// Focus node is used to control the focus
+  FocusNode focusNode = FocusNode();
+
   /// TabController for managing tabs in the UI.
   late TabController tabController;
 
@@ -26,7 +29,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   /// List of tabs
   final List<Widget> tabs = <Widget>[
     Tab(text: APPStrings.all.tr),
-    Tab(text: APPStrings.location.tr),
+    Tab(text: APPStrings.byVenues.tr),
   ];
 
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
@@ -73,10 +76,8 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   }
 
   Future<void> _fetchFilterData(BuildContext context, Emitter<ExhibitionListingState> emit) async {
-    if (filterData.isEmpty) {
-      await _setupFilters(context, emit);
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
-    }
+    await _setupFilters(context, emit);
+    BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
   }
 
   void _initializePagination(BuildContext context) {
@@ -201,13 +202,8 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     currentTab = index;
     emit(const ExhibitionListingLoadingState());
 
-    /// Update filter data for the current tab
-    // BlocProvider.of<AdvanceSortFilterBloc>(context)
-    //     .add(AddAdvanceSortFilterDataEvent(filterOptionList: appliedFilterData[currentTab] ?? [], context: context));
-
     /// Reload order data
     await _reloadOrderData(context, emit);
-    // emit(ChangeExhibitionTabsState());
   }
 
   /// Reloads the order data for the specified category
@@ -215,6 +211,7 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     searchController.clear();
     paginationScrollController.pullToRefresh();
 
+    await _fetchFilterData(context, emit);
     await fetchOrderListData(context, emit);
   }
 
@@ -256,7 +253,6 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
         paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       });
     }
-    emit(ExhibitionFilterListLoadedState());
     emit(ExhibitionListingLoadedState());
   }
 
@@ -278,7 +274,6 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   List<ExhibitionListingModel> _populateExhibitionList(List<ExhibitionListLocationDataModel> dataList) {
     return dataList.map((e) {
       return ExhibitionListingModel(
-        // image: data.data?.setMediaUrl,
         title: e.location,
         exhibitionSubList: e.data?.map((data) {
           return ExhibitionSubListingModel(
@@ -322,16 +317,5 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
       tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
     }
     return tempSecondaryData;
-  }
-
-  String _getCommodityForTab(int index) {
-    switch (index) {
-      case 0:
-        return 'all';
-      case 1:
-        return 'places';
-      default:
-        return 'all';
-    }
   }
 }

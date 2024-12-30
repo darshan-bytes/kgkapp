@@ -37,9 +37,6 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
                 ),
               ),
               _ordersListing(bloc, context),
-              SizedBox(
-                height: 14.h,
-              ),
             ],
           );
         });

@@ -149,7 +149,6 @@ class AppRepository extends ApiService {
       required String sortValue,
       bool isLoadMore = false,
       Map<String, String>? query,
-      Map<String, String>? headers,
       required String type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
@@ -165,8 +164,7 @@ class AppRepository extends ApiService {
       queryParams.addAll(query);
     }
 
-    var response =
-        await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: queryParams, withCurrencyHeader: true, headers: headers);
+    var response = await getMethod<DiamondListingModel>(ApiClient.diamondListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

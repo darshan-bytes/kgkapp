@@ -49,10 +49,3 @@ final class ExhibitionFilterListLoadedState extends ExhibitionListingState {
   @override
   List<Object?> get props => [];
 }
-
-final class ChangeExhibitionTabsState extends ExhibitionListingState {
-  const ChangeExhibitionTabsState();
-
-  @override
-  List<Object> get props => [];
-}

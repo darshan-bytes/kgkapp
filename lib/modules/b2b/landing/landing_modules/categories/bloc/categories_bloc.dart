@@ -188,6 +188,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
             productsDetailsList: orionSubCategoryList,
             isExpanded: false),
+        CategoriesModel(
+          name: 'Exhibition',
+          image: '',
+          productsDetailsList: [],
+          isExpanded: false,
+        )
       ]);
     } else {
       categories.addAll([
@@ -310,6 +316,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return _getDoItYourselfRouteNameB2B(categorySubName);
       case 'Orion':
         return _getOrionRouteNameB2B(categorySubName);
+      case 'Exhibition':
+        return _getExhibitionRouteNameForB2B(categorySubName);
       default:
         return defaultAction();
     }
@@ -433,6 +441,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   String? _getAboutUsRouteNameForB2C(String? categorySubName) {
     return AppRoutes.cmsWebViewPage;
+  }
+
+  String? _getExhibitionRouteNameForB2B(String? categorySubName) {
+    return AppRoutes.exhibitionListingPage;
   }
 
   Map<RoutesData, dynamic>? _getAboutUsRouteArgumentsForB2C(String? categorySubName) {

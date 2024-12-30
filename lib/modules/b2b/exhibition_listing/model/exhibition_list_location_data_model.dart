@@ -1,15 +1,15 @@
 class ExhibitionListLocationDataModel {
   String? location;
-  List<Data>? data;
+  List<VenueListModel>? data;
 
   ExhibitionListLocationDataModel({this.location, this.data});
 
   ExhibitionListLocationDataModel.fromJson(Map<String, dynamic> json) {
     location = json['location'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <VenueListModel>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new VenueListModel.fromJson(v));
       });
     }
   }
@@ -24,15 +24,15 @@ class ExhibitionListLocationDataModel {
   }
 }
 
-class Data {
+class VenueListModel {
   String? status;
   String? title;
   String? createdBy;
   String? id;
 
-  Data({this.status, this.title, this.createdBy, this.id});
+  VenueListModel({this.status, this.title, this.createdBy, this.id});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  VenueListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     title = json['title'];
     createdBy = json['created_by'];
