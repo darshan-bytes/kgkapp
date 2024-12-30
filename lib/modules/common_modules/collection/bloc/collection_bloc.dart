@@ -57,7 +57,9 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     emit(CollectionReloadState());
     _initializeTabs();
     _initializePagination(context);
-    await _callCollectionListingApi(context: context, isLoadMore: true);
+    if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
+      await _callCollectionListingApi(context: context, isLoadMore: true);
+    }
     emit(CollectionMasterListLoadedState());
   }
 
@@ -116,9 +118,11 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
   }
 
   Future<void> _handleLoadMore(BuildContext context, Emitter<CollectionState> emit, int currentPage) async {
-    emit(CollectionListLoadingMoreState());
-    await _callCollectionListingApi(context: context);
-    emit(CollectionListLoadedMoreState(currentPage + 1));
+    if (currentPage <= totalNumberOfPages!) {
+      emit(CollectionListLoadingMoreState());
+      await _callCollectionListingApi(context: context);
+      emit(CollectionListLoadedMoreState(currentPage));
+    }
   }
 
   Future<void> _handlePullToRefresh(BuildContext context, Emitter<CollectionState> emit) async {

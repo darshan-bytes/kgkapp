@@ -169,7 +169,16 @@ class DesignLibraryListItemDataModel {
     gms = json['gms']?.toString();
     businessCategoryName = json['business_category_name'];
     jewelleryTypeName = json['jewellery_type_name'];
-    images = json['images'].cast<String>();
+    if (json['images'] != null) {
+      images = [];
+      for (var e in (json['images'] as List<dynamic>)) {
+        if (e != null) {
+          images!.add(e.toString());
+        }
+      }
+    } else {
+      images = null;
+    }
     productDescription = json['product_description'];
     isAddedToCart = json['isAddedToCart'];
   }

@@ -99,3 +99,10 @@ final class SortAndFilterPriceRangeEditEvent extends SortFilterEvent {
   @override
   List<Object> get props => [isMin];
 }
+
+final class InitialSortFilterEvent extends SortFilterEvent {
+  const InitialSortFilterEvent();
+
+  @override
+  List<Object> get props => [];
+}

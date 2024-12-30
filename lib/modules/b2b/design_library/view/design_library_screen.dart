@@ -23,19 +23,24 @@ class DesignLibraryScreen extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 24.h),
         child: BlocBuilder<DesignLibraryBloc, DesignLibraryState>(
-          buildWhen: (previous, current) => current is DesignLibraryLoadedState,
+          buildWhen: (previous, current) => current is DesignLibraryLoadedState || current is DesignLibraryLoadingState,
           builder: (context, state) {
+            if (state is DesignLibraryLoadingState) {
+              return const SmartCircularProgressIndicator();
+            }
             if (state is DesignLibraryLoadedState) {
               return Column(
                 children: [
                   _buildFilterCount(bloc, context),
-                  _buildSearchTextField(bloc),
+                  SizedBox(height: 16.h),
+
+                  /// This feature has been temporarily hidden as it is not displayed on the web side.
+                  /// _buildSearchTextField(bloc),
                   _buildList(bloc),
                 ],
               );
-            } else {
-              return const SmartCircularProgressIndicator();
             }
+            return SizedBox.shrink();
           },
         ),
       ),
@@ -52,7 +57,12 @@ class DesignLibraryScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]),
+              SmartText(
+                  APPStrings.showingListLengthX.tr.interpolate([
+                    bloc.paginationScrollController.currentPage,
+                    bloc.totalNumberOfPages,
+                    bloc.totalFilteredRecords,
+                  ]),
                   style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(
@@ -133,7 +143,7 @@ class DesignLibraryScreen extends StatelessWidget {
       key: bloc.paginationScrollController.gridKey,
       controller: bloc.paginationScrollController.scrollController,
       onRefresh: () async {
-        await bloc.pullToRefresh(context: context);
+        bloc.add(DesignLibraryPullToRefreshEvent(context: context));
       },
       child: SmartGridView(
         items: List.generate(
@@ -155,7 +165,7 @@ class DesignLibraryScreen extends StatelessWidget {
       child: ListView.builder(
         key: bloc.paginationScrollController.listKey,
         shrinkWrap: true,
-        controller: bloc.paginationScrollController.secondaryScrollController,
+        controller: bloc.paginationScrollController.controller,
         itemCount: bloc.designLibraryList.length,
         itemBuilder: (context, index) {
           return Column(
@@ -174,7 +184,7 @@ class DesignLibraryScreen extends StatelessWidget {
         },
       ),
       onRefresh: () async {
-        await bloc.pullToRefresh(context: context);
+        bloc.add(DesignLibraryPullToRefreshEvent(context: context));
       },
     );
   }
@@ -187,18 +197,21 @@ class DesignLibraryScreen extends StatelessWidget {
           return FilterBottomActionBar(
             controller: bloc.paginationScrollController.controller,
             onFilterTap: () {
+              BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
+
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder: (context) => FilterScreen(
-                  onApply: () {},
+                  onApply: (value) {
+                    if (value != null && value is List<FilterData>) {
+                      bloc.add(DesignLibraryFilterEvent(context: context, filterData: value));
+                    }
+                  },
                 ),
               );
             },
             onSortTap: () async {
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => SortScreen(sortData: bloc.sortOptions),
-              );
+              bloc.onTapSortOption(context);
             },
           );
         } else {
