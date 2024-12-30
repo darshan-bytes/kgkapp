@@ -6,40 +6,45 @@ class CadLibraryListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CadLibraryListingBloc cadLibraryListingBloc = BlocProvider.of<CadLibraryListingBloc>(context);
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      bottomNavigationBar: _buildBottomNavigationBar(cadLibraryListingBloc, context),
-      floatingActionButton: _buildFloatingActionButton(cadLibraryListingBloc),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-          child: BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
-            buildWhen: (previous, current) => current is CadListingLoadedState,
-            builder: (context, state) {
-              if (state is CadListingLoadedState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: 24.h),
-                    _buildCadFilterCount(cadLibraryListingBloc, context),
-                    _buildSearchTextField(cadLibraryListingBloc),
-                    _buildCadList(cadLibraryListingBloc),
-                    SizedBox(height: 16.h),
-                  ],
-                );
-              } else {
-                return const SmartCircularProgressIndicator();
-              }
-            },
+    return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
+      buildWhen: (previous, current) => current is CadAppBarTitleChangedState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: _buildAppBar(context, cadLibraryListingBloc),
+          bottomNavigationBar: _buildBottomNavigationBar(cadLibraryListingBloc, context),
+          floatingActionButton: _buildFloatingActionButton(cadLibraryListingBloc),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              child: BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
+                buildWhen: (previous, current) => current is CadListingLoadedState || current is CadPullToRefreshState,
+                builder: (context, state) {
+                  if (state is CadListingLoadedState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 24.h),
+                        _buildCadFilterCount(cadLibraryListingBloc, context),
+                        _buildSearchTextField(cadLibraryListingBloc),
+                        _buildCadList(cadLibraryListingBloc),
+                        SizedBox(height: 16.h),
+                      ],
+                    );
+                  } else {
+                    return const SmartCircularProgressIndicator();
+                  }
+                },
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  SmartAppBar _buildAppBar(BuildContext context) {
+  SmartAppBar _buildAppBar(BuildContext context, CadLibraryListingBloc bloc) {
     return SmartAppBar(
-      title: APPStrings.cadLibrary.tr,
+      title: bloc.appBarTitle, //APPStrings.cadLibrary.tr,
       onSearch: () {
         context.pushNamed(AppRoutes.searchPage);
       },
@@ -61,7 +66,9 @@ class CadLibraryListingScreen extends StatelessWidget {
   }
 
   Widget _buildCadFilterCount(CadLibraryListingBloc bloc, BuildContext context) {
-    final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
+    final diamondListingStyle = AppTheme
+        .of(context)
+        .diamondListingStyle;
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
       buildWhen: (previous, current) => current is CadChangeListingTypeState,
       builder: (context, state) {
@@ -119,7 +126,7 @@ class CadLibraryListingScreen extends StatelessWidget {
   Widget _buildCadList(CadLibraryListingBloc bloc) {
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
       buildWhen: (previous, current) =>
-          current is CadChangeListingTypeState || current is CadListLoadedMoreState || current is CadListLoadingMoreState,
+      current is CadChangeListingTypeState || current is CadListLoadedMoreState || current is CadListLoadingMoreState,
       builder: (context, state) {
         if (bloc.cadList.isEmpty) {
           return _buildEmptyState();
@@ -189,9 +196,10 @@ class CadLibraryListingScreen extends StatelessWidget {
             onFilterTap: () async {
               await Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
-                ),
+                builder: (context) =>
+                    FilterScreen(
+                      onApply: () {},
+                    ),
               );
             },
             onSortTap: () async {
