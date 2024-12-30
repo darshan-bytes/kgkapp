@@ -428,6 +428,39 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     return commodityMasterDetails;
   }
+
+  Future<String?> handleShareProduct({required BuildContext context, required ProductDetailsModel productDetails}) async {
+    printWrapped('handleShareProduct->ProductDetailsModel: $productDetails');
+    final String title = productDetails.name ?? '';
+    // FOr now description and destination are empty. It will be updated later
+    final String description = '';
+    final String destination = '';
+
+    BranchLinkDataModel branchLinkDataModel = BranchLinkDataModel(
+      branchLinkType: BranchLinkTypeType.productShare,
+      id: productDetails.suid,
+      commodity: productDetails.commodity?.value,
+    );
+
+    final BranchResponse response = await BranchService().createDeepLink(
+      title: title,
+      description: description,
+      destination: destination,
+      extraData: branchLinkDataModel,
+      imageUrl: productDetails.imageUrl ?? productDetails.shapeImage ?? '',
+    );
+    if (response.success) {
+      final String deepLink = response.result;
+      printWrapped('handleShareProduct->DeepLink: $deepLink');
+      await Clipboard.setData(ClipboardData(text: deepLink));
+      // Utils.showMessage(APPStrings.textCopied.tr);
+      return deepLink;
+    } else {
+      Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+    }
+
+    return null;
+  }
 }
 
 extension LoadingExtension on BuildContext {

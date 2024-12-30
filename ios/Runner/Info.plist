@@ -22,12 +22,29 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kgkapp</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>In order to access your photo library</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required to find nearby stores</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is required to find nearby stores</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to access your photo library</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -49,9 +66,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	 <key>NSLocationAlwaysUsageDescription</key>
-     <string>Your location is required to find nearby stores</string>
-     <key>NSLocationWhenInUseUsageDescription</key>
-     <string>Your location is required to find nearby stores</string>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_lqj9CGZvX7PFcy5VqRsPBndmEqfdOxko</string>
+		<key>test</key>
+		<string>key_test_hDh6vU4F69Nrdx6GuQFRcjinwvblTkX8</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>ybfp0.test-app.link</string>
+		<string>ybfp0-alternate.test-app.link</string>
+		<string>ybfp0.app.link</string>
+		<string>ybfp0-alternate.app.link</string>
+	</array>
 </dict>
 </plist>

@@ -6,6 +6,7 @@ part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
   bool isInitialized = false;
+  late AppBloc appBloc;
 
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
@@ -137,8 +138,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     isInitialized = true;
     emit(ProductDetailsLoadingState());
     initCompareProductChangesStream(event.context);
+    appBloc = BlocProvider.of<AppBloc>(event.context);
     // assigning current userType
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    userType = appBloc.userType;
 
     getScreenIdentifier(event.context);
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
@@ -224,6 +226,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
             productId: productId,
+            suid: diamondData!.suid,
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
             originalPrice: diamondData!.finalPrice?.setCurrency,
@@ -264,6 +267,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }
           productDetails = ProductDetailsModel(
             productId: productId,
+            suid: gemstoneData!.suid,
             name: productName,
             offerPrice: isDiscounted ? (gemstoneData?.discountPrice ?? 0).toString().setCurrency : null,
             originalPrice: gemstoneData?.finalPrice?.setCurrency,
@@ -433,6 +437,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
         productDetails = ProductDetailsModel(
           productId: productId,
+          suid: jewelleryData.suid,
           name: productName,
           offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
           originalPrice: jewelleryData.finalPrice?.setCurrency,
