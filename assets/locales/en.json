@@ -757,5 +757,6 @@
   "mob_coupons": "Coupons",
   "mob_offer_valid_till_x": "Offer valid till {#}",
   "mob_more_offers": "More Offers",
-  "mob_no_state_found": "No state found"
+  "mob_no_state_found": "No state found",
+  "mob_style_library": "Style Library"
 }

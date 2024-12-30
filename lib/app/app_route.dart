@@ -785,6 +785,8 @@ enum ScreenIdentifier {
   productForRing,
   productForLibraryGrey,
   productForLibraryPlatinum,
+  productForLibraryStyle,
+  productForLibraryCAD,
   landingForDiamonds,
   landingForJewellery,
   landingForGemstones,
