@@ -1,0 +1,13 @@
+//
+//  BranchDomains.strings
+//  Runner
+//
+//  Created by Bytes-Divyarajsinh on 30/12/24.
+//
+
+"BRANCH_DOMAIN_1" = "ybfp0.test-app.link";
+"BRANCH_DOMAIN_2" = "ybfp0-alternate.test-app.link";
+"BRANCH_DOMAIN_3" = "ybfp0.app.link";
+"BRANCH_DOMAIN_4" = "ybfp0-alternate.app.link";
+"BRANCH_LIVE_KEY" = "key_live_lqj9CGZvX7PFcy5VqRsPBndmEqfdOxko";
+"BRANCH_TEST_KEY" = "key_test_hDh6vU4F69Nrdx6GuQFRcjinwvblTkX8";
