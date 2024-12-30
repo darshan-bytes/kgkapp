@@ -44,7 +44,7 @@ class CadLibraryListingScreen extends StatelessWidget {
 
   SmartAppBar _buildAppBar(BuildContext context, CadLibraryListingBloc bloc) {
     return SmartAppBar(
-      title: bloc.appBarTitle, //APPStrings.cadLibrary.tr,
+      title: bloc.appBarTitle,
       onSearch: () {
         context.pushNamed(AppRoutes.searchPage);
       },
