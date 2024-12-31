@@ -451,9 +451,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     if (response.success) {
       final String deepLink = response.result;
-      printWrapped('handleShareProduct->DeepLink: $deepLink');
       await Clipboard.setData(ClipboardData(text: deepLink));
-      // Utils.showMessage(APPStrings.textCopied.tr);
       return deepLink;
     } else {
       Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);

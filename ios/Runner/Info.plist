@@ -66,6 +66,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>branch_disable_nativelink</key>
+	<true/>
 	<key>branch_key</key>
 	<dict>
 		<key>live</key>

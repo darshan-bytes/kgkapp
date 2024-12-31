@@ -3,4 +3,5 @@
     <string name="branchKeyLive">key_live_lqj9CGZvX7PFcy5VqRsPBndmEqfdOxko</string>
     <string name="branchKeyTest">key_test_hDh6vU4F69Nrdx6GuQFRcjinwvblTkX8</string>
     <string name="branchUrlSchema">kgkapp</string>
+    <string name="googleMapsKey">AIzaSyCdyWZPs--H-SZqdUBpHeGakkBbimsDFek</string>
 </resources>
