@@ -760,5 +760,6 @@
   "mob_exhibitions_in_x": "{#} में उद्घाटन",
   "mob_by_venues": "स्थानों के अनुसार",
   "mob_maximize_your_reach": "अपने ग्राहकों के लिए अधिकतम रूची बड़ी बनाएं",
-  "mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform": "हमारे मंच पर वैश्विक दर्शकों के सामने अपनी आभूषण प्रदर्शनी प्रदर्शित करें।"
+  "mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform": "हमारे मंच पर वैश्विक दर्शकों के सामने अपनी आभूषण प्रदर्शनी प्रदर्शित करें।",
+  "mob_failed_to_create_sharing_link": "साझाकरण लिंक बनाने में विफल. कृपया पुन: प्रयास करें।"
 }

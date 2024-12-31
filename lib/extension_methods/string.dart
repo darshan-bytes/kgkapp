@@ -108,4 +108,26 @@ extension StringExtensions on String {
   }
 
   String get setMediaUrl => "${ApiClient.assetsBaseUrl}$this";
+
+  /// Converts a custom-formatted string into a Dart Map.
+  /// Example input: "{commodity=jewellery, id=EFGSTOCK99045002297824, branch_link_type=product_share}"
+  Map<String, dynamic>? get customStringToJson {
+    try {
+      // Remove curly braces
+      String cleaned = replaceAll('{', '').replaceAll('}', '');
+
+      // Split by comma and process each key-value pair
+      Map<String, dynamic> result = {};
+      for (var pair in cleaned.split(', ')) {
+        var keyValue = pair.split('=');
+        if (keyValue.length == 2) {
+          result[keyValue[0].trim()] = keyValue[1].trim();
+        }
+      }
+
+      return result;
+    } catch (e) {
+      return null;
+    }
+  }
 }

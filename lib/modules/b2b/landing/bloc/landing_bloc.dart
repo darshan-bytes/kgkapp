@@ -28,6 +28,8 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   bool _isInitialized = false;
 
+  StreamSubscription<BranchLinkDataModel>? _deepLinkSubscription;
+
   LandingBloc() : super(LandingInitialState()) {
     on<LandingInitialEvent>(_onLandingInitialEvent);
     on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
@@ -35,7 +37,13 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     on<LandingChangeMyBagCountEvent>(_onLandingChangeMyBagCount);
   }
 
-  void _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) {
+  @override
+  Future<void> close() async {
+    _deepLinkSubscription?.cancel();
+    return super.close();
+  }
+
+  Future<void> _onLandingInitialEvent(LandingInitialEvent event, Emitter<LandingState> emit) async {
     if (_isInitialized) {
       return;
     }
@@ -51,6 +59,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         break;
     }
     blocList[0].add(HomeInitialEvent(context: event.context));
+    await initBranchAndNavigation(event.context);
     if (userType == UserType.internal && (StorageManager().getSelectedCsc() == null)) {
       currentIndex = companyIndex;
       blocList[companyIndex].add(InitialCompanyListEvent(context: event.context));
@@ -217,5 +226,43 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   void _onLandingLogoutEvent(LandingLogoutEvent event, Emitter<LandingState> emit) {
     _isInitialized = false;
+  }
+
+  /// Initializes the Branch service and sets up deep link navigation.
+  ///
+  /// This method performs the following steps:
+  /// 1. Initializes the Branch service.
+  /// 2. Subscribes to the deep link stream from the Branch service.
+  /// 3. Listens for deep link events and navigates to the appropriate screen based on the link type.
+  Future<void> initBranchAndNavigation(BuildContext context) async {
+    await BranchService().initialize();
+    _deepLinkSubscription = BranchService().deepLinkStream.listen((BranchLinkDataModel branchLinkData) {
+      switch (branchLinkData.branchLinkType) {
+        case BranchLinkTypeType.productShare:
+          context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+            RoutesData.productId: branchLinkData.id,
+            RoutesData.isPageFor: getScreenIdentifierFromCommodity(branchLinkData.commodityEnum)
+          });
+          break;
+        //TODO: Add more cases for different link types
+        default:
+          break;
+      }
+    });
+  }
+
+  /// Returns the appropriate [ScreenIdentifier] based on the given [Commodity].
+  /// This method maps each [Commodity] to a specific [ScreenIdentifier] used for navigation.
+  ScreenIdentifier getScreenIdentifierFromCommodity(Commodity commodity) {
+    switch (commodity) {
+      case Commodity.jewellery:
+        return ScreenIdentifier.productForRing;
+      case Commodity.diamond:
+        return ScreenIdentifier.productForDiamonds;
+      case Commodity.gemstone:
+        return ScreenIdentifier.productForGemstones;
+      default:
+        return ScreenIdentifier.productForRing;
+    }
   }
 }
