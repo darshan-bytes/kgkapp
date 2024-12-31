@@ -7,11 +7,13 @@ part 'cad_library_listing_event.dart';
 class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListingState> {
   UserType userType = UserType.b2cUser;
   bool isGrid = true;
+  String appBarTitle = '';
   List<B2BCustomListingDataModel> cadList = [];
   int? totalNumberOfPages;
   final TextEditingController cadLibrarySearchController = TextEditingController();
   final SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
   Completer<bool> refreshCompleter = Completer<bool>();
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.productForLibraryCAD;
 
   String sortKey = AppConst.sortKeyNERPBS;
   String sortValue = AppConst.sortValueDesc;
@@ -28,9 +30,10 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(CadListingReloadState());
-
     clearData();
     userType = BlocProvider.of<AppBloc>(event.context).userType;
+    getRouteData(event.context);
+    emit(CadAppBarTitleChangedState());
     await _initializeSortOptions();
     gridPaginationScrollController.init(
       isSecondaryView: true,
@@ -38,8 +41,24 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         add(CadListLoadMoreEvent(event.context, currentPage));
       },
     );
-    await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
+    if(screenIdentifier == ScreenIdentifier.productForLibraryStyle){
+      await _callStyleLibraryListingApi(context: event.context, isLoadMore: false);
+    }else{
+      await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
+    }
     emit(CadListingLoadedState());
+  }
+
+  void getRouteData(BuildContext context) async {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    if (data != null) {
+      screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForLibraryCAD;
+      if(screenIdentifier == ScreenIdentifier.productForLibraryStyle){
+        appBarTitle = APPStrings.styleLibrary.tr;
+      }else{
+        appBarTitle = APPStrings.cadLibrary.tr;
+      }
+    }
   }
 
   Future<void> _initializeSortOptions() async {
@@ -61,6 +80,28 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     };
     Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
         await AppRepository(context).getCadLibraryList(query: params, isLoadMore: isLoadMore);
+
+    response?.fold((error) {
+      if (error.message.isNotNullNorEmpty) {
+        Utils.showMessage(error.message);
+      }
+    }, (success) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      final localList = success.dataList ?? [];
+      cadList.addAll(localList.map((e) => convertToB2BCustomListingDataModel(sourceModel: e)).toList());
+    });
+    gridPaginationScrollController.isPageLoaded.complete(gridPaginationScrollController.currentPage == totalNumberOfPages);
+  }
+
+  Future<void> _callStyleLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
+    final Map<String, dynamic> params = {
+      ApiKey.limit: AppConst.pageLimit,
+      ApiKey.page: gridPaginationScrollController.currentPage,
+      ApiKey.sortValue: sortValue,
+      ApiKey.sortKey: sortKey
+    };
+    Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
+    await AppRepository(context).getStyleLibraryList(query: params, isLoadMore: isLoadMore);
 
     response?.fold((error) {
       if (error.message.isNotNullNorEmpty) {
@@ -97,9 +138,10 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   Future<void> _onCadListPullToRefresh(CadListPullToRefreshEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(CadListingReloadState());
+    emit(CadPullToRefreshState());
     gridPaginationScrollController.pullToRefresh();
     cadList.clear();
-    await _callCadLibraryListingApi(context: event.context, isLoadMore: true);
+    await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     refreshCompleter.complete(true);
     emit(CadListingLoadedState());
   }

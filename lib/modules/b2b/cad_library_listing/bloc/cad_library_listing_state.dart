@@ -39,3 +39,17 @@ final class CadListLoadedMoreState extends CadLibraryListingState {
   @override
   List<Object> get props => [];
 }
+
+final class CadAppBarTitleChangedState extends CadLibraryListingState {
+  const CadAppBarTitleChangedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class CadPullToRefreshState extends CadLibraryListingState {
+  const CadPullToRefreshState();
+
+  @override
+  List<Object> get props => [];
+}

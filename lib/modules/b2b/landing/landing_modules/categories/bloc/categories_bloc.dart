@@ -105,6 +105,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Product Library MF - Platinum', image: ''),
     ProductDetailModel(name: 'Design Library', image: ''),
     ProductDetailModel(name: 'CAD Library', image: ''),
+    ProductDetailModel(name: 'Style Library', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: '')
   ];
 
@@ -601,6 +602,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return AppRoutes.productListGridPage;
       case 'CAD Library':
         return AppRoutes.cadLibraryListingPage;
+      case 'Style Library':
+        return AppRoutes.cadLibraryListingPage;
       case 'Design Library':
         return AppRoutes.designLibraryScreen;
       default:
@@ -614,6 +617,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey};
       case 'Product Library MF - Platinum':
         return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum};
+      case 'Style Library':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryStyle};
+      case 'CAD Library':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD};
       default:
         return defaultAction();
     }

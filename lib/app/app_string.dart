@@ -710,6 +710,7 @@ class APPStrings {
   // CAD Library
   static const String cadLibrary = 'mob_cad_library';
   static const String noCadLibraryFound = 'mob_no_cad_library_found';
+  static const String styleLibrary = 'mob_style_library';
 
   //Edit watchlist
   //Create watchlist
