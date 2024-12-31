@@ -106,6 +106,8 @@ class ApiClient {
 
   static const String designLibraryListing = '$apiBaseUrl/jewelleries/library/design/filters';
 
+  static const String skuLibraryListing = '$apiBaseUrl/jewelleries/library/sku/filters';
+
   static const String compareProducts = '$apiBaseUrl/compare-products';
 
   static const String homePageKgkCoutureCollections = '$apiBaseUrl/homepage-collections/couture-collections';

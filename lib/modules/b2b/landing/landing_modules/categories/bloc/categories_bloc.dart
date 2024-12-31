@@ -104,6 +104,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Product Library - Grey', image: ''),
     ProductDetailModel(name: 'Product Library MF - Platinum', image: ''),
     ProductDetailModel(name: 'Design Library', image: ''),
+    ProductDetailModel(name: 'SKU Library', image: ''),
     ProductDetailModel(name: 'CAD Library', image: ''),
     ProductDetailModel(name: 'Style Library', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: '')
