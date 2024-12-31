@@ -501,6 +501,12 @@ export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/view/ap
 export 'package:kgk/modules/b2b/landing/landing_modules/apply_promo_code/model/apply_promo_code_model.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:kgk/model/placeholder_data.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_places_tab_view.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_tab_view.dart';
+export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_list_location_data_model.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';
+export 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
+export 'package:kgk/app/branch_service.dart';
+export 'package:kgk/model/branch_link_data_model.dart';
 export 'package:kgk/modules/b2b/sku_library_listing/bloc/sku_library_bloc.dart';
 export 'package:kgk/modules/b2b/sku_library_listing/model/sku_library_listItem_data_model.dart';

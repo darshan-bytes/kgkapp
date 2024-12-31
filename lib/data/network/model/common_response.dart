@@ -163,6 +163,8 @@ class CommonResponse<T> {
         return PaginationData<PlaceOrderResponse>.fromJson(json);
       case const (ApplyPromoCodeModel):
         return ApplyPromoCodeModel.fromJson(json);
+      case const (PaginationData<ExhibitionListLocationDataModel>):
+        return PaginationData<ExhibitionListLocationDataModel>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

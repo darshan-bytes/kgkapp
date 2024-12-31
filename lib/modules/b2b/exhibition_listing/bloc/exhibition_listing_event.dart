@@ -70,3 +70,13 @@ final class ExhibitionListingSearchEvent extends ExhibitionListingEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class ChangeExhibitionTabsEvent extends ExhibitionListingEvent {
+  final int index;
+  final BuildContext context;
+
+  const ChangeExhibitionTabsEvent({required this.context, required this.index});
+
+  @override
+  List<Object> get props => [context, index];
+}

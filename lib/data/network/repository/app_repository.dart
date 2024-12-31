@@ -571,9 +571,7 @@ class AppRepository extends ApiService {
 
   // For Gemstone Filter Option
   Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({required String type}) async {
-    context.setAppLoading(true);
-    var response = await getMethod<FilterOptionModel>(ApiClient.filterOptions(type));
-    context.setAppLoading(false);
+    var response = await getMethod<FilterOptionModel>(ApiClient.filterOptions(type), withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -940,6 +938,12 @@ class AppRepository extends ApiService {
   /// Get Exhibition Listing Data
   Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing({required Map<String, dynamic> body}) async {
     var response = await postMethod<PaginationData<ExhibitionListDataModel>>(ApiClient.getExhibitionList, body);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get Exhibition Listing Data by Locations
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>?> getExhibitionListingByLocations() async {
+    var response = await getMethod<PaginationData<ExhibitionListLocationDataModel>>(ApiClient.getExhibitionListByLocations);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

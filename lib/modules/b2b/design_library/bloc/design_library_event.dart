@@ -40,3 +40,23 @@ final class DesignLibraryPullToRefreshEvent extends DesignLibraryEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class DesignLibrarySortEvent extends DesignLibraryEvent {
+  final BuildContext context;
+  final SortOptions sortData;
+
+  const DesignLibrarySortEvent({required this.context, required this.sortData});
+
+  @override
+  List<Object> get props => [context, sortData];
+}
+
+final class DesignLibraryFilterEvent extends DesignLibraryEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const DesignLibraryFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}

@@ -20,12 +20,25 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   /// Focus node is used to control the focus
   FocusNode focusNode = FocusNode();
 
+  /// TabController for managing tabs in the UI.
+  late TabController tabController;
+
+  /// For keeping track of the current tab and stop same tab on click event
+  int currentTab = -1;
+
+  /// List of tabs
+  final List<Widget> tabs = <Widget>[
+    Tab(text: APPStrings.all.tr),
+    Tab(text: APPStrings.byVenues.tr),
+  ];
+
   ExhibitionListingBloc() : super(ExhibitionListingInitialState()) {
     on<InitialExhibitionListingEvent>(_onInitialExhibitionListingEvent);
     on<LoadMoreExhibitionListingEvent>(_onLoadMoreExhibitionListingEvent);
     on<ExhibitionListingPullToRefreshEvent>(_onExhibitionListingPullToRefreshEvent);
     on<ExhibitionListingSearchEvent>(_onExhibitionListingSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<ExhibitionListingFilterEvent>(_onExhibitionListingFilterEvent);
+    on<ChangeExhibitionTabsEvent>(_onChangeTabEvent);
   }
 
   @override
@@ -63,10 +76,8 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
   }
 
   Future<void> _fetchFilterData(BuildContext context, Emitter<ExhibitionListingState> emit) async {
-    if (filterData.isEmpty) {
-      await _setupFilters(context, emit);
-      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
-    }
+    await _setupFilters(context, emit);
+    BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
   }
 
   void _initializePagination(BuildContext context) {
@@ -180,6 +191,71 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
     emit(ExhibitionListingLoadedState());
   }
 
+  /// Handles the ChangeOrderTabsEvent for tab switching
+  Future<void> _onChangeTabEvent(ChangeExhibitionTabsEvent event, Emitter<ExhibitionListingState> emit) async {
+    await _handleTabSelection(event.context, event.index, emit);
+  }
+
+  /// Handles tab selection and reloads order data accordingly
+  Future<void> _handleTabSelection(BuildContext context, int index, Emitter<ExhibitionListingState> emit) async {
+    if (currentTab == index) return;
+    currentTab = index;
+    emit(const ExhibitionListingLoadingState());
+
+    /// Reload order data
+    await _reloadOrderData(context, emit);
+  }
+
+  /// Reloads the order data for the specified category
+  Future<void> _reloadOrderData(BuildContext context, Emitter<ExhibitionListingState> emit) async {
+    searchController.clear();
+    paginationScrollController.pullToRefresh();
+
+    await _fetchFilterData(context, emit);
+    await fetchOrderListData(context, emit);
+  }
+
+  /// Fetches the order list data from the API
+  Future<void> fetchOrderListData(BuildContext context, Emitter<ExhibitionListingState> emit,
+      {bool isLoadMore = false, Map<String, dynamic>? query}) async {
+    if (tabController.index == 0) {
+      /// Build the query base on the current tab applied filters data
+      query = buildQuery(
+        filterData: filterData,
+        searchString: searchController.text,
+        currentPage: paginationScrollController.currentPage,
+        pageLimit: AppConst.pageLimit,
+      );
+
+      Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>? response =
+          await AppRepository(context).getExhibitionListing(body: query);
+
+      response?.fold((error) {
+        Utils.showMessage(error.message);
+      }, (PaginationData<ExhibitionListDataModel> success) {
+        exhibitionCatalogueList.clear();
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<ExhibitionListDataModel> dataList = success.dataList ?? [];
+        exhibitionCatalogueList.addAll(_populateExhibitionCatalogueList(dataList));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      });
+    } else {
+      Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>? response =
+          await AppRepository(context).getExhibitionListingByLocations();
+
+      response?.fold((error) {
+        Utils.showMessage(error.message);
+      }, (PaginationData<ExhibitionListLocationDataModel> success) {
+        exhibitionNameListing.clear();
+        totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+        List<ExhibitionListLocationDataModel> dataList = success.dataList ?? [];
+        exhibitionNameListing.addAll(_populateExhibitionList(dataList));
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+      });
+    }
+    emit(ExhibitionListingLoadedState());
+  }
+
   List<ExhibitionListingModel> _populateExhibitionCatalogueList(List<ExhibitionListDataModel> dataList) {
     return dataList.map((data) {
       return ExhibitionListingModel(
@@ -192,6 +268,22 @@ class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListi
           location: data.venue,
           onTap: () {},
           id: data.id.toString());
+    }).toList();
+  }
+
+  List<ExhibitionListingModel> _populateExhibitionList(List<ExhibitionListLocationDataModel> dataList) {
+    return dataList.map((e) {
+      return ExhibitionListingModel(
+        title: e.location,
+        exhibitionSubList: e.data?.map((data) {
+          return ExhibitionSubListingModel(
+            id: data.id,
+            name: data.title,
+            author: data.createdBy,
+            status: data.status?.toUpperCamelCase,
+          );
+        }).toList(),
+      );
     }).toList();
   }
 

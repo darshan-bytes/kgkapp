@@ -1,0 +1,163 @@
+import 'package:kgk/kgk.dart';
+
+class ExhibitionPlacesTabView extends StatelessWidget {
+  final ExhibitionListingBloc exhibitionListingBloc;
+  const ExhibitionPlacesTabView({super.key, required this.exhibitionListingBloc});
+
+  Widget build(BuildContext context) {
+    final style = AppTheme.of(context).filterBottomActionBarStyle;
+    ExhibitionListingItemStyle listingItemStyle = AppTheme.of(context).exhibitionListingItemStyle;
+    final outlineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(color: style.dividerColor),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+    );
+    return Scaffold(
+      floatingActionButton: ScrollToTopFAB(
+        canScrollToTop: exhibitionListingBloc.paginationScrollController.canScrollToTop,
+        onTap: exhibitionListingBloc.paginationScrollController.scrollToTop,
+      ),
+      body: BlocBuilder<ExhibitionListingBloc, ExhibitionListingState>(
+        buildWhen: (previous, current) => current is ExhibitionListingLoadedState || current is ExhibitionListingLoadingState,
+        builder: (context, state) {
+          if (state is ExhibitionListingLoadingState) {
+            return const SmartCircularProgressIndicator();
+          }
+          if (state is ExhibitionListingLoadedState) {
+            return SmartSingleChildScrollView(
+              key: exhibitionListingBloc.paginationScrollController.listKey,
+              onRefresh: () async {
+                exhibitionListingBloc.add(ExhibitionListingPullToRefreshEvent(context: context));
+              },
+              controller: exhibitionListingBloc.paginationScrollController.scrollController,
+              child: Column(
+                children: [
+                  SizedBox(height: 24.h),
+                  _buildImageAndText(exhibitionListingBloc, listingItemStyle),
+                  SizedBox(height: 24.h),
+                  _buildCatalogueExhibitionList(context, exhibitionListingBloc, listingItemStyle),
+                ],
+              ),
+            );
+          } else {
+            return const SmartCircularProgressIndicator();
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildImageAndText(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+    return Column(
+      children: [
+        SmartImage(
+          path: 'https://i.ibb.co/RQj8JGk/Rectangle-651.png',
+          width: 390.w,
+          height: 283.h,
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
+          decoration: BoxDecoration(
+            color: style.textBackgroundColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SmartText(
+                APPStrings.maximizeYourReach.tr,
+                style: style.titleStyle,
+              ),
+              SizedBox(
+                height: 4.0.h,
+              ),
+              SmartText(
+                APPStrings.showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform.tr,
+                maxLines: 2,
+                style: style.subTitleStyle,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildCatalogueExhibitionList(BuildContext context, ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 24.h,
+        ),
+        _buildExhibitionSubList(bloc, style),
+      ],
+    );
+  }
+
+  Widget _buildExhibitionSubList(ExhibitionListingBloc bloc, ExhibitionListingItemStyle style) {
+    return ListView.builder(
+      itemCount: bloc.exhibitionNameListing.length,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final ExhibitionListingModel item = bloc.exhibitionNameListing[index];
+        return Container(
+          margin: EdgeInsets.only(bottom: 24.0.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(
+                APPStrings.exhibitionsInX.tr.interpolate([item.title]),
+                style: style.listTextStyle,
+              ),
+              ListView.separated(
+                separatorBuilder: (context, subIndex) => const Divider(),
+                itemCount: bloc.exhibitionNameListing[index].exhibitionSubList?.length ?? 0,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                primary: false,
+                itemBuilder: (context, subIndex) {
+                  ExhibitionSubListingModel item = bloc.exhibitionNameListing[index].exhibitionSubList![subIndex];
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SmartText(
+                          item.name ?? '',
+                          maxLines: 2,
+                          style: style.listTitleStyle,
+                        ),
+                        SizedBox(height: 8.h),
+                        SmartText(
+                          item.author,
+                          style: style.listAuthorStyle,
+                        ),
+                        SizedBox(height: 12.h),
+                        if (item.status != null) _buildStatusBadge(style, item.status!),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStatusBadge(ExhibitionListingItemStyle style, String status) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: style.backgroundColor,
+        border: Border.all(color: style.borderColor, width: 1.w),
+      ),
+      child: SmartText(
+        status,
+        style: style.listStatusStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
