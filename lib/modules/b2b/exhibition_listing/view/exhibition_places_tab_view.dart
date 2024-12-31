@@ -4,6 +4,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
   final ExhibitionListingBloc exhibitionListingBloc;
   const ExhibitionPlacesTabView({super.key, required this.exhibitionListingBloc});
 
+  @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).filterBottomActionBarStyle;
     ExhibitionListingItemStyle listingItemStyle = AppTheme.of(context).exhibitionListingItemStyle;

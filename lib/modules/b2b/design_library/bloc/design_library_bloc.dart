@@ -45,13 +45,6 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     on<DesignLibraryFilterEvent>(_onDesignLibraryFilterEvent);
   }
 
-  /// Clears all data and resets the grid view.
-  void clearData() {
-    isGrid = true;
-    designLibraryList.clear();
-    sortOptions.clear();
-  }
-
   /// Disposes resources when the bloc is closed.
   @override
   Future<void> close() {
@@ -87,7 +80,6 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<DesignLibraryState> emit) async {
     emit(DesignLibraryLoadingState());
-    clearData();
     userType = BlocProvider.of<AppBloc>(context).userType;
     await _initializeSortOptions(context);
     BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());

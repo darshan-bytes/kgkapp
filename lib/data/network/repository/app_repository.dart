@@ -697,6 +697,12 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>?> getSkuLibraryList({Map<String, dynamic>? query}) async {
+    var response = await getMethod<PaginationData<SkuLibraryListItemDataModel>>(ApiClient.skuLibraryListing,
+        query: query, withCurrencyHeader: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<KgkCoutureDetails>>?> homePageKgkCoutureCollections({
     required String limit,
     required String page,

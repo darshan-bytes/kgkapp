@@ -62,6 +62,8 @@ class PaginationData<T> {
         return DigitalCatalogueDetails.fromJson(json);
       case const (DesignLibraryListItemDataModel):
         return DesignLibraryListItemDataModel.fromJson(json);
+      case const (SkuLibraryListItemDataModel):
+        return SkuLibraryListItemDataModel.fromJson(json);
       case const (KgkCoutureDetails):
         return KgkCoutureDetails.fromJson(json);
       case const (ShapeMasterDetails):
