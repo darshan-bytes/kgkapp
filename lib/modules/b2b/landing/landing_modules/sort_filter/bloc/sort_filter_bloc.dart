@@ -13,7 +13,8 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     SortOptions(name: APPStrings.mostViewed, sortKey: AppConst.sortKeyViewCount, sortValue: AppConst.sortValueDesc),
   ];
 
-  SortOptions selectedSortData = SortOptions(name: APPStrings.ascending, sortKey: AppConst.sortKeySuid, sortValue: AppConst.sortValueAsc);
+  SortOptions selectedSortData =
+      SortOptions(name: AppConst.sortKeyNERPBS, sortKey: AppConst.sortKeyNERPBS, sortValue: AppConst.sortValueDesc);
 
   List<FilterData> filterData = [];
   bool isLoading = false;
@@ -35,6 +36,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     on<SearchFilterDataEvent>(_onSearchFilterDataEvent);
     on<ClearAllFilterDataEvent>(_onClearAllFilterDataEvent);
     on<ApplyFilterDataEvent>(_onApplyFilterDataEvent);
+    on<InitialSortFilterEvent>(_onInitialSortFilterEvent);
 
     /// Need to discuss with team for the below event
     // on<SortFilterScreenTypeEvent>(_onSortFilterScreenTypeEvent);
@@ -279,6 +281,14 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       Utils.showMessage(APPStrings.pleaseEnterValidPriceRangeX.tr
           .interpolate([selectedFilterData?.minMaxValues?.start, selectedFilterData?.minMaxValues?.end]));
       maxPriceController.text = '${selectedFilterData?.rangeValues?.end.toString()}'; // Reset the text field if the value is out of range.
+    }
+  }
+
+  void _onInitialSortFilterEvent(InitialSortFilterEvent event, Emitter<SortFilterState> emit) async {
+    if (sortData.isNotNullNorEmpty) {
+      emit(SortReloadState());
+      selectedSortData = SortOptions(name: AppConst.sortKeyNERPBS, sortKey: AppConst.sortKeyNERPBS, sortValue: AppConst.sortValueDesc);
+      emit(SortDataSelectedState(selectedSortData));
     }
   }
 }

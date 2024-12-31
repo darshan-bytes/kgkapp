@@ -40,7 +40,16 @@ final class DesignLibraryLoadingMoreState extends DesignLibraryState {
 }
 
 final class DesignLibraryLoadedMoreState extends DesignLibraryState {
-  const DesignLibraryLoadedMoreState();
+  final int currentPage;
+
+  const DesignLibraryLoadedMoreState({required this.currentPage});
+
+  @override
+  List<Object> get props => [currentPage];
+}
+
+final class DesignLibraryLoadingState extends DesignLibraryState {
+  const DesignLibraryLoadingState();
 
   @override
   List<Object> get props => [];
