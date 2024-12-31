@@ -111,6 +111,8 @@ class CommonResponse<T> {
         return PaginationData<DigitalCatalogueDetails>.fromJson(json);
       case const (PaginationData<DesignLibraryListItemDataModel>):
         return PaginationData<DesignLibraryListItemDataModel>.fromJson(json);
+      case const (PaginationData<SkuLibraryListItemDataModel>):
+        return PaginationData<SkuLibraryListItemDataModel>.fromJson(json);
       case const (AuctionDataModel):
         return AuctionDataModel.fromJson(json);
       case const (CompareProductDetails):
