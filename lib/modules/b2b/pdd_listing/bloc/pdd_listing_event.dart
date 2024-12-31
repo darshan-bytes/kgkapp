@@ -23,10 +23,13 @@ final class PresentationChangeListingTypeEvent extends PddListingEvent {
 }
 
 final class FilterPresentationEvent extends PddListingEvent {
-  const FilterPresentationEvent();
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const FilterPresentationEvent(this.context, this.filterData);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context, filterData];
 }
 
 final class NavigateToPddPreviewEvent extends PddListingEvent {
@@ -41,16 +44,26 @@ final class NavigateToPddPreviewEvent extends PddListingEvent {
 
 final class PddListLoadMoreEvent extends PddListingEvent {
   final int currentPage;
+  final BuildContext context;
 
-  const PddListLoadMoreEvent(this.currentPage);
+  const PddListLoadMoreEvent(this.currentPage, this.context);
 
   @override
   List<Object> get props => [currentPage];
 }
 
 final class PddListPullToRefreshEvent extends PddListingEvent {
-  const PddListPullToRefreshEvent();
+  final BuildContext context;
+  const PddListPullToRefreshEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
+}
+
+final class PddListSearchEvent extends PddListingEvent {
+  final BuildContext context;
+  const PddListSearchEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
 }
