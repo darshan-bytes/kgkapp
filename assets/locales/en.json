@@ -758,5 +758,10 @@
   "mob_offer_valid_till_x": "Offer valid till {#}",
   "mob_more_offers": "More Offers",
   "mob_no_state_found": "No state found",
+  "mob_style_library": "Style Library",
+  "mob_exhibitions_in_x": "Exhibitions in {#}",
+  "mob_by_venues": "By Venues",
+  "mob_maximize_your_reach": "Maximize your reach",
+  "mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform": "Showcase your jewellery exhibition to a global audience on our platform.",
   "mob_failed_to_create_sharing_link": "Failed to create a sharing link. Please try again later."
 }

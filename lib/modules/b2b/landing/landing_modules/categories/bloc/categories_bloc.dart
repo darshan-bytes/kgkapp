@@ -105,6 +105,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     ProductDetailModel(name: 'Product Library MF - Platinum', image: ''),
     ProductDetailModel(name: 'Design Library', image: ''),
     ProductDetailModel(name: 'CAD Library', image: ''),
+    ProductDetailModel(name: 'Style Library', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: '')
   ];
 
@@ -188,6 +189,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
             productsDetailsList: orionSubCategoryList,
             isExpanded: false),
+        CategoriesModel(
+          name: 'Exhibition',
+          image: '',
+          productsDetailsList: [],
+          isExpanded: false,
+        )
       ]);
     } else {
       categories.addAll([
@@ -310,6 +317,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return _getDoItYourselfRouteNameB2B(categorySubName);
       case 'Orion':
         return _getOrionRouteNameB2B(categorySubName);
+      case 'Exhibition':
+        return _getExhibitionRouteNameForB2B(categorySubName);
       default:
         return defaultAction();
     }
@@ -433,6 +442,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   String? _getAboutUsRouteNameForB2C(String? categorySubName) {
     return AppRoutes.cmsWebViewPage;
+  }
+
+  String? _getExhibitionRouteNameForB2B(String? categorySubName) {
+    return AppRoutes.exhibitionListingPage;
   }
 
   Map<RoutesData, dynamic>? _getAboutUsRouteArgumentsForB2C(String? categorySubName) {
@@ -589,6 +602,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return AppRoutes.productListGridPage;
       case 'CAD Library':
         return AppRoutes.cadLibraryListingPage;
+      case 'Style Library':
+        return AppRoutes.cadLibraryListingPage;
       case 'Design Library':
         return AppRoutes.designLibraryScreen;
       default:
@@ -602,6 +617,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryGrey};
       case 'Product Library MF - Platinum':
         return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryPlatinum};
+      case 'Style Library':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryStyle};
+      case 'CAD Library':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD};
       default:
         return defaultAction();
     }

@@ -710,6 +710,7 @@ class APPStrings {
   // CAD Library
   static const String cadLibrary = 'mob_cad_library';
   static const String noCadLibraryFound = 'mob_no_cad_library_found';
+  static const String styleLibrary = 'mob_style_library';
 
   //Edit watchlist
   //Create watchlist
@@ -950,5 +951,10 @@ class APPStrings {
   static const String offerValidTillX = 'mob_offer_valid_till_x';
   static const String moreOffers = 'mob_more_offers';
   static const String noStateFound = 'mob_no_state_found';
+  static const String exhibitionsInX = 'mob_exhibitions_in_x';
+  static const String byVenues = 'mob_by_venues';
+  static const String maximizeYourReach = 'mob_maximize_your_reach';
+  static const String showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform =
+      'mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform';
   static const String failedToCreateSharingLink = 'mob_failed_to_create_sharing_link';
 }

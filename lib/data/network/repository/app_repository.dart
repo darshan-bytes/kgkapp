@@ -657,6 +657,15 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>?> getStyleLibraryList(
+      {Map<String, dynamic>? query, bool isLoadMore = true}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response =
+    await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.styleLibraryListing, query: query, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<DigitalCatalogueDetails>>?> digitalCatalogueFilters(
       {required Map<String, dynamic> body, bool isLoadMore = false}) async {
     if (isLoadMore) {
@@ -925,6 +934,12 @@ class AppRepository extends ApiService {
   /// Get Exhibition Listing Data
   Future<Either<ErrorResponse, PaginationData<ExhibitionListDataModel>>?> getExhibitionListing({required Map<String, dynamic> body}) async {
     var response = await postMethod<PaginationData<ExhibitionListDataModel>>(ApiClient.getExhibitionList, body);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// Get Exhibition Listing Data by Locations
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>?> getExhibitionListingByLocations() async {
+    var response = await getMethod<PaginationData<ExhibitionListLocationDataModel>>(ApiClient.getExhibitionListByLocations);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

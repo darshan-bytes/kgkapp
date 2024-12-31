@@ -112,4 +112,6 @@ class ApiKey {
   static const String week = 'week';
   static const String cartId_ = 'cart_id';
   static const String shapeCode = 'shape_code';
+  static const String cscCode = 'csc-code';
+  static const String exhibitionId = 'exhibition_id';
 }
