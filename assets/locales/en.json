@@ -765,5 +765,8 @@
   "mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform": "Showcase your jewellery exhibition to a global audience on our platform.",
   "mob_failed_to_create_sharing_link": "Failed to create a sharing link. Please try again later.",
   "mob_sku_library": "SKU Library",
-  "mob_no_sku_library_found": "No SKU library found"
+  "mob_no_sku_library_found": "No SKU library found",
+  "mob_failed_to_create_sharing_link": "Failed to create a sharing link. Please try again later.",
+  "mob_account": "Account",
+  "mob_login_msg": "Login or create an account to unlock exclusive features."
 }

@@ -121,6 +121,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
     locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
     emit(LanguageState(locale));
+    event.callback?.call();
   }
 
   void _onSetLoadingEvent(SetAppLoadingEvent event, Emitter<AppState> emit) {
