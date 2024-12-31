@@ -758,5 +758,9 @@
   "mob_offer_valid_till_x": "優惠券有效期至 {#}",
   "mob_more_offers": "更多優惠券",
   "mob_no_state_found": "找不到狀態",
-  "mob_style_library": "風格庫"
+  "mob_style_library": "風格庫",
+  "mob_exhibitions_in_x" : "展覽在 {#}",
+  "mob_by_venues": "依場地",
+  "mob_maximize_your_reach": "最大限度地擴大您的影響力",
+  "mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform": "在我們的平台上向全球觀眾展示您的珠寶展。"
 }

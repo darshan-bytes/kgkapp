@@ -44,7 +44,10 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
 
   Widget _ordersListing(ExhibitionDetailsBloc exhibitionDetailsOrdersBloc, BuildContext context) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) => current is ExhibitionListingLoadedMoreState || current is ExhibitionListingLoadingMoreState,
+      buildWhen: (previous, current) =>
+          current is ExhibitionListingLoadedMoreState ||
+          current is ExhibitionListingLoadingMoreState ||
+          current is ExhibitionDetailsLoadedState,
       builder: (context, state) {
         if (bloc.exhibitionOrdersList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
