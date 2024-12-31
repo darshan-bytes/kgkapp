@@ -681,6 +681,7 @@ class LightModeTheme extends AppTheme {
         blueInProgressTextColor: colors.color006FBB,
         yellowBgColor: colors.colorEEC200.withValues(alpha: 0.1),
         yellowTextColor: colors.colorEEC200,
+        pendingBgColor: colors.colorFCF7E0,
       );
 
   @override

@@ -1335,19 +1335,22 @@ class StatusBadgeStyle {
   final Color blueInProgressTextColor;
   final Color yellowTextColor;
   final Color yellowBgColor;
+  final Color pendingBgColor;
 
-  StatusBadgeStyle(
-      {required this.orangeInProgressBackgroundColor,
-      required this.orangeInProgressTextColor,
-      required this.activeBackgroundColor,
-      required this.activeTextColor,
-      required this.statusTextStyle,
-      required this.lostBackgroundColor,
-      required this.lostTextColor,
-      required this.blueInProgressBackgroundColor,
-      required this.blueInProgressTextColor,
-      required this.yellowTextColor,
-      required this.yellowBgColor});
+  StatusBadgeStyle({
+    required this.orangeInProgressBackgroundColor,
+    required this.orangeInProgressTextColor,
+    required this.activeBackgroundColor,
+    required this.activeTextColor,
+    required this.statusTextStyle,
+    required this.lostBackgroundColor,
+    required this.lostTextColor,
+    required this.blueInProgressBackgroundColor,
+    required this.blueInProgressTextColor,
+    required this.yellowTextColor,
+    required this.yellowBgColor,
+    required this.pendingBgColor,
+  });
 }
 
 class OrderCancelPopupStyle {
