@@ -88,14 +88,26 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   Future<void> _onChangeCurrencyEvent(PreferencesChangeCurrencyEvent event, Emitter<PreferencesState> emit) async {
     emit(PreferencesReloadState());
     selectedCurrency = event.currency;
-    if (selectedCurrency != null) {
-      await StorageManager().setSelectedCurrency(selectedCurrency!.name);
-      await StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
-    }
     emit(PreferencesChangeCurrencyState());
   }
 
-  void _onSaveEvent(PreferencesSaveEvent event, Emitter<PreferencesState> emit) {
-    BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(selectedLanguage?.symbol ?? 'en', context: event.context));
+  Future<void> _onSaveEvent(PreferencesSaveEvent event, Emitter<PreferencesState> emit) async {
+    if (selectedCurrency != null) {
+      /// Save the selected currency and its symbol to storage
+      await StorageManager().setSelectedCurrency(selectedCurrency!.name);
+      await StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
+    }
+    BlocProvider.of<AppBloc>(event.context).add(
+      LanguageChangedEvent(
+        selectedLanguage?.symbol ?? 'en',
+        context: event.context,
+        callback: () {
+          event.context.pop();
+          Utils.showMessage(
+            'Preferences Updated Successfully',
+          );
+        },
+      ),
+    );
   }
 }
