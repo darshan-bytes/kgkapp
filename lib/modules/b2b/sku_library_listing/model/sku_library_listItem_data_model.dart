@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class SkuLibraryListItemDataModel {
   SkuLibraryListItemDataModel({
     required this.id,
@@ -79,7 +81,7 @@ class SkuLibraryListItemDataModel {
   final String? jewelleryType;
   final String? locationName;
   final String? market;
-  final List<String> metalColor;
+  final List<String?>? metalColor;
   final String? metalCommodity;
   final String? metalKt;
   final List<dynamic> multipleCadViewImage;
@@ -153,7 +155,7 @@ class SkuLibraryListItemDataModel {
       jewelleryType: json["jewellery_type"],
       locationName: json["location_name"],
       market: json["market"],
-      metalColor: json["metal_color"] == null ? [] : List<String>.from(json["metal_color"]!.map((x) => x)),
+      metalColor: json["metal_color"] == null ? [] : List<String?>.from(json["metal_color"]!.map((x) => x)),
       metalCommodity: json["metal_commodity"],
       metalKt: json["metal_kt"],
       multipleCadViewImage:
@@ -164,7 +166,7 @@ class SkuLibraryListItemDataModel {
               json["multiple_finished_view_image"]!.map((x) => SkuMultipleFinishedViewImage.fromJson(x))),
       newArrival: json["new_arrival"],
       productDescription: json["product_description"],
-      productPriceIntCurrency: json["product_price_int_currency"],
+      productPriceIntCurrency: json["product_price_int_currency"]?.toString().toDouble,
       qty: json["qty"],
       skuNo: json["sku_no"],
       styleNo: json["style_no"],
@@ -173,9 +175,9 @@ class SkuLibraryListItemDataModel {
       businessCategoryCode: json["business_category_code"],
       suid: json["suid"],
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      diamondWeight: json["diamond_weight"],
+      diamondWeight: json["diamond_weight"]?.toString().toInt,
       gemstoneWeight: json["gemstone_weight"],
-      metalWeight: json["metal_weight"],
+      metalWeight: json["metal_weight"]?.toString().toDouble,
       diamondColor: json["diamond_color"] == null ? [] : List<dynamic>.from(json["diamond_color"]!.map((x) => x)),
       internationalQuality: json["international_quality"] == null ? [] : List<String>.from(json["international_quality"]!.map((x) => x)),
       internalQualityName: json["internal_quality_name"] == null ? [] : List<dynamic>.from(json["internal_quality_name"]!.map((x) => x)),
@@ -192,7 +194,7 @@ class SkuLibraryListItemDataModel {
       kgkCollection: json["kgk_collection"],
       finalPrice: json["final_price"],
       discountPrice: json["discount_price"],
-      originalPrice: json["original_price"],
+      originalPrice: json["original_price"]?.toString().toDouble,
       images: images ?? [],
       isAddedToCart: json["isAddedToCart"],
       productSize: json["product_size"],
@@ -219,7 +221,7 @@ class SkuLibraryListItemDataModel {
         "jewellery_type": jewelleryType,
         "location_name": locationName,
         "market": market,
-        "metal_color": metalColor.map((x) => x).toList(),
+        "metal_color": metalColor?.map((x) => x).toList(),
         "metal_commodity": metalCommodity,
         "metal_kt": metalKt,
         "multiple_cad_view_image": multipleCadViewImage.map((x) => x).toList(),
@@ -325,16 +327,16 @@ class SkuComponentDetail {
       internationalQuality: json["InternationalQuality"],
       sieveSize: json["SieveSize"],
       mmSize: json["MMSize"],
-      consumedQty1: json["ConsumedQty1"].toDouble(),
+      consumedQty1: json["ConsumedQty1"]?.toString().toDouble,
       consumedQty2: json["ConsumedQty2"],
-      totalQty1: json["TotalQty1"].toDouble(),
+      totalQty1: json["TotalQty1"]?.toString().toDouble,
       totalQty2: json["TotalQty2"],
       uom1: json["UOM1"],
       uom2: json["UOM2"],
-      localCurrencyRate: json["LocalCurrencyRate"].toDouble(),
-      localCurrencyAmount: json["LocalCurrencyAmount"].toDouble(),
-      intCurrencyRate: json["IntCurrencyRate"].toDouble(),
-      intCurrencyAmount: json["IntCurrencyAmount"].toDouble(),
+      localCurrencyRate: json["LocalCurrencyRate"]?.toString().toDouble,
+      localCurrencyAmount: json["LocalCurrencyAmount"]?.toString().toDouble,
+      intCurrencyRate: json["IntCurrencyRate"]?.toString().toDouble,
+      intCurrencyAmount: json["IntCurrencyAmount"]?.toString().toDouble,
       certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
     );
   }
