@@ -63,6 +63,7 @@ class AppRoutes {
   static const watchListPage = '/watchListPage';
   static const previewCataloguePage = '/previewCataloguePage';
   static const designLibraryScreen = '/designLibraryScreen';
+  static const skuLibraryScreen = '/skuLibraryScreen';
   static const activityLogScreenPage = '/activityLogScreenPage';
   static const watchlistDetailsPage = '/watchlistDetailsPage';
   static const manufacturerOrderListingPage = '/manufacturerOrderListingPage';
@@ -558,6 +559,15 @@ class AppRoutes {
           return BlocProvider<DesignLibraryBloc>(
             create: (context) => DesignLibraryBloc()..add(DesignLibraryInitialEvent(context: context)),
             child: const DesignLibraryScreen(),
+          );
+        };
+        break;
+
+      case skuLibraryScreen:
+        builder = (context) {
+          return BlocProvider<SkuLibraryBloc>(
+            create: (context) => SkuLibraryBloc()..add(SkuLibraryInitialEvent(context: context)),
+            child: const SkuLibraryScreen(),
           );
         };
         break;

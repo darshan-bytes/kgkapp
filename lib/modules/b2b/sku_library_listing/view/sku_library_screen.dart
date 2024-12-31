@@ -1,14 +1,14 @@
 import 'package:kgk/kgk.dart';
 
 class SkuLibraryScreen extends StatelessWidget {
-  const SkuLibraryScreen({Key? key}) : super(key: key);
+  const SkuLibraryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final SkuLibraryBloc bloc = BlocProvider.of<SkuLibraryBloc>(context);
     return Scaffold(
       appBar: SmartAppBar(
-        title: 'APPStrings.skuLibrary.tr',
+        title: APPStrings.skuLibrary.tr,
         onSearch: () => context.pushNamed(AppRoutes.searchPage),
         onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
       ),
@@ -125,7 +125,7 @@ class SkuLibraryScreen extends StatelessWidget {
           current is SkuLibraryLoadingMoreState,
       builder: (context, state) {
         if (bloc.skuLibraryList.isEmpty) {
-          return NoDataFoundWidget(text: 'APPStrings.noSkuLibraryFound.tr');
+          return NoDataFoundWidget(text: APPStrings.noSkuLibraryFound.tr);
         }
         return _buildListOrGridView(bloc, state, context);
       },
@@ -155,6 +155,7 @@ class SkuLibraryScreen extends StatelessWidget {
               (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.skuLibraryList[index],
             onTap: () {
+              /// TODO: Navigate to the design detail page.
              // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
             },
           ),
@@ -179,6 +180,7 @@ class SkuLibraryScreen extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 24.h),
                 designModel: bloc.skuLibraryList[index],
                 onTap: () {
+                  /// TODO: Navigate to the design detail page.
                   // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
                 },
               ),

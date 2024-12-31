@@ -957,4 +957,6 @@ class APPStrings {
   static const String showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform =
       'mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform';
   static const String failedToCreateSharingLink = 'mob_failed_to_create_sharing_link';
+  static const String skuLibrary = 'mob_sku_library';
+  static const String noSkuLibraryFound = 'mob_no_sku_library_found';
 }

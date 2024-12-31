@@ -607,6 +607,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return AppRoutes.cadLibraryListingPage;
       case 'Design Library':
         return AppRoutes.designLibraryScreen;
+      case 'SKU Library':
+        return AppRoutes.skuLibraryScreen;
       default:
         return defaultAction();
     }

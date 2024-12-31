@@ -9,7 +9,7 @@ class ExhibitionListLocationDataModel {
     if (json['data'] != null) {
       data = <VenueListModel>[];
       json['data'].forEach((v) {
-        data!.add(new VenueListModel.fromJson(v));
+        data!.add(VenueListModel.fromJson(v));
       });
     }
   }

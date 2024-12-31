@@ -42,13 +42,6 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
     on<SkuLibraryFilterEvent>(_onSkuLibraryFilterEvent);
   }
 
-  /// Clears all data and resets the grid view.
-  void clearData() {
-    isGrid = true;
-    skuLibraryList.clear();
-    sortOptions.clear();
-  }
-
   /// Disposes resources when the bloc is closed.
   @override
   Future<void> close() {
@@ -84,7 +77,6 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<SkuLibraryState> emit) async {
     emit(SkuLibraryLoadingState());
-    clearData();
     userType = BlocProvider.of<AppBloc>(context).userType;
     await _initializeSortOptions(context);
     BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
@@ -127,7 +119,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
     };
 
     Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>? response =
-    await AppRepository(context).getSkuLibraryList(query: params);
+        await AppRepository(context).getSkuLibraryList(query: params);
 
     response?.fold((error) {
       if (error.message.isNotNullNorEmpty) {
@@ -145,10 +137,10 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   /// Converts API response data to the custom listing data model.
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required SkuLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
-      id: sourceModel.sId,
-      strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
-      strDesignNumber: sourceModel.skuNumber,
-      strDbfNumber: sourceModel.description,
+      id: sourceModel.id,
+      strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images.first : '',
+      strDesignNumber: sourceModel.skuNo,
+      strDbfNumber: sourceModel.productDescription,
     );
   }
 
@@ -218,7 +210,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
 
   Future<void> _setupFilters(BuildContext context) async {
     final List<FilterOptionModel> tempFilterData =
-    await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.skuLibrary);
+        await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.skuLibrary);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
       FilterData filter = FilterData(
