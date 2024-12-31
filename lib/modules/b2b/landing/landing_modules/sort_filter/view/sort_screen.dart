@@ -10,14 +10,15 @@ class SortScreen extends StatelessWidget {
     SortFilterBloc sortFilterBloc = BlocProvider.of<SortFilterBloc>(context);
     final SortStyle style = AppTheme.of(context).sortStyle;
     return Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-          ),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: style.backgroundColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
         ),
+      ),
+      child: SmartSingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -55,7 +56,7 @@ class SortScreen extends StatelessWidget {
                             style: style.itemTitleStyle,
                           ),
                         ),
-                        if (sortFilterBloc.selectedSortData.name == sortData[index].name) const SmartImage(path: AppImages.icCheck),
+                        if (sortData[index].name == sortFilterBloc.selectedSortData.name) const SmartImage(path: AppImages.icCheck),
                       ],
                     ),
                   ),
@@ -63,6 +64,8 @@ class SortScreen extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
