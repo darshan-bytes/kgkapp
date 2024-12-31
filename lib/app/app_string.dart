@@ -956,4 +956,5 @@ class APPStrings {
   static const String maximizeYourReach = 'mob_maximize_your_reach';
   static const String showcaseYourJewelleryExhibitionToAGlobalAudienceOnOurPlatform =
       'mob_showcase_your_jewellery_exhibition_to_a_global_audience_on_our_platform';
+  static const String failedToCreateSharingLink = 'mob_failed_to_create_sharing_link';
 }
