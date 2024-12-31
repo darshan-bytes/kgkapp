@@ -937,6 +937,12 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  /// Get Exhibition Listing Data by Locations
+  Future<Either<ErrorResponse, PaginationData<ExhibitionListLocationDataModel>>?> getExhibitionListingByLocations() async {
+    var response = await getMethod<PaginationData<ExhibitionListLocationDataModel>>(ApiClient.getExhibitionListByLocations);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, DiamondListingModel>?> diyFilters({
     required String limit,
     required String page,
