@@ -959,4 +959,6 @@ class APPStrings {
   static const String failedToCreateSharingLink = 'mob_failed_to_create_sharing_link';
   static const String skuLibrary = 'mob_sku_library';
   static const String noSkuLibraryFound = 'mob_no_sku_library_found';
+  static const String account = 'mob_account';
+  static const String loginMsg = 'mob_login_msg';
 }

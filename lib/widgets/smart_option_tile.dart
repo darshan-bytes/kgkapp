@@ -66,15 +66,16 @@ class SmartOptionTile extends StatelessWidget {
                 SizedBox(
                   width: 12.w,
                 ),
-              Container(
-                height: 24.w,
-                width: 24.w,
-                alignment: Alignment.center,
-                child: SmartImage(
-                  path: profileListModel.trailingIcon!,
-                  color: style.arrowRightColor,
+              if (profileListModel.trailingIcon.isNotNullNorEmpty)
+                Container(
+                  height: 24.w,
+                  width: 24.w,
+                  alignment: Alignment.center,
+                  child: SmartImage(
+                    path: profileListModel.trailingIcon ?? "",
+                    color: style.arrowRightColor,
+                  ),
                 ),
-              ),
             ]),
           ],
         ),
