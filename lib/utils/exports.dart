@@ -505,6 +505,7 @@ export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_places_tab_vi
 export 'package:kgk/modules/b2b/exhibition_listing/view/exhibition_tab_view.dart';
 export 'package:kgk/modules/b2b/exhibition_listing/model/exhibition_list_location_data_model.dart';
 export 'package:kgk/modules/common_modules/order_management/order_details/view/return_order_product_bottomsheet.dart';
+export 'package:kgk/modules/b2b/pdd_listing/pdd_data_model.dart';
 export 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 export 'package:kgk/app/branch_service.dart';
 export 'package:kgk/model/branch_link_data_model.dart';

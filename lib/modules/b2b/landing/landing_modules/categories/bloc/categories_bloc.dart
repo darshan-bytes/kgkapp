@@ -191,7 +191,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             isExpanded: false),
         CategoriesModel(
           name: 'Exhibition',
-          image: '',
+          image: 'https://i.ibb.co/VxhKkNW/Mask-group.png',
           productsDetailsList: [],
           isExpanded: false,
         )

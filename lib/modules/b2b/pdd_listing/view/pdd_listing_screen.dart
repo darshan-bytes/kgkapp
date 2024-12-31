@@ -22,7 +22,7 @@ class PddListingScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: 24.h),
-                    _buildSearchTextField(pddListingBloc, diamondListingStyle),
+                    _buildSearchTextField(context, pddListingBloc, diamondListingStyle),
                     SizedBox(height: 24.h),
                     _buildPddList(pddListingBloc, state),
                     SizedBox(height: 16.h),
@@ -41,19 +41,21 @@ class PddListingScreen extends StatelessWidget {
     return SmartAppBar(title: APPStrings.presentations.tr);
   }
 
-  Widget _buildSearchTextField(PddListingBloc pddListingBloc, DiamondListingStyle diamondListingStyle) {
+  Widget _buildSearchTextField(BuildContext context, PddListingBloc pddListingBloc, DiamondListingStyle diamondListingStyle) {
     return Row(
       children: [
         Expanded(
           child: SmartTextField(
+            focusNode: pddListingBloc.focusNode,
             hintText: APPStrings.searchPresentation.tr,
             controller: pddListingBloc.presentationSearchController,
-            onValueChanges: (value) => pddListingBloc.add(const FilterPresentationEvent()),
+            onValueChanges: (value) => pddListingBloc.add(PddListSearchEvent(context)),
+            onFieldSubmitted: (value) => pddListingBloc.add(PddListSearchEvent(context)),
             suffixIcon: SmartImage(
               path: AppImages.icSearchThin,
               padding: EdgeInsets.all(14.w),
             ),
-            onTapOutside: (event) {},
+            onTapOutside: (value) => FocusScope.of(context).unfocus(),
           ),
         ),
         SizedBox(width: 16.w),
@@ -99,12 +101,19 @@ class PddListingScreen extends StatelessWidget {
   Widget _buildPddList(PddListingBloc bloc, PddListingState state) {
     return BlocBuilder<PddListingBloc, PddListingState>(
       buildWhen: (previous, current) =>
-          current is PddListingChangeListingTypeState || current is PddListLoadingMoreState || current is PddListLoadedMoreState,
+          current is PddListingChangeListingTypeState ||
+          current is PddListLoadingMoreState ||
+          current is PddListLoadedMoreState ||
+          current is PddListingLoadedState ||
+          current is PddListLoadingState,
       builder: (context, state) {
-        if (bloc.filteredPresentationList.isEmpty) {
+        if (state is PddListLoadingState) {
+          return const SmartCircularProgressIndicator();
+        }
+        if (bloc.presentationList.isEmpty) {
           return _buildEmptyState();
         }
-        return _buildListingView(bloc, state);
+        return _buildListingView(bloc, state, context);
       },
     );
   }
@@ -113,17 +122,17 @@ class PddListingScreen extends StatelessWidget {
     return NoDataFoundWidget(text: APPStrings.noPresentationFound.tr);
   }
 
-  Widget _buildListingView(PddListingBloc bloc, PddListingState state) {
+  Widget _buildListingView(PddListingBloc bloc, PddListingState state, BuildContext context) {
     return Expanded(
       child: RefreshIndicator.adaptive(
         onRefresh: () async {
-          await bloc.pullToRefresh();
+          bloc.add(PddListPullToRefreshEvent(context));
         },
         child: ListView.builder(
           shrinkWrap: true,
           key: bloc.isGrid ? bloc.gridPaginationScrollController.gridKey : bloc.gridPaginationScrollController.listKey,
           controller: bloc.gridPaginationScrollController.controller,
-          itemCount: bloc.filteredPresentationList.length,
+          itemCount: bloc.presentationList.length,
           itemBuilder: (context, index) {
             return BlocBuilder<PddListingBloc, PddListingState>(
               buildWhen: (previous, current) => current is PddListLoadingMoreState || current is PddListLoadedMoreState,
@@ -133,22 +142,22 @@ class PddListingScreen extends StatelessWidget {
                     bloc.isGrid
                         ? PresentationGridItem(
                             margin: EdgeInsets.only(
-                                bottom: state is PddListLoadingMoreState && index == bloc.filteredPresentationList.length - 1 ? 0.h : 24.h),
+                                bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTap: () {
                               bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
                             },
-                            b2bCustomListingDataModel: bloc.filteredPresentationList[index])
+                            b2bCustomListingDataModel: bloc.presentationList[index])
                         : B2BListingItem(
                             margin: EdgeInsets.only(
-                                bottom: state is PddListLoadingMoreState && index == bloc.filteredPresentationList.length - 1 ? 0.h : 24.h),
+                                bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTapMenuButton: () {},
                             type: B2BListingType.presentationListingType,
-                            listingItemModel: bloc.filteredPresentationList[index],
+                            listingItemModel: bloc.presentationList[index],
                             onTap: () {
                               bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
                             },
                           ),
-                    if (state is PddListLoadingMoreState && index == bloc.filteredPresentationList.length - 1)
+                    if (state is PddListLoadingMoreState && index == bloc.presentationList.length - 1)
                       const SmartCircularProgressIndicator(),
                   ],
                 );
@@ -170,16 +179,13 @@ class PddListingScreen extends StatelessWidget {
             onFilterTap: () {
               Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) => FilterScreen(
-                  onApply: () {},
+                builder: (_) => AdvanceFilterScreen(
+                  onApply: (value) {
+                    if (value != null && value is List<FilterData>) {
+                      pddListingBloc.add(FilterPresentationEvent(context, value));
+                    }
+                  },
                 ),
-              );
-            },
-            onSortTap: () {
-              /// TODO: Fetch this from local and pass here as sortData based on commodity type
-              Utils.showSmartModalBottomSheet(
-                context: context,
-                builder: (context) => SortScreen(sortData: []),
               );
             },
           );

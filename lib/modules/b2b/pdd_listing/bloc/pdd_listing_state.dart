@@ -44,3 +44,10 @@ final class PddListLoadingMoreState extends PddListingState {
   @override
   List<Object> get props => [];
 }
+
+final class PddListLoadingState extends PddListingState {
+  const PddListLoadingState();
+
+  @override
+  List<Object> get props => [];
+}

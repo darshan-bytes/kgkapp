@@ -156,7 +156,11 @@ class UserIdDetails {
 }
 
 extension UserIdDetailsExtension on UserIdDetails {
-  String get fullName => "$firstname $lastname";
+  String get fullName {
+    final nameParts = [firstname, lastname];
+
+    return nameParts.where((part) => part.isNotNullNorEmpty).join(" ");
+  }
 
   String get phoneNumber {
     final String? validPhoneCode = phoneCode?.trim().isNotEmpty == true ? phoneCode : "";

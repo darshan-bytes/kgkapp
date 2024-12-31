@@ -116,7 +116,7 @@ class SmartStatusBadge extends StatelessWidget {
       case ProjectStatus.wip:
         return style.blueInProgressBackgroundColor;
       case ProjectStatus.pending:
-        return style.yellowBgColor;
+        return style.pendingBgColor;
       case ProjectStatus.completed:
         return style.activeBackgroundColor;
       case ProjectStatus.cancelled:

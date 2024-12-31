@@ -5,10 +5,11 @@ sealed class PresentationEvent extends Equatable {
 }
 
 final class InitialPresentationEvent extends PresentationEvent {
-  const InitialPresentationEvent();
+  final BuildContext context;
+  const InitialPresentationEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class PresentationLoadMoreEvent extends PresentationEvent {

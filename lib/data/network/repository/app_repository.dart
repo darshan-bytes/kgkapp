@@ -659,7 +659,7 @@ class AppRepository extends ApiService {
       {Map<String, dynamic>? query, bool isLoadMore = true}) async {
     if (isLoadMore) context.setAppLoading(true);
     var response =
-    await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.styleLibraryListing, query: query, withCurrencyHeader: true);
+        await getMethod<PaginationData<CadLibraryListItemDataModel>>(ApiClient.styleLibraryListing, query: query, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -1030,6 +1030,24 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, CommonResponse<ApplyPromoCodeModel>>?> fetchPromoCodeList() async {
     var response = await getMethod<ApplyPromoCodeModel>(ApiClient.promoCodeList, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<PddDataModel>>?> getPresentationFilters(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<PddDataModel>>(ApiClient.presentationFilters, body);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For DigitalCatalogue Filter Option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchPddListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.pddFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }
