@@ -20,6 +20,7 @@ class SmartDropDown<T> extends StatelessWidget {
   final bool isChangeableValue;
   final Function(String)? onSearchEvent;
   final bool canSearch;
+  final String? errorText;
 
   const SmartDropDown({
     super.key,
@@ -42,6 +43,7 @@ class SmartDropDown<T> extends StatelessWidget {
     this.isChangeableValue = true,
     this.onSearchEvent,
     this.canSearch = false, // Default to false (no search)
+    this.errorText,
   });
 
   @override
@@ -98,6 +100,13 @@ class SmartDropDown<T> extends StatelessWidget {
             child: _getTitleView(textFieldStyle: textFieldStyle, isIcArrowDropDown: isIcArrowDropDown, title: title, hintText: hintText),
           ),
         ),
+        if (errorText.isNotNullNorEmpty) ...[
+          SizedBox(height: 4.h),
+          SmartText(
+            errorText!,
+            style: textFieldStyle.errorStyle,
+          ),
+        ],
       ],
     );
   }

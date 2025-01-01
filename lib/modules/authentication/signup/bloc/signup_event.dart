@@ -115,3 +115,13 @@ final class SignUpPhoneNumberValidationEvent extends SignUpEvent {
   @override
   List<Object> get props => [context, phoneNumber];
 }
+
+final class SignUpFieldChangeEvent extends SignUpEvent {
+  final FieldType fieldType;
+  final int index;
+
+  const SignUpFieldChangeEvent(this.fieldType, {this.index = -1});
+
+  @override
+  List<Object> get props => [fieldType];
+}
