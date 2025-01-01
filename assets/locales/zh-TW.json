@@ -766,7 +766,7 @@
   "mob_failed_to_create_sharing_link": "無法建立共享連結。請稍後重試。",
   "mob_sku_library": "SKU庫",
   "mob_no_sku_library_found": "找不到SKU庫",
-  "mob_failed_to_create_sharing_link": "無法建立共享連結。請稍後重試。",
   "mob_account": "帳戶",
-  "mob_login_msg": "登入或創建帳戶以解鎖專屬功能。"
+  "mob_login_msg": "登入或創建帳戶以解鎖專屬功能。",
+  "mob_error_contact_number_valid": "請輸入有效的聯絡電話"
 }
