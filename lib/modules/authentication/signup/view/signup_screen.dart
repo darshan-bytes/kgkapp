@@ -141,7 +141,7 @@ class SignUpScreen extends StatelessWidget {
       SizedBox(height: 24.h),
       _buildCompanyLocationField(signUpBloc),
       SizedBox(height: 24.h),
-      _buildBusinessType(signUpBloc, context),
+      _buildBusinessType(signUpBloc, context, style),
       SizedBox(height: 24.h),
       const Divider(),
       SizedBox(height: 24.h),
@@ -170,89 +170,157 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildFirstNameField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.firstName.tr,
-      hintText: APPStrings.hintFirstName.tr,
-      controller: signUpBloc.firstNameController,
-      focusNode: signUpBloc.firstNameFocusNode,
-      nextFocus: signUpBloc.lastNameFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.firstName,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.firstNameError,
+          labelText: APPStrings.firstName.tr,
+          hintText: APPStrings.hintFirstName.tr,
+          controller: signUpBloc.firstNameController,
+          focusNode: signUpBloc.firstNameFocusNode,
+          nextFocus: signUpBloc.lastNameFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.firstNameError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.firstName));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildLastNameField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.lastName.tr,
-      hintText: APPStrings.hintLastName.tr,
-      controller: signUpBloc.lastNameController,
-      focusNode: signUpBloc.lastNameFocusNode,
-      nextFocus: signUpBloc.emailFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.lastName,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.lastNameError,
+          labelText: APPStrings.lastName.tr,
+          hintText: APPStrings.hintLastName.tr,
+          controller: signUpBloc.lastNameController,
+          focusNode: signUpBloc.lastNameFocusNode,
+          nextFocus: signUpBloc.emailFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.lastNameError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.lastName));
+            }
+          },
+        );
+      },
     );
   }
 
   // build address field
   Widget _buildAddressField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.address.tr,
-      hintText: APPStrings.address.tr,
-      controller: signUpBloc.addressController,
-      focusNode: signUpBloc.addressFocusNode,
-      nextFocus: signUpBloc.cityFocusNode,
-      keyboardType: TextInputType.streetAddress,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.address,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.addressError,
+          labelText: APPStrings.address.tr,
+          hintText: APPStrings.address.tr,
+          controller: signUpBloc.addressController,
+          focusNode: signUpBloc.addressFocusNode,
+          nextFocus: signUpBloc.cityFocusNode,
+          keyboardType: TextInputType.streetAddress,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.addressError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.address));
+            }
+          },
+        );
+      },
     );
   }
 
   // build city field
   Widget _buildCityField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.city.tr,
-      hintText: APPStrings.city.tr,
-      controller: signUpBloc.cityController,
-      focusNode: signUpBloc.cityFocusNode,
-      nextFocus: signUpBloc.stateFocusNode,
-      keyboardType: TextInputType.streetAddress,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.city,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.cityError,
+          labelText: APPStrings.city.tr,
+          hintText: APPStrings.city.tr,
+          controller: signUpBloc.cityController,
+          focusNode: signUpBloc.cityFocusNode,
+          nextFocus: signUpBloc.stateFocusNode,
+          keyboardType: TextInputType.streetAddress,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.cityError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.city));
+            }
+          },
+        );
+      },
     );
   }
 
   // build state field
   Widget _buildStateField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.state.tr,
-      hintText: APPStrings.state.tr,
-      controller: signUpBloc.stateController,
-      focusNode: signUpBloc.stateFocusNode,
-      nextFocus: signUpBloc.zipcodeFocusNode,
-      keyboardType: TextInputType.streetAddress,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.state,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.stateError,
+          labelText: APPStrings.state.tr,
+          hintText: APPStrings.state.tr,
+          controller: signUpBloc.stateController,
+          focusNode: signUpBloc.stateFocusNode,
+          nextFocus: signUpBloc.zipcodeFocusNode,
+          keyboardType: TextInputType.streetAddress,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.stateError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.state));
+            }
+          },
+        );
+      },
     );
   }
 
   // build zipcode field
   Widget _buildZipcodeField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.zipcode.tr,
-      hintText: APPStrings.zipcode.tr,
-      controller: signUpBloc.zipcodeController,
-      focusNode: signUpBloc.zipcodeFocusNode,
-      nextFocus: signUpBloc.officeLocationFocusNode,
-      keyboardType: TextInputType.number,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.zipcode,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.zipcodeError,
+          labelText: APPStrings.zipcode.tr,
+          hintText: APPStrings.zipcode.tr,
+          controller: signUpBloc.zipcodeController,
+          focusNode: signUpBloc.zipcodeFocusNode,
+          nextFocus: signUpBloc.officeLocationFocusNode,
+          keyboardType: TextInputType.number,
+          onValueChanges: (value) {
+            if (signUpBloc.zipcodeError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.zipcode));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildEmailField(BuildContext context, SignUpBloc signUpBloc, SignUpStyle style) {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) =>
-          current is SignUpEmailValidationState && current.emailValidationFieldType == ValidationFieldType.email,
+          (current is SignUpEmailValidationState && current.emailValidationFieldType == ValidationFieldType.email) ||
+          (current is SignUpFieldValidationState && current.fieldType == FieldType.email),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartTextField(
+              errorText: signUpBloc.emailError,
               labelText: APPStrings.email.tr,
               hintText: APPStrings.hintEmail.tr,
               controller: signUpBloc.emailController,
@@ -261,6 +329,9 @@ class SignUpScreen extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               onValueChanges: (value) {
                 signUpBloc.add(SignUpEmailValidationEvent(email: value, context: context));
+                if (signUpBloc.emailError.isNotNullNorEmpty) {
+                  signUpBloc.add(SignUpFieldChangeEvent(FieldType.email));
+                }
               },
             ),
             Visibility(
@@ -291,74 +362,83 @@ class SignUpScreen extends StatelessWidget {
               primary: false,
               itemCount: signUpBloc.isIndividual ? 1 : signUpBloc.contactNumberControllers.length,
               itemBuilder: (_, index) {
-                return SmartTextField(
-                  labelText: index == 0 ? APPStrings.contactNumber.tr : null,
-                  hintText: APPStrings.hintContactNumber.tr,
-                  controller: signUpBloc.contactNumberControllers[index],
-                  focusNode: signUpBloc.contactNumberFocusNodes[index],
-                  nextFocus: (index == signUpBloc.contactNumberControllers.length - 1)
-                      ? signUpBloc.addressFocusNode
-                      : signUpBloc.contactNumberFocusNodes[index + 1],
-                  keyboardType: TextInputType.phone,
-                  textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
-                  onValueChanges: (value) {
-                    signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
-                  },
-                  prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
-                    buildWhen: (previous, current) => current is SignUpChangeCountryCodeState,
-                    builder: (context, state) {
-                      return InkWell(
-                        onTap: () {
-                          Utils.showCountryPickerModel(
-                            context: context,
-                            countryPickerStyle: countryPickerStyle,
-                            showPhoneCode: true,
-                            onSelect: (Country country) {
-                              signUpBloc.add(SignUpChangeCountryCodeEvent(country: country, index: index));
+                return BlocBuilder<SignUpBloc, SignUpState>(
+                  buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.contactNumber,
+                  builder: (context, state) {
+                    return SmartTextField(
+                      errorText: signUpBloc.contactNumberErrors[index],
+                      labelText: index == 0 ? APPStrings.contactNumber.tr : null,
+                      hintText: APPStrings.hintContactNumber.tr,
+                      controller: signUpBloc.contactNumberControllers[index],
+                      focusNode: signUpBloc.contactNumberFocusNodes[index],
+                      nextFocus: (index == signUpBloc.contactNumberControllers.length - 1)
+                          ? signUpBloc.addressFocusNode
+                          : signUpBloc.contactNumberFocusNodes[index + 1],
+                      keyboardType: TextInputType.phone,
+                      textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                      onValueChanges: (value) {
+                        signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
+                        if (signUpBloc.contactNumberErrors[index].isNotNullNorEmpty) {
+                          signUpBloc.add(SignUpFieldChangeEvent(FieldType.contactNumber, index: index));
+                        }
+                      },
+                      prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
+                        buildWhen: (previous, current) => current is SignUpChangeCountryCodeState,
+                        builder: (context, state) {
+                          return InkWell(
+                            onTap: () {
+                              Utils.showCountryPickerModel(
+                                context: context,
+                                countryPickerStyle: countryPickerStyle,
+                                showPhoneCode: true,
+                                onSelect: (Country country) {
+                                  signUpBloc.add(SignUpChangeCountryCodeEvent(country: country, index: index));
+                                },
+                              );
                             },
-                          );
-                        },
-                        child: SizedBox(
-                          width: 95.w,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(12.w),
-                            margin: EdgeInsets.only(right: 12.w),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide(
-                                  color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                            child: SizedBox(
+                              width: 95.w,
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(12.w),
+                                margin: EdgeInsets.only(right: 12.w),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide(
+                                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SmartText(
+                                      '+${signUpBloc.selectedCountryCodes[index].phoneCode}',
+                                      style: AppTheme.of(context).textFieldStyle.textStyle,
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    const SmartImage(path: AppImages.icArrowDropDown),
+                                  ],
                                 ),
                               ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SmartText(
-                                  '+${signUpBloc.selectedCountryCodes[index].phoneCode}',
-                                  style: AppTheme.of(context).textFieldStyle.textStyle,
-                                ),
-                                SizedBox(width: 4.w),
-                                const SmartImage(path: AppImages.icArrowDropDown),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  suffixIcon: (!signUpBloc.isIndividual && index > 0)
-                      ? IconButton(
-                          onPressed: () {
-                            signUpBloc.add(SignUpRemoveContactEvent(index));
-                          },
-                          icon: SmartImage(
-                            path: AppImages.icMinus,
-                            height: 16.w,
-                            width: 16.w,
-                          ),
-                        )
-                      : null,
+                          );
+                        },
+                      ),
+                      suffixIcon: (!signUpBloc.isIndividual && index > 0)
+                          ? IconButton(
+                              onPressed: () {
+                                signUpBloc.add(SignUpRemoveContactEvent(index));
+                              },
+                              icon: SmartImage(
+                                path: AppImages.icMinus,
+                                height: 16.w,
+                                width: 16.w,
+                              ),
+                            )
+                          : null,
+                    );
+                  },
                 );
               },
               separatorBuilder: (_, __) {
@@ -390,47 +470,80 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _buildPasswordField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.password.tr,
-      hintText: APPStrings.password.tr,
-      controller: signUpBloc.passwordController,
-      focusNode: signUpBloc.passwordFocusNode,
-      nextFocus: signUpBloc.confirmPasswordFocusNode,
-      obscured: true,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.password,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.passwordError,
+          labelText: APPStrings.password.tr,
+          hintText: APPStrings.password.tr,
+          controller: signUpBloc.passwordController,
+          focusNode: signUpBloc.passwordFocusNode,
+          nextFocus: signUpBloc.confirmPasswordFocusNode,
+          obscured: true,
+          onValueChanges: (value) {
+            if (signUpBloc.passwordError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.password));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildConfirmPasswordField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.confirmPassword.tr,
-      hintText: APPStrings.confirmPassword.tr,
-      controller: signUpBloc.confirmPasswordController,
-      focusNode: signUpBloc.confirmPasswordFocusNode,
-      textInputAction: TextInputAction.done,
-      onEditingComplete: () {
-        // signUpBloc.add(const SignUpSubmitEvent());
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.confirmPassword,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.confirmPasswordError,
+          labelText: APPStrings.confirmPassword.tr,
+          hintText: APPStrings.confirmPassword.tr,
+          controller: signUpBloc.confirmPasswordController,
+          focusNode: signUpBloc.confirmPasswordFocusNode,
+          textInputAction: TextInputAction.done,
+          obscured: true,
+          onValueChanges: (value) {
+            if (signUpBloc.confirmPasswordError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.confirmPassword));
+            }
+          },
+        );
       },
-      obscured: true,
     );
   }
 
   Widget _buildCompanyNameField(SignUpBloc signUpBloc) {
-    return SmartTextField(
-      labelText: APPStrings.companyName.tr,
-      hintText: APPStrings.hintCompanyName.tr,
-      controller: signUpBloc.companyNameController,
-      focusNode: signUpBloc.companyNameFocusNode,
-      nextFocus: signUpBloc.officeLocationFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.companyName,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: signUpBloc.companyNameError,
+          labelText: APPStrings.companyName.tr,
+          hintText: APPStrings.hintCompanyName.tr,
+          controller: signUpBloc.companyNameController,
+          focusNode: signUpBloc.companyNameFocusNode,
+          nextFocus: signUpBloc.officeLocationFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          onValueChanges: (value) {
+            if (signUpBloc.companyNameError.isNotNullNorEmpty) {
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.companyName));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildCompanyLocationField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpChangeOfficeLocationState,
+      buildWhen: (previous, current) =>
+          current is SignUpChangeOfficeLocationState ||
+          (current is SignUpFieldValidationState && current.fieldType == FieldType.officeLocation),
       builder: (context, state) {
         return SmartDropDown<OfficeLocation>(
+          errorText: signUpBloc.officeLocationError,
           hintText: APPStrings.officeLocation.tr,
           labelText: APPStrings.officeLocation.tr,
           items: signUpBloc.officeLocations.map((OfficeLocation officeLocation) {
@@ -442,6 +555,7 @@ class SignUpScreen extends StatelessWidget {
           onChanged: (businessType) {
             if (businessType != null) {
               signUpBloc.add(SignUpChangeOfficeLocationEvent(businessType));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldType.officeLocation));
             }
           },
           selectedItem: signUpBloc.selectedOfficeLocation,
@@ -465,38 +579,53 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBusinessType(SignUpBloc signUpBloc, BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SmartText(
-          APPStrings.businessType.tr,
-          style: AppTheme.of(context).textFieldStyle.labelStyle,
-        ),
-        SizedBox(height: 12.h),
-        Wrap(
-          children: List.generate(signUpBloc.businessTypes.length, (index) {
-            final BusinessType businessType = signUpBloc.businessTypes[index];
-            return BlocBuilder<SignUpBloc, SignUpState>(
-              buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
-              builder: (context, state) {
-                return SmartCheckbox.radio(
-                  padding: index != signUpBloc.businessTypes.length - 1 ? EdgeInsets.only(right: 20.w) : EdgeInsets.zero,
-                  value: businessType.isSelected,
-                  onChanged: (val) {
-                    if (val == null) {
-                      return;
-                    }
-                    signUpBloc.add(SignUpBusinessTypeChangedEvent(val, index));
+  Widget _buildBusinessType(SignUpBloc signUpBloc, BuildContext context, SignUpStyle style) {
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.businessType,
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SmartText(
+              APPStrings.businessType.tr,
+              style: AppTheme.of(context).textFieldStyle.labelStyle,
+            ),
+            SizedBox(height: 12.h),
+            Wrap(
+              children: List.generate(signUpBloc.businessTypes.length, (index) {
+                final BusinessType businessType = signUpBloc.businessTypes[index];
+                return BlocBuilder<SignUpBloc, SignUpState>(
+                  buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
+                  builder: (context, state) {
+                    return SmartCheckbox.radio(
+                      padding: index != signUpBloc.businessTypes.length - 1 ? EdgeInsets.only(right: 20.w) : EdgeInsets.zero,
+                      value: businessType.isSelected,
+                      onChanged: (val) {
+                        if (val == null) {
+                          return;
+                        }
+                        signUpBloc.add(SignUpBusinessTypeChangedEvent(val, index));
+                        signUpBloc.add(SignUpFieldChangeEvent(FieldType.businessType));
+                      },
+                      label: businessType.name,
+                      mainAxisSize: MainAxisSize.min,
+                    );
                   },
-                  label: businessType.name,
-                  mainAxisSize: MainAxisSize.min,
                 );
-              },
-            );
-          }).toList(),
-        ),
-      ],
+              }).toList(),
+            ),
+            if (signUpBloc.businessTypeError.isNotNullNorEmpty)
+              Visibility(
+                visible: state is SignUpEmailValidationState && state.isError,
+                child: SmartText(
+                  signUpBloc.businessTypeError,
+                  color: style.errorTextColor,
+                  optionalPadding: EdgeInsets.only(top: 6.h),
+                ),
+              )
+          ],
+        );
+      },
     );
   }
 

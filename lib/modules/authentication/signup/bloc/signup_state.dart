@@ -1,5 +1,21 @@
 part of 'signup_bloc.dart';
 
+enum FieldType {
+  firstName,
+  lastName,
+  email,
+  contactNumber,
+  password,
+  confirmPassword,
+  companyName,
+  businessType,
+  officeLocation,
+  address,
+  city,
+  state,
+  zipcode,
+}
+
 sealed class SignUpState extends Equatable {
   const SignUpState();
 }
@@ -110,7 +126,7 @@ final class SignUpEmailValidationState extends SignUpState {
   final ValidationFieldType emailValidationFieldType;
   final bool isError;
 
-  const SignUpEmailValidationState({required this.emailValidationFieldType,required this.isError});
+  const SignUpEmailValidationState({required this.emailValidationFieldType, required this.isError});
 
   @override
   List<Object> get props => [emailValidationFieldType, isError];
@@ -120,8 +136,17 @@ final class SignUpPhoneNumberValidationState extends SignUpState {
   final ValidationFieldType phoneNumberValidationFieldType;
   final bool isError;
 
-  const SignUpPhoneNumberValidationState({required this.phoneNumberValidationFieldType,required this.isError});
+  const SignUpPhoneNumberValidationState({required this.phoneNumberValidationFieldType, required this.isError});
 
   @override
   List<Object> get props => [phoneNumberValidationFieldType, isError];
+}
+
+final class SignUpFieldValidationState extends SignUpState {
+  final FieldType fieldType;
+
+  const SignUpFieldValidationState({required this.fieldType});
+
+  @override
+  List<Object?> get props => [fieldType];
 }

@@ -961,4 +961,5 @@ class APPStrings {
   static const String noSkuLibraryFound = 'mob_no_sku_library_found';
   static const String account = 'mob_account';
   static const String loginMsg = 'mob_login_msg';
+  static const String errorContactNumberValid = 'mob_error_contact_number_valid';
 }

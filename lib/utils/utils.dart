@@ -1,10 +1,12 @@
-import 'package:kgk/kgk.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:http/http.dart' as http;
+import 'package:kgk/kgk.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Utils {
   Utils._();
+
+  static ToastificationItem? _toast;
 
   /// Show common snack bar messages
   static Future<void> showMessage(String? message) async {
@@ -17,16 +19,28 @@ class Utils {
       final context = NavigatorKey.navigatorKey.currentContext!;
       String routeName = ModalRoute.of(context)?.settings.name ?? '';
       if (routeName == AppRoutes.landingPage && BlocProvider.of<LandingBloc>(context).currentIndex == 0) return;
+      // Dismisses the currently displayed toast message if it exists.
+      if (_toast != null) {
+        toastification.dismiss(_toast!);
+      }
 
-      await Flushbar(
-        message: message,
-        duration: const Duration(seconds: 3),
-        flushbarPosition: FlushbarPosition.TOP,
-        animationDuration: const Duration(milliseconds: 1300),
+// Displays a new toast message with the specified properties.
+      _toast = toastification.show(
+        title: Text(message ?? '', style: TextStyle(color: AppThemes().appColor.white)),
+        autoCloseDuration: const Duration(seconds: 3),
         backgroundColor: AppThemes().appColor.primary,
+        borderRadius: BorderRadius.circular(10.r),
         margin: EdgeInsets.all(10.w),
-        borderRadius: BorderRadius.all(Radius.circular(10.r)),
-      ).show(NavigatorKey.navigatorKey.currentContext!);
+        closeButtonShowType: CloseButtonShowType.none,
+        showIcon: false,
+        showProgressBar: false,
+        alignment: Alignment.topCenter,
+        callbacks: ToastificationCallbacks(
+          onDismissed: (ToastificationItem item) {
+            _toast = null;
+          },
+        ),
+      );
     } catch (e) {
       printWrapped(e.toString());
     }
@@ -239,7 +253,7 @@ class Utils {
 
   /// Check password validation
   static bool isValidPassword(String newPassword) {
-    String regex = r'^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$';
+    String regex = r'^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{7,}$';
     RegExp regExp = RegExp(regex);
     return regExp.hasMatch(newPassword);
   }
