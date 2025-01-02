@@ -11,8 +11,8 @@ final class AddressListInitial extends AddressListState {
 
 final class AddressListLoadedState extends AddressListState {
   final List<AddressDetails> addressList;
-  final AddressDetails selectedShippingAddress;
-  final AddressDetails selectedBillingAddress;
+  final AddressDetails? selectedShippingAddress;
+  final AddressDetails? selectedBillingAddress;
   final bool isBillingAndShippingSame;
 
   const AddressListLoadedState(
@@ -23,7 +23,7 @@ final class AddressListLoadedState extends AddressListState {
   );
 
   @override
-  List<Object> get props => [addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame];
+  List<Object?> get props => [addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame];
 }
 
 final class AddressListReloadState extends AddressListState {

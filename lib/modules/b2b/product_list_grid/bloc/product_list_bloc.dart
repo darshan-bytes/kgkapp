@@ -100,7 +100,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productId = data[RoutesData.productId] ?? "";
       collectionName = data[RoutesData.collectionName] ?? "";
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
-      fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.dealOfTheDay;
+      fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.regularList;
     }
   }
 

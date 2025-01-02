@@ -698,8 +698,8 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<SkuLibraryListItemDataModel>>?> getSkuLibraryList({Map<String, dynamic>? query}) async {
-    var response = await getMethod<PaginationData<SkuLibraryListItemDataModel>>(ApiClient.skuLibraryListing,
-        query: query, withCurrencyHeader: true);
+    var response =
+        await getMethod<PaginationData<SkuLibraryListItemDataModel>>(ApiClient.skuLibraryListing, query: query, withCurrencyHeader: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -868,7 +868,7 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderIndividual({Map<String, dynamic> body = const {}}) async {
     context.setAppLoading(true);
-    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

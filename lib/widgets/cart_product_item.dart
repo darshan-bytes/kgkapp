@@ -28,7 +28,7 @@ class CartProductItem extends StatelessWidget {
   final bool isCheckboxShow;
   final TextStyle? priceTextStyle;
   final bool isDropDownEnable;
-  final bool isEnableAddToWatchList;
+  final bool isEnableAddToWishList;
 
   const CartProductItem({
     super.key,
@@ -58,7 +58,7 @@ class CartProductItem extends StatelessWidget {
     this.onChangedCheckbox,
     this.isCheckboxShow = false,
     this.isDropDownEnable = true,
-    this.isEnableAddToWatchList = true,
+    this.isEnableAddToWishList = true,
     this.priceTextStyle,
   });
 
@@ -104,11 +104,11 @@ class CartProductItem extends StatelessWidget {
                     },
                   )),
                   Container(width: 1.w, height: 48.w, color: style.myBagDividerColor),
-                  if (isEnableAddToWatchList)
+                  if (isEnableAddToWishList)
                     Expanded(
                         child: SmartButton(
                             activeBackgroundColor: style.backgroundColor,
-                            title: APPStrings.addToWatchList.tr,
+                            title: APPStrings.moveToWishlist.tr,
                             titleStyle: style.removeBagTextStyle,
                             borderRadius: const BorderRadius.all(Radius.zero),
                             onTap: () {
@@ -119,7 +119,7 @@ class CartProductItem extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(height: 32.h),
+            SizedBox(height: 32.h),
           ],
         ),
       ),
@@ -213,7 +213,7 @@ class CartProductItem extends StatelessWidget {
                   ),
               ],
             ),
-            if (productDetails.originalPrice.isNotNullNorEmpty) ...[
+            if (productDetails.finalPrice.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
               priceSection(style),
             ],
@@ -254,9 +254,9 @@ class CartProductItem extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: SmartDropDown<CartProductQuantity>(
+                      canSearch: true,
                       isChangeableValue: isDropDownEnable,
                       labelText: APPStrings.qty.tr,
-                      scrollDirection: Axis.horizontal,
                       selectedItem: selectedQuantity,
                       onChanged: (newValue) => onQuantityChanged?.call(newValue!),
                       items: quantityOptionsList.map((e) => SmartDropDownItem<CartProductQuantity>(value: e, title: e.name ?? '')).toList(),
