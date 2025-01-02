@@ -68,3 +68,13 @@ final class WatchListLoadFullListEvent extends WatchlistEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class WatchListFilterEvent extends WatchlistEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const WatchListFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}

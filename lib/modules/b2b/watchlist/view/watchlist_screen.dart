@@ -24,57 +24,72 @@ class WatchlistScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is WatchlistLoadedState,
           builder: (context, state) {
             if (state is WatchlistLoadedState) {
-              return SmartSingleChildScrollView(
-                onRefresh: () async {
-                  await bloc.pullToRefresh(context: context);
-                },
-                padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
-                controller: bloc.paginationScrollController.controller,
-                child: Column(
-                  children: [
-                    SmartTextField.search(
-                      height: 48.h,
-                      hintText: APPStrings.searchWatchlist.tr,
-                      controller: bloc.watchlistSearchController,
-                      onValueChanges: (value) {
-                        /// We can use this function inside watchlist bloc using TextEditingController.addListener
-                        /// but we need BuildContext inside the function so called from here
-                        bloc.searchListener(context);
-                      },
-                    ),
-                    SizedBox(height: 24.h),
-                    BlocBuilder<WatchlistBloc, WatchlistState>(
-                      buildWhen: (previous, current) =>
-                          current is WatchlistLoadedState ||
-                          current is WatchlistLoadedMoreState ||
-                          current is WatchlistDeleteState ||
-                          current is WatchlistLoadingState,
-                      builder: (builderContext, state) {
-                        if (bloc.watchListingList.isEmpty && state is! WatchlistLoadingState) {
-                          return NoDataFoundWidget(
-                            text: APPStrings.noWatchlistFound.tr,
-                            onRetry: () {
-                              bloc.pullToRefresh(context: builderContext);
-                            },
-                          );
-                        }
-                        return ListView.builder(
-                          itemCount: bloc.watchListingList.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => _buildWatchlistItem(bloc, index, builderContext),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              );
+              return _buildWatchlistContent(context);
             }
             return const SizedBox.shrink();
           },
         ),
         bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       ),
+    );
+  }
+
+  Widget _buildWatchlistContent(BuildContext context) {
+    final bloc = BlocProvider.of<WatchlistBloc>(context);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
+      child: Column(
+        children: [
+          _buildSearchField(bloc, context),
+          SizedBox(height: 24.h),
+          Expanded(child: _buildWatchlistList(bloc, context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchField(WatchlistBloc bloc, BuildContext context) {
+    return SmartTextField.search(
+      height: 48.h,
+      hintText: APPStrings.searchWatchlist.tr,
+      controller: bloc.watchlistSearchController,
+      onValueChanges: (value) {
+        /// We can use this function inside watchlist bloc using TextEditingController.addListener
+        /// but we need BuildContext inside the function so called from here
+        bloc.searchListener(context);
+      },
+    );
+  }
+
+  Widget _buildWatchlistList(WatchlistBloc bloc, BuildContext context) {
+    if (bloc.watchListingList.isEmpty) {
+      return NoDataFoundWidget(
+        text: APPStrings.noWatchlistFound.tr,
+      );
+    }
+    return SmartSingleChildScrollView(
+      onRefresh: () async => await bloc.pullToRefresh(context: context),
+      controller: bloc.paginationScrollController.controller,
+      child: BlocBuilder<WatchlistBloc, WatchlistState>(
+        buildWhen: (previous, current) =>
+            current is WatchlistLoadedState ||
+            current is WatchlistLoadedMoreState ||
+            current is WatchlistDeleteState ||
+            current is WatchlistLoadingState,
+        builder: (builderContext, state) {
+          return _buildListView(bloc, builderContext);
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(WatchlistBloc bloc, BuildContext builderContext) {
+    return ListView.builder(
+      itemCount: bloc.watchListingList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => _buildWatchlistItem(bloc, index, builderContext),
     );
   }
 
@@ -115,8 +130,12 @@ class WatchlistScreen extends StatelessWidget {
                 onFilterTap: () {
                   Utils.showSmartModalBottomSheet(
                     context: context,
-                    builder: (context) => FilterScreen(
-                      onApply: () {},
+                    builder: (context) => AdvanceFilterScreen(
+                      onApply: (value) {
+                        if (value != null && value is List<FilterData>) {
+                          bloc.add(WatchListFilterEvent(filterData: value, context: context));
+                        }
+                      },
                     ),
                   );
                 },

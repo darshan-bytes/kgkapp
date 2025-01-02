@@ -512,4 +512,6 @@ export 'package:kgk/model/branch_link_data_model.dart';
 export 'package:kgk/modules/b2b/sku_library_listing/bloc/sku_library_bloc.dart';
 export 'package:kgk/modules/b2b/sku_library_listing/model/sku_library_listItem_data_model.dart';
 export 'package:kgk/modules/b2b/sku_library_listing/view/sku_library_screen.dart';
-
+export 'package:photo_view/photo_view_gallery.dart';
+export 'package:photo_view/photo_view.dart';
+export 'package:kgk/modules/common_modules/product_details/view/product_image_zoom_view.dart';

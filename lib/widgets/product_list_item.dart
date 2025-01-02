@@ -106,7 +106,7 @@ class ProductListItem extends StatelessWidget {
                 buildIcon(
                     path: AppImages.icAddEye,
                     onTap: () {
-                      BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                      BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
                     },
                     style: style),
               SizedBox(width: 8.w),
@@ -117,7 +117,7 @@ class ProductListItem extends StatelessWidget {
                     return buildIcon(
                         path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
                         onTap: () {
-                          BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
+                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
                         },
                         style: style);
                   },

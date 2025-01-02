@@ -20,6 +20,7 @@ class SmartDropDown<T> extends StatelessWidget {
   final bool isChangeableValue;
   final Function(String)? onSearchEvent;
   final bool canSearch;
+  final String? emptyText;
 
   const SmartDropDown({
     super.key,
@@ -42,6 +43,7 @@ class SmartDropDown<T> extends StatelessWidget {
     this.isChangeableValue = true,
     this.onSearchEvent,
     this.canSearch = false, // Default to false (no search)
+    this.emptyText,
   });
 
   @override
@@ -80,6 +82,7 @@ class SmartDropDown<T> extends StatelessWidget {
                   height: selectionWindowHeight,
                   onSearchEvent: onSearchEvent,
                   canSearch: canSearch,
+                  noDataFoundText: emptyText ?? APPStrings.noDataFound.tr,
                 );
               },
             );
@@ -142,6 +145,7 @@ class SmartDropDownView<T> extends StatelessWidget {
   final Function(String)? onSearchEvent;
   final bool canSearch;
   final ValueNotifier<String> searchNotifier;
+  final String noDataFoundText;
 
   SmartDropDownView({
     super.key,
@@ -153,6 +157,7 @@ class SmartDropDownView<T> extends StatelessWidget {
     this.scrollDirection = Axis.vertical,
     this.onSearchEvent,
     this.canSearch = false, // Default is false, meaning no search
+    this.noDataFoundText = '',
   }) : searchNotifier = ValueNotifier<String>('');
 
   final ScrollController _scrollController = ScrollController();
@@ -200,7 +205,7 @@ class SmartDropDownView<T> extends StatelessWidget {
                     ? Flexible(child: _buildItemList(filteredItems, style, context))
                     : Expanded(
                         child: Center(
-                          child: SmartText(APPStrings.noStateFound.tr),
+                          child: SmartText(noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr),
                         ),
                       );
               },
