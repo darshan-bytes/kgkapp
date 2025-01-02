@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 AppColor colors(BuildContext context) => Theme.of(context).colors;
 
-/// To get Light and dark mode.[AppThemes]
+/// To get Light and dark model.[AppThemes]
 class AppThemes {
   late ThemeData selectedColor;
   AppColor appColor = const AppColor(

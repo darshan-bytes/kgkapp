@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/model/home_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
 import '../../../modules/b2b/stone_landing/model/diamonds_strapi_model.dart';
@@ -13,7 +13,8 @@ class AppRepository extends ApiService {
   /// Fetches the home data from the Strapi CMS
   Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
     try {
-      final response = await http.get(Uri.parse(ApiClient.strapiHomeApiUrl));
+      String url = await buildUrl(endpoint: StrapiEndPoints.homePage, attribute: Attributes.homePage);
+      final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final homeStrapiModel = HomeStrapiModel.fromJson(jsonDecode(response.body));

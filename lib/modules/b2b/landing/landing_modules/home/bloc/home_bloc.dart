@@ -1,5 +1,6 @@
 import 'package:kgk/kgk.dart';
-import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/model/home_strapi_model.dart';
+import 'package:kgk/modules/b2b/landing/landing_modules/home/model/kgk_couture_collections_model.dart';
 
 part 'home_event.dart';
 
@@ -903,7 +904,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.kgkDiamondShape:
         return HomeWidgets.buildShopDiamondSection(homeBloc, style);
 
-      case HomeSlug.kgkGemstone:
+      case HomeSlug.shopByGemstones:
         return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
 
       case HomeSlug.unknown:
@@ -1158,7 +1159,7 @@ enum HomeSlug {
   mobileShopByStyle('mobile-shop-by-style'),
   mobileDIYGuidance('mobile-diy-guidance'),
   kgkDiamondShape('kgk-diamond-shape'),
-  kgkGemstone('kgk-gemstone'),
+  shopByGemstones('shop-by-gemstones'),
   unknown('unknown');
 
   const HomeSlug(this.value);

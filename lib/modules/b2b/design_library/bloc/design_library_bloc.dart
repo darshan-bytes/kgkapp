@@ -8,7 +8,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// The type of user, defaults to B2C user.
   UserType userType = UserType.b2cUser;
 
-  /// Determines if the view is in grid mode; defaults to true.
+  /// Determines if the view is in grid model; defaults to true.
   bool isGrid = true;
 
   /// List to hold the design library data.
