@@ -59,7 +59,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagPaymentConditionChangedEvent>(_onMyBagPaymentConditionChangedEvent);
     on<MyBagToggleReadMoreDetailsEvent>(_onMyBagToggleReadMoreDetailsEvent);
     on<MyBagToggleViewModeEvent>(_onMyBagToggleViewModeEvent);
-    on<MyBagAddToWatchlistEvent>(_onMyBagAddToWatchlistEvent);
+    on<MyBagMoveToWishListEvent>(_onMyBagMoveToWishListEvent);
     on<MyBagRemovePromoCodeEvent>(_onMyBagRemovePromoCode);
     on<MyBagApplyPromoCodeEvent>(_onMyBagApplyPromoCode);
     on<MyBagCheckoutEvent>(_onMyBagCheckout);
@@ -131,7 +131,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               shape: item.shape,
               color: item.color,
               lotCode: item.lotCode,
-              discountPercentageString: item.discountPercentage != null
+              discountPercentageString: item.discountPercentage != null && item.discountPercentage != 0
                   ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
                   : "",
               clarity: item.clarity,
@@ -159,6 +159,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               originalYourAmount: item.originalYourAmount,
               originalTotalPrice: item.originalTotalPrice,
               originalFinalPrice: item.originalFinalPrice,
+              finalPrice: item.finalPrice?.setCurrency,
+              originalPrice: item.totalPrice?.setCurrency,
             );
           });
         }
@@ -242,6 +244,26 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) async {
+    bool isConfirm = false;
+    await Utils.showSmartModalBottomSheet(
+      context: event.context,
+      builder: (context) {
+        return ConfirmationDialog(
+          title: APPStrings.removeProductFromCart.tr,
+          onDeniedText: APPStrings.cancel.tr,
+          onApprovedText: APPStrings.remove.tr,
+          onDenied: () {
+            isConfirm = false;
+            context.pop();
+          },
+          onApproved: () {
+            isConfirm = true;
+            context.pop();
+          },
+        );
+      },
+    );
+    if (!isConfirm) return;
     emit(MyBagReloadState());
     String bagId = StorageManager().getBagId() ?? "";
     String suid = myBagProductList[event.index].suid ?? "";
@@ -273,14 +295,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     emit(MyBagProductRemovedState(index: event.index));
   }
 
-  Future<void> _onMyBagAddToWatchlistEvent(MyBagAddToWatchlistEvent event, Emitter<MyBagState> emit) async {
-    BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(myBagProductList[event.index], event.context));
-    await Utils.showSmartModalBottomSheet(
-      context: event.context,
-      enableDrag: false,
-      useRootNavigator: true,
-      builder: (context) => const AddWatchlistScreen(),
-    );
+  Future<void> _onMyBagMoveToWishListEvent(MyBagMoveToWishListEvent event, Emitter<MyBagState> emit) async {
+    BlocProvider.of<AppBloc>(event.context).add(ProductAddToFavoriteEvent(myBagProductList[event.index], event.context));
   }
 
   void _onMyBagSelectAllProductChangedEvent(MyBagSelectAllProductChangedEvent event, Emitter<MyBagState> emit) {
@@ -467,10 +483,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
     await StorageManager().clearBagData();
+
     bagListDataModel = null;
     commodity = null;
     myBagProductList.clear();
     salesmanList.clear();
     bagOrderSummaryData = null;
+    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(0));
   }
 }

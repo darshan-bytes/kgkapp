@@ -13,7 +13,6 @@ class MyBagScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: SmartAppBar(
-            appBarHeight: AppConst.appBarHeight.height,
             title: APPStrings.myBag.tr,
             isBack: false,
             onSearch: () {
@@ -158,8 +157,10 @@ class MyBagScreen extends StatelessWidget {
                 _buildSelectAllProductBox(bloc, style, context),
                 SizedBox(height: 24.h),
                 _buildMyBagList(bloc, style),
-                _buildBagTotalDiamondItemsDetails(bloc, style),
-                SizedBox(height: 24.h),
+                if (bloc.commodity != Commodity.jewellery) ...[
+                  _buildBagTotalDiamondItemsDetails(bloc, style),
+                  SizedBox(height: 24.h),
+                ],
                 _buildOrderSummary(bloc, style, context),
                 SizedBox(height: 32.h),
                 _buildInquirySection(bloc, style),
@@ -209,21 +210,28 @@ class MyBagScreen extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
-                child: SmartCheckbox(
-                  height: 24.w,
-                  width: 24.w,
-                  value: bloc.selectAllProduct,
-                  onChanged: (value) {
-                    bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: !bloc.selectAllProduct));
-                  },
-                  label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString]),
-                  labelStyle: style.itemSelectedStyle,
-                ),
+              // Below code is commented as of now because currently we can't see the use of select all product
+              // Expanded(
+              //   child: SmartCheckbox(
+              //     height: 24.w,
+              //     width: 24.w,
+              //     value: bloc.selectAllProduct,
+              //     onChanged: (value) {
+              //       bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: !bloc.selectAllProduct));
+              //     },
+              //     label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString]),
+              //     labelStyle: style.itemSelectedStyle,
+              //   ),
+              // ),
+              // SizedBox(width: 20.w),
+              BlocBuilder<MyBagBloc, MyBagState>(
+                buildWhen: (previous, current) => current is MyBagOrderSummaryDataLoadedState,
+                builder: (context, state) {
+                  return SmartText(bloc.bagOrderSummaryData?.totalAmount?.setCurrency, style: style.totalAmountStyle);
+                },
               ),
-              SizedBox(width: 20.w),
-              SmartText("\$35,700.00", style: style.totalAmountStyle),
             ],
           ),
           // Commented below code for: Feedback - 30=> Bottom checkout is not needed as we have fixed checkout button is available.
@@ -411,7 +419,7 @@ class MyBagScreen extends StatelessWidget {
                     bloc.add(MyBagRemoveProductEvent(context: context, index: index));
                   },
                   onMoveToWishListTap: () {
-                    bloc.add(MyBagAddToWatchlistEvent(index: index, context: context));
+                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
                   },
                   onQuantityChanged: (quantity) {
                     bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
@@ -507,7 +515,6 @@ class MyBagScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          const Divider(),
         ],
       ),
     );
@@ -586,7 +593,8 @@ class MyBagScreen extends StatelessWidget {
               _buildTextInfoColumn(APPStrings.totalWeight.tr, bloc.bagListDataModel?.summary?.totalCarats?.toString() ?? '-', style),
             ],
           ),
-          SizedBox(height: 12.h),
+          // Below Code is commented as of now because the values are not clear yet.
+          /*SizedBox(height: 12.h),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -594,7 +602,7 @@ class MyBagScreen extends StatelessWidget {
               SizedBox(width: 12.w),
               _buildTextInfoColumn(APPStrings.originalRatePerCarat.tr, '14,937.38 (S)', style),
             ],
-          ),
+          ),*/
           if (bloc.userType == UserType.b2bUser) ...[
             SizedBox(height: 12.h),
             Row(
@@ -705,11 +713,11 @@ class MyBagScreen extends StatelessWidget {
               // implemented add to watchlist instead of add to wishlist
               context.pop();
               if (bloc.myBagProductList[index].productId != null) {
-                bloc.add(MyBagAddToWatchlistEvent(index: index, context: mainContext));
+                bloc.add(MyBagMoveToWishListEvent(index: index, context: mainContext));
               }
             },
-            APPStrings.addToWatchList.tr,
-            AppImages.icWatchlist,
+            APPStrings.moveToWishlist.tr,
+            AppImages.icHeart,
           ),
           Divider(indent: 16.w, endIndent: 16.w),
           buildRowButton(

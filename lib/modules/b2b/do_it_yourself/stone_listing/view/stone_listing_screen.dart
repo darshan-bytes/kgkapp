@@ -329,6 +329,7 @@ class StoneListingScreen extends StatelessWidget {
                               }
                             },
                             productDetails: ProductDetailsModel(
+                              suid: product.suid,
                               productInfoClarityChat: ProductInfoClarityChat(
                                 carat: "36.09",
                                 commodity: "Sapphire",

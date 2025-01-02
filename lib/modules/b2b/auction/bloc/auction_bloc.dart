@@ -36,6 +36,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   List<ProductDetailsModel> youMayAlisLikeProductList = List.generate(
     8,
     (index) => ProductDetailsModel(
+      suid: "1",
       diamond: "1.5 gram",
       gram: "1.5 gram",
       imageUrl: "https://i.ibb.co/nBQy6n5/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
@@ -183,6 +184,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
+            suid: diamondData!.suid,
             productId: productId,
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,

@@ -146,7 +146,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   }
 
   Widget _buildListView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state) {
-    return ListView.builder(
+    return ListView.separated(
       key: bloc.productPaginationScrollController.listKey,
       shrinkWrap: true,
       itemCount: bloc.productList.length,
@@ -155,7 +155,6 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
         return Column(
           children: [
             ProductListItem(
-              margin: EdgeInsets.only(bottom: 17.h),
               onEyeTap: () {},
               onFavTap: () {},
               onTap: () {},
@@ -165,6 +164,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           ],
         );
       },
+      separatorBuilder: (context, index) => SizedBox(height: 17.h),
     );
   }
 }

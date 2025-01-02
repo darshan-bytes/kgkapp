@@ -175,51 +175,53 @@ class SmartDropDownView<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     SmartDropDownStyle style = AppTheme.of(context).smartDropDownStyle;
 
-    return Container(
-      height: height ?? 500.h,
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(6.r),
-          topRight: Radius.circular(6.r),
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: Container(
+        decoration: BoxDecoration(
+          color: style.backgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(6.r),
+            topRight: Radius.circular(6.r),
+          ),
         ),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (hintText.isNotNullNorEmpty) ...[
-              SmartText(hintText!, style: style.labelStyle),
-              SizedBox(height: 16.h),
-            ],
-            // Conditionally display the search field
-            if (canSearch) ...[
-              SmartTextField.search(
-                height: 48.h,
-                hintText: '${APPStrings.search.tr} ${hintText ?? ''}',
-                onValueChanges: (value) {
-                  searchNotifier.value = value;
-                  if (onSearchEvent != null) onSearchEvent!(value);
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (hintText.isNotNullNorEmpty) ...[
+                SmartText(hintText!, style: style.labelStyle),
+                SizedBox(height: 16.h),
+              ],
+              // Conditionally display the search field
+              if (canSearch) ...[
+                SmartTextField.search(
+                  height: 48.h,
+                  hintText: '${APPStrings.search.tr} ${hintText ?? ''}',
+                  onValueChanges: (value) {
+                    searchNotifier.value = value;
+                    if (onSearchEvent != null) onSearchEvent!(value);
+                  },
+                ),
+                SizedBox(height: 8.h),
+              ],
+              ValueListenableBuilder<String>(
+                valueListenable: searchNotifier,
+                builder: (context, query, child) {
+                  final filteredItems = items.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
+                  return filteredItems.isNotEmpty
+                      ? Flexible(child: _buildItemList(filteredItems, style, context))
+                      : Expanded(
+                          child: Center(
+                            child: SmartText(noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr),
+                          ),
+                        );
                 },
               ),
-              SizedBox(height: 8.h),
             ],
-            ValueListenableBuilder<String>(
-              valueListenable: searchNotifier,
-              builder: (context, query, child) {
-                final filteredItems = items.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
-                return filteredItems.isNotEmpty
-                    ? Flexible(child: _buildItemList(filteredItems, style, context))
-                    : Expanded(
-                        child: Center(
-                          child: SmartText(noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr),
-                        ),
-                      );
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

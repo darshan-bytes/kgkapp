@@ -318,6 +318,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Helper Function: Convert Gemstone Data to ProductDetailsModel
   ProductDetailsModel _convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
     return ProductDetailsModel(
+      suid: diamond.suid,
       productId: diamond.id,
       diamond: "2.5 crt",
       gram: "1.5 grms",
@@ -353,6 +354,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Helper Function: Convert Gemstone Data to ProductDetailsModel
   ProductDetailsModel _convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
     return ProductDetailsModel(
+      suid: gemstone.suid,
       productId: gemstone.id,
       diamond: "2.5 crt",
       gram: "1.5 grms",

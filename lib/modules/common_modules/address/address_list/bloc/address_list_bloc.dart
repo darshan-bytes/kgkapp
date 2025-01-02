@@ -37,9 +37,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     selectedShippingAddress = addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? addressList.firstOrNull;
     selectedBillingAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? addressList.firstOrNull;
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
-    if (selectedShippingAddress != null && selectedBillingAddress != null) {
-      emit(AddressListLoadedState(addressList, selectedShippingAddress!, selectedBillingAddress!, isBillingAndShippingSame));
-    }
+    emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
   }
 
   void _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) {
@@ -74,7 +72,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
           selectedBillingAddress = addressList.first;
         }
         addressList.removeAt(event.index);
-        emit(AddressListLoadedState(addressList, selectedShippingAddress!, selectedBillingAddress!, isBillingAndShippingSame));
+        emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
       },
     );
 
@@ -95,7 +93,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
             if (isBillingAndShippingSame) {
               selectedBillingAddress = addressList[event.index];
             }
-            emit(AddressListLoadedState(addressList, selectedShippingAddress!, selectedBillingAddress!, isBillingAndShippingSame));
+            emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
           } catch (e) {
             printWrapped('Error in updating address: $e');
           }
@@ -208,7 +206,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   void handleNavigateToOrderSuccessAndClearCart(BuildContext context, {String? message, String? uniqueId}) {
-    BlocProvider.of<MyBagBloc>(context).add(ClearMyBagEvent());
+    BlocProvider.of<MyBagBloc>(context).add(ClearMyBagEvent(context));
     Utils.showMessage(message);
     context.pushNamedAndRemoveUntil(
       AppRoutes.orderConfirmationPage,

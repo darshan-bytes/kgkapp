@@ -869,7 +869,7 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderIndividual({Map<String, dynamic> body = const {}}) async {
     context.setAppLoading(true);
-    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true);
+    var response = await postMethod<PlaceOrderResponse>(ApiClient.orderIndividual, body, withFullResponse: true, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
