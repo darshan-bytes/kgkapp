@@ -19,6 +19,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
 
   Timer? _debounce;
 
+  /// This filterData is used to store the filter data
+  List<FilterData> filterData = [];
+
   WatchlistBloc() : super(const WatchlistInitial()) {
     on<WatchlistInitialEvent>(_onWatchlistInitialEvent);
     on<WatchlistLoadMoreEvent>(_onWatchlistLoadMoreEvent);
@@ -27,6 +30,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     on<WatchListSearchEvent>(_onWatchListSearch);
     on<WatchListDeleteEvent>(_onWatchListDelete);
     on<WatchListLoadFullListEvent>(_onWatchListLoadFullLis);
+    on<WatchListFilterEvent>(_onWatchListFilter);
   }
 
   @override
@@ -54,7 +58,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     );
     watchListingList.clear();
     await fetchWatchlist(event.context, emit, false, 1);
+    _fetchFilterData(event.context, emit);
     refreshCompleter.complete(true);
+
     emit(const WatchlistLoadedState());
   }
 
@@ -74,6 +80,35 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     emit(const WatchlistLoadedState());
   }
 
+  /// Build the filters dynamically
+  Map<String, dynamic> buildFilters(List<FilterData> filterData) {
+    Map<String, dynamic> filters = {};
+
+    for (FilterData element in filterData) {
+      switch (element.filterType) {
+        case FilterType.dateRange:
+          if (element.dateRange != null) {
+            filters[element.code ?? ''] = [
+              element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
+              element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
+            ];
+          }
+          break;
+        case FilterType.checkbox:
+          List<String?>? selectedCodes = element.secondaryFilterData?.where((e) => e.isSelected).map((e) => e.code).toList();
+          if (selectedCodes != null && selectedCodes.isNotEmpty) {
+            filters[element.code ?? ''] = selectedCodes.join(',');
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    return filters;
+  }
+
   Future<void> fetchWatchlist(BuildContext context, Emitter<WatchlistState> emit, bool? isLoadMore, int currentPage) async {
     if (isLoadMore == true) {
       emit(const WatchlistLoadingMoreState());
@@ -85,6 +120,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
       limit: AppConst.pageLimit.toString(),
       isLoadMore: isLoadMore ?? false,
       searchQuery: searchQuery,
+      filterQuery: buildFilters(filterData),
     );
     response?.fold(
       (l) {
@@ -229,5 +265,53 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
         allWatchlistFull.complete((r.dataList ?? []));
       },
     );
+  }
+
+  void _onWatchListFilter(WatchListFilterEvent event, Emitter<WatchlistState> emit) {
+    emit(const WatchlistLoadingState());
+    paginationScrollController.pullToRefresh();
+    watchlistDataList.clear();
+    watchListingList.clear();
+    filterData = event.filterData;
+    fetchWatchlist(event.context, emit, false, paginationScrollController.currentPage);
+    emit(const WatchlistLoadedState());
+  }
+
+  void _fetchFilterData(BuildContext context, Emitter<WatchlistState> emit) async {
+    if (filterData.isEmpty) {
+      await _setupFilters(context);
+      BlocProvider.of<AdvanceSortFilterBloc>(context).add(AddAdvanceSortFilterDataEvent(filterOptionList: filterData, context: context));
+    }
+  }
+
+  Future<void> _setupFilters(BuildContext context) async {
+    Either<ErrorResponse, AdvanceFilterOptionModel>? response = await AppRepository(context).fetchWatchListingFilterOptionList();
+    response?.fold((l) {
+      Utils.showMessage(l.message);
+    }, (AdvanceFilterOptionModel success) {
+      filterData.clear();
+      if (success.filters.isNotNullNorEmpty) {
+        for (Filters filterOption in success.filters ?? <Filters>[]) {
+          FilterData filter = FilterData(
+            name: filterOption.title,
+            code: filterOption.key,
+            inputType: filterOption.type,
+            filterType: filterOption.getFilterType(filterType: filterOption.type),
+            secondaryFilterData: _getSecondaryFilterData(filterOption: filterOption),
+          );
+          filterData.add(filter);
+        }
+      }
+    });
+  }
+
+  /// Get secondary filter data
+  List<SecondaryFilterData> _getSecondaryFilterData({required Filters filterOption}) {
+    FilterType filterType = filterOption.getFilterType(filterType: filterOption.type);
+    List<SecondaryFilterData> tempSecondaryData = [];
+    if (filterType == FilterType.checkbox) {
+      tempSecondaryData = filterOption.options?.map((option) => SecondaryFilterData(name: option.label, code: option.value)).toList() ?? [];
+    }
+    return tempSecondaryData;
   }
 }

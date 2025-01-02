@@ -283,7 +283,7 @@ class ProfileScreen extends StatelessWidget {
               title: APPStrings.login.tr,
               onTap: () {
                 BlocProvider.of<LandingBloc>(context).add(const LandingLogoutEvent());
-                context.pushNamed(AppRoutes.signInPage);
+                context.pushNamedAndRemoveUntil(AppRoutes.signInPage, (route) => false);
               },
             ),
           ],

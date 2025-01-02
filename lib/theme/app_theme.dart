@@ -255,6 +255,8 @@ abstract class AppTheme {
   ConceptListingStyle get conceptListingStyle;
 
   ApplyPromoCodeStyle get applyPromoCodeStyle;
+
+  ProductPhotoViewGalleryStyle get productPhotoViewGalleryStyle;
 }
 
 class PrimaryButtonStyle {
@@ -2466,5 +2468,19 @@ class ApplyPromoCodeStyle {
     required this.whiteColor,
     required this.descriptionStyle,
     required this.orangeColor,
+  });
+}
+
+class ProductPhotoViewGalleryStyle {
+  final Color whiteColor;
+  final Color blackColor;
+  final Color blueAccentColor;
+  final Color transparentColor;
+
+  ProductPhotoViewGalleryStyle({
+    required this.whiteColor,
+    required this.blackColor,
+    required this.blueAccentColor,
+    required this.transparentColor,
   });
 }

@@ -298,13 +298,13 @@ class AppRepository extends ApiService {
   }
 
   /// For Getting Watchlist Data
-  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList({
-    required String limit,
-    required String page,
-    bool isLoadMore = false,
-    String searchQuery = '',
-    bool isFullList = false,
-  }) async {
+  Future<Either<ErrorResponse, PaginationData<WatchlistData>>?> getWatchList(
+      {required String limit,
+      required String page,
+      bool isLoadMore = false,
+      String searchQuery = '',
+      bool isFullList = false,
+      Map<String, dynamic>? filterQuery}) async {
     if (!isLoadMore) {
       context.setAppLoading(true);
     }
@@ -316,6 +316,7 @@ class AppRepository extends ApiService {
               ApiKey.page: page,
               ApiKey.limit: limit,
               if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
+              if (filterQuery != null) ...filterQuery
             },
     );
     if (!isLoadMore) {
@@ -889,6 +890,12 @@ class AppRepository extends ApiService {
   /// For Auction listing filter option
   Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchAuctionListingFilterOptionList() async {
     var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.auctionListingFilterOption);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For Watch listing filter option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchWatchListingFilterOptionList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.watchListFilterOptions);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

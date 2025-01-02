@@ -195,6 +195,8 @@ class ApiClient {
   static const String presentationFilters = '$apiBaseUrl/presentations/filters';
 
   static const String pddFilterOptions = '$apiBaseUrl/presentations/filter-list';
+
+  static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
