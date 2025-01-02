@@ -515,4 +515,4 @@ export 'package:kgk/modules/b2b/sku_library_listing/view/sku_library_screen.dart
 export 'package:country_phone_validator/country_phone_validator.dart' hide Country;
 export 'package:photo_view/photo_view_gallery.dart';
 export 'package:photo_view/photo_view.dart';
-export 'package:kgk/modules/common_modules/product_details/view/product_image_zoom_view.dart';
+export 'package:kgk/widgets/product_image_zoom_view.dart';

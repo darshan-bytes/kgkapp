@@ -67,8 +67,8 @@ class ProductPhotoViewGallery extends StatelessWidget {
   /// Builds the image index indicator.
   Widget _buildImageIndicator(ValueNotifier<int> currentPage, {required ProductPhotoViewGalleryStyle style}) {
     return Positioned(
-      top: 20,
-      right: 20,
+      top: 20.w,
+      right: 20.w,
       child: ValueListenableBuilder<int>(
         valueListenable: currentPage,
         builder: (context, index, child) {
