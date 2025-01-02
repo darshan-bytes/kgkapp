@@ -151,6 +151,7 @@ class AddWatchlistScreen extends StatelessWidget {
         return SmartDropDown<WatchlistData>(
           hintText: APPStrings.hintWatchlistName.tr,
           labelText: APPStrings.watchlist.tr,
+          emptyText: APPStrings.noWatchlistFound.tr,
           items: bloc.arrWatchlist.map((WatchlistData watchlist) {
             return SmartDropDownItem<WatchlistData>(
               value: watchlist,

@@ -6,6 +6,7 @@ class SmartCarouselSlider extends StatelessWidget {
   final Function(int index, CarouselPageChangedReason reason)? onPageChanged;
   final Function()? on360Tap;
   final Color? backgroundColor;
+  final Function(int currentPage)? onTapFullImage;
 
   const SmartCarouselSlider({
     super.key,
@@ -14,6 +15,7 @@ class SmartCarouselSlider extends StatelessWidget {
     this.onPageChanged,
     this.on360Tap,
     this.backgroundColor,
+    this.onTapFullImage,
   });
 
   @override
@@ -25,19 +27,26 @@ class SmartCarouselSlider extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
-              color: backgroundColor,
-              child: CarouselSlider(
-                items: imgList.map((e) => SmartImage(path: e)).toList(),
-                carouselController: controller,
-                options: CarouselOptions(
-                    autoPlay: true,
-                    viewportFraction: 1.5,
-                    aspectRatio: 1,
-                    onPageChanged: (index, reason) {
-                      currentPage.value = index;
-                      onPageChanged?.call(index, reason);
-                    }),
+            GestureDetector(
+              onTap: () {
+                if (onTapFullImage != null) {
+                  onTapFullImage?.call(currentPage.value);
+                }
+              },
+              child: Container(
+                color: backgroundColor,
+                child: CarouselSlider(
+                  items: imgList.map((e) => SmartImage(path: e)).toList(),
+                  carouselController: controller,
+                  options: CarouselOptions(
+                      autoPlay: true,
+                      viewportFraction: 1.5,
+                      aspectRatio: 1,
+                      onPageChanged: (index, reason) {
+                        currentPage.value = index;
+                        onPageChanged?.call(index, reason);
+                      }),
+                ),
               ),
             ),
             if (on360Tap != null)

@@ -130,6 +130,9 @@ dependencies:
   country_phone_validator: ^1.0.1
 
 
+  # For Photo View
+  photo_view: ^0.15.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
