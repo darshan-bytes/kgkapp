@@ -43,6 +43,20 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   FocusNode stateFocusNode = FocusNode();
   FocusNode zipcodeFocusNode = FocusNode();
 
+  String? firstNameError;
+  String? lastNameError;
+  String? emailError;
+  List<String?> contactNumberErrors = [null];
+  String? passwordError;
+  String? confirmPasswordError;
+  String? companyNameError;
+  String? businessTypeError;
+  String? officeLocationError;
+  String? addressError;
+  String? cityError;
+  String? stateError;
+  String? zipcodeError;
+
   List<Country> selectedCountryCodes = [
     Country.from(json: {
       "e164_cc": "91",
@@ -81,6 +95,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpSubmitEvent>(_onSignUpSubmit);
     on<SignUpEmailValidationEvent>(_onSignUpEmailValidationEvent);
     on<SignUpPhoneNumberValidationEvent>(_onSignUpPhoneNumberValidationEvent);
+    on<SignUpFieldChangeEvent>(_onSignUpFieldChangeEvent);
   }
 
   Future<void> _onSignUpInitialEvent(SignUpInitialEvent event, Emitter<SignUpState> emit) async {
@@ -152,7 +167,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           onApproved: () {
             context.pop();
             clearField();
-            clearField();
             isIndividual = event.isIndividual;
             emit(SignUpChangeAccountTypeState(isIndividual));
           },
@@ -167,6 +181,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   void _onSignUpChangeCountryCodeEvent(SignUpChangeCountryCodeEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
     selectedCountryCodes[event.index] = event.country;
+    contactNumberErrors[event.index] = null;
+    emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
     emit(SignUpChangeCountryCodeState(country: selectedCountryCodes[event.index], index: event.index));
   }
 
@@ -197,6 +213,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     contactNumberControllers.add(TextEditingController());
     contactNumberFocusNodes.add(FocusNode());
     selectedCountryCodes.add(Country.from(json: selectedCountryCodes.last.toJson()));
+    contactNumberErrors.add(null);
     emit(SignUpAddRemoveContactState(index: selectedCountryCodes.length - 1, country: selectedCountryCodes.last));
   }
 
@@ -259,84 +276,154 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Future<void> _onSignUpSubmit(SignUpSubmitEvent event, Emitter<SignUpState> emit) async {
-    if (_validateForm()) {
+    emit(SignUpReloadState());
+    if (_validateForm(emit)) {
       emit(const SignUpLoadingState());
       await _callSignUpApi(event: event);
     }
   }
 
-  bool _validateForm() {
+  bool _validateForm(Emitter<SignUpState> emit) {
+    bool isValidate = true;
+    bool isValidContact = true;
     if (isIndividual) {
       if (firstNameController.text.isEmpty) {
-        Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
-        return false;
-      } else if (lastNameController.text.isEmpty) {
-        Utils.showMessage(APPStrings.errorLastNameRequired.tr);
-        return false;
-      } else if (emailController.text.isEmpty) {
-        Utils.showMessage(APPStrings.emailRequired.tr);
-        return false;
-      } else if (!Utils.isValidEmail(emailController.text)) {
-        Utils.showMessage(APPStrings.validEmail.tr);
-        return false;
-      } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
-        Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
-        return false;
-      } else if (passwordController.text.trim().isEmpty) {
-        Utils.showMessage(APPStrings.errorPasswordRequired.tr);
-        return false;
-      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
-        Utils.showMessage(APPStrings.validPassword.tr);
-        return false;
-      } else if (confirmPasswordController.text.trim().isEmpty) {
-        Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
-        return false;
-      } else if (passwordController.text != confirmPasswordController.text) {
-        Utils.showMessage(APPStrings.errorPasswordNotMatch.tr);
-        return false;
+        firstNameError = APPStrings.errorFirstNameRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.firstName));
+        isValidate = false;
       }
-
-      return true;
+      if (lastNameController.text.isEmpty) {
+        lastNameError = APPStrings.errorLastNameRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.lastName));
+        isValidate = false;
+      }
+      if (emailController.text.isEmpty) {
+        emailError = APPStrings.emailRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        isValidate = false;
+      } else if (!Utils.isValidEmail(emailController.text)) {
+        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        emailError = APPStrings.validEmail.tr;
+        isValidate = false;
+      }
+      if (contactNumberControllers.any((element) => element.text.isEmpty)) {
+        contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
+          if (contactNumberControllers[index].text.isEmpty) {
+            return APPStrings.errorContactNumberRequired.tr;
+          }
+          return null;
+        });
+        emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        isValidate = false;
+      } else {
+        for (int i = 0; i < contactNumberControllers.length; i++) {
+          contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
+            if (!CountryUtils.validatePhoneNumber(contactNumberControllers[index].text, "+${selectedCountryCodes[index].phoneCode}")) {
+              isValidContact = false;
+              return APPStrings.errorContactNumberValid.tr;
+            }
+            return null;
+          });
+          emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        }
+      }
+      if (passwordController.text.trim().isEmpty) {
+        passwordError = APPStrings.errorPasswordRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        isValidate = false;
+      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
+        passwordError = APPStrings.validPassword.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        isValidate = false;
+      }
+      if (confirmPasswordController.text.trim().isEmpty) {
+        confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        isValidate = false;
+      } else if (passwordController.text != confirmPasswordController.text) {
+        confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        isValidate = false;
+      }
     } else {
       if (companyNameController.text.isEmpty) {
-        Utils.showMessage(APPStrings.errorCompanyNameRequired.tr);
-        return false;
-      } else if (selectedOfficeLocation == null) {
-        Utils.showMessage(APPStrings.errorOfficeLocationRequired.tr);
-        return false;
-      } else if (businessTypes.every((element) => !element.isSelected)) {
-        Utils.showMessage(APPStrings.errorBusinessTypeRequired.tr);
-        return false;
-      } else if (firstNameController.text.isEmpty) {
-        Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
-        return false;
-      } else if (lastNameController.text.isEmpty) {
-        Utils.showMessage(APPStrings.errorLastNameRequired.tr);
-        return false;
-      } else if (emailController.text.isEmpty) {
-        Utils.showMessage(APPStrings.emailRequired.tr);
-        return false;
-      } else if (!Utils.isValidEmail(emailController.text)) {
-        Utils.showMessage(APPStrings.validEmail.tr);
-        return false;
-      } else if (contactNumberControllers.any((element) => element.text.isEmpty)) {
-        Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
-        return false;
-      } else if (passwordController.text.trim().isEmpty) {
-        Utils.showMessage(APPStrings.errorPasswordRequired.tr);
-        return false;
-      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
-        Utils.showMessage(APPStrings.validPassword.tr);
-        return false;
-      } else if (confirmPasswordController.text.trim().isEmpty) {
-        Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
-        return false;
-      } else if (passwordController.text != confirmPasswordController.text) {
-        Utils.showMessage(APPStrings.errorPasswordNotMatch.tr);
-        return false;
+        companyNameError = APPStrings.errorCompanyNameRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.companyName));
+        isValidate = false;
       }
-      return true;
+      if (selectedOfficeLocation == null) {
+        officeLocationError = APPStrings.errorOfficeLocationRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.officeLocation));
+        isValidate = false;
+      }
+      if (businessTypes.every((element) => !element.isSelected)) {
+        businessTypeError = APPStrings.errorBusinessTypeRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.businessType));
+        isValidate = false;
+      }
+      if (firstNameController.text.isEmpty) {
+        firstNameError = APPStrings.errorFirstNameRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.firstName));
+        isValidate = false;
+      }
+      if (lastNameController.text.isEmpty) {
+        lastNameError = APPStrings.errorLastNameRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.lastName));
+        isValidate = false;
+      }
+      if (emailController.text.isEmpty) {
+        emailError = APPStrings.emailRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        isValidate = false;
+      } else if (!Utils.isValidEmail(emailController.text)) {
+        emailError = APPStrings.validEmail.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        isValidate = false;
+      }
+      if (contactNumberControllers.any((element) => element.text.isEmpty)) {
+        contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
+          if (contactNumberControllers[index].text.isEmpty) {
+            return APPStrings.errorContactNumberRequired.tr;
+          }
+          return null;
+        });
+        emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        isValidate = false;
+        isValidContact = false;
+      } else {
+        for (int i = 0; i < contactNumberControllers.length; i++) {
+          contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
+            if (!CountryUtils.validatePhoneNumber(contactNumberControllers[index].text, "+${selectedCountryCodes[index].phoneCode}")) {
+              isValidContact = false;
+              return APPStrings.errorContactNumberValid.tr;
+            }
+            return null;
+          });
+          emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        }
+      }
+
+      if (passwordController.text.trim().isEmpty) {
+        passwordError = APPStrings.errorPasswordRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        isValidate = false;
+      } else if (!Utils.isValidPassword(passwordController.text.trim())) {
+        passwordError = APPStrings.validPassword.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        isValidate = false;
+      }
+      if (confirmPasswordController.text.trim().isEmpty) {
+        confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        isValidate = false;
+      } else if (passwordController.text != confirmPasswordController.text) {
+        confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        isValidate = false;
+      }
     }
+
+    return isValidate;
   }
 
   Future<void> _callSignUpApi({required SignUpSubmitEvent event}) async {
@@ -441,6 +528,53 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
   }
 
+  void _onSignUpFieldChangeEvent(SignUpFieldChangeEvent event, Emitter<SignUpState> emit) {
+    emit(SignUpReloadState());
+    switch (event.fieldType) {
+      case FieldType.firstName:
+        firstNameError = null;
+        break;
+      case FieldType.lastName:
+        lastNameError = null;
+        break;
+      case FieldType.email:
+        emailError = null;
+        break;
+      case FieldType.contactNumber:
+        if (event.index < 0) break;
+        contactNumberErrors[event.index] = null;
+        break;
+      case FieldType.password:
+        passwordError = null;
+        break;
+      case FieldType.confirmPassword:
+        confirmPasswordError = null;
+        break;
+      case FieldType.companyName:
+        companyNameError = null;
+        break;
+      case FieldType.businessType:
+        businessTypeError = null;
+        break;
+      case FieldType.officeLocation:
+        officeLocationError = null;
+        break;
+      case FieldType.address:
+        addressError = null;
+        break;
+      case FieldType.city:
+        cityError = null;
+        break;
+      case FieldType.state:
+        stateError = null;
+        break;
+      case FieldType.zipcode:
+        zipcodeError = null;
+        break;
+    }
+    emit(SignUpFieldValidationState(fieldType: event.fieldType));
+  }
+
   Future<void> mergeCart(BuildContext context) async {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
     if (myBagDataModel != null) {
@@ -473,7 +607,35 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     cityController.clear();
     stateController.clear();
     zipcodeController.clear();
+    selectedCountryCodes = [
+      Country.from(json: {
+        "e164_cc": "91",
+        "iso2_cc": "IN",
+        "e164_sc": 0,
+        "geographic": true,
+        "level": 1,
+        "name": "India",
+        "example": "9123456789",
+        "display_name": "India (IN) [+91]",
+        "full_example_with_plus_sign": "+919123456789",
+        "display_name_no_e164_cc": "India (IN)",
+        "e164_key": "91-IN-0",
+      })
+    ];
     selectedCountry = Country.from(json: selectedCountryCodes.first.toJson());
     selectFirstBusinessLocation();
+    firstNameError = null;
+    lastNameError = null;
+    emailError = null;
+    contactNumberErrors = [null];
+    passwordError = null;
+    confirmPasswordError = null;
+    companyNameError = null;
+    businessTypeError = null;
+    officeLocationError = null;
+    addressError = null;
+    cityError = null;
+    stateError = null;
+    zipcodeError = null;
   }
 }

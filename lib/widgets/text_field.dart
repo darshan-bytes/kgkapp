@@ -252,7 +252,6 @@ class SmartTextFieldState extends State<SmartTextField> {
                         borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
                       ),
                   hintText: widget.obscured ? '●●●●●●●●' : widget.hintText ?? '',
-                  errorText: widget.errorText,
                   hintStyle: style.hintStyle.merge(widget.hintStyle),
                   prefixIcon: widget.isSearch
                       ? FittedBox(
@@ -299,6 +298,18 @@ class SmartTextFieldState extends State<SmartTextField> {
               onEditingComplete: widget.onEditingComplete,
             ),
           ),
+          AnimatedSize(
+              duration: Duration(milliseconds: 200),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: widget.errorText.isNotNullNorEmpty
+                    ? [
+                        SizedBox(height: 8.h),
+                        SmartText(widget.errorText!, style: style.errorStyle),
+                      ]
+                    : [],
+              )),
         ],
       ),
     );

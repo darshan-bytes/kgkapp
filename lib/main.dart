@@ -28,20 +28,24 @@ class _MyAppState extends State<MyApp> {
             builder: (context, appState) {
               AppBloc appBloc = BlocProvider.of<AppBloc>(context);
               return MediaQuery.withNoTextScaling(
-                child: MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  onGenerateRoute: AppRoutes.generateRoute,
-                  initialRoute: AppRoutes.initialRoute,
-                  title: APPStrings.appName,
-                  navigatorKey: NavigatorKey.navigatorKey,
-                  supportedLocales: appBloc.supportedLocales,
-                  theme: appBloc.themeData,
-                  locale: appBloc.locale,
-                  builder: (context, widget) {
-                    return buildMaterialBuilder(appBloc, widget, appState);
-                  },
-                  navigatorObservers: [MyNavigatorObserver()],
-                  localizationsDelegates: appBloc.localizationsDelegates,
+                /// Here we are using ToastificationWrapper to show toast messages and wrapped our MaterialApp
+                /// with it to display toast messages without context
+                child: ToastificationWrapper(
+                  child: MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    onGenerateRoute: AppRoutes.generateRoute,
+                    initialRoute: AppRoutes.initialRoute,
+                    title: APPStrings.appName,
+                    navigatorKey: NavigatorKey.navigatorKey,
+                    supportedLocales: appBloc.supportedLocales,
+                    theme: appBloc.themeData,
+                    locale: appBloc.locale,
+                    builder: (context, widget) {
+                      return buildMaterialBuilder(appBloc, widget, appState);
+                    },
+                    navigatorObservers: [MyNavigatorObserver()],
+                    localizationsDelegates: appBloc.localizationsDelegates,
+                  ),
                 ),
               );
             },
