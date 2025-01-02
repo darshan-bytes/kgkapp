@@ -1315,4 +1315,12 @@ class LightModeTheme extends AppTheme {
         descriptionStyle: eBGaramondRegularTextStyle.copyWith(fontWeight: FontWeight.w600, fontSize: 16.sp),
         orangeColor: colors.primary,
       );
+
+  @override
+  ProductPhotoViewGalleryStyle get productPhotoViewGalleryStyle => ProductPhotoViewGalleryStyle(
+        whiteColor: colors.white,
+        blackColor: colors.black,
+        blueAccentColor: Colors.blueAccent,
+        transparentColor: colors.transparent,
+      );
 }

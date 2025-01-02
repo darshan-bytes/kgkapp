@@ -242,6 +242,9 @@ class ProductDetailsScreen extends StatelessWidget {
                               imgList: bloc.imgList,
                               controller: bloc.controller,
                               on360Tap: bloc.isCustomisation ? () {} : null,
+                              onTapFullImage: (int index) {
+                                bloc.onTapFullImage(context: context, currentIndex: index);
+                              },
                             ),
                             if (!bloc.isCustomisation)
                               Padding(
