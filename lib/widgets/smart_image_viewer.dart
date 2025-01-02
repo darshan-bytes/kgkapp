@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'dart:developer' as kgk_logger;
 
 class SmartImage extends StatelessWidget {
   final String path;
@@ -127,7 +128,15 @@ class SmartImage extends StatelessWidget {
                     height: height,
                     width: width,
                     fit: fit,
-                    errorListener: (error) {},
+                    errorListener: (error) {
+                      if (kDebugMode) {
+                        kgk_logger.log(
+                          "❌ Error in CachedNetworkImage: ",
+                          error: error,
+                          name: "SmartImage",
+                        );
+                      }
+                    },
                     errorWidget: (context, url, error) => placeholderImage.isNotNullNorEmpty
                         ? Image.file(
                             File(placeholderImage),
@@ -141,23 +150,26 @@ class SmartImage extends StatelessWidget {
                             width: width,
                             fit: fit ?? BoxFit.cover,
                           ),
-                    placeholder: (context, url) => SizedBox(
-                          height: height ?? 50.w,
-                          width: height ?? 50.w,
-                          child: Container(
+                    placeholder: (context, url) => Center(
+                      child: SizedBox(
+                        height: height ?? 50.w,
+                        width: height ?? 50.w,
+                        child: Container(
+                            height: 20.w,
+                            width: 20.w,
+                            alignment: Alignment.center,
+                            child: SizedBox(
                               height: 20.w,
                               width: 20.w,
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                height: 20.w,
-                                width: 20.w,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3.w,
-                                  color: AppTheme.of(context).colors.primary,
-                                ),
-                              )),
-                        ),
-                    imageUrl: path),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3.w,
+                                color: AppTheme.of(context).colors.primary,
+                              ),
+                            )),
+                      ),
+                    ),
+                    imageUrl: path,
+                  ),
           );
       }
     }

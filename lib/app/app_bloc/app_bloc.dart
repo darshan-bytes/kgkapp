@@ -176,6 +176,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   ///for add product to wishlist
   Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
+    // First check if the user is logged in or not
+    if (StorageManager().getIsSkipLogin()) {
+      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
+      return;
+    }
     emit(AppReloadState());
     Map<String, dynamic> body = {
       ApiKey.productId_: event.productDetails.productId,
@@ -242,10 +247,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   // Add to bag
   Future<void> _addToBag(ProductAddToBagEvent event, String userId) async {
+    if (event.productDetails.suid.isNullOrEmpty || event.productDetails.commodity == null) return;
     Map<String, dynamic> body = {
       ApiKey.commodity: event.productDetails.commodity?.value,
       ApiKey.quantity: 1,
-      ApiKey.suid: event.productDetails.productId,
+      ApiKey.suid: event.productDetails.suid,
       ApiKey.userId: userId,
     };
 
@@ -304,7 +310,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.productDetails.productId.isNullOrEmpty) {
       return;
     }
-
+    // First check if the user is logged in or not
+    if (StorageManager().getIsSkipLogin()) {
+      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
+      return;
+    }
     BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(event.productDetails, event.context));
     Utils.showSmartModalBottomSheet(
       context: event.context,

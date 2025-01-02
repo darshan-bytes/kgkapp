@@ -194,7 +194,7 @@ class ProductListScreen extends StatelessWidget {
   }
 
   Widget _buildListView(ProductListBloc bloc, ProductListState state) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: bloc.productList.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -204,7 +204,7 @@ class ProductListScreen extends StatelessWidget {
           children: [
             ProductListItem(
               boxHeight: 190.h,
-              margin: EdgeInsets.only(bottom: 17.h),
+              padding: EdgeInsetsDirectional.only(end: 10.w),
               productDetails: productDetails,
               isCustomisable: _isCustomisable(bloc, productDetails, index),
               isOutOfStock: productDetails.isOutOfStock,
@@ -227,6 +227,7 @@ class ProductListScreen extends StatelessWidget {
           ],
         );
       },
+      separatorBuilder: (context, index) => SizedBox(height: 17.h),
     );
   }
 

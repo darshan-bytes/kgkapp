@@ -97,7 +97,7 @@ class _OrderDetailBody extends StatelessWidget {
                 boxWidth: 72.w,
                 isDropDownEnable: false,
                 isCheckboxShow: false,
-                isEnableAddToWatchList: false,
+                isEnableAddToWishList: false,
                 selectedQuality: product.productQuality,
                 selectedQuantity: product.productQuantity,
                 onRemoveTap: () {

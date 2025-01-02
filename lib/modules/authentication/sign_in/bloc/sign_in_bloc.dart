@@ -15,6 +15,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       //B2C
       emailController.text = "ankita7@yopmail.com";
 
+      // Client's User B2C
+      // emailController.text = "ramesh.kumar@sparklesoft.co.in";
+
       //B2B
       // emailController.text = "joseph.murphy@yopmail.com";
       // emailController.text = "customer48008@kgkmail.com";

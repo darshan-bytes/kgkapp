@@ -114,6 +114,7 @@ dependencies:
 
   # mime_type and http_parser both Used in Multipart File Uploading in ApiService class
   mime_type: ^1.0.1
+
   http_parser: ^4.1.1
 
   # For Bloc Event Transformer
@@ -127,6 +128,7 @@ dependencies:
 
   # For Deep Linking
   flutter_branch_sdk: ^8.3.1
+
   country_phone_validator: ^1.0.1
 
 
