@@ -66,6 +66,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagProductQuantityChangedEvent>(_onMyBagProductQuantityChanged);
     on<MyBagYourDiscountChangedEvent>(_onMyBagYourDiscountChanged);
     on<ClearMyBagEvent>(_onClearMyBag);
+    on<FetchOrderSummaryDataEvent>(_onFetchOrderSummaryData);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -211,7 +212,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     );
   }
 
-  Future<void> fetchBagOrderSummaryData(BuildContext context, Emitter<MyBagState> emit) async {
+  Future<void> fetchBagOrderSummaryData(BuildContext context, Emitter<MyBagState> emit, {VoidCallback? onSuccess}) async {
+    emit(MyBagReloadState());
     String id = StorageManager().getBagId() ?? "";
     if (id.isNullOrEmpty) return;
     final response = await AppRepository(context).getBagOrderSummaryData(id: id);
@@ -219,10 +221,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     response?.fold(
       (l) {
         Utils.showMessage(l.message);
+        emit(MyBagOrderSummaryDataLoadedState());
       },
       (r) {
         bagOrderSummaryData = r;
         emit(MyBagOrderSummaryDataLoadedState());
+        onSuccess?.call();
       },
     );
   }
@@ -490,5 +494,10 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     salesmanList.clear();
     bagOrderSummaryData = null;
     BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(0));
+  }
+
+  /// Using this event to fetch latest order summary data
+  Future<void> _onFetchOrderSummaryData(FetchOrderSummaryDataEvent event, Emitter<MyBagState> emit) async {
+    await fetchBagOrderSummaryData(event.context, emit);
   }
 }
