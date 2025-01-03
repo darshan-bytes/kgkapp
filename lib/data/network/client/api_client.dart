@@ -7,9 +7,6 @@ class ApiClient {
   static const String apiBaseUrl = devApiBase;
   static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
-  static const String strapiHomeApiUrl =
-      'https://strapi-cms.kgk.magnetoinfotech.com/api/mobile-home-pages?populate%5Bhome%5D%5Bpopulate%5D=images%2Cdata.image%2Cslug%2CImage';
-
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
   static const String verifyQrCodeForAuth = '$apiBaseUrl/auth/verify-qr-scanner';
   static const String checkDuplicationEmail = '$apiBaseUrl/users/check-email-duplication';
@@ -197,6 +194,10 @@ class ApiClient {
   static const String pddFilterOptions = '$apiBaseUrl/presentations/filter-list';
 
   static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
+
+  static String get inquiryType => '$apiBaseUrl/customer-inquiry/types';
+
+  static String get submitContactUs => '$apiBaseUrl/contact_us';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
