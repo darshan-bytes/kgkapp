@@ -964,4 +964,6 @@ class APPStrings {
   static const String errorContactNumberValid = 'mob_error_contact_number_valid';
   static const String removeProductFromCart = 'mob_remove_product_from_cart';
   static const String loginToUseThisFeature = 'mob_login_to_use_this_feature';
+
+  static const String errorDurationRequired = 'mob_error_duration_required';
 }
