@@ -45,6 +45,7 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       element.isSelected = false;
       emit(const AddToWatchlistLoadedState());
     }
+    productDetails = event.productDetails;
     if (actionType == WatchlistActionType.add) {
       watchlistBloc.add(WatchListLoadFullListEvent(event.context));
       arrWatchlist = await watchlistBloc.allWatchlistFull.future;
@@ -60,7 +61,6 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       }
     }
     emit(const AddToWatchlistReloadState());
-    productDetails = event.productDetails;
   }
 
   void _onChangeWatchList(WatchlistChangeNameEvent event, Emitter<AddToWatchlistState> emit) {
