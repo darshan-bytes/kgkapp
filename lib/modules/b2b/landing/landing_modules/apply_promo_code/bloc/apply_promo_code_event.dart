@@ -11,3 +11,22 @@ final class InitialApplyPromoCodeEvent extends ApplyPromoCodeEvent {
   @override
   List<Object?> get props => [context];
 }
+
+final class OnTapApplyPromoCodeEvent extends ApplyPromoCodeEvent {
+  final BuildContext context;
+  final String promoCode;
+
+  const OnTapApplyPromoCodeEvent({required this.context, required this.promoCode});
+
+  @override
+  List<Object?> get props => [context, promoCode];
+}
+
+final class OnTapRemovePromoCodeEvent extends ApplyPromoCodeEvent {
+  final BuildContext context;
+
+  const OnTapRemovePromoCodeEvent({required this.context});
+
+  @override
+  List<Object?> get props => [context];
+}

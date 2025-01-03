@@ -38,7 +38,7 @@ class ProductReviewModel {
     title = json['title'];
     description = json['description'];
     businessType = json['business_type'];
-    rating = json['rating'];
+    rating = json['rating']?.toInt();
     images = json['images'];
     id = json['id'];
     createdAt = json['created_at'];

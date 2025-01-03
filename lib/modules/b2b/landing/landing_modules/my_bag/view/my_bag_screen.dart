@@ -453,12 +453,6 @@ class MyBagScreen extends StatelessWidget {
         BagOrderSummaryDataModel? bagOrderSummary = bloc.bagOrderSummaryData;
         return OrderSummary(
           promoCode: bagOrderSummary?.promoCode,
-          onApplyPromoCode: (promoCode) {
-            bloc.add(MyBagApplyPromoCodeEvent(context: context, promoCode: promoCode));
-          },
-          onTapRemovePromoCode: () {
-            bloc.add(MyBagRemovePromoCodeEvent(context));
-          },
           onTapCheckout: () {
             bloc.add(MyBagCheckoutEvent(context: context));
           },

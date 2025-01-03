@@ -1,9 +1,7 @@
 import 'package:kgk/kgk.dart';
 
 class ApplyPromoCodeScreen extends StatelessWidget {
-  ApplyPromoCodeScreen({super.key});
-
-  final TextEditingController promoCodeController = TextEditingController();
+  const ApplyPromoCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,36 +25,48 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                 children: [
                   SmartTextField(
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    controller: promoCodeController,
+                    controller: bloc.promoCodeController,
                     hintText: APPStrings.hintPromoCode.tr,
                     textInputAction: TextInputAction.done,
                     suffixIcon: SmartText(APPStrings.apply.tr, onTap: () {
-                      context.pop(arguments: {RoutesData.promoCode: promoCodeController.text});
+                      if (bloc.promoCodeController.text.isNullOrEmpty) return;
+                      bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
                     }, textAlign: TextAlign.center, optionalPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h)),
                   ),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                       color: style.backgroundColor,
-                      child: ListView.separated(
-                        itemCount: bloc.applyPromoCodeList.length,
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                        itemBuilder: (context, index) {
-                          Widget header = SmartText(APPStrings.moreOffers.tr, style: style.titleStyle);
-                          if (index == 0) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                header,
-                                SizedBox(height: 12.h),
-                                _buildApplyPromoCodeItem(model: bloc.applyPromoCodeList[index], style: style, context: context),
-                              ],
-                            );
-                          }
-                          return _buildApplyPromoCodeItem(model: bloc.applyPromoCodeList[index], style: style, context: context);
-                        },
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (bloc.appliedPromoCode != null) ...[
+                              SmartText("Applied Promo Code", style: style.titleStyle),
+                              SizedBox(height: 12.h),
+                              _buildApplyPromoCodeItem(
+                                model: bloc.appliedPromoCode!,
+                                style: style,
+                                context: context,
+                                bloc: bloc,
+                                isApplied: true,
+                              ),
+                              SizedBox(height: 20.h),
+                            ],
+                            SmartText(APPStrings.moreOffers.tr, style: style.titleStyle),
+                            ListView.separated(
+                              itemCount: bloc.applyPromoCodeList.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                              itemBuilder: (builderContext, index) {
+                                if (bloc.applyPromoCodeList[index] == bloc.appliedPromoCode) return SizedBox.shrink();
+                                return _buildApplyPromoCodeItem(
+                                    model: bloc.applyPromoCodeList[index], style: style, context: context, bloc: bloc);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -70,7 +80,13 @@ class ApplyPromoCodeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildApplyPromoCodeItem({required ApplyPromoCodeModel model, required ApplyPromoCodeStyle style, required BuildContext context}) {
+  Widget _buildApplyPromoCodeItem({
+    required ApplyPromoCodeModel model,
+    required ApplyPromoCodeStyle style,
+    required BuildContext context,
+    required ApplyPromoCodeBloc bloc,
+    bool isApplied = false,
+  }) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
@@ -104,21 +120,15 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // Apply Button
-              ElevatedButton.icon(
-                onPressed: () {
-                  context.pop(arguments: {RoutesData.promoCode: model.code});
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(60.w, 30.h),
-                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
-                  backgroundColor: style.orangeColor,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
-                  elevation: 0,
-                ),
-                icon: Icon(Icons.check_circle, size: 14.w, color: style.whiteColor),
-                label: SmartText(APPStrings.apply.tr, style: style.activeApplyTextStyle),
-              )
+              if (!isApplied) ...[
+                _getApplyButton(style, icon: Icons.check_circle, label: APPStrings.apply.tr, onPressed: () {
+                  bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: model.code ?? ""));
+                })
+              ] else ...[
+                _getApplyButton(style, icon: Icons.close, label: APPStrings.remove.tr, onPressed: () {
+                  bloc.add(OnTapRemovePromoCodeEvent(context: context));
+                })
+              ]
             ],
           ),
           SizedBox(height: 6.h),
@@ -135,6 +145,21 @@ class ApplyPromoCodeScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _getApplyButton(ApplyPromoCodeStyle style, {required Function() onPressed, required IconData icon, required String label}) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(60.w, 36.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
+        backgroundColor: style.orangeColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
+        elevation: 0,
+      ),
+      icon: Icon(icon, size: 14.w, color: style.whiteColor),
+      label: SmartText(label, style: style.activeApplyTextStyle),
     );
   }
 }

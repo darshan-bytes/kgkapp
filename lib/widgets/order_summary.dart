@@ -6,7 +6,7 @@ class OrderSummary extends StatelessWidget {
   final String totalPrice;
   final void Function()? onTapCheckout;
   final void Function()? onTapRemovePromoCode;
-  final Function(String)? onApplyPromoCode;
+  final void Function()? onApplyPromoCode;
   final bool isPromoCodeApplied;
   final TextStyle? titleStyle;
   final TextStyle? totalStyle;
@@ -80,15 +80,14 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return InkWell(
-      onTap: () async {
-        /// navigate to applyPromoCodeScreen
-        await context.pushNamed(AppRoutes.applyPromoCodeScreen).then(
+      onTap: () {
+        /// navigate to applyPromoCodeScreen with promoCode for applied promoCode
+        context.pushNamed(AppRoutes.applyPromoCodeScreen, arguments: {RoutesData.promoCode: promoCode}).then(
           (value) {
-            if (value != null) {
-              onApplyPromoCode?.call(value[RoutesData.promoCode]);
-            }
+            BlocProvider.of<MyBagBloc>(context).add(FetchOrderSummaryDataEvent(context));
           },
         );
+        onApplyPromoCode?.call();
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.h),
@@ -102,14 +101,9 @@ class OrderSummary extends StatelessWidget {
             ),
             SizedBox(width: 17.w),
             SmartText(
-              promoCode == null ? APPStrings.apply.tr : APPStrings.remove.tr,
+              promoCode == null ? APPStrings.apply.tr : "Applied",
               style: totalStyle ?? style.totalPriceStyle,
-              onTap: promoCode != null
-                  ? () {
-                      onTapRemovePromoCode?.call();
-                    }
-                  : null,
-            )
+            ),
           ],
         ),
       ),
