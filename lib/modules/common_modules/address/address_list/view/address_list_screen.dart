@@ -95,7 +95,12 @@ class AddressListScreen extends StatelessWidget {
                         ],
                       ),
                     ),*/
-                    _buildOrderSummary(style)
+                    if (addressListBloc.bagOrderSummaryData != null)
+                      _buildOrderSummary(
+                        style: style,
+                        context: context,
+                        addressListBloc: addressListBloc,
+                      ),
                   ],
                 ),
               );
@@ -256,18 +261,32 @@ class AddressListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderSummary(AddressListStyle style) {
-    return OrderSummary(
-      title: APPStrings.priceDetails.tr,
-      isPromoCodeApplied: false,
-      items: [
-        // Here String come from API
-        OrderSummaryItem(title: APPStrings.subtotal.tr, value: "\$11,950.00"),
-        OrderSummaryItem(title: APPStrings.shipping.tr, value: "\$0.00"),
-        OrderSummaryItem(title: APPStrings.salesTax.tr, value: "\$0.00"),
-      ],
-      totalPrice: "\$35,700.00",
-      totalStyle: style.footerTotalAmountStyle,
+  Widget _buildOrderSummary({
+    required AddressListStyle style,
+    required BuildContext context,
+    required AddressListBloc addressListBloc,
+  }) {
+    addressListBloc.add(OrderSummaryDataRefreshEvent(context: context));
+    return BlocBuilder<AddressListBloc, AddressListState>(
+      buildWhen: (previous, current) => current is AddressListLoadedState,
+      builder: (context, state) {
+        return OrderSummary(
+          onApplyPromoCode: () {},
+          promoCode: addressListBloc.bagOrderSummaryData?.promoCode,
+          items: List.generate(
+            addressListBloc.bagOrderSummaryData?.charges.length ?? 0,
+            (index) {
+              BagOrderCharge? bagOrderCharge = addressListBloc.bagOrderSummaryData?.charges[index];
+              return OrderSummaryItem(
+                title: bagOrderCharge?.title ?? '',
+                value: bagOrderCharge?.displayValue?.setCurrency ?? '',
+              );
+            },
+          ).toList(),
+          totalPrice: addressListBloc.bagOrderSummaryData?.totalAmount?.setCurrency ?? '',
+          totalStyle: style.footerTotalAmountStyle,
+        );
+      },
     );
   }
 }

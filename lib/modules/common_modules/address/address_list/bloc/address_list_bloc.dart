@@ -14,6 +14,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     on<ToggleBillingAndShippingSameEvent>(_onToggleBillingAndShippingSameEvent);
     on<ChangeProductListExpansionEvent>(_onChangeProductListExpansionEvent);
     on<ContinueToPaymentEvent>(_onContinueToPayment);
+    on<OrderSummaryDataRefreshEvent>(_onOrderSummaryDataRefreshEvent);
   }
 
   late AppBloc appBloc;
@@ -29,7 +30,10 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   bool isBillingAndShippingSame = true;
 
+  BagOrderSummaryDataModel? bagOrderSummaryData;
+
   Future<void> _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) async {
+    emit(const AddressListReloadState());
     appBloc = BlocProvider.of<AppBloc>(event.context);
     userType = appBloc.userType;
     await appBloc.fetchAddressList(event.context, isForceFetch: true);
@@ -37,6 +41,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     selectedShippingAddress = addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? addressList.firstOrNull;
     selectedBillingAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? addressList.firstOrNull;
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
+    bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
   }
 
@@ -215,5 +220,11 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
         RoutesData.orderNumber: uniqueId,
       },
     );
+  }
+
+  void _onOrderSummaryDataRefreshEvent(OrderSummaryDataRefreshEvent event, Emitter<AddressListState> emit) {
+    emit(AddressListReloadState());
+    bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
+    emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
   }
 }

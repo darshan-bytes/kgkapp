@@ -966,4 +966,7 @@ class APPStrings {
   static const String loginToUseThisFeature = 'mob_login_to_use_this_feature';
 
   static const String errorDurationRequired = 'mob_error_duration_required';
+
+  static const String appliedPromoCode = 'mob_applied_promo_code';
+  static const String applied = 'mob_applied';
 }

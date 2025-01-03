@@ -769,5 +769,7 @@
   "mob_error_contact_number_valid": "कृपया वैध संपर्क नंबर दर्ज करें",
   "mob_remove_product_from_cart": "कार्ट से उत्पाद हटाएं",
   "mob_login_to_use_this_feature": "इस सुविधा का उपयोग करने के लिए लॉगिन करें",
-  "mob_error_duration_required": "अवधि आवश्यक है"
+  "mob_error_duration_required": "अवधि आवश्यक है",
+  "mob_applied_promo_code": "उपलब्ध कूपन कोड",
+  "mob_applied": "उपलब्ध"
 }

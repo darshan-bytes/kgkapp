@@ -14,14 +14,12 @@ enum FetchScenario {
 }
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
-  UserType userType = UserType.b2cUser;
   bool isGrid = true;
-  String appbarTitle = APPStrings.ring.tr;
+  String appbarTitle = APPStrings.jewellery.tr;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
 
   List<ProductDetailsModel> productList = [];
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-  Completer<bool> refreshCompleter = Completer<bool>();
 
   int? totalNumberOfPages;
   String productId = "";
@@ -36,6 +34,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
 
   List<SortOptions> sortOptions = [];
+
+  /// The total number of filtered records
+  int? totalFilteredRecords;
 
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
@@ -83,12 +84,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<ProductListState> emit) async {
-    userType = BlocProvider.of<AppBloc>(context).userType;
+    emit(ReloadProductState());
+    getRouteData(context);
     _initWishlistUpdaterServiceBloc(context);
     await _sortOptionListApiCall(context);
-    emit(ReloadProductState());
     _initializePagination(context);
-    getRouteData(context);
     await _loadInitialData(context, emit);
     emit(const ProductListLoadedState());
   }
@@ -152,51 +152,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   Future<void> _loadInitialData(BuildContext context, Emitter<ProductListState> emit) async {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
-      appbarTitle = APPStrings.ring.tr;
+      appbarTitle = APPStrings.jewellery.tr;
       productList.clear();
       if (filterData.isEmpty) {
         await _setupFilters(context);
       }
       await fetchJewelleriesList(context, emit, true);
-    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
-      appbarTitle = APPStrings.diamonds.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  diamond: "2.5 crt",
-                  gram: "1.5 grms",
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/FDQpQYW/image-7-1.png" : "https://i.ibb.co/8xM4BxQ/image-7.png",
-                  name: "2.00 Carat H VS1 Excellent Cut Round Setting",
-                  originalPrice: "\$3,000.00",
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryGrey) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      List.generate(
-          20,
-          (index) => productList.add(
-                ProductDetailsModel(
-                  imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-                  name: "Diamond Vine Ring in 18k Rose Gold",
-                  originalPrice: '\$5,000.00',
-                ),
-              ));
-    } else if (screenIdentifier == ScreenIdentifier.productForLibraryPlatinum) {
-      appbarTitle = APPStrings.productLibrary.tr;
-      productList.clear();
-      List.generate(
-        20,
-        (index) => productList.add(
-          ProductDetailsModel(
-            imageUrl: index % 2 == 0 ? "https://i.ibb.co/Lk4H7Wj/image-7-1.png" : "https://i.ibb.co/Gxkhf7J/image-7.png",
-            name: "Diamond Vine Ring in 18k Yellow Gold",
-            originalPrice: '\$5,000.00',
-          ),
-        ),
-      );
     }
   }
 
@@ -292,6 +253,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     response?.fold((error) => Utils.showMessage(error.message), (success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final localList = success.data;
+
+      /// Show the total number of records in the UI side
+      totalFilteredRecords = success.filteredRecords;
       productList.addAll(localList
           .map((item) => ProductDetailsModel(
                   suid: item.suid ?? "",
