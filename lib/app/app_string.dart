@@ -965,6 +965,8 @@ class APPStrings {
   static const String removeProductFromCart = 'mob_remove_product_from_cart';
   static const String loginToUseThisFeature = 'mob_login_to_use_this_feature';
 
+  static const String errorDurationRequired = 'mob_error_duration_required';
+
   static const String errorEnterYourComment = 'mob_enter_your_comment';
   static const String errorSelectInquiryType = 'mob_select_inquiry_type';
   static const String errorFullNameRequired = 'mob_full_name_required';

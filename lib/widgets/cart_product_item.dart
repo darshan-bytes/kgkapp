@@ -254,7 +254,6 @@ class CartProductItem extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: SmartDropDown<CartProductQuantity>(
-                      canSearch: true,
                       isChangeableValue: isDropDownEnable,
                       labelText: APPStrings.qty.tr,
                       selectedItem: selectedQuantity,

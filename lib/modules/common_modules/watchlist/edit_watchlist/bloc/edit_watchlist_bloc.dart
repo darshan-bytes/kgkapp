@@ -18,6 +18,8 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
 
   WatchlistData? watchlistData;
 
+  String? watchListNameError;
+
   EditWatchlistBloc() : super(const EditWatchlistInitial()) {
     on<EditWatchlistInitialEvent>(_onEditWatchlistInitialEvent);
     on<EditWatchlistDurationChangedEvent>(_onEditWatchlistDurationChangedEvent);
@@ -50,6 +52,12 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
   }
 
   Future<void> _onEditWatchlistSaveEvent(EditWatchlistSaveEvent event, Emitter<EditWatchlistState> emit) async {
+    if (duration == null || duration == Duration.zero) {
+      //TODO: Display Error message
+      watchListNameError = APPStrings.errorDurationRequired.tr;
+      emit(const EditWatchlistNameErrorState());
+      return;
+    }
     final Map<String, dynamic> body = {
       ApiKey.name: nameController.text,
       ApiKey.hours: duration?.inHours.remainder(24),
