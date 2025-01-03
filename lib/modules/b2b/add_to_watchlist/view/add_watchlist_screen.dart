@@ -45,7 +45,7 @@ class AddWatchlistScreen extends StatelessWidget {
                     if (!bloc.isEdit) ...[
                       _buildWatchlistNameField(bloc),
                       SizedBox(height: 10.h),
-                      _buildCreateWatchlistButton(context),
+                      _buildCreateWatchlistButton(context, bloc),
                       SizedBox(height: 16.h),
                     ],
                     _buildCheckboxList(
@@ -169,7 +169,7 @@ class AddWatchlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCreateWatchlistButton(BuildContext context) {
+  Widget _buildCreateWatchlistButton(BuildContext context, AddToWatchlistBloc bloc) {
     return SmartButton(
       onTap: () async {
         BlocProvider.of<EditWatchlistBloc>(context).add(const EditWatchlistInitialEvent(isEdit: false));
@@ -181,6 +181,11 @@ class AddWatchlistScreen extends StatelessWidget {
             return const EditWatchlistScreen();
           },
         ).then((value) {
+          bloc.watchlistBloc.add(WatchListLoadFullListEvent(getNavigatorKeyContext));
+          if (bloc.productDetails != null) {
+            bloc.add(AddToWatchlistInitialEvent.add(bloc.productDetails!, getNavigatorKeyContext));
+          }
+
           Utils.showSmartModalBottomSheet(
             context: getNavigatorKeyContext,
             enableDrag: false,
