@@ -17,7 +17,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(WatchlistDetailsBloc bloc) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: AppBar().preferredSize,
       child: BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
         buildWhen: (previous, current) => current is WatchlistDetailsLoaded,
         builder: (context, state) {
@@ -89,7 +89,9 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 path: AppImages.icMoreVertical,
                 width: 24.w,
                 height: 24.h,
-                onTap: () {},
+                onTap: () {
+                  //TODO: Show more options
+                },
               ),
             ],
           ),

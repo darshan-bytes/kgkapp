@@ -770,5 +770,6 @@
   "mob_login_msg": "Login or create an account to unlock exclusive features.",
   "mob_error_contact_number_valid": "Please enter valid contact number",
   "mob_remove_product_from_cart": "Remove From cart?",
-  "mob_login_to_use_this_feature": "Login to use this feature"
+  "mob_login_to_use_this_feature": "Login to use this feature",
+  "mob_error_duration_required": "Duration is required"
 }

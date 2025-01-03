@@ -39,12 +39,23 @@ class EditWatchlistScreen extends StatelessWidget {
                             style: style.subTitleStyle,
                           ),
                           SizedBox(height: 16.h),
-                          SmartTextField(
-                            labelText: APPStrings.name.tr,
-                            hintText: APPStrings.hintWatchlistName.tr,
-                            controller: bloc.nameController,
-                            textInputAction: TextInputAction.done,
-                            textCapitalization: TextCapitalization.words,
+                          BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
+                            buildWhen: (previous, current) => current is EditWatchlistNameErrorState,
+                            builder: (context, state) {
+                              return SmartTextField(
+                                errorText: bloc.watchListNameError,
+                                labelText: APPStrings.name.tr,
+                                hintText: APPStrings.hintWatchlistName.tr,
+                                controller: bloc.nameController,
+                                textInputAction: TextInputAction.done,
+                                textCapitalization: TextCapitalization.words,
+                                onValueChanges: (value) {
+                                  if (value.isNotNullNorEmpty) {
+                                    bloc.watchListNameError = null;
+                                  }
+                                },
+                              );
+                            },
                           ),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(

@@ -43,7 +43,7 @@ class SmartDropDown<T> extends StatelessWidget {
     this.isExpanded = true,
     this.isChangeableValue = true,
     this.onSearchEvent,
-    this.canSearch = false, // Default to false (no search)
+    this.canSearch = false,
     this.errorText,
     this.emptyText,
   });
@@ -70,7 +70,7 @@ class SmartDropDown<T> extends StatelessWidget {
             }
             Utils.showSmartModalBottomSheet(
               context: context,
-              isScrollControlled: scrollDirection == Axis.horizontal,
+              // isScrollControlled: scrollDirection == Axis.horizontal,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
               ),
