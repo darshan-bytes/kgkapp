@@ -41,7 +41,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     selectedShippingAddress = addressList.firstWhereOrNull((element) => element.isDefaultShipping) ?? addressList.firstOrNull;
     selectedBillingAddress = addressList.firstWhereOrNull((element) => element.isDefaultBilling) ?? addressList.firstOrNull;
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
-    fetchOrderSummaryDataFromMyBagBloc(event.context);
+    bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
   }
 
@@ -224,11 +224,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   void _onOrderSummaryDataRefreshEvent(OrderSummaryDataRefreshEvent event, Emitter<AddressListState> emit) {
     emit(AddressListReloadState());
-    fetchOrderSummaryDataFromMyBagBloc(event.context);
+    bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
-  }
-
-  void fetchOrderSummaryDataFromMyBagBloc(BuildContext context) {
-    bagOrderSummaryData = BlocProvider.of<MyBagBloc>(context).bagOrderSummaryData;
   }
 }

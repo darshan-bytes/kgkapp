@@ -42,7 +42,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (bloc.appliedPromoCode != null) ...[
-                              SmartText("Applied Promo Code", style: style.titleStyle),
+                              SmartText(APPStrings.appliedPromoCode.tr, style: style.titleStyle),
                               SizedBox(height: 12.h),
                               _buildApplyPromoCodeItem(
                                 model: bloc.appliedPromoCode!,
@@ -149,8 +149,11 @@ class ApplyPromoCodeScreen extends StatelessWidget {
   }
 
   Widget _getApplyButton(ApplyPromoCodeStyle style, {required Function() onPressed, required IconData icon, required String label}) {
+    final Throttle throttle = Throttle(milliseconds: 500);
     return ElevatedButton.icon(
-      onPressed: onPressed,
+      onPressed: () {
+        throttle.run(onPressed.call());
+      },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(60.w, 36.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),

@@ -101,7 +101,7 @@ class OrderSummary extends StatelessWidget {
             ),
             SizedBox(width: 17.w),
             SmartText(
-              promoCode == null ? APPStrings.apply.tr : "Applied",
+              promoCode == null ? APPStrings.apply.tr : APPStrings.applied.tr,
               style: totalStyle ?? style.totalPriceStyle,
             ),
           ],

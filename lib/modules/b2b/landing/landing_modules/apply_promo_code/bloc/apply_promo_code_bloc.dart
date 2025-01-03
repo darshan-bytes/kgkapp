@@ -100,15 +100,17 @@ class ApplyPromoCodeBloc extends Bloc<ApplyPromoCodeEvent, ApplyPromoCodeState> 
         Utils.showMessage(l.message);
       },
       (r) async {
-        appliedPromoCode = null;
-        applyPromoCodeList = [];
-        promoCode = null;
+        clearData();
 
         /// Using this event to fetch latest order summary data
         BlocProvider.of<MyBagBloc>(event.context).add(FetchOrderSummaryDataEvent(event.context));
-        await fetchApplyPromoCodeList(event.context, emit);
       },
     );
     emit(ApplyPromoCodeLoadedState());
+  }
+
+  void clearData() {
+    appliedPromoCode = null;
+    promoCode = null;
   }
 }
