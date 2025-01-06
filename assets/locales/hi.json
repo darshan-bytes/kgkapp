@@ -774,5 +774,7 @@
   "mob_select_inquiry_type": "अपना टिप्पण दर्ज करें",
   "mob_full_name_required": "अपना पूरा नाम दर्ज करें",
   "mob_applied_promo_code": "उपलब्ध कूपन कोड",
-  "mob_applied": "उपलब्ध"
+  "mob_applied": "उपलब्ध",
+  "mob_error_name_required": "नाम आवश्यक है",
+  "mob_go_to_bag": "बैग पर जाएं"
 }

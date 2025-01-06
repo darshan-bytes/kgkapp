@@ -18,6 +18,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   late AppBloc appBloc;
+  late MyBagBloc myBagBloc;
   UserType userType = UserType.b2cUser;
 
   GlobalKey<SmartExpansionTileState> productsListExpansionKey = GlobalKey();
@@ -35,6 +36,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   Future<void> _onLoadAddressListEvent(LoadAddressListEvent event, Emitter<AddressListState> emit) async {
     emit(const AddressListReloadState());
     appBloc = BlocProvider.of<AppBloc>(event.context);
+    myBagBloc = BlocProvider.of<MyBagBloc>(event.context);
     userType = appBloc.userType;
     await appBloc.fetchAddressList(event.context, isForceFetch: true);
     addressList = appBloc.savedAddressList;
@@ -176,7 +178,6 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   Future<void> placeB2BUserOrderAPI(BuildContext context) async {
-    final MyBagBloc myBagBloc = BlocProvider.of<MyBagBloc>(context);
     List<PlaceOrderProductRequest> placeOrderProductRequestList = myBagBloc.placeOrderProductRequestList;
     BagListDataModel? bagListDataModel = myBagBloc.bagListDataModel;
     BagOrderSummaryDataModel? bagOrderSummaryData = myBagBloc.bagOrderSummaryData;
@@ -211,7 +212,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   }
 
   void handleNavigateToOrderSuccessAndClearCart(BuildContext context, {String? message, String? uniqueId}) {
-    BlocProvider.of<MyBagBloc>(context).add(ClearMyBagEvent(context));
+    myBagBloc.add(ClearMyBagEvent(context));
     Utils.showMessage(message);
     context.pushNamedAndRemoveUntil(
       AppRoutes.orderConfirmationPage,

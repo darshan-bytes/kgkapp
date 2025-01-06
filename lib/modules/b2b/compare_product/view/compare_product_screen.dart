@@ -36,7 +36,7 @@ class CompareProductScreen extends StatelessWidget {
                               Table(
                                 defaultColumnWidth: const IntrinsicColumnWidth(),
                                 columnWidths: bloc.generateTableColumnWidths(bloc.productIdList.length, 124.w),
-                                children: [_buildTableRow(style, bloc)],
+                                children: [_buildTableRow(context, style, bloc)],
                               ),
                               SizedBox(
                                 height: 132.h,
@@ -55,7 +55,7 @@ class CompareProductScreen extends StatelessWidget {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withValues(alpha:0.5),
+                                color: Colors.grey.withValues(alpha: 0.5),
                                 spreadRadius: 5.r,
                                 blurRadius: 7.r,
                                 offset: const Offset(0, 3), // changes position of shadow
@@ -75,18 +75,14 @@ class CompareProductScreen extends StatelessWidget {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Visibility(
-                                                visible: !bloc.productList[index].isAddedToCart,
-                                                child: SmartButton(
-                                                  onTap: () {
-                                                    BlocProvider.of<AppBloc>(context)
-                                                        .onTapBag(context, productDetails: bloc.productList[index]);
-                                                    bloc.productList[index].isAddedToCart = true;
-                                                  },
-                                                  title: APPStrings.addToBag.tr,
-                                                  width: 114.w,
-                                                  height: 48.w,
-                                                ),
+                                              SmartButton(
+                                                onTap: () {
+                                                  bloc.handleBagButtonClick(context, index);
+                                                },
+                                                title:
+                                                    bloc.productList[index].isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                                                width: 114.w,
+                                                height: 48.w,
                                               ),
                                               SizedBox(
                                                 height: 8.h,
@@ -125,11 +121,11 @@ class CompareProductScreen extends StatelessWidget {
     );
   }
 
-  TableRow _buildTableRow(CompareProductStyle style, CompareProductBloc bloc) {
-    return TableRow(children: List.generate(bloc.productIdList.length, (index) => _buildTableCell(index, style, bloc)));
+  TableRow _buildTableRow(BuildContext context, CompareProductStyle style, CompareProductBloc bloc) {
+    return TableRow(children: List.generate(bloc.productIdList.length, (index) => _buildTableCell(context, index, style, bloc)));
   }
 
-  Widget _buildTableCell(int index, CompareProductStyle style, CompareProductBloc bloc) {
+  Widget _buildTableCell(BuildContext context, int index, CompareProductStyle style, CompareProductBloc bloc) {
     ProductDetailsModel productDetail = bloc.productList[index];
     return Container(
       width: 130.w,
@@ -142,6 +138,17 @@ class CompareProductScreen extends StatelessWidget {
             width: 114.w,
             height: 114.w,
             color: Colors.black,
+            onTap: () {
+              if (bloc.commodity != null) {
+                context.pushNamed(
+                  AppRoutes.productDetailsPage,
+                  arguments: {
+                    RoutesData.productId: productDetail.productId,
+                    RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(bloc.commodity!),
+                  },
+                );
+              }
+            },
           ),
           SizedBox(height: 8.h),
           Container(

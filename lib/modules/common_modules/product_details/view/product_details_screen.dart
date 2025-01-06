@@ -587,7 +587,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildSuggestedProductList(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is ProductDetailsSuggestedProductLoadedState,
+      buildWhen: (previous, current) => current is ProductDetailsSuggestedLoadedState,
       builder: (context, state) {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(

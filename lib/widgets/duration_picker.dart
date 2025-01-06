@@ -11,6 +11,7 @@ class SmartDurationPicker extends StatelessWidget {
   final Color? backgroundColor;
   final BorderRadiusGeometry? borderRadius;
   final BoxBorder? border;
+  final String? errorText;
 
   SmartDurationPicker({
     super.key,
@@ -24,6 +25,7 @@ class SmartDurationPicker extends StatelessWidget {
     this.backgroundColor,
     this.borderRadius,
     this.border,
+    this.errorText,
   }) {
     duration.value = initialDuration;
   }
@@ -32,14 +34,14 @@ class SmartDurationPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextFieldStyle textFieldStyle = AppTheme.of(context).textFieldStyle;
+    final TextFieldStyle style = AppTheme.of(context).textFieldStyle;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (labelText != null) ...[
           SmartText(
             labelText!,
-            style: textFieldStyle.labelStyle,
+            style: style.labelStyle,
           ),
           SizedBox(height: 8.h),
         ],
@@ -66,7 +68,7 @@ class SmartDurationPicker extends StatelessWidget {
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
               border: border ??
                   Border.all(
-                    color: textFieldStyle.enabledTextFieldBorderColor,
+                    color: style.enabledTextFieldBorderColor,
                   ),
             ),
             child: Row(
@@ -77,7 +79,7 @@ class SmartDurationPicker extends StatelessWidget {
                       builder: (context, value, child) {
                         return SmartText(
                           duration.value?.formattedDurationShort ?? hintText ?? APPStrings.select.tr,
-                          style: duration.value != null ? textFieldStyle.textStyle : textFieldStyle.hintStyle,
+                          style: duration.value != null ? style.textStyle : style.hintStyle,
                         );
                       }),
                 ),
@@ -86,6 +88,18 @@ class SmartDurationPicker extends StatelessWidget {
             ),
           ),
         ),
+        AnimatedSize(
+            duration: Duration(milliseconds: 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: errorText.isNotNullNorEmpty
+                  ? [
+                      SizedBox(height: 8.h),
+                      SmartText(errorText!, style: style.errorStyle),
+                    ]
+                  : [],
+            )),
       ],
     );
   }

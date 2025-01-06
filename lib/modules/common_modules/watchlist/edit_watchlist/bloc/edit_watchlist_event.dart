@@ -31,3 +31,12 @@ final class EditWatchlistSaveEvent extends EditWatchlistEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class EditWatchlistNameChangedEvent extends EditWatchlistEvent {
+  final String name;
+
+  const EditWatchlistNameChangedEvent(this.name);
+
+  @override
+  List<Object> get props => [name];
+}

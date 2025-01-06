@@ -241,7 +241,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         case BranchLinkTypeType.productShare:
           context.pushNamed(AppRoutes.productDetailsPage, arguments: {
             RoutesData.productId: branchLinkData.id,
-            RoutesData.isPageFor: getScreenIdentifierFromCommodity(branchLinkData.commodityEnum)
+            RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(branchLinkData.commodityEnum)
           });
           break;
         //TODO: Add more cases for different link types
@@ -249,20 +249,5 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
           break;
       }
     });
-  }
-
-  /// Returns the appropriate [ScreenIdentifier] based on the given [Commodity].
-  /// This method maps each [Commodity] to a specific [ScreenIdentifier] used for navigation.
-  ScreenIdentifier getScreenIdentifierFromCommodity(Commodity commodity) {
-    switch (commodity) {
-      case Commodity.jewellery:
-        return ScreenIdentifier.productForRing;
-      case Commodity.diamond:
-        return ScreenIdentifier.productForDiamonds;
-      case Commodity.gemstone:
-        return ScreenIdentifier.productForGemstones;
-      default:
-        return ScreenIdentifier.productForRing;
-    }
   }
 }

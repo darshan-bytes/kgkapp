@@ -40,7 +40,7 @@ class EditWatchlistScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
-                            buildWhen: (previous, current) => current is EditWatchlistNameErrorState,
+                            buildWhen: (previous, current) => current is EditWatchlistFieldErrorState,
                             builder: (context, state) {
                               return SmartTextField(
                                 errorText: bloc.watchListNameError,
@@ -52,6 +52,7 @@ class EditWatchlistScreen extends StatelessWidget {
                                 onValueChanges: (value) {
                                   if (value.isNotNullNorEmpty) {
                                     bloc.watchListNameError = null;
+                                    bloc.add(EditWatchlistNameChangedEvent(value));
                                   }
                                 },
                               );
@@ -59,9 +60,11 @@ class EditWatchlistScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
                           BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
-                            buildWhen: (previous, current) => current is EditWatchlistDurationChangedState,
+                            buildWhen: (previous, current) =>
+                                current is EditWatchlistDurationChangedState || current is EditWatchlistFieldErrorState,
                             builder: (context, state) {
                               return SmartDurationPicker(
+                                errorText: bloc.watchListDurationError,
                                 labelText: APPStrings.duration.tr,
                                 initialDuration: bloc.duration,
                                 onDurationChanged: (duration) {
