@@ -376,8 +376,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = diamondStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(diamondStrapiList[index].poster?.description ?? '');
-        String? image = (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
+        String? image = (diamondStrapiList[index].poster?.image?.data != null &&
+            diamondStrapiList[index].poster!.image!.data!.isNotEmpty)
+            ? (diamondStrapiList[index].poster?.image?.data?.first['attributes']?['url'] as String?)
             : '';
 
         List<Widget> buttonList = [];
@@ -391,7 +392,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
               );
             },
-            title: diamondStrapiList[index].button[i].label ?? '',
+            title: diamondStrapiList[index].button[i]['label'] ?? '',
           ));
         }
         return StoneBannerView(
@@ -407,8 +408,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
       case LandingSlug.jewelstonePoster:
         String buttonTitle = diamondStrapiList[index].button.first.label ?? '';
-        String backgroundImage = (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].poster?.mobileImage?.data.first.attributes?.url ?? ''
+        String backgroundImage = (diamondStrapiList[index].poster?.image?.data).isNotNullNorEmpty
+            ? diamondStrapiList[index].poster?.image?.data.first.attributes?.url ?? ''
             : '';
         String title = diamondStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString((diamondStrapiList[index].poster?.description ?? ''));
@@ -439,7 +440,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             AuctionListModel(
               id: i.toString(),
               name: diamondStrapiList[index].country[i].title ?? '',
-              imageUrl: (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}' : "",
+              imageUrl: (diamondStrapiList[index].poster?.image?.data != null &&
+                  diamondStrapiList[index].poster!.image!.data!.isNotEmpty)
+                  ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].poster!.image!.data!.first['attributes']?['url'] ?? ''}'
+                  : "",
               redirectTo: diamondStrapiList[index].country[i].redirecTo ?? '',
               redirectionType: diamondStrapiList[index].country[i].redirectionType ?? '',
             ),
@@ -466,7 +470,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         String mainBannerTitle = diamondStrapiList[index].title ?? '';
         String mainBannerDescription = Utils.parseHtmlString(diamondStrapiList[index].description ?? '');
-        String mainBannerForegroundImagePath = '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].image?.data?.attributes?.url}';
+        String mainBannerForegroundImagePath = diamondStrapiList[index].image?.data != null
+            ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].image!.data!['attributes']?['url'] ?? ''}'
+            : '';
         List<Widget> buttonList = [];
 
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
@@ -479,7 +485,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
               );
             },
-            title: diamondStrapiList[index].button[i].label ?? '',
+            title: diamondStrapiList[index].button[i]['label'] ?? '',
           ));
         }
 
@@ -497,9 +503,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         for (int i = 0; i < diamondStrapiList[index].banner.length; i++) {
           String title = diamondStrapiList[index].banner[i].title ?? '';
           String description = Utils.parseHtmlString(diamondStrapiList[index].banner[i].description ?? '');
-          String? image = (diamondStrapiList[index].banner[i].image?.data).isNotNullNorEmpty
-              ? diamondStrapiList[index].banner[i].image?.data.first.attributes?.url
-              : '';
+          // String? image = (diamondStrapiList[index].banner[i].image?.data != null &&
+          //     diamondStrapiList[index].banner[i].image!.data!.isNotEmpty)
+          //     ? diamondStrapiList[index].banner[i].image?.data.first.attributes?.url
+          //     : '';
+          String image = '';
           String buttonTitle = diamondStrapiList[index].banner[i].buttonLabel ?? '';
 
           stonesBannerView.add(StonesBannerView(
@@ -537,9 +545,10 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.aboutEntity:
         String title = diamondStrapiList[index].about?.title ?? '';
         String description = Utils.parseHtmlString(diamondStrapiList[index].about?.description ?? '');
-        String? image = (diamondStrapiList[index].about?.image?.data).isNotNullNorEmpty
-            ? diamondStrapiList[index].about?.image?.data.first.attributes?.url
-            : '';
+        // String? image = (diamondStrapiList[index].about?.image?.data).isNotNullNorEmpty
+        //     ? diamondStrapiList[index].about?.image?.data.first.attributes?.url
+        //     : '';
+        String image = '';
         return AboutOurStoneSection(
           style: style,
           learnMore: () {
@@ -799,8 +808,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case LandingSlug.landingBanner:
         String title = jewelleryStrapiList[index].poster?.title ?? '';
         String description = Utils.parseHtmlString(jewelleryStrapiList[index].poster?.description ?? '');
-        String? image = (jewelleryStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
-            ? jewelleryStrapiList[index].poster?.mobileImage?.data.first.attributes?.url
+        String? image = (jewelleryStrapiList[index].poster?.image?.data).isNotNullNorEmpty
+            ? jewelleryStrapiList[index].poster?.image?.data.first.attributes?.url
             : '';
         List<Widget> buttonList = [];
         for (int i = 0; i < jewelleryStrapiList[index].button.length; i++) {
@@ -1202,8 +1211,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       bloc.originOfDiamondsList.add(AuctionListModel(
         id: i.toString(),
         name: diamondStrapiList[index].country[i].title ?? '',
-        imageUrl: (diamondStrapiList[index].country[i].image?.data).isNotNullNorEmpty
-            ? "${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image?.data.first.attributes?.url ?? ''}"
+        imageUrl: (diamondStrapiList[index].country[i].image?.data != null &&
+            diamondStrapiList[index].country[i].image!.data!.isNotEmpty)
+            ? "${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].image!.data!.first['attributes']?['url'] ?? ''}"
             : "",
       ));
     }

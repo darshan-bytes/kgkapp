@@ -243,7 +243,7 @@ class StrapiEndPoints {
 
 /// All attributes are defined here for the Strapi CMS
 class Attributes {
-  static const String homePage = 'home';
+  static const String homePage = 'mobile-home-page';//'home';
   static const String diamondPage = 'diamonds';
   static const String gemstonePage = 'gemstones';
   static const String jewelleryPage = 'jewelleries';
