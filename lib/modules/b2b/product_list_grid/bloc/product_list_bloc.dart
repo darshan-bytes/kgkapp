@@ -162,7 +162,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   Future<void> _setupFilters(BuildContext context) async {
+    context.setAppLoading(true);
     final filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
+    context.setAppLoading(false);
     filterData.clear();
     for (FilterOptionModel filterOption in filterList) {
       if (filterOption.data.isNotEmpty) {

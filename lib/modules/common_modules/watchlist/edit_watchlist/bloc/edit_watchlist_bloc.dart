@@ -19,15 +19,19 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
   WatchlistData? watchlistData;
 
   String? watchListNameError;
+  String? watchListDurationError;
 
   EditWatchlistBloc() : super(const EditWatchlistInitial()) {
     on<EditWatchlistInitialEvent>(_onEditWatchlistInitialEvent);
     on<EditWatchlistDurationChangedEvent>(_onEditWatchlistDurationChangedEvent);
     on<EditWatchlistSaveEvent>(_onEditWatchlistSaveEvent);
+    on<EditWatchlistNameChangedEvent>(_onEditWatchlistNameChangedEvent);
   }
 
   void _onEditWatchlistInitialEvent(EditWatchlistInitialEvent event, Emitter<EditWatchlistState> emit) {
     emit(const EditWatchlistReloadState());
+    watchListNameError = null;
+    watchListDurationError = null;
     isEdit = event.isEdit;
     if (isEdit) {
       watchlistData = event.watchlistData;
@@ -48,14 +52,23 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
 
   void _onEditWatchlistDurationChangedEvent(EditWatchlistDurationChangedEvent event, Emitter<EditWatchlistState> emit) {
     duration = event.duration;
+    watchListDurationError = null;
     emit(const EditWatchlistDurationChangedState());
   }
 
   Future<void> _onEditWatchlistSaveEvent(EditWatchlistSaveEvent event, Emitter<EditWatchlistState> emit) async {
+    emit(const EditWatchlistReloadState());
+    if (nameController.text.isEmpty) {
+      watchListNameError = APPStrings.errorNameRequired.tr;
+    }
+
     if (duration == null || duration == Duration.zero) {
       //TODO: Display Error message
-      watchListNameError = APPStrings.errorDurationRequired.tr;
-      emit(const EditWatchlistNameErrorState());
+      watchListDurationError = APPStrings.errorDurationRequired.tr;
+    }
+
+    if (watchListNameError.isNotNullNorEmpty || watchListDurationError.isNotNullNorEmpty) {
+      emit(const EditWatchlistFieldErrorState());
       return;
     }
     final Map<String, dynamic> body = {
@@ -80,5 +93,11 @@ class EditWatchlistBloc extends Bloc<EditWatchlistEvent, EditWatchlistState> {
         Utils.showMessage(data.message);
       },
     );
+  }
+
+  void _onEditWatchlistNameChangedEvent(EditWatchlistNameChangedEvent event, Emitter<EditWatchlistState> emit) {
+    emit(const EditWatchlistReloadState());
+    watchListNameError = null;
+    emit(const EditWatchlistFieldErrorState());
   }
 }

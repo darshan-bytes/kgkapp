@@ -32,8 +32,8 @@ final class EditWatchlistDurationChangedState extends EditWatchlistState {
   List<Object> get props => [];
 }
 
-final class EditWatchlistNameErrorState extends EditWatchlistState {
-  const EditWatchlistNameErrorState();
+final class EditWatchlistFieldErrorState extends EditWatchlistState {
+  const EditWatchlistFieldErrorState();
 
   @override
   List<Object> get props => [];

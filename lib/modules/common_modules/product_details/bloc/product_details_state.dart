@@ -70,10 +70,10 @@ final class GemstoneDetailsToggleState extends ProductDetailsState {
   List<Object> get props => [isGemstoneDetailsOpen];
 }
 
-final class ProductDetailsSuggestedProductLoadedState extends ProductDetailsState {
+final class ProductDetailsSuggestedLoadedState extends ProductDetailsState {
   final List<ProductDetailsModel> suggestedProducts;
 
-  const ProductDetailsSuggestedProductLoadedState(this.suggestedProducts);
+  const ProductDetailsSuggestedLoadedState(this.suggestedProducts);
 
   @override
   List<Object> get props => [suggestedProducts];

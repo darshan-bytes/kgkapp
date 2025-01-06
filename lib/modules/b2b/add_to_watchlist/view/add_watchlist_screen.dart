@@ -180,8 +180,9 @@ class AddWatchlistScreen extends StatelessWidget {
           builder: (context) {
             return const EditWatchlistScreen();
           },
-        ).then((value) {
+        ).then((value) async {
           bloc.watchlistBloc.add(WatchListLoadFullListEvent(getNavigatorKeyContext));
+          await bloc.watchlistBloc.allWatchlistFull.future;
           if (bloc.productDetails != null) {
             bloc.add(AddToWatchlistInitialEvent.add(bloc.productDetails!, getNavigatorKeyContext));
           }

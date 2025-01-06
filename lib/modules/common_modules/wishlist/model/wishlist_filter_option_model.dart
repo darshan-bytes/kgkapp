@@ -94,7 +94,7 @@ class Options {
 
   Options.fromJson(Map<String, dynamic> json) {
     label = json['label'];
-    value = json['value'];
+    value = json['value']?.toString();
   }
 
   Map<String, dynamic> toJson() {

@@ -964,7 +964,6 @@ class APPStrings {
   static const String errorContactNumberValid = 'mob_error_contact_number_valid';
   static const String removeProductFromCart = 'mob_remove_product_from_cart';
   static const String loginToUseThisFeature = 'mob_login_to_use_this_feature';
-
   static const String errorDurationRequired = 'mob_error_duration_required';
 
   static const String appliedPromoCode = 'mob_applied_promo_code';
@@ -973,4 +972,6 @@ class APPStrings {
   static const String errorEnterYourComment = 'mob_enter_your_comment';
   static const String errorSelectInquiryType = 'mob_select_inquiry_type';
   static const String errorFullNameRequired = 'mob_full_name_required';
+  static const String errorNameRequired = 'mob_error_name_required';
+  static const String goToBag = 'mob_go_to_bag';
 }

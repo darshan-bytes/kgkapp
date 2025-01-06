@@ -337,4 +337,19 @@ class Utils {
       return '';
     }
   }
+
+  /// Returns the appropriate [ScreenIdentifier] based on the given [Commodity].
+  /// This method maps each [Commodity] to a specific [ScreenIdentifier] used for navigation.
+  static ScreenIdentifier getScreenIdentifierFromCommodity(Commodity commodity) {
+    switch (commodity) {
+      case Commodity.jewellery:
+        return ScreenIdentifier.productForRing;
+      case Commodity.diamond:
+        return ScreenIdentifier.productForDiamonds;
+      case Commodity.gemstone:
+        return ScreenIdentifier.productForGemstones;
+      default:
+        return ScreenIdentifier.productForRing;
+    }
+  }
 }
