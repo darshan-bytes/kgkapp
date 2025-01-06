@@ -13,7 +13,8 @@ class AppRepository extends ApiService {
   /// Fetches the home data from the Strapi CMS
   Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
     try {
-      final response = await http.get(Uri.parse(ApiClient.strapiHomeApiUrl));
+      final url = await buildUrl(endpoint: StrapiEndPoints.homePage, attribute: Attributes.homePage);
+      final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final homeStrapiModel = HomeStrapiModel.fromJson(jsonDecode(response.body));
@@ -329,6 +330,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> createWatchlist({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(ApiClient.watchList, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Submit Contact
+  Future<Either<ErrorResponse, CommonResponse>?> submitContactUs({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(ApiClient.submitContactUs, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -987,6 +996,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, DiyDiamondDataModel>?> diyDetails({required String id}) async {
     context.setAppLoading(true);
     var response = await getMethod<DiyDiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // fetchInquiryType
+  Future<Either<ErrorResponse, List<String>>?> fetchInquiryType() async {
+    context.setAppLoading(true);
+    var response = await getMethod<String>(ApiClient.inquiryType);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

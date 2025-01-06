@@ -770,8 +770,11 @@
   "mob_login_msg": "登入或創建帳戶以解鎖專屬功能。",
   "mob_error_contact_number_valid": "請輸入有效的聯絡電話",
   "mob_remove_product_from_cart": "從購物車中刪除產品",
-  "mob_login_to_use_this_feature": "登入以使用此功能",
   "mob_error_duration_required": "需要持續時間",
+  "mob_login_to_use_this_feature": "登入以使用此功能",
+  "mob_enter_your_comment": "輸入您的評論",
+  "mob_select_inquiry_type": "選擇詢問類型",
+  "mob_full_name_required": "姓名為必填項",
   "mob_applied_promo_code": "已套用優惠券",
   "mob_applied": "已套用"
 }

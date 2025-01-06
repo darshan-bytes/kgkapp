@@ -171,6 +171,8 @@ class CommonResponse<T> {
         return PaginationData<PddDataModel>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
+      case const (String):
+        return json;
       default:
         throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
     }
