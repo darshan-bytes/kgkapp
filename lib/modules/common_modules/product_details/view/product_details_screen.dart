@@ -424,8 +424,18 @@ class ProductDetailsScreen extends StatelessWidget {
           const Divider(),
           SizedBox(height: 24.h),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
+            ///TODO:Here Need to work on isShowWriteReviewButton
             ProductReviewsDetails(
+              isShowWriteReviewButton: true,
+              ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
+              averageRating: bloc.productDetails?.rating ?? 0,
+              reviewCount: bloc.productDetails?.reviewCount ?? 0,
               onTap: () {
+                /// First check if the user is logged in or not
+                if (StorageManager().getIsSkipLogin()) {
+                  Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
+                  return;
+                }
                 context.pushNamed(AppRoutes.writeReviewPage, arguments: {
                   RoutesData.productId: bloc.productDetails?.productId,
                   RoutesData.commodity: bloc.productDetails?.commodity,

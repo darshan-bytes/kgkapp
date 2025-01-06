@@ -249,49 +249,47 @@ class ProductGridItem extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-            if (productDetails.originalPrice.isNotNullNorEmpty) ...[
-              SizedBox(height: 8.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Wrap(
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      children: <Widget>[
+            SizedBox(height: 8.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: <Widget>[
+                      SmartText(
+                        productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
+                        style: style.priceTextStyle,
+                        optionalPadding: EdgeInsets.only(right: 8.w),
+                      ),
+                      if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
                         SmartText(
-                          productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
-                          style: style.priceTextStyle,
-                          optionalPadding: EdgeInsets.only(right: 8.w),
+                          productDetails.originalPrice,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: style.checkedPriceStyle,
                         ),
-                        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
-                          SmartText(
-                            productDetails.originalPrice,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: style.checkedPriceStyle,
-                          ),
-                        ] else ...[
-                          SmartText("\n")
-                        ]
-                      ],
-                    ),
+                      ] else ...[
+                        SmartText("\n")
+                      ]
+                    ],
                   ),
-                  if (isStoneWithPrice && productDetails.ctsOrGms != null)
-                    SmartImage(
-                      path: productDetails.ctsOrGms! > 0.1
-                          ? AppImages.icOneRing
-                          : productDetails.ctsOrGms! > 0.2
-                              ? AppImages.icTwoRing
-                              : AppImages.icThreeRing,
-                      height: 20.w,
-                      width: 20.w,
-                      fit: BoxFit.fill,
-                    )
-                ],
-              )
-            ],
+                ),
+                if (isStoneWithPrice && productDetails.ctsOrGms != null)
+                  SmartImage(
+                    path: productDetails.ctsOrGms! > 0.1
+                        ? AppImages.icOneRing
+                        : productDetails.ctsOrGms! > 0.2
+                            ? AppImages.icTwoRing
+                            : AppImages.icThreeRing,
+                    height: 20.w,
+                    width: 20.w,
+                    fit: BoxFit.fill,
+                  )
+              ],
+            ),
             if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
               SmartText(

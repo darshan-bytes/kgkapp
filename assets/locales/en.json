@@ -774,5 +774,7 @@
   "mob_login_to_use_this_feature": "Login to use this feature",
   "mob_enter_your_comment": "Please enter your comment",
   "mob_select_inquiry_type": "Please select an inquiry type",
-  "mob_full_name_required": "Please enter your full name"
+  "mob_full_name_required": "Please enter your full name",
+  "mob_applied_promo_code": "Applied Promo Code",
+  "mob_applied": "Applied"
 }

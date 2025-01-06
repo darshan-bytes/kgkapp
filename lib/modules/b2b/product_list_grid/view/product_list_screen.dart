@@ -66,23 +66,24 @@ class ProductListScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is ProductListLoadedState,
         builder: (context, state) {
           if (state is ProductListLoadedState) {
-            return SmartSingleChildScrollView(
-              controller: bloc.paginationScrollController.scrollController,
-              onRefresh: () async {
-                bloc.add(ProductListPullToRefreshEvent(context));
-              },
-              child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      _buildProductFilterCount(diamondListingStyle, bloc),
-                      SizedBox(height: 24.h),
-                      _buildProductList(diamondListingStyle, bloc),
-                      SizedBox(height: 7.h),
-                    ],
-                  ),
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                child: Column(
+                  children: [
+                    SizedBox(height: 16.h),
+                    _buildProductFilterCount(diamondListingStyle, bloc),
+                    SizedBox(height: 24.h),
+                    Expanded(
+                      child: SmartSingleChildScrollView(
+                        controller: bloc.paginationScrollController.scrollController,
+                        onRefresh: () async {
+                          bloc.add(ProductListPullToRefreshEvent(context));
+                        },
+                        child: _buildProductList(diamondListingStyle, bloc),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -103,7 +104,13 @@ class ProductListScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
+              SmartText(
+                  APPStrings.showingListLengthX.tr.interpolate([
+                    bloc.paginationScrollController.currentPage,
+                    bloc.totalNumberOfPages,
+                    bloc.totalFilteredRecords,
+                  ]),
+                  style: style.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

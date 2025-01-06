@@ -129,7 +129,7 @@ class ProductPhotoViewGallery extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
           color: isSelected ? style.blueAccentColor : style.transparentColor,
-          width: 1.w,
+          width: 2.w,
         ),
         boxShadow: isSelected
             ? [
@@ -142,8 +142,8 @@ class ProductPhotoViewGallery extends StatelessWidget {
             : [],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.r),
-        child: SmartImage(path: imageUrl, imageBorderRadius: BorderRadius.circular(10.r), fit: BoxFit.cover),
+        borderRadius: BorderRadius.circular(8.r),
+        child: SmartImage(path: imageUrl, imageBorderRadius: BorderRadius.circular(8.r), fit: BoxFit.cover),
       ),
     );
   }

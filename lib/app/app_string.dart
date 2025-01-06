@@ -967,6 +967,9 @@ class APPStrings {
 
   static const String errorDurationRequired = 'mob_error_duration_required';
 
+  static const String appliedPromoCode = 'mob_applied_promo_code';
+  static const String applied = 'mob_applied';
+
   static const String errorEnterYourComment = 'mob_enter_your_comment';
   static const String errorSelectInquiryType = 'mob_select_inquiry_type';
   static const String errorFullNameRequired = 'mob_full_name_required';

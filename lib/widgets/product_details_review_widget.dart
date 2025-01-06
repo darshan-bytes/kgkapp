@@ -1,13 +1,30 @@
 import 'package:kgk/kgk.dart';
 
 class ProductReviewsDetails extends StatelessWidget {
+  final double averageRating;
+  final int reviewCount;
   final VoidCallback onTap;
+  final List<int> ratings;
+  final bool isShowWriteReviewButton;
 
-  const ProductReviewsDetails({super.key, required this.onTap});
+  const ProductReviewsDetails({
+    super.key,
+    required this.onTap,
+    required this.averageRating,
+    required this.reviewCount,
+    required this.ratings,
+    this.isShowWriteReviewButton = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
+
+    /// Using this function to calculate the count of each rating and set in a map
+    final Map<int, int> ratingCounts = calculateRatingCounts(ratings);
+
+    /// To get the max count
+    final int maxCount = ratingCounts.values.isEmpty ? 1 : ratingCounts.values.reduce((a, b) => a > b ? a : b);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -31,14 +48,14 @@ class ProductReviewsDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SmartText('4.0', style: style.averageRatingStyle),
+                        SmartText(averageRating.toString(), style: style.averageRatingStyle),
                         SizedBox(width: 4.w),
                         SmartImage(path: AppImages.icFullStar, height: 20.h, width: 20.w),
                       ],
                     ),
                     SizedBox(height: 8.h),
                     SmartText(
-                      APPStrings.reviewsX.tr.interpolate([120]),
+                      APPStrings.reviewsX.tr.interpolate([reviewCount]),
                       style: style.productCodeStyle,
                     ),
                   ],
@@ -51,91 +68,54 @@ class ProductReviewsDetails extends StatelessWidget {
                 padding: EdgeInsets.only(left: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        SmartText('5'.tr),
-                        SizedBox(width: 18.w),
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            value: 0.8,
-                            color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
+                  children: ratingCounts.entries.map((entry) {
+                    final rating = entry.key;
+                    final count = entry.value;
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 4.h),
+                      child: Row(
+                        children: [
+                          SmartText('$rating'.tr),
+                          SizedBox(width: 18.w),
+                          Expanded(
+                            child: LinearProgressIndicator(
+                              value: maxCount > 0 ? count / maxCount : 0.0,
+                              color: style.ratingGlowColor,
+                              backgroundColor: style.ratingGlowColor.withValues(alpha: 0.2),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        SmartText('4'.tr),
-                        SizedBox(width: 18.w),
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            value: 0.5,
-                            color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        SmartText('3'.tr),
-                        SizedBox(width: 18.w),
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            value: 0.0,
-                            color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        SmartText('2'.tr),
-                        SizedBox(width: 18.w),
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            value: 0.1,
-                            color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        SmartText('1'.tr),
-                        SizedBox(width: 18.w),
-                        Expanded(
-                          child: LinearProgressIndicator(
-                            value: 0.2,
-                            color: style.ratingGlowColor,
-                            backgroundColor: style.ratingGlowColor.withValues(alpha:0.2),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 16.h),
-        SmartButton(
-          onTap: () {
-            onTap();
-          },
-          title: APPStrings.writeAReview.tr,
-          prefixImage: AppImages.icEdit,
-        ),
+        // Write a Review Button
+        if (isShowWriteReviewButton) ...[
+          SizedBox(height: 16.h),
+          SmartButton(
+            onTap: () {
+              onTap();
+            },
+            title: APPStrings.writeAReview.tr,
+            prefixImage: AppImages.icEdit,
+          ),
+        ],
       ],
     );
+  }
+
+  /// Using this function to calculate the count of each rating
+  Map<int, int> calculateRatingCounts(List<int> ratings) {
+    Map<int, int> ratingCounts = {5: 0, 4: 0, 3: 0, 2: 0, 1: 0};
+    for (var rating in ratings) {
+      if (ratingCounts.containsKey(rating)) {
+        ratingCounts[rating] = ratingCounts[rating]! + 1;
+      }
+    }
+    return ratingCounts;
   }
 }

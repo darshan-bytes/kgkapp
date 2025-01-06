@@ -74,3 +74,11 @@ final class ContinueToPaymentEvent extends AddressListEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class OrderSummaryDataRefreshEvent extends AddressListEvent {
+  final BuildContext context;
+  const OrderSummaryDataRefreshEvent({required this.context});
+
+  @override
+  List<Object> get props => [];
+}
