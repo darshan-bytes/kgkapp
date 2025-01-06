@@ -114,4 +114,7 @@ class ApiKey {
   static const String shapeCode = 'shape_code';
   static const String cscCode = 'csc-code';
   static const String exhibitionId = 'exhibition_id';
+  static const String fullName = 'full_name';
+  static const String subject = 'subject';
+  static const String inquiryType = 'inquiry_type';
 }

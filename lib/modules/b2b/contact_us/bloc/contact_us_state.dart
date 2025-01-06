@@ -29,3 +29,10 @@ final class ContactUsReloadState extends ContactUsState {
   @override
   List<Object> get props => [];
 }
+
+final class ContactUsSubmitState extends ContactUsState {
+  const ContactUsSubmitState();
+
+  @override
+  List<Object> get props => [];
+}

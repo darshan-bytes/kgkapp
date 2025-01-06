@@ -27,14 +27,15 @@ class ContactUsScreen extends StatelessWidget {
             _buildEmailField(bloc),
             SizedBox(height: 14.h),
             _buildInquiryTypeDropdown(bloc),
-            SizedBox(height: 14.h),
-            _buildProductDropdown(bloc),
+            // Right now hide this section ones confirmation comes from client totally remove this
+            // SizedBox(height: 14.h),
+            // _buildProductDropdown(bloc),
             SizedBox(height: 14.h),
             _buildCommentField(bloc),
             SizedBox(height: 22.h),
             SmartButton(
               onTap: () {
-                context.pop();
+                bloc.add(ContactUsSubmitEvent(context: context));
               },
               title: APPStrings.submit.tr,
             ),

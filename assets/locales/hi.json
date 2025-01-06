@@ -768,8 +768,11 @@
   "mob_login_msg": "लॉगिन करें या एक खाता बनाएं जहां अधिकांशित सुविधाएं प्रदान करें।",
   "mob_error_contact_number_valid": "कृपया वैध संपर्क नंबर दर्ज करें",
   "mob_remove_product_from_cart": "कार्ट से उत्पाद हटाएं",
-  "mob_login_to_use_this_feature": "इस सुविधा का उपयोग करने के लिए लॉगिन करें",
   "mob_error_duration_required": "अवधि आवश्यक है",
+  "mob_login_to_use_this_feature": "इस सुविधा का उपयोग करने के लिए लॉगिन करें",
+  "mob_enter_your_comment": "अपना टिप्पण दर्ज करें",
+  "mob_select_inquiry_type": "अपना टिप्पण दर्ज करें",
+  "mob_full_name_required": "अपना पूरा नाम दर्ज करें",
   "mob_applied_promo_code": "उपलब्ध कूपन कोड",
   "mob_applied": "उपलब्ध"
 }

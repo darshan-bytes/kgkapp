@@ -5,8 +5,12 @@ sealed class ContactUsEvent extends Equatable {
 }
 
 class ContactUsInitialEvent extends ContactUsEvent {
+  final BuildContext context;
+
+  const ContactUsInitialEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class ContactUsChangeInquiryTypeEvent extends ContactUsEvent {
@@ -25,4 +29,13 @@ class ContactUsChangeSelectProductEvent extends ContactUsEvent {
 
   @override
   List<Object> get props => [productModel];
+}
+
+class ContactUsSubmitEvent extends ContactUsEvent {
+  final BuildContext context;
+
+  const ContactUsSubmitEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
 }
