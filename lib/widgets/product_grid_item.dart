@@ -307,7 +307,11 @@ class ProductGridItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
-                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                  if (buttonText.isNullOrEmpty) {
+                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                  } else {
+                    onAddToBagTap?.call();
+                  }
                 },
                 title: buttonText ?? APPStrings.addToBag.tr,
                 prefixImage: prefixImage,

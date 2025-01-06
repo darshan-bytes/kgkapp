@@ -117,7 +117,7 @@ final class SignUpPhoneNumberValidationEvent extends SignUpEvent {
 }
 
 final class SignUpFieldChangeEvent extends SignUpEvent {
-  final FieldType fieldType;
+  final FieldTypeValidationEnum fieldType;
   final int index;
 
   const SignUpFieldChangeEvent(this.fieldType, {this.index = -1});

@@ -31,6 +31,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     on<WatchListDeleteEvent>(_onWatchListDelete);
     on<WatchListLoadFullListEvent>(_onWatchListLoadFullLis);
     on<WatchListFilterEvent>(_onWatchListFilter);
+    on<WatchListUpdateItemEvent>(_onWatchListUpdateItemEvent);
   }
 
   @override
@@ -190,8 +191,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     emit(const WatchlistInitial());
   }
 
-  FutureOr<void> _onWatchListSearch(WatchListSearchEvent event, Emitter<WatchlistState> emit) {
-    pullToRefresh(context: event.context);
+  Future<void> _onWatchListSearch(WatchListSearchEvent event, Emitter<WatchlistState> emit) async {
+    await pullToRefresh(context: event.context);
   }
 
   void searchListener(BuildContext context) {
@@ -206,7 +207,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
 
   void clearBlocData() {
     isInitialized = false;
-    paginationScrollController.dispose();
+    if (paginationScrollController.isInitialised) {
+      paginationScrollController.dispose();
+    }
     paginationScrollController = SmartPaginationScrollController();
     watchListingList.clear();
     watchlistDataList.clear();
@@ -275,6 +278,30 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     filterData = event.filterData;
     fetchWatchlist(event.context, emit, false, paginationScrollController.currentPage);
     emit(const WatchlistLoadedState());
+  }
+
+  void _onWatchListUpdateItemEvent(WatchListUpdateItemEvent event, Emitter<WatchlistState> emit) {
+    emit(const WatchlistLoadingState());
+    if (event.isWatchlistDeleted == true) {
+      emit(const WatchlistReloadState());
+      watchlistDataList.removeAt(event.index);
+      watchListingList.removeAt(event.index);
+      emit(const WatchlistDeleteState());
+    } else if (event.watchlistData != null) {
+      watchlistDataList[event.index] = event.watchlistData!;
+      watchListingList[event.index] = B2BCustomListingDataModel(
+        id: event.watchlistData!.sId ?? "",
+        strName: event.watchlistData!.name ?? "",
+        status: event.watchlistData!.displayStatus,
+        strFrom: event.watchlistData!.createdAt?.changeDateFormat(
+            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
+        strTo: event.watchlistData!.expiresAt?.changeDateFormat(
+            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
+        strNumberOfProduct: event.watchlistData?.products?.length.toString() ?? "0",
+        strRemainingTime: ValueNotifier<String>(event.watchlistData!.duration?.displayDuration ?? ""),
+      );
+      emit(const WatchlistLoadedState());
+    }
   }
 
   void _fetchFilterData(BuildContext context, Emitter<WatchlistState> emit) async {

@@ -66,3 +66,13 @@ final class AddAddressChangeCountryCodeState extends AddAddressState {
   @override
   List<Object> get props => [];
 }
+
+final class AddAddressFieldErrorState extends AddAddressState {
+  final FieldTypeValidationEnum fieldType;
+  final String? message;
+
+  const AddAddressFieldErrorState({required this.fieldType, this.message});
+
+  @override
+  List<Object?> get props => [fieldType, message];
+}

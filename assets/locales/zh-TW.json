@@ -778,5 +778,6 @@
   "mob_applied_promo_code": "已套用優惠券",
   "mob_applied": "已套用",
   "mob_error_name_required": "姓名為必填項",
-  "mob_go_to_bag": "去包里"
+  "mob_go_to_bag": "去包里",
+  "mob_error_zip_code_valid": "請輸入有效的郵遞區號"
 }
