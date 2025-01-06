@@ -69,3 +69,12 @@ final class AddAddressChangeCountryCodeEvent extends AddAddressEvent {
   @override
   List<Object> get props => [selectedCountry];
 }
+
+final class AddAddressFieldChangeEvent extends AddAddressEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const AddAddressFieldChangeEvent(this.fieldType);
+
+  @override
+  List<Object> get props => [fieldType];
+}

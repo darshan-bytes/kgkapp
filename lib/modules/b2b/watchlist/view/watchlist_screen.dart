@@ -19,6 +19,10 @@ class WatchlistScreen extends StatelessWidget {
           title: APPStrings.watchlist.tr,
           onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
           onSearch: () => context.pushNamed(AppRoutes.searchPage),
+          onBack: () {
+            context.pop();
+            bloc.add(const WatchListCloseEvent());
+          },
         ),
         body: BlocBuilder<WatchlistBloc, WatchlistState>(
           buildWhen: (previous, current) => current is WatchlistLoadedState,
@@ -108,7 +112,19 @@ class WatchlistScreen extends StatelessWidget {
               listingItemModel: bloc.watchListingList[index],
               margin: EdgeInsets.only(bottom: 16.h),
               onTap: () {
-                context.pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchlistDataList[index].sId});
+                context
+                    .pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchlistDataList[index].sId}).then(
+                  (value) {
+                    if (value != null && value[RoutesData.isWatchlistUpdated] == true || value[RoutesData.isWatchlistDeleted] == true) {
+                      if (value[RoutesData.watchlistData] != null && value[RoutesData.watchlistData] is WatchlistData) {
+                        bloc.add(WatchListUpdateItemEvent(
+                            index: index,
+                            watchlistData: value[RoutesData.watchlistData],
+                            isWatchlistDeleted: value[RoutesData.isWatchlistDeleted]));
+                      }
+                    }
+                  },
+                );
               },
             ),
             if (state is WatchlistLoadingMoreState && index == bloc.watchListingList.length - 1) const SmartCircularProgressIndicator(),

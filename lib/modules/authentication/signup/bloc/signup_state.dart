@@ -1,21 +1,5 @@
 part of 'signup_bloc.dart';
 
-enum FieldType {
-  firstName,
-  lastName,
-  email,
-  contactNumber,
-  password,
-  confirmPassword,
-  companyName,
-  businessType,
-  officeLocation,
-  address,
-  city,
-  state,
-  zipcode,
-}
-
 sealed class SignUpState extends Equatable {
   const SignUpState();
 }
@@ -143,7 +127,7 @@ final class SignUpPhoneNumberValidationState extends SignUpState {
 }
 
 final class SignUpFieldValidationState extends SignUpState {
-  final FieldType fieldType;
+  final FieldTypeValidationEnum fieldType;
 
   const SignUpFieldValidationState({required this.fieldType});
 

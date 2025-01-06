@@ -190,7 +190,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (response) {
         response?.fold(
           (l) {
-            Utils.showMessage(l.message);
+            // Utils.showMessage(l.message);
           },
           (data) {
             Utils.showMessage(data.message);

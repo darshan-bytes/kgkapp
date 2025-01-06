@@ -214,3 +214,21 @@ enum BranchLinkTypeType {
 
   final String value;
 }
+
+enum FieldTypeValidationEnum {
+  firstName,
+  lastName,
+  email,
+  contactNumber,
+  password,
+  confirmPassword,
+  companyName,
+  businessType,
+  officeLocation,
+  address,
+  city,
+  state,
+  zipcode,
+  apartment,
+  country,
+}

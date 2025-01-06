@@ -776,5 +776,6 @@
   "mob_applied_promo_code": "उपलब्ध कूपन कोड",
   "mob_applied": "उपलब्ध",
   "mob_error_name_required": "नाम आवश्यक है",
-  "mob_go_to_bag": "बैग पर जाएं"
+  "mob_go_to_bag": "बैग पर जाएं",
+  "mob_error_zip_code_valid": "कृपया वैध ज़िप कोड दर्ज करें"
 }

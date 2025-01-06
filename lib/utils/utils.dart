@@ -258,6 +258,13 @@ class Utils {
     return regExp.hasMatch(newPassword);
   }
 
+  /// Validate ZipCode
+  static bool isValidZipCode(String zipCode) {
+    String regex = r'^[0-9]{5}(?:-[0-9]{4})?$';
+    RegExp regExp = RegExp(regex);
+    return regExp.hasMatch(zipCode);
+  }
+
   /// Parse HTML string to plain text
   static String parseHtmlString(String htmlString) {
     // Parse the HTML string

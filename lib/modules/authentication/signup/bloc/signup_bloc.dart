@@ -182,7 +182,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(SignUpReloadState());
     selectedCountryCodes[event.index] = event.country;
     contactNumberErrors[event.index] = null;
-    emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+    emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
     emit(SignUpChangeCountryCodeState(country: selectedCountryCodes[event.index], index: event.index));
   }
 
@@ -289,20 +289,20 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (isIndividual) {
       if (firstNameController.text.isEmpty) {
         firstNameError = APPStrings.errorFirstNameRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.firstName));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.firstName));
         isValidate = false;
       }
       if (lastNameController.text.isEmpty) {
         lastNameError = APPStrings.errorLastNameRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.lastName));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.lastName));
         isValidate = false;
       }
       if (emailController.text.isEmpty) {
         emailError = APPStrings.emailRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.email));
         isValidate = false;
       } else if (!Utils.isValidEmail(emailController.text)) {
-        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.email));
         emailError = APPStrings.validEmail.tr;
         isValidate = false;
       }
@@ -313,7 +313,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           }
           return null;
         });
-        emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
         isValidate = false;
       } else {
         for (int i = 0; i < contactNumberControllers.length; i++) {
@@ -324,60 +324,60 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             }
             return null;
           });
-          emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
         }
       }
       if (passwordController.text.trim().isEmpty) {
         passwordError = APPStrings.errorPasswordRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
         isValidate = false;
       } else if (!Utils.isValidPassword(passwordController.text.trim())) {
         passwordError = APPStrings.validPassword.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
         isValidate = false;
       }
       if (confirmPasswordController.text.trim().isEmpty) {
         confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
         isValidate = false;
       } else if (passwordController.text != confirmPasswordController.text) {
         confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
         isValidate = false;
       }
     } else {
       if (companyNameController.text.isEmpty) {
         companyNameError = APPStrings.errorCompanyNameRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.companyName));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.companyName));
         isValidate = false;
       }
       if (selectedOfficeLocation == null) {
         officeLocationError = APPStrings.errorOfficeLocationRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.officeLocation));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.officeLocation));
         isValidate = false;
       }
       if (businessTypes.every((element) => !element.isSelected)) {
         businessTypeError = APPStrings.errorBusinessTypeRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.businessType));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.businessType));
         isValidate = false;
       }
       if (firstNameController.text.isEmpty) {
         firstNameError = APPStrings.errorFirstNameRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.firstName));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.firstName));
         isValidate = false;
       }
       if (lastNameController.text.isEmpty) {
         lastNameError = APPStrings.errorLastNameRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.lastName));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.lastName));
         isValidate = false;
       }
       if (emailController.text.isEmpty) {
         emailError = APPStrings.emailRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.email));
         isValidate = false;
       } else if (!Utils.isValidEmail(emailController.text)) {
         emailError = APPStrings.validEmail.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.email));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.email));
         isValidate = false;
       }
       if (contactNumberControllers.any((element) => element.text.isEmpty)) {
@@ -387,7 +387,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           }
           return null;
         });
-        emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
         isValidate = false;
         isValidContact = false;
       } else {
@@ -399,26 +399,26 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             }
             return null;
           });
-          emit(SignUpFieldValidationState(fieldType: FieldType.contactNumber));
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
         }
       }
 
       if (passwordController.text.trim().isEmpty) {
         passwordError = APPStrings.errorPasswordRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
         isValidate = false;
       } else if (!Utils.isValidPassword(passwordController.text.trim())) {
         passwordError = APPStrings.validPassword.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.password));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
         isValidate = false;
       }
       if (confirmPasswordController.text.trim().isEmpty) {
         confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
         isValidate = false;
       } else if (passwordController.text != confirmPasswordController.text) {
         confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
-        emit(SignUpFieldValidationState(fieldType: FieldType.confirmPassword));
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
         isValidate = false;
       }
     }
@@ -531,45 +531,47 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   void _onSignUpFieldChangeEvent(SignUpFieldChangeEvent event, Emitter<SignUpState> emit) {
     emit(SignUpReloadState());
     switch (event.fieldType) {
-      case FieldType.firstName:
+      case FieldTypeValidationEnum.firstName:
         firstNameError = null;
         break;
-      case FieldType.lastName:
+      case FieldTypeValidationEnum.lastName:
         lastNameError = null;
         break;
-      case FieldType.email:
+      case FieldTypeValidationEnum.email:
         emailError = null;
         break;
-      case FieldType.contactNumber:
+      case FieldTypeValidationEnum.contactNumber:
         if (event.index < 0) break;
         contactNumberErrors[event.index] = null;
         break;
-      case FieldType.password:
+      case FieldTypeValidationEnum.password:
         passwordError = null;
         break;
-      case FieldType.confirmPassword:
+      case FieldTypeValidationEnum.confirmPassword:
         confirmPasswordError = null;
         break;
-      case FieldType.companyName:
+      case FieldTypeValidationEnum.companyName:
         companyNameError = null;
         break;
-      case FieldType.businessType:
+      case FieldTypeValidationEnum.businessType:
         businessTypeError = null;
         break;
-      case FieldType.officeLocation:
+      case FieldTypeValidationEnum.officeLocation:
         officeLocationError = null;
         break;
-      case FieldType.address:
+      case FieldTypeValidationEnum.address:
         addressError = null;
         break;
-      case FieldType.city:
+      case FieldTypeValidationEnum.city:
         cityError = null;
         break;
-      case FieldType.state:
+      case FieldTypeValidationEnum.state:
         stateError = null;
         break;
-      case FieldType.zipcode:
+      case FieldTypeValidationEnum.zipcode:
         zipcodeError = null;
+        break;
+      default:
         break;
     }
     emit(SignUpFieldValidationState(fieldType: event.fieldType));
