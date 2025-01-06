@@ -62,8 +62,8 @@ final class GemstoneDetailsToggleEvent extends ProductDetailsEvent {
   List<Object> get props => [];
 }
 
-final class ProductDetailsSuggestedProductLoadedEvent extends ProductDetailsEvent {
-  const ProductDetailsSuggestedProductLoadedEvent();
+final class ProductDetailsSuggestedLoadedEvent extends ProductDetailsEvent {
+  const ProductDetailsSuggestedLoadedEvent();
 
   @override
   List<Object> get props => [];

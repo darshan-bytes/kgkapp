@@ -50,7 +50,7 @@ class SmartDropDown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextFieldStyle textFieldStyle = AppTheme.of(context).textFieldStyle;
+    final TextFieldStyle style = AppTheme.of(context).textFieldStyle;
     String? title = items.firstWhereOrNull((element) => element.value == selectedItem)?.title;
     return Column(
       crossAxisAlignment: isExpanded ? CrossAxisAlignment.stretch : CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class SmartDropDown<T> extends StatelessWidget {
         if (labelText != null) ...[
           SmartText(
             labelText!,
-            style: textFieldStyle.labelStyle,
+            style: style.labelStyle,
           ),
           SizedBox(height: 8.h),
         ],
@@ -97,19 +97,24 @@ class SmartDropDown<T> extends StatelessWidget {
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
               border: border ??
                   Border.all(
-                    color: textFieldStyle.enabledTextFieldBorderColor,
+                    color: style.enabledTextFieldBorderColor,
                   ),
             ),
-            child: _getTitleView(textFieldStyle: textFieldStyle, isIcArrowDropDown: isIcArrowDropDown, title: title, hintText: hintText),
+            child: _getTitleView(textFieldStyle: style, isIcArrowDropDown: isIcArrowDropDown, title: title, hintText: hintText),
           ),
         ),
-        if (errorText.isNotNullNorEmpty) ...[
-          SizedBox(height: 4.h),
-          SmartText(
-            errorText!,
-            style: textFieldStyle.errorStyle,
-          ),
-        ],
+        AnimatedSize(
+            duration: Duration(milliseconds: 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: errorText.isNotNullNorEmpty
+                  ? [
+                      SizedBox(height: 8.h),
+                      SmartText(errorText!, style: style.errorStyle),
+                    ]
+                  : [],
+            )),
       ],
     );
   }

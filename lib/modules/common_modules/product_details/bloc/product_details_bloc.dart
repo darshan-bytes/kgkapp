@@ -122,7 +122,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<RingDetailsToggleEvent>(_onRingDetailsToggleEvent);
     on<ProductDiamondDetailsToggleEvent>(_onProductDiamondDetailsToggleEvent);
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
-    on<ProductDetailsSuggestedProductLoadedEvent>(_onProductDetailsSuggestedProductLoadedEvent);
+    on<ProductDetailsSuggestedLoadedEvent>(_onProductDetailsSuggestedLoadedEvent);
     on<ProductDetailsReviewsLoadedEvent>(_onProductDetailsReviewsLoadedEvent);
   }
 
@@ -321,7 +321,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               subTitle: e.rmDescription,
             );
           }).toList();
-          add(const ProductDetailsSuggestedProductLoadedEvent());
+          add(const ProductDetailsSuggestedLoadedEvent());
         }
       },
     );
@@ -361,7 +361,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           );
         }).toList();
 
-        add(const ProductDetailsSuggestedProductLoadedEvent());
+        add(const ProductDetailsSuggestedLoadedEvent());
       },
     );
   }
@@ -405,7 +405,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
                 e.metalColor3HexCode ?? "",
               ]);
         }).toList();
-        add(const ProductDetailsSuggestedProductLoadedEvent());
+        if (!isClosed) {
+          add(const ProductDetailsSuggestedLoadedEvent());
+        }
       },
     );
   }
@@ -482,7 +484,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               );
             }).toList() ??
             [];
-        add(const ProductDetailsReviewsLoadedEvent());
+        if (!isClosed) {
+          add(const ProductDetailsReviewsLoadedEvent());
+        }
       },
     );
   }
@@ -650,8 +654,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(GemstoneDetailsToggleState(isGemstoneDetailsOpen));
   }
 
-  void _onProductDetailsSuggestedProductLoadedEvent(ProductDetailsSuggestedProductLoadedEvent event, Emitter<ProductDetailsState> emit) {
-    emit(ProductDetailsSuggestedProductLoadedState(suggestedProductList));
+  void _onProductDetailsSuggestedLoadedEvent(ProductDetailsSuggestedLoadedEvent event, Emitter<ProductDetailsState> emit) {
+    emit(ProductDetailsSuggestedLoadedState(suggestedProductList));
   }
 
   void _onProductDetailsReviewsLoadedEvent(ProductDetailsReviewsLoadedEvent event, Emitter<ProductDetailsState> emit) {
