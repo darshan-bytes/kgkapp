@@ -40,3 +40,12 @@ final class EditProfilePhoneNumberValidationState extends ProfileState {
   @override
   List<Object> get props => [phoneNumberValidationFieldType, isError];
 }
+
+final class EditProfileFieldErrorState extends ProfileState {
+  final FieldTypeValidationEnum fieldType;
+
+  const EditProfileFieldErrorState({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}

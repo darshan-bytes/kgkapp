@@ -33,10 +33,12 @@ final class WatchlistPullToRefreshEvent extends WatchlistEvent {
 }
 
 final class WatchListCloseEvent extends WatchlistEvent {
-  const WatchListCloseEvent();
+  final BuildContext? context;
+
+  const WatchListCloseEvent({this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [context];
 }
 
 final class WatchListSearchEvent extends WatchlistEvent {

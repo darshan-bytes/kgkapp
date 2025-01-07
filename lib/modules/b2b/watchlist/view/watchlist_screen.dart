@@ -20,8 +20,7 @@ class WatchlistScreen extends StatelessWidget {
           onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
           onSearch: () => context.pushNamed(AppRoutes.searchPage),
           onBack: () {
-            context.pop();
-            bloc.add(const WatchListCloseEvent());
+            bloc.add(WatchListCloseEvent(context: context));
           },
         ),
         body: BlocBuilder<WatchlistBloc, WatchlistState>(

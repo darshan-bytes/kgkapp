@@ -46,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

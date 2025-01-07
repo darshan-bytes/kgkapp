@@ -81,8 +81,10 @@ class ApiService implements ApiProvider {
       var commonResponse = CommonResponse<T>.fromJson(jsonDecode(response.body));
 
       if (commonResponse.isTokenExpired) {
-        await StorageManager().clearSession();
-        Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());
+        if (!StorageManager().getIsSkipLogin()) {
+          await StorageManager().clearSession();
+          Utils.showSmartModalBottomSheet(context: getNavigatorKeyContext, builder: (context) => const TokenExpireDialog());
+        }
         return null;
       }
 

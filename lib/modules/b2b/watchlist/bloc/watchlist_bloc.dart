@@ -188,6 +188,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
 
   void _onWatchListClose(WatchListCloseEvent event, Emitter<WatchlistState> emit) {
     clearBlocData();
+    event.context?.pop();
     emit(const WatchlistInitial());
   }
 

@@ -92,114 +92,148 @@ class EditProfileBottomSheet extends StatelessWidget {
     );
   }
 
-  List<Widget> generateProfileForm(ProfileBloc profileBloc, BuildContext context) {
+  List<Widget> generateProfileForm(ProfileBloc bloc, BuildContext context) {
     return <Widget>[
-      _buildFirstNameField(profileBloc),
+      _buildFirstNameField(bloc),
       SizedBox(height: 24.h),
-      _buildLastNameField(profileBloc),
+      _buildLastNameField(bloc),
       SizedBox(height: 24.h),
-      _buildEmailField(profileBloc),
+      _buildEmailField(bloc),
       SizedBox(height: 24.h),
-      _buildContactNumberField(profileBloc, context),
+      _buildContactNumberField(bloc, context),
     ];
   }
 
-  Widget _buildFirstNameField(ProfileBloc profileBloc) {
-    return SmartTextField(
-      labelText: APPStrings.firstName.tr,
-      hintText: APPStrings.firstName.tr,
-      controller: profileBloc.firstNameController,
-      focusNode: profileBloc.firstNameFocusNode,
-      nextFocus: profileBloc.lastNameFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+  Widget _buildFirstNameField(ProfileBloc bloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) => current is EditProfileFieldErrorState && current.fieldType == FieldTypeValidationEnum.firstName,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.firstName.tr,
+          hintText: APPStrings.firstName.tr,
+          controller: bloc.firstNameController,
+          focusNode: bloc.firstNameFocusNode,
+          nextFocus: bloc.lastNameFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.firstNameError,
+          onValueChanges: (value) {
+            if (bloc.firstNameError.isNotNullNorEmpty) {
+              bloc.add(EditProfileFieldChangeEvent(fieldType: FieldTypeValidationEnum.firstName));
+            }
+          },
+        );
+      },
     );
   }
 
-  Widget _buildLastNameField(ProfileBloc profileBloc) {
-    return SmartTextField(
-      labelText: APPStrings.lastName.tr,
-      hintText: APPStrings.lastName.tr,
-      controller: profileBloc.lastNameController,
-      focusNode: profileBloc.lastNameFocusNode,
-      nextFocus: profileBloc.emailFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+  Widget _buildLastNameField(ProfileBloc bloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) => current is EditProfileFieldErrorState && current.fieldType == FieldTypeValidationEnum.lastName,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.lastName.tr,
+          hintText: APPStrings.lastName.tr,
+          controller: bloc.lastNameController,
+          focusNode: bloc.lastNameFocusNode,
+          nextFocus: bloc.emailFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.lastNameError,
+          onValueChanges: (value) {
+            if (bloc.lastNameError.isNotNullNorEmpty) {
+              bloc.add(EditProfileFieldChangeEvent(fieldType: FieldTypeValidationEnum.lastName));
+            }
+          },
+        );
+      },
     );
   }
 
-  Widget _buildEmailField(ProfileBloc profileBloc) {
+  Widget _buildEmailField(ProfileBloc bloc) {
     return SmartTextField(
       isEnabled: false,
       labelText: APPStrings.email.tr,
       hintText: APPStrings.email.tr,
-      controller: profileBloc.emailController,
-      focusNode: profileBloc.emailFocusNode,
-      nextFocus: profileBloc.contactNumberFocusNode,
+      controller: bloc.emailController,
+      focusNode: bloc.emailFocusNode,
+      nextFocus: bloc.contactNumberFocusNode,
       keyboardType: TextInputType.emailAddress,
     );
   }
 
-  Widget _buildContactNumberField(ProfileBloc profileBloc, BuildContext context) {
+  Widget _buildContactNumberField(ProfileBloc bloc, BuildContext context) {
     final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
-    return SmartTextField(
-      labelText: APPStrings.contactNumber.tr,
-      hintText: APPStrings.hintContactNumber.tr,
-      controller: profileBloc.contactNumberController,
-      focusNode: profileBloc.contactNumberFocusNode,
-      keyboardType: TextInputType.phone,
-      onValueChanges: (value) {
-        profileBloc.add(EditProfilePhoneNumberValidationEvent(context: context, phoneNumber: value));
-      },
-      prefixIcon: BlocBuilder<ProfileBloc, ProfileState>(
-        buildWhen: (previous, current) => current is EditProfileChangeCountryCodeState,
-        builder: (context, state) {
-          return InkWell(
-            onTap: () {
-              Utils.showCountryPickerModel(
-                context: context,
-                countryPickerStyle: countryPickerStyle,
-                showPhoneCode: true,
-                onSelect: (Country country) {
-                  profileBloc.add(EditProfileChangeCountryCodeEvent(country: country));
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) => current is EditProfileFieldErrorState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.contactNumber.tr,
+          hintText: APPStrings.hintContactNumber.tr,
+          controller: bloc.contactNumberController,
+          focusNode: bloc.contactNumberFocusNode,
+          keyboardType: TextInputType.phone,
+          errorText: bloc.contactNumberError,
+          onValueChanges: (value) {
+            if (bloc.contactNumberError.isNotNullNorEmpty) {
+              bloc.add(EditProfileFieldChangeEvent(fieldType: FieldTypeValidationEnum.contactNumber));
+            }
+            bloc.add(EditProfilePhoneNumberValidationEvent(context: context, phoneNumber: value));
+          },
+          prefixIcon: BlocBuilder<ProfileBloc, ProfileState>(
+            buildWhen: (previous, current) => current is EditProfileChangeCountryCodeState,
+            builder: (context, state) {
+              return InkWell(
+                onTap: () {
+                  Utils.showCountryPickerModel(
+                    context: context,
+                    countryPickerStyle: countryPickerStyle,
+                    showPhoneCode: true,
+                    onSelect: (Country country) {
+                      bloc.add(EditProfileChangeCountryCodeEvent(country: country));
+                      if (bloc.contactNumberController.text.isNotEmpty) {
+                        bloc.add(EditProfilePhoneNumberValidationEvent(context: context, phoneNumber: bloc.contactNumberController.text));
+                      }
+                    },
+                  );
                 },
-              );
-            },
-            child: SizedBox(
-              width: 95.w,
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(12.w),
-                margin: EdgeInsets.only(right: 12.w),
-                decoration: BoxDecoration(
-                  border: Border(
-                    right: BorderSide(
-                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                child: SizedBox(
+                  width: 95.w,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(12.w),
+                    margin: EdgeInsets.only(right: 12.w),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SmartText(
+                          '+${bloc.selectedCountry.phoneCode}',
+                          style: AppTheme.of(context).textFieldStyle.textStyle,
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SmartText(
-                      '+${profileBloc.selectedCountry.phoneCode}',
-                      style: AppTheme.of(context).textFieldStyle.textStyle,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-      onTap: () {
-        profileBloc.scrollController.animateTo(
-          profileBloc.scrollController.position.maxScrollExtent,
-          duration: const Duration(seconds: 2),
-          curve: Curves.easeOut,
+              );
+            },
+          ),
+          onTap: () {
+            bloc.scrollController.animateTo(
+              bloc.scrollController.position.maxScrollExtent,
+              duration: const Duration(seconds: 2),
+              curve: Curves.easeOut,
+            );
+          },
+          textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
         );
       },
-      textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
     );
   }
 

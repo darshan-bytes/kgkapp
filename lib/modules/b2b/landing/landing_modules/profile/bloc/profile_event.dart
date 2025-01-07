@@ -80,3 +80,12 @@ final class ChangePasswordEvent extends ProfileEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class EditProfileFieldChangeEvent extends ProfileEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const EditProfileFieldChangeEvent({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}
