@@ -5,9 +5,6 @@ part 'product_details_event.dart';
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
-  bool isInitialized = false;
-  late AppBloc appBloc;
-
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
@@ -134,13 +131,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
-    if (isInitialized) return;
-    isInitialized = true;
     emit(ProductDetailsLoadingState());
     initCompareProductChangesStream(event.context);
-    appBloc = BlocProvider.of<AppBloc>(event.context);
-    // assigning current userType
-    userType = appBloc.userType;
+
+    /// assigning current userType
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
 
     getScreenIdentifier(event.context);
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
@@ -170,6 +165,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       await getGemstoneYouMayLike(event.context, productId);
       await getGemstoneRecentlyViewed(event.context, productId);
     } else if (screenIdentifier == ScreenIdentifier.productForRing) {
+      emit(ProductDetailsLoadingState());
       await StorageManager().setRecentlyViewedJewellery(productId);
       imgList.clear();
       suggestedProductList.clear();
@@ -179,7 +175,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
         emit(ProductDetailsLoadedState(productDetails!));
       }
-      await productReviewsFilter(event.context, productId);
+      await productReviewsFilter(event.context, productId, emit);
       await getProductYouMayLike(event.context, productId);
       await getProductRecentlyViewed(event.context, productId);
     }
@@ -377,33 +373,36 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       },
       (data) {
         jewelleryDatumListAPI = data.data;
-        suggestedProductList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage! > 0);
+        suggestedProductList = data.data.map((item) {
+          bool isDiscounted = item.discountPercentage != null && (item.discountPercentage! > 0);
           return ProductDetailsModel(
-              productId: e.suid ?? '',
-              name: e.productDescription ?? '',
-              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-              originalPrice: e.finalPrice?.setCurrency,
-              discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-              productSku: e.contractNoSkuNo,
-              reviewCount: e.reviewCount,
-              rating: e.rating?.toDouble(),
-              isFavourite: e.isFavorite,
-              commodity: Commodity.jewellery,
-              wishlistId: e.wishlistID,
-              subTitle: e.productDescription ?? '',
-              title: e.contractNoSkuNo ?? '',
-              kgkCollectionName: e.kgkCollection ?? "\n",
-              businessCategoryName: e.businessCategoryName ?? "\n",
-              cts: e.crt,
-              gms: e.gms,
-              brandName: e.brandName,
-              colorsCode: [
-                e.metalColor1HexCode ?? "",
-                e.metalColor2HexCode ?? "",
-                e.metalColor3HexCode ?? "",
-              ]);
+            suid: item.suid ?? "",
+            imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+            name: item.productDescription ?? "",
+            originalPrice: item.finalPrice?.toString().setCurrency,
+            offerPrice: item.discountPrice?.toString().setCurrency,
+            finalPrice: item.discountPrice?.toString().setCurrency,
+            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]) : null,
+            productId: item.id ?? "",
+            commodity: Commodity.jewellery,
+            isFavourite: item.isFavorite,
+            wishlistId: item.wishlistID,
+            productSku: item.contractNoSkuNo,
+            title: item.contractNoSkuNo ?? '',
+            subTitle: item.productDescription ?? '',
+            kgkCollectionName: item.kgkCollection ?? "\n",
+            businessCategoryName: item.businessCategoryName ?? "\n",
+            cts: item.crt,
+            gms: item.gms,
+            brandName: item.brandName,
+            reviewCount: item.reviewCount,
+            rating: item.rating?.toDouble(),
+            colorsCode: [
+              item.metalColor1HexCode ?? "",
+              item.metalColor2HexCode ?? "",
+              item.metalColor3HexCode ?? "",
+            ],
+          );
         }).toList();
         if (!isClosed) {
           add(const ProductDetailsSuggestedLoadedEvent());
@@ -459,7 +458,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     );
   }
 
-  Future<void> productReviewsFilter(BuildContext context, String productId) async {
+  Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit) async {
+    emit(const ReloadProductDetailsState());
+
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
     Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
         await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
@@ -489,6 +490,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
     );
+    emit(const ProductDetailsRecentlyViewedLoadedState());
   }
 
   Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
@@ -663,12 +665,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(const ProductDetailsRecentlyViewedLoadedState());
   }
 
-  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context, {required String productNavigation}) {
+  void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context,
+      {required String productNavigation, String productId = ''}) {
     switch (screenIdentifier) {
       case ScreenIdentifier.productForRing:
         context.pushNamed(AppRoutes.productListGridPage, arguments: {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
-          RoutesData.productId: productDetails?.productId,
+          RoutesData.productId: productId,
           RoutesData.productNavigation: productNavigation,
         });
         break;

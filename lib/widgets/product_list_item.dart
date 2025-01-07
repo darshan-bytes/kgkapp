@@ -154,6 +154,7 @@ class ProductListItem extends StatelessWidget {
   Widget productDetailsSection(ProductItemStyle style, BuildContext context) {
     return Expanded(
       child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         color: style.backgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
