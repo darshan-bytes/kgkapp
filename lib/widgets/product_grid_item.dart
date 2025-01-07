@@ -26,6 +26,7 @@ class ProductGridItem extends StatelessWidget {
   final String? buttonText;
   final bool isBadgeVisible;
   final bool forPreviewCatalogue;
+  final bool isCrtAndGramVisible;
 
   const ProductGridItem({
     super.key,
@@ -54,6 +55,7 @@ class ProductGridItem extends StatelessWidget {
     this.buttonText,
     this.isBadgeVisible = false,
     this.forPreviewCatalogue = false,
+    this.isCrtAndGramVisible = true,
   });
 
   @override
@@ -226,7 +228,7 @@ class ProductGridItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
-              height: style.productNameStyle.height,
+              height: style.productNameStyle.fontSize! * 2.5.sp,
               child: SmartText(
                 productDetails.subTitle,
                 style: style.productNameStyle,
@@ -299,7 +301,7 @@ class ProductGridItem extends StatelessWidget {
                 style: style.discountTextStyle,
               ),
             ],
-            diamondAndGramSection(style),
+            if (isCrtAndGramVisible) diamondAndGramSection(style),
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,

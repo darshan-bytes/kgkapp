@@ -225,6 +225,7 @@ class StoneListingScreen extends StatelessWidget {
                     items: diamondListingBloc.productList.map((ProductDetailsModel productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
+                    isCrtAndGramVisible: false,
                     onTap: () {
                       if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
                         context.pushNamed(AppRoutes.stoneDetailPage, arguments: {

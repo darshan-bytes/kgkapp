@@ -600,6 +600,20 @@ class JewelleryDataModel {
   }
 }
 
+extension JewelleryListingModelExtension on JewelleryDataModel {
+  String? get discountEXT {
+    if ((discountPercentage ?? 0) > 0) {
+      return APPStrings.percentageOffInterpolating.tr.interpolate([discountPercentage]);
+    }
+    return null;
+  }
+
+  String? get crtEXT {
+    final crtValue = double.tryParse(crt ?? '0') ?? 0.0;
+    return crtValue > 0 ? crt : null;
+  }
+}
+
 class MultipleFinishedViewImage {
   MultipleFinishedViewImage({
     required this.highRes3,
