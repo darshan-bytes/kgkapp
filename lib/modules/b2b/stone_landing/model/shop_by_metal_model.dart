@@ -211,7 +211,7 @@ class ComponentDetailShopByMetal {
     required this.karatage,
   });
 
-  final int? brokenQty1;
+  final double? brokenQty1;
   final String? commodity;
   final int? commodityNameRefSuid;
   final String? commodityNameSuid;
@@ -219,7 +219,7 @@ class ComponentDetailShopByMetal {
   final int? consumedQty2;
   final int? lossQty1;
   final String? lotCode;
-  final int? lotId;
+  final String? lotId;
   final String? rmName;
   final int? rmNameRefSuid;
   final String? rmNameSuid;
@@ -233,7 +233,7 @@ class ComponentDetailShopByMetal {
   final String? karatage;
 
   ComponentDetailShopByMetal copyWith({
-    int? brokenQty1,
+    double? brokenQty1,
     String? commodity,
     int? commodityNameRefSuid,
     String? commodityNameSuid,
@@ -241,7 +241,7 @@ class ComponentDetailShopByMetal {
     int? consumedQty2,
     int? lossQty1,
     String? lotCode,
-    int? lotId,
+    String? lotId,
     String? rmName,
     int? rmNameRefSuid,
     String? rmNameSuid,

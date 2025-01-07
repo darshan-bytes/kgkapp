@@ -295,7 +295,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                             },
                                             onTapCopy: () async {
                                               if (bloc.productDetails != null) {
-                                                await bloc.appBloc
+                                                await BlocProvider.of<AppBloc>(context)
                                                     .handleShareProduct(context: context, productDetails: bloc.productDetails!);
                                               }
                                               bloc.onTapCopyLink(context: context);
@@ -425,23 +425,29 @@ class ProductDetailsScreen extends StatelessWidget {
           SizedBox(height: 24.h),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
             ///TODO:Here Need to work on isShowWriteReviewButton
-            ProductReviewsDetails(
-              isShowWriteReviewButton: true,
-              ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
-              averageRating: bloc.productDetails?.rating ?? 0,
-              reviewCount: bloc.productDetails?.reviewCount ?? 0,
-              onTap: () {
-                /// First check if the user is logged in or not
-                if (StorageManager().getIsSkipLogin()) {
-                  Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
-                  return;
-                }
-                context.pushNamed(AppRoutes.writeReviewPage, arguments: {
-                  RoutesData.productId: bloc.productDetails?.productId,
-                  RoutesData.commodity: bloc.productDetails?.commodity,
-                });
+            BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+              buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsRecentlyViewedLoadedState,
+              builder: (context, state) {
+                return ProductReviewsDetails(
+                  isShowWriteReviewButton: true,
+                  ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
+                  averageRating: bloc.productDetails?.rating ?? 0,
+                  reviewCount: bloc.productDetails?.reviewCount ?? 0,
+                  onTap: () {
+                    /// First check if the user is logged in or not
+                    if (StorageManager().getIsSkipLogin()) {
+                      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
+                      return;
+                    }
+                    context.pushNamed(AppRoutes.writeReviewPage, arguments: {
+                      RoutesData.productId: bloc.productDetails?.productId,
+                      RoutesData.commodity: bloc.productDetails?.commodity,
+                    });
+                  },
+                );
               },
             ),
+
             SizedBox(height: 32.h),
             BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
               buildWhen: (previous, current) => current is ProductDetailsRecentlyViewedLoadedState,

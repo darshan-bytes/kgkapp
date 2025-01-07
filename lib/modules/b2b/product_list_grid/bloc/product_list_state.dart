@@ -39,3 +39,8 @@ final class ProductListLoadedMoreState extends ProductListState {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ProductListLoadingState extends ProductListState {
+  @override
+  List<Object> get props => [];
+}
