@@ -25,11 +25,25 @@ class ProductListScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: ScrollToTopFAB(
-          canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop),
-      bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
-        buildWhen: (previous, current) => current is ProductListLoadedState,
+      floatingActionButton: BlocBuilder<ProductListBloc, ProductListState>(
+        buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
         builder: (context, state) {
+          if (state is ProductListLoadingState) {
+            return SizedBox.shrink();
+          }
+          if (state is ProductListLoadedState) {
+            return ScrollToTopFAB(
+                canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop);
+          }
+          return SizedBox.shrink();
+        },
+      ),
+      bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
+        buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
+        builder: (context, state) {
+          if (state is ProductListLoadingState) {
+            return SizedBox.shrink();
+          }
           if (state is ProductListLoadedState) {
             return FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,

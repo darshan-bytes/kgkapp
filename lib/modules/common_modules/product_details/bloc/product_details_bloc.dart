@@ -508,10 +508,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               productId: e.id,
               name: e.productDescription ?? '',
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              offerPrice: e.discountPrice?.setCurrency,
-              originalPrice: e.finalPrice?.setCurrency,
-              discountPercentageString:
-                  e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+              originalPrice: e.finalPrice?.toString().setCurrency,
+              offerPrice: e.discountPrice?.toString().setCurrency,
+              finalPrice: e.discountPrice?.toString().setCurrency,
+              discountPercentageString: e.discountEXT,
               productSku: e.contractNoSkuNo,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
@@ -522,7 +522,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               title: e.contractNoSkuNo ?? '',
               kgkCollectionName: e.kgkCollection ?? "\n",
               businessCategoryName: e.businessCategoryName ?? "\n",
-              cts: e.crt,
+              cts: e.crtEXT,
               gms: e.gms,
               brandName: e.brandName,
               colorsCode: [
@@ -547,14 +547,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       },
       (data) {
         recentlyViewedProductList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
           return ProductDetailsModel(
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-            originalPrice: e.finalPrice?.setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+            originalPrice: e.finalPrice?.toString().setCurrency,
+            offerPrice: e.discountPrice?.toString().setCurrency,
+            finalPrice: e.discountPrice?.toString().setCurrency,
+            discountPercentageString: e.discountEXT,
             productSku: e.lotCode,
             reviewCount: e.reviewCount,
             rating: e.rating?.toDouble(),
