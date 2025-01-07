@@ -94,17 +94,28 @@ extension WatchlistDataExtension on WatchlistData {
 class WatchlistProducts {
   String? productId;
   String? commodity;
-  NotificationSettings? notificationSettings;
+
+  bool? notifyOnPriceDrop;
+  bool? notifyOnAvailability;
+  bool? notifyOnDiscount;
   JewelleryDataModel? jewelleryData;
   DiamondDataModel? diamondData;
   GemstoneDatum? gemstoneData;
 
-  WatchlistProducts({this.productId, this.commodity, this.notificationSettings});
+  WatchlistProducts({
+    this.productId,
+    this.commodity,
+    this.notifyOnPriceDrop,
+    this.notifyOnAvailability,
+    this.notifyOnDiscount,
+  });
 
   WatchlistProducts.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];
     commodity = json['commodity'];
-    notificationSettings = json['notificationSettings'] != null ? NotificationSettings.fromJson(json['notificationSettings']) : null;
+    notifyOnPriceDrop = json['notifyOnPriceDrop'];
+    notifyOnAvailability = json['notifyOnAvailability'];
+    notifyOnDiscount = json['notifyOnDiscount'];
     if (json['productData'] != null) {
       switch (displayCommodity) {
         case Commodity.diamond:
@@ -126,9 +137,9 @@ class WatchlistProducts {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['productId'] = productId;
     data['commodity'] = commodity;
-    if (notificationSettings != null) {
-      data['notificationSettings'] = notificationSettings!.toJson();
-    }
+    data['notifyOnPriceDrop'] = notifyOnPriceDrop;
+    data['notifyOnAvailability'] = notifyOnAvailability;
+    data['notifyOnDiscount'] = notifyOnDiscount;
     switch (displayCommodity) {
       case Commodity.diamond:
         data['productData'] = diamondData?.toJson();

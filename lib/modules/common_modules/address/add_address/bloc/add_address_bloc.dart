@@ -34,6 +34,16 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   FocusNode zipCodeFocusNode = FocusNode();
   FocusNode phoneFocusNode = FocusNode();
 
+  String? firstNameError;
+  String? lastNameError;
+  String? streetAddressError;
+  String? apartmentError;
+  String? cityError;
+  String? stateError;
+  String? countryError;
+  String? zipCodeError;
+  String? phoneError;
+
   Country selectedCountryCodes = Country.from(json: {
     "e164_cc": "91",
     "iso2_cc": "IN",
@@ -64,6 +74,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     on<AddAddressChangeStateEvent>(_onChangeState);
     on<SaveAddressEvent>(_onSaveAddressEvent);
     on<AddAddressChangeCountryCodeEvent>(_onAddAddressChangeCountryCodeEvent);
+    on<AddAddressFieldChangeEvent>(_onAddAddressFieldChangeEvent);
   }
 
   void getScreenIdentifier(BuildContext context) {
@@ -172,12 +183,11 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   Future<void> _onSaveAddressEvent(SaveAddressEvent event, Emitter<AddAddressState> emit) async {
     emit(AddAddressReloadState());
 
-    if (_validateAddress()) {
+    if (_validateAddress(emit)) {
       //TODO: Implement the logic to save the address and navigate to the previous screen with the saved address
       CommonResponse<AddressDetails>? addressDetails;
       if (isEditAddress) {
         if (address == null || address!.id.isNullOrEmpty) {
-          // Utils.showMessage(APPStrings.somethingWrong.tr);
           return;
         }
         addressDetails = await updateAddressAPI(event.context, address!.id ?? "");
@@ -228,47 +238,101 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     emit(const AddAddressChangeCountryCodeState());
   }
 
-  bool _validateAddress() {
+  void _onAddAddressFieldChangeEvent(AddAddressFieldChangeEvent event, Emitter<AddAddressState> emit) {
+    emit(AddAddressReloadState());
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.firstName:
+        firstNameError = null;
+        break;
+      case FieldTypeValidationEnum.lastName:
+        lastNameError = null;
+        break;
+      case FieldTypeValidationEnum.apartment:
+        apartmentError = null;
+        break;
+      case FieldTypeValidationEnum.address:
+        streetAddressError = null;
+        break;
+      case FieldTypeValidationEnum.city:
+        cityError = null;
+        break;
+      case FieldTypeValidationEnum.state:
+        stateError = null;
+        break;
+      case FieldTypeValidationEnum.country:
+        countryError = null;
+        break;
+      case FieldTypeValidationEnum.zipcode:
+        zipCodeError = null;
+        break;
+      case FieldTypeValidationEnum.contactNumber:
+        phoneError = null;
+        break;
+
+      default:
+        break;
+    }
+
+    emit(AddAddressFieldErrorState(fieldType: event.fieldType));
+  }
+
+  bool _validateAddress(Emitter<AddAddressState> emit) {
+    emit(AddAddressReloadState());
     if (firstNameController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
-      return false;
+      firstNameError = APPStrings.errorFirstNameRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.firstName, message: firstNameError));
     }
     if (lastNameController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorLastNameRequired.tr);
-      return false;
+      lastNameError = APPStrings.errorLastNameRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.lastName, message: lastNameError));
     }
 
     if (apartmentController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorApartmentRequired.tr);
-      return false;
+      apartmentError = APPStrings.errorApartmentRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.apartment, message: apartmentError));
     }
 
     if (streetAddressController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorStreetAddressRequired.tr);
-      return false;
+      streetAddressError = APPStrings.errorStreetAddressRequired.tr;
+
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.address, message: APPStrings.errorStreetAddressRequired.tr));
     }
     if (cityController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorCityRequired.tr);
-      return false;
+      cityError = APPStrings.errorCityRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.city, message: cityError));
     }
     if (selectedState == null) {
-      Utils.showMessage(APPStrings.errorStateRequired.tr);
-      return false;
+      stateError = APPStrings.errorStateRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.state, message: stateError));
     }
     if (selectedCountry == null) {
-      Utils.showMessage(APPStrings.errorCountryRequired.tr);
-      return false;
+      countryError = APPStrings.errorCountryRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.country, message: countryError));
     }
     if (zipCodeController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorZipCodeRequired.tr);
-      return false;
+      zipCodeError = APPStrings.errorZipCodeRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.zipcode, message: zipCodeError));
+    } else if (!Utils.isValidZipCode(zipCodeController.text.trim())) {
+      zipCodeError = APPStrings.errorZipCodeValid.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.zipcode, message: zipCodeError));
     }
     if (phoneController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
-      return false;
+      phoneError = APPStrings.errorContactNumberRequired.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber, message: phoneError));
+    } else if (!CountryUtils.validatePhoneNumber(phoneController.text.trim(), "+${selectedCountryCodes.phoneCode}")) {
+      phoneError = APPStrings.errorContactNumberValid.tr;
+      emit(AddAddressFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber, message: phoneError));
     }
 
-    return true;
+    return (firstNameError.isNullOrEmpty &&
+        lastNameError.isNullOrEmpty &&
+        apartmentError.isNullOrEmpty &&
+        streetAddressError.isNullOrEmpty &&
+        cityError.isNullOrEmpty &&
+        stateError.isNullOrEmpty &&
+        countryError.isNullOrEmpty &&
+        zipCodeError.isNullOrEmpty &&
+        phoneError.isNullOrEmpty);
   }
 
   Future<CommonResponse<AddressDetails>?> saveAddressAPI(BuildContext context) async {

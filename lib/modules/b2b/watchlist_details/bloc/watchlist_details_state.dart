@@ -31,19 +31,3 @@ final class WatchlistDetailsLoaded extends WatchlistDetailsState {
   @override
   List<Object> get props => [];
 }
-
-final class WatchlistProductLoadingMore extends WatchlistDetailsState {
-  const WatchlistProductLoadingMore();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class WatchlistProductLoadedMore extends WatchlistDetailsState {
-  final int currentPage;
-
-  const WatchlistProductLoadedMore(this.currentPage);
-
-  @override
-  List<Object> get props => [currentPage];
-}

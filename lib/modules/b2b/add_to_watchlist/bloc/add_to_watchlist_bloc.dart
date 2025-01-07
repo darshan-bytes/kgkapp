@@ -52,12 +52,12 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
       selectedWatchlist = null;
     } else {
       selectedWatchlist = event.watchlistData;
-      NotificationSettings? notificationSettings = selectedWatchlist?.products
-          ?.firstWhereOrNull((WatchlistProducts element) => element.productId == event.productDetails.productId)
-          ?.notificationSettings;
-      if (notificationSettings != null) {
-        _arrSelectedWatchlist[1].isSelected = notificationSettings.notifyOnPriceDrop ?? false;
-        _arrSelectedWatchlist[2].isSelected = notificationSettings.notifyOnDiscount ?? false;
+      WatchlistProducts? watchlistProducts =
+          selectedWatchlist?.products?.firstWhereOrNull((WatchlistProducts element) => element.productId == event.productDetails.productId);
+      if (watchlistProducts != null) {
+        _arrSelectedWatchlist[0].isSelected = watchlistProducts.notifyOnAvailability ?? false;
+        _arrSelectedWatchlist[1].isSelected = watchlistProducts.notifyOnPriceDrop ?? false;
+        _arrSelectedWatchlist[2].isSelected = watchlistProducts.notifyOnDiscount ?? false;
       }
     }
     emit(const AddToWatchlistReloadState());

@@ -778,5 +778,6 @@
   "mob_applied_promo_code": "Applied Promo Code",
   "mob_applied": "Applied",
   "mob_error_name_required": "Name is required",
-  "mob_go_to_bag": "Go to Bag"
+  "mob_go_to_bag": "Go to Bag",
+  "mob_error_zip_code_valid": "Please enter valid zip code"
 }

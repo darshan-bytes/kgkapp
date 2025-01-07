@@ -102,67 +102,127 @@ class AddAddressScreen extends StatelessWidget {
   }
 
   Widget _buildFirstNameField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.firstName.tr,
-      hintText: APPStrings.firstName.tr,
-      controller: bloc.firstNameController,
-      focusNode: bloc.firstNameFocusNode,
-      nextFocus: bloc.lastNameFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.firstName,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.firstName.tr,
+          hintText: APPStrings.firstName.tr,
+          controller: bloc.firstNameController,
+          focusNode: bloc.firstNameFocusNode,
+          nextFocus: bloc.lastNameFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.firstNameError,
+          onValueChanges: (value) {
+            if (bloc.firstNameError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.firstName));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildLastNameField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.lastName.tr,
-      hintText: APPStrings.lastName.tr,
-      controller: bloc.lastNameController,
-      focusNode: bloc.lastNameFocusNode,
-      nextFocus: bloc.apartmentFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.lastName,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.lastName.tr,
+          hintText: APPStrings.lastName.tr,
+          controller: bloc.lastNameController,
+          focusNode: bloc.lastNameFocusNode,
+          nextFocus: bloc.apartmentFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.lastNameError,
+          onValueChanges: (value) {
+            if (bloc.lastNameError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.lastName));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildApartmentField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.apartmentSuite.tr,
-      hintText: APPStrings.apartmentSuite.tr,
-      controller: bloc.apartmentController,
-      focusNode: bloc.apartmentFocusNode,
-      nextFocus: bloc.streetAddressFocusNode,
-      keyboardType: TextInputType.streetAddress,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.apartment,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.apartmentSuite.tr,
+          hintText: APPStrings.apartmentSuite.tr,
+          controller: bloc.apartmentController,
+          focusNode: bloc.apartmentFocusNode,
+          nextFocus: bloc.streetAddressFocusNode,
+          keyboardType: TextInputType.streetAddress,
+          errorText: bloc.apartmentError,
+          onValueChanges: (value) {
+            if (bloc.apartmentError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.apartment));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildStreetAddressField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.streetAddress.tr,
-      hintText: APPStrings.streetAddress.tr,
-      controller: bloc.streetAddressController,
-      focusNode: bloc.streetAddressFocusNode,
-      nextFocus: bloc.cityFocusNode,
-      keyboardType: TextInputType.streetAddress,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.address,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.streetAddress.tr,
+          hintText: APPStrings.streetAddress.tr,
+          controller: bloc.streetAddressController,
+          focusNode: bloc.streetAddressFocusNode,
+          nextFocus: bloc.cityFocusNode,
+          keyboardType: TextInputType.streetAddress,
+          errorText: bloc.streetAddressError,
+          onValueChanges: (value) {
+            if (bloc.streetAddressError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.address));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildCityField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.city.tr,
-      hintText: APPStrings.city.tr,
-      controller: bloc.cityController,
-      focusNode: bloc.cityFocusNode,
-      nextFocus: bloc.stateFocusNode,
-      keyboardType: TextInputType.name,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.city,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.city.tr,
+          hintText: APPStrings.city.tr,
+          controller: bloc.cityController,
+          focusNode: bloc.cityFocusNode,
+          nextFocus: bloc.stateFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.cityError,
+          onValueChanges: (value) {
+            if (bloc.cityError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.city));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildStateField(AddAddressBloc bloc) {
     return BlocBuilder<AddAddressBloc, AddAddressState>(
-      buildWhen: (previous, current) => current is AddAddressChangeStateState || current is AddAddressChangeCountryState,
+      buildWhen: (previous, current) =>
+          current is AddAddressChangeStateState ||
+          current is AddAddressChangeCountryState ||
+          (current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.state),
       builder: (context, state) {
         return SmartDropDown<CountryStateModel>(
+          errorText: bloc.stateError,
           hintText: APPStrings.state.tr,
           labelText: APPStrings.state.tr,
           items: bloc.arrState.map((CountryStateModel state) {
@@ -171,6 +231,7 @@ class AddAddressScreen extends StatelessWidget {
           onChanged: (state) {
             if (state != null) {
               bloc.add(AddAddressChangeStateEvent(context, state));
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.state));
             }
           },
           canSearch: true,
@@ -233,71 +294,96 @@ class AddAddressScreen extends StatelessWidget {
   }
 
   Widget _buildZipCodeField(AddAddressBloc bloc) {
-    return SmartTextField(
-      labelText: APPStrings.postalCode.tr,
-      hintText: APPStrings.postalCode.tr,
-      controller: bloc.zipCodeController,
-      focusNode: bloc.zipCodeFocusNode,
-      nextFocus: bloc.phoneFocusNode,
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.words,
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.zipcode,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.postalCode.tr,
+          hintText: APPStrings.postalCode.tr,
+          controller: bloc.zipCodeController,
+          focusNode: bloc.zipCodeFocusNode,
+          nextFocus: bloc.phoneFocusNode,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          errorText: bloc.zipCodeError,
+          onValueChanges: (value) {
+            if (bloc.zipCodeError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.zipcode));
+            }
+          },
+        );
+      },
     );
   }
 
   Widget _buildPhoneField(AddAddressBloc bloc, BuildContext context, CountryPickerStyle countryPickerStyle) {
-    return SmartTextField(
-      labelText: APPStrings.phoneNumber.tr,
-      hintText: APPStrings.phoneNumber.tr,
-      controller: bloc.phoneController,
-      focusNode: bloc.phoneFocusNode,
-      keyboardType: TextInputType.number,
-      prefixIcon: InkWell(
-        onTap: bloc.isEditAddress
-            ? null
-            : () {
-                Utils.showCountryPickerModel(
-                  context: context,
-                  countryPickerStyle: countryPickerStyle,
-                  showPhoneCode: true,
-                  onSelect: (Country country) {
-                    bloc.add(AddAddressChangeCountryCodeEvent(country));
+    return BlocBuilder<AddAddressBloc, AddAddressState>(
+      buildWhen: (previous, current) => current is AddAddressFieldErrorState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+      builder: (context, state) {
+        return SmartTextField(
+          labelText: APPStrings.phoneNumber.tr,
+          hintText: APPStrings.phoneNumber.tr,
+          controller: bloc.phoneController,
+          focusNode: bloc.phoneFocusNode,
+          keyboardType: TextInputType.number,
+          prefixIcon: InkWell(
+            onTap: bloc.isEditAddress
+                ? null
+                : () {
+                    Utils.showCountryPickerModel(
+                      context: context,
+                      countryPickerStyle: countryPickerStyle,
+                      showPhoneCode: true,
+                      onSelect: (Country country) {
+                        bloc.add(AddAddressChangeCountryCodeEvent(country));
+                        if (bloc.phoneError.isNotNullNorEmpty) {
+                          bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.contactNumber));
+                        }
+                      },
+                    );
                   },
-                );
-              },
-        child: SizedBox(
-          width: 95.w,
-          child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(12.w),
-            margin: EdgeInsets.only(right: 12.w),
-            decoration: BoxDecoration(
-              border: Border(
-                right: BorderSide(
-                  color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+            child: SizedBox(
+              width: 95.w,
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(12.w),
+                margin: EdgeInsets.only(right: 12.w),
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    BlocBuilder<AddAddressBloc, AddAddressState>(
+                      buildWhen: (previous, current) => current is AddAddressChangeCountryCodeState,
+                      builder: (context, state) {
+                        return SmartText(
+                          '+${bloc.selectedCountryCodes.phoneCode}',
+                          style: AppTheme.of(context).textFieldStyle.textStyle,
+                        );
+                      },
+                    ),
+                    if (!bloc.isEditAddress) ...[
+                      SizedBox(width: 4.w),
+                      const SmartImage(path: AppImages.icArrowDropDown),
+                    ],
+                  ],
                 ),
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<AddAddressBloc, AddAddressState>(
-                  buildWhen: (previous, current) => current is AddAddressChangeCountryCodeState,
-                  builder: (context, state) {
-                    return SmartText(
-                      '+${bloc.selectedCountryCodes.phoneCode}',
-                      style: AppTheme.of(context).textFieldStyle.textStyle,
-                    );
-                  },
-                ),
-                if (!bloc.isEditAddress) ...[
-                  SizedBox(width: 4.w),
-                  const SmartImage(path: AppImages.icArrowDropDown),
-                ],
-              ],
-            ),
           ),
-        ),
-      ),
+          errorText: bloc.phoneError,
+          onValueChanges: (value) {
+            if (bloc.phoneError.isNotNullNorEmpty) {
+              bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.contactNumber));
+            }
+          },
+        );
+      },
     );
   }
 }

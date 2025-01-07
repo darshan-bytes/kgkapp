@@ -5,10 +5,11 @@ part 'watchlist_details_event.dart';
 part 'watchlist_details_state.dart';
 
 class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsState> {
+  bool isWatchlistUpdated = false;
   WatchlistData watchlistDetailsModel = WatchlistData();
 
+  List<ProductDetailsModel> _productList = [];
   List<ProductDetailsModel> productList = [];
-  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
   String get watchlistName => watchlistDetailsModel.name ?? '';
 
@@ -16,23 +17,15 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
 
   WatchlistDetailsBloc() : super(const WatchlistDetailsInitial()) {
     on<WatchlistDetailsInitialEvent>(_onWatchlistDetailsInitialEvent);
-    on<WatchlistDetailsLoadMoreEvent>(_onWatchlistDetailsLoadMoreEvent);
     on<WatchlistDetailsEditProductEvent>(_onWatchlistDetailsEditProductEvent);
+    on<WatchlistDetailsSearchEvent>(_onWatchlistDetailsSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
+    on<WatchlistDetailsDeleteEvent>(_onWatchlistDetailsDeleteEvent);
   }
 
   Future<void> _onWatchlistDetailsInitialEvent(WatchlistDetailsInitialEvent event, Emitter<WatchlistDetailsState> emit) async {
     emit(const WatchlistDetailsReload());
     if (!event.isInBackground) {
       emit(const WatchlistDetailsLoading());
-      if (paginationScrollController.isInitialised) {
-        paginationScrollController.dispose();
-        paginationScrollController = SmartPaginationScrollController();
-      }
-      paginationScrollController.init(
-        loadAction: (int currentPage) async {
-          add(WatchlistDetailsLoadMoreEvent(currentPage: currentPage));
-        },
-      );
     }
     String watchlistId = event.context.routesData?[RoutesData.watchlistId] ?? "";
     if (watchlistId.isNotEmpty) {
@@ -46,26 +39,13 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
         (data) {
           watchlistDetailsModel = data;
           productList = _generateProductList();
+          _productList = List.from(productList);
           emit(const WatchlistDetailsLoaded());
         },
       );
 
       emit(const WatchlistDetailsLoaded());
     }
-  }
-
-  Future<void> _onWatchlistDetailsLoadMoreEvent(WatchlistDetailsLoadMoreEvent event, Emitter<WatchlistDetailsState> emit) async {
-    emit(const WatchlistProductLoadingMore());
-    await Future.delayed(const Duration(seconds: 2));
-    productList.addAll(_generateProductList());
-    paginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-    emit(WatchlistProductLoadedMore(event.currentPage));
-  }
-
-  @override
-  Future<void> close() async {
-    paginationScrollController.dispose();
-    super.close();
   }
 
   List<ProductDetailsModel> _generateProductList() {
@@ -76,21 +56,34 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
         switch (product.displayCommodity) {
           case Commodity.jewellery:
             return ProductDetailsModel(
-              productId: product.productId,
-              imageUrl: product.jewelleryData?.multipleFinishedViewImage.isNotNullNorEmpty == true
-                  ? product.jewelleryData!.multipleFinishedViewImage[0].imageUrl
-                  : "",
-              name: product.jewelleryData?.productDescription,
-              originalPrice: product.jewelleryData?.finalPrice,
-              company: product.jewelleryData?.brandName,
-              productSku: product.jewelleryData?.contractNoSkuNo,
-              discountPrice: product.jewelleryData?.discountPrice,
-              discountPercentageString:
-                  (product.jewelleryData?.discountPercentage != null && product.jewelleryData!.discountPercentage! > 0)
-                      ? product.jewelleryData?.discountPercentage?.toString()
-                      : null,
-              commodity: product.displayCommodity,
-            );
+                suid: product.jewelleryData?.suid ?? "",
+                productId: product.productId,
+                imageUrl: product.jewelleryData?.multipleFinishedViewImage.isNotNullNorEmpty == true
+                    ? product.jewelleryData!.multipleFinishedViewImage[0].imageUrl
+                    : "",
+                name: product.jewelleryData?.productDescription,
+                discountPrice: product.jewelleryData?.discountPrice?.setCurrency,
+                originalPrice: product.jewelleryData?.finalPrice?.setCurrency,
+                discountPercentageString: (product.jewelleryData?.discountPercentage ?? 0) > 0
+                    ? APPStrings.percentageOffInterpolating.tr.interpolate([product.jewelleryData?.discountPercentage])
+                    : null,
+                company: product.jewelleryData?.brandName,
+                productSku: product.jewelleryData?.contractNoSkuNo,
+                commodity: product.displayCommodity,
+                cts: product.jewelleryData?.crt,
+                gms: product.jewelleryData?.gms,
+                isFavourite: product.jewelleryData?.isFavorite ?? false,
+                wishlistId: product.jewelleryData?.wishlistID,
+                title: product.jewelleryData?.contractNoSkuNo ?? '',
+                subTitle: product.jewelleryData?.productDescription ?? '',
+                kgkCollectionName: product.jewelleryData?.kgkCollection ?? "\n",
+                businessCategoryName: product.jewelleryData?.businessCategoryName ?? "\n",
+                brandName: product.jewelleryData?.brandName,
+                colorsCode: [
+                  product.jewelleryData?.metalColor1HexCode ?? "",
+                  product.jewelleryData?.metalColor2HexCode ?? "",
+                  product.jewelleryData?.metalColor3HexCode ?? "",
+                ]);
           case Commodity.gemstone:
             return ProductDetailsModel(
               productId: product.productId,
@@ -142,7 +135,48 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
     );
 
     if (result?[RoutesData.isWatchlistUpdated] == true) {
+      isWatchlistUpdated = true;
       add(WatchlistDetailsInitialEvent(event.context, isInBackground: true));
+    }
+  }
+
+  void _onWatchlistDetailsSearchEvent(WatchlistDetailsSearchEvent event, Emitter<WatchlistDetailsState> emit) {
+    emit(const WatchlistDetailsLoading());
+    if (event.searchQuery.isEmpty) {
+      productList = _productList;
+    } else {
+      productList.clear();
+      productList.addAll(
+          _productList.where((element) => element.name!.toLowerCase().trim().contains(event.searchQuery.toLowerCase().trim())).toList());
+    }
+    emit(const WatchlistDetailsLoaded());
+  }
+
+  Future<void> _onWatchlistDetailsDeleteEvent(WatchlistDetailsDeleteEvent event, Emitter<WatchlistDetailsState> emit) async {
+    if (watchlistDetailsModel.sId.isNullOrEmpty) return;
+    Either<ErrorResponse, CommonResponse>? response = await AppRepository(event.context).deleteWatchList(watchlistDetailsModel.sId!);
+    response?.fold(
+      (error) {
+        Utils.showMessage(error.message);
+      },
+      (data) {
+        Utils.showMessage(data.message);
+
+        event.context.pop();
+        event.screenContext.pop(arguments: {
+          RoutesData.isWatchlistDeleted: true,
+          RoutesData.watchlistData: watchlistDetailsModel,
+        });
+      },
+    );
+  }
+
+  void handleBack(BuildContext context, {required bool needToPop}) {
+    if (needToPop) {
+      context.pop(arguments: {
+        RoutesData.isWatchlistUpdated: isWatchlistUpdated,
+        RoutesData.watchlistData: watchlistDetailsModel,
+      });
     }
   }
 }

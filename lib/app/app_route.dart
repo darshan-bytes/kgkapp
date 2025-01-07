@@ -784,7 +784,9 @@ enum RoutesData {
   catalogueId,
   dealsOfTheDay,
   exhibitionId,
-  promoCode
+  promoCode,
+  watchlistData,
+  isWatchlistDeleted,
 }
 
 enum ScreenIdentifier {

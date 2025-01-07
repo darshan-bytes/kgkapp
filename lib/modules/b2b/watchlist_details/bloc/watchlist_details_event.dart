@@ -14,15 +14,6 @@ final class WatchlistDetailsInitialEvent extends WatchlistDetailsEvent {
   List<Object> get props => [context, isInBackground];
 }
 
-final class WatchlistDetailsLoadMoreEvent extends WatchlistDetailsEvent {
-  final int currentPage;
-
-  const WatchlistDetailsLoadMoreEvent({required this.currentPage});
-
-  @override
-  List<Object> get props => [currentPage];
-}
-
 final class WatchlistDetailsEditProductEvent extends WatchlistDetailsEvent {
   final int index;
   final BuildContext context;
@@ -32,4 +23,26 @@ final class WatchlistDetailsEditProductEvent extends WatchlistDetailsEvent {
 
   @override
   List<Object> get props => [index, context, actionType];
+}
+
+final class WatchlistDetailsSearchEvent extends WatchlistDetailsEvent {
+  final String searchQuery;
+
+  const WatchlistDetailsSearchEvent(this.searchQuery);
+
+  @override
+  List<Object> get props => [searchQuery];
+}
+
+final class WatchlistDetailsDeleteEvent extends WatchlistDetailsEvent {
+  final BuildContext context;
+  final BuildContext screenContext;
+
+  const WatchlistDetailsDeleteEvent({
+    required this.context,
+    required this.screenContext,
+  });
+
+  @override
+  List<Object> get props => [context, screenContext];
 }

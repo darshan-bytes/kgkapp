@@ -171,7 +171,7 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildFirstNameField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.firstName,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.firstName,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.firstNameError,
@@ -184,7 +184,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.firstNameError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.firstName));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.firstName));
             }
           },
         );
@@ -194,7 +194,7 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildLastNameField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.lastName,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.lastName,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.lastNameError,
@@ -207,7 +207,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.lastNameError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.lastName));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.lastName));
             }
           },
         );
@@ -218,7 +218,7 @@ class SignUpScreen extends StatelessWidget {
   // build address field
   Widget _buildAddressField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.address,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.address,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.addressError,
@@ -231,7 +231,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.addressError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.address));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.address));
             }
           },
         );
@@ -242,7 +242,7 @@ class SignUpScreen extends StatelessWidget {
   // build city field
   Widget _buildCityField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.city,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.city,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.cityError,
@@ -255,7 +255,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.cityError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.city));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.city));
             }
           },
         );
@@ -266,7 +266,7 @@ class SignUpScreen extends StatelessWidget {
   // build state field
   Widget _buildStateField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.state,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.state,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.stateError,
@@ -279,7 +279,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.stateError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.state));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.state));
             }
           },
         );
@@ -290,7 +290,7 @@ class SignUpScreen extends StatelessWidget {
   // build zipcode field
   Widget _buildZipcodeField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.zipcode,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.zipcode,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.zipcodeError,
@@ -302,7 +302,7 @@ class SignUpScreen extends StatelessWidget {
           keyboardType: TextInputType.number,
           onValueChanges: (value) {
             if (signUpBloc.zipcodeError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.zipcode));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.zipcode));
             }
           },
         );
@@ -314,7 +314,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) =>
           (current is SignUpEmailValidationState && current.emailValidationFieldType == ValidationFieldType.email) ||
-          (current is SignUpFieldValidationState && current.fieldType == FieldType.email),
+          (current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.email),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,7 +330,7 @@ class SignUpScreen extends StatelessWidget {
               onValueChanges: (value) {
                 signUpBloc.add(SignUpEmailValidationEvent(email: value, context: context));
                 if (signUpBloc.emailError.isNotNullNorEmpty) {
-                  signUpBloc.add(SignUpFieldChangeEvent(FieldType.email));
+                  signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.email));
                 }
               },
             ),
@@ -363,7 +363,8 @@ class SignUpScreen extends StatelessWidget {
               itemCount: signUpBloc.isIndividual ? 1 : signUpBloc.contactNumberControllers.length,
               itemBuilder: (_, index) {
                 return BlocBuilder<SignUpBloc, SignUpState>(
-                  buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.contactNumber,
+                  buildWhen: (previous, current) =>
+                      current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
                   builder: (context, state) {
                     return SmartTextField(
                       errorText: signUpBloc.contactNumberErrors[index],
@@ -379,7 +380,7 @@ class SignUpScreen extends StatelessWidget {
                       onValueChanges: (value) {
                         signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
                         if (signUpBloc.contactNumberErrors[index].isNotNullNorEmpty) {
-                          signUpBloc.add(SignUpFieldChangeEvent(FieldType.contactNumber, index: index));
+                          signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.contactNumber, index: index));
                         }
                       },
                       prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
@@ -471,7 +472,7 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildPasswordField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.password,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.password,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.passwordError,
@@ -483,7 +484,7 @@ class SignUpScreen extends StatelessWidget {
           obscured: true,
           onValueChanges: (value) {
             if (signUpBloc.passwordError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.password));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.password));
             }
           },
         );
@@ -493,7 +494,8 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildConfirmPasswordField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.confirmPassword,
+      buildWhen: (previous, current) =>
+          current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.confirmPasswordError,
@@ -505,7 +507,7 @@ class SignUpScreen extends StatelessWidget {
           obscured: true,
           onValueChanges: (value) {
             if (signUpBloc.confirmPasswordError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.confirmPassword));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.confirmPassword));
             }
           },
         );
@@ -515,7 +517,7 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildCompanyNameField(SignUpBloc signUpBloc) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.companyName,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.companyName,
       builder: (context, state) {
         return SmartTextField(
           errorText: signUpBloc.companyNameError,
@@ -528,7 +530,7 @@ class SignUpScreen extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           onValueChanges: (value) {
             if (signUpBloc.companyNameError.isNotNullNorEmpty) {
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.companyName));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.companyName));
             }
           },
         );
@@ -540,7 +542,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) =>
           current is SignUpChangeOfficeLocationState ||
-          (current is SignUpFieldValidationState && current.fieldType == FieldType.officeLocation),
+          (current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.officeLocation),
       builder: (context, state) {
         return SmartDropDown<OfficeLocation>(
           errorText: signUpBloc.officeLocationError,
@@ -555,7 +557,7 @@ class SignUpScreen extends StatelessWidget {
           onChanged: (businessType) {
             if (businessType != null) {
               signUpBloc.add(SignUpChangeOfficeLocationEvent(businessType));
-              signUpBloc.add(SignUpFieldChangeEvent(FieldType.officeLocation));
+              signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.officeLocation));
             }
           },
           selectedItem: signUpBloc.selectedOfficeLocation,
@@ -581,7 +583,7 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildBusinessType(SignUpBloc signUpBloc, BuildContext context, SignUpStyle style) {
     return BlocBuilder<SignUpBloc, SignUpState>(
-      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldType.businessType,
+      buildWhen: (previous, current) => current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.businessType,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -605,7 +607,7 @@ class SignUpScreen extends StatelessWidget {
                           return;
                         }
                         signUpBloc.add(SignUpBusinessTypeChangedEvent(val, index));
-                        signUpBloc.add(SignUpFieldChangeEvent(FieldType.businessType));
+                        signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.businessType));
                       },
                       label: businessType.name,
                       mainAxisSize: MainAxisSize.min,

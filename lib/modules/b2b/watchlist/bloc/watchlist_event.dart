@@ -78,3 +78,18 @@ final class WatchListFilterEvent extends WatchlistEvent {
   @override
   List<Object> get props => [context, filterData];
 }
+
+final class WatchListUpdateItemEvent extends WatchlistEvent {
+  final WatchlistData? watchlistData;
+  final bool? isWatchlistDeleted;
+  final int index;
+
+  const WatchListUpdateItemEvent({
+    this.watchlistData,
+    this.isWatchlistDeleted,
+    required this.index,
+  });
+
+  @override
+  List<Object?> get props => [watchlistData, index, isWatchlistDeleted];
+}
