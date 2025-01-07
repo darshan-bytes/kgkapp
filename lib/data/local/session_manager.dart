@@ -208,6 +208,11 @@ class StorageManager {
       await setSelectedCurrency(selectedCurrency!);
       await setSelectedCurrencySymbol(selectedCurrencySymbol!);
     }
+    if (getNavigatorKeyContext.mounted) {
+      BlocProvider.of<LandingBloc>(getNavigatorKeyContext).add(const LandingLogoutEvent());
+      BlocProvider.of<LandingBloc>(getNavigatorKeyContext)
+          .add(LandingChangeTabEvent(LandingBloc.homeIndex, context: getNavigatorKeyContext));
+    }
     if (isSkipLogin) {
       await setIsSkipLogin(isSkipLogin);
       if (guestBagId.isNotEmpty) {
