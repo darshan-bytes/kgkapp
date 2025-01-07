@@ -11,7 +11,7 @@ class ProductListScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: AppConst.appBarHeight,
         child: BlocBuilder<ProductListBloc, ProductListState>(
-          buildWhen: (previous, current) => current is ProductListLoadedState,
+          buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
           builder: (context, state) {
             return SmartAppBar(
               title: bloc.appbarTitle,
@@ -57,14 +57,16 @@ class ProductListScreen extends StatelessWidget {
                 });
               },
             );
-          } else {
-            return const SizedBox.shrink();
           }
+          return const SizedBox.shrink();
         },
       ),
       body: BlocBuilder<ProductListBloc, ProductListState>(
-        buildWhen: (previous, current) => current is ProductListLoadedState,
+        buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
         builder: (context, state) {
+          if (state is ProductListLoadingState) {
+            return SmartCircularProgressIndicator();
+          }
           if (state is ProductListLoadedState) {
             return SafeArea(
               child: Padding(
@@ -76,7 +78,7 @@ class ProductListScreen extends StatelessWidget {
                     SizedBox(height: 24.h),
                     Expanded(
                       child: SmartSingleChildScrollView(
-                        controller: bloc.paginationScrollController.scrollController,
+                        controller: bloc.paginationScrollController.controller,
                         onRefresh: () async {
                           bloc.add(ProductListPullToRefreshEvent(context));
                         },
@@ -87,9 +89,8 @@ class ProductListScreen extends StatelessWidget {
                 ),
               ),
             );
-          } else {
-            return const SizedBox.shrink();
           }
+          return const SizedBox.shrink();
         },
       ),
     );

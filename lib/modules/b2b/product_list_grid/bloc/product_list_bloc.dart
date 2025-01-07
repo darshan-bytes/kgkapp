@@ -4,40 +4,67 @@ part 'product_list_event.dart';
 
 part 'product_list_state.dart';
 
-/// Enum for Fetch Scenarios
+/// Defines different scenarios under which the product list can be fetched.
 enum FetchScenario {
+  /// Fetch based on product ID
   productId,
+
+  /// Fetch based on collection name
   collectionName,
-  regularList,
+
+  /// Fetch recently viewed products
   recentlyViewed,
+
+  /// Fetch "Deal of the Day" products
   dealOfTheDay,
+
+  /// Fetch a regular product list
+  regularList,
 }
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
+  /// Determines if the view is in grid or list mode
   bool isGrid = true;
+
+  /// App bar title for the screen
   String appbarTitle = APPStrings.jewellery.tr;
+
+  /// Identifier for the current screen type
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
-
-  List<ProductDetailsModel> productList = [];
-  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-
-  int? totalNumberOfPages;
-  String productId = "";
-  String productNavigation = '';
-  String sortKey = AppConst.sortKeySuid;
-  String sortValue = AppConst.sortValueAsc;
-  String collectionName = "";
-  FetchScenario fetchScenario = FetchScenario.dealOfTheDay;
-
-  List<FilterData> filterData = [];
-  List<JewelleryDataModel> jewelleryDatumList = [];
-  StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
-
-  List<SortOptions> sortOptions = [];
 
   /// The total number of filtered records
   int? totalFilteredRecords;
 
+  /// Controller for managing pagination
+  int? totalNumberOfPages;
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
+  /// Variables for managing pagination and filtering
+  String productId = "";
+  String collectionName = "";
+  String productNavigation = '';
+  FetchScenario fetchScenario = FetchScenario.dealOfTheDay;
+
+  /// Variables for sorting
+  String sortKey = AppConst.sortKeyNERPBS;
+  String sortValue = AppConst.sortValueDesc;
+
+  /// Stores filter data for products
+  List<FilterData> filterData = [];
+
+  /// Stores sorting options for the product list
+  List<SortOptions> sortOptions = [];
+
+  /// This model is used to transfer data between the BLoC and the screen for displaying the product list in the UI
+  List<ProductDetailsModel> productList = [];
+
+  /// This model contains the actual data fetched, but we use ProductDetailsModel for displaying the data at the UI level
+  List<JewelleryDataModel> jewelleryDatumList = [];
+
+  /// Stream subscription for wishlist updates
+  StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
+
+  /// Constructor: Sets up event handlers
   ProductListBloc() : super(ProductListInitial()) {
     on<InitialProductListEvent>(_onInitialProductListEvent);
     on<ProductListLoadMoreEvent>(_onProductListLoadMoreEvent);
@@ -48,6 +75,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     on<ProductFilterEvent>(_onProductFilterEvent);
   }
 
+  /// Override close to clean up resources
   @override
   Future<void> close() {
     paginationScrollController.dispose();
@@ -55,45 +83,63 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     return super.close();
   }
 
-  /// Event handlers
+  /// Handler for initializing the product list
   Future<void> _onInitialProductListEvent(InitialProductListEvent event, Emitter<ProductListState> emit) async {
     await _initializeBloc(event.context, emit);
   }
 
+  /// Handler for loading more products when user scrolls
   Future<void> _onProductListLoadMoreEvent(ProductListLoadMoreEvent event, Emitter<ProductListState> emit) async {
     await _handleLoadMore(event.context, emit, event.currentPage);
   }
 
+  /// Handler for refreshing the product list
   Future<void> _onProductListPullToRefresh(ProductListPullToRefreshEvent event, Emitter<ProductListState> emit) async {
     await _handlePullToRefresh(event.context, emit);
   }
 
+  /// Handler for toggling between grid and list view
   void _onChangeListingTypeEvent(ProductChangeListingTypeEvent event, Emitter<ProductListState> emit) {
     _toggleViewType(emit: emit, isGridValue: event.isGrid);
   }
 
+  /// Handler for adding a product to the watchlist
   Future<void> _onProductListAddToWatchList(ProductListAddToWatchListEvent event, Emitter<ProductListState> emit) async {
     await _addToWatchList(event.context, event.productId);
   }
 
+  /// Handler for sorting the product list
   Future<void> _onProductSortEvent(ProductSortEvent event, Emitter<ProductListState> emit) async {
     sortKey = event.sortData.sortKey ?? "";
     sortValue = event.sortData.sortValue ?? "";
-    _handlePullToRefresh(event.context, emit);
+    await _handlePullToRefresh(event.context, emit);
+  }
+
+  /// Handler for filtering the product list
+  Future<void> _onProductFilterEvent(ProductFilterEvent event, Emitter<ProductListState> emit) async {
+    emit(ProductListLoadingState());
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+    filterData = event.filterData;
+    await fetchJewelleriesList(event.context, emit, false);
+    emit(const ProductListLoadedState());
   }
 
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<ProductListState> emit) async {
-    emit(ReloadProductState());
+    emit(ProductListLoadingState());
     getRouteData(context);
-    _initWishlistUpdaterServiceBloc(context);
-    await _sortOptionListApiCall(context);
     _initializePagination(context);
-    await _loadInitialData(context, emit);
+    if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
+      await _loadInitialData(context, emit);
+    }
+    await _sortOptionListApiCall(context);
+    _initWishlistUpdaterServiceBloc(context);
     emit(const ProductListLoadedState());
   }
 
-  void getRouteData(BuildContext context) async {
+  /// Fetches data from the current route (navigation)
+  void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
@@ -102,8 +148,249 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
       fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.regularList;
     }
+
+    /// Here we set the appbar title
+    _getProductListName();
   }
 
+  /// Fetches sort options for products
+  Future<void> _sortOptionListApiCall(BuildContext context) async {
+    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.jewellery.value);
+    if (sortOptionsList.isNotNullNorEmpty) {
+      sortOptions = sortOptionsList;
+      SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
+      sortKey = defaultSortOption.sortKey ?? "";
+      sortValue = defaultSortOption.sortValue ?? "";
+    }
+  }
+
+  /// Initializes pagination behavior
+  void _initializePagination(BuildContext context) {
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(ProductListLoadMoreEvent(currentPage, context));
+      },
+    );
+  }
+
+  /// jewellery product list main api call method
+  Future<void> _loadInitialData(BuildContext context, Emitter<ProductListState> emit) async {
+    if (screenIdentifier == ScreenIdentifier.productForRing) {
+      productList.clear();
+      await fetchJewelleriesList(context, emit, false);
+      if (filterData.isEmpty) {
+        await _setupFilters(context);
+      }
+    }
+  }
+
+  /// Determine the fetch scenario
+  FetchScenario determineFetchScenario() {
+    if (productId.isNotNullNorEmpty) return FetchScenario.productId;
+    if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
+    if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
+      return FetchScenario.recentlyViewed;
+    }
+    if (fetchScenario == FetchScenario.dealOfTheDay) return FetchScenario.dealOfTheDay;
+    return FetchScenario.regularList;
+  }
+
+  /// Builds the filter query
+  Map<String, String> buildFilterQuery(Map<String, String> query, List<FilterData> filterData) {
+    filterData.where((element) {
+      return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+          (element.filterType == FilterType.range && element.rangeValues != null);
+    }).forEach(
+      (element) {
+        if (element.filterType == FilterType.range) {
+          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+        } else {
+          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+        }
+      },
+    );
+    return query;
+  }
+
+  /// Fetches jewellery product list
+  Future<void> fetchJewelleriesList(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
+      {Map<String, String>? query}) async {
+    emit(ReloadProductState());
+
+    /// Determine the scenario for fetching data
+    FetchScenario scenario = determineFetchScenario();
+
+    /// Initialize query if it's null
+    query ??= {};
+
+    /// Build the query based on filters
+    query = buildFilterQuery(query, filterData);
+    Either<ErrorResponse, JewelleryListingModel>? response;
+
+    /// Fetch data based on the scenario
+    switch (scenario) {
+      case FetchScenario.productId:
+        response = await fetchByProductId(context: context);
+        break;
+      case FetchScenario.collectionName:
+        response = await fetchByCollectionName(context: context, isLoadMore: isLoadMore);
+        break;
+      case FetchScenario.regularList:
+        response = await fetchRegularList(context: context, isLoadMore: isLoadMore, query: query);
+        break;
+      case FetchScenario.recentlyViewed:
+        response = await fetchRecentlyViewed(context: context, isLoadMore: isLoadMore);
+        break;
+      case FetchScenario.dealOfTheDay:
+        response = await fetchDealOfTheDay(context: context, isLoadMore: isLoadMore);
+        break;
+    }
+
+    /// Handle the response and update the state
+    response?.fold(
+      (error) => Utils.showMessage(error.message),
+      (success) => handleSuccessResponse(success, emit),
+    );
+
+    /// Update the state
+    emit(ProductListLoadedState());
+  }
+
+  /// Handle the success response
+  void handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) {
+    totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+    final localList = success.data;
+
+    /// Show the total number of records in the UI side
+    totalFilteredRecords = success.filteredRecords;
+    productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
+    paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
+  }
+
+  /// Helper function to map the product data into ProductDetailsModel
+  ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
+    return ProductDetailsModel(
+      suid: item.suid ?? "",
+      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+      name: item.productDescription ?? "",
+      originalPrice: item.finalPrice?.toString().setCurrency,
+      offerPrice: item.discountPrice?.toString().setCurrency,
+      finalPrice: item.discountPrice?.toString().setCurrency,
+      discountPercentageString:
+          (item.discountPercentage ?? 0) > 0 ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]) : null,
+      productId: item.id ?? "",
+      commodity: Commodity.jewellery,
+      isFavourite: item.isFavorite,
+      wishlistId: item.wishlistID,
+      productSku: item.contractNoSkuNo,
+      title: item.contractNoSkuNo ?? '',
+      subTitle: item.productDescription ?? '',
+      kgkCollectionName: item.kgkCollection ?? "\n",
+      businessCategoryName: item.businessCategoryName ?? "\n",
+      cts: item.crt,
+      gms: item.gms,
+      brandName: item.brandName,
+      colorsCode: [
+        item.metalColor1HexCode ?? "",
+        item.metalColor2HexCode ?? "",
+        item.metalColor3HexCode ?? "",
+      ],
+    );
+  }
+
+  /// Fetch products by productId
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchByProductId({required BuildContext context}) async {
+    return AppRepository(context).getJewelleryYouMayLike(
+      productId,
+      limit: AppConst.pageLimit.toString(),
+      isLoadMore: false,
+      page: paginationScrollController.currentPage.toString(),
+    );
+  }
+
+  /// Fetch products by collection name
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchByCollectionName(
+      {required BuildContext context, bool isLoadMore = false}) async {
+    return AppRepository(context).fetchJewelleryList(
+      page: paginationScrollController.currentPage.toString(),
+      isLoadMore: isLoadMore,
+      limit: AppConst.pageLimit.toString(),
+      type: '',
+      sortKey: sortKey,
+      sortValue: sortValue,
+      query: {ApiKey.kgkCollection: collectionName},
+    );
+  }
+
+  /// Fetch the regular list of products
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRegularList(
+      {required BuildContext context, bool isLoadMore = false, required Map<String, String> query}) async {
+    return AppRepository(context).fetchJewelleryList(
+      page: paginationScrollController.currentPage.toString(),
+      isLoadMore: isLoadMore,
+      limit: AppConst.pageLimit.toString(),
+      type: '',
+      sortKey: sortKey,
+      sortValue: sortValue,
+      query: query,
+    );
+  }
+
+  /// Fetch recently viewed products
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewed(
+      {required BuildContext context, bool isLoadMore = false}) async {
+    return AppRepository(context).getRecentlyViewedProductList(
+      limit: AppConst.pageLimit.toString(),
+      page: paginationScrollController.currentPage.toString(),
+      isLoadMore: isLoadMore,
+    );
+  }
+
+  /// Fetch deal of the day products
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchDealOfTheDay({required BuildContext context, bool isLoadMore = false}) async {
+    return AppRepository(context).getJewelleryDealOfTheDayProductList(
+      page: paginationScrollController.currentPage.toString(),
+      limit: AppConst.pageLimit.toString(),
+      isLoadMore: isLoadMore,
+    );
+  }
+
+  /// Load more products
+  Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
+    if (currentPage <= totalNumberOfPages!) {
+      emit(ProductListLoadingMoreState());
+      await fetchJewelleriesList(context, emit, false);
+      emit(ProductListLoadedMoreState(currentPage));
+    }
+  }
+
+  /// Refresh the product list
+  Future<void> _handlePullToRefresh(BuildContext context, Emitter<ProductListState> emit) async {
+    emit(ProductListLoadingState());
+    paginationScrollController.pullToRefresh();
+    productList.clear();
+    await _loadInitialData(context, emit);
+    emit(const ProductListLoadedState());
+  }
+
+  /// Toggle between grid and list view
+  void _toggleViewType({bool isGridValue = false, required Emitter<ProductListState> emit}) {
+    emit(ReloadProductState());
+    isGrid = isGridValue;
+    emit(ProductChangeListingTypeState());
+  }
+
+  /// Add a product to the watchlist
+  Future<void> _addToWatchList(BuildContext context, String productId) async {
+    ProductDetailsModel? product = productList.firstWhereOrNull((element) => element.productId == productId);
+    if (product != null) {
+      BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
+      await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
+    }
+  }
+
+  /// Initialize the wishlist updater service
   void _initWishlistUpdaterServiceBloc(BuildContext context) {
     WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
     wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen((state) {
@@ -131,40 +418,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     });
   }
 
-  Future<void> _sortOptionListApiCall(BuildContext context) async {
-    ///fetch sort options
-    List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.jewellery.value);
-    if (sortOptionsList.isNotNullNorEmpty) {
-      sortOptions = sortOptionsList;
-      SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
-      sortKey = defaultSortOption.sortKey ?? "";
-      sortValue = defaultSortOption.sortValue ?? "";
-    }
-  }
-
-  void _initializePagination(BuildContext context) {
-    paginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(ProductListLoadMoreEvent(currentPage, context));
-      },
-    );
-  }
-
-  Future<void> _loadInitialData(BuildContext context, Emitter<ProductListState> emit) async {
-    if (screenIdentifier == ScreenIdentifier.productForRing) {
-      appbarTitle = APPStrings.jewellery.tr;
-      productList.clear();
-      if (filterData.isEmpty) {
-        await _setupFilters(context);
-      }
-      await fetchJewelleriesList(context, emit, true);
-    }
-  }
-
+  /// Setup filters
   Future<void> _setupFilters(BuildContext context) async {
-    context.setAppLoading(true);
     final filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
-    context.setAppLoading(false);
     filterData.clear();
     for (FilterOptionModel filterOption in filterList) {
       if (filterOption.data.isNotEmpty) {
@@ -188,153 +444,22 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     }
   }
 
-  Future<void> fetchJewelleriesList(
-    BuildContext context,
-    Emitter<ProductListState> emit,
-    bool isLoadMore, {
-    Map<String, String>? query,
-  }) async {
-    Either<ErrorResponse, JewelleryListingModel>? response;
+  void _getProductListName() {
+    /// Determine the scenario for fetching data
     FetchScenario scenario = determineFetchScenario();
-    query ??= {};
-    filterData
-        .where((element) =>
-            (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
-            (element.filterType == FilterType.range && element.rangeValues != null))
-        .forEach(
-      (element) {
-        if (element.filterType == FilterType.range) {
-          query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
-          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
-        } else {
-          query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
-        }
-      },
-    );
-
+    appbarTitle = APPStrings.jewellery.tr;
     switch (scenario) {
-      case FetchScenario.productId:
-        response = await AppRepository(context).getJewelleryYouMayLike(productId,
-            limit: AppConst.pageLimit.toString(), isLoadMore: false, page: paginationScrollController.currentPage.toString());
-        break;
-      case FetchScenario.collectionName:
-        response = await AppRepository(context).fetchJewelleryList(
-            page: paginationScrollController.currentPage.toString(),
-            isLoadMore: isLoadMore,
-            limit: AppConst.pageLimit.toString(),
-            type: '',
-            sortKey: sortKey,
-            sortValue: sortValue,
-            query: {ApiKey.kgkCollection: collectionName});
-        break;
       case FetchScenario.regularList:
-        response = await AppRepository(context).fetchJewelleryList(
-          page: paginationScrollController.currentPage.toString(),
-          isLoadMore: isLoadMore,
-          limit: AppConst.pageLimit.toString(),
-          type: '',
-          sortKey: sortKey,
-          sortValue: sortValue,
-          query: query,
-        );
+      case FetchScenario.collectionName:
+      case FetchScenario.productId:
+        appbarTitle = APPStrings.jewellery.tr;
+        break;
+      case FetchScenario.dealOfTheDay:
+        appbarTitle = APPStrings.dealOfTheDay.tr;
         break;
       case FetchScenario.recentlyViewed:
-        response = await AppRepository(context).getRecentlyViewedProductList(
-            limit: AppConst.pageLimit.toString(), page: paginationScrollController.currentPage.toString(), isLoadMore: isLoadMore);
-        break;
-
-      case FetchScenario.dealOfTheDay:
-        response = await AppRepository(context).getJewelleryDealOfTheDayProductList(
-          page: paginationScrollController.currentPage.toString(),
-          limit: AppConst.pageLimit.toString(),
-          isLoadMore: isLoadMore,
-        );
+        appbarTitle = APPStrings.recentlyViewed.tr;
         break;
     }
-
-    response?.fold((error) => Utils.showMessage(error.message), (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
-      final localList = success.data;
-
-      /// Show the total number of records in the UI side
-      totalFilteredRecords = success.filteredRecords;
-      productList.addAll(localList
-          .map((item) => ProductDetailsModel(
-                  suid: item.suid ?? "",
-                  imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
-                  name: item.productDescription ?? "",
-                  originalPrice: item.finalPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
-                  offerPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
-                  finalPrice: item.discountPrice?.toString().toDouble?.toStringAsFixed(2).setCurrency,
-                  discountPercentageString: (item.discountPercentage ?? 0) > 0
-                      ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage])
-                      : null,
-                  productId: item.id ?? "",
-                  commodity: Commodity.jewellery,
-                  isFavourite: item.isFavorite,
-                  wishlistId: item.wishlistID,
-                  productSku: item.contractNoSkuNo,
-                  title: item.contractNoSkuNo ?? '',
-                  subTitle: item.productDescription ?? '',
-                  kgkCollectionName: item.kgkCollection ?? "\n",
-                  businessCategoryName: item.businessCategoryName ?? "\n",
-                  cts: item.crt,
-                  gms: item.gms,
-                  brandName: item.brandName,
-                  colorsCode: [
-                    item.metalColor1HexCode ?? "",
-                    item.metalColor2HexCode ?? "",
-                    item.metalColor3HexCode ?? "",
-                  ]))
-          .toList());
-      paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-      emit(const ProductListLoadedState());
-    });
-  }
-
-  FetchScenario determineFetchScenario() {
-    if (productId.isNotNullNorEmpty) return FetchScenario.productId;
-    if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
-    if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) return FetchScenario.recentlyViewed;
-    if (fetchScenario == FetchScenario.dealOfTheDay) return FetchScenario.dealOfTheDay;
-    return FetchScenario.regularList;
-  }
-
-  void _toggleViewType({bool isGridValue = false, required Emitter<ProductListState> emit}) {
-    emit(ReloadProductState());
-    isGrid = isGridValue;
-    emit(ProductChangeListingTypeState());
-  }
-
-  Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {
-    if (currentPage <= totalNumberOfPages!) {
-      emit(ProductListLoadingMoreState());
-      await fetchJewelleriesList(context, emit, false);
-      emit(ProductListLoadedMoreState(currentPage + 1));
-    }
-  }
-
-  Future<void> _handlePullToRefresh(BuildContext context, Emitter<ProductListState> emit) async {
-    paginationScrollController.pullToRefresh();
-    productList.clear();
-    await _loadInitialData(context, emit);
-    emit(const ProductListLoadedState());
-  }
-
-  Future<void> _addToWatchList(BuildContext context, String productId) async {
-    ProductDetailsModel? product = productList.firstWhereOrNull((element) => element.productId == productId);
-    if (product != null) {
-      BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
-      await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
-    }
-  }
-
-  Future<void> _onProductFilterEvent(ProductFilterEvent event, Emitter<ProductListState> emit) async {
-    emit(ReloadProductState());
-    paginationScrollController.pullToRefresh();
-    productList.clear();
-    filterData = event.filterData;
-    await fetchJewelleriesList(event.context, emit, true);
-    emit(const ProductListLoadedState());
   }
 }
