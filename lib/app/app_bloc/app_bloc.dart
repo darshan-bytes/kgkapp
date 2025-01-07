@@ -189,9 +189,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await AppRepository(event.context).createWishList(body: body).then(
       (response) {
         response?.fold(
-          (l) {
-            // Utils.showMessage(l.message);
-          },
+          (l) {},
           (data) {
             Utils.showMessage(data.message);
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;

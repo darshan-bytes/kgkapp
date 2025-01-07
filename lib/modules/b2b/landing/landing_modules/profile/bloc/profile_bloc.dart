@@ -29,6 +29,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   FocusNode newPasswordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
 
+  String? firstNameError;
+  String? lastNameError;
+  String? contactNumberError;
+
   /// This list holds the details of the actions that can be performed on the profile.
   List<ProfileListModel> profileActionList = [];
 
@@ -72,6 +76,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<EditProfileSaveEvent>(_onEditProfileSaveEvent);
     on<EditProfilePhoneNumberValidationEvent>(_onEditProfilePhoneNumberValidationEvent);
     on<ChangePasswordEvent>(_onChangePasswordEvent);
+    on<EditProfileFieldChangeEvent>(_onEditProfileFieldChangeEvent);
   }
 
   Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
@@ -92,7 +97,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onEditProfileSaveEvent(EditProfileSaveEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileReloadState());
-    if (_validateEditProfile()) {
+    if (_validateEditProfile(emit)) {
       await _callEditUserProfileApi(event: event);
     }
   }
@@ -102,6 +107,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (_validateChangePassword()) {
       _callChangePasswordApi(event: event);
     }
+  }
+
+  void _onEditProfileFieldChangeEvent(EditProfileFieldChangeEvent event, Emitter<ProfileState> emit) {
+    emit(ProfileReloadState());
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.firstName:
+        firstNameError = null;
+        break;
+      case FieldTypeValidationEnum.lastName:
+        lastNameError = null;
+        break;
+      case FieldTypeValidationEnum.contactNumber:
+        contactNumberError = null;
+        break;
+      default:
+        break;
+    }
+    emit(EditProfileFieldErrorState(fieldType: event.fieldType));
   }
 
   Future<void> _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
@@ -187,25 +210,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  bool _validateEditProfile() {
+  bool _validateEditProfile(Emitter<ProfileState> emit) {
     if (firstNameController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorFirstNameRequired.tr);
-      return false;
-    } else if (lastNameController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorLastNameRequired.tr);
-      return false;
-    } else if (emailController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.emailRequired.tr);
-      return false;
-    } else if (!Utils.isValidEmail(emailController.text)) {
-      Utils.showMessage(APPStrings.validEmail.tr);
-      return false;
-    } else if (contactNumberController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
-      return false;
+      firstNameError = APPStrings.errorFirstNameRequired.tr;
+      emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.firstName));
+    }
+    if (lastNameController.text.trim().isEmpty) {
+      lastNameError = APPStrings.errorLastNameRequired.tr;
+      emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.lastName));
     }
 
-    return true;
+    if (contactNumberController.text.trim().isEmpty) {
+      contactNumberError = APPStrings.errorContactNumberRequired.tr;
+      emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
+    } else if (!CountryUtils.validatePhoneNumber(contactNumberController.text.trim(), "+${selectedCountry.phoneCode}")) {
+      contactNumberError = APPStrings.errorContactNumberValid.tr;
+      emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
+    }
+
+    return firstNameError.isNullOrEmpty && lastNameError.isNullOrEmpty && contactNumberError.isNullOrEmpty;
   }
 
   Future<void> _callEditUserProfileApi({required EditProfileSaveEvent event}) async {
