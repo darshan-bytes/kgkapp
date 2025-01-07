@@ -760,6 +760,15 @@ class DiamondDataModel {
   }
 }
 
+extension DiamondListingModelExtension on DiamondDataModel {
+  String? get discountEXT {
+    if ((discountPercentage ?? 0) > 0) {
+      return APPStrings.percentageOffInterpolating.tr.interpolate([discountPercentage]);
+    }
+    return null;
+  }
+}
+
 class DiamondImage {
   DiamondImage({
     required this.url,

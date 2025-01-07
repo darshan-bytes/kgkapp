@@ -52,11 +52,11 @@ class HomeScreen extends StatelessWidget {
                   if (homeBloc.recentlyViewDiamondList.isNotNullNorEmpty)
                     _buildRecentlyViewedSection(APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList,
                         ScreenIdentifier.productForDiamonds,
-                        context: context),
+                        context: context, isCrtAndGramVisible: false),
                   if (homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty)
                     _buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style, homeBloc.recentlyViewGemstoneList,
                         ScreenIdentifier.productForGemstones,
-                        context: context),
+                        context: context, isCrtAndGramVisible: false),
 
                   /// Deal of the day for jewellery
                   if (homeBloc.dealOfTheDayJewelleryList.isNotNullNorEmpty)
@@ -76,6 +76,7 @@ class HomeScreen extends StatelessWidget {
                       screenIdentifier: ScreenIdentifier.productForDiamonds,
                       arrProductList: homeBloc.dealOfTheDayDiamondList,
                       context: context,
+                      isCrtAndGramVisible: false,
                     ),
 
                   /// Deal of the day for gemstone
@@ -86,6 +87,7 @@ class HomeScreen extends StatelessWidget {
                       screenIdentifier: ScreenIdentifier.productForGemstones,
                       arrProductList: homeBloc.dealOfTheDayGemstoneList,
                       context: context,
+                      isCrtAndGramVisible: false,
                     )
                 ],
               ),
@@ -459,8 +461,8 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
-                                  style.primaryColor.withValues(alpha:0.6),
-                                  style.primaryColor.withValues(alpha:0.9),
+                                  style.primaryColor.withValues(alpha: 0.6),
+                                  style.primaryColor.withValues(alpha: 0.9),
                                 ],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),
@@ -927,10 +929,12 @@ Widget _buildDealOfTheDaySection(
     required HomeScreenStyle style,
     required ScreenIdentifier screenIdentifier,
     required BuildContext context,
-    required List<ProductDetailsModel> arrProductList}) {
+    required List<ProductDetailsModel> arrProductList,
+    bool isCrtAndGramVisible = true}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
+      isCrtAndGramVisible: isCrtAndGramVisible,
       title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
       onViewAllTap: arrProductList.length > 5
           ? () {
@@ -1033,10 +1037,11 @@ Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
 
 Widget _buildRecentlyViewedSection(
     String title, HomeBloc homeBloc, HomeScreenStyle style, List<ProductDetailsModel> productList, ScreenIdentifier commodity,
-    {required BuildContext context}) {
+    {required BuildContext context, bool isCrtAndGramVisible = true}) {
   return Padding(
     padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
     child: SmartSuggestionProductList(
+      isCrtAndGramVisible: isCrtAndGramVisible,
       title: title,
       onViewAllTap: productList.length > 5
           ? () {

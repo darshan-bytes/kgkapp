@@ -485,10 +485,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               productId: e.id,
               name: e.productDescription ?? '',
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              offerPrice: e.discountPrice?.setCurrency,
-              originalPrice: e.finalPrice?.setCurrency,
-              discountPercentageString:
-                  e.discountPercentage != null ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
+              originalPrice: e.finalPrice?.toString().setCurrency,
+              offerPrice: e.discountPrice?.toString().setCurrency,
+              finalPrice: e.discountPrice?.toString().setCurrency,
+              discountPercentageString: e.discountEXT,
               productSku: e.contractNoSkuNo,
               reviewCount: e.reviewCount,
               rating: e.rating?.toDouble(),
@@ -499,7 +499,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               title: e.contractNoSkuNo ?? '',
               kgkCollectionName: e.kgkCollection ?? "\n",
               businessCategoryName: e.businessCategoryName ?? "\n",
-              cts: e.crt,
+              cts: e.crtEXT,
               gms: e.gms,
               brandName: e.brandName,
               colorsCode: [

@@ -9,6 +9,7 @@ class SmartSuggestionProductList extends StatelessWidget {
   final bool isPaddingNeeded;
   final ScrollController scrollController;
   final Function(ProductDetailsModel)? onProductTap;
+  final bool isCrtAndGramVisible;
 
   const SmartSuggestionProductList({
     super.key,
@@ -20,6 +21,7 @@ class SmartSuggestionProductList extends StatelessWidget {
     this.isPaddingNeeded = true,
     required this.scrollController,
     this.onProductTap,
+    this.isCrtAndGramVisible = true,
   });
 
   @override
@@ -70,6 +72,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                   onEyeTap: onEyeTap,
                   onFavTap: onFavTap,
                   productDetails: product,
+                  isCrtAndGramVisible: isCrtAndGramVisible,
                 );
               }).toList(),
             ),

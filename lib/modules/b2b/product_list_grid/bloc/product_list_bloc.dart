@@ -130,12 +130,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ProductListLoadingState());
     getRouteData(context);
     _initializePagination(context);
+    await _sortOptionListApiCall(context);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await _loadInitialData(context, emit);
     }
-    await _sortOptionListApiCall(context);
-    _initWishlistUpdaterServiceBloc(context);
     emit(const ProductListLoadedState());
+    _initWishlistUpdaterServiceBloc(context);
   }
 
   /// Fetches data from the current route (navigation)
@@ -277,8 +277,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       originalPrice: item.finalPrice?.toString().setCurrency,
       offerPrice: item.discountPrice?.toString().setCurrency,
       finalPrice: item.discountPrice?.toString().setCurrency,
-      discountPercentageString:
-          (item.discountPercentage ?? 0) > 0 ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]) : null,
+      discountPercentageString: item.discountEXT,
       productId: item.id ?? "",
       commodity: Commodity.jewellery,
       isFavourite: item.isFavorite,
@@ -288,7 +287,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       subTitle: item.productDescription ?? '',
       kgkCollectionName: item.kgkCollection ?? "\n",
       businessCategoryName: item.businessCategoryName ?? "\n",
-      cts: item.crt,
+      cts: item.crtEXT,
       gms: item.gms,
       brandName: item.brandName,
       colorsCode: [
