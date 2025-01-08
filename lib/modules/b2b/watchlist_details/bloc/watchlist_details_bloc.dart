@@ -15,11 +15,22 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
 
   final TextEditingController searchController = TextEditingController();
 
+  Duration get watchlistRemainTime => watchlistDetailsModel.expiresAt?.difference(DateTime.now()) ?? Duration.zero;
+
+  Timer? timer;
+
   WatchlistDetailsBloc() : super(const WatchlistDetailsInitial()) {
     on<WatchlistDetailsInitialEvent>(_onWatchlistDetailsInitialEvent);
     on<WatchlistDetailsEditProductEvent>(_onWatchlistDetailsEditProductEvent);
     on<WatchlistDetailsSearchEvent>(_onWatchlistDetailsSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<WatchlistDetailsDeleteEvent>(_onWatchlistDetailsDeleteEvent);
+    on<WatchlistDetailsTimerEvent>(_onWatchlistDetailsTimerEvent);
+  }
+
+  @override
+  Future<void> close() async {
+    timer?.cancel();
+    return super.close();
   }
 
   Future<void> _onWatchlistDetailsInitialEvent(WatchlistDetailsInitialEvent event, Emitter<WatchlistDetailsState> emit) async {
@@ -38,6 +49,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
         },
         (data) {
           watchlistDetailsModel = data;
+          startTimer();
           productList = _generateProductList();
           _productList = List.from(productList);
           emit(const WatchlistDetailsLoaded());
@@ -171,6 +183,11 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
     );
   }
 
+  Future<void> _onWatchlistDetailsTimerEvent(WatchlistDetailsTimerEvent event, Emitter<WatchlistDetailsState> emit) async {
+    emit(const WatchlistDetailsReload());
+    emit(const WatchlistDetailsTimerState());
+  }
+
   void handleBack(BuildContext context, {required bool needToPop}) {
     if (needToPop) {
       context.pop(arguments: {
@@ -178,5 +195,20 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
         RoutesData.watchlistData: watchlistDetailsModel,
       });
     }
+  }
+
+  void startTimer() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (watchlistDetailsModel.expiresAt != null) {
+        if (watchlistDetailsModel.expiresAt?.isAfter(DateTime.now()) == true) {
+          add(WatchlistDetailsTimerEvent());
+        } else {
+          timer?.cancel();
+        }
+      }
+    });
   }
 }

@@ -152,7 +152,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
     final Throttle throttle = Throttle(milliseconds: 500);
     return ElevatedButton.icon(
       onPressed: () {
-        throttle.run(onPressed.call());
+        throttle.run(onPressed);
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(60.w, 36.h),

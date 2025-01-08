@@ -217,7 +217,7 @@ class CartProductItem extends StatelessWidget {
               SizedBox(height: 8.h),
               priceSection(style),
             ],
-            if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
+            if (productDetails.gms.isNotNullNorEmpty || productDetails.cts.isNotNullNorEmpty) ...[
               SizedBox(height: 8.h),
               diamondAndGramSection(style, context),
             ],
@@ -300,7 +300,7 @@ class CartProductItem extends StatelessWidget {
   Widget diamondAndGramSection(ProductItemStyle style, BuildContext context) {
     return Row(
       children: [
-        if (productDetails.diamond.isNotNullNorEmpty) ...[
+        if (productDetails.cts.isNotNullNorEmpty) ...[
           Flexible(
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -309,7 +309,7 @@ class CartProductItem extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
-                    productDetails.diamond,
+                    productDetails.cts,
                     style: style.diamondTextStyle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -320,7 +320,7 @@ class CartProductItem extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
         ],
-        if (productDetails.gram.isNotNullNorEmpty)
+        if (productDetails.gms.isNotNullNorEmpty)
           Flexible(
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -329,7 +329,7 @@ class CartProductItem extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
-                    productDetails.gram,
+                    productDetails.gms,
                     style: style.diamondTextStyle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

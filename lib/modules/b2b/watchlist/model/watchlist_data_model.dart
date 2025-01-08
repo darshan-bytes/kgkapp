@@ -8,12 +8,12 @@ class WatchlistData {
   List<WatchlistProducts>? products;
   WatchlistDuration? duration;
   String? endDate;
-  String? expiresAt;
   bool? isDeleted;
   String? deletedAt;
-  String? createdAt;
-  String? updatedAt;
   int? iV;
+  DateTime? expiresAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   WatchlistData({
     this.sId,
@@ -44,11 +44,11 @@ class WatchlistData {
     }
     duration = json['duration'] != null ? WatchlistDuration.fromJson(json['duration']) : null;
     endDate = json['endDate'];
-    expiresAt = json['expiresAt'];
+    expiresAt = DateTime.tryParse(json["expiresAt"] ?? "");
     isDeleted = json['isDeleted'];
     deletedAt = json['deletedAt'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    createdAt = DateTime.tryParse(json["createdAt"] ?? "");
+    updatedAt = DateTime.tryParse(json["updatedAt"] ?? "");
     iV = json['__v'];
   }
 
@@ -65,11 +65,11 @@ class WatchlistData {
       data['duration'] = duration!.toJson();
     }
     data['endDate'] = endDate;
-    data['expiresAt'] = expiresAt;
+    data['expiresAt'] = expiresAt?.toIso8601String();
     data['isDeleted'] = isDeleted;
     data['deletedAt'] = deletedAt;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
+    data['createdAt'] = createdAt?.toIso8601String();
+    data['updatedAt'] = updatedAt?.toIso8601String();
     data['__v'] = iV;
     return data;
   }
@@ -80,15 +80,9 @@ extension WatchlistDataExtension on WatchlistData {
     return status == true ? ProjectStatus.active : ProjectStatus.inActive;
   }
 
-  String get displayFromDate =>
-      createdAt?.changeDateFormat(
-          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ??
-      "";
+  String get displayFromDate => createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
 
-  String get displayToDate =>
-      expiresAt?.changeDateFormat(
-          inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ??
-      "";
+  String get displayToDate => expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
 }
 
 class WatchlistProducts {
@@ -210,6 +204,10 @@ class WatchlistDuration {
 }
 
 extension WatchlistDurationExtension on WatchlistDuration {
+  Duration get durationExt {
+    return Duration(days: days ?? 0, hours: hours ?? 0, minutes: minutes ?? 0);
+  }
+
   String get displayDuration {
     return '${days ?? 0}d ${hours ?? 0}h ${minutes ?? 0}m';
   }

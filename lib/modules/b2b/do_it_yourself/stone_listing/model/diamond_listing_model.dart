@@ -214,6 +214,7 @@ class DiamondDataModel {
     required this.finalPrice,
     this.isAuction = false,
     required this.components,
+    this.isAddedToCart = false,
   });
 
   String? id;
@@ -393,6 +394,7 @@ class DiamondDataModel {
   String? finalPrice;
   bool isAuction;
   List<StoneElement> components;
+  bool isAddedToCart;
 
   factory DiamondDataModel.fromJson(Map<String, dynamic> json) {
     return DiamondDataModel(
@@ -573,6 +575,7 @@ class DiamondDataModel {
       wishlistID: json["is_favorite"],
       isAuction: json["is_auction"] ?? false,
       components: json["components"] == null ? [] : List<StoneElement>.from(json["components"]!.map((x) => StoneElement.fromJson(x))),
+      isAddedToCart: json["isAddedToCart"] ?? false,
     );
   }
 
@@ -751,12 +754,14 @@ class DiamondDataModel {
         "is_favorite": isFavorite,
         "price_cts": priceCts,
         "final_price": finalPrice,
-        "is_auction": isAuction
+        "is_auction": isAuction,
+        "components": List.from(components.map((x) => x.toJson())),
+        "isAddedToCart": isAddedToCart,
       };
 
   @override
   String toString() {
-    return "$id, $avgWeight, $backRate, $blackCrown, $blackCrownRefSuid, $blackCrownSuid, $blackTable, $blackTableRefSuid, $blackTableSuid, $cscCode, $cscId, $cscName, $certificate, $certificateCardImage, $certificateFile, $certificateImage, $certificateVideo, $clarity, $clarityGrading, $clarityRefSuid, $claritySuid, $clarityChar, $color, $colorGrading, $colorGradingRefSuid, $colorGradingSuid, $colorOrigin, $colorRefSuid, $colorSuid, $comment, $commodityName, $commodityNameRefSuid, $commodityNameSuid, $crownOpen, $crownOpenRefSuid, $crownOpenSuid, $crownAngle, $crownHeight, $ctsOrGms, $culet, $culetCondRefSuid, $culetCondSuid, $culetSizeRefSuid, $culetSizeSuid, $culetCond, $culetRefSuid, $culetSize, $culetSuid, $culetGia, $currency, $cut, $cutRefSuid, $cutSuid, $depth, $diamondAssetUrl, $discountPercentage, $dtcBand, $fancyColor, $fancyColorRefSuid, $fancyColorSuid, $flag, $fluorescence, $fluorescenceRefSuid, $fluorescenceSuid, $girdle, $girdleInclusion, $girdleInclusionRefSuid, $girdleInclusionSuid, $girdleSize, $girdleCond, $girdlePer, $girdleRefSuid, $girdleSuid, $grade, $guestUser, $hna, $hnaRefSuid, $hnaSuid, $image, $includes, $inscriptionNumber, $intensity, $invTypeDiscount, $inventoryType, $keyToSymbol, $keyToSymbolRefSuid, $keyToSymbolSuid, $lwRatio, $labs, $laserInscription, $laserInsReg, $location, $lotCodeRefSuid, $lotCodeSuid, $lotCode, $lowerHalf, $lsp, $maxSize, $measurements, $milky, $milkyRefSuid, $milkySuid, $minSize, $noBgm, $openDnaUrl, $origin, $pavOpen, $pavOpenRefSuid, $pavOpenSuid, $pavilionAngle, $pavilionDepth, $pcs, $polish, $price, $quality, $rmDescription, $rappaportDate, $rappaportPrice, $rawMaterial, $rawMaterialRefSuid, $rawMaterialSuid, $receivedDateTime, $refSuid, $sscWebsiteLotNo, $shape, $shapeCode, $shapeRefSuid, $shapeSuid, $size, $sizeRange, $importedFrom, $specialOffer, $starLength, $status, $stone, $subTypeCode, $subTypeName, $subareaCode, $subareaId, $subareaName, $suid, $supplierCode, $supplierName, $symmetry, $symmetryRefSuid, $symmetrySuid, $table, $tableOpen, $tableOpenRefSuid, $tableOpenSuid, $totalCarat, $treatment, $type, $uom1, $uom2, $updatedDateTime, $video, $whiteInCenter, $whiteInCenterRefSuid, $whiteInCenterSuid, $whiteInCrown, $whiteInCrownRefSuid, $whiteInCrownSuid, $referenceId, $datumCreatedAt, $createdAt, $updatedAt, $discountPrice, $rating, $reviewCount, $auctionId, $isFavorite, $priceCts, $finalPrice, $isAuction ";
+    return "$id, $avgWeight, $backRate, $blackCrown, $blackCrownRefSuid, $blackCrownSuid, $blackTable, $blackTableRefSuid, $blackTableSuid, $cscCode, $cscId, $cscName, $certificate, $certificateCardImage, $certificateFile, $certificateImage, $certificateVideo, $clarity, $clarityGrading, $clarityRefSuid, $claritySuid, $clarityChar, $color, $colorGrading, $colorGradingRefSuid, $colorGradingSuid, $colorOrigin, $colorRefSuid, $colorSuid, $comment, $commodityName, $commodityNameRefSuid, $commodityNameSuid, $crownOpen, $crownOpenRefSuid, $crownOpenSuid, $crownAngle, $crownHeight, $ctsOrGms, $culet, $culetCondRefSuid, $culetCondSuid, $culetSizeRefSuid, $culetSizeSuid, $culetCond, $culetRefSuid, $culetSize, $culetSuid, $culetGia, $currency, $cut, $cutRefSuid, $cutSuid, $depth, $diamondAssetUrl, $discountPercentage, $dtcBand, $fancyColor, $fancyColorRefSuid, $fancyColorSuid, $flag, $fluorescence, $fluorescenceRefSuid, $fluorescenceSuid, $girdle, $girdleInclusion, $girdleInclusionRefSuid, $girdleInclusionSuid, $girdleSize, $girdleCond, $girdlePer, $girdleRefSuid, $girdleSuid, $grade, $guestUser, $hna, $hnaRefSuid, $hnaSuid, $image, $includes, $inscriptionNumber, $intensity, $invTypeDiscount, $inventoryType, $keyToSymbol, $keyToSymbolRefSuid, $keyToSymbolSuid, $lwRatio, $labs, $laserInscription, $laserInsReg, $location, $lotCodeRefSuid, $lotCodeSuid, $lotCode, $lowerHalf, $lsp, $maxSize, $measurements, $milky, $milkyRefSuid, $milkySuid, $minSize, $noBgm, $openDnaUrl, $origin, $pavOpen, $pavOpenRefSuid, $pavOpenSuid, $pavilionAngle, $pavilionDepth, $pcs, $polish, $price, $quality, $rmDescription, $rappaportDate, $rappaportPrice, $rawMaterial, $rawMaterialRefSuid, $rawMaterialSuid, $receivedDateTime, $refSuid, $sscWebsiteLotNo, $shape, $shapeCode, $shapeRefSuid, $shapeSuid, $size, $sizeRange, $importedFrom, $specialOffer, $starLength, $status, $stone, $subTypeCode, $subTypeName, $subareaCode, $subareaId, $subareaName, $suid, $supplierCode, $supplierName, $symmetry, $symmetryRefSuid, $symmetrySuid, $table, $tableOpen, $tableOpenRefSuid, $tableOpenSuid, $totalCarat, $treatment, $type, $uom1, $uom2, $updatedDateTime, $video, $whiteInCenter, $whiteInCenterRefSuid, $whiteInCenterSuid, $whiteInCrown, $whiteInCrownRefSuid, $whiteInCrownSuid, $referenceId, $datumCreatedAt, $createdAt, $updatedAt, $discountPrice, $rating, $reviewCount, $auctionId, $isFavorite, $priceCts, $finalPrice, $isAuction, $isAddedToCart, $components";
   }
 }
 

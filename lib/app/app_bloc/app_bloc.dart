@@ -235,28 +235,28 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   // Add to bag event
   Future<void> _onProductAddToBagEvent(ProductAddToBagEvent event, Emitter<AppState> emit) async {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    String userId = StorageManager().getUserId() ?? '';
 
     if (myBagDataModel != null && myBagDataModel.commodity != event.productDetails.commodity?.value) {
       await _deleteAndRetryBag(event, emit, myBagDataModel.sId ?? '');
     }
-    await _addToBag(event, userId);
+    await _addToBag(event);
   }
 
   // Add to bag
-  Future<void> _addToBag(ProductAddToBagEvent event, String userId) async {
+  Future<void> _addToBag(ProductAddToBagEvent event) async {
     if (event.productDetails.suid.isNullOrEmpty || event.productDetails.commodity == null) return;
     Map<String, dynamic> body = {
       ApiKey.commodity: event.productDetails.commodity?.value,
       ApiKey.quantity: 1,
       ApiKey.suid: event.productDetails.suid,
-      ApiKey.userId: userId,
     };
 
-    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    String id = myBagDataModel?.sId ?? '';
-    if (id.isNotEmpty) {
-      body[ApiKey.id] = id;
+    if (StorageManager().getIsSkipLogin()) {
+      MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+      String id = myBagDataModel?.sId ?? '';
+      if (id.isNotEmpty) {
+        body[ApiKey.id] = id;
+      }
     }
 
     await AppRepository(event.context).addToBag(body: body).then((response) {

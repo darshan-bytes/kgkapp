@@ -44,3 +44,10 @@ final class ProductListLoadingState extends ProductListState {
   @override
   List<Object> get props => [];
 }
+
+final class ProductListFilterLoadedState extends ProductListState {
+  const ProductListFilterLoadedState();
+
+  @override
+  List<Object> get props => [];
+}

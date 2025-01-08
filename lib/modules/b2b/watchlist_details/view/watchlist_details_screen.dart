@@ -134,11 +134,16 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildDetailColumn(
-                      APPStrings.remainingTime.tr,
-                      bloc.watchlistDetailsModel.duration?.displayDuration,
-                      style,
-                      valueStyle: style.watchlistNameStyle,
+                    BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
+                      buildWhen: (previous, current) => current is WatchlistDetailsTimerState,
+                      builder: (context, state) {
+                        return _buildDetailColumn(
+                          APPStrings.remainingTime.tr,
+                          bloc.watchlistRemainTime.formattedDurationWithSecondsShort,
+                          style,
+                          valueStyle: style.watchlistNameStyle,
+                        );
+                      },
                     ),
                     SizedBox(height: 16.h),
                     _buildDetailColumn(

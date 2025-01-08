@@ -588,6 +588,7 @@ class LightModeTheme extends AppTheme {
         isSameAddressStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         nProductsTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
         footerTotalAmountStyle: interSemiBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
+        addressTypeTitleStyle: interMediumBoldTextStyle.copyWith(fontSize: 18.sp, color: colors.color303538),
         whiteColor: colors.white,
       );
 
