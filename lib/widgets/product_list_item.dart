@@ -12,8 +12,8 @@ class ProductListItem extends StatelessWidget {
   final Function()? onEyeTap;
   final BoxFit fit;
   final bool isFavourite;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final bool isCustomisable;
   final bool isOutOfStock;
 
@@ -30,8 +30,8 @@ class ProductListItem extends StatelessWidget {
     this.onAddToBagTap,
     this.onEyeTap,
     this.isFavourite = false,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding,
+    this.margin,
     this.isCustomisable = false,
     this.isOutOfStock = false,
   });
@@ -44,6 +44,12 @@ class ProductListItem extends StatelessWidget {
       onTap: onTap,
       child: Card(
         clipBehavior: Clip.antiAlias,
+        elevation: 0.8,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: style.borderColor, strokeAlign: 0.5),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        shadowColor: style.primaryColor,
         child: Container(
           padding: padding,
           margin: margin,
@@ -137,7 +143,9 @@ class ProductListItem extends StatelessWidget {
         decoration: BoxDecoration(
             color: backgroundColor ?? style.backgroundColor,
             borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: borderColor ?? style.transparentColor)),
+            border: Border.all(
+              color: borderColor ?? style.transparentColor,
+            )),
         height: 24.w,
         width: 24.w,
         alignment: Alignment.center,
@@ -198,16 +206,12 @@ class ProductListItem extends StatelessWidget {
               SizedBox(height: 8.h),
               priceSection(style),
             ],
-            if (productDetails.gram.isNotNullNorEmpty || productDetails.diamond.isNotNullNorEmpty) ...[
-              SizedBox(height: 4.h),
-              diamondAndGramSection(style),
-            ],
             Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (productDetails.kgkCollectionName.isNotNullNorEmpty)
-                  Expanded(
+                  Flexible(
                     child: SmartText(
                       productDetails.kgkCollectionName,
                       style: style.priceTextStyle,
@@ -216,7 +220,14 @@ class ProductListItem extends StatelessWidget {
                       optionalPadding: EdgeInsets.only(top: 8.h),
                     ),
                   ),
-                if (productDetails.businessCategoryName.isNotNullNorEmpty)
+                if (productDetails.businessCategoryName.isNotNullNorEmpty) ...[
+                  SmartText(
+                    "|",
+                    style: style.priceTextStyle,
+                    optionalPadding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                  ),
                   Expanded(
                     child: SmartText(
                       productDetails.businessCategoryName,
@@ -225,6 +236,7 @@ class ProductListItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                ]
               ],
             ),
             if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[

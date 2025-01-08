@@ -44,7 +44,7 @@ class CollectionScreen extends StatelessWidget {
                   // tabBarColor: Colors.red,
                 );
               }
-              return const SizedBox.shrink();
+              return SmartCircularProgressIndicator();
             },
           ),
         ),
@@ -81,7 +81,7 @@ class CollectionScreen extends StatelessWidget {
                   bloc.add(CollectionListPullToRefreshEvent(context));
                 },
                 child: ListView.builder(
-                  controller: bloc.paginationScrollController.scrollController,
+                  controller: bloc.paginationScrollController.controller,
                   padding: EdgeInsets.symmetric(horizontal: 14.w),
                   shrinkWrap: true,
                   itemCount: bloc.collectionMasterList.length,

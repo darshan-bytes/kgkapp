@@ -406,7 +406,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String _getJewelleryRouteNameForB2C(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
-        return AppRoutes.productListGridPage;
+        return AppRoutes.collectionPage;
       default:
         return defaultAction();
     }

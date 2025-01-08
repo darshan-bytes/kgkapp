@@ -498,6 +498,8 @@ class LightModeTheme extends AppTheme {
         addPromoCodeStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
         totalPriceStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
         orderSummaryItemValueStyle: interRegularTextStyle.copyWith(fontSize: 16.sp, color: colors.color303538),
+        viewAllCouponsStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.primary),
+        applyButtonStyle: interMediumBoldTextStyle.copyWith(fontSize: 16.sp, color: colors.color50B83C),
       );
 
   @override

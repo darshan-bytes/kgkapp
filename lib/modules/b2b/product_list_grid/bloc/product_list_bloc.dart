@@ -234,7 +234,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await fetchByProductId(context: context);
         break;
       case FetchScenario.collectionName:
-        response = await fetchByCollectionName(context: context, isLoadMore: isLoadMore);
+        if (query.isEmpty) {
+          query.addAll({ApiKey.kgkCollection: collectionName});
+        }
+        response = await fetchByCollectionName(context: context, isLoadMore: isLoadMore, query: query);
         break;
       case FetchScenario.regularList:
         response = await fetchRegularList(context: context, isLoadMore: isLoadMore, query: query);
@@ -310,7 +313,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// Fetch products by collection name
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchByCollectionName(
-      {required BuildContext context, bool isLoadMore = false}) async {
+      {required BuildContext context, bool isLoadMore = false, Map<String, String>? query}) async {
     return AppRepository(context).fetchJewelleryList(
       page: paginationScrollController.currentPage.toString(),
       isLoadMore: isLoadMore,
@@ -318,7 +321,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       type: '',
       sortKey: sortKey,
       sortValue: sortValue,
-      query: {ApiKey.kgkCollection: collectionName},
+      query: query,
     );
   }
 
@@ -451,7 +454,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       case FetchScenario.regularList:
       case FetchScenario.collectionName:
       case FetchScenario.productId:
-        appbarTitle = APPStrings.jewellery.tr;
+        appbarTitle = collectionName.isNotNullNorEmpty ? collectionName : APPStrings.jewellery.tr;
         break;
       case FetchScenario.dealOfTheDay:
         appbarTitle = APPStrings.dealOfTheDay.tr;

@@ -5,35 +5,49 @@ part 'stone_listing_event.dart';
 part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
-  /// grid/list view for product listing
+  /// This variable is used to check whether the toggle is Precious tab or Semi Precious tab
   bool isInitialToggle = true;
+
+  /// Determines if the view is in grid or list mode
   bool isGrid = true;
-
-  /// appbar title
-  String stoneListingAppbarTitle = "";
-  ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
-
-  /// Store product list
-  List<ProductDetailsModel> productList = [];
-  List<DiamondDataModel> diamondDatumList = [];
-  List<GemstoneDatum> gemstoneDatumList = [];
-
-  /// Store filter and sort data
-  List<FilterData> filterData = [];
-  List<SortOptions> sortOptions = [];
-
-  int? totalNumberOfPages;
-  String productId = '';
-  String productNavigation = '';
-  String sortKey = AppConst.sortKeyUpdatedDateTime;
-  String sortValue = AppConst.sortValueDesc;
 
   /// Tab title
   String tabOneTitle = APPStrings.naturalDiamond.tr;
   String tabTwoTitle = APPStrings.looseDiamond.tr;
 
-  /// Pagination controller
+  /// App bar title for the screen
+  String appbarTitle = APPStrings.gemstone.tr;
+
+  /// Identifier for the current screen type
+  ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
+
+  /// The total number of filtered records
+  int? totalFilteredRecords;
+
+  /// Controller for managing pagination
+  int? totalNumberOfPages;
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
+  /// Variables for managing pagination and filtering
+  String productId = "";
+  String productNavigation = "";
+
+  /// Variables for sorting
+  String sortKey = AppConst.sortKeyUpdatedDateTime;
+  String sortValue = AppConst.sortValueDesc;
+
+  /// Stores filter data for products
+  List<FilterData> filterData = [];
+
+  /// Stores sorting options for the product list
+  List<SortOptions> sortOptions = [];
+
+  /// This model is used to transfer data between the BLoC and the screen for displaying the product list in the UI
+  List<ProductDetailsModel> productList = [];
+
+  /// This model contains the actual data fetched, but we use ProductDetailsModel for displaying the data at the UI level
+  List<DiamondDataModel> diamondDatumList = [];
+  List<GemstoneDatum> gemstoneDatumList = [];
 
   /// Stone listing constructor
   StoneListingBloc() : super(const StoneListingInitial()) {
@@ -55,55 +69,67 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     return super.close();
   }
 
-  /// Event handlers
+  /// Handler for initializing the stone list
   Future<void> _onGetStoneProductListEvent(GetStoneProductListEvent event, Emitter<StoneListingState> emit) async {
     await _initializeBloc(event.context, emit);
   }
 
+  /// Handler for changing the stone type
   Future<void> _onStoneChangeTypeEvent(StoneChangeTypeEvent event, Emitter<StoneListingState> emit) async {
     await stoneChangeType(event.context, event, emit);
   }
 
+  /// Handler for changing the listing type
   Future<void> _onChangeListingTypeEvent(StoneChangeListingTypeEvent event, Emitter<StoneListingState> emit) async {
     _changeListingViewType(emit);
   }
 
+  /// Handler for load more
   Future<void> _onStoneListLoadMoreEvent(StoneListLoadMoreEvent event, Emitter<StoneListingState> emit) async {
     await _handleLoadMore(event.context, emit, event.currentPage);
   }
 
+  /// Handler for pull to refresh
   Future<void> _onStoneListPullToRefresh(StoneListPullToRefreshEvent event, Emitter<StoneListingState> emit) async {
     await _handlePullToRefresh(event.context, emit);
   }
 
+  /// Handler for adding a product to the watchlist
   Future<void> _onStoneListAddToWatchList(StoneListAddToWatchListEvent event, Emitter<StoneListingState> emit) async {
     await _addToWatchList(event.context, event.stoneId);
   }
 
+  /// Handler for sorting
   Future<void> _onStoneSortEvent(StoneSortEvent event, Emitter<StoneListingState> emit) async {
     await _handleSortFunction(event, emit);
   }
 
+  /// Handler for filtering
   Future<void> _onStoneListingFilterEvent(StoneListingFilterEvent event, Emitter<StoneListingState> emit) async {
     await _handleFilterFunction(event, emit);
   }
 
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<StoneListingState> emit) async {
-    emit(StoneProductReloadState());
-    getScreenIdentifier(context);
-    await _initializeSortOptions();
+    emit(StoneListLoadingState());
+    getRouteData(context);
     _initializePagination(context);
-    await _generateProductList(context, emit);
+    await _initializeSortOptions();
+    if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
+      await _generateProductList(context, emit);
+    }
     emit(const StoneProductLoadedState());
   }
 
   /// Get screen identifier
-  void getScreenIdentifier(BuildContext context) {
+  void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
     productId = data?[RoutesData.productId] ?? "";
     productNavigation = data?[RoutesData.productNavigation] ?? AppConst.youMayLike;
+
+    /// Here we set the appbar title
+    _getStoneListName();
   }
 
   /// Initialize pagination
@@ -124,21 +150,21 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
         _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
-        await fetchDiamondList(context, emit, isLoadMore: true);
+        await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
         }
         break;
       case ScreenIdentifier.productForGemstones:
         _setupTitles(APPStrings.gemstone.tr, APPStrings.precious.tr, APPStrings.semiPrecious.tr);
-        await fetchGemstoneList(context, emit, isLoadMore: true);
+        await fetchGemstoneList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.productForGemstones);
         }
         break;
       default:
         _setupTitles(APPStrings.diamonds.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
-        await fetchDiamondList(context, emit, isLoadMore: true);
+        await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
         }
@@ -149,15 +175,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Setup titles
-  void _setupTitles(String appbarTitle, String tabOne, String tabTwo) {
-    stoneListingAppbarTitle = appbarTitle;
+  void _setupTitles(String appbarTitleValue, String tabOne, String tabTwo) {
+    appbarTitle = appbarTitleValue;
     tabOneTitle = tabOne;
     tabTwoTitle = tabTwo;
   }
 
   /// Fetch diamond list
   Future<void> fetchDiamondList(BuildContext context, Emitter<StoneListingState> emit,
-      {required bool isLoadMore, Map<String, String>? query}) async {
+      {bool isLoadMore = false, Map<String, String>? query}) async {
     final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
@@ -232,9 +258,17 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }, (success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final diamondList = success.data;
+
+      /// Show the total number of records in the UI side
+      totalFilteredRecords = success.filteredRecords;
       productList.addAll(
         diamondList.map((diamond) => _convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
       );
+
+      /// Here sometime the pagination is not completed and called multiple times so we have managed it
+      if (paginationScrollController.isPageLoaded.isCompleted) {
+        paginationScrollController.isPageLoaded = Completer<bool>();
+      }
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
@@ -242,7 +276,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Fetch gemstone list
   Future<void> fetchGemstoneList(BuildContext context, Emitter<StoneListingState> emit,
-      {required bool isLoadMore, Map<String, String>? query}) async {
+      {bool isLoadMore = false, Map<String, String>? query}) async {
     final String type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     Either<ErrorResponse, GemstoneListingModel>? response;
     query ??= {};
@@ -307,6 +341,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }, (success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       final gemstoneList = success.data;
+
+      /// Show the total number of records in the UI side
+      totalFilteredRecords = success.filteredRecords;
       productList.addAll(
         gemstoneList.map((gemstone) => _convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
       );
@@ -354,16 +391,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     return ProductDetailsModel(
       suid: gemstone.suid,
       productId: gemstone.id,
-      diamond: "2.5 crt",
-      gram: "1.5 grms",
       imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
       name: gemstone.rmDescription ?? "",
-      originalPrice: (gemstone.discountPrice ?? 0).toString().setCurrency,
       ctsOrGms: gemstone.ctsOrGms,
       rappaportPrice: gemstone.rappaportPrice,
       priceCts: gemstone.priceCts,
-      discountPrice: (gemstone.discountPrice ?? 0).toString().setCurrency,
-      finalPrice: gemstone.finalPrice?.setCurrency,
+      originalPrice: gemstone.finalPrice?.toString().setCurrency,
+      offerPrice: gemstone.finalPrice?.toString().setCurrency,
+      finalPrice: gemstone.discountPrice?.toString().setCurrency,
       lotCode: gemstone.lotCode,
       shape: gemstone.shape,
       fluorescence: gemstone.fluorescence,
@@ -410,13 +445,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       } else {
         await fetchDiamondList(context, emit, isLoadMore: false);
       }
-      emit(StoneListLoadedMoreState(currentPage + 1));
+      emit(StoneListLoadedMoreState(currentPage));
     }
   }
 
   /// Handle pull to refresh
   Future<void> _handlePullToRefresh(BuildContext context, Emitter<StoneListingState> emit) async {
-    emit(StoneProductReloadState());
+    emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
     productList.clear();
@@ -489,11 +524,29 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Handle filter
   Future<void> _handleFilterFunction(StoneListingFilterEvent event, Emitter<StoneListingState> emit) async {
-    emit(StoneProductReloadState());
+    emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
     filterData = event.filterData;
     await _generateProductList(event.context, emit);
     emit(const StoneProductLoadedState());
+  }
+
+  void _getStoneListName() {
+    appbarTitle = APPStrings.diamonds.tr;
+    switch (screenIdentifier) {
+      case ScreenIdentifier.diamondForDIY:
+        appbarTitle = APPStrings.diy.tr;
+        break;
+      case ScreenIdentifier.productForDiamonds:
+        appbarTitle = APPStrings.diamonds.tr;
+        break;
+      case ScreenIdentifier.productForGemstones:
+        appbarTitle = APPStrings.gemstone.tr;
+        break;
+      default:
+        appbarTitle = APPStrings.diamonds.tr;
+        break;
+    }
   }
 }

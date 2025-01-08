@@ -975,4 +975,5 @@ class APPStrings {
   static const String errorNameRequired = 'mob_error_name_required';
   static const String goToBag = 'mob_go_to_bag';
   static const String errorZipCodeValid = 'mob_error_zip_code_valid';
+  static const String viewAllCoupons = "mob_view_all_coupons";
 }
