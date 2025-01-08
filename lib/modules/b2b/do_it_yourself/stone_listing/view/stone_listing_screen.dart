@@ -14,7 +14,7 @@ class StoneListingScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is StoneProductLoadedState,
           builder: (context, state) {
             return SmartAppBar(
-              title: diamondListingBloc.stoneListingAppbarTitle,
+              title: diamondListingBloc.appbarTitle,
               onSearch: () {
                 context.pushNamed(AppRoutes.searchPage);
               },
@@ -30,8 +30,11 @@ class StoneListingScreen extends StatelessWidget {
         onTap: diamondListingBloc.paginationScrollController.scrollToTop,
       ),
       bottomNavigationBar: BlocBuilder<StoneListingBloc, StoneListingState>(
-        buildWhen: (previous, current) => current is StoneProductLoadedState,
+        buildWhen: (previous, current) => current is StoneProductLoadedState || current is StoneListLoadingState,
         builder: (context, state) {
+          if (state is StoneListLoadingState) {
+            return SmartCircularProgressIndicator();
+          }
           if (state is StoneProductLoadedState) {
             return FilterBottomActionBar(
               controller: diamondListingBloc.paginationScrollController.controller,
@@ -71,7 +74,7 @@ class StoneListingScreen extends StatelessWidget {
           if (state is StoneProductLoadedState) {
             return SafeArea(
                 child: SmartSingleChildScrollView(
-              controller: diamondListingBloc.paginationScrollController.scrollController,
+              controller: diamondListingBloc.paginationScrollController.controller,
               onRefresh: () async {
                 diamondListingBloc.add(StoneListPullToRefreshEvent(context));
               },
@@ -148,7 +151,13 @@ class StoneListingScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: style.filterProductCountTextStyle),
+              SmartText(
+                  APPStrings.showingListLengthX.tr.interpolate([
+                    diamondListingBloc.paginationScrollController.currentPage,
+                    diamondListingBloc.totalNumberOfPages,
+                    diamondListingBloc.totalFilteredRecords,
+                  ]),
+                  style: style.filterProductCountTextStyle),
               Row(
                 children: [
                   SelectionButton(
@@ -184,18 +193,20 @@ class StoneListingScreen extends StatelessWidget {
                       diamondListingBloc.add(const StoneChangeListingTypeEvent());
                     },
                   ),
-                  SizedBox(width: 16.w),
-                  SelectionButton(
-                    width: 48.w,
-                    imageHeight: 24.5.w,
-                    imageWidth: 24.5.w,
-                    isSelected: true,
-                    selectedButtonColor: style.menuBackgroundColor,
-                    selectedButtonBorderColor: style.menuBorderColor,
-                    selectedButtonIconColor: style.gridIconColor,
-                    image: AppImages.icMenu,
-                    onTap: () {},
-                  ),
+
+                  /// TODO: Currently not implemented as per discussion with JD
+                  // SizedBox(width: 16.w),
+                  // SelectionButton(
+                  //   width: 48.w,
+                  //   imageHeight: 24.5.w,
+                  //   imageWidth: 24.5.w,
+                  //   isSelected: true,
+                  //   selectedButtonColor: style.menuBackgroundColor,
+                  //   selectedButtonBorderColor: style.menuBorderColor,
+                  //   selectedButtonIconColor: style.gridIconColor,
+                  //   image: AppImages.icMenu,
+                  //   onTap: () {},
+                  // ),
                 ],
               )
             ],

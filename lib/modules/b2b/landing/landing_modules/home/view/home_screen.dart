@@ -1045,7 +1045,8 @@ Widget _buildRecentlyViewedSection(
       title: title,
       onViewAllTap: productList.length > 5
           ? () {
-              context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: commodity});
+              context.pushNamed(AppRoutes.productListGridPage,
+                  arguments: {RoutesData.isPageFor: commodity, RoutesData.productNavigation: AppConst.recentlyViewed});
             }
           : null,
       suggestedProductList: productList,

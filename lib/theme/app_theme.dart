@@ -1012,6 +1012,8 @@ class OrderSummaryStyle {
   final TextStyle orderSummaryItemValueStyle;
   final TextStyle addPromoCodeStyle;
   final TextStyle totalPriceStyle;
+  final TextStyle viewAllCouponsStyle;
+  final TextStyle applyButtonStyle;
 
   OrderSummaryStyle({
     required this.backgroundColor,
@@ -1020,6 +1022,8 @@ class OrderSummaryStyle {
     required this.addPromoCodeStyle,
     required this.totalPriceStyle,
     required this.orderSummaryItemValueStyle,
+    required this.viewAllCouponsStyle,
+    required this.applyButtonStyle,
   });
 }
 

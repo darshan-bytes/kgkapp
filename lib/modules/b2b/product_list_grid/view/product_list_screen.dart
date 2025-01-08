@@ -82,6 +82,9 @@ class ProductListScreen extends StatelessWidget {
             return SmartCircularProgressIndicator();
           }
           if (state is ProductListLoadedState) {
+            if (bloc.productList.isNullOrEmpty) {
+              return NoDataFoundWidget(text: APPStrings.emptyProducts.tr);
+            }
             return SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
