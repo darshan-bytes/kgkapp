@@ -90,19 +90,32 @@ class OrderSummary extends StatelessWidget {
         onApplyPromoCode?.call();
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 18.h),
+        padding: EdgeInsets.symmetric(vertical: promoCode != null ? 10.h : 14.h),
         child: Row(
           children: [
             Expanded(
-              child: SmartText(
-                promoCode?.title ?? APPStrings.addPromoCode.tr,
-                style: style.addPromoCodeStyle,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SmartText(
+                    promoCode?.title ?? APPStrings.addPromoCode.tr,
+                    style: style.addPromoCodeStyle,
+                  ),
+                  if (promoCode != null)
+                    Row(
+                      children: [
+                        SmartText(APPStrings.viewAllCoupons.tr, style: style.viewAllCouponsStyle),
+                        SizedBox(width: 5.w),
+                        Icon(Icons.arrow_forward_ios, size: 12.w, color: style.viewAllCouponsStyle.color)
+                      ],
+                    )
+                ],
               ),
             ),
             SizedBox(width: 17.w),
             SmartText(
               promoCode == null ? APPStrings.apply.tr : APPStrings.applied.tr,
-              style: totalStyle ?? style.totalPriceStyle,
+              style: (promoCode == null ? style.totalPriceStyle : style.applyButtonStyle).merge(totalStyle),
             ),
           ],
         ),

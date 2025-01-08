@@ -58,7 +58,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
     _initializeTabs();
     _initializePagination(context);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
-      await _callCollectionListingApi(context: context, isLoadMore: true);
+      await _callCollectionListingApi(context: context, isLoadMore: false);
     }
     emit(CollectionMasterListLoadedState());
   }
