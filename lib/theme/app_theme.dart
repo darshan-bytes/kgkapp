@@ -1184,8 +1184,8 @@ class AddressListStyle {
   final Color arrowColor;
   final TextStyle isSameAddressStyle;
   final TextStyle nProductsTitleStyle;
-
   final TextStyle footerTotalAmountStyle;
+  final TextStyle addressTypeTitleStyle;
 
   AddressListStyle({
     required this.backgroundColor,
@@ -1194,6 +1194,7 @@ class AddressListStyle {
     required this.nProductsTitleStyle,
     required this.footerTotalAmountStyle,
     required this.whiteColor,
+    required this.addressTypeTitleStyle,
   });
 }
 

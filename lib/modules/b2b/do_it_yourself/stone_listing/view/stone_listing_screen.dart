@@ -296,6 +296,7 @@ class StoneListingScreen extends StatelessWidget {
                             productDetails: product,
                           )
                         : ProductInfoItem(
+                            isFromBag: false,
                             onTap360View: () => printWrapped("onTap360View"),
                             productFeaturesList: attributes,
                             onTapDNA: () {

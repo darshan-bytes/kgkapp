@@ -179,7 +179,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productList.clear();
       await fetchJewelleriesList(context, emit, false);
       if (filterData.isEmpty) {
+        emit(ReloadProductState());
         await _setupFilters(context);
+        emit(ProductListFilterLoadedState());
       }
     }
   }
@@ -268,6 +270,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     /// Show the total number of records in the UI side
     totalFilteredRecords = success.filteredRecords;
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
+    if (paginationScrollController.isPageLoaded.isCompleted) {
+      paginationScrollController.isPageLoaded = Completer<bool>();
+    }
     paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
   }
 
@@ -293,6 +298,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       cts: item.crtEXT,
       gms: item.gms,
       brandName: item.brandName,
+      isAddedToCart: item.isAddedToCart,
       colorsCode: [
         item.metalColor1HexCode ?? "",
         item.metalColor2HexCode ?? "",

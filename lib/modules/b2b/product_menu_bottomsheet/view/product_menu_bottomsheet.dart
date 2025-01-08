@@ -126,7 +126,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
             SizedBox(width: 8.w),
             Expanded(
               child: SmartText(
-                bloc.subTotalAmount,
+                "90,000.00".setCurrency,
                 style: style.totalAmountStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

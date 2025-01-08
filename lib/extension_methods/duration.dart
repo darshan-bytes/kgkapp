@@ -25,4 +25,17 @@ extension DurationExtension on Duration {
     }
     return '$result$hours hours, $minutes minutes, $formattedSeconds seconds';
   }
+
+  String get formattedDurationWithSecondsShort {
+    final days = inDays;
+    final hours = inHours.remainder(24);
+    final minutes = inMinutes.remainder(60);
+    final seconds = inSeconds.remainder(60);
+    String formattedSeconds = seconds < 10 ? '0$seconds' : '$seconds';
+    String result = '';
+    if (days > 0) {
+      result += '${days}d ';
+    }
+    return '$result${hours}h ${minutes}m ${formattedSeconds}s';
+  }
 }

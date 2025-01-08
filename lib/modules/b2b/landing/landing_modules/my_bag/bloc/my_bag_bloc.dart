@@ -27,7 +27,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   // For Product menu bottom sheet
   bool showMoreDetails = false;
-  String subTotalAmount = "\$90,000.00";
 
   List<ProductDetailsModel> myBagProductList = [];
 
@@ -137,6 +136,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
                   : "",
               clarity: item.clarity,
               ctsOrGms: item.ctsOrGms,
+              cts: item.crtEXT,
+              gms: item.gms,
               rappaportPrice: item.rappaportPrice,
               polish: item.polish,
               measurements: item.measurements,
@@ -322,6 +323,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     } else {
       selectedProductCount -= 1;
     }
+
+    selectAllProduct = selectedProductCount == myBagProductList.length;
     emit(MyBagSelectProductChangedState(index: event.index, isSelectedProduct: product.isSelectedProduct));
   }
 

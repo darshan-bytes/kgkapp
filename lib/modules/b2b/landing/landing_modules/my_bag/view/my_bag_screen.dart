@@ -14,6 +14,7 @@ class MyBagScreen extends StatelessWidget {
         return Scaffold(
           appBar: SmartAppBar(
             title: APPStrings.myBag.tr,
+            leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
             isBack: false,
             onSearch: () {
               context.pushNamed(AppRoutes.searchPage);
@@ -210,22 +211,26 @@ class MyBagScreen extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Below code is commented as of now because currently we can't see the use of select all product
-              // Expanded(
-              //   child: SmartCheckbox(
-              //     height: 24.w,
-              //     width: 24.w,
-              //     value: bloc.selectAllProduct,
-              //     onChanged: (value) {
-              //       bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: !bloc.selectAllProduct));
-              //     },
-              //     label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString]),
-              //     labelStyle: style.itemSelectedStyle,
-              //   ),
-              // ),
-              // SizedBox(width: 20.w),
+              Expanded(
+                child: BlocBuilder<MyBagBloc, MyBagState>(
+                  buildWhen: (previous, current) =>
+                      current is MyBagSelectAllProductChangedState || current is MyBagSelectProductChangedState,
+                  builder: (context, state) {
+                    return SmartCheckbox(
+                      height: 24.w,
+                      width: 24.w,
+                      value: bloc.selectAllProduct,
+                      onChanged: (value) {
+                        bloc.add(MyBagSelectAllProductChangedEvent(selectAllProduct: !bloc.selectAllProduct));
+                      },
+                      label: APPStrings.selectProductItemX.tr.interpolate([bloc.selectedProductCountString]),
+                      labelStyle: style.itemSelectedStyle,
+                    );
+                  },
+                ),
+              ),
+              SizedBox(width: 20.w),
               BlocBuilder<MyBagBloc, MyBagState>(
                 buildWhen: (previous, current) => current is MyBagOrderSummaryDataLoadedState,
                 builder: (context, state) {
@@ -413,23 +418,34 @@ class MyBagScreen extends StatelessWidget {
                   ],
                 );
               case Commodity.jewellery:
-                return CartProductItem(
-                  productDetails: product,
-                  onRemoveTap: () {
-                    bloc.add(MyBagRemoveProductEvent(context: context, index: index));
+                return BlocBuilder<MyBagBloc, MyBagState>(
+                  buildWhen: (previous, current) =>
+                      current is MyBagSelectAllProductChangedState || (current is MyBagSelectProductChangedState && current.index == index),
+                  builder: (context, state) {
+                    return CartProductItem(
+                      isCheckboxShow: true,
+                      isSelectedProduct: product.isSelectedProduct,
+                      productDetails: product,
+                      onChangedCheckbox: (value) {
+                        bloc.add(MyBagSelectProductChangedEvent(index: index));
+                      },
+                      onRemoveTap: () {
+                        bloc.add(MyBagRemoveProductEvent(context: context, index: index));
+                      },
+                      onMoveToWishListTap: () {
+                        bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
+                      },
+                      onQuantityChanged: (quantity) {
+                        bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
+                      },
+                      quantityOptionsList: List.generate(
+                          product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
+                      selectedQuantity: product.quantity != null
+                          ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                          : null,
+                      qualityOptionsList: [],
+                    );
                   },
-                  onMoveToWishListTap: () {
-                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
-                  },
-                  onQuantityChanged: (quantity) {
-                    bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
-                  },
-                  quantityOptionsList: List.generate(
-                      product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
-                  selectedQuantity: product.quantity != null
-                      ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
-                      : null,
-                  qualityOptionsList: [],
                 );
               default:
                 return const SizedBox.shrink();

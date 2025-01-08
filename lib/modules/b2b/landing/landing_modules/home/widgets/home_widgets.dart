@@ -271,8 +271,8 @@ class HomeWidgets {
                             borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
-                                  style.primaryColor.withValues(alpha:0.6),
-                                  style.primaryColor.withValues(alpha:0.9),
+                                  style.primaryColor.withValues(alpha: 0.6),
+                                  style.primaryColor.withValues(alpha: 0.9),
                                 ],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),
@@ -383,6 +383,7 @@ class HomeWidgets {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
           },
           width: 72.w,
+          imageWidth: 72.w,
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
@@ -392,7 +393,7 @@ class HomeWidgets {
           ),
           imagePadding: EdgeInsets.all(12.w),
           titleMaxLines: 1,
-          fit: BoxFit.fill,
+          fit: BoxFit.contain,
           imageUrl: item.imageUrl ?? '',
         );
       },

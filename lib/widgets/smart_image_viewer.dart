@@ -125,6 +125,8 @@ class SmartImage extends StatelessWidget {
             child: path.isSvgUrl
                 ? SvgPicture.network(path, width: width, height: height)
                 : CachedNetworkImage(
+                    memCacheWidth: 100,
+                    memCacheHeight: 100,
                     height: height,
                     width: width,
                     fit: fit,
