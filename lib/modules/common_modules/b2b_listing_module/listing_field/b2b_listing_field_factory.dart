@@ -161,7 +161,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.from.tr, value: model.strFrom),
           B2BItemField(label: APPStrings.to.tr, value: model.strTo),
           B2BItemField(label: APPStrings.numberOfProduct.tr, value: model.strNumberOfProduct),
-          B2BItemField(label: APPStrings.remainingTime.tr, value: model.strRemainingTime?.value),
+          B2BItemField(label: APPStrings.remainingTime.tr, value: model.strRemainingTime?.value, isValueNotifier: true),
         ];
       case B2BListingType.exhibitionDetailPageProductsType:
         return [
@@ -229,7 +229,6 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.orderedOn.tr, value: model.strOrderOn),
           B2BItemField(label: APPStrings.purchaseOrder.tr, orderStatus: model.purchaseOrderStatus),
         ];
-
-      }
+    }
   }
 }

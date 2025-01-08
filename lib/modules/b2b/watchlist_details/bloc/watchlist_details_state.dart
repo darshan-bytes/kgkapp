@@ -31,3 +31,10 @@ final class WatchlistDetailsLoaded extends WatchlistDetailsState {
   @override
   List<Object> get props => [];
 }
+
+final class WatchlistDetailsTimerState extends WatchlistDetailsState {
+  const WatchlistDetailsTimerState();
+
+  @override
+  List<Object> get props => [];
+}

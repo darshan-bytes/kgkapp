@@ -18,7 +18,7 @@ class ProductInfoItem extends StatelessWidget {
   final bool isAutoSizeText;
   final bool isDiamond;
   final void Function(String?)? onYourDiscountChange;
-
+  final bool isFromBag;
   final TextEditingController yourDiscountController = TextEditingController();
 
   ProductInfoItem({
@@ -40,6 +40,7 @@ class ProductInfoItem extends StatelessWidget {
     this.isAutoSizeText = true,
     this.isDiamond = false,
     this.onYourDiscountChange,
+    this.isFromBag = true,
   }) {
     if (productDetails.productInfoClarityChat?.your?.isNotNullNorEmpty == true) {
       yourDiscountController.text = productDetails.productInfoClarityChat?.your ?? '0';
@@ -73,8 +74,10 @@ class ProductInfoItem extends StatelessWidget {
                 _buildSlotSecondWidget(chart, style, productInfoItemStyle),
                 _buildSlotThirdWidget(chart, style, productInfoItemStyle, showMoreDetails),
                 _buildSlotFourthWidget(chart, style, productInfoItemStyle),
-                Divider(height: 32.h),
-                _buildSlotFiveWidget(chart, style, productInfoItemStyle),
+                if (isFromBag && StorageManager().getUserData()?.userTypeEnum == UserType.b2bUser) ...[
+                  Divider(height: 32.h),
+                  _buildSlotFiveWidget(chart, style, productInfoItemStyle),
+                ],
               ],
             ),
           ),
@@ -135,35 +138,33 @@ class ProductInfoItem extends StatelessWidget {
     //       const Divider(),
     //       SizedBox(height: 16.h),
     //     ]);
-    return Column(children: [
-      SizedBox(height: 16.h),
-      if (isDiamond) ...[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SmartText(chart.colour ?? '-', isAutoSizeText: true, style: shapeTextStyle),
-            _buildDivider(style),
-            SmartText(
-              (chart.clarity.isNotNullNorEmpty || chart.cut.isNotNullNorEmpty)
-                  ? '${chart.clarity ?? ''}${(chart.clarity.isNotNullNorEmpty) && (chart.cut.isNotNullNorEmpty) ? '/' : ''}${chart.cut ?? ''}'
-                  : '-',
-              isAutoSizeText: true,
-              style: shapeTextStyle,
-            ),
-            _buildDivider(style),
-            SmartText(chart.polish ?? '-', isAutoSizeText: true, style: shapeTextStyle),
-            _buildDivider(style),
-            SmartText(chart.symmetry ?? '-', isAutoSizeText: true, style: shapeTextStyle),
-            _buildDivider(style),
-            SmartText(chart.lab ?? '-', isAutoSizeText: true, style: shapeTextStyle),
-          ],
-        ),
+    return Column(
+      children: [
+        SizedBox(height: 16.h),
+        if (isDiamond) ...[
+          Wrap(
+            children: [
+              SmartText(chart.colour ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+              _buildDivider(style),
+              SmartText(
+                chart.isDisplayClarityAndCut ? chart.displayClarityAndCut : '-',
+                isAutoSizeText: true,
+                style: shapeTextStyle,
+              ),
+              _buildDivider(style),
+              SmartText(chart.polish ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+              _buildDivider(style),
+              SmartText(chart.symmetry ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+              _buildDivider(style),
+              SmartText(chart.lab ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+            ],
+          ),
+          SizedBox(height: 16.h),
+        ],
+        const Divider(),
         SizedBox(height: 16.h),
       ],
-      const Divider(),
-      SizedBox(height: 16.h),
-    ]);
+    );
   }
 
   Widget _buildSlotSecondWidget(ProductInfoClarityChat chart, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle) {

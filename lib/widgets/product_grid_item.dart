@@ -310,12 +310,17 @@ class ProductGridItem extends StatelessWidget {
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
                   if (buttonText.isNullOrEmpty) {
-                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                    if (productDetails.isAddedToCart) {
+                      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                      context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                    } else {
+                      BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                    }
                   } else {
                     onAddToBagTap?.call();
                   }
                 },
-                title: buttonText ?? APPStrings.addToBag.tr,
+                title: buttonText ?? (productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr),
                 prefixImage: prefixImage,
                 isShadow: false,
                 imageSize: imageSize ?? 16.w,

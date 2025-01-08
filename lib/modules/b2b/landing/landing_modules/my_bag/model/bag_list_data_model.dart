@@ -126,6 +126,8 @@ class MyBagResult {
     required this.originalFinalPrice,
     required this.cscCode,
     required this.certificate,
+    required this.crt,
+    required this.gms,
   });
 
   final String? suid;
@@ -168,6 +170,8 @@ class MyBagResult {
   final String? cscCode;
   final double? originalFinalPrice;
   final String? certificate;
+  final String? crt;
+  final String? gms;
 
   MyBagResult copyWith({
     String? suid,
@@ -210,6 +214,8 @@ class MyBagResult {
     String? cscCode,
     double? originalFinalPrice,
     String? certificate,
+    String? crt,
+    String? gms,
   }) {
     return MyBagResult(
       suid: suid ?? this.suid,
@@ -252,6 +258,8 @@ class MyBagResult {
       certificate: certificate ?? this.certificate,
       cscCode: cscCode ?? this.cscCode,
       originalFinalPrice: originalFinalPrice ?? this.originalFinalPrice,
+      crt: crt ?? this.crt,
+      gms: gms ?? this.gms,
     );
   }
 
@@ -297,6 +305,8 @@ class MyBagResult {
       originalFinalPrice: json["original_final_price"]?.toString().toDouble,
       cscCode: json["csc_code"],
       certificate: json["certificate"],
+      crt: json["crt"]?.toString(),
+      gms: json["gms"]?.toString(),
     );
   }
 
@@ -340,6 +350,9 @@ class MyBagResult {
         "your_amount": yourAmount,
         "original_totalPrice": originalTotalPrice,
         "totalPrice": totalPrice,
+        "location": location,
+        "crt": crt,
+        "gms": gms,
       };
 
   @override
@@ -437,6 +450,11 @@ class MyBagResult {
   }
 
   Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;
+
+  String? get crtEXT {
+    final crtValue = double.tryParse(crt ?? '0') ?? 0.0;
+    return crtValue > 0 ? crt : null;
+  }
 }
 
 class BagSummary {

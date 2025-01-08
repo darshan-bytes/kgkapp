@@ -46,3 +46,10 @@ final class WatchlistDetailsDeleteEvent extends WatchlistDetailsEvent {
   @override
   List<Object> get props => [context, screenContext];
 }
+
+final class WatchlistDetailsTimerEvent extends WatchlistDetailsEvent {
+  const WatchlistDetailsTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -280,7 +280,7 @@ class ComponentDetailShopByMetal {
 
   factory ComponentDetailShopByMetal.fromJson(Map<String, dynamic> json) {
     return ComponentDetailShopByMetal(
-      brokenQty1: json["BrokenQty1"],
+      brokenQty1: json["BrokenQty1"]?.toString().toDouble,
       commodity: json["Commodity"],
       commodityNameRefSuid: json["CommodityNameRefSuid"],
       commodityNameSuid: json["CommodityNameSuid"],

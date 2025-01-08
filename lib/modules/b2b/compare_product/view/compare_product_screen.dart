@@ -217,32 +217,35 @@ class CompareProductScreen extends StatelessWidget {
 
   Widget _buildProductDetailWidgets(int index, String label, String value, CompareProductStyle style,
       {double textHeight = 48, int maxLines = 2}) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Visibility(
-        visible: index == 0,
-        maintainSize: true,
-        maintainAnimation: true,
-        maintainState: true,
-        child: SmartText(
-          label,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: style.productSubTitleStyle,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Visibility(
+          visible: index == 0,
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          child: SmartText(
+            label,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: style.productSubTitleStyle,
+          ),
         ),
-      ),
-      SizedBox(height: 8.h),
-      const Divider(),
-      SizedBox(height: 8.h),
-      Container(
-        margin: EdgeInsets.only(right: 12.w),
-        height: textHeight.h,
-        child: SmartText(
-          value,
-          style: style.productTitleStyle,
-          maxLines: maxLines,
+        SizedBox(height: 8.h),
+        const Divider(),
+        SizedBox(height: 8.h),
+        Container(
+          margin: EdgeInsets.only(right: 12.w),
+          height: textHeight.h,
+          child: SmartText(
+            value.isNotNullNorEmpty ? value : '-',
+            style: style.productTitleStyle,
+            maxLines: maxLines,
+          ),
         ),
-      ),
-      SizedBox(height: 14.h),
-    ]);
+        SizedBox(height: 10.h),
+      ],
+    );
   }
 }

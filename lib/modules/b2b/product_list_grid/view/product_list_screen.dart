@@ -39,12 +39,13 @@ class ProductListScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BlocBuilder<ProductListBloc, ProductListState>(
-        buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
+        buildWhen: (previous, current) =>
+            current is ProductListLoadedState || current is ProductListLoadingState || current is ProductListFilterLoadedState,
         builder: (context, state) {
           if (state is ProductListLoadingState) {
             return SizedBox.shrink();
-          }
-          if (state is ProductListLoadedState) {
+          } else {
+            if (state is! ProductListLoadedState) return SizedBox.shrink();
             return FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
@@ -72,7 +73,6 @@ class ProductListScreen extends StatelessWidget {
               },
             );
           }
-          return const SizedBox.shrink();
         },
       ),
       body: BlocBuilder<ProductListBloc, ProductListState>(

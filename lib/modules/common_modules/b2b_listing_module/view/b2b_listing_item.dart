@@ -6,7 +6,7 @@ import 'package:kgk/kgk.dart';
 
 class B2BItemField {
   final String? label;
-  final String? value;
+  String? value;
   final ProjectStatus? orderStatus;
   final String? imageUrl;
   final double? imageSize;
@@ -14,6 +14,7 @@ class B2BItemField {
   final bool isCircleWithValue;
   final bool isOnlyImageView;
   final double? gridSpacing;
+  final bool isValueNotifier;
 
   B2BItemField({
     this.label,
@@ -25,6 +26,7 @@ class B2BItemField {
     this.isCircleWithValue = false,
     this.isOnlyImageView = false,
     this.gridSpacing,
+    this.isValueNotifier = false,
   });
 }
 
@@ -77,10 +79,13 @@ class B2BListingItem extends StatelessWidget {
             child: SmartGridView(
               items: B2BListingFieldFactory.getListingFields(type: type, model: listingItemModel).map((field) {
                 /// if the type is watchlistType, then we are displaying the remaining time of the listing item. that will be decremented by 1 second every second. so changed it to value notifier builder.
-                if (type == B2BListingType.watchlistType && field.label != null && listingItemModel.strRemainingTime != null) {
+                if (type == B2BListingType.watchlistType && field.label != null && field.isValueNotifier) {
                   return ValueListenableBuilder(
                     valueListenable: listingItemModel.strRemainingTime!,
-                    builder: (context, value, child) => _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w),
+                    builder: (context, value, child) {
+                      field.value = listingItemModel.strRemainingTime?.value;
+                      return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);
+                    },
                   );
                 } else {
                   return _buildDetailItem(field, context, style, gridSpacing ?? 16.0.w);

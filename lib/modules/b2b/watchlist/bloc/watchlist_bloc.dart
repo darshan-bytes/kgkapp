@@ -22,6 +22,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   /// This filterData is used to store the filter data
   List<FilterData> filterData = [];
 
+  Timer? timer;
+
   WatchlistBloc() : super(const WatchlistInitial()) {
     on<WatchlistInitialEvent>(_onWatchlistInitialEvent);
     on<WatchlistLoadMoreEvent>(_onWatchlistLoadMoreEvent);
@@ -141,12 +143,10 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
               id: e.sId ?? "",
               strName: e.name ?? "",
               status: e.displayStatus,
-              strFrom: e.createdAt?.changeDateFormat(
-                  outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
-              strTo: e.expiresAt?.changeDateFormat(
-                  outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
+              strFrom: e.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+              strTo: e.expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
-              strRemainingTime: ValueNotifier<String>(e.duration?.displayDuration ?? ""),
+              strRemainingTime: ValueNotifier<String>(e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? ""),
 
               /// Below code is commented as it is currently not available in API
               // strConceptNumber: e.strConceptNumber ?? "",
@@ -163,15 +163,12 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   }
 
   void startTimerForDurationDecrement() {
-    //TODO: Implement timer for decrementing the duration, Need to discuss with JD for the same
-    // timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   for (int i = 0; i < watchlistDataList.length; i++) {
-    //     if (watchlistDataList[i].duration?.seconds != null) {
-    //       watchlistDataList[i].duration!.seconds = watchlistDataList[i].duration!.seconds! - 1;
-    //       watchListingList[i].strRemainingTime.value = watchlistDataList[i].duration?.displayDuration ?? "";
-    //     }
-    //   }
-    // });
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      for (int i = 0; i < watchlistDataList.length; i++) {
+        watchListingList[i].strRemainingTime?.value =
+            watchlistDataList[i].expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "";
+      }
+    });
   }
 
   Future<bool> pullToRefresh({required BuildContext context}) async {
@@ -217,6 +214,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     refreshCompleter = Completer<bool>();
     watchlistSearchController.clear();
     _debounce?.cancel();
+    timer?.cancel();
   }
 
   Future<void> _onWatchListDelete(WatchListDeleteEvent event, Emitter<WatchlistState> emit) async {
@@ -294,10 +292,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
         id: event.watchlistData!.sId ?? "",
         strName: event.watchlistData!.name ?? "",
         status: event.watchlistData!.displayStatus,
-        strFrom: event.watchlistData!.createdAt?.changeDateFormat(
-            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
-        strTo: event.watchlistData!.expiresAt?.changeDateFormat(
-            outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2, inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ),
+        strFrom: event.watchlistData!.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+        strTo: event.watchlistData!.expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
         strNumberOfProduct: event.watchlistData?.products?.length.toString() ?? "0",
         strRemainingTime: ValueNotifier<String>(event.watchlistData!.duration?.displayDuration ?? ""),
       );

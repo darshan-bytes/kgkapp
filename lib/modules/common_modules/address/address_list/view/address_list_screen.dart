@@ -25,7 +25,7 @@ class AddressListScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SmartText(APPStrings.shippingAddress.tr, style: style.footerTotalAmountStyle),
+                          SmartText(APPStrings.shippingAddress.tr, style: style.addressTypeTitleStyle),
                           _buildShippingAddressList(addressListBloc, style),
                           Divider(height: 48.h),
                           Row(
@@ -252,7 +252,7 @@ class AddressListScreen extends StatelessWidget {
             SizedBox(height: 24.h),
             if (!addressListBloc.isBillingAndShippingSame) ...[
               Divider(height: 24.h),
-              SmartText(APPStrings.billingAddress.tr, style: style.footerTotalAmountStyle),
+              SmartText(APPStrings.billingAddress.tr, style: style.addressTypeTitleStyle),
               _buildBillingAddressList(addressListBloc, style),
             ],
           ],

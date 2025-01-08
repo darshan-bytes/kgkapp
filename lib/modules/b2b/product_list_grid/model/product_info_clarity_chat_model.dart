@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class ProductInfoClarityChat {
   String? productId;
   String? productName;
@@ -60,4 +62,10 @@ class ProductInfoClarityChat {
     this.yourRate,
     this.yourValue,
   });
+}
+
+extension ProductInfoClarityChatExtension on ProductInfoClarityChat {
+  bool get isDisplayClarityAndCut => clarity.isNotNullNorEmpty || cut.isNotNullNorEmpty;
+
+  String get displayClarityAndCut => '${clarity ?? ''}${(clarity.isNotNullNorEmpty) && (cut.isNotNullNorEmpty) ? '/' : ''}${cut ?? ''}';
 }
