@@ -778,5 +778,13 @@
   "mob_error_name_required": "नाम आवश्यक है",
   "mob_go_to_bag": "बैग पर जाएं",
   "mob_error_zip_code_valid": "कृपया वैध ज़िप कोड दर्ज करें",
-  "mob_view_all_coupons": "सभी कूपन देखें"
+  "mob_view_all_coupons": "सभी कूपन देखें",
+  "mob_verify_your_account": "अपने खाते को सत्यापित करें",
+  "mob_verify_your_account_desc": "आपके ईमेल पते पर एक सत्यापन कोड भेज दिया गया है. कृपया अपना खाता सत्यापित करने के लिए नीचे दिया गया कोड दर्ज करें।",
+  "mob_otp": "ओ.टी.पी",
+  "mob_resend_code": "पुन: कोड भेजे",
+  "mob_verify": "सत्यापित करें",
+  "mob_your_account_is_not_verified": "आपका खाता सत्यापित नहीं है. कृपया अपने खाते को सत्यापित करें।",
+  "mob_otp_required": "कृपया ओटीपी दर्ज करें",
+  "mob_otp_length": "ओटीपी 6 अक्षर लंबा होना चाहिए"
 }

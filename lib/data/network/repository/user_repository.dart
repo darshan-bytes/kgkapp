@@ -57,9 +57,9 @@ class UserRepository extends ApiService {
   }
 
   // For User SignUp
-  Future<Either<ErrorResponse, CommonResponse<UserResponse>>?> signUpCustomer(Map<String, dynamic> params) async {
+  Future<Either<ErrorResponse, CommonResponse>?> signUpCustomer(Map<String, dynamic> params) async {
     context.setAppLoading(true);
-    var response = await postMethod<UserResponse>(ApiClient.signUpCustomer, params, withFullResponse: true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.signUpCustomer, params, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -112,6 +112,20 @@ class UserRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> deleteAccount() async {
     context.setAppLoading(true);
     var response = await deleteMethod<CommonResponse>(ApiClient.deleteUser, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> resendEmailOtp({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.resendEmailOtp, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<UserResponse>>?> verifyEmailOtp({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<UserResponse>(ApiClient.verifyEmailOtp, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

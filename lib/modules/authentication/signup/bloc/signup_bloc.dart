@@ -451,7 +451,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       params[ApiKey.state] = stateController.text;
     }
 
-    Either<ErrorResponse, CommonResponse<UserResponse>>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
+    Either<ErrorResponse, CommonResponse>? signUpResponse = await UserRepository(event.context).signUpCustomer(params);
     signUpResponse?.fold(
       (l) {
         Utils.showMessage(l.message);
@@ -459,25 +459,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       (r) async {
         add(const SignUpResetEvent());
         if (isIndividual) {
-          UserResponse userResponse = r.responseData;
-          await StorageManager().setAuthToken(userResponse.accessToken ?? '');
-          await StorageManager().setUserId(userResponse.userId ?? '');
-          await StorageManager().setUserResponse(userResponse);
-          if (userResponse.customerOrganizationId.isNotNullNorEmpty) {
-            await StorageManager().setCustomerOrgId(userResponse.customerOrganizationId!.toString());
-          }
-          if (userResponse.userIdDetails != null) {
-            await StorageManager().setUserData(userResponse.userIdDetails!);
-          }
-          if (userResponse.bagId != null) {
-            await StorageManager().setBagId(userResponse.bagId!);
-          }
-          if (userResponse.userIdDetails?.userTypeEnum != null) {
-            await StorageManager().setIsSkipLogin(false);
-            BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(userResponse.userIdDetails!.userTypeEnum));
-            await mergeCart(event.context);
-            event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
-          }
+          event.context.pushNamedAndRemoveUntil(AppRoutes.otpVerificationPage, (route) => false,
+              arguments: {RoutesData.email: emailController.text.trim(), RoutesData.isFromSignIn: false});
         } else {
           event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
         }

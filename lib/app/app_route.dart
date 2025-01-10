@@ -5,6 +5,7 @@ class AppRoutes {
   static const signInPage = '/signInPage';
   static const signUpPage = '/signUpPage';
   static const categoriesPage = '/categoriesPage';
+  static const otpVerificationPage = '/otpVerificationPage';
   static const landingPage = '/landingPage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const emailSentPage = '/emailSentPage';
@@ -100,7 +101,13 @@ class AppRoutes {
           return BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)), child: const SignUpScreen());
         };
         break;
-
+      case otpVerificationPage:
+        builder = (context) {
+          return BlocProvider<OtpVerificationBloc>(
+            create: (context) => OtpVerificationBloc()..add(OtpVerificationInitialEvent(context)),
+            child: const OtpVerificationScreen(),
+          );
+        };
       case categoriesPage:
         builder = (context) {
           BlocProvider.of<CategoriesBloc>(context).add(CategoriesInitialEvent(context: context));
@@ -787,6 +794,8 @@ enum RoutesData {
   promoCode,
   watchlistData,
   isWatchlistDeleted,
+  email,
+  isFromSignIn,
 }
 
 enum ScreenIdentifier {

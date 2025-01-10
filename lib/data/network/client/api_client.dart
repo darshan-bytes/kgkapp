@@ -195,9 +195,13 @@ class ApiClient {
 
   static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
 
-  static String get inquiryType => '$apiBaseUrl/customer-inquiry/types';
+  static const String inquiryType = '$apiBaseUrl/customer-inquiry/types';
 
-  static String get submitContactUs => '$apiBaseUrl/contact_us';
+  static const String submitContactUs = '$apiBaseUrl/contact_us';
+
+  static const String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';
+
+  static const String resendEmailOtp = '$apiBaseUrl/auth/resend-email-otp';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
