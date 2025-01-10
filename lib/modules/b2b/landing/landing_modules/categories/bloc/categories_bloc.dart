@@ -41,10 +41,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ];
   List<ProductDetailModel> jewellerySubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
+    ProductDetailModel(name: 'Jewellery', image: ''),
+    // ProductDetailModel(name: 'Best Selling', image: ''),
+    // ProductDetailModel(name: 'Seasonal Offers', image: ''),
+    // ProductDetailModel(name: 'Occasion Offer', image: ''),
+    // ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
     ProductDetailModel(name: 'Diamond', image: ''),
@@ -407,6 +408,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     switch (categorySubName) {
       case 'Collection':
         return AppRoutes.collectionPage;
+      case 'Jewellery':
+        return AppRoutes.productListGridPage;
       default:
         return defaultAction();
     }
@@ -415,6 +418,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getJewelleryRouteArgumentsForB2C(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.productForRing};
+      case 'Jewellery':
         return {RoutesData.isPageFor: ScreenIdentifier.productForRing};
       default:
         return defaultAction();
@@ -544,7 +549,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getJewelleryRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
-        return AppRoutes.stonesLandingPage;
+        return AppRoutes.collectionPage;
+      case 'Jewellery':
+        return AppRoutes.productListGridPage;
       default:
         return defaultAction();
     }
@@ -553,6 +560,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   Map<RoutesData, dynamic>? _getJewelleryRouteArgumentsB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
+      case 'Jewellery':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
       default:
         return defaultAction();
