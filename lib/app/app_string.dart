@@ -558,7 +558,7 @@ class APPStrings {
   static const String revisedDate = 'mob_revised_date';
   static const String dbfApproval = 'mob_dbf_approval';
   static const String designer = 'mob_designer';
-  static const String approvedOn = "mob_approved_on";
+  static const String approvedOn = 'mob_approved_on';
 
   //Watchlist type
   static const String name = 'mob_name';
@@ -619,19 +619,19 @@ class APPStrings {
   static const String topSellingCategories = 'mob_top_selling_categories';
   static const String kgkCouture = 'mob_kgk_couture';
   static const String viewAllCollections = 'mob_view_all_collections';
-  static const String luminous = "mob_luminous";
-  static const String elan = "mob_elan";
-  static const String huse = "mob_huse";
-  static const String mirage = "mob_mirage";
-  static const String dealOfTheDay = "mob_deal_of_the_day";
-  static const String getInspired = "mob_get_inspired";
-  static const String shopByStyle = "mob_shop_by_style";
-  static const String createOwnSignaturePiece = "mob_create_own_signature_piece";
+  static const String luminous = 'mob_luminous';
+  static const String elan = 'mob_elan';
+  static const String huse = 'mob_huse';
+  static const String mirage = 'mob_mirage';
+  static const String dealOfTheDay = 'mob_deal_of_the_day';
+  static const String getInspired = 'mob_get_inspired';
+  static const String shopByStyle = 'mob_shop_by_style';
+  static const String createOwnSignaturePiece = 'mob_create_own_signature_piece';
   static const String personaliseJewellery = 'mob_personalise_jewellery';
   static const String stepX = 'mob_step_x';
   static const String selectStone = 'mob_select_stone';
   static const String selectJewellery = 'mob_select_jewellery';
-  static const String customiseViewPrice = "mob_customise_view_price";
+  static const String customiseViewPrice = 'mob_customise_view_price';
   static const String getStarted = 'mob_get_started';
   static const String txtDefault = 'mob_default';
   static const String add = 'mob_add';
@@ -747,12 +747,12 @@ class APPStrings {
   static const String shopNaturalDiamonds = 'mob_shop_natural_diamonds';
   static const String shopLabDiamonds = 'mob_shop_lab_diamonds';
   static const String startWithAGemstone = 'mob_start_with_a_gemstone';
-  static const String startWithASetting = "mob_start_with_a_setting";
+  static const String startWithASetting = 'mob_start_with_a_setting';
   static const String originOfDiamonds = 'mob_origin_of_diamonds';
-  static const String startWithANaturalDiamond = "mob_start_with_a_natural_diamond";
-  static const String startWithALabDiamond = "mob_start_with_a_lab_diamond";
-  static const String diamondFAQs = "mob_diamond_faqs";
-  static const String gemstonesFAQs = "mob_gemstones_faqs";
+  static const String startWithANaturalDiamond = 'mob_start_with_a_natural_diamond';
+  static const String startWithALabDiamond = 'mob_start_with_a_lab_diamond';
+  static const String diamondFAQs = 'mob_diamond_faqs';
+  static const String gemstonesFAQs = 'mob_gemstones_faqs';
   static const String shopByGemstones = 'mob_shop_by_gemstones';
   static const String aboutOurDiamonds = 'mob_about_our_diamonds';
   static const String aboutOurGemstones = 'mob_about_our_gemstones';
@@ -843,13 +843,13 @@ class APPStrings {
 
   // Newsletter
   static const String newsletter = 'mob_newsletter';
-  static const String template = "mob_template";
-  static const String subscribers = "mob_subscribers";
+  static const String template = 'mob_template';
+  static const String subscribers = 'mob_subscribers';
 
   static const String searchSubscribers = 'mob_search_subscribers';
-  static const String searchCategory = "mob_search_category";
-  static const String searchTemplate = "mob_search_template";
-  static const String validity = "mob_validity";
+  static const String searchCategory = 'mob_search_category';
+  static const String searchTemplate = 'mob_search_template';
+  static const String validity = 'mob_validity';
   static const String viewMore = 'mob_view_more';
 
   static const String shopByX = 'mob_shop_by_x';
@@ -863,17 +863,17 @@ class APPStrings {
   static const String shopLatestCollection = 'mob_shop_latest_collection';
 
   //Email validation key
-  static const String emailRequired = "mob_email_required";
-  static const String validEmail = "mob_valid_email";
+  static const String emailRequired = 'mob_email_required';
+  static const String validEmail = 'mob_valid_email';
 
   //Password validation key
-  static const String passwordRequired = "mob_password_required";
-  static const String validPassword = "mob_valid_password";
+  static const String passwordRequired = 'mob_password_required';
+  static const String validPassword = 'mob_valid_password';
 
   //No internet screen
-  static const String noInternetConnectionFound = "mob_no_internet_connection_found";
-  static const String pleaseCheckYourInternetConnection = "mob_please_check_your_internet_connection";
-  static const String tryAgain = "mob_try_again";
+  static const String noInternetConnectionFound = 'mob_no_internet_connection_found';
+  static const String pleaseCheckYourInternetConnection = 'mob_please_check_your_internet_connection';
+  static const String tryAgain = 'mob_try_again';
 
   // Session Expired
   static const String sessionExpired = 'mob_session_expired';
@@ -932,10 +932,10 @@ class APPStrings {
   static const String differentCommoditiesSelected = 'mob_different_commodities_selected';
   static const String yes = 'mob_yes';
   static const String no = 'mob_no';
-  static const String areYouSureChangeAccountType = "mob_are_you_sure_change_account_type";
-  static const String recentlyViewedJewellery = "mob_recently_viewed_jewellery";
-  static const String recentlyViewedDiamond = "mob_recently_viewed_diamond";
-  static const String recentlyViewedGemstone = "mob_recently_viewed_gemstone";
+  static const String areYouSureChangeAccountType = 'mob_are_you_sure_change_account_type';
+  static const String recentlyViewedJewellery = 'mob_recently_viewed_jewellery';
+  static const String recentlyViewedDiamond = 'mob_recently_viewed_diamond';
+  static const String recentlyViewedGemstone = 'mob_recently_viewed_gemstone';
   static const String allFiltersCleared = 'mob_all_filters_cleared';
   static const String stock = 'mob_stock';
   static const String totalItems = 'mob_total_items';
@@ -975,5 +975,16 @@ class APPStrings {
   static const String errorNameRequired = 'mob_error_name_required';
   static const String goToBag = 'mob_go_to_bag';
   static const String errorZipCodeValid = 'mob_error_zip_code_valid';
-  static const String viewAllCoupons = "mob_view_all_coupons";
+  static const String viewAllCoupons = 'mob_view_all_coupons';
+
+  static const String verifyYourAccount = 'mob_verify_your_account';
+  static const String verifyYourAccountDesc = 'mob_verify_your_account_desc';
+  static const String otp = 'mob_otp';
+  static const String resendCode = 'mob_resend_code';
+  static const String verify = 'mob_verify';
+  static const String yourAccountIsNotVerified = 'mob_your_account_is_not_verified';
+
+  static const String otpRequired = 'mob_otp_required';
+
+  static const String otpLength = 'mob_otp_length';
 }

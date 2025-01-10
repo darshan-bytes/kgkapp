@@ -337,7 +337,8 @@ class AppRepository extends ApiService {
   // For Submit Contact
   Future<Either<ErrorResponse, CommonResponse>?> submitContactUs({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    Either<ErrorResponse, dynamic>? response = await postMethod<Map<String, dynamic>>(ApiClient.submitContactUs, body, withFullResponse: true);
+    Either<ErrorResponse, dynamic>? response =
+        await postMethod<Map<String, dynamic>>(ApiClient.submitContactUs, body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

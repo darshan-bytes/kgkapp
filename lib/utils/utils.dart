@@ -359,4 +359,43 @@ class Utils {
         return ScreenIdentifier.productForRing;
     }
   }
+
+  static handleAuthSuccessResponse(BuildContext context, UserResponse r) async {
+    await StorageManager().setAuthToken(r.accessToken ?? '');
+    await StorageManager().setUserId(r.userId ?? '');
+    await StorageManager().setUserResponse(r);
+    if (r.customerOrganizationId.isNotNullNorEmpty) {
+      await StorageManager().setCustomerOrgId(r.customerOrganizationId!.toString());
+    }
+    if (r.userIdDetails != null) {
+      await StorageManager().setUserData(r.userIdDetails!);
+    }
+    if (r.bagId != null) {
+      await StorageManager().setBagId(r.bagId!);
+    }
+    if (r.userIdDetails?.userTypeEnum != null) {
+      await StorageManager().setIsSkipLogin(false);
+      BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
+      await mergeCart(context);
+      context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+    }
+  }
+
+  static Future<void> mergeCart(BuildContext context) async {
+    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
+    if (myBagDataModel != null) {
+      Map<String, dynamic> body = {
+        ApiKey.id: myBagDataModel.sId ?? '',
+      };
+      await AppRepository(context).mergeBag(body: body).then((value) {
+        value?.fold((l) {
+          Utils.showMessage(l.message);
+        }, (r) async {
+          if (r.responseData != null) {
+            await StorageManager().clearBagData();
+          }
+        });
+      });
+    }
+  }
 }
