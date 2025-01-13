@@ -198,6 +198,12 @@ class ApiClient {
   static String get inquiryType => '$apiBaseUrl/customer-inquiry/types';
 
   static String get submitContactUs => '$apiBaseUrl/contact_us';
+
+  static String get uniqueShapes => '$apiBaseUrl/commodity/diamond/unique-shape';
+
+  // static String getCalenderEventDetailsById(String id) => '$apiBaseUrl/tasks/$id';
+
+  static String get orionList => '$apiBaseUrl/commodity/diamond/orion/list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

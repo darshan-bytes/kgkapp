@@ -227,14 +227,11 @@ class ProductGridItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(
-              height: style.productNameStyle.fontSize! * 2.5.sp,
-              child: SmartText(
-                productDetails.subTitle,
-                style: style.productNameStyle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+            SmartText(
+              "${productDetails.subTitle}\n\n",
+              style: style.productNameStyle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             if (productDetails.kgkCollectionName.isNotNullNorEmpty)
               SmartText(

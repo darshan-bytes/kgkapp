@@ -221,6 +221,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         ),
         CategoriesModel(
             name: 'Education', image: 'https://i.ibb.co/rFjpN0q/Education-Category.png', productsDetailsList: educationSubOptionsB2CList),
+        CategoriesModel(
+            name: 'Orion',
+            image: 'https://i.ibb.co/tDyD1Yj/Orion-Category.png',
+            productsDetailsList: orionSubCategoryList,
+            isExpanded: false),
       ]);
     }
     emit(CategoriesFetchData());
@@ -273,6 +278,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         return _getAboutUsRouteNameForB2C(categorySubName);
       case 'Education':
         return _getEducationRouteNameForB2C(categorySubName);
+      case 'Orion':
+        return _getOrionRouteNameB2B(categorySubName);
       default:
         return defaultAction();
     }

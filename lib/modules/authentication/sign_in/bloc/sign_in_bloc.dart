@@ -13,7 +13,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInInitial()) {
     if (kDebugMode) {
       //B2C
-      emailController.text = "ankita7@yopmail.com";
+       emailController.text = "ankita7@yopmail.com";
 
       // Client's User B2C
       // emailController.text = "ramesh.kumar@sparklesoft.co.in";
@@ -24,7 +24,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond
       // emailController.text = "parash2@yopmail.com"; // Jewellery
 
-      passwordController.text = "Test@123";
+       passwordController.text = "Test@123";
       // passwordController.text = "Admin@123";
     }
     on<SignInButtonPressedEvent>(signInApiCall);
