@@ -40,7 +40,7 @@ class ClarityModel {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ClarityModel && other.id == id && other.name == name && other.description == description;
+    return other is ClarityModel && other.name == name && other.description == description;
   }
 
   @override
