@@ -10,6 +10,7 @@ class UserResponse {
     required this.defaultCscCode,
     required this.userIdDetails,
     required this.customerOrganizationId,
+    required this.isVerified,
   });
 
   final String? accessToken;
@@ -19,6 +20,7 @@ class UserResponse {
   final String? bagId;
   final String? defaultCscCode;
   final UserIdDetails? userIdDetails;
+  final bool? isVerified;
 
   //customer_organization_id
   final String? customerOrganizationId;
@@ -33,6 +35,7 @@ class UserResponse {
       userIdDetails: json["user_id_details"] == null ? null : UserIdDetails.fromJson(json["user_id_details"]),
       bagId: json["bag_id"],
       customerOrganizationId: json["customer_organization_id"],
+      isVerified: json["isVerified"],
     );
   }
 
@@ -45,11 +48,12 @@ class UserResponse {
         "user_id_details": userIdDetails?.toJson(),
         "bag_id": bagId,
         "customer_organization_id": customerOrganizationId?.toString(),
+        "isVerified": isVerified,
       };
 
   @override
   String toString() {
-    return "$accessToken, $userId, $userPermissions, $role, $userIdDetails, $bagId, $defaultCscCode, ";
+    return "$accessToken, $userId, $userPermissions, $role, $userIdDetails, $bagId, $defaultCscCode, $isVerified";
   }
 }
 

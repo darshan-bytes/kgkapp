@@ -516,5 +516,6 @@ export 'package:country_phone_validator/country_phone_validator.dart' hide Count
 export 'package:photo_view/photo_view_gallery.dart';
 export 'package:photo_view/photo_view.dart';
 export 'package:kgk/widgets/product_image_zoom_view.dart';
+export 'package:kgk/modules/authentication/otp_verification/bloc/otp_verification_bloc.dart';
+export 'package:kgk/modules/authentication/otp_verification/view/otp_verification_screen.dart';
 export 'package:kgk/modules/b2b/orion/model/orion_shape_model.dart';
-export 'package:kgk/modules/b2b/orion/model/orion_list_model.dart';

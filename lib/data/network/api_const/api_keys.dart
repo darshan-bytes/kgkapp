@@ -117,6 +117,7 @@ class ApiKey {
   static const String fullName = 'full_name';
   static const String subject = 'subject';
   static const String inquiryType = 'inquiry_type';
+  static const String otpPasscode = 'otp_passcode';
   static const String shape = 'shape';
   static const String min = 'min';
   static const String max = 'max';

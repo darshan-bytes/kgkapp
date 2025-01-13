@@ -587,12 +587,12 @@ class AppRepository extends ApiService {
   }
 
   //fetchOrionList
-  Future<Either<ErrorResponse, PaginationData<OrionListModel>>?> fetchOrionList(bool isLoadMore,
+  Future<Either<ErrorResponse, PaginationData<DiamondDataModel>>?> fetchOrionList(bool isLoadMore,
       {required Map<String, dynamic> body}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<PaginationData<OrionListModel>>(ApiClient.orionList, query: body, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<DiamondDataModel>>(ApiClient.orionList, query: body, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

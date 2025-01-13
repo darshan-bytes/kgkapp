@@ -391,6 +391,12 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _handleCheckoutClick(BuildContext context) async {
+    if (StorageManager().getIsSkipLogin()) {
+      // TODO: We will create a new view to highlight the feature is restricted to logged in users.
+      Utils.showMessage(
+          "${APPStrings.loginToUseThisFeature.tr}\nWe will create a new view to highlight the feature is restricted to logged in users");
+      return;
+    }
     bool isAbleToCheckout = false;
 
     final response = await AppRepository(context).checkoutStatus();

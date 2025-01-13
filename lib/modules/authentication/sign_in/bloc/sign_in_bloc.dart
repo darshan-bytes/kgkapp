@@ -14,6 +14,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (kDebugMode) {
       //B2C
        emailController.text = "ankita7@yopmail.com";
+      // emailController.text = "user.email+16@yopmail.com";
 
       // Client's User B2C
       // emailController.text = "ramesh.kumar@sparklesoft.co.in";
@@ -51,46 +52,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         Utils.showMessage(errorModel.message);
         emit(SignInErrorState(errorMessage: errorModel.message ?? ''));
       }, (r) async {
-        await StorageManager().setAuthToken(r.accessToken ?? '');
-        await StorageManager().setUserId(r.userId ?? '');
-        await StorageManager().setUserResponse(r);
-        if (r.customerOrganizationId.isNotNullNorEmpty) {
-          await StorageManager().setCustomerOrgId(r.customerOrganizationId!.toString());
-        }
-        if (r.userIdDetails != null) {
-          await StorageManager().setUserData(r.userIdDetails!);
-        }
-        if (r.bagId != null) {
-          await StorageManager().setBagId(r.bagId!);
-        }
-        if (r.userIdDetails?.userTypeEnum != null) {
+        if (r.isVerified == false) {
+          //TODO: Handle OTP Verification
+          Utils.showMessage(APPStrings.yourAccountIsNotVerified.tr);
+          event.context.pushNamed(AppRoutes.otpVerificationPage, arguments: {
+            RoutesData.email: emailController.text.trim(),
+            RoutesData.isFromSignIn: true,
+          });
+        } else {
+          await Utils.handleAuthSuccessResponse(event.context, r);
           clearAllFields();
           emit(const SignInSuccessState());
-          await StorageManager().setIsSkipLogin(false);
-          BlocProvider.of<AppBloc>(event.context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
-          await mergeCart(event.context);
-          event.context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
         }
       });
     });
-  }
-
-  Future<void> mergeCart(BuildContext context) async {
-    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    if (myBagDataModel != null) {
-      Map<String, dynamic> body = {
-        ApiKey.id: myBagDataModel.sId ?? '',
-      };
-      await AppRepository(context).mergeBag(body: body).then((value) {
-        value?.fold((l) {
-          Utils.showMessage(l.message);
-        }, (r) async {
-          if (r.responseData != null) {
-            await StorageManager().clearBagData();
-          }
-        });
-      });
-    }
   }
 
   /// Check email & password validations as needed

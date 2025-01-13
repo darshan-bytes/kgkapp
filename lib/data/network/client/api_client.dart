@@ -195,13 +195,15 @@ class ApiClient {
 
   static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
 
-  static String get inquiryType => '$apiBaseUrl/customer-inquiry/types';
+  static const String inquiryType = '$apiBaseUrl/customer-inquiry/types';
 
-  static String get submitContactUs => '$apiBaseUrl/contact_us';
+  static const String submitContactUs = '$apiBaseUrl/contact_us';
+
+  static const String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';
+
+  static const String resendEmailOtp = '$apiBaseUrl/auth/resend-email-otp';
 
   static String get uniqueShapes => '$apiBaseUrl/commodity/diamond/unique-shape';
-
-  // static String getCalenderEventDetailsById(String id) => '$apiBaseUrl/tasks/$id';
 
   static String get orionList => '$apiBaseUrl/commodity/diamond/orion/list';
 }

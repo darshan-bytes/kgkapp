@@ -13,6 +13,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   ScrollController diamondShapeListController = ScrollController();
   double maximumXAxis = 0.0;
 
+  String getCurrencySymbol = "";
   /// Defines the minimum and maximum values for the price range slider.
   ///
   /// This constant is used to set the initial and maximum selectable range for the price slider in the UI.
@@ -124,6 +125,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   ///Event Handlers
   Future<void> _onOrionInitialEvent(OrionInitialEvent event, Emitter<OrionState> emit) async {
+    getCurrencySymbol = "".setCurrency;
     minPriceController.text = '${values.start.toStringAsFixed(2)}'.setCurrency;
     maxPriceController.text = '${values.end.toStringAsFixed(2)}'.setCurrency;
     if (isInitialized) return;
@@ -135,8 +137,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     if (selectedDiamondShape != null && selectedDiamondShape!.shapeCode.isNotNullNorEmpty) {
       final Map<String, String> body = {
         ApiKey.shape: selectedDiamondShape!.shapeCode ?? '',
-        ApiKey.min: minPriceController.text.replaceAll('\$ ', ''),
-        ApiKey.max: maxPriceController.text.replaceAll('\$ ', ''),
+        ApiKey.min: minPriceController.text.replaceAll(getCurrencySymbol, ''),
+        ApiKey.max: maxPriceController.text.replaceAll(getCurrencySymbol, ''),
         ApiKey.limit: AppConst.pageLimit50.toString()
       };
       await fetchOrionList(event.context, emit, body, isLoadMore: false);
@@ -162,7 +164,6 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       page: AppConst.page1.toString(),
       limit: AppConst.pageLimit50.toString(),
       isLoadMore: isLoadMore,
-      // type: type,
       query: query,
     );
 
@@ -259,7 +260,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   Future<void> fetchOrionList(context, Emitter<OrionState> emit, Map<String, String> body, {bool isLoadMore = true}) async {
     final response = await AppRepository(context).fetchOrionList(isLoadMore, body: body);
 
-    return response?.fold((error) => Utils.showMessage(error.message), (PaginationData<OrionListModel> success) async {
+    return response?.fold((error) => Utils.showMessage(error.message), (PaginationData<DiamondDataModel> success) async {
       /// Clear previous data
       clearData();
       final list = success.dataList ?? [];
@@ -362,8 +363,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     if (selectedDiamondShape != null && selectedDiamondShape!.shapeCode.isNotNullNorEmpty && clarityModelList.isNotEmpty) {
       final Map<String, String> body = {
         ApiKey.shape: selectedDiamondShape!.shapeCode ?? '',
-        ApiKey.min: minPriceController.text.replaceAll('\$ ', ''),
-        ApiKey.max: maxPriceController.text.replaceAll('\$ ', ''),
+        ApiKey.min: minPriceController.text.replaceAll(getCurrencySymbol, ''),
+        ApiKey.max: maxPriceController.text.replaceAll(getCurrencySymbol, ''),
         ApiKey.limit: AppConst.pageLimit50.toString(),
       };
       await fetchOrionList(event.context, emit, body);
@@ -379,8 +380,8 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
     if (selectedDiamondShape != null && selectedDiamondShape != null && selectedDiamondShape!.shapeCode.isNotNullNorEmpty) {
       final Map<String, String> body = {
         ApiKey.shape: selectedDiamondShape!.shapeCode ?? '',
-        ApiKey.min: minPriceController.text.replaceAll('\$ ', ''),
-        ApiKey.max: maxPriceController.text.replaceAll('\$ ', ''),
+        ApiKey.min: minPriceController.text.replaceAll(getCurrencySymbol, ''),
+        ApiKey.max: maxPriceController.text.replaceAll(getCurrencySymbol, ''),
         ApiKey.limit: AppConst.pageLimit50.toString()
       };
       await fetchOrionList(event.context, emit, body);
