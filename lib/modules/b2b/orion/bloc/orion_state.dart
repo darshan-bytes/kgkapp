@@ -58,3 +58,41 @@ final class OrionDiamondMovedState extends OrionState {
   @override
   List<Object> get props => [];
 }
+
+class OrionChangeListingTypeState extends OrionState {
+  @override
+  List<Object> get props => [];
+}
+
+final class OrionProductReloadState extends OrionState {
+  @override
+  List<Object> get props => [];
+}
+
+final class OrionDiamondListLoadedState extends OrionState {
+  const OrionDiamondListLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class OrionProductLoadedState extends OrionState {
+  const OrionProductLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class OrionListLoadingMoreState extends OrionState {
+  @override
+  List<Object> get props => [];
+}
+
+final class OrionListLoadedMoreState extends OrionState {
+  final int currentPage;
+
+  const OrionListLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}

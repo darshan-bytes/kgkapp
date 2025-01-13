@@ -24,12 +24,14 @@ extension ProductCustomizationOptionsExtension on ProductCustomizationOptions {
 class ProductCustomizationOptionValues {
   String? id;
   String? value;
+  String? shapeCode;
   String? image;
   int availableProductCount;
 
   ProductCustomizationOptionValues({
     this.id,
     this.value,
+    this.shapeCode,
     this.image,
     this.availableProductCount = 0,
   });
@@ -40,10 +42,11 @@ class ProductCustomizationOptionValues {
     return other is ProductCustomizationOptionValues &&
         other.id == id &&
         other.value == value &&
+        other.shapeCode == shapeCode &&
         other.image == image &&
         other.availableProductCount == availableProductCount;
   }
 
   @override
-  int get hashCode => id.hashCode ^ value.hashCode ^ image.hashCode ^ availableProductCount.hashCode;
+  int get hashCode => id.hashCode ^ value.hashCode ^ shapeCode.hashCode ^ image.hashCode ^ availableProductCount.hashCode;
 }

@@ -597,7 +597,7 @@ class AppRoutes {
 
       case orionPage:
         builder = (context) {
-          BlocProvider.of<OrionBloc>(context).add(const OrionInitialEvent());
+          BlocProvider.of<OrionBloc>(context).add(OrionInitialEvent(context));
           return const OrionScreen();
         };
         break;

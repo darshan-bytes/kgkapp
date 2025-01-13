@@ -146,20 +146,20 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList(
       {required String limit,
       required String page,
-      required String sortKey,
-      required String sortValue,
+      String? sortKey,
+      String? sortValue,
       bool isLoadMore = false,
       Map<String, String>? query,
-      required String type}) async {
+      String? type}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     Map<String, String> queryParams = {
-      ApiKey.limit: limit,
       ApiKey.page: page,
-      ApiKey.sortKey: sortKey,
-      ApiKey.sortValue: sortValue,
-      ApiKey.type: type
+      ApiKey.limit: limit,
+      if (sortKey != null) ApiKey.sortKey: sortKey,
+      if (sortValue != null) ApiKey.sortValue: sortValue,
+      if(type != null) ApiKey.type: type
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -295,6 +295,12 @@ class AppRepository extends ApiService {
       withCurrencyHeader: true,
     );
     context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // For Getting Unique Shapes
+  Future<Either<ErrorResponse, List<OrionShapeModel>>?> fetchUniqueShapes() async {
+    var response = await getMethod<OrionShapeModel>(ApiClient.uniqueShapes);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -577,6 +583,19 @@ class AppRepository extends ApiService {
     if (isLoadMore) context.setAppLoading(true);
     var response = await getMethod<PaginationData<CollectionDataItemsModel>>(ApiClient.collectionMaster, query: body);
     if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //fetchOrionList
+  Future<Either<ErrorResponse, PaginationData<DiamondDataModel>>?> fetchOrionList(bool isLoadMore,
+      {required Map<String, dynamic> body}) async {
+    if (isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<DiamondDataModel>>(ApiClient.orionList, query: body, withCurrencyHeader: true);
+    if (isLoadMore) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

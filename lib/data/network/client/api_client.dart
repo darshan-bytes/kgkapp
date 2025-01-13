@@ -202,6 +202,10 @@ class ApiClient {
   static const String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';
 
   static const String resendEmailOtp = '$apiBaseUrl/auth/resend-email-otp';
+
+  static String get uniqueShapes => '$apiBaseUrl/commodity/diamond/unique-shape';
+
+  static String get orionList => '$apiBaseUrl/commodity/diamond/orion/list';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

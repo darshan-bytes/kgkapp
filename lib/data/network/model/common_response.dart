@@ -169,6 +169,10 @@ class CommonResponse<T> {
         return PaginationData<ExhibitionListLocationDataModel>.fromJson(json);
       case const (PaginationData<PddDataModel>):
         return PaginationData<PddDataModel>.fromJson(json);
+      case const (PaginationData<DiamondDataModel>):
+        return PaginationData<DiamondDataModel>.fromJson(json);
+      case const (OrionShapeModel):
+        return OrionShapeModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):

@@ -90,6 +90,8 @@ class PaginationData<T> {
         return ExhibitionListLocationDataModel.fromJson(json);
       case const (PddDataModel):
         return PddDataModel.fromJson(json);
+      case const (DiamondDataModel):
+        return DiamondDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

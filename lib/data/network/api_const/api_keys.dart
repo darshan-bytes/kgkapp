@@ -118,4 +118,10 @@ class ApiKey {
   static const String subject = 'subject';
   static const String inquiryType = 'inquiry_type';
   static const String otpPasscode = 'otp_passcode';
+  static const String shape = 'shape';
+  static const String min = 'min';
+  static const String max = 'max';
+  static const String cut = 'cut';
+  static const String color = 'color';
+  static const String clarity = 'clarity';
 }
