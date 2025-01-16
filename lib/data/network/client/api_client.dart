@@ -238,6 +238,8 @@ class StrapiEndPoints {
 
   static String get homePage => '$baseUrl/homes';
 
+  static String get mobileHomePage => '$baseUrl/mobile-home-pages';
+
   static String get jewelleryPage => '$baseUrl/jewelleries';
 
   static String get notFoundPage => '$baseUrl/page-not-founds';
@@ -252,6 +254,7 @@ class StrapiEndPoints {
 /// All attributes are defined here for the Strapi CMS
 class Attributes {
   static const String homePage = 'home';
+  static const String mobileHomePage = 'home';
   static const String diamondPage = 'diamonds';
   static const String gemstonePage = 'gemstones';
   static const String jewelleryPage = 'jewelleries';
