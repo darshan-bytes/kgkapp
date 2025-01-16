@@ -888,9 +888,7 @@ Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
               .map((AuctionListModel field) => SmartImageTitleColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     topWidget: SmartImage(
-                      // height: 188.w,
                       path: field.imageUrl ?? '',
-                      // fit: BoxFit.fitWidth,
                     ),
                     title: '',
                     titleStyle: style.getInspiredTitleStyle,

@@ -71,5 +71,8 @@ class AppConst {
   /// For gemstone Deals of the day api parameters values
   static const String gemstoneDealsOfTheDayParam = "CERTIFIEDCOLORSTONE";
 
+  /// For couture collection
+  static const String coutureCollection = "COUTURE_COLLECTION";
+
   static const String orderContext = "order";
 }

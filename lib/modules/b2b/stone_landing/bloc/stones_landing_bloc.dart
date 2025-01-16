@@ -391,7 +391,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
               );
             },
-            title: diamondStrapiList[index].button[i].label ?? '',
+            /// Todo : fix in next strapi update
+            title: "btnTitle" ?? '',
           ));
         }
         return StoneBannerView(
@@ -439,7 +440,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             AuctionListModel(
               id: i.toString(),
               name: diamondStrapiList[index].country[i].title ?? '',
-              imageUrl: (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}' : "",
+              imageUrl: (diamondStrapiList[index].poster?.mobileImage?.data).isNotNullNorEmpty
+                  ? '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].country[i].mobileImage?.data.first.attributes?.url}'
+                  : "",
               redirectTo: diamondStrapiList[index].country[i].redirecTo ?? '',
               redirectionType: diamondStrapiList[index].country[i].redirectionType ?? '',
             ),
@@ -466,7 +469,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         String mainBannerTitle = diamondStrapiList[index].title ?? '';
         String mainBannerDescription = Utils.parseHtmlString(diamondStrapiList[index].description ?? '');
-        String mainBannerForegroundImagePath = '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].image?.data?.attributes?.url}';
+        String mainBannerForegroundImagePath =
+            '${AppConst.strapiQaEnvImgBaseUrl}${diamondStrapiList[index].image?.data.first.attributes?.url}';
         List<Widget> buttonList = [];
 
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
@@ -479,7 +483,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
               );
             },
-            title: diamondStrapiList[index].button[i].label ?? '',
+            title: 'Check',
           ));
         }
 

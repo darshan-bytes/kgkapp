@@ -811,7 +811,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         //Utils.showMessage(l.message);
       }, (r) {
         homeStrapiList = r;
-        print("Length of : ${homeStrapiList.length}");
       });
     });
     emit(const HomeStrapiDataFetchedState());
@@ -849,7 +848,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (slug) {
       case HomeSlug.mobileProductCategories:
-        return HomeWidgets.buildJewelleryList(homeBloc, style);
+        return HomeWidgets.buildJewelleryList(homeStrapiList[index].info?.title ?? '',homeBloc, style);
 
       case HomeSlug.mobileHomeBanner:
         return HomeWidgets.buildEngagementImageSlider(
@@ -858,6 +857,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileTopSellingCategories:
+
         return HomeWidgets.buildTopSellingCategories(
           homeBloc,
           style,
@@ -876,6 +876,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           url: imageUrl != null ? "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl" : '',
           redirectTo: redirectTo,
           redirectionType: redirectionType,
+          title: homeStrapiList[index].data['title'].toString(),
         );
 
       case HomeSlug.mobileGetInspired:
@@ -887,10 +888,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileShopByStyle:
+        List<AuctionListModel> dataList = parseDataList(homeStrapiList[index].data);
+        if(dataList.isEmpty){
+          return Container();
+        }
         return HomeWidgets.buildShopByStyleSection(
           homeBloc,
           style,
-          parseDataList(homeStrapiList[index].data),
+          dataList,
         );
 
       case HomeSlug.mobileDIYGuidance:
@@ -915,7 +920,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopDiamondSection(homeBloc, style);
 
       case HomeSlug.mobileShopGemstone:
-        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: 'Shop Gemstone');
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: APPStrings.shopGemstones.tr);
 
       case HomeSlug.mobileKGKCouture:
         return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, context: context);
@@ -1026,8 +1031,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 productId: item.suid ?? '',
                 commodity: Commodity.jewellery,
                 imageUrl: item.multipleFinishedViewImage ?? '',
-                name: item.productDescription ?? '',
-                originalPrice: item.finalPrice?.toString().setCurrency ?? '',
+                title: item.jewelleryTypeName ?? '',
+                subTitle: item.productDescription ?? '',
+                originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
                 offerPrice: item.discountPrice?.toString().setCurrency ?? '',
               );
             },

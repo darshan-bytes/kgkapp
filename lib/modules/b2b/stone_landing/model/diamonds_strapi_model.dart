@@ -11,19 +11,21 @@ class DiamondsStrapiModel {
 
   factory DiamondsStrapiModel.fromJson(Map<String, dynamic> json) {
     return DiamondsStrapiModel(
-      data: json["data"] == null ? [] : List<DiamondsStrapiModelDatum>.from(json["data"]!.map((x) => DiamondsStrapiModelDatum.fromJson(x))),
-      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+      data: (json["data"] as List<dynamic>?)
+          ?.map((x) => DiamondsStrapiModelDatum.fromJson(x as Map<String, dynamic>))
+          .toList() ?? [],
+      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-        "meta": meta?.toJson(),
-      };
+    "data": data.map((x) => x.toJson()).toList(),
+    "meta": meta?.toJson(),
+  };
 
   @override
   String toString() {
-    return "$data, $meta, ";
+    return "$data, $meta";
   }
 }
 
@@ -98,56 +100,68 @@ class DiamondData {
     required this.id,
     required this.component,
     required this.slug,
+    required this.button,
     required this.userType,
     required this.businessType,
-    required this.button,
     required this.poster,
-    required this.details,
-    required this.country,
+    required this.info,
     required this.title,
     required this.description,
+    required this.backgroundImage,
+    required this.details,
+    required this.country,
     required this.image,
+    required this.mobileImage,
     required this.banner,
     required this.headline,
     required this.about,
     required this.faQs,
+    required this.points,
   });
 
   final int? id;
   final String? component;
   final Slug? slug;
+  final dynamic button;
   final UserType? userType;
   final BusinessType? businessType;
-  final List<Button> button;
-  final Poster? poster;
-  final Details? details;
-  final List<Country> country;
+  final About? poster;
+  final Info? info;
   final String? title;
   final String? description;
-  final DiamondImage? image;
+  final BackgroundImage? backgroundImage;
+  final Details? details;
+  final List<About> country;
+  final AboutImage? image;
+  final AboutImage? mobileImage;
   final List<Banner> banner;
   final dynamic headline;
   final About? about;
   final List<Faq> faQs;
+  final List<Details> points;
 
   factory DiamondData.fromJson(Map<String, dynamic> json) {
     return DiamondData(
       id: json["id"],
       component: json["__component"],
       slug: json["slug"] == null ? null : Slug.fromJson(json["slug"]),
+      button: json["button"],
       userType: json["user_type"] == null ? null : UserType.fromJson(json["user_type"]),
       businessType: json["business_type"] == null ? null : BusinessType.fromJson(json["business_type"]),
-      button: json["button"] == null ? [] : List<Button>.from(json["button"]!.map((x) => Button.fromJson(x))),
-      poster: json["poster"] == null ? null : Poster.fromJson(json["poster"]),
-      details: json["details"] == null ? null : Details.fromJson(json["details"]),
-      country: json["country"] == null ? [] : List<Country>.from(json["country"]!.map((x) => Country.fromJson(x))),
+      poster: json["poster"] == null ? null : About.fromJson(json["poster"]),
+      info: json["info"] == null ? null : Info.fromJson(json["info"]),
       title: json["title"],
       description: json["description"],
-      image: json["image"] == null ? null : DiamondImage.fromJson(json["image"]),
+      backgroundImage: json["background_image"] == null ? null : BackgroundImage.fromJson(json["background_image"]),
+      details: json["details"] == null ? null : Details.fromJson(json["details"]),
+      country: json["country"] == null ? [] : List<About>.from(json["country"]!.map((x) => About.fromJson(x))),
+      image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
+      mobileImage: json["mobile_image"] == null ? null : AboutImage.fromJson(json["mobile_image"]),
       banner: json["banner"] == null ? [] : List<Banner>.from(json["banner"]!.map((x) => Banner.fromJson(x))),
       headline: json["headline"],
       about: json["about"] == null ? null : About.fromJson(json["about"]),
       faQs: json["FAQs"] == null ? [] : List<Faq>.from(json["FAQs"]!.map((x) => Faq.fromJson(x))),
+      points: json["points"] == null ? [] : List<Details>.from(json["points"]!.map((x) => Details.fromJson(x))),
     );
   }
 
@@ -155,19 +169,23 @@ class DiamondData {
         "id": id,
         "__component": component,
         "slug": slug?.toJson(),
+        "button": button,
         "user_type": userType?.toJson(),
         "business_type": businessType?.toJson(),
-        "button": button.map((x) => x.toJson()).toList(),
         "poster": poster?.toJson(),
-        "details": details?.toJson(),
-        "country": country.map((x) => x.toJson()).toList(),
+        "info": info?.toJson(),
         "title": title,
         "description": description,
+        "background_image": backgroundImage?.toJson(),
+        "details": details?.toJson(),
+        "country": country.map((x) => x.toJson()).toList(),
         "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
         "banner": banner.map((x) => x.toJson()).toList(),
         "headline": headline,
         "about": about?.toJson(),
         "FAQs": faQs.map((x) => x.toJson()).toList(),
+        "points": points.map((x) => x.toJson()).toList(),
       };
 
   @override
@@ -184,6 +202,7 @@ class About {
     required this.tag,
     required this.redirecTo,
     required this.redirectionType,
+    required this.mobileImage,
     required this.image,
   });
 
@@ -192,7 +211,8 @@ class About {
   final String? description;
   final dynamic tag;
   final String? redirecTo;
-  final dynamic redirectionType;
+  final String? redirectionType;
+  final AboutImage? mobileImage;
   final AboutImage? image;
 
   factory About.fromJson(Map<String, dynamic> json) {
@@ -203,6 +223,7 @@ class About {
       tag: json["tag"],
       redirecTo: json["RedirecTo"],
       redirectionType: json["RedirectionType"],
+      mobileImage: json["mobile_image"] == null ? null : AboutImage.fromJson(json["mobile_image"]),
       image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
     );
   }
@@ -214,13 +235,9 @@ class About {
         "tag": tag,
         "RedirecTo": redirecTo,
         "RedirectionType": redirectionType,
+        "mobile_image": mobileImage?.toJson(),
         "image": image?.toJson(),
       };
-
-  @override
-  String toString() {
-    return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, ";
-  }
 }
 
 class AboutImage {
@@ -231,18 +248,32 @@ class AboutImage {
   final List<PurpleDatum> data;
 
   factory AboutImage.fromJson(Map<String, dynamic> json) {
+    // Handle case where data might be a Map or a List
+    dynamic jsonData = json["data"];
+    if (jsonData == null) {
+      return AboutImage(data: []);
+    }
+
+    if (jsonData is Map<String, dynamic>) {
+      // If it's a single object, wrap it in a list
+      return AboutImage(data: [PurpleDatum.fromJson(jsonData)]);
+    }
+
+    // If it's already a list, process it normally
     return AboutImage(
-      data: json["data"] == null ? [] : List<PurpleDatum>.from(json["data"]!.map((x) => PurpleDatum.fromJson(x))),
+      data: (jsonData as List<dynamic>)
+          .map((x) => PurpleDatum.fromJson(x as Map<String, dynamic>))
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "data": data.map((x) => x.toJson()).toList(),
-      };
+    "data": data.map((x) => x.toJson()).toList(),
+  };
 
   @override
   String toString() {
-    return "$data, ";
+    return "$data";
   }
 }
 
@@ -358,24 +389,36 @@ class FluffyAttributes {
 
 class PurpleFormats {
   PurpleFormats({
+    required this.small,
+    required this.medium,
     required this.thumbnail,
+    required this.large,
   });
 
+  final Large? small;
+  final Large? medium;
   final Large? thumbnail;
+  final Large? large;
 
   factory PurpleFormats.fromJson(Map<String, dynamic> json) {
     return PurpleFormats(
+      small: json["small"] == null ? null : Large.fromJson(json["small"]),
+      medium: json["medium"] == null ? null : Large.fromJson(json["medium"]),
       thumbnail: json["thumbnail"] == null ? null : Large.fromJson(json["thumbnail"]),
+      large: json["large"] == null ? null : Large.fromJson(json["large"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
+        "small": small?.toJson(),
+        "medium": medium?.toJson(),
         "thumbnail": thumbnail?.toJson(),
+        "large": large?.toJson(),
       };
 
   @override
   String toString() {
-    return "$thumbnail, ";
+    return "$thumbnail, $large, $medium, $small, ";
   }
 }
 
@@ -436,6 +479,80 @@ class Large {
   String toString() {
     return "$ext, $url, $hash, $mime, $name, $path, $size, $width, $height, $sizeInBytes, ";
   }
+}
+
+class BackgroundImage {
+  BackgroundImage({
+    required this.id,
+    required this.title,
+    required this.url,
+    required this.mobileImage,
+    required this.image,
+  });
+
+  final int? id;
+  final dynamic title;
+  final dynamic url;
+  final AboutImage? mobileImage;
+  final AboutImage? image;
+
+  factory BackgroundImage.fromJson(Map<String, dynamic> json){
+    return BackgroundImage(
+      id: json["id"],
+      title: json["title"],
+      url: json["url"],
+      mobileImage: json["mobile_image"] == null ? null : AboutImage.fromJson(json["mobile_image"]),
+      image: json["image"] == null ? null : AboutImage.fromJson(json["image"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "url": url,
+    "mobile_image": mobileImage?.toJson(),
+    "image": image?.toJson(),
+  };
+
+}
+
+class ButtonElement {
+  ButtonElement({
+    required this.id,
+    required this.label,
+    required this.url,
+    required this.target,
+    required this.redirectTo,
+    required this.redirectionType,
+  });
+
+  final int? id;
+  final String? label;
+  final String? url;
+  final String? target;
+  final String? redirectTo;
+  final String? redirectionType;
+
+  factory ButtonElement.fromJson(Map<String, dynamic> json){
+    return ButtonElement(
+      id: json["id"],
+      label: json["label"],
+      url: json["url"],
+      target: json["target"],
+      redirectTo: json["redirectTo"],
+      redirectionType: json["redirectionType"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "label": label,
+    "url": url,
+    "target": target,
+    "redirectTo": redirectTo,
+    "redirectionType": redirectionType,
+  };
+
 }
 
 class Banner {
@@ -1066,7 +1183,6 @@ class Poster {
       redirectionType: json["RedirectionType"],
       image: json["image"] == null ? null : BannerImage.fromJson(json["image"]),
       mobileImage: json["mobile_image"] == null ? null : BannerImage.fromJson(json["mobile_image"]),
-
     );
   }
 
@@ -1085,6 +1201,41 @@ class Poster {
   String toString() {
     return "$id, $title, $description, $tag, $redirecTo, $redirectionType, $image, $mobileImage";
   }
+}
+
+class Info {
+  Info({
+    required this.id,
+    required this.title,
+    required this.headline,
+    required this.tagline,
+    required this.sectionTitle,
+  });
+
+  final int? id;
+  final String? title;
+  final dynamic headline;
+  final dynamic tagline;
+  final dynamic sectionTitle;
+
+  factory Info.fromJson(Map<String, dynamic> json){
+    return Info(
+      id: json["id"],
+      title: json["title"],
+      headline: json["headline"],
+      tagline: json["tagline"],
+      sectionTitle: json["section_title"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "headline": headline,
+    "tagline": tagline,
+    "section_title": sectionTitle,
+  };
+
 }
 
 class Slug {
