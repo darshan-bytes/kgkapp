@@ -13,7 +13,7 @@ class AppRepository extends ApiService {
   /// Fetches the home data from the Strapi CMS
   Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
     try {
-      final url = await buildUrl(endpoint: StrapiEndPoints.homePage, attribute: Attributes.homePage);
+      final url = await buildUrl(endpoint: StrapiEndPoints.mobileHomePage, attribute: Attributes.homePage);
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
