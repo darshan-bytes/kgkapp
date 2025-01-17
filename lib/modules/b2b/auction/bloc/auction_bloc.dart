@@ -16,7 +16,7 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   Duration auctionEndDuration = const Duration(days: 5, hours: 3, minutes: 30, seconds: 45);
 
   TextEditingController bidAmountController = TextEditingController();
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
   final ScrollController listScrollController = ScrollController();
   final ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey();

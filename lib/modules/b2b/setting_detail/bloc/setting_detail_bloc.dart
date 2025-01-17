@@ -13,7 +13,7 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
   late BuildContext context;
 
   int current = 0;
-  final CarouselController controller = CarouselController();
+  final CarouselSliderController controller = CarouselSliderController();
 
   final List<String> imgList = [
     "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",

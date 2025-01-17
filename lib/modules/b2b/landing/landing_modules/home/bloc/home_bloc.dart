@@ -10,7 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Engagement List With slider controller
   int currentCarouselIndex = 0;
-  final CarouselController engagementListCarouselController = CarouselController();
+  final CarouselSliderController engagementListCarouselController = CarouselSliderController();
   final List<AuctionListModel> engagementList = _generateEngagementList();
   final List<AuctionListModel> latestCollectionList = _generateLatestCollection();
 
