@@ -165,7 +165,12 @@ class AppRoutes {
         break;
 
       case settingDetailPage:
-        builder = (context) => const SettingDetailScreen();
+        builder = (context) {
+          return BlocProvider<SettingDetailBloc>(
+            create: (_) => SettingDetailBloc()..add(SettingDetailInitialEvent(context: context)),
+            child: const SettingDetailScreen(),
+          );
+        };
         break;
 
       case stoneListingPage:
@@ -187,7 +192,12 @@ class AppRoutes {
         break;
 
       case completeProductPage:
-        builder = (context) => const CompleteProductScreen();
+        builder = (_) {
+          return BlocProvider<CompleteProductBloc>(
+            create: (context) => CompleteProductBloc()..add(CompleteProductInitialEvent(context: context)),
+            child: const CompleteProductScreen(),
+          );
+        };
         break;
 
       case addAddressPage:
@@ -796,6 +806,7 @@ enum RoutesData {
   isWatchlistDeleted,
   email,
   isFromSignIn,
+  settingId,
 }
 
 enum ScreenIdentifier {

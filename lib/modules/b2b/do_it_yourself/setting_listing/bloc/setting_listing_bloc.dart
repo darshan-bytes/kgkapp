@@ -6,7 +6,7 @@ part 'setting_listing_state.dart';
 
 class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> {
   late AppBloc appBloc;
-  DiyDiamondDataModel? diamondDataForDIY;
+  DiamondDataModel? diamondDataForDIY;
   bool isInitialToggle = true;
   bool isGrid = true;
   String sortKey = AppConst.sortKeySuid;
@@ -26,6 +26,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     on<SettingChangeListingTypeEvent>(_onChangeListingTypeEvent);
     on<LoadMoreSettingProductListEvent>(_onLoadMoreSettingProductListEvent);
     on<SettingListPullToRefreshEvent>(_onSettingListPullToRefresh);
+    on<SettingListingOnTapEvent>(_onSettingListingOnTapEvent);
   }
 
   Future<void> _onSettingListingInitialEvent(SettingListingInitialEvent event, Emitter<SettingListingState> emit) async {
@@ -71,6 +72,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     emit(const SettingLoadedState());
   }
 
+  Future<void> _onSettingListingOnTapEvent(SettingListingOnTapEvent event, Emitter<SettingListingState> emit) async {
+    emit(const SettingLoadedState());
+  }
+
   Future<bool> pullToRefresh(BuildContext context) async {
     if (!refreshCompleter.isCompleted) {
       return false;
@@ -84,12 +89,11 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   Future<void> _fetchSettingProductList(
     BuildContext context,
     Emitter<SettingListingState> emit,
-    bool isLoadMore, {
-    Map<String, String>? query,
-  }) async {
+    bool isLoadMore,
+  ) async {
     Either<ErrorResponse, PaginationData<DiyStyleListModel>>? response;
 
-    query ??= {};
+    Map<String, String>? query = {};
 
     filterData
         .where((element) =>
@@ -98,10 +102,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
         .forEach(
       (element) {
         if (element.filterType == FilterType.range) {
-          query!['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
           query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
         } else {
-          query![element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
         }
       },
     );
@@ -109,6 +113,8 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     if (diamondDataForDIY?.shapeCode != null) {
       query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
     }
+    //TODO: Need to pass Jewellery Type name. Get it from routes data
+    query[ApiKey.jewelleryTypeName] = 'Ring';
 
     response = await AppRepository(context).diyStyleFilters(
       page: paginationScrollController.currentPage.toString(),

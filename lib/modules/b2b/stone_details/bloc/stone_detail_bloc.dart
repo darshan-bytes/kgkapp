@@ -17,14 +17,13 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   bool isStoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> stoneDetailsKey = GlobalKey();
 
-  DiyDiamondDataModel? diamondData;
+  DiamondDataModel? diamondData;
   String productName = '';
   ProductDetailsModel? productDetails;
   final CarouselSliderController controller = CarouselSliderController();
 
   StoneDetailBloc() : super(StoneDetailInitial()) {
     on<StoneDetailInitialEvent>(_stoneDetailInitialEvent);
-    on<StoneDetailsToggleEvent>(_onStoneDetailsToggleEvent);
     on<StoneDetailSelectStoneForDIYEvent>(_onStoneDetailSelectStoneForDIYEvent);
   }
 
@@ -48,19 +47,13 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
     }
   }
 
-  void _onStoneDetailsToggleEvent(StoneDetailsToggleEvent event, Emitter<StoneDetailState> emit) {
-    emit(StoneDetailReloadState());
-    isStoneDetailsOpen = !isStoneDetailsOpen;
-    emit(StoneDetailsToggleState(isStoneDetailsOpen));
-  }
-
   Future<void> _onStoneDetailSelectStoneForDIYEvent(StoneDetailSelectStoneForDIYEvent event, Emitter<StoneDetailState> emit) async {
     appBloc.diamondDataForDIY = diamondData;
     await event.context.pushNamed(AppRoutes.settingListingPage);
   }
 
   Future<void> getDIYDetails(BuildContext context, String productId) async {
-    Either<ErrorResponse, DiyDiamondDataModel>? response = await AppRepository(context).diyDetails(id: productId);
+    Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).diyDetails(id: productId);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -84,6 +77,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
             commodity: Commodity.diamond,
+            stoneElements: diamondData?.components,
           );
         }
       },

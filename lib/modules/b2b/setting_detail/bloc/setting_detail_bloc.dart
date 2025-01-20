@@ -5,58 +5,69 @@ part 'setting_detail_event.dart';
 part 'setting_detail_state.dart';
 
 class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
-  bool isSettingOpen = false;
-  bool isDiamondDetailsOpen = false;
+  UserType userType = UserType.b2cUser;
 
-  GlobalKey<SmartExpansionTileState> settingDetailsKey = GlobalKey();
-  GlobalKey<SmartExpansionTileState> diamondDetailsKey = GlobalKey();
-  late BuildContext context;
+  ProductDetailsModel? productDetails;
 
-  int current = 0;
   final CarouselSliderController controller = CarouselSliderController();
 
-  final List<String> imgList = [
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-    "https://i.ibb.co/6w4y6pX/DERS01-XXSRTTP-6-0-RD-PWR1-jpg-1.png",
-    "https://i.ibb.co/q71vDB8/DERS01-XXSRTTP-6-0-RD-PWR1-jpg.png",
-  ];
+  final List<String> imgList = [];
 
-  ProductCustomizationOptions metalCustomisation = ProductCustomizationOptions(
-    id: '2',
-    name: APPStrings.metal.tr,
-    type: ProductCustomizationType.metal.value,
-    selectedValue: ProductCustomizationOptionValues(id: '1', value: 'White Gold', image: 'https://i.ibb.co/Zzd66J6/Ellipse-117.png'),
-    values: [
-      ProductCustomizationOptionValues(id: '1', value: 'White Gold', image: 'https://i.ibb.co/Zzd66J6/Ellipse-117.png'),
-      ProductCustomizationOptionValues(id: '2', value: 'Rose Gold', image: 'https://i.ibb.co/DYMS4xm/Ellipse-117-1.png'),
-      ProductCustomizationOptionValues(id: '3', value: 'Yellow Gold', image: 'https://i.ibb.co/XsKxFtz/Ellipse-117-2.png'),
-      ProductCustomizationOptionValues(id: '4', value: 'Silver', image: 'https://i.ibb.co/wJmc5Vq/Ellipse-117-3.png'),
-      ProductCustomizationOptionValues(id: '5', value: 'Platinum', image: 'https://i.ibb.co/QbPWvNs/Ellipse-117-4.png'),
-    ],
-  );
+  String productName = '';
+  String? settingId;
 
   SettingDetailBloc() : super(SettingDetailInitial()) {
-    on<SettingToggleEvent>(onOpenCloseSetting);
-    on<SettingDiamondDetailsToggleEvent>(_onSettingDiamondDetailsToggleEvent);
-    on<MetalCustomizationChangeEvent>(_onMetalCustomizationChangeEvent);
+    on<SettingDetailInitialEvent>(_onSettingDetailInitialEvent);
   }
 
-  void onOpenCloseSetting(SettingToggleEvent event, emit) async {
-    isSettingOpen = !isSettingOpen;
-    emit(SettingToggleState(isSettingOpen));
+  Future<void> _onSettingDetailInitialEvent(SettingDetailInitialEvent event, Emitter<SettingDetailState> emit) async {
+    getScreenIdentifier(event.context);
+
+    /// assigning current userType
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    imgList.clear();
+    await getSettingDetails(event.context, settingId);
+    emit(const SettingDetailLoadedState());
   }
 
-  void _onMetalCustomizationChangeEvent(MetalCustomizationChangeEvent event, Emitter<SettingDetailState> emit) {
-    int currentIndex = metalCustomisation.values!.indexWhere((element) => element == metalCustomisation.selectedValue);
-    metalCustomisation.selectedValue = metalCustomisation.values![event.index];
-    emit(MetalCustomizationChangeState(event.index, currentIndex));
+  void getScreenIdentifier(BuildContext context) {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    if (data != null) {
+      settingId = data[RoutesData.settingId];
+    }
   }
 
-  void _onSettingDiamondDetailsToggleEvent(SettingDiamondDetailsToggleEvent event, Emitter<SettingDetailState> emit) {
-    isDiamondDetailsOpen = !isDiamondDetailsOpen;
-    emit(SettingDiamondToggleState(isDiamondDetailsOpen));
+  Future<void> getSettingDetails(BuildContext context, String? settingId) async {
+    Either<ErrorResponse, DiyFinalDetailsModel>? response = await AppRepository(context).getDiySettingDetails(settingId ?? '');
+    response?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) {
+        if (r.product != null) {
+          DiyStyleListModel item = r.product!;
+          if (item.imageSketch.isNotNullNorEmpty) {
+            imgList.clear();
+            imgList.add(item.imageSketch ?? '');
+          }
+          productName = item.longDescription ?? '';
+
+          productDetails = ProductDetailsModel(
+            suid: item.suid,
+            productId: item.suid,
+            imageUrl: item.imageSketch,
+            subTitle: item.autoDescription,
+            originalPrice: item.finalPrice?.toString().setCurrency,
+            offerPrice: item.discountPrice?.toString().setCurrency,
+            finalPrice: item.discountPrice?.toString().setCurrency,
+            commodity: Commodity.diy,
+            businessCategoryName: item.businessCategoryName ?? "",
+            colorsCode: [item.metalColor1HexCode ?? ""],
+            components: item.components,
+            productSku: item.styleNumber,
+          );
+        }
+      },
+    );
   }
 }

@@ -4,33 +4,19 @@ sealed class CompleteProductEvent extends Equatable {
   const CompleteProductEvent();
 }
 
+final class CompleteProductInitialEvent extends CompleteProductEvent {
+  final BuildContext context;
+
+  const CompleteProductInitialEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
 final class CompleteProductCompareToggle extends CompleteProductEvent {
   final bool isCompare;
 
   const CompleteProductCompareToggle(this.isCompare);
-
-  @override
-  List<Object> get props => [];
-}
-
-class ProductRingDetailsToggleEvent extends CompleteProductEvent {
-  final bool isRingDetailsOpen;
-
-  const ProductRingDetailsToggleEvent({required this.isRingDetailsOpen});
-
-  @override
-  List<Object> get props => [isRingDetailsOpen];
-}
-
-class CompleteProductDiamondDetailsToggleEvent extends CompleteProductEvent {
-  const CompleteProductDiamondDetailsToggleEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CompleteProductGemstoneDetailsToggleEvent extends CompleteProductEvent {
-  const CompleteProductGemstoneDetailsToggleEvent();
 
   @override
   List<Object> get props => [];

@@ -123,7 +123,11 @@ class StoneDetailScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           const Divider(),
-          _diamondDetails(bloc),
+          ProductDetailsComponentsView(
+            commodity: Commodity.diamond,
+            components: [],
+            stoneElements: bloc.productDetails?.stoneElements,
+          ),
           Divider(height: 1.h),
           SizedBox(height: 24.h),
           const InquiryWidget(
@@ -133,48 +137,6 @@ class StoneDetailScreen extends StatelessWidget {
           SizedBox(height: 24.h),
         ],
       ),
-    );
-  }
-
-  Widget _diamondDetails(StoneDetailBloc diamondDetailsBloc) {
-    return BlocBuilder<StoneDetailBloc, StoneDetailState>(
-      buildWhen: (previous, current) => current is StoneDetailsToggleState,
-      builder: (context, state) {
-        final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
-        return Padding(
-          padding: diamondDetailsBloc.isStoneDetailsOpen ? const EdgeInsets.only(bottom: 28) : EdgeInsets.zero,
-          child: SmartExpansionTile(
-            initiallyExpanded: diamondDetailsBloc.isStoneDetailsOpen,
-            key: diamondDetailsBloc.stoneDetailsKey,
-            title: SmartText(
-              APPStrings.diamondDetails.tr,
-              style: style.settingSelectionTitleStyle,
-            ),
-            trailing: Icon(
-              diamondDetailsBloc.isStoneDetailsOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-              size: 24.w,
-              color: style.ratingGlowColor,
-            ),
-            onExpansionChanged: (value) {
-              diamondDetailsBloc.add(const StoneDetailsToggleEvent());
-            },
-            children: [
-              SizedBox(height: 16.h),
-              _settingWidget(APPStrings.shape.tr, 'Engagement Ring', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.quantity.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.totalCarat.tr, '1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.color.tr, 'F-G', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.clarity.tr, 'VS2-SI1', context),
-              SizedBox(height: 14.h),
-              _settingWidget(APPStrings.setting.tr, 'TypeThree Stone', context),
-            ],
-          ),
-        );
-      },
     );
   }
 

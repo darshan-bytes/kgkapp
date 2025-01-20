@@ -230,9 +230,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore,
         limit: AppConst.pageLimit.toString(),
-        type: type,
-        sortKey: sortKey,
-        sortValue: sortValue,
         query: query,
       );
     } else {
