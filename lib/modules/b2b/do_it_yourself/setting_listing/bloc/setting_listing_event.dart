@@ -42,7 +42,6 @@ final class SettingListPullToRefreshEvent extends SettingListingEvent {
   List<Object> get props => [context];
 }
 
-//SettingListingOnTapEvent(context:context, index:index)
 final class SettingListingOnTapEvent extends SettingListingEvent {
   final BuildContext context;
   final int index;

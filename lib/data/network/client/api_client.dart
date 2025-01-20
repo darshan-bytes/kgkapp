@@ -206,6 +206,8 @@ class ApiClient {
   static String get uniqueShapes => '$apiBaseUrl/commodity/diamond/unique-shape';
 
   static String get orionList => '$apiBaseUrl/commodity/diamond/orion/list';
+
+  static String diyStyleDetails(String id) => '$apiBaseUrl/diy/style/$id/view';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

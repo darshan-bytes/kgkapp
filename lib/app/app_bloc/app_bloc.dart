@@ -42,7 +42,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   List<AddressDetails> savedAddressList = [];
 
   /// [diamondDataForDIY] is used to store selected diamondData for DIY and will be used in the next steps
-  DiyDiamondDataModel? diamondDataForDIY;
+  DiamondDataModel? diamondDataForDIY;
 
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);

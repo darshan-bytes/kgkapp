@@ -16,15 +16,6 @@ final class StoneDetailLoadedState extends StoneDetailState {
   List<Object> get props => [];
 }
 
-final class StoneDetailsToggleState extends StoneDetailState {
-  final bool isDiamondDetailsOpen;
-
-  const StoneDetailsToggleState(this.isDiamondDetailsOpen);
-
-  @override
-  List<Object> get props => [isDiamondDetailsOpen];
-}
-
 final class StoneDetailReloadState extends StoneDetailState {
   @override
   List<Object> get props => [];

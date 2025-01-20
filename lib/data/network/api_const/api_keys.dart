@@ -124,4 +124,6 @@ class ApiKey {
   static const String cut = 'cut';
   static const String color = 'color';
   static const String clarity = 'clarity';
+  static const String jewelleryTypeName = 'jewellery_type_name';
+  static const String diamondSuid = 'diamond_suid';
 }
