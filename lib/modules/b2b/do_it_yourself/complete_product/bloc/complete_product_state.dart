@@ -9,6 +9,13 @@ final class CompleteProductInitial extends CompleteProductState {
   List<Object> get props => [];
 }
 
+final class CompleteProductLoadedState extends CompleteProductState {
+  const CompleteProductLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class CompleteProductCompareToggleState extends CompleteProductState {
   final bool isCompare;
 
@@ -16,31 +23,4 @@ final class CompleteProductCompareToggleState extends CompleteProductState {
 
   @override
   List<Object> get props => [isCompare];
-}
-
-class CompleteProductRingDetailsToggleState extends CompleteProductState {
-  final bool isRingDetailsOpen;
-
-  const CompleteProductRingDetailsToggleState(this.isRingDetailsOpen);
-
-  @override
-  List<Object> get props => [isRingDetailsOpen];
-}
-
-class CompleteProductDiamondDetailsToggleState extends CompleteProductState {
-  final bool isDiamondDetailsOpen;
-
-  const CompleteProductDiamondDetailsToggleState(this.isDiamondDetailsOpen);
-
-  @override
-  List<Object> get props => [isDiamondDetailsOpen];
-}
-
-class CompleteProductGemstoneDetailsToggleState extends CompleteProductState {
-  final bool isGemstoneDetailsOpen;
-
-  const CompleteProductGemstoneDetailsToggleState(this.isGemstoneDetailsOpen);
-
-  @override
-  List<Object> get props => [isGemstoneDetailsOpen];
 }

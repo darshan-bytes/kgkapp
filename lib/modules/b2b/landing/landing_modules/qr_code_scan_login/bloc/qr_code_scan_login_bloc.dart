@@ -17,7 +17,7 @@ class QrCodeScanLoginBloc extends Bloc<QrCodeScanLoginEvent, QrCodeScanLoginStat
 
     if (event.barcode != null) {
       Utils.showQrAuthLoadingDialog(event.context);
-      await verifyQrCodeForAuth(event.context, emit, event.barcode!.barcodes.first.displayValue!);
+      await verifyQrCodeForAuth(event.context, emit, event.barcode!.barcodes.first.displayValue!.base64ToString);
     }
     emit(QrCodeScanLoginResult(barcode: event.barcode));
   }
@@ -25,8 +25,7 @@ class QrCodeScanLoginBloc extends Bloc<QrCodeScanLoginEvent, QrCodeScanLoginStat
   // Verify Qr Code for Auth
   Future<void> verifyQrCodeForAuth(BuildContext context, Emitter<QrCodeScanLoginState> emit, String code) async {
     if (code.isNotNullNorEmpty) {
-      String deviceId = await getDeviceId() ?? '';
-      Map<String, dynamic> params = {ApiKey.qrToken: code, ApiKey.deviceId: deviceId};
+      Map<String, dynamic> params = {ApiKey.deviceId: code};
 
       await UserRepository(context).verifyQrCodeForAuth(params).then((value) async {
         await value?.fold((l) {

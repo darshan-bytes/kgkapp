@@ -519,3 +519,4 @@ export 'package:kgk/widgets/product_image_zoom_view.dart';
 export 'package:kgk/modules/authentication/otp_verification/bloc/otp_verification_bloc.dart';
 export 'package:kgk/modules/authentication/otp_verification/view/otp_verification_screen.dart';
 export 'package:kgk/modules/b2b/orion/model/orion_shape_model.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/diy_final_details_model.dart';

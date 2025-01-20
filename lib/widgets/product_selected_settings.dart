@@ -30,8 +30,10 @@ class ProductSelectedSettings extends StatelessWidget {
             children: [
               SmartText(selectedSettings.name, style: style.titleStyle),
               SizedBox(height: 6.h),
-              SmartText(selectedSettings.specification, style: style.specialityStyle),
-              SizedBox(height: 4.h),
+              if (selectedSettings.specification.isNotNullNorEmpty) ...[
+                SmartText(selectedSettings.specification, style: style.specialityStyle),
+                SizedBox(height: 4.h),
+              ],
               SmartText(selectedSettings.price, style: style.titleStyle),
               SizedBox(height: 12.h),
               SmartButton(
