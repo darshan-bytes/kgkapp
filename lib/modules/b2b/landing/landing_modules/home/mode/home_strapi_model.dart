@@ -60,12 +60,14 @@ class DatumAttributes {
     required this.updatedAt,
     required this.publishedAt,
     required this.home,
+    required this.locale,
   });
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final DateTime? publishedAt;
   final List<Home> home;
+  final String? locale;
 
   factory DatumAttributes.fromJson(Map<String, dynamic> json) {
     return DatumAttributes(
@@ -73,6 +75,7 @@ class DatumAttributes {
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       publishedAt: DateTime.tryParse(json["publishedAt"] ?? ""),
       home: json["home"] == null ? [] : List<Home>.from(json["home"]!.map((x) => Home.fromJson(x))),
+      locale: json["locale"],
     );
   }
 
@@ -81,11 +84,12 @@ class DatumAttributes {
         "updatedAt": updatedAt?.toIso8601String(),
         "publishedAt": publishedAt?.toIso8601String(),
         "home": home.map((x) => x.toJson()).toList(),
+        "locale": locale,
       };
 
   @override
   String toString() {
-    return "$createdAt, $updatedAt, $publishedAt, $home, ";
+    return "$createdAt, $updatedAt, $publishedAt, $home, $locale";
   }
 }
 
@@ -95,12 +99,16 @@ class Home {
     required this.component,
     required this.data,
     required this.slug,
+    required this.category,
+    required this.info,
   });
 
   final int? id;
   final String? component;
   final dynamic data;
   final Slug? slug;
+  final String? category;
+  final Info? info;
 
   factory Home.fromJson(Map<String, dynamic> json) {
     return Home(
@@ -108,6 +116,8 @@ class Home {
       component: json["__component"],
       data: json["data"],
       slug: json["slug"] == null ? null : Slug.fromJson(json["slug"]),
+      category: json["category"],
+      info: json["info"] == null ? null : Info.fromJson(json["info"]),
     );
   }
 
@@ -116,11 +126,13 @@ class Home {
         "__component": component,
         "data": data,
         "slug": slug?.toJson(),
+        "category": category,
+        "info": info?.toJson(),
       };
 
   @override
   String toString() {
-    return "$id, $component, $data, $slug, ";
+    return "$id, $component, $data, $slug, $category, $info";
   }
 }
 
@@ -439,6 +451,41 @@ class DataData {
   String toString() {
     return "$id, $title, $headline, $tagline, $sectionTitle, $redirectTo, $redirectionType, $image, ";
   }
+}
+
+class Info {
+  Info({
+    required this.id,
+    required this.title,
+    required this.headline,
+    required this.tagline,
+    required this.sectionTitle,
+  });
+
+  final int? id;
+  final String? title;
+  final dynamic headline;
+  final dynamic tagline;
+  final dynamic sectionTitle;
+
+  factory Info.fromJson(Map<String, dynamic> json){
+    return Info(
+      id: json["id"],
+      title: json["title"],
+      headline: json["headline"],
+      tagline: json["tagline"],
+      sectionTitle: json["section_title"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "headline": headline,
+    "tagline": tagline,
+    "section_title": sectionTitle,
+  };
+
 }
 
 class Slug {

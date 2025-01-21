@@ -288,7 +288,7 @@ class ComponentDetailShopByMetal {
       consumedQty2: json["ConsumedQty2"]?.toString().toInt,
       lossQty1: json["LossQty1"]?.toString().toInt,
       lotCode: json["LotCode"],
-      lotId: json["LotId"],
+      lotId: json["LotId"]?.toString(),
       rmName: json["RMName"],
       rmNameRefSuid: json["RMNameRefSuid"],
       rmNameSuid: json["RMNameSuid"],
