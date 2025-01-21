@@ -16,7 +16,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   String tabTwoTitle = APPStrings.looseDiamond.tr;
 
   /// App bar title for the screen
-  String appbarTitle = APPStrings.gemstone.tr;
+  String appbarTitle = '';
 
   /// Identifier for the current screen type
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;

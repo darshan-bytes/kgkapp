@@ -299,7 +299,7 @@ class MyBagResult {
       yourRate: json["your_rate"],
       yourAmount: json["your_amount"],
       yourDiscount: json["your_discount"]?.toString().toDouble,
-      originalYourRate: json["original_your_rate"],
+      originalYourRate: json["original_your_rate"]?.toString().toDouble,
       originalYourAmount: json["original_your_amount"],
       originalTotalPrice: json["original_totalPrice"],
       originalFinalPrice: json["original_final_price"]?.toString().toDouble,

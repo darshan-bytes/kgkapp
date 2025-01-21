@@ -13,6 +13,7 @@ class SmartImage extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final BorderRadius? inkwellBorderRadius;
   final BoxBorder? border;
+  final bool isMemCacheEnabled;
 
   const SmartImage({
     super.key,
@@ -27,6 +28,7 @@ class SmartImage extends StatelessWidget {
     this.margin,
     this.inkwellBorderRadius,
     this.border,
+    this.isMemCacheEnabled = true,
   });
 
   @override
@@ -125,8 +127,16 @@ class SmartImage extends StatelessWidget {
             child: path.isSvgUrl
                 ? SvgPicture.network(path, width: width, height: height)
                 : CachedNetworkImage(
-                    memCacheWidth: 100,
-                    memCacheHeight: 100,
+                    memCacheWidth: isMemCacheEnabled
+                        ? height?.isFinite == true
+                            ? height!.toInt()
+                            : null
+                        : null,
+                    memCacheHeight: isMemCacheEnabled
+                        ? width?.isFinite == true
+                            ? width!.toInt()
+                            : null
+                        : null,
                     height: height,
                     width: width,
                     fit: fit,

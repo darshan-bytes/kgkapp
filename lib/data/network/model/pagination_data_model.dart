@@ -22,7 +22,8 @@ class PaginationData<T> {
     totalRecords = json['totalRecords']?.toString().toInt;
     avgRating = json['avgRating']?.toString().toDouble;
     dataList = json.containsKey('data') && json['data'] != null ? getResponseData(json['data']) : null;
-    kgkCollectionList = json['kgk_collections']?.cast<String?>();
+    kgkCollectionList = (json['kgk_collections'] as List<dynamic>?)
+        ?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {

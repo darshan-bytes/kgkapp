@@ -45,50 +45,6 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  if (homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty)
-                    _buildRecentlyViewedSection(APPStrings.recentlyViewedJewellery.tr, homeBloc, style,
-                        homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
-                        context: context),
-                  if (homeBloc.recentlyViewDiamondList.isNotNullNorEmpty)
-                    _buildRecentlyViewedSection(APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList,
-                        ScreenIdentifier.productForDiamonds,
-                        context: context, isCrtAndGramVisible: false),
-                  if (homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty)
-                    _buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style, homeBloc.recentlyViewGemstoneList,
-                        ScreenIdentifier.productForGemstones,
-                        context: context, isCrtAndGramVisible: false),
-
-                  /// Deal of the day for jewellery
-                  if (homeBloc.dealOfTheDayJewelleryList.isNotNullNorEmpty)
-                    _buildDealOfTheDaySection(
-                      homeBloc: homeBloc,
-                      style: style,
-                      screenIdentifier: ScreenIdentifier.productForRing,
-                      arrProductList: homeBloc.dealOfTheDayJewelleryList,
-                      context: context,
-                    ),
-
-                  /// Deal of the day for diamond
-                  if (homeBloc.dealOfTheDayDiamondList.isNotNullNorEmpty)
-                    _buildDealOfTheDaySection(
-                      homeBloc: homeBloc,
-                      style: style,
-                      screenIdentifier: ScreenIdentifier.productForDiamonds,
-                      arrProductList: homeBloc.dealOfTheDayDiamondList,
-                      context: context,
-                      isCrtAndGramVisible: false,
-                    ),
-
-                  /// Deal of the day for gemstone
-                  if (homeBloc.dealOfTheDayGemstoneList.isNotNullNorEmpty)
-                    _buildDealOfTheDaySection(
-                      homeBloc: homeBloc,
-                      style: style,
-                      screenIdentifier: ScreenIdentifier.productForGemstones,
-                      arrProductList: homeBloc.dealOfTheDayGemstoneList,
-                      context: context,
-                      isCrtAndGramVisible: false,
-                    )
                 ],
               ),
             );
@@ -231,35 +187,6 @@ class HomeScreen extends StatelessWidget {
           titleMaxLines: 1,
           fit: BoxFit.fill,
           imageUrl: item.imageUrl ?? '',
-        );
-      },
-    );
-  }
-
-  Widget _buildJewelleryList(HomeBloc homeBloc, HomeScreenStyle style) {
-    return SmartHorizontalItemBuilder(
-      itemCount: homeBloc.jewelleryList.length,
-      itemBetweenSpace: 16.w,
-      spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      padding: EdgeInsets.only(top: 16.h),
-      itemBuilder: (context, index) {
-        final AuctionListModel item = homeBloc.jewelleryList[index];
-        return SmartImageTitleColumn(
-          onTap: () {
-            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
-          },
-          imageUrl: item.imageUrl ?? '',
-          title: item.name ?? '',
-          imageWidth: 80.w,
-          imageHeight: 80.w,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
-          ),
-          imageBorderRadius: BorderRadius.circular(50.r),
-          fit: BoxFit.fitWidth,
-          imageBorder: Border.all(color: style.borderColor, width: 1.w),
         );
       },
     );
@@ -924,46 +851,6 @@ Widget _buildOwnSignaturePieceSteps(String image, String steps, String title, Ho
   );
 }
 
-Widget _buildDealOfTheDaySection(
-    {required HomeBloc homeBloc,
-    required HomeScreenStyle style,
-    required ScreenIdentifier screenIdentifier,
-    required BuildContext context,
-    required List<ProductDetailsModel> arrProductList,
-    bool isCrtAndGramVisible = true}) {
-  return Padding(
-    padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-    child: SmartSuggestionProductList(
-      isCrtAndGramVisible: isCrtAndGramVisible,
-      title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
-      onViewAllTap: arrProductList.length > 5
-          ? () {
-              if (screenIdentifier == ScreenIdentifier.productForRing) {
-                context.pushNamed(AppRoutes.productListGridPage,
-                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.dealsOfTheDay: FetchScenario.dealOfTheDay});
-              } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
-                context.pushNamed(AppRoutes.stoneListingPage,
-                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.diamondsDealsOfTheDayParam});
-              } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-                context.pushNamed(AppRoutes.stoneListingPage,
-                    arguments: {RoutesData.isPageFor: screenIdentifier, RoutesData.productNavigation: AppConst.gemstoneDealsOfTheDayParam});
-              }
-            }
-          : null,
-      onProductTap: (ProductDetailsModel model) {
-        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-          RoutesData.productId: model.productId ?? '',
-          RoutesData.isPageFor: screenIdentifier,
-        });
-      },
-      suggestedProductList: arrProductList,
-      onEyeTap: () {},
-      onFavTap: () {},
-      scrollController: homeBloc.dealOfTheDayScrollController,
-    ),
-  );
-}
-
 // Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
 //   return Padding(
 //     padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
@@ -1001,9 +888,7 @@ Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
               .map((AuctionListModel field) => SmartImageTitleColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     topWidget: SmartImage(
-                      // height: 188.w,
                       path: field.imageUrl ?? '',
-                      // fit: BoxFit.fitWidth,
                     ),
                     title: '',
                     titleStyle: style.getInspiredTitleStyle,
@@ -1032,43 +917,5 @@ Widget _buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style) {
                   ))
               .toList())
     ]),
-  );
-}
-
-Widget _buildRecentlyViewedSection(
-    String title, HomeBloc homeBloc, HomeScreenStyle style, List<ProductDetailsModel> productList, ScreenIdentifier commodity,
-    {required BuildContext context, bool isCrtAndGramVisible = true}) {
-  return Padding(
-    padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
-    child: SmartSuggestionProductList(
-      isCrtAndGramVisible: isCrtAndGramVisible,
-      title: title,
-      onViewAllTap: productList.length > 5
-          ? () {
-              context.pushNamed(AppRoutes.productListGridPage,
-                  arguments: {RoutesData.isPageFor: commodity, RoutesData.productNavigation: AppConst.recentlyViewed});
-            }
-          : null,
-      suggestedProductList: productList,
-      onEyeTap: () {
-        // homeBloc.add(ProductAddToWatchListEvent(context: context, productId: productList[0].productId, productList: productList));
-
-        // Future<void> _addToWatchList(BuildContext context, String productId) async {
-        //   ProductDetailsModel? product = productList.firstWhereOrNull((element) => element.productId == productId);
-        //   if (product != null) {
-        //     BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(product, context));
-        //     await Utils.showSmartModalBottomSheet(context: context, enableDrag: false, builder: (context) => const AddWatchlistScreen());
-        //   }
-        // }
-      },
-      onFavTap: () {},
-      scrollController: homeBloc.recentlyViewedScrollController,
-      onProductTap: (model) {
-        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-          RoutesData.productId: model.productId ?? '',
-          RoutesData.isPageFor: commodity,
-        });
-      },
-    ),
   );
 }

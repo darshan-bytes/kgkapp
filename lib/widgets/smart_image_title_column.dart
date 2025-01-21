@@ -127,6 +127,7 @@ class SmartImageTitleColumn extends StatelessWidget {
           fit: fit,
           color: imageColor,
           imageBorderRadius: imageBorderRadius,
+          isMemCacheEnabled: false,
         ),
       );
     } else {
