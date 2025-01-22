@@ -104,6 +104,9 @@ extension StringExtensions on String {
 
   String get setCurrency {
     String symbol = StorageManager().getSelectedCurrencySymbol() ?? '';
+    if (startsWith(symbol)) {
+      return this;
+    }
     return "$symbol $this";
   }
 

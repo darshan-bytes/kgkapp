@@ -2,10 +2,10 @@ import 'package:kgk/kgk.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class StorageManager {
-  static final StorageManager _instance = StorageManager._internal();
+  static final StorageManager instance = StorageManager._internal();
 
   factory StorageManager() {
-    return _instance;
+    return instance;
   }
 
   StorageManager._internal();

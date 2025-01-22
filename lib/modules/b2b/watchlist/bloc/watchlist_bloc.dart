@@ -118,6 +118,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     } else {
       emit(const WatchlistLoadingState());
     }
+    timer?.cancel();
     Either<ErrorResponse, PaginationData<WatchlistData>>? response = await AppRepository(context).getWatchList(
       page: currentPage.toString(),
       limit: AppConst.pageLimit.toString(),
@@ -269,13 +270,13 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     );
   }
 
-  void _onWatchListFilter(WatchListFilterEvent event, Emitter<WatchlistState> emit) {
+  Future<void> _onWatchListFilter(WatchListFilterEvent event, Emitter<WatchlistState> emit) async {
     emit(const WatchlistLoadingState());
     paginationScrollController.pullToRefresh();
     watchlistDataList.clear();
     watchListingList.clear();
     filterData = event.filterData;
-    fetchWatchlist(event.context, emit, false, paginationScrollController.currentPage);
+    await fetchWatchlist(event.context, emit, false, paginationScrollController.currentPage);
     emit(const WatchlistLoadedState());
   }
 

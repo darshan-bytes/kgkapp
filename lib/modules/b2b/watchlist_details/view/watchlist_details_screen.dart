@@ -7,7 +7,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final WatchlistDetailsBloc bloc = BlocProvider.of<WatchlistDetailsBloc>(context);
     return PopScope(
-      canPop: false,
+      canPop: !bloc.isWatchlistUpdated,
       child: Scaffold(
         //Here I've used resizeToAvoidBottomInset as false to avoid the keyboard overlapping the content.
         // Also, there is no need to allow the user to scroll the content when the keyboard is open.
@@ -189,6 +189,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
         (index) {
           ProductDetailsModel productDetails = bloc.productList[index];
           return ProductGridItem(
+            isFromWatchlist: true,
             isOutOfStock: productDetails.isOutOfStock,
             productDetails: productDetails,
             onCancelTap: () {

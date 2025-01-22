@@ -112,7 +112,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         String? bagId = StorageManager().getBagId();
         myBagProductList.clear();
         bagListDataModel = r;
-        BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
+        BlocProvider.of<LandingBloc>(context.mounted ? context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(r.result.length));
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
           commodity = r.result.first.displayCommodity;
           MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result.first.commodity, sId: bagId);

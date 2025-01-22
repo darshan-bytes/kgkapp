@@ -183,6 +183,7 @@ class SmartDropDownView<T> extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: Container(
+        constraints: BoxConstraints(maxHeight: context.height * 0.75),
         decoration: BoxDecoration(
           color: style.backgroundColor,
           borderRadius: BorderRadius.only(
@@ -218,9 +219,10 @@ class SmartDropDownView<T> extends StatelessWidget {
                   final filteredItems = items.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
                   return filteredItems.isNotEmpty
                       ? Flexible(child: _buildItemList(filteredItems, style, context))
-                      : Expanded(
-                          child: Center(
-                            child: SmartText(noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr),
+                      : SizedBox(
+                          height: 200.h,
+                          child: NoDataFoundWidget(
+                            text: noDataFoundText.isNotNullNorEmpty ? noDataFoundText : APPStrings.noDataFound.tr,
                           ),
                         );
                 },

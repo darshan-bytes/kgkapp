@@ -114,12 +114,14 @@ class WatchlistScreen extends StatelessWidget {
                 context
                     .pushNamed(AppRoutes.watchlistDetailsPage, arguments: {RoutesData.watchlistId: bloc.watchlistDataList[index].sId}).then(
                   (value) {
-                    if (value != null && value[RoutesData.isWatchlistUpdated] == true || value[RoutesData.isWatchlistDeleted] == true) {
-                      if (value[RoutesData.watchlistData] != null && value[RoutesData.watchlistData] is WatchlistData) {
-                        bloc.add(WatchListUpdateItemEvent(
-                            index: index,
-                            watchlistData: value[RoutesData.watchlistData],
-                            isWatchlistDeleted: value[RoutesData.isWatchlistDeleted]));
+                    if (value != null && (value as Map).isNotEmpty) {
+                      if (value[RoutesData.isWatchlistUpdated] == true || value[RoutesData.isWatchlistDeleted] == true) {
+                        if (value[RoutesData.watchlistData] != null && value[RoutesData.watchlistData] is WatchlistData) {
+                          bloc.add(WatchListUpdateItemEvent(
+                              index: index,
+                              watchlistData: value[RoutesData.watchlistData],
+                              isWatchlistDeleted: value[RoutesData.isWatchlistDeleted]));
+                        }
                       }
                     }
                   },

@@ -241,7 +241,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
       return FetchScenario.recentlyViewed;
     }
-    if(productNavigation.isNotNullNorEmpty && productNavigation == AppConst.coutureCollection) {
+    if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.coutureCollection) {
       return FetchScenario.coutureCollection;
     }
     if (fetchScenario == FetchScenario.dealOfTheDay) return FetchScenario.dealOfTheDay;
@@ -304,15 +304,17 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       case FetchScenario.dealOfTheDay:
         response = await fetchDealOfTheDay(context: context, isLoadMore: isLoadMore);
         break;
-        case FetchScenario.coutureCollection:
+      case FetchScenario.coutureCollection:
         // response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
         break;
     }
 
     /// Handle the response and update the state
-    response?.fold(
+    await response?.fold(
       (error) => Utils.showMessage(error.message),
-      (success) => handleSuccessResponse(success, emit),
+      (success) async {
+        await handleSuccessResponse(success, emit);
+      },
     );
 
     /// Update the state
@@ -320,13 +322,17 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Handle the success response
-  void handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) {
+  Future<void> handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) async {
     totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
     final localList = success.data;
 
     /// Show the total number of records in the UI side
     totalFilteredRecords = success.filteredRecords;
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
+    List<String> imageUrlList = productList.where((e) => e.imageUrl.isNullOrEmpty).map((e) => e.imageUrl ?? '').toList();
+    printWrapped("precacheImageList-start-time: ${DateTime.now()}");
+    await Utils.precacheImageList(imageUrlList);
+    printWrapped("precacheImageList-end-time: ${DateTime.now()}");
     if (paginationScrollController.isPageLoaded.isCompleted) {
       paginationScrollController.isPageLoaded = Completer<bool>();
     }
@@ -507,7 +513,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
           secondaryFilterData: [],
         );
-        if (filter.filterType == FilterType.range) {
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        }
+        if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           if (filterOption.data.isNotEmpty) {
             filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
           } else {

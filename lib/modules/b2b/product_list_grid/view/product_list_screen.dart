@@ -92,7 +92,7 @@ class ProductListScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 16.h),
                     _buildProductFilterCount(diamondListingStyle, bloc),
-                    SizedBox(height: 24.h),
+                    SizedBox(height: 16.h),
                     Expanded(
                       child: SmartSingleChildScrollView(
                         controller: bloc.paginationScrollController.controller,
