@@ -139,6 +139,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   /// Fetch Bag Data Because Add Logic For Add To Bag
   Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+    if (!context.mounted) context = getNavigatorKeyContext;
     try {
       String id = StorageManager().getBagId() ?? '';
       if (id.isNullOrEmpty) return;
@@ -147,6 +148,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       response?.fold((l) {
         //Utils.showMessage(l.message);
       }, (r) async {
+        if (!context.mounted) context = getNavigatorKeyContext;
         String? bagId = StorageManager().getBagId();
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
           BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
@@ -848,7 +850,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (slug) {
       case HomeSlug.mobileProductCategories:
-        return HomeWidgets.buildJewelleryList(homeStrapiList[index].info?.title ?? '',homeBloc, style);
+        return HomeWidgets.buildJewelleryList(homeStrapiList[index].info?.title ?? '', homeBloc, style);
 
       case HomeSlug.mobileHomeBanner:
         return HomeWidgets.buildEngagementImageSlider(
@@ -857,7 +859,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileTopSellingCategories:
-
         return HomeWidgets.buildTopSellingCategories(
           homeBloc,
           style,
@@ -889,7 +890,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       case HomeSlug.mobileShopByStyle:
         List<AuctionListModel> dataList = parseDataList(homeStrapiList[index].data);
-        if(dataList.isEmpty){
+        if (dataList.isEmpty) {
           return Container();
         }
         return HomeWidgets.buildShopByStyleSection(
@@ -911,7 +912,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       case HomeSlug.kgkDiamondShape:
         return Container();
-        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+      // return HomeWidgets.buildShopDiamondSection(homeBloc, style);
 
       case HomeSlug.kgkGemstone:
         return Container();

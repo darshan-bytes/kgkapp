@@ -1,11 +1,21 @@
 import 'package:kgk/kgk.dart';
 
 class ProductMenuBottomSheet extends StatelessWidget {
-  const ProductMenuBottomSheet({super.key});
+  final ProductDetailsModel productDetails;
+  final VoidCallback? onAddToBag;
+  final VoidCallback? onBuyNow;
+
+  ProductMenuBottomSheet({
+    super.key,
+    required this.productDetails,
+    this.onAddToBag,
+    this.onBuyNow,
+  });
+
+  final ValueNotifier<bool> showMoreDetails = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
-    final MyBagBloc bloc = BlocProvider.of<MyBagBloc>(context);
     final ProductMenuBottomSheetStyle style = AppTheme.of(context).productMenuBottomSheetStyle;
 
     return Container(
@@ -22,28 +32,32 @@ class ProductMenuBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 8.h),
-          _buildAppBar(context, style, bloc),
+          _buildAppBar(context, style),
           Flexible(
             child: SmartSingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: BlocBuilder<MyBagBloc, MyBagState>(
-                  buildWhen: (previous, current) => current is MyBagReloadState,
-                  builder: (context, state) {
+                child: ValueListenableBuilder(
+                  valueListenable: showMoreDetails,
+                  builder: (context, value, child) {
                     return Column(
                       children: [
-                        if (bloc.showMoreDetails) ...[
-                          ..._buildInfoRows(style),
-                          SizedBox(height: 16.h),
-                          const Divider(),
-                          SizedBox(height: 16.h),
-                        ],
-                        _buildProductDetailsView(bloc, style),
+                        // Below code is commented because it is not used in the app for now. It will be used in future for B2B implementation.
+                        // if (showMoreDetails.value) ...[
+                        //   ..._buildInfoRows(style),
+                        //   SizedBox(height: 16.h),
+                        //   const Divider(),
+                        //   SizedBox(height: 16.h),
+                        // ],
+                        _buildProductDetailsView(style),
                         SizedBox(height: 16.h),
                         _buildButtons(context),
                         SizedBox(height: 16.h),
-                        _buildActionGrid(style, context),
-                        SizedBox(height: 16.h),
+                        if (!StorageManager.instance.getIsSkipLogin() &&
+                            BlocProvider.of<AppBloc>(context).userType == UserType.b2bUser) ...[
+                          _buildActionGrid(style, context),
+                          SizedBox(height: 16.h),
+                        ],
                       ],
                     );
                   },
@@ -56,7 +70,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(BuildContext context, ProductMenuBottomSheetStyle style, MyBagBloc bloc) {
+  Widget _buildAppBar(BuildContext context, ProductMenuBottomSheetStyle style) {
     return SmartAppBar(
       isBack: false,
       appBarHeight: AppConst.defaultAppBarHeight,
@@ -65,7 +79,6 @@ class ProductMenuBottomSheet extends StatelessWidget {
       actions: [
         InkWell(
           onTap: () {
-            bloc.showMoreDetails = false;
             context.pop();
           },
           child: SmartImage(
@@ -115,30 +128,33 @@ class ProductMenuBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDetailsView(MyBagBloc bloc, ProductMenuBottomSheetStyle style) {
+  Widget _buildProductDetailsView(ProductMenuBottomSheetStyle style) {
     return BlocBuilder<MyBagBloc, MyBagState>(
       buildWhen: (previous, current) => current is ShowFullProductDetailsState,
       builder: (context, state) {
-        final bool showMoreDetails = bloc.showMoreDetails;
         return Row(
           children: [
             SmartText(APPStrings.subTotal.tr, style: style.subTotalStyle),
             SizedBox(width: 8.w),
             Expanded(
               child: SmartText(
-                "90,000.00".setCurrency,
+                productDetails.finalPrice?.setCurrency,
                 style: style.totalAmountStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                isAutoSizeText: true,
               ),
             ),
-            InkWell(
-              onTap: () => bloc.add(const ShowFullProductDetailsEvent()),
-              child: SmartText(
-                showMoreDetails ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
-                style: style.moreDetailsStyle,
-              ),
-            ),
+            // Below code is commented because it is not used in the app for now. It will be used in future for B2B implementation.
+            // InkWell(
+            //   onTap: () {
+            //     showMoreDetails.value = !showMoreDetails.value;
+            //   },
+            //   child: SmartText(
+            //     showMoreDetails.value ? APPStrings.lessDetails.tr : APPStrings.moreDetails.tr,
+            //     style: style.moreDetailsStyle,
+            //   ),
+            // ),
           ],
         );
       },
@@ -148,9 +164,20 @@ class ProductMenuBottomSheet extends StatelessWidget {
   Widget _buildButtons(BuildContext context) {
     return Column(
       children: [
-        SmartButton(onTap: () {}, title: APPStrings.addToBag.tr.toLowerCase().capitalizeFirst, prefixImage: AppImages.icShoppingBag),
+        SmartButton(
+            onTap: () {
+              onAddToBag?.call();
+              context.pop();
+            },
+            title: APPStrings.addToBag.tr.toLowerCase().capitalizeFirst,
+            prefixImage: AppImages.icShoppingBag),
         SizedBox(height: 8.h),
-        SmartButton(onTap: () {}, title: APPStrings.buyNow.tr.toLowerCase().capitalizeFirst),
+        SmartButton(
+            onTap: () {
+              onBuyNow?.call();
+              context.pop();
+            },
+            title: APPStrings.buyNow.tr.toLowerCase().capitalizeFirst),
       ],
     );
   }

@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+41
+version: 1.0.0+42
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -25,7 +25,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # For State Management
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.0.0
 
   # For API
   dartz: ^0.10.1
@@ -53,6 +53,7 @@ dependencies:
 
   # For Cached Network Image
   cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
 
   # For Country Code Picker
   country_picker: ^2.0.27

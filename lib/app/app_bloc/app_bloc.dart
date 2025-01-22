@@ -259,17 +259,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
     }
 
-    await AppRepository(event.context).addToBag(body: body).then((response) {
+    await AppRepository(event.context.mounted ? event.context : getNavigatorKeyContext).addToBag(body: body).then((response) {
       response?.fold(
         (l) => Utils.showMessage(l.message),
         (data) async {
+          event.productDetails.isAddedToCart = true;
           MyBagDataModel myBagDataModel = data.responseData;
           if (myBagDataModel.products.isNotNullNorEmpty) {
-            BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(myBagDataModel.products!.length));
+            BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
+                .add(LandingChangeMyBagCountEvent(myBagDataModel.products!.length));
           }
           await StorageManager().storeBagData(myBagDataModel);
           await StorageManager().setBagId(myBagDataModel.sId ?? '');
           Utils.showMessage(data.message);
+          if (event.isBuyNow) {
+            BuildContext context = event.context.mounted ? event.context : getNavigatorKeyContext;
+            BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+            context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+          }
         },
       );
     });
@@ -330,7 +337,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (r) {
-      filterList = r;
+      filterList = r.where((e) => e.filterType != FilterType.undefined).toList();
     });
     return filterList;
   }

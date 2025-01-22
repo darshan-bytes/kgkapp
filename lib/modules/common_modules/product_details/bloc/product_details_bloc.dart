@@ -13,6 +13,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   DiamondDataModel? diamondData;
   GemstoneDatum? gemstoneData;
   bool isCustomisation = false;
+  bool isAddedToCart = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselSliderController controller = CarouselSliderController();
   final ScrollController youMayLikeScrollController = ScrollController();
@@ -218,6 +219,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           isErrorInLoadingData = false;
           bool isDiscounted =
               diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
+          isAddedToCart = diamondData!.isAddedToCart;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
@@ -257,6 +259,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           bool isDiscounted = gemstoneData?.discountPercentage != null &&
               (gemstoneData?.discountPercentage is num) &&
               (gemstoneData?.discountPercentage ?? 0) > 0;
+          isAddedToCart = gemstoneData!.isAddedToCart;
           productName = gemstoneData?.rmDescription ?? '';
           if (gemstoneData?.image.isNotEmpty ?? false) {
             imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
@@ -422,6 +425,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       },
       (JewelleryDataModel jewelleryData) {
         isErrorInLoadingData = false;
+        isAddedToCart = jewelleryData.isAddedToCart;
         productName = jewelleryData.productDescription ?? '';
         bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
 
@@ -791,5 +795,16 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         );
       },
     );
+  }
+
+  void handleBagButtonClick(BuildContext context) {
+    if (productDetails == null) return;
+    if (!isAddedToCart) {
+      BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: productDetails!);
+      isAddedToCart = true;
+    } else {
+      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+      context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+    }
   }
 }

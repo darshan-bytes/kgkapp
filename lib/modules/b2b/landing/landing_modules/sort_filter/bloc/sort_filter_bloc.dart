@@ -76,6 +76,10 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
           filterData[index].secondaryFilterData = secondaryFilterData;
           selectedFilterData?.secondaryFilterData = secondaryFilterData;
         }
+        if (selectedFilterData?.filterType == FilterType.range) {
+          minPriceController.text = '${(selectedFilterData?.rangeValues ?? selectedFilterData?.minMaxValues)?.start.toString()}';
+          maxPriceController.text = '${(selectedFilterData?.rangeValues ?? selectedFilterData?.minMaxValues)?.end.toString()}';
+        }
         secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
         emit(SelectSecondaryDiamondSortFilterDataState(secondaryFilterDataDisplay));
       }
@@ -138,17 +142,20 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       selectedFilterData = filterData.first;
 
       if (selectedFilterData?.filterType == FilterType.range) {
-        minPriceController.text = '${selectedFilterData?.rangeValues?.start.toString()}';
-        maxPriceController.text = '${selectedFilterData?.rangeValues?.end.toString()}';
+        minPriceController.text = '${(selectedFilterData?.rangeValues ?? selectedFilterData?.minMaxValues)?.start.toString()}';
+        maxPriceController.text = '${(selectedFilterData?.rangeValues ?? selectedFilterData?.minMaxValues)?.end.toString()}';
         isLoading = false;
       } else {
-        selectedFilterData?.secondaryFilterData = await fetchSecondaryFilterData(
-          context: event.context,
-          emit: emit,
-          slug: selectedFilterData?.code ?? '',
-          needToFetchData: true,
-          codes: selectedFilterData?.subFilterCodes ?? '',
-        );
+        if (selectedFilterData?.secondaryFilterData.isNullOrEmpty == true) {
+          selectedFilterData?.secondaryFilterData = await fetchSecondaryFilterData(
+            context: event.context,
+            emit: emit,
+            slug: selectedFilterData?.code ?? '',
+            needToFetchData: selectedFilterData?.secondaryFilterData.isNullOrEmpty == true,
+            codes: selectedFilterData?.subFilterCodes ?? '',
+          );
+        }
+        emit(SelectSecondaryDiamondSortFilterDataState(selectedFilterData?.secondaryFilterData ?? []));
       }
       secondaryFilterDataDisplay = selectedFilterData?.secondaryFilterData ?? [];
       emit(FilterDataSelectedState(selectedFilterData!));
@@ -178,7 +185,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
       },
       (r) {
         if (r.isNotEmpty) {
-          secondaryFilterData = r.map((e) => SecondaryFilterData(name: e.label, code: e.value)).toList();
+          secondaryFilterData = r.map((e) => SecondaryFilterData(name: e.label, code: e.value, image: e.imgPath?.setMediaUrl)).toList();
         }
 
         isLoading = false;
