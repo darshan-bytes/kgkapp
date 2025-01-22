@@ -39,7 +39,8 @@ class SmartCarouselSlider extends StatelessWidget {
                   items: imgList.map((e) => SmartImage(path: e)).toList(),
                   carouselController: controller,
                   options: CarouselOptions(
-                      autoPlay: true,
+                      autoPlay: imgList.length > 1,
+                      enableInfiniteScroll: imgList.length > 1,
                       viewportFraction: 1.5,
                       aspectRatio: 1,
                       onPageChanged: (index, reason) {

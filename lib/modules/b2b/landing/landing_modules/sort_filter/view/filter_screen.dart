@@ -225,14 +225,36 @@ class FilterScreen extends StatelessWidget {
                 ),
 
                 /// Need to check this widget
-                child: SmartCheckbox(
-                    value: secondaryFilterData.isSelected,
-                    label: secondaryFilterData.name,
-                    labelStyle: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
-                    spaceBetweenLabelAndCheckbox: 8.w,
-                    onChanged: (value) {
-                      handleOnChange(filterBloc, secondaryFilterData);
-                    }),
+                child: Row(
+                  children: [
+                    SmartCheckbox(
+                      value: secondaryFilterData.isSelected,
+                      onChanged: (value) {
+                        handleOnChange(filterBloc, secondaryFilterData);
+                      },
+                    ),
+                    SizedBox(width: 8.w),
+                    if (secondaryFilterData.image.isNotNullNorEmpty) ...[
+                      Padding(
+                        padding: EdgeInsets.all(4.w),
+                        child: SmartImage(
+                          path: secondaryFilterData.image ?? '',
+                          height: 24.w,
+                          width: 24.w,
+                          fit: BoxFit.contain,
+                          color: secondaryFilterData.isSelected ? style.selectedImageColor : null,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                    ],
+                    Expanded(
+                      child: SmartText(
+                        secondaryFilterData.name,
+                        style: secondaryFilterData.isSelected ? style.selectedItemTitleStyle : style.itemTitleStyle,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

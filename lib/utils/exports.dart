@@ -520,3 +520,4 @@ export 'package:kgk/modules/authentication/otp_verification/bloc/otp_verificatio
 export 'package:kgk/modules/authentication/otp_verification/view/otp_verification_screen.dart';
 export 'package:kgk/modules/b2b/orion/model/orion_shape_model.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/complete_product/model/diy_final_details_model.dart';
+export 'package:flutter_cache_manager/flutter_cache_manager.dart';

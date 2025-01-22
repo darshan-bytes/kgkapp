@@ -86,8 +86,13 @@ class ProductRemoveFromFavoriteEvent extends AppEvent {
 class ProductAddToBagEvent extends AppEvent {
   final ProductDetailsModel productDetails;
   final BuildContext context;
+  final bool isBuyNow;
 
-  const ProductAddToBagEvent(this.productDetails, this.context);
+  const ProductAddToBagEvent(
+    this.productDetails,
+    this.context, {
+    this.isBuyNow = false,
+  });
 
   @override
   List<Object> get props => [productDetails, context];

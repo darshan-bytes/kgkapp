@@ -169,6 +169,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lastNameController.text = userIdDetails?.lastname ?? '';
       emailController.text = userIdDetails?.email ?? '';
       contactNumberController.text = userIdDetails?.phone ?? '';
+      firstNameError = null;
+      lastNameError = null;
+      contactNumberError = null;
     }
   }
 
@@ -711,9 +714,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     lastNameController.clear();
     emailController.clear();
     contactNumberController.clear();
+    firstNameError = null;
+    lastNameError = null;
+    contactNumberError = null;
   }
 
   void onTapEditProfileButton({required BuildContext context}) {
+    _getUserDetailsFromStorage();
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(

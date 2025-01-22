@@ -391,8 +391,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 redirectionType: getRedirectionTypeFromString(diamondStrapiList[index].button[i].redirectionType ?? ""),
               );
             },
+
             /// Todo : fix in next strapi update
-            title: "btnTitle" ?? '',
+            title: "btnTitle",
           ));
         }
         return StoneBannerView(

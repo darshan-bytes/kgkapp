@@ -36,6 +36,8 @@ class StoneChangeListingTypeState extends StoneListingState {
 }
 
 final class StoneProductReloadState extends StoneListingState {
+  const StoneProductReloadState();
+
   @override
   List<Object> get props => [];
 }
@@ -62,7 +64,11 @@ final class StoneDiamondListLoadedState extends StoneListingState {
 }
 
 final class StoneListLoadingState extends StoneListingState {
-  const StoneListLoadingState();
+  final bool isFirst;
+
+  const StoneListLoadingState({
+    this.isFirst = false,
+  });
 
   @override
   List<Object> get props => [];

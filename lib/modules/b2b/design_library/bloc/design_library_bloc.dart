@@ -230,6 +230,9 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
           subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
           secondaryFilterData: [],
         );
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        }
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
         }
