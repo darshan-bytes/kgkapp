@@ -360,7 +360,7 @@ class Utils {
     }
   }
 
-  static handleAuthSuccessResponse(BuildContext context, UserResponse r) async {
+  static handleAuthSuccessResponse(BuildContext context, UserResponse r, bool isFromLoginRequired) async {
     await StorageManager().setAuthToken(r.accessToken ?? '');
     await StorageManager().setUserId(r.userId ?? '');
     await StorageManager().setUserResponse(r);
@@ -374,10 +374,14 @@ class Utils {
       await StorageManager().setBagId(r.bagId!);
     }
     if (r.userIdDetails?.userTypeEnum != null) {
-      await StorageManager().setIsSkipLogin(false);
+      await StorageManager.instance.setIsSkipLogin(false);
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
       await mergeCart(context);
-      context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+      if (!isFromLoginRequired) {
+        context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
+      } else {
+        context.pop();
+      }
     }
   }
 
@@ -408,5 +412,33 @@ class Utils {
         printWrapped(e.toString());
       }
     });
+  }
+
+  static Future<void> showLoginRequiredDialog(BuildContext context, {VoidCallback? onDenied, VoidCallback? onApproved}) async {
+    await Utils.showSmartModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.loginRequired.tr,
+        message: APPStrings.loginToUseThisFeature.tr,
+        onApproved: () async {
+          if (onApproved != null) {
+            await context.pushNamed(AppRoutes.signInPage, arguments: {RoutesData.isFromLoginRequired: true});
+            if (!StorageManager().getIsSkipLogin()) {
+              onApproved.call();
+              context.pop();
+            }
+          }
+        },
+        onDenied: () {
+          context.pop();
+          onDenied?.call();
+        },
+        onApprovedText: APPStrings.login.tr,
+        onDeniedText: APPStrings.cancel.tr,
+      ),
+    );
   }
 }

@@ -207,7 +207,6 @@ class ProductListScreen extends StatelessWidget {
               },
               prefixImage: AppImages.icShoppingBag,
               imageSize: 16.w,
-              isStoneWithPrice: _isStoneWithPrice(bloc),
               onTap: () => _onProductTap(context, bloc, productDetails),
             );
           }).toList(),
@@ -228,7 +227,6 @@ class ProductListScreen extends StatelessWidget {
         return Column(
           children: [
             ProductListItem(
-              boxHeight: 190.h,
               padding: EdgeInsetsDirectional.only(end: 10.w),
               productDetails: productDetails,
               isCustomisable: _isCustomisable(bloc, productDetails, index),

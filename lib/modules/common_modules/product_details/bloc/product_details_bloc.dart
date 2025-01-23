@@ -142,6 +142,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
     getScreenIdentifier(event.context);
     String productId = event.context.routesData?[RoutesData.productId] ?? '--';
+    if (productId.isEmpty || productId == '--') {
+      return;
+    }
     if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
       await StorageManager().setRecentlyViewedDiamonds(productId);
       productCustomizations.clear();
@@ -388,7 +391,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             offerPrice: item.discountPrice?.toString().setCurrency,
             finalPrice: item.discountPrice?.toString().setCurrency,
             discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]) : null,
-            productId: item.id ?? "",
+            productId: item.suid ?? "",
             commodity: Commodity.jewellery,
             isFavourite: item.isFavorite,
             wishlistId: item.wishlistID,

@@ -5,8 +5,7 @@ part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  late BuildContext context;
-
+  bool isFromLoginRequired = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -29,6 +28,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       //  passwordController.text = "Admin@123";
     }
     on<SignInButtonPressedEvent>(signInApiCall);
+    on<SignInInitialEvent>(_onSignInInitialEvent);
+  }
+
+  Future<void> _onSignInInitialEvent(SignInInitialEvent event, Emitter<SignInState> emit) async {
+    event.context;
+
+    isFromLoginRequired = event.context.routesData?[RoutesData.isFromLoginRequired] ?? false;
   }
 
   /// Sign in API call
@@ -60,7 +66,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             RoutesData.isFromSignIn: true,
           });
         } else {
-          await Utils.handleAuthSuccessResponse(event.context, r);
+          await Utils.handleAuthSuccessResponse(event.context, r, isFromLoginRequired);
           clearAllFields();
           emit(const SignInSuccessState());
         }
@@ -88,7 +94,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   void onSkipLogin(BuildContext context) async {
-    await StorageManager().setIsSkipLogin(true);
+    await StorageManager.instance.setIsSkipLogin(true);
     BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
     context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
   }

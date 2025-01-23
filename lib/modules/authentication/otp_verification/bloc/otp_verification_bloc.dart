@@ -54,7 +54,7 @@ class OtpVerificationBloc extends Bloc<OtpVerificationEvent, OtpVerificationStat
         },
         (r) async {
           Utils.showMessage(r.message);
-          await Utils.handleAuthSuccessResponse(event.context, r.responseData);
+          await Utils.handleAuthSuccessResponse(event.context, r.responseData, false);
         },
       );
     }
