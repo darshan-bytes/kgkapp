@@ -134,8 +134,12 @@ class StoneListingScreen extends StatelessWidget {
   Widget _buildProductFilterCount(DiamondListingStyle style, StoneListingBloc bloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
       buildWhen: (previous, current) =>
-          current is StoneChangeListingTypeState || current is StoneProductLoadedState || current is StoneListLoadedMoreState,
+          current is StoneChangeListingTypeState ||
+          current is StoneProductLoadedState ||
+          current is StoneListLoadedMoreState ||
+          current is StoneListLoadingState,
       builder: (context, state) {
+        if (state is StoneListLoadingState) return SizedBox.shrink();
         return SizedBox(
           height: 48.h,
           child: Row(
@@ -143,8 +147,8 @@ class StoneListingScreen extends StatelessWidget {
             children: [
               SmartText(
                   APPStrings.showingListLengthX.tr.interpolate([
-                    bloc.paginationScrollController.currentPage,
-                    bloc.totalNumberOfPages,
+                    1,
+                    bloc.productList.length,
                     bloc.totalFilteredRecords,
                   ]),
                   style: style.filterProductCountTextStyle),
