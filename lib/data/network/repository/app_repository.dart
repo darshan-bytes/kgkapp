@@ -501,12 +501,12 @@ class AppRepository extends ApiService {
   }
 
   // For Get Product Reviews
-  Future<Either<ErrorResponse, PaginationData<ProductReviewModel>>?> productReviewsFilter(String productId,
+  Future<Either<ErrorResponse, ProductReviewWrapperModel>?> productReviewsFilter(String productId,
       {Map<String, dynamic>? query, bool isLoadMore = true}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<PaginationData<ProductReviewModel>>(ApiClient.productReviewsFilter(productId), query: query);
+    var response = await getMethod<ProductReviewWrapperModel>(ApiClient.productReviewsFilter(productId), query: query);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

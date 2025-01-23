@@ -462,10 +462,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<String?> handleShareProduct({required BuildContext context, required ProductDetailsModel productDetails}) async {
-    printWrapped('handleShareProduct->ProductDetailsModel: $productDetails');
     final String title = productDetails.name ?? '';
     // FOr now description and destination are empty. It will be updated later
-    final String description = '';
+    final String description = productDetails.kgkCollectionName ?? '';
     final String destination = '';
 
     BranchLinkDataModel branchLinkDataModel = BranchLinkDataModel(
