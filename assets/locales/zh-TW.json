@@ -788,5 +788,6 @@
   "mob_otp_required": "請輸入一次性密碼",
   "mob_otp_length": "OTP 長度必須為 6 個字符",
   "mob_bag": "包",
-  "mob_you": "你"
+  "mob_you": "你",
+  "mob_login_required": "需要登入"
 }

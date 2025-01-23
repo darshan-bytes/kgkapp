@@ -3,7 +3,6 @@ import 'package:kgk/kgk.dart';
 class BlocGenerator {
   static List<BlocProvider> generateBlocList(BuildContext context) {
     return [
-      BlocProvider<SignInBloc>(create: (_) => SignInBloc()),
       BlocProvider<GetReadyBloc>(create: (_) => GetReadyBloc()),
       BlocProvider<AppBloc>(create: (_) => AppBloc()..add(LoadAppEvent(context: context)), lazy: false),
       BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),

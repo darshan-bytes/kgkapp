@@ -63,7 +63,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       titleSpacing: 0,
       title: _buildTitle(style, context),
-      actions: _buildActions(),
+      actions: _buildActions(context),
       shape: isBorder ? Border(bottom: BorderSide(color: isSearchBar ? style.transparentColor : style.borderColor)) : null,
     );
   }
@@ -184,16 +184,24 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
   }
 
-  List<Widget> _buildActions() {
+  List<Widget> _buildActions(BuildContext context) {
     final List<Widget> actionsList = [];
     if (onScan != null) actionsList.add(_buildIconButton(onScan!, AppImages.icScanner, size: 24.w));
     if (onSearch != null) actionsList.add(_buildIconButton(onSearch!, AppImages.icSearch, size: 24.w));
     if (onFavorite != null) {
-      actionsList.add(_buildIconButton(() {
+      actionsList.add(_buildIconButton(() async {
         // First check if the user is logged in or not
         if (StorageManager().getIsSkipLogin()) {
-          Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
-          return;
+          bool isApproved = false;
+          await Utils.showLoginRequiredDialog(
+            context,
+            onApproved: () {
+              isApproved = true;
+            },
+          );
+          if (!isApproved) {
+            return;
+          }
         }
         onFavorite!();
       }, AppImages.icHeart, size: 24.w));

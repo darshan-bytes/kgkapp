@@ -123,43 +123,44 @@ class DiamondInfoPopupScreen extends StatelessWidget {
           }).toList(),
           carouselController: bloc.controller,
           options: CarouselOptions(
-            autoPlay: false,
+            autoPlay: bloc.imgList.length > 1,
             viewportFraction: 1.5,
             aspectRatio: 1,
             scrollPhysics: const NeverScrollableScrollPhysics(),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 8.w),
-              height: 24.w,
-              width: 24.w,
-              child: InkWell(
-                onTap: () => bloc.controller.previousPage(),
-                child: const Center(
-                  child: SmartImage(
-                    path: AppImages.icArrowLeft,
+        if (bloc.imgList.length > 1)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 8.w),
+                height: 24.w,
+                width: 24.w,
+                child: InkWell(
+                  onTap: () => bloc.controller.previousPage(),
+                  child: const Center(
+                    child: SmartImage(
+                      path: AppImages.icArrowLeft,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 8.w),
-              height: 24.w,
-              width: 24.w,
-              child: InkWell(
-                onTap: () => bloc.controller.nextPage(),
-                child: const Center(
-                  child: SmartImage(
-                    path: AppImages.icArrowRight,
+              Container(
+                margin: EdgeInsets.only(right: 8.w),
+                height: 24.w,
+                width: 24.w,
+                child: InkWell(
+                  onTap: () => bloc.controller.nextPage(),
+                  child: const Center(
+                    child: SmartImage(
+                      path: AppImages.icArrowRight,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }

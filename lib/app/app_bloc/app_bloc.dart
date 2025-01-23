@@ -178,8 +178,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _onProductAddToFavoriteEvent(ProductAddToFavoriteEvent event, Emitter<AppState> emit) async {
     // First check if the user is logged in or not
     if (StorageManager().getIsSkipLogin()) {
-      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
-      return;
+      bool isApproved = false;
+      await Utils.showLoginRequiredDialog(
+        event.context,
+        onApproved: () {
+          isApproved = true;
+        },
+      );
+      if (!isApproved) {
+        return;
+      }
     }
     emit(AppReloadState());
     Map<String, dynamic> body = {
@@ -317,8 +325,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     // First check if the user is logged in or not
     if (StorageManager().getIsSkipLogin()) {
-      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
-      return;
+      bool isApproved = false;
+      await Utils.showLoginRequiredDialog(
+        event.context,
+        onApproved: () {
+          isApproved = true;
+        },
+      );
+      if (!isApproved) {
+        return;
+      }
     }
     BlocProvider.of<AddToWatchlistBloc>(event.context).add(AddToWatchlistInitialEvent.add(event.productDetails, event.context));
     Utils.showSmartModalBottomSheet(

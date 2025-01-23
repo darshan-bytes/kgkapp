@@ -70,68 +70,73 @@ class ProductListItem extends StatelessWidget {
   }
 
   Widget productImageSection(ProductItemStyle style, BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: boxHeight ?? 144.w,
-          width: boxWidth ?? 144.w,
-          alignment: Alignment.topCenter,
-          color: style.whiteColor,
-          child: SmartImage(
-            path: productDetails.imageUrl ?? '',
-            height: imageHeight,
-            width: imageWidth,
-            fit: fit,
-          ),
-        ),
-        if (isOutOfStock)
-          Positioned(
-            top: 8.h,
-            left: 8.w,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-              decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
-              child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
+    return SizedBox(
+      height: boxHeight ?? 144.w,
+      width: boxWidth ?? 144.w,
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          Container(
+            height: boxHeight ?? 144.w,
+            width: boxWidth ?? 144.w,
+            alignment: Alignment.topCenter,
+            color: style.whiteColor,
+            child: SmartImage(
+              path: productDetails.imageUrl ?? '',
+              height: imageHeight,
+              width: imageWidth,
+              fit: fit,
             ),
           ),
-        Positioned(
-          top: 8,
-          right: 8,
-          child: Row(
-            children: [
-              if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
-            ],
+          if (isOutOfStock)
+            Positioned(
+              top: 8.h,
+              left: 8.w,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
+                child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
+              ),
+            ),
+          Positioned(
+            top: 8.h,
+            right: 8.w,
+            child: Row(
+              children: [
+                if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 8,
-          right: 8,
-          child: Row(
-            children: [
-              if (onEyeTap != null)
-                buildIcon(
-                    path: AppImages.icAddEye,
-                    onTap: () {
-                      BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
+          Positioned(
+            bottom: 8.w,
+            right: 8.w,
+            child: Row(
+              children: [
+                if (onEyeTap != null)
+                  buildIcon(
+                      path: AppImages.icAddEye,
+                      onTap: () {
+                        BlocProvider.of<AppBloc>(context).onTapWatchList(context, productDetails: productDetails);
+                      },
+                      style: style),
+                SizedBox(width: 8.w),
+                if (onFavTap != null)
+                  BlocBuilder<AppBloc, AppState>(
+                    buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                    builder: (context, state) {
+                      return buildIcon(
+                          path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
+                          onTap: () {
+                            BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
+                          },
+                          style: style);
                     },
-                    style: style),
-              SizedBox(width: 8.w),
-              if (onFavTap != null)
-                BlocBuilder<AppBloc, AppState>(
-                  buildWhen: (previous, current) => current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
-                  builder: (context, state) {
-                    return buildIcon(
-                        path: isFavourite ? AppImages.icHeartFill : AppImages.icProductFavIcon,
-                        onTap: () {
-                          BlocProvider.of<AppBloc>(context).onTapFavorite(context, productDetails: productDetails);
-                        },
-                        style: style);
-                  },
-                ),
-            ],
+                  ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -206,7 +211,9 @@ class ProductListItem extends StatelessWidget {
               SizedBox(height: 8.h),
               priceSection(style),
             ],
-            Row(
+
+            /// Below Lines are commented as they are not required in the current implementation as discussed in the client call
+            /*Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -238,21 +245,24 @@ class ProductListItem extends StatelessWidget {
                   ),
                 ]
               ],
-            ),
-            if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[
+            ),*/
+            /*if (productDetails.cts.isNotNullNorEmpty || productDetails.gms.isNotNullNorEmpty) ...[
               SizedBox(height: 4.h),
               diamondAndGramSection(style),
-            ],
+            ],*/
             SizedBox(height: 4.h),
             if (onAddToBagTap != null)
               SmartButton(
+                height: 32.w,
                 margin: productDetails.discountPercentageString.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
-                titleStyle: style.buttonWithIconTextStyle,
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                titleStyle: style.buttonTextStyle,
                 onTap: () {
                   BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
                 },
-                title: APPStrings.addToBag.tr,
+                title: productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
                 prefixImage: AppImages.icShoppingBag,
+                imageSize: 16.w,
               ),
           ],
         ),

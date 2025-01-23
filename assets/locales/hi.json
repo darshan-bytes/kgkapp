@@ -786,5 +786,6 @@
   "mob_otp_required": "कृपया ओटीपी दर्ज करें",
   "mob_otp_length": "ओटीपी 6 अक्षर लंबा होना चाहिए",
   "mob_bag": "बैग",
-  "mob_you": "आप"
+  "mob_you": "आप",
+  "mob_login_required": "लॉगिन आवश्यक है"
 }
