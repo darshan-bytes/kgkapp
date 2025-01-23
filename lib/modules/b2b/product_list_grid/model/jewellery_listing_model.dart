@@ -620,53 +620,74 @@ extension JewelleryListingModelExtension on JewelleryDataModel {
 
 class MultipleFinishedViewImage {
   MultipleFinishedViewImage({
-    required this.highRes3,
-    required this.highRes4,
     required this.contractNo,
+    required this.contractImage,
+    required this.styleImage,
     required this.imageAvailable,
     required this.imageAvailableMa,
+    required this.imageUrl,
     required this.highRes1,
     required this.highRes2,
-    required this.imageUrl,
+    required this.highRes3,
+    required this.highRes4,
     required this.multiAngleUrl,
+    required this.the3DFile,
+    required this.videoUrl,
   });
 
-  dynamic highRes3;
-  dynamic highRes4;
-  String? contractNo;
-  String? imageAvailable;
-  String? imageAvailableMa;
-  dynamic highRes1;
-  dynamic highRes2;
-  String? imageUrl;
+  final String? contractNo;
+  final String? contractImage;
+  final String? styleImage;
+  final String? imageAvailable;
+  final String? imageAvailableMa;
+  final String? imageUrl;
+  final String? highRes1;
+  final String? highRes2;
+  final String? highRes3;
+  final String? highRes4;
   final List<MultiAngleUrl> multiAngleUrl;
+  final String? the3DFile;
+  final String? videoUrl;
 
   factory MultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
     return MultipleFinishedViewImage(
-      highRes3: json["high_res3"]?.toString(),
-      highRes4: json["high_res4"]?.toString(),
-      contractNo: json["ContractNo"]?.toString(),
-      imageAvailable: json["IMAGE_AVAILABLE"]?.toString(),
-      imageAvailableMa: json["IMAGE_AVAILABLE_MA"]?.toString(),
-      highRes1: json["high_res1"]?.toString(),
-      highRes2: json["high_res2"]?.toString(),
-      imageUrl: json["IMAGE_URL"]?.toString(),
+      contractNo: json["ContractNo"],
+      contractImage: json["ContractImage"],
+      styleImage: json["StyleImage"],
+      imageAvailable: json["IMAGE_AVAILABLE"],
+      imageAvailableMa: json["IMAGE_AVAILABLE_MA"],
+      imageUrl: json["IMAGE_URL"],
+      highRes1: json["high_res1"],
+      highRes2: json["high_res2"],
+      highRes3: json["high_res3"],
+      highRes4: json["high_res4"],
       multiAngleUrl:
           json["MULTI_ANGLE_URL"] == null ? [] : List<MultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => MultiAngleUrl.fromJson(x))),
+      the3DFile: json["3dFile"],
+      videoUrl: json["VideoUrl"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "high_res3": highRes3,
-        "high_res4": highRes4,
         "ContractNo": contractNo,
+        "ContractImage": contractImage,
+        "StyleImage": styleImage,
         "IMAGE_AVAILABLE": imageAvailable,
         "IMAGE_AVAILABLE_MA": imageAvailableMa,
+        "IMAGE_URL": imageUrl,
         "high_res1": highRes1,
         "high_res2": highRes2,
-        "IMAGE_URL": imageUrl,
-        "MULTI_ANGLE_URL": multiAngleUrl
+        "high_res3": highRes3,
+        "high_res4": highRes4,
+        "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
+        "3dFile": the3DFile,
+        "VideoUrl": videoUrl,
       };
+
+  @override
+  String toString() {
+    return "$contractNo, $contractImage, $styleImage, $imageAvailable, $imageAvailableMa, $imageUrl, $highRes1, $highRes2, $highRes3, $highRes4, $multiAngleUrl, $the3DFile, $videoUrl, ";
+  }
 }
 
 class MultiAngleUrl {

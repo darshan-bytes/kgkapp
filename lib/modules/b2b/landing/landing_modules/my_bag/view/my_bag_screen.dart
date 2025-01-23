@@ -13,7 +13,7 @@ class MyBagScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: SmartAppBar(
-            title: APPStrings.myBag.tr,
+            title: APPStrings.bag.tr,
             leadingImage: "https://i.ibb.co/cyvpMrR/KGK-Group-Logo-1.png",
             isBack: false,
             onSearch: () {

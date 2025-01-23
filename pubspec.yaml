@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+42
+version: 1.0.0+43
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -135,6 +135,7 @@ dependencies:
 
   # For Photo View
   photo_view: ^0.15.0
+  model_viewer_plus: ^1.9.1
 
 dev_dependencies:
   flutter_test:
