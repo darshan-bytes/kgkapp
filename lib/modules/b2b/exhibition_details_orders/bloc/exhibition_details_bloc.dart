@@ -13,6 +13,9 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
 
   String exhibitionId = '';
 
+  /// Exhibition type is required for fetching exhibition product listing
+  String exhibitionType = '';
+
   /// Identify Current user type
   UserType userType = UserType.b2cUser;
 
@@ -29,7 +32,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
   ];
 
   /// The total number of filtered records
-  int? totalFilteredRecords;
+  int totalFilteredRecords = 0;
 
   /// Controller for managing pagination
   int? totalNumberOfPages;
@@ -99,6 +102,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     /// Fetch exhibition product listing
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       /// Fetch exhibition product listing
+      await _callProductListingApi(context: context, exhibitionType: exhibitionType);
     }
     emit(const ExhibitionDetailsLoadedState());
   }
@@ -129,6 +133,7 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
         /// Set the exhibition details.
         exhibitionDetails = data;
         appbarTitle = exhibitionDetails.name ?? '';
+        exhibitionType = exhibitionDetails.exhibitionType ?? "";
       },
     );
   }
@@ -159,5 +164,197 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     emit(const ExhibitionDetailsReloadState());
     isGrid = isGridValue;
     emit(const ExhibitionChangeListingTypeState());
+  }
+
+  Future<void> _callProductListingApi({required BuildContext context, required String exhibitionType}) async {
+    Either<ErrorResponse, dynamic>? response;
+    switch (exhibitionType) {
+      case AppConst.diamond:
+        response = await AppRepository(context).fetchDiamondList(
+          limit: AppConst.pageLimit.toString(),
+          page: paginationScrollController.currentPage.toString(),
+          sortKey: null,
+          sortValue: null,
+          type: null,
+          query: {ApiKey.exhibitionId: exhibitionId},
+        );
+        break;
+      case AppConst.jewellery:
+        response = await AppRepository(context).fetchJewelleryList(
+          limit: AppConst.pageLimit.toString(),
+          page: paginationScrollController.currentPage.toString(),
+          sortKey: null,
+          sortValue: null,
+          type: null,
+          query: {ApiKey.exhibitionId: exhibitionId},
+        );
+        break;
+      case AppConst.gemstone:
+        response = await AppRepository(context).fetchGemstoneList(
+          limit: AppConst.pageLimit.toString(),
+          page: paginationScrollController.currentPage.toString(),
+          sortKey: null,
+          sortValue: null,
+          type: null,
+          query: {ApiKey.exhibitionId: exhibitionId},
+        );
+        break;
+      case AppConst.cadLibrary:
+        response = await AppRepository(context).getCadLibraryList(query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        });
+        break;
+      case AppConst.designLibrary:
+        response = await AppRepository(context).getDesignLibraryList(query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        });
+        break;
+      case AppConst.styleLibrary:
+        response = await AppRepository(context).getStyleLibraryList(query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        });
+        break;
+      case AppConst.skuLibrary:
+        response = await AppRepository(context).getSkuLibraryList(query: {
+          ApiKey.limit: AppConst.pageLimit.toString(),
+          ApiKey.page: paginationScrollController.currentPage.toString(),
+          ApiKey.exhibitionId: exhibitionId,
+        });
+        break;
+    }
+  }
+
+  /// Populates the product list for diamond.
+  void _populateDiamondProductList(List<DiamondDataModel> diamondDataList) {
+    productList = List.generate(
+      diamondDataList.length,
+      (index) => ProductDetailsModel(
+        productId: diamondDataList[index].id,
+        imageUrl: (diamondDataList[index].image.isNotNullNorEmpty) ? diamondDataList[index].image.first.url : '',
+        title: diamondDataList[index].lotCode,
+        subTitle: diamondDataList[index].rmDescription,
+        originalPrice: diamondDataList[index].discountPrice,
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for jewellery.
+  void _populateJewelleryProductList(List<JewelleryDataModel> jewelleryDataList) {
+    productList = List.generate(
+      jewelleryDataList.length,
+      (index) => ProductDetailsModel(
+        productId: jewelleryDataList[index].id,
+        imageUrl: (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
+            ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
+            : '',
+        title: jewelleryDataList[index].contractNoSkuNo,
+        subTitle: jewelleryDataList[index].productDescription,
+        kgkCollectionName: jewelleryDataList[index].kgkCollection ?? "\n",
+        businessCategoryName: jewelleryDataList[index].businessCategoryName ?? "\n",
+        originalPrice: jewelleryDataList[index].discountPrice,
+        cts: jewelleryDataList[index].crt,
+        gms: jewelleryDataList[index].gms,
+        colorsCode: [
+          jewelleryDataList[index].metalColor1HexCode ?? "",
+          jewelleryDataList[index].metalColor2HexCode ?? "",
+          jewelleryDataList[index].metalColor3HexCode ?? "",
+        ],
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for gemstone.
+  void _populateGemstoneProductList(List<GemstoneDatum> gemstoneDataList) {
+    productList = List.generate(
+      gemstoneDataList.length,
+      (index) => ProductDetailsModel(
+        productId: gemstoneDataList[index].id,
+        imageUrl: (gemstoneDataList[index].image.isNotNullNorEmpty) ? gemstoneDataList[index].image.first.url : '',
+        title: gemstoneDataList[index].lotCode,
+        subTitle: gemstoneDataList[index].rmDescription,
+        originalPrice: (gemstoneDataList[index].discountPrice ?? 0).toString(),
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for CAD library.
+  void _populateCadLibraryProductList(List<CadLibraryListItemDataModel> cadLibraryListItemDataList) {
+    productList = List.generate(
+      cadLibraryListItemDataList.length,
+      (index) => ProductDetailsModel(
+        productId: cadLibraryListItemDataList[index].sId,
+        imageUrl:
+            (cadLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false) ? cadLibraryListItemDataList[index].images?.first : '',
+        title: cadLibraryListItemDataList[index].contractNoSkuNo,
+        subTitle: cadLibraryListItemDataList[index].productDescription ?? '',
+        kgkCollectionName: cadLibraryListItemDataList[index].kgkCollection ?? "\n",
+        businessCategoryName: cadLibraryListItemDataList[index].businessCategoryName ?? "\n",
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for design library.
+  void _populateDesignLibraryProductList(List<DesignLibraryListItemDataModel> designLibraryListItemDataList) {
+    productList = List.generate(
+      designLibraryListItemDataList.length,
+      (index) => ProductDetailsModel(
+        productId: designLibraryListItemDataList[index].sId,
+        imageUrl: (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+            ? designLibraryListItemDataList[index].images?.first
+            : '',
+        title: designLibraryListItemDataList[index].contractNoSkuNo,
+        subTitle: designLibraryListItemDataList[index].productDescription ?? '',
+        kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
+        businessCategoryName: designLibraryListItemDataList[index].businessCategoryName ?? "\n",
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for style library.
+  void _populateStyleLibraryProductList(List<CadLibraryListItemDataModel> styleLibraryListItemDataList) {
+    productList = List.generate(
+      styleLibraryListItemDataList.length,
+      (index) => ProductDetailsModel(
+        productId: styleLibraryListItemDataList[index].sId,
+        imageUrl: (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
+            ? styleLibraryListItemDataList[index].images?.first
+            : '',
+        title: styleLibraryListItemDataList[index].contractNoSkuNo,
+        subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
+        kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
+        businessCategoryName: styleLibraryListItemDataList[index].businessCategoryName ?? "\n",
+        isCommentVisible: true,
+      ),
+    );
+  }
+
+  /// Populates the product list for SKU library.
+  void _populateSkuLibraryProductList(List<SkuProductModel> skuProductList) {
+    productList = List.generate(
+      skuProductList.length,
+      (index) => ProductDetailsModel(
+        productId: skuProductList[index].sId,
+        imageUrl: (skuProductList[index].multipleFinishedViewImage?.isNotNullNorEmpty ?? false)
+            ? skuProductList[index].multipleFinishedViewImage?.first.imageUrl
+            : '',
+        title: skuProductList[index].contractNumber,
+        subTitle: skuProductList[index].productDescription ?? '',
+        kgkCollectionName: skuProductList[index].kgkCollection ?? "\n",
+        businessCategoryName: skuProductList[index].businessCategoryName ?? "\n",
+        originalPrice: skuProductList[index].discountPrice,
+        isCommentVisible: true,
+      ),
+    );
   }
 }
