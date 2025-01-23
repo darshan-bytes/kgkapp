@@ -221,7 +221,6 @@ class AppRepository extends ApiService {
       queryParams.addAll(query);
     }
 
-    printWrapped("queryParams => $queryParams");
     var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
