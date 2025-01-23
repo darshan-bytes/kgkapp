@@ -49,6 +49,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   List<DiamondDataModel> diamondDatumList = [];
   List<GemstoneDatum> gemstoneDatumList = [];
 
+  /// Stream subscription for wishlist updates
+  StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
+
   /// Stone listing constructor
   StoneListingBloc() : super(const StoneListingInitial()) {
     on<GetStoneProductListEvent>(_onGetStoneProductListEvent);
@@ -66,6 +69,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   @override
   Future<void> close() {
     paginationScrollController.dispose();
+    wishlistUpdaterServiceStream?.cancel();
     return super.close();
   }
 
@@ -120,6 +124,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }
     emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
+    _initWishlistUpdaterServiceBloc(context);
   }
 
   /// Get screen identifier
@@ -146,6 +151,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _generateProductList(BuildContext context, Emitter<StoneListingState> emit) async {
     /// Clear product list before fetching new data
     productList.clear();
+    diamondDatumList.clear();
+    gemstoneDatumList.clear();
 
     /// Determine screen-specific settings
     switch (screenIdentifier) {
@@ -264,6 +271,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
       /// Show the total number of records in the UI side
       totalFilteredRecords = success.filteredRecords;
+      diamondDatumList.addAll(diamondList);
       productList.addAll(
         diamondList.map((diamond) => _convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
       );
@@ -347,6 +355,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
       /// Show the total number of records in the UI side
       totalFilteredRecords = success.filteredRecords;
+      gemstoneDatumList.addAll(gemstoneList);
       productList.addAll(
         gemstoneList.map((gemstone) => _convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
       );
@@ -459,7 +468,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
+    diamondDatumList.clear();
     productList.clear();
+    diamondDatumList.clear();
     await _generateProductList(context, emit);
     emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
@@ -536,6 +547,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
+    diamondDatumList.clear();
     filterData = event.filterData;
     await _generateProductList(event.context, emit);
     emit(const StoneProductReloadState());
@@ -565,5 +577,47 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         appbarTitle = APPStrings.diamonds.tr;
         break;
     }
+  }
+
+  /// Initialize the wishlist updater service
+  void _initWishlistUpdaterServiceBloc(BuildContext context) {
+    WishlistUpdaterServiceBloc wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+    wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen((state) {
+      if (state is WishListUpdateProductState) {
+        try {
+          if (screenIdentifier == ScreenIdentifier.diamondForDefault || screenIdentifier == ScreenIdentifier.diamondForDIY) {
+            int index = diamondDatumList.indexWhere((element) => element.suid == state.productId);
+            if (index != -1) {
+              if (state.wishlistId.isNotEmpty) {
+                diamondDatumList[index].isFavorite = true;
+                diamondDatumList[index].wishlistID = state.wishlistId;
+              } else {
+                diamondDatumList[index].isFavorite = false;
+                diamondDatumList[index].wishlistID = "";
+              }
+              productList[index].isFavourite = diamondDatumList[index].isFavorite;
+              productList[index].wishlistId =
+                  diamondDatumList[index].wishlistID.isNotNullNorEmpty ? diamondDatumList[index].wishlistID : null;
+            }
+          } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
+            int index = gemstoneDatumList.indexWhere((element) => element.suid == state.productId);
+            if (index != -1) {
+              if (state.wishlistId.isNotEmpty) {
+                gemstoneDatumList[index].isFavorite = true;
+                gemstoneDatumList[index].wishlistID = state.wishlistId;
+              } else {
+                gemstoneDatumList[index].isFavorite = false;
+                gemstoneDatumList[index].wishlistID = "";
+              }
+              productList[index].isFavourite = gemstoneDatumList[index].isFavorite;
+              productList[index].wishlistId =
+                  gemstoneDatumList[index].wishlistID.isNotNullNorEmpty ? gemstoneDatumList[index].wishlistID : null;
+            }
+          }
+        } catch (e) {
+          printWrapped(e.toString());
+        }
+      }
+    });
   }
 }

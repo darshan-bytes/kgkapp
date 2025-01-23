@@ -12,15 +12,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
       builder: (context, state) {
         final ProductInfoModel productInfoModel = bloc.productInfoModel;
         return Scaffold(
-          appBar: SmartAppBar(
-            title: APPStrings.diamonds.tr,
-            onSearch: () {
-              context.pushNamed(AppRoutes.searchPage);
-            },
-            onFavorite: () {
-              context.pushNamed(AppRoutes.wishListPage);
-            },
-          ),
+          appBar: SmartAppBar(title: APPStrings.diamonds.tr),
           bottomNavigationBar: _buildBottomNavigationBar(),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 17.w),

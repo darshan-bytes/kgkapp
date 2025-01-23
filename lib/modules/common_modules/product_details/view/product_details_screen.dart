@@ -302,7 +302,6 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 await BlocProvider.of<AppBloc>(context)
                                                     .handleShareProduct(context: context, productDetails: bloc.productDetails!);
                                               }
-                                              bloc.onTapCopyLink(context: context);
                                             },
                                             onTapOther: () async {
                                               bloc.onTapShareLink(context: context);
@@ -434,28 +433,12 @@ class ProductDetailsScreen extends StatelessWidget {
               buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsRecentlyViewedLoadedState,
               builder: (context, state) {
                 return ProductReviewsDetails(
-                  isShowWriteReviewButton: true,
+                  isShowWriteReviewButton: !bloc.userReviewSubmitted,
                   ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
                   averageRating: bloc.productDetails?.rating ?? 0,
                   reviewCount: bloc.productDetails?.reviewCount ?? 0,
                   onTap: () async {
-                    /// First check if the user is logged in or not
-                    if (StorageManager().getIsSkipLogin()) {
-                      bool isApproved = false;
-                      await Utils.showLoginRequiredDialog(
-                        context,
-                        onApproved: () {
-                          isApproved = true;
-                        },
-                      );
-                      if (!isApproved) {
-                        return;
-                      }
-                    }
-                    context.pushNamed(AppRoutes.writeReviewPage, arguments: {
-                      RoutesData.productId: bloc.productDetails?.productId,
-                      RoutesData.commodity: bloc.productDetails?.commodity,
-                    });
+                    bloc.add(ProductDetailsWriteReviewEvent(context));
                   },
                 );
               },

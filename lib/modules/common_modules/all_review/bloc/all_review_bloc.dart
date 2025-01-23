@@ -44,8 +44,7 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
       ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: paginationScrollController.currentPage,
     };
-    Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
-        await AppRepository(context).productReviewsFilter(productId, query: query);
+    Either<ErrorResponse, ProductReviewWrapperModel>? response = await AppRepository(context).productReviewsFilter(productId, query: query);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {

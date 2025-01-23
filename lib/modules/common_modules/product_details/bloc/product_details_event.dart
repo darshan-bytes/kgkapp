@@ -75,3 +75,12 @@ final class ProductDetailsReviewsLoadedEvent extends ProductDetailsEvent {
   @override
   List<Object> get props => [];
 }
+
+final class ProductDetailsWriteReviewEvent extends ProductDetailsEvent {
+  final BuildContext context;
+
+  const ProductDetailsWriteReviewEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

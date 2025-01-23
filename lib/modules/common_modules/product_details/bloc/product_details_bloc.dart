@@ -112,6 +112,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   List<ReviewDataModel> reviewList = [];
 
+  bool userReviewSubmitted = false;
+
   StreamSubscription<WishlistUpdaterServiceState>? wishlistUpdaterServiceStream;
   StreamSubscription<CompareProductState>? compareProductStream;
 
@@ -124,6 +126,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<GemstoneDetailsToggleEvent>(_onGemstoneDetailsToggleEvent);
     on<ProductDetailsSuggestedLoadedEvent>(_onProductDetailsSuggestedLoadedEvent);
     on<ProductDetailsReviewsLoadedEvent>(_onProductDetailsReviewsLoadedEvent);
+    on<ProductDetailsWriteReviewEvent>(_onProductDetailsWriteReviewEvent);
   }
 
   @override
@@ -207,6 +210,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ),
       );
     }
+
+    _initWishlistUpdaterServiceBloc(event.context);
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
@@ -474,7 +479,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(const ReloadProductDetailsState());
 
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
-    Either<ErrorResponse, PaginationData<ProductReviewModel>>? response =
+    Either<ErrorResponse, ProductReviewWrapperModel>? response =
         await AppRepository(context).productReviewsFilter(productId, query: {ApiKey.limit: "6", ApiKey.page: "1"}, isLoadMore: false);
     response?.fold(
       (error) {
@@ -483,6 +488,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        userReviewSubmitted = data.userReviewSubmitted;
         reviewList = (data.dataList)?.map((e) {
               return ReviewDataModel(
                 id: e.id,
@@ -611,7 +617,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             subTitle: e.rmDescription,
           );
         }).toList();
-        add(const ProductDetailsReviewsLoadedEvent());
+        if (!isClosed) {
+          add(const ProductDetailsReviewsLoadedEvent());
+        }
       },
     );
   }
@@ -677,6 +685,32 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     emit(const ProductDetailsRecentlyViewedLoadedState());
   }
 
+  Future<void> _onProductDetailsWriteReviewEvent(ProductDetailsWriteReviewEvent event, Emitter<ProductDetailsState> emit) async {
+    final BuildContext context = event.context;
+
+    /// First check if the user is logged in or not
+    if (StorageManager().getIsSkipLogin()) {
+      bool isApproved = false;
+      await Utils.showLoginRequiredDialog(
+        context,
+        onApproved: () {
+          isApproved = true;
+        },
+      );
+      if (!isApproved) {
+        return;
+      }
+      await _onLoadProductDetails(LoadProductDetailsEvent(context), emit);
+      if (userReviewSubmitted) {
+        return;
+      }
+    }
+    context.pushNamed(AppRoutes.writeReviewPage, arguments: {
+      RoutesData.productId: productDetails?.productId,
+      RoutesData.commodity: productDetails?.commodity,
+    });
+  }
+
   void navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(BuildContext context,
       {required String productNavigation, String productId = ''}) {
     switch (screenIdentifier) {
@@ -710,6 +744,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void _handleWishlistUpdate(WishlistUpdaterServiceState state) {
     if (state is WishListUpdateProductState) {
       try {
+        _updateProductDetails(state.productId, state.wishlistId);
         _updateProductList(state);
         _updateRecentlyViewedList(state);
       } catch (e) {
@@ -743,9 +778,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
 // Update product details based on wishlist status
-  void _updateProductDetails(dynamic product, String wishlistId) {
-    product.isFavorite = wishlistId.isNotEmpty;
-    product.wishlistID = wishlistId;
+  void _updateProductDetails(String productId, String wishlistId) {
+    if (productId == productDetails?.productId) {
+      productDetails?.isFavourite = wishlistId.isNotEmpty;
+      productDetails?.wishlistId = wishlistId;
+    }
   }
 
 // Update the suggested product list
@@ -788,7 +825,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         } else {
           isCompare = false;
         }
-        add(ToggleCompareProductEvent(isCompare: isCompare));
+        if (!isClosed) {
+          add(ToggleCompareProductEvent(isCompare: isCompare));
+        }
       }
     });
   }
