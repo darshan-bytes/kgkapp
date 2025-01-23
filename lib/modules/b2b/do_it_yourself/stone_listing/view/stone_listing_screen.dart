@@ -6,107 +6,96 @@ class StoneListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).diamondListingStyle;
-    final StoneListingBloc diamondListingBloc = BlocProvider.of<StoneListingBloc>(context);
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
-        child: BlocBuilder<StoneListingBloc, StoneListingState>(
-          buildWhen: (previous, current) => current is StoneProductLoadedState,
-          builder: (context, state) {
-            return SmartAppBar(
-              title: diamondListingBloc.appbarTitle,
-              onSearch: () {
-                context.pushNamed(AppRoutes.searchPage);
-              },
-              onFavorite: () {
-                context.pushNamed(AppRoutes.wishListPage);
-              },
-            );
-          },
-        ),
-      ),
-      floatingActionButton: ScrollToTopFAB(
-        canScrollToTop: diamondListingBloc.paginationScrollController.canScrollToTop,
-        onTap: diamondListingBloc.paginationScrollController.scrollToTop,
-      ),
-      bottomNavigationBar: BlocBuilder<StoneListingBloc, StoneListingState>(
-        buildWhen: (previous, current) => current is StoneProductLoadedState || current is StoneListLoadingState,
-        builder: (context, state) {
-          if (state is StoneListLoadingState) {
-            return SmartCircularProgressIndicator();
-          }
-          if (state is StoneProductLoadedState) {
-            return FilterBottomActionBar(
-              controller: diamondListingBloc.paginationScrollController.controller,
-              onFilterTap: () {
-                BlocProvider.of<SortFilterBloc>(context)
-                    .add(AddSortFilterDataEvent(filterOptionList: diamondListingBloc.filterData, context: context));
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: (value) {
-                      if (value != null && value is List<FilterData>) {
-                        diamondListingBloc.add(StoneListingFilterEvent(context: context, filterData: value));
-                      }
-                    },
-                  ),
+    final StoneListingBloc bloc = BlocProvider.of<StoneListingBloc>(context);
+    return BlocBuilder<StoneListingBloc, StoneListingState>(
+      buildWhen: (previous, current) => current is StoneProductLoadedState || current is StoneListLoadingState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: AppConst.appBarHeight,
+            child: BlocBuilder<StoneListingBloc, StoneListingState>(
+              buildWhen: (previous, current) => current is StoneProductLoadedState,
+              builder: (context, state) {
+                return SmartAppBar(
+                  title: bloc.appbarTitle,
+                  onSearch: () {
+                    context.pushNamed(AppRoutes.searchPage);
+                  },
+                  onFavorite: () {
+                    context.pushNamed(AppRoutes.wishListPage);
+                  },
                 );
               },
-              onSortTap: () {
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => SortScreen(sortData: diamondListingBloc.sortOptions),
-                ).then((onValue) {
-                  if (onValue != null) {
-                    diamondListingBloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
-                  }
-                });
-              },
-            );
-          } else {
-            return const SizedBox.shrink();
-          }
-        },
-      ),
-      body: BlocBuilder<StoneListingBloc, StoneListingState>(
-        buildWhen: (previous, current) => current is StoneProductLoadedState,
-        builder: (context, state) {
-          if (state is StoneProductLoadedState) {
-            return SafeArea(
-                child: SmartSingleChildScrollView(
-              controller: diamondListingBloc.paginationScrollController.controller,
-              onRefresh: () async {
-                diamondListingBloc.add(StoneListPullToRefreshEvent(context));
-              },
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
-              child: Column(
-                children: [
-                  if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
-                  if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
-                    const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
-                  if (diamondListingBloc.displaySelection) ...[
-                    SizedBox(height: 24.h),
-                    _buildSelectionDiamond(diamondListingBloc),
-                  ],
-                  SizedBox(height: 24.h),
-                  _buildProductFilterCount(style, diamondListingBloc),
-                  SizedBox(height: 24.h),
-                  BlocBuilder<StoneListingBloc, StoneListingState>(
-                    builder: (context, state) {
-                      if (state is StoneProductReloadState) {
-                        return const SizedBox.shrink();
-                      } else {
-                        return _buildProductList(style, diamondListingBloc);
-                      }
-                    },
+            ),
+          ),
+          floatingActionButton: ScrollToTopFAB(
+            canScrollToTop: bloc.paginationScrollController.canScrollToTop,
+            onTap: bloc.paginationScrollController.scrollToTop,
+          ),
+          bottomNavigationBar: state is StoneProductLoadedState ? _buildBottomNavigationBar(bloc) : null,
+          body: BlocBuilder<StoneListingBloc, StoneListingState>(
+            buildWhen: (previous, current) => current is StoneProductLoadedState || (current is StoneListLoadingState && current.isFirst),
+            builder: (context, state) {
+              if (state is StoneProductLoadedState) {
+                return SafeArea(
+                    child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
+                        const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 6.h),
+                      if (bloc.displaySelection) ...[
+                        SizedBox(height: 10.h),
+                        _buildSelectionDiamond(bloc),
+                      ],
+                      SizedBox(height: 10.h),
+                      _buildProductFilterCount(style, bloc),
+                      SizedBox(height: 10.h),
+                      Expanded(
+                        child: BlocBuilder<StoneListingBloc, StoneListingState>(
+                          buildWhen: (previous, current) => current is StoneListLoadingState || current is StoneProductLoadedState,
+                          builder: (context, state) {
+                            return (state is StoneListLoadingState)
+                                ? SmartCircularProgressIndicator()
+                                : bloc.productList.isNullOrEmpty
+                                    ? NoDataFoundWidget(text: APPStrings.emptyProducts.tr)
+                                    : SmartSingleChildScrollView(
+                                        controller: bloc.paginationScrollController.controller,
+                                        onRefresh: () async {
+                                          bloc.add(StoneListPullToRefreshEvent(context));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            BlocBuilder<StoneListingBloc, StoneListingState>(
+                                              builder: (context, state) {
+                                                if (state is StoneProductReloadState) {
+                                                  return const SizedBox.shrink();
+                                                } else {
+                                                  return _buildProductList(style, bloc);
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ));
-          }
-          return const SizedBox.shrink();
-        },
-      ),
+                ));
+              } else if (state is StoneListLoadingState) {
+                return const SmartCircularProgressIndicator();
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -142,9 +131,10 @@ class StoneListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductFilterCount(DiamondListingStyle style, StoneListingBloc diamondListingBloc) {
+  Widget _buildProductFilterCount(DiamondListingStyle style, StoneListingBloc bloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
-      buildWhen: (previous, current) => current is StoneChangeListingTypeState,
+      buildWhen: (previous, current) =>
+          current is StoneChangeListingTypeState || current is StoneProductLoadedState || current is StoneListLoadedMoreState,
       builder: (context, state) {
         return SizedBox(
           height: 48.h,
@@ -153,16 +143,16 @@ class StoneListingScreen extends StatelessWidget {
             children: [
               SmartText(
                   APPStrings.showingListLengthX.tr.interpolate([
-                    diamondListingBloc.paginationScrollController.currentPage,
-                    diamondListingBloc.totalNumberOfPages,
-                    diamondListingBloc.totalFilteredRecords,
+                    bloc.paginationScrollController.currentPage,
+                    bloc.totalNumberOfPages,
+                    bloc.totalFilteredRecords,
                   ]),
                   style: style.filterProductCountTextStyle),
               Row(
                 children: [
                   SelectionButton(
                     width: 48.w,
-                    isSelected: diamondListingBloc.isGrid,
+                    isSelected: bloc.isGrid,
                     image: AppImages.icGrid,
                     imageHeight: 24.5.w,
                     imageWidth: 24.5.w,
@@ -174,12 +164,12 @@ class StoneListingScreen extends StatelessWidget {
                     unselectedButtonBorderColor: style.listBorderColor,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                     onTap: () {
-                      diamondListingBloc.add(const StoneChangeListingTypeEvent());
+                      bloc.add(const StoneChangeListingTypeEvent());
                     },
                   ),
                   SelectionButton(
                     width: 48.w,
-                    isSelected: !diamondListingBloc.isGrid,
+                    isSelected: !bloc.isGrid,
                     image: AppImages.icList,
                     imageHeight: 18.h,
                     selectedButtonColor: style.gridBackgroundColor,
@@ -190,7 +180,7 @@ class StoneListingScreen extends StatelessWidget {
                     unselectedButtonBorderColor: style.listBorderColor,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                     onTap: () {
-                      diamondListingBloc.add(const StoneChangeListingTypeEvent());
+                      bloc.add(const StoneChangeListingTypeEvent());
                     },
                   ),
 
@@ -297,35 +287,36 @@ class StoneListingScreen extends StatelessWidget {
                           )
                         : ProductInfoItem(
                             isFromBag: false,
-                            onTap360View: () => printWrapped("onTap360View"),
                             productFeaturesList: attributes,
-                            onTapDNA: () {
-                              if (diamondListingBloc.screenIdentifier != ScreenIdentifier.productForGemstones) {
-                                context.pushNamed(AppRoutes.diamondInfoPopupPage,
-                                    arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
-                              } else {
-                                context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                                  RoutesData.cmsPageData: CmsWebViewDataModel(
-                                    url: product.openDnaUrl,
-                                    title: APPStrings.dna.tr,
-                                  )
-                                });
-                              }
-                            },
-                            onTapCertificate: () {
-                              context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                                RoutesData.cmsPageData: CmsWebViewDataModel(
-                                  url: product.certificateFile,
-                                  title: APPStrings.certificate.tr,
-                                )
-                              });
-                            },
-                            onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                            onTap360View: () => printWrapped("onTap360View"),
+                            onTapDNA: product.openDnaUrl != null
+                                ? () {
+                                    Utils.launchUrlFromString(product.openDnaUrl!);
+                                  }
+                                : null,
+                            onTapCertificate: product.certificateFile != null
+                                ? () {
+                                    Utils.launchUrlFromString(product.certificateFile!);
+                                  }
+                                : null,
+                            onTapImageViewer: product.shapeImage != null
+                                ? () {
+                                    Utils.launchUrlFromString(product.shapeImage!);
+                                  }
+                                : null,
                             onTapUSA: () => printWrapped("onTapUSA"),
                             onTapMenuButton: () {
                               Utils.showSmartModalBottomSheet(
                                 context: context,
-                                builder: (context) => const ProductMenuBottomSheet(),
+                                builder: (_) => ProductMenuBottomSheet(
+                                  productDetails: product,
+                                  onAddToBag: () {
+                                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
+                                  },
+                                  onBuyNow: () {
+                                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
+                                  },
+                                ),
                               );
                             },
                             isSelectedBackground: (index % 2 != 0),
@@ -347,7 +338,7 @@ class StoneListingScreen extends StatelessWidget {
                                 carat: "36.09",
                                 commodity: "Sapphire",
                                 origin: "Sri Lanka",
-                                rapRate: product.rappaportPrice?.setCurrency ?? "\$35,500.00",
+                                rapRate: product.rappaportPrice?.setCurrency,
                                 productId: product.productId,
                                 productName: product.name,
                                 ct: "10.04",
@@ -586,6 +577,44 @@ class StoneListingScreen extends StatelessWidget {
               ],
             );
           }
+        }
+      },
+    );
+  }
+
+  Widget _buildBottomNavigationBar(StoneListingBloc bloc) {
+    return BlocBuilder<StoneListingBloc, StoneListingState>(
+      buildWhen: (previous, current) => current is StoneProductLoadedState || current is StoneListLoadingState,
+      builder: (context, state) {
+        if (state is StoneProductLoadedState) {
+          return FilterBottomActionBar(
+            controller: bloc.paginationScrollController.controller,
+            onFilterTap: () {
+              BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => FilterScreen(
+                  onApply: (value) {
+                    if (value != null && value is List<FilterData>) {
+                      bloc.add(StoneListingFilterEvent(context: context, filterData: value));
+                    }
+                  },
+                ),
+              );
+            },
+            onSortTap: () {
+              Utils.showSmartModalBottomSheet(
+                context: context,
+                builder: (context) => SortScreen(sortData: bloc.sortOptions),
+              ).then((onValue) {
+                if (onValue != null) {
+                  bloc.add(StoneSortEvent(context: context, sortData: onValue[RoutesData.sortData]));
+                }
+              });
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
         }
       },
     );

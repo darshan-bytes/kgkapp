@@ -100,11 +100,9 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: SmartButton(
                           height: 54.h,
                           prefixImage: AppImages.icShoppingBag,
-                          title: APPStrings.addToBag.tr,
+                          title: bloc.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
                           onTap: () {
-                            if (bloc.productDetails != null) {
-                              BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: bloc.productDetails!);
-                            }
+                            bloc.handleBagButtonClick(context);
                           },
                         ),
                       ),
@@ -313,7 +311,7 @@ class ProductDetailsScreen extends StatelessWidget {
                               ),
                           ],
                         ),
-                        SizedBox(height: 40.h),
+                        SizedBox(height: 20.h),
                         _productDetail(style, bloc, context),
                       ],
                     );
@@ -422,8 +420,9 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           const Divider(),
-          SizedBox(height: 24.h),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing) ...[
+            SizedBox(height: 24.h),
+
             ///TODO:Here Need to work on isShowWriteReviewButton
             BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
               buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsRecentlyViewedLoadedState,

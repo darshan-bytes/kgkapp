@@ -507,7 +507,7 @@ class LightModeTheme extends AppTheme {
         productTypeStyle: interMediumBoldTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         productCodeStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
         dotColor: colors.color8C8C8C,
-        productNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, color: colors.color303538),
+        productNameStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),
         ratingGlowColor: colors.primary,
         compareProductStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color303538),
         priceStyle: interSemiBoldTextStyle.copyWith(fontSize: 24.sp, color: colors.color303538),

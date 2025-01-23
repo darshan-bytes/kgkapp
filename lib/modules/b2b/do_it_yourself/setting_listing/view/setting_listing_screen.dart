@@ -160,8 +160,9 @@ class SettingListingScreen extends StatelessWidget {
                                 onEyeTap: () {},
                                 onFavTap: () {},
                                 onTap: () {
-                                  settingListingBloc.add(SettingListingOnTapEvent(context: context, index: index));
-                                  context.pushNamed(AppRoutes.settingDetailPage);
+                                  context.pushNamed(AppRoutes.settingDetailPage, arguments: {
+                                    RoutesData.settingId: productDetails.suid,
+                                  });
                                 },
                               );
                             },

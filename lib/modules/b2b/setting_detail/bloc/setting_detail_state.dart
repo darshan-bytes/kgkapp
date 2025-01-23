@@ -9,6 +9,13 @@ final class SettingDetailInitial extends SettingDetailState {
   List<Object> get props => [];
 }
 
+final class SettingDetailLoadedState extends SettingDetailState {
+  const SettingDetailLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class SettingToggleState extends SettingDetailState {
   final bool isSettingOpen;
 

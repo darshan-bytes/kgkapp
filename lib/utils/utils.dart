@@ -398,4 +398,10 @@ class Utils {
       });
     }
   }
+
+  static Future<void> precacheImageList(List<String> imageUrlList) async {
+    await Future.forEach(imageUrlList, (String imageUrl) async {
+      await DefaultCacheManager().downloadFile(imageUrl, force: true);
+    });
+  }
 }

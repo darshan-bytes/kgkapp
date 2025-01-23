@@ -26,7 +26,6 @@ class AppRoutes {
   static const paymentPage = '/paymentPage';
   static const writeReviewPage = '/writeReviewPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
-  static const productMenuBottomSheet = '/productMenuBottomSheet';
   static const auctionPage = '/auctionPage';
   static const orderPage = '/orderPage';
   static const orderDetailsPage = '/orderDetailsPage';
@@ -165,7 +164,12 @@ class AppRoutes {
         break;
 
       case settingDetailPage:
-        builder = (context) => const SettingDetailScreen();
+        builder = (context) {
+          return BlocProvider<SettingDetailBloc>(
+            create: (_) => SettingDetailBloc()..add(SettingDetailInitialEvent(context: context)),
+            child: const SettingDetailScreen(),
+          );
+        };
         break;
 
       case stoneListingPage:
@@ -187,7 +191,12 @@ class AppRoutes {
         break;
 
       case completeProductPage:
-        builder = (context) => const CompleteProductScreen();
+        builder = (_) {
+          return BlocProvider<CompleteProductBloc>(
+            create: (context) => CompleteProductBloc()..add(CompleteProductInitialEvent(context: context)),
+            child: const CompleteProductScreen(),
+          );
+        };
         break;
 
       case addAddressPage:
@@ -244,10 +253,6 @@ class AppRoutes {
             child: const DiamondInfoPopupScreen(),
           );
         };
-        break;
-
-      case productMenuBottomSheet:
-        builder = (context) => const ProductMenuBottomSheet();
         break;
 
       case auctionPage:
@@ -732,15 +737,31 @@ class AppRoutes {
   }
 
   static Route<dynamic> _buildRoute(RouteSettings settings, WidgetBuilder builder) {
+    // builder = (context) {
+    //   return PopScope(
+    //     canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
+    //     child: builder(context),
+    //   );
+    // };
     if (Platform.isIOS) {
       return CupertinoPageRoute(
-        builder: builder,
+        builder: (context) {
+          return PopScope(
+            canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
+            child: builder(context),
+          );
+        },
         settings: settings,
         fullscreenDialog: false,
       );
     } else {
       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return PopScope(
+            canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
+            child: builder(context),
+          );
+        },
         transitionsBuilder: commonTransitionBuilder,
         settings: settings,
       );
@@ -796,6 +817,7 @@ enum RoutesData {
   isWatchlistDeleted,
   email,
   isFromSignIn,
+  settingId,
 }
 
 enum ScreenIdentifier {
@@ -804,6 +826,7 @@ enum ScreenIdentifier {
   productForGemstones,
   productForDiamonds,
   productForRing,
+  productForCouture,
   productForLibraryGrey,
   productForLibraryPlatinum,
   productForLibraryStyle,

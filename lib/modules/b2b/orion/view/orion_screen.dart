@@ -149,7 +149,7 @@ class OrionScreen extends StatelessWidget {
                         onTapMenuButton: () {
                           Utils.showSmartModalBottomSheet(
                             context: context,
-                            builder: (context) => const ProductMenuBottomSheet(),
+                            builder: (context) => ProductMenuBottomSheet(productDetails: product),
                           );
                         },
                         isSelectedBackground: (index % 2 != 0),

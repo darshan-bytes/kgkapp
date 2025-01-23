@@ -16,7 +16,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   String tabTwoTitle = APPStrings.looseDiamond.tr;
 
   /// App bar title for the screen
-  String appbarTitle = APPStrings.diamonds.tr;
+  String appbarTitle = '';
 
   /// Identifier for the current screen type
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDIY;
@@ -111,13 +111,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<StoneListingState> emit) async {
-    emit(StoneListLoadingState());
+    emit(StoneListLoadingState(isFirst: true));
     getRouteData(context);
     _initializePagination(context);
     await _initializeSortOptions();
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await _generateProductList(context, emit);
     }
+    emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
   }
 
@@ -171,6 +172,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         break;
     }
 
+    emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
   }
 
@@ -230,9 +232,6 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore,
         limit: AppConst.pageLimit.toString(),
-        type: type,
-        sortKey: sortKey,
-        sortValue: sortValue,
         query: query,
       );
     } else {
@@ -422,9 +421,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> stoneChangeType(BuildContext context, StoneChangeTypeEvent event, Emitter<StoneListingState> emit) async {
     emit(StoneProductReloadState());
     isInitialToggle = event.isInitialToggle;
+    emit(StoneChangeTypeState(isInitialToggle));
+    emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
     await _generateProductList(event.context, emit);
-    emit(StoneChangeTypeState(isInitialToggle));
+    emit(const StoneProductLoadedState());
   }
 
   /// Change listing view type
@@ -456,6 +457,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     productList.clear();
     productList.clear();
     await _generateProductList(context, emit);
+    emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
   }
 
@@ -502,6 +504,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
           secondaryFilterData: [],
         );
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        }
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
         }
@@ -529,6 +534,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     productList.clear();
     filterData = event.filterData;
     await _generateProductList(event.context, emit);
+    emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
   }
 

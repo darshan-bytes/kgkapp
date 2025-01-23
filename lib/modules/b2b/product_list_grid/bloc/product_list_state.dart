@@ -22,6 +22,8 @@ final class ProductListLoadedState extends ProductListState {
 }
 
 final class ProductChangeListingTypeState extends ProductListState {
+  const ProductChangeListingTypeState();
+
   @override
   List<Object> get props => [];
 }

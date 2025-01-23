@@ -20,6 +20,12 @@ enum FetchScenario {
 
   /// Fetch a regular product list
   regularList,
+
+  /// Fetch recently viewed jewellery
+  recentlyViewedJewellery,
+
+  /// Couture collection
+  coutureCollection,
 }
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
@@ -184,7 +190,49 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         emit(ProductListFilterLoadedState());
       }
     }
+
+    if (screenIdentifier == ScreenIdentifier.productForCouture) {
+      productList.clear();
+      await fetchJewelleriesList(context, emit, false);
+      if (filterData.isEmpty) {
+        emit(ReloadProductState());
+        await _setupFilters(context);
+        emit(ProductListFilterLoadedState());
+      }
+    }
   }
+
+  // Future<void> fetchKgkCoutureData(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
+  //     {Map<String, String>? query}) async {
+  //   try {
+  //     final response = await AppRepository(context).homePageKgkCoutureCollections(
+  //         page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString(), kgkCollection: kgkCollection, isLoadMore: true);
+  //     response?.fold(
+  //       (l) {
+  //         //Utils.showMessage(l.message);
+  //       },
+  //       (r) {
+  //         productList = List.generate(
+  //           r.dataList?.length ?? 0,
+  //           (index) {
+  //             KgkCoutureDetails item = r.dataList![index];
+  //             return ProductDetailsModel(
+  //               productId: item.suid ?? '',
+  //               commodity: Commodity.jewellery,
+  //               imageUrl: item.multipleFinishedViewImage ?? '',
+  //               title: item.jewelleryTypeName ?? '',
+  //               subTitle: item.productDescription ?? '',
+  //               originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
+  //               offerPrice: item.discountPrice?.toString().setCurrency ?? '',
+  //             );
+  //           },
+  //         );
+  //       },
+  //     );
+  //   } catch (e) {
+  //     // Utils.showMessage(e.toString());
+  //   }
+  // }
 
   /// Determine the fetch scenario
   FetchScenario determineFetchScenario() {
@@ -192,6 +240,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
     if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
       return FetchScenario.recentlyViewed;
+    }
+    if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.coutureCollection) {
+      return FetchScenario.coutureCollection;
     }
     if (fetchScenario == FetchScenario.dealOfTheDay) return FetchScenario.dealOfTheDay;
     return FetchScenario.regularList;
@@ -247,15 +298,23 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       case FetchScenario.recentlyViewed:
         response = await fetchRecentlyViewed(context: context, isLoadMore: isLoadMore);
         break;
+      case FetchScenario.recentlyViewedJewellery:
+        response = await fetchRecentlyViewedJewellery(context: context, isLoadMore: isLoadMore);
+        break;
       case FetchScenario.dealOfTheDay:
         response = await fetchDealOfTheDay(context: context, isLoadMore: isLoadMore);
+        break;
+      case FetchScenario.coutureCollection:
+        // response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
         break;
     }
 
     /// Handle the response and update the state
-    response?.fold(
+    await response?.fold(
       (error) => Utils.showMessage(error.message),
-      (success) => handleSuccessResponse(success, emit),
+      (success) async {
+        await handleSuccessResponse(success, emit);
+      },
     );
 
     /// Update the state
@@ -263,13 +322,17 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// Handle the success response
-  void handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) {
+  Future<void> handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) async {
     totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
     final localList = success.data;
 
     /// Show the total number of records in the UI side
     totalFilteredRecords = success.filteredRecords;
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
+    List<String> imageUrlList = productList.where((e) => e.imageUrl.isNullOrEmpty).map((e) => e.imageUrl ?? '').toList();
+    printWrapped("precacheImageList-start-time: ${DateTime.now()}");
+    await Utils.precacheImageList(imageUrlList);
+    printWrapped("precacheImageList-end-time: ${DateTime.now()}");
     if (paginationScrollController.isPageLoaded.isCompleted) {
       paginationScrollController.isPageLoaded = Completer<bool>();
     }
@@ -347,6 +410,16 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// Fetch recently viewed products
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewed(
+      {required BuildContext context, bool isLoadMore = false}) async {
+    return AppRepository(context).getRecentlyViewedProductList(
+      limit: AppConst.pageLimit.toString(),
+      page: paginationScrollController.currentPage.toString(),
+      isLoadMore: isLoadMore,
+    );
+  }
+
+  /// Fetch recently viewed jewellery products
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchRecentlyViewedJewellery(
       {required BuildContext context, bool isLoadMore = false}) async {
     return AppRepository(context).getRecentlyViewedProductList(
       limit: AppConst.pageLimit.toString(),
@@ -440,7 +513,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
           secondaryFilterData: [],
         );
-        if (filter.filterType == FilterType.range) {
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        }
+        if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           if (filterOption.data.isNotEmpty) {
             filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
           } else {
@@ -465,8 +541,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       case FetchScenario.dealOfTheDay:
         appbarTitle = APPStrings.dealOfTheDay.tr;
         break;
-      case FetchScenario.recentlyViewed:
+      case FetchScenario.recentlyViewed || FetchScenario.recentlyViewedJewellery:
         appbarTitle = APPStrings.recentlyViewed.tr;
+        break;
+      case FetchScenario.coutureCollection:
+        appbarTitle = APPStrings.jewellery.tr;
         break;
     }
   }

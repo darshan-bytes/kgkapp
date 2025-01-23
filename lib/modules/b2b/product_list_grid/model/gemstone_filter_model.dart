@@ -8,6 +8,7 @@ class FilterOptionModel {
     required this.inputType,
     required this.data,
     required this.id,
+    this.fromCommon = false,
   });
 
   int? id;
@@ -16,24 +17,7 @@ class FilterOptionModel {
   dynamic defaultValue;
   String? inputType;
   List<dynamic> data;
-
-  FilterOptionModel copyWith({
-    int? id,
-    String? name,
-    String? slug,
-    dynamic defaultValue,
-    String? inputType,
-    dynamic data,
-  }) {
-    return FilterOptionModel(
-      name: name ?? this.name,
-      slug: slug ?? this.slug,
-      defaultValue: defaultValue ?? this.defaultValue,
-      inputType: inputType ?? this.inputType,
-      data: data ?? this.data,
-      id: id ?? this.id,
-    );
-  }
+  bool fromCommon;
 
   factory FilterOptionModel.fromJson(Map<String, dynamic> json) {
     return FilterOptionModel(
@@ -43,6 +27,7 @@ class FilterOptionModel {
       defaultValue: json["default_value"],
       inputType: json["input_type"],
       data: json["data"] ?? [],
+      fromCommon: json["fromCommon"] ?? false,
     );
   }
 
@@ -53,11 +38,12 @@ class FilterOptionModel {
         "input_type": inputType,
         "data": data.map((x) => x).toList(),
         "id": id,
+        "fromCommon": fromCommon,
       };
 
   @override
   String toString() {
-    return "$name, $slug, $defaultValue, $inputType, $data, $id, ";
+    return "$name, $slug, $defaultValue, $inputType, $data, $id, $fromCommon";
   }
 }
 

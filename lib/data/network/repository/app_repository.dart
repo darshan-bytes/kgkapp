@@ -13,7 +13,7 @@ class AppRepository extends ApiService {
   /// Fetches the home data from the Strapi CMS
   Future<Either<ErrorResponse, List<Home>>> fetchStrapiHomeData() async {
     try {
-      final url = await buildUrl(endpoint: StrapiEndPoints.homePage, attribute: Attributes.homePage);
+      final url = await buildUrl(endpoint: StrapiEndPoints.mobileHomePage, attribute: Attributes.homePage);
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -159,7 +159,7 @@ class AppRepository extends ApiService {
       ApiKey.limit: limit,
       if (sortKey != null) ApiKey.sortKey: sortKey,
       if (sortValue != null) ApiKey.sortValue: sortValue,
-      if(type != null) ApiKey.type: type
+      if (type != null) ApiKey.type: type
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -987,11 +987,11 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, DiamondListingModel>?> diyFilters({
     required String limit,
     required String page,
-    required String sortKey,
-    required String sortValue,
+    String? sortKey,
+    String? sortValue,
     bool isLoadMore = false,
     Map<String, String>? query,
-    required String type,
+    String? type,
   }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
@@ -999,9 +999,9 @@ class AppRepository extends ApiService {
     Map<String, String> queryParams = {
       ApiKey.limit: limit,
       ApiKey.page: page,
-      ApiKey.sortKey: sortKey,
-      ApiKey.sortValue: sortValue,
-      ApiKey.type: type
+      if (sortKey.isNotNullNorEmpty) ApiKey.sortKey: sortKey!,
+      if (sortValue.isNotNullNorEmpty) ApiKey.sortValue: sortValue!,
+      if (type.isNotNullNorEmpty) ApiKey.type: type!,
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -1014,9 +1014,9 @@ class AppRepository extends ApiService {
     return response?.fold((error) => Left(error), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, DiyDiamondDataModel>?> diyDetails({required String id}) async {
+  Future<Either<ErrorResponse, DiamondDataModel>?> diyDetails({required String id}) async {
     context.setAppLoading(true);
-    var response = await getMethod<DiyDiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
+    var response = await getMethod<DiamondDataModel>(ApiClient.diyDetails(id), withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
@@ -1042,7 +1042,10 @@ class AppRepository extends ApiService {
     bool isLoadMore = false,
     Map<String, String>? query,
   }) async {
-    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue};
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+    };
     if (query != null) {
       queryParams.addAll(query);
     }
@@ -1099,6 +1102,15 @@ class AppRepository extends ApiService {
   /// For DigitalCatalogue Filter Option
   Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchPddListingFilterOptionList() async {
     var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.pddFilterOptions);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DiyFinalDetailsModel>?> getDiySettingDetails(String settingId, {Map<String, dynamic>? query}) async {
+    context.setAppLoading(true);
+
+    var response = await getMethod<DiyFinalDetailsModel>(ApiClient.diyStyleDetails(settingId), query: query, withCurrencyHeader: true);
+
+    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 }

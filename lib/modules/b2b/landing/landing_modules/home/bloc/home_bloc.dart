@@ -139,6 +139,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   /// Fetch Bag Data Because Add Logic For Add To Bag
   Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+    if (!context.mounted) context = getNavigatorKeyContext;
     try {
       String id = StorageManager().getBagId() ?? '';
       if (id.isNullOrEmpty) return;
@@ -147,6 +148,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       response?.fold((l) {
         //Utils.showMessage(l.message);
       }, (r) async {
+        if (!context.mounted) context = getNavigatorKeyContext;
         String? bagId = StorageManager().getBagId();
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
           BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
@@ -836,7 +838,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           if (imageUrl != null) {
             dataList.add(AuctionListModel(
                 id: element['id'].toString(),
-                imageUrl: "${AppConst.strapiImgBaseUrl}$imageUrl",
+                imageUrl: "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl",
                 redirectTo: redirectTo,
                 redirectionType: redirectionType,
                 name: name));
@@ -847,6 +849,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     switch (slug) {
+      case HomeSlug.mobileProductCategories:
+        return HomeWidgets.buildJewelleryList(homeStrapiList[index].info?.title ?? '', homeBloc, style);
+
       case HomeSlug.mobileHomeBanner:
         return HomeWidgets.buildEngagementImageSlider(
           homeBloc,
@@ -869,9 +874,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           homeBloc,
           style,
           context: context,
-          url: imageUrl != null ? "${AppConst.strapiImgBaseUrl}$imageUrl" : '',
+          url: imageUrl != null ? "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl" : '',
           redirectTo: redirectTo,
           redirectionType: redirectionType,
+          title: homeStrapiList[index].data['title'].toString(),
         );
 
       case HomeSlug.mobileGetInspired:
@@ -883,10 +889,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.mobileShopByStyle:
+        List<AuctionListModel> dataList = parseDataList(homeStrapiList[index].data);
+        if (dataList.isEmpty) {
+          return Container();
+        }
         return HomeWidgets.buildShopByStyleSection(
           homeBloc,
           style,
-          parseDataList(homeStrapiList[index].data),
+          dataList,
         );
 
       case HomeSlug.mobileDIYGuidance:
@@ -901,10 +911,66 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
 
       case HomeSlug.kgkDiamondShape:
-        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+        return Container();
+      // return HomeWidgets.buildShopDiamondSection(homeBloc, style);
 
       case HomeSlug.kgkGemstone:
-        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, imgList: [], width: 0, title: '');
+        return Container();
+
+      case HomeSlug.mobileShopDiamonds:
+        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+
+      case HomeSlug.mobileShopGemstone:
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: APPStrings.shopGemstones.tr);
+
+      case HomeSlug.mobileKGKCouture:
+        return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, context: context);
+
+      case HomeSlug.mobileRecentlyViewed:
+        if (homeStrapiList[index].category == 'jewellery' && homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty) {
+          return HomeWidgets.buildRecentlyViewedSection(
+              APPStrings.recentlyViewedJewellery.tr, homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
+              context: context);
+        } else if (homeStrapiList[index].category == 'diamond' && homeBloc.recentlyViewDiamondList.isNotNullNorEmpty) {
+          return HomeWidgets.buildRecentlyViewedSection(
+              APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
+              context: context, isCrtAndGramVisible: false);
+        } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty) {
+          return HomeWidgets.buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style,
+              homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
+              context: context, isCrtAndGramVisible: false);
+        }
+
+        return SizedBox.shrink();
+
+      case HomeSlug.mobileDealsOfDay:
+        if (homeStrapiList[index].category == 'diamond' && homeBloc.dealOfTheDayDiamondList.isNotNullNorEmpty) {
+          return HomeWidgets.buildDealOfTheDaySection(
+              homeBloc: homeBloc,
+              style: style,
+              screenIdentifier: ScreenIdentifier.productForDiamonds,
+              arrProductList: homeBloc.dealOfTheDayDiamondList,
+              context: context,
+              isCrtAndGramVisible: false);
+        } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.dealOfTheDayGemstoneList.isNotNullNorEmpty) {
+          return HomeWidgets.buildDealOfTheDaySection(
+            homeBloc: homeBloc,
+            style: style,
+            screenIdentifier: ScreenIdentifier.productForGemstones,
+            arrProductList: homeBloc.dealOfTheDayGemstoneList,
+            context: context,
+            isCrtAndGramVisible: false,
+          );
+        } else if (homeStrapiList[index].category == 'jewellery' && homeBloc.dealOfTheDayJewelleryList.isNotNullNorEmpty) {
+          return HomeWidgets.buildDealOfTheDaySection(
+            homeBloc: homeBloc,
+            style: style,
+            screenIdentifier: ScreenIdentifier.productForRing,
+            arrProductList: homeBloc.dealOfTheDayJewelleryList,
+            context: context,
+          );
+        }
+        return Container();
 
       case HomeSlug.unknown:
         //TODO: For KGK Couture _buildKGKCoutureTabBarSection(homeBloc, style, context: context)
@@ -966,8 +1032,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 productId: item.suid ?? '',
                 commodity: Commodity.jewellery,
                 imageUrl: item.multipleFinishedViewImage ?? '',
-                name: item.productDescription ?? '',
-                originalPrice: item.finalPrice?.toString().setCurrency ?? '',
+                title: item.jewelleryTypeName ?? '',
+                subTitle: item.productDescription ?? '',
+                originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
                 offerPrice: item.discountPrice?.toString().setCurrency ?? '',
               );
             },
@@ -1157,8 +1224,14 @@ enum HomeSlug {
   mobileGetInspired('mobile-get-inspired'),
   mobileShopByStyle('mobile-shop-by-style'),
   mobileDIYGuidance('mobile-diy-guidance'),
+  mobileShopDiamonds('mobile-shop-diamonds'),
+  mobileShopGemstone('mobile-shop-gemstone'),
   kgkDiamondShape('kgk-diamond-shape'),
   kgkGemstone('kgk-gemstone'),
+  mobileProductCategories('mobile-product-categories'),
+  mobileKGKCouture('mobile-kgk-couture'),
+  mobileDealsOfDay('mobile-deals-of-day'),
+  mobileRecentlyViewed('mobile-recently-viewed'),
   unknown('unknown');
 
   const HomeSlug(this.value);
