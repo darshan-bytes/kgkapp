@@ -5,28 +5,43 @@ part 'exhibition_details_event.dart';
 part 'exhibition_details_state.dart';
 
 class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetailsState> {
-  String appbarTitle = '';
-  int currentIndex = 0;
+  /// Determines if the view is in grid or list mode
   bool isGrid = true;
 
+  /// App bar title for the screen
+  String appbarTitle = '';
+
+  String exhibitionId = '';
+
+  /// Identify Current user type
+  UserType userType = UserType.b2cUser;
+
+  /// For keeping track of the current tab and stop same tab on click event
+  int currentTab = -1;
+
+  /// TabController for managing tabs in the UI.
   late TabController tabController;
 
+  /// List of tabs
   final List<Widget> tabs = <Widget>[
     Tab(text: APPStrings.products.tr),
     Tab(text: APPStrings.orders.tr),
   ];
 
-  List<B2BCustomListingDataModel> exhibitionOrdersList = [];
+  /// The total number of filtered records
+  int? totalFilteredRecords;
 
+  /// Controller for managing pagination
+  int? totalNumberOfPages;
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
+  /// List of exhibition products
   List<ProductDetailsModel> productList = [];
 
-  SmartPaginationScrollController orderScrollController = SmartPaginationScrollController();
-  SmartPaginationScrollController productPaginationScrollController = SmartPaginationScrollController();
+  /// List of exhibition orders
+  List<B2BCustomListingDataModel> exhibitionOrdersList = [];
 
-  final GlobalKey tabBarKey = GlobalKey();
-
-  ValueNotifier<bool> canScrollToTop = ValueNotifier<bool>(false);
-
+  /// Exhibition details
   ExhibitionListDataModel exhibitionDetails = ExhibitionListDataModel();
   ExhibitionProductDetailsDataModel exhibitionProductDetailsData = ExhibitionProductDetailsDataModel();
 
@@ -37,175 +52,112 @@ class ExhibitionDetailsBloc extends Bloc<ExhibitionDetailsEvent, ExhibitionDetai
     on<ExhibitionChangeListingTypeEvent>(_onExhibitionChangeListingTypeEvent);
   }
 
-  Future<void> _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) async {
-    emit(const ExhibitionDetailsReloadState());
-    isGrid = true;
-    Map<RoutesData, dynamic>? data = event.context.routesData;
-    String exhibitionId = data?[RoutesData.exhibitionId] ?? '';
-    if (exhibitionId.isNullOrEmpty) return;
-    _initScrollControllers();
-    await _getExhibitionDetails(event.context, exhibitionId);
-    appbarTitle = exhibitionDetails.name ?? '';
-    await _getExhibitionProductDetails(event.context, exhibitionId);
-
-    productList.addAll(_generateProductList());
-    exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
-    emit(const ExhibitionDetailsLoadedState());
-  }
-
-  void _onChangeTabEvent(ExhibitionChangeTabsEvent event, Emitter<ExhibitionDetailsState> emit) {
-    emit(const ExhibitionDetailsReloadState());
-    scrollController.removeListener(scrollToTopListener);
-    currentIndex = tabController.index;
-    scrollController.addListener(scrollToTopListener);
-    emit(const ExhibitionChangeTabsState());
-  }
-
-  void _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) {
-    emit(const ExhibitionDetailsReloadState());
-    scrollController.removeListener(scrollToTopListener);
-    isGrid = event.isGrid;
-    productPaginationScrollController.onViewChange(!isGrid);
-    scrollController.addListener(scrollToTopListener);
-    emit(const ExhibitionChangeListingTypeState());
-  }
-
-  Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
-    emit(const ExhibitionListingLoadingMoreState());
-    await Future.delayed(const Duration(seconds: 2));
-    _loadMoreData(event);
-    emit(ExhibitionListingLoadedMoreState(event.currentPage + 1));
-  }
-
-  void _loadMoreData(ExhibitionListingLoadMoreEvent event) {
-    if (currentIndex == 0) {
-      productList.addAll(_generateProductList());
-      productPaginationScrollController.isPageLoaded.complete(event.currentPage == 3);
-    } else {
-      exhibitionOrdersList.addAll(_generateExhibitionOrdersList());
-      orderScrollController.isPageLoaded.complete(event.currentPage == 3);
-    }
-  }
-
-  void _initScrollControllers() {
-    if (productPaginationScrollController.isInitialised) {
-      productPaginationScrollController.dispose();
-      productPaginationScrollController = SmartPaginationScrollController();
-    }
-    productPaginationScrollController.init(
-      isSecondaryView: true,
-      loadAction: (int currentPage) async {
-        add(ExhibitionListingLoadMoreEvent(currentPage));
-      },
-    );
-
-    if (isGrid) {
-      productPaginationScrollController.controller.addListener(scrollToTopListener);
-    }
-
-    if (orderScrollController.isInitialised) {
-      orderScrollController.dispose();
-      orderScrollController = SmartPaginationScrollController();
-    }
-    orderScrollController.init(
-      loadAction: (int currentPage) async {
-        add(ExhibitionListingLoadMoreEvent(currentPage));
-      },
-    );
-  }
-
   @override
   Future<void> close() {
-    scrollController.removeListener(scrollToTopListener);
-    productPaginationScrollController.dispose();
-    orderScrollController.dispose();
+    paginationScrollController.dispose();
     return super.close();
   }
 
+  /// Initializes the OrdersBloc by fetching order data
+  Future<void> _onInitialEvent(ExhibitionDetailsInitialEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    await _initializeBloc(context: event.context, emit: emit);
+  }
+
+  /// Handles the ChangeOrderTabsEvent for tab switching
+  Future<void> _onChangeTabEvent(ExhibitionChangeTabsEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    await _handleTabSelection(context: event.context, index: event.index, emit: emit);
+  }
+
+  /// Handles the load more event for order listings
+  Future<void> _onExhibitionListingLoadMoreEvent(ExhibitionListingLoadMoreEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    // await _handleLoadMore(event.context, event.currentPage, emit);
+  }
+
+  /// Handles the change listing type event
+  Future<void> _onExhibitionChangeListingTypeEvent(ExhibitionChangeListingTypeEvent event, Emitter<ExhibitionDetailsState> emit) async {
+    _toggleViewType(isGridValue: event.isGrid, emit: emit);
+  }
+
+  Future<void> _initializeBloc({required Emitter<ExhibitionDetailsState> emit, required BuildContext context}) async {
+    emit(const ExhibitionDetailsReloadState());
+
+    /// Set the current user type.
+    userType = BlocProvider.of<AppBloc>(context).userType;
+
+    /// Extract exhibitionId number from route data.
+    _getRouteData(context);
+
+    /// Initialize pagination.
+    _initializePagination(context);
+
+    /// Fetch exhibition details
+    await _getExhibitionDetails(context, exhibitionId);
+
+    /// Fetch exhibition product details
+    await _getExhibitionProductDetails(context, exhibitionId);
+
+    /// Fetch exhibition product listing
+    if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
+      /// Fetch exhibition product listing
+    }
+    emit(const ExhibitionDetailsLoadedState());
+  }
+
+  /// Extract exhibitionId number from route data.
+  void _getRouteData(BuildContext context) {
+    String exhibitionIdValue = context.routesData?[RoutesData.exhibitionId] ?? '';
+    if (exhibitionIdValue.isNotNullNorEmpty) {
+      exhibitionId = exhibitionIdValue;
+    }
+  }
+
+  /// Initializes pagination for loading more order data
+  void _initializePagination(BuildContext context) {
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(ExhibitionListingLoadMoreEvent(currentPage: currentPage, context: context));
+      },
+    );
+  }
+
+  /// Fetches the exhibition details data from the API
   Future<void> _getExhibitionDetails(BuildContext context, String id) async {
     Either<ErrorResponse, ExhibitionListDataModel>? response = await AppRepository(context).fetchExhibitionDetails(id: id);
     response?.fold(
-      (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
-      },
+      (error) => error.message.isNotNullNorEmpty ? Utils.showMessage(error.message) : null,
       (data) {
+        /// Set the exhibition details.
         exhibitionDetails = data;
+        appbarTitle = exhibitionDetails.name ?? '';
       },
     );
   }
 
+  /// Fetches the exhibition product details data from the API
   Future<void> _getExhibitionProductDetails(BuildContext context, String id) async {
     Either<ErrorResponse, ExhibitionProductDetailsDataModel>? response = await AppRepository(context).fetchExhibitionProductDetails(id: id);
     response?.fold(
-      (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
-      },
-      (data) {
-        exhibitionProductDetailsData = data;
-      },
+      (error) => error.message.isNotNullNorEmpty ? Utils.showMessage(error.message) : null,
+      (data) => exhibitionProductDetailsData = data,
     );
   }
 
-  static List<ProductDetailsModel> _generateProductList() {
-    return List.generate(10, (index) {
-      return ProductDetailsModel(
-        imageUrl: index % 2 == 0 ? "https://i.ibb.co/zZ6y0w4/image-7-4.png" : "https://i.ibb.co/xStbncs/image-7-5.png",
-        name: "Diamond Vine Ring in 18k Rose Gold",
-        originalPrice: '\$5,000.00',
-      );
-    });
+  /// Handles tab selection and reloads order data accordingly
+  Future<void> _handleTabSelection(
+      {required BuildContext context, required int index, required Emitter<ExhibitionDetailsState> emit}) async {
+    if (currentTab == index) return;
+    currentTab = index;
+    emit(const ExhibitionDetailsReloadState());
+
+    /// Reload order data
+    // await _reloadOrderData(context, emit);
+    emit(const ExhibitionChangeTabsState());
   }
 
-  static List<B2BCustomListingDataModel> _generateExhibitionOrdersList() {
-    return List.generate(
-      10,
-      (index) => B2BCustomListingDataModel(
-          strApprovedBy: "John Samanta",
-          strApprovedByImageUrl: "https://i.ibb.co/BLyLVHS/Frame-3978.png",
-          strItems: '5',
-          strTotalAmount: '\$35,700',
-          strMarket: "New York, USA",
-          strMarketFlagImageUrl: AppImages.icFlagUSA,
-          strOrderName: "Dianne Russell",
-          strOrderId: "ORD00${index + 1}",
-          id: "${index + 1}"),
-    );
-  }
-
-  ScrollController get scrollController {
-    if (currentIndex == 0) {
-      if (isGrid) {
-        return productPaginationScrollController.scrollController;
-      } else {
-        return productPaginationScrollController.secondaryScrollController;
-      }
-    } else {
-      return orderScrollController.scrollController;
-    }
-  }
-
-  void scrollToKey() {
-    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox != null) {
-      Scrollable.ensureVisible(
-        tabBarKey.currentContext!,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void scrollToTopListener() {
-    RenderBox? renderBox = tabBarKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox != null) {
-      Offset position = renderBox.localToGlobal(Offset.zero);
-      canScrollToTop.value = position.dy < 50.h;
-    } else {
-      canScrollToTop.value = false;
-    }
+  /// Toggle between grid and list view
+  void _toggleViewType({bool isGridValue = false, required Emitter<ExhibitionDetailsState> emit}) {
+    emit(const ExhibitionDetailsReloadState());
+    isGrid = isGridValue;
+    emit(const ExhibitionChangeListingTypeState());
   }
 }

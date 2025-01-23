@@ -17,7 +17,11 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           _buildProductDisplay(bloc, style),
           SizedBox(height: 24.h),
           SmartText(
-            APPStrings.xProducts.tr.interpolate(["100"]),
+            APPStrings.showingListLengthX.tr.interpolate([
+              bloc.paginationScrollController.currentPage,
+              bloc.totalNumberOfPages,
+              bloc.totalFilteredRecords,
+            ]),
             style: style.listStatusStyle,
           ),
           SizedBox(height: 24.h),
@@ -147,7 +151,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
 
   Widget _buildListView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state) {
     return ListView.separated(
-      key: bloc.productPaginationScrollController.listKey,
+      key: bloc.paginationScrollController.listKey,
       shrinkWrap: true,
       itemCount: bloc.productList.length,
       physics: const NeverScrollableScrollPhysics(),
