@@ -92,7 +92,12 @@ class AppRoutes {
         break;
 
       case signInPage:
-        builder = (context) => const SignInScreen();
+        builder = (context) {
+          return BlocProvider<SignInBloc>(
+            create: (context) => SignInBloc()..add(SignInInitialEvent(context)),
+            child: const SignInScreen(),
+          );
+        };
         break;
 
       case signUpPage:
@@ -737,12 +742,6 @@ class AppRoutes {
   }
 
   static Route<dynamic> _buildRoute(RouteSettings settings, WidgetBuilder builder) {
-    // builder = (context) {
-    //   return PopScope(
-    //     canPop: !(BlocProvider.of<AppBloc>(context).isLoading),
-    //     child: builder(context),
-    //   );
-    // };
     if (Platform.isIOS) {
       return CupertinoPageRoute(
         builder: (context) {
@@ -818,6 +817,7 @@ enum RoutesData {
   email,
   isFromSignIn,
   settingId,
+  isFromLoginRequired,
 }
 
 enum ScreenIdentifier {

@@ -789,5 +789,6 @@
   "mob_otp_length": "OTP must be 6 characters long",
   "mob_menu": "Menu",
   "mob_bag": "Bag",
-  "mob_you": "You"
+  "mob_you": "You",
+  "mob_login_required": "Login Required"
 }

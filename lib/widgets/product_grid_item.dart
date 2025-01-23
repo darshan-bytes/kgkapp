@@ -236,7 +236,9 @@ class ProductGridItem extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            if (productDetails.kgkCollectionName.isNotNullNorEmpty || isFromWatchlist)
+
+            /// Below Lines are commented as they are not required in the current implementation as discussed in the client call
+            /*if (productDetails.kgkCollectionName.isNotNullNorEmpty || isFromWatchlist)
               SmartText(
                 "${productDetails.kgkCollectionName ?? ''}\n",
                 style: style.priceTextStyle,
@@ -250,7 +252,7 @@ class ProductGridItem extends StatelessWidget {
                 style: style.productNameStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-              ),
+              ),*/
             SizedBox(height: 8.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

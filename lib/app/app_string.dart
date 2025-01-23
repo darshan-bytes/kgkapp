@@ -984,8 +984,7 @@ class APPStrings {
   static const String resendCode = 'mob_resend_code';
   static const String verify = 'mob_verify';
   static const String yourAccountIsNotVerified = 'mob_your_account_is_not_verified';
-
   static const String otpRequired = 'mob_otp_required';
-
   static const String otpLength = 'mob_otp_length';
+  static const String loginRequired = 'mob_login_required';
 }

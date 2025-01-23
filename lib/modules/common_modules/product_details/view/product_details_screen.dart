@@ -24,7 +24,8 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
       body: getScaffoldBody(bloc, style),
       floatingActionButton: bloc.isErrorInLoadingData ? null : _buildCompareButton(bloc, style),
-      bottomNavigationBar: bloc.isErrorInLoadingData ? null : _buildBottomNavigationBar(bloc, style, context),
+      bottomNavigationBar:
+          (bloc.isErrorInLoadingData || bloc.productDetails == null) ? null : _buildBottomNavigationBar(bloc, style, context),
     );
   }
 
@@ -437,11 +438,19 @@ class ProductDetailsScreen extends StatelessWidget {
                   ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
                   averageRating: bloc.productDetails?.rating ?? 0,
                   reviewCount: bloc.productDetails?.reviewCount ?? 0,
-                  onTap: () {
+                  onTap: () async {
                     /// First check if the user is logged in or not
                     if (StorageManager().getIsSkipLogin()) {
-                      Utils.showMessage(APPStrings.loginToUseThisFeature.tr);
-                      return;
+                      bool isApproved = false;
+                      await Utils.showLoginRequiredDialog(
+                        context,
+                        onApproved: () {
+                          isApproved = true;
+                        },
+                      );
+                      if (!isApproved) {
+                        return;
+                      }
                     }
                     context.pushNamed(AppRoutes.writeReviewPage, arguments: {
                       RoutesData.productId: bloc.productDetails?.productId,
@@ -608,7 +617,7 @@ class ProductDetailsScreen extends StatelessWidget {
             suggestedProductList: bloc.suggestedProductList,
             onProductTap: (product) {
               context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                RoutesData.productId: product.productId,
+                RoutesData.productId: product.suid,
                 RoutesData.isPageFor: bloc.screenIdentifier,
               });
             },
@@ -641,7 +650,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 suggestedProductList: bloc.recentlyViewedProductList,
                 onProductTap: (product) {
                   context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.productId: product.productId,
+                    RoutesData.productId: product.suid,
                     RoutesData.isPageFor: bloc.screenIdentifier,
                   });
                 },
