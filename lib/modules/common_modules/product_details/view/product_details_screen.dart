@@ -239,7 +239,12 @@ class ProductDetailsScreen extends StatelessWidget {
                             SmartCarouselSlider(
                               imgList: bloc.imgList,
                               controller: bloc.controller,
-                              on360Tap: bloc.isCustomisation ? () {} : null,
+                              on360Tap: bloc.the3DFile.isNotNullNorEmpty
+                                  ? () {
+                                      bloc.onTap360Image(context);
+                                    }
+                                  : null,
+                              videoUrl: bloc.videoUrl,
                               onTapFullImage: (int index) {
                                 bloc.onTapFullImage(context: context, currentIndex: index);
                               },

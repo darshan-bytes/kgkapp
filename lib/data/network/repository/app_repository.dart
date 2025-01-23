@@ -263,9 +263,17 @@ class AppRepository extends ApiService {
   //For Getting Diamond Details by ID
   Future<Either<ErrorResponse, DiamondDataModel>?> getDiamondDetailById(String id) async {
     context.setAppLoading(true);
+    final Map<String, dynamic> query = {ApiKey.view: true};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     var response = await getMethod<DiamondDataModel>(
       ApiClient.diamondDetails(id),
-      query: {ApiKey.view: true},
+      query: query,
       withCurrencyHeader: true,
     );
     context.setAppLoading(false);
@@ -275,9 +283,17 @@ class AppRepository extends ApiService {
   //For Getting Gemstone Details by ID
   Future<Either<ErrorResponse, GemstoneDatum>?> getGemstoneDetailById(String id) async {
     context.setAppLoading(true);
+    final Map<String, dynamic> query = {ApiKey.view: true};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     var response = await getMethod<GemstoneDatum>(
       ApiClient.gemstoneDetails(id),
-      query: {ApiKey.view: true},
+      query: query,
       withCurrencyHeader: true,
     );
     context.setAppLoading(false);
@@ -288,10 +304,17 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
     context.setAppLoading(true);
+    final Map<String, dynamic> query = {ApiKey.page: page, ApiKey.limit: limit};
 
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     var response = await getMethod<DiamondListingModel>(
       ApiClient.diamondYouMayLike(id),
-      query: {ApiKey.page: page, ApiKey.limit: limit},
+      query: query,
       withCurrencyHeader: true,
     );
     context.setAppLoading(false);
@@ -361,9 +384,17 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneYouMayLike(String id,
       {required String limit, required String page, bool isLoadMore = false}) async {
     if (isLoadMore) context.setAppLoading(true);
+    final Map<String, dynamic> query = {ApiKey.page: page, ApiKey.limit: limit};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     var response = await getMethod<GemstoneListingModel>(
       ApiClient.gemstoneYouMayAlsoLike(id),
-      query: {ApiKey.page: page, ApiKey.limit: limit},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadMore) context.setAppLoading(false);
@@ -376,9 +407,17 @@ class AppRepository extends ApiService {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
+    final Map<String, dynamic> query = {ApiKey.page: page, ApiKey.limit: limit};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     var response = await getMethod<JewelleryListingModel>(
       ApiClient.jewelleryYouMayAlsoLike(id),
-      query: {ApiKey.page: page, ApiKey.limit: limit},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadMore) {
@@ -509,12 +548,20 @@ class AppRepository extends ApiService {
 
   //For Getting Product Details by ID
   Future<Either<ErrorResponse, JewelleryDataModel>?> getProductDetailById(String id, {bool isLoadingShow = true}) async {
+    final Map<String, dynamic> query = {ApiKey.view: true};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     if (isLoadingShow) {
       context.setAppLoading(true);
     }
     var response = await getMethod<JewelleryDataModel>(
       ApiClient.productDetails(id),
-      query: {ApiKey.view: true},
+      query: query,
       withCurrencyHeader: true,
     );
     if (isLoadingShow) {
