@@ -2,6 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class ExhibitionPlacesTabView extends StatelessWidget {
   final ExhibitionListingBloc exhibitionListingBloc;
+
   const ExhibitionPlacesTabView({super.key, required this.exhibitionListingBloc});
 
   @override
@@ -25,11 +26,11 @@ class ExhibitionPlacesTabView extends StatelessWidget {
           }
           if (state is ExhibitionListingLoadedState) {
             return SmartSingleChildScrollView(
-              key: exhibitionListingBloc.paginationScrollController.listKey,
+              key: exhibitionListingBloc.paginationScrollController.gridKey,
               onRefresh: () async {
                 exhibitionListingBloc.add(ExhibitionListingPullToRefreshEvent(context: context));
               },
-              controller: exhibitionListingBloc.paginationScrollController.scrollController,
+              controller: exhibitionListingBloc.paginationScrollController.controller,
               child: Column(
                 children: [
                   SizedBox(height: 24.h),

@@ -94,7 +94,7 @@ class CollectionScreen extends StatelessWidget {
                               bloc.navigateToJewelleryListingScreen(context: context, collectionName: collectionDataModel.name ?? ""),
                           path: collectionDataModel.image ?? '',
                           width: context.width,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                           margin: EdgeInsets.only(bottom: 16.h),
                         ),
                         if (state is CollectionListLoadingMoreState && index == bloc.collectionMasterList.length - 1)

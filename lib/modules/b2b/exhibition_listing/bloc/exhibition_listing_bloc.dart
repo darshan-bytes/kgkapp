@@ -5,16 +5,22 @@ part 'exhibition_listing_event.dart';
 part 'exhibition_listing_state.dart';
 
 class ExhibitionListingBloc extends Bloc<ExhibitionListingEvent, ExhibitionListingState> {
+  /// Search controller
   final TextEditingController searchController = TextEditingController();
 
+  /// List of exhibition listing
   List<ExhibitionListingModel> exhibitionCatalogueList = [];
 
+  /// List of filter data
   List<FilterData> filterData = [];
 
+  /// paginationScrollController is used to control the pagination
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
 
+  /// Total number of pages for Pagination and filter data
   int? totalNumberOfPages;
 
+  /// List of exhibition listing
   List<ExhibitionListingModel> exhibitionNameListing = [];
 
   /// Focus node is used to control the focus
