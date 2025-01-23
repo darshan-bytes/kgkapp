@@ -18,8 +18,8 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           SizedBox(height: 24.h),
           SmartText(
             APPStrings.showingListLengthX.tr.interpolate([
-              bloc.paginationScrollController.currentPage,
-              bloc.totalNumberOfPages,
+              1,
+              bloc.productList.length,
               bloc.totalFilteredRecords,
             ]),
             style: style.listStatusStyle,

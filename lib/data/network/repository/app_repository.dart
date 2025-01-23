@@ -176,10 +176,10 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, GemstoneListingModel>?> fetchGemstoneList({
     required String limit,
     required String page,
-    required String sortKey,
-    required String sortValue,
+    String? sortKey,
+    String? sortValue,
     bool isLoadMore = false,
-    required String type,
+    String? type,
     Map<String, String>? query,
   }) async {
     if (isLoadMore) {
@@ -188,9 +188,9 @@ class AppRepository extends ApiService {
     Map<String, String> queryParams = {
       ApiKey.limit: limit,
       ApiKey.page: page,
-      ApiKey.sortKey: sortKey,
-      ApiKey.sortValue: sortValue,
-      ApiKey.subTypeCode: type
+      if (sortKey != null) ApiKey.sortKey: sortKey,
+      if (sortValue != null) ApiKey.sortValue: sortValue,
+      if (type != null) ApiKey.type: type
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -207,16 +207,21 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, JewelleryListingModel>?> fetchJewelleryList(
       {required String limit,
       required String page,
-      required String sortKey,
-      required String sortValue,
+      String? sortKey,
+      String? sortValue,
       bool isLoadMore = false,
-      required String type,
+      String? type,
       Map<String, String>? query}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
 
-    Map<String, String> queryParams = {ApiKey.limit: limit, ApiKey.page: page, ApiKey.sortKey: sortKey, ApiKey.sortValue: sortValue};
+    Map<String, String> queryParams = {
+      ApiKey.limit: limit,
+      ApiKey.page: page,
+      if (sortKey != null) ApiKey.sortKey: sortKey,
+      if (sortValue != null) ApiKey.sortValue: sortValue,
+    };
     if (query != null) {
       queryParams.addAll(query);
     }
