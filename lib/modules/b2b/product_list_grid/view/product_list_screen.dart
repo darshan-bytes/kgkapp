@@ -124,8 +124,8 @@ class ProductListScreen extends StatelessWidget {
             children: [
               SmartText(
                   APPStrings.showingListLengthX.tr.interpolate([
-                    bloc.paginationScrollController.currentPage,
-                    bloc.totalNumberOfPages,
+                    1,
+                    bloc.productList.length,
                     bloc.totalFilteredRecords,
                   ]),
                   style: style.filterProductCountTextStyle),

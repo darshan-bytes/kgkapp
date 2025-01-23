@@ -63,16 +63,17 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent('', context: context));
     });
 
-    // Wait for the video to finish playing
-    final Duration duration = playerController.value.duration;
-    await Future.delayed(duration);
-
     // Determine the next route based on the presence of an auth token
     String? authToken = StorageManager().getAuthToken();
     UserIdDetails? userIdDetails = StorageManager().getUserData();
     if (authToken != null && userIdDetails != null) {
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(userIdDetails.userTypeEnum));
     }
+
+    // Wait for the video to finish playing
+    final Duration duration = playerController.value.duration;
+    await Future.delayed(duration);
+
     String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
     context.pushNamedAndRemoveUntil(route, (route) => false);
   }

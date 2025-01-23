@@ -626,24 +626,25 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               SizedBox(height: 32.h),
               SmartSuggestionProductList(
-                  title: APPStrings.recentlyViewed.tr,
-                  onViewAllTap: bloc.recentlyViewedProductList.length > 5
-                      ? () {
-                          bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
-                              productNavigation: AppConst.recentlyViewed);
-                        }
-                      : null,
-                  suggestedProductList: bloc.recentlyViewedProductList,
-                  onProductTap: (product) {
-                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                      RoutesData.productId: product.productId,
-                      RoutesData.isPageFor: bloc.screenIdentifier,
-                    });
-                  },
-                  onEyeTap: () {},
-                  onFavTap: () {},
-                  isPaddingNeeded: false,
-                  scrollController: bloc.recentViewScrollController),
+                title: APPStrings.recentlyViewed.tr,
+                onViewAllTap: bloc.recentlyViewedProductList.length > 5
+                    ? () {
+                        bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
+                            productNavigation: AppConst.recentlyViewed);
+                      }
+                    : null,
+                suggestedProductList: bloc.recentlyViewedProductList,
+                onProductTap: (product) {
+                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                    RoutesData.productId: product.productId,
+                    RoutesData.isPageFor: bloc.screenIdentifier,
+                  });
+                },
+                onEyeTap: () {},
+                onFavTap: () {},
+                isPaddingNeeded: false,
+                scrollController: bloc.recentViewScrollController,
+              ),
             ],
           );
         } else {

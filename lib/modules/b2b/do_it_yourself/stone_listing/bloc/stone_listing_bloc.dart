@@ -150,21 +150,18 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     /// Determine screen-specific settings
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
-        _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
         }
         break;
       case ScreenIdentifier.productForGemstones:
-        _setupTitles(APPStrings.gemstone.tr, APPStrings.precious.tr, APPStrings.semiPrecious.tr);
         await fetchGemstoneList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.productForGemstones);
         }
         break;
       default:
-        _setupTitles(APPStrings.diamonds.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
@@ -540,15 +537,22 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   void _getStoneListName() {
     appbarTitle = APPStrings.diamonds.tr;
+    if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
+      appbarTitle = APPStrings.youMayAlsoLike.tr;
+      return;
+    } else if (productNavigation == AppConst.recentlyViewed && productId.isNotEmpty) {
+      appbarTitle = APPStrings.recentlyViewed.tr;
+      return;
+    }
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
-        appbarTitle = APPStrings.diy.tr;
+        _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForDiamonds:
-        appbarTitle = APPStrings.diamonds.tr;
+        _setupTitles(APPStrings.diamonds.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForGemstones:
-        appbarTitle = APPStrings.gemstone.tr;
+        _setupTitles(APPStrings.gemstone.tr, APPStrings.precious.tr, APPStrings.semiPrecious.tr);
         break;
       default:
         appbarTitle = APPStrings.diamonds.tr;
