@@ -279,6 +279,13 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     /// Build the query based on filters
     query = buildFilterQuery(query, filterData);
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     Either<ErrorResponse, JewelleryListingModel>? response;
 
     /// Fetch data based on the scenario
@@ -329,10 +336,28 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     /// Show the total number of records in the UI side
     totalFilteredRecords = success.filteredRecords;
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
-    List<String> imageUrlList = productList.where((e) => e.imageUrl.isNullOrEmpty).map((e) => e.imageUrl ?? '').toList();
-    printWrapped("precacheImageList-start-time: ${DateTime.now()}");
-    await Utils.precacheImageList(imageUrlList);
-    printWrapped("precacheImageList-end-time: ${DateTime.now()}");
+
+    /// Below Code is commented as of now to avoid the precache of images.
+    // printWrapped("precacheImageList-start-time: ${DateTime.now()}");
+    // await Future.forEach(productList, (productDetails) async {
+    //   bool canLaunch = false;
+    //   try {
+    //     await DefaultCacheManager().downloadFile(productDetails.imageUrl ?? '', force: true);
+    //     canLaunch = true;
+    //   } catch (e) {
+    //     canLaunch = false;
+    //   }
+    //   if (!canLaunch) {
+    //     productDetails.imageUrl = '';
+    //     int index = productList.indexWhere((element) => element.productId == productDetails.productId);
+    //     if (index != -1) {
+    //       productList[index].imageUrl = '';
+    //     }
+    //   }
+    // });
+    // // List<String> imageUrlList = productList.where((e) => e.imageUrl.isNullOrEmpty).map((e) => e.imageUrl ?? '').toList();
+    // // await Utils.precacheImageList(imageUrlList);
+    // printWrapped("precacheImageList-end-time: ${DateTime.now()}");
     if (paginationScrollController.isPageLoaded.isCompleted) {
       paginationScrollController.isPageLoaded = Completer<bool>();
     }

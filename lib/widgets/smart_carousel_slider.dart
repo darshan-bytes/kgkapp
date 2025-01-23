@@ -7,6 +7,7 @@ class SmartCarouselSlider extends StatelessWidget {
   final Function()? on360Tap;
   final Color? backgroundColor;
   final Function(int currentPage)? onTapFullImage;
+  final String? videoUrl;
 
   const SmartCarouselSlider({
     super.key,
@@ -16,6 +17,7 @@ class SmartCarouselSlider extends StatelessWidget {
     this.on360Tap,
     this.backgroundColor,
     this.onTapFullImage,
+    this.videoUrl,
   });
 
   @override
@@ -36,10 +38,12 @@ class SmartCarouselSlider extends StatelessWidget {
               child: Container(
                 color: backgroundColor,
                 child: CarouselSlider(
-                  items: imgList.map((e) => SmartImage(path: e)).toList(),
+                  items: imgList.map((e) {
+                    return SmartImage(path: e);
+                  }).toList(),
                   carouselController: controller,
                   options: CarouselOptions(
-                      autoPlay: imgList.length > 1,
+                      autoPlay: imgList.length > 1 && videoUrl.isNullOrEmpty,
                       enableInfiniteScroll: imgList.length > 1,
                       viewportFraction: 1.5,
                       aspectRatio: 1,
@@ -50,18 +54,42 @@ class SmartCarouselSlider extends StatelessWidget {
                 ),
               ),
             ),
-            if (on360Tap != null)
+            if (on360Tap != null || videoUrl.isNotNullNorEmpty)
               Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: SmartImage(
-                    path: AppImages.ic360,
-                    height: 36.w,
-                    width: 36.w,
-                  ),
-                  onPressed: () {
-                    on360Tap?.call();
-                  },
+                alignment: Alignment.topLeft,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (on360Tap != null)
+                      IconButton(
+                        icon: SmartImage(
+                          path: AppImages.ic360,
+                          height: 36.w,
+                          width: 36.w,
+                        ),
+                        onPressed: () {
+                          on360Tap?.call();
+                        },
+                      ),
+                    if (videoUrl.isNotNullNorEmpty)
+                      IconButton(
+                        onPressed: () {
+                          if (videoUrl.isNotNullNorEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ProductVideoWidget(path: videoUrl!);
+                              },
+                            );
+                          }
+                        },
+                        icon: Icon(
+                          Icons.video_file_outlined,
+                          color: imageCarouselStyle.selectedDotColor,
+                          size: 36.w,
+                        ),
+                      ),
+                  ],
                 ),
               )
           ],

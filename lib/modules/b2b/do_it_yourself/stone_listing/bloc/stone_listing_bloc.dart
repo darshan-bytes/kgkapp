@@ -189,6 +189,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
+
+    if (StorageManager.instance.getIsSkipLogin()) {
+      String? bagId = StorageManager.instance.getBagId();
+      if (bagId.isNotNullNorEmpty) {
+        query[ApiKey.quote] = bagId!;
+      }
+    }
     filterData
         .where((element) =>
             (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||

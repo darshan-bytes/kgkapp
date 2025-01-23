@@ -5,9 +5,7 @@
   "mob_email": "ईमेल",
   "mob_home": "घर",
   "mob_categories": "श्रेणियाँ",
-  "mob_my_bag": "मेरे बैग",
   "mob_support": "सहायता",
-  "mob_profile": "प्रोफ़ाइल",
   "mob_login": "लॉग इन करें",
   "mob_register": "पंजीकरण करवाना",
   "mob_skip": "छोडना",
@@ -786,5 +784,7 @@
   "mob_verify": "सत्यापित करें",
   "mob_your_account_is_not_verified": "आपका खाता सत्यापित नहीं है. कृपया अपने खाते को सत्यापित करें।",
   "mob_otp_required": "कृपया ओटीपी दर्ज करें",
-  "mob_otp_length": "ओटीपी 6 अक्षर लंबा होना चाहिए"
+  "mob_otp_length": "ओटीपी 6 अक्षर लंबा होना चाहिए",
+  "mob_bag": "बैग",
+  "mob_you": "आप"
 }

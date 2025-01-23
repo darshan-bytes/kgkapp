@@ -5,9 +5,7 @@
   "mob_email": "電子郵件",
   "mob_home": "家",
   "mob_categories": "類別",
-  "mob_my_bag": "我的包包",
   "mob_support": "支援",
-  "mob_profile": "輪廓",
   "mob_login": "登入",
   "mob_register": "登記",
   "mob_skip": "跳過",
@@ -788,5 +786,7 @@
   "mob_verify": "核實",
   "mob_your_account_is_not_verified": "您的帳戶未經驗證。請驗證您的帳戶。",
   "mob_otp_required": "請輸入一次性密碼",
-  "mob_otp_length": "OTP 長度必須為 6 個字符"
+  "mob_otp_length": "OTP 長度必須為 6 個字符",
+  "mob_bag": "包",
+  "mob_you": "你"
 }

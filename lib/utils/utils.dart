@@ -399,9 +399,14 @@ class Utils {
     }
   }
 
+  /// Pre-caches a list of images by downloading them and storing them in the cache.
   static Future<void> precacheImageList(List<String> imageUrlList) async {
     await Future.forEach(imageUrlList, (String imageUrl) async {
-      await DefaultCacheManager().downloadFile(imageUrl, force: true);
+      try {
+        await DefaultCacheManager().downloadFile(imageUrl, force: true);
+      } catch (e) {
+        printWrapped(e.toString());
+      }
     });
   }
 }

@@ -143,7 +143,7 @@ class SmartImage extends StatelessWidget {
                     errorListener: (error) {
                       if (kDebugMode) {
                         kgk_logger.log(
-                          "❌ Error in CachedNetworkImage: ",
+                          "❌ Error in CachedNetworkImage: $path",
                           error: error,
                           name: "SmartImage",
                         );

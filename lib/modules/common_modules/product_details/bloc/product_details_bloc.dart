@@ -13,6 +13,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   DiamondDataModel? diamondData;
   GemstoneDatum? gemstoneData;
   bool isCustomisation = false;
+  String? the3DFile;
+  String? videoUrl;
   bool isAddedToCart = false;
   ScreenIdentifier screenIdentifier = ScreenIdentifier.productForRing;
   final CarouselSliderController controller = CarouselSliderController();
@@ -440,6 +442,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }
         }
 
+        the3DFile = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
+        videoUrl = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.videoUrl.isNotNullNorEmpty)?.videoUrl;
+
         productDetails = ProductDetailsModel(
           productId: productId,
           suid: jewelleryData.suid,
@@ -806,5 +811,40 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
     }
+  }
+
+  void onTap360Image(BuildContext context) {
+    if (the3DFile.isNullOrEmpty) return;
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Scaffold(
+          body: SafeArea(
+            child: Stack(
+              children: [
+                ModelViewer(
+                  backgroundColor: Colors.white,
+                  src: the3DFile ?? '',
+                  alt: productName,
+                  autoRotate: true,
+                  cameraControls: true,
+                ),
+                PositionedDirectional(
+                  top: 16.h,
+                  start: 16.w,
+                  child: SmartImage(
+                    path: AppImages.icCross,
+                    color: Colors.black,
+                    onTap: () {
+                      context.pop();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

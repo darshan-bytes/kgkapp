@@ -19,9 +19,10 @@ class APPStrings {
   static const String email = 'mob_email';
   static const String home = 'mob_home';
   static const String categories = 'mob_categories';
-  static const String myBag = 'mob_my_bag';
+  static const String bag = 'mob_bag';
   static const String support = 'mob_support';
-  static const String profile = 'mob_profile';
+  static const String you = 'mob_you';
+  static const String menu = 'mob_menu';
 
   // splash screen
   static const String login = 'mob_login';

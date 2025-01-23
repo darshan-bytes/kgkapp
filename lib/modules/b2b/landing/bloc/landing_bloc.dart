@@ -95,12 +95,12 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: AppImages.icCategories,
         activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.categories,
+        label: APPStrings.menu,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
-        label: APPStrings.myBag,
+        label: APPStrings.bag,
         notificationCount: 0,
       ),
       BottomNavigationBarDataModel(
@@ -111,7 +111,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
         activeIcon: "",
-        label: APPStrings.profile,
+        label: APPStrings.you,
         isProfile: true,
       ),
     ];
@@ -144,12 +144,12 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: AppImages.icCategories,
         activeIcon: AppImages.icCategoriesActive,
-        label: APPStrings.categories,
+        label: APPStrings.menu,
       ),
       BottomNavigationBarDataModel(
         icon: AppImages.icShoppingBag,
         activeIcon: AppImages.icShoppingBagActive,
-        label: APPStrings.myBag,
+        label: APPStrings.bag,
         notificationCount: 0,
       ),
       BottomNavigationBarDataModel(
@@ -160,7 +160,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       BottomNavigationBarDataModel(
         icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
         activeIcon: "",
-        label: APPStrings.profile,
+        label: APPStrings.you,
         isProfile: true,
       ),
     ];
