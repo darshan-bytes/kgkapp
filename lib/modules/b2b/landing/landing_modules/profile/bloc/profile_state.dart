@@ -49,3 +49,8 @@ final class EditProfileFieldErrorState extends ProfileState {
   @override
   List<Object> get props => [fieldType];
 }
+
+final class ProfileLoadedState extends ProfileState {
+  @override
+  List<Object?> get props => [];
+}

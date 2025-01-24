@@ -32,28 +32,36 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _getBody({required ProfileScreenStyle style, required BuildContext context, required ProfileBloc bloc}) {
     return SafeArea(
-      child: SmartSingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildProfileHeader(style: style, bloc: bloc, context: context),
-            Divider(color: style.dividerColor, thickness: 8.h),
-            SmartText(APPStrings.myAccount.tr, style: style.subTitleStyle, optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h)),
-            _buildAccountList(style, bloc),
-            if (bloc.userType == UserType.internal) ...[
-              Divider(color: style.dividerColor, thickness: 8.h),
-              SmartText(
-                APPStrings.adminSection.tr,
-                style: style.subTitleStyle,
-                optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
+      child: BlocBuilder<ProfileBloc, ProfileState>(
+        buildWhen: (previous, current) => current is ProfileLoadedState,
+        builder: (context, state) {
+          if (state is ProfileLoadedState) {
+            return SmartSingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildProfileHeader(style: style, bloc: bloc, context: context),
+                  Divider(color: style.dividerColor, thickness: 8.h),
+                  SmartText(APPStrings.myAccount.tr, style: style.subTitleStyle, optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h)),
+                  _buildAccountList(style, bloc),
+                  if (bloc.userType == UserType.internal) ...[
+                    Divider(color: style.dividerColor, thickness: 8.h),
+                    SmartText(
+                      APPStrings.adminSection.tr,
+                      style: style.subTitleStyle,
+                      optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
+                    ),
+                    _buildAdminList(style, bloc),
+                  ],
+                  Divider(color: style.dividerColor, thickness: 8.h),
+                  _buildExpandList(style, bloc),
+                  if (!bloc.isSkipUser) _buildPopupList(context, style, bloc),
+                ],
               ),
-              _buildAdminList(style, bloc),
-            ],
-            Divider(color: style.dividerColor, thickness: 8.h),
-            _buildExpandList(style, bloc),
-            if (!bloc.isSkipUser) _buildPopupList(context, style, bloc),
-          ],
-        ),
+            );
+          }
+          return SmartCircularProgressIndicator();
+        },
       ),
     );
   }

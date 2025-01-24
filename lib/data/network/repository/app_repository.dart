@@ -190,12 +190,11 @@ class AppRepository extends ApiService {
       ApiKey.page: page,
       if (sortKey != null) ApiKey.sortKey: sortKey,
       if (sortValue != null) ApiKey.sortValue: sortValue,
-      if (type != null) ApiKey.type: type
+      if (type != null) ApiKey.subTypeCode: type
     };
     if (query != null) {
       queryParams.addAll(query);
     }
-
     var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);

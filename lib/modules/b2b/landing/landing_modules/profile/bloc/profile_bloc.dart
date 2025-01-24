@@ -80,7 +80,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
-    _initializeBloc(event.context, emit);
+    await _initializeBloc(event.context, emit);
   }
 
   Future<void> _onToggleProfileListEvent(ToggleProfileListEvent event, Emitter<ProfileState> emit) async {
@@ -135,15 +135,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     await _handleDeleteProfile(context: event.context, emit: emit);
   }
 
-  void _initializeBloc(BuildContext context, Emitter<ProfileState> emit) {
+  Future<void> _initializeBloc(BuildContext context, Emitter<ProfileState> emit) async {
     /// Set the user type
     userType = BlocProvider.of<AppBloc>(context).userType;
 
-    /// Fetch the user details from storage and set in text fields
-    _getUserDetailsFromStorage();
-
     /// Clear and initialize profile actions list
     profileActionList.clear();
+
+    /// Fetch the user details from storage and set in text fields
+    await _fetchUserDetailsAPI(context, emit);
 
     /// Set profile actions based on user type
     if (userType == UserType.internal) {
@@ -173,6 +173,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lastNameError = null;
       contactNumberError = null;
     }
+  }
+
+  Future<void> _fetchUserDetailsAPI(BuildContext context, Emitter<ProfileState> emit) async {
+    emit(ProfileReloadState());
+    Either<ErrorResponse, CommonResponse>? getProfileResponse = await UserRepository(context).getUserProfile();
+    await getProfileResponse?.fold(
+      (l) => Utils.showMessage(l.message),
+      (r) async {
+        UserIdDetails userData = r.responseData;
+        userIdDetails = userData;
+        await StorageManager().setUserData(userData);
+        firstNameController.text = userIdDetails?.firstname ?? '';
+        lastNameController.text = userIdDetails?.lastname ?? '';
+        emailController.text = userIdDetails?.email ?? '';
+        contactNumberController.text = userIdDetails?.phone ?? '';
+        firstNameError = null;
+        lastNameError = null;
+        contactNumberError = null;
+      },
+    );
+    emit(ProfileLoadedState());
   }
 
   /// Handles toggle profile list
