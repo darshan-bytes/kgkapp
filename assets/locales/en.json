@@ -449,7 +449,6 @@
   "mob_order_received": "Order received",
   "mob_total_sell": "Total sell",
   "mob_leads": "Leads",
-  "mob_quality": "Qty",
   "mob_order_on": "Order on",
   "mob_customer_name": "Customer name",
   "mob_mobile_number": "Mobile number",
@@ -790,5 +789,8 @@
   "mob_menu": "Menu",
   "mob_bag": "Bag",
   "mob_you": "You",
-  "mob_login_required": "Login Required"
+  "mob_login_required": "Login Required",
+  "mob_qty_x": "Qty: {#}",
+  "mob_remove_all": "Remove all",
+  "mob_remove_all_product_from_cart": "Remove all product from cart?"
 }

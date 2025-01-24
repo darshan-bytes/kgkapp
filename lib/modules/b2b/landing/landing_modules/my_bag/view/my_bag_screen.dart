@@ -182,6 +182,7 @@ class MyBagScreen extends StatelessWidget {
   }
 
   Widget _buildSelectAllProductBox(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
+    GlobalKey key = GlobalKey();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w),
       child: Column(
@@ -197,6 +198,7 @@ class MyBagScreen extends StatelessWidget {
                 ),
               ),
               SelectionButton(
+                key: key,
                 width: 48.w,
                 imageHeight: 24.5.w,
                 imageWidth: 24.5.w,
@@ -205,14 +207,37 @@ class MyBagScreen extends StatelessWidget {
                 selectedButtonBorderColor: style.menuBorderColor,
                 selectedButtonIconColor: style.menuIconColor,
                 image: AppImages.icMenu,
-                onTap: () {},
+                onTap: () {
+                  final RenderBox renderBox = key.currentContext!.findRenderObject() as RenderBox;
+                  Offset offset = renderBox.localToGlobal(Offset.zero);
+                  showMenu(
+                    context: context,
+                    position: RelativeRect.fromLTRB(
+                      offset.dx,
+                      offset.dy + 24.w,
+                      MediaQuery.of(context).size.width - offset.dx - 24.w,
+                      MediaQuery.of(context).size.height - offset.dy,
+                    ),
+                    items: [
+                      PopupMenuItem(
+                        value: 0,
+                        onTap: () {
+                          bloc.add(MyBagRemoveAllProductEvent(context: context));
+                        },
+                        child: SmartText(APPStrings.removeAll.tr),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
           SizedBox(height: 16.h),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
+              /// Below code is commented as of now no need to display selection of all products and checkbox.
+              /*Expanded(
                 child: BlocBuilder<MyBagBloc, MyBagState>(
                   buildWhen: (previous, current) =>
                       current is MyBagSelectAllProductChangedState || current is MyBagSelectProductChangedState,
@@ -229,7 +254,7 @@ class MyBagScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ),
+              ),*/
               SizedBox(width: 20.w),
               BlocBuilder<MyBagBloc, MyBagState>(
                 buildWhen: (previous, current) => current is MyBagOrderSummaryDataLoadedState,
@@ -418,34 +443,26 @@ class MyBagScreen extends StatelessWidget {
                   ],
                 );
               case Commodity.jewellery:
-                return BlocBuilder<MyBagBloc, MyBagState>(
-                  buildWhen: (previous, current) =>
-                      current is MyBagSelectAllProductChangedState || (current is MyBagSelectProductChangedState && current.index == index),
-                  builder: (context, state) {
-                    return CartProductItem(
-                      isCheckboxShow: true,
-                      isSelectedProduct: product.isSelectedProduct,
-                      productDetails: product,
-                      onChangedCheckbox: (value) {
-                        bloc.add(MyBagSelectProductChangedEvent(index: index));
-                      },
-                      onRemoveTap: () {
-                        bloc.add(MyBagRemoveProductEvent(context: context, index: index));
-                      },
-                      onMoveToWishListTap: () {
-                        bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
-                      },
-                      onQuantityChanged: (quantity) {
-                        bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
-                      },
-                      quantityOptionsList: List.generate(
-                          product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
-                      selectedQuantity: product.quantity != null
-                          ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
-                          : null,
-                      qualityOptionsList: [],
-                    );
+                return CartProductItem(
+                  productDetails: product,
+                  onChangedCheckbox: (value) {
+                    bloc.add(MyBagSelectProductChangedEvent(index: index));
                   },
+                  onRemoveTap: () {
+                    bloc.add(MyBagRemoveProductEvent(context: context, index: index));
+                  },
+                  onMoveToWishListTap: () {
+                    bloc.add(MyBagMoveToWishListEvent(index: index, context: context));
+                  },
+                  onQuantityChanged: (quantity) {
+                    bloc.add(MyBagProductQuantityChangedEvent(context: context, index: index, quantity: quantity.quantity ?? 0));
+                  },
+                  quantityOptionsList: List.generate(
+                      product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
+                  selectedQuantity: product.quantity != null
+                      ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                      : null,
+                  qualityOptionsList: [],
                 );
               default:
                 return const SizedBox.shrink();
