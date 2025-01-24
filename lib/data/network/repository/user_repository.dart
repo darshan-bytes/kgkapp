@@ -129,4 +129,9 @@ class UserRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, CommonResponse<UserIdDetails>>?> getUserProfile() async {
+    var response = await getMethod<UserIdDetails>(ApiClient.getUserProfile, withFullResponse: true);
+    return response?.fold((ErrorResponse l) => Left(l), (r) => Right(r));
+  }
 }
