@@ -575,7 +575,6 @@ class APPStrings {
   static const String leads = 'mob_leads';
 
   //Remaining B2B Listing Type
-  static const String quality = 'mob_quality';
   static const String orderOn = 'mob_order_on';
   static const String customerName = 'mob_customer_name';
   static const String mobileNumber = 'mob_mobile_number';
@@ -987,4 +986,7 @@ class APPStrings {
   static const String otpRequired = 'mob_otp_required';
   static const String otpLength = 'mob_otp_length';
   static const String loginRequired = 'mob_login_required';
+  static const String qtyX = 'mob_qty_x';
+  static const String removeAll = 'mob_remove_all';
+  static const String removeAllProductFromCart = 'mob_remove_all_product_from_cart';
 }

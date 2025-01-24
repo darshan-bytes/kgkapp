@@ -186,6 +186,7 @@ class CartProductItem extends StatelessWidget {
   }
 
   Widget productDetailsSection(ProductItemStyle style, BuildContext context) {
+    final textFieldStyle = AppTheme.of(context).textFieldStyle;
     return Expanded(
       child: Container(
         color: style.backgroundColor,
@@ -237,7 +238,7 @@ class CartProductItem extends StatelessWidget {
             // SizedBox(height: 12.h),
             //padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
             Padding(
-              padding: EdgeInsets.only(top: 4.h),
+              padding: EdgeInsets.only(top: 8.h),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -251,16 +252,21 @@ class CartProductItem extends StatelessWidget {
                   //   ),
                   // ),
                   // SizedBox(width: 8.w),
-                  Expanded(
-                    flex: 1,
-                    child: SmartDropDown<CartProductQuantity>(
-                      isChangeableValue: isDropDownEnable,
-                      labelText: APPStrings.qty.tr,
-                      selectedItem: selectedQuantity,
-                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                      items: quantityOptionsList.map((e) => SmartDropDownItem<CartProductQuantity>(value: e, title: e.name ?? '')).toList(),
-                      hintText: APPStrings.selectQuantity.tr,
-                    ),
+                  DropdownButton<CartProductQuantity>(
+                    isDense: true,
+                    value: selectedQuantity,
+                    onChanged: (newValue) => onQuantityChanged?.call(newValue!),
+                    selectedItemBuilder: (context) {
+                      return quantityOptionsList.map((e) {
+                        return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
+                      }).toList();
+                    },
+                    items: quantityOptionsList
+                        .map((e) => DropdownMenuItem<CartProductQuantity>(
+                              value: e,
+                              child: SmartText(e.name ?? ''),
+                            ))
+                        .toList(),
                   ),
                 ],
               ),

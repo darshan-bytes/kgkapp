@@ -66,6 +66,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     on<MyBagYourDiscountChangedEvent>(_onMyBagYourDiscountChanged);
     on<ClearMyBagEvent>(_onClearMyBag);
     on<FetchOrderSummaryDataEvent>(_onFetchOrderSummaryData);
+    on<MyBagRemoveAllProductEvent>(_onMyBagRemoveAllProductEvent);
   }
 
   void _onMyBagToggleViewModeEvent(MyBagToggleViewModeEvent event, Emitter<MyBagState> emit) {
@@ -508,5 +509,52 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   /// Using this event to fetch latest order summary data
   Future<void> _onFetchOrderSummaryData(FetchOrderSummaryDataEvent event, Emitter<MyBagState> emit) async {
     await fetchBagOrderSummaryData(event.context, emit);
+  }
+
+  Future<void> _onMyBagRemoveAllProductEvent(MyBagRemoveAllProductEvent event, Emitter<MyBagState> emit) async {
+    bool isConfirm = false;
+    await Utils.showSmartModalBottomSheet(
+      context: event.context,
+      builder: (context) {
+        return ConfirmationDialog(
+          title: APPStrings.removeAllProductFromCart.tr,
+          onDeniedText: APPStrings.cancel.tr,
+          onApprovedText: APPStrings.remove.tr,
+          onDenied: () {
+            isConfirm = false;
+            context.pop();
+          },
+          onApproved: () {
+            isConfirm = true;
+            context.pop();
+          },
+        );
+      },
+    );
+    if (!isConfirm) return;
+    emit(MyBagReloadState());
+    String bagId = StorageManager().getBagId() ?? "";
+
+    if (bagId.isEmpty) return;
+    final Map<String, dynamic> body = {
+      ApiKey.id: bagId,
+    };
+    final result = await AppRepository(event.context).deleteBag(body: body);
+    await result?.fold(
+      (l) {
+        Utils.showMessage(l.message);
+      },
+      (r) async {
+        bagListDataModel = null;
+        commodity = null;
+        myBagProductList.clear();
+        bagOrderSummaryData = null;
+        salesmanList = [];
+        bagOrderSummaryData = null;
+        emit(const MyBagLoadedState());
+        emit(MyBagSalesmanListLoadedState());
+        emit(MyBagOrderSummaryDataLoadedState());
+      },
+    );
   }
 }
