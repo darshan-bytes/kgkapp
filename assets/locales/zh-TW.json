@@ -449,7 +449,6 @@
   "mob_order_received": "收到訂單",
   "mob_total_sell": "總銷量",
   "mob_leads": "潛在客戶",
-  "mob_quality": "數量",
   "mob_order_on": "訂購日期",
   "mob_customer_name": "客戶名稱",
   "mob_mobile_number": "手機號碼",
@@ -789,5 +788,8 @@
   "mob_otp_length": "OTP 長度必須為 6 個字符",
   "mob_bag": "包",
   "mob_you": "你",
-  "mob_login_required": "需要登入"
+  "mob_login_required": "需要登入",
+  "mob_qty_x": "數量：{#}",
+  "mob_remove_all": "全部刪除",
+  "mob_remove_all_product_from_cart": "從購物車中刪除所有產品？"
 }

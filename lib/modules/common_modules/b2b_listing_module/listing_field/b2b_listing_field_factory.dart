@@ -187,7 +187,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerNameImageUrl),
           B2BItemField(label: APPStrings.mobileNumber.tr, value: model.strMobileNumber),
           B2BItemField(label: APPStrings.items.tr, value: model.strItems),
-          B2BItemField(label: APPStrings.quality.tr, value: model.strQuality),
+          B2BItemField(label: APPStrings.qty.tr, value: model.strQuality),
           B2BItemField(label: APPStrings.orderedOn.tr, value: model.strOrderOn),
           B2BItemField(label: APPStrings.salesOrder.tr, orderStatus: model.salesOrderStatus),
         ];
@@ -225,7 +225,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.customerName.tr, value: model.strCustomerName, imageUrl: model.strCustomerNameImageUrl),
           B2BItemField(label: APPStrings.mobileNumber.tr, value: model.strMobileNumber),
           B2BItemField(label: APPStrings.items.tr, value: model.strItems),
-          B2BItemField(label: APPStrings.quality.tr, value: model.strQuality),
+          B2BItemField(label: APPStrings.qty.tr, value: model.strQuality),
           B2BItemField(label: APPStrings.orderedOn.tr, value: model.strOrderOn),
           B2BItemField(label: APPStrings.purchaseOrder.tr, orderStatus: model.purchaseOrderStatus),
         ];

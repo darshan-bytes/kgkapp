@@ -170,3 +170,12 @@ final class FetchOrderSummaryDataEvent extends MyBagEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class MyBagRemoveAllProductEvent extends MyBagEvent {
+  final BuildContext context;
+
+  const MyBagRemoveAllProductEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
