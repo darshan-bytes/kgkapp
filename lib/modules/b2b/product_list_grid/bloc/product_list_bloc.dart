@@ -126,6 +126,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ProductListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
+    jewelleryDatumList.clear();
     filterData = event.filterData;
     await fetchJewelleriesList(event.context, emit, false);
     emit(const ProductListLoadedState());
@@ -183,6 +184,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   Future<void> _loadInitialData(BuildContext context, Emitter<ProductListState> emit) async {
     if (screenIdentifier == ScreenIdentifier.productForRing) {
       productList.clear();
+      jewelleryDatumList.clear();
       await fetchJewelleriesList(context, emit, false);
       if (filterData.isEmpty) {
         emit(ReloadProductState());
@@ -193,6 +195,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     if (screenIdentifier == ScreenIdentifier.productForCouture) {
       productList.clear();
+      jewelleryDatumList.clear();
       await fetchJewelleriesList(context, emit, false);
       if (filterData.isEmpty) {
         emit(ReloadProductState());
@@ -335,6 +338,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     /// Show the total number of records in the UI side
     totalFilteredRecords = success.filteredRecords;
+    jewelleryDatumList.addAll(localList);
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
 
     /// Below Code is commented as of now to avoid the precache of images.
@@ -476,6 +480,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     emit(ProductListLoadingState());
     paginationScrollController.pullToRefresh();
     productList.clear();
+    jewelleryDatumList.clear();
     await _loadInitialData(context, emit);
     emit(const ProductListLoadedState());
   }
@@ -503,7 +508,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       if (state is WishListUpdateProductState) {
         try {
           if (screenIdentifier == ScreenIdentifier.productForRing) {
-            int index = jewelleryDatumList.indexWhere((element) => element.id == state.productId);
+            int index = jewelleryDatumList.indexWhere((element) => element.suid == state.productId);
             if (index != -1) {
               if (state.wishlistId.isNotEmpty) {
                 jewelleryDatumList[index].isFavorite = true;

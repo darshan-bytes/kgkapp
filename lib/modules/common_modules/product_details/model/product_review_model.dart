@@ -1,5 +1,61 @@
 import 'package:kgk/kgk.dart';
 
+class ProductReviewWrapperModel {
+  int? filteredRecords;
+  int? totalRecords;
+  double? avgRating;
+  List<ProductReviewModel>? dataList;
+  bool userReviewSubmitted = false;
+  String? page;
+  String? limit;
+  Map<String, int>? starCounts;
+
+  ProductReviewWrapperModel({
+    this.filteredRecords,
+    this.dataList,
+    this.avgRating,
+    this.totalRecords,
+    this.page,
+    this.limit,
+    this.userReviewSubmitted = false,
+    this.starCounts,
+  });
+
+  ProductReviewWrapperModel.fromJson(Map<String, dynamic> json) {
+    filteredRecords = json['filteredRecords']?.toString().toInt;
+    totalRecords = json['totalRecords']?.toString().toInt;
+    avgRating = json['avgRating']?.toString().toDouble;
+
+    starCounts = json['starCounts'] != null ? Map<String, int>.from(json['starCounts']) : null;
+
+    if (json['data'] != null) {
+      dataList = <ProductReviewModel>[];
+      json['data'].forEach((v) {
+        dataList!.add(ProductReviewModel.fromJson(v));
+      });
+    }
+
+    page = json['page'];
+    limit = json['limit'];
+    userReviewSubmitted = json['userReviewSubmited'] ?? false;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['filteredRecords'] = filteredRecords;
+    data['totalRecords'] = totalRecords;
+    data['avgRating'] = avgRating;
+    data['starCounts'] = starCounts;
+    if (dataList != null) {
+      data['data'] = dataList?.map((x) => x.toJson()).toList();
+    }
+    data['page'] = page;
+    data['limit'] = limit;
+    data['userReviewSubmited'] = userReviewSubmitted;
+    return data;
+  }
+}
+
 class ProductReviewModel {
   String? status;
   String? userId;
