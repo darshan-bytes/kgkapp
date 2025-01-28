@@ -9,7 +9,7 @@ class ProductDetailsScreen extends StatelessWidget {
     final ProductDetailsStyle style = AppTheme.of(context).productDetailsStyle;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
+        preferredSize: context.appBarHeight,
         child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           buildWhen: (previous, current) => current is ProductDetailsLoadedState,
           builder: (context, state) {
@@ -593,21 +593,24 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(
-            title: APPStrings.youMayAlsoLike.tr,
-            onViewAllTap: bloc.suggestedProductList.length > 5
-                ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
-                : null,
-            suggestedProductList: bloc.suggestedProductList,
-            onProductTap: (product) {
-              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                RoutesData.productId: product.suid,
-                RoutesData.isPageFor: bloc.screenIdentifier,
-              });
-            },
-            onEyeTap: () {},
-            onFavTap: () {},
-            isPaddingNeeded: false,
-            scrollController: bloc.youMayLikeScrollController);
+          title: APPStrings.youMayAlsoLike.tr,
+          onViewAllTap: bloc.suggestedProductList.length > 5
+              ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
+              : null,
+          suggestedProductList: bloc.suggestedProductList,
+          onProductTap: (product) {
+            context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+              RoutesData.productId: product.suid,
+              RoutesData.isPageFor: bloc.screenIdentifier,
+            });
+          },
+          onEyeTap: () {},
+          onFavTap: () {},
+          isPaddingNeeded: false,
+          scrollController: bloc.youMayLikeScrollController,
+          isCrtAndGramVisible: false,
+          margin: EdgeInsets.zero,
+        );
       },
     );
   }

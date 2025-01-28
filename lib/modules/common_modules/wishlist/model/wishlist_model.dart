@@ -114,6 +114,7 @@ class ProductData {
     required this.wishlistId,
     required this.rmDescription,
     required this.lotCode,
+    required this.productImages,
   });
 
   String? exclusive;
@@ -145,6 +146,7 @@ class ProductData {
   String? wishlistId;
   String? rmDescription;
   String? lotCode;
+  List<ProductImages>? productImages;
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(
@@ -164,7 +166,8 @@ class ProductData {
       market: json["market"],
       multipleFinishedViewImage: json["multiple_finished_view_image"] == null
           ? []
-          : List<MultipleFinishedViewImageShopByMetal>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x))),
+          : List<MultipleFinishedViewImageShopByMetal>.from(
+              json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImageShopByMetal.fromJson(x))),
       componentDetails: json["component_details"] == null
           ? []
           : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
@@ -181,6 +184,7 @@ class ProductData {
       wishlistId: json["is_favorite"],
       lotCode: json["lot_code"],
       rmDescription: json["rm_description"],
+      productImages: json["image"] == null ? [] : List<ProductImages>.from(json["image"]!.map((x) => ProductImages.fromJson(x))),
     );
   }
 
@@ -216,5 +220,21 @@ class ProductData {
   @override
   String toString() {
     return "$exclusive, $id, $productDescription, $binGroup, $metalColor1, $currency, $cscCode, $certificateNo, $diamondGrade, $newArrival, $bestSeller, $metalKt, $brandName, $market, $multipleFinishedViewImage, $componentDetails, $suid, $crt, $gms, $rating, $reviewCount, $metalColor1HexCode, $discountPercentage, $discountPrice, $isFavorite, $finalPrice, ";
+  }
+}
+
+class ProductImages {
+  String? uRL;
+
+  ProductImages({this.uRL});
+
+  ProductImages.fromJson(Map<String, dynamic> json) {
+    uRL = json['URL'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['URL'] = uRL;
+    return data;
   }
 }

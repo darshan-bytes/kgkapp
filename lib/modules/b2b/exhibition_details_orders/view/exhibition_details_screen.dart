@@ -111,7 +111,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
   /// Here we are building the appbar view
   PreferredSizeWidget _buildAppBar(ExhibitionDetailsBloc bloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
         buildWhen: (previous, current) => current is ExhibitionDetailsLoadedState,
         builder: (context, state) {

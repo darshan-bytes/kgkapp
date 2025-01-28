@@ -8,7 +8,7 @@ class PddPreviewScreen extends StatelessWidget {
     final PddPreviewBloc pddPreviewBloc = BlocProvider.of<PddPreviewBloc>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).colors.colorF7F9FA,
-      appBar: _buildAppBar(pddPreviewBloc),
+      appBar: _buildAppBar(pddPreviewBloc, context),
       body: SafeArea(
         child: Column(
           children: [
@@ -24,9 +24,9 @@ class PddPreviewScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(PddPreviewBloc pddPreviewBloc) {
+  PreferredSizeWidget _buildAppBar(PddPreviewBloc pddPreviewBloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<PddPreviewBloc, PddPreviewState>(
         buildWhen: (previous, current) {
           return current is PddPreviewLoadedState;

@@ -49,6 +49,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   GlobalKey<ScaffoldState> saveBtnKey = GlobalKey<ScaffoldState>();
   final scrollController = ScrollController();
 
+  /// This object is used to pick the image from the gallery or camera.
+  final ImagePicker _picker = ImagePicker();
+
+  /// profile image
+  List<XFile> profilePickedImageList = [];
+
   List<Country> selectedCountryCodes = [
     Country.from(json: {
       "e164_cc": "91",
@@ -77,6 +83,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<EditProfilePhoneNumberValidationEvent>(_onEditProfilePhoneNumberValidationEvent);
     on<ChangePasswordEvent>(_onChangePasswordEvent);
     on<EditProfileFieldChangeEvent>(_onEditProfileFieldChangeEvent);
+    on<ProfilePickImageEvent>(_onProfilePickImage);
+    on<RemoveProfileImageEvent>(_onRemoveProfileImage);
   }
 
   Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
@@ -105,8 +113,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onChangePasswordEvent(ChangePasswordEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileReloadState());
     if (_validateChangePassword()) {
-      _callChangePasswordApi(event: event);
+      await _callChangePasswordApi(event: event);
     }
+  }
+
+  Future<void> _onProfilePickImage(ProfilePickImageEvent event, Emitter<ProfileState> emit) async {
+    await _handleProfilePickImage(emit: emit, imageSource: event.imageSource);
+  }
+
+  void _onRemoveProfileImage(RemoveProfileImageEvent event, Emitter<ProfileState> emit) {
+    _handleRemoveProfileImage(emit: emit);
   }
 
   void _onEditProfileFieldChangeEvent(EditProfileFieldChangeEvent event, Emitter<ProfileState> emit) {
@@ -169,6 +185,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lastNameController.text = userIdDetails?.lastname ?? '';
       emailController.text = userIdDetails?.email ?? '';
       contactNumberController.text = userIdDetails?.phone ?? '';
+      if (userIdDetails?.profilePic != null) {
+        profilePickedImageList.clear();
+        profilePickedImageList.add(XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? ''));
+      }
       firstNameError = null;
       lastNameError = null;
       contactNumberError = null;
@@ -188,6 +208,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         lastNameController.text = userIdDetails?.lastname ?? '';
         emailController.text = userIdDetails?.email ?? '';
         contactNumberController.text = userIdDetails?.phone ?? '';
+        if (userIdDetails?.profilePic != null) {
+          profilePickedImageList.clear();
+          profilePickedImageList.add(XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? ''));
+        }
         firstNameError = null;
         lastNameError = null;
         contactNumberError = null;
@@ -261,8 +285,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ApiKey.lastname: lastNameController.text.trim(),
       ApiKey.phoneCode: selectedCountry.phoneCode,
       ApiKey.phone: contactNumberController.text.trim(),
+      if (userIdDetails?.profilePic != null) ApiKey.profilePic: userIdDetails?.profilePic,
     };
-    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context).editUserProfile(params);
+    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context)
+        .editUserProfile(params, images: profilePickedImageList.isNotEmpty ? profilePickedImageList.map((e) => e.path).toList() : []);
     await editProfileResponse?.fold(
       (l) => Utils.showMessage(l.message),
       (r) async {
@@ -761,5 +787,49 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         },
       ),
     );
+  }
+
+  Future<void> _handleProfilePickImage({required Emitter<ProfileState> emit, required ImageSource imageSource}) async {
+    try {
+      await _pickSingleImage(imageSource, emit);
+    } on PlatformException catch (e) {
+      _handlePlatformException(e);
+    }
+  }
+
+  Future<void> _pickSingleImage(ImageSource source, Emitter<ProfileState> emit) async {
+    emit(ProfileReloadState());
+    XFile? pickedImage = await _picker.pickImage(source: source);
+    if (pickedImage != null) {
+      profilePickedImageList.clear();
+      profilePickedImageList.add(pickedImage);
+      emit(ProfilePickImageState());
+    }
+  }
+
+  void _handleRemoveProfileImage({required Emitter<ProfileState> emit}) {
+    emit(ProfileReloadState());
+    profilePickedImageList.clear();
+    emit(ProfilePickImageState());
+  }
+
+  void _handlePlatformException(PlatformException e) {
+    switch (e.code) {
+      case 'camera_access_denied':
+      case 'photo_access_denied':
+        Utils.showDoubleActionDialog(
+          title: e.message,
+          okButtonText: APPStrings.ok.tr,
+          cancelButtonText: APPStrings.cancel.tr,
+          content: APPStrings.errorAllowCameraSettings.tr,
+          onOkPressed: () {
+            openAppSettings();
+          },
+        );
+        break;
+      default:
+        Utils.showMessage("An error occurred: ${e.message}");
+        break;
+    }
   }
 }

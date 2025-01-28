@@ -10,6 +10,7 @@ class SmartSuggestionProductList extends StatelessWidget {
   final ScrollController scrollController;
   final Function(ProductDetailsModel)? onProductTap;
   final bool isCrtAndGramVisible;
+  final EdgeInsetsGeometry? margin;
 
   const SmartSuggestionProductList({
     super.key,
@@ -22,6 +23,7 @@ class SmartSuggestionProductList extends StatelessWidget {
     required this.scrollController,
     this.onProductTap,
     this.isCrtAndGramVisible = true,
+    this.margin,
   });
 
   @override
@@ -68,7 +70,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                           onProductTap?.call(product);
                         }
                       : null,
-                  margin: EdgeInsets.only(bottom: 17.h),
+                  margin: margin ?? EdgeInsets.only(bottom: 17.h),
                   onEyeTap: onEyeTap,
                   onFavTap: onFavTap,
                   productDetails: product,

@@ -9,7 +9,7 @@ class SearchResultScreen extends StatelessWidget {
     final style = AppTheme.of(context).searchResultScreenStyle;
     final SearchResultBloc searchResultBloc = BlocProvider.of<SearchResultBloc>(context);
     return Scaffold(
-      appBar: _buildAppBar(searchResultBloc),
+      appBar: _buildAppBar(searchResultBloc, context),
       body: _buildBody(diamondListingStyle, style, searchResultBloc, context),
     );
   }
@@ -184,9 +184,9 @@ class SearchResultScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(SearchResultBloc searchResultBloc) {
+  PreferredSizeWidget _buildAppBar(SearchResultBloc searchResultBloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<SearchResultBloc, SearchResultState>(
         builder: (context, state) {
           return SmartAppBar(

@@ -8,14 +8,14 @@ class PreviewCatalogueScreen extends StatelessWidget {
     final PreviewCatalogueBloc bloc = BlocProvider.of<PreviewCatalogueBloc>(context);
     final PreviewCatalogueStyle style = AppTheme.of(context).previewCatalogueStyle;
     return Scaffold(
-      appBar: appBarPreferredSize(bloc),
+      appBar: appBarPreferredSize(bloc, context),
       body: buildBody(bloc, context, style),
     );
   }
 
-  PreferredSizeWidget appBarPreferredSize(PreviewCatalogueBloc bloc) {
+  PreferredSizeWidget appBarPreferredSize(PreviewCatalogueBloc bloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<PreviewCatalogueBloc, PreviewCatalogueState>(
         buildWhen: (previous, current) => current is PreviewCatalogueLoadedState,
         builder: (context, state) {

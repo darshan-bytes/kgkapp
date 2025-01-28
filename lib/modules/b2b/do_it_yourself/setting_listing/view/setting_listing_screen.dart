@@ -9,7 +9,7 @@ class SettingListingScreen extends StatelessWidget {
     final SettingListingBloc settingListingBloc = BlocProvider.of<SettingListingBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
+        preferredSize: context.appBarHeight,
         child: BlocBuilder<SettingListingBloc, SettingListingState>(
           builder: (context, state) {
             return SmartAppBar(

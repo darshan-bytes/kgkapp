@@ -54,3 +54,8 @@ final class ProfileLoadedState extends ProfileState {
   @override
   List<Object?> get props => [];
 }
+
+final class ProfilePickImageState extends ProfileState {
+  @override
+  List<Object?> get props => [];
+}

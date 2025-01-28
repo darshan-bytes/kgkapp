@@ -38,7 +38,7 @@ class DesignListingScreen extends StatelessWidget {
 
   PreferredSize _buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: SmartAppBar(
         title: APPStrings.designs.tr,
         onSearch: () {

@@ -185,4 +185,5 @@ class AppImages {
   static const String icDelete = 'assets/images/ic_delete.png';
   static const String icAuctionLabel = 'assets/images/ic_auction_label.svg';
   static const String icBadge = 'assets/images/ic_badge.svg';
+  static const String icProfilePic = 'assets/images/ic_profile_pic.svg';
 }
