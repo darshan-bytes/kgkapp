@@ -134,33 +134,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ];
 
   CategoriesBloc() : super(CategoriesInitial()) {
-    on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
     on<CategoriesInitialEvent>(onCategoriesInitialEvent);
-  }
-
-  void onCategoriesSelectedEvent(CategoriesSelectedEvent event, Emitter<CategoriesState> emit) {
-    emit(CategoriesReloaded());
-
-    if (selectedRowIndex == event.index && selectedItemIndex == event.itemIndex) {
-      selectedRowIndex = -1;
-      selectedItemIndex = -1;
-    } else {
-      selectedRowIndex = event.index;
-      selectedItemIndex = event.itemIndex;
-    }
-
-    if (event.itemIndex == 0) {
-      arrowPosition = ArrowPosition.leftTop;
-    } else if (event.itemIndex == 1) {
-      arrowPosition = ArrowPosition.centerTop;
-    } else if (event.itemIndex == 2) {
-      arrowPosition = ArrowPosition.rightTop;
-    }
-
-    selectedCategoriesList.clear();
-    selectedCategoriesList.addAll(event.subList[event.itemIndex].productsDetailsList ?? []);
-
-    emit(CategoriesSelected());
+    on<CategoriesSelectedEvent>(onCategoriesSelectedEvent);
   }
 
   void onCategoriesInitialEvent(CategoriesInitialEvent event, Emitter<CategoriesState> emit) {
@@ -230,6 +205,31 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       ]);
     }
     emit(CategoriesFetchData());
+  }
+
+  void onCategoriesSelectedEvent(CategoriesSelectedEvent event, Emitter<CategoriesState> emit) {
+    emit(CategoriesReloaded());
+
+    if (selectedRowIndex == event.index && selectedItemIndex == event.itemIndex) {
+      selectedRowIndex = -1;
+      selectedItemIndex = -1;
+    } else {
+      selectedRowIndex = event.index;
+      selectedItemIndex = event.itemIndex;
+    }
+
+    if (event.itemIndex == 0) {
+      arrowPosition = ArrowPosition.leftTop;
+    } else if (event.itemIndex == 1) {
+      arrowPosition = ArrowPosition.centerTop;
+    } else if (event.itemIndex == 2) {
+      arrowPosition = ArrowPosition.rightTop;
+    }
+
+    selectedCategoriesList.clear();
+    selectedCategoriesList.addAll(event.subList[event.itemIndex].productsDetailsList ?? []);
+
+    emit(CategoriesSelected());
   }
 
   // Navigate based on the selected category and subcategory
@@ -556,6 +556,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getJewelleryRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
+        return AppRoutes.stonesLandingPage;
         return AppRoutes.collectionPage;
       case 'Jewellery':
         return AppRoutes.productListGridPage;
