@@ -7,15 +7,15 @@ class ShippingAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ShippingAddressBloc shippingAddressBloc = BlocProvider.of<ShippingAddressBloc>(context);
     return Scaffold(
-      appBar: _buildAppBar(shippingAddressBloc),
+      appBar: _buildAppBar(shippingAddressBloc, context),
       body: _buildBody(shippingAddressBloc),
       bottomNavigationBar: _buildBottomNavigationBar(shippingAddressBloc, context),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(ShippingAddressBloc shippingAddressBloc) {
+  PreferredSizeWidget _buildAppBar(ShippingAddressBloc shippingAddressBloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppConst.appBarHeight,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
         buildWhen: (previous, current) => current is ShippingAddressLoadedState,
         builder: (context, state) {

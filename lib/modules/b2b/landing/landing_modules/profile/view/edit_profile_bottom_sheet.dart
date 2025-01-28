@@ -26,7 +26,7 @@ class EditProfileBottomSheet extends StatelessWidget {
           children: [
             _buildAppBar(style, context),
             SizedBox(height: 24.h),
-            _buildProfileImageSection(style, context),
+            _buildProfileImageSection(style, context, bloc),
             SizedBox(height: 24.h),
             ...generateProfileForm(bloc, context),
             SizedBox(height: 24.h),
@@ -58,37 +58,58 @@ class EditProfileBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileImageSection(ProfileScreenStyle style, BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          alignment: Alignment.bottomRight,
+  Widget _buildProfileImageSection(ProfileScreenStyle style, BuildContext context, ProfileBloc bloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) => current is ProfilePickImageState,
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(right: 3.5.w, bottom: 1.5.h),
-              child: SmartImage(
-                path: 'https://i.ibb.co/GWFG9GF/Frame-1410088735.png',
-                height: 73.w,
-                width: 73.w,
-                fit: BoxFit.cover,
-                imageBorderRadius: BorderRadius.circular(50.r),
-                onTap: () {
-                  _showImagePickDialog(context);
-                },
-              ),
-            ),
-            SmartImage(
-              path: AppImages.icEditImage,
-              height: 32.w,
-              width: 32.w,
-              onTap: () {
-                _showImagePickDialog(context);
-              },
+            Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                SmartImage(
+                  path: bloc.profilePickedImageList.isNotNullNorEmpty ? bloc.profilePickedImageList.first.path : AppImages.icProfilePic,
+                  height: 73.w,
+                  width: 73.w,
+                  fit: BoxFit.cover,
+                  imageBorderRadius: BorderRadius.circular(50.r),
+                  onTap: () {
+                    _showImagePickDialog(context, bloc);
+                  },
+                ),
+                if (bloc.profilePickedImageList.isNullOrEmpty) ...[
+                  SmartImage(
+                    path: AppImages.icEditImage,
+                    height: 32.w,
+                    width: 32.w,
+                    onTap: () {
+                      _showImagePickDialog(context, bloc);
+                    },
+                  ),
+                ] else ...[
+                  Positioned(
+                    top: 0.w,
+                    right: 0.w,
+                    child: CircleAvatar(
+                      radius: 16.r,
+                      child: SmartImage(
+                        path: AppImages.icCross,
+                        color: style.primaryColor,
+                        height: 16.w,
+                        width: 16.w,
+                        onTap: () {
+                          bloc.add(RemoveProfileImageEvent());
+                        },
+                      ),
+                    ),
+                  )
+                ]
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -247,12 +268,14 @@ class EditProfileBottomSheet extends StatelessWidget {
     );
   }
 
-  void _showImagePickDialog(BuildContext context) {
+  void _showImagePickDialog(BuildContext context, ProfileBloc bloc) {
     Utils.showSmartModalBottomSheet(
       context: context,
       builder: (context) {
         return SmartImagePickDialogSheet(
-          onTapSource: (ImageSource imageSource) {},
+          onTapSource: (ImageSource imageSource) {
+            bloc.add(ProfilePickImageEvent(imageSource: imageSource));
+          },
         );
       },
     );

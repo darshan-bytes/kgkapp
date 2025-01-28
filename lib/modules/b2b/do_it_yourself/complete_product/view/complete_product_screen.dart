@@ -12,7 +12,7 @@ class CompleteProductScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: PreferredSize(
-            preferredSize: AppConst.appBarHeight,
+            preferredSize: context.appBarHeight,
             child: SmartAppBar(
               title: bloc.productName,
               onFavorite: () {},
