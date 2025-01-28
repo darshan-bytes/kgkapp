@@ -11,7 +11,7 @@ class AddAddressScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: style.backgroundColor,
       appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
+        preferredSize: context.appBarHeight,
         child: BlocBuilder<AddAddressBloc, AddAddressState>(
           buildWhen: (previous, current) => current is AddAddressReloadState,
           builder: (context, state) {

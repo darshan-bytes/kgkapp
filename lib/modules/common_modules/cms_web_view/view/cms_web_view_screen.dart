@@ -8,7 +8,7 @@ class CmsWebViewScreen extends StatelessWidget {
     final CmsWebViewBloc cmsWebViewBloc = BlocProvider.of<CmsWebViewBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(AppConst.defaultAppBarHeight),
+        preferredSize: context.appBarHeight,
         child: BlocBuilder<CmsWebViewBloc, CmsWebViewState>(
           buildWhen: (previous, current) => current is CmsWebViewLoadedState,
           builder: (context, state) {

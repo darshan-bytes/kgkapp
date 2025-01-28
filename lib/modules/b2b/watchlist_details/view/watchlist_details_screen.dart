@@ -12,15 +12,15 @@ class WatchlistDetailsScreen extends StatelessWidget {
         //Here I've used resizeToAvoidBottomInset as false to avoid the keyboard overlapping the content.
         // Also, there is no need to allow the user to scroll the content when the keyboard is open.
         resizeToAvoidBottomInset: false,
-        appBar: _buildAppBar(bloc),
+        appBar: _buildAppBar(bloc, context),
         body: _buildBody(bloc, context),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(WatchlistDetailsBloc bloc) {
+  PreferredSizeWidget _buildAppBar(WatchlistDetailsBloc bloc, BuildContext context) {
     return PreferredSize(
-      preferredSize: AppBar().preferredSize,
+      preferredSize: context.appBarHeight,
       child: BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
         buildWhen: (previous, current) => current is WatchlistDetailsLoaded,
         builder: (context, state) {

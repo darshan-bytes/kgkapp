@@ -12,7 +12,7 @@ class StoneListingScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: PreferredSize(
-            preferredSize: AppConst.appBarHeight,
+            preferredSize: context.appBarHeight,
             child: BlocBuilder<StoneListingBloc, StoneListingState>(
               buildWhen: (previous, current) => current is StoneProductLoadedState,
               builder: (context, state) {

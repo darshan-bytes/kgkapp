@@ -304,9 +304,10 @@ class ProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SmartImage(
-            path: 'https://i.ibb.co/GWFG9GF/Frame-1410088735.png',
-            height: 73.h,
+            path: bloc.profilePickedImageList.isNotNullNorEmpty ? bloc.profilePickedImageList.first.path : AppImages.icProfilePic,
+            height: 73.w,
             width: 73.w,
+            fit: BoxFit.cover,
             imageBorderRadius: BorderRadius.circular(50.r),
           ),
           SizedBox(width: 12.w),

@@ -9,7 +9,7 @@ class ProductListScreen extends StatelessWidget {
     final ProductListBloc bloc = BlocProvider.of<ProductListBloc>(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: AppConst.appBarHeight,
+        preferredSize: context.appBarHeight,
         child: BlocBuilder<ProductListBloc, ProductListState>(
           buildWhen: (previous, current) => current is ProductListLoadedState || current is ProductListLoadingState,
           builder: (context, state) {

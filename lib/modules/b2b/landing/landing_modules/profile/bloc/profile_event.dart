@@ -89,3 +89,19 @@ final class EditProfileFieldChangeEvent extends ProfileEvent {
   @override
   List<Object> get props => [fieldType];
 }
+
+final class ProfilePickImageEvent extends ProfileEvent {
+  final ImageSource imageSource;
+
+  const ProfilePickImageEvent({required this.imageSource});
+
+  @override
+  List<Object> get props => [imageSource];
+}
+
+final class RemoveProfileImageEvent extends ProfileEvent {
+  const RemoveProfileImageEvent();
+
+  @override
+  List<Object> get props => [];
+}

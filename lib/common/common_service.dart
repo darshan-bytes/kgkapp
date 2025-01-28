@@ -28,3 +28,8 @@ class Throttle {
     });
   }
 }
+
+extension PreferredSizeExtensions on BuildContext {
+  ///appbar height
+  Size get appBarHeight => AppBar().preferredSize;
+}
