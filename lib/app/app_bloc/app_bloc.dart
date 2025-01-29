@@ -54,7 +54,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<ProductAddToFavoriteEvent>(_onProductAddToFavoriteEvent);
     on<ProductRemoveFromFavoriteEvent>(_onProductRemoveFromWishlist);
     on<ProductAddToBagEvent>(_onProductAddToBagEvent);
-    on<ProductRemoveFromBagEvent>(_onProductRemoveFromBagEvent);
     on<ProductAddToWatchListEvent>(_onProductAddToWatchListEvent);
   }
 
@@ -245,6 +244,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
 
     if (myBagDataModel != null && myBagDataModel.commodity != event.productDetails.commodity?.value) {
+      bool isConfirm = false;
+      await Utils.showSmartModalBottomSheet(
+        context: event.context,
+        builder: (context) {
+          return ConfirmationDialog(
+            title: APPStrings.differentCommoditiesSelected.tr,
+            message: APPStrings.cantAddProductFromDifferentCommodities.tr,
+            onDeniedText: APPStrings.cancel.tr,
+            onApprovedText: APPStrings.strContinue.tr,
+            onDenied: () {
+              isConfirm = false;
+              context.pop();
+            },
+            onApproved: () {
+              isConfirm = true;
+              context.pop();
+            },
+          );
+        },
+      );
+      if (!isConfirm) return;
       await _deleteAndRetryBag(event, emit, myBagDataModel.sId ?? '');
     }
     await _addToBag(event);
@@ -302,21 +322,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (l) => Utils.showMessage(l.message),
         (data) async {
           await StorageManager().clearBagData();
-          Utils.showMessage(data.message);
+          // Utils.showMessage(data.message);
         },
       );
     });
-  }
-
-  Future<void> _onProductRemoveFromBagEvent(event, Emitter<AppState> emit) async {
-    /// Implementing it later
-    ProductDetailsModel productDetails = event.productDetails;
-    if (event.productDetails.productId.isNullOrEmpty) {
-      return;
-    }
-
-    /// TODO :: Temporary added static bag id here
-    await _deleteAndRetryBag(event, emit, "674982171e6515593f727ec6", suid: productDetails.suid ?? '');
   }
 
   Future<void> _onProductAddToWatchListEvent(ProductAddToWatchListEvent event, Emitter<AppState> emit) async {
@@ -410,7 +419,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.search: "",
         ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
-      Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response = await AppRepository(context).shapeMasterFilters(body: body);
+      Either<ErrorResponse, PaginationData<ShapeMasterDetails>>? response =
+          await AppRepository(context).shapeMasterFilters(body: body, isShowLoader: isShowLoader);
       response?.fold((l) {
         Utils.showMessage(l.message);
       }, (PaginationData<ShapeMasterDetails> r) {
@@ -448,7 +458,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
       Either<ErrorResponse, PaginationData<CommodityMasterDetails>>? response =
-          await AppRepository(context).commodityMasterFilters(body: body);
+          await AppRepository(context).commodityMasterFilters(body: body, isShowLoader: isShowLoader);
       response?.fold(
         (l) {},
         (PaginationData<CommodityMasterDetails> r) {

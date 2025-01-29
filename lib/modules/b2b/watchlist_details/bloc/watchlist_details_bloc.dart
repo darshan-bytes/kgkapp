@@ -52,11 +52,10 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
           startTimer();
           productList = _generateProductList();
           _productList = List.from(productList);
-          emit(const WatchlistDetailsLoaded());
         },
       );
 
-      emit(const WatchlistDetailsLoaded());
+      emit(const WatchlistDetailsLoaded(isFirst: true));
     }
   }
 
@@ -163,7 +162,6 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
   }
 
   Future<void> _onWatchlistDetailsEditProductEvent(WatchlistDetailsEditProductEvent event, Emitter<WatchlistDetailsState> emit) async {
-    if (state is! WatchlistDetailsLoaded) return;
     if (event.actionType == WatchlistActionType.edit) {
       BlocProvider.of<AddToWatchlistBloc>(event.context)
           .add(AddToWatchlistInitialEvent.edit(productList[event.index], event.context, watchlistDetailsModel));
@@ -193,7 +191,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
       productList.addAll(
           _productList.where((element) => element.name!.toLowerCase().trim().contains(event.searchQuery.toLowerCase().trim())).toList());
     }
-    emit(const WatchlistDetailsLoaded());
+    emit(const WatchlistDetailsLoaded(isFirst: false));
   }
 
   Future<void> _onWatchlistDetailsDeleteEvent(WatchlistDetailsDeleteEvent event, Emitter<WatchlistDetailsState> emit) async {

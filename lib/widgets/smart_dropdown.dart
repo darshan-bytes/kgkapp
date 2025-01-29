@@ -68,24 +68,28 @@ class SmartDropDown<T> extends StatelessWidget {
             if (!isChangeableValue) {
               return;
             }
+            SmartDropDownView view = SmartDropDownView(
+              scrollDirection: scrollDirection,
+              hintText: hintText,
+              onTap: (value) {
+                onChanged(value);
+              },
+              items: items,
+              selectedItem: selectedItem,
+              height: selectionWindowHeight,
+              onSearchEvent: onSearchEvent,
+              canSearch: canSearch,
+              noDataFoundText: emptyText ?? APPStrings.noDataFound.tr,
+            );
             Utils.showSmartModalBottomSheet(
               context: context,
               // isScrollControlled: scrollDirection == Axis.horizontal,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
               ),
+
               builder: (context) {
-                return SmartDropDownView(
-                  scrollDirection: scrollDirection,
-                  hintText: hintText,
-                  onTap: onChanged,
-                  items: items,
-                  selectedItem: selectedItem,
-                  height: selectionWindowHeight,
-                  onSearchEvent: onSearchEvent,
-                  canSearch: canSearch,
-                  noDataFoundText: emptyText ?? APPStrings.noDataFound.tr,
-                );
+                return view;
               },
             );
           },
@@ -183,7 +187,8 @@ class SmartDropDownView<T> extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: Container(
-        constraints: BoxConstraints(maxHeight: context.height * 0.75),
+        constraints:
+            BoxConstraints(maxHeight: context.height * 0.75, minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom),
         decoration: BoxDecoration(
           color: style.backgroundColor,
           borderRadius: BorderRadius.only(

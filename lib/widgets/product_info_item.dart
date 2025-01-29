@@ -144,7 +144,8 @@ class ProductInfoItem extends StatelessWidget {
         if (isDiamond) ...[
           Wrap(
             children: [
-              SmartText(chart.colour ?? '-', isAutoSizeText: true, style: shapeTextStyle),
+              SmartText(chart.colour.isNotNullNorEmpty ? (chart.colour!.length > 2 ? chart.colour!.substring(0, 2) : chart.colour) : '-',
+                  isAutoSizeText: true, style: shapeTextStyle),
               _buildDivider(style),
               SmartText(
                 chart.isDisplayClarityAndCut ? chart.displayClarityAndCut : '-',

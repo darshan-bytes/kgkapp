@@ -122,7 +122,7 @@ class AppRoutes {
       case landingPage:
         builder = (context) {
           BlocProvider.of<LandingBloc>(context).add(LandingInitialEvent(context: context));
-          return const LandingScreen();
+          return LandingScreen();
         };
         break;
 

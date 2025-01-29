@@ -9,7 +9,7 @@ class Utils {
   static ToastificationItem? _toast;
 
   /// Show common snack bar messages
-  static Future<void> showMessage(String? message) async {
+  static Future<void> showMessage(String? message, {Duration? autoCloseDuration}) async {
     if (message.isNullOrEmpty) return;
 
     try {
@@ -27,7 +27,7 @@ class Utils {
 // Displays a new toast message with the specified properties.
       _toast = toastification.show(
         title: Text(message ?? '', style: TextStyle(color: AppThemes().appColor.white)),
-        autoCloseDuration: const Duration(seconds: 3),
+        autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 3),
         backgroundColor: AppThemes().appColor.primary,
         borderRadius: BorderRadius.circular(10.r),
         margin: EdgeInsets.all(10.w),

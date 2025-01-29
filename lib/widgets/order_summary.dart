@@ -4,6 +4,7 @@ class OrderSummary extends StatelessWidget {
   final String? title;
   final List<OrderSummaryItem> items;
   final String totalPrice;
+  final String subTotalPrice;
   final void Function()? onTapCheckout;
   final void Function()? onTapRemovePromoCode;
   final void Function()? onApplyPromoCode;
@@ -17,6 +18,7 @@ class OrderSummary extends StatelessWidget {
     super.key,
     required this.items,
     required this.totalPrice,
+    required this.subTotalPrice,
     this.onTapCheckout,
     this.isPromoCodeApplied = true,
     this.titleStyle,
@@ -40,7 +42,15 @@ class OrderSummary extends StatelessWidget {
             title ?? APPStrings.orderSummary.tr,
             style: titleStyle == null ? style.orderSummaryTitleStyle : style.orderSummaryTitleStyle.merge(titleStyle),
           ),
-          SizedBox(height: 24.h),
+          if (isPromoCodeApplied) ...[
+            SizedBox(height: 16.h),
+            const Divider(),
+            _buildPromoCodeSection(style, context),
+            const Divider(),
+          ],
+          SizedBox(height: 16.h),
+          _buildTotalSection(style, isSubTotal: true),
+          SizedBox(height: 16.h),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -51,12 +61,6 @@ class OrderSummary extends StatelessWidget {
             },
             separatorBuilder: (context, index) => SizedBox(height: 16.h),
           ),
-          SizedBox(height: 16.h),
-          if (isPromoCodeApplied) ...[
-            const Divider(),
-            _buildPromoCodeSection(style, context),
-            const Divider(),
-          ],
           SizedBox(height: 16.h),
           _buildTotalSection(style),
         ],
@@ -123,19 +127,19 @@ class OrderSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalSection(OrderSummaryStyle style) {
+  Widget _buildTotalSection(OrderSummaryStyle style, {bool isSubTotal = false}) {
     return Padding(
       padding: EdgeInsets.only(top: 12.h),
       child: Row(
         children: [
           Expanded(
               child: SmartText(
-            APPStrings.total.tr,
+            isSubTotal ? APPStrings.subTotal.tr : APPStrings.total.tr,
             style: style.orderSummaryItemStyle,
           )),
           SizedBox(width: 17.w),
           SmartText(
-            totalPrice,
+            isSubTotal ? subTotalPrice : totalPrice,
             style: totalStyle ?? style.totalPriceStyle,
           ),
         ],

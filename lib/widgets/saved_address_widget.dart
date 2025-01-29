@@ -64,7 +64,6 @@ class SavedAddressWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 24.h),
           Divider(color: style.borderColor),
           Row(
             children: [

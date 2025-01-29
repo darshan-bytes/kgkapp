@@ -4,12 +4,14 @@ class ProductMenuBottomSheet extends StatelessWidget {
   final ProductDetailsModel productDetails;
   final VoidCallback? onAddToBag;
   final VoidCallback? onBuyNow;
+  final String? buttonText;
 
   ProductMenuBottomSheet({
     super.key,
     required this.productDetails,
     this.onAddToBag,
     this.onBuyNow,
+    this.buttonText,
   });
 
   final ValueNotifier<bool> showMoreDetails = ValueNotifier<bool>(false);
@@ -166,10 +168,20 @@ class ProductMenuBottomSheet extends StatelessWidget {
       children: [
         SmartButton(
             onTap: () {
-              onAddToBag?.call();
+              if (buttonText.isNullOrEmpty) {
+                if (productDetails.isAddedToCart) {
+                  BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                  context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                } else {
+                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                }
+              } else {
+                onAddToBag?.call();
+              }
               context.pop();
             },
-            title: APPStrings.addToBag.tr.toLowerCase().capitalizeFirst,
+            title: buttonText ??
+                ((productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr)).toLowerCase().capitalizeFirst,
             prefixImage: AppImages.icShoppingBag),
         SizedBox(height: 8.h),
         SmartButton(

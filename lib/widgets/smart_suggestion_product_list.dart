@@ -9,6 +9,7 @@ class SmartSuggestionProductList extends StatelessWidget {
   final bool isPaddingNeeded;
   final ScrollController scrollController;
   final Function(ProductDetailsModel)? onProductTap;
+  final Function()? onAddToBagTap;
   final bool isCrtAndGramVisible;
   final EdgeInsetsGeometry? margin;
 
@@ -22,7 +23,8 @@ class SmartSuggestionProductList extends StatelessWidget {
     this.isPaddingNeeded = true,
     required this.scrollController,
     this.onProductTap,
-    this.isCrtAndGramVisible = true,
+    this.isCrtAndGramVisible = false,
+    this.onAddToBagTap,
     this.margin,
   });
 
@@ -75,6 +77,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                   onFavTap: onFavTap,
                   productDetails: product,
                   isCrtAndGramVisible: isCrtAndGramVisible,
+                  onAddToBagTap: onAddToBagTap,
                 );
               }).toList(),
             ),

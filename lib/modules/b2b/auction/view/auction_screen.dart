@@ -290,9 +290,9 @@ class AuctionScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         return _buildResetBidsItem(
-                            isMyBid: bloc.recentBidList[index]['is_my_bid'],
-                            labelText: bloc.recentBidList[index]['date_time'],
-                            value: bloc.recentBidList[index]['price'],
+                            isMyBid: bloc.recentBidList[index]['is_my_bid'] ?? '',
+                            labelText: bloc.recentBidList[index]['date_time'] ?? '',
+                            value: bloc.recentBidList[index]['price'] ?? '',
                             style: style);
                       },
                       separatorBuilder: (context, index) => SizedBox(height: 16.h),
@@ -433,7 +433,7 @@ class AuctionScreen extends StatelessWidget {
               color: style.whiteColor,
               boxShadow: [
                 BoxShadow(
-                  color: style.boxShadowColor.withValues(alpha:0.17),
+                  color: style.boxShadowColor.withValues(alpha: 0.17),
                   spreadRadius: 0.r,
                   blurRadius: 16.r,
                   offset: const Offset(0, -2),

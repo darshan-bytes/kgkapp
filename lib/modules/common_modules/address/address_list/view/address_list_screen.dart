@@ -284,6 +284,7 @@ class AddressListScreen extends StatelessWidget {
             },
           ).toList(),
           totalPrice: addressListBloc.bagOrderSummaryData?.totalAmount?.setCurrency ?? '',
+          subTotalPrice: addressListBloc.bagOrderSummaryData?.subTotal?.setCurrency ?? '',
         );
       },
     );

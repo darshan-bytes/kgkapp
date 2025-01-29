@@ -37,7 +37,7 @@ class ProductGridItem extends StatelessWidget {
     this.imageWidth,
     this.onTap,
     required this.productDetails,
-    this.fit = BoxFit.cover,
+    this.fit = BoxFit.contain,
     this.isFavourite = false,
     this.onFavTap,
     this.onAddToBagTap,
@@ -56,7 +56,7 @@ class ProductGridItem extends StatelessWidget {
     this.buttonText,
     this.isBadgeVisible = false,
     this.forPreviewCatalogue = false,
-    this.isCrtAndGramVisible = true,
+    this.isCrtAndGramVisible = false,
     this.isFromWatchlist = false,
   });
 
@@ -199,15 +199,14 @@ class ProductGridItem extends StatelessWidget {
               color: backgroundColor ?? style.backgroundColor,
               borderRadius: BorderRadius.circular(4.r),
               border: Border.all(color: borderColor ?? style.transparentColor)),
-          height: 24.w,
-          width: 24.w,
+          height: 30.w,
+          width: 30.w,
           alignment: Alignment.center,
           child: SmartImage(
             path: path,
             height: 20.w,
             width: 20.w,
             fit: BoxFit.contain,
-            color: iconColor,
           ),
         ),
       ),
@@ -259,14 +258,14 @@ class ProductGridItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Wrap(
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SmartText(
-                        productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
+                        productDetails.finalPrice.isNotNullNorEmpty ? "${productDetails.finalPrice}\n" : productDetails.originalPrice,
                         style: style.priceTextStyle,
                         optionalPadding: EdgeInsets.only(right: 8.w),
+                        maxLines: 1,
                       ),
                       if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
                         SmartText(
@@ -276,7 +275,7 @@ class ProductGridItem extends StatelessWidget {
                           style: style.checkedPriceStyle,
                         ),
                       ] else ...[
-                        SmartText("\n")
+                        SmartText("")
                       ]
                     ],
                   ),

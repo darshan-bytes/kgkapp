@@ -13,20 +13,6 @@ class BagOrderSummaryDataModel {
   final List<BagOrderCharge> charges;
   final BagOrderCharge? promoCode;
 
-  BagOrderSummaryDataModel copyWith({
-    String? subTotal,
-    String? totalAmount,
-    List<BagOrderCharge>? charges,
-    BagOrderCharge? promoCode,
-  }) {
-    return BagOrderSummaryDataModel(
-      subTotal: subTotal ?? this.subTotal,
-      totalAmount: totalAmount ?? this.totalAmount,
-      charges: charges ?? this.charges,
-      promoCode: promoCode ?? this.promoCode,
-    );
-  }
-
   factory BagOrderSummaryDataModel.fromJson(Map<String, dynamic> json) {
     return BagOrderSummaryDataModel(
       subTotal: json["subTotal"],
@@ -61,24 +47,6 @@ class BagOrderCharge {
   final double? percentage;
   final bool? fromPercentage;
 
-  BagOrderCharge copyWith({
-    String? id,
-    String? title,
-    String? displayValue,
-    double? value,
-    double? percentage,
-    bool? fromPercentage,
-  }) {
-    return BagOrderCharge(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      displayValue: displayValue ?? this.displayValue,
-      value: value ?? this.value,
-      percentage: percentage ?? this.percentage,
-      fromPercentage: fromPercentage ?? this.fromPercentage,
-    );
-  }
-
   factory BagOrderCharge.fromJson(Map<String, dynamic> json) {
     return BagOrderCharge(
       id: json["_id"],
@@ -98,4 +66,11 @@ class BagOrderCharge {
         "percentage": percentage,
         "from_percentage": fromPercentage,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is BagOrderCharge && runtimeType == other.runtimeType && id == other.id && title == other.title;
+
+  @override
+  int get hashCode => id.hashCode ^ title.hashCode;
 }

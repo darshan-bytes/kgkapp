@@ -789,5 +789,7 @@
   "mob_login_required": "लॉगिन आवश्यक है",
   "mob_qty_x": "मात्रा: {#}",
   "mob_remove_all": "सभी हटाएं",
-  "mob_remove_all_product_from_cart": "कार्ट से सभी उत्पाद हटाएं?"
+  "mob_remove_all_product_from_cart": "कार्ट से सभी उत्पाद हटाएं?",
+  "mob_press_back_again_to_exit": "बाहर निकलने के लिए फिर से बैक दबाएं",
+  "mob_cant_add_product_from_different_commodities": "आप अलग-अलग कमोडिटी से उत्पाद नहीं जोड़ सकते। क्या आप आगे बढ़ना चाहते हैं? इससे पिछली कमोडिटी से उत्पाद हट जाएँगे।"
 }
