@@ -231,4 +231,5 @@ enum FieldTypeValidationEnum {
   zipcode,
   apartment,
   country,
+  currentPassword,
 }

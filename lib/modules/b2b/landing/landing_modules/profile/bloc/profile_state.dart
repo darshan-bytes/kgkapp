@@ -59,3 +59,11 @@ final class ProfilePickImageState extends ProfileState {
   @override
   List<Object?> get props => [];
 }
+
+final class ChangePasswordFieldErrorState extends ProfileState {
+  final FieldTypeValidationEnum fieldType;
+
+  const ChangePasswordFieldErrorState({required this.fieldType});
+  @override
+  List<Object?> get props => [];
+}

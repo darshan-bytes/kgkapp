@@ -33,6 +33,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? lastNameError;
   String? contactNumberError;
 
+  String? currentPasswordError;
+  String? passwordError;
+  String? confirmPasswordError;
+
   /// This list holds the details of the actions that can be performed on the profile.
   List<ProfileListModel> profileActionList = [];
 
@@ -85,6 +89,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<EditProfileFieldChangeEvent>(_onEditProfileFieldChangeEvent);
     on<ProfilePickImageEvent>(_onProfilePickImage);
     on<RemoveProfileImageEvent>(_onRemoveProfileImage);
+    on<ChangePasswordFieldChangeEvent>(_onChangePasswordFieldChangeEvent);
   }
 
   Future<void> _onInitialProfileListEvent(InitialProfileListEvent event, Emitter<ProfileState> emit) async {
@@ -112,7 +117,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onChangePasswordEvent(ChangePasswordEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileReloadState());
-    if (_validateChangePassword()) {
+    if (_validateChangePassword(emit)) {
       await _callChangePasswordApi(event: event);
     }
   }
@@ -141,6 +146,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         break;
     }
     emit(EditProfileFieldErrorState(fieldType: event.fieldType));
+  }
+
+  void _onChangePasswordFieldChangeEvent(ChangePasswordFieldChangeEvent event, Emitter<ProfileState> emit) {
+    emit(ProfileReloadState());
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.currentPassword:
+        currentPasswordError = null;
+        break;
+      case FieldTypeValidationEnum.password:
+        passwordError = null;
+        break;
+      case FieldTypeValidationEnum.confirmPassword:
+        confirmPasswordError = null;
+        break;
+      default:
+        break;
+    }
+    emit(ChangePasswordFieldErrorState(fieldType: event.fieldType));
   }
 
   Future<void> _onLogoutEvent(LogoutEvent event, Emitter<ProfileState> emit) async {
@@ -301,25 +324,32 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  bool _validateChangePassword() {
+  bool _validateChangePassword(Emitter<ProfileState> emit) {
+    bool isValidate = true;
     if (currentPasswordController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorCurrentPasswordRequired.tr);
-      return false;
-    } else if (newPasswordController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorNewPasswordRequired.tr);
-      return false;
-    } else if (confirmPasswordController.text.trim().isEmpty) {
-      Utils.showMessage(APPStrings.errorConfirmPasswordRequired.tr);
-      return false;
-    } else if (newPasswordController.text.trim() != confirmPasswordController.text.trim()) {
-      Utils.showMessage(APPStrings.passwordsDoNotMatch.tr);
-      return false;
-    } else if (!Utils.isValidPassword(newPasswordController.text.trim())) {
-      Utils.showMessage(APPStrings.validPassword.tr);
-      return false;
+      currentPasswordError = APPStrings.errorCurrentPasswordRequired.tr;
+      emit(ChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.currentPassword));
+      isValidate = false;
     }
-
-    return true;
+    if (newPasswordController.text.trim().isEmpty) {
+      passwordError = APPStrings.errorPasswordRequired.tr;
+      emit(ChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.password));
+      isValidate = false;
+    } else if (!Utils.isValidPassword(newPasswordController.text.trim())) {
+      passwordError = APPStrings.validPassword.tr;
+      emit(ChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.password));
+      isValidate = false;
+    }
+    if (confirmPasswordController.text.trim().isEmpty) {
+      confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
+      emit(ChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.confirmPassword));
+      isValidate = false;
+    } else if (newPasswordController.text != confirmPasswordController.text) {
+      confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
+      emit(ChangePasswordFieldErrorState(fieldType: FieldTypeValidationEnum.confirmPassword));
+      isValidate = false;
+    }
+    return isValidate;
   }
 
   Future<void> _callChangePasswordApi({required ChangePasswordEvent event}) async {
