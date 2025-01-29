@@ -7,7 +7,7 @@ part 'product_details_state.dart';
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
   // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
-
+  String productId = '';
   String productName = '';
   ProductDetailsModel? productDetails;
   DiamondDataModel? diamondData;
@@ -144,7 +144,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     userType = BlocProvider.of<AppBloc>(event.context).userType;
 
     getScreenIdentifier(event.context);
-    String productId = event.context.routesData?[RoutesData.productId] ?? '--';
+    productId = event.context.routesData?[RoutesData.productId] ?? '--';
     if (productId.isEmpty || productId == '--') {
       return;
     }
@@ -266,7 +266,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
-          bool isDiscounted = gemstoneData?.discountPercentage != null &&
+          bool isDiscounted = gemstoneData!.discountPercentage != null &&
               (gemstoneData?.discountPercentage is num) &&
               (gemstoneData?.discountPercentage ?? 0) > 0;
           isAddedToCart = gemstoneData!.isAddedToCart;
@@ -278,8 +278,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productId: productId,
             suid: gemstoneData!.suid,
             name: productName,
-            offerPrice: isDiscounted ? (gemstoneData?.discountPrice ?? 0).toString().setCurrency : null,
-            originalPrice: gemstoneData?.finalPrice?.setCurrency,
+            offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
+            originalPrice: gemstoneData!.finalPrice?.setCurrency,
             discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
             productSku: gemstoneData?.lotCode,
@@ -293,6 +293,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             isFavourite: gemstoneData?.isFavorite ?? false,
             wishlistId: gemstoneData?.wishlistID,
             stoneElements: gemstoneData?.components,
+            isAddedToCart: gemstoneData?.isAddedToCart ?? false,
           );
         }
       },
@@ -301,7 +302,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
     Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
-        .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString());
+        .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString(), isShowLoader: false);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -314,6 +315,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           suggestedProductList = diamondDatumListAPI.map((e) {
             bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
             return ProductDetailsModel(
+              suid: e.suid ?? '',
               productId: e.suid ?? '',
               name: e.rmDescription ?? '',
               imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
@@ -328,6 +330,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               wishlistId: e.wishlistID,
               title: e.suid,
               subTitle: e.rmDescription,
+              isAddedToCart: e.isAddedToCart,
             );
           }).toList();
           add(const ProductDetailsSuggestedLoadedEvent());
@@ -353,6 +356,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
 
           return ProductDetailsModel(
+            suid: e.suid ?? '',
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
@@ -367,6 +371,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             wishlistId: e.wishlistID,
             title: e.suid,
             subTitle: e.rmDescription,
+            isAddedToCart: e.isAddedToCart,
           );
         }).toList();
 
@@ -415,6 +420,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               item.metalColor2HexCode ?? "",
               item.metalColor3HexCode ?? "",
             ],
+            isAddedToCart: item.isAddedToCart,
           );
         }).toList();
         if (!isClosed) {
@@ -523,31 +529,34 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (data) {
         recentlyViewedProductList = data.data.map((e) {
           return ProductDetailsModel(
-              productId: e.id,
-              name: e.productDescription ?? '',
-              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              originalPrice: e.finalPrice?.toString().setCurrency,
-              offerPrice: e.discountPrice?.toString().setCurrency,
-              finalPrice: e.discountPrice?.toString().setCurrency,
-              discountPercentageString: e.discountEXT,
-              productSku: e.contractNoSkuNo,
-              reviewCount: e.reviewCount,
-              rating: e.rating?.toDouble(),
-              isFavourite: e.isFavorite,
-              wishlistId: e.wishlistID,
-              commodity: Commodity.jewellery,
-              subTitle: e.productDescription ?? '',
-              title: e.contractNoSkuNo ?? '',
-              kgkCollectionName: e.kgkCollection ?? "\n",
-              businessCategoryName: e.businessCategoryName ?? "\n",
-              cts: e.crtEXT,
-              gms: e.gms,
-              brandName: e.brandName,
-              colorsCode: [
-                e.metalColor1HexCode ?? "",
-                e.metalColor2HexCode ?? "",
-                e.metalColor3HexCode ?? "",
-              ]);
+            suid: e.suid ?? '',
+            productId: e.id,
+            name: e.productDescription ?? '',
+            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
+            originalPrice: e.finalPrice?.toString().setCurrency,
+            offerPrice: e.discountPrice?.toString().setCurrency,
+            finalPrice: e.discountPrice?.toString().setCurrency,
+            discountPercentageString: e.discountEXT,
+            productSku: e.contractNoSkuNo,
+            reviewCount: e.reviewCount,
+            rating: e.rating?.toDouble(),
+            isFavourite: e.isFavorite,
+            wishlistId: e.wishlistID,
+            commodity: Commodity.jewellery,
+            subTitle: e.productDescription ?? '',
+            title: e.contractNoSkuNo ?? '',
+            kgkCollectionName: e.kgkCollection ?? "\n",
+            businessCategoryName: e.businessCategoryName ?? "\n",
+            cts: e.crtEXT,
+            gms: e.gms,
+            brandName: e.brandName,
+            colorsCode: [
+              e.metalColor1HexCode ?? "",
+              e.metalColor2HexCode ?? "",
+              e.metalColor3HexCode ?? "",
+            ],
+            isAddedToCart: e.isAddedToCart,
+          );
         }).toList();
         add(const ProductDetailsReviewsLoadedEvent());
       },

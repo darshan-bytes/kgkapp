@@ -791,5 +791,7 @@
   "mob_login_required": "需要登入",
   "mob_qty_x": "數量：{#}",
   "mob_remove_all": "全部刪除",
-  "mob_remove_all_product_from_cart": "從購物車中刪除所有產品？"
+  "mob_remove_all_product_from_cart": "從購物車中刪除所有產品？",
+  "mob_press_back_again_to_exit": "再次按返回退出",
+  "mob_cant_add_product_from_different_commodities": "您不能新增來自不同商品的產品。您想繼續嗎？這將從先前的商品中刪除該產品。"
 }

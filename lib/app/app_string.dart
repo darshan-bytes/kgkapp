@@ -989,4 +989,8 @@ class APPStrings {
   static const String qtyX = 'mob_qty_x';
   static const String removeAll = 'mob_remove_all';
   static const String removeAllProductFromCart = 'mob_remove_all_product_from_cart';
+  static const String pressBackAgainToExit = 'mob_press_back_again_to_exit';
+  static const String cantAddProductFromDifferentCommodities = 'mob_cant_add_product_from_different_commodities';
+  static const String differentCommoditiesFound = 'mob_different_commodities_found';
+  static const String differentCommoditiesMergeConfirm = 'mob_different_commodities_merge_confirm';
 }

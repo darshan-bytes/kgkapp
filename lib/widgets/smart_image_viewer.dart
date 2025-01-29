@@ -77,6 +77,7 @@ class SmartImage extends StatelessWidget {
               colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
             ),
           );
+          break;
         case ImageType.asset:
           child = Container(
             height: height,
@@ -95,6 +96,7 @@ class SmartImage extends StatelessWidget {
               fit: fit ?? BoxFit.cover,
             ),
           );
+          break;
         case ImageType.file:
           child = Container(
             height: height,
@@ -113,6 +115,7 @@ class SmartImage extends StatelessWidget {
               fit: fit ?? BoxFit.cover,
             ),
           );
+          break;
         case ImageType.network:
           child = Container(
             height: height,
@@ -154,13 +157,13 @@ class SmartImage extends StatelessWidget {
                             File(placeholderImage),
                             height: height,
                             width: width,
-                            fit: fit ?? BoxFit.cover,
+                            fit: fit ?? BoxFit.contain,
                           )
                         : Image.asset(
                             AppImages.icPlaceholder,
                             height: height,
                             width: width,
-                            fit: fit ?? BoxFit.cover,
+                            fit: fit ?? BoxFit.contain,
                           ),
                     placeholder: (context, url) => Center(
                       child: SizedBox(
@@ -183,6 +186,7 @@ class SmartImage extends StatelessWidget {
                     imageUrl: path,
                   ),
           );
+          break;
       }
     }
 

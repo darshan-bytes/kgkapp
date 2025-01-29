@@ -43,7 +43,7 @@ class FaqScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 32.h),
-                          _buildStillNeedSection(style),
+                          _buildStillNeedSection(context, style),
                         ],
                       ),
                     ),
@@ -91,23 +91,23 @@ class FaqScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStillNeedSection(FAQStyle style) {
+  Widget _buildStillNeedSection(BuildContext context, FAQStyle style) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         SmartText(APPStrings.stillNeedHelp.tr, style: style.titleStyle),
         SizedBox(height: 24.h),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.byPhone.tr,
-          "Monday – Friday 9 AM – 5 PM",
-          "+91 98765 43210",
-        ),
+        _buildStillNeedHelpItems(style, APPStrings.byPhone.tr, "Monday – Friday 9 AM – 5 PM", "+91 98765 43210", onTap: () async {
+          await Utils.launchUrlFromString("tel:+919876543210");
+        }),
         _buildStillNeedHelpItems(
           style,
           APPStrings.byEmail.tr,
           APPStrings.questionOrQueriesGetInTouch.tr,
           "support@kgk.com",
+          onTap: () async {
+            await Utils.launchUrlFromString("mailto:support@kgk.com");
+          },
         ),
         _buildStillNeedHelpItems(
           style,
@@ -115,7 +115,7 @@ class FaqScreen extends StatelessWidget {
           APPStrings.findYourNearestXStore.tr.interpolate(['KGK']),
           APPStrings.storeDirectory.tr,
           onTap: () {
-            //TODO: Navigate to Store Directory
+            context.pushNamed(AppRoutes.findStorePage);
           },
         ),
       ],

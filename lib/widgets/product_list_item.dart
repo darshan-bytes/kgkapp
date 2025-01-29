@@ -151,13 +151,13 @@ class ProductListItem extends StatelessWidget {
             border: Border.all(
               color: borderColor ?? style.transparentColor,
             )),
-        height: 24.w,
-        width: 24.w,
+        height: 30.w,
+        width: 30.w,
         alignment: Alignment.center,
         child: SmartImage(
           path: path,
-          height: 16.w,
-          width: 16.w,
+          height: 20.w,
+          width: 20.w,
           fit: BoxFit.contain,
         ),
       ),

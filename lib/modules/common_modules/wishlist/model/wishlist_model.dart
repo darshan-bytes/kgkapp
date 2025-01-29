@@ -46,6 +46,7 @@ class WishlistDatum {
     required this.customerId,
     required this.id,
     required this.productData,
+    this.isAddedToCart = false,
   });
 
   String? productId;
@@ -53,6 +54,7 @@ class WishlistDatum {
   int? customerId;
   String? id;
   ProductData? productData;
+  bool isAddedToCart;
 
   factory WishlistDatum.fromJson(Map<String, dynamic> json) {
     return WishlistDatum(
@@ -61,6 +63,7 @@ class WishlistDatum {
       customerId: json["customer_id"],
       id: json["id"],
       productData: json["productData"] == null ? null : ProductData.fromJson(json["productData"]),
+      isAddedToCart: json["isAddedToCart"] ?? false,
     );
   }
 
@@ -70,11 +73,12 @@ class WishlistDatum {
         "customer_id": customerId,
         "id": id,
         "productData": productData?.toJson(),
+        "isAddedToCart": isAddedToCart,
       };
 
   @override
   String toString() {
-    return "$productId, $listingName, $customerId, $id, $productData, ";
+    return "$productId, $listingName, $customerId, $id, $productData, $isAddedToCart";
   }
 }
 

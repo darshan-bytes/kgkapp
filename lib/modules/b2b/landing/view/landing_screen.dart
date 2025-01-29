@@ -14,9 +14,23 @@ class LandingScreen extends StatelessWidget {
             body: BlocBuilder<LandingBloc, LandingState>(
               buildWhen: (previous, current) => current is LandingChangeTabState,
               builder: (context, state) => PopScope(
-                canPop: landingBloc.currentIndex == 0,
+                canPop: false,
                 onPopInvokedWithResult: (didPop, result) {
-                  landingBloc.add(LandingChangeTabEvent(0, context: context));
+                  if (didPop) {
+                    return;
+                  }
+                  if (landingBloc.currentIndex != 0) {
+                    landingBloc.add(LandingChangeTabEvent(0, context: context));
+                    return;
+                  }
+
+                  DateTime now = DateTime.now();
+                  if (landingBloc.lastExitTime == null || now.difference(landingBloc.lastExitTime!) > landingBloc.exitTimeGap) {
+                    landingBloc.lastExitTime = now;
+                    Utils.showMessage(APPStrings.pressBackAgainToExit.tr, autoCloseDuration: landingBloc.exitTimeGap);
+                  } else {
+                    SystemNavigator.pop();
+                  }
                 },
                 child: landingBloc.pages[landingBloc.currentIndex],
               ),

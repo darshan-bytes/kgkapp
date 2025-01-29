@@ -75,27 +75,39 @@ class EditWatchlistScreen extends StatelessWidget {
                           ),
                           if (bloc.isEdit) ...[
                             SizedBox(height: 16.h),
-                            Container(
+                            remainingTimeWidgetForEdit(context, style, bloc),
+                            /*Container(
                               color: style.durationBackgroundColor,
                               padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      SmartImage(path: AppImages.icClock, width: 20.w, height: 20.w),
-                                      SizedBox(width: 10.w),
-                                      SmartRichText(spans: [
-                                        SmartTextSpan(text: bloc.durationDays.toString(), style: style.timeDurationValueStyle),
-                                        SmartTextSpan(text: APPStrings.days.tr.toLowerCase(), style: style.timeDurationStyle),
-                                        SmartTextSpan(text: " : ", style: style.timeDurationStyle),
-                                        SmartTextSpan(text: bloc.durationHours.toString(), style: style.timeDurationValueStyle),
-                                        SmartTextSpan(text: APPStrings.hours.tr.toString(), style: style.timeDurationStyle),
-                                        SmartTextSpan(text: " : ", style: style.timeDurationStyle),
-                                        SmartTextSpan(text: bloc.durationMinutes.toString(), style: style.timeDurationValueStyle),
-                                        SmartTextSpan(text: APPStrings.mins.tr.toLowerCase(), style: style.timeDurationStyle),
-                                      ]),
-                                    ],
-                                  ),
+                                  if (BlocProvider.of<WatchlistBloc>(context)
+                                          .watchListingList
+                                          .firstWhereOrNull((e) => e.id == bloc.watchlistData?.sId)
+                                          ?.strRemainingTime !=
+                                      null)
+                                    ValueListenableBuilder(
+                                      valueListenable: BlocProvider.of<WatchlistBloc>(context)
+                                          .watchListingList
+                                          .firstWhere((e) => e.id == bloc.watchlistData?.sId)
+                                          .strRemainingTime!,
+                                      builder: (context, child, value) {
+                                        return Row(
+                                          children: [
+                                            SmartImage(path: AppImages.icClock, width: 20.w, height: 20.w),
+                                            SizedBox(width: 10.w),
+                                            SmartText(
+                                              BlocProvider.of<WatchlistBloc>(context)
+                                                  .watchListingList
+                                                  .firstWhere((e) => e.id == bloc.watchlistData?.sId)
+                                                  .strRemainingTime
+                                                  ?.value,
+                                              style: style.timeDurationValueStyle,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
                                   SizedBox(height: 4.h),
                                   SmartText(
                                     APPStrings.theProductWillBeRemovedWhenTheTimeIsUp.tr,
@@ -103,7 +115,7 @@ class EditWatchlistScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
+                            ),*/
                           ],
                           SizedBox(height: 32.h),
                           Row(
@@ -146,6 +158,52 @@ class EditWatchlistScreen extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget remainingTimeWidgetForEdit(BuildContext context, EditWatchlistStyle style, EditWatchlistBloc bloc) {
+    // Get WatchlistBloc once instead of multiple times
+    final watchlistBloc = BlocProvider.of<WatchlistBloc>(context);
+
+    // Find the watchlist item once
+    final watchlistItem = watchlistBloc.watchListingList.firstWhereOrNull((e) => e.id == bloc.watchlistData?.sId);
+
+    // If no remaining time, return empty container
+    if (watchlistItem?.strRemainingTime == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      color: style.durationBackgroundColor,
+      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+      child: Column(
+        children: [
+          ValueListenableBuilder<String?>(
+            valueListenable: watchlistItem!.strRemainingTime!,
+            builder: (context, value, _) {
+              return Row(
+                children: [
+                  SmartImage(
+                    path: AppImages.icClock,
+                    width: 20.w,
+                    height: 20.w,
+                  ),
+                  SizedBox(width: 10.w),
+                  SmartText(
+                    value,
+                    style: style.timeDurationValueStyle,
+                  ),
+                ],
+              );
+            },
+          ),
+          SizedBox(height: 4.h),
+          SmartText(
+            APPStrings.theProductWillBeRemovedWhenTheTimeIsUp.tr,
+            style: style.timeDurationDescStyle,
           ),
         ],
       ),

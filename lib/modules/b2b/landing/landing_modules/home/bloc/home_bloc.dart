@@ -1048,7 +1048,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> shapeMasterFilters(BuildContext context) async {
     try {
-      final response = await appBloc.fetchShapeMasterFilters(context);
+      final response = await appBloc.fetchShapeMasterFilters(context, isShowLoader: false);
       shopDiamondsList = List.generate(response.length, (index) {
         ShapeMasterDetails item = response[index];
         return AuctionListModel(
@@ -1066,7 +1066,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> fetchCommodityMasterFilters(BuildContext context) async {
     try {
-      final response = await appBloc.fetchCommodityMasterFilters(context);
+      final response = await appBloc.fetchCommodityMasterFilters(context, isShowLoader: false);
       shopGemstonesList = List.generate(response.length, (index) {
         CommodityMasterDetails item = response[index];
         return AuctionListModel(
