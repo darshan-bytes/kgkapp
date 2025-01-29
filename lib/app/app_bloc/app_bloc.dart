@@ -322,7 +322,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (l) => Utils.showMessage(l.message),
         (data) async {
           await StorageManager().clearBagData();
-          // Utils.showMessage(data.message);
         },
       );
     });
