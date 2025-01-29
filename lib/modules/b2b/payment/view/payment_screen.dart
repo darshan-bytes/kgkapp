@@ -125,6 +125,7 @@ class PaymentScreen extends StatelessWidget {
       ],
       // totalStyle: style.footerTotalAmountStyle,
       totalPrice: "\$35,700.00",
+      subTotalPrice: "\$11,950.00",
     );
   }
 }

@@ -403,6 +403,30 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         }
       }
 
+      if (addressController.text.trim().isEmpty) {
+        addressError = APPStrings.errorStreetAddressRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.address));
+        isValidate = false;
+      }
+
+      if (cityController.text.trim().isEmpty) {
+        cityError = APPStrings.errorCityRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.city));
+        isValidate = false;
+      }
+
+      if (stateController.text.trim().isEmpty) {
+        stateError = APPStrings.errorStateRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.state));
+        isValidate = false;
+      }
+
+      if (zipcodeController.text.trim().isEmpty) {
+        zipcodeError = APPStrings.errorZipCodeRequired.tr;
+        emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.zipcode));
+        isValidate = false;
+      }
+
       if (passwordController.text.trim().isEmpty) {
         passwordError = APPStrings.errorPasswordRequired.tr;
         emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
@@ -558,24 +582,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         break;
     }
     emit(SignUpFieldValidationState(fieldType: event.fieldType));
-  }
-
-  Future<void> mergeCart(BuildContext context) async {
-    MyBagDataModel? myBagDataModel = StorageManager().getBagData();
-    if (myBagDataModel != null) {
-      Map<String, dynamic> body = {
-        ApiKey.id: myBagDataModel.sId ?? '',
-      };
-      await AppRepository(context).mergeBag(body: body).then((value) {
-        value?.fold((l) {
-          Utils.showMessage(l.message);
-        }, (r) async {
-          if (r.responseData != null) {
-            await StorageManager().clearBagData();
-          }
-        });
-      });
-    }
   }
 
   void clearField() {

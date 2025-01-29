@@ -37,7 +37,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
 
   Widget _buildBody(WatchlistDetailsBloc bloc, BuildContext context) {
     return BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
-      buildWhen: (previous, current) => current is WatchlistDetailsLoaded || current is WatchlistDetailsLoading,
+      buildWhen: (previous, current) => (current is WatchlistDetailsLoaded && current.isFirst),
       builder: (context, state) {
         if (state is WatchlistDetailsLoaded) {
           final WatchlistDetailsStyle style = AppTheme.of(context).watchlistDetailsStyle;
@@ -180,29 +180,35 @@ class WatchlistDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildProductGrid(BuildContext context, WatchlistDetailsBloc bloc) {
-    if (bloc.productList.isEmpty) {
-      return NoDataFoundWidget(text: APPStrings.noProductsAddedInWatchlist.tr);
-    }
-    return SmartGridView(
-      items: List.generate(
-        bloc.productList.length,
-        (index) {
-          ProductDetailsModel productDetails = bloc.productList[index];
-          return ProductGridItem(
-            isFromWatchlist: true,
-            isOutOfStock: productDetails.isOutOfStock,
-            productDetails: productDetails,
-            onCancelTap: () {
-              bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
+    return BlocBuilder<WatchlistDetailsBloc, WatchlistDetailsState>(
+      buildWhen: (previous, current) => current is WatchlistDetailsLoaded || current is WatchlistDetailsLoading,
+      builder: (context, state) {
+        if (bloc.productList.isEmpty) {
+          return NoDataFoundWidget(text: APPStrings.noProductsAddedInWatchlist.tr);
+        }
+        return SmartGridView(
+          items: List.generate(
+            bloc.productList.length,
+            (index) {
+              ProductDetailsModel productDetails = bloc.productList[index];
+              return ProductGridItem(
+                isFromWatchlist: true,
+                isOutOfStock: productDetails.isOutOfStock,
+                productDetails: productDetails,
+                onCancelTap: () {
+                  printWrapped('Cancel Tap');
+                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
+                },
+                onFavTap: () {},
+                onAddToBagTap: () {
+                  bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
+                },
+                buttonText: APPStrings.edit.tr,
+              );
             },
-            onFavTap: () {},
-            onAddToBagTap: () {
-              bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
-            },
-            buttonText: APPStrings.edit.tr,
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

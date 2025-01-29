@@ -220,7 +220,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         response = await AppRepository(context).getDiamondYouMayLike(
           productId,
           page: paginationScrollController.currentPage.toString(),
-          isLoadMore: isLoadMore,
+          isShowLoader: isLoadMore,
           limit: AppConst.pageLimit.toString(),
         );
       } else if (productNavigation == AppConst.recentlyViewed) {
@@ -395,6 +395,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       title: diamond.lotCode ?? "",
       subTitle: diamond.rmDescription ?? "",
       isForAuction: diamond.isAuction,
+      isAddedToCart: diamond.isAddedToCart,
     );
   }
 

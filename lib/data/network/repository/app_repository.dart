@@ -306,8 +306,10 @@ class AppRepository extends ApiService {
 
   ///For Getting Diamond You May Like by ID
   Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondYouMayLike(String id,
-      {required String limit, required String page, bool isLoadMore = false}) async {
-    context.setAppLoading(true);
+      {required String limit, required String page, bool isShowLoader = true}) async {
+    if (isShowLoader) {
+      context.setAppLoading(true);
+    }
     final Map<String, dynamic> query = {ApiKey.page: page, ApiKey.limit: limit};
 
     if (StorageManager.instance.getIsSkipLogin()) {
@@ -321,7 +323,9 @@ class AppRepository extends ApiService {
       query: query,
       withCurrencyHeader: true,
     );
-    context.setAppLoading(false);
+    if (isShowLoader) {
+      context.setAppLoading(false);
+    }
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -831,12 +835,12 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<ShapeMasterDetails>>?> shapeMasterFilters(
-      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
-    if (!isLoadMore) {
+      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+    if (isShowLoader) {
       context.setAppLoading(true);
     }
     var response = await postMethod<PaginationData<ShapeMasterDetails>>(ApiClient.shapeMasterFilters, body);
-    if (!isLoadMore) {
+    if (isShowLoader) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
@@ -849,12 +853,12 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
-      {Map<String, dynamic>? body, bool isLoadMore = false}) async {
-    if (!isLoadMore) {
+      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+    if (isShowLoader) {
       context.setAppLoading(true);
     }
     var response = await postMethod<PaginationData<CommodityMasterDetails>>(ApiClient.commodityMasterFilters, body);
-    if (!isLoadMore) {
+    if (isShowLoader) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));

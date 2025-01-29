@@ -327,7 +327,9 @@ class MyBagScreen extends StatelessWidget {
                         // );
                       },
                       isSelectedBackground: false,
-                      onTap: () {},
+                      onTap: () {
+                        _onProductTap(context, product);
+                      },
                       onYourDiscountChange: (value) {
                         FocusScope.of(context).unfocus();
                         if (value != null) {
@@ -402,7 +404,9 @@ class MyBagScreen extends StatelessWidget {
                         // );
                       },
                       isSelectedBackground: false,
-                      onTap: () {},
+                      onTap: () {
+                        _onProductTap(context, product);
+                      },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
                           carat: product.ctsOrGms?.toString(),
@@ -444,6 +448,9 @@ class MyBagScreen extends StatelessWidget {
                 );
               case Commodity.jewellery:
                 return CartProductItem(
+                  onTap: () {
+                    _onProductTap(context, product);
+                  },
                   productDetails: product,
                   onChangedCheckbox: (value) {
                     bloc.add(MyBagSelectProductChangedEvent(index: index));
@@ -499,6 +506,7 @@ class MyBagScreen extends StatelessWidget {
                   .toList() ??
               [],
           totalPrice: bagOrderSummary?.totalAmount?.setCurrency ?? '',
+          subTotalPrice: bagOrderSummary?.subTotal?.setCurrency ?? '',
         );
       },
     );
@@ -775,5 +783,15 @@ class MyBagScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onProductTap(BuildContext context, ProductDetailsModel productDetails) {
+    if (productDetails.commodity == null) {
+      return;
+    }
+    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+      RoutesData.productId: productDetails.suid ?? '',
+      RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
+    });
   }
 }

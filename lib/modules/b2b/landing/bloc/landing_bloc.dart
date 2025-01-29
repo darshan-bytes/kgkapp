@@ -5,6 +5,9 @@ part 'landing_event.dart';
 part 'landing_state.dart';
 
 class LandingBloc extends Bloc<LandingEvent, LandingState> {
+  final Duration exitTimeGap = const Duration(seconds: 2);
+  DateTime? lastExitTime;
+
   UserType userType = UserType.b2cUser;
   static const int homeIndex = 0;
   static const int categoriesIndex = 1;

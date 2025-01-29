@@ -137,7 +137,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     for (WishlistDatum element in wishlistData) {
       if (element.productData != null) {
         ProductDetailsModel product = ProductDetailsModel(
-          productId: element.productId ?? '',
+          suid: element.productData?.suid ?? "",
+          productId: element.productData?.suid ?? '',
           imageUrl: (element.productData?.productImages)?.isNotNullNorEmpty ?? false ? element.productData!.productImages?.first.uRL : "",
           title: _buildTitleOfProduct(element: element),
           subTitle: _buildSubTitleOfProduct(element: element),
@@ -147,6 +148,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           wishlistId: element.productData?.wishlistId ?? "",
           gms: element.displayCommodity == Commodity.jewellery ? element.productData?.gms : null,
           colorsCode: _buildColorsCode(element: element),
+          isAddedToCart: element.isAddedToCart,
         );
         productList.add(product);
       }

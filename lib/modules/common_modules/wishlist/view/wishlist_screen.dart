@@ -72,24 +72,27 @@ class WishlistScreen extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            SmartGridView(
-                items: bloc.productList.map((ProductDetailsModel productDetails) {
-              return ProductGridItem(
-                productDetails: productDetails,
-                isOutOfStock: productDetails.isOutOfStock,
-                isFavourite: true,
-                onAddToBagTap: () {},
-                prefixImage: AppImages.icShoppingBag,
-                imageSize: 16.w,
-                onFavTap: () {
-                  bloc.add(ProductRemoveFromWishlistEvent(productDetails));
-                },
-                onTap: () {
-                  _onProductTap(context, bloc, productDetails);
-                },
-                isStoneWithPrice: true,
-              );
-            }).toList()),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20.h),
+              child: SmartGridView(
+                  items: bloc.productList.map((ProductDetailsModel productDetails) {
+                return ProductGridItem(
+                  productDetails: productDetails,
+                  isOutOfStock: productDetails.isOutOfStock,
+                  isFavourite: true,
+                  onAddToBagTap: () {},
+                  prefixImage: AppImages.icShoppingBag,
+                  imageSize: 16.w,
+                  onFavTap: () {
+                    bloc.add(ProductRemoveFromWishlistEvent(productDetails));
+                  },
+                  onTap: () {
+                    _onProductTap(context, bloc, productDetails);
+                  },
+                  isStoneWithPrice: true,
+                );
+              }).toList()),
+            ),
             if (state is WishlistLoadingMoreState) const SmartCircularProgressIndicator(),
           ],
         );
@@ -98,8 +101,12 @@ class WishlistScreen extends StatelessWidget {
   }
 
   void _onProductTap(BuildContext context, WishlistBloc bloc, ProductDetailsModel productDetails) {
+    if (productDetails.commodity == null) {
+      return;
+    }
     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-      RoutesData.productId: productDetails.productId ?? '',
+      RoutesData.productId: productDetails.suid ?? '',
+      RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
     });
   }
 }

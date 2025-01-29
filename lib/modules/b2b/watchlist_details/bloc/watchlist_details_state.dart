@@ -26,10 +26,12 @@ final class WatchlistDetailsLoading extends WatchlistDetailsState {
 }
 
 final class WatchlistDetailsLoaded extends WatchlistDetailsState {
-  const WatchlistDetailsLoaded();
+  final bool isFirst;
+
+  const WatchlistDetailsLoaded({this.isFirst = true});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isFirst];
 }
 
 final class WatchlistDetailsTimerState extends WatchlistDetailsState {

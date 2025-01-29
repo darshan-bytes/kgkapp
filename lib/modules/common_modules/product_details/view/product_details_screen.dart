@@ -593,6 +593,7 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
         return SmartSuggestionProductList(
+          onAddToBagTap: () {},
           title: APPStrings.youMayAlsoLike.tr,
           onViewAllTap: bloc.suggestedProductList.length > 5
               ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
@@ -626,6 +627,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               SizedBox(height: 32.h),
               SmartSuggestionProductList(
+                onAddToBagTap: () {},
                 title: APPStrings.recentlyViewed.tr,
                 onViewAllTap: bloc.recentlyViewedProductList.length > 5
                     ? () {
