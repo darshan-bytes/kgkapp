@@ -59,48 +59,81 @@ class ChangePasswordBottomSheet extends StatelessWidget {
     return <Widget>[
       _buildCurrentPasswordField(profileBloc),
       SizedBox(height: 24.h),
-      _buildNewPasswordField(profileBloc),
+      _buildPasswordField(profileBloc),
       SizedBox(height: 24.h),
-      _buildConfirmNewPasswordField(profileBloc),
+      _buildConfirmPasswordField(profileBloc),
     ];
   }
 
   Widget _buildCurrentPasswordField(ProfileBloc profileBloc) {
-    return SmartTextField(
-      controller: profileBloc.currentPasswordController,
-      labelText: APPStrings.currentPassword.tr,
-      hintText: APPStrings.currentPassword.tr,
-      obscured: true,
-      keyboardType: TextInputType.visiblePassword,
-      focusNode: profileBloc.currentPasswordFocusNode,
-      nextFocus: profileBloc.newPasswordFocusNode,
-      textInputAction: TextInputAction.next,
-      autofocus: true,
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) =>
+          current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.currentPassword,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: profileBloc.currentPasswordError,
+          controller: profileBloc.currentPasswordController,
+          labelText: APPStrings.currentPassword.tr,
+          hintText: APPStrings.currentPassword.tr,
+          obscured: true,
+          keyboardType: TextInputType.visiblePassword,
+          focusNode: profileBloc.currentPasswordFocusNode,
+          nextFocus: profileBloc.newPasswordFocusNode,
+          textInputAction: TextInputAction.next,
+          autofocus: true,
+          onValueChanges: (value) {
+            if (profileBloc.currentPasswordError.isNotNullNorEmpty) {
+              profileBloc.add(ChangePasswordFieldChangeEvent(fieldType: FieldTypeValidationEnum.currentPassword));
+            }
+          },
+        );
+      },
     );
   }
 
-  Widget _buildNewPasswordField(ProfileBloc profileBloc) {
-    return SmartTextField(
-      controller: profileBloc.newPasswordController,
-      labelText: APPStrings.newPassword.tr,
-      hintText: APPStrings.newPassword.tr,
-      obscured: true,
-      keyboardType: TextInputType.visiblePassword,
-      focusNode: profileBloc.newPasswordFocusNode,
-      nextFocus: profileBloc.confirmPasswordFocusNode,
-      textInputAction: TextInputAction.next,
+  Widget _buildPasswordField(ProfileBloc profileBloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) => current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.password,
+      builder: (context, state) {
+        return SmartTextField(
+          obscured: true,
+          errorText: profileBloc.passwordError,
+          labelText: APPStrings.newPassword.tr,
+          hintText: APPStrings.newPassword.tr,
+          controller: profileBloc.newPasswordController,
+          focusNode: profileBloc.newPasswordFocusNode,
+          nextFocus: profileBloc.confirmPasswordFocusNode,
+          textInputAction: TextInputAction.next,
+          onValueChanges: (value) {
+            if (profileBloc.passwordError.isNotNullNorEmpty) {
+              profileBloc.add(ChangePasswordFieldChangeEvent(fieldType: FieldTypeValidationEnum.password));
+            }
+          },
+        );
+      },
     );
   }
 
-  Widget _buildConfirmNewPasswordField(ProfileBloc profileBloc) {
-    return SmartTextField(
-      controller: profileBloc.confirmPasswordController,
-      labelText: APPStrings.confirmPassword.tr,
-      hintText: APPStrings.confirmPassword.tr,
-      keyboardType: TextInputType.visiblePassword,
-      textInputAction: TextInputAction.done,
-      obscured: true,
-      focusNode: profileBloc.confirmPasswordFocusNode,
+  Widget _buildConfirmPasswordField(ProfileBloc profileBloc) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) =>
+          current is ChangePasswordFieldErrorState && current.fieldType == FieldTypeValidationEnum.confirmPassword,
+      builder: (context, state) {
+        return SmartTextField(
+          errorText: profileBloc.confirmPasswordError,
+          labelText: APPStrings.confirmPassword.tr,
+          hintText: APPStrings.confirmPassword.tr,
+          controller: profileBloc.confirmPasswordController,
+          focusNode: profileBloc.confirmPasswordFocusNode,
+          textInputAction: TextInputAction.done,
+          obscured: true,
+          onValueChanges: (value) {
+            if (profileBloc.confirmPasswordError.isNotNullNorEmpty) {
+              profileBloc.add(ChangePasswordFieldChangeEvent(fieldType: FieldTypeValidationEnum.confirmPassword));
+            }
+          },
+        );
+      },
     );
   }
 

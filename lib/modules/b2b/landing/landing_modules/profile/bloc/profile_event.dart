@@ -90,6 +90,15 @@ final class EditProfileFieldChangeEvent extends ProfileEvent {
   List<Object> get props => [fieldType];
 }
 
+final class ChangePasswordFieldChangeEvent extends ProfileEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const ChangePasswordFieldChangeEvent({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}
+
 final class ProfilePickImageEvent extends ProfileEvent {
   final ImageSource imageSource;
 
