@@ -196,7 +196,6 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 isOutOfStock: productDetails.isOutOfStock,
                 productDetails: productDetails,
                 onCancelTap: () {
-                  printWrapped('Cancel Tap');
                   bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context, actionType: WatchlistActionType.remove));
                 },
                 onFavTap: () {},

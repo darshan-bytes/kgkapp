@@ -24,7 +24,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await CachedNetworkImageProvider.defaultCacheManager.emptyCache();
 
     // Perform API calls for currency and language labels
-    // await _setPlaceholderImage();
     await _currencyApiCall(event.context, emit);
     await _languageLabelApiCall(event.context, emit);
     await _sortOptionListApiCall(event.context);

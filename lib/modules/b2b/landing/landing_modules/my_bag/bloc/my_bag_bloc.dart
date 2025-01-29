@@ -227,11 +227,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       },
       (r) {
         bagOrderSummaryData = r;
-        // if (bagOrderSummaryData != null) {
-        //   if (bagOrderSummaryData!.charges.isNotEmpty && bagOrderSummaryData!.promoCode != null) {
-        //     bagOrderSummaryData!.charges.remove(bagOrderSummaryData!.promoCode!);
-        //   }
-        // }
         emit(MyBagOrderSummaryDataLoadedState());
         onSuccess?.call();
       },
