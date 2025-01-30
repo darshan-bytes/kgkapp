@@ -557,8 +557,10 @@ class AppRoutes {
 
       case stonesLandingPage:
         builder = (context) {
-          BlocProvider.of<StonesLandingBloc>(context).add(InitialStonesLandingEvent(context: context));
-          return const StonesLandingScreen();
+          return BlocProvider<StonesLandingBloc>(
+            create: (context) => StonesLandingBloc()..add(InitialStonesLandingEvent(context: context)),
+            child: const StonesLandingScreen(),
+          );
         };
         break;
 
