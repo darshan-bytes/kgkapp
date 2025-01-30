@@ -535,6 +535,9 @@ class HomeWidgets {
   }
 
   static Widget buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
+    if (homeBloc.kgkCoutureSelectedIndex == 0 && homeBloc.luminousProductViewList.isNullOrEmpty) {
+      return SizedBox();
+    }
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 32.h),
         child: Column(
