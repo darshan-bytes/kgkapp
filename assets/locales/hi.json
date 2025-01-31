@@ -791,5 +791,11 @@
   "mob_remove_all": "सभी हटाएं",
   "mob_remove_all_product_from_cart": "कार्ट से सभी उत्पाद हटाएं?",
   "mob_press_back_again_to_exit": "बाहर निकलने के लिए फिर से बैक दबाएं",
-  "mob_cant_add_product_from_different_commodities": "आप अलग-अलग कमोडिटी से उत्पाद नहीं जोड़ सकते। क्या आप आगे बढ़ना चाहते हैं? इससे पिछली कमोडिटी से उत्पाद हट जाएँगे।"
+  "mob_cant_add_product_from_different_commodities": "आप अलग-अलग कमोडिटी से उत्पाद नहीं जोड़ सकते। क्या आप आगे बढ़ना चाहते हैं? इससे पिछली कमोडिटी से उत्पाद हट जाएँगे।",
+  "mob_bids_found": "अभी तक कोई बोली नहीं लगाई गई है. बोली लगाने वाले पहले व्यक्ति बनें!,",
+  "mob_error_bid_amount_valid": "कृपया वैध बोली दर्ज करें",
+  "mob_error_bid_amount_greater_than_x": "बोली राशि आरंभिक बोली राशि के बराबर या उससे अधिक होनी चाहिए।",
+  "mob_auction_will_start_on": "बोली अवधि को शुरू करेंगे",
+  "mob_auction_has_ended": "बोली समाप्त हो गया है",
+  "mob_loading": "लोड हो रहा है..."
 }

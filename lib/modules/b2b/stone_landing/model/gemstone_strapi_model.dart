@@ -120,7 +120,7 @@ class Gemstone {
   final int? id;
   final String? component;
   final Slug? slug;
-  final dynamic? button;
+  final dynamic button;
   final UserType? userType;
   final BusinessType? businessType;
   final About? poster;
@@ -138,7 +138,7 @@ class Gemstone {
   final List<Faq> faQs;
   final List<Details> points;
 
-  factory Gemstone.fromJson(Map<String, dynamic> json){
+  factory Gemstone.fromJson(Map<String, dynamic> json) {
     return Gemstone(
       id: json["id"],
       component: json["__component"],
@@ -164,28 +164,27 @@ class Gemstone {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "__component": component,
-    "slug": slug?.toJson(),
-    "button": button,
-    "user_type": userType?.toJson(),
-    "business_type": businessType?.toJson(),
-    "poster": poster?.toJson(),
-    "info": info?.toJson(),
-    "title": title,
-    "description": description,
-    "background_image": backgroundImage?.toJson(),
-    "details": details?.toJson(),
-    "country": country.map((x) => x?.toJson()).toList(),
-    "image": image?.toJson(),
-    "mobile_image": mobileImage?.toJson(),
-    "banner": banner.map((x) => x?.toJson()).toList(),
-    "headline": headline,
-    "about": about?.toJson(),
-    "FAQs": faQs.map((x) => x?.toJson()).toList(),
-    "points": points.map((x) => x?.toJson()).toList(),
-  };
-
+        "id": id,
+        "__component": component,
+        "slug": slug?.toJson(),
+        "button": button,
+        "user_type": userType?.toJson(),
+        "business_type": businessType?.toJson(),
+        "poster": poster?.toJson(),
+        "info": info?.toJson(),
+        "title": title,
+        "description": description,
+        "background_image": backgroundImage?.toJson(),
+        "details": details?.toJson(),
+        "country": country.map((x) => x.toJson()).toList(),
+        "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
+        "banner": banner.map((x) => x.toJson()).toList(),
+        "headline": headline,
+        "about": about?.toJson(),
+        "FAQs": faQs.map((x) => x.toJson()).toList(),
+        "points": points.map((x) => x.toJson()).toList(),
+      };
 }
 
 class About {
@@ -209,7 +208,7 @@ class About {
   final AboutImage? mobileImage;
   final AboutImage? image;
 
-  factory About.fromJson(Map<String, dynamic> json){
+  factory About.fromJson(Map<String, dynamic> json) {
     return About(
       id: json["id"],
       title: json["title"],
@@ -223,16 +222,15 @@ class About {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "description": description,
-    "tag": tag,
-    "RedirecTo": redirecTo,
-    "RedirectionType": redirectionType,
-    "mobile_image": mobileImage?.toJson(),
-    "image": image?.toJson(),
-  };
-
+        "id": id,
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "RedirecTo": redirecTo,
+        "RedirectionType": redirectionType,
+        "mobile_image": mobileImage?.toJson(),
+        "image": image?.toJson(),
+      };
 }
 
 class AboutImage {
@@ -256,15 +254,13 @@ class AboutImage {
 
     // If it's already a list, process it normally
     return AboutImage(
-      data: (jsonData as List<dynamic>)
-          .map((x) => Dat.fromJson(x as Map<String, dynamic>))
-          .toList(),
+      data: (jsonData as List<dynamic>).map((x) => Dat.fromJson(x as Map<String, dynamic>)).toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "data": data.map((x) => x.toJson()).toList(),
-  };
+        "data": data.map((x) => x.toJson()).toList(),
+      };
 
   @override
   String toString() {
@@ -491,7 +487,7 @@ class BackgroundImage {
   final AboutImage? mobileImage;
   final AboutImage? image;
 
-  factory BackgroundImage.fromJson(Map<String, dynamic> json){
+  factory BackgroundImage.fromJson(Map<String, dynamic> json) {
     return BackgroundImage(
       id: json["id"],
       title: json["title"],
@@ -502,13 +498,12 @@ class BackgroundImage {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "url": url,
-    "mobile_image": mobileImage?.toJson(),
-    "image": image?.toJson(),
-  };
-
+        "id": id,
+        "title": title,
+        "url": url,
+        "mobile_image": mobileImage?.toJson(),
+        "image": image?.toJson(),
+      };
 }
 
 class Banner {
@@ -686,7 +681,7 @@ class Info {
   final dynamic tagline;
   final dynamic sectionTitle;
 
-  factory Info.fromJson(Map<String, dynamic> json){
+  factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
       id: json["id"],
       title: json["title"],
@@ -697,13 +692,12 @@ class Info {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "headline": headline,
-    "tagline": tagline,
-    "section_title": sectionTitle,
-  };
-
+        "id": id,
+        "title": title,
+        "headline": headline,
+        "tagline": tagline,
+        "section_title": sectionTitle,
+      };
 }
 
 class Faq {

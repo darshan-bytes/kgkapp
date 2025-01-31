@@ -84,3 +84,45 @@ final class ProductDetailsWriteReviewEvent extends ProductDetailsEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class ProductDetailsAuctionStartTimerEvent extends ProductDetailsEvent {
+  const ProductDetailsAuctionStartTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductDetailsAuctionTimerCompletedEvent extends ProductDetailsEvent {
+  const ProductDetailsAuctionTimerCompletedEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductDetailsAuctionUpdateTimerEvent extends ProductDetailsEvent {
+  final Duration duration;
+
+  const ProductDetailsAuctionUpdateTimerEvent(this.duration);
+
+  @override
+  List<Object> get props => [duration];
+}
+
+final class ProductDetailsAuctionPlaceBidEvent extends ProductDetailsEvent {
+  final BuildContext context;
+  final String amount;
+
+  const ProductDetailsAuctionPlaceBidEvent(this.context, this.amount);
+
+  @override
+  List<Object> get props => [context, amount];
+}
+
+final class ProductDetailsPlaceBidFieldChangeEvent extends ProductDetailsEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const ProductDetailsPlaceBidFieldChangeEvent({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}

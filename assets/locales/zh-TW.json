@@ -793,5 +793,11 @@
   "mob_remove_all": "全部刪除",
   "mob_remove_all_product_from_cart": "從購物車中刪除所有產品？",
   "mob_press_back_again_to_exit": "再次按返回退出",
-  "mob_cant_add_product_from_different_commodities": "您不能新增來自不同商品的產品。您想繼續嗎？這將從先前的商品中刪除該產品。"
+  "mob_cant_add_product_from_different_commodities": "您不能新增來自不同商品的產品。您想繼續嗎？這將從先前的商品中刪除該產品。",
+  "mob_bids_found": "尚未出價。成為第一個出價的人！",
+  "mob_error_bid_amount_valid": "請輸入有效的出價金額",
+  "mob_error_bid_amount_greater_than_x": "投標金額必須等於或大於起始投標金額。",
+  "mob_auction_will_start_on": "拍賣將在",
+  "mob_auction_has_ended": "拍賣已結束",
+  "mob_loading": "載入中"
 }

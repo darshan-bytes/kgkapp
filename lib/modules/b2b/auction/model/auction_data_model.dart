@@ -155,6 +155,8 @@ class AuctionDataModel {
   String toString() {
     return "$businessType, $productId, $productSku, $productDescription, $productImage, $startDate, $endDate, $startingPrice, $createdBy, $status, $currency, $cscCodes, $id, $lastBidAmount, $updatedBy, $createdAt, $bids, $showPlaceBid, $myBidValue, $totalBid, $createdByDetails, $updatedByDetails, ";
   }
+
+  double get startingPriceToDouble => startingPrice?.replaceAll(',', '').toDouble ?? 0.0;
 }
 
 class Bid {
@@ -199,7 +201,7 @@ class Bid {
   factory Bid.fromJson(Map<String, dynamic> json) {
     return Bid(
       auctionId: json["auction_id"],
-      bidAmount: json["bid_amount"].toString().toDouble?.toStringAsFixed(2),
+      bidAmount: json["bid_amount"]?.toString(),
       country: json["country"],
       id: json["id"],
       isWinner: json["is_winner"],

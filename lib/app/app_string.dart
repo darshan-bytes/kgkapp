@@ -993,4 +993,10 @@ class APPStrings {
   static const String cantAddProductFromDifferentCommodities = 'mob_cant_add_product_from_different_commodities';
   static const String differentCommoditiesFound = 'mob_different_commodities_found';
   static const String differentCommoditiesMergeConfirm = 'mob_different_commodities_merge_confirm';
+  static const String noBidsFound = 'mob_bids_found';
+  static const String errorBidAmountRequired = 'mob_error_bid_amount_required';
+  static const String errorBidAmountGreaterThan = "mob_error_bid_amount_greater_than_x";
+  static const String auctionWillStartOn = 'mob_auction_will_start_on';
+  static const String auctionHasEnded = "mob_auction_has_ended";
+  static const String loading = "mob_loading";
 }
