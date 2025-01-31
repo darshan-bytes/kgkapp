@@ -92,3 +92,40 @@ final class ProductDetailsRecentlyViewedLoadedState extends ProductDetailsState 
   @override
   List<Object> get props => [];
 }
+
+final class ProductDetailsAuctionPlaceBidState extends ProductDetailsState {
+  const ProductDetailsAuctionPlaceBidState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductDetailsAuctionTimerUpdateState extends ProductDetailsState {
+  final Duration duration;
+
+  const ProductDetailsAuctionTimerUpdateState(this.duration);
+
+  @override
+  List<Object> get props => [duration];
+}
+
+final class ProductDetailsAuctionTimerCompletedState extends ProductDetailsState {
+  const ProductDetailsAuctionTimerCompletedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ProductDetailsAuctionLoadingState extends ProductDetailsState {
+  @override
+  List<Object> get props => [];
+}
+
+final class BidAmountFieldErrorState extends ProductDetailsState {
+  final FieldTypeValidationEnum fieldType;
+
+  const BidAmountFieldErrorState({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}

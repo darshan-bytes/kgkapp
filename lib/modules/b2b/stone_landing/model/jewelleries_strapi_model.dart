@@ -119,7 +119,7 @@ class Jewellery {
   final int? id;
   final String? component;
   final Slug? slug;
-  final dynamic? button;
+  final dynamic button;
   final UserType? userType;
   final BusinessType? businessType;
   final Poster? poster;
@@ -136,7 +136,7 @@ class Jewellery {
   final Button? button2;
   final List<Details> points;
 
-  factory Jewellery.fromJson(Map<String, dynamic> json){
+  factory Jewellery.fromJson(Map<String, dynamic> json) {
     return Jewellery(
       id: json["id"],
       component: json["__component"],
@@ -161,27 +161,26 @@ class Jewellery {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "__component": component,
-    "slug": slug?.toJson(),
-    "button": button,
-    "user_type": userType?.toJson(),
-    "business_type": businessType?.toJson(),
-    "poster": poster?.toJson(),
-    "info": info?.toJson(),
-    "details": details?.toJson(),
-    "country": country.map((x) => x?.toJson()).toList(),
-    "title": title,
-    "description": description,
-    "image": image?.toJson(),
-    "mobile_image": mobileImage?.toJson(),
-    "banner": banner.map((x) => x?.toJson()).toList(),
-    "background_image": backgroundImage?.toJson(),
-    "button_1": button1?.toJson(),
-    "button_2": button2?.toJson(),
-    "points": points.map((x) => x?.toJson()).toList(),
-  };
-
+        "id": id,
+        "__component": component,
+        "slug": slug?.toJson(),
+        "button": button,
+        "user_type": userType?.toJson(),
+        "business_type": businessType?.toJson(),
+        "poster": poster?.toJson(),
+        "info": info?.toJson(),
+        "details": details?.toJson(),
+        "country": country.map((x) => x.toJson()).toList(),
+        "title": title,
+        "description": description,
+        "image": image?.toJson(),
+        "mobile_image": mobileImage?.toJson(),
+        "banner": banner.map((x) => x.toJson()).toList(),
+        "background_image": backgroundImage?.toJson(),
+        "button_1": button1?.toJson(),
+        "button_2": button2?.toJson(),
+        "points": points.map((x) => x.toJson()).toList(),
+      };
 }
 
 class BackgroundImage {
@@ -199,7 +198,7 @@ class BackgroundImage {
   final BannerImage? mobileImage;
   final BannerImage? image;
 
-  factory BackgroundImage.fromJson(Map<String, dynamic> json){
+  factory BackgroundImage.fromJson(Map<String, dynamic> json) {
     return BackgroundImage(
       id: json["id"],
       title: json["title"],
@@ -210,13 +209,12 @@ class BackgroundImage {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "url": url,
-    "mobile_image": mobileImage?.toJson(),
-    "image": image?.toJson(),
-  };
-
+        "id": id,
+        "title": title,
+        "url": url,
+        "mobile_image": mobileImage?.toJson(),
+        "image": image?.toJson(),
+      };
 }
 
 class Banner {
@@ -299,9 +297,7 @@ class BannerImage {
 
     // If it's already a list, process it normally
     return BannerImage(
-      data: (jsonData as List<dynamic>)
-          .map((x) => Dat.fromJson(x as Map<String, dynamic>))
-          .toList(),
+      data: (jsonData as List<dynamic>).map((x) => Dat.fromJson(x as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -332,9 +328,9 @@ class Dat {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "attributes": attributes?.toJson(),
-  };
+        "id": id,
+        "attributes": attributes?.toJson(),
+      };
 
   @override
   String toString() {
@@ -610,7 +606,7 @@ class Poster {
   final BannerImage? mobileImage;
   final BannerImage? image;
 
-  factory Poster.fromJson(Map<String, dynamic> json){
+  factory Poster.fromJson(Map<String, dynamic> json) {
     return Poster(
       id: json["id"],
       title: json["title"],
@@ -624,16 +620,15 @@ class Poster {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "description": description,
-    "tag": tag,
-    "RedirecTo": redirecTo,
-    "RedirectionType": redirectionType,
-    "mobile_image": mobileImage?.toJson(),
-    "image": image?.toJson(),
-  };
-
+        "id": id,
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "RedirecTo": redirecTo,
+        "RedirectionType": redirectionType,
+        "mobile_image": mobileImage?.toJson(),
+        "image": image?.toJson(),
+      };
 }
 
 class Country {
@@ -752,7 +747,7 @@ class Info {
   final String? tagline;
   final dynamic sectionTitle;
 
-  factory Info.fromJson(Map<String, dynamic> json){
+  factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
       id: json["id"],
       title: json["title"],
@@ -763,13 +758,12 @@ class Info {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "headline": headline,
-    "tagline": tagline,
-    "section_title": sectionTitle,
-  };
-
+        "id": id,
+        "title": title,
+        "headline": headline,
+        "tagline": tagline,
+        "section_title": sectionTitle,
+      };
 }
 
 class Slug {

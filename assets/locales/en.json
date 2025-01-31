@@ -794,5 +794,12 @@
   "mob_remove_all": "Remove all",
   "mob_remove_all_product_from_cart": "Remove all product from cart?",
   "mob_press_back_again_to_exit": "Press back again to exit",
-  "mob_cant_add_product_from_different_commodities": "You cannot add products from different commodities. Do you want to proceed? This will remove the products from the previous commodity."
+  "mob_cant_add_product_from_different_commodities": "You cannot add products from different commodities. Do you want to proceed? This will remove the products from the previous commodity.",
+  "mob_bids_found": "No bids have been placed yet. Be the first to place a bid!",
+  "mob_error_bid_amount_required": "Bid amount is required",
+  "mob_error_bid_amount_valid": "Please enter valid bid amount",
+  "mob_error_bid_amount_greater_than_x": "The bid amount must be equal to or greater than the starting bid amount.",
+  "mob_auction_will_start_on": "Auction will start on",
+  "mob_auction_has_ended": "Auction has ended",
+  "mob_loading": "Loading..."
 }

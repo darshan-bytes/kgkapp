@@ -5,7 +5,6 @@ part 'product_details_event.dart';
 part 'product_details_state.dart';
 
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
-  // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
   String productId = '';
   String productName = '';
@@ -26,6 +25,28 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   bool isCompare = false;
 
   bool isErrorInLoadingData = false;
+
+  /// Auction related variables
+  String startingBidPrice = '';
+  bool isBidPlaced = false;
+  bool isMyBidPlaced = false;
+  Timer? _timer;
+  AuctionDataModel? auctionDataModel;
+  Duration auctionEndDuration = Duration.zero;
+  final GlobalKey targetKey = GlobalKey();
+  List<Map<String, dynamic>> recentBidList = [];
+  final TextEditingController bidAmountController = TextEditingController();
+  String? bidAmountError;
+
+  /// Timer title getter
+  String _timerTitle = APPStrings.auctionEndIn.tr;
+
+  String get timerTitle => "$_timerTitle  :";
+
+  /// Timer title value getter
+  String _timerValue = '';
+
+  String get timerValue => _timerValue;
 
   List<ProductCustomizationOptions> productCustomizations = [
     ProductCustomizationOptions(
@@ -127,70 +148,112 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDetailsSuggestedLoadedEvent>(_onProductDetailsSuggestedLoadedEvent);
     on<ProductDetailsReviewsLoadedEvent>(_onProductDetailsReviewsLoadedEvent);
     on<ProductDetailsWriteReviewEvent>(_onProductDetailsWriteReviewEvent);
+    on<ProductDetailsAuctionStartTimerEvent>(_onStartTimer);
+    on<ProductDetailsAuctionUpdateTimerEvent>(_onUpdateTimer);
+    on<ProductDetailsAuctionTimerCompletedEvent>(_onAuctionTimerCompletedEvent);
+    on<ProductDetailsAuctionPlaceBidEvent>(_onPlaceBidEvent);
+    on<ProductDetailsPlaceBidFieldChangeEvent>(_onProductDetailsPlaceBidFieldChangeEvent);
   }
 
   @override
   Future<void> close() async {
     wishlistUpdaterServiceStream?.cancel();
     compareProductStream?.cancel();
+    _timer?.cancel();
     super.close();
   }
 
   Future<void> _onLoadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     emit(ProductDetailsLoadingState());
+
+    /// initializing compare product stream
     initCompareProductChangesStream(event.context);
 
     /// assigning current userType
     userType = BlocProvider.of<AppBloc>(event.context).userType;
 
+    /// assigning current screen identifier
     getScreenIdentifier(event.context);
+
+    /// assigning product id
     productId = event.context.routesData?[RoutesData.productId] ?? '--';
-    if (productId.isEmpty || productId == '--') {
-      return;
-    }
-    if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
-      await StorageManager().setRecentlyViewedDiamonds(productId);
-      productCustomizations.clear();
-      imgList.clear();
-      suggestedProductList.clear();
-      await getDiamondsDetails(event.context, productId);
-      if (productDetails != null) {
-        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
-        emit(ProductDetailsLoadedState(productDetails!));
-      }
-      await getDiamondYouMayLike(event.context, productId);
-      await getDiamondsRecentlyViewed(event.context, productId);
-    } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
-      await StorageManager().setRecentlyViewedGemstones(productId);
-      productCustomizations.clear();
-      imgList.clear();
-      suggestedProductList.clear();
-      recentlyViewedProductList.clear();
-      await getGemstoneDetails(event.context, productId);
-      if (productDetails != null) {
-        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
-        emit(ProductDetailsLoadedState(productDetails!));
-      }
-      await getGemstoneYouMayLike(event.context, productId);
-      await getGemstoneRecentlyViewed(event.context, productId);
-    } else if (screenIdentifier == ScreenIdentifier.productForRing) {
-      emit(ProductDetailsLoadingState());
-      await StorageManager().setRecentlyViewedJewellery(productId);
-      imgList.clear();
-      suggestedProductList.clear();
-      recentlyViewedProductList.clear();
-      await getProductDetails(event.context, productId);
-      if (productDetails != null) {
-        isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
-        emit(ProductDetailsLoadedState(productDetails!));
-      }
-      await productReviewsFilter(event.context, productId, emit);
-      await getProductYouMayLike(event.context, productId);
-      await getProductRecentlyViewed(event.context, productId);
+    if (productId.isEmpty || productId == '--') return;
+
+    /// loading product details
+    await _loadProductDetails(event, emit);
+
+    /// initializing wishlist updater service
+    _initWishlistUpdaterServiceBloc(event.context);
+
+    /// initializing wishlist updater service
+    _initWishlistUpdaterServiceBloc(event.context);
+  }
+
+  Future<void> _loadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    _clearProductData();
+
+    switch (screenIdentifier) {
+      case ScreenIdentifier.productForDiamonds:
+        await _handleDiamondProduct(event, emit);
+        break;
+      case ScreenIdentifier.productForGemstones:
+        await _handleGemstoneProduct(event, emit);
+        break;
+      case ScreenIdentifier.productForRing:
+        await _handleRingProduct(event, emit);
+        break;
+      default:
+        break;
     }
 
-    isCustomisation = event.context.routesData?[RoutesData.isCustomisationPage] ?? false;
+    /// set up customizations
+    _setupCustomizations(context: event.context);
+  }
 
+  void _clearProductData() {
+    productCustomizations.clear();
+    imgList.clear();
+    suggestedProductList.clear();
+    recentlyViewedProductList.clear();
+  }
+
+  Future<void> _handleDiamondProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    await StorageManager().setRecentlyViewedDiamonds(productId);
+    await getDiamondsDetails(event.context, productId);
+    _emitLoadedStateIfAvailable(event, emit);
+    await _getDiamondAuctionDetails(event.context, emit);
+    getTimerText(state);
+    await getDiamondYouMayLike(event.context, productId);
+    await getDiamondsRecentlyViewed(event.context, productId);
+  }
+
+  Future<void> _handleGemstoneProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    await StorageManager().setRecentlyViewedGemstones(productId);
+    await getGemstoneDetails(event.context, productId);
+    _emitLoadedStateIfAvailable(event, emit);
+    await getGemstoneYouMayLike(event.context, productId);
+    await getGemstoneRecentlyViewed(event.context, productId);
+  }
+
+  Future<void> _handleRingProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    emit(ProductDetailsLoadingState());
+    await StorageManager().setRecentlyViewedJewellery(productId);
+    await getProductDetails(event.context, productId);
+    _emitLoadedStateIfAvailable(event, emit);
+    await productReviewsFilter(event.context, productId, emit);
+    await getProductYouMayLike(event.context, productId);
+    await getProductRecentlyViewed(event.context, productId);
+  }
+
+  void _emitLoadedStateIfAvailable(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
+    if (productDetails != null) {
+      isCompare = BlocProvider.of<CompareProductBloc>(event.context).productIdList.contains(productDetails!.productId);
+      emit(ProductDetailsLoadedState(productDetails!));
+    }
+  }
+
+  void _setupCustomizations({required BuildContext context}) {
+    isCustomisation = context.routesData?[RoutesData.isCustomisationPage] ?? false;
     if (isCustomisation) {
       productCustomizations.insert(
         0,
@@ -210,8 +273,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         ),
       );
     }
-
-    _initWishlistUpdaterServiceBloc(event.context);
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
@@ -247,6 +308,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             isFavourite: diamondData?.isFavorite ?? false,
             wishlistId: diamondData?.wishlistID,
             stoneElements: diamondData?.components,
+            auctionId: diamondData?.auctionId,
           );
         }
       },
@@ -897,5 +959,123 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         );
       },
     );
+  }
+
+  Future<void> _getDiamondAuctionDetails(BuildContext context, Emitter<ProductDetailsState> emit) async {
+    if (productDetails != null && (productDetails?.auctionId).isNotNullNorEmpty) {
+      emit(ProductDetailsAuctionLoadingState());
+      Either<ErrorResponse, AuctionDataModel>? response = await AppRepository(context).getAuctionDetails(id: productDetails!.auctionId!);
+      await response?.fold((error) => Utils.showMessage(error.message), (data) {
+        /// assign auction data
+        auctionDataModel = data;
+        startingBidPrice = data.startingPrice?.setCurrency ?? '';
+        isBidPlaced = data.showPlaceBid ?? false;
+        isMyBidPlaced = data.bids.any((bid) => bid.isMyBid == true);
+        recentBidList = data.bids.map((bid) {
+          return {
+            AppConst.dateTimeKey: bid.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
+            AppConst.priceKey: bid.bidAmount?.setCurrency,
+            AppConst.isMyBidKey: bid.isMyBid,
+          };
+        }).toList();
+        auctionEndDuration = DateTime.parse(data.endDate.toString()).difference(DateTime.now());
+        add(const ProductDetailsAuctionStartTimerEvent());
+      });
+      emit(const ProductDetailsAuctionPlaceBidState());
+    }
+  }
+
+  void _onStartTimer(ProductDetailsAuctionStartTimerEvent event, Emitter<ProductDetailsState> emit) {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (auctionEndDuration.compareTo(const Duration(days: 0, hours: 0, minutes: 0, seconds: 0)) > 0) {
+        auctionEndDuration -= const Duration(seconds: 1);
+        add(ProductDetailsAuctionUpdateTimerEvent(auctionEndDuration));
+      } else {
+        _timer?.cancel();
+        auctionEndDuration = const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
+        add(ProductDetailsAuctionTimerCompletedEvent());
+      }
+    });
+  }
+
+  /// Update Timer
+  void _onUpdateTimer(ProductDetailsAuctionUpdateTimerEvent event, Emitter<ProductDetailsState> emit) {
+    emit(ProductDetailsAuctionTimerUpdateState(event.duration));
+  }
+
+  /// Timer Completed
+  void _onAuctionTimerCompletedEvent(ProductDetailsAuctionTimerCompletedEvent event, Emitter<ProductDetailsState> emit) {
+    emit(const ProductDetailsAuctionTimerCompletedState());
+  }
+
+  /// Place bid
+  Future<void> _onPlaceBidEvent(ProductDetailsAuctionPlaceBidEvent event, Emitter<ProductDetailsState> emit) async {
+    emit(ProductDetailsLoadingState());
+    if (_validatePlaceBidEvent(emit)) {
+      await createBidForAuction(event.context, emit);
+      emit(const ProductDetailsAuctionPlaceBidState());
+    }
+  }
+
+  /// Create bid for auction
+  Future<void> createBidForAuction(BuildContext context, Emitter<ProductDetailsState> emit) async {
+    if (productDetails?.auctionId == null) return;
+    Map<String, dynamic> body = {ApiKey.auctionId: int.parse(productDetails!.auctionId!), ApiKey.bidAmount: bidAmountController.text};
+    Either<ErrorResponse, CommonResponse<dynamic>>? response = await AppRepository(context).createBidForAuction(body);
+    await response?.fold((error) async {
+      Utils.showMessage(error.message);
+    }, (data) async {
+      isBidPlaced = true;
+      Utils.showMessage(data.message);
+      bidAmountController.clear();
+      Scrollable.ensureVisible(
+        targetKey.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
+    await _getDiamondAuctionDetails(context, emit);
+  }
+
+  bool _validatePlaceBidEvent(Emitter<ProductDetailsState> emit) {
+    bool isValidate = true;
+    double? bidAmount = double.tryParse(bidAmountController.text.trim());
+    double minBidPrice = auctionDataModel?.startingPriceToDouble ?? 0.0;
+    if (bidAmountController.text.trim().isEmpty) {
+      bidAmountError = APPStrings.errorBidAmountRequired.tr;
+      emit(BidAmountFieldErrorState(fieldType: FieldTypeValidationEnum.bidAmount));
+      isValidate = false;
+    } else if (bidAmount == null || bidAmount <= minBidPrice) {
+      bidAmountError = APPStrings.errorBidAmountGreaterThan.tr;
+      emit(BidAmountFieldErrorState(fieldType: FieldTypeValidationEnum.bidAmount));
+      isValidate = false;
+    }
+    return isValidate;
+  }
+
+  void _onProductDetailsPlaceBidFieldChangeEvent(ProductDetailsPlaceBidFieldChangeEvent event, Emitter<ProductDetailsState> emit) {
+    emit(ProductDetailsAuctionLoadingState());
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.bidAmount:
+        bidAmountError = null;
+        break;
+      default:
+        break;
+    }
+    emit(BidAmountFieldErrorState(fieldType: event.fieldType));
+  }
+
+  void getTimerText(ProductDetailsState state) {
+    if (auctionDataModel != null && auctionDataModel!.status == "NOT_STARTED") {
+      _timerTitle = APPStrings.auctionWillStartOn.tr;
+      _timerValue = auctionDataModel!.startDate?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY) ?? "";
+    } else if (state is ProductDetailsAuctionTimerUpdateState) {
+      _timerValue = Utils.formatDuration(state.duration);
+    } else if (state is AuctionTimerCompletedState) {
+      _timerValue = APPStrings.auctionHasEnded.tr;
+    } else {
+      _timerValue = APPStrings.loading.tr;
+    }
   }
 }

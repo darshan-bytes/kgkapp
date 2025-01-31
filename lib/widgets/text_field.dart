@@ -179,6 +179,7 @@ class SmartTextFieldState extends State<SmartTextField> {
     return Padding(
       padding: widget.padding ?? EdgeInsets.zero,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.labelText != null) ...[

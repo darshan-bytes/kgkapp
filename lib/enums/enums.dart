@@ -232,4 +232,5 @@ enum FieldTypeValidationEnum {
   apartment,
   country,
   currentPassword,
+  bidAmount,
 }
