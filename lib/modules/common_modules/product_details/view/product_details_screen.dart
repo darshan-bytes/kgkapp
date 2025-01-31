@@ -30,91 +30,101 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
-    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-      buildWhen: (previous, current) => current is ProductDetailsLoadedState,
-      builder: (context, state) {
-        return Container(
-          decoration: BoxDecoration(
-            color: style.whiteColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.5),
-                spreadRadius: 7.r,
-                blurRadius: 7.r,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+        color: style.whiteColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.5),
+            spreadRadius: 7.r,
+            blurRadius: 7.r,
+            offset: const Offset(0, 3),
           ),
-          child: SafeArea(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (bloc.isCustomisation) ...[
-                    if (bloc.userType == UserType.b2cUser) ..._buildB2CCustomisationDetails(style),
-                    if (bloc.userType == UserType.b2bUser) ..._buildB2BCustomisationDetails(bloc, style),
-                  ],
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 6,
-                        child: SizedBox(
-                          height: 60.h,
-                          child: Row(
+        ],
+      ),
+      child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+        buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsAuctionPlaceBidState,
+        builder: (context, state) {
+          if (bloc.isBidPlaced && !bloc.isMyBidPlaced && state is ProductDetailsAuctionPlaceBidState) {
+            return _buildAuctionBidPlaceView(bloc);
+          } else {
+            if ((bloc.productDetails?.auctionId).isNotNullNorEmpty) {
+              return const SizedBox();
+            }
+            return _buildBottomActionView(bloc, style, context);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildBottomActionView(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (bloc.isCustomisation) ...[
+              if (bloc.userType == UserType.b2cUser) ..._buildB2CCustomisationDetails(style),
+              if (bloc.userType == UserType.b2bUser) ..._buildB2BCustomisationDetails(bloc, style),
+            ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: SizedBox(
+                    height: 60.h,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SmartImage(path: bloc.imgList.isNotEmpty ? bloc.imgList.first : '', height: 54.w, width: 54.w),
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SmartImage(path: bloc.imgList.isNotEmpty ? bloc.imgList.first : '', height: 54.w, width: 54.w),
-                              SizedBox(width: 8.w),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              SmartText(bloc.productDetails?.displayPrice, style: style.priceStyle, maxLines: 1, isAutoSizeText: true),
+                              if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SmartText(bloc.productDetails?.displayPrice,
-                                        style: style.priceStyle, maxLines: 1, isAutoSizeText: true),
-                                    if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
-                                          SizedBox(width: 2.w),
-                                          SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle),
-                                        ],
-                                      )
+                                    SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
+                                    SizedBox(width: 2.w),
+                                    SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle),
                                   ],
-                                ),
-                              ),
+                                )
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Expanded(
-                        flex: 4,
-                        child: SmartButton(
-                          height: 54.h,
-                          prefixImage: AppImages.icShoppingBag,
-                          title: bloc.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
-                          onTap: () {
-                            bloc.handleBagButtonClick(context);
-                          },
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 4.w),
+                Expanded(
+                  flex: 4,
+                  child: SmartButton(
+                    height: 54.h,
+                    prefixImage: AppImages.icShoppingBag,
+                    title: bloc.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                    onTap: () {
+                      bloc.handleBagButtonClick(context);
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -343,6 +353,20 @@ class ProductDetailsScreen extends StatelessWidget {
           SizedBox(height: 16.h),
           _compareWidget(bloc, style),
           SizedBox(height: 16.h),
+
+          /// AUCTION FLOW FOR DIAMOND
+          if (bloc.screenIdentifier == ScreenIdentifier.productForDiamonds && (bloc.productDetails?.auctionId).isNotNullNorEmpty) ...[
+            BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+              buildWhen: (previous, current) => current is ProductDetailsAuctionPlaceBidState,
+              builder: (context, state) {
+                if (state is ProductDetailsAuctionPlaceBidState) {
+                  return auctionRecentBidSection(bloc: bloc);
+                }
+                return SizedBox.shrink();
+              },
+            ),
+            SizedBox(height: 16.h),
+          ],
 
           /// NOTE : COMMENTED AS OF NOW TO MAKE IT SIMILAR WITH WEB
           // Divider(height: 48.h),
@@ -731,6 +755,214 @@ class ProductDetailsScreen extends StatelessWidget {
                     onTap: () => context.pop(),
                   ),
                 )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget auctionRecentBidSection({required ProductDetailsBloc bloc}) {
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) =>
+          current is ProductDetailsAuctionTimerUpdateState || current is ProductDetailsAuctionTimerCompletedState,
+      builder: (context, state) {
+        final style = AppTheme.of(context).auctionScreenStyle;
+        bloc.getTimerText(state);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildStartingBid(bloc, style),
+            SizedBox(height: 12.h),
+            _buildRecentBidsContainer(bloc, style, context),
+            SizedBox(height: 12.h),
+            _buildBidStatus(bloc, style),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildStartingBid(ProductDetailsBloc bloc, AuctionScreenStyle style) {
+    return SmartRichText(spans: [
+      SmartTextSpan(text: APPStrings.startingBidPrice.tr, style: style.auctionTimerStyle),
+      SmartTextSpan(text: " ${bloc.startingBidPrice}", style: style.recentBidValueStyle),
+    ]);
+  }
+
+  Widget _buildRecentBidsContainer(ProductDetailsBloc bloc, AuctionScreenStyle style, BuildContext context) {
+    return Container(
+      key: bloc.targetKey,
+      decoration: BoxDecoration(
+        color: style.recentBidBackgroundColor,
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: style.borderColor),
+      ),
+      padding: EdgeInsets.all(12.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            SmartText(bloc.timerTitle, style: style.auctionTimerStyle),
+            SizedBox(width: 8.w),
+            Flexible(child: SmartText(bloc.timerValue, style: style.recentBidStyle)),
+          ]),
+          SizedBox(height: 10.h),
+          const Divider(),
+          SizedBox(height: 10.h),
+          if (bloc.recentBidList.isNotEmpty) ...[
+            _buildRecentBidHeader(bloc, style, context),
+            SizedBox(height: 10.h),
+            _buildRecentBidsList(bloc, style),
+          ] else ...[
+            Center(child: SmartText(APPStrings.noBidsFound.tr, textAlign: TextAlign.center)),
+          ]
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentBidHeader(ProductDetailsBloc bloc, AuctionScreenStyle style, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SmartText(APPStrings.recentBid.tr, style: style.recentBidStyle),
+          if (bloc.recentBidList.length > 4) _buildViewAllBidsButton(context, style),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildViewAllBidsButton(BuildContext context, AuctionScreenStyle style) {
+    return InkWell(
+      onTap: () async {
+        await Utils.showSmartModalBottomSheet(
+          context: context,
+          builder: (context) => const AllBidsBottomSheet(),
+        );
+      },
+      child: Row(
+        children: [
+          SmartText(APPStrings.viewAll.tr, style: style.auctionTimerStyle),
+          SizedBox(width: 8.w),
+          Container(
+            height: 24.w,
+            width: 24.w,
+            alignment: Alignment.center,
+            child: const SmartImage(path: AppImages.icArrowRight),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentBidsList(ProductDetailsBloc bloc, AuctionScreenStyle style) {
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return _buildBidItem(
+          isMyBid: bloc.recentBidList[index][AppConst.isMyBidKey] ?? false,
+          labelText: bloc.recentBidList[index][AppConst.dateTimeKey] ?? '',
+          value: bloc.recentBidList[index][AppConst.priceKey] ?? '',
+          style: style,
+        );
+      },
+      separatorBuilder: (context, index) => SizedBox(height: 16.h),
+      itemCount: bloc.recentBidList.length > 5 ? 5 : bloc.recentBidList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+    );
+  }
+
+  Widget _buildBidStatus(ProductDetailsBloc bloc, AuctionScreenStyle style) {
+    if (bloc.isMyBidPlaced) {
+      return Row(
+        children: [
+          const SmartImage(path: AppImages.icSuccessPlaceBid),
+          SizedBox(width: 8.w),
+          SmartRichText(spans: [
+            SmartTextSpan(text: APPStrings.yourBidOf.tr, style: style.auctionTimerStyle),
+            SmartTextSpan(text: " ${bloc.auctionDataModel?.myBidValue} ", style: style.recentBidValueStyle),
+            SmartTextSpan(text: APPStrings.hasBeenPlaced.tr, style: style.auctionTimerStyle),
+          ]),
+        ],
+      );
+    }
+    return SmartText(APPStrings.enterBidAmountHigherThanX.tr.interpolate([bloc.startingBidPrice]), style: style.auctionTimerStyle);
+  }
+
+  Widget _buildBidItem({
+    required String labelText,
+    required String value,
+    required AuctionScreenStyle style,
+    bool isMyBid = false,
+  }) {
+    return Row(
+      children: [
+        const SmartImage(path: AppImages.icCalendar),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: Row(
+            children: [
+              SmartText(labelText, style: style.auctionTimerStyle),
+              SizedBox(width: 5.w),
+              if (isMyBid) _buildMyBidTag(style),
+            ],
+          ),
+        ),
+        SizedBox(width: 8.w),
+        SmartText(value, style: style.recentBidValueStyle),
+      ],
+    );
+  }
+
+  Widget _buildMyBidTag(AuctionScreenStyle style) {
+    return Container(
+      decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      child: SmartText(APPStrings.myBid.tr, style: style.myBidTextStyle),
+    );
+  }
+
+  Widget _buildAuctionBidPlaceView(ProductDetailsBloc bloc) {
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+      buildWhen: (previous, current) => current is BidAmountFieldErrorState && current.fieldType == FieldTypeValidationEnum.bidAmount,
+      builder: (context, state) {
+        AuctionScreenStyle style = AppTheme.of(context).auctionScreenStyle;
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SmartTextField(
+                    height: 42.h,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                    controller: bloc.bidAmountController,
+                    keyboardType: TextInputType.number,
+                    textCapitalization: TextCapitalization.words,
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                    maxLines: 1,
+                    errorText: bloc.bidAmountError,
+                    onValueChanges: (value) {
+                      if (bloc.bidAmountError.isNotNullNorEmpty) {
+                        bloc.add(ProductDetailsPlaceBidFieldChangeEvent(fieldType: FieldTypeValidationEnum.bidAmount));
+                      }
+                    },
+                    suffixIcon: SmartButton(
+                      width: 134.w,
+                      height: 42.h,
+                      title: APPStrings.placeBid.tr,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      onTap: () {
+                        bloc.add(ProductDetailsAuctionPlaceBidEvent(context, bloc.bidAmountController.text));
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

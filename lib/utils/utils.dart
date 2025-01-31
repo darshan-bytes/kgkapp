@@ -441,4 +441,31 @@ class Utils {
       ),
     );
   }
+
+  static String formatDuration(Duration duration) {
+    int days = duration.inDays;
+    int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+
+    List<String> parts = [];
+
+    if (days > 0) {
+      parts.add("$days${"d"}");
+    }
+    if (hours > 0) {
+      parts.add("$hours${"hrs"}");
+    }
+    if (minutes > 0) {
+      parts.add("$minutes${"mins"}");
+    }
+    if (seconds > 0 || parts.isEmpty) {
+      parts.add("$seconds${"sec"}");
+    }
+
+    return parts.join(" : ");
+
+    /// For display full time in days, hours, minutes, seconds
+    //   return "$days${"d"} : $hours${"hrs"} : $minutes${"mins"} : $seconds${"sec"}";
+  }
 }
