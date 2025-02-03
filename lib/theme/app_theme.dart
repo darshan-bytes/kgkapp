@@ -569,6 +569,8 @@ class ProductItemStyle {
   final Color commentSelectedColor;
   final Color primaryColor;
   final TextStyle badgeTextStyle;
+  final TextStyle outOfStockTextStyle;
+  final Color errorColor;
 
   ProductItemStyle({
     required this.backgroundColor,
@@ -590,6 +592,8 @@ class ProductItemStyle {
     required this.primaryColor,
     required this.badgeTextStyle,
     required this.whiteColor,
+    required this.outOfStockTextStyle,
+    required this.errorColor,
   });
 }
 

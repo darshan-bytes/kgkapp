@@ -17,3 +17,10 @@ final class SavedAddressLoadedState extends SavedAddressState {
   @override
   List<Object> get props => [];
 }
+
+final class SavedAddressReloadState extends SavedAddressState {
+  const SavedAddressReloadState();
+
+  @override
+  List<Object> get props => [];
+}

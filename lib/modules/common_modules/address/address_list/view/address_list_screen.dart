@@ -27,7 +27,8 @@ class AddressListScreen extends StatelessWidget {
                         children: [
                           SmartText(APPStrings.shippingAddress.tr, style: style.addressTypeTitleStyle),
                           _buildShippingAddressList(addressListBloc, style),
-                          Divider(height: 48.h),
+                          SizedBox(height: 24.h),
+                          const Divider(),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -44,7 +45,8 @@ class AddressListScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Divider(height: 48.h),
+                          const Divider(),
+                          SizedBox(height: 24.h),
                           _buildIsBillingAddressSameAsSelected(addressListBloc, style),
                         ],
                       ),

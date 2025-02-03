@@ -43,8 +43,6 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   }
 
   void _onMakeInquiryInitialEvent(MakeInquiryInitialEvent event, Emitter<MakeInquiryState> emit) {
-    selectedInquiryType = inquiryTypeList[0];
-    selectedProduct = productList[0];
     emit(MakeInquiryReloadState());
   }
 

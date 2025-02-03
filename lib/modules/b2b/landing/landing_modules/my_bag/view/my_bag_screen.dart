@@ -448,6 +448,7 @@ class MyBagScreen extends StatelessWidget {
                 );
               case Commodity.jewellery:
                 return CartProductItem(
+                  isOutOfStock: (product.stockQty ?? 0) < (product.quantity ?? 0),
                   onTap: () {
                     _onProductTap(context, product);
                   },
@@ -467,7 +468,9 @@ class MyBagScreen extends StatelessWidget {
                   quantityOptionsList: List.generate(
                       product.stockQty ?? 0, (index) => CartProductQuantity(name: (index + 1).toString(), quantity: index + 1)),
                   selectedQuantity: product.quantity != null
-                      ? CartProductQuantity(name: (product.quantity!).toString(), quantity: product.quantity)
+                      ? CartProductQuantity(
+                          name: (product.quantity!).toString(),
+                          quantity: (product.stockQty ?? 0) < (product.quantity ?? 0) ? product.stockQty : product.quantity)
                       : null,
                   qualityOptionsList: [],
                 );

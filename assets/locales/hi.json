@@ -797,5 +797,6 @@
   "mob_error_bid_amount_greater_than_x": "बोली राशि आरंभिक बोली राशि के बराबर या उससे अधिक होनी चाहिए।",
   "mob_auction_will_start_on": "बोली अवधि को शुरू करेंगे",
   "mob_auction_has_ended": "बोली समाप्त हो गया है",
-  "mob_loading": "लोड हो रहा है..."
+  "mob_loading": "लोड हो रहा है...",
+  "mob_this_product_is_currently_not_in_stock": "यह उत्पाद वर्तमान में स्टॉक में नहीं है"
 }

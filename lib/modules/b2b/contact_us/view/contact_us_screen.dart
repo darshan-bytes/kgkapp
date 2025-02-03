@@ -7,41 +7,50 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).contactUsStyle;
     final bloc = BlocProvider.of<ContactUsBloc>(context);
-    return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.contactUs.tr,
-      ),
-      body: SmartSingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 18.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SmartText(APPStrings.getInTouchWithUs.tr, style: style.headerTitleStyle),
-            SizedBox(height: 8.h),
-            SmartText(APPStrings.dropUsANote.tr, style: style.messageStyle),
-            SizedBox(height: 18.h),
-            SmartImage(path: "https://i.ibb.co/mbJ92Mj/image-383.png", height: 356.h),
-            SizedBox(height: 20.h),
-            _buildFullNameField(bloc),
-            SizedBox(height: 14.h),
-            _buildEmailField(bloc),
-            SizedBox(height: 14.h),
-            _buildInquiryTypeDropdown(bloc),
-            // Right now hide this section ones confirmation comes from client totally remove this
-            // SizedBox(height: 14.h),
-            // _buildProductDropdown(bloc),
-            SizedBox(height: 14.h),
-            _buildCommentField(bloc),
-            SizedBox(height: 22.h),
-            SmartButton(
-              onTap: () {
-                bloc.add(ContactUsSubmitEvent(context: context));
-              },
-              title: APPStrings.submit.tr,
-            ),
-            SizedBox(height: 18.h),
-            _buildStillNeedSection(style),
-          ],
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        bloc.clearData();
+      },
+      child: Scaffold(
+        appBar: SmartAppBar(
+          title: APPStrings.contactUs.tr,
+          onBack: () {
+            bloc.clearData();
+            context.pop();
+          },
+        ),
+        body: SmartSingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 18.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SmartText(APPStrings.getInTouchWithUs.tr, style: style.headerTitleStyle),
+              SizedBox(height: 8.h),
+              SmartText(APPStrings.dropUsANote.tr, style: style.messageStyle),
+              SizedBox(height: 18.h),
+              SmartImage(path: "https://i.ibb.co/mbJ92Mj/image-383.png", height: 356.h),
+              SizedBox(height: 20.h),
+              _buildFullNameField(bloc),
+              SizedBox(height: 14.h),
+              _buildEmailField(bloc),
+              SizedBox(height: 14.h),
+              _buildInquiryTypeDropdown(bloc),
+              // Right now hide this section ones confirmation comes from client totally remove this
+              // SizedBox(height: 14.h),
+              // _buildProductDropdown(bloc),
+              SizedBox(height: 14.h),
+              _buildCommentField(bloc),
+              SizedBox(height: 22.h),
+              SmartButton(
+                onTap: () {
+                  bloc.add(ContactUsSubmitEvent(context: context));
+                },
+                title: APPStrings.submit.tr,
+              ),
+              SizedBox(height: 18.h),
+              _buildStillNeedSection(style),
+            ],
+          ),
         ),
       ),
     );

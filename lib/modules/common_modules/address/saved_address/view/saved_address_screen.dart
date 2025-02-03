@@ -15,7 +15,7 @@ class SavedAddressScreen extends StatelessWidget {
 
   Widget _buildBody(SavedAddressStyle style, SavedAddressBloc bloc, BuildContext context) {
     return BlocBuilder<SavedAddressBloc, SavedAddressState>(
-      buildWhen: (previous, current) => current is SavedAddressLoadedState,
+      buildWhen: (previous, current) => current is SavedAddressLoadedState || current is SavedAddressReloadState,
       builder: (context, state) {
         if (state is! SavedAddressLoadedState) {
           return const SizedBox.shrink();
@@ -64,7 +64,7 @@ class SavedAddressScreen extends StatelessWidget {
                       isSameAsShippingAddress: bloc.isBillingAddressSameAsShippingAddress,
                       onShippingAddressChange: (value) {
                         if (value == true) {
-                          bloc.add(SavedAddressChangeBillingAddressSameEvent(value!));
+                          bloc.add(SavedAddressChangeBillingAddressSameEvent(context: context, value: value!));
                         }
                       },
                     ),

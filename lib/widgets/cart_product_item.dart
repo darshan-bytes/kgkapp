@@ -29,6 +29,7 @@ class CartProductItem extends StatelessWidget {
   final TextStyle? priceTextStyle;
   final bool isDropDownEnable;
   final bool isEnableAddToWishList;
+  final bool isOutOfStock;
 
   const CartProductItem({
     super.key,
@@ -60,6 +61,7 @@ class CartProductItem extends StatelessWidget {
     this.isDropDownEnable = true,
     this.isEnableAddToWishList = true,
     this.priceTextStyle,
+    required this.isOutOfStock,
   });
 
   @override
@@ -76,6 +78,14 @@ class CartProductItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Row(
+              children: [
+                Icon(Icons.warning_amber_outlined, color: style.errorColor, size: 16.w),
+                SizedBox(width: 8.w),
+                SmartText(APPStrings.thisProductIsCurrentlyNotInStock.tr, style: style.outOfStockTextStyle),
+              ],
+            ),
+            SizedBox(height: 32.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

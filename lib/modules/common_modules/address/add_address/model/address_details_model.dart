@@ -192,16 +192,6 @@ class CustomerPhoneNumber {
   final String? phoneCode;
   final String? phoneNumber;
 
-  CustomerPhoneNumber copyWith({
-    String? phoneCode,
-    String? phoneNumber,
-  }) {
-    return CustomerPhoneNumber(
-      phoneCode: phoneCode ?? this.phoneCode,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-    );
-  }
-
   factory CustomerPhoneNumber.fromJson(Map<String, dynamic> json) {
     return CustomerPhoneNumber(
       phoneCode: json["phone_code"],
