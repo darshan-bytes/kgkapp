@@ -183,8 +183,14 @@ class FilterScreen extends StatelessWidget {
         return SmartSfRangeSlider(
           title: APPStrings.preferredPriceRange.tr,
           titleStyle: style.selectionTitleStyle,
-          values: bloc.selectedFilterData?.rangeValues ?? bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
-          minMaxValues: bloc.selectedFilterData?.minMaxValues ?? SfRangeValues(0, 100),
+          values: RangeValues(
+            bloc.selectedFilterData?.rangeValues?.start?.toDouble() ?? 0.0,
+            bloc.selectedFilterData?.rangeValues?.end?.toDouble() ?? 0.0,
+          ),
+          minMaxValues: RangeValues(
+            bloc.selectedFilterData?.minMaxValues?.start?.toDouble() ?? 0.0,
+            bloc.selectedFilterData?.minMaxValues?.end?.toDouble() ?? 0.0,
+          ),
           minPriceController: bloc.minPriceController,
           maxPriceController: bloc.maxPriceController,
           rangeSliderTrackColor: style.rangeSliderTrackColor,
@@ -193,10 +199,10 @@ class FilterScreen extends StatelessWidget {
           sliderThumbBorderColor: style.sliderThumbBorderColor,
           sliderThumbColor: style.sliderThumbColor,
           onMinControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent()),
-          onMinControllerEditingComplete: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent()),
+          onMinControllerEditingComplete: () => bloc.add(const SortAndFilterPriceRangeEditEvent()),
           onMaxControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
-          onMaxControllerEditingComplete: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
-          onChanged: (SfRangeValues values) => bloc.add(SortAndFilterPriceRangeChangedEvent(values)),
+          onMaxControllerEditingComplete: () => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
+          onChanged: (RangeValues values) => bloc.add(SortAndFilterPriceRangeChangedEvent(SfRangeValues(values.start, values.end))),
         );
       },
     );

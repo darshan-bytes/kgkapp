@@ -138,6 +138,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     getRouteData(context);
     _initializePagination(context);
     await _sortOptionListApiCall(context);
+    if (filterData.isEmpty) {
+      emit(ReloadProductState());
+      await _setupFilters(context);
+      emit(ProductListFilterLoadedState());
+    }
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await _loadInitialData(context, emit);
     }
@@ -186,11 +191,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productList.clear();
       jewelleryDatumList.clear();
       await fetchJewelleriesList(context, emit, false);
-      if (filterData.isEmpty) {
-        emit(ReloadProductState());
-        await _setupFilters(context);
-        emit(ProductListFilterLoadedState());
-      }
     }
 
     if (screenIdentifier == ScreenIdentifier.productForCouture) {
@@ -239,7 +239,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// Determine the fetch scenario
   FetchScenario determineFetchScenario() {
-    if (productId.isNotNullNorEmpty) return FetchScenario.productId;
+    if (productId.isNotNullNorEmpty && (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.youMayLike)) {
+      return FetchScenario.productId;
+    }
     if (collectionName.isNotNullNorEmpty) return FetchScenario.collectionName;
     if (productNavigation.isNotNullNorEmpty && productNavigation == AppConst.recentlyViewed) {
       return FetchScenario.recentlyViewed;
@@ -563,9 +565,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     FetchScenario scenario = determineFetchScenario();
     appbarTitle = APPStrings.jewellery.tr;
     switch (scenario) {
+      case FetchScenario.productId:
+        appbarTitle = APPStrings.youMayAlsoLike.tr;
+        break;
       case FetchScenario.regularList:
       case FetchScenario.collectionName:
-      case FetchScenario.productId:
         appbarTitle = collectionName.isNotNullNorEmpty ? collectionName : APPStrings.jewellery.tr;
         break;
       case FetchScenario.dealOfTheDay:

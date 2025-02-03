@@ -172,8 +172,8 @@ class DiamondFilterScreen extends StatelessWidget {
         return SmartSfRangeSlider(
           title: APPStrings.preferredPriceRange.tr,
           titleStyle: style.selectionTitleStyle,
-          values: bloc.values!,
-          minMaxValues: bloc.minMaxValues,
+          values: RangeValues(bloc.values?.start, bloc.values?.end),
+          minMaxValues: RangeValues(bloc.minMaxValues?.start, bloc.minMaxValues?.end),
           minPriceController: bloc.minPriceController,
           maxPriceController: bloc.maxPriceController,
           rangeSliderTrackColor: style.rangeSliderTrackColor,
@@ -182,10 +182,10 @@ class DiamondFilterScreen extends StatelessWidget {
           sliderThumbBorderColor: style.sliderThumbBorderColor,
           sliderThumbColor: style.sliderThumbColor,
           onMinControllerTapOutside: (p) => bloc.add(const FilterPriceRangeEditEvent()),
-          onMinControllerEditingComplete: (p) => bloc.add(const FilterPriceRangeEditEvent()),
+          onMinControllerEditingComplete: () => bloc.add(const FilterPriceRangeEditEvent()),
           onMaxControllerTapOutside: (p) => bloc.add(const FilterPriceRangeEditEvent(isMin: false)),
-          onMaxControllerEditingComplete: (p) => bloc.add(const FilterPriceRangeEditEvent(isMin: false)),
-          onChanged: (SfRangeValues values) => bloc.add(FilterPriceRangeChangedEvent(values)),
+          onMaxControllerEditingComplete: () => bloc.add(const FilterPriceRangeEditEvent(isMin: false)),
+          onChanged: (RangeValues values) => bloc.add(FilterPriceRangeChangedEvent(SfRangeValues(values.start, values.end))),
         );
       },
     );

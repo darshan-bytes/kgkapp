@@ -620,7 +620,8 @@ class ProductDetailsScreen extends StatelessWidget {
           onAddToBagTap: () {},
           title: APPStrings.youMayAlsoLike.tr,
           onViewAllTap: bloc.suggestedProductList.length > 5
-              ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context, productNavigation: AppConst.youMayLike)
+              ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
+                  productNavigation: AppConst.youMayLike, productId: bloc.productId)
               : null,
           suggestedProductList: bloc.suggestedProductList,
           onProductTap: (product) {
