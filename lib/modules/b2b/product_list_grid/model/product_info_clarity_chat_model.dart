@@ -67,5 +67,6 @@ class ProductInfoClarityChat {
 extension ProductInfoClarityChatExtension on ProductInfoClarityChat {
   bool get isDisplayClarityAndCut => clarity.isNotNullNorEmpty || cut.isNotNullNorEmpty;
 
-  String get displayClarityAndCut => '${clarity ?? ''}${(clarity.isNotNullNorEmpty) && (cut.isNotNullNorEmpty) ? '/' : ''}${cut ?? ''}';
+  String get displayClarityAndCut =>
+      '${(clarity ?? '').length > 2 ? clarity?.substring(0, 2) : clarity}${(clarity.isNotNullNorEmpty) && (cut.isNotNullNorEmpty) ? '/' : ''}${(cut ?? '').length > 2 ? cut?.substring(0, 2) : cut}';
 }

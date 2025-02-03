@@ -171,7 +171,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       default:
         await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
-          await _setupFilters(context, ScreenIdentifier.diamondForDIY);
+          await _setupFilters(context, ScreenIdentifier.productForDiamonds);
         }
         break;
     }
@@ -524,7 +524,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
           filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
         }
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
-          filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
+          if (filterOption.data.isNotEmpty) {
+            filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
+          } else {
+            continue;
+          }
         }
         filterData.add(filter);
       }

@@ -14,6 +14,10 @@ extension NullableStringExtensions<E> on String? {
   double? get toDouble => double.tryParse(toString());
 
   int? get toInt => int.tryParse(toString());
+
+  String? get getFirstTwoOrNull {
+    return isNotNullNorEmpty ? this?.substring(0, 2) : null;
+  }
 }
 
 extension StringExtensions on String {
