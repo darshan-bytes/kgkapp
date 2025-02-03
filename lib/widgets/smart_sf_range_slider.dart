@@ -4,25 +4,21 @@ class SmartSfRangeSlider extends StatelessWidget {
   final TextStyle? style;
   final TextEditingController minPriceController;
   final TextEditingController maxPriceController;
-  final void Function(SfRangeValues)? onChanged;
+  final void Function(RangeValues)? onChanged;
   final void Function(PointerDownEvent)? onMinControllerTapOutside;
-  final void Function(PointerDownEvent)? onMinControllerEditingComplete;
+  final void Function()? onMinControllerEditingComplete;
   final void Function(PointerDownEvent)? onMaxControllerTapOutside;
-  final void Function(PointerDownEvent)? onMaxControllerEditingComplete;
-  final SfRangeValues values;
-  final SfRangeValues? minMaxValues;
+  final void Function()? onMaxControllerEditingComplete;
+  final RangeValues values;
+  final RangeValues? minMaxValues;
   final Color? rangeSliderTrackColor;
   final Color? sliderThumbColor;
   final Color? sliderThumbBorderColor;
   final TextStyle? sliderLabelTextStyle;
   final TextStyle? propertySelectionSubtitleStyle;
-  final Widget? startThumbIcon;
-  final Widget? endThumbIcon;
   final String? currencySymbol;
   final String? title;
   final TextStyle? titleStyle;
-  final bool? enableToolTip;
-  final bool? shouldAlwaysShowTooltip;
   final double? stepSize;
   final double? interval;
   final bool? showDividers;
@@ -44,13 +40,9 @@ class SmartSfRangeSlider extends StatelessWidget {
     this.sliderThumbBorderColor,
     this.sliderLabelTextStyle,
     this.propertySelectionSubtitleStyle,
-    this.startThumbIcon,
-    this.endThumbIcon,
     this.currencySymbol,
     this.title,
     this.titleStyle,
-    this.enableToolTip,
-    this.shouldAlwaysShowTooltip,
     this.stepSize,
     this.interval,
     this.showDividers,
@@ -68,20 +60,19 @@ class SmartSfRangeSlider extends StatelessWidget {
             optionalPadding: EdgeInsets.symmetric(horizontal: 16.w),
           ),
         SizedBox(height: 16.h),
-        SfRangeSlider(
-          enableTooltip: enableToolTip ?? true,
-          values: values,
-          min: minMaxValues?.start,
-          max: minMaxValues?.end,
-          interval: interval ?? 1,
-          stepSize: stepSize ?? 0.001,
-          activeColor: rangeSliderTrackColor,
-          startThumbIcon: startThumbIcon ?? _buildSliderThumb(),
-          endThumbIcon: endThumbIcon ?? _buildSliderThumb(),
-          onChanged: (SfRangeValues values) => onChanged!(values),
-          shouldAlwaysShowTooltip: shouldAlwaysShowTooltip ?? false,
-          showDividers: showDividers ?? false,
-        ),
+        SliderTheme(
+            data: SliderThemeData(
+              showValueIndicator: ShowValueIndicator.always,
+              trackShape: RoundedRectSliderTrackShape(),
+            ),
+            child: RangeSlider(
+              values: values,
+              min: minMaxValues?.start ?? 0.0,
+              max: minMaxValues?.end ?? 100.0,
+              labels: RangeLabels(values.start.toStringAsFixed(2), values.end.toStringAsFixed(2)),
+              activeColor: rangeSliderTrackColor,
+              onChanged: onChanged,
+            )),
         SizedBox(height: 6.h),
         Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
@@ -96,17 +87,14 @@ class SmartSfRangeSlider extends StatelessWidget {
                     children: [
                       SmartTextField(
                         padding: EdgeInsets.symmetric(vertical: 4.h),
-                        // prefixText: currencySymbol ?? "".setCurrency,
                         height: 40.h,
                         contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                         textAlign: TextAlign.center,
                         controller: minPriceController,
                         keyboardType: TextInputType.number,
                         style: propertySelectionSubtitleStyle,
-                        onTapOutside: (p) => onMinControllerTapOutside!(p),
-                        // bloc.add(const FilterPriceRangeEditEvent()),
+                        onTapOutside: (p) => onMinControllerTapOutside,
                         onEditingComplete: () => onMinControllerEditingComplete,
-                        // bloc.add(const FilterPriceRangeEditEvent()),
                         textInputAction: TextInputAction.done,
                       ),
                       SmartText(
@@ -124,14 +112,13 @@ class SmartSfRangeSlider extends StatelessWidget {
                   children: [
                     SmartTextField(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
-                      // prefixText: currencySymbol ?? "".setCurrency,
                       height: 40.h,
                       contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
                       textAlign: TextAlign.center,
                       controller: maxPriceController,
                       keyboardType: TextInputType.number,
                       style: propertySelectionSubtitleStyle,
-                      onTapOutside: (p) => onMaxControllerTapOutside!(p),
+                      onTapOutside: (p) => onMaxControllerTapOutside,
                       onEditingComplete: () => onMaxControllerEditingComplete,
                       textInputAction: TextInputAction.done,
                     ),
