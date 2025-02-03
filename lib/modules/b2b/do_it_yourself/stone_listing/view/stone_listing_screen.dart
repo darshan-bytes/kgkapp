@@ -327,14 +327,23 @@ class StoneListingScreen extends StatelessWidget {
                             isSelectedBackground: (index % 2 != 0),
                             onTap: () {
                               if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
-                                context.pushNamed(AppRoutes.stoneDetailPage,
-                                    arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                                context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
+                                  RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
+                                  RoutesData.productId: product.productId
+                                });
                               } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
-                                context.pushNamed(AppRoutes.productDetailsPage,
-                                    arguments: {RoutesData.isPageFor: ScreenIdentifier.productForDiamonds});
+                                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                                  RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
+                                  RoutesData.productId: product.productId
+                                });
+                                //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
+                                // context.pushNamed(AppRoutes.diamondInfoPopupPage,
+                                //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                               } else {
-                                context.pushNamed(AppRoutes.productDetailsPage,
-                                    arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                                  RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
+                                  RoutesData.productId: product.productId
+                                });
                               }
                             },
                             productDetails: ProductDetailsModel(

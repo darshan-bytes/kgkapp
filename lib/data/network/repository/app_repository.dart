@@ -763,7 +763,7 @@ class AppRepository extends ApiService {
 
   Future<Either<ErrorResponse, List<Map<String, dynamic>>>?> compareProducts({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
-    var response = await postMethod<Map<String, dynamic>>(ApiClient.compareProducts, body);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.compareProducts, body, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

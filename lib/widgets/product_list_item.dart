@@ -258,7 +258,12 @@ class ProductListItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
-                  BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                  if (productDetails.isAddedToCart) {
+                    BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                    context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                  } else {
+                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
+                  }
                 },
                 title: productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
                 prefixImage: AppImages.icShoppingBag,

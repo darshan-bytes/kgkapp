@@ -33,6 +33,7 @@ class SmartImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isError = ValueNotifier<bool>(false);
     // get placeholder image from box
     String? placeholderImage = StorageManager().getPlaceHolderImage();
     Widget? child;
@@ -129,61 +130,83 @@ class SmartImage extends StatelessWidget {
             ),
             child: path.isSvgUrl
                 ? SvgPicture.network(path, width: width, height: height)
-                : CachedNetworkImage(
-                    memCacheWidth: isMemCacheEnabled
-                        ? height?.isFinite == true
-                            ? height!.toInt()
-                            : null
-                        : null,
-                    memCacheHeight: isMemCacheEnabled
-                        ? width?.isFinite == true
-                            ? width!.toInt()
-                            : null
-                        : null,
-                    height: height,
-                    width: width,
-                    fit: fit,
-                    errorListener: (error) {
-                      if (kDebugMode) {
-                        kgk_logger.log(
-                          "❌ Error in CachedNetworkImage: $path",
-                          error: error,
-                          name: "SmartImage",
+                : ValueListenableBuilder(
+                    valueListenable: isError,
+                    builder: (context, value, child) {
+                      if (value) {
+                        return placeholderImage.isNotNullNorEmpty
+                            ? Image.file(
+                                File(placeholderImage),
+                                height: height,
+                                width: width,
+                                fit: fit ?? BoxFit.contain,
+                              )
+                            : Image.asset(
+                                AppImages.icPlaceholder,
+                                height: height,
+                                width: width,
+                                fit: fit ?? BoxFit.contain,
+                              );
+                      } else {
+                        return CachedNetworkImage(
+                          memCacheWidth: isMemCacheEnabled
+                              ? height?.isFinite == true
+                                  ? height!.toInt()
+                                  : null
+                              : null,
+                          memCacheHeight: isMemCacheEnabled
+                              ? width?.isFinite == true
+                                  ? width!.toInt()
+                                  : null
+                              : null,
+                          height: height,
+                          width: width,
+                          fit: fit,
+                          errorListener: (error) {
+                            isError.value = true;
+                            if (kDebugMode) {
+                              kgk_logger.log(
+                                "❌ Error in CachedNetworkImage: $path",
+                                error: error,
+                                name: "SmartImage",
+                              );
+                            }
+                          },
+                          errorWidget: (context, url, error) => placeholderImage.isNotNullNorEmpty
+                              ? Image.file(
+                                  File(placeholderImage),
+                                  height: height,
+                                  width: width,
+                                  fit: fit ?? BoxFit.contain,
+                                )
+                              : Image.asset(
+                                  AppImages.icPlaceholder,
+                                  height: height,
+                                  width: width,
+                                  fit: fit ?? BoxFit.contain,
+                                ),
+                          placeholder: (context, url) => Center(
+                            child: SizedBox(
+                              height: height ?? 50.w,
+                              width: height ?? 50.w,
+                              child: Container(
+                                  height: 20.w,
+                                  width: 20.w,
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    height: 20.w,
+                                    width: 20.w,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3.w,
+                                      color: AppTheme.of(context).colors.primary,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          imageUrl: path,
                         );
                       }
                     },
-                    errorWidget: (context, url, error) => placeholderImage.isNotNullNorEmpty
-                        ? Image.file(
-                            File(placeholderImage),
-                            height: height,
-                            width: width,
-                            fit: fit ?? BoxFit.contain,
-                          )
-                        : Image.asset(
-                            AppImages.icPlaceholder,
-                            height: height,
-                            width: width,
-                            fit: fit ?? BoxFit.contain,
-                          ),
-                    placeholder: (context, url) => Center(
-                      child: SizedBox(
-                        height: height ?? 50.w,
-                        width: height ?? 50.w,
-                        child: Container(
-                            height: 20.w,
-                            width: 20.w,
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                              height: 20.w,
-                              width: 20.w,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3.w,
-                                color: AppTheme.of(context).colors.primary,
-                              ),
-                            )),
-                      ),
-                    ),
-                    imageUrl: path,
                   ),
           );
           break;

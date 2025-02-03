@@ -228,6 +228,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   }
 
   void _onLandingLogoutEvent(LandingLogoutEvent event, Emitter<LandingState> emit) {
+    (blocList[myBagIndex] as MyBagBloc).add(ClearMyBagEvent(getNavigatorKeyContext));
     _isInitialized = false;
   }
 

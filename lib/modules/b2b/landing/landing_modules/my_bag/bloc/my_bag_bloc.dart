@@ -83,7 +83,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     await fetchListOfBag(event.context, emit);
     emit(const MyBagLoadedState());
-    if (myBagProductList.isEmpty) return;
+    if (myBagProductList.isEmpty) {
+      clearData();
+      return;
+    }
+    ;
     await fetchSalesmanList(event.context, emit);
     await fetchBagOrderSummaryData(event.context, emit);
     await getPaymentTermsFilter(event.context, emit);
@@ -496,6 +500,11 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onClearMyBag(ClearMyBagEvent event, Emitter<MyBagState> emit) async {
     emit(MyBagReloadState());
+    await clearData();
+    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(0));
+  }
+
+  Future<void> clearData() async {
     await StorageManager().clearBagData();
 
     bagListDataModel = null;
@@ -503,7 +512,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
     myBagProductList.clear();
     salesmanList.clear();
     bagOrderSummaryData = null;
-    BlocProvider.of<LandingBloc>(event.context).add(LandingChangeMyBagCountEvent(0));
   }
 
   /// Using this event to fetch latest order summary data

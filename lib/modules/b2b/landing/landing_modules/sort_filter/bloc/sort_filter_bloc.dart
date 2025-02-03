@@ -136,7 +136,36 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   }
 
   Future<void> _onAddSortFilterDataEvent(AddSortFilterDataEvent event, Emitter<SortFilterState> emit) async {
-    filterData = event.filterOptionList;
+    filterData = [];
+    for (int i = 0; i < event.filterOptionList.length; i++) {
+      final item = event.filterOptionList[i];
+      FilterData filter = FilterData(
+        secondaryFilterData: [],
+        name: item.name,
+        code: item.code,
+        dateRange: item.dateRange,
+        filterType: item.filterType,
+        inputType: item.inputType,
+        isAdvanceFilter: item.isAdvanceFilter,
+        minMaxValues: item.minMaxValues,
+        rangeValues: item.rangeValues,
+        subFilterCodes: item.subFilterCodes,
+      );
+
+      List<SecondaryFilterData> secondaryFilterData = [];
+      for (int i = 0; i < (item.secondaryFilterData?.length ?? 0); i++) {
+        final secondaryItem = item.secondaryFilterData![i];
+        SecondaryFilterData secondaryFilter = SecondaryFilterData(
+          code: secondaryItem.code,
+          image: secondaryItem.image,
+          isSelected: secondaryItem.isSelected,
+          name: secondaryItem.name,
+        );
+        secondaryFilterData.add(secondaryFilter);
+      }
+      filter.secondaryFilterData = secondaryFilterData;
+      filterData.add(filter);
+    }
 
     if (filterData.isNotEmpty) {
       selectedFilterData = filterData.first;

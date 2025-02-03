@@ -255,6 +255,8 @@ class LightModeTheme extends AppTheme {
         primaryColor: colors.primary,
         badgeTextStyle: interRegularTextStyle.copyWith(fontSize: 10.sp, color: colors.white),
         whiteColor: colors.white,
+        outOfStockTextStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.colorF65D3C),
+        errorColor: colors.colorF65D3C,
       );
 
   @override

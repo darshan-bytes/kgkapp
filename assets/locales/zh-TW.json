@@ -799,5 +799,6 @@
   "mob_error_bid_amount_greater_than_x": "投標金額必須等於或大於起始投標金額。",
   "mob_auction_will_start_on": "拍賣將在",
   "mob_auction_has_ended": "拍賣已結束",
-  "mob_loading": "載入中"
+  "mob_loading": "載入中",
+  "mob_this_product_is_currently_not_in_stock": "此產品目前缺貨"
 }
