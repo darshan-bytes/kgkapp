@@ -41,9 +41,10 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         // Store currency list in local storage if API call succeeds
         await StorageManager().setCurrencyList(r);
         String? currency = StorageManager().getSelectedCurrency();
-        if (currency.isNullOrEmpty) {
-          await StorageManager().setSelectedCurrency(r.first.name ?? '');
-          await StorageManager().setSelectedCurrencySymbol(r.first.symbol ?? '');
+        CurrencyListModel? defaultCurrency = r.firstWhereOrNull((element) => element.isDefault == true) ?? r.firstOrNull;
+        if (defaultCurrency != null) {
+          await StorageManager().setSelectedCurrency(defaultCurrency.name ?? '');
+          await StorageManager().setSelectedCurrencySymbol(defaultCurrency.symbol ?? '');
         }
       });
     });

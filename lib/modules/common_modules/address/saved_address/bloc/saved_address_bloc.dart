@@ -33,9 +33,15 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     _isInitialised = true;
   }
 
-  void _onSavedAddressChangeBillingAddressSameEvent(SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) {
+  Future<void> _onSavedAddressChangeBillingAddressSameEvent(
+      SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) async {
     //TODO: Handle on change billing address same as shipping address
     /// Api call to set billing address same as shipping address
+
+    // emit(const SavedAddressReloadState());
+    await onSameAsShippingClickAPI(event.context);
+    _isInitialised = false;
+    add(SavedAddressInitialEvent(event.context));
   }
 
   Future<void> _onSavedAddressChangeShippingAddressEvent(
@@ -69,5 +75,22 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     } catch (e) {
       Utils.showMessage(e.toString());
     }
+  }
+
+  Future<bool> onSameAsShippingClickAPI(BuildContext context) async {
+    final Map<String, dynamic> body = {
+      ApiKey.id: defaultShippingAddress?.id,
+      ApiKey.isDefaultBilling: true,
+      ApiKey.isDefaultShipping: true,
+    };
+
+    final response = await AppRepository(context).updateAddress(defaultShippingAddress?.id ?? '', body: body);
+    return response?.fold((l) {
+          Utils.showMessage(l.message);
+          return false;
+        }, (CommonResponse r) {
+          return true;
+        }) ??
+        false;
   }
 }

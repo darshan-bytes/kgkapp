@@ -23,11 +23,13 @@ class FaqScreen extends StatelessWidget {
                         children: [
                           SizedBox(height: 24.h),
                           SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.titleStyle),
-                          SizedBox(height: 24.h),
+
+                          /// Below code is commented as search functionality is not implemented in the API for now
+                          /*SizedBox(height: 24.h),
                           SmartTextField(
                             controller: faqBloc.searchController,
                             suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
-                          ),
+                          ),*/
                           SizedBox(height: 16.h),
                           BlocBuilder<FaqBloc, FaqState>(
                             buildWhen: (previous, current) => current is FaqLoadedState,
@@ -96,7 +98,7 @@ class FaqScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SmartText(APPStrings.stillNeedHelp.tr, style: style.titleStyle),
-        SizedBox(height: 24.h),
+        SizedBox(height: 10.h),
         _buildStillNeedHelpItems(style, APPStrings.byPhone.tr, "Monday – Friday 9 AM – 5 PM", "+91 98765 43210", onTap: () async {
           await Utils.launchUrlFromString("tel:+919876543210");
         }),
@@ -130,7 +132,7 @@ class FaqScreen extends StatelessWidget {
         SmartText(desc, style: style.contactDescriptionStyle),
         SizedBox(height: 8.h),
         SmartText(value, style: style.contactDetailsStyle, onTap: onTap),
-        SizedBox(height: 24.h),
+        SizedBox(height: 16.h),
         const Divider(),
         SizedBox(height: 16.h),
       ],

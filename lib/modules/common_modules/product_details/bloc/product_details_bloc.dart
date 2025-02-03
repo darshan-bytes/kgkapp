@@ -294,7 +294,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
-            productId: productId,
+            productId: diamondData!.suid,
             suid: diamondData!.suid,
             name: productName,
             offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
@@ -337,7 +337,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
           }
           productDetails = ProductDetailsModel(
-            productId: productId,
+            productId: gemstoneData!.suid,
             suid: gemstoneData!.suid,
             name: productName,
             offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
@@ -374,25 +374,37 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       (data) {
         if (data.data.isNotEmpty) {
           diamondDatumListAPI = data.data;
-          suggestedProductList = diamondDatumListAPI.map((e) {
-            bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
+          suggestedProductList = diamondDatumListAPI.map((diamond) {
             return ProductDetailsModel(
-              suid: e.suid ?? '',
-              productId: e.suid ?? '',
-              name: e.rmDescription ?? '',
-              imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-              offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-              originalPrice: e.finalPrice?.setCurrency,
-              discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-              productSku: e.lotCode,
-              reviewCount: e.reviewCount,
-              rating: e.rating?.toDouble(),
+              suid: diamond.suid,
+              productId: diamond.id,
+              imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
+              name: diamond.rmDescription ?? "",
+              ctsOrGms: diamond.ctsOrGms,
+              rappaportPrice: diamond.rappaportPrice,
+              priceCts: diamond.priceCts,
+              originalPrice: diamond.finalPrice?.toString().setCurrency,
+              offerPrice: diamond.finalPrice?.toString().setCurrency,
+              finalPrice: diamond.discountPrice?.toString().setCurrency,
+              lotCode: diamond.lotCode,
+              productSku: diamond.lotCode,
+              shape: diamond.shape,
+              fluorescence: diamond.fluorescence,
+              labs: diamond.labs,
+              lsp: diamond.lsp,
+              color: diamond.color,
+              clarity: diamond.clarity,
+              cut: diamond.cut,
+              certificateFile: diamond.certificateFile,
+              openDnaUrl: diamond.openDnaUrl,
               commodity: Commodity.diamond,
-              isFavourite: e.isFavorite,
-              wishlistId: e.wishlistID,
-              title: e.suid,
-              subTitle: e.rmDescription,
-              isAddedToCart: e.isAddedToCart,
+              company: diamond.id,
+              isFavourite: diamond.isFavorite,
+              wishlistId: diamond.wishlistID,
+              title: diamond.lotCode ?? "",
+              subTitle: diamond.rmDescription ?? "",
+              isForAuction: diamond.isAuction,
+              isAddedToCart: diamond.isAddedToCart,
             );
           }).toList();
           add(const ProductDetailsSuggestedLoadedEvent());
@@ -431,7 +443,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             commodity: Commodity.gemstone,
             isFavourite: e.isFavorite,
             wishlistId: e.wishlistID,
-            title: e.suid,
+            title: e.lotCode,
             subTitle: e.rmDescription,
             isAddedToCart: e.isAddedToCart,
           );
@@ -635,23 +647,37 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
-        recentlyViewedProductList = data.data.map((e) {
+        recentlyViewedProductList = data.data.map((diamond) {
           return ProductDetailsModel(
-            productId: e.suid ?? '',
-            name: e.rmDescription ?? '',
-            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            originalPrice: e.finalPrice?.toString().setCurrency,
-            offerPrice: e.discountPrice?.toString().setCurrency,
-            finalPrice: e.discountPrice?.toString().setCurrency,
-            discountPercentageString: e.discountEXT,
-            productSku: e.lotCode,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
+            suid: diamond.suid,
+            productId: diamond.id,
+            imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.firstOrNull?.url : null,
+            name: diamond.rmDescription ?? "",
+            ctsOrGms: diamond.ctsOrGms,
+            rappaportPrice: diamond.rappaportPrice,
+            priceCts: diamond.priceCts,
+            originalPrice: diamond.finalPrice?.toString().setCurrency,
+            offerPrice: diamond.finalPrice?.toString().setCurrency,
+            finalPrice: diamond.discountPrice?.toString().setCurrency,
+            lotCode: diamond.lotCode,
+            productSku: diamond.lotCode,
+            shape: diamond.shape,
+            fluorescence: diamond.fluorescence,
+            labs: diamond.labs,
+            lsp: diamond.lsp,
+            color: diamond.color,
+            clarity: diamond.clarity,
+            cut: diamond.cut,
+            certificateFile: diamond.certificateFile,
+            openDnaUrl: diamond.openDnaUrl,
             commodity: Commodity.diamond,
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            subTitle: e.rmDescription ?? '',
-            title: e.lotCode ?? '',
+            company: diamond.id,
+            isFavourite: diamond.isFavorite,
+            wishlistId: diamond.wishlistID,
+            title: diamond.lotCode ?? "",
+            subTitle: diamond.rmDescription ?? "",
+            isForAuction: diamond.isAuction,
+            isAddedToCart: diamond.isAddedToCart,
           );
         }).toList();
         add(const ProductDetailsReviewsLoadedEvent());
@@ -684,7 +710,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             commodity: Commodity.gemstone,
             isFavourite: e.isFavorite,
             wishlistId: e.wishlistID,
-            title: e.suid,
+            title: e.lotCode,
             subTitle: e.rmDescription,
           );
         }).toList();
@@ -712,7 +738,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         } else {
           BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductRemoveProductEvent(
             context: event.context!,
-            productId: productDetails?.productId ?? '',
+            productId: productDetails?.suid ?? '',
           ));
         }
       } else if (event.isCompare != null) {
@@ -891,7 +917,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void initCompareProductChangesStream(BuildContext context) {
     compareProductStream = BlocProvider.of<CompareProductBloc>(context).stream.listen((state) {
       if (state is CompareProductAddedState) {
-        if (state.productIdList.contains(productDetails?.productId)) {
+        if (state.productIdList.contains(productDetails?.suid)) {
           isCompare = true;
         } else {
           isCompare = false;

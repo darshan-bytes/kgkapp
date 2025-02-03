@@ -260,7 +260,7 @@ class Utils {
 
   /// Validate ZipCode
   static bool isValidZipCode(String zipCode) {
-    String regex = r'^[0-9]{5}(?:-[0-9]{4})?$';
+    String regex = r'^[0-9]{6}(?:-[0-9]{6})?$';
     RegExp regExp = RegExp(regex);
     return regExp.hasMatch(zipCode);
   }
@@ -391,10 +391,8 @@ class Utils {
       Map<String, dynamic> body = {
         ApiKey.id: myBagDataModel.sId ?? '',
       };
-      await AppRepository(context).mergeBag(body: body).then((value) {
-        value?.fold((l) {
-          Utils.showMessage(l.message);
-        }, (r) async {
+      await AppRepository(context).mergeBag(body: body).then((value) async {
+        await value?.fold((l) {}, (r) async {
           if (r.responseData != null) {
             await StorageManager().clearBagData();
           }

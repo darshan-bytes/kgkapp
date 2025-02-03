@@ -134,7 +134,7 @@ class CompareProductScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SmartImage(
-            path: productDetail.imageUrl ?? '',
+            path: (bloc.compareResult[index]['image'] as List?)?.firstOrNull['URL'] ?? '',
             width: 114.w,
             height: 114.w,
             color: Colors.black,

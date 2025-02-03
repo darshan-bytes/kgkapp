@@ -93,6 +93,7 @@ class _OrderDetailBody extends StatelessWidget {
             if (bloc.userType == UserType.b2cUser) {
               final ProductDetailsModel product = bloc.orderProductList[index];
               return CartProductItem(
+                isOutOfStock: false,
                 boxHeight: 72.w,
                 boxWidth: 72.w,
                 isDropDownEnable: false,

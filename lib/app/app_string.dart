@@ -991,8 +991,7 @@ class APPStrings {
   static const String removeAllProductFromCart = 'mob_remove_all_product_from_cart';
   static const String pressBackAgainToExit = 'mob_press_back_again_to_exit';
   static const String cantAddProductFromDifferentCommodities = 'mob_cant_add_product_from_different_commodities';
-  static const String differentCommoditiesFound = 'mob_different_commodities_found';
-  static const String differentCommoditiesMergeConfirm = 'mob_different_commodities_merge_confirm';
+  static const String thisProductIsCurrentlyNotInStock = 'mob_this_product_is_currently_not_in_stock';
   static const String noBidsFound = 'mob_bids_found';
   static const String errorBidAmountRequired = 'mob_error_bid_amount_required';
   static const String errorBidAmountGreaterThan = "mob_error_bid_amount_greater_than_x";

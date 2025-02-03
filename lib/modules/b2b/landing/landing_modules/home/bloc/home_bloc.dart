@@ -585,7 +585,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             commodity: Commodity.gemstone,
             isFavourite: e.isFavorite,
             wishlistId: e.wishlistID,
-            title: e.suid,
+            title: e.lotCode,
             subTitle: e.rmDescription,
           );
         }).toList();
