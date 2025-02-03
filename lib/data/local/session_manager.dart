@@ -196,8 +196,11 @@ class StorageManager {
     MyBagDataModel? guestBagData = getBagData();
     String? selectedCurrency = getSelectedCurrency();
     String? selectedCurrencySymbol = getSelectedCurrencySymbol();
+    final storedData = _box.get(_sortingData, defaultValue: {});
     await _box.clear();
-
+    if (storedData != null) {
+      await _box.put(_sortingData, storedData);
+    }
     if (locale != null) {
       await setLocale(locale);
     }

@@ -143,7 +143,7 @@ class ProductData {
   double? rating;
   int? reviewCount;
   String? metalColor1HexCode;
-  int? discountPercentage;
+  double? discountPercentage;
   String? discountPrice;
   bool isFavorite;
   String? finalPrice;
@@ -181,7 +181,7 @@ class ProductData {
       rating: json["rating"]?.toString().toDouble ?? 0.0,
       reviewCount: json["review_count"],
       metalColor1HexCode: json["metal_color_1_hex_code"],
-      discountPercentage: json["discount_percentage"],
+      discountPercentage: json["discount_percentage"]?.toString().toDouble ?? 0.0,
       discountPrice: json["discount_price"],
       isFavorite: (json["is_favorite"] != null && json["is_favorite"].toString().isNotEmpty) ? true : false,
       finalPrice: json["final_price"],
