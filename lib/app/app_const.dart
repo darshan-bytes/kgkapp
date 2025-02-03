@@ -35,7 +35,7 @@ class AppConst {
   static const String youMayLike = "YOU_MAY_LIKE";
   static const String recentlyViewed = "RECENTLY_VIEWED";
   static const String diamondFilter = "diamond";
-  static const String gemstoneFilter = "diamond";
+  static const String gemstoneFilter = "gemstone";
   static const String diamondForDIYFilter = "diy_rm_listing";
 
   static const String sortKeyBestSeller = "best_seller";
