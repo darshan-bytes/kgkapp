@@ -136,6 +136,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   }
 
   Future<void> _onAddSortFilterDataEvent(AddSortFilterDataEvent event, Emitter<SortFilterState> emit) async {
+    emit(SortReloadState());
     filterData = [];
     for (int i = 0; i < event.filterOptionList.length; i++) {
       final item = event.filterOptionList[i];
