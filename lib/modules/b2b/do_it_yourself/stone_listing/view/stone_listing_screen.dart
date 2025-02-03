@@ -101,8 +101,10 @@ class StoneListingScreen extends StatelessWidget {
 
   Widget _buildSelectionDiamond(StoneListingBloc diamondListingBloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
-      buildWhen: (previous, current) => current is StoneChangeTypeState,
+      buildWhen: (previous, current) =>
+          current is StoneChangeTypeState || current is StoneListLoadingState || current is StoneProductLoadedState,
       builder: (context, state) {
+        if (state is StoneListLoadingState) return const SizedBox.shrink();
         return Row(
           children: [
             Expanded(
@@ -168,7 +170,7 @@ class StoneListingScreen extends StatelessWidget {
                     unselectedButtonBorderColor: style.listBorderColor,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                     onTap: () {
-                      bloc.add(const StoneChangeListingTypeEvent());
+                      bloc.add(StoneChangeListingTypeEvent(true));
                     },
                   ),
                   SelectionButton(
@@ -184,7 +186,7 @@ class StoneListingScreen extends StatelessWidget {
                     unselectedButtonBorderColor: style.listBorderColor,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                     onTap: () {
-                      bloc.add(const StoneChangeListingTypeEvent());
+                      bloc.add(StoneChangeListingTypeEvent(false));
                     },
                   ),
 

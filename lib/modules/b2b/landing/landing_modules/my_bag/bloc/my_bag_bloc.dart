@@ -87,7 +87,6 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
       clearData();
       return;
     }
-    ;
     await fetchSalesmanList(event.context, emit);
     await fetchBagOrderSummaryData(event.context, emit);
     await getPaymentTermsFilter(event.context, emit);
