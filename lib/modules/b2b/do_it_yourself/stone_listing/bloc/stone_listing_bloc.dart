@@ -85,7 +85,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Handler for changing the listing type
   Future<void> _onChangeListingTypeEvent(StoneChangeListingTypeEvent event, Emitter<StoneListingState> emit) async {
-    _changeListingViewType(emit);
+    _changeListingViewType(isGridValue: event.isGrid, emit: emit);
   }
 
   /// Handler for load more
@@ -118,7 +118,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     emit(StoneListLoadingState(isFirst: true));
     getRouteData(context);
     _initializePagination(context);
-    await _initializeSortOptions();
+    await _initializeSortOptions(context);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
       await _generateProductList(context, emit);
     }
@@ -443,9 +443,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Change listing view type
-  void _changeListingViewType(Emitter<StoneListingState> emit) {
+  void _changeListingViewType({required bool isGridValue, required Emitter<StoneListingState> emit}) {
     emit(StoneProductReloadState());
-    isGrid = !isGrid;
+    isGrid = isGridValue;
     emit(StoneChangeListingTypeState());
   }
 
@@ -536,7 +536,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   /// Initialize sort options
-  Future<void> _initializeSortOptions() async {
+  Future<void> _initializeSortOptions(BuildContext context) async {
     List<SortOptions> sortOptionsList = await StorageManager()
         .getSortingList(screenIdentifier == ScreenIdentifier.diamondForDIY ? Commodity.diamond.value : Commodity.gemstone.value);
     if (sortOptionsList.isNotNullNorEmpty) {
@@ -544,6 +544,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
       sortKey = defaultSortOption.sortKey ?? "";
       sortValue = defaultSortOption.sortValue ?? "";
+      BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
     }
   }
 

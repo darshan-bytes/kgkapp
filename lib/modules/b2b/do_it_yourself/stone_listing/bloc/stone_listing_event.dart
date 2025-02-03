@@ -27,10 +27,12 @@ class StoneChangeTypeEvent extends StoneListingEvent {
 }
 
 class StoneChangeListingTypeEvent extends StoneListingEvent {
-  const StoneChangeListingTypeEvent();
+  final bool isGrid;
+
+  const StoneChangeListingTypeEvent(this.isGrid);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isGrid];
 }
 
 class StoneListLoadMoreEvent extends StoneListingEvent {

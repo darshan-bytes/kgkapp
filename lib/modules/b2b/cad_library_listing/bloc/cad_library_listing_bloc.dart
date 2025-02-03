@@ -34,16 +34,16 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     getRouteData(event.context);
     emit(CadAppBarTitleChangedState());
-    await _initializeSortOptions();
+    await _initializeSortOptions(event.context);
     gridPaginationScrollController.init(
       isSecondaryView: true,
       loadAction: (int currentPage) async {
         add(CadListLoadMoreEvent(event.context, currentPage));
       },
     );
-    if(screenIdentifier == ScreenIdentifier.productForLibraryStyle){
+    if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
       await _callStyleLibraryListingApi(context: event.context, isLoadMore: false);
-    }else{
+    } else {
       await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     }
     emit(CadListingLoadedState());
@@ -53,21 +53,22 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
       screenIdentifier = data[RoutesData.isPageFor] ?? ScreenIdentifier.productForLibraryCAD;
-      if(screenIdentifier == ScreenIdentifier.productForLibraryStyle){
+      if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
         appBarTitle = APPStrings.styleLibrary.tr;
-      }else{
+      } else {
         appBarTitle = APPStrings.cadLibrary.tr;
       }
     }
   }
 
-  Future<void> _initializeSortOptions() async {
+  Future<void> _initializeSortOptions(BuildContext context) async {
     List<SortOptions> sortOptionsList = await StorageManager().getSortingList(Commodity.cadLibrary.value);
     if (sortOptionsList.isNotNullNorEmpty) {
       sortOptions = sortOptionsList;
       SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
       sortKey = defaultSortOption.sortKey ?? "";
       sortValue = defaultSortOption.sortValue ?? "";
+      BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
     }
   }
 
@@ -101,7 +102,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       ApiKey.sortKey: sortKey
     };
     Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
-    await AppRepository(context).getStyleLibraryList(query: params, isLoadMore: isLoadMore);
+        await AppRepository(context).getStyleLibraryList(query: params, isLoadMore: isLoadMore);
 
     response?.fold((error) {
       if (error.message.isNotNullNorEmpty) {
