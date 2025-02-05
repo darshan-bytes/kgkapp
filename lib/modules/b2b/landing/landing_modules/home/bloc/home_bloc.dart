@@ -24,6 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   //Shop Diamonds List
   List<AuctionListModel> shopDiamondsList = [];
+  List<ShapeMasterDetails> shopDiamondsShapeMasterList = [];
 
   //Shop Rings List
   final List<AuctionListModel> shopByBrands = _generateShopByBrands();
@@ -1050,9 +1051,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> shapeMasterFilters(BuildContext context) async {
     try {
-      final response = await appBloc.fetchShapeMasterFilters(context, isShowLoader: false);
-      shopDiamondsList = List.generate(response.length, (index) {
-        ShapeMasterDetails item = response[index];
+      shopDiamondsShapeMasterList = await appBloc.fetchShapeMasterFilters(context, isShowLoader: false);
+      shopDiamondsList = List.generate(shopDiamondsShapeMasterList.length, (index) {
+        ShapeMasterDetails item = shopDiamondsShapeMasterList[index];
         return AuctionListModel(
           id: item.id?.toString() ?? '',
           name: item.shapeName,
