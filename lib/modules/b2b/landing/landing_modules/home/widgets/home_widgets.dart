@@ -361,7 +361,12 @@ class HomeWidgets {
         final AuctionListModel item = homeBloc.shopDiamondsList[index];
         return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault});
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {
+              RoutesData.isPageFor: ScreenIdentifier.diamondForDefault,
+              RoutesData.filterData: {
+                ApiKey.shape: homeBloc.shopDiamondsShapeMasterList[index].shapeName,
+              },
+            });
           },
           width: 72.w,
           imageWidth: 72.w,

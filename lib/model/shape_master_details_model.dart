@@ -37,46 +37,6 @@ class ShapeMasterDetails {
   final String? imgPath;
   final String? symbolPath;
 
-  ShapeMasterDetails copyWith({
-    int? id,
-    String? referenceId,
-    String? suid,
-    String? refSuid,
-    String? importedFrom,
-    String? shapeId,
-    String? shapeName,
-    String? stoneType,
-    String? imgReferenceId,
-    String? symbolReferenceId,
-    String? sortingNo,
-    DateTime? receivedAt,
-    DateTime? updatedDateTime,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? imgPath,
-    String? symbolPath,
-  }) {
-    return ShapeMasterDetails(
-      id: id ?? this.id,
-      referenceId: referenceId ?? this.referenceId,
-      suid: suid ?? this.suid,
-      refSuid: refSuid ?? this.refSuid,
-      importedFrom: importedFrom ?? this.importedFrom,
-      shapeId: shapeId ?? this.shapeId,
-      shapeName: shapeName ?? this.shapeName,
-      stoneType: stoneType ?? this.stoneType,
-      imgReferenceId: imgReferenceId ?? this.imgReferenceId,
-      symbolReferenceId: symbolReferenceId ?? this.symbolReferenceId,
-      sortingNo: sortingNo ?? this.sortingNo,
-      receivedAt: receivedAt ?? this.receivedAt,
-      updatedDateTime: updatedDateTime ?? this.updatedDateTime,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      imgPath: imgPath ?? this.imgPath,
-      symbolPath: symbolPath ?? this.symbolPath,
-    );
-  }
-
   factory ShapeMasterDetails.fromJson(Map<String, dynamic> json) {
     return ShapeMasterDetails(
       id: json["id"],

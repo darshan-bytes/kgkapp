@@ -31,6 +31,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Variables for managing pagination and filtering
   String productId = "";
   String productNavigation = "";
+  Map<String, String?>? filterDataMap;
 
   /// Variables for sorting
   String sortKey = AppConst.sortKeyUpdatedDateTime;
@@ -133,6 +134,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
     productId = data?[RoutesData.productId] ?? "";
     productNavigation = data?[RoutesData.productNavigation] ?? AppConst.youMayLike;
+    filterDataMap = data?[RoutesData.filterData];
 
     /// Here we set the appbar title
     _getStoneListName();
@@ -193,7 +195,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
-
+    filterDataMap?.forEach((key, value) {
+      if (value != null) {
+        query![key] = value;
+      }
+    });
     if (StorageManager.instance.getIsSkipLogin()) {
       String? bagId = StorageManager.instance.getBagId();
       if (bagId.isNotNullNorEmpty) {
@@ -511,6 +517,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
+      if (filterDataMap?.containsKey(filterOption.slug) == true) {
+        continue;
+      }
       if (filterOption.data.isNotEmpty) {
         FilterData filter = FilterData(
           name: filterOption.name,

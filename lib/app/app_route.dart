@@ -820,6 +820,7 @@ enum RoutesData {
   isFromSignIn,
   settingId,
   isFromLoginRequired,
+  filterData,
 }
 
 enum ScreenIdentifier {

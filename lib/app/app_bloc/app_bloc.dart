@@ -414,7 +414,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
-        ApiKey.pagination: {ApiKey.limit: 10, ApiKey.page: 1},
+        ApiKey.pagination: {ApiKey.limit: 100, ApiKey.page: 1},
         ApiKey.search: "",
         ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
