@@ -37,8 +37,6 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     emit(const ContactUsReloadState());
     isInitialized = true;
     await fetchInquiryType(event.context, emit);
-    selectedProduct = productList.first;
-    selectedInquiryType = inquiryTypeList.first;
     emit(const ContactUsChangeInquiryTypeState());
     emit(const ContactUsChangeSelectProductState());
   }
@@ -119,7 +117,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     fullNameController.clear();
     commentController.clear();
     emailController.clear();
-    selectedProduct = productList.first;
-    selectedInquiryType = inquiryTypeList.first;
+    selectedProduct = null;
+    selectedInquiryType = null;
   }
 }

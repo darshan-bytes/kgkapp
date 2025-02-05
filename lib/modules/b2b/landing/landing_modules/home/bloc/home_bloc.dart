@@ -150,8 +150,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }, (r) async {
         if (!context.mounted) context = getNavigatorKeyContext;
         String? bagId = StorageManager().getBagId();
+        BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
         if (r.result.isNotEmpty && bagId.isNotNullNorEmpty) {
-          BlocProvider.of<LandingBloc>(context).add(LandingChangeMyBagCountEvent(r.result.length));
           MyBagDataModel myBagDataModel = MyBagDataModel(status: true, commodity: r.result[0].commodity, sId: bagId);
 
           await StorageManager().storeBagData(myBagDataModel);
@@ -472,9 +472,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (token.isNullOrEmpty && recentlyViewedJewellery.isNullOrEmpty) return;
 
     Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getRecentlyViewedProductList(
-        page: AppConst.page1.toString(),
-        limit: AppConst.pageLimit10.toString(),
-        suids: token.isNullOrEmpty ? recentlyViewedJewellery : null);
+      page: AppConst.page1.toString(),
+      limit: AppConst.pageLimit10.toString(),
+    );
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -521,7 +521,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     String? token = StorageManager().getAuthToken();
     if (token.isNullOrEmpty && recentlyViewedDiamond.isNullOrEmpty) return;
     Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context).getDiamondRecentlyViewedProductList(
-        page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString(), suids: token.isNullOrEmpty ? recentlyViewedDiamond : null);
+      page: AppConst.page1.toString(),
+      limit: AppConst.pageLimit10.toString(),
+    );
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {
@@ -560,9 +562,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (token.isNullOrEmpty && recentlyViewedGemstone.isNullOrEmpty) return;
 
     Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context).getGemstoneRecentlyViewedProductList(
-        page: AppConst.page1.toString(),
-        limit: AppConst.pageLimit10.toString(),
-        suids: token.isNullOrEmpty ? recentlyViewedGemstone : null);
+      page: AppConst.page1.toString(),
+      limit: AppConst.pageLimit10.toString(),
+    );
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {

@@ -20,19 +20,24 @@ class AppLocalizations {
   /// Returns:
   ///   A Future bool
   Future<bool> load() async {
-    // Load the language JSON file from the "lang" folder
-    Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
+    String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
 
-    if (languageLabels.isNotEmpty) {
-      _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
-      return true;
-    } else {
-      String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
-      Map<String, dynamic> jsonMap = json.decode(jsonString);
-
-      _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
-      return true;
-    }
+    _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    return true;
+    // // Load the language JSON file from the "lang" folder
+    // Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
+    //
+    // if (languageLabels.isNotEmpty) {
+    //   _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
+    //   return true;
+    // } else {
+    //   String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
+    //   Map<String, dynamic> jsonMap = json.decode(jsonString);
+    //
+    //   _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    //   return true;
+    // }
   }
 
   /// If the localized strings map is not null, return the value of the key in the map
