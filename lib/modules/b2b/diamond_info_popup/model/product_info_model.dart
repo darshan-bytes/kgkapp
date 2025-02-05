@@ -54,6 +54,7 @@ class ProductInfoModel {
   String? discount;
   String? pricePerCrt;
   String? amount;
+  bool isAddedToCart;
 
   ProductInfoModel({
     this.productId,
@@ -109,5 +110,6 @@ class ProductInfoModel {
     this.discount,
     this.pricePerCrt,
     this.amount,
+    this.isAddedToCart = false,
   });
 }

@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+46
+version: 1.0.0+47
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -83,7 +83,7 @@ dependencies:
   intl: ^0.19.0
 
   #For Qr Code Scanner
-  mobile_scanner: ^6.0.5
+  mobile_scanner: ^6.0.6
 
   #For Webview
   webview_flutter: ^4.10.0
@@ -92,12 +92,12 @@ dependencies:
   google_maps_flutter: ^2.10.0
 
   #For Range Sliders
-  syncfusion_flutter_sliders: ^28.2.3
+  syncfusion_flutter_sliders: ^28.2.4
 
   #For Calendar
-  syncfusion_flutter_calendar: ^28.2.3
+  syncfusion_flutter_calendar: ^28.2.4
 
-  syncfusion_flutter_charts: ^28.2.3
+  syncfusion_flutter_charts: ^28.2.4+1
 
   #For QR Code
   qr_flutter: ^4.1.0
