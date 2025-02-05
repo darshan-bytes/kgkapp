@@ -533,11 +533,16 @@ class AppRepository extends ApiService {
   }
 
   Future<Either<ErrorResponse, JewelleryListingModel>?> getRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
+      {required String limit, required String page, bool isLoadMore = false}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     Map<String, dynamic>? query;
+
+    String? suids;
+    if (StorageManager.instance.getIsSkipLogin()) {
+      suids = StorageManager.instance.getRecentlyViewedJewellery();
+    }
     if (suids != null) {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
     } else {
@@ -580,11 +585,15 @@ class AppRepository extends ApiService {
 
   // For Get Recently Viewed Product List for Diamond
   Future<Either<ErrorResponse, DiamondListingModel>?> getDiamondRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
+      {required String limit, required String page, bool isLoadMore = false}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     Map<String, dynamic>? query;
+    String? suids;
+    if (StorageManager.instance.getIsSkipLogin()) {
+      suids = StorageManager.instance.getRecentlyViewedDiamond();
+    }
     if (suids != null) {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
     } else {
@@ -603,11 +612,15 @@ class AppRepository extends ApiService {
 
   // For Get Recently Viewed Product List for Gemstone
   Future<Either<ErrorResponse, GemstoneListingModel>?> getGemstoneRecentlyViewedProductList(
-      {required String limit, required String page, bool isLoadMore = false, String? suids}) async {
+      {required String limit, required String page, bool isLoadMore = false}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
     Map<String, dynamic>? query;
+    String? suids;
+    if (StorageManager.instance.getIsSkipLogin()) {
+      suids = StorageManager.instance.getRecentlyViewedGemstone();
+    }
     if (suids != null) {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
     } else {

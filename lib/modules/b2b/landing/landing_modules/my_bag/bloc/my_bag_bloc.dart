@@ -558,6 +558,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         bagOrderSummaryData = null;
         salesmanList = [];
         bagOrderSummaryData = null;
+        BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(0));
         emit(const MyBagLoadedState());
         emit(MyBagSalesmanListLoadedState());
         emit(MyBagOrderSummaryDataLoadedState());

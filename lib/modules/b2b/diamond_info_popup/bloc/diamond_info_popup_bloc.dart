@@ -22,6 +22,8 @@ class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupS
         diamondDatum.discountPercentage != null && (diamondDatum.discountPercentage is num) && diamondDatum.discountPercentage > 0;
     imgList = diamondDatum.image.map((e) => e.url ?? '').toList();
     productInfoModel = ProductInfoModel(
+      productId: diamondDatum.suid,
+      isAddedToCart: diamondDatum.isAddedToCart,
       productName: diamondDatum.rmDescription,
       offerPrice: diamondDatum.discountPrice?.setCurrency,
       originalPrice: diamondDatum.finalPrice?.setCurrency,

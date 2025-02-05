@@ -13,7 +13,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
         final ProductInfoModel productInfoModel = bloc.productInfoModel;
         return Scaffold(
           appBar: SmartAppBar(title: APPStrings.diamonds.tr),
-          bottomNavigationBar: _buildBottomNavigationBar(),
+          bottomNavigationBar: _buildBottomNavigationBar(context, productInfoModel),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 17.w),
             child: SmartSingleChildScrollView(
@@ -310,7 +310,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar(BuildContext context, ProductInfoModel productInfo) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 8.h),
       child: SafeArea(
@@ -319,11 +319,25 @@ class DiamondInfoPopupScreen extends StatelessWidget {
             Expanded(
               child: SmartButton(
                 prefixImage: AppImages.icShoppingBag,
-                title: APPStrings.addToBag.tr,
-                onTap: () {},
+                title: productInfo.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                onTap: () {
+                  ProductDetailsModel? productDetails = ProductDetailsModel(
+                    productId: productInfo.productId,
+                    suid: productInfo.productId,
+                    commodity: Commodity.diamond,
+                  );
+
+                  if (!productInfo.isAddedToCart) {
+                    BlocProvider.of<AppBloc>(context).onTapBag(context, productDetails: productDetails);
+                    productInfo.isAddedToCart = true;
+                  } else {
+                    BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                    context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                  }
+                },
               ),
             ),
-            SizedBox(width: 8.w),
+            /*  SizedBox(width: 8.w),
             SelectionButton(
               height: 42.w,
               width: 42.w,
@@ -331,7 +345,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
               isSelected: false,
               onTap: () {},
               image: AppImages.icHeart,
-            ),
+            ),*/
           ],
         ),
       ),
