@@ -476,10 +476,15 @@ class HomeWidgets {
                       fit: BoxFit.contain,
                       isMemCacheEnabled: false,
                       onTap: () {
+                        printWrapped("Redirect To: ${field.redirectTo}");
+                        printWrapped("Redirect Type: ${field.redirectionType}");
+                        printWrapped("Redirect Url: ${field.redirectionUrl}");
                         homeBloc.handleRedirection(
-                            context: context,
-                            redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
-                            redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""));
+                          context: context,
+                          redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
+                          redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
+                          redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? ''),
+                        );
                       },
                     ))
                 .toList())
