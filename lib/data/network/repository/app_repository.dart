@@ -18,7 +18,7 @@ class AppRepository extends ApiService {
 
       if (response.statusCode == 200) {
         final homeStrapiModel = HomeStrapiModel.fromJson(jsonDecode(response.body));
-        List<Home> homeStrapiList = homeStrapiModel.data.first.attributes?.home ?? [];
+        List<Home> homeStrapiList = homeStrapiModel.data.firstOrNull?.attributes?.home ?? [];
         return Right(homeStrapiList);
       } else {
         return Left(ErrorResponse(
