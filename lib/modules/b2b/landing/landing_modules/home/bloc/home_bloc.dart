@@ -36,7 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final List<AuctionListModel> shopGemstones2List = _generateShopGemstones2List();
 
   //Top Selling Categories
-  final List<AuctionListModel> topSellingCategoriesList = _generateTopSellingCategoriesList();
+  final List<AuctionListModel> topSellingCategoriesList = [];
 
   final List<AuctionListModel> eliganceList = _generateEliganceList();
 
@@ -434,23 +434,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  //For Top Selling Categories
-  static List<AuctionListModel> _generateTopSellingCategoriesList() {
-    List<String> imageList = [
-      "https://i.ibb.co/mXxkBC7/Necklaces.png",
-      "https://i.ibb.co/syzfTzT/Bracelets.png",
-      "https://i.ibb.co/GvyRJtx/Earrings.png",
-      "https://i.ibb.co/2yNzxBw/Rings.png"
-    ];
-    return List.generate(
-      imageList.length,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        imageUrl: imageList[index],
-      ),
-    );
-  }
-
   //For Tab View
   static List<ProductDetailsModel> _generateTabViewList({bool isOfferAvailable = false}) {
     return List.generate(
@@ -811,10 +794,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> fetchStrapiData(BuildContext context, Emitter<HomeState> emit) async {
     homeStrapiList.clear();
     await AppRepository(context).fetchStrapiHomeData().then((value) async {
-      value.fold((l) {
-        // emit(HomeErrorState(errorMessage: l.message ?? ""));
-        //Utils.showMessage(l.message);
-      }, (r) {
+      value.fold((l) {}, (r) {
         homeStrapiList = r;
       });
     });
@@ -837,14 +817,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           String redirectTo = element['redirectTo'];
           String? name = element['title'];
           String redirectionType = element['redirectionType'];
+          String? redirectionUrl = element['redirection_url'];
 
           if (imageUrl != null) {
             dataList.add(AuctionListModel(
-                id: element['id'].toString(),
-                imageUrl: "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl",
-                redirectTo: redirectTo,
-                redirectionType: redirectionType,
-                name: name));
+              id: element['id']?.toString(),
+              imageUrl: "${AppConst.strapiQaEnvImgBaseUrl}$imageUrl",
+              redirectTo: redirectTo,
+              redirectionType: redirectionType,
+              name: name,
+              redirectionUrl: redirectionUrl,
+            ));
           }
         }
       }
@@ -985,24 +968,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   /// Handles redirection based on the [redirectTo] and [redirectionType]
-  void handleRedirection({required BuildContext context, required RedirectionTo redirectTo, required RedirectionType redirectionType}) {
+  void handleRedirection({
+    required BuildContext context,
+    required RedirectionTo redirectTo,
+    required RedirectionType redirectionType,
+    Map<String, dynamic>? redirectionData,
+  }) {
     Map<RoutesData, dynamic>? arguments;
     String routeName;
 
     switch (redirectTo) {
       case RedirectionTo.gemstone:
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
-        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForGemstones};
+        arguments = {
+          RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
+          RoutesData.filterData: redirectionData,
+        };
         break;
 
       case RedirectionTo.diamond:
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
-        arguments = {RoutesData.isPageFor: ScreenIdentifier.diamondForDefault};
+        arguments = {
+          RoutesData.isPageFor: ScreenIdentifier.diamondForDefault,
+          RoutesData.filterData: redirectionData,
+        };
         break;
 
       case RedirectionTo.jewellery:
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
-        arguments = {RoutesData.isPageFor: ScreenIdentifier.productForRing};
+        arguments = {
+          RoutesData.isPageFor: ScreenIdentifier.productForRing,
+          RoutesData.filterData: redirectionData,
+        };
         break;
 
       case RedirectionTo.unknown:
@@ -1296,4 +1293,9 @@ RedirectionType getRedirectionTypeFromString(String value) {
     default:
       return RedirectionType.unknown;
   }
+}
+
+Map<String, String> getQueryParamFromUrlForFilter(String url) {
+  final uri = Uri.parse(url);
+  return uri.queryParameters;
 }

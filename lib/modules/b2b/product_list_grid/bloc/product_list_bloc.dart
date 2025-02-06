@@ -50,6 +50,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   String collectionName = "";
   String productNavigation = '';
   FetchScenario fetchScenario = FetchScenario.dealOfTheDay;
+  Map<String, String?>? filterDataMap;
 
   /// Variables for sorting
   String sortKey = AppConst.sortKeyNERPBS;
@@ -159,6 +160,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       collectionName = data[RoutesData.collectionName] ?? "";
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
       fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.regularList;
+      filterDataMap = data[RoutesData.filterData] ?? {};
     }
 
     /// Here we set the appbar title
@@ -283,8 +285,20 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     /// Initialize query if it's null
     query ??= {};
 
+    filterDataMap?.forEach((key, value) {
+      if (value != null) {
+        query![key] = value;
+      }
+    });
+
     /// Build the query based on filters
-    query = buildFilterQuery(query, filterData);
+    buildFilterQuery(query, filterData).forEach(
+      (key, value) {
+        if (query?.containsKey(key) == false) {
+          query?[key] = value;
+        }
+      },
+    );
 
     if (StorageManager.instance.getIsSkipLogin()) {
       String? bagId = StorageManager.instance.getBagId();
@@ -537,6 +551,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     final filterList = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, AppConst.jewellery);
     filterData.clear();
     for (FilterOptionModel filterOption in filterList) {
+      if (filterDataMap?.containsKey(filterOption.slug) == true) {
+        continue;
+      }
       if (filterOption.data.isNotEmpty) {
         FilterData filter = FilterData(
           name: filterOption.name,
