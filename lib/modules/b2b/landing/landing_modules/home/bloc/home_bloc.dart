@@ -856,6 +856,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final imageUrl = homeStrapiList[index].data['image']?['data']?['attributes']?['url'];
         String redirectTo = homeStrapiList[index].data['redirectTo'];
         String redirectionType = homeStrapiList[index].data['redirectionType'];
+        String? redirectionUrl = homeStrapiList[index].data['redirection_url'];
         return HomeWidgets.buildViewAllCollectionsSection(
           homeBloc,
           style,
@@ -864,6 +865,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           redirectTo: redirectTo,
           redirectionType: redirectionType,
           title: homeStrapiList[index].data['title'].toString(),
+          redirectionUrl: redirectionUrl,
         );
 
       case HomeSlug.mobileGetInspired:
@@ -1000,6 +1002,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
           RoutesData.filterData: redirectionData,
         };
+        break;
+
+      case RedirectionTo.collection:
+        routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
+        arguments = (redirectionType == RedirectionType.listing)
+            ? {
+                RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                RoutesData.filterData: redirectionData,
+              }
+            : {};
         break;
 
       case RedirectionTo.unknown:
@@ -1243,6 +1255,7 @@ enum RedirectionTo {
   gemstone,
   diamond,
   jewellery,
+  collection,
   unknown,
 }
 
@@ -1279,6 +1292,8 @@ RedirectionTo getRedirectionToFromString(String value) {
       return RedirectionTo.diamond;
     case 'jewellery':
       return RedirectionTo.jewellery;
+    case 'collection':
+      return RedirectionTo.collection;
     default:
       return RedirectionTo.unknown;
   }
@@ -1290,12 +1305,15 @@ RedirectionType getRedirectionTypeFromString(String value) {
       return RedirectionType.listing;
     case 'product details':
       return RedirectionType.details;
+    case 'collection':
+      return RedirectionType.details;
     default:
       return RedirectionType.unknown;
   }
 }
 
 Map<String, String> getQueryParamFromUrlForFilter(String url) {
+  if (url.isEmpty) return {};
   final uri = Uri.parse(url);
   return uri.queryParameters;
 }

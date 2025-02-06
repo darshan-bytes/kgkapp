@@ -497,7 +497,8 @@ class HomeWidgets {
       required String url,
       required String redirectTo,
       required String redirectionType,
-      required String title}) {
+      required String title,
+      String? redirectionUrl}) {
     return Padding(
       padding: EdgeInsets.zero,
       child: Stack(
@@ -509,11 +510,13 @@ class HomeWidgets {
             fit: BoxFit.fitWidth,
             isMemCacheEnabled: false,
             onTap: () {
-              context.pushNamed(AppRoutes.collectionPage);
-              // homeBloc.handleRedirection(
-              //     context: context,
-              //     redirectTo: getRedirectionToFromString(redirectTo),
-              //     redirectionType: getRedirectionTypeFromString(redirectionType));
+              // context.pushNamed(AppRoutes.collectionPage);
+              homeBloc.handleRedirection(
+                context: context,
+                redirectTo: getRedirectionToFromString(redirectTo),
+                redirectionType: getRedirectionTypeFromString(redirectionType),
+                redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? ''),
+              );
             },
           ),
           Positioned(
@@ -522,11 +525,17 @@ class HomeWidgets {
             right: 0.w,
             child: GestureDetector(
               onTap: () {
-                context.pushNamed(AppRoutes.collectionPage);
+                // context.pushNamed(AppRoutes.collectionPage);
                 // homeBloc.handleRedirection(
                 //     context: context,
                 //     redirectTo: getRedirectionToFromString(redirectTo),
                 //     redirectionType: getRedirectionTypeFromString(redirectionType));
+                homeBloc.handleRedirection(
+                  context: context,
+                  redirectTo: getRedirectionToFromString(redirectTo),
+                  redirectionType: getRedirectionTypeFromString(redirectionType),
+                  redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? ''),
+                );
               },
               child: Container(
                 height: 60.h,
