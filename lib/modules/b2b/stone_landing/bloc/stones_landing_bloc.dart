@@ -87,12 +87,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         imageUrl: item.multipleFinishedViewImage.isNotEmpty && item.multipleFinishedViewImage.first.imageAvailable == "Yes"
             ? (item.multipleFinishedViewImage.first.imageUrl ?? '')
             : '',
-        originalPrice: item.finalPrice
-            ?.toStringAsFixed(2)
-            .setCurrency,
-        finalPrice: item.discountPrice
-            ?.toStringAsFixed(2)
-            .setCurrency,
+        originalPrice: item.finalPrice?.toStringAsFixed(2).setCurrency,
+        finalPrice: item.discountPrice?.toStringAsFixed(2).setCurrency,
       );
     });
   }
@@ -215,13 +211,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
     return List.generate(
       20,
-          (index) =>
-          AuctionListModel(
-            id: index.toString(),
-            name: isForCountry ? countriesName[Random().nextInt(countriesName.length)] : nameList[Random().nextInt(nameList.length)],
-            imageUrl:
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: isForCountry ? countriesName[Random().nextInt(countriesName.length)] : nameList[Random().nextInt(nameList.length)],
+        imageUrl:
             isForCountry ? countriesImageList[Random().nextInt(countriesImageList.length)] : imageList[Random().nextInt(imageList.length)],
-          ),
+      ),
     );
   }
 
@@ -249,16 +244,15 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     ];
     return List.generate(
       imageList.length,
-          (index) =>
-          AuctionListModel(
-            id: index.toString(),
-            name: titleList[index],
-            imageUrl: isForDiamond
-                ? diamondImageList[index]
-                : isGemstone
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: titleList[index],
+        imageUrl: isForDiamond
+            ? diamondImageList[index]
+            : isGemstone
                 ? shopByStyleImage[index]
                 : imageList[index],
-          ),
+      ),
     );
   }
 
@@ -343,12 +337,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     ];
     return List.generate(
       20,
-          (index) =>
-          AuctionListModel(
-            id: index.toString(),
-            name: nameList[Random().nextInt(nameList.length)],
-            imageUrl: imageList[Random().nextInt(imageList.length)],
-          ),
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: nameList[Random().nextInt(nameList.length)],
+        imageUrl: imageList[Random().nextInt(imageList.length)],
+      ),
     );
   }
 
@@ -363,23 +356,24 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     ];
     return List.generate(
       imageList.length,
-          (index) =>
-          AuctionListModel(
-            id: index.toString(),
-            name: nameList[index],
-            imageUrl: imageList[index],
-          ),
+      (index) => AuctionListModel(
+        id: index.toString(),
+        name: nameList[index],
+        imageUrl: imageList[index],
+      ),
     );
   }
 
   /// Returns a Widget based on the given LandingSlug type.
   ///
-  Widget getDiamondWidgetsFromSlug(BuildContext context,
-      LandingSlug slug,
-      StonesLandingBloc stoneLandingBloc,
-      StonesLandingScreenStyle style,
-      HomeScreenStyle homeScreenStyle,
-      int index,) {
+  Widget getDiamondWidgetsFromSlug(
+    BuildContext context,
+    LandingSlug slug,
+    StonesLandingBloc stoneLandingBloc,
+    StonesLandingScreenStyle style,
+    HomeScreenStyle homeScreenStyle,
+    int index,
+  ) {
     switch (slug) {
       case LandingSlug.landingBanner:
         String title = diamondStrapiList[index].poster?.title ?? '';
@@ -596,12 +590,14 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   /// Returns a Widget based on the given LandingSlug type.
-  Widget getGemStoneWidgetsFromSlug(BuildContext context,
-      LandingSlug slug,
-      StonesLandingBloc stoneLandingBloc,
-      StonesLandingScreenStyle style,
-      HomeScreenStyle homeScreenStyle,
-      int index,) {
+  Widget getGemStoneWidgetsFromSlug(
+    BuildContext context,
+    LandingSlug slug,
+    StonesLandingBloc stoneLandingBloc,
+    StonesLandingScreenStyle style,
+    HomeScreenStyle homeScreenStyle,
+    int index,
+  ) {
     switch (slug) {
       case LandingSlug.landingBanner:
         String title = gemstoneStrapiList[index].poster?.title ?? '';
@@ -697,7 +693,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         if (gemstoneStrapiList[index].title.isNotNullNorEmpty) {
           String mainBannerTitle = gemstoneStrapiList[index].title ?? '';
           String mainBannerDescription = Utils.parseHtmlString(gemstoneStrapiList[index].description ?? '');
-          String mainBannerForegroundImagePath = '${AppConst.strapiQaEnvImgBaseUrl}${gemstoneStrapiList[index].mobileImage?.data.firstOrNull?.attributes?.url}';
+          String mainBannerForegroundImagePath =
+              '${AppConst.strapiQaEnvImgBaseUrl}${gemstoneStrapiList[index].mobileImage?.data.firstOrNull?.attributes?.url}';
           List<Widget> buttonList = [];
 
           for (int i = 0; i < gemstoneStrapiList[index].button.length; i++) {
@@ -762,12 +759,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         return stonesBannerView.isNotNullNorEmpty
             ? Container(
-          color: style.designYourOwnStoneBgColor,
-          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
-          child: Column(
-            children: stonesBannerView,
-          ),
-        )
+                color: style.designYourOwnStoneBgColor,
+                padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+                child: Column(
+                  children: stonesBannerView,
+                ),
+              )
             : const SizedBox.shrink();
 
       case LandingSlug.aboutEntity:
@@ -819,12 +816,14 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   /// Returns a Widget based on the given LandingSlug type.
-  Widget getJewelleriesWidgetsFromSlug(BuildContext context,
-      LandingSlug slug,
-      StonesLandingBloc stoneLandingBloc,
-      StonesLandingScreenStyle style,
-      HomeScreenStyle homeScreenStyle,
-      int index,) {
+  Widget getJewelleriesWidgetsFromSlug(
+    BuildContext context,
+    LandingSlug slug,
+    StonesLandingBloc stoneLandingBloc,
+    StonesLandingScreenStyle style,
+    HomeScreenStyle homeScreenStyle,
+    int index,
+  ) {
     switch (slug) {
       case LandingSlug.landingBanner:
         String title = jewelleryStrapiList[index].poster?.title ?? '';
@@ -910,7 +909,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             String buttonTitle = jewelleryStrapiList[index].banner[i].buttonLabel ?? '';
             stonesBannerView.add(StonesBannerView(
               margin:
-              EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w, bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0),
+                  EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w, bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0),
               backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
               backgroundImageHeight: 200.h,
               spaceBetweenTitleAndSubTitle: 4.h,
@@ -984,8 +983,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         return stonesBannerView.isNotNullNorEmpty
             ? Column(
-          children: stonesBannerView,
-        )
+                children: stonesBannerView,
+              )
             : const SizedBox.shrink();
 
       case LandingSlug.kgkDiamondShape:
@@ -1008,7 +1007,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   }
 
   /// Handles redirection based on the [redirectTo] and [redirectionType]
-  void handleRedirection({required BuildContext context, required RedirectionTo redirectTo, required RedirectionType redirectionType}) {
+  void handleRedirection({
+    required BuildContext context,
+    required RedirectionTo redirectTo,
+    required RedirectionType redirectionType,
+    Map<String, dynamic>? redirectionData,
+  }) {
     Map<RoutesData, dynamic>? arguments;
     String routeName;
 
@@ -1026,6 +1030,16 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       case RedirectionTo.jewellery:
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
         arguments = {RoutesData.isPageFor: ScreenIdentifier.productForRing};
+        break;
+
+      case RedirectionTo.collection:
+        routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
+        arguments = (redirectionType == RedirectionType.listing)
+            ? {
+                RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                RoutesData.filterData: {},
+              }
+            : {};
         break;
 
       case RedirectionTo.unknown:
@@ -1077,12 +1091,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     final buttonList = item.button
         .asMap()
         .entries
-        .map<Widget>((entry) =>
-        SmartButton(
-          margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
-          onTap: () => printWrapped("Button ${entry.key} clicked"),
-          title: entry.value.label ?? '',
-        ))
+        .map<Widget>((entry) => SmartButton(
+              margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+              onTap: () => printWrapped("Button ${entry.key} clicked"),
+              title: entry.value.label ?? '',
+            ))
         .toList();
 
     return StoneBannerView(
@@ -1143,12 +1156,11 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     final buttonList = item.button
         .asMap()
         .entries
-        .map<Widget>((entry) =>
-        SmartButton(
-          margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
-          onTap: () => printWrapped("Button ${entry.key} clicked"),
-          title: entry.value.label ?? '',
-        ))
+        .map<Widget>((entry) => SmartButton(
+              margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+              onTap: () => printWrapped("Button ${entry.key} clicked"),
+              title: entry.value.label ?? '',
+            ))
         .toList();
 
     return DesignYourOwnStoneSection(
@@ -1225,8 +1237,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
     );
   }
 
-  Widget _buildOriginOfDiamondsSection(StonesLandingBloc bloc, StonesLandingScreenStyle style, BuildContext context,
-      HomeScreenStyle homeScreenStyle, int index) {
+  Widget _buildOriginOfDiamondsSection(
+      StonesLandingBloc bloc, StonesLandingScreenStyle style, BuildContext context, HomeScreenStyle homeScreenStyle, int index) {
     String title = diamondStrapiList[index].details?.title ?? '';
     String description = Utils.parseHtmlString(diamondStrapiList[index].details?.description ?? '');
     bloc.originOfDiamondsList.clear();
@@ -1325,13 +1337,12 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               newlyLaunchedItemsList.length > 4
                   ? 4
                   : (newlyLaunchedItemsList.length % 2 == 0 ? newlyLaunchedItemsList.length : newlyLaunchedItemsList.length - 1),
-                  (index) =>
-                  ProductGridItem(
-                    productDetails: newlyLaunchedItemsList[index],
-                    onEyeTap: () {},
-                    onFavTap: () {},
-                    onTap: () {},
-                  ),
+              (index) => ProductGridItem(
+                productDetails: newlyLaunchedItemsList[index],
+                onEyeTap: () {},
+                onFavTap: () {},
+                onTap: () {},
+              ),
             ),
           ),
           SizedBox(height: 24.h),
