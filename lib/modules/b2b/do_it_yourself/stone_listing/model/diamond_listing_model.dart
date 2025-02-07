@@ -751,7 +751,7 @@ class DiamondDataModel {
         "rating": rating,
         "review_count": reviewCount,
         "auction_id": auctionId,
-        "is_favorite": isFavorite,
+        "is_favorite": wishlistID,
         "price_cts": priceCts,
         "final_price": finalPrice,
         "is_auction": isAuction,

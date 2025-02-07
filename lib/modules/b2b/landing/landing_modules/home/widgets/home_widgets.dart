@@ -895,9 +895,11 @@ class HomeWidgets {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     onTap: () {
                       homeBloc.handleRedirection(
-                          context: context,
-                          redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
-                          redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""));
+                        context: context,
+                        redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
+                        redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
+                        redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? ''),
+                      );
                     },
                     topWidget: SmartImage(
                       path: field.imageUrl ?? '',

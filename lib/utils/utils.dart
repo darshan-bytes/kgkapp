@@ -377,6 +377,8 @@ class Utils {
       await StorageManager.instance.setIsSkipLogin(false);
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
       await mergeCart(context);
+      BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());
+
       if (!isFromLoginRequired) {
         context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
       } else {
