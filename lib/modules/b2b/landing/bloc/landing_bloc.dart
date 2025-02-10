@@ -112,7 +112,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         label: APPStrings.support,
       ),
       BottomNavigationBarDataModel(
-        icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+        icon: StorageManager().getUserData()?.profilePicUrl?.setMediaUrl ?? AppImages.icProfilePic,
         activeIcon: "",
         label: APPStrings.you,
         isProfile: true,
@@ -161,7 +161,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
         label: APPStrings.company,
       ),
       BottomNavigationBarDataModel(
-        icon: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+        icon: StorageManager().getUserData()?.profilePicUrl?.setMediaUrl ?? AppImages.icProfilePic,
         activeIcon: "",
         label: APPStrings.you,
         isProfile: true,
@@ -228,8 +228,10 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   }
 
   void _onLandingLogoutEvent(LandingLogoutEvent event, Emitter<LandingState> emit) {
-    (blocList[myBagIndex] as MyBagBloc).add(ClearMyBagEvent(getNavigatorKeyContext));
-    _isInitialized = false;
+    if (_isInitialized) {
+      (blocList[myBagIndex] as MyBagBloc).add(ClearMyBagEvent(getNavigatorKeyContext));
+      _isInitialized = false;
+    }
   }
 
   /// Initializes the Branch service and sets up deep link navigation.

@@ -1,3 +1,5 @@
+import 'package:kgk/extension_methods/string.dart';
+
 class HomeNewLanuchesDatum {
   HomeNewLanuchesDatum({
     required this.id,
@@ -85,7 +87,7 @@ class HomeNewLanuchesDatum {
     );
   }
 
-  factory HomeNewLanuchesDatum.fromJson(Map<String, dynamic> json){
+  factory HomeNewLanuchesDatum.fromJson(Map<String, dynamic> json) {
     return HomeNewLanuchesDatum(
       id: json["_id"],
       suid: json["suid"],
@@ -102,37 +104,42 @@ class HomeNewLanuchesDatum {
       cscCode: json["csc_code"],
       customerCode: json["customer_code"],
       productDescription: json["product_description"],
-      componentDetails: json["component_details"] == null ? [] : List<HomeNewlyLauncheComponentDetail>.from(json["component_details"]!.map((x) => HomeNewlyLauncheComponentDetail.fromJson(x))),
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null ? [] : List<HomeNewLaunchesMultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => HomeNewLaunchesMultipleFinishedViewImage.fromJson(x))),
-      finalPrice: json["final_price"],
-      discountPrice: json["discount_price"],
+      componentDetails: json["component_details"] == null
+          ? []
+          : List<HomeNewlyLauncheComponentDetail>.from(json["component_details"]!.map((x) => HomeNewlyLauncheComponentDetail.fromJson(x))),
+      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
+          ? []
+          : List<HomeNewLaunchesMultipleFinishedViewImage>.from(
+              json["multiple_finished_view_image"]!.map((x) => HomeNewLaunchesMultipleFinishedViewImage.fromJson(x))),
+      finalPrice: json["final_price"]?.toString().toDouble,
+      discountPrice: json["discount_price"]?.toString().toDouble,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "suid": suid,
-    "exclusive": exclusive,
-    "business_category": businessCategory,
-    "contract_no_sku_no": contractNoSkuNo,
-    "guest_user": guestUser,
-    "jewelllery_type-code": jewellleryTypeCode,
-    "style_no": styleNo,
-    "kgk_collection": kgkCollection,
-    "csc_name": cscName,
-    "product_price_int_currency": productPriceIntCurrency,
-    "subarea_name": subareaName,
-    "csc_code": cscCode,
-    "customer_code": customerCode,
-    "product_description": productDescription,
-    "component_details": componentDetails.map((x) => x.toJson()).toList(),
-    "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
-    "final_price": finalPrice,
-    "discount_price": discountPrice,
-  };
+        "_id": id,
+        "suid": suid,
+        "exclusive": exclusive,
+        "business_category": businessCategory,
+        "contract_no_sku_no": contractNoSkuNo,
+        "guest_user": guestUser,
+        "jewelllery_type-code": jewellleryTypeCode,
+        "style_no": styleNo,
+        "kgk_collection": kgkCollection,
+        "csc_name": cscName,
+        "product_price_int_currency": productPriceIntCurrency,
+        "subarea_name": subareaName,
+        "csc_code": cscCode,
+        "customer_code": customerCode,
+        "product_description": productDescription,
+        "component_details": componentDetails.map((x) => x.toJson()).toList(),
+        "multiple_finished_view_image": multipleFinishedViewImage.map((x) => x.toJson()).toList(),
+        "final_price": finalPrice,
+        "discount_price": discountPrice,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $suid, $exclusive, $businessCategory, $contractNoSkuNo, $guestUser, $jewellleryTypeCode, $styleNo, $kgkCollection, $cscName, $productPriceIntCurrency, $subareaName, $cscCode, $customerCode, $productDescription, $componentDetails, $multipleFinishedViewImage, $finalPrice, $discountPrice, ";
   }
 }
@@ -182,61 +189,15 @@ class HomeNewlyLauncheComponentDetail {
   final String? uom2;
   final String? karatage;
 
-  HomeNewlyLauncheComponentDetail copyWith({
-    double? brokenQty1,
-    String? commodity,
-    int? commodityNameRefSuid,
-    String? commodityNameSuid,
-    double? consumedQty1,
-    int? consumedQty2,
-    double? lossQty1,
-    String? lotCode,
-    int? lotId,
-    String? rmName,
-    int? rmNameRefSuid,
-    String? rmNameSuid,
-    String? shape,
-    int? shapeRefSuid,
-    String? shapeSuid,
-    double? totalQty1,
-    int? totalQty2,
-    String? uom1,
-    String? uom2,
-    String? karatage,
-  }) {
+  factory HomeNewlyLauncheComponentDetail.fromJson(Map<String, dynamic> json) {
     return HomeNewlyLauncheComponentDetail(
-      brokenQty1: brokenQty1 ?? this.brokenQty1,
-      commodity: commodity ?? this.commodity,
-      commodityNameRefSuid: commodityNameRefSuid ?? this.commodityNameRefSuid,
-      commodityNameSuid: commodityNameSuid ?? this.commodityNameSuid,
-      consumedQty1: consumedQty1 ?? this.consumedQty1,
-      consumedQty2: consumedQty2 ?? this.consumedQty2,
-      lossQty1: lossQty1 ?? this.lossQty1,
-      lotCode: lotCode ?? this.lotCode,
-      lotId: lotId ?? this.lotId,
-      rmName: rmName ?? this.rmName,
-      rmNameRefSuid: rmNameRefSuid ?? this.rmNameRefSuid,
-      rmNameSuid: rmNameSuid ?? this.rmNameSuid,
-      shape: shape ?? this.shape,
-      shapeRefSuid: shapeRefSuid ?? this.shapeRefSuid,
-      shapeSuid: shapeSuid ?? this.shapeSuid,
-      totalQty1: totalQty1 ?? this.totalQty1,
-      totalQty2: totalQty2 ?? this.totalQty2,
-      uom1: uom1 ?? this.uom1,
-      uom2: uom2 ?? this.uom2,
-      karatage: karatage ?? this.karatage,
-    );
-  }
-
-  factory HomeNewlyLauncheComponentDetail.fromJson(Map<String, dynamic> json){
-    return HomeNewlyLauncheComponentDetail(
-      brokenQty1: json["BrokenQty1"].toDouble(),
+      brokenQty1: json["BrokenQty1"]?.toString().toDouble,
       commodity: json["Commodity"],
       commodityNameRefSuid: json["CommodityNameRefSuid"],
       commodityNameSuid: json["CommodityNameSuid"],
-      consumedQty1: json["ConsumedQty1"].toDouble(),
+      consumedQty1: json["ConsumedQty1"]?.toString().toDouble,
       consumedQty2: json["ConsumedQty2"],
-      lossQty1: json["LossQty1"].toDouble(),
+      lossQty1: json["LossQty1"]?.toString().toDouble,
       lotCode: json["LotCode"],
       lotId: json["LotId"],
       rmName: json["RMName"],
@@ -245,7 +206,7 @@ class HomeNewlyLauncheComponentDetail {
       shape: json["Shape"],
       shapeRefSuid: json["ShapeRefSuid"],
       shapeSuid: json["ShapeSuid"],
-      totalQty1: json["TotalQty1"].toDouble(),
+      totalQty1: json["TotalQty1"]?.toString().toDouble,
       totalQty2: json["TotalQty2"],
       uom1: json["UOM1"],
       uom2: json["UOM2"],
@@ -254,30 +215,30 @@ class HomeNewlyLauncheComponentDetail {
   }
 
   Map<String, dynamic> toJson() => {
-    "BrokenQty1": brokenQty1,
-    "Commodity": commodity,
-    "CommodityNameRefSuid": commodityNameRefSuid,
-    "CommodityNameSuid": commodityNameSuid,
-    "ConsumedQty1": consumedQty1,
-    "ConsumedQty2": consumedQty2,
-    "LossQty1": lossQty1,
-    "LotCode": lotCode,
-    "LotId": lotId,
-    "RMName": rmName,
-    "RMNameRefSuid": rmNameRefSuid,
-    "RMNameSuid": rmNameSuid,
-    "Shape": shape,
-    "ShapeRefSuid": shapeRefSuid,
-    "ShapeSuid": shapeSuid,
-    "TotalQty1": totalQty1,
-    "TotalQty2": totalQty2,
-    "UOM1": uom1,
-    "UOM2": uom2,
-    "Karatage": karatage,
-  };
+        "BrokenQty1": brokenQty1,
+        "Commodity": commodity,
+        "CommodityNameRefSuid": commodityNameRefSuid,
+        "CommodityNameSuid": commodityNameSuid,
+        "ConsumedQty1": consumedQty1,
+        "ConsumedQty2": consumedQty2,
+        "LossQty1": lossQty1,
+        "LotCode": lotCode,
+        "LotId": lotId,
+        "RMName": rmName,
+        "RMNameRefSuid": rmNameRefSuid,
+        "RMNameSuid": rmNameSuid,
+        "Shape": shape,
+        "ShapeRefSuid": shapeRefSuid,
+        "ShapeSuid": shapeSuid,
+        "TotalQty1": totalQty1,
+        "TotalQty2": totalQty2,
+        "UOM1": uom1,
+        "UOM2": uom2,
+        "Karatage": karatage,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$brokenQty1, $commodity, $commodityNameRefSuid, $commodityNameSuid, $consumedQty1, $consumedQty2, $lossQty1, $lotCode, $lotId, $rmName, $rmNameRefSuid, $rmNameSuid, $shape, $shapeRefSuid, $shapeSuid, $totalQty1, $totalQty2, $uom1, $uom2, $karatage, ";
   }
 }
@@ -337,7 +298,7 @@ class HomeNewLaunchesMultipleFinishedViewImage {
     );
   }
 
-  factory HomeNewLaunchesMultipleFinishedViewImage.fromJson(Map<String, dynamic> json){
+  factory HomeNewLaunchesMultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
     return HomeNewLaunchesMultipleFinishedViewImage(
       contractNo: json["ContractNo"],
       contractImage: json["ContractImage"],
@@ -349,26 +310,28 @@ class HomeNewLaunchesMultipleFinishedViewImage {
       highRes2: json["high_res2"],
       highRes3: json["high_res3"],
       highRes4: json["high_res4"],
-      multiAngleUrl: json["MULTI_ANGLE_URL"] == null ? [] : List<HomeNewLaunchesMultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => HomeNewLaunchesMultiAngleUrl.fromJson(x))),
+      multiAngleUrl: json["MULTI_ANGLE_URL"] == null
+          ? []
+          : List<HomeNewLaunchesMultiAngleUrl>.from(json["MULTI_ANGLE_URL"]!.map((x) => HomeNewLaunchesMultiAngleUrl.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "ContractNo": contractNo,
-    "ContractImage": contractImage,
-    "StyleImage": styleImage,
-    "IMAGE_AVAILABLE": imageAvailable,
-    "IMAGE_AVAILABLE_MA": imageAvailableMa,
-    "IMAGE_URL": imageUrl,
-    "high_res1": highRes1,
-    "high_res2": highRes2,
-    "high_res3": highRes3,
-    "high_res4": highRes4,
-    "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
-  };
+        "ContractNo": contractNo,
+        "ContractImage": contractImage,
+        "StyleImage": styleImage,
+        "IMAGE_AVAILABLE": imageAvailable,
+        "IMAGE_AVAILABLE_MA": imageAvailableMa,
+        "IMAGE_URL": imageUrl,
+        "high_res1": highRes1,
+        "high_res2": highRes2,
+        "high_res3": highRes3,
+        "high_res4": highRes4,
+        "MULTI_ANGLE_URL": multiAngleUrl.map((x) => x.toJson()).toList(),
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$contractNo, $contractImage, $styleImage, $imageAvailable, $imageAvailableMa, $imageUrl, $highRes1, $highRes2, $highRes3, $highRes4, $multiAngleUrl, ";
   }
 }
@@ -388,18 +351,18 @@ class HomeNewLaunchesMultiAngleUrl {
     );
   }
 
-  factory HomeNewLaunchesMultiAngleUrl.fromJson(Map<String, dynamic> json){
+  factory HomeNewLaunchesMultiAngleUrl.fromJson(Map<String, dynamic> json) {
     return HomeNewLaunchesMultiAngleUrl(
       url: json["url"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "url": url,
-  };
+        "url": url,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$url, ";
   }
 }

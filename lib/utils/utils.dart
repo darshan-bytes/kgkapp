@@ -387,18 +387,29 @@ class Utils {
     }
   }
 
-  static Future<void> mergeCart(BuildContext context) async {
+  static Future<void> mergeCart(BuildContext context, {bool isRetry = false}) async {
     MyBagDataModel? myBagDataModel = StorageManager().getBagData();
     if (myBagDataModel != null) {
       Map<String, dynamic> body = {
         ApiKey.id: myBagDataModel.sId ?? '',
       };
       await AppRepository(context).mergeBag(body: body).then((value) async {
-        await value?.fold((l) {}, (r) async {
-          if (r.responseData != null) {
+        await value?.fold(
+          (l) async {
+            Map<String, dynamic> body = {ApiKey.id: myBagDataModel.sId ?? '', ApiKey.suid: ""};
+
+            await AppRepository(context).deleteBag(body: body);
             await StorageManager().clearBagData();
-          }
-        });
+            if (!isRetry) {
+              await mergeCart(context, isRetry: true);
+            }
+          },
+          (r) async {
+            if (r.responseData != null) {
+              await StorageManager().clearBagData();
+            }
+          },
+        );
       });
     }
   }
