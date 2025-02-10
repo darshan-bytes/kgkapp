@@ -310,8 +310,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ApiKey.phone: contactNumberController.text.trim(),
       if (userIdDetails?.profilePic != null) ApiKey.profilePic: userIdDetails?.profilePic,
     };
-    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context)
-        .editUserProfile(params, images: profilePickedImageList.isNotEmpty ? profilePickedImageList.map((e) => e.path).toList() : []);
+    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context).editUserProfile(params,
+        images: profilePickedImageList.isNotEmpty
+            ? profilePickedImageList.where((e) => e.path.isNotNullNorEmpty).map((e) => e.path).toList()
+            : []);
     await editProfileResponse?.fold(
       (l) => Utils.showMessage(l.message),
       (r) async {
