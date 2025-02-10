@@ -57,6 +57,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   String? stateError;
   String? zipcodeError;
 
+  Completer<bool> isEmailUsed = Completer<bool>();
+  Completer<bool> isPhoneNumberUsed = Completer<bool>();
+
   List<Country> selectedCountryCodes = [
     Country.from(json: {
       "e164_cc": "91",
@@ -277,7 +280,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   Future<void> _onSignUpSubmit(SignUpSubmitEvent event, Emitter<SignUpState> emit) async {
     emit(SignUpReloadState());
-    if (_validateForm(emit)) {
+    bool isValidate = _validateForm(emit);
+    bool isPhoneNumberUsed = await this.isPhoneNumberUsed.future;
+    bool isEmailUsed = await this.isEmailUsed.future;
+    if (isValidate && !isPhoneNumberUsed && !isEmailUsed) {
       emit(const SignUpLoadingState());
       await _callSignUpApi(event: event);
     }
@@ -285,7 +291,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   bool _validateForm(Emitter<SignUpState> emit) {
     bool isValidate = true;
-    bool isValidContact = true;
     if (isIndividual) {
       if (firstNameController.text.isEmpty) {
         firstNameError = APPStrings.errorFirstNameRequired.tr;
@@ -319,7 +324,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         for (int i = 0; i < contactNumberControllers.length; i++) {
           contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
             if (!CountryUtils.validatePhoneNumber(contactNumberControllers[index].text, "+${selectedCountryCodes[index].phoneCode}")) {
-              isValidContact = false;
+              isValidate = false;
               return APPStrings.errorContactNumberValid.tr;
             }
             return null;
@@ -389,12 +394,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         });
         emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
         isValidate = false;
-        isValidContact = false;
+        isValidate = false;
       } else {
         for (int i = 0; i < contactNumberControllers.length; i++) {
           contactNumberErrors = List.generate(contactNumberControllers.length, (index) {
             if (!CountryUtils.validatePhoneNumber(contactNumberControllers[index].text, "+${selectedCountryCodes[index].phoneCode}")) {
-              isValidContact = false;
+              isValidate = false;
               return APPStrings.errorContactNumberValid.tr;
             }
             return null;
@@ -483,7 +488,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       (r) async {
         add(const SignUpResetEvent());
         if (isIndividual) {
-          event.context.pushNamedAndRemoveUntil(AppRoutes.otpVerificationPage, (route) => false,
+          event.context.pushNamedAndRemoveUntil(AppRoutes.otpVerificationPage, (route) => route.settings.name == AppRoutes.signInPage,
               arguments: {RoutesData.email: emailController.text.trim(), RoutesData.isFromSignIn: false});
         } else {
           event.context.popUntil((route) => (route.settings.name == AppRoutes.signInPage));
@@ -498,16 +503,20 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (!emit.isDone) {
+      isEmailUsed = Completer<bool>();
       if (event.email.isNotEmpty && Utils.isValidEmail(event.email)) {
         Map<String, dynamic> params = {ApiKey.email: event.email.trim()};
         Either<ErrorResponse, CommonResponse>? emailValidationResponse = await UserRepository(event.context).validateEmail(params);
 
         if (!emit.isDone) {
-          emailValidationResponse?.fold((l) {
+          await emailValidationResponse?.fold((l) {
             Utils.showMessage(l.message);
-          }, (r) {
-            bool isEmailUsed = r.responseData['isEmailUsed'];
-            emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: isEmailUsed));
+          }, (r) async {
+            if (isEmailUsed.isCompleted) {
+              isEmailUsed = Completer<bool>();
+            }
+            isEmailUsed.complete(r.responseData['isEmailUsed']);
+            emit(SignUpEmailValidationState(emailValidationFieldType: ValidationFieldType.email, isError: await isEmailUsed.future));
           });
         }
       }
@@ -515,6 +524,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Future<void> _onSignUpPhoneNumberValidationEvent(SignUpPhoneNumberValidationEvent event, Emitter<SignUpState> emit) async {
+    isPhoneNumberUsed = Completer<bool>();
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (!emit.isDone) {
@@ -523,12 +533,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
 
         if (!emit.isDone) {
-          phoneNumberValidationResponse?.fold((l) {
+          await phoneNumberValidationResponse?.fold((l) {
             Utils.showMessage(l.message);
-          }, (r) {
-            bool isPhoneNumberUsed = r.responseData;
+          }, (r) async {
+            if (isPhoneNumberUsed.isCompleted) {
+              isPhoneNumberUsed = Completer<bool>();
+            }
+            isPhoneNumberUsed.complete(r.responseData);
             emit(SignUpPhoneNumberValidationState(
-                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: isPhoneNumberUsed));
+                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: await isPhoneNumberUsed.future));
           });
         }
       }
@@ -548,14 +561,34 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         emailError = null;
         break;
       case FieldTypeValidationEnum.contactNumber:
+        emit(SignUpPhoneNumberValidationState(phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: false));
         if (event.index < 0) break;
         contactNumberErrors[event.index] = null;
         break;
       case FieldTypeValidationEnum.password:
         passwordError = null;
+        if (passwordController.text.trim().isEmpty) {
+          passwordError = APPStrings.errorPasswordRequired.tr;
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
+        } else if (!Utils.isValidPassword(passwordController.text.trim())) {
+          passwordError = APPStrings.validPassword.tr;
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.password));
+        } else {
+          if (confirmPasswordController.text.trim().isNotEmpty && passwordController.text == confirmPasswordController.text) {
+            confirmPasswordError = null;
+            emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
+          }
+        }
         break;
       case FieldTypeValidationEnum.confirmPassword:
         confirmPasswordError = null;
+        if (confirmPasswordController.text.trim().isEmpty) {
+          confirmPasswordError = APPStrings.errorConfirmPasswordRequired.tr;
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
+        } else if (passwordController.text != confirmPasswordController.text) {
+          confirmPasswordError = APPStrings.errorPasswordNotMatch.tr;
+          emit(SignUpFieldValidationState(fieldType: FieldTypeValidationEnum.confirmPassword));
+        }
         break;
       case FieldTypeValidationEnum.companyName:
         companyNameError = null;

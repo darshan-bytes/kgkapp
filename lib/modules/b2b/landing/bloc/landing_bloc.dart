@@ -38,6 +38,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     on<LandingChangeTabEvent>(_onLandingChangeTabEvent);
     on<LandingLogoutEvent>(_onLandingLogoutEvent);
     on<LandingChangeMyBagCountEvent>(_onLandingChangeMyBagCount);
+    on<LandingProfilePictureUpdateEvent>(_onLandingProfilePictureUpdate);
   }
 
   @override
@@ -232,6 +233,13 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       (blocList[myBagIndex] as MyBagBloc).add(ClearMyBagEvent(getNavigatorKeyContext));
       _isInitialized = false;
     }
+  }
+
+  void _onLandingProfilePictureUpdate(LandingProfilePictureUpdateEvent event, Emitter<LandingState> emit) {
+    if (!event.isForce && bottomNavigationBarDataModel[profileIndex].icon == event.profilePicture) return;
+    emit(const LandingReloadState());
+    bottomNavigationBarDataModel[profileIndex].icon = event.profilePicture ?? AppImages.icProfilePic;
+    emit(LandingChangeTabState(profileIndex));
   }
 
   /// Initializes the Branch service and sets up deep link navigation.
