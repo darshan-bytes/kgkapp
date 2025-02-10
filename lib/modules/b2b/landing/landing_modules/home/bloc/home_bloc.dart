@@ -879,7 +879,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.mobileShopByStyle:
         List<AuctionListModel> dataList = parseDataList(homeStrapiList[index].data);
         if (dataList.isEmpty) {
-          return Container();
+          return SizedBox.shrink();
         }
         return HomeWidgets.buildShopByStyleSection(
           homeBloc,

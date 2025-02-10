@@ -147,7 +147,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
               strFrom: e.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
               strTo: e.expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
-              strRemainingTime: ValueNotifier<String>(e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? ""),
+              strRemainingTime: ValueNotifier<String>((e.expiresAt?.isAfter(DateTime.now()) == true)
+                  ? (e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
+                  : APPStrings.expired.tr),
 
               /// Below code is commented as it is currently not available in API
               // strConceptNumber: e.strConceptNumber ?? "",
@@ -166,8 +168,9 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
   void startTimerForDurationDecrement() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       for (int i = 0; i < watchlistDataList.length; i++) {
-        watchListingList[i].strRemainingTime?.value =
-            watchlistDataList[i].expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "";
+        watchListingList[i].strRemainingTime?.value = (watchlistDataList[i].expiresAt?.isAfter(DateTime.now()) == true)
+            ? (watchlistDataList[i].expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
+            : APPStrings.expired.tr;
       }
     });
   }

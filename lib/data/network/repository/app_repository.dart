@@ -356,6 +356,7 @@ class AppRepository extends ApiService {
               if (searchQuery.isNotEmpty) ApiKey.search: searchQuery,
               if (filterQuery != null) ...filterQuery
             },
+      withCurrencyHeader: true,
     );
     if (!isLoadMore) {
       context.setAppLoading(false);
