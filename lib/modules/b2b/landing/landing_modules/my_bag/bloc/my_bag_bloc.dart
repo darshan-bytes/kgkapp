@@ -504,7 +504,9 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> clearData() async {
-    await StorageManager().clearBagData();
+    if (!StorageManager().getIsSkipLogin()) {
+      await StorageManager().clearBagData();
+    }
 
     bagListDataModel = null;
     commodity = null;
