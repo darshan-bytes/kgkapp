@@ -98,6 +98,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   void onSkipLogin(BuildContext context) async {
     await StorageManager.instance.setIsSkipLogin(true);
     BlocProvider.of<AppBloc>(context).add(const SetUserTypeEvent(UserType.b2cUser));
+    BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());
     context.pushNamedAndRemoveUntil(AppRoutes.landingPage, (route) => false);
   }
 

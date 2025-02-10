@@ -81,10 +81,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   List<ProductDetailModel> jewellerySubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
+    ProductDetailModel(name: 'Landing', image: ''),
     ProductDetailModel(name: 'Best Selling', image: ''),
     ProductDetailModel(name: 'Seasonal Offers', image: ''),
     ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> diamondSubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
@@ -556,10 +556,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   String? _getJewelleryRouteNameB2B(String? categorySubName) {
     switch (categorySubName) {
       case 'Collection':
-        return AppRoutes.stonesLandingPage;
         return AppRoutes.collectionPage;
       case 'Jewellery':
         return AppRoutes.productListGridPage;
+      case 'Landing':
+        return AppRoutes.stonesLandingPage;
       default:
         return defaultAction();
     }
@@ -570,6 +571,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Collection':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
       case 'Jewellery':
+        return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
+      case 'Landing':
         return {RoutesData.isPageFor: ScreenIdentifier.landingForJewellery};
       default:
         return defaultAction();
