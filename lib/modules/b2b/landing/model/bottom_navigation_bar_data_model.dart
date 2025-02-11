@@ -1,6 +1,6 @@
 class BottomNavigationBarDataModel {
   final String label;
-  final String icon;
+  String icon;
   final String activeIcon;
   final bool isProfile;
   int? notificationCount;

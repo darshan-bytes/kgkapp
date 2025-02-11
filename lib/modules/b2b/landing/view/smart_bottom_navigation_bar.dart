@@ -71,12 +71,18 @@ class SmartBottomNavigationBar extends StatelessWidget {
   }
 
   Widget _buildProfileIcon(TabBarStyle style, bool isActive, String iconPath) {
-    return SmartImage(
-      path: iconPath,
-      imageBorderRadius: BorderRadius.circular(50.r),
-      border: isActive ? Border.all(color: style.indicatorColor, width: 1.w) : null,
-      height: 24.w,
-      width: 24.w,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: isActive ? style.indicatorColor : Colors.transparent, width: 1.w),
+        borderRadius: BorderRadius.circular(50.r),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: SmartImage(
+        path: iconPath,
+        imageBorderRadius: BorderRadius.circular(50.r),
+        height: 24.w,
+        width: 24.w,
+      ),
     );
   }
 

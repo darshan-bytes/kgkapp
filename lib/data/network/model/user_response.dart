@@ -105,14 +105,14 @@ class UserIdDetails {
     this.customerCode,
   });
 
-  final String? firstname;
-  final String? lastname;
-  final String? profilePic;
-  final String? userAccountId;
-  final String? email;
-  final String? userType;
-  final String? accountType;
-  final String? profilePicUrl;
+  String? firstname;
+  String? lastname;
+  String? profilePic;
+  String? userAccountId;
+  String? email;
+  String? userType;
+  String? accountType;
+  String? profilePicUrl;
   String? phoneCode;
   String? phone;
   String? organisationName;

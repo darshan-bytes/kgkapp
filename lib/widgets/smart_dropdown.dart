@@ -174,7 +174,7 @@ class SmartDropDownView<T> extends StatelessWidget {
     this.hintText,
     this.scrollDirection = Axis.vertical,
     this.onSearchEvent,
-    this.canSearch = false, // Default is false, meaning no search
+    this.canSearch = false,
     this.noDataFoundText = '',
   }) : searchNotifier = ValueNotifier<String>('');
 
@@ -258,14 +258,19 @@ class SmartDropDownView<T> extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? style.selectedBorderColor : style.backgroundColor,
               borderRadius: BorderRadius.circular(4.r),
               border: Border.all(
                 color: isSelected ? style.selectedBorderColor : style.unSelectedBorderColor,
+                width: 1.w,
               ),
             ),
             padding: EdgeInsets.all(12.w),
-            child: SmartText(item.title, style: isSelected ? style.selectedTitleTextStyle : style.titleTextStyle),
+            child: Row(
+              children: [
+                Expanded(child: SmartText(item.title, style: style.titleTextStyle)),
+                if (isSelected) const SmartImage(path: AppImages.icCheck),
+              ],
+            ),
           ),
         );
 
