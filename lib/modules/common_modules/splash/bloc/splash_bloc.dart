@@ -36,7 +36,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await UserRepository(context).getCurrencies().then((value) async {
       await value?.fold((l) {
         // Show error message if API call fails
-        Utils.showMessage(l.message);
       }, (r) async {
         // Store currency list in local storage if API call succeeds
         await StorageManager().setCurrencyList(r);
@@ -56,7 +55,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
     await value?.fold((l) {
       // Show error message if API call fails
-      Utils.showMessage(l.message);
     }, (r) async {
       // Store language labels in local storage if API call succeeds
       await StorageManager().setLanguageLabels(r.responseData);
@@ -86,7 +84,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     response = await AppRepository(context).getSortingOptions();
 
     response?.fold((error) {
-      Utils.showMessage(error.message);
+      // Utils.showMessage(error.message);
     }, (sortingOptions) async {
       /// Create a temporary Map to store sorting data by type
       Map<String, List<SortOptions>> sortingData = {};

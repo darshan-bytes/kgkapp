@@ -7,6 +7,15 @@ sealed class LandingState extends Equatable {
 
 ///[LandingInitialState] is a class that is emitted by the bloc when the screen is loaded for the first time
 final class LandingInitialState extends LandingState {
+  const LandingInitialState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class LandingReloadState extends LandingState {
+  const LandingReloadState();
+
   @override
   List<Object> get props => [];
 }

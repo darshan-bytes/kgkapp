@@ -13,37 +13,33 @@ class OtpVerificationScreen extends StatelessWidget {
         if (state is! OtpVerificationDataLoadedState) {
           return const SizedBox.shrink();
         }
-        return PopScope(
-          canPop: bloc.isFromSignIn,
-          child: Scaffold(
-            appBar: SmartAppBar(
-              appBarHeight: 52.h,
-              isBorder: false,
-              backgroundColor: style.backgroundColor,
-              isBack: bloc.isFromSignIn,
-            ),
-            body: SafeArea(
-              child: SmartSingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 17.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SmartText(
-                      APPStrings.verifyYourAccount.tr,
-                      style: style.titleTextStyle,
-                    ),
-                    SmartText(
-                      APPStrings.verifyYourAccountDesc.tr,
-                      style: style.subTitleStyle,
-                    ),
-                    SizedBox(height: 32.h),
-                    _buildOtpField(context, style, bloc),
-                    SizedBox(height: 16.h),
-                    _buildResendCodeText(context, style, bloc),
-                    SizedBox(height: 16.h),
-                    _buildVerifyButton(context, bloc),
-                  ],
-                ),
+        return Scaffold(
+          appBar: SmartAppBar(
+            appBarHeight: 52.h,
+            isBorder: false,
+            backgroundColor: style.backgroundColor,
+          ),
+          body: SafeArea(
+            child: SmartSingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SmartText(
+                    APPStrings.verifyYourAccount.tr,
+                    style: style.titleTextStyle,
+                  ),
+                  SmartText(
+                    APPStrings.verifyYourAccountDesc.tr,
+                    style: style.subTitleStyle,
+                  ),
+                  SizedBox(height: 32.h),
+                  _buildOtpField(context, style, bloc),
+                  SizedBox(height: 16.h),
+                  _buildResendCodeText(context, style, bloc),
+                  SizedBox(height: 16.h),
+                  _buildVerifyButton(context, bloc),
+                ],
               ),
             ),
           ),
@@ -62,6 +58,9 @@ class OtpVerificationScreen extends StatelessWidget {
           obscured: true,
           textInputAction: TextInputAction.done,
           errorText: bloc.otpError,
+          maxLength: 6,
+          textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
           onValueChanges: (value) {
             if (bloc.otpError.isNotNullNorEmpty) {
               bloc.add(OtpVerificationOtpChangedEvent());

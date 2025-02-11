@@ -231,10 +231,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         lastNameController.text = userIdDetails?.lastname ?? '';
         emailController.text = userIdDetails?.email ?? '';
         contactNumberController.text = userIdDetails?.phone ?? '';
+        profilePickedImageList.clear();
         if (userIdDetails?.profilePic != null) {
-          profilePickedImageList.clear();
           profilePickedImageList.add(XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? ''));
         }
+        BlocProvider.of<LandingBloc>(context)
+            .add(LandingProfilePictureUpdateEvent(profilePicture: userIdDetails?.profilePicUrl?.setMediaUrl));
         firstNameError = null;
         lastNameError = null;
         contactNumberError = null;
@@ -322,6 +324,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         userIdDetails = userData;
         event.context.pop();
         Utils.showMessage(r.message);
+        BlocProvider.of<LandingBloc>(getNavigatorKeyContext)
+            .add(LandingProfilePictureUpdateEvent(profilePicture: userData.profilePicUrl?.setMediaUrl, isForce: true));
       },
     );
   }

@@ -379,9 +379,8 @@ class SignUpScreen extends StatelessWidget {
                       textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
                       onValueChanges: (value) {
                         signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
-                        if (signUpBloc.contactNumberErrors[index].isNotNullNorEmpty) {
-                          signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.contactNumber, index: index));
-                        }
+
+                        signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.contactNumber, index: index));
                       },
                       prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
                         buildWhen: (previous, current) => current is SignUpChangeCountryCodeState,
@@ -446,13 +445,18 @@ class SignUpScreen extends StatelessWidget {
                 return SizedBox(height: 8.h);
               },
             ),
-            Visibility(
-              visible: state is SignUpPhoneNumberValidationState && state.isError,
-              child: SmartText(
-                APPStrings.phoneNumberAlreadyUsed.tr,
-                color: style.errorTextColor,
-                optionalPadding: EdgeInsets.only(top: 6.h),
-              ),
+            BlocBuilder<SignUpBloc, SignUpState>(
+              buildWhen: (previous, current) => current is SignUpPhoneNumberValidationState,
+              builder: (context, state) {
+                return Visibility(
+                  visible: state is SignUpPhoneNumberValidationState && state.isError,
+                  child: SmartText(
+                    APPStrings.phoneNumberAlreadyUsed.tr,
+                    color: style.errorTextColor,
+                    optionalPadding: EdgeInsets.only(top: 6.h),
+                  ),
+                );
+              },
             ),
             if (!signUpBloc.isIndividual && signUpBloc.contactNumberControllers.length < 2) ...[
               SizedBox(height: 8.h),
@@ -483,7 +487,7 @@ class SignUpScreen extends StatelessWidget {
           nextFocus: signUpBloc.confirmPasswordFocusNode,
           obscured: true,
           onValueChanges: (value) {
-            if (signUpBloc.passwordError.isNotNullNorEmpty) {
+            if (signUpBloc.passwordError.isNotNullNorEmpty || signUpBloc.confirmPasswordError.isNotNullNorEmpty) {
               signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.password));
             }
           },
@@ -506,7 +510,7 @@ class SignUpScreen extends StatelessWidget {
           textInputAction: TextInputAction.done,
           obscured: true,
           onValueChanges: (value) {
-            if (signUpBloc.confirmPasswordError.isNotNullNorEmpty) {
+            if (signUpBloc.confirmPasswordError.isNotNullNorEmpty || signUpBloc.passwordError.isNotNullNorEmpty) {
               signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.confirmPassword));
             }
           },
@@ -545,6 +549,7 @@ class SignUpScreen extends StatelessWidget {
           (current is SignUpFieldValidationState && current.fieldType == FieldTypeValidationEnum.officeLocation),
       builder: (context, state) {
         return SmartDropDown<OfficeLocation>(
+          canSearch: true,
           errorText: signUpBloc.officeLocationError,
           hintText: APPStrings.officeLocation.tr,
           labelText: APPStrings.officeLocation.tr,
