@@ -76,8 +76,13 @@ class UserRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber({required String code, required String phoneNumber}) async {
-    var response = await getMethod<Map<String, dynamic>>(ApiClient.checkDuplicationPhoneNumber(code, phoneNumber), withFullResponse: true);
+  Future<Either<ErrorResponse, CommonResponse>?> validatePhoneNumber(
+      {required String code, required String phoneNumber, String? userId}) async {
+    var response = await getMethod<Map<String, dynamic>>(
+      ApiClient.checkDuplicationPhoneNumber(code, phoneNumber),
+      query: userId.isNotNullNorEmpty ? {ApiKey.userId: userId} : null,
+      withFullResponse: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 

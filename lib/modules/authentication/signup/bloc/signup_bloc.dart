@@ -528,7 +528,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (!emit.isDone) {
-      if (event.phoneNumber.isNotEmpty && event.phoneNumber.length >= 10) {
+      emit(SignUpReloadState());
+      if (event.phoneNumber.isNotEmpty &&
+          CountryUtils.validatePhoneNumber(contactNumberController.text.trim(), "+${selectedCountry.phoneCode}")) {
         Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
             await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
 

@@ -746,7 +746,7 @@ class GemstoneDatum {
         "updatedAt": updatedAt?.toIso8601String(),
         "view_count": viewCount,
         "discount_price": discountPrice,
-        "is_favorite": isFavorite,
+        "is_favorite": wishlistID,
         "rating": rating,
         "review_count": reviewCount,
         "final_price": finalPrice,

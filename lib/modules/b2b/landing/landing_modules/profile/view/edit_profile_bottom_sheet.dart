@@ -211,7 +211,7 @@ class EditProfileBottomSheet extends StatelessWidget {
                     countryPickerStyle: countryPickerStyle,
                     showPhoneCode: true,
                     onSelect: (Country country) {
-                      bloc.add(EditProfileChangeCountryCodeEvent(country: country));
+                      bloc.add(EditProfileChangeCountryCodeEvent(context: context, country: country));
                       if (bloc.contactNumberController.text.isNotEmpty) {
                         bloc.add(EditProfilePhoneNumberValidationEvent(context: context, phoneNumber: bloc.contactNumberController.text));
                       }

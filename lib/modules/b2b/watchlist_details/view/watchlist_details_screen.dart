@@ -192,7 +192,6 @@ class WatchlistDetailsScreen extends StatelessWidget {
             (index) {
               ProductDetailsModel productDetails = bloc.productList[index];
               return ProductGridItem(
-                isFromWatchlist: true,
                 isOutOfStock: productDetails.isOutOfStock,
                 productDetails: productDetails,
                 onCancelTap: () {
@@ -201,6 +200,9 @@ class WatchlistDetailsScreen extends StatelessWidget {
                 onFavTap: () {},
                 onAddToBagTap: () {
                   bloc.add(WatchlistDetailsEditProductEvent(index: index, context: context));
+                },
+                onTap: () {
+                  _onProductTap(context, productDetails);
                 },
                 buttonText: APPStrings.edit.tr,
               );
@@ -300,5 +302,15 @@ class WatchlistDetailsScreen extends StatelessWidget {
         child: SmartText(text, style: style),
       ),
     );
+  }
+
+  void _onProductTap(BuildContext context, ProductDetailsModel productDetails) {
+    if (productDetails.commodity == null) {
+      return;
+    }
+    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+      RoutesData.productId: productDetails.suid ?? '',
+      RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
+    });
   }
 }
