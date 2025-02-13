@@ -80,6 +80,7 @@ class BranchService {
         buo: buo,
         linkProperties: linkProperties,
       );
+      kgk_logger.log('Branch link created: ${response.toString()}');
       return response;
     } catch (e) {
       kgk_logger.log('Failed to create Branch link: $e', error: e);

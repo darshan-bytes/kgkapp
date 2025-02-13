@@ -32,6 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? firstNameError;
   String? lastNameError;
   String? contactNumberError;
+  Completer<bool> isPhoneNumberUsed = Completer<bool>();
 
   String? currentPasswordError;
   String? passwordError;
@@ -101,7 +102,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _onEditProfileChangeCountryCodeEvent(EditProfileChangeCountryCodeEvent event, Emitter<ProfileState> emit) async {
-    _handleEditProfileChangeCountryCode(emit: emit, country: event.country);
+    _handleEditProfileChangeCountryCode(context: event.context, emit: emit, country: event.country);
   }
 
   Future<void> _onEditProfilePhoneNumberValidationEvent(EditProfilePhoneNumberValidationEvent event, Emitter<ProfileState> emit) async {
@@ -110,7 +111,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onEditProfileSaveEvent(EditProfileSaveEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileReloadState());
-    if (_validateEditProfile(emit)) {
+    bool isValidateEditProfile = _validateEditProfile(emit);
+    bool isPhoneNumberUsed = await this.isPhoneNumberUsed.future;
+    if (isValidateEditProfile && !isPhoneNumberUsed) {
       await _callEditUserProfileApi(event: event);
     }
   }
@@ -256,27 +259,41 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  void _handleEditProfileChangeCountryCode({required Country country, required Emitter<ProfileState> emit}) {
+  Future<void> _handleEditProfileChangeCountryCode({
+    required BuildContext context,
+    required Country country,
+    required Emitter<ProfileState> emit,
+  }) async {
     emit(ProfileReloadState());
     selectedCountry = country;
     emit(EditProfileChangeCountryCodeState(country: selectedCountry));
+    await _handleEditProfilePhoneNumberValidation(context: context, phoneNumber: contactNumberController.text, emit: emit);
   }
 
   Future<void> _handleEditProfilePhoneNumberValidation(
       {required String phoneNumber, required BuildContext context, required Emitter<ProfileState> emit}) async {
+    isPhoneNumberUsed = Completer<bool>();
     await Future.delayed(const Duration(milliseconds: 500));
     if (!emit.isDone) {
-      if (phoneNumber.isNotEmpty && phoneNumber.length >= 10) {
-        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
-            await UserRepository(context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: phoneNumber);
+      if (isPhoneNumberUsed.isCompleted) {
+        isPhoneNumberUsed = Completer<bool>();
+      }
+      if (phoneNumber.isNotEmpty &&
+          CountryUtils.validatePhoneNumber(contactNumberController.text.trim(), "+${selectedCountry.phoneCode}")) {
+        Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse = await UserRepository(context)
+            .validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: phoneNumber, userId: userIdDetails?.userAccountId);
 
         if (!emit.isDone) {
-          phoneNumberValidationResponse?.fold((l) {
+          emit(ProfileReloadState());
+          await phoneNumberValidationResponse?.fold((l) {
             Utils.showMessage(l.message);
-          }, (r) {
-            bool isPhoneNumberUsed = r.responseData;
-            emit(EditProfilePhoneNumberValidationState(
-                phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: isPhoneNumberUsed));
+          }, (r) async {
+            if (isPhoneNumberUsed.isCompleted) {
+              isPhoneNumberUsed = Completer<bool>();
+            }
+            isPhoneNumberUsed.complete(r.responseData);
+            contactNumberError = APPStrings.phoneNumberAlreadyUsed.tr;
+            emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
           });
         }
       }

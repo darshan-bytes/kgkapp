@@ -217,7 +217,7 @@ class ProductData {
         "metal_color_1_hex_code": metalColor1HexCode,
         "discount_percentage": discountPercentage,
         "discount_price": discountPrice,
-        "is_favorite": isFavorite,
+        "is_favorite": wishlistId,
         "final_price": finalPrice,
       };
 

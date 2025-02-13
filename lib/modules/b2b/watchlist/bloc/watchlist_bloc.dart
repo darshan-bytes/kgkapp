@@ -94,7 +94,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
             filters[element.code ?? ''] = [
               element.dateRange?.start.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD),
               element.dateRange?.end.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatYYYYMMDD)
-            ];
+            ].join(',');
           }
           break;
         case FilterType.checkbox:
@@ -144,8 +144,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
               id: e.sId ?? "",
               strName: e.name ?? "",
               status: e.displayStatus,
-              strFrom: e.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
-              strTo: e.expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+              strFrom: e.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+              strTo: e.expiresAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
               strRemainingTime: ValueNotifier<String>((e.expiresAt?.isAfter(DateTime.now()) == true)
                   ? (e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")
@@ -212,6 +212,7 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
     }
+    filterData.clear();
     paginationScrollController = SmartPaginationScrollController();
     watchListingList.clear();
     watchlistDataList.clear();

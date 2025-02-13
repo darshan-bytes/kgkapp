@@ -87,9 +87,8 @@ class WishlistScreen extends StatelessWidget {
                     bloc.add(ProductRemoveFromWishlistEvent(productDetails));
                   },
                   onTap: () {
-                    _onProductTap(context, bloc, productDetails);
+                    _onProductTap(context, productDetails);
                   },
-                  isStoneWithPrice: true,
                 );
               }).toList()),
             ),
@@ -100,7 +99,7 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  void _onProductTap(BuildContext context, WishlistBloc bloc, ProductDetailsModel productDetails) {
+  void _onProductTap(BuildContext context, ProductDetailsModel productDetails) {
     if (productDetails.commodity == null) {
       return;
     }

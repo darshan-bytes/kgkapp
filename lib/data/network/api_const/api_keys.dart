@@ -29,7 +29,7 @@ class ApiKey {
   static const String watchlistId = 'watchlistId';
   static const String quantity = 'quantity';
   static const String suid = 'suid';
-  static const String userId = 'user_id';
+  static const String userId_ = 'user_id';
   static const String accountType = 'account_type';
   static const String firstName_ = 'first_name';
   static const String lastName_ = 'last_name';
@@ -128,4 +128,5 @@ class ApiKey {
   static const String diamondSuid = 'diamond_suid';
   static const String quote = 'quote';
   static const String profilePic = 'profile_pic';
+  static const String userId = 'userId';
 }

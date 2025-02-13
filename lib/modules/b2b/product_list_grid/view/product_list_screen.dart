@@ -240,12 +240,12 @@ class ProductListScreen extends StatelessWidget {
               },
               onTap: () => _onProductTap(context, bloc, productDetails),
             ),
-            if (index == 13)
-              SmartImage(
-                path: "https://i.ibb.co/PN51B9q/Banner.png",
-                fit: BoxFit.fitWidth,
-                padding: EdgeInsets.symmetric(vertical: 32.h),
-              ),
+            // if (index == 13)
+            //   SmartImage(
+            //     path: "https://i.ibb.co/PN51B9q/Banner.png",
+            //     fit: BoxFit.fitWidth,
+            //     padding: EdgeInsets.symmetric(vertical: 32.h),
+            //   ),
             if (index == bloc.productList.length - 1 && state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
           ],
         );
