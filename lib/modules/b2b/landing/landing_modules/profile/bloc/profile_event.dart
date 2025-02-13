@@ -43,14 +43,16 @@ final class DeleteProfileEvent extends ProfileEvent {
 }
 
 final class EditProfileChangeCountryCodeEvent extends ProfileEvent {
+  final BuildContext context;
   final Country country;
 
   const EditProfileChangeCountryCodeEvent({
+    required this.context,
     required this.country,
   });
 
   @override
-  List<Object> get props => [country];
+  List<Object> get props => [context, country];
 }
 
 final class EditProfileSaveEvent extends ProfileEvent {

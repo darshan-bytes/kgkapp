@@ -26,7 +26,7 @@ class Utils {
 
 // Displays a new toast message with the specified properties.
       _toast = toastification.show(
-        title: Text(message ?? '', style: TextStyle(color: AppThemes().appColor.white)),
+        description: Text(message ?? '', style: TextStyle(color: AppThemes().appColor.white)),
         autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 3),
         backgroundColor: AppThemes().appColor.primary,
         borderRadius: BorderRadius.circular(10.r),

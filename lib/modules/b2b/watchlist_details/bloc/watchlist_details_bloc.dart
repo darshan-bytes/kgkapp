@@ -185,7 +185,8 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
   void _onWatchlistDetailsSearchEvent(WatchlistDetailsSearchEvent event, Emitter<WatchlistDetailsState> emit) {
     emit(const WatchlistDetailsLoading());
     if (event.searchQuery.isEmpty) {
-      productList = _productList;
+      productList.clear();
+      productList.addAll(_productList);
     } else {
       productList.clear();
       productList.addAll(

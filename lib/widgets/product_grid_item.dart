@@ -225,7 +225,7 @@ class ProductGridItem extends StatelessWidget {
           children: [
             SmartText(
               productDetails.title,
-              style: style.priceTextStyle,
+              style: style.diamondTextStyle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -293,15 +293,15 @@ class ProductGridItem extends StatelessWidget {
                   )
               ],
             ),
-            if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
-              SizedBox(height: 4.h),
-              SmartText(
-                productDetails.discountPercentageString,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: style.discountTextStyle,
-              ),
-            ],
+            // if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
+            //   SizedBox(height: 4.h),
+            //   SmartText(
+            //     productDetails.discountPercentageString,
+            //     maxLines: 1,
+            //     overflow: TextOverflow.ellipsis,
+            //     style: style.discountTextStyle,
+            //   ),
+            // ],
             if (isCrtAndGramVisible || isFromWatchlist) diamondAndGramSection(style),
             if (onAddToBagTap != null)
               SmartButton(
