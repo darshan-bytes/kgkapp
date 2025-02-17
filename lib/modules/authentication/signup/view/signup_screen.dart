@@ -448,14 +448,15 @@ class SignUpScreen extends StatelessWidget {
             BlocBuilder<SignUpBloc, SignUpState>(
               buildWhen: (previous, current) => current is SignUpPhoneNumberValidationState,
               builder: (context, state) {
-                return Visibility(
-                  visible: state is SignUpPhoneNumberValidationState && state.isError,
-                  child: SmartText(
-                    APPStrings.phoneNumberAlreadyUsed.tr,
+                if (state is SignUpPhoneNumberValidationState && state.isError) {
+                  return SmartText(
+                    state.errorMessage ?? APPStrings.phoneNumberAlreadyUsed.tr,
                     color: style.errorTextColor,
                     optionalPadding: EdgeInsets.only(top: 6.h),
-                  ),
-                );
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
               },
             ),
             if (!signUpBloc.isIndividual && signUpBloc.contactNumberControllers.length < 2) ...[

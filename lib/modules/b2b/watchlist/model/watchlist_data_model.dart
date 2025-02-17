@@ -80,9 +80,9 @@ extension WatchlistDataExtension on WatchlistData {
     return status == true ? ProjectStatus.active : ProjectStatus.inActive;
   }
 
-  String get displayFromDate => createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
+  String get displayFromDate => createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
 
-  String get displayToDate => expiresAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
+  String get displayToDate => expiresAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA) ?? "";
 }
 
 class WatchlistProducts {

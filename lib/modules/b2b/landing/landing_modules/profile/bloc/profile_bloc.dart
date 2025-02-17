@@ -58,7 +58,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ImagePicker _picker = ImagePicker();
 
   /// profile image
-  List<XFile> profilePickedImageList = [];
+  XFile? profilePickedImage;
+  XFile? selectedProfilePickedImage;
 
   List<Country> selectedCountryCodes = [
     Country.from(json: {
@@ -211,9 +212,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lastNameController.text = userIdDetails?.lastname ?? '';
       emailController.text = userIdDetails?.email ?? '';
       contactNumberController.text = userIdDetails?.phone ?? '';
+      profilePickedImage = null;
       if (userIdDetails?.profilePic != null) {
-        profilePickedImageList.clear();
-        profilePickedImageList.add(XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? ''));
+        profilePickedImage = XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? '');
       }
       firstNameError = null;
       lastNameError = null;
@@ -234,9 +235,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         lastNameController.text = userIdDetails?.lastname ?? '';
         emailController.text = userIdDetails?.email ?? '';
         contactNumberController.text = userIdDetails?.phone ?? '';
-        profilePickedImageList.clear();
+        profilePickedImage = null;
         if (userIdDetails?.profilePic != null) {
-          profilePickedImageList.add(XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? ''));
+          profilePickedImage = XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? '');
         }
         BlocProvider.of<LandingBloc>(context)
             .add(LandingProfilePictureUpdateEvent(profilePicture: userIdDetails?.profilePicUrl?.setMediaUrl));
@@ -266,6 +267,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) async {
     emit(ProfileReloadState());
     selectedCountry = country;
+    isPhoneNumberUsed = Completer<bool>();
     emit(EditProfileChangeCountryCodeState(country: selectedCountry));
     await _handleEditProfilePhoneNumberValidation(context: context, phoneNumber: contactNumberController.text, emit: emit);
   }
@@ -292,7 +294,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               isPhoneNumberUsed = Completer<bool>();
             }
             isPhoneNumberUsed.complete(r.responseData);
-            contactNumberError = APPStrings.phoneNumberAlreadyUsed.tr;
+            contactNumberError = (await isPhoneNumberUsed.future) ? APPStrings.phoneNumberAlreadyUsed.tr : null;
             emit(EditProfileFieldErrorState(fieldType: FieldTypeValidationEnum.contactNumber));
           });
         }
@@ -327,16 +329,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ApiKey.lastname: lastNameController.text.trim(),
       ApiKey.phoneCode: selectedCountry.phoneCode,
       ApiKey.phone: contactNumberController.text.trim(),
-      if (userIdDetails?.profilePic != null) ApiKey.profilePic: userIdDetails?.profilePic,
+      if (profilePickedImage == null && selectedProfilePickedImage == null) ApiKey.profilePic: '',
     };
-    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context).editUserProfile(params,
-        images: profilePickedImageList.isNotEmpty
-            ? profilePickedImageList.where((e) => e.path.isNotNullNorEmpty).map((e) => e.path).toList()
-            : []);
+    Either<ErrorResponse, CommonResponse>? editProfileResponse = await UserRepository(event.context)
+        .editUserProfile(params, images: selectedProfilePickedImage != null ? [selectedProfilePickedImage!.path] : []);
+
     await editProfileResponse?.fold(
       (l) => Utils.showMessage(l.message),
       (r) async {
         UserIdDetails userData = r.responseData;
+        profilePickedImage = null;
+        if (userData.profilePic != null) {
+          profilePickedImage = selectedProfilePickedImage ?? XFile(userData.profilePicUrl?.setMediaUrl ?? '');
+        }
+        selectedProfilePickedImage = null;
         await StorageManager().setUserData(userData);
         userIdDetails = userData;
         event.context.pop();
@@ -854,15 +860,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(ProfileReloadState());
     XFile? pickedImage = await _picker.pickImage(source: source);
     if (pickedImage != null) {
-      profilePickedImageList.clear();
-      profilePickedImageList.add(pickedImage);
+      selectedProfilePickedImage = pickedImage;
       emit(ProfilePickImageState());
     }
   }
 
   void _handleRemoveProfileImage({required Emitter<ProfileState> emit}) {
     emit(ProfileReloadState());
-    profilePickedImageList.clear();
+    if (selectedProfilePickedImage != null) {
+      selectedProfilePickedImage = null;
+    } else {
+      profilePickedImage = null;
+    }
     emit(ProfilePickImageState());
   }
 

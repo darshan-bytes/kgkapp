@@ -529,8 +529,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
     if (!emit.isDone) {
       emit(SignUpReloadState());
-      if (event.phoneNumber.isNotEmpty &&
-          CountryUtils.validatePhoneNumber(contactNumberController.text.trim(), "+${selectedCountry.phoneCode}")) {
+      if (event.phoneNumber.isNotEmpty && CountryUtils.validatePhoneNumber(event.phoneNumber.trim(), "+${selectedCountry.phoneCode}")) {
         Either<ErrorResponse, CommonResponse>? phoneNumberValidationResponse =
             await UserRepository(event.context).validatePhoneNumber(code: selectedCountry.phoneCode, phoneNumber: event.phoneNumber);
 
@@ -546,6 +545,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
                 phoneNumberValidationFieldType: ValidationFieldType.phoneNumber, isError: await isPhoneNumberUsed.future));
           });
         }
+      } else {
+        emit(SignUpPhoneNumberValidationState(
+          phoneNumberValidationFieldType: ValidationFieldType.phoneNumber,
+          isError: true,
+          errorMessage: APPStrings.errorContactNumberValid.tr,
+        ));
       }
     }
   }
