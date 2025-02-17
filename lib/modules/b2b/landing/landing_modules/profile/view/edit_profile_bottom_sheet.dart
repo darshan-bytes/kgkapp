@@ -69,7 +69,9 @@ class EditProfileBottomSheet extends StatelessWidget {
               alignment: Alignment.bottomRight,
               children: [
                 SmartImage(
-                  path: bloc.profilePickedImageList.isNotNullNorEmpty ? bloc.profilePickedImageList.first.path : AppImages.icProfilePic,
+                  path: (bloc.profilePickedImage != null || bloc.selectedProfilePickedImage != null)
+                      ? (bloc.selectedProfilePickedImage ?? bloc.profilePickedImage)!.path
+                      : AppImages.icProfilePic,
                   height: 73.w,
                   width: 73.w,
                   fit: BoxFit.cover,
@@ -78,7 +80,7 @@ class EditProfileBottomSheet extends StatelessWidget {
                     _showImagePickDialog(context, bloc);
                   },
                 ),
-                if (bloc.profilePickedImageList.isNullOrEmpty) ...[
+                if (bloc.profilePickedImage == null) ...[
                   SmartImage(
                     path: AppImages.icEditImage,
                     height: 32.w,

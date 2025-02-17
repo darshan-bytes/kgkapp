@@ -119,11 +119,16 @@ final class SignUpEmailValidationState extends SignUpState {
 final class SignUpPhoneNumberValidationState extends SignUpState {
   final ValidationFieldType phoneNumberValidationFieldType;
   final bool isError;
+  final String? errorMessage;
 
-  const SignUpPhoneNumberValidationState({required this.phoneNumberValidationFieldType, required this.isError});
+  const SignUpPhoneNumberValidationState({
+    required this.phoneNumberValidationFieldType,
+    required this.isError,
+    this.errorMessage,
+  });
 
   @override
-  List<Object> get props => [phoneNumberValidationFieldType, isError];
+  List<Object?> get props => [phoneNumberValidationFieldType, isError, errorMessage];
 }
 
 final class SignUpFieldValidationState extends SignUpState {
