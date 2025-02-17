@@ -466,7 +466,7 @@ class AppRepository extends ApiService {
     if (!isInBackground) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<WatchlistData>(ApiClient.watchListById(id));
+    var response = await getMethod<WatchlistData>(ApiClient.watchListById(id), withCurrencyHeader: true);
     if (!isInBackground) {
       context.setAppLoading(false);
     }
