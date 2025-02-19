@@ -75,6 +75,7 @@ class ProductDetailsModel {
   double? originalYourAmount;
   double? originalTotalPrice;
   double? originalFinalPrice;
+  String? jewelleryType;
 
   ProductDetailsModel({
     this.productId,
@@ -151,6 +152,7 @@ class ProductDetailsModel {
     this.originalYourAmount,
     this.originalTotalPrice,
     this.originalFinalPrice,
+    this.jewelleryType,
   });
 
   @override
@@ -215,7 +217,8 @@ class ProductDetailsModel {
           measurements == other.measurements &&
           certificateNumber == other.certificateNumber &&
           table == other.table &&
-          depth == other.depth;
+          depth == other.depth &&
+          jewelleryType == other.jewelleryType;
 
   @override
   int get hashCode =>
@@ -277,7 +280,8 @@ class ProductDetailsModel {
       measurements.hashCode ^
       certificateNumber.hashCode ^
       table.hashCode ^
-      depth.hashCode;
+      depth.hashCode ^
+      jewelleryType.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {

@@ -134,10 +134,12 @@ class CompareProductScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SmartImage(
-            path: (bloc.compareResult[index]['image'] as List?)?.firstOrNull['URL'] ?? '',
+            path: bloc.commodity == Commodity.jewellery
+                ? (bloc.compareResult[index]['multiple_finished_view_image'] as List?)?.firstOrNull['IMAGE_URL'] ?? ''
+                : (bloc.compareResult[index]['image'] as List?)?.firstOrNull['URL'] ?? '',
             width: 114.w,
             height: 114.w,
-            color: Colors.black,
+            color: style.blackColor,
             onTap: () {
               if (bloc.commodity != null) {
                 context.pushNamed(

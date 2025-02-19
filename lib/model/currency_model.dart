@@ -86,6 +86,51 @@ class CurrencyListModel {
       };
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CurrencyListModel &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          slug == other.slug &&
+          code == other.code &&
+          symbol == other.symbol &&
+          isDefault == other.isDefault &&
+          symbolPosition == other.symbolPosition &&
+          decimalSeparator == other.decimalSeparator &&
+          thousandSeparator == other.thousandSeparator &&
+          decimalDigits == other.decimalDigits &&
+          conversionType == other.conversionType &&
+          status == other.status &&
+          createdBy == other.createdBy &&
+          createdAt == other.createdAt &&
+          updatedAt == other.updatedAt &&
+          id == other.id &&
+          updatedBy == other.updatedBy &&
+          createdByDetails == other.createdByDetails &&
+          updatedByDetails == other.updatedByDetails;
+
+  @override
+  int get hashCode =>
+      name.hashCode ^
+      slug.hashCode ^
+      code.hashCode ^
+      symbol.hashCode ^
+      isDefault.hashCode ^
+      symbolPosition.hashCode ^
+      decimalSeparator.hashCode ^
+      thousandSeparator.hashCode ^
+      decimalDigits.hashCode ^
+      conversionType.hashCode ^
+      status.hashCode ^
+      createdBy.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode ^
+      id.hashCode ^
+      updatedBy.hashCode ^
+      createdByDetails.hashCode ^
+      updatedByDetails.hashCode;
+
+  @override
   String toString() {
     return "$name, $slug, $code, $symbol, $isDefault, $symbolPosition, $decimalSeparator, $thousandSeparator, $decimalDigits, $conversionType, $status, $createdBy, $createdAt, $updatedAt, $id, $updatedBy, $createdByDetails, $updatedByDetails, ";
   }

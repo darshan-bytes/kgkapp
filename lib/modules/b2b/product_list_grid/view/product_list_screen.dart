@@ -90,12 +90,13 @@ class ProductListScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 8.h),
                     _buildProductFilterCount(diamondListingStyle, bloc),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 8.h),
                     Expanded(
                       child: SmartSingleChildScrollView(
                         controller: bloc.paginationScrollController.controller,
+                        padding: EdgeInsets.only(bottom: 60.h),
                         onRefresh: () async {
                           bloc.add(ProductListPullToRefreshEvent(context));
                         },

@@ -900,6 +900,7 @@ class CompareProductStyle {
   final TextStyle productReviewStyle;
   final TextStyle productRemoveStyle;
   final Color primaryColor;
+  final Color blackColor;
 
   CompareProductStyle({
     required this.productTitleStyle,
@@ -908,6 +909,7 @@ class CompareProductStyle {
     required this.productReviewStyle,
     required this.productRemoveStyle,
     required this.primaryColor,
+    required this.blackColor,
   });
 }
 

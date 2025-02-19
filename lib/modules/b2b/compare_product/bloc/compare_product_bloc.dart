@@ -5,7 +5,9 @@ part 'compare_product_event.dart';
 part 'compare_product_state.dart';
 
 class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> {
+  MyBagBloc? myBagBloc;
   Commodity? commodity;
+  String? jewelleryType;
   List<FilterOptionModel> filterList = [];
   final List<ProductDetailsModel> productList = [];
   final List<String> productIdList = [];
@@ -33,8 +35,13 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
     }
 
+    bool isDisplayError = commodity != productCommodity;
+    if (commodity == Commodity.jewellery) {
+      jewelleryType ??= event.product.jewelleryType;
+      isDisplayError = jewelleryType != event.product.jewelleryType;
+    }
     // Handle different commodities case
-    if (commodity != productCommodity) {
+    if (isDisplayError) {
       final result = await Utils.showSmartModalBottomSheet(
         context: event.context,
         shape: RoundedRectangleBorder(
@@ -102,6 +109,18 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     _isInitialized = true;
     emit(CompareProductLoadingState());
 
+    if (StorageManager().getIsSkipLogin()) {
+      myBagBloc ??= BlocProvider.of<MyBagBloc>(event.context);
+      if (myBagBloc != null && (myBagBloc!.commodity == null || myBagBloc!.commodity == commodity)) {
+        myBagBloc!.add(InitialMyBagEvent(context: event.context));
+        await for (final state in myBagBloc!.stream) {
+          if (state is MyBagLoadedState) {
+            break;
+          }
+        }
+      }
+    }
+
     try {
       final Map<String, dynamic> body = {
         ApiKey.products: productIdList.map((e) => {ApiKey.id: e, ApiKey.collectionType: commodity?.value}).toList(),
@@ -115,7 +134,12 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         (r) {
           compareResult = r;
           for (int i = 0; i < compareResult.length; i++) {
-            productList[i].isAddedToCart = compareResult[i][ApiKey.isAddedToCart] ?? false;
+            if (StorageManager().getIsSkipLogin()) {
+              productList[i].isAddedToCart =
+                  myBagBloc?.bagListDataModel?.result.map((e) => e.suid).toList().contains(productList[i].suid) ?? false;
+            } else {
+              productList[i].isAddedToCart = compareResult[i][ApiKey.isAddedToCart] ?? false;
+            }
           }
           emit(CompareProductsLoadedState());
         },
