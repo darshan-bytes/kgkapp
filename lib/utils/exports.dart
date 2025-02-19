@@ -233,7 +233,6 @@ export 'package:kgk/modules/b2b/pdd_preview/view/pdd_preview_screen.dart';
 export 'package:kgk/modules/b2b/pdd_preview/view/pdd_version_history_screen.dart';
 export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
 export 'package:kgk/modules/b2b/preferences/model/country_model.dart';
-export 'package:kgk/modules/b2b/preferences/model/currency_model.dart';
 export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';
 export 'package:kgk/modules/b2b/preferences/model/language_model.dart';
 export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';

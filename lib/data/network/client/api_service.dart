@@ -10,7 +10,7 @@ class ApiService implements ApiProvider {
     // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM4OTIiLCJpc19hZG1pbiI6dHJ1ZSwidXNlcl90eXBlIjoiY3VzdG9tZXIiLCJjb3VudHJ5X2NvZGUiOiJJTiIsInJvbGUiOiJpbmRpdmlkdWFsLXJvbGUiLCJjdXN0b21lcl9vcmdhbml6YXRpb25faWQiOiIzMTcxOCIsImlhdCI6MTczMzkyNjEyOSwiZXhwIjoxNzM0NTMwOTI5fQ.SbFMhmBCEjFE1D2uoTlGxXMAmHx0c3r0BfCDaEEx4Yg';
     String? apiKey = "1ab2c3d4e5f61ab2c3d4e5f6";
     String? acceptLanguage = StorageManager().getLocale();
-    String? currency = StorageManager().getSelectedCurrency();
+    String? currency = StorageManager().getSelectedCurrency()?.code;
 
     printWrapped("Token ::::: $token");
 

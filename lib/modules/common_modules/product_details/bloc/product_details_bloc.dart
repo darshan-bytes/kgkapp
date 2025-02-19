@@ -297,8 +297,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productId: diamondData!.suid,
             suid: diamondData!.suid,
             name: productName,
-            offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-            originalPrice: diamondData!.finalPrice?.setCurrency,
+            originalPrice: diamondData?.finalPrice?.toString().setCurrency,
+            offerPrice: diamondData?.discountPrice?.toString().setCurrency,
+            finalPrice: diamondData?.discountPrice?.toString().setCurrency,
+            // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
+            // originalPrice: diamondData!.finalPrice?.setCurrency,
             discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
             productSku: diamondData!.lotCode,
@@ -340,8 +343,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             productId: gemstoneData!.suid,
             suid: gemstoneData!.suid,
             name: productName,
-            offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
-            originalPrice: gemstoneData!.finalPrice?.setCurrency,
+            originalPrice: gemstoneData?.finalPrice?.toString().setCurrency,
+            offerPrice: gemstoneData?.discountPrice?.toString().setCurrency,
+            finalPrice: gemstoneData?.discountPrice?.toString().setCurrency,
+            // offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
+            // originalPrice: gemstoneData!.finalPrice?.setCurrency,
             discountPercentageString:
                 isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
             productSku: gemstoneData?.lotCode,
@@ -536,11 +542,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         videoUrl = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.videoUrl.isNotNullNorEmpty)?.videoUrl;
 
         productDetails = ProductDetailsModel(
-          productId: productId,
+          productId: jewelleryData.suid,
           suid: jewelleryData.suid,
           name: productName,
-          offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
-          originalPrice: jewelleryData.finalPrice?.setCurrency,
+          jewelleryType: jewelleryData.jewelleryType,
+          originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
+          offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
+          finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
+          // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
+          // originalPrice: jewelleryData.finalPrice?.setCurrency,
           discountPercentageString:
               isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
           productSku: jewelleryData.contractNoSkuNo,
