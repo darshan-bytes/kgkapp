@@ -8,11 +8,11 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   bool isIntialized = false;
   List<CountryModel> countryList = [];
   List<LanguageModel> languageList = [];
-  List<CurrencyModel> currencyList = [];
+  List<CurrencyListModel> currencyList = [];
 
   CountryModel? selectedCountry;
   LanguageModel? selectedLanguage;
-  CurrencyModel? selectedCurrency;
+  CurrencyListModel? selectedCurrency;
 
   PreferencesBloc() : super(PreferencesInitialState()) {
     on<PreferencesInitialEvent>(_onInitialEvent);
@@ -36,14 +36,12 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       isIntialized = true;
     }
 
-    StorageManager().getCurrencyList().forEach((element) {
-      currencyList.add(CurrencyModel(name: element.name ?? '', symbol: element.symbol ?? '\$'));
-    });
+    currencyList = StorageManager().getCurrencyList();
 
     selectedCountry = countryList.first;
     selectedLanguage = languageList.firstWhereOrNull((element) => element.symbol == (StorageManager().getLocale() ?? 'en'));
     selectedCurrency =
-        currencyList.firstWhereOrNull((element) => element.name == (StorageManager().getSelectedCurrency() ?? currencyList.first.name));
+        currencyList.firstWhereOrNull((element) => element.id == StorageManager().getSelectedCurrency()?.id) ?? currencyList.firstOrNull;
 
     emit(PreferencesDataFetchedState());
     emit(PreferencesReloadState());
@@ -94,8 +92,8 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   Future<void> _onSaveEvent(PreferencesSaveEvent event, Emitter<PreferencesState> emit) async {
     if (selectedCurrency != null) {
       /// Save the selected currency and its symbol to storage
-      await StorageManager().setSelectedCurrency(selectedCurrency!.name);
-      await StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol);
+      await StorageManager().setSelectedCurrency(selectedCurrency!);
+      await StorageManager().setSelectedCurrencySymbol(selectedCurrency!.symbol ?? '');
     }
     BlocProvider.of<AppBloc>(event.context).add(
       LanguageChangedEvent(

@@ -90,13 +90,25 @@ class ProductDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SmartText(bloc.productDetails?.displayPrice, style: style.priceStyle, maxLines: 1, isAutoSizeText: true),
+                              SmartText(
+                                  bloc.productDetails?.finalPrice.isNotNullNorEmpty == true
+                                      ? "${bloc.productDetails?.finalPrice}\n"
+                                      : bloc.productDetails?.originalPrice,
+                                  style: style.priceStyle,
+                                  maxLines: 1,
+                                  isAutoSizeText: true),
                               if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SmartText(bloc.productDetails?.offerPrice, style: style.originalPriceStyle),
+                                    Flexible(
+                                        child: SmartText(
+                                      bloc.productDetails?.originalPrice,
+                                      style: style.originalPriceStyle,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    )),
                                     SizedBox(width: 2.w),
                                     SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle),
                                   ],

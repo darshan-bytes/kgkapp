@@ -80,10 +80,10 @@ class PreferencesScreen extends StatelessWidget {
                         BlocBuilder<PreferencesBloc, PreferencesState>(
                           buildWhen: (previous, current) => current is PreferencesChangeCurrencyState,
                           builder: (context, state) {
-                            return SmartDropDown<CurrencyModel>(
+                            return SmartDropDown<CurrencyListModel>(
                               selectedItem: bloc.selectedCurrency,
                               items: bloc.currencyList
-                                  .map((e) => SmartDropDownItem<CurrencyModel>(value: e, title: "${e.name} (${e.symbol})"))
+                                  .map((e) => SmartDropDownItem<CurrencyListModel>(value: e, title: "${e.name} (${e.symbol})"))
                                   .toList(),
                               hintText: APPStrings.currency.tr,
                               onChanged: (newValue) {

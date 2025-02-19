@@ -37,7 +37,7 @@ class PreferencesChangeLanguageEvent extends PreferencesEvent {
 }
 
 class PreferencesChangeCurrencyEvent extends PreferencesEvent {
-  final CurrencyModel currency;
+  final CurrencyListModel currency;
 
   const PreferencesChangeCurrencyEvent(this.currency);
 

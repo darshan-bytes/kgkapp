@@ -73,8 +73,11 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
                     ? product.jewelleryData!.multipleFinishedViewImage[0].imageUrl
                     : "",
                 name: product.jewelleryData?.productDescription,
-                discountPrice: product.jewelleryData?.discountPrice?.setCurrency,
-                originalPrice: product.jewelleryData?.finalPrice?.setCurrency,
+                originalPrice: product.jewelleryData?.finalPrice?.toString().setCurrency,
+                offerPrice: product.jewelleryData?.discountPrice?.toString().setCurrency,
+                finalPrice: product.jewelleryData?.discountPrice?.toString().setCurrency,
+                // discountPrice: product.jewelleryData?.discountPrice?.setCurrency,
+                // originalPrice: product.jewelleryData?.finalPrice?.setCurrency,
                 discountPercentageString: (product.jewelleryData?.discountPercentage ?? 0) > 0
                     ? APPStrings.percentageOffInterpolating.tr.interpolate([product.jewelleryData?.discountPercentage])
                     : null,

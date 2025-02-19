@@ -102,13 +102,14 @@ class StorageManager {
   }
 
   /// Set selected currency
-  Future<void> setSelectedCurrency(String currency) async {
-    await _box.put(_selectedCurrency, currency);
+  Future<void> setSelectedCurrency(CurrencyListModel currency) async {
+    await _box.put(_selectedCurrency, jsonEncode(currency.toJson()));
   }
 
   /// Get selected currency
-  String? getSelectedCurrency() {
-    return _box.get(_selectedCurrency);
+  CurrencyListModel? getSelectedCurrency() {
+    String? selectedCurrency = _box.get(_selectedCurrency);
+    return selectedCurrency.isNotNullNorEmpty ? CurrencyListModel.fromJson(jsonDecode(_box.get(_selectedCurrency))) : null;
   }
 
   /// Set currency list
@@ -194,7 +195,7 @@ class StorageManager {
     bool isSkipLogin = getIsSkipLogin();
     String guestBagId = getBagId() ?? '';
     MyBagDataModel? guestBagData = getBagData();
-    String? selectedCurrency = getSelectedCurrency();
+    CurrencyListModel? selectedCurrency = getSelectedCurrency();
     String? selectedCurrencySymbol = getSelectedCurrencySymbol();
     final storedData = _box.get(_sortingData, defaultValue: {});
     await _box.clear();
@@ -207,8 +208,8 @@ class StorageManager {
     if (currencyList.isNotNullNorEmpty) {
       await setCurrencyList(currencyList);
     }
-    if (selectedCurrency.isNotNullNorEmpty && selectedCurrencySymbol.isNotNullNorEmpty) {
-      await setSelectedCurrency(selectedCurrency!);
+    if (selectedCurrency != null && selectedCurrencySymbol.isNotNullNorEmpty) {
+      await setSelectedCurrency(selectedCurrency);
       await setSelectedCurrencySymbol(selectedCurrencySymbol!);
     }
     if (getNavigatorKeyContext.mounted) {

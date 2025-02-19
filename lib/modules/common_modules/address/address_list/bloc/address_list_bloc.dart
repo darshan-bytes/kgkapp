@@ -181,12 +181,12 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     List<PlaceOrderProductRequest> placeOrderProductRequestList = myBagBloc.placeOrderProductRequestList;
     BagListDataModel? bagListDataModel = myBagBloc.bagListDataModel;
     BagOrderSummaryDataModel? bagOrderSummaryData = myBagBloc.bagOrderSummaryData;
-    String? currency = StorageManager().getSelectedCurrency();
+    CurrencyListModel? currency = StorageManager().getSelectedCurrency();
     final Map<String, dynamic> body = {
       ApiKey.commodity: myBagBloc.commodity?.value,
       ApiKey.billingAddressId: selectedBillingAddress?.id,
       ApiKey.shippingAddressId: selectedShippingAddress?.id,
-      ApiKey.currency: currency,
+      ApiKey.currency: currency?.code,
       ApiKey.products: placeOrderProductRequestList.map((e) => e.toJson()).toList(),
       ApiKey.orderContext: AppConst.orderContext,
       ApiKey.orderContextId: StorageManager().getBagId(),

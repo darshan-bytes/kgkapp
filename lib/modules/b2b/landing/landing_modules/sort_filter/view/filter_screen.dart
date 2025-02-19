@@ -184,8 +184,8 @@ class FilterScreen extends StatelessWidget {
           title: APPStrings.preferredPriceRange.tr,
           titleStyle: style.selectionTitleStyle,
           values: RangeValues(
-            bloc.selectedFilterData?.rangeValues?.start?.toDouble() ?? 0.0,
-            bloc.selectedFilterData?.rangeValues?.end?.toDouble() ?? 0.0,
+            (bloc.selectedFilterData?.rangeValues ?? bloc.selectedFilterData?.minMaxValues)?.start?.toDouble() ?? 0.0,
+            (bloc.selectedFilterData?.rangeValues ?? bloc.selectedFilterData?.minMaxValues)?.end?.toDouble() ?? 0.0,
           ),
           minMaxValues: RangeValues(
             bloc.selectedFilterData?.minMaxValues?.start?.toDouble() ?? 0.0,
