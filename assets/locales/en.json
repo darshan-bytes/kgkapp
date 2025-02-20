@@ -803,5 +803,6 @@
   "mob_auction_has_ended": "Auction has ended",
   "mob_loading": "Loading...",
   "mob_this_product_is_currently_not_in_stock": "This product is currently not in stock",
-  "mob_expired": "Expired"
+  "mob_expired": "Expired",
+  "mob_preferences_saved": "Preferences Updated Successfully"
 }

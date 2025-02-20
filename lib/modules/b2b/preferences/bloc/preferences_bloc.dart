@@ -102,7 +102,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         callback: () {
           event.context.pop();
           Utils.showMessage(
-            'Preferences Updated Successfully',
+            APPStrings.preferencesSaved.tr,
           );
         },
       ),
