@@ -999,4 +999,5 @@ class APPStrings {
   static const String auctionHasEnded = "mob_auction_has_ended";
   static const String loading = "mob_loading";
   static const String expired = "mob_expired";
+  static const String preferencesSaved = "mob_preferences_saved";
 }

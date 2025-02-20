@@ -14,30 +14,27 @@ class AppLocalizations {
   }
 
   Map<String, String>? _localizedStrings;
+  Map<String, String>? _localizedStringsFromLocalJson;
 
   /// > Load the language JSON file from the "lang" folder and return true if successful
   ///
   /// Returns:
   ///   A Future bool
   Future<bool> load() async {
-    String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
+    // Load the language JSON file from the "lang" folder
+    Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
+    final languageFile = File('assets/locales/${locale!.languageCode}.json');
+    bool fileExists = await languageFile.exists();
+    String jsonString = await rootBundle.loadString('assets/locales/${fileExists ? locale!.languageCode : 'en'}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
-
-    _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
-    return true;
-    // // Load the language JSON file from the "lang" folder
-    // Map<String, dynamic> languageLabels = StorageManager().getLanguageLabels();
-    //
-    // if (languageLabels.isNotEmpty) {
-    //   _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
-    //   return true;
-    // } else {
-    //   String jsonString = await rootBundle.loadString('assets/locales/${locale!.languageCode}.json');
-    //   Map<String, dynamic> jsonMap = json.decode(jsonString);
-    //
-    //   _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
-    //   return true;
-    // }
+    if (languageLabels.isNotEmpty) {
+      _localizedStrings = languageLabels.map((key, value) => MapEntry(key, value.toString()));
+      _localizedStringsFromLocalJson = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      return true;
+    } else {
+      _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      return true;
+    }
   }
 
   /// If the localized strings map is not null, return the value of the key in the map
@@ -49,7 +46,7 @@ class AppLocalizations {
   ///   The value of the key in the map.
   String? translate(String key) {
     if (!key.startsWith('mob_')) key = 'mob_$key';
-    return _localizedStrings![key];
+    return _localizedStrings?[key] ?? _localizedStringsFromLocalJson?[key];
   }
 
   /// Static member to have a simple access to the delegate from the MaterialApp
