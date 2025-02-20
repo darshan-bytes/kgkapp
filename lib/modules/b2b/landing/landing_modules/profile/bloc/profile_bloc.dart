@@ -211,8 +211,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       firstNameController.text = userIdDetails?.firstname ?? '';
       lastNameController.text = userIdDetails?.lastname ?? '';
       emailController.text = userIdDetails?.email ?? '';
-      selectedCountry =
-          CountryParser.tryParsePhoneCode(userIdDetails?.phoneCode ?? '') ?? Country.from(json: selectedCountryCodes.first.toJson());
+      fetchSelectedCountryCode();
       contactNumberController.text = userIdDetails?.phone ?? '';
       profilePickedImage = null;
       if (userIdDetails?.profilePic != null) {
@@ -222,6 +221,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lastNameError = null;
       contactNumberError = null;
     }
+  }
+
+  /// Fetches the selected country code based on the user's phone code.
+  /// If the user's phone code is not found, it defaults to the first country in the `selectedCountryCodes` list.
+  /// Previously, we were using CountryParser.tryParsePhoneCode(userIdDetails?.phoneCode ?? ''). but in this method there was a bug
+  /// in the package. If there is a phone code that is present in multiple countries, it was returning null. like 1 is present in multiple countries.
+  void fetchSelectedCountryCode() {
+    final phoneCode = (userIdDetails?.phoneCode ?? '').replaceAll('+', '');
+    final selectedCountryMap = countryCodes.firstWhereOrNull(
+      (element) => element['e164_cc'] == phoneCode,
+    );
+    selectedCountry = selectedCountryMap != null ? Country.from(json: selectedCountryMap) : selectedCountryCodes.first;
   }
 
   Future<void> _fetchUserDetailsAPI(BuildContext context, Emitter<ProfileState> emit) async {
