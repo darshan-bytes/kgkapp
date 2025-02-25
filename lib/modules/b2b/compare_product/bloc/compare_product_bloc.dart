@@ -36,7 +36,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     }
 
     bool isDisplayError = commodity != productCommodity;
-    if (commodity == Commodity.jewellery) {
+    if (!isDisplayError && (commodity == Commodity.jewellery)) {
       jewelleryType ??= event.product.jewelleryType;
       isDisplayError = jewelleryType != event.product.jewelleryType;
     }

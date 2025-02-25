@@ -46,7 +46,7 @@ class AppLocalizations {
   ///   The value of the key in the map.
   String? translate(String key) {
     if (!key.startsWith('mob_')) key = 'mob_$key';
-    return _localizedStrings?[key] ?? _localizedStringsFromLocalJson?[key];
+    return (_localizedStrings?[key].isNotNullNorEmpty == true) ? _localizedStrings![key] : _localizedStringsFromLocalJson?[key];
   }
 
   /// Static member to have a simple access to the delegate from the MaterialApp
