@@ -83,14 +83,14 @@ class ProductInfoItem extends StatelessWidget {
           ),
           if (productDetails.isForAuction)
             Positioned(
-                left: -3.w,
-                child: SmartImage(
-                  path: AppImages.icAuctionLabel,
-                  height: 32.w,
-                  width: 92.w,
-                  fit: BoxFit.fill,
-                  margin: EdgeInsets.only(top: 14.h),
-                )),
+              left: -3.w,
+              child: SmartImage(
+                path: AppImages.icAuctionLabel,
+                height: 32.w,
+                width: 92.w,
+                fit: BoxFit.fill,
+              ),
+            ),
         ],
       ),
     );
