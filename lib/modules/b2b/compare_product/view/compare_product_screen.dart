@@ -164,7 +164,7 @@ class CompareProductScreen extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           SmartText(
-            productDetail.displayPrice,
+            productDetail.finalPrice ?? productDetail.originalPrice ?? '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: style.productPriceStyle,
@@ -223,7 +223,6 @@ class CompareProductScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-          visible: index == 0,
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,

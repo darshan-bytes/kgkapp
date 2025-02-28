@@ -60,24 +60,26 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                     const Divider(),
                     SizedBox(height: 16.h),
                   ],
-                  _buildBasicInfo(productInfoModel, style),
+                  _buildBasicInfo(productInfoModel, style, bloc),
                   SizedBox(height: 8.h),
-                  const Divider(),
-                  SizedBox(height: 16.h),
-                  _buildMeasurementsInfo(productInfoModel, style),
-                  SizedBox(height: 8.h),
-                  const Divider(),
-                  SizedBox(height: 16.h),
-                  _buildInclusionInfo(productInfoModel, style),
-                  SizedBox(height: 8.h),
-                  const Divider(),
-                  SizedBox(height: 16.h),
-                  _buildOtherInfo(productInfoModel, style),
-                  SizedBox(height: 8.h),
-                  const Divider(),
-                  SizedBox(height: 16.h),
-                  _buildPriceDetailsInfo(productInfoModel, style),
-                  SizedBox(height: 16.h),
+
+                  /// Below code is commented as of now, because for noe there is only one section's data available
+                  // const Divider(),
+                  // SizedBox(height: 16.h),
+                  // _buildMeasurementsInfo(productInfoModel, style),
+                  // SizedBox(height: 8.h),
+                  // const Divider(),
+                  // SizedBox(height: 16.h),
+                  // _buildInclusionInfo(productInfoModel, style),
+                  // SizedBox(height: 8.h),
+                  // const Divider(),
+                  // SizedBox(height: 16.h),
+                  // _buildOtherInfo(productInfoModel, style),
+                  // SizedBox(height: 8.h),
+                  // const Divider(),
+                  // SizedBox(height: 16.h),
+                  // _buildPriceDetailsInfo(productInfoModel, style),
+                  // SizedBox(height: 16.h),
                   const Divider(),
                   SizedBox(height: 24.h),
                   _buildInquirySection(context),
@@ -157,25 +159,16 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBasicInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style) {
+  Widget _buildBasicInfo(ProductInfoModel productInfoModel, DiamondInfoPopupScreenStyle style, DiamondInfoPopupBloc bloc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SmartText(APPStrings.basicInfo.tr, style: style.labelStyle),
+        SmartText(APPStrings.productDetails.tr, style: style.labelStyle),
         SizedBox(height: 12.h),
-        _buildProductInfoItem(APPStrings.lotNo.tr, productInfoModel.lotNumber, style),
-        _buildProductInfoItem(APPStrings.certificateNo.tr, productInfoModel.certificateNumber, style),
-        _buildProductInfoItem(APPStrings.size.tr, productInfoModel.size, style),
-        _buildProductInfoItem(APPStrings.shape.tr, productInfoModel.shape, style),
-        _buildProductInfoItem(APPStrings.carat.tr, productInfoModel.carat, style),
-        _buildProductInfoItem(APPStrings.color.tr, productInfoModel.color, style),
-        _buildProductInfoItem(APPStrings.clarity.tr, productInfoModel.clarity, style),
-        _buildProductInfoItem(APPStrings.cut.tr, productInfoModel.cut, style),
-        _buildProductInfoItem(APPStrings.lab.tr, productInfoModel.lab, style),
-        _buildProductInfoItem(APPStrings.polish.tr, productInfoModel.polish, style),
-        _buildProductInfoItem(APPStrings.symmetry.tr, productInfoModel.symmetry, style),
-        _buildProductInfoItem(APPStrings.fluorescence.tr, productInfoModel.fluorescence, style),
-        _buildProductInfoItem(APPStrings.location.tr, productInfoModel.location, style),
+        ...List.generate(bloc.diamondDatum?.components.length ?? 0, (index) {
+          StoneElement stoneElement = bloc.diamondDatum!.components[index];
+          return _buildProductInfoItem(stoneElement.title ?? '', stoneElement.value, style);
+        }),
       ],
     );
   }

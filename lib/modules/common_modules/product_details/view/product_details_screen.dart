@@ -843,18 +843,18 @@ class ProductDetailsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmartText(APPStrings.recentBid.tr, style: style.recentBidStyle),
-          if (bloc.recentBidList.length > 4) _buildViewAllBidsButton(context, style),
+          if (bloc.recentBidList.length > 5) _buildViewAllBidsButton(context, style, bloc.recentBidList),
         ],
       ),
     );
   }
 
-  Widget _buildViewAllBidsButton(BuildContext context, AuctionScreenStyle style) {
+  Widget _buildViewAllBidsButton(BuildContext context, AuctionScreenStyle style, List<Map<String, dynamic>> recentBidList) {
     return InkWell(
       onTap: () async {
         await Utils.showSmartModalBottomSheet(
           context: context,
-          builder: (context) => const AllBidsBottomSheet(),
+          builder: (context) => AllBidsBottomSheet(recentBidList: recentBidList),
         );
       },
       child: Row(
@@ -874,7 +874,10 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildRecentBidsList(ProductDetailsBloc bloc, AuctionScreenStyle style) {
     return ListView.separated(
+      shrinkWrap: true,
       padding: EdgeInsets.zero,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: bloc.recentBidList.length > 5 ? 5 : bloc.recentBidList.length,
       itemBuilder: (context, index) {
         return _buildBidItem(
           isMyBid: bloc.recentBidList[index][AppConst.isMyBidKey] ?? false,
@@ -884,9 +887,6 @@ class ProductDetailsScreen extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
-      itemCount: bloc.recentBidList.length > 5 ? 5 : bloc.recentBidList.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
     );
   }
 
@@ -946,6 +946,7 @@ class ProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         AuctionScreenStyle style = AppTheme.of(context).auctionScreenStyle;
         return SafeArea(
+          minimum: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
             child: Row(

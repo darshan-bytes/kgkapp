@@ -494,8 +494,8 @@
   "mob_approved_on": "पर स्वीकृत",
   "mob_no_presentation_found": "कोई प्रस्तुतिकरण नहीं मिला",
   "mob_add_new": "नया जोड़ो",
-  "mob_same_as_shipping": "नौवहन के जैसा",
-  "mob_default": "गलती करना",
+  "mob_same_as_shipping": "शिपिंग के समान",
+  "mob_default": "डिफ़ॉल्ट",
   "mob_add": "जोड़ना",
   "mob_shop_diamonds_by_shape": "आकार के अनुसार हीरों की खरीदारी करें",
   "mob_product_library": "उत्पाद पुस्तकालय",
@@ -804,5 +804,7 @@
   "mob_loading": "लोड हो रहा है...",
   "mob_this_product_is_currently_not_in_stock": "यह उत्पाद वर्तमान में स्टॉक में नहीं है",
   "mob_expired": "समय समाप्त",
-  "mob_preferences_saved": "पसंद सहेजी गई"
+  "mob_preferences_saved": "पसंद सहेजी गई",
+  "mob_hrs": "घंटे",
+  "mob_secs": "सेकंड"
 }

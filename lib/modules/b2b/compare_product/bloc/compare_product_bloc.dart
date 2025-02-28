@@ -62,6 +62,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         jewelleryType = event.product.jewelleryType;
         filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
         productIdList.clear();
+        productList.clear();
       } else {
         return;
       }

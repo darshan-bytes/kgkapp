@@ -785,7 +785,7 @@ class AppRepository extends ApiService {
   // getAuctionDetails
   Future<Either<ErrorResponse, AuctionDataModel>?> getAuctionDetails({required String id, bool isShowLoader = true}) async {
     if (isShowLoader) context.setAppLoading(true);
-    var response = await getMethod<AuctionDataModel>(ApiClient.auctionDetails(id));
+    var response = await getMethod<AuctionDataModel>(ApiClient.auctionDetails(id), withCurrencyHeader: true);
     if (isShowLoader) context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

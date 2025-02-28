@@ -12,9 +12,9 @@ class AddToWatchlistBloc extends Bloc<AddToWatchlistEvent, AddToWatchlistState> 
   List<WatchlistData> arrWatchlist = [];
 
   final List<WatchlistSelectionModel> _arrSelectedWatchlist = [
-    WatchlistSelectionModel(name: APPStrings.notifyWhenProductIsInStock.tr),
-    WatchlistSelectionModel(name: APPStrings.notifyWhenPriceDrops.tr),
-    WatchlistSelectionModel(name: APPStrings.notifyWhenDiscountApplied.tr),
+    WatchlistSelectionModel(name: APPStrings.notifyWhenProductIsInStock),
+    WatchlistSelectionModel(name: APPStrings.notifyWhenPriceDrops),
+    WatchlistSelectionModel(name: APPStrings.notifyWhenDiscountApplied),
   ];
 
   List<WatchlistSelectionModel> get arrSelectedWatchlist {
