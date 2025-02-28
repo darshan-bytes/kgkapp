@@ -563,7 +563,7 @@
   "mob_the_product_will_be_removed_when_the_time_is_up": "ผลิตภัณฑ์จะถูกลบออกเมื่อถึงเวลา",
   "mob_hint_watchlist_name": "ชื่อรายการดู",
   "mob_duration": "ระยะเวลา",
-  "mob_mins": "ขั้นต่ำ",
+  "mob_mins": "นาที",
   "mob_select_duration": "เลือกระยะเวลา",
   "mob_days": "วัน",
   "mob_hours": "ชั่วโมง",
@@ -804,5 +804,7 @@
   "mob_loading": "กำลังโหลด ...",
   "mob_this_product_is_currently_not_in_stock": "ผลิตภัณฑ์นี้ไม่ได้อยู่ในสต็อก",
   "mob_expired": "ที่หมดอายุแล้ว",
-  "mob_preferences_saved": "อัพเดทการตั้งค่าสำเร็จ"
+  "mob_preferences_saved": "อัพเดทการตั้งค่าสำเร็จ",
+  "mob_hrs": "ชั่วโมง",
+  "mob_secs": "วินาที"
 }

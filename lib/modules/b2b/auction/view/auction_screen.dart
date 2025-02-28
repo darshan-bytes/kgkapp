@@ -260,7 +260,7 @@ class AuctionScreen extends StatelessWidget {
                             onTap: () async {
                               await Utils.showSmartModalBottomSheet(
                                 context: context,
-                                builder: (context) => const AllBidsBottomSheet(),
+                                builder: (context) => AllBidsBottomSheet(recentBidList: bloc.recentBidList),
                               );
                             },
                             child: Row(

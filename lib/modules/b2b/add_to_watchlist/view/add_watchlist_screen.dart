@@ -231,7 +231,7 @@ class AddWatchlistScreen extends StatelessWidget {
                             width: 8.w,
                           ),
                           SmartText(
-                            bloc.arrSelectedWatchlist[index].name,
+                            bloc.arrSelectedWatchlist[index].name.tr,
                             style: style.listTextStyle,
                           ),
                         ],

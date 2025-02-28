@@ -257,7 +257,7 @@ class StoneListingScreen extends StatelessWidget {
                     onEyeTap: () {},
                     isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
-                    onAddToBagTap: () {},
+                    onAddToBagTap: productDetails.isForAuction ? null : () {},
                   );
                 }).toList()),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),

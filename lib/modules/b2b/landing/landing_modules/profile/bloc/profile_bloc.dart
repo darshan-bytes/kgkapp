@@ -215,6 +215,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           CountryParser.tryParsePhoneCode(userIdDetails?.phoneCode ?? '') ?? Country.from(json: selectedCountryCodes.first.toJson());
       contactNumberController.text = userIdDetails?.phone ?? '';
       profilePickedImage = null;
+      selectedProfilePickedImage = null;
       if (userIdDetails?.profilePic != null) {
         profilePickedImage = XFile(userIdDetails?.profilePicUrl?.setMediaUrl ?? '');
       }
@@ -246,6 +247,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         firstNameError = null;
         lastNameError = null;
         contactNumberError = null;
+        if (isPhoneNumberUsed.isCompleted) {
+          isPhoneNumberUsed = Completer<bool>();
+        }
+        isPhoneNumberUsed.complete(false);
       },
     );
     emit(ProfileLoadedState());
@@ -410,6 +415,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     currentPasswordController.clear();
     newPasswordController.clear();
     confirmPasswordController.clear();
+    currentPasswordError = null;
+    passwordError = null;
+    confirmPasswordError = null;
   }
 
   /// Helper function to get profile actions for internal users

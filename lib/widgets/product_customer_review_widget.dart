@@ -55,7 +55,45 @@ class ProductCustomerReviewWidget extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: reviewDataModel.images?.length ?? 0,
-              itemBuilder: (context, index) => SmartImage(path: reviewDataModel.images![index], width: 50.w, height: 50.w),
+              itemBuilder: (context, index) => SmartImage(
+                path: reviewDataModel.images![index],
+                width: 50.w,
+                height: 50.w,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        alignment: Alignment.center,
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
+                          clipBehavior: Clip.antiAlias,
+                          children: [
+                            SmartImage(
+                              path: reviewDataModel.images![index],
+                              fit: BoxFit.contain,
+                            ),
+                            PositionedDirectional(
+                              top: 24.h,
+                              end: 24.w,
+                              child: Container(
+                                color: AppTheme.of(context).colors.white,
+                                child: SmartImage(
+                                  path: AppImages.icCross,
+                                  width: 24.w,
+                                  height: 24.w,
+                                  color: AppTheme.of(context).colors.black,
+                                  onTap: () => context.pop(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               separatorBuilder: (_, __) => SizedBox(width: 12.w),
             ),
           ),

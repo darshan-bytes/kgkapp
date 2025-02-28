@@ -1,11 +1,15 @@
 import 'package:kgk/kgk.dart';
 
 class AllBidsBottomSheet extends StatelessWidget {
-  const AllBidsBottomSheet({super.key});
+  final List<Map<String, dynamic>> recentBidList;
+
+  const AllBidsBottomSheet({
+    super.key,
+    required this.recentBidList,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final AuctionBloc bloc = BlocProvider.of<AuctionBloc>(context);
     final AuctionScreenStyle style = AppTheme.of(context).auctionScreenStyle;
 
     return ConstrainedBox(
@@ -30,13 +34,14 @@ class AllBidsBottomSheet extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return _buildResetBidsItem(
-                        labelText: bloc.recentBidList[index]['date_time'],
-                        value: bloc.recentBidList[index]['price'],
-                        style: style,
-                        isMyBid: index == 2);
+                      labelText: recentBidList[index][AppConst.dateTimeKey],
+                      value: recentBidList[index][AppConst.priceKey],
+                      isMyBid: recentBidList[index][AppConst.isMyBidKey],
+                      style: style,
+                    );
                   },
                   separatorBuilder: (context, index) => const Divider(),
-                  itemCount: bloc.recentBidList.length,
+                  itemCount: recentBidList.length,
                 ),
               ),
             ),

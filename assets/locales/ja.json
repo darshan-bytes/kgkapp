@@ -804,5 +804,7 @@
   "mob_loading": "読み込み...",
   "mob_this_product_is_currently_not_in_stock": "この製品は現在在庫がありません",
   "mob_expired": "期限切れ",
-  "mob_preferences_saved": "好みが正常に更新されました"
+  "mob_preferences_saved": "好みが正常に更新されました",
+  "mob_hrs": "時間",
+  "mob_secs": "秒"
 }

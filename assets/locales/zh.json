@@ -804,5 +804,7 @@
   "mob_loading": "加载中...",
   "mob_this_product_is_currently_not_in_stock": "该产品目前尚未库存",
   "mob_expired": "已到期",
-  "mob_preferences_saved": "偏好已保存"
+  "mob_preferences_saved": "偏好已保存",
+  "mob_hrs": "小时",
+  "mob_secs": "秒"
 }
