@@ -139,7 +139,11 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         ProductDetailsModel product = ProductDetailsModel(
           suid: element.productData?.suid ?? "",
           productId: element.productData?.suid ?? '',
-          imageUrl: (element.productData?.productImages)?.isNotNullNorEmpty ?? false ? element.productData!.productImages?.first.uRL : "",
+          imageUrl: element.productData?.multipleFinishedViewImage.isNotNullNorEmpty == true
+              ? (element.productData?.multipleFinishedViewImage.firstOrNull?.imageUrl ?? '')
+              : (element.productData?.productImages)?.isNotNullNorEmpty ?? false
+                  ? element.productData!.productImages?.first.uRL
+                  : "",
           title: _buildTitleOfProduct(element: element),
           subTitle: _buildSubTitleOfProduct(element: element),
           originalPrice: element.productData?.discountPrice?.setCurrency,

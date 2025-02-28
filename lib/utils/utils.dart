@@ -465,18 +465,14 @@ class Utils {
       parts.add("$days${"d"}");
     }
     if (hours > 0) {
-      parts.add("$hours${"hrs"}");
+      parts.add("$hours${"hrs".tr}");
     }
     if (minutes > 0) {
-      parts.add("$minutes${"mins"}");
+      parts.add("$minutes${"mins".tr}");
     }
     if (seconds > 0 || parts.isEmpty) {
-      parts.add("$seconds${"sec"}");
+      parts.add("$seconds${"secs".tr}");
     }
-
     return parts.join(" : ");
-
-    /// For display full time in days, hours, minutes, seconds
-    //   return "$days${"d"} : $hours${"hrs"} : $minutes${"mins"} : $seconds${"sec"}";
   }
 }

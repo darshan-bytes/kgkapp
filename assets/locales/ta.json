@@ -804,5 +804,7 @@
   "mob_loading": "ஏற்றுகிறது ...",
   "mob_this_product_is_currently_not_in_stock": "இந்த தயாரிப்பு தற்போது கையிருப்பில் இல்லை",
   "mob_expired": "காலாவதியானது",
-  "mob_preferences_saved": "விருப்பத்தேர்வுகள் வெற்றிகரமாக புதுப்பிக்கப்பட்டன"
+  "mob_preferences_saved": "விருப்பத்தேர்வுகள் வெற்றிகரமாக புதுப்பிக்கப்பட்டன",
+  "mob_hrs": "மணி",
+  "mob_secs": "வினாடிகள்"
 }

@@ -65,7 +65,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       }, (data) {
         languageList.clear();
         for (var element in data.languageData) {
-          languageList.add(LanguageModel(name: element.name ?? '', symbol: element.code ?? ''));
+          languageList.add(LanguageModel(name: element.name ?? '', symbol: element.code?.split('-').firstOrNull ?? ''));
         }
       });
     });
@@ -97,7 +97,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     }
     BlocProvider.of<AppBloc>(event.context).add(
       LanguageChangedEvent(
-        selectedLanguage?.symbol ?? 'en',
+        selectedLanguage?.symbol.split('-').firstOrNull ?? 'en',
         context: event.context,
         callback: () {
           event.context.pop();

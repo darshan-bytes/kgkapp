@@ -563,7 +563,7 @@
   "mob_the_product_will_be_removed_when_the_time_is_up": "The product will be removed when the time is up.",
   "mob_hint_watchlist_name": "Watchlist name",
   "mob_duration": "Duration",
-  "mob_mins": "Mins",
+  "mob_mins": "mins",
   "mob_select_duration": "Select duration",
   "mob_days": "Days",
   "mob_hours": "Hours",
@@ -804,5 +804,7 @@
   "mob_loading": "Loading...",
   "mob_this_product_is_currently_not_in_stock": "This product is currently not in stock",
   "mob_expired": "Expired",
-  "mob_preferences_saved": "Preferences Updated Successfully"
+  "mob_preferences_saved": "Preferences Updated Successfully",
+  "mob_hrs": "hrs",
+  "mob_secs": "secs"
 }

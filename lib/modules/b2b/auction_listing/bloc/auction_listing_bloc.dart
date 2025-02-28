@@ -167,6 +167,9 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
       Utils.showMessage(error.message);
     }, (AuctionListingModel success) {
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      if (paginationScrollController.currentPage == 1) {
+        originalAuctionList.clear();
+      }
       originalAuctionList.addAll(_populateAuctionList(success.data));
       auctionList = List.from(originalAuctionList);
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);

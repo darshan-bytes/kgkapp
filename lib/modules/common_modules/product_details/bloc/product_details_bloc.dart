@@ -41,7 +41,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   /// Timer title getter
   String _timerTitle = APPStrings.auctionEndIn.tr;
 
-  String get timerTitle => "$_timerTitle  :";
+  String get timerTitle => _timerTitle;
 
   /// Timer title value getter
   String _timerValue = '';
