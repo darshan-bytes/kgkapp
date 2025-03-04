@@ -806,5 +806,6 @@
   "mob_expired": "已到期",
   "mob_preferences_saved": "偏好已保存",
   "mob_hrs": "小时",
-  "mob_secs": "秒"
+  "mob_secs": "秒",
+  "mob_working_hours": "周一至周五上午9点至下午5点"
 }
