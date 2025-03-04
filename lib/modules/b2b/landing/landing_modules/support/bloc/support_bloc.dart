@@ -25,7 +25,7 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
       ProfileListModel(
         image: AppImages.icPhone,
         title: APPStrings.call.tr,
-        subTitle: "Monday – Friday 9 AM – 5 PM",
+        subTitle: APPStrings.workingHours.tr,
         trailingIcon: AppImages.icArrowRight,
         onTap: (context) {},
       ),

@@ -806,5 +806,6 @@
   "mob_expired": "期限切れ",
   "mob_preferences_saved": "好みが正常に更新されました",
   "mob_hrs": "時間",
-  "mob_secs": "秒"
+  "mob_secs": "秒",
+  "mob_working_hours": "月曜日-金曜日9時-17時"
 }

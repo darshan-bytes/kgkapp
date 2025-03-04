@@ -806,5 +806,6 @@
   "mob_expired": "ที่หมดอายุแล้ว",
   "mob_preferences_saved": "อัพเดทการตั้งค่าสำเร็จ",
   "mob_hrs": "ชั่วโมง",
-  "mob_secs": "วินาที"
+  "mob_secs": "วินาที",
+  "mob_working_hours": "จันทร์ - ศุกร์ 9 โมง - 5 โมง"
 }
