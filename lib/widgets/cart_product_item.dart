@@ -85,7 +85,7 @@ class CartProductItem extends StatelessWidget {
                 SmartText(APPStrings.thisProductIsCurrentlyNotInStock.tr, style: style.outOfStockTextStyle),
               ],
             ),
-            SizedBox(height: 32.h),
+            SizedBox(height: 22.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -94,7 +94,7 @@ class CartProductItem extends StatelessWidget {
                 productDetailsSection(style, context),
               ],
             ),
-            SizedBox(height: 32.h),
+            SizedBox(height: 22.h),
             Container(
               decoration: BoxDecoration(
                 border: Border.symmetric(horizontal: BorderSide(color: style.borderColor)),

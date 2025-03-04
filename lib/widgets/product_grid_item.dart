@@ -28,6 +28,8 @@ class ProductGridItem extends StatelessWidget {
   final bool forPreviewCatalogue;
   final bool isCrtAndGramVisible;
   final bool isFromWatchlist;
+  final bool isKGKCouture;
+  final bool isHomeView;
 
   const ProductGridItem({
     super.key,
@@ -58,6 +60,8 @@ class ProductGridItem extends StatelessWidget {
     this.forPreviewCatalogue = false,
     this.isCrtAndGramVisible = false,
     this.isFromWatchlist = false,
+    this.isKGKCouture = false,
+    this.isHomeView = false,
   });
 
   @override
@@ -275,6 +279,7 @@ class ProductGridItem extends StatelessWidget {
                           style: style.checkedPriceStyle,
                         ),
                       ] else ...[
+                        if(!isKGKCouture)
                         SmartText("")
                       ]
                     ],
@@ -302,7 +307,8 @@ class ProductGridItem extends StatelessWidget {
             //     style: style.discountTextStyle,
             //   ),
             // ],
-            if (isCrtAndGramVisible || isFromWatchlist) diamondAndGramSection(style),
+
+            if (!isHomeView && (isCrtAndGramVisible || isFromWatchlist)) diamondAndGramSection(style),
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
