@@ -406,6 +406,7 @@ class HomeWidgets {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
           },
           title: item.name ?? '',
+          imageWidth: 72.w,
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
           margin: EdgeInsets.only(
@@ -612,6 +613,7 @@ class HomeWidgets {
                                 ? EdgeInsets.only(right: 17.w)
                                 : EdgeInsets.zero,
                         productDetails: homeBloc.luminousProductViewList[index],
+                        isKGKCouture: true,
                         onEyeTap: () async {
                           ProductDetailsModel? productDetails = homeBloc.luminousProductViewList[index];
                           BlocProvider.of<AddToWatchlistBloc>(context).add(AddToWatchlistInitialEvent.add(productDetails, context));
@@ -1056,7 +1058,7 @@ class HomeWidgets {
       String title, HomeBloc homeBloc, HomeScreenStyle style, List<ProductDetailsModel> productList, ScreenIdentifier commodity,
       {required BuildContext context, bool isCrtAndGramVisible = true}) {
     return Padding(
-      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      padding: EdgeInsets.only(top: 32.h),
       child: SmartSuggestionProductList(
         isCrtAndGramVisible: isCrtAndGramVisible,
         title: title,
@@ -1089,6 +1091,7 @@ class HomeWidgets {
           // }
         },
         onFavTap: () {},
+        isHomeView: true,
         scrollController: homeBloc.recentlyViewedScrollController,
         onProductTap: (model) {
           context.pushNamed(AppRoutes.productDetailsPage, arguments: {

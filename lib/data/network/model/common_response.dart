@@ -177,6 +177,8 @@ class CommonResponse<T> {
         return DiyFinalDetailsModel.fromJson(json);
       case const (ProductReviewWrapperModel):
         return ProductReviewWrapperModel.fromJson(json);
+      case const (PaginationData<MetalShapeModel>):
+        return PaginationData<MetalShapeModel>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):

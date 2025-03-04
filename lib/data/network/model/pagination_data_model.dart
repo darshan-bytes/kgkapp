@@ -22,8 +22,7 @@ class PaginationData<T> {
     totalRecords = json['totalRecords']?.toString().toInt;
     avgRating = json['avgRating']?.toString().toDouble;
     dataList = json.containsKey('data') && json['data'] != null ? getResponseData(json['data']) : null;
-    kgkCollectionList = (json['kgk_collections'] as List<dynamic>?)
-        ?.cast<String>();
+    kgkCollectionList = (json['kgk_collections'] as List<dynamic>?)?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -93,6 +92,8 @@ class PaginationData<T> {
         return PddDataModel.fromJson(json);
       case const (DiamondDataModel):
         return DiamondDataModel.fromJson(json);
+      case const (MetalShapeModel):
+        return MetalShapeModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
