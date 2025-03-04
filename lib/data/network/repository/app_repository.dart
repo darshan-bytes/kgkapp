@@ -866,6 +866,13 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  ///fetchMetalShapeData
+  Future<Either<ErrorResponse, PaginationData<MetalShapeModel>>?> fetchMetalShapeData() async {
+    var response = await getMethod<PaginationData<MetalShapeModel>>(ApiClient.homePageShopByMetals,
+        query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
       {Map<String, dynamic>? body, bool isShowLoader = false}) async {
     if (isShowLoader) {

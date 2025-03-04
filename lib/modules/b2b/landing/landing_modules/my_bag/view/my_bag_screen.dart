@@ -199,7 +199,8 @@ class MyBagScreen extends StatelessWidget {
               ),
               SelectionButton(
                 key: key,
-                width: 48.w,
+                width: 42.w,
+                height: 42.w,
                 imageHeight: 24.5.w,
                 imageWidth: 24.5.w,
                 isSelected: true,

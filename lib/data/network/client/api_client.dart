@@ -111,6 +111,8 @@ class ApiClient {
 
   static const String homePageNewlyLaunches = '$apiBaseUrl/homepage-collections/home-page-newlylaunches';
 
+  static const String homePageShopByMetals = '$apiBaseUrl/homepage-collections/home-page-shopbymetals';
+
   static const String shapeMasterFilters = '$apiBaseUrl/shape-master/filters';
 
   static String digitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
