@@ -806,5 +806,6 @@
   "mob_expired": "Expired",
   "mob_preferences_saved": "Preferences Updated Successfully",
   "mob_hrs": "hrs",
-  "mob_secs": "secs"
+  "mob_secs": "secs",
+  "mob_working_hours": "Monday – Friday 9 AM – 5 PM"
 }

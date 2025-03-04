@@ -806,5 +806,6 @@
   "mob_expired": "समय समाप्त",
   "mob_preferences_saved": "पसंद सहेजी गई",
   "mob_hrs": "घंटे",
-  "mob_secs": "सेकंड"
+  "mob_secs": "सेकंड",
+  "mob_working_hours": "सोमवार - शुक्रवार 9 बजे सुबह से 5 बजे शाम तक"
 }

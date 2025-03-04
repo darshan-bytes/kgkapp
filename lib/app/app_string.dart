@@ -1000,4 +1000,5 @@ class APPStrings {
   static const String loading = "mob_loading";
   static const String expired = "mob_expired";
   static const String preferencesSaved = "mob_preferences_saved";
+  static const String workingHours = "mob_working_hours";
 }
