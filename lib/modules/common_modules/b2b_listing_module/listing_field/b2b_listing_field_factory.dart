@@ -156,8 +156,8 @@ class B2BListingFieldFactory {
         return [
           B2BItemField(label: APPStrings.name.tr, value: model.strName),
           B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
-          B2BItemField(label: APPStrings.conceptNumber.tr, value: model.strConceptNumber),
-          B2BItemField(label: APPStrings.salesman.tr, value: model.strSalesman, imageUrl: model.strSalesmanImageUrl),
+          // B2BItemField(label: APPStrings.conceptNumber.tr, value: model.strConceptNumber),
+          // B2BItemField(label: APPStrings.salesman.tr, value: model.strSalesman, imageUrl: model.strSalesmanImageUrl),
           B2BItemField(label: APPStrings.from.tr, value: model.strFrom),
           B2BItemField(label: APPStrings.to.tr, value: model.strTo),
           B2BItemField(label: APPStrings.numberOfProduct.tr, value: model.strNumberOfProduct),

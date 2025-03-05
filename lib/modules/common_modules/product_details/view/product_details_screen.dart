@@ -949,33 +949,41 @@ class ProductDetailsScreen extends StatelessWidget {
           minimum: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: Row(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: SmartTextField(
-                    height: 42.h,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
-                    controller: bloc.bidAmountController,
-                    keyboardType: TextInputType.number,
-                    textCapitalization: TextCapitalization.words,
-                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                    maxLines: 1,
-                    errorText: bloc.bidAmountError,
-                    onValueChanges: (value) {
-                      if (bloc.bidAmountError.isNotNullNorEmpty) {
-                        bloc.add(ProductDetailsPlaceBidFieldChangeEvent(fieldType: FieldTypeValidationEnum.bidAmount));
-                      }
-                    },
-                    suffixIcon: SmartButton(
-                      width: 134.w,
-                      height: 42.h,
-                      title: APPStrings.placeBid.tr,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
-                      onTap: () {
-                        bloc.add(ProductDetailsAuctionPlaceBidEvent(context, bloc.bidAmountController.text));
-                      },
+                SmartText(APPStrings.enterBidAmountHigherThanX.tr.interpolate([bloc.startingBidPrice]), style: style.auctionTimerStyle),
+                SizedBox(height: 8.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SmartTextField(
+                        height: 42.h,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                        controller: bloc.bidAmountController,
+                        keyboardType: TextInputType.number,
+                        textCapitalization: TextCapitalization.words,
+                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        maxLines: 1,
+                        errorText: bloc.bidAmountError,
+                        onValueChanges: (value) {
+                          if (bloc.bidAmountError.isNotNullNorEmpty) {
+                            bloc.add(ProductDetailsPlaceBidFieldChangeEvent(fieldType: FieldTypeValidationEnum.bidAmount));
+                          }
+                        },
+                        suffixIcon: SmartButton(
+                          width: 134.w,
+                          height: 42.h,
+                          title: APPStrings.placeBid.tr,
+                          borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                          onTap: () {
+                            bloc.add(ProductDetailsAuctionPlaceBidEvent(context, bloc.bidAmountController.text));
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
