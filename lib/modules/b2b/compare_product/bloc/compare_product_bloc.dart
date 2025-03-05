@@ -15,6 +15,8 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
 
   bool _isInitialized = false;
 
+  Completer<bool> _isFilterListLoaded = Completer();
+
   CompareProductBloc() : super(CompareProductInitial()) {
     on<CompareProductAddProductEvent>(_onCompareProductAddProduct);
     on<CompareProductRemoveProductEvent>(_onCompareProductRemoveProduct);
@@ -60,7 +62,11 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       if (result?[RoutesData.isContinueClearCompare] == true) {
         commodity = productCommodity;
         jewelleryType = event.product.jewelleryType;
-        filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
+        _isFilterListLoaded = Completer<bool>();
+        BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '').then((value) {
+          filterList = value;
+          _isFilterListLoaded.complete(true);
+        });
         productIdList.clear();
         productList.clear();
       } else {
@@ -110,7 +116,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     if (_isInitialized) return;
     _isInitialized = true;
     emit(CompareProductLoadingState());
-
+    await _isFilterListLoaded.future;
     if (StorageManager().getIsSkipLogin()) {
       myBagBloc ??= BlocProvider.of<MyBagBloc>(event.context);
       if (myBagBloc != null && (myBagBloc!.commodity == null || myBagBloc!.commodity == commodity)) {

@@ -225,7 +225,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
         filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
       }
       if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
-        filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
+        filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
       }
       filterData.add(filter);
     }

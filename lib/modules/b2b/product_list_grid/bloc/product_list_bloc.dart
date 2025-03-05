@@ -568,7 +568,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         }
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           if (filterOption.data.isNotEmpty) {
-            filter.minMaxValues = SfRangeValues(0, filterOption.data.last.toDouble());
+            filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
           } else {
             continue;
           }
