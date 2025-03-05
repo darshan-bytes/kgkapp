@@ -72,6 +72,8 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                             SmartImage(
                               path: reviewDataModel.images![index],
                               fit: BoxFit.contain,
+                              height: context.height,
+                              width: context.width,
                             ),
                             PositionedDirectional(
                               top: 24.h,
