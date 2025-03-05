@@ -325,7 +325,8 @@ class AddAddressScreen extends StatelessWidget {
           hintText: APPStrings.phoneNumber.tr,
           controller: bloc.phoneController,
           focusNode: bloc.phoneFocusNode,
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.done,
           prefixIcon: InkWell(
             onTap: bloc.isEditAddress
                 ? null
