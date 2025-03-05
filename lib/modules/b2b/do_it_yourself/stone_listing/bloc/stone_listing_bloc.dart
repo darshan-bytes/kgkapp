@@ -434,6 +434,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       isForAuction: false,
       title: gemstone.lotCode ?? "",
       subTitle: gemstone.rmDescription ?? "",
+      isAddedToCart: gemstone.isAddedToCart,
     );
   }
 

@@ -288,6 +288,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         diamondData = data;
         if (diamondData != null) {
           isErrorInLoadingData = false;
+
+          /// Below line is commented because the3DFile is not available in the response.
+          // the3DFile = diamondData?.image.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
+          videoUrl = diamondData?.video;
           bool isDiscounted =
               diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
           isAddedToCart = diamondData!.isAddedToCart;
@@ -312,6 +316,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             wishlistId: diamondData?.wishlistID,
             stoneElements: diamondData?.components,
             auctionId: diamondData?.auctionId,
+            isAddedToCart: diamondData?.isAddedToCart ?? false,
           );
         }
       },
