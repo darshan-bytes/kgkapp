@@ -15,13 +15,14 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
   void _onInitialSupportListEvent(SupportInitialEvent event, Emitter<SupportState> emit) {
     supportActionList = [
       ProfileListModel(
-          image: AppImages.icNote,
-          title: APPStrings.makeAnInquiry.tr,
-          subTitle: APPStrings.repliesWithin24Hours.tr,
-          trailingIcon: AppImages.icArrowRight,
-          onTap: (context) {
-            context.pushNamed(AppRoutes.makeInquiryPage);
-          }),
+        image: AppImages.icNote,
+        title: APPStrings.makeAnInquiry.tr,
+        subTitle: APPStrings.repliesWithin24Hours.tr,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.makeInquiryPage);
+        },
+      ),
       ProfileListModel(
         image: AppImages.icPhone,
         title: APPStrings.call.tr,

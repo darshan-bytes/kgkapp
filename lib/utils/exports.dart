@@ -523,3 +523,4 @@ export 'package:flutter_cache_manager/flutter_cache_manager.dart';
 export 'package:kgk/widgets/product_video_widget.dart';
 export 'package:model_viewer_plus/model_viewer_plus.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/metal_shape_model.dart';
+export 'package:kgk/widgets/svg_shape_painter.dart';

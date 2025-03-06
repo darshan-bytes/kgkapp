@@ -101,8 +101,10 @@ final class SortAndFilterPriceRangeEditEvent extends SortFilterEvent {
 }
 
 final class InitialSortFilterEvent extends SortFilterEvent {
-  const InitialSortFilterEvent();
+  final List<SortOptions> sortOptions;
+
+  const InitialSortFilterEvent({required this.sortOptions});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [sortOptions];
 }

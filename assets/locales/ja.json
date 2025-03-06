@@ -807,5 +807,7 @@
   "mob_preferences_saved": "好みが正常に更新されました",
   "mob_hrs": "時間",
   "mob_secs": "秒",
-  "mob_working_hours": "月曜日-金曜日9時-17時"
+  "mob_working_hours": "月曜日-金曜日9時-17時",
+  "mob_no_internet_connection_or_server_not_reachable": "インターネット接続がないか、サーバーに到達できません",
+  "mob_auction": "オークション"
 }

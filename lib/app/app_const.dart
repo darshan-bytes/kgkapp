@@ -7,7 +7,7 @@ class AppConst {
   static double defaultAppBarHeight = 52.0.h;
   static String apiKey = '1ab2c3d4e5f61ab2c3d4e5f6';
   static const int maxImagesCount = 5;
-  static const int pageLimit = 20;
+  static const int pageLimit = 10;
   static const int pageLimit10 = 10;
   static const int pageLimit50 = 50;
   static const int page1 = 1;
