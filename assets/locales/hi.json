@@ -809,5 +809,7 @@
   "mob_secs": "सेकंड",
   "mob_working_hours": "सोमवार - शुक्रवार 9 बजे सुबह से 5 बजे शाम तक",
   "mob_no_internet_connection_or_server_not_reachable": "इंटरनेट जोड़ने के लिए कोई संयोग नहीं है या सर्वर उपलब्ध नहीं है",
-  "mob_auction": "नीलामी"
+  "mob_auction": "नीलामी",
+  "mob_crt": "सीआरटी",
+  "mob_grms": "ग्राम"
 }

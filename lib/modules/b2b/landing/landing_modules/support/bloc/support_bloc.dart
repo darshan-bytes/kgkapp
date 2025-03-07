@@ -12,7 +12,10 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
     on<SupportInitialEvent>(_onInitialSupportListEvent);
   }
 
-  void _onInitialSupportListEvent(SupportInitialEvent event, Emitter<SupportState> emit) {
+  Future<void> _onInitialSupportListEvent(SupportInitialEvent event, Emitter<SupportState> emit) async {
+    emit(SupportLoadingState());
+    await _getFaqList(event.context);
+    emit(SupportLoadedState());
     supportActionList = [
       ProfileListModel(
         image: AppImages.icNote,
@@ -40,27 +43,17 @@ class SupportBloc extends Bloc<SupportEvent, SupportState> {
         },
       ),
     ];
+  }
 
-    faqs = [
-      FAQ(
-          question: "Do you offer any customization options for diamond and gemstone jewelry?",
-          answer:
-              "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry."),
-      FAQ(
-        question: "What types of diamonds and gemstones do you offer?",
-        answer:
-            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
-      ),
-      FAQ(
-        question: "What types of diamonds and gemstones do you offer?",
-        answer:
-            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
-      ),
-      FAQ(
-        question: "How can I determine the quality and authenticity of the jewelry I purchase?",
-        answer:
-            "Yes, we provide customization options for some of our products, allowing you to customize aspects such as metal, diamond, ring heads, settings, and more to create a unique and personalized piece of jewelry.",
-      )
-    ];
+  Future<void> _getFaqList(BuildContext context) async {
+    if (faqs.isNullOrEmpty) {
+      final FaqBloc faqBloc = BlocProvider.of<FaqBloc>(context);
+      await faqBloc.getFaqList(context);
+
+      List<FaqWrapper> faqWrappers = faqBloc.faq;
+      if (faqWrappers.isNotNullNorEmpty && faqWrappers.length > 1) {
+        faqs = faqWrappers[1].faqs ?? [];
+      }
+    }
   }
 }

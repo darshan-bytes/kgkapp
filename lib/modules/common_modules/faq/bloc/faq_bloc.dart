@@ -15,8 +15,13 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
 
   Future<void> _onInitialFaqListEvent(FaqInitialEvent event, Emitter<FaqState> emit) async {
     faq.clear();
+    await getFaqList(event.context);
+    isLoading = false;
+    emit(FaqLoadedState(faq));
+  }
 
-    await AppRepository(event.context).fetchStrapiFaqData().then((value) {
+  Future<void> getFaqList(BuildContext context) async {
+    await AppRepository(context).fetchStrapiFaqData().then((value) {
       value.fold((l) {
         Utils.showMessage(l.message);
       }, (r) {
@@ -26,8 +31,6 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
         faq.addAll(faqWrappers);
       });
     });
-    isLoading = false;
-    emit(FaqLoadedState(faq));
   }
 
   List<FaqWrapper> parseFaqs(List<Map<String, dynamic>> json) {
@@ -38,8 +41,6 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
       groupedFaqs.putIfAbsent(title, () => []).add(item);
     }
 
-    return groupedFaqs.entries
-        .map((entry) => FaqWrapper.fromJson(entry.key, entry.value))
-        .toList();
+    return groupedFaqs.entries.map((entry) => FaqWrapper.fromJson(entry.key, entry.value)).toList();
   }
 }

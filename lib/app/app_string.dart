@@ -1003,4 +1003,6 @@ class APPStrings {
   static const String workingHours = "mob_working_hours";
   static const String noInternetConnectionOrServerNotReachable = "mob_no_internet_connection_or_server_not_reachable";
   static const String mobAuction = "mob_auction";
+  static const String crt = "mob_crt";
+  static const String grms = "mob_grms";
 }

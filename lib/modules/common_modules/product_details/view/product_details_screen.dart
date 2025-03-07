@@ -362,7 +362,7 @@ class ProductDetailsScreen extends StatelessWidget {
           SmartText(bloc.productName, style: style.productNameStyle),
           SizedBox(height: 8.h),
           _buildRatingBarAndReviews(style, bloc.productDetails),
-          SizedBox(height: 16.h),
+          SizedBox(height: 32.h),
           _compareWidget(bloc, style),
           SizedBox(height: 16.h),
 

@@ -809,5 +809,7 @@
   "mob_secs": "வினாடிகள்",
   "mob_working_hours": "திங்கள் - வெள்ளி 9 முதல் 5 மணி",
   "mob_no_internet_connection_or_server_not_reachable": "இணையதம் அல்லது சேவையகத்தில் இணையதம் இல்லை",
-  "mob_auction": "ஏலம்"
+  "mob_auction": "ஏலம்",
+  "mob_crt": "கிரீட்",
+  "mob_grms": "கிராம்ஸ்"
 }

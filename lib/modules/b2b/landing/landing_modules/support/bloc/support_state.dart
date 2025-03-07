@@ -9,7 +9,12 @@ final class SupportInitial extends SupportState {
   List<Object> get props => [];
 }
 
-final class SupportReloadState extends SupportState {
+final class SupportLoadedState extends SupportState {
+  @override
+  List<Object> get props => [];
+}
+
+final class SupportLoadingState extends SupportState {
   @override
   List<Object> get props => [];
 }
