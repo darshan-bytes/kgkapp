@@ -154,7 +154,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               certificateFile: item.certificateFile,
               fluorescence: item.fluorescence,
               shapeImage: item.shapeImage?.setMediaUrl,
-              isOutOfStock: item.stockQty == 0,
+              isOutOfStock: (item.stockQty ?? 0) < (item.quantity ?? 0),
               labs: item.labs,
               location: item.location,
               yourRate: item.yourRate,

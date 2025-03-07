@@ -5,7 +5,7 @@ class APPStrings {
   static const String appName = 'KGK';
   static const String languageEn = 'en';
 
-  // static const String languageTh = 'th';
+  static const String languageTh = 'th';
   static const String languageZh = 'zh';
   static const String languageJa = 'ja';
   static const String languageHi = 'hi';

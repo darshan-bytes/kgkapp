@@ -545,7 +545,7 @@ class AppRepository extends ApiService {
       suids = StorageManager.instance.getRecentlyViewedJewellery();
     }
     if (suids != null) {
-      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids};
+      query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.suid: suids, ApiKey.quote: StorageManager.instance.getBagId()};
     } else {
       query = {ApiKey.page: page, ApiKey.limit: limit, ApiKey.customFilter: "frequently-viewed-products"};
     }

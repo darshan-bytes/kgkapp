@@ -130,6 +130,7 @@ enum FilterType {
   dateRange('date_range'),
   date('date'),
   createdBySearch('created_by_search'),
+  boolean('boolean'),
   ;
 
   const FilterType(this.value);

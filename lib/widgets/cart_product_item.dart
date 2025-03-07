@@ -78,14 +78,16 @@ class CartProductItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                Icon(Icons.warning_amber_outlined, color: style.errorColor, size: 16.w),
-                SizedBox(width: 8.w),
-                SmartText(APPStrings.thisProductIsCurrentlyNotInStock.tr, style: style.outOfStockTextStyle),
-              ],
-            ),
-            SizedBox(height: 22.h),
+            if (isOutOfStock) ...[
+              Row(
+                children: [
+                  Icon(Icons.warning_amber_outlined, color: style.errorColor, size: 16.w),
+                  SizedBox(width: 8.w),
+                  SmartText(APPStrings.thisProductIsCurrentlyNotInStock.tr, style: style.outOfStockTextStyle),
+                ],
+              ),
+              SizedBox(height: 22.h),
+            ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

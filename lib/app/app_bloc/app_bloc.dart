@@ -13,7 +13,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Locale(APPStrings.languageAr, ''),
     Locale(APPStrings.languageHi, ''),
     Locale(APPStrings.languageJa, ''),
-    // Locale(APPStrings.languageTh, ''),
+    Locale(APPStrings.languageTh, ''),
     Locale(APPStrings.languageZh, ''),
   ];
   List<LocalizationsDelegate<Object>> localizationsDelegates = const [
@@ -119,6 +119,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
     locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
+    await sortOptionListApiCall(event.context);
     emit(LanguageState(locale));
     event.callback?.call();
   }
@@ -272,6 +273,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   // Add to bag
   Future<void> _addToBag(ProductAddToBagEvent event) async {
+    printWrapped('Add to bag event::  ${event.productDetails.suid} ${event.productDetails.commodity}');
     if (event.productDetails.suid.isNullOrEmpty || event.productDetails.commodity == null) return;
     Map<String, dynamic> body = {
       ApiKey.commodity: event.productDetails.commodity?.value,
@@ -498,6 +500,31 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
 
     return null;
+  }
+
+  Future<void> sortOptionListApiCall(BuildContext context) async {
+    ///clear sorting data
+    await StorageManager().clearSortingData();
+
+    Either<ErrorResponse, List<SortOptionsModel>>? response;
+    response = await AppRepository(context).getSortingOptions();
+
+    response?.fold((error) {
+      // Utils.showMessage(error.message);
+    }, (sortingOptions) async {
+      /// Create a temporary Map to store sorting data by type
+      Map<String, List<SortOptions>> sortingData = {};
+
+      /// Populate the map
+      for (final option in sortingOptions) {
+        if (option.commodity != null) {
+          sortingData[option.commodity!] = option.data;
+        }
+      }
+
+      /// Store the entire map in local storage
+      await StorageManager().setSortingData(sortingData);
+    });
   }
 }
 
