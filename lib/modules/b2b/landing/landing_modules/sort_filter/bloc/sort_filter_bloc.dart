@@ -324,8 +324,13 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   void _onInitialSortFilterEvent(InitialSortFilterEvent event, Emitter<SortFilterState> emit) async {
     if (sortData.isNotNullNorEmpty) {
       emit(SortReloadState());
-      selectedSortData = SortOptions(name: AppConst.sortKeyNERPBS, sortKey: AppConst.sortKeyNERPBS, sortValue: AppConst.sortValueDesc);
+      selectedSortData = event.sortOptions.firstWhere(
+            (element) => element.isDefault == true,
+        orElse: () => event.sortOptions.first, // Provide a fallback if no match is found
+      );
       emit(SortDataSelectedState(selectedSortData));
+    } else {
+      selectedSortData = SortOptions(name: AppConst.sortKeyNERPBS, sortKey: AppConst.sortKeyNERPBS, sortValue: AppConst.sortValueDesc);
     }
   }
 }

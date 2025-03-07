@@ -1001,4 +1001,6 @@ class APPStrings {
   static const String expired = "mob_expired";
   static const String preferencesSaved = "mob_preferences_saved";
   static const String workingHours = "mob_working_hours";
+  static const String noInternetConnectionOrServerNotReachable = "mob_no_internet_connection_or_server_not_reachable";
+  static const String mobAuction = "mob_auction";
 }

@@ -82,7 +82,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     emit(DesignLibraryLoadingState());
     userType = BlocProvider.of<AppBloc>(context).userType;
     await _initializeSortOptions(context);
-    BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
+    BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent(sortOptions: sortOptions));
     _initializePagination(context);
     await _loadFilterData(context: context, emit: emit);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {
