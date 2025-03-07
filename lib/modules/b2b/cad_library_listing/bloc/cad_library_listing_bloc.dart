@@ -68,7 +68,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       SortOptions defaultSortOption = sortOptionsList.firstWhereOrNull((element) => element.isDefault == true) ?? sortOptionsList.first;
       sortKey = defaultSortOption.sortKey ?? "";
       sortValue = defaultSortOption.sortValue ?? "";
-      BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
+      BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent(sortOptions: sortOptions));
     }
   }
 

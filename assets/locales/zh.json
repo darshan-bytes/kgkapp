@@ -807,5 +807,7 @@
   "mob_preferences_saved": "偏好已保存",
   "mob_hrs": "小时",
   "mob_secs": "秒",
-  "mob_working_hours": "周一至周五上午9点至下午5点"
+  "mob_working_hours": "周一至周五上午9点至下午5点",
+  "mob_no_internet_connection_or_server_not_reachable": "无网络连接或服务器不可达",
+  "mob_auction": "拍卖"
 }

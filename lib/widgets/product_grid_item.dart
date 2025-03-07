@@ -109,10 +109,12 @@ class ProductGridItem extends StatelessWidget {
         ),
         if (productDetails.isForAuction)
           Positioned(
-            top: 0.h,
-            left: -4.w,
-            child: SmartImage(path: AppImages.icAuctionLabel, height: 32.w, width: 92.w, fit: BoxFit.fill),
-          ),
+              top: 0.h,
+              left: -4.w,
+              child: CustomPaint(
+                painter: SvgShapePainter(APPStrings.mobAuction.tr),
+                size: Size(200, 28), // Give it enough width
+              )),
         if (isOutOfStock)
           Positioned(
             top: 8.h,
@@ -279,8 +281,7 @@ class ProductGridItem extends StatelessWidget {
                           style: style.checkedPriceStyle,
                         ),
                       ] else ...[
-                        if(!isKGKCouture)
-                        SmartText("")
+                        if (!isKGKCouture) SmartText("")
                       ]
                     ],
                   ),
@@ -309,6 +310,10 @@ class ProductGridItem extends StatelessWidget {
             // ],
 
             if (!isHomeView && (isCrtAndGramVisible || isFromWatchlist)) diamondAndGramSection(style),
+            if (isForAuction)
+              SizedBox(
+                height: 32.w,
+              ),
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,

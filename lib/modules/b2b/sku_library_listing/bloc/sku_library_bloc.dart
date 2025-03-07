@@ -79,7 +79,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
     emit(SkuLibraryLoadingState());
     userType = BlocProvider.of<AppBloc>(context).userType;
     await _initializeSortOptions(context);
-    BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent());
+    BlocProvider.of<SortFilterBloc>(context).add(InitialSortFilterEvent(sortOptions: sortOptions));
     _initializePagination(context);
     await _loadFilterData(context: context, emit: emit);
     if (totalNumberOfPages == null || paginationScrollController.currentPage <= totalNumberOfPages!) {

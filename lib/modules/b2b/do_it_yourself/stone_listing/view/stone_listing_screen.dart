@@ -104,7 +104,6 @@ class StoneListingScreen extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is StoneChangeTypeState || current is StoneListLoadingState || current is StoneProductLoadedState,
       builder: (context, state) {
-        if (state is StoneListLoadingState) return const SizedBox.shrink();
         return Row(
           children: [
             Expanded(
@@ -113,7 +112,9 @@ class StoneListingScreen extends StatelessWidget {
                 title: diamondListingBloc.tabOneTitle,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(StoneChangeTypeEvent(true, context));
+                  if (state is! StoneListLoadingState) {
+                    diamondListingBloc.add(StoneChangeTypeEvent(true, context));
+                  }
                 },
               ),
             ),
@@ -123,7 +124,9 @@ class StoneListingScreen extends StatelessWidget {
                 title: diamondListingBloc.tabTwoTitle,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                 onTap: () {
-                  diamondListingBloc.add(StoneChangeTypeEvent(false, context));
+                  if (state is! StoneListLoadingState) {
+                    diamondListingBloc.add(StoneChangeTypeEvent(false, context));
+                  }
                 },
               ),
             ),
@@ -233,6 +236,7 @@ class StoneListingScreen extends StatelessWidget {
                   return ProductGridItem(
                     productDetails: productDetails,
                     isCrtAndGramVisible: false,
+                    isForAuction: productDetails.isForAuction,
                     onTap: () {
                       if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
                         context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
@@ -258,6 +262,7 @@ class StoneListingScreen extends StatelessWidget {
                     isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
                     onAddToBagTap: productDetails.isForAuction ? null : () {},
+
                   );
                 }).toList()),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
