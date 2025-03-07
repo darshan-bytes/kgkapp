@@ -1017,7 +1017,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         isMyBidPlaced = data.bids.any((bid) => bid.isMyBid == true);
         recentBidList = data.bids.map((bid) {
           return {
-            AppConst.dateTimeKey: bid.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
+            AppConst.dateTimeKey: bid.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
             AppConst.priceKey: bid.bidAmount?.setCurrency,
             AppConst.isMyBidKey: bid.isMyBid,
           };

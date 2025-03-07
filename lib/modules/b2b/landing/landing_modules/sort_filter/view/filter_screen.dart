@@ -164,6 +164,7 @@ class FilterScreen extends StatelessWidget {
           case FilterType.range:
             return _buildPriceRangeSlide(filterBloc, style);
           case FilterType.checkbox:
+          case FilterType.boolean:
             return _buildOptionList(filterBloc, style);
           case FilterType.undefined:
           default:
