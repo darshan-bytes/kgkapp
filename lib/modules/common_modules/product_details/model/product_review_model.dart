@@ -125,5 +125,5 @@ class ProductReviewModel {
 }
 
 extension ProductReviewModelExtension on ProductReviewModel {
-  List<String>? get displayImage => images?.split(',').map((e) => e.trim().setMediaUrl).toList();
+  List<String>? get displayImage => images.isNotNullNorEmpty ? images?.split(',').map((e) => e.trim().setMediaUrl).toList() : [];
 }

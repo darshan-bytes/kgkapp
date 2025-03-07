@@ -26,7 +26,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     // Perform API calls for currency and language labels
     await _currencyApiCall(event.context, emit);
     await _languageLabelApiCall(event.context, emit);
-    await _sortOptionListApiCall(event.context);
+    await BlocProvider.of<AppBloc>(event.context).sortOptionListApiCall(event.context);
   }
 
   Future<void> _currencyApiCall(BuildContext context, Emitter<SplashState> emit) async {
@@ -76,31 +76,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
     String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
     context.pushNamedAndRemoveUntil(route, (route) => false);
-  }
-
-  Future<void> _sortOptionListApiCall(BuildContext context) async {
-    ///clear sorting data
-    await StorageManager().clearSortingData();
-
-    Either<ErrorResponse, List<SortOptionsModel>>? response;
-    response = await AppRepository(context).getSortingOptions();
-
-    response?.fold((error) {
-      // Utils.showMessage(error.message);
-    }, (sortingOptions) async {
-      /// Create a temporary Map to store sorting data by type
-      Map<String, List<SortOptions>> sortingData = {};
-
-      /// Populate the map
-      for (final option in sortingOptions) {
-        if (option.commodity != null) {
-          sortingData[option.commodity!] = option.data;
-        }
-      }
-
-      /// Store the entire map in local storage
-      await StorageManager().setSortingData(sortingData);
-    });
   }
 
   Future<void> _setPlaceholderImage() async {
