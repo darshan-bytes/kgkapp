@@ -87,7 +87,7 @@ class WishlistScreen extends StatelessWidget {
                     bloc.add(ProductRemoveFromWishlistEvent(productDetails));
                   },
                   onTap: () {
-                    _onProductTap(context, productDetails);
+                    _onProductTap(context, productDetails, bloc);
                   },
                 );
               }).toList()),
@@ -99,13 +99,17 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  void _onProductTap(BuildContext context, ProductDetailsModel productDetails) {
+  void _onProductTap(BuildContext context, ProductDetailsModel productDetails, WishlistBloc bloc) {
     if (productDetails.commodity == null) {
       return;
     }
     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
       RoutesData.productId: productDetails.suid ?? '',
       RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
-    });
+    }).then(
+      (value) {
+        bloc.add(WishlistPullToRefreshEvent(context));
+      },
+    );
   }
 }

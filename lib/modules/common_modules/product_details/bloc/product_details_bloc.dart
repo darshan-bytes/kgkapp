@@ -697,7 +697,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             isAddedToCart: diamond.isAddedToCart,
           );
         }).toList();
-        add(const ProductDetailsReviewsLoadedEvent());
+        if (!isClosed) add(const ProductDetailsReviewsLoadedEvent());
       },
     );
   }

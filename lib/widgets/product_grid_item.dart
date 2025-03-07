@@ -323,7 +323,8 @@ class ProductGridItem extends StatelessWidget {
                 onTap: () {
                   if (buttonText.isNullOrEmpty) {
                     if (productDetails.isAddedToCart) {
-                      BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                      BlocProvider.of<LandingBloc>(context)
+                          .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context, isForce: true));
                       context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
                     } else {
                       BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
