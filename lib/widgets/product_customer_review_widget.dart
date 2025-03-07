@@ -63,33 +63,38 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return Dialog(
-                        alignment: Alignment.center,
-                        child: Stack(
-                          alignment: AlignmentDirectional.center,
-                          clipBehavior: Clip.antiAlias,
-                          children: [
-                            SmartImage(
-                              path: reviewDataModel.images![index],
-                              fit: BoxFit.contain,
-                              height: context.height,
-                              width: context.width,
+                      return Material(
+                        color: Colors.transparent,
+                        clipBehavior: Clip.antiAlias,
+                        child: Padding(
+                          padding: EdgeInsets.all(20.w),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: context.height / 2,
+                              maxWidth: context.width / 2,
                             ),
-                            PositionedDirectional(
-                              top: 24.h,
-                              end: 24.w,
-                              child: Container(
-                                color: AppTheme.of(context).colors.white,
-                                child: SmartImage(
-                                  path: AppImages.icCross,
-                                  width: 24.w,
-                                  height: 24.w,
-                                  color: AppTheme.of(context).colors.black,
-                                  onTap: () => context.pop(),
+                            child: Stack(
+                              children: [
+                                SmartImage(
+                                  path: reviewDataModel.images![index],
                                 ),
-                              ),
+                                PositionedDirectional(
+                                  top: 24.h,
+                                  end: 24.w,
+                                  child: Container(
+                                    color: AppTheme.of(context).colors.white,
+                                    child: SmartImage(
+                                      path: AppImages.icCross,
+                                      width: 24.w,
+                                      height: 24.w,
+                                      color: AppTheme.of(context).colors.black,
+                                      onTap: () => context.pop(),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       );
                     },

@@ -56,7 +56,9 @@ dependencies:
   flutter_cache_manager: ^3.4.1
 
   # For Country Code Picker
-  country_picker: ^2.0.27
+  #  country_picker: ^2.0.27
+  country_picker:
+    path: packages/country_picker
 
   # For Carousel image Slider
   carousel_slider: ^5.0.0
@@ -83,7 +85,7 @@ dependencies:
   intl: ^0.19.0
 
   #For Qr Code Scanner
-  mobile_scanner: ^6.0.6
+  mobile_scanner: ^6.0.7
 
   #For Webview
   webview_flutter: ^4.10.0
@@ -128,7 +130,7 @@ dependencies:
   url_launcher: ^6.3.1
 
   # For Deep Linking
-  flutter_branch_sdk: ^8.3.2
+  flutter_branch_sdk: ^8.4.0
 
   country_phone_validator: ^1.0.1
 
