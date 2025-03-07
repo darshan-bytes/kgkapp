@@ -104,6 +104,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
         if (element.filterType == FilterType.range) {
           query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
           query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+        } else if (element.filterType == FilterType.boolean &&
+            (element.secondaryFilterData ?? []).isNotEmpty &&
+            element.secondaryFilterData!.any((e) => e.isSelected)) {
+          query[element.code ?? ''] = 'YES';
         } else {
           query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
         }

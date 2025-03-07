@@ -920,7 +920,7 @@ class ProductDetailsScreen extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              SmartText(labelText, style: style.auctionTimerStyle),
+              Expanded(child: SmartText(labelText, style: style.auctionTimerStyle, isAutoSizeText: true)),
               SizedBox(width: 5.w),
               if (isMyBid) _buildMyBidTag(style),
             ],
