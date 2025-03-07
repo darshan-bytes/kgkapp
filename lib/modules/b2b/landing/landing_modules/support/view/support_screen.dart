@@ -19,38 +19,48 @@ class SupportScreen extends StatelessWidget {
             context.pushNamed(AppRoutes.notificationPage);
           },
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 8.h),
-                _buildSupportActionSection(supportBloc, context),
-                const Divider(),
-                SizedBox(height: 32.h),
-                SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
-                SizedBox(height: 16.h),
-                _buildFAQSection(supportBloc, style),
-                SizedBox(height: 16.h),
-                Center(
-                  child: IntrinsicWidth(
-                    child: SmartButton(
-                      title: APPStrings.moreFaq.tr,
-                      height: 40.h,
-                      suffixImage: AppImages.icRight,
-                      imageSize: 20.w,
-                      padding: EdgeInsets.only(left: 12.w),
-                      onTap: () {
-                        context.pushNamed(AppRoutes.faqPage);
-                      },
+        body: BlocBuilder<SupportBloc, SupportState>(
+          buildWhen: (previous, current) => current is SupportLoadedState || current is SupportLoadingState,
+          builder: (context, state) {
+            if (state is SupportLoadingState) {
+              return const SmartCircularProgressIndicator();
+            }
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 17.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.h),
+                    _buildSupportActionSection(supportBloc, context),
+                    const Divider(),
+                    SizedBox(height: 32.h),
+                    if (supportBloc.faqs.isNotNullNorEmpty) ...[
+                      SmartText(APPStrings.frequentlyAskedQuestion.tr, style: style.frequentlyAskedQuestionStyle),
+                      SizedBox(height: 16.h),
+                      _buildFAQSection(supportBloc, style),
+                      SizedBox(height: 16.h),
+                    ],
+                    Center(
+                      child: IntrinsicWidth(
+                        child: SmartButton(
+                          title: APPStrings.moreFaq.tr,
+                          height: 40.h,
+                          suffixImage: AppImages.icRight,
+                          imageSize: 20.w,
+                          padding: EdgeInsets.only(left: 12.w),
+                          onTap: () {
+                            context.pushNamed(AppRoutes.faqPage);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 16.h),
+                  ],
                 ),
-                SizedBox(height: 16.h),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ));
   }
 

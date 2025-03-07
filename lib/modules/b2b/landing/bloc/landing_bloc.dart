@@ -177,7 +177,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     LandingChangeTabEvent event,
     Emitter<LandingState> emit,
   ) {
-    if (currentIndex != event.index) {
+    if (currentIndex != event.index || event.isForce) {
       currentIndex = event.index;
       if (userType == UserType.b2cUser) {
         switch (event.index) {

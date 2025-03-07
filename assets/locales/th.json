@@ -809,5 +809,7 @@
   "mob_secs": "วินาที",
   "mob_working_hours": "จันทร์ - ศุกร์ 9 โมง - 5 โมง",
   "mob_no_internet_connection_or_server_not_reachable": "ไม่มีการเชื่อมต่ออินเตอร์เน็ต หรือไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์",
-  "mob_auction": "การประมูล"
+  "mob_auction": "การประมูล",
+  "mob_crt": "กระเป๋า",
+  "mob_grms": "กรัม"
 }

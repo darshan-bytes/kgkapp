@@ -809,5 +809,7 @@
   "mob_secs": "secs",
   "mob_working_hours": "Monday – Friday 9 AM – 5 PM",
   "mob_no_internet_connection_or_server_not_reachable": "No internet connection or server not reachable",
-  "mob_auction": "Auction"
+  "mob_auction": "Auction",
+  "mob_crt": "crt",
+  "mob_grms": "grms"
 }

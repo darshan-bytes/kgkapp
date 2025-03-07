@@ -18,8 +18,9 @@ final class LandingInitialEvent extends LandingEvent {
 final class LandingChangeTabEvent extends LandingEvent {
   final int index;
   final BuildContext context;
+  final bool isForce;
 
-  const LandingChangeTabEvent(this.index, {required this.context});
+  const LandingChangeTabEvent(this.index, {required this.context, this.isForce = false});
 
   @override
   List<Object> get props => [index, context];

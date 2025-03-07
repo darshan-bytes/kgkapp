@@ -809,5 +809,7 @@
   "mob_secs": "秒",
   "mob_working_hours": "月曜日-金曜日9時-17時",
   "mob_no_internet_connection_or_server_not_reachable": "インターネット接続がないか、サーバーに到達できません",
-  "mob_auction": "オークション"
+  "mob_auction": "オークション",
+  "mob_crt": "ブラウン管",
+  "mob_grms": "グラム"
 }

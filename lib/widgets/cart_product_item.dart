@@ -325,7 +325,7 @@ class CartProductItem extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
-                    productDetails.cts,
+                    "${productDetails.cts} ${APPStrings.crt.tr}",
                     style: style.diamondTextStyle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -345,7 +345,7 @@ class CartProductItem extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Flexible(
                   child: SmartText(
-                    productDetails.gms,
+                    "${productDetails.gms} ${APPStrings.grms.tr}",
                     style: style.diamondTextStyle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
