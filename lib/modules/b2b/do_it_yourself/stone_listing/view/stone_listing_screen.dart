@@ -262,7 +262,6 @@ class StoneListingScreen extends StatelessWidget {
                     isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
                     onAddToBagTap: productDetails.isForAuction ? null : () {},
-
                   );
                 }).toList()),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
@@ -384,11 +383,7 @@ class StoneListingScreen extends StatelessWidget {
                               productId: product.productId,
                               diamond: "1.5 gram",
                               gram: "1.5 gram",
-                              imageUrl: diamondListingBloc.screenIdentifier == ScreenIdentifier.productForGemstones
-                                  ? (index % 2 == 0
-                                      ? "https://i.ibb.co/477f41r/Group-1410089379.png"
-                                      : "https://i.ibb.co/sggT4PJ/Group-1410089378.png")
-                                  : product.imageUrl ?? "https://i.ibb.co/swb5gVs/Round.png",
+                              imageUrl: product.imageUrl,
                               isForAuction: product.isForAuction,
                             ),
                             isAutoSizeText: false,

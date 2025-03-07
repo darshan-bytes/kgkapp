@@ -15,8 +15,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
 
   bool _isInitialized = false;
 
-  Completer<bool> _isFilterListLoaded = Completer();
-
   CompareProductBloc() : super(CompareProductInitial()) {
     on<CompareProductAddProductEvent>(_onCompareProductAddProduct);
     on<CompareProductRemoveProductEvent>(_onCompareProductRemoveProduct);
@@ -32,10 +30,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
   Future<void> _onCompareProductAddProduct(CompareProductAddProductEvent event, Emitter<CompareProductState> emit) async {
     // Initialize the commodity if null
     Commodity productCommodity = event.product.commodity ?? Commodity.jewellery;
-    if (commodity == null) {
-      commodity ??= productCommodity;
-      filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
-    }
+    commodity ??= productCommodity;
 
     bool isDisplayError = commodity != productCommodity;
     if (!isDisplayError && (commodity == Commodity.jewellery)) {
@@ -62,11 +57,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       if (result?[RoutesData.isContinueClearCompare] == true) {
         commodity = productCommodity;
         jewelleryType = event.product.jewelleryType;
-        _isFilterListLoaded = Completer<bool>();
-        BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '').then((value) {
-          filterList = value;
-          _isFilterListLoaded.complete(true);
-        });
         productIdList.clear();
         productList.clear();
       } else {
@@ -107,6 +97,8 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
   /// Clears all products from the comparison list
   void _onCompareProductClear(CompareProductClearEvent event, Emitter<CompareProductState> emit) {
     productIdList.clear();
+    productList.clear();
+    filterList.clear();
     emit(CompareProductReloadState());
     emit(CompareProductAddedState(productIdList: List.unmodifiable(productIdList)));
   }
@@ -115,24 +107,20 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
   Future<void> _onCompareProductGenerateTable(CompareProductGenerateTableEvent event, Emitter<CompareProductState> emit) async {
     if (_isInitialized) return;
     _isInitialized = true;
+    compareResult.clear();
     emit(CompareProductLoadingState());
-    await _isFilterListLoaded.future;
-    if (StorageManager().getIsSkipLogin()) {
-      myBagBloc ??= BlocProvider.of<MyBagBloc>(event.context);
-      if (myBagBloc != null && (myBagBloc!.commodity == null || myBagBloc!.commodity == commodity)) {
-        myBagBloc!.add(InitialMyBagEvent(context: event.context));
-        await for (final state in myBagBloc!.stream) {
-          if (state is MyBagLoadedState) {
-            break;
-          }
-        }
-      }
-    }
+    event.context.setAppLoading(true);
+    filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
+    event.context.setAppLoading(false);
 
     try {
       final Map<String, dynamic> body = {
         ApiKey.products: productIdList.map((e) => {ApiKey.id: e, ApiKey.collectionType: commodity?.value}).toList(),
       };
+
+      if (StorageManager.instance.getIsSkipLogin()) {
+        body[ApiKey.quote] = StorageManager.instance.getBagId();
+      }
 
       final response = await AppRepository(event.context).compareProducts(body: body);
       response?.fold(
@@ -142,7 +130,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         (r) {
           compareResult = r;
           for (int i = 0; i < compareResult.length; i++) {
-            if (StorageManager().getIsSkipLogin()) {
+            if (StorageManager.instance.getIsSkipLogin()) {
               productList[i].isAddedToCart =
                   myBagBloc?.bagListDataModel?.result.map((e) => e.suid).toList().contains(productList[i].suid) ?? false;
             } else {

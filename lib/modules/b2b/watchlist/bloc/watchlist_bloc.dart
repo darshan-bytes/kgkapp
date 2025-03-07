@@ -144,8 +144,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
               id: e.sId ?? "",
               strName: e.name ?? "",
               status: e.displayStatus,
-              strFrom: e.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
-              strTo: e.expiresAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
+              strFrom: e.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+              strTo: e.expiresAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
               strNumberOfProduct: e.products?.length.toString() ?? "0",
               strRemainingTime: ValueNotifier<String>((e.expiresAt?.isAfter(DateTime.now()) == true)
                   ? (e.expiresAt?.difference(DateTime.now()).formattedDurationWithSecondsShort ?? "")

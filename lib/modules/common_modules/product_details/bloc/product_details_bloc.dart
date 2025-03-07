@@ -715,6 +715,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         recentlyViewedProductList = data.data.map((e) {
           return ProductDetailsModel(
             productId: e.suid ?? '',
+            suid: e.suid ?? '',
             name: e.rmDescription ?? '',
             imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
             originalPrice: e.finalPrice?.toString().setCurrency,
