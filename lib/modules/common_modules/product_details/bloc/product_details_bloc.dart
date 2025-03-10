@@ -730,6 +730,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             wishlistId: e.wishlistID,
             title: e.lotCode,
             subTitle: e.rmDescription,
+            isAddedToCart: e.isAddedToCart,
           );
         }).toList();
         if (!isClosed) {

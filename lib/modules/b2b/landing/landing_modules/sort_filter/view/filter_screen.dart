@@ -199,9 +199,13 @@ class FilterScreen extends StatelessWidget {
           sliderLabelTextStyle: style.sliderLabelTextStyle,
           sliderThumbBorderColor: style.sliderThumbBorderColor,
           sliderThumbColor: style.sliderThumbColor,
-          onMinControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent()),
+          onMinControllerTapOutside: (p) {
+            bloc.add(const SortAndFilterPriceRangeEditEvent());
+          },
           onMinControllerEditingComplete: () => bloc.add(const SortAndFilterPriceRangeEditEvent()),
-          onMaxControllerTapOutside: (p) => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
+          onMaxControllerTapOutside: (p) {
+            bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false));
+          },
           onMaxControllerEditingComplete: () => bloc.add(const SortAndFilterPriceRangeEditEvent(isMin: false)),
           onChanged: (RangeValues values) => bloc.add(SortAndFilterPriceRangeChangedEvent(SfRangeValues(values.start, values.end))),
         );

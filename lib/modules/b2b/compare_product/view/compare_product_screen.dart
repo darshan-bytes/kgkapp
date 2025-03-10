@@ -23,6 +23,9 @@ class CompareProductScreen extends StatelessWidget {
             buildWhen: (previous, current) => current is CompareProductsLoadedState || current is CompareProductErrorState,
             builder: (context, state) {
               if (state is CompareProductsLoadedState) {
+                if (bloc.compareResult.isEmpty) {
+                  return SizedBox.shrink();
+                }
                 return SmartSingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Stack(
