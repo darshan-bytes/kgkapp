@@ -650,7 +650,10 @@ class HomeWidgets {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 isSelected: false,
                 onTap: () {
-                  context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.productNavigation: AppConst.coutureCollection});
+                  context.pushNamed(AppRoutes.productListGridPage, arguments: {
+                    RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                    RoutesData.productNavigation: AppConst.coutureCollection
+                  });
                 },
                 title: APPStrings.viewAll.tr,
               ),

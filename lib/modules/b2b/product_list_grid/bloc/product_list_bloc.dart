@@ -332,7 +332,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await fetchDealOfTheDay(context: context, isLoadMore: isLoadMore);
         break;
       case FetchScenario.coutureCollection:
-         response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
+        response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
         break;
     }
 
@@ -389,7 +389,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
     return ProductDetailsModel(
       suid: item.suid ?? "",
-      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
       name: item.productDescription ?? "",
       originalPrice: item.finalPrice?.toString().setCurrency,
       offerPrice: item.discountPrice?.toString().setCurrency,
@@ -484,41 +484,15 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   /// fetchKgkCoutureData
-  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchKgkCoutureData(BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchKgkCoutureData(
+      BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
       {Map<String, String>? query}) async {
-
-    try {
-      final response = await AppRepository(context).homePageKgkCoutureCollections(
-          page: paginationScrollController.currentPage.toString(), limit: AppConst.pageLimit.toString(), isLoadMore: true);
-      response?.fold(
-        (l) {
-          Utils.showMessage(l.message);
-        },
-        (r) {
-          productList = List.generate(
-            r.dataList?.length ?? 0,
-            (index) {
-              KgkCoutureDetails item = r.dataList![index];
-              return ProductDetailsModel(
-                productId: item.suid ?? '',
-                commodity: Commodity.jewellery,
-                imageUrl: item.multipleFinishedViewImage ?? '',
-                title: item.jewelleryTypeName ?? '',
-                subTitle: item.productDescription ?? '',
-                originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
-                offerPrice: item.discountPrice?.toString().setCurrency ?? '',
-              );
-            },
-          );
-        },
-      );
-    } catch (e) {
-      // Utils.showMessage(e.toString());
-    }
-    print("productList.length: ${productList.length}");
-    return null;
+    return AppRepository(context).homePageKgkCoutureCollectionsForJewelleryListing(
+      page: paginationScrollController.currentPage.toString(),
+      limit: AppConst.pageLimit.toString(),
+      isLoadMore: true,
+    );
   }
-
 
   /// Load more products
   Future<void> _handleLoadMore(BuildContext context, Emitter<ProductListState> emit, int currentPage) async {

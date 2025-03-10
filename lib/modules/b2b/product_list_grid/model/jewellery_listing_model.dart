@@ -174,6 +174,19 @@ class JewelleryDataModel {
     this.isFavorite = false,
     required this.wishlistID,
     this.isAddedToCart = false,
+    this.businessCategoryCode,
+    this.countryCode,
+    this.customerCode,
+    this.defaultMetalValueName,
+    this.defaultMetalValueRefSuid,
+    this.defaultMetalValueSuid,
+    this.jewelleryTypeCode,
+    this.subareaCode,
+    this.subareaId,
+    this.subareaName,
+    this.customerScopeRefSuid,
+    this.customerScope,
+    this.kgkCoutureImage,
   });
 
   dynamic metalColor3RefSuid;
@@ -313,6 +326,19 @@ class JewelleryDataModel {
   String? wishlistID;
   List<Component> components;
   bool isAddedToCart;
+  dynamic businessCategoryCode;
+  dynamic countryCode;
+  String? customerCode;
+  String? defaultMetalValueName;
+  int? defaultMetalValueRefSuid;
+  String? defaultMetalValueSuid;
+  String? jewelleryTypeCode;
+  String? subareaCode;
+  int? subareaId;
+  String? subareaName;
+  dynamic customerScopeRefSuid;
+  dynamic customerScope;
+  String? kgkCoutureImage;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
@@ -412,9 +438,11 @@ class JewelleryDataModel {
       brandName: json["brand_name"]?.toString(),
       productName: json["product_name"]?.toString(),
       market: json["market"]?.toString(),
-      multipleFinishedViewImage: json["multiple_finished_view_image"] == null
+      multipleFinishedViewImage: (json["multiple_finished_view_image"] == null ||
+              json["multiple_finished_view_image"].runtimeType == String)
           ? []
           : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
+      kgkCoutureImage: json["multiple_finished_view_image"],
       setsPart: json["sets_part"]?.toString(),
       kgkCollection2Name: json["kgk_collection_2_name"]?.toString(),
       refSuid: json["ref_suid"],
@@ -458,6 +486,18 @@ class JewelleryDataModel {
       wishlistID: json["is_favorite"]?.toString(),
       components: json["components"] == null ? [] : List<Component>.from(json["components"]!.map((x) => Component.fromJson(x))),
       isAddedToCart: json["isAddedToCart"] ?? false,
+      businessCategoryCode: json["business_category_code"],
+      countryCode: json["country_code"],
+      customerCode: json["customer_code"],
+      defaultMetalValueName: json["default_metal_value_name"],
+      defaultMetalValueRefSuid: json["default_metal_value_ref_suid"],
+      defaultMetalValueSuid: json["default_metal_value_suid"],
+      jewelleryTypeCode: json["jewellery_type_code"],
+      subareaCode: json["subarea_code"],
+      subareaId: json["subarea_id"],
+      subareaName: json["subarea_name"],
+      customerScopeRefSuid: json["customer_scope_ref_suid"],
+      customerScope: json["customer_scope"],
     );
   }
 
@@ -596,6 +636,18 @@ class JewelleryDataModel {
         "final_price": finalPrice,
         "discount_price": discountPrice,
         "isAddedToCart": isAddedToCart,
+        "business_category_code": businessCategoryCode,
+        "country_code": countryCode,
+        "customer_code": customerCode,
+        "default_metal_value_name": defaultMetalValueName,
+        "default_metal_value_ref_suid": defaultMetalValueRefSuid,
+        "default_metal_value_suid": defaultMetalValueSuid,
+        "jewellery_type_code": jewelleryTypeCode,
+        "subarea_code": subareaCode,
+        "subarea_id": subareaId,
+        "subarea_name": subareaName,
+        "customer_scope_ref_suid": customerScopeRefSuid,
+        "customer_scope": customerScope,
       };
 
   @override
