@@ -269,6 +269,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   /// [minMaxValues] to check against the valid range, and [values] to update the current price range.
   void handleMinPriceChange() {
     double min = double.tryParse(minPriceController.text) ?? 0; // Attempt to parse the minimum price from the text field.
+    selectedFilterData?.rangeValues ??= selectedFilterData?.minMaxValues;
     if (min >= selectedFilterData?.minMaxValues?.start && min <= selectedFilterData?.minMaxValues?.end) {
       // Check if the parsed value is within the valid range.
       SfRangeValues values = SfRangeValues(min, selectedFilterData?.rangeValues?.end); // Create a new range with the updated minimum value.
@@ -299,6 +300,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   /// [minMaxValues] to check against the valid range, and [values] to update the current price range.
   void handleMaxPriceChange() {
     double max = double.tryParse(maxPriceController.text) ?? 0; // Attempt to parse the maximum price from the text field.
+    selectedFilterData?.rangeValues ??= selectedFilterData?.minMaxValues;
     if (max < (double.tryParse(minPriceController.text) ?? 0)) {
       maxPriceController.text = '${selectedFilterData?.rangeValues?.end.toString()}'; // Reset the text field if the value is out of range.
       Utils.showMessage(APPStrings.maxRangeShouldBeLessThanX.tr.interpolate([minPriceController.text]));
@@ -325,7 +327,7 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
     if (sortData.isNotNullNorEmpty) {
       emit(SortReloadState());
       selectedSortData = event.sortOptions.firstWhere(
-            (element) => element.isDefault == true,
+        (element) => element.isDefault == true,
         orElse: () => event.sortOptions.first, // Provide a fallback if no match is found
       );
       emit(SortDataSelectedState(selectedSortData));

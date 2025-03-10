@@ -123,12 +123,7 @@ class ProductListScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(
-                  APPStrings.showingListLengthX.tr.interpolate([
-                    1,
-                    bloc.productList.length,
-                    bloc.totalFilteredRecords,
-                  ]),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
                   style: style.filterProductCountTextStyle),
               Expanded(
                 child: Row(

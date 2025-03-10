@@ -250,9 +250,9 @@ class AddressListScreen extends StatelessWidget {
               },
               label: APPStrings.billingAddressSame.tr,
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 22.h),
             if (!addressListBloc.isBillingAndShippingSame) ...[
-              Divider(height: 24.h),
+              Divider(height: 10.h),
               SmartText(APPStrings.billingAddress.tr, style: style.addressTypeTitleStyle),
               _buildBillingAddressList(addressListBloc, style),
             ],

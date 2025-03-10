@@ -72,6 +72,7 @@ class SmartSfRangeSlider extends StatelessWidget {
               labels: RangeLabels(values.start.toStringAsFixed(2), values.end.toStringAsFixed(2)),
               activeColor: rangeSliderTrackColor,
               onChanged: onChanged,
+              onChangeEnd: (value) => onMaxControllerEditingComplete?.call(),
             )),
         SizedBox(height: 6.h),
         Padding(
@@ -93,8 +94,8 @@ class SmartSfRangeSlider extends StatelessWidget {
                         controller: minPriceController,
                         keyboardType: TextInputType.number,
                         style: propertySelectionSubtitleStyle,
-                        onTapOutside: (p) => onMinControllerTapOutside,
-                        onEditingComplete: () => onMinControllerEditingComplete,
+                        onTapOutside: (p) => onMinControllerTapOutside?.call(p),
+                        onEditingComplete: () => onMinControllerEditingComplete?.call(),
                         textInputAction: TextInputAction.done,
                       ),
                       SmartText(
@@ -118,8 +119,8 @@ class SmartSfRangeSlider extends StatelessWidget {
                       controller: maxPriceController,
                       keyboardType: TextInputType.number,
                       style: propertySelectionSubtitleStyle,
-                      onTapOutside: (p) => onMaxControllerTapOutside,
-                      onEditingComplete: () => onMaxControllerEditingComplete,
+                      onTapOutside: (p) => onMaxControllerTapOutside?.call(p),
+                      onEditingComplete: () => onMaxControllerEditingComplete?.call(),
                       textInputAction: TextInputAction.done,
                     ),
                     SmartText(
