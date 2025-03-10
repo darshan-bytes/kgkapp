@@ -225,21 +225,19 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       },
     );
 
-    if (productId.isNotEmpty && productNavigation.isNotEmpty) {
-      if (productNavigation == AppConst.youMayLike) {
-        response = await AppRepository(context).getDiamondYouMayLike(
-          productId,
-          page: paginationScrollController.currentPage.toString(),
-          isShowLoader: isLoadMore,
-          limit: AppConst.pageLimit.toString(),
-        );
-      } else if (productNavigation == AppConst.recentlyViewed) {
-        response = await AppRepository(context).getDiamondRecentlyViewedProductList(
-          limit: AppConst.pageLimit.toString(),
-          isLoadMore: isLoadMore,
-          page: paginationScrollController.currentPage.toString(),
-        );
-      }
+    if (productNavigation == AppConst.youMayLike) {
+      response = await AppRepository(context).getDiamondYouMayLike(
+        productId,
+        page: paginationScrollController.currentPage.toString(),
+        isShowLoader: isLoadMore,
+        limit: AppConst.pageLimit.toString(),
+      );
+    } else if (productNavigation == AppConst.recentlyViewed) {
+      response = await AppRepository(context).getDiamondRecentlyViewedProductList(
+        limit: AppConst.pageLimit.toString(),
+        isLoadMore: isLoadMore,
+        page: paginationScrollController.currentPage.toString(),
+      );
     } else if (productNavigation == AppConst.diamondsDealsOfTheDayParam) {
       Map<String, String> queryParam = {
         ApiKey.page: paginationScrollController.currentPage.toString(),

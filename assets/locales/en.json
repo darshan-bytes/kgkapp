@@ -94,7 +94,7 @@
   "mob_natural_diamond": "Natural Diamonds",
   "mob_loose_diamond": "Loose Diamonds",
   "mob_empty_products": "Empty Products",
-  "mob_showing_list_length_x": "Showing {#} - {#} of {#}",
+  "mob_showing_list_length_x": "Showing {#}",
   "mob_diy": "DIY",
   "mob_compare_product": "Compare product",
   "mob_change": "Change",

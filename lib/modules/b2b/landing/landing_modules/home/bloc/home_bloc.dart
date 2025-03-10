@@ -516,26 +516,44 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewDiamondList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
-          return ProductDetailsModel(
-            productId: e.suid ?? '',
-            name: e.rmDescription ?? '',
-            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-            originalPrice: e.finalPrice?.setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-            productSku: e.lotCode,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            commodity: Commodity.diamond,
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            subTitle: e.rmDescription ?? '',
-            title: e.lotCode ?? '',
-          );
+          return _convertDiamondDataModelToProductDetailsModel(diamond: e);
         }).toList();
         emit(HomeStrapiDataFetchedState());
       },
+    );
+  }
+
+  ProductDetailsModel _convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
+    return ProductDetailsModel(
+      suid: diamond.suid,
+      productId: diamond.id,
+      imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
+      name: diamond.rmDescription ?? "",
+      ctsOrGms: diamond.ctsOrGms,
+      rappaportPrice: diamond.rappaportPrice,
+      priceCts: diamond.priceCts,
+      originalPrice: diamond.finalPrice?.toString().setCurrency,
+      offerPrice: diamond.finalPrice?.toString().setCurrency,
+      finalPrice: diamond.discountPrice?.toString().setCurrency,
+      lotCode: diamond.lotCode,
+      productSku: diamond.lotCode,
+      shape: diamond.shape,
+      fluorescence: diamond.fluorescence,
+      labs: diamond.labs,
+      lsp: diamond.lsp,
+      color: diamond.color,
+      clarity: diamond.clarity,
+      cut: diamond.cut,
+      certificateFile: diamond.certificateFile,
+      openDnaUrl: diamond.openDnaUrl,
+      commodity: Commodity.diamond,
+      company: diamond.id,
+      isFavourite: diamond.isFavorite,
+      wishlistId: diamond.wishlistID,
+      title: diamond.lotCode ?? "",
+      subTitle: diamond.rmDescription ?? "",
+      isForAuction: diamond.isAuction,
+      isAddedToCart: diamond.isAddedToCart,
     );
   }
 
@@ -956,6 +974,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             screenIdentifier: ScreenIdentifier.productForRing,
             arrProductList: homeBloc.dealOfTheDayJewelleryList,
             context: context,
+            isCrtAndGramVisible: false,
           );
         }
         return Container();
@@ -1107,33 +1126,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       (data) {
-        dealOfTheDayJewelleryList = data.data.map((e) {
-          final isDiscounted = e.discountPercentage != null && e.discountPercentage! > 0;
-          return ProductDetailsModel(
-            productId: e.id,
-            name: e.productDescription ?? '',
-            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? e.multipleFinishedViewImage.first.imageUrl ?? '' : '',
-            offerPrice: e.discountPrice?.setCurrency,
-            originalPrice: e.finalPrice?.setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-            productSku: e.contractNoSkuNo,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            commodity: Commodity.jewellery,
-            subTitle: e.productDescription ?? '',
-            title: e.contractNoSkuNo ?? '',
-            cts: e.crt,
-            gms: e.gms,
-            brandName: e.brandName,
-            colorsCode: [
-              e.metalColor1HexCode ?? "",
-              e.metalColor2HexCode ?? "",
-              e.metalColor3HexCode ?? "",
-            ],
-          );
-        }).toList();
+        dealOfTheDayJewelleryList = data.data.map((e) => Utils.mapToProductDetailsModel(e)).toList();
         emit(HomeStrapiDataFetchedState());
       },
     );
@@ -1152,27 +1145,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     response?.fold((error) {
       Utils.showMessage(error.message);
     }, (success) {
-      final List<GemstoneDatum> diamondList = success.data;
-      dealOfTheDayGemstoneList = diamondList.map((e) {
-        bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
-        return ProductDetailsModel(
-          productId: e.suid ?? '',
-          name: e.rmDescription ?? '',
-          imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-          offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-          originalPrice: e.discountPrice?.setCurrency,
-          finalPrice: e.finalPrice?.setCurrency,
-          discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-          productSku: e.lotCode,
-          reviewCount: e.reviewCount,
-          rating: e.rating?.toDouble(),
-          commodity: Commodity.diamond,
-          isFavourite: e.isFavorite,
-          wishlistId: e.wishlistID,
-          subTitle: e.rmDescription ?? '',
-          title: e.lotCode ?? '',
-        );
-      }).toList();
+      final List<GemstoneDatum> gemstoneList = success.data;
+      dealOfTheDayGemstoneList = gemstoneList.map((e) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList();
       emit(HomeStrapiDataFetchedState());
     });
   }
@@ -1191,26 +1165,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Utils.showMessage(error.message);
     }, (success) {
       final List<DiamondDataModel> diamondList = success.data;
-      dealOfTheDayDiamondList = diamondList.map((e) {
-        bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage > 0;
-        return ProductDetailsModel(
-          productId: e.suid ?? '',
-          name: e.rmDescription ?? '',
-          imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-          offerPrice: isDiscounted ? e.discountPrice?.setCurrency : null,
-          finalPrice: e.finalPrice?.setCurrency,
-          originalPrice: e.discountPrice?.setCurrency,
-          discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-          productSku: e.lotCode,
-          reviewCount: e.reviewCount,
-          rating: e.rating?.toDouble(),
-          commodity: Commodity.diamond,
-          isFavourite: e.isFavorite,
-          wishlistId: e.wishlistID,
-          subTitle: e.rmDescription ?? '',
-          title: e.lotCode ?? '',
-        );
-      }).toList();
+      dealOfTheDayDiamondList = diamondList.map((e) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: e)).toList();
       emit(HomeStrapiDataFetchedState());
     });
   }

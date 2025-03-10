@@ -475,4 +475,101 @@ class Utils {
     }
     return parts.join(" : ");
   }
+
+  static ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
+    return ProductDetailsModel(
+      suid: item.suid ?? "",
+      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
+      name: item.productDescription ?? "",
+      originalPrice: item.finalPrice?.toString().setCurrency,
+      offerPrice: item.discountPrice?.toString().setCurrency,
+      finalPrice: item.discountPrice?.toString().setCurrency,
+      discountPercentageString: item.discountEXT,
+      productId: item.id ?? "",
+      commodity: Commodity.jewellery,
+      isFavourite: item.isFavorite,
+      wishlistId: item.wishlistID,
+      productSku: item.contractNoSkuNo,
+      title: item.contractNoSkuNo ?? '',
+      subTitle: item.productDescription ?? '',
+      kgkCollectionName: item.kgkCollection ?? "\n",
+      businessCategoryName: item.businessCategoryName ?? "\n",
+      cts: item.crtEXT,
+      gms: item.gms,
+      brandName: item.brandName,
+      isAddedToCart: item.isAddedToCart,
+      colorsCode: [
+        item.metalColor1HexCode ?? "",
+        item.metalColor2HexCode ?? "",
+        item.metalColor3HexCode ?? "",
+      ],
+    );
+  }
+
+  static ProductDetailsModel convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
+    return ProductDetailsModel(
+      suid: diamond.suid,
+      productId: diamond.id,
+      imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
+      name: diamond.rmDescription ?? "",
+      ctsOrGms: diamond.ctsOrGms,
+      rappaportPrice: diamond.rappaportPrice,
+      priceCts: diamond.priceCts,
+      originalPrice: diamond.finalPrice?.toString().setCurrency,
+      offerPrice: diamond.finalPrice?.toString().setCurrency,
+      finalPrice: diamond.discountPrice?.toString().setCurrency,
+      lotCode: diamond.lotCode,
+      productSku: diamond.lotCode,
+      shape: diamond.shape,
+      fluorescence: diamond.fluorescence,
+      labs: diamond.labs,
+      lsp: diamond.lsp,
+      color: diamond.color,
+      clarity: diamond.clarity,
+      cut: diamond.cut,
+      certificateFile: diamond.certificateFile,
+      openDnaUrl: diamond.openDnaUrl,
+      commodity: Commodity.diamond,
+      company: diamond.id,
+      isFavourite: diamond.isFavorite,
+      wishlistId: diamond.wishlistID,
+      title: diamond.lotCode ?? "",
+      subTitle: diamond.rmDescription ?? "",
+      isForAuction: diamond.isAuction,
+      isAddedToCart: diamond.isAddedToCart,
+    );
+  }
+
+  /// Helper Function: Convert Gemstone Data to ProductDetailsModel
+  static ProductDetailsModel convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
+    return ProductDetailsModel(
+      suid: gemstone.suid,
+      productId: gemstone.id,
+      imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
+      name: gemstone.rmDescription ?? "",
+      ctsOrGms: gemstone.ctsOrGms,
+      rappaportPrice: gemstone.rappaportPrice,
+      priceCts: gemstone.priceCts,
+      originalPrice: gemstone.finalPrice?.toString().setCurrency,
+      offerPrice: gemstone.finalPrice?.toString().setCurrency,
+      finalPrice: gemstone.discountPrice?.toString().setCurrency,
+      lotCode: gemstone.lotCode,
+      shape: gemstone.shape,
+      fluorescence: gemstone.fluorescence,
+      labs: gemstone.labs,
+      lsp: gemstone.lsp?.toString(),
+      color: gemstone.color,
+      clarity: gemstone.clarity,
+      cut: gemstone.cut,
+      certificateFile: gemstone.certificateFile,
+      openDnaUrl: gemstone.openDnaUrl,
+      commodity: Commodity.gemstone,
+      isFavourite: gemstone.isFavorite,
+      wishlistId: gemstone.wishlistID,
+      isForAuction: false,
+      title: gemstone.lotCode ?? "",
+      subTitle: gemstone.rmDescription ?? "",
+      isAddedToCart: gemstone.isAddedToCart,
+    );
+  }
 }

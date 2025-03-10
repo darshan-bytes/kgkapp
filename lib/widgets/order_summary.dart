@@ -32,7 +32,7 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderSummaryStyle style = AppTheme.of(context).orderSummaryStyle;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       color: style.backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,79 +40,75 @@ class OrderSummary extends StatelessWidget {
         children: [
           SmartText(
             title ?? APPStrings.orderSummary.tr,
-            style: titleStyle == null ? style.orderSummaryTitleStyle : style.orderSummaryTitleStyle.merge(titleStyle),
+            style: titleStyle?.merge(style.orderSummaryTitleStyle) ?? style.orderSummaryTitleStyle,
           ),
+          SizedBox(height: 20.h),
           if (isPromoCodeApplied) ...[
-            SizedBox(height: 16.h),
             const Divider(),
             _buildPromoCodeSection(style, context),
             const Divider(),
+            SizedBox(height: 14.h),
           ],
-          SizedBox(height: 16.h),
           _buildTotalSection(style, isSubTotal: true),
-          SizedBox(height: 16.h),
-          ListView.separated(
+          SizedBox(height: 6.h),
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              return _buildOrderSummaryItem(item, style);
+              return Padding(
+                padding: EdgeInsets.only(bottom: 6.0),
+                child: _buildOrderSummaryItem(item, style),
+              );
             },
-            separatorBuilder: (context, index) => SizedBox(height: 16.h),
           ),
-          SizedBox(height: 16.h),
           _buildTotalSection(style),
         ],
       ),
     );
   }
 
-  Widget _buildOrderSummaryItem(OrderSummaryItem item, style) {
-    return Row(
-      children: [
-        Expanded(
-            child: SmartText(
-          item.title,
-          style: style.orderSummaryItemStyle,
-        )),
-        SizedBox(width: 17.w),
-        SmartText(item.value, style: style.orderSummaryItemValueStyle),
-      ],
+  Widget _buildOrderSummaryItem(OrderSummaryItem item, OrderSummaryStyle style) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6.h),
+      child: Row(
+        children: [
+          Expanded(child: SmartText(item.title, style: style.orderSummaryItemStyle)),
+          SizedBox(width: 16.w),
+          SmartText(item.value, style: style.orderSummaryItemValueStyle),
+        ],
+      ),
     );
   }
 
   Widget _buildPromoCodeSection(OrderSummaryStyle style, BuildContext context) {
     return InkWell(
       onTap: () {
-        /// navigate to applyPromoCodeScreen with promoCode for applied promoCode
         context.pushNamed(AppRoutes.applyPromoCodeScreen, arguments: {RoutesData.promoCode: promoCode}).then(
-          (value) {
-            BlocProvider.of<MyBagBloc>(context).add(FetchOrderSummaryDataEvent(context));
-          },
+          (_) => BlocProvider.of<MyBagBloc>(context).add(FetchOrderSummaryDataEvent(context)),
         );
         onApplyPromoCode?.call();
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: promoCode != null ? 10.h : 14.h),
+        padding: EdgeInsets.symmetric(vertical: promoCode != null ? 10.h : 12.h),
         child: Row(
           children: [
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SmartText(
-                    promoCode?.title ?? APPStrings.addPromoCode.tr,
-                    style: style.addPromoCodeStyle,
-                  ),
-                  if (promoCode != null)
+                  SmartText(promoCode?.title ?? APPStrings.addPromoCode.tr, style: style.addPromoCodeStyle),
+                  if (promoCode != null) ...[
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         SmartText(APPStrings.viewAllCoupons.tr, style: style.viewAllCouponsStyle),
-                        SizedBox(width: 5.w),
-                        Icon(Icons.arrow_forward_ios, size: 12.w, color: style.viewAllCouponsStyle.color)
+                        SizedBox(width: 4.w),
+                        Icon(Icons.arrow_forward_ios, size: 12.w, color: style.viewAllCouponsStyle.color),
                       ],
-                    )
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -128,32 +124,26 @@ class OrderSummary extends StatelessWidget {
   }
 
   Widget _buildTotalSection(OrderSummaryStyle style, {bool isSubTotal = false}) {
-    return Padding(
-      padding: EdgeInsets.only(top: 12.h),
-      child: Row(
-        children: [
-          Expanded(
-              child: SmartText(
+    return Row(
+      children: [
+        Expanded(
+          child: SmartText(
             isSubTotal ? APPStrings.subTotal.tr : APPStrings.total.tr,
             style: style.orderSummaryItemStyle,
-          )),
-          SizedBox(width: 17.w),
-          SmartText(
-            isSubTotal ? subTotalPrice : totalPrice,
-            style: totalStyle ?? style.totalPriceStyle,
           ),
-        ],
-      ),
+        ),
+        SizedBox(width: 16.w),
+        SmartText(
+          isSubTotal ? subTotalPrice : totalPrice,
+          style: totalStyle ?? style.totalPriceStyle,
+        ),
+      ],
     );
   }
 }
 
 class OrderSummaryItem {
+  const OrderSummaryItem({required this.title, required this.value});
   final String title;
   final String value;
-
-  const OrderSummaryItem({
-    required this.title,
-    required this.value,
-  });
 }
