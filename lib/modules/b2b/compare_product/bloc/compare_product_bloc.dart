@@ -108,6 +108,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     if (_isInitialized) return;
     _isInitialized = true;
     compareResult.clear();
+    productList.clear();
     emit(CompareProductLoadingState());
     event.context.setAppLoading(true);
     filterList = await BlocProvider.of<AppBloc>(event.context).getFilterOptionList(event.context, commodity?.value ?? '');
@@ -130,12 +131,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         (r) {
           compareResult = r;
           for (int i = 0; i < compareResult.length; i++) {
-            if (StorageManager.instance.getIsSkipLogin()) {
-              productList[i].isAddedToCart =
-                  myBagBloc?.bagListDataModel?.result.map((e) => e.suid).toList().contains(productList[i].suid) ?? false;
-            } else {
-              productList[i].isAddedToCart = compareResult[i][ApiKey.isAddedToCart] ?? false;
-            }
+            productList.add(_convertToProductDetailModel(compareResult[i]));
           }
           emit(CompareProductsLoadedState());
         },
@@ -143,6 +139,93 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     } catch (e) {
       emit(CompareProductErrorState(message: e.toString()));
     }
+  }
+
+  ProductDetailsModel _convertToProductDetailModel(Map<String, dynamic> sourceModel) {
+    ProductDetailsModel productDetails = ProductDetailsModel();
+
+    if (commodity == Commodity.jewellery) {
+      JewelleryDataModel jewelleryData = JewelleryDataModel.fromJson(sourceModel);
+      bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
+      productDetails = ProductDetailsModel(
+        productId: jewelleryData.suid,
+        suid: jewelleryData.suid,
+        name: jewelleryData.productDescription ?? '',
+        jewelleryType: jewelleryData.jewelleryType,
+        originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
+        offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
+        finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
+        // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
+        // originalPrice: jewelleryData.finalPrice?.setCurrency,
+        discountPercentageString:
+            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
+        productSku: jewelleryData.contractNoSkuNo,
+        reviewCount: jewelleryData.reviewCount,
+        rating: jewelleryData.rating?.toDouble(),
+        brandName: jewelleryData.brandName,
+        imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
+        commodity: Commodity.jewellery,
+        isFavourite: jewelleryData.isFavorite,
+        wishlistId: jewelleryData.wishlistID,
+        components: jewelleryData.components,
+      );
+    } else if (commodity == Commodity.diamond) {
+      DiamondDataModel diamondData = DiamondDataModel.fromJson(sourceModel);
+      bool isDiscounted =
+          diamondData.discountPercentage != null && (diamondData.discountPercentage is num) && diamondData.discountPercentage > 0;
+      productDetails = ProductDetailsModel(
+        productId: diamondData.suid,
+        suid: diamondData.suid,
+        name: diamondData.rmDescription ?? '',
+        originalPrice: diamondData.finalPrice?.toString().setCurrency,
+        offerPrice: diamondData.discountPrice?.toString().setCurrency,
+        finalPrice: diamondData.discountPrice?.toString().setCurrency,
+        // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
+        // originalPrice: diamondData!.finalPrice?.setCurrency,
+        discountPercentageString:
+            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData.discountPercentage]) : null,
+        productSku: diamondData.lotCode,
+        reviewCount: diamondData.reviewCount,
+        rating: diamondData.rating,
+        commodity: Commodity.diamond,
+        isFavourite: diamondData.isFavorite,
+        wishlistId: diamondData.wishlistID,
+        stoneElements: diamondData.components,
+        auctionId: diamondData.auctionId,
+        isAddedToCart: diamondData.isAddedToCart,
+      );
+    } else if (commodity == Commodity.gemstone) {
+      GemstoneDatum gemstoneData = GemstoneDatum.fromJson(sourceModel);
+      bool isDiscounted =
+          gemstoneData.discountPercentage != null && (gemstoneData.discountPercentage is num) && (gemstoneData.discountPercentage ?? 0) > 0;
+
+      productDetails = ProductDetailsModel(
+        productId: gemstoneData.suid,
+        suid: gemstoneData.suid,
+        name: gemstoneData.rmDescription ?? '',
+        originalPrice: gemstoneData.finalPrice?.toString().setCurrency,
+        offerPrice: gemstoneData.discountPrice?.toString().setCurrency,
+        finalPrice: gemstoneData.discountPrice?.toString().setCurrency,
+        // offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
+        // originalPrice: gemstoneData!.finalPrice?.setCurrency,
+        discountPercentageString:
+            isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData.discountPercentage]) : null,
+        productSku: gemstoneData.lotCode,
+        reviewCount: gemstoneData.reviewCount,
+        rating: gemstoneData.rating?.toDouble(),
+        shape: gemstoneData.shape,
+        productQuality: CartProductQuality(name: gemstoneData.quality),
+        color: gemstoneData.color,
+        clarity: gemstoneData.clarity,
+        commodity: Commodity.gemstone,
+        isFavourite: gemstoneData.isFavorite,
+        wishlistId: gemstoneData.wishlistID,
+        stoneElements: gemstoneData.components,
+        isAddedToCart: gemstoneData.isAddedToCart,
+      );
+    }
+
+    return productDetails;
   }
 
   void setInitialized(bool bool) {

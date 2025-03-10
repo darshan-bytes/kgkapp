@@ -173,7 +173,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       default:
         await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
-          await _setupFilters(context, ScreenIdentifier.productForDiamonds);
+          await _setupFilters(context, ScreenIdentifier.diamondForDefault);
         }
         break;
     }
@@ -451,6 +451,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     emit(StoneChangeTypeState(isInitialToggle));
     emit(StoneListLoadingState());
     paginationScrollController.pullToRefresh();
+    filterData.clear();
+    await _setupFilters(context, screenIdentifier);
     await _generateProductList(event.context, emit);
     emit(const StoneProductLoadedState());
   }
@@ -516,12 +518,16 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     String filterKey = "";
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
       filterKey = AppConst.diamondForDIYFilter;
-    } else if (screenIdentifier == ScreenIdentifier.productForDiamonds) {
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       filterKey = AppConst.diamondFilter;
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       filterKey = AppConst.gemstoneFilter;
     }
-    final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey);
+    if (filterKey.isEmpty) {
+      return;
+    }
+    final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
+    final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey, type: type);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
       if (filterDataMap?.containsKey(filterOption.slug) == true) {
@@ -592,6 +598,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForDiamonds:
+      case ScreenIdentifier.diamondForDefault:
         _setupTitles(APPStrings.diamonds.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForGemstones:

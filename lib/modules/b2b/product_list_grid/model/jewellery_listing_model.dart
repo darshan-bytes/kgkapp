@@ -442,7 +442,9 @@ class JewelleryDataModel {
               json["multiple_finished_view_image"].runtimeType == String)
           ? []
           : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
-      kgkCoutureImage: json["multiple_finished_view_image"].runtimeType == String ? json["multiple_finished_view_image"] : "",
+      kgkCoutureImage: (json["multiple_finished_view_image"] is List && json["multiple_finished_view_image"].isNotEmpty)
+          ? json["multiple_finished_view_image"].first.toString()
+          : null,
       setsPart: json["sets_part"]?.toString(),
       kgkCollection2Name: json["kgk_collection_2_name"]?.toString(),
       refSuid: json["ref_suid"],

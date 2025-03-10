@@ -242,8 +242,8 @@ class SortFilterBloc extends Bloc<SortFilterEvent, SortFilterState> {
   void _onSortAndFilterPriceRangeChangedEvent(SortAndFilterPriceRangeChangedEvent event, Emitter<SortFilterState> emit) {
     emit(SortReloadState());
     selectedFilterData?.rangeValues = event.values;
-    minPriceController.text = '${selectedFilterData?.rangeValues?.start.toString()}';
-    maxPriceController.text = '${selectedFilterData?.rangeValues?.end.toString()}';
+    minPriceController.text = '${selectedFilterData?.rangeValues?.start ?? 0}';
+    maxPriceController.text = '${selectedFilterData?.rangeValues?.end ?? 0}';
     emit(const SortAndFilterPriceRangeChangedState());
   }
 
