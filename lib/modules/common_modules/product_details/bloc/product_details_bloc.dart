@@ -1116,7 +1116,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       _timerValue = auctionDataModel!.startDate?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYY) ?? "";
     } else if (state is ProductDetailsAuctionTimerUpdateState) {
       _timerValue = Utils.formatDuration(state.duration);
-    } else if (state is AuctionTimerCompletedState) {
+    } else if (state is ProductDetailsAuctionTimerCompletedState) {
       _timerValue = APPStrings.auctionHasEnded.tr;
     } else {
       _timerValue = APPStrings.loading.tr;
