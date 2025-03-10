@@ -31,7 +31,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Variables for managing pagination and filtering
   String productId = "";
   String productNavigation = "";
-  Map<String, String?>? filterDataMap;
+  Map<dynamic, String?>? filterDataMap;
 
   /// Variables for sorting
   String sortKey = AppConst.sortKeyUpdatedDateTime;
@@ -166,6 +166,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         break;
       case ScreenIdentifier.productForGemstones:
         await fetchGemstoneList(context, emit);
+        print("Gemstone Data: $filterData");
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.productForGemstones);
         }
