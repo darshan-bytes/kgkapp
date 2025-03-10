@@ -802,30 +802,6 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<KgkCoutureDetails>>?> homePageKgkCoutureCollections({
-    required String limit,
-    required String page,
-    bool isLoadMore = false,
-    String? kgkCollection,
-  }) async {
-    if (!isLoadMore) {
-      context.setAppLoading(true);
-    }
-    var response = await getMethod<PaginationData<KgkCoutureDetails>>(
-      ApiClient.homePageKgkCoutureCollections,
-      query: {
-        ApiKey.limit: limit,
-        ApiKey.page: page,
-        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
-      },
-      withCurrencyHeader: true,
-    );
-    if (!isLoadMore) {
-      context.setAppLoading(false);
-    }
-    return response?.fold((l) => Left(l), (r) => Right(r));
-  }
-
   Future<Either<ErrorResponse, PreviewCatalogueDataModel>?> getPreviewCatalogue({required String id}) async {
     context.setAppLoading(true);
     var response = await getMethod<PreviewCatalogueDataModel>(ApiClient.digitalCatalogueById(id), withCurrencyHeader: true);
@@ -937,6 +913,46 @@ class AppRepository extends ApiService {
     var response = await getMethod<JewelleryListingModel>(ApiClient.jewelleryDealOfTheDay,
         query: {ApiKey.page: page, ApiKey.limit: limit}, withCurrencyHeader: true);
     if (isLoadMore) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, JewelleryListingModel>?> homePageKgkCoutureCollectionsForJewelleryListing(
+      {required String limit, required String page, bool isLoadMore = false, String? kgkCollection}) async {
+    if (!isLoadMore) context.setAppLoading(true);
+    var response = await getMethod<JewelleryListingModel>(
+      ApiClient.homePageKgkCoutureCollections,
+      query: {
+        ApiKey.limit: limit,
+        ApiKey.page: page,
+        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
+      },
+      withCurrencyHeader: true,
+    );
+    if (!isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, PaginationData<KgkCoutureDetails>>?> homePageKgkCoutureCollections({
+    required String limit,
+    required String page,
+    bool isLoadMore = false,
+    String? kgkCollection,
+  }) async {
+    if (!isLoadMore) {
+      context.setAppLoading(true);
+    }
+    var response = await getMethod<PaginationData<KgkCoutureDetails>>(
+      ApiClient.homePageKgkCoutureCollections,
+      query: {
+        ApiKey.limit: limit,
+        ApiKey.page: page,
+        if (kgkCollection != null) ApiKey.kgkCollection: kgkCollection,
+      },
+      withCurrencyHeader: true,
+    );
+    if (!isLoadMore) {
       context.setAppLoading(false);
     }
     return response?.fold((l) => Left(l), (r) => Right(r));
