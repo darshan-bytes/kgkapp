@@ -336,7 +336,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         response = await fetchDealOfTheDay(context: context, isLoadMore: isLoadMore);
         break;
       case FetchScenario.coutureCollection:
-        // response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
+        response = await fetchKgkCoutureData(context, emit, isLoadMore, query: query);
         break;
     }
 
@@ -393,7 +393,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
     return ProductDetailsModel(
       suid: item.suid ?? "",
-      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
+      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
       name: item.productDescription ?? "",
       originalPrice: item.finalPrice?.toString().setCurrency,
       offerPrice: item.discountPrice?.toString().setCurrency,
@@ -484,6 +484,17 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       page: paginationScrollController.currentPage.toString(),
       limit: AppConst.pageLimit.toString(),
       isLoadMore: isLoadMore,
+    );
+  }
+
+  /// fetchKgkCoutureData
+  Future<Either<ErrorResponse, JewelleryListingModel>?> fetchKgkCoutureData(
+      BuildContext context, Emitter<ProductListState> emit, bool isLoadMore,
+      {Map<String, String>? query}) async {
+    return AppRepository(context).homePageKgkCoutureCollectionsForJewelleryListing(
+      page: paginationScrollController.currentPage.toString(),
+      limit: AppConst.pageLimit.toString(),
+      isLoadMore: true,
     );
   }
 

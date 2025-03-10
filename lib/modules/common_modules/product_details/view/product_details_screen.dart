@@ -105,7 +105,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     Flexible(
                                         child: SmartText(
                                       bloc.productDetails?.originalPrice,
-                                      style: style.originalPriceStyle,
+                                      style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 14.sp),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     )),
