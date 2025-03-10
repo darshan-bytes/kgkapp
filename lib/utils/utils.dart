@@ -31,7 +31,7 @@ class Utils {
         backgroundColor: AppThemes().appColor.primary,
         borderRadius: BorderRadius.circular(10.r),
         margin: EdgeInsets.all(10.w),
-        closeButtonShowType: CloseButtonShowType.none,
+        closeButton: ToastCloseButton(showType: CloseButtonShowType.none),
         showIcon: false,
         showProgressBar: false,
         alignment: Alignment.topCenter,

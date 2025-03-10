@@ -669,8 +669,12 @@ class AppRepository extends ApiService {
   }
 
   // For Gemstone Filter Option
-  Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({required String type}) async {
-    var response = await getMethod<FilterOptionModel>(ApiClient.filterOptions(type), withCurrencyHeader: true);
+  Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({required String listType, String? type}) async {
+    var response = await getMethod<FilterOptionModel>(
+      ApiClient.filterOptions(listType),
+      query: type.isNotNullNorEmpty ? {ApiKey.type: type} : null,
+      withCurrencyHeader: true,
+    );
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
