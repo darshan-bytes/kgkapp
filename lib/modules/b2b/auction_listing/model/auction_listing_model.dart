@@ -66,7 +66,7 @@ class AuctionDatum {
     required this.createdAt,
     required this.auctionStatus,
     required this.bidAmount,
-    required this.status,
+    this.status = ProjectStatus.onGoing,
   });
 
   final String? auctionId;
@@ -78,7 +78,7 @@ class AuctionDatum {
   final DateTime? createdAt;
   final String? auctionStatus;
   final String? bidAmount;
-  final String? status;
+  final ProjectStatus status;
 
   AuctionDatum copyWith({
     String? auctionId,
@@ -90,7 +90,7 @@ class AuctionDatum {
     DateTime? createdAt,
     String? auctionStatus,
     String? bidAmount,
-    String? status,
+    ProjectStatus? status,
   }) {
     return AuctionDatum(
       auctionId: auctionId ?? this.auctionId,
@@ -116,8 +116,8 @@ class AuctionDatum {
       productId: json["product_id"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       auctionStatus: json["auction_status"],
-      bidAmount: json["bid_amount"]?.toString().toDouble?.toStringAsFixed(2),
-      status: json["status"],
+      bidAmount: json["bid_amount"],
+      status: json["status"] != null ? getAuctionStatus(auctionStatus: json["status"]) : ProjectStatus.onGoing,
     );
   }
 
@@ -133,6 +133,19 @@ class AuctionDatum {
         "bid_amount": bidAmount,
         "status": status,
       };
+
+  static ProjectStatus getAuctionStatus({required String auctionStatus}) {
+    switch (auctionStatus) {
+      case "ONGOING":
+        return ProjectStatus.onGoing;
+      case "WIN":
+        return ProjectStatus.winner;
+      case "LOST":
+        return ProjectStatus.lost;
+      default:
+        return ProjectStatus.onGoing;
+    }
+  }
 
   @override
   String toString() {

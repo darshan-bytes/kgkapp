@@ -212,26 +212,13 @@ class AuctionListingBloc extends Bloc<AuctionListingEvent, AuctionListingState> 
         imageUrl: data.productImage,
         name: data.productDescription,
         skuNo: data.productSku,
-        orderStatus: _getAuctionStatus(auctionStatus: data.auctionStatus ?? ''),
+        orderStatus: data.status,
         bidAmount: data.bidAmount?.setCurrency,
-        bidPlacedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMM),
+        bidPlacedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA),
         type: data.type,
         productId: data.productId,
       );
     }).toList();
-  }
-
-  ProjectStatus _getAuctionStatus({required String auctionStatus}) {
-    switch (auctionStatus) {
-      case "ONGOING":
-        return ProjectStatus.onGoing;
-      case "WIN":
-        return ProjectStatus.winner;
-      case "LOST":
-        return ProjectStatus.lost;
-      default:
-        return ProjectStatus.onGoing;
-    }
   }
 
   Future<void> _setupFilters(BuildContext context) async {
