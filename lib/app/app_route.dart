@@ -26,7 +26,6 @@ class AppRoutes {
   static const paymentPage = '/paymentPage';
   static const writeReviewPage = '/writeReviewPage';
   static const diamondInfoPopupPage = '/diamondInfoPopupPage';
-  static const auctionPage = '/auctionPage';
   static const orderPage = '/orderPage';
   static const orderDetailsPage = '/orderDetailsPage';
   static const auctionListingPage = '/auctionListingPage';
@@ -257,13 +256,6 @@ class AppRoutes {
             create: (context) => DiamondInfoPopupBloc()..add(DiamondInfoPopupInitialEvent(context)),
             child: const DiamondInfoPopupScreen(),
           );
-        };
-        break;
-
-      case auctionPage:
-        builder = (context) {
-          BlocProvider.of<AuctionBloc>(context).add(AuctionInitialEvent(context: context));
-          return const AuctionScreen();
         };
         break;
 
