@@ -57,12 +57,7 @@ class DesignLibraryScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(
-                  APPStrings.showingListLengthX.tr.interpolate([
-                    bloc.paginationScrollController.currentPage,
-                    bloc.totalNumberOfPages,
-                    bloc.totalFilteredRecords,
-                  ]),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
                   style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(

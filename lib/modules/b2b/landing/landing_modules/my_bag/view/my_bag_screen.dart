@@ -154,7 +154,7 @@ class MyBagScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 24.h),
+                SizedBox(height: 16.h),
                 _buildSelectAllProductBox(bloc, style, context),
                 SizedBox(height: 24.h),
                 _buildMyBagList(bloc, style),
@@ -501,12 +501,7 @@ class MyBagScreen extends StatelessWidget {
             bloc.add(MyBagCheckoutEvent(context: context));
           },
           items: bagOrderSummary?.charges
-                  .map(
-                    (e) => OrderSummaryItem(
-                      title: e.title ?? '',
-                      value: e.displayValue?.setCurrency ?? '',
-                    ),
-                  )
+                  .map((e) => OrderSummaryItem(title: e.title ?? '', value: e.displayValue?.setCurrency ?? ''))
                   .toList() ??
               [],
           totalPrice: bagOrderSummary?.totalAmount?.setCurrency ?? '',

@@ -66,9 +66,7 @@ class CadLibraryListingScreen extends StatelessWidget {
   }
 
   Widget _buildCadFilterCount(CadLibraryListingBloc bloc, BuildContext context) {
-    final diamondListingStyle = AppTheme
-        .of(context)
-        .diamondListingStyle;
+    final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
       buildWhen: (previous, current) => current is CadChangeListingTypeState,
       builder: (context, state) {
@@ -77,8 +75,7 @@ class CadLibraryListingScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]),
-                  style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -126,7 +123,7 @@ class CadLibraryListingScreen extends StatelessWidget {
   Widget _buildCadList(CadLibraryListingBloc bloc) {
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
       buildWhen: (previous, current) =>
-      current is CadChangeListingTypeState || current is CadListLoadedMoreState || current is CadListLoadingMoreState,
+          current is CadChangeListingTypeState || current is CadListLoadedMoreState || current is CadListLoadingMoreState,
       builder: (context, state) {
         if (bloc.cadList.isEmpty) {
           return _buildEmptyState();
@@ -196,10 +193,9 @@ class CadLibraryListingScreen extends StatelessWidget {
             onFilterTap: () async {
               await Utils.showSmartModalBottomSheet(
                 context: context,
-                builder: (context) =>
-                    FilterScreen(
-                      onApply: () {},
-                    ),
+                builder: (context) => FilterScreen(
+                  onApply: () {},
+                ),
               );
             },
             onSortTap: () async {

@@ -218,12 +218,7 @@ class OrionScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(
-                  APPStrings.showingListLengthX.tr.interpolate([
-                    orionBloc.paginationScrollController.currentPage,
-                    orionBloc.totalNumberOfPages,
-                    orionBloc.totalFilteredRecords,
-                  ]),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([orionBloc.totalFilteredRecords]),
                   style: style.filterProductCountTextStyle),
               Row(
                 children: [

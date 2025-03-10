@@ -94,7 +94,7 @@
   "mob_natural_diamond": "เพชรธรรมชาติ",
   "mob_loose_diamond": "เพชรหลวม",
   "mob_empty_products": "สินค้าเปล่า",
-  "mob_showing_list_length_x": "แสดง {#} - {#} ของ {#}",
+  "mob_showing_list_length_x": "กำลังแสดง {#}",
   "mob_diy": "DIY",
   "mob_compare_product": "เปรียบเทียบผลิตภัณฑ์",
   "mob_change": "เปลี่ยน",

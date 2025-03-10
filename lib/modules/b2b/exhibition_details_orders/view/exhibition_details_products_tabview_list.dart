@@ -16,14 +16,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           SizedBox(height: 24.h),
           _buildProductDisplay(bloc, style),
           SizedBox(height: 24.h),
-          SmartText(
-            APPStrings.showingListLengthX.tr.interpolate([
-              1,
-              bloc.productList.length,
-              bloc.totalFilteredRecords,
-            ]),
-            style: style.listStatusStyle,
-          ),
+          SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]), style: style.listStatusStyle),
           SizedBox(height: 24.h),
           _buildExhibitionFilterCount(bloc, context),
           SizedBox(height: 24.h),
@@ -56,8 +49,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]),
-                  style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

@@ -285,6 +285,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     /// Determine the scenario for fetching data
     FetchScenario scenario = determineFetchScenario();
+    fetchScenario = scenario;
 
     /// Initialize query if it's null
     query ??= {};
@@ -354,11 +355,16 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
   /// Handle the success response
   Future<void> handleSuccessResponse(JewelleryListingModel success, Emitter<ProductListState> emit) async {
-    totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+    if ((FetchScenario.coutureCollection == fetchScenario) || (FetchScenario.dealOfTheDay == fetchScenario)) {
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
+      totalFilteredRecords = success.totalRecords;
+    } else {
+      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      totalFilteredRecords = success.filteredRecords;
+    }
     final localList = success.data;
 
     /// Show the total number of records in the UI side
-    totalFilteredRecords = success.filteredRecords;
     jewelleryDatumList.addAll(localList);
     productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
 

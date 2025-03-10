@@ -87,7 +87,7 @@ class SearchResultScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SmartText(APPStrings.showingListLengthX.tr.interpolate(["1", "24", 100]), style: diamondListingStyle.filterProductCountTextStyle),
+          SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: diamondListingStyle.filterProductCountTextStyle),
           Expanded(
             child: BlocBuilder<SearchResultBloc, SearchResultState>(
               buildWhen: (_, current) => current is SearchResultChangeListingTypeState,

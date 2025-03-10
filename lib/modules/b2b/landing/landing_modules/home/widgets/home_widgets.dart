@@ -1045,7 +1045,7 @@ class HomeWidgets {
             : null,
         onProductTap: (ProductDetailsModel model) {
           context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-            RoutesData.productId: model.productId ?? '',
+            RoutesData.productId: model.suid ?? '',
             RoutesData.isPageFor: screenIdentifier,
           });
         },
@@ -1068,7 +1068,6 @@ class HomeWidgets {
         onViewAllTap: productList.length > 5
             ? () {
                 String productNavigation = AppConst.recentlyViewed;
-
                 if (commodity == ScreenIdentifier.productForRing) {
                   context.pushNamed(AppRoutes.productListGridPage,
                       arguments: {RoutesData.isPageFor: commodity, RoutesData.productNavigation: productNavigation});

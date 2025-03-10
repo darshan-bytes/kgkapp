@@ -78,6 +78,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                   onEyeTap: onEyeTap,
                   onFavTap: onFavTap,
                   productDetails: product,
+                  isFavourite: product.isFavourite,
                   isCrtAndGramVisible: isCrtAndGramVisible,
                   onAddToBagTap: onAddToBagTap,
                   isHomeView: isHomeView,

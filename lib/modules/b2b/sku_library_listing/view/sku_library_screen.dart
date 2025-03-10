@@ -23,8 +23,7 @@ class SkuLibraryScreen extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 24.h),
         child: BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
-          buildWhen: (previous, current) =>
-          current is SkuLibraryLoadedState || current is SkuLibraryLoadingState,
+          buildWhen: (previous, current) => current is SkuLibraryLoadedState || current is SkuLibraryLoadingState,
           builder: (context, state) {
             if (state is SkuLibraryLoadingState) {
               return const SmartCircularProgressIndicator();
@@ -48,8 +47,7 @@ class SkuLibraryScreen extends StatelessWidget {
   Widget _buildFilterCount(SkuLibraryBloc bloc, BuildContext context) {
     final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     return BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
-      buildWhen: (previous, current) =>
-      current is SkuLibraryChangeListingTypeState,
+      buildWhen: (previous, current) => current is SkuLibraryChangeListingTypeState,
       builder: (context, state) {
         return SizedBox(
           height: 48.h,
@@ -57,11 +55,7 @@ class SkuLibraryScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmartText(
-                APPStrings.showingListLengthX.tr.interpolate([
-                  bloc.paginationScrollController.currentPage,
-                  bloc.totalNumberOfPages,
-                  bloc.skuLibraryList.length,
-                ]),
+                APPStrings.showingListLengthX.tr.interpolate([bloc.skuLibraryList.length]),
                 style: diamondListingStyle.filterProductCountTextStyle,
               ),
               _buildListStyleSwitch(bloc, diamondListingStyle),
@@ -72,8 +66,7 @@ class SkuLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListStyleSwitch(
-      SkuLibraryBloc bloc, DiamondListingStyle diamondListingStyle) {
+  Widget _buildListStyleSwitch(SkuLibraryBloc bloc, DiamondListingStyle diamondListingStyle) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -120,9 +113,7 @@ class SkuLibraryScreen extends StatelessWidget {
   Widget _buildList(SkuLibraryBloc bloc) {
     return BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
       buildWhen: (previous, current) =>
-      current is SkuLibraryChangeListingTypeState ||
-          current is SkuLibraryLoadedMoreState ||
-          current is SkuLibraryLoadingMoreState,
+          current is SkuLibraryChangeListingTypeState || current is SkuLibraryLoadedMoreState || current is SkuLibraryLoadingMoreState,
       builder: (context, state) {
         if (bloc.skuLibraryList.isEmpty) {
           return NoDataFoundWidget(text: APPStrings.noSkuLibraryFound.tr);
@@ -132,17 +123,13 @@ class SkuLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListOrGridView(
-      SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
+  Widget _buildListOrGridView(SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
     return Expanded(
-      child: bloc.isGrid
-          ? _buildGridView(bloc, state, context)
-          : _buildListView(bloc, state, context),
+      child: bloc.isGrid ? _buildGridView(bloc, state, context) : _buildListView(bloc, state, context),
     );
   }
 
-  Widget _buildGridView(
-      SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
+  Widget _buildGridView(SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
     return SmartSingleChildScrollView(
       key: bloc.paginationScrollController.gridKey,
       controller: bloc.paginationScrollController.scrollController,
@@ -152,11 +139,11 @@ class SkuLibraryScreen extends StatelessWidget {
       child: SmartGridView(
         items: List.generate(
           bloc.skuLibraryList.length,
-              (index) => DesignListingGridItem.designGridItem(
+          (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.skuLibraryList[index],
             onTap: () {
               /// TODO: Navigate to the design detail page.
-             // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
+              // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
             },
           ),
         ),
@@ -165,8 +152,7 @@ class SkuLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListView(
-      SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
+  Widget _buildListView(SkuLibraryBloc bloc, SkuLibraryState state, BuildContext context) {
     return RefreshIndicator.adaptive(
       child: ListView.builder(
         key: bloc.paginationScrollController.listKey,
@@ -184,9 +170,7 @@ class SkuLibraryScreen extends StatelessWidget {
                   // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
                 },
               ),
-              if (state is SkuLibraryLoadingMoreState &&
-                  index == bloc.skuLibraryList.length - 1)
-                const SmartCircularProgressIndicator(),
+              if (state is SkuLibraryLoadingMoreState && index == bloc.skuLibraryList.length - 1) const SmartCircularProgressIndicator(),
             ],
           );
         },
@@ -197,28 +181,21 @@ class SkuLibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(
-      BuildContext context, SkuLibraryBloc bloc) {
+  Widget _buildBottomNavigationBar(BuildContext context, SkuLibraryBloc bloc) {
     return BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
-      buildWhen: (previous, current) =>
-      current is SkuLibraryLoadedState ||
-          current is SkuLibraryChangeListingTypeState,
+      buildWhen: (previous, current) => current is SkuLibraryLoadedState || current is SkuLibraryChangeListingTypeState,
       builder: (context, state) {
-        if (state is SkuLibraryLoadedState ||
-            state is SkuLibraryChangeListingTypeState) {
+        if (state is SkuLibraryLoadedState || state is SkuLibraryChangeListingTypeState) {
           return FilterBottomActionBar(
             controller: bloc.paginationScrollController.controller,
             onFilterTap: () {
-              BlocProvider.of<SortFilterBloc>(context).add(
-                  AddSortFilterDataEvent(
-                      filterOptionList: bloc.filterData, context: context));
+              BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
               Utils.showSmartModalBottomSheet(
                 context: context,
                 builder: (context) => FilterScreen(
                   onApply: (value) {
                     if (value != null && value is List<FilterData>) {
-                      bloc.add(SkuLibraryFilterEvent(
-                          context: context, filterData: value));
+                      bloc.add(SkuLibraryFilterEvent(context: context, filterData: value));
                     }
                   },
                 ),
@@ -236,15 +213,11 @@ class SkuLibraryScreen extends StatelessWidget {
 
   Widget _buildScrollToTopFab(SkuLibraryBloc bloc) {
     return BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
-      buildWhen: (previous, current) =>
-      current is SkuLibraryLoadedState ||
-          current is SkuLibraryChangeListingTypeState,
+      buildWhen: (previous, current) => current is SkuLibraryLoadedState || current is SkuLibraryChangeListingTypeState,
       builder: (context, state) {
         return ScrollToTopFAB(
-            canScrollToTop: bloc.paginationScrollController.canScrollToTop,
-            onTap: bloc.paginationScrollController.scrollToTop);
+            canScrollToTop: bloc.paginationScrollController.canScrollToTop, onTap: bloc.paginationScrollController.scrollToTop);
       },
     );
   }
 }
-
