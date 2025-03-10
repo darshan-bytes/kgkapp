@@ -266,6 +266,10 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         if (element.filterType == FilterType.range) {
           query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
           query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+        } else if (element.filterType == FilterType.boolean &&
+            (element.secondaryFilterData ?? []).isNotEmpty &&
+            element.secondaryFilterData!.any((e) => e.isSelected)) {
+          query[element.code ?? ''] = 'YES';
         } else {
           query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
         }
@@ -576,6 +580,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         );
         if (!filterOption.fromCommon) {
           filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        } else if (filterOption.filterType == FilterType.boolean) {
+          filter.secondaryFilterData = [SecondaryFilterData(name: filterOption.name)];
         }
         if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           if (filterOption.data.isNotEmpty) {
