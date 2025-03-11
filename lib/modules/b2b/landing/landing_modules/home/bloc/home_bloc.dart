@@ -167,6 +167,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     appBloc = BlocProvider.of<AppBloc>(event.context);
     currentPageIndex = 0;
     kgkCoutureSelectedIndex = 0;
+    currentCarouselIndex = 0;
     await fetchListOfBag(event.context, emit);
     await fetchStrapiData(event.context, emit);
     await shapeMasterFilters(event.context);
@@ -865,6 +866,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.mobileTopSellingCategories:
         return HomeWidgets.buildTopSellingCategories(
           homeBloc,
+          homeStrapiList[index].title,
           style,
           parseDataList(homeStrapiList[index].data),
           context: context,
@@ -889,6 +891,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeSlug.mobileGetInspired:
         return HomeWidgets.buildGetInspiredSection(
           context,
+          homeStrapiList[index].title,
           homeBloc,
           style,
           parseDataList(homeStrapiList[index].data),
@@ -930,20 +933,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: APPStrings.shopGemstones.tr);
 
       case HomeSlug.mobileKGKCouture:
-        return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, context: context);
+        return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, homeStrapiList[index].info?.title, context: context);
 
       case HomeSlug.mobileRecentlyViewed:
         if (homeStrapiList[index].category == 'jewellery' && homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(
-              APPStrings.recentlyViewedJewellery.tr, homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedJewellery.tr,
+              homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
               context: context);
         } else if (homeStrapiList[index].category == 'diamond' && homeBloc.recentlyViewDiamondList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(
-              APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedDiamond.tr, homeBloc,
+              style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
               context: context, isCrtAndGramVisible: false);
         } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style,
-              homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedGemstone.tr, homeBloc,
+              style, homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
               context: context, isCrtAndGramVisible: false);
         }
 
@@ -993,13 +996,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required BuildContext context,
     required RedirectionTo redirectTo,
     required RedirectionType redirectionType,
-    Map<String, dynamic>? redirectionData,
+    Map<dynamic, dynamic>? redirectionData,
   }) {
     Map<RoutesData, dynamic>? arguments;
     String routeName;
 
     switch (redirectTo) {
       case RedirectionTo.gemstone:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
@@ -1008,14 +1012,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.diamond:
-        routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
+        if(redirectionData == null || redirectionData.isEmpty) return;
+        routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.stoneListingPage;
         arguments = {
-          RoutesData.isPageFor: ScreenIdentifier.diamondForDefault,
+          RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
           RoutesData.filterData: redirectionData,
         };
         break;
 
       case RedirectionTo.jewellery:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
@@ -1024,6 +1030,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.collection:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
         arguments = (redirectionType == RedirectionType.listing)
             ? {
@@ -1036,6 +1043,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case RedirectionTo.unknown:
         printWrapped('Unknown redirection');
         return; // Exit early for unknown redirection
+    }
+
+    if (redirectionType == RedirectionType.details) {
+      arguments[RoutesData.productId] = redirectionData[RoutesData.productId];
     }
 
     context.pushNamed(routeName, arguments: arguments);
@@ -1267,8 +1278,14 @@ RedirectionType getRedirectionTypeFromString(String value) {
   }
 }
 
-Map<String, String> getQueryParamFromUrlForFilter(String url) {
+Map<dynamic, String> getQueryParamFromUrlForFilter(
+  String url, {
+  RedirectionType redirectionType = RedirectionType.listing,
+}) {
   if (url.isEmpty) return {};
+  if (redirectionType == RedirectionType.details) {
+    return {RoutesData.productId: url.split('/').last};
+  }
   final uri = Uri.parse(url);
   return uri.queryParameters;
 }

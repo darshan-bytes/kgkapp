@@ -19,6 +19,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   final CarouselSliderController controller = CarouselSliderController();
   final ScrollController youMayLikeScrollController = ScrollController();
   final ScrollController recentViewScrollController = ScrollController();
+  Map<dynamic, String?>? filterDataMap;
 
   List<String> imgList = [];
   int current = 0;
@@ -743,6 +744,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   void getScreenIdentifier(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.productForRing;
+    filterDataMap = data?[RoutesData.filterData] ?? {};
   }
 
   void _onToggleCompareProduct(ToggleCompareProductEvent event, Emitter<ProductDetailsState> emit) {
