@@ -167,6 +167,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     appBloc = BlocProvider.of<AppBloc>(event.context);
     currentPageIndex = 0;
     kgkCoutureSelectedIndex = 0;
+    currentCarouselIndex = 0;
     await fetchListOfBag(event.context, emit);
     await fetchStrapiData(event.context, emit);
     await shapeMasterFilters(event.context);
@@ -936,16 +937,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       case HomeSlug.mobileRecentlyViewed:
         if (homeStrapiList[index].category == 'jewellery' && homeBloc.recentlyViewedJewelleryList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(
-              APPStrings.recentlyViewedJewellery.tr, homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedJewellery.tr,
+              homeBloc, style, homeBloc.recentlyViewedJewelleryList, ScreenIdentifier.productForRing,
               context: context);
         } else if (homeStrapiList[index].category == 'diamond' && homeBloc.recentlyViewDiamondList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(
-              APPStrings.recentlyViewedDiamond.tr, homeBloc, style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedDiamond.tr, homeBloc,
+              style, homeBloc.recentlyViewDiamondList, ScreenIdentifier.productForDiamonds,
               context: context, isCrtAndGramVisible: false);
         } else if (homeStrapiList[index].category == 'gemstone' && homeBloc.recentlyViewGemstoneList.isNotNullNorEmpty) {
-          return HomeWidgets.buildRecentlyViewedSection(APPStrings.recentlyViewedGemstone.tr, homeBloc, style,
-              homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
+          return HomeWidgets.buildRecentlyViewedSection(homeStrapiList[index].info?.title ?? APPStrings.recentlyViewedGemstone.tr, homeBloc,
+              style, homeBloc.recentlyViewGemstoneList, ScreenIdentifier.productForGemstones,
               context: context, isCrtAndGramVisible: false);
         }
 
@@ -1002,6 +1003,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (redirectTo) {
       case RedirectionTo.gemstone:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
@@ -1010,6 +1012,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.diamond:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.stoneListingPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
@@ -1018,6 +1021,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.jewellery:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
@@ -1026,6 +1030,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.collection:
+        if(redirectionData == null || redirectionData.isEmpty) return;
         routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
         arguments = (redirectionType == RedirectionType.listing)
             ? {
@@ -1041,9 +1046,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     if (redirectionType == RedirectionType.details) {
-      // arguments.putIfAbsent(RoutesData.productId, () => redirectionData?[RoutesData.productId]);
-      print('productId: ${redirectionData}');
-      arguments[RoutesData.productId] = redirectionData?[RoutesData.productId];
+      arguments[RoutesData.productId] = redirectionData[RoutesData.productId];
     }
 
     context.pushNamed(routeName, arguments: arguments);

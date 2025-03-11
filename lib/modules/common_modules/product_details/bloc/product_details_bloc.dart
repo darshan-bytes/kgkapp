@@ -178,7 +178,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
     /// assigning product id
     productId = event.context.routesData?[RoutesData.productId] ?? '--';
-    print('productId >>>>>>>>>>: $productId');
     if (productId.isEmpty || productId == '--') return;
 
     /// loading product details

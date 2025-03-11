@@ -70,12 +70,17 @@ class HomeWidgets {
                 ),
               ),
               SizedBox(height: 16.h),
-              buildImageIndicator(
-                homeBloc,
-                context: context,
-                itemList: dataList,
-                carouselController: homeBloc.engagementListCarouselController,
-                currentIndex: homeBloc.currentCarouselIndex,
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
+                builder: (context, state) {
+                  return buildImageIndicator(
+                    homeBloc,
+                    context: context,
+                    itemList: dataList,
+                    carouselController: homeBloc.engagementListCarouselController,
+                    currentIndex: homeBloc.currentCarouselIndex,
+                  );
+                },
               ),
             ],
           ),
@@ -470,7 +475,7 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildTopSellingCategories(HomeBloc homeBloc, String? title,HomeScreenStyle style, List<AuctionListModel> dataList,
+  static Widget buildTopSellingCategories(HomeBloc homeBloc, String? title, HomeScreenStyle style, List<AuctionListModel> dataList,
       {required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
@@ -898,7 +903,8 @@ class HomeWidgets {
 //   );
 // }
 
-  static Widget buildGetInspiredSection(BuildContext context, String? title,HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
+  static Widget buildGetInspiredSection(
+      BuildContext context, String? title, HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
     return Container(
       color: style.getInspiredSectionColor,
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),

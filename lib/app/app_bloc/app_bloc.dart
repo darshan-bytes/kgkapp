@@ -464,7 +464,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (l) {},
         (PaginationData<CommodityMasterDetails> r) {
           commodityMasterDetails = r.dataList ?? [];
-          print(commodityMasterDetails.length);
         },
       );
     } catch (e) {
