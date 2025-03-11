@@ -259,7 +259,7 @@ class AppRepository extends ApiService {
   // createBidForAuction
   Future<Either<ErrorResponse, CommonResponse>?> createBidForAuction(Map<String, dynamic> body) async {
     context.setAppLoading(true);
-    var response = await postMethod<CommonResponse>(ApiClient.createBid, body, withFullResponse: true);
+    var response = await postMethod<CommonResponse>(ApiClient.createBid, body, withFullResponse: true, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

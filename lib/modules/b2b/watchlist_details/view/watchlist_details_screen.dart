@@ -139,7 +139,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
                       builder: (context, state) {
                         return _buildDetailColumn(
                           APPStrings.remainingTime.tr,
-                          bloc.watchlistRemainTime.formattedDurationWithSecondsShort,
+                          bloc.watchlistRemainTimeFormatted,
                           style,
                           valueStyle: style.watchlistNameStyle,
                         );

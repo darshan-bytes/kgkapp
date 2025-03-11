@@ -66,13 +66,10 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                       return Material(
                         color: Colors.transparent,
                         clipBehavior: Clip.antiAlias,
-                        child: Padding(
-                          padding: EdgeInsets.all(20.w),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: context.height / 2,
-                              maxWidth: context.width / 2,
-                            ),
+                        type: MaterialType.card,
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.w),
                             child: Stack(
                               children: [
                                 SmartImage(

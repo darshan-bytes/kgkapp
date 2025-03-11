@@ -626,7 +626,7 @@
   "mob_search_user": "பயனரைத் தேடுங்கள்",
   "mob_orion": "ஓரியன்",
   "mob_select_diamond_shape": "வைர வடிவத்தைத் தேர்ந்தெடுக்கவும்",
-  "mob_preferred_price_range": "விருப்பமான விலை வரம்பு",
+  "mob_preferred_price_range": "விருப்பமான {#} வரம்பு",
   "mob_inbox": "இன்பாக்ஸ்",
   "mob_sent": "அனுப்பப்பட்டது",
   "mob_trash": "குப்பை",
@@ -811,5 +811,6 @@
   "mob_no_internet_connection_or_server_not_reachable": "இணையதம் அல்லது சேவையகத்தில் இணையதம் இல்லை",
   "mob_auction": "ஏலம்",
   "mob_crt": "கிரீட்",
-  "mob_grms": "கிராம்ஸ்"
+  "mob_grms": "கிராம்ஸ்",
+  "mob_compare_product_minimum": "ஒப்பிடுவதற்கு குறைந்தது இரண்டு தயாரிப்புகளைத் தேர்ந்தெடுக்கவும்"
 }

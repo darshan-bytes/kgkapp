@@ -116,6 +116,9 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       AddressDetails addressDetails = result[RoutesData.addressDetails];
       addressList.add(addressDetails);
       selectedShippingAddress = addressDetails;
+      if (isBillingAndShippingSame) {
+        selectedBillingAddress = addressDetails;
+      }
       emit(AddNewAddressState(addressDetails));
     }
   }
