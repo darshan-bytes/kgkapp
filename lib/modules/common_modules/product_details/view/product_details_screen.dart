@@ -210,7 +210,12 @@ class ProductDetailsScreen extends StatelessWidget {
         return bloc.isCompare
             ? ElevatedButton(
                 onPressed: () {
-                  context.pushNamed(AppRoutes.compareProductPage);
+                  if (compareProductBloc.productIdList.length < 2) {
+                    Utils.showMessage(APPStrings.compareProductMinimum.tr);
+                    return;
+                  } else {
+                    context.pushNamed(AppRoutes.compareProductPage);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: style.ratingGlowColor,

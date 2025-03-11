@@ -138,6 +138,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               discountPercentageString: item.discountPercentage != null && item.discountPercentage != 0
                   ? "-${item.discountPercentage == item.discountPercentage?.toInt() ? item.discountPercentage?.toInt() : item.discountPercentage?.toStringAsFixed(2)}"
                   : "",
+              cut: item.cut,
               clarity: item.clarity,
               ctsOrGms: item.ctsOrGms,
               cts: item.crtEXT,
@@ -253,26 +254,28 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
   }
 
   Future<void> _onMyBagRemoveProduct(MyBagRemoveProductEvent event, Emitter<MyBagState> emit) async {
-    bool isConfirm = false;
-    await Utils.showSmartModalBottomSheet(
-      context: event.context,
-      builder: (context) {
-        return ConfirmationDialog(
-          title: APPStrings.removeProductFromCart.tr,
-          onDeniedText: APPStrings.cancel.tr,
-          onApprovedText: APPStrings.remove.tr,
-          onDenied: () {
-            isConfirm = false;
-            context.pop();
-          },
-          onApproved: () {
-            isConfirm = true;
-            context.pop();
-          },
-        );
-      },
-    );
-    if (!isConfirm) return;
+    if (!event.isFromMoveToWishList) {
+      bool isConfirm = false;
+      await Utils.showSmartModalBottomSheet(
+        context: event.context,
+        builder: (context) {
+          return ConfirmationDialog(
+            title: APPStrings.removeProductFromCart.tr,
+            onDeniedText: APPStrings.cancel.tr,
+            onApprovedText: APPStrings.remove.tr,
+            onDenied: () {
+              isConfirm = false;
+              context.pop();
+            },
+            onApproved: () {
+              isConfirm = true;
+              context.pop();
+            },
+          );
+        },
+      );
+      if (!isConfirm) return;
+    }
     emit(MyBagReloadState());
     String bagId = StorageManager().getBagId() ?? "";
     String suid = myBagProductList[event.index].suid ?? "";
@@ -306,6 +309,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _onMyBagMoveToWishListEvent(MyBagMoveToWishListEvent event, Emitter<MyBagState> emit) async {
     BlocProvider.of<AppBloc>(event.context).add(ProductAddToFavoriteEvent(myBagProductList[event.index], event.context));
+    add(MyBagRemoveProductEvent(index: event.index, context: event.context, isFromMoveToWishList: true));
   }
 
   void _onMyBagSelectAllProductChangedEvent(MyBagSelectAllProductChangedEvent event, Emitter<MyBagState> emit) {
@@ -396,10 +400,20 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
 
   Future<void> _handleCheckoutClick(BuildContext context) async {
     if (StorageManager().getIsSkipLogin()) {
+      bool isApproved = false;
+      await Utils.showLoginRequiredDialog(
+        context,
+        onApproved: () {
+          isApproved = true;
+        },
+      );
+      if (!isApproved) {
+        return;
+      }
       // TODO: We will create a new view to highlight the feature is restricted to logged in users.
-      Utils.showMessage(
-          "${APPStrings.loginToUseThisFeature.tr}\nWe will create a new view to highlight the feature is restricted to logged in users");
-      return;
+      // Utils.showMessage(
+      //     "${APPStrings.loginToUseThisFeature.tr}\nWe will create a new view to highlight the feature is restricted to logged in users");
+      // return;
     }
     bool isAbleToCheckout = false;
 

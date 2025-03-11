@@ -626,7 +626,7 @@
   "mob_search_user": "उपयोगकर्ता खोजें",
   "mob_orion": "ओरायन",
   "mob_select_diamond_shape": "हीरे का आकार चुनें",
-  "mob_preferred_price_range": "पसंदीदा मूल्य सीमा",
+  "mob_preferred_price_range": "पसंदीदा {#} रेंज",
   "mob_inbox": "इनबॉक्स",
   "mob_sent": "भेजा",
   "mob_trash": "कचरा",
@@ -811,5 +811,6 @@
   "mob_no_internet_connection_or_server_not_reachable": "इंटरनेट जोड़ने के लिए कोई संयोग नहीं है या सर्वर उपलब्ध नहीं है",
   "mob_auction": "नीलामी",
   "mob_crt": "सीआरटी",
-  "mob_grms": "ग्राम"
+  "mob_grms": "ग्राम",
+  "mob_compare_product_minimum": "कृपया तुलना करने के लिए कम से कम दो प्रोडक्ट्स चुनें"
 }

@@ -626,7 +626,7 @@
   "mob_search_user": "ค้นหาผู้ใช้",
   "mob_orion": "นายพราน",
   "mob_select_diamond_shape": "เลือกรูปร่างเพชร",
-  "mob_preferred_price_range": "ช่วงราคาที่ต้องการ",
+  "mob_preferred_price_range": "ช่วง {#} ที่ต้องการ",
   "mob_inbox": "กล่องจดหมาย",
   "mob_sent": "ส่งแล้ว",
   "mob_trash": "ขยะ",
@@ -811,5 +811,6 @@
   "mob_no_internet_connection_or_server_not_reachable": "ไม่มีการเชื่อมต่ออินเตอร์เน็ต หรือไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์",
   "mob_auction": "การประมูล",
   "mob_crt": "กระเป๋า",
-  "mob_grms": "กรัม"
+  "mob_grms": "กรัม",
+  "mob_compare_product_minimum": "โปรดเลือกผลิตภัณฑ์อย่างน้อยสองรายการเพื่อเปรียบเทียบ"
 }

@@ -626,7 +626,7 @@
   "mob_search_user": "Search user",
   "mob_orion": "Orion",
   "mob_select_diamond_shape": "Select diamond shape",
-  "mob_preferred_price_range": "Preferred price range",
+  "mob_preferred_price_range": "Preferred {#} range",
   "mob_inbox": "Inbox",
   "mob_sent": "Sent",
   "mob_trash": "Trash",
@@ -811,5 +811,6 @@
   "mob_no_internet_connection_or_server_not_reachable": "No internet connection or server not reachable",
   "mob_auction": "Auction",
   "mob_crt": "crt",
-  "mob_grms": "grms"
+  "mob_grms": "grms",
+  "mob_compare_product_minimum": "Please select at least two products to compare"
 }
