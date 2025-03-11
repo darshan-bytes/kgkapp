@@ -101,6 +101,8 @@ class Home {
     required this.slug,
     required this.category,
     required this.info,
+    required this.shopBy,
+    required this.title,
   });
 
   final int? id;
@@ -109,6 +111,8 @@ class Home {
   final Slug? slug;
   final String? category;
   final Info? info;
+  final String? shopBy;
+  final String? title;
 
   factory Home.fromJson(Map<String, dynamic> json) {
     return Home(
@@ -118,6 +122,8 @@ class Home {
       slug: json["slug"] == null ? null : Slug.fromJson(json["slug"]),
       category: json["category"],
       info: json["info"] == null ? null : Info.fromJson(json["info"]),
+      title: json["title"],
+      shopBy: json["shop_by"],
     );
   }
 
@@ -128,11 +134,13 @@ class Home {
         "slug": slug?.toJson(),
         "category": category,
         "info": info?.toJson(),
+        "title": title,
+        "shop_by": shopBy,
       };
 
   @override
   String toString() {
-    return "$id, $component, $data, $slug, $category, $info";
+    return "$id, $component, $data, $slug, $category, $info, $title, $shopBy";
   }
 }
 
@@ -468,7 +476,7 @@ class Info {
   final dynamic tagline;
   final dynamic sectionTitle;
 
-  factory Info.fromJson(Map<String, dynamic> json){
+  factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
       id: json["id"],
       title: json["title"],
@@ -479,13 +487,12 @@ class Info {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "headline": headline,
-    "tagline": tagline,
-    "section_title": sectionTitle,
-  };
-
+        "id": id,
+        "title": title,
+        "headline": headline,
+        "tagline": tagline,
+        "section_title": sectionTitle,
+      };
 }
 
 class Slug {

@@ -47,9 +47,12 @@ class HomeWidgets {
                     .map((e) => GestureDetector(
                         onTap: () {
                           homeBloc.handleRedirection(
-                              context: context,
-                              redirectTo: getRedirectionToFromString(e.redirectTo ?? ''),
-                              redirectionType: getRedirectionTypeFromString(e.redirectionType ?? ""));
+                            context: context,
+                            redirectTo: getRedirectionToFromString(e.redirectTo ?? ''),
+                            redirectionType: getRedirectionTypeFromString(e.redirectionType ?? ""),
+                            redirectionData: getQueryParamFromUrlForFilter(e.redirectionUrl ?? '',
+                                redirectionType: getRedirectionTypeFromString(e.redirectionType ?? "")),
+                          );
                         },
                         child: SmartImage(
                           path: e.imageUrl ?? '',
@@ -67,12 +70,17 @@ class HomeWidgets {
                 ),
               ),
               SizedBox(height: 16.h),
-              buildImageIndicator(
-                homeBloc,
-                context: context,
-                itemList: dataList,
-                carouselController: homeBloc.engagementListCarouselController,
-                currentIndex: homeBloc.currentCarouselIndex,
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
+                builder: (context, state) {
+                  return buildImageIndicator(
+                    homeBloc,
+                    context: context,
+                    itemList: dataList,
+                    carouselController: homeBloc.engagementListCarouselController,
+                    currentIndex: homeBloc.currentCarouselIndex,
+                  );
+                },
               ),
             ],
           ),
@@ -364,7 +372,9 @@ class HomeWidgets {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {
               RoutesData.isPageFor: ScreenIdentifier.diamondForDefault,
               RoutesData.filterData: {
-                ApiKey.shape: homeBloc.shopDiamondsShapeMasterList[index].shapeName,
+                ApiKey.shape: homeBloc.shopDiamondsShapeMasterList[index].shapeName == "HEARTS"
+                    ? "HEART"
+                    : homeBloc.shopDiamondsShapeMasterList[index].shapeName,
               },
             });
           },
@@ -403,7 +413,10 @@ class HomeWidgets {
         final AuctionListModel item = homeBloc.shopGemstonesList[index];
         return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.stoneListingPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForGemstones});
+            context.pushNamed(AppRoutes.stoneListingPage, arguments: {
+              RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
+              RoutesData.filterData: {ApiKey.shape: item.name}
+            });
           },
           title: item.name ?? '',
           imageWidth: 72.w,
@@ -449,9 +462,12 @@ class HomeWidgets {
                       isMemCacheEnabled: false,
                       onTap: () {
                         homeBloc.handleRedirection(
-                            context: context,
-                            redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
-                            redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""));
+                          context: context,
+                          redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
+                          redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
+                          redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
+                              redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
+                        );
                       },
                     ))
                 .toList())
@@ -459,12 +475,12 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildTopSellingCategories(HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList,
+  static Widget buildTopSellingCategories(HomeBloc homeBloc, String? title, HomeScreenStyle style, List<AuctionListModel> dataList,
       {required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SmartText(APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
+        SmartText(title ?? APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
         SmartGridView(
             columns: 2,
@@ -477,9 +493,6 @@ class HomeWidgets {
                       fit: BoxFit.contain,
                       isMemCacheEnabled: false,
                       onTap: () {
-                        printWrapped("Redirect To: ${field.redirectTo}");
-                        printWrapped("Redirect Type: ${field.redirectionType}");
-                        printWrapped("Redirect Url: ${field.redirectionUrl}");
                         homeBloc.handleRedirection(
                           context: context,
                           redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
@@ -516,7 +529,8 @@ class HomeWidgets {
                 context: context,
                 redirectTo: getRedirectionToFromString(redirectTo),
                 redirectionType: getRedirectionTypeFromString(redirectionType),
-                redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? ''),
+                redirectionData:
+                    getQueryParamFromUrlForFilter(redirectionUrl ?? '', redirectionType: getRedirectionTypeFromString(redirectionType)),
               );
             },
           ),
@@ -535,7 +549,8 @@ class HomeWidgets {
                   context: context,
                   redirectTo: getRedirectionToFromString(redirectTo),
                   redirectionType: getRedirectionTypeFromString(redirectionType),
-                  redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? ''),
+                  redirectionData:
+                      getQueryParamFromUrlForFilter(redirectionUrl ?? '', redirectionType: getRedirectionTypeFromString(redirectionType)),
                 );
               },
               child: Container(
@@ -554,7 +569,7 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, {required BuildContext context}) {
+  static Widget buildKGKCoutureTabBarSection(HomeBloc homeBloc, HomeScreenStyle style, String? title, {required BuildContext context}) {
     if (homeBloc.kgkCoutureSelectedIndex == 0 && homeBloc.luminousProductViewList.isNullOrEmpty) {
       return SizedBox();
     }
@@ -564,7 +579,7 @@ class HomeWidgets {
           mainAxisSize: MainAxisSize.min,
           children: [
             SmartText(
-              APPStrings.kgkCouture.tr,
+              title ?? APPStrings.kgkCouture.tr,
               style: style.bannerTitleStyle,
               textAlign: TextAlign.center,
             ),
@@ -786,7 +801,12 @@ class HomeWidgets {
                             ],
                           ),
                           SizedBox(height: 12.h),
-                          SmartButton(onTap: () {}, title: APPStrings.getStarted.tr)
+                          SmartButton(
+                              onTap: () {
+                                context.pushNamed(AppRoutes.stoneListingPage,
+                                    arguments: {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY});
+                              },
+                              title: APPStrings.getStarted.tr)
                         ],
                       );
                     },
@@ -883,12 +903,13 @@ class HomeWidgets {
 //   );
 // }
 
-  static Widget buildGetInspiredSection(BuildContext context, HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
+  static Widget buildGetInspiredSection(
+      BuildContext context, String? title, HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
     return Container(
       color: style.getInspiredSectionColor,
       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
+        SmartText(title ?? APPStrings.getInspired.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
         SmartGridView(
             columns: 2,
@@ -903,7 +924,8 @@ class HomeWidgets {
                         context: context,
                         redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
                         redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
-                        redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? ''),
+                        redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
+                            redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
                       );
                     },
                     topWidget: SmartImage(

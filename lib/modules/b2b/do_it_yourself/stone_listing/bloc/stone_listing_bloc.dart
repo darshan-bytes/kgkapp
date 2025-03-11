@@ -31,7 +31,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Variables for managing pagination and filtering
   String productId = "";
   String productNavigation = "";
-  Map<String, String?>? filterDataMap;
+  Map<dynamic, String?>? filterDataMap;
 
   /// Variables for sorting
   String sortKey = AppConst.sortKeyUpdatedDateTime;
@@ -131,9 +131,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// Get screen identifier
   void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
-    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDIY;
+    screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDefault;
     productId = data?[RoutesData.productId] ?? "";
-    productNavigation = data?[RoutesData.productNavigation] ?? AppConst.youMayLike;
+    productNavigation = data?[RoutesData.productNavigation] ?? "";
     filterDataMap = data?[RoutesData.filterData];
 
     /// Here we set the appbar title

@@ -13,6 +13,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   List<String> imgList = [];
   List<ProductDetailsModel> suggestedProductList = [];
   ScreenIdentifier screenIdentifier = ScreenIdentifier.diamondForDefault;
+  Map<dynamic, String?>? filterDataMap;
 
   bool isStoneDetailsOpen = false;
   GlobalKey<SmartExpansionTileState> stoneDetailsKey = GlobalKey();
@@ -39,6 +40,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
     userType = appBloc.userType;
     Map<RoutesData, dynamic>? data = event.context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor] ?? ScreenIdentifier.diamondForDefault;
+    filterDataMap = data?[RoutesData.filterData] ?? {};
     String productId = data?[RoutesData.productId] ?? '';
     if (productId.isEmpty) return;
     await getDIYDetails(event.context, productId);
