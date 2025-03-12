@@ -161,6 +161,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       productNavigation = data[RoutesData.productNavigation] ?? AppConst.youMayLike;
       fetchScenario = data[RoutesData.dealsOfTheDay] ?? FetchScenario.regularList;
       filterDataMap = data[RoutesData.filterData] ?? {};
+
+      if (collectionName.isNotNullNorEmpty) {
+        filterDataMap ??= {};
+        filterDataMap?[ApiKey.kgkCollection] = collectionName;
+      }
     }
 
     /// Here we set the appbar title
