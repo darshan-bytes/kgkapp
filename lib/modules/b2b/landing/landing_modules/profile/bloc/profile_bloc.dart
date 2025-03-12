@@ -211,8 +211,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       firstNameController.text = userIdDetails?.firstname ?? '';
       lastNameController.text = userIdDetails?.lastname ?? '';
       emailController.text = userIdDetails?.email ?? '';
-      selectedCountry =
-          CountryParser.tryParsePhoneCode(userIdDetails?.phoneCode ?? '') ?? Country.from(json: selectedCountryCodes.first.toJson());
+      selectedCountry = CountryParser.tryParsePhoneCode(userIdDetails?.phoneCode ?? '') ?? selectedCountryCodes.first;
       contactNumberController.text = userIdDetails?.phone ?? '';
       profilePickedImage = null;
       selectedProfilePickedImage = null;

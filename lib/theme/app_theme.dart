@@ -478,6 +478,7 @@ class CollectionViewStyle {
   final TextStyle collectionListTitleStyle;
   final Color selectedTabColor;
   final Color unSelectedTabColor;
+  final Color backgroundColor;
 
   CollectionViewStyle({
     required this.headerBgColor,
@@ -486,6 +487,7 @@ class CollectionViewStyle {
     required this.collectionListTitleStyle,
     required this.selectedTabColor,
     required this.unSelectedTabColor,
+    required this.backgroundColor,
   });
 }
 

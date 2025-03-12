@@ -345,15 +345,14 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         ApiKey.limit: AppConst.pageLimit.toString(),
         ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
       };
-      if(query.isNotEmpty){
+      if (query.isNotEmpty) {
         Map<String, String> stringMap = query.map(
-              (key, value) => MapEntry(key.toString(), value ?? ''),
+          (key, value) => MapEntry(key.toString(), value ?? ''),
         );
         queryParam.addAll(stringMap);
       }
       response = await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
     } else {
-
       response = await AppRepository(context).fetchGemstoneList(
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore,
@@ -528,17 +527,20 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   /// For Setup Filters
   Future<void> _setupFilters(BuildContext context, ScreenIdentifier screenIdentifier) async {
     String filterKey = "";
+    String type = "";
     if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
       filterKey = AppConst.diamondForDIYFilter;
+      type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
       filterKey = AppConst.diamondFilter;
+      type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
       filterKey = AppConst.gemstoneFilter;
+      type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     }
     if (filterKey.isEmpty) {
       return;
     }
-    final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey, type: type);
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {

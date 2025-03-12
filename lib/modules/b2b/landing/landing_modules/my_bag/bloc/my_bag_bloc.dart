@@ -170,6 +170,8 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               originalPrice: item.totalPrice?.setCurrency,
             );
           });
+        } else {
+          await clearData();
         }
       }
     });
@@ -290,6 +292,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         Utils.showMessage(l.message);
       },
       (r) async {
+        if (myBagProductList.isEmpty) {}
         await fetchListOfBag(event.context, emit);
         emit(const MyBagLoadedState());
         await fetchSalesmanList(event.context, emit);
