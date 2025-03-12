@@ -80,28 +80,43 @@ class CollectionScreen extends StatelessWidget {
                 onRefresh: () async {
                   bloc.add(CollectionListPullToRefreshEvent(context));
                 },
-                child: ListView.builder(
+                child: ListView.separated(
                   controller: bloc.paginationScrollController.controller,
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 16.h),
                   shrinkWrap: true,
                   itemCount: bloc.collectionMasterList.length,
                   itemBuilder: (context, index) {
                     CollectionDataItemsModel collectionDataModel = bloc.collectionMasterList[index];
                     return Column(
                       children: [
-                        SmartImage(
-                          onTap: () =>
-                              bloc.navigateToJewelleryListingScreen(context: context, collectionName: collectionDataModel.name ?? ""),
-                          path: collectionDataModel.image ?? '',
-                          width: context.width,
-                          fit: BoxFit.contain,
-                          margin: EdgeInsets.only(bottom: 16.h),
+                        Card(
+                          color: style.backgroundColor,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SmartImage(
+                                onTap: () =>
+                                    bloc.navigateToJewelleryListingScreen(context: context, collectionName: collectionDataModel.name ?? ""),
+                                path: collectionDataModel.image ?? '',
+                                width: context.width,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(height: 16.h),
+                              SmartText(
+                                collectionDataModel.name ?? '',
+                                style: style.collectionListTitleStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 16.h),
+                            ],
+                          ),
                         ),
                         if (state is CollectionListLoadingMoreState && index == bloc.collectionMasterList.length - 1)
                           const SmartCircularProgressIndicator()
                       ],
                     );
                   },
+                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
                 ),
               );
             },

@@ -206,6 +206,7 @@ class LightModeTheme extends AppTheme {
         collectionListTitleStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 28.sp, color: colors.color303538),
         selectedTabColor: colors.primary,
         unSelectedTabColor: colors.transparent,
+        backgroundColor: colors.white,
       );
 
   @override
