@@ -272,7 +272,11 @@ class ProductDetailsScreen extends StatelessWidget {
                                       bloc.onTap360Image(context);
                                     }
                                   : null,
-                              videoUrl: bloc.videoUrl,
+                              onVideoTap: bloc.videoUrl.isNotNullNorEmpty
+                                  ? () {
+                                      bloc.handleVideoTap(context);
+                                    }
+                                  : null,
                               onTapFullImage: (int index) {
                                 bloc.onTapFullImage(context: context, currentIndex: index);
                               },

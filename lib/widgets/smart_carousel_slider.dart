@@ -5,9 +5,9 @@ class SmartCarouselSlider extends StatelessWidget {
   final CarouselSliderController controller;
   final Function(int index, CarouselPageChangedReason reason)? onPageChanged;
   final Function()? on360Tap;
+  final Function()? onVideoTap;
   final Color? backgroundColor;
   final Function(int currentPage)? onTapFullImage;
-  final String? videoUrl;
 
   const SmartCarouselSlider({
     super.key,
@@ -17,7 +17,7 @@ class SmartCarouselSlider extends StatelessWidget {
     this.on360Tap,
     this.backgroundColor,
     this.onTapFullImage,
-    this.videoUrl,
+    this.onVideoTap,
   });
 
   @override
@@ -43,7 +43,7 @@ class SmartCarouselSlider extends StatelessWidget {
                   }).toList(),
                   carouselController: controller,
                   options: CarouselOptions(
-                      autoPlay: imgList.length > 1 && videoUrl.isNullOrEmpty,
+                      autoPlay: imgList.length > 1 && onVideoTap != null,
                       enableInfiniteScroll: imgList.length > 1,
                       viewportFraction: 1.5,
                       aspectRatio: 1,
@@ -54,7 +54,7 @@ class SmartCarouselSlider extends StatelessWidget {
                 ),
               ),
             ),
-            if (on360Tap != null || videoUrl.isNotNullNorEmpty)
+            if (on360Tap != null || onVideoTap != null)
               Align(
                 alignment: Alignment.topLeft,
                 child: Column(
@@ -71,17 +71,10 @@ class SmartCarouselSlider extends StatelessWidget {
                           on360Tap?.call();
                         },
                       ),
-                    if (videoUrl.isNotNullNorEmpty)
+                    if (onVideoTap != null)
                       IconButton(
                         onPressed: () {
-                          if (videoUrl.isNotNullNorEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return ProductVideoWidget(path: videoUrl!);
-                              },
-                            );
-                          }
+                          onVideoTap?.call();
                         },
                         icon: Icon(
                           Icons.video_file_outlined,
