@@ -1303,13 +1303,13 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
   Future<void> fetchCommodityMasterFilters(BuildContext context) async {
     try {
-      final response = await BlocProvider.of<AppBloc>(context).fetchCommodityMasterFilters(context);
+      final response = await BlocProvider.of<AppBloc>(context).fetchHomeGemstiones(context);
       shopGemstonesList = List.generate(response.length, (index) {
-        CommodityMasterDetails item = response[index];
+        HomeGemstonesModel item = response[index];
         return AuctionListModel(
           id: item.id?.toString() ?? '',
-          name: item.name,
-          imageUrl: item.imgPath?.setMediaUrl,
+          name: item.commodityName,
+          imageUrl: item.image?.setMediaUrl,
           redirectTo: RedirectionTo.jewellery.toString(),
         );
       });

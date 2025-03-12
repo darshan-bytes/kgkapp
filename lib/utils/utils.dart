@@ -572,4 +572,7 @@ class Utils {
       isAddedToCart: gemstone.isAddedToCart,
     );
   }
+
+  /// Make getter for is rtl
+  static bool get isRtl => StorageManager.instance.getLocale() == 'ar';
 }

@@ -74,12 +74,13 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         path: leadingImage!,
         height: 40.w,
         width: 40.w,
+        matchTextDirection: true,
       );
     } else if (isBack) {
       return GestureDetector(
         onTap: onBack ?? () => context.pop(),
         child: Container(
-          padding: EdgeInsets.only(left: 17.w),
+          padding: EdgeInsetsDirectional.only(start: 17.w),
           height: 72.w,
           width: 41.w,
           color: style.transparentColor,
@@ -88,6 +89,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
               path: isSearchBar ? AppImages.icArrowLeftAppbar : AppImages.icBack,
               height: 24.w,
               width: 24.w,
+              matchTextDirection: true,
             ),
           ),
         ),
@@ -131,8 +133,8 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 8.w),
-                      padding: EdgeInsets.zero,
+                      margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 8.w),
+                      padding: EdgeInsetsDirectional.zero,
                       child: SmartImage(
                         path: AppImages.icImgSearch,
                         height: 16.w,
@@ -147,8 +149,8 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 10.w),
-                      padding: EdgeInsets.zero,
+                      margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 10.w),
+                      padding: EdgeInsetsDirectional.zero,
                       child: SmartImage(
                         path: AppImages.icSearchThin,
                         height: 16.w,
@@ -159,7 +161,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+            contentPadding: EdgeInsetsDirectional.symmetric(vertical: 10.h, horizontal: 16.w),
           )),
         ],
       );
@@ -219,7 +221,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildIconButton(VoidCallback onTap, String assetPath, {double? size}) {
     return Padding(
-      padding: EdgeInsets.only(left: 20.w),
+      padding: EdgeInsetsDirectional.only(start: 20.w),
       child: InkWell(
         onTap: onTap,
         child: SizedBox(
@@ -230,6 +232,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
               path: assetPath,
               height: size?.w,
               width: size?.w,
+              matchTextDirection: true,
             ),
           ),
         ),
@@ -242,6 +245,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (appBloc.notificationCount > 0) {
       item = Badge.count(
         count: appBloc.notificationCount,
+        // alignment: Utils.isRtl ? AlignmentDirectional.topStart : AlignmentDirectional.topEnd,
         child: item,
       );
     }

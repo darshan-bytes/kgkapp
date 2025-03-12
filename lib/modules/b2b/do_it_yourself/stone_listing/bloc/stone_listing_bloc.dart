@@ -295,10 +295,16 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Fetch gemstone list
   Future<void> fetchGemstoneList(BuildContext context, Emitter<StoneListingState> emit,
-      {bool isLoadMore = false, Map<String, String>? query}) async {
+      {bool isLoadMore = false, Map<String, String?>? query}) async {
     final String type = isInitialToggle ? AppConst.precious : AppConst.semiPrecious;
     Either<ErrorResponse, GemstoneListingModel>? response;
     query ??= {};
+    if (filterDataMap?.isNotEmpty ?? false) {
+      query.addAll(
+        filterDataMap!.map((key, value) => MapEntry(key.toString(), value ?? '')),
+      );
+    }
+
     filterData
         .where((element) =>
             (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
@@ -339,9 +345,15 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
         ApiKey.limit: AppConst.pageLimit.toString(),
         ApiKey.stone: AppConst.gemstoneDealsOfTheDayParam
       };
-      queryParam.addAll(query);
+      if(query.isNotEmpty){
+        Map<String, String> stringMap = query.map(
+              (key, value) => MapEntry(key.toString(), value ?? ''),
+        );
+        queryParam.addAll(stringMap);
+      }
       response = await AppRepository(context).getGemstoneDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
     } else {
+
       response = await AppRepository(context).fetchGemstoneList(
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore,
