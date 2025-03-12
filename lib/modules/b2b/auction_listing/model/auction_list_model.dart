@@ -14,6 +14,7 @@ class AuctionListModel {
   String? redirectionType;
   String? productId;
   String? redirectionUrl;
+  String? subTypeCode;
 
   AuctionListModel({
     this.id,
@@ -29,5 +30,6 @@ class AuctionListModel {
     this.redirectionType,
     this.productId,
     this.redirectionUrl,
+    this.subTypeCode,
   });
 }

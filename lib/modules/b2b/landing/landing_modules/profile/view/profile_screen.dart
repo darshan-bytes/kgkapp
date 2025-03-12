@@ -40,7 +40,8 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   _buildProfileHeader(style: style, bloc: bloc, context: context),
                   Divider(color: style.dividerColor, thickness: 8.h),
-                  SmartText(APPStrings.myAccount.tr, style: style.subTitleStyle, optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h)),
+                  SmartText(APPStrings.myAccount.tr,
+                      style: style.subTitleStyle, optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 16.h)),
                   _buildAccountList(style, bloc),
                   if (bloc.userType == UserType.internal) ...[
                     Divider(color: style.dividerColor, thickness: 8.h),
@@ -130,6 +131,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   SmartImage(
                     path: bloc.profileCMSList[index].image ?? '',
+                    matchTextDirection: true,
                   ),
                   SizedBox(width: 12.h),
                   Expanded(
@@ -172,6 +174,7 @@ class ProfileScreen extends StatelessWidget {
                     SmartImage(
                       color: style.arrowRightColor,
                       path: bloc.profileCMSList[index].isSubListExpanded ? AppImages.icArrowUp : AppImages.icArrowDown,
+                      matchTextDirection: true,
                     )
                 ],
               ),
@@ -218,7 +221,10 @@ class ProfileScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmartImage(path: image),
+            SmartImage(
+              path: image,
+              matchTextDirection: true,
+            ),
             SizedBox(width: 12.h),
             SmartText(title, style: textStyle),
           ],
@@ -322,7 +328,11 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          SmartImage(path: AppImages.icEditProfile, onTap: () => bloc.onTapEditProfileButton(context: context))
+          SmartImage(
+            path: AppImages.icEditProfile,
+            onTap: () => bloc.onTapEditProfileButton(context: context),
+            matchTextDirection: true,
+          )
         ],
       ),
     );

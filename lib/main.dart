@@ -75,13 +75,10 @@ class _MyAppState extends State<MyApp> {
   /// Build date banner tag on top right corner
   Align buildDateBannerTag() {
     return Align(
-      alignment: Alignment.topRight,
-      child: Container(
-        padding: const EdgeInsets.only(top: 55, right: 50),
-        child: const Banner(
-          message: "10-March",
-          location: BannerLocation.bottomStart,
-        ),
+      alignment: AlignmentDirectional.topEnd,
+      child: const Banner(
+        message: "10-March",
+        location: BannerLocation.topEnd,
       ),
     );
   }

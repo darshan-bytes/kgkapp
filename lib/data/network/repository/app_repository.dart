@@ -180,7 +180,7 @@ class AppRepository extends ApiService {
     String? sortValue,
     bool isLoadMore = false,
     String? type,
-    Map<String, String>? query,
+    Map<String, String?>? query,
   }) async {
     if (isLoadMore) {
       context.setAppLoading(true);
@@ -188,13 +188,19 @@ class AppRepository extends ApiService {
     Map<String, String> queryParams = {
       ApiKey.limit: limit,
       ApiKey.page: page,
-      if (sortKey != null) ApiKey.sortKey: sortKey,
-      if (sortValue != null) ApiKey.sortValue: sortValue,
-      if (type != null) ApiKey.subTypeCode: type
+      if (sortKey?.isNotEmpty ?? false) ApiKey.sortKey: sortKey!,
+      if (sortValue?.isNotEmpty ?? false) ApiKey.sortValue: sortValue!,
+      if (type?.isNotEmpty ?? false) ApiKey.subTypeCode: type!,
     };
-    if (query != null) {
-      queryParams.addAll(query);
+
+    // Ensure query is not null or empty before processing
+    if (query?.isNotEmpty ?? false) {
+      queryParams.addAll(
+        query!.map((key, value) => MapEntry(key.toString(), value ?? '')),
+      );
     }
+
+
     var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
@@ -853,12 +859,25 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
+  /// Right now not needed
+  // Future<Either<ErrorResponse, PaginationData<CommodityMasterDetails>>?> commodityMasterFilters(
+  //     {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+  //   if (isShowLoader) {
+  //     context.setAppLoading(true);
+  //   }
+  //   var response = await postMethod<PaginationData<CommodityMasterDetails>>(ApiClient.commodityMasterFilters, body);
+  //   if (isShowLoader) {
+  //     context.setAppLoading(false);
+  //   }
+  //   return response?.fold((l) => Left(l), (r) => Right(r));
+  // }
+
+  Future<Either<ErrorResponse, PaginationData<HomeGemstonesModel>>?> homePageShopGemstones(
       {Map<String, dynamic>? body, bool isShowLoader = false}) async {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
-    var response = await postMethod<PaginationData<CommodityMasterDetails>>(ApiClient.commodityMasterFilters, body);
+    var response = await getMethod<PaginationData<HomeGemstonesModel>>(ApiClient.homePageShopByGemstones);
     if (isShowLoader) {
       context.setAppLoading(false);
     }

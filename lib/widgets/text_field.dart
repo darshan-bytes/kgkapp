@@ -16,7 +16,7 @@ class SmartTextField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final Iterable<String>? autofillHints;
   final Color? color;
-  final EdgeInsets? contentPadding;
+  final EdgeInsetsGeometry? contentPadding;
   final Function(String)? onValueChanges;
   final Function(String)? onFieldSubmitted;
   final Function(String)? validator;

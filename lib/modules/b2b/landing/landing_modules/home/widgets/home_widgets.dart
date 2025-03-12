@@ -415,7 +415,7 @@ class HomeWidgets {
           onTap: () {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {
               RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
-              RoutesData.filterData: {ApiKey.shape: item.name}
+              RoutesData.filterData: {ApiKey.commodityName: item.name, ApiKey.subTypeCode: item.subTypeCode}
             });
           },
           title: item.name ?? '',
@@ -478,7 +478,7 @@ class HomeWidgets {
   static Widget buildTopSellingCategories(HomeBloc homeBloc, String? title, HomeScreenStyle style, List<AuctionListModel> dataList,
       {required BuildContext context}) {
     return Padding(
-      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
+      padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 22.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(title ?? APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -1004,7 +1004,9 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildJewelleryList(String title, HomeBloc homeBloc, HomeScreenStyle style) {
+  static Widget buildJewelleryList(String title, HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
+    homeBloc.jewelleryList.clear();
+    homeBloc.jewelleryList.addAll(dataList);
     return SmartHorizontalItemBuilder(
       itemCount: homeBloc.jewelleryList.length,
       itemBetweenSpace: 16.w,
@@ -1017,7 +1019,7 @@ class HomeWidgets {
         final AuctionListModel item = homeBloc.jewelleryList[index];
         return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing});
+            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.filterData: getQueryParamFromUrlForFilter(item.redirectionUrl ?? '')});
           },
           imageUrl: item.imageUrl ?? '',
           title: item.name ?? '',
