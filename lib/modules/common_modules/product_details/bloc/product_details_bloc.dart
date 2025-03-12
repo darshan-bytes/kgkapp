@@ -1125,4 +1125,22 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       _timerValue = APPStrings.loading.tr;
     }
   }
+
+  void handleVideoTap(BuildContext context) {
+    if (videoUrl.isNullOrEmpty) return;
+
+    if (productDetails?.commodity == Commodity.jewellery) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ProductVideoWidget(path: videoUrl!);
+        },
+      );
+    } else if (productDetails?.commodity == Commodity.diamond) {
+      context.pushNamed(
+        AppRoutes.cmsWebViewPage,
+        arguments: {RoutesData.cmsPageData: CmsWebViewDataModel(url: videoUrl)},
+      );
+    }
+  }
 }

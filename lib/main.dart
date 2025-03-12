@@ -64,9 +64,7 @@ class _MyAppState extends State<MyApp> {
           buildAppRootsWidgets(appBloc, widget),
           buildDateBannerTag(),
           if (appState is ConnectivityState && !appState.isConnected)
-            NoInternetScreen(
-              theme: appBloc.themeData ?? appBloc.appThemes.light(),
-            )
+            NoInternetScreen(theme: appBloc.themeData ?? appBloc.appThemes.light()),
         ],
       ),
     );
@@ -78,10 +76,7 @@ class _MyAppState extends State<MyApp> {
       alignment: Alignment.topRight,
       child: Container(
         padding: const EdgeInsets.only(top: 55, right: 50),
-        child: const Banner(
-          message: "10-March",
-          location: BannerLocation.bottomStart,
-        ),
+        child: const Banner(message: "11-March", location: BannerLocation.bottomStart),
       ),
     );
   }
@@ -100,9 +95,7 @@ class _MyAppState extends State<MyApp> {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   color: Colors.grey.withValues(alpha: 0.5),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           ),

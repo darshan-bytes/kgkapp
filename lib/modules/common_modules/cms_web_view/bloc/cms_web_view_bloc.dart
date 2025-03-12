@@ -17,7 +17,6 @@ class CmsWebViewBloc extends Bloc<CmsWebViewEvent, CmsWebViewState> {
     CmsWebViewDataModel? webViewData = event.context.routesData?[RoutesData.cmsPageData];
     appBloc = BlocProvider.of<AppBloc>(event.context);
     if (webViewData != null) {
-
       // For future development
       // if( webViewData.attribute.isNotNullNorEmpty) {
       //   await AppRepository(event.context).fetchStrapiDataFroAboutUs(webViewData.attribute);
@@ -26,7 +25,13 @@ class CmsWebViewBloc extends Bloc<CmsWebViewEvent, CmsWebViewState> {
       appBarTitle = webViewData.title ?? '';
       String url = webViewData.url ?? '';
 
-      webViewController = WebViewController()..setJavaScriptMode(JavaScriptMode.unrestricted);
+      webViewController = WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setNavigationDelegate(NavigationDelegate(
+          onNavigationRequest: (request) {
+            return NavigationDecision.navigate;
+          },
+        ));
       if (url.isNotNullNorEmpty) {
         await webViewController.loadRequest(Uri.parse(url));
         emit(CmsWebViewLoadedState(controller: webViewController));
