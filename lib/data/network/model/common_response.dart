@@ -179,12 +179,16 @@ class CommonResponse<T> {
         return ProductReviewWrapperModel.fromJson(json);
       case const (PaginationData<MetalShapeModel>):
         return PaginationData<MetalShapeModel>.fromJson(json);
+      case const (PaginationData<HomeGemstonesModel>):
+        return PaginationData<HomeGemstonesModel>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):
         return json;
       default:
         throw KGKException(message: 'Specific model retrieve error.....', code: 'model_not_found');
+
+      /// When you use PaginationData data model, in that case you also need to place the model in the PaginationData class switch case
     }
   }
 }

@@ -123,6 +123,8 @@ class ApiClient {
 
   static const String commodityMasterFilters = '$apiBaseUrl/commodity-master/filters';
 
+  static const String homePageShopByGemstones = '$apiBaseUrl/homepage-collections/home-page-shopbygemstones';
+
   static const String productsShare = '$apiBaseUrl/products-share';
 
   static const String sortingData = '$apiBaseUrl/common-modules/sorting-data';

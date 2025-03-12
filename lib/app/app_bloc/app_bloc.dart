@@ -448,9 +448,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     return newLaunchedList;
   }
 
-  Future<List<CommodityMasterDetails>> fetchCommodityMasterFilters(BuildContext context,
+  Future<List<HomeGemstonesModel>> fetchHomeGemstiones(BuildContext context,
       {bool isShowLoader = true, bool isForceFetch = false}) async {
-    List<CommodityMasterDetails> commodityMasterDetails = [];
+    List<HomeGemstonesModel> commodityMasterDetails = [];
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {ApiKey.dynamicObject: {}},
@@ -458,11 +458,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ApiKey.search: "",
         ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
-      Either<ErrorResponse, PaginationData<CommodityMasterDetails>>? response =
-          await AppRepository(context).commodityMasterFilters(body: body, isShowLoader: isShowLoader);
+      Either<ErrorResponse, PaginationData<HomeGemstonesModel>>? response =
+          await AppRepository(context).homePageShopGemstones(body: body, isShowLoader: isShowLoader);
       response?.fold(
         (l) {},
-        (PaginationData<CommodityMasterDetails> r) {
+        (PaginationData<HomeGemstonesModel> r) {
           commodityMasterDetails = r.dataList ?? [];
         },
       );

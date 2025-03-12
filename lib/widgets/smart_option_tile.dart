@@ -37,6 +37,7 @@ class SmartOptionTile extends StatelessWidget {
                 width: imageSize ?? 24.w,
                 color: leadingImageColor,
                 fit: BoxFit.contain,
+                matchTextDirection: true,
               ),
               SizedBox(
                 width: 12.w,
@@ -74,6 +75,7 @@ class SmartOptionTile extends StatelessWidget {
                   child: SmartImage(
                     path: profileListModel.trailingIcon ?? "",
                     color: style.arrowRightColor,
+                    matchTextDirection: true,
                   ),
                 ),
             ]),

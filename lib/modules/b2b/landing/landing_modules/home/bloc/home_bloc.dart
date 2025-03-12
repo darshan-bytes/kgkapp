@@ -9,7 +9,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late AppBloc appBloc;
 
   //Jewellery List
-  final List<AuctionListModel> jewelleryList = _generateJewelleryList();
+  final List<AuctionListModel> jewelleryList = [];
 
   //Engagement List With slider controller
   int currentCarouselIndex = 0;
@@ -228,26 +228,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     refreshCompleter = Completer<bool>();
     add(HomePullToRefreshEvent(context: context));
     return refreshCompleter.future;
-  }
-
-  //For Jewellery List
-  static List<AuctionListModel> _generateJewelleryList() {
-    List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
-    List<String> imageList = [
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-    ];
-    return List.generate(
-      5,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
-    );
   }
 
   //For Engagement List
@@ -855,7 +835,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (slug) {
       case HomeSlug.mobileProductCategories:
-        return HomeWidgets.buildJewelleryList(homeStrapiList[index].info?.title ?? '', homeBloc, style);
+        return HomeWidgets.buildJewelleryList(
+          homeStrapiList[index].title ?? '',
+          homeBloc,
+          style,
+          parseDataList(homeStrapiList[index].data),
+        );
 
       case HomeSlug.mobileHomeBanner:
         return HomeWidgets.buildEngagementImageSlider(
@@ -1003,7 +988,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (redirectTo) {
       case RedirectionTo.gemstone:
-        if(redirectionData == null || redirectionData.isEmpty) return;
+        if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.stoneDetailPage : AppRoutes.stoneListingPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
@@ -1012,7 +997,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.diamond:
-        if(redirectionData == null || redirectionData.isEmpty) return;
+        if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.stoneListingPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
@@ -1021,7 +1006,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.jewellery:
-        if(redirectionData == null || redirectionData.isEmpty) return;
+        if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.details) ? AppRoutes.productDetailsPage : AppRoutes.productListGridPage;
         arguments = {
           RoutesData.isPageFor: ScreenIdentifier.productForRing,
@@ -1030,7 +1015,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
 
       case RedirectionTo.collection:
-        if(redirectionData == null || redirectionData.isEmpty) return;
+        if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
         arguments = (redirectionType == RedirectionType.listing)
             ? {
@@ -1108,14 +1093,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> fetchCommodityMasterFilters(BuildContext context) async {
     try {
-      final response = await appBloc.fetchCommodityMasterFilters(context, isShowLoader: false);
+      final response = await appBloc.fetchHomeGemstiones(context, isShowLoader: false);
       shopGemstonesList = List.generate(response.length, (index) {
-        CommodityMasterDetails item = response[index];
+        HomeGemstonesModel item = response[index];
         return AuctionListModel(
           id: item.id?.toString() ?? '',
-          name: item.name,
-          imageUrl: item.imgPath?.setMediaUrl,
+          name: item.commodityName,
+          imageUrl: item.image ?? '',
           redirectTo: RedirectionTo.jewellery.toString(),
+          subTypeCode: item.subTypeCode,
         );
       });
     } catch (e) {

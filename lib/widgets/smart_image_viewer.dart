@@ -14,6 +14,7 @@ class SmartImage extends StatelessWidget {
   final BorderRadius? inkwellBorderRadius;
   final BoxBorder? border;
   final bool isMemCacheEnabled;
+  final bool matchTextDirection;
 
   const SmartImage({
     super.key,
@@ -29,6 +30,7 @@ class SmartImage extends StatelessWidget {
     this.inkwellBorderRadius,
     this.border,
     this.isMemCacheEnabled = true,
+    this.matchTextDirection = false,
   });
 
   @override
@@ -53,6 +55,7 @@ class SmartImage extends StatelessWidget {
           height: height,
           width: width,
           fit: fit ?? BoxFit.cover,
+          matchTextDirection: matchTextDirection,
           color: color,
         ),
       );
@@ -76,6 +79,7 @@ class SmartImage extends StatelessWidget {
               height: height,
               fit: fit ?? BoxFit.contain,
               colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+              matchTextDirection: matchTextDirection,
             ),
           );
           break;
@@ -95,6 +99,7 @@ class SmartImage extends StatelessWidget {
               height: height,
               width: width,
               fit: fit ?? BoxFit.cover,
+              matchTextDirection: matchTextDirection,
             ),
           );
           break;
@@ -114,6 +119,7 @@ class SmartImage extends StatelessWidget {
               height: height,
               width: width,
               fit: fit ?? BoxFit.cover,
+              matchTextDirection: matchTextDirection,
             ),
           );
           break;
@@ -140,15 +146,18 @@ class SmartImage extends StatelessWidget {
                                 height: height,
                                 width: width,
                                 fit: fit ?? BoxFit.contain,
+                                matchTextDirection: matchTextDirection,
                               )
                             : Image.asset(
                                 AppImages.icPlaceholder,
                                 height: height,
                                 width: width,
                                 fit: fit ?? BoxFit.contain,
+                                matchTextDirection: matchTextDirection,
                               );
                       } else {
                         return CachedNetworkImage(
+                          matchTextDirection: matchTextDirection,
                           memCacheWidth: isMemCacheEnabled
                               ? height?.isFinite == true
                                   ? height!.toInt()
@@ -178,12 +187,14 @@ class SmartImage extends StatelessWidget {
                                   height: height,
                                   width: width,
                                   fit: fit ?? BoxFit.contain,
+                                  matchTextDirection: matchTextDirection,
                                 )
                               : Image.asset(
                                   AppImages.icPlaceholder,
                                   height: height,
                                   width: width,
                                   fit: fit ?? BoxFit.contain,
+                                  matchTextDirection: matchTextDirection,
                                 ),
                           placeholder: (context, url) => Center(
                             child: SizedBox(

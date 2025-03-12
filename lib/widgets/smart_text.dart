@@ -5,7 +5,7 @@ class SmartText extends StatelessWidget {
   final TextStyle? _style;
   final Color? color;
   final FontWeight? fontWeight;
-  final EdgeInsets? optionalPadding;
+  final EdgeInsetsGeometry? optionalPadding;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
   final TextDecoration? decoration;

@@ -19,6 +19,7 @@ class ApiKey {
   static const String notifyOnPriceDrop = 'notifyOnPriceDrop';
   static const String notifyOnDiscount = 'notifyOnDiscount';
   static const String commodity = 'commodity';
+  static const String commodityName = 'commodity_name';
   static const String productId = 'productId';
   static const String productId_ = 'product_id';
   static const String title = 'title';

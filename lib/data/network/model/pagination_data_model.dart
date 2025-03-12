@@ -94,6 +94,8 @@ class PaginationData<T> {
         return DiamondDataModel.fromJson(json);
       case const (MetalShapeModel):
         return MetalShapeModel.fromJson(json);
+      case const (HomeGemstonesModel):
+        return HomeGemstonesModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:
