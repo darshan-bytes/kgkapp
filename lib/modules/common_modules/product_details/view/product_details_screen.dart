@@ -210,7 +210,12 @@ class ProductDetailsScreen extends StatelessWidget {
         return bloc.isCompare
             ? ElevatedButton(
                 onPressed: () {
-                  context.pushNamed(AppRoutes.compareProductPage);
+                  if (compareProductBloc.productIdList.length < 2) {
+                    Utils.showMessage(APPStrings.compareProductMinimum.tr);
+                    return;
+                  } else {
+                    context.pushNamed(AppRoutes.compareProductPage);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: style.ratingGlowColor,
@@ -267,7 +272,11 @@ class ProductDetailsScreen extends StatelessWidget {
                                       bloc.onTap360Image(context);
                                     }
                                   : null,
-                              videoUrl: bloc.videoUrl,
+                              onVideoTap: bloc.videoUrl.isNotNullNorEmpty
+                                  ? () {
+                                      bloc.handleVideoTap(context);
+                                    }
+                                  : null,
                               onTapFullImage: (int index) {
                                 bloc.onTapFullImage(context: context, currentIndex: index);
                               },

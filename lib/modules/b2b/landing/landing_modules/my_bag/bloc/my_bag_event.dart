@@ -36,11 +36,12 @@ final class MyBagChangeProductQuantity extends MyBagEvent {
 final class MyBagRemoveProductEvent extends MyBagEvent {
   final int index;
   final BuildContext context;
+  final bool isFromMoveToWishList;
 
-  const MyBagRemoveProductEvent({required this.index, required this.context});
+  const MyBagRemoveProductEvent({required this.index, required this.context, this.isFromMoveToWishList = false});
 
   @override
-  List<Object> get props => [index, context];
+  List<Object> get props => [index, context, isFromMoveToWishList];
 }
 
 final class MyBagSelectAllProductChangedEvent extends MyBagEvent {

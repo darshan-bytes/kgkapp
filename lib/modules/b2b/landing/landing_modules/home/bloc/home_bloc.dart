@@ -9,7 +9,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late AppBloc appBloc;
 
   //Jewellery List
-  final List<AuctionListModel> jewelleryList = []; //_generateJewelleryList();
+  final List<AuctionListModel> jewelleryList = [];
 
   //Engagement List With slider controller
   int currentCarouselIndex = 0;
@@ -228,26 +228,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     refreshCompleter = Completer<bool>();
     add(HomePullToRefreshEvent(context: context));
     return refreshCompleter.future;
-  }
-
-  //For Jewellery List
-  static List<AuctionListModel> _generateJewelleryList() {
-    List<String> nameList = ["Necklace", "Earrings", "Ring", "Bracelet", "Pendant"];
-    List<String> imageList = [
-      "https://i.ibb.co/D4kHrXY/image-18652.jpg",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-      "https://i.ibb.co/5jmqMcF/image-18654.png",
-      "https://i.ibb.co/vBG9fzy/image-18655.png",
-      "https://i.ibb.co/1f3SHWg/image-18653.png",
-    ];
-    return List.generate(
-      5,
-      (index) => AuctionListModel(
-        id: index.toString(),
-        name: nameList[index],
-        imageUrl: imageList[index],
-      ),
-    );
   }
 
   //For Engagement List

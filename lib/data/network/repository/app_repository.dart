@@ -188,9 +188,9 @@ class AppRepository extends ApiService {
     Map<String, String> queryParams = {
       ApiKey.limit: limit,
       ApiKey.page: page,
-      if (sortKey?.isNotEmpty ?? false) ApiKey.sortKey: sortKey!,
-      if (sortValue?.isNotEmpty ?? false) ApiKey.sortValue: sortValue!,
-      if (type?.isNotEmpty ?? false) ApiKey.subTypeCode: type!,
+      if (sortKey.isNotNullNorEmpty) ApiKey.sortKey: sortKey!,
+      if (sortValue.isNotNullNorEmpty) ApiKey.sortValue: sortValue!,
+      if (type.isNotNullNorEmpty) ApiKey.type: type!,
     };
 
     // Ensure query is not null or empty before processing
@@ -199,7 +199,6 @@ class AppRepository extends ApiService {
         query!.map((key, value) => MapEntry(key.toString(), value ?? '')),
       );
     }
-
 
     var response = await getMethod<GemstoneListingModel>(ApiClient.gemstoneListing, query: queryParams, withCurrencyHeader: true);
     if (isLoadMore) {
@@ -224,8 +223,8 @@ class AppRepository extends ApiService {
     Map<String, String> queryParams = {
       ApiKey.limit: limit,
       ApiKey.page: page,
-      if (sortKey != null) ApiKey.sortKey: sortKey,
-      if (sortValue != null) ApiKey.sortValue: sortValue,
+      if (sortKey.isNotNullNorEmpty) ApiKey.sortKey: sortKey!,
+      if (sortValue.isNotNullNorEmpty) ApiKey.sortValue: sortValue!,
     };
     if (query != null) {
       queryParams.addAll(query);
@@ -265,7 +264,7 @@ class AppRepository extends ApiService {
   // createBidForAuction
   Future<Either<ErrorResponse, CommonResponse>?> createBidForAuction(Map<String, dynamic> body) async {
     context.setAppLoading(true);
-    var response = await postMethod<CommonResponse>(ApiClient.createBid, body, withFullResponse: true);
+    var response = await postMethod<CommonResponse>(ApiClient.createBid, body, withFullResponse: true, withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

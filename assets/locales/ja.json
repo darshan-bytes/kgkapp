@@ -626,7 +626,7 @@
   "mob_search_user": "ユーザーを検索します",
   "mob_orion": "オリオン",
   "mob_select_diamond_shape": "ダイヤモンドの形状を選択します",
-  "mob_preferred_price_range": "優先価格帯",
+  "mob_preferred_price_range": "優先{#}範囲",
   "mob_inbox": "受信トレイ",
   "mob_sent": "送信済み",
   "mob_trash": "ごみ",
@@ -811,5 +811,6 @@
   "mob_no_internet_connection_or_server_not_reachable": "インターネット接続がないか、サーバーに到達できません",
   "mob_auction": "オークション",
   "mob_crt": "ブラウン管",
-  "mob_grms": "グラム"
+  "mob_grms": "グラム",
+  "mob_compare_product_minimum": "比較する製品を少なくとも 2 つ選択してください"
 }

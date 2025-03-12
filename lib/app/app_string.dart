@@ -994,15 +994,16 @@ class APPStrings {
   static const String thisProductIsCurrentlyNotInStock = 'mob_this_product_is_currently_not_in_stock';
   static const String noBidsFound = 'mob_bids_found';
   static const String errorBidAmountRequired = 'mob_error_bid_amount_required';
-  static const String errorBidAmountGreaterThan = "mob_error_bid_amount_greater_than_x";
+  static const String errorBidAmountGreaterThan = 'mob_error_bid_amount_greater_than_x';
   static const String auctionWillStartOn = 'mob_auction_will_start_on';
-  static const String auctionHasEnded = "mob_auction_has_ended";
-  static const String loading = "mob_loading";
-  static const String expired = "mob_expired";
-  static const String preferencesSaved = "mob_preferences_saved";
-  static const String workingHours = "mob_working_hours";
-  static const String noInternetConnectionOrServerNotReachable = "mob_no_internet_connection_or_server_not_reachable";
-  static const String mobAuction = "mob_auction";
-  static const String crt = "mob_crt";
-  static const String grms = "mob_grms";
+  static const String auctionHasEnded = 'mob_auction_has_ended';
+  static const String loading = 'mob_loading';
+  static const String expired = 'mob_expired';
+  static const String preferencesSaved = 'mob_preferences_saved';
+  static const String workingHours = 'mob_working_hours';
+  static const String noInternetConnectionOrServerNotReachable = 'mob_no_internet_connection_or_server_not_reachable';
+  static const String mobAuction = 'mob_auction';
+  static const String crt = 'mob_crt';
+  static const String grms = 'mob_grms';
+  static const String compareProductMinimum = 'mob_compare_product_minimum';
 }

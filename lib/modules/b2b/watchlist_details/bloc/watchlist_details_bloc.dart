@@ -17,6 +17,9 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
 
   Duration get watchlistRemainTime => watchlistDetailsModel.expiresAt?.difference(DateTime.now()) ?? Duration.zero;
 
+  String get watchlistRemainTimeFormatted =>
+      watchlistRemainTime.inSeconds <= 0 ? APPStrings.expired.tr : watchlistRemainTime.formattedDurationWithSecondsShort;
+
   Timer? timer;
 
   WatchlistDetailsBloc() : super(const WatchlistDetailsInitial()) {
