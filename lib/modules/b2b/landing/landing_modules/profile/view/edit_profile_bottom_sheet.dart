@@ -12,12 +12,12 @@ class EditProfileBottomSheet extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       controller: bloc.scrollController,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 24.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 24.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12.r),
-            topRight: Radius.circular(12.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(12.r),
+            topEnd: Radius.circular(12.r),
           ),
         ),
         child: Column(
@@ -66,7 +66,7 @@ class EditProfileBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
-              alignment: Alignment.bottomRight,
+              alignment: AlignmentDirectional.bottomEnd,
               children: [
                 SmartImage(
                   path: (bloc.profilePickedImage != null || bloc.selectedProfilePickedImage != null)
@@ -90,9 +90,9 @@ class EditProfileBottomSheet extends StatelessWidget {
                     },
                   ),
                 ] else ...[
-                  Positioned(
+                  PositionedDirectional(
                     top: 0.w,
-                    right: 0.w,
+                    end: 0.w,
                     child: CircleAvatar(
                       radius: 16.r,
                       child: SmartImage(
@@ -223,12 +223,12 @@ class EditProfileBottomSheet extends StatelessWidget {
                 child: SizedBox(
                   width: 95.w,
                   child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(12.w),
-                    margin: EdgeInsets.only(right: 12.w),
+                    alignment: AlignmentDirectional.center,
+                    padding: EdgeInsetsDirectional.all(12.w),
+                    margin: EdgeInsetsDirectional.only(end: 12.w),
                     decoration: BoxDecoration(
-                      border: Border(
-                        right: BorderSide(
+                      border: BorderDirectional(
+                        end: BorderSide(
                           color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
                         ),
                       ),

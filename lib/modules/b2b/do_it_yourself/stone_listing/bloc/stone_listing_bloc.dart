@@ -392,6 +392,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     return ProductDetailsModel(
       suid: diamond.suid,
       productId: diamond.id,
+      video: diamond.video,
       imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
       name: diamond.rmDescription ?? "",
       ctsOrGms: diamond.ctsOrGms,

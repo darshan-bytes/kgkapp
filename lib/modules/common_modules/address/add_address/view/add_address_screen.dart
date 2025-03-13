@@ -51,7 +51,7 @@ class AddAddressScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is AddAddressChangeAddressSameState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 22.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w, vertical: 22.h),
           child: SmartCheckbox(
             height: 24.w,
             width: 24.w,
@@ -71,7 +71,9 @@ class AddAddressScreen extends StatelessWidget {
 
   Widget generateAddressForm(AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context) {
     return Padding(
-        padding: bloc.isFromCheckout ? EdgeInsets.symmetric(horizontal: 17.w) : EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+        padding: bloc.isFromCheckout
+            ? EdgeInsetsDirectional.symmetric(horizontal: 17.w)
+            : EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
         child: Column(children: [
           _buildFirstNameField(bloc),
           SizedBox(height: 24.h),
@@ -266,7 +268,7 @@ class AddAddressScreen extends StatelessWidget {
               },
               child: Container(
                 height: 48.h,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: countryPickerStyle.inputBorderColor,
@@ -346,12 +348,12 @@ class AddAddressScreen extends StatelessWidget {
             child: SizedBox(
               width: 95.w,
               child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(12.w),
-                margin: EdgeInsets.only(right: 12.w),
+                alignment: AlignmentDirectional.center,
+                padding: EdgeInsetsDirectional.all(12.w),
+                margin: EdgeInsetsDirectional.only(end: 12.w),
                 decoration: BoxDecoration(
-                  border: Border(
-                    right: BorderSide(
+                  border: BorderDirectional(
+                    end: BorderSide(
                       color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
                     ),
                   ),

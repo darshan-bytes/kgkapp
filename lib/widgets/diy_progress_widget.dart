@@ -13,19 +13,19 @@ class DiyProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h),
         width: context.width,
         child: Stack(
           children: [
             Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: _commonChevron(context,
                     isSelected: selectedStep == 1, title: 'Choose a', index: 1, subTitle: 'Diamond', padding: 20.w)),
             Align(
-                alignment: Alignment.center,
+                alignment: AlignmentDirectional.center,
                 child: _commonChevron(context, isSelected: selectedStep == 2, title: 'Choose a', index: 2, subTitle: 'Setting')),
             Align(
-                alignment: Alignment.centerRight,
+                alignment: AlignmentDirectional.centerEnd,
                 child: _commonChevron(context, isSelected: selectedStep == 3, title: 'Choose a', index: 3, subTitle: 'Ring')),
           ],
         ));
@@ -35,7 +35,7 @@ class DiyProgressWidget extends StatelessWidget {
       {required bool isSelected, required String title, required int index, required String subTitle, double? padding}) {
     final style = AppTheme.of(context).diyProgressViewStyle;
 
-    Color backgroundColor = style.unselectedBorderColor.withValues(alpha:0.5);
+    Color backgroundColor = style.unselectedBorderColor.withValues(alpha: 0.5);
     TextStyle textStyle = style.selectedIndexStyle.copyWith(color: Colors.black);
 
     /// Set Style and Color According to Indexes
@@ -43,7 +43,7 @@ class DiyProgressWidget extends StatelessWidget {
       backgroundColor = style.backgroundChevronColor;
       textStyle = style.selectedIndexStyle;
     } else if (index == selectedStep + 1) {
-      backgroundColor = style.backgroundChevronColor.withValues(alpha:0.5);
+      backgroundColor = style.backgroundChevronColor.withValues(alpha: 0.5);
       textStyle = style.selectedIndexStyle;
     }
 
@@ -68,7 +68,7 @@ class DiyProgressWidget extends StatelessWidget {
           '$title \n$subTitle',
           maxLines: 2,
           style: textStyle,
-          optionalPadding: EdgeInsets.only(left: padding ?? 40.w, top: 10.h, bottom: 10.h),
+          optionalPadding: EdgeInsetsDirectional.only(start: padding ?? 40.w, top: 10.h, bottom: 10.h),
         ));
   }
 
@@ -77,11 +77,11 @@ class DiyProgressWidget extends StatelessWidget {
     final style = AppTheme.of(context).diyProgressViewStyle;
     return Expanded(
       child: Container(
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(
           border: Border.all(color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor, width: 1),
         ),
-        padding: EdgeInsets.all(12.w),
+        padding: EdgeInsetsDirectional.all(12.w),
         height: 70.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -30,7 +30,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                     SizedBox(height: 24.h),
                     SmartTabBar(
                       isExpanded: false,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                       length: bloc.tabs.length,
                       onTabInitialized: (tabController) {
                         bloc.tabController = tabController;
@@ -58,7 +58,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
         if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState || state is ExhibitionChangeListingTypeState) {
           return Container(
             decoration: BoxDecoration(color: style.primaryColor),
-            padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

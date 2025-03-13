@@ -9,7 +9,7 @@ class EditWatchlistScreen extends StatelessWidget {
     final EditWatchlistBloc bloc = BlocProvider.of<EditWatchlistBloc>(context);
     return SmartSingleChildScrollView(
       physics: const ClampingScrollPhysics(),
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -20,7 +20,7 @@ class EditWatchlistScreen extends StatelessWidget {
                   color: style.backgroundColor,
                   borderRadius: BorderRadius.circular(16.w),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 20.h),
                 child: BlocBuilder<EditWatchlistBloc, EditWatchlistState>(
                   buildWhen: (previous, current) => current is EditWatchlistLoadedState,
                   builder: (context, state) {
@@ -78,7 +78,7 @@ class EditWatchlistScreen extends StatelessWidget {
                             remainingTimeWidgetForEdit(context, style, bloc),
                             /*Container(
                               color: style.durationBackgroundColor,
-                              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+                              padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 16.h),
                               child: Column(
                                 children: [
                                   if (BlocProvider.of<WatchlistBloc>(context)
@@ -144,8 +144,8 @@ class EditWatchlistScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Positioned(
-                right: 16.w,
+              PositionedDirectional(
+                end: 16.w,
                 top: 16.h,
                 child: SmartImage(
                   path: AppImages.icCross,
@@ -178,7 +178,7 @@ class EditWatchlistScreen extends StatelessWidget {
 
     return Container(
       color: style.durationBackgroundColor,
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 16.h),
       child: Column(
         children: [
           ValueListenableBuilder<String?>(

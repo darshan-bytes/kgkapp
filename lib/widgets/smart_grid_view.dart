@@ -30,7 +30,7 @@ class SmartGridView extends StatelessWidget {
           return Column(
             children: [
               Align(
-                alignment: Alignment.topLeft,
+                alignment: AlignmentDirectional.topStart,
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.start,
                   alignment: WrapAlignment.start,

@@ -61,11 +61,11 @@ class SmartRefreshIndicatorState extends State<SmartRefreshIndicator> {
     return Stack(
       children: <Widget>[
         Align(
-          alignment: Alignment.topCenter,
+          alignment: AlignmentDirectional.topCenter,
           child: Container(
             color: Colors.transparent,
             child: Padding(
-              padding: EdgeInsets.only(top: _isIndicatorAtTop ? pulledExtent : 0.0),
+              padding: EdgeInsetsDirectional.only(top: _isIndicatorAtTop ? pulledExtent : 0.0),
               child: refreshState == RefreshIndicatorMode.refresh
                   ? const CircularProgressIndicator.adaptive()
                   : Icon(

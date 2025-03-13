@@ -21,7 +21,7 @@ class AddressListScreen extends StatelessWidget {
                     const CheckoutHeaderProgressbar(),
                     SizedBox(height: 22.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -35,7 +35,7 @@ class AddressListScreen extends StatelessWidget {
                                 onTap: () {
                                   addressListBloc.add(AddNewAddressEvent(context));
                                 },
-                                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                                padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
                                 isSelected: false,
                                 title: APPStrings.addAddress.tr,
                                 image: AppImages.icPlus,
@@ -54,7 +54,7 @@ class AddressListScreen extends StatelessWidget {
 
                     /// Below line is commented as it is not required in the screen for now. The same is discussed in the meeting with JD.
                     /* Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
                       child: Column(
                         children: [
                           SmartExpansionTile(
@@ -110,7 +110,7 @@ class AddressListScreen extends StatelessWidget {
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -135,7 +135,7 @@ class AddressListScreen extends StatelessWidget {
         return ListView.separated(
           shrinkWrap: true,
           itemCount: addressListBloc.addressList.length,
-          padding: EdgeInsets.symmetric(vertical: 12.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
           itemBuilder: (context, index) {
@@ -158,7 +158,7 @@ class AddressListScreen extends StatelessWidget {
                     Utils.showSmartModalBottomSheet(
                         context: context,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
                         ),
                         builder: (builderContext) => ConfirmationDialog(
                               title: APPStrings.deleteAddress.tr,
@@ -189,7 +189,7 @@ class AddressListScreen extends StatelessWidget {
         return ListView.separated(
           shrinkWrap: true,
           itemCount: addressListBloc.addressList.length,
-          padding: EdgeInsets.symmetric(vertical: 12.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
           itemBuilder: (context, index) {
@@ -212,7 +212,7 @@ class AddressListScreen extends StatelessWidget {
                     Utils.showSmartModalBottomSheet(
                         context: context,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
                         ),
                         builder: (builderContext) => ConfirmationDialog(
                               title: APPStrings.deleteAddress.tr,

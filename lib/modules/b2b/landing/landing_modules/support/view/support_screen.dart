@@ -27,7 +27,7 @@ class SupportScreen extends StatelessWidget {
             }
             return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 17.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,7 +48,7 @@ class SupportScreen extends StatelessWidget {
                           height: 40.h,
                           suffixImage: AppImages.icRight,
                           imageSize: 20.w,
-                          padding: EdgeInsets.only(left: 12.w),
+                          padding: EdgeInsetsDirectional.only(start: 12.w),
                           onTap: () {
                             context.pushNamed(AppRoutes.faqPage);
                           },
@@ -91,7 +91,7 @@ class SupportScreen extends StatelessWidget {
           title: SmartText(
             faq.question,
             style: style.questionStyle,
-            optionalPadding: EdgeInsets.symmetric(vertical: 8.h),
+            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
           ),
           onExpansionChanged: (value) {
             // Handle expansion change if necessary
@@ -100,7 +100,7 @@ class SupportScreen extends StatelessWidget {
             SmartText(
               faq.answer,
               style: style.answerStyle,
-              optionalPadding: EdgeInsets.only(bottom: 17.h),
+              optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h),
             ),
           ],
         );

@@ -26,8 +26,8 @@ class DesignListingGridItem extends StatelessWidget {
     this.onTap,
     required this.designModel,
     this.fit = BoxFit.cover,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.designGridItem({
@@ -39,8 +39,8 @@ class DesignListingGridItem extends StatelessWidget {
     this.onTap,
     required this.designModel,
     this.fit = BoxFit.cover,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
   }) : _viewType = _GridViewType.designGridItem;
 
   const DesignListingGridItem.cadLibrary({
@@ -52,8 +52,8 @@ class DesignListingGridItem extends StatelessWidget {
     this.onTap,
     required this.designModel,
     this.fit = BoxFit.cover,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
   }) : _viewType = _GridViewType.cadLibrary;
 
   @override
@@ -100,7 +100,7 @@ class DesignListingGridItem extends StatelessWidget {
         Container(
           height: boxHeight ?? 172.h,
           width: width,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
           child: SmartImage(
             path: _getImageUrl(),
@@ -110,12 +110,12 @@ class DesignListingGridItem extends StatelessWidget {
           ),
         ),
         if (_viewType == _GridViewType.designGridItem && status != null)
-          Positioned(
+          PositionedDirectional(
             bottom: 8.w,
-            right: 14.w,
+            end: 14.w,
             child: SmartStatusBadge(
               borderRadius: 4.0.r,
-              padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
               currentStatus: status,
             ),
           )
@@ -128,7 +128,7 @@ class DesignListingGridItem extends StatelessWidget {
       child: Container(
         width: width,
         color: style.backgroundColor,
-        padding: EdgeInsets.all(12.w),
+        padding: EdgeInsetsDirectional.all(12.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

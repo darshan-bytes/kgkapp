@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                     SmartText(
                       APPStrings.adminSection.tr,
                       style: style.subTitleStyle,
-                      optionalPadding: EdgeInsets.only(left: 17.w, top: 16.h),
+                      optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 16.h),
                     ),
                     _buildAdminList(style, bloc),
                   ],
@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
           primary: false,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 16.h),
+          padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, bottom: 16.h),
           itemCount: bloc.profileActionList.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
@@ -92,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
           primary: false,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 16.h),
+          padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, bottom: 16.h),
           itemCount: bloc.profileAdminList.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
@@ -112,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         primary: false,
-        padding: EdgeInsets.symmetric(vertical: 16.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
         itemCount: bloc.profileCMSList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -121,10 +121,10 @@ class ProfileScreen extends StatelessWidget {
             },
             child: Container(
               color: style.transparentColor,
-              padding: EdgeInsets.only(
-                left: 17.w,
+              padding: EdgeInsetsDirectional.only(
+                start: 17.w,
                 top: index != 0 ? 16.h : 0,
-                right: 17.w,
+                end: 17.w,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildPopupList(BuildContext context, ProfileScreenStyle style, ProfileBloc bloc) {
     return Container(
       color: style.dividerColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Column(
         children: [
           _buildPopupItem(
@@ -217,7 +217,7 @@ class ProfileScreen extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 66.h,
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -237,7 +237,7 @@ class ProfileScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => ConfirmationDialog(
         title: APPStrings.logoutAsk.tr,
@@ -256,7 +256,7 @@ class ProfileScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => ConfirmationDialog(
         title: APPStrings.deleteAccountAsk.tr,
@@ -274,7 +274,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileHeader({required ProfileScreenStyle style, required ProfileBloc bloc, required BuildContext context}) {
     if (bloc.isSkipUser) {
       return Container(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         decoration: BoxDecoration(
           color: style.backgroundColor,
         ),
@@ -303,7 +303,7 @@ class ProfileScreen extends StatelessWidget {
       );
     }
     return Container(
-      padding: EdgeInsets.all(17.w),
+      padding: EdgeInsetsDirectional.all(17.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

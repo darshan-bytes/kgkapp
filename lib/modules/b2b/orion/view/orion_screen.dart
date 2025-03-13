@@ -25,7 +25,7 @@ class OrionScreen extends StatelessWidget {
         if (state is OrionLoadedState) {
           return SmartSingleChildScrollView(
             controller: bloc.paginationScrollController.controller,
-            padding: EdgeInsets.symmetric(vertical: 24.h),
+            padding: EdgeInsetsDirectional.symmetric(vertical: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -60,7 +60,7 @@ class OrionScreen extends StatelessWidget {
 
   Widget _buildProductList(DiamondListingStyle style, OrionBloc orionBloc) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: BlocBuilder<OrionBloc, OrionState>(
         buildWhen: (previous, current) =>
             current is OrionDiamondListLoadedState ||
@@ -250,7 +250,7 @@ class OrionScreen extends StatelessWidget {
                     unselectedButtonIconColor: style.listIconColor,
                     unselectedButtonColor: style.listBackgroundColor,
                     unselectedButtonBorderColor: style.listBorderColor,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                    borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                     onTap: () {
                       orionBloc.add(const OrionChangeListingTypeEvent());
                     },
@@ -271,10 +271,10 @@ class OrionScreen extends StatelessWidget {
       spacingBetweenTitleAndItems: 16.h,
       scrollController: bloc.diamondShapeListController,
       itemBetweenSpace: 16.w,
-      listPadding: EdgeInsets.only(bottom: 12.h),
+      listPadding: EdgeInsetsDirectional.only(bottom: 12.h),
       isScrollbarVisible: true,
       itemCount: bloc.diamondShapeList.length,
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
       itemBuilder: (context, index) {
         return BlocBuilder<OrionBloc, OrionState>(
           buildWhen: (previous, current) =>
@@ -288,7 +288,7 @@ class OrionScreen extends StatelessWidget {
                 bloc.add(OrionDiamondShapeChangedEvent(context, index));
               },
               child: Container(
-                padding: EdgeInsets.all(6.w),
+                padding: EdgeInsetsDirectional.all(6.w),
                 decoration: BoxDecoration(
                   color: isSelected ? style.selectedDiamondSelectionBackgroundColor : null,
                   borderRadius: BorderRadius.circular(8.w),
@@ -318,7 +318,7 @@ class OrionScreen extends StatelessWidget {
 
   Widget _buildPriceRangeSlide(OrionBloc bloc, OrionStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -351,7 +351,7 @@ class OrionScreen extends StatelessWidget {
                       IntrinsicWidth(
                         child: SmartTextField(
                           height: 40.h,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                          contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                           textAlign: TextAlign.center,
                           controller: bloc.minPriceController,
                           keyboardType: TextInputType.number,
@@ -365,7 +365,7 @@ class OrionScreen extends StatelessWidget {
                       IntrinsicWidth(
                         child: SmartTextField(
                           height: 40.h,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                          contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                           textAlign: TextAlign.center,
                           controller: bloc.maxPriceController,
                           keyboardType: TextInputType.number,
@@ -405,7 +405,7 @@ class OrionScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           child: SmartText(APPStrings.selectDiamond.tr, style: style.selectDiamondTitleStyle),
         ),
         SizedBox(height: 16.h),
@@ -481,8 +481,8 @@ class OrionScreen extends StatelessWidget {
                   ),
                   Visibility(
                     visible: bloc.dotPositions.isNotEmpty,
-                    child: Positioned(
-                      left: bloc.pinPosition.dx + bloc.yAxisWidth - 10,
+                    child: PositionedDirectional(
+                      start: bloc.pinPosition.dx + bloc.yAxisWidth - 10,
                       top: bloc.pinPosition.dy - 26,
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
@@ -510,7 +510,7 @@ class OrionScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is OrionDiamondMovedState,
           builder: (context, state) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -536,7 +536,7 @@ class OrionScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is OrionDiamondMovedState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -559,7 +559,7 @@ class OrionScreen extends StatelessWidget {
                   final bool isSelected = bloc.selectedCutModel == properties;
                   return Container(
                     color: Colors.transparent,
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
                     child: SmartText(
                       properties.name,
                       style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
@@ -579,7 +579,7 @@ class OrionScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is OrionDiamondMovedState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -602,7 +602,7 @@ class OrionScreen extends StatelessWidget {
                   final bool isSelected = bloc.selectedClarityModel == properties;
                   return Container(
                     color: Colors.transparent,
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
                     child: SmartText(
                       properties.name,
                       style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
@@ -622,7 +622,7 @@ class OrionScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is OrionDiamondMovedState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -645,7 +645,7 @@ class OrionScreen extends StatelessWidget {
                   final bool isSelected = bloc.selectedColorModel == properties;
                   return Container(
                     color: Colors.transparent,
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
                     child: SmartText(
                       properties.name,
                       style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,

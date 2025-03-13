@@ -30,7 +30,7 @@ class SettingDetailScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: Container(
-            padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+            padding: EdgeInsetsDirectional.symmetric(vertical: 14.h, horizontal: 17.w),
             decoration: BoxDecoration(
               color: style.whiteColor,
               boxShadow: [
@@ -93,7 +93,7 @@ class SettingDetailScreen extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,12 +209,12 @@ class SettingDetailScreen extends StatelessWidget {
         SizedBox(height: 12.h),
         Container(
           height: 100.w,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           width: context.width,
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.zero,
+            padding: EdgeInsetsDirectional.zero,
             physics: const BouncingScrollPhysics(),
             itemCount: settingDetailBloc.metalCustomisation.values?.length ?? 0,
             itemBuilder: (context, index) {
@@ -235,14 +235,14 @@ class SettingDetailScreen extends StatelessWidget {
                         settingDetailBloc.add(MetalCustomizationChangeEvent(index: index));
                       },
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 6.w),
+                        padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               height: 34.w,
                               width: 34.w,
-                              padding: EdgeInsets.all(4.w),
+                              padding: EdgeInsetsDirectional.all(4.w),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,

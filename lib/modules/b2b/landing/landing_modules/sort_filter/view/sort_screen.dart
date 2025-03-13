@@ -13,9 +13,9 @@ class SortScreen extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.r),
-          topRight: Radius.circular(16.r),
+        borderRadius: BorderRadiusDirectional.only(
+          topStart: Radius.circular(16.r),
+          topEnd: Radius.circular(16.r),
         ),
       ),
       child: SmartSingleChildScrollView(
@@ -37,7 +37,7 @@ class SortScreen extends StatelessWidget {
               ],
             ),
             ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
               shrinkWrap: true,
               itemCount: sortData.length,
               itemBuilder: (context, index) {
@@ -47,7 +47,7 @@ class SortScreen extends StatelessWidget {
                     context.pop(arguments: {RoutesData.sortData: sortData[index]});
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                     child: Row(
                       children: [
                         Expanded(

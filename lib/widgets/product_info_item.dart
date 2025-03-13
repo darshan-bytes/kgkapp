@@ -27,7 +27,7 @@ class ProductInfoItem extends StatelessWidget {
     this.onTap,
     this.onTapMenuButton,
     this.padding,
-    this.margin = EdgeInsets.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.onTap360View,
     this.onTapCertificate,
     this.onTapUSA,
@@ -58,7 +58,7 @@ class ProductInfoItem extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            padding: padding ?? EdgeInsets.all(16.0.w),
+            padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
             margin: margin,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
@@ -82,8 +82,8 @@ class ProductInfoItem extends StatelessWidget {
             ),
           ),
           if (productDetails.isForAuction)
-            Positioned(
-              left: -3.w,
+            PositionedDirectional(
+              start: -3.w,
               child: SmartImage(
                 path: AppImages.icAuctionLabel,
                 height: 32.w,
@@ -223,8 +223,8 @@ class ProductInfoItem extends StatelessWidget {
                     showMoreDetails.value = !showMoreDetails.value;
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    alignment: Alignment.center,
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
+                    alignment: AlignmentDirectional.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -284,7 +284,7 @@ class ProductInfoItem extends StatelessWidget {
 
   Widget _buildDivider(MyBagDiamondItemStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18.12.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.12.w),
       child: Container(
         height: 20.h,
         width: 1,
@@ -296,7 +296,7 @@ class ProductInfoItem extends StatelessWidget {
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, ProductInfoItemStyle productInfoItemStyle,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Container(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -313,7 +313,7 @@ class ProductInfoItem extends StatelessWidget {
                   width: 56.w,
                   child: SmartTextField(
                     height: 32.h,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                    contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                     controller: yourDiscountController,
                     disabledBorderColor: style.borderColor,
                     style: style.subTitleStyle,
@@ -391,14 +391,14 @@ class ProductInfoItem extends StatelessWidget {
         child: Container(
           height: 48.w,
           width: 48.w,
-          padding: EdgeInsets.all(8.w),
+          padding: EdgeInsetsDirectional.all(8.w),
           decoration: BoxDecoration(
             border: Border.all(
               color: style.borderColor,
             ),
             borderRadius: BorderRadius.circular(4.r),
           ),
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           child: SmartImage(
             path: imagePath,
             fit: BoxFit.contain,

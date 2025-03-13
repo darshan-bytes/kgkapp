@@ -14,8 +14,8 @@ class SmartButton extends StatelessWidget {
   final TextStyle? titleStyle;
   final TextStyle? disableTitleStyle;
   final Color? borderColor;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final String? prefixImage;
   final String? suffixImage;
   final Color? activeImageColor;
@@ -81,7 +81,7 @@ class SmartButton extends StatelessWidget {
     final style = AppTheme.of(context).primaryButtonStyle;
     return isLoading
         ? SmartCircularProgressIndicator(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsetsDirectional.zero,
             size: height ?? 42.w,
           )
         : Bounceable(
@@ -92,7 +92,7 @@ class SmartButton extends StatelessWidget {
                 boxShadow: <BoxShadow>[
                   if (isShadow)
                     BoxShadow(
-                      color: style.activeBackgroundColor.withValues(alpha:0.9),
+                      color: style.activeBackgroundColor.withValues(alpha: 0.9),
                       blurRadius: 10.0.r,
                       spreadRadius: -8.0,
                       offset: const Offset(0.0, 8.0),
@@ -112,7 +112,7 @@ class SmartButton extends StatelessWidget {
               ),
               height: height ?? 42.w,
               width: width ?? double.infinity,
-              padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w),
+              padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 12.w),
               child: prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty
                   ? Center(
                       child: Row(

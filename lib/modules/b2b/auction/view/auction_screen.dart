@@ -31,7 +31,7 @@
 //       ),
 //       floatingActionButton: _buildCompareButton(bloc, style),
 //       bottomNavigationBar: Padding(
-//         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+//         padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
 //         child: _buildBottomNavigationBar(bloc, context, style),
 //       ),
 //     );
@@ -75,7 +75,7 @@
 //           child: Container(
 //             width: 8.0.w,
 //             height: 8.0.w,
-//             margin: EdgeInsets.only(right: 6.0.w),
+//             margin: EdgeInsetsDirectional.only(end: 6.0.w),
 //             decoration: BoxDecoration(
 //               shape: BoxShape.circle,
 //               color: bloc.current == entry.key ? style.selectedDotColor : style.dotColor,
@@ -89,7 +89,7 @@
 //   Widget _productDetail(BuildContext context, AuctionBloc bloc, AuctionScreenStyle style) {
 //     final DiamondDetailScreenStyle diamondDetailScreenStyle = AppTheme.of(context).diamondDetailScreenStyle;
 //     return Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 17.w),
+//       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
 //       child: Column(
 //         crossAxisAlignment: CrossAxisAlignment.start,
 //         children: [
@@ -141,14 +141,14 @@
 //         ),
 //         SizedBox(width: 17.w),
 //         SelectionButton(
-//           padding: EdgeInsets.all(12.w),
+//           padding: EdgeInsetsDirectional.all(12.w),
 //           isSelected: false,
 //           onTap: () {},
 //           image: AppImages.icHeart,
 //         ),
 //         SizedBox(width: 10.w),
 //         SelectionButton(
-//           padding: EdgeInsets.all(12.w),
+//           padding: EdgeInsetsDirectional.all(12.w),
 //           isSelected: false,
 //           onTap: () {},
 //           image: AppImages.icShare,
@@ -166,7 +166,7 @@
 //           initialRating: 4,
 //           allowHalfRating: false,
 //           itemSize: 16.sp,
-//           itemPadding: EdgeInsets.only(right: 2.w, left: 2.w),
+//           itemPadding: EdgeInsetsDirectional.only(end: 2.w, start: 2.w),
 //         ),
 //         SizedBox(width: 8.w),
 //         SmartText(
@@ -227,7 +227,7 @@
 //                 borderRadius: BorderRadius.circular(8.r),
 //                 border: Border.all(color: style.borderColor),
 //               ),
-//               padding: EdgeInsets.all(16.w),
+//               padding: EdgeInsetsDirectional.all(16.w),
 //               child: Column(
 //                 crossAxisAlignment: CrossAxisAlignment.start,
 //                 children: [
@@ -250,7 +250,7 @@
 //                   const Divider(),
 //                   SizedBox(height: 10.h),
 //                   Padding(
-//                     padding: EdgeInsets.symmetric(vertical: 2.h),
+//                     padding: EdgeInsetsDirectional.symmetric(vertical: 2.h),
 //                     child: Row(
 //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                       children: [
@@ -275,7 +275,7 @@
 //                                 Container(
 //                                   height: 24.w,
 //                                   width: 24.w,
-//                                   alignment: Alignment.center,
+//                                   alignment: AlignmentDirectional.center,
 //                                   child: const SmartImage(
 //                                     path: AppImages.icArrowRight,
 //                                   ),
@@ -288,7 +288,7 @@
 //                   ),
 //                   SizedBox(height: 16.h),
 //                   ListView.separated(
-//                       padding: EdgeInsets.zero,
+//                       padding: EdgeInsetsDirectional.zero,
 //                       itemBuilder: (context, index) {
 //                         return _buildResetBidsItem(
 //                             isMyBid: bloc.recentBidList[index]['is_my_bid'] ?? '',
@@ -404,7 +404,7 @@
 //                 if (isMyBid)
 //                   Container(
 //                       decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
-//                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+//                       padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
 //                       child: SmartText(
 //                         APPStrings.myBid.tr,
 //                         style: style.myBidTextStyle,
@@ -429,7 +429,7 @@
 //         } else {
 //           if (bloc.isBidPlaced) return const SizedBox.shrink();
 //           return Container(
-//             padding: EdgeInsets.all(16.w),
+//             padding: EdgeInsetsDirectional.all(16.w),
 //             decoration: BoxDecoration(
 //               color: style.whiteColor,
 //               boxShadow: [
@@ -458,7 +458,7 @@
 //                           height: 42.h,
 //                           child: TextFormField(
 //                             decoration: InputDecoration(
-//                                 contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+//                                 contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
 //                                 hintText: '',
 //                                 disabledBorder: OutlineInputBorder(
 //                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
@@ -470,7 +470,7 @@
 //                                 ),
 //                                 border: OutlineInputBorder(
 //                                     borderSide: BorderSide(color: style.textFieldBorderColor),
-//                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r))),
+//                                     borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(4.r), bottomStart: Radius.circular(4.r))),
 //                                 enabledBorder: OutlineInputBorder(
 //                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
 //                                   borderSide: BorderSide(color: style.textFieldBorderColor),
@@ -484,7 +484,7 @@
 //                         ),
 //                       ),
 //                       SmartButton(
-//                         borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+//                         borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
 //                         width: 134.w,
 //                         onTap: () {
 //                           if (bloc.bidAmountController.text.isNotNullNorEmpty) {
@@ -515,7 +515,7 @@
 //                 },
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: style.primaryColor,
-//                   padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
+//                   padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 24.w),
 //                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
 //                 ),
 //                 child: Row(
@@ -526,7 +526,7 @@
 //                     Container(
 //                       height: 24.w,
 //                       width: 24.w,
-//                       alignment: Alignment.center,
+//                       alignment: AlignmentDirectional.center,
 //                       decoration: BoxDecoration(
 //                         color: style.compareCountBGColor,
 //                         borderRadius: BorderRadius.circular(4.r),

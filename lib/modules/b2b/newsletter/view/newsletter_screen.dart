@@ -16,13 +16,13 @@ class NewsletterScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
           child: Column(
             children: [
               SizedBox(height: 17.0.h),
               Expanded(
                 child: SmartTabBar(
-                  labelPadding: EdgeInsets.zero,
+                  labelPadding: EdgeInsetsDirectional.zero,
                   indicatorHeight: 4.0.h,
                   length: bloc.tabs.length,
                   onTabInitialized: (tabController) {

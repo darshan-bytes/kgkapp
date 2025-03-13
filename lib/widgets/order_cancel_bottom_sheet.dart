@@ -11,7 +11,7 @@ class OrderCancelBottomSheet extends StatelessWidget {
       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -21,7 +21,7 @@ class OrderCancelBottomSheet extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
-                      padding: EdgeInsets.all(18.w),
+                      padding: EdgeInsetsDirectional.all(18.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -44,7 +44,7 @@ class OrderCancelBottomSheet extends StatelessWidget {
                           Container(
                             height: 148.w,
                             width: context.width,
-                            padding: EdgeInsets.all(14.w),
+                            padding: EdgeInsetsDirectional.all(14.w),
                             decoration: BoxDecoration(color: style.refundBgColor, borderRadius: BorderRadius.all(Radius.circular(6.r))),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,9 +144,9 @@ class OrderCancelBottomSheet extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Positioned(
+                    PositionedDirectional(
                       top: 16.w,
-                      right: 16.w,
+                      end: 16.w,
                       child: InkWell(
                         onTap: () {
                           context.pop();

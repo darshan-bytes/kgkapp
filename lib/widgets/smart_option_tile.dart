@@ -27,7 +27,7 @@ class SmartOptionTile extends StatelessWidget {
       },
       child: Container(
         color: style.transparentColor,
-        padding: EdgeInsets.symmetric(vertical: 16.0.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 16.0.h),
         child: Column(
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -71,7 +71,7 @@ class SmartOptionTile extends StatelessWidget {
                 Container(
                   height: 24.w,
                   width: 24.w,
-                  alignment: Alignment.center,
+                  alignment: AlignmentDirectional.center,
                   child: SmartImage(
                     path: profileListModel.trailingIcon ?? "",
                     color: style.arrowRightColor,

@@ -62,7 +62,7 @@ class SmartDurationPicker extends StatelessWidget {
           },
           child: Container(
             height: buttonHeight ?? 48.w,
-            padding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: contentPadding ?? EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
@@ -129,10 +129,10 @@ class CustomDurationPicker extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 20.h, horizontal: 16.w),
           decoration: BoxDecoration(
             color: style.backgroundColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
           ),
           child: Stack(
             children: [
@@ -232,7 +232,7 @@ class CustomDurationPicker extends StatelessWidget {
                 ],
               ),
               Align(
-                alignment: Alignment.topRight,
+                alignment: AlignmentDirectional.topEnd,
                 child: SmartImage(
                     path: AppImages.icCross,
                     width: 24.w,

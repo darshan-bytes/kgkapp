@@ -203,7 +203,7 @@ class SmartImage extends StatelessWidget {
                               child: Container(
                                   height: 20.w,
                                   width: 20.w,
-                                  alignment: Alignment.center,
+                                  alignment: AlignmentDirectional.center,
                                   child: SizedBox(
                                     height: 20.w,
                                     width: 20.w,

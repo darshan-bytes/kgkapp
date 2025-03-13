@@ -34,7 +34,7 @@ class ShippingAddressScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ShippingAddressLoadedState,
       builder: (context, state) {
         return ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
           itemCount: shippingAddressBloc.addressList.length,
           itemBuilder: (context, index) {
             return BlocBuilder<ShippingAddressBloc, ShippingAddressState>(
@@ -56,7 +56,7 @@ class ShippingAddressScreen extends StatelessWidget {
                     Utils.showSmartModalBottomSheet(
                         context: context,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+                          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
                         ),
                         builder: (builderContext) => ConfirmationDialog(
                               title: APPStrings.deleteAddress.tr,
@@ -88,7 +88,7 @@ class ShippingAddressScreen extends StatelessWidget {
         color: style.whiteColor,
         boxShadow: [style.boxShadow],
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       child: SafeArea(
         child: Row(
           children: [

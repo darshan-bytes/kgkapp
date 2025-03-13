@@ -9,7 +9,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final Connectivity _connectivity = Connectivity();
   late Stream<List<ConnectivityResult>> _connectivityStream;
   List<Locale> supportedLocales = const [
-    Locale(APPStrings.languageEn, ''), // English
+    Locale(APPStrings.languageEn, ''),
     Locale(APPStrings.languageAr, ''),
     Locale(APPStrings.languageHi, ''),
     Locale(APPStrings.languageJa, ''),
@@ -273,7 +273,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   // Add to bag
   Future<void> _addToBag(ProductAddToBagEvent event) async {
-    printWrapped('Add to bag event::  ${event.productDetails.suid} ${event.productDetails.commodity}');
     if (event.productDetails.suid.isNullOrEmpty || event.productDetails.commodity == null) return;
     Map<String, dynamic> body = {
       ApiKey.commodity: event.productDetails.commodity?.value,
@@ -324,6 +323,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (l) => Utils.showMessage(l.message),
         (data) async {
           await StorageManager().clearBagData();
+          BlocProvider.of<LandingBloc>(event.context.mounted ? event.context : getNavigatorKeyContext).add(LandingChangeMyBagCountEvent(0));
         },
       );
     });
@@ -448,8 +448,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     return newLaunchedList;
   }
 
-  Future<List<HomeGemstonesModel>> fetchHomeGemstiones(BuildContext context,
-      {bool isShowLoader = true, bool isForceFetch = false}) async {
+  Future<List<HomeGemstonesModel>> fetchHomeGemstiones(BuildContext context, {bool isShowLoader = true, bool isForceFetch = false}) async {
     List<HomeGemstonesModel> commodityMasterDetails = [];
     try {
       final Map<String, dynamic> body = {

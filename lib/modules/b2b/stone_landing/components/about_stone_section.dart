@@ -19,7 +19,7 @@ class AboutOurStoneSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +34,7 @@ class AboutOurStoneSection extends StatelessWidget {
               onTap: learnMore,
               child: SmartText(
                 APPStrings.learnMore.tr,
-                optionalPadding: EdgeInsets.only(top: 24.h),
+                optionalPadding: EdgeInsetsDirectional.only(top: 24.h),
                 style: style.learnMoreTextStyle,
               ),
             ),

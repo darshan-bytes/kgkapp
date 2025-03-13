@@ -96,6 +96,7 @@ class ApiService implements ApiProvider {
     } on KGKException catch (e) {
       return Left(ErrorResponse(code: 0, message: e.message));
     } on SocketException catch (e) {
+      kgk_logger.log('🔴 SocketException: ${e.message}');
       return Left(ErrorResponse(code: 0, message: APPStrings.noInternetConnectionOrServerNotReachable.tr));
     } catch (e) {
       return Left(ErrorResponse(code: 0, message: APPStrings.somethingWrong.tr));

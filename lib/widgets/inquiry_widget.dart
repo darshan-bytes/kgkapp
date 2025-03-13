@@ -15,7 +15,7 @@ class InquiryWidget extends StatelessWidget {
     return Container(
       decoration:
           BoxDecoration(border: Border.all(color: colors(context).colorD3DAE0, width: 1.w), borderRadius: BorderRadius.circular(8.r)),
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class InquiryWidget extends StatelessWidget {
             Container(
               height: 32.w,
               width: 32.w,
-              alignment: Alignment.center,
+              alignment: AlignmentDirectional.center,
               child: SmartImage(path: AppImages.icArrowRight, height: 14.w, width: 14.w),
             )
         ],

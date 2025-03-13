@@ -9,7 +9,7 @@ class InboxTabviewListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
         child: Column(
           children: [
             SizedBox(height: 24.h),

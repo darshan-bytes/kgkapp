@@ -9,7 +9,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExhibitionDetailsItemStyle style = AppTheme.of(context).exhibitionDetailsItemStyle;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -79,7 +79,7 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
                       unselectedButtonIconColor: diamondListingStyle.listIconColor,
                       unselectedButtonColor: diamondListingStyle.listBackgroundColor,
                       unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ExhibitionChangeListingTypeEvent(isGrid: false));
                       },

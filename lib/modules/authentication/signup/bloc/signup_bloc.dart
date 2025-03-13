@@ -161,10 +161,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     await Utils.showSmartModalBottomSheet(
       context: event.context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(20.r), topEnd: Radius.circular(20.r)),
       ),
       builder: (context) => Padding(
-        padding: EdgeInsets.all(8.0.h),
+        padding: EdgeInsetsDirectional.all(8.0.h),
         child: ConfirmationDialog(
           title: APPStrings.areYouSureChangeAccountType.tr,
           onApproved: () {

@@ -11,7 +11,7 @@ class ActivityLogScreen extends StatelessWidget {
       appBar: SmartAppBar(title: APPStrings.activityLog.tr),
       body: SafeArea(
         child: SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
           child: Column(
             children: [
               SmartText(
@@ -87,7 +87,7 @@ class ActivityLogScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 24.w),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 10.w, horizontal: 24.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24.w),
             border: Border.all(color: style.borderColor),
@@ -110,12 +110,12 @@ class ActivityLogScreen extends StatelessWidget {
           child: ListView.separated(
             separatorBuilder: (context, index) {
               return Container(
-                margin: EdgeInsets.symmetric(vertical: 16.w),
+                margin: EdgeInsetsDirectional.symmetric(vertical: 16.w),
                 height: 1.h,
                 color: style.dividerColor,
               );
             },
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: activityLog.activities?.length ?? 0,

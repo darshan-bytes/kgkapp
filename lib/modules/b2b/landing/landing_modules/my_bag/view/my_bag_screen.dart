@@ -36,7 +36,7 @@ class MyBagScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 24.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
           boxShadow: [
@@ -184,7 +184,7 @@ class MyBagScreen extends StatelessWidget {
   Widget _buildSelectAllProductBox(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
     GlobalKey key = GlobalKey();
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -278,7 +278,7 @@ class MyBagScreen extends StatelessWidget {
 
   Widget buildCheckoutButton(BuildContext context, MyBagScreenStyle style, MyBagBloc bloc) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 18.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 18.w),
       color: style.backgroundColor,
       child: SmartButton(
         onTap: () {
@@ -294,7 +294,7 @@ class MyBagScreen extends StatelessWidget {
       buildWhen: (_, current) => current is MyBagToggleViewModeState,
       builder: (context, state) {
         return ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
             ProductDetailsModel product = bloc.myBagProductList[index];
             switch (bloc.commodity) {
@@ -515,7 +515,7 @@ class MyBagScreen extends StatelessWidget {
 
   Widget _buildInquirySection(MyBagBloc bloc, MyBagScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         children: [
           InquiryWidget(
@@ -582,7 +582,7 @@ class MyBagScreen extends StatelessWidget {
 
   Widget _buildBagTotalDiamondItemsDetails(MyBagBloc bloc, MyBagScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 14.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -603,7 +603,7 @@ class MyBagScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 primary: false,
-                padding: EdgeInsets.symmetric(vertical: 12.h),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
                 itemCount: bloc.salesmanList.length,
                 itemBuilder: (context, index) {
                   AssignClient? salesman = bloc.salesmanList[index].assignClient;
@@ -774,7 +774,7 @@ class MyBagScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16.w),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 16.w, horizontal: 16.w),
         child: Row(
           children: [
             SmartImage(path: iconPath, height: 24.w, width: 24.w),

@@ -571,6 +571,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
         Utils.showMessage(l.message);
       },
       (r) async {
+        clearData();
         bagListDataModel = null;
         commodity = null;
         myBagProductList.clear();

@@ -25,7 +25,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
   Widget _buildSearchSection() {
     return SmartTextField.search(
       height: 48.w,
-      padding: EdgeInsets.symmetric(vertical: 24.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
       hintText: APPStrings.searchTemplate.tr,
       controller: bloc.templateSearchController,
       onTapOutside: (event) {},
@@ -63,7 +63,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
                     templateListModel: templateListModel,
                     isLastItem: index == bloc.templateList.length - 1 && state is NewsletterLoadingMoreState,
                     context: context,
-                    padding: EdgeInsets.only(
+                    padding: EdgeInsetsDirectional.only(
                       bottom: (state is NewsletterLoadingMoreState && index == bloc.templateList.length - 1) ? 0 : 24.h,
                     ),
                     style: style,
@@ -83,7 +83,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
       {required TemplateListModel templateListModel,
       bool isLastItem = false,
       required BuildContext context,
-      required EdgeInsets padding,
+      required EdgeInsetsGeometry padding,
       required NewsletterScreenStyle style}) {
     return Padding(
       padding: padding,
@@ -101,7 +101,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
                 onTap: () {},
                 onTapMenuButton: () {},
                 listingItemModel: item,
-                margin: EdgeInsets.only(
+                margin: EdgeInsetsDirectional.only(
                   bottom: subIndex == (templateListModel.templateSubList?.length ?? 0) - 1 ? 0 : 16.h,
                 ),
               );
@@ -118,7 +118,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
     required B2BCustomListingDataModel listingItemModel,
     Function()? onTap,
     Function()? onTapMenuButton,
-    EdgeInsets? margin,
+    EdgeInsetsGeometry? margin,
   }) {
     final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
 
@@ -128,7 +128,7 @@ class NewsletterTemplateTabView extends StatelessWidget {
         children: [
           Container(
             margin: margin,
-            padding: EdgeInsets.all(16.0.w),
+            padding: EdgeInsetsDirectional.all(16.0.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0.r),
               border: Border.all(color: style.borderColor),
@@ -182,13 +182,13 @@ class NewsletterTemplateTabView extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             top: 14.h,
-            right: 14.w,
+            end: 14.w,
             child: SmartImage(
               path: AppImages.icMoreHorizontal,
               onTap: onTapMenuButton,
-              padding: EdgeInsets.all(4.w),
+              padding: EdgeInsetsDirectional.all(4.w),
               inkwellBorderRadius: BorderRadius.circular(4.0.r),
             ),
           ),

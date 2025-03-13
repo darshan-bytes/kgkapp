@@ -39,7 +39,7 @@ class RetailerOrderListBuilder extends StatelessWidget {
                       onTap?.call(index);
                     },
                     onTapMenuButton: onTapMenuButton != null ? () => onTapMenuButton!(index) : null,
-                    margin: EdgeInsets.only(
+                    margin: EdgeInsetsDirectional.only(
                         bottom: (state is RetailerOrderListingLoadingMoreState && index == ordersList.length - 1) ? 0 : 16.h),
                     listingItemModel: ordersList[index],
                     type: currentListType,

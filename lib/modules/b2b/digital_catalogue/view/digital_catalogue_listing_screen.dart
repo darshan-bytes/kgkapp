@@ -54,8 +54,8 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                     focusNode: digitalCatalogueBloc.focusNode,
                     controller: digitalCatalogueBloc.searchController,
                     hintText: APPStrings.searchCatalogue.tr,
-                    suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-                    padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 16.w),
+                    suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 24.w, horizontal: 16.w),
                     onTapOutside: (value) => FocusScope.of(context).unfocus(),
                     onValueChanges: (value) {
                       digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
@@ -95,7 +95,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
               controller: digitalCatalogueBloc.paginationScrollController.controller,
               itemCount: digitalCatalogueBloc.digitalCatalogueList.length,
               separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 100.h),
+              padding: EdgeInsetsDirectional.only(start: 16.w, end: 16.w, bottom: 100.h),
               itemBuilder: (context, index) {
                 return BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
                   buildWhen: (previous, current) => current is DigitalCatalogueLoadingMoreState || current is DigitalCatalogueLoadMoreState,
@@ -120,8 +120,8 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                   width: context.width,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(16.w),
-                                  alignment: Alignment.topRight,
+                                  padding: EdgeInsetsDirectional.all(16.w),
+                                  alignment: AlignmentDirectional.topEnd,
                                   child: SmartImage(
                                     path: AppImages.icMoreVerticalCircle,
                                     imageBorderRadius: BorderRadius.circular(4.0.r),
@@ -133,7 +133,7 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.all(16.0.w),
+                              padding: EdgeInsetsDirectional.all(16.0.w),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

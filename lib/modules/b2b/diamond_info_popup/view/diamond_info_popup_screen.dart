@@ -15,7 +15,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
           appBar: SmartAppBar(title: APPStrings.diamonds.tr),
           bottomNavigationBar: _buildBottomNavigationBar(context, productInfoModel),
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
             child: SmartSingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                   ],
                   if (productInfoModel.originalPrice.isNotNullNorEmpty) ...[
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: EdgeInsetsDirectional.only(
                         top: 4.h,
                       ),
                       child: Row(
@@ -109,7 +109,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
 
   Widget _buildImageSlider(DiamondInfoPopupBloc bloc) {
     return Stack(
-      alignment: Alignment.centerRight,
+      alignment: AlignmentDirectional.centerEnd,
       children: [
         CarouselSlider(
           items: bloc.imgList.map((e) {
@@ -128,7 +128,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.only(right: 8.w),
+                margin: EdgeInsetsDirectional.only(end: 8.w),
                 height: 24.w,
                 width: 24.w,
                 child: InkWell(
@@ -141,7 +141,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(right: 8.w),
+                margin: EdgeInsetsDirectional.only(end: 8.w),
                 height: 24.w,
                 width: 24.w,
                 child: InkWell(
@@ -251,7 +251,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
 
   Widget _buildProductInfoItem(String title, String? value, DiamondInfoPopupScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.0.h),
+      padding: EdgeInsetsDirectional.only(bottom: 8.0.h),
       child: Row(children: [
         Expanded(child: SmartText(title, style: style.itemTitleStyle)),
         Expanded(child: SmartText(value.isNotNullNorEmpty ? value : APPStrings.dash.tr, style: style.itemValueStyle)),
@@ -305,7 +305,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(BuildContext context, ProductInfoModel productInfo) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 8.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 8.h),
       child: SafeArea(
         child: Row(
           children: [
@@ -334,7 +334,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
             SelectionButton(
               height: 42.w,
               width: 42.w,
-              padding: EdgeInsets.all(6.w),
+              padding: EdgeInsetsDirectional.all(6.w),
               isSelected: false,
               onTap: () {},
               image: AppImages.icHeart,

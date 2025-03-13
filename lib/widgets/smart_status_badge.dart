@@ -26,7 +26,7 @@ class SmartStatusBadge extends StatelessWidget {
     return FittedBox(
       child: Container(
         height: height,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 4.h),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius ?? 100.r),

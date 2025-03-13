@@ -10,22 +10,22 @@ class GetInspiredSection extends StatelessWidget {
   final Color? backgroundColor;
   final double? height;
 
-  const GetInspiredSection({
-    super.key,
-    required this.bloc,
-    required this.homeScreenStyle,
-    required this.style,
-    required this.title,
-    required this.itemList,
-    required this.onTap,
-    this.backgroundColor,
+  const GetInspiredSection(
+      {super.key,
+      required this.bloc,
+      required this.homeScreenStyle,
+      required this.style,
+      required this.title,
+      required this.itemList,
+      required this.onTap,
+      this.backgroundColor,
       this.height});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: backgroundColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -14,7 +14,7 @@ class AllReviewScreen extends StatelessWidget {
           if (state is AllReviewLoadedState || state is AllReviewLoadedMoreState) {
             return ListView.separated(
               controller: bloc.paginationScrollController.scrollController,
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsetsDirectional.all(16.w),
               itemCount: bloc.reviewList.length,
               itemBuilder: (context, index) {
                 return BlocBuilder<AllReviewBloc, AllReviewState>(

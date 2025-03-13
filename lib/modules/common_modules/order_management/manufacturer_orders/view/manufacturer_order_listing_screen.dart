@@ -25,7 +25,7 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<ManufacturerOrderListingBloc, ManufacturerOrderListingState>(
             buildWhen: (previous, current) => current is ManufacturerOrderListingLoadedState,
             builder: (context, state) {
@@ -63,7 +63,7 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
                 child: SmartTextField.search(
                   height: 48.w,
                   prefixIconSize: 12.w,
-                  padding: EdgeInsets.symmetric(vertical: 24.w),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
                   hintText: APPStrings.searchOrder.tr,
                   controller: bloc.manufacturerOrderSearchController,
                   borderRadius: borderRadius,
@@ -114,7 +114,7 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
                     return Column(
                       children: [
                         B2BListingItem(
-                          margin: EdgeInsets.only(bottom: 16.0.h),
+                          margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
                           type: B2BListingType.manufacturerOrderListingType,
                           listingItemModel: orderItem,
                           onTapMenuButton: () {},
@@ -142,11 +142,11 @@ class ManufacturerOrderListingScreen extends StatelessWidget {
         return SizedBox(
           width: 120.w,
           child: SmartDropDown<ManufacturerOrderModel>(
-            border: Border(
-                right: BorderSide(color: style.dividerColor),
+            border: BorderDirectional(
+                end: BorderSide(color: style.dividerColor),
                 top: BorderSide(color: style.dividerColor),
                 bottom: BorderSide(color: style.dividerColor)),
-            borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+            borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
             items: bloc.orderTypeList.map((ManufacturerOrderModel type) {
               return SmartDropDownItem<ManufacturerOrderModel>(
                 value: type,

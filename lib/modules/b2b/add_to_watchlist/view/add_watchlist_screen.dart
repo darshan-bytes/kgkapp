@@ -8,19 +8,19 @@ class AddWatchlistScreen extends StatelessWidget {
     final WatchListItemStyle style = AppTheme.of(context).watchListItemStyle;
     final AddToWatchlistBloc bloc = BlocProvider.of<AddToWatchlistBloc>(context);
     return SmartSingleChildScrollView(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12.r),
-            topRight: Radius.circular(12.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(12.r),
+            topEnd: Radius.circular(12.r),
           ),
         ),
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -89,7 +89,7 @@ class AddWatchlistScreen extends StatelessWidget {
 
   Widget _productWatchDetails(WatchListItemStyle style, AddToWatchlistBloc bloc) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       decoration: BoxDecoration(
         color: style.disableBackgroundColor,
       ),
@@ -98,7 +98,7 @@ class AddWatchlistScreen extends StatelessWidget {
         children: [
           if (bloc.productDetails?.isOutOfStock ?? false) ...[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(
                 color: style.outOfStockBgColor,
               ),
@@ -217,7 +217,7 @@ class AddWatchlistScreen extends StatelessWidget {
                       bloc.add(WatchlistCheckEvent(index: index));
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                       child: Row(
                         children: [
                           SmartCheckbox(
@@ -248,7 +248,7 @@ class AddWatchlistScreen extends StatelessWidget {
   Widget _bottomNavigationBar(BuildContext context, AddToWatchlistBloc bloc) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.w),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
         child: Row(
           children: [
             Expanded(

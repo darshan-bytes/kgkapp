@@ -21,7 +21,7 @@ class SkuLibraryScreen extends StatelessWidget {
   Widget buildBody(SkuLibraryBloc bloc, BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 24.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w, vertical: 24.h),
         child: BlocBuilder<SkuLibraryBloc, SkuLibraryState>(
           buildWhen: (previous, current) => current is SkuLibraryLoadedState || current is SkuLibraryLoadingState,
           builder: (context, state) {
@@ -80,9 +80,9 @@ class SkuLibraryScreen extends StatelessWidget {
           unselectedButtonIconColor: diamondListingStyle.listIconColor,
           unselectedButtonColor: diamondListingStyle.listBackgroundColor,
           unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.r),
-            bottomLeft: Radius.circular(4.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(4.r),
+            bottomStart: Radius.circular(4.r),
           ),
           onTap: () {
             bloc.add(const SkuLibraryChangeListingTypeEvent(isGrid: true));
@@ -98,9 +98,9 @@ class SkuLibraryScreen extends StatelessWidget {
           unselectedButtonIconColor: diamondListingStyle.listIconColor,
           unselectedButtonColor: diamondListingStyle.listBackgroundColor,
           unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(4.r),
-            bottomRight: Radius.circular(4.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topEnd: Radius.circular(4.r),
+            bottomEnd: Radius.circular(4.r),
           ),
           onTap: () {
             bloc.add(const SkuLibraryChangeListingTypeEvent(isGrid: false));
@@ -163,7 +163,7 @@ class SkuLibraryScreen extends StatelessWidget {
           return Column(
             children: [
               CadLibraryListItem.designListItem(
-                margin: EdgeInsets.only(bottom: 24.h),
+                margin: EdgeInsetsDirectional.only(bottom: 24.h),
                 designModel: bloc.skuLibraryList[index],
                 onTap: () {
                   /// TODO: Navigate to the design detail page.

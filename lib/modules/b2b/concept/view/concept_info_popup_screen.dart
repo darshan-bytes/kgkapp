@@ -24,7 +24,7 @@ class ConceptInfoPopupScreen extends StatelessWidget {
         Stack(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +46,7 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                       child: SmartHorizontalItemBuilder(
                           scrollController: _scrollController,
                           itemCount: imageList.length,
-                          listPadding: EdgeInsets.only(bottom: 16.h),
+                          listPadding: EdgeInsetsDirectional.only(bottom: 16.h),
                           itemBetweenSpace: 16.w,
                           itemBuilder: (context, index) {
                             return SmartImage(
@@ -60,9 +60,9 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
+            PositionedDirectional(
               top: 16.w,
-              right: 17.w,
+              end: 17.w,
               child: SmartImage(
                 path: AppImages.icCross,
                 height: 24.w,

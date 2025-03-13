@@ -15,7 +15,7 @@ class CadLibraryListingScreen extends StatelessWidget {
           floatingActionButton: _buildFloatingActionButton(cadLibraryListingBloc),
           body: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
               child: BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
                 buildWhen: (previous, current) => current is CadListingLoadedState || current is CadPullToRefreshState,
                 builder: (context, state) {
@@ -58,8 +58,8 @@ class CadLibraryListingScreen extends StatelessWidget {
     return SmartTextField(
       hintText: APPStrings.searchCAD.tr,
       controller: bloc.cadLibrarySearchController,
-      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-      padding: EdgeInsets.symmetric(vertical: 16.w),
+      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 16.w),
       textInputAction: TextInputAction.search,
       onTapOutside: (event) {},
     );
@@ -105,7 +105,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                       unselectedButtonIconColor: diamondListingStyle.listIconColor,
                       unselectedButtonColor: diamondListingStyle.listBackgroundColor,
                       unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const CadChangeListingTypeEvent(isGrid: false));
                       },
@@ -171,7 +171,7 @@ class CadLibraryListingScreen extends StatelessWidget {
           return Column(
             children: [
               CadLibraryListItem(
-                margin: EdgeInsets.only(bottom: 24.h),
+                margin: EdgeInsetsDirectional.only(bottom: 24.h),
                 designModel: bloc.cadList[index],
                 onTap: () {},
               ),

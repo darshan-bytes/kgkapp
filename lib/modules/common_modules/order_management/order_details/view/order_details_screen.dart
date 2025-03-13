@@ -54,7 +54,7 @@ class _OrderDetailBody extends StatelessWidget {
 
   Widget _buildSearchTextField(OrderDetailBloc bloc) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Row(
         children: [
           Expanded(
@@ -88,7 +88,7 @@ class _OrderDetailBody extends StatelessWidget {
           itemCount: bloc.userType == UserType.b2cUser ? bloc.orderProductList.length : bloc.orderProductDetailsList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           itemBuilder: (context, index) {
             if (bloc.userType == UserType.b2cUser) {
               final ProductDetailsModel product = bloc.orderProductList[index];
@@ -131,15 +131,15 @@ class _OrderDetailBody extends StatelessWidget {
       context: context,
       enableDrag: false,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
             color: orderPopupStyle.whiteColor,
           ),
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsetsDirectional.all(16.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -173,7 +173,7 @@ class _OrderDetailBody extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => BlocProvider<OrderDetailBloc>(
         create: (context) => OrderDetailBloc(),
@@ -187,7 +187,7 @@ class _OrderDetailBody extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
         return BlocProvider<OrderDetailBloc>(
@@ -203,7 +203,7 @@ class _OrderDetailBody extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
         return BlocProvider<OrderDetailBloc>(
@@ -218,7 +218,7 @@ class _OrderDetailBody extends StatelessWidget {
     BuildContext context, {
     required String text,
     required TextStyle style,
-    EdgeInsets? padding,
+    EdgeInsetsGeometry? padding,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -226,8 +226,8 @@ class _OrderDetailBody extends StatelessWidget {
       child: Container(
         height: 56.h,
         width: context.width,
-        alignment: Alignment.centerLeft,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        alignment: AlignmentDirectional.centerStart,
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 20.w),
         child: SmartText(text, style: style),
       ),
     );
@@ -244,7 +244,7 @@ class _OrderDetailsInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: style.detailsTileColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w, vertical: 24.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -322,7 +322,7 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 22.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w, vertical: 22.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -386,7 +386,7 @@ class _DetailColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(right: 6.w),
+        padding: EdgeInsetsDirectional.only(end: 6.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -440,7 +440,7 @@ class _CreatorDetailItem extends StatelessWidget {
             children: [
               if (iconImage != null)
                 Padding(
-                  padding: EdgeInsets.only(right: 4.w),
+                  padding: EdgeInsetsDirectional.only(end: 4.w),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50.r),
                     child: SmartImage(

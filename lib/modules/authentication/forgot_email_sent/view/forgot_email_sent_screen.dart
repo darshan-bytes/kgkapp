@@ -19,13 +19,13 @@ class ForgotEmailSentScreen extends StatelessWidget {
         builder: (context, state) {
           return SmartSingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    alignment: Alignment.topLeft,
+                    alignment: AlignmentDirectional.topStart,
                     child: SmartText(
                       APPStrings.forgotPassword.tr.interpolate(['']),
                       style: signInStyle.titleTextStyle,

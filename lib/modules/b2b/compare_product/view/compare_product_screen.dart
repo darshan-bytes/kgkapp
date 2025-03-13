@@ -31,7 +31,7 @@ class CompareProductScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(14.w),
+                        padding: EdgeInsetsDirectional.all(14.w),
                         child: SmartSingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Column(
@@ -49,11 +49,11 @@ class CompareProductScreen extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: Alignment.bottomLeft,
+                        alignment: AlignmentDirectional.bottomStart,
                         child: Container(
                           height: 132.w,
-                          padding: EdgeInsets.symmetric(horizontal: 14.w),
-                          alignment: Alignment.center,
+                          padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
+                          alignment: AlignmentDirectional.center,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -98,7 +98,7 @@ class CompareProductScreen extends StatelessWidget {
                                                 child: Container(
                                                   height: 48.h,
                                                   width: 114.w,
-                                                  alignment: Alignment.center,
+                                                  alignment: AlignmentDirectional.center,
                                                   child: Icon(
                                                     Icons.delete_forever,
                                                     color: style.primaryColor,
@@ -157,7 +157,7 @@ class CompareProductScreen extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Container(
-            margin: EdgeInsets.only(right: 10.w),
+            margin: EdgeInsetsDirectional.only(end: 10.w),
             child: SmartText(
               productDetail.name ?? '',
               maxLines: 2,
@@ -240,7 +240,7 @@ class CompareProductScreen extends StatelessWidget {
         const Divider(),
         SizedBox(height: 8.h),
         Container(
-          margin: EdgeInsets.only(right: 12.w),
+          margin: EdgeInsetsDirectional.only(end: 12.w),
           height: textHeight.h,
           child: SmartText(
             value.isNotNullNorEmpty ? value : '-',

@@ -385,7 +385,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         List<Widget> buttonList = [];
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
           buttonList.add(SmartButton(
-            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
             onTap: () {
               handleRedirection(
                 context: context,
@@ -488,7 +488,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         for (int i = 0; i < diamondStrapiList[index].button.length; i++) {
           buttonList.add(SmartButton(
-            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+            margin: i != diamondStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
             onTap: () {
               handleRedirection(
                 context: context,
@@ -501,14 +501,14 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         }
 
         stonesBannerView.add(StonesBannerView(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsetsDirectional.zero,
             foregroundImagePath: mainBannerForegroundImagePath,
             spaceBetweenImageAndTitle: 16.h,
             bannerTitleText: mainBannerTitle,
             bannerTitleStyle: style.craftedSectionTitleStyle,
             bannerSubTitleText: mainBannerDescription,
             bannerSubTitleStyle: style.originSectionSubTitleStyle,
-            margin: EdgeInsets.only(bottom: 24.h),
+            margin: EdgeInsetsDirectional.only(bottom: 24.h),
             buttonList: buttonList));
 
         for (int i = 0; i < diamondStrapiList[index].banner.length; i++) {
@@ -520,8 +520,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
           String buttonTitle = diamondStrapiList[index].banner[i].buttonLabel ?? '';
 
           stonesBannerView.add(StonesBannerView(
-            padding: EdgeInsets.all(16.w),
-            margin: i != diamondStrapiList[index].banner.length - 1 ? EdgeInsets.only(bottom: 24.h) : EdgeInsets.zero,
+            padding: EdgeInsetsDirectional.all(16.w),
+            margin: i != diamondStrapiList[index].banner.length - 1 ? EdgeInsetsDirectional.only(bottom: 24.h) : EdgeInsetsDirectional.zero,
             backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
@@ -545,7 +545,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
         return Container(
           color: style.designYourOwnStoneBgColor,
-          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
           child: Column(
             children: stonesBannerView,
           ),
@@ -608,7 +608,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         List<Widget> buttonList = [];
         for (int i = 0; i < gemstoneStrapiList[index].button.length; i++) {
           buttonList.add(SmartButton(
-            margin: i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+            margin:
+                i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
             onTap: () {
               handleRedirection(
                 context: context,
@@ -699,7 +700,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
           for (int i = 0; i < gemstoneStrapiList[index].button.length; i++) {
             buttonList.add(SmartButton(
-              margin: i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+              margin:
+                  i != gemstoneStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
               onTap: () {
                 handleRedirection(
                   context: context,
@@ -712,14 +714,14 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
           }
 
           stonesBannerView.add(StonesBannerView(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsetsDirectional.zero,
               foregroundImagePath: mainBannerForegroundImagePath,
               spaceBetweenImageAndTitle: 16.h,
               bannerTitleText: mainBannerTitle,
               bannerTitleStyle: style.craftedSectionTitleStyle,
               bannerSubTitleText: mainBannerDescription,
               bannerSubTitleStyle: style.originSectionSubTitleStyle,
-              margin: EdgeInsets.only(bottom: 24.h),
+              margin: EdgeInsetsDirectional.only(bottom: 24.h),
               buttonList: buttonList));
         }
 
@@ -733,8 +735,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
             String buttonTitle = gemstoneStrapiList[index].banner[i].buttonLabel ?? '';
 
             stonesBannerView.add(StonesBannerView(
-              padding: EdgeInsets.all(16.w),
-              margin: i != gemstoneStrapiList[index].banner.length - 1 ? EdgeInsets.only(bottom: 24.h) : EdgeInsets.zero,
+              padding: EdgeInsetsDirectional.all(16.w),
+              margin:
+                  i != gemstoneStrapiList[index].banner.length - 1 ? EdgeInsetsDirectional.only(bottom: 24.h) : EdgeInsetsDirectional.zero,
               backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
               backgroundImageHeight: 200.h,
               spaceBetweenTitleAndSubTitle: 4.h,
@@ -760,7 +763,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         return stonesBannerView.isNotNullNorEmpty
             ? Container(
                 color: style.designYourOwnStoneBgColor,
-                padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
                 child: Column(
                   children: stonesBannerView,
                 ),
@@ -834,7 +837,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         List<Widget> buttonList = [];
         for (int i = 0; i < jewelleryStrapiList[index].button.length; i++) {
           buttonList.add(SmartButton(
-            margin: i != jewelleryStrapiList[index].button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+            margin:
+                i != jewelleryStrapiList[index].button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
             onTap: () {
               handleRedirection(
                 context: context,
@@ -908,8 +912,8 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
                 : '';
             String buttonTitle = jewelleryStrapiList[index].banner[i].buttonLabel ?? '';
             stonesBannerView.add(StonesBannerView(
-              margin:
-                  EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w, bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0),
+              margin: EdgeInsetsDirectional.only(
+                  top: 24.h, start: 17.w, end: 17.w, bottom: i == jewelleryStrapiList[index].banner.length - 1 ? 24.h : 0),
               backgroundImagePath: "${AppConst.strapiQaEnvImgBaseUrl}$image",
               backgroundImageHeight: 200.h,
               spaceBetweenTitleAndSubTitle: 4.h,
@@ -945,7 +949,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               buttonList.add(
                 SmartText(
                   APPStrings.or.tr,
-                  optionalPadding: EdgeInsets.symmetric(vertical: 4.h),
+                  optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
                 ),
               );
             }
@@ -963,7 +967,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
 
           stonesBannerView.add(Container(
             color: style.designYourOwnStoneBgColor,
-            padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
             child: StonesBannerView(
               crossAxisAlignment: CrossAxisAlignment.center,
               titleTextAlign: TextAlign.center,
@@ -973,7 +977,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
               bannerSubTitleText: mainBannerDescription,
               bannerTitleStyle: style.sectionLabelStyle,
               bannerSubTitleStyle: style.jewelleryCreateOwnSubTitleStyle,
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsetsDirectional.all(16.w),
               backgroundImageHeight: 448.h,
               spaceBetweenTitleAndSubTitle: 4.h,
               buttonList: buttonList,
@@ -1092,7 +1096,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         .asMap()
         .entries
         .map<Widget>((entry) => SmartButton(
-              margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+              margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
               onTap: () => printWrapped("Button ${entry.key} clicked"),
               title: entry.value.label ?? '',
             ))
@@ -1157,7 +1161,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         .asMap()
         .entries
         .map<Widget>((entry) => SmartButton(
-              margin: entry.key != item.button.length - 1 ? EdgeInsets.only(bottom: 16.h) : EdgeInsets.zero,
+              margin: entry.key != item.button.length - 1 ? EdgeInsetsDirectional.only(bottom: 16.h) : EdgeInsetsDirectional.zero,
               onTap: () => printWrapped("Button ${entry.key} clicked"),
               title: entry.value.label ?? '',
             ))
@@ -1212,7 +1216,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   Widget _buildJewelleryCreateOwnSection({required StonesLandingScreenStyle style}) {
     return Container(
       color: style.designYourOwnStoneBgColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: StonesBannerView(
         crossAxisAlignment: CrossAxisAlignment.center,
         titleTextAlign: TextAlign.center,
@@ -1222,14 +1226,14 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         bannerSubTitleText: "Unleash your creativity and design your own exquisite jewelry piece that truly reflects your unique style.",
         bannerTitleStyle: style.sectionLabelStyle,
         bannerSubTitleStyle: style.jewelleryCreateOwnSubTitleStyle,
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         backgroundImageHeight: 448.h,
         spaceBetweenTitleAndSubTitle: 4.h,
         buttonList: [
           SmartButton(onTap: () {}, title: APPStrings.startWithSetting.tr),
           SmartText(
             APPStrings.or.tr,
-            optionalPadding: EdgeInsets.symmetric(vertical: 4.h),
+            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
           ),
           SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr)
         ],
@@ -1255,16 +1259,16 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
       title: title,
       widgetBetweenTitleAndItems: SmartText(
         description,
-        optionalPadding: EdgeInsets.only(left: 17.w, top: 12.h, right: 17.w, bottom: 16.h),
+        optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 12.h, end: 17.w, bottom: 16.h),
         style: style.originSectionSubTitleStyle,
       ),
       titleStyle: style.sectionLabelStyle,
       backgroundColor: style.originSectionBgColor,
       itemCount: bloc.originOfDiamondsList.length,
       itemBetweenSpace: 17.w,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = bloc.originOfDiamondsList[index];
         return SmartImageTitleColumn(
@@ -1272,9 +1276,9 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
           width: 88.w,
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
           ),
           titleMaxLines: 1,
           fit: BoxFit.fill,
@@ -1321,7 +1325,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
   Widget buildNewlyLaunchedSection(StonesLandingScreenStyle style) {
     return Container(
       color: style.newlyLaunchedBackgroundColor,
-      padding: EdgeInsets.symmetric(
+      padding: EdgeInsetsDirectional.symmetric(
         vertical: 32.h,
         horizontal: 17.w,
       ),

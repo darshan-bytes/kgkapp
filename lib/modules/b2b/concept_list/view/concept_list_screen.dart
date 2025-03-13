@@ -14,7 +14,7 @@ class ConceptListScreen extends StatelessWidget {
           if (state is ConceptListLoadedState) {
             return SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -25,7 +25,7 @@ class ConceptListScreen extends StatelessWidget {
                       onFieldSubmitted: (value) => conceptListBloc.add(const ConceptListSearchEvent()),
                       suffixIcon: SmartImage(
                         path: AppImages.icSearchThin,
-                        padding: EdgeInsets.all(14.w),
+                        padding: EdgeInsetsDirectional.all(14.w),
                       ),
                       onTapOutside: (event) {},
                     ),
@@ -40,7 +40,7 @@ class ConceptListScreen extends StatelessWidget {
                           return RefreshIndicator.adaptive(
                             child: ListView.separated(
                               physics: const ClampingScrollPhysics(),
-                              padding: EdgeInsets.only(bottom: 24.h),
+                              padding: EdgeInsetsDirectional.only(bottom: 24.h),
                               controller: conceptListBloc.paginationScrollController.scrollController,
                               shrinkWrap: true,
                               itemCount: conceptListBloc.conceptList.length,

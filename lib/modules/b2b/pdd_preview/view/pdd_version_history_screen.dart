@@ -14,7 +14,7 @@ class PddPreviewHistoryScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16.0.w),
+          padding: EdgeInsetsDirectional.all(16.0.w),
           child: Column(
             children: [
               _versionHistoryDropdown(pddPreviewBloc, style),

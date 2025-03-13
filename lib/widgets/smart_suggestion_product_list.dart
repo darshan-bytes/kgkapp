@@ -42,7 +42,7 @@ class SmartSuggestionProductList extends StatelessWidget {
               child: SmartText(
                 title,
                 style: style.titleStyle,
-                optionalPadding: isPaddingNeeded ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+                optionalPadding: isPaddingNeeded ? EdgeInsetsDirectional.only(start: 17.w) : EdgeInsetsDirectional.zero,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -51,7 +51,7 @@ class SmartSuggestionProductList extends StatelessWidget {
             if (onViewAllTap != null)
               SmartText(
                 APPStrings.viewAll.tr,
-                optionalPadding: isPaddingNeeded ? EdgeInsets.only(right: 17.w) : EdgeInsets.zero,
+                optionalPadding: isPaddingNeeded ? EdgeInsetsDirectional.only(end: 17.w) : EdgeInsetsDirectional.zero,
                 style: style.viewAllStyle,
                 onTap: onViewAllTap,
               ),
@@ -62,7 +62,7 @@ class SmartSuggestionProductList extends StatelessWidget {
           controller: scrollController,
           scrollDirection: Axis.horizontal,
           child: Padding(
-            padding: isPaddingNeeded ? EdgeInsets.only(left: 17.w, right: 17.w) : EdgeInsets.zero,
+            padding: isPaddingNeeded ? EdgeInsetsDirectional.only(start: 17.w, end: 17.w) : EdgeInsetsDirectional.zero,
             child: Wrap(
               direction: Axis.horizontal,
               spacing: 12.w,
@@ -74,7 +74,7 @@ class SmartSuggestionProductList extends StatelessWidget {
                           onProductTap?.call(product);
                         }
                       : null,
-                  margin: margin ?? EdgeInsets.only(bottom: 17.h),
+                  margin: margin ?? EdgeInsetsDirectional.only(bottom: 17.h),
                   onEyeTap: onEyeTap,
                   onFavTap: onFavTap,
                   productDetails: product,

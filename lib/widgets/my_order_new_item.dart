@@ -13,7 +13,7 @@ class MyOrderNewItem extends StatelessWidget {
     this.onTap,
     this.onTapMenuButton,
     this.padding,
-    this.margin = EdgeInsets.zero,
+    this.margin = EdgeInsetsDirectional.zero,
   });
 
   @override
@@ -25,7 +25,7 @@ class MyOrderNewItem extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            padding: padding ?? EdgeInsets.all(16.0.w),
+            padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
             margin: margin,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
@@ -42,7 +42,7 @@ class MyOrderNewItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(right: 6.w),
+                        padding: EdgeInsetsDirectional.only(end: 6.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -106,7 +106,7 @@ class MyOrderNewItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(right: 6.w),
+                        padding: EdgeInsetsDirectional.only(end: 6.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -156,7 +156,7 @@ class MyOrderNewItem extends StatelessWidget {
                         fit: BoxFit.fill,
                         height: 50.w,
                         width: 50.w,
-                        margin: EdgeInsets.only(right: 10.w),
+                        margin: EdgeInsetsDirectional.only(end: 10.w),
                       );
                     },
                   ),
@@ -171,7 +171,7 @@ class MyOrderNewItem extends StatelessWidget {
 
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, {bool isOrderStatus = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

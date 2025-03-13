@@ -57,7 +57,7 @@ class SmartSfRangeSlider extends StatelessWidget {
           SmartText(
             title,
             style: titleStyle,
-            optionalPadding: EdgeInsets.symmetric(horizontal: 16.w),
+            optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           ),
         SizedBox(height: 16.h),
         SliderTheme(
@@ -82,14 +82,14 @@ class SmartSfRangeSlider extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SmartTextField(
-                        padding: EdgeInsets.symmetric(vertical: 4.h),
+                        padding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
                         height: 40.h,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                        contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                         textAlign: TextAlign.center,
                         controller: minPriceController,
                         keyboardType: TextInputType.number,
@@ -112,9 +112,9 @@ class SmartSfRangeSlider extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SmartTextField(
-                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      padding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
                       height: 40.h,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                      contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                       textAlign: TextAlign.center,
                       controller: maxPriceController,
                       keyboardType: TextInputType.number,

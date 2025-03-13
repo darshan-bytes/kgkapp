@@ -15,7 +15,7 @@ class NoInternetScreen extends StatelessWidget {
           height: context.height,
           width: context.width,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

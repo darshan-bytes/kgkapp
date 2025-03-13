@@ -33,7 +33,7 @@ class SavedAddressWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

@@ -14,7 +14,7 @@ class CalendarScreen extends StatelessWidget {
       body: SafeArea(
         child: SmartSingleChildScrollView(
           physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 24.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 24.h),
           child: Column(
             children: [
               _buildHeaderRow(bloc, style, context),
@@ -23,8 +23,8 @@ class CalendarScreen extends StatelessWidget {
               SizedBox(height: 24.h),
               Container(
                 height: 40.h,
-                margin: EdgeInsets.symmetric(horizontal: 17.w),
-                padding: EdgeInsets.all(4.w),
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+                padding: EdgeInsetsDirectional.all(4.w),
                 decoration: BoxDecoration(
                   border: Border.all(color: style.borderColor, width: 1.w),
                   borderRadius: BorderRadius.circular(4.r),
@@ -37,7 +37,7 @@ class CalendarScreen extends StatelessWidget {
                         Expanded(
                           child: SmartButton(
                             height: 32.h,
-                            padding: EdgeInsets.zero,
+                            padding: EdgeInsetsDirectional.zero,
                             title: APPStrings.day.tr,
                             onTap: () {
                               bloc.add(CalendarViewChangeEvent(CalendarView.day, context));
@@ -49,7 +49,7 @@ class CalendarScreen extends StatelessWidget {
                         Expanded(
                           child: SmartButton(
                             height: 32.h,
-                            padding: EdgeInsets.zero,
+                            padding: EdgeInsetsDirectional.zero,
                             title: APPStrings.week.tr,
                             onTap: () {
                               bloc.add(CalendarViewChangeEvent(CalendarView.week, context));
@@ -61,7 +61,7 @@ class CalendarScreen extends StatelessWidget {
                         Expanded(
                           child: SmartButton(
                             height: 32.h,
-                            padding: EdgeInsets.zero,
+                            padding: EdgeInsetsDirectional.zero,
                             title: APPStrings.month.tr,
                             onTap: () {
                               bloc.add(CalendarViewChangeEvent(CalendarView.month, context));
@@ -86,7 +86,7 @@ class CalendarScreen extends StatelessWidget {
 
   Widget _buildHeaderRow(CalendarBloc bloc, CalendarStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -130,7 +130,7 @@ class CalendarScreen extends StatelessWidget {
             },
             borderRadius: BorderRadius.circular(4.r),
             child: Padding(
-              padding: EdgeInsets.all(4.w),
+              padding: EdgeInsetsDirectional.all(4.w),
               child: Row(
                 children: [
                   SmartText(APPStrings.viewColon.tr, style: style.viewAllStyle),
@@ -154,7 +154,7 @@ class CalendarScreen extends StatelessWidget {
 
   Widget _buildSearchFieldAndMenuButton(BuildContext context, CalendarBloc bloc, CalendarStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Row(
         children: [
           Expanded(
@@ -228,12 +228,12 @@ class CalendarScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
         ),
         builder: (subContext) {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
               color: orderPopupStyle.whiteColor,
             ),
             child: SafeArea(
@@ -264,7 +264,7 @@ class CalendarScreen extends StatelessWidget {
     BuildContext context, {
     required String text,
     required TextStyle style,
-    EdgeInsets? padding,
+    EdgeInsetsGeometry? padding,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -272,8 +272,8 @@ class CalendarScreen extends StatelessWidget {
       child: Container(
         height: 56.h,
         width: context.width,
-        alignment: Alignment.centerLeft,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        alignment: AlignmentDirectional.centerStart,
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 20.w),
         child: SmartText(text, style: style),
       ),
     );

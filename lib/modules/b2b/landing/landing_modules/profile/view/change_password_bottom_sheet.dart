@@ -8,14 +8,14 @@ class ChangePasswordBottomSheet extends StatelessWidget {
     final ProfileScreenStyle style = AppTheme.of(context).profilePageScreenStyle;
     final ProfileBloc profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SmartSingleChildScrollView(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 16.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 16.h),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12.r),
-            topRight: Radius.circular(12.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(12.r),
+            topEnd: Radius.circular(12.r),
           ),
         ),
         child: SafeArea(

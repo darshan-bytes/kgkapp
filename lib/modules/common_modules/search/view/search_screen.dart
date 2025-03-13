@@ -35,7 +35,7 @@ class SearchScreen extends StatelessWidget {
         builder: (context, state) {
           return SmartSingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
                 children: [
                   searchItemBuilder(title: APPStrings.popularSearches.tr, searchList: searchBloc.popularSearchList, style: style),
@@ -61,7 +61,7 @@ class SearchScreen extends StatelessWidget {
         SmartText(
           title,
           style: style.titleStyle,
-          optionalPadding: EdgeInsets.symmetric(vertical: 16.w),
+          optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 16.w),
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -107,8 +107,8 @@ class SearchScreen extends StatelessWidget {
               itemCount: searchBloc.searchByCategoryList.length,
               title: APPStrings.searchByCategory.tr,
               titleStyle: style.searchByCategoryStyle,
-              titleOptionalPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
-              listPadding: EdgeInsets.only(bottom: 16.h),
+              titleOptionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 16.h),
+              listPadding: EdgeInsetsDirectional.only(bottom: 16.h),
               itemBetweenSpace: 16.w,
               itemBuilder: (context, index) {
                 AuctionListModel item = searchBloc.searchByCategoryList[index];
@@ -116,7 +116,7 @@ class SearchScreen extends StatelessWidget {
                   title: item.name ?? '',
                   imageHeight: 80.w,
                   imageWidth: 80.w,
-                  padding: index == 0 ? EdgeInsets.only(left: 17.w) : EdgeInsets.zero,
+                  padding: index == 0 ? EdgeInsetsDirectional.only(start: 17.w) : EdgeInsetsDirectional.zero,
                   imageBorderRadius: BorderRadius.circular(50.r),
                   imageColor: style.whiteColor,
                   fit: BoxFit.contain,

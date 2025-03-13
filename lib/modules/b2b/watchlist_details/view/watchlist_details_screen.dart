@@ -47,7 +47,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
               children: [
                 _buildDetailsView(context, style, bloc),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 24.h),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 24.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -78,7 +78,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
   Widget _buildDetailsView(BuildContext context, WatchlistDetailsStyle style, WatchlistDetailsBloc bloc) {
     return Container(
       color: style.detailsBackgroundColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -91,7 +91,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
               SizedBox(width: 16.w),
               SmartStatusBadge(
                 borderRadius: 22.r,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 6.h),
                 currentStatus: bloc.watchlistDetailsModel.displayStatus,
               ),
               SizedBox(width: 16.w),
@@ -219,12 +219,12 @@ class WatchlistDetailsScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
         context: screenContext,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+          borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
         ),
         builder: (context) {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+              borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
               color: orderPopupStyle.whiteColor,
             ),
             height: 170.h,
@@ -269,7 +269,7 @@ class WatchlistDetailsScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: screenContext,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => ConfirmationDialog(
         title: APPStrings.removeWatchlistName.tr,
@@ -289,7 +289,6 @@ class WatchlistDetailsScreen extends StatelessWidget {
     BuildContext context, {
     required String text,
     required TextStyle style,
-    EdgeInsets? padding,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -297,8 +296,8 @@ class WatchlistDetailsScreen extends StatelessWidget {
       child: Container(
         height: 56.h,
         width: context.width,
-        alignment: Alignment.centerLeft,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        alignment: AlignmentDirectional.centerStart,
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
         child: SmartText(text, style: style),
       ),
     );

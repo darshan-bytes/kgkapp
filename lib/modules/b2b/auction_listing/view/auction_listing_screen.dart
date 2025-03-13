@@ -34,7 +34,7 @@ class AuctionListingScreen extends StatelessWidget {
           }
           if (state is AuctionListingLoadedState || state is AuctionListingReloadingState) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

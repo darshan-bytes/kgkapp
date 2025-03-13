@@ -7,7 +7,7 @@ class SmartRatingBar extends StatelessWidget {
   final bool? ignoreGestures;
   final int? itemCount;
   final double itemSize;
-  final EdgeInsets? itemPadding;
+  final EdgeInsetsGeometry? itemPadding;
   final Color? fillStarColor;
   final Color? emptyStarColor;
   final Function(double) onRatingUpdate;
@@ -35,7 +35,7 @@ class SmartRatingBar extends StatelessWidget {
       allowHalfRating: allowHalfRating ?? false,
       itemCount: itemCount ?? 5,
       itemSize: itemSize,
-      itemPadding: itemPadding ?? EdgeInsets.zero,
+      itemPadding: itemPadding ?? EdgeInsetsDirectional.zero,
       ratingWidget: RatingWidget(
         empty: Icon(
           Icons.star_border,

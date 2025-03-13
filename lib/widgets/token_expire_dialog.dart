@@ -9,7 +9,7 @@ class TokenExpireDialog extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Container(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
         ),

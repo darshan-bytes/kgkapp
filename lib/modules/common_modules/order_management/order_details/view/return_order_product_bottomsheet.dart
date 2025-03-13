@@ -9,7 +9,7 @@ class ReturnOrderProductBottomSheet extends StatelessWidget {
     final ReturnOrderStyle style = AppTheme.of(context).returnOrderStyle;
     return Container(
       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(8.r))),
-      padding: EdgeInsets.symmetric(horizontal: 17.5.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -98,7 +98,7 @@ class ReturnOrderProductBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
         color: style.orderInfoBackgroundColor,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -109,7 +109,7 @@ class ReturnOrderProductBottomSheet extends StatelessWidget {
           SizedBox(height: 8.h),
           Material(
             child: ListTile(
-                contentPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsetsDirectional.zero,
                 isThreeLine: true,
                 leading: SmartImage(
                   path: "https://i.ibb.co/8xM4BxQ/image-7.png",
