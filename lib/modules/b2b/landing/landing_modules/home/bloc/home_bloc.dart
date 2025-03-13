@@ -132,14 +132,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _onHomePullToRefreshEvent(HomePullToRefreshEvent event, Emitter<HomeState> emit) async {
     emit(const HomeReloadState());
     kgkCoutureSelectedIndex = 0;
-    await fetchStrapiData(event.context, emit);
+    await fetchStrapiData(event.context);
     await fetchKgkCoutureData(event.context);
     emit(const HomeStrapiDataFetchedState());
     refreshCompleter.complete(true);
   }
 
   /// Fetch Bag Data Because Add Logic For Add To Bag
-  Future<void> fetchListOfBag(BuildContext context, Emitter<HomeState> emit) async {
+  Future<void> fetchListOfBag(BuildContext context) async {
     if (!context.mounted) context = getNavigatorKeyContext;
     try {
       String id = StorageManager().getBagId() ?? '';
@@ -168,17 +168,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     currentPageIndex = 0;
     kgkCoutureSelectedIndex = 0;
     currentCarouselIndex = 0;
-    await fetchListOfBag(event.context, emit);
-    await fetchStrapiData(event.context, emit);
+    await fetchListOfBag(event.context);
+    await fetchStrapiData(event.context);
     await shapeMasterFilters(event.context);
     await fetchCommodityMasterFilters(event.context);
     await fetchKgkCoutureData(event.context);
-    await getJewelleryProductRecentlyViewed(event.context, emit);
-    await getDiamondProductRecentlyViewed(event.context, emit);
-    await getGemstoneProductRecentlyViewed(event.context, emit);
-    await _getJewelleryDealOfTheDayAPICall(event.context, emit);
-    await _getDiamondDealOfTheDayAPICall(event.context, emit);
-    await _getGemstoneDealOfTheDayAPICall(event.context, emit);
+    await getJewelleryProductRecentlyViewed(event.context);
+    await getDiamondProductRecentlyViewed(event.context);
+    await getGemstoneProductRecentlyViewed(event.context);
+    await _getJewelleryDealOfTheDayAPICall(event.context);
+    await _getDiamondDealOfTheDayAPICall(event.context);
+    await _getGemstoneDealOfTheDayAPICall(event.context);
     emit(const HomeReloadState());
     emit(const HomeStrapiDataFetchedState());
     if (refreshCompleter.isCompleted) {
@@ -429,7 +429,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  Future<void> getJewelleryProductRecentlyViewed(BuildContext context, emit) async {
+  Future<void> getJewelleryProductRecentlyViewed(BuildContext context) async {
     String recentlyViewedJewellery = StorageManager().getRecentlyViewedJewellery();
 
     String? token = StorageManager().getAuthToken();
@@ -475,12 +475,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 e.metalColor3HexCode ?? "",
               ]);
         }).toList();
-        emit(HomeStrapiDataFetchedState());
       },
     );
   }
 
-  Future<void> getDiamondProductRecentlyViewed(BuildContext context, emit) async {
+  Future<void> getDiamondProductRecentlyViewed(BuildContext context) async {
     String recentlyViewedDiamond = StorageManager().getRecentlyViewedDiamond();
 
     String? token = StorageManager().getAuthToken();
@@ -499,7 +498,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         recentlyViewDiamondList = data.data.map((e) {
           return _convertDiamondDataModelToProductDetailsModel(diamond: e);
         }).toList();
-        emit(HomeStrapiDataFetchedState());
       },
     );
   }
@@ -538,7 +536,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  Future<void> getGemstoneProductRecentlyViewed(BuildContext context, emit) async {
+  Future<void> getGemstoneProductRecentlyViewed(BuildContext context) async {
     String recentlyViewedGemstone = StorageManager().getRecentlyViewedGemstone();
 
     String? token = StorageManager().getAuthToken();
@@ -574,7 +572,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             subTitle: e.rmDescription,
           );
         }).toList();
-        emit(HomeStrapiDataFetchedState());
       },
     );
   }
@@ -790,14 +787,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   /// Fetches the Strapi data from the server
-  Future<void> fetchStrapiData(BuildContext context, Emitter<HomeState> emit) async {
+  Future<void> fetchStrapiData(BuildContext context) async {
     homeStrapiList.clear();
     await AppRepository(context).fetchStrapiHomeData().then((value) async {
       value.fold((l) {}, (r) {
         homeStrapiList = r;
       });
     });
-    emit(const HomeStrapiDataFetchedState());
   }
 
   /// Returns the widgets based on the [HomeSlug]
@@ -1110,7 +1106,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> _getJewelleryDealOfTheDayAPICall(BuildContext context, emit) async {
+  Future<void> _getJewelleryDealOfTheDayAPICall(BuildContext context) async {
     final Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context).getJewelleryDealOfTheDayProductList(
       page: AppConst.page1.toString(),
       limit: AppConst.pageLimit10.toString(),
@@ -1124,12 +1120,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         dealOfTheDayJewelleryList = data.data.map((e) => Utils.mapToProductDetailsModel(e)).toList();
-        emit(HomeStrapiDataFetchedState());
       },
     );
   }
 
-  Future<void> _getGemstoneDealOfTheDayAPICall(BuildContext context, emit) async {
+  Future<void> _getGemstoneDealOfTheDayAPICall(BuildContext context) async {
     Map<String, String> queryParams = {
       ApiKey.page: AppConst.page1.toString(),
       ApiKey.limit: AppConst.pageLimit10.toString(),
@@ -1144,11 +1139,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }, (success) {
       final List<GemstoneDatum> gemstoneList = success.data;
       dealOfTheDayGemstoneList = gemstoneList.map((e) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e)).toList();
-      emit(HomeStrapiDataFetchedState());
     });
   }
 
-  Future<void> _getDiamondDealOfTheDayAPICall(BuildContext context, emit) async {
+  Future<void> _getDiamondDealOfTheDayAPICall(BuildContext context) async {
     Map<String, String> queryParams = {
       ApiKey.page: AppConst.page1.toString(),
       ApiKey.limit: AppConst.pageLimit10.toString(),
@@ -1163,7 +1157,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }, (success) {
       final List<DiamondDataModel> diamondList = success.data;
       dealOfTheDayDiamondList = diamondList.map((e) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: e)).toList();
-      emit(HomeStrapiDataFetchedState());
     });
   }
 

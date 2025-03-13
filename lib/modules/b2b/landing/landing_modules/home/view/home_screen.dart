@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           buildWhen: (previous, current) => current is HomeStrapiDataFetchedState,
           builder: (context, state) {
-            if (homeBloc.homeStrapiList.isEmpty) {
+            if (state is! HomeStrapiDataFetchedState || homeBloc.homeStrapiList.isEmpty) {
               return const SmartCircularProgressIndicator();
             }
             return RefreshIndicator.adaptive(
