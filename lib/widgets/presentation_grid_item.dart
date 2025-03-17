@@ -2,8 +2,8 @@ import 'package:kgk/kgk.dart';
 
 class PresentationGridItem extends StatelessWidget {
   final B2BCustomListingDataModel b2bCustomListingDataModel;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Color? backgroundColor;
   final Color? borderColor;
   final TextStyle? titleStyle;
@@ -49,8 +49,8 @@ class PresentationGridItem extends StatelessWidget {
               ],
             ),
             if (b2bCustomListingDataModel.status != null)
-              Positioned(
-                left: 16.w,
+              PositionedDirectional(
+                start: 16.w,
                 top: 16.w,
                 child: SmartStatusBadge(
                   currentStatus: b2bCustomListingDataModel.status!,
@@ -74,7 +74,7 @@ class PresentationGridItem extends StatelessWidget {
 
   Widget _buildDetails(PresentationGridItemStyle style) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -216,7 +216,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       context: context,
       enableDrag: false,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
       ),
       builder: (context) => TaskDetailsBottomSheet(calendarData: eventDetail),
     );

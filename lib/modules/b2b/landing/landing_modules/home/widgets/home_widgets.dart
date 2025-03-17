@@ -11,9 +11,9 @@ class HomeWidgets {
       itemCount: homeBloc.shopByBrands.length,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-      padding: EdgeInsets.symmetric(vertical: 22.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w, bottom: 20.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopByBrands[index];
         return SmartImageTitleColumn(
@@ -22,9 +22,9 @@ class HomeWidgets {
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
           titleMaxLines: 1,
           fit: BoxFit.fill,
@@ -39,7 +39,7 @@ class HomeWidgets {
       buildWhen: (_, current) => current is HomeJewelleryImagePageChangeState || current is HomeReloadState,
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 12.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 0.w, vertical: 12.h),
           child: Column(
             children: [
               CarouselSlider(
@@ -101,7 +101,7 @@ class HomeWidgets {
         ),
         SmartText(APPStrings.shopByCategory.tr, style: style.bannerTitleStyle),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsetsDirectional.all(8.0),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final screenWidth = constraints.maxWidth;
@@ -129,18 +129,18 @@ class HomeWidgets {
                         isMemCacheEnabled: false,
                       ),
                       if (homeBloc.shopBySpacificCategory[i].name.isNotNullNorEmpty)
-                        Positioned(
+                        PositionedDirectional(
                           bottom: 4.h,
-                          left: 0,
-                          right: 0,
+                          start: 0,
+                          end: 0,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                                alignment: Alignment.center,
+                                padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 2.h),
+                                alignment: AlignmentDirectional.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4.r),
                                   color: style.whiteColor,
@@ -175,7 +175,7 @@ class HomeWidgets {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: 20.h),
       Padding(
-        padding: EdgeInsets.only(left: 6.w),
+        padding: EdgeInsetsDirectional.only(start: 6.w),
         child: SmartText(APPStrings.trendingNow.tr, style: style.bannerTitleStyle),
       ),
       SizedBox(height: 20.h),
@@ -191,7 +191,7 @@ class HomeWidgets {
               Container(
                 height: 130.h,
                 width: 180.w,
-                margin: EdgeInsets.only(left: 6.w, right: index == homeBloc.trendingList.length - 1 ? 6.w : 0),
+                margin: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.trendingList.length - 1 ? 6.w : 0),
                 child: SmartImage(
                   path: homeBloc.trendingList[index].imageUrl ?? '',
                   fit: BoxFit.cover,
@@ -201,7 +201,7 @@ class HomeWidgets {
               ),
               SizedBox(height: 8.h),
               Padding(
-                padding: EdgeInsets.only(left: 8.w),
+                padding: EdgeInsetsDirectional.only(start: 8.w),
                 child: SmartText(homeBloc.trendingList[index].name,
                     style: style.dropDownTextStyle.merge(TextStyle(fontSize: 14.sp)), textAlign: TextAlign.center),
               ),
@@ -222,7 +222,7 @@ class HomeWidgets {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: 20.h),
       Padding(
-        padding: EdgeInsets.only(left: 6.w),
+        padding: EdgeInsetsDirectional.only(start: 6.w),
         child: SmartText(title, style: style.bannerTitleStyle),
       ),
       SizedBox(
@@ -240,7 +240,7 @@ class HomeWidgets {
               Container(
                 height: 160.h,
                 width: 130.w,
-                margin: EdgeInsets.only(left: 6.w, right: index == popularList.length - 1 ? 6.w : 0),
+                margin: EdgeInsetsDirectional.only(start: 6.w, end: index == popularList.length - 1 ? 6.w : 0),
                 child: Stack(
                   children: [
                     SmartImage(
@@ -254,9 +254,9 @@ class HomeWidgets {
                       Container(
                           width: 100.w,
                           height: 24.h,
-                          margin: EdgeInsets.only(top: 6.h),
+                          margin: EdgeInsetsDirectional.only(top: 6.h),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
+                            borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(8.r), bottomEnd: Radius.circular(8.r)),
                             gradient: LinearGradient(
                                 colors: [
                                   style.primaryColor.withValues(alpha: 0.6),
@@ -274,10 +274,10 @@ class HomeWidgets {
                             ),
                           )),
                     if (popularList[index].percentageOff.isNotNullNorEmpty)
-                      Positioned(
+                      PositionedDirectional(
                         bottom: 6.h,
-                        left: 6.w,
-                        right: 6.w,
+                        start: 6.w,
+                        end: 6.w,
                         child: SmartText(popularList[index].percentageOff,
                             style: style.getInspiredTitleStyle.merge(TextStyle(fontSize: 20.sp))),
                       ),
@@ -300,7 +300,7 @@ class HomeWidgets {
           height: 20.h,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 6.w),
+          padding: EdgeInsetsDirectional.only(start: 6.w),
           child: SmartText(APPStrings.shopLatestCollection.tr, style: style.bannerTitleStyle),
         ),
         SizedBox(
@@ -313,7 +313,7 @@ class HomeWidgets {
             itemCount: homeBloc.latestCollectionList.length,
             shrinkWrap: true,
             itemBuilder: (context, index) => Container(
-              padding: EdgeInsets.only(left: 6.w, right: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
+              padding: EdgeInsetsDirectional.only(start: 6.w, end: index == homeBloc.latestCollectionList.length - 1 ? 6.w : 0),
               child: SmartImage(
                 path: homeBloc.latestCollectionList[index].imageUrl ?? '',
                 fit: BoxFit.fitHeight,
@@ -342,7 +342,7 @@ class HomeWidgets {
           child: Container(
             width: 8.0.w,
             height: 8.0.w,
-            margin: EdgeInsets.only(right: 6.0.w),
+            margin: EdgeInsetsDirectional.only(end: 6.0.w),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: currentIndex == entry.key ? style.selectedDotColor : style.dotColor,
@@ -362,9 +362,9 @@ class HomeWidgets {
       itemCount: homeBloc.shopDiamondsList.length,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-      padding: EdgeInsets.symmetric(vertical: 22.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w, bottom: 20.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopDiamondsList[index];
         return SmartImageTitleColumn(
@@ -383,11 +383,11 @@ class HomeWidgets {
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
-          imagePadding: EdgeInsets.all(12.w),
+          imagePadding: EdgeInsetsDirectional.all(12.w),
           titleMaxLines: 1,
           fit: BoxFit.contain,
           imageUrl: item.imageUrl ?? '',
@@ -406,9 +406,9 @@ class HomeWidgets {
       backgroundColor: style.shopGemstoneBgColor,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-      padding: EdgeInsets.symmetric(vertical: 22.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w, bottom: 20.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopGemstonesList[index];
         return SmartImageTitleColumn(
@@ -422,9 +422,9 @@ class HomeWidgets {
           imageWidth: 72.w,
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
           titleMaxLines: 1,
           fit: BoxFit.fill,
@@ -446,7 +446,7 @@ class HomeWidgets {
   }) {
     return Container(
       color: bgColor ?? style.topSellingEleganceColor,
-      padding: EdgeInsets.only(left: 17.w, right: 17.w, top: 32.h, bottom: 22.h),
+      padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, top: 32.h, bottom: 22.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         SmartText(title ?? APPStrings.eligance.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -478,7 +478,7 @@ class HomeWidgets {
   static Widget buildTopSellingCategories(HomeBloc homeBloc, String? title, HomeScreenStyle style, List<AuctionListModel> dataList,
       {required BuildContext context}) {
     return Padding(
-      padding: EdgeInsets.only(left: 17.w, right: 17.w, bottom: 22.h),
+      padding: EdgeInsetsDirectional.only(start: 17.w, end: 17.w, bottom: 22.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(title ?? APPStrings.topSellingCategories.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -514,7 +514,7 @@ class HomeWidgets {
       required String title,
       String? redirectionUrl}) {
     return Padding(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsetsDirectional.zero,
       child: Stack(
         children: [
           SmartImage(
@@ -534,10 +534,10 @@ class HomeWidgets {
               );
             },
           ),
-          Positioned(
+          PositionedDirectional(
             bottom: 0.w,
-            left: 0.w,
-            right: 0.w,
+            start: 0.w,
+            end: 0.w,
             child: GestureDetector(
               onTap: () {
                 // context.pushNamed(AppRoutes.collectionPage);
@@ -556,7 +556,7 @@ class HomeWidgets {
               child: Container(
                 height: 60.h,
                 color: style.viewAllCollectionsBgColor,
-                alignment: Alignment.center,
+                alignment: AlignmentDirectional.center,
                 child: SmartText(
                   title,
                   style: style.viewAllCollectionsTextStyle,
@@ -574,7 +574,7 @@ class HomeWidgets {
       return SizedBox();
     }
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 32.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -595,12 +595,12 @@ class HomeWidgets {
                     return SelectionButton(
                       constraints: BoxConstraints(minWidth: 50.w),
                       margin: index == 0
-                          ? EdgeInsets.only(left: 17.w)
+                          ? EdgeInsetsDirectional.only(start: 17.w)
                           : (index == homeBloc.kgkCoutureButtonsTitle.length - 1)
-                              ? EdgeInsets.only(right: 17.w)
+                              ? EdgeInsetsDirectional.only(end: 17.w)
                               : null,
                       borderRadius: BorderRadius.circular(50.r),
-                      padding: EdgeInsets.symmetric(horizontal: 18.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
                       isSelected: isSelected,
                       onTap: () {
                         homeBloc.add(HomeKgkCoutureSelectionChangeEvent(index: index, context: context));
@@ -623,10 +623,10 @@ class HomeWidgets {
                     itemBuilder: (context, index) {
                       return ProductGridItem(
                         margin: index == 0
-                            ? EdgeInsets.only(left: 17.w)
+                            ? EdgeInsetsDirectional.only(start: 17.w)
                             : (index == (homeBloc.luminousProductViewList.length > 8 ? 8 : homeBloc.luminousProductViewList.length) - 1)
-                                ? EdgeInsets.only(right: 17.w)
-                                : EdgeInsets.zero,
+                                ? EdgeInsetsDirectional.only(end: 17.w)
+                                : EdgeInsetsDirectional.zero,
                         productDetails: homeBloc.luminousProductViewList[index],
                         isKGKCouture: true,
                         onEyeTap: () async {
@@ -662,7 +662,7 @@ class HomeWidgets {
                 width: 120.w,
                 unselectedButtonBorderColor: style.primaryColor,
                 borderRadius: BorderRadius.circular(10.r),
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
                 isSelected: false,
                 onTap: () {
                   context.pushNamed(AppRoutes.productListGridPage, arguments: {
@@ -696,7 +696,7 @@ class HomeWidgets {
               int end =
                   (index == homeBloc.categoryPageLength - 1) ? homeBloc.categoryList.length : (start + HomeBloc.categoryPerPageLength);
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                 child: SmartGridView(
                   columns: 3,
                   runSpacing: 10.h,
@@ -730,7 +730,7 @@ class HomeWidgets {
                   return Container(
                     width: 6.0.w,
                     height: 6.0.w,
-                    margin: EdgeInsets.symmetric(horizontal: 2.0.w),
+                    margin: EdgeInsetsDirectional.symmetric(horizontal: 2.0.w),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: isCurrentPage ? imageCarouselStyle.selectedDotColor : imageCarouselStyle.dotColor),
                   );
@@ -750,14 +750,14 @@ class HomeWidgets {
       color: style.primaryColor,
       width: context.width,
       child: Stack(
-        alignment: Alignment.topRight,
+        alignment: AlignmentDirectional.topEnd,
         children: [
           const SmartImage(
             path: AppImages.icPrimaryBgLine,
             isMemCacheEnabled: false,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -776,7 +776,7 @@ class HomeWidgets {
                 SizedBox(height: 24.h),
                 Container(
                   color: style.whiteColor,
-                  padding: EdgeInsets.all(24.w),
+                  padding: EdgeInsetsDirectional.all(24.w),
                   child: BlocBuilder<HomeBloc, HomeState>(
                     buildWhen: (previous, current) =>
                         current is HomeSelectStoneTypeChangeState || current is HomeSelectJewelleryTypeChangeState,
@@ -791,7 +791,7 @@ class HomeWidgets {
                               Flexible(child: buildStep1DropDownField(homeBloc, style))
                             ],
                           ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 12.h), child: const Divider()),
+                          Padding(padding: EdgeInsetsDirectional.symmetric(vertical: 12.h), child: const Divider()),
                           Row(
                             children: [
                               SmartText(APPStrings.stepX.tr.interpolate(["2"]),
@@ -822,11 +822,11 @@ class HomeWidgets {
 
   static Widget buildStep1DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
     return SmartDropDown<OrderStoneTypeModel>(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsetsDirectional.zero,
       buttonHeight: 40.h,
       textStyle: style.dropDownTextStyle,
       border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
-      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
       items: homeBloc.arrStoneType.map((OrderStoneTypeModel type) {
         return SmartDropDownItem<OrderStoneTypeModel>(
           value: type,
@@ -844,11 +844,11 @@ class HomeWidgets {
 
   static Widget buildStep2DropDownField(HomeBloc homeBloc, HomeScreenStyle style) {
     return SmartDropDown<OrderStoneTypeModel>(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsetsDirectional.zero,
       buttonHeight: 40.h,
       textStyle: style.dropDownTextStyle,
       border: const Border.symmetric(vertical: BorderSide.none, horizontal: BorderSide.none),
-      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
       items: homeBloc.arrRingType.map((OrderStoneTypeModel type) {
         return SmartDropDownItem<OrderStoneTypeModel>(
           value: type,
@@ -883,7 +883,7 @@ class HomeWidgets {
   /// Keep as it is for now used in future
 // Widget _buildGetInspiredSection(HomeBloc homeBloc, HomeScreenStyle style) {
 //   return Padding(
-//     padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+//     padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
 //     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 //       SmartText(APPStrings.getInspired.tr, style: style.bannerTitleStyle),
 //       SizedBox(height: 16.h),
@@ -907,7 +907,7 @@ class HomeWidgets {
       BuildContext context, String? title, HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
     return Container(
       color: style.getInspiredSectionColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(title ?? APPStrings.getInspired.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -943,7 +943,7 @@ class HomeWidgets {
 
   static Widget buildShopByStyleSection(HomeBloc homeBloc, HomeScreenStyle style, List<AuctionListModel> dataList) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SmartText(APPStrings.shopByStyle.tr, style: style.bannerTitleStyle),
         SizedBox(height: 16.h),
@@ -977,9 +977,9 @@ class HomeWidgets {
       itemCount: homeBloc.shopDiamondsList.length,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w, bottom: 20.h),
-      padding: EdgeInsets.symmetric(vertical: 22.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w, bottom: 20.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 22.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.shopDiamondsList[index];
         return SmartImageTitleColumn(
@@ -990,11 +990,11 @@ class HomeWidgets {
           title: item.name ?? '',
           titleStyle: style.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
-          imagePadding: EdgeInsets.all(12.w),
+          imagePadding: EdgeInsetsDirectional.all(12.w),
           titleMaxLines: 1,
           fit: BoxFit.contain,
           imageUrl: item.imageUrl ?? '',
@@ -1013,21 +1013,24 @@ class HomeWidgets {
       title: title,
       titleStyle: style.bannerTitleStyle,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      padding: EdgeInsets.only(top: 16.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      padding: EdgeInsetsDirectional.only(top: 16.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = homeBloc.jewelleryList[index];
         return SmartImageTitleColumn(
           onTap: () {
-            context.pushNamed(AppRoutes.productListGridPage, arguments: {RoutesData.isPageFor: ScreenIdentifier.productForRing, RoutesData.filterData: getQueryParamFromUrlForFilter(item.redirectionUrl ?? '')});
+            context.pushNamed(AppRoutes.productListGridPage, arguments: {
+              RoutesData.isPageFor: ScreenIdentifier.productForRing,
+              RoutesData.filterData: getQueryParamFromUrlForFilter(item.redirectionUrl ?? '')
+            });
           },
           imageUrl: item.imageUrl ?? '',
           title: item.name ?? '',
           imageWidth: 80.w,
           imageHeight: 80.w,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == homeBloc.jewelleryList.length - 1 ? 17.w : 0,
           ),
           imageBorderRadius: BorderRadius.circular(50.r),
           fit: BoxFit.fitWidth,
@@ -1045,7 +1048,7 @@ class HomeWidgets {
       required List<ProductDetailsModel> arrProductList,
       bool isCrtAndGramVisible = true}) {
     return Padding(
-      padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+      padding: EdgeInsetsDirectional.only(top: 32.h, bottom: 20.h),
       child: SmartSuggestionProductList(
         isCrtAndGramVisible: isCrtAndGramVisible,
         title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
@@ -1085,7 +1088,7 @@ class HomeWidgets {
       String title, HomeBloc homeBloc, HomeScreenStyle style, List<ProductDetailsModel> productList, ScreenIdentifier commodity,
       {required BuildContext context, bool isCrtAndGramVisible = true}) {
     return Padding(
-      padding: EdgeInsets.only(top: 32.h),
+      padding: EdgeInsetsDirectional.only(top: 32.h),
       child: SmartSuggestionProductList(
         isCrtAndGramVisible: isCrtAndGramVisible,
         title: title,

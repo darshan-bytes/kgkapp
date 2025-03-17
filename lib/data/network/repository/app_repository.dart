@@ -190,7 +190,7 @@ class AppRepository extends ApiService {
       ApiKey.page: page,
       if (sortKey.isNotNullNorEmpty) ApiKey.sortKey: sortKey!,
       if (sortValue.isNotNullNorEmpty) ApiKey.sortValue: sortValue!,
-      if (type.isNotNullNorEmpty) ApiKey.type: type!,
+      if (type.isNotNullNorEmpty) ApiKey.subTypeCode: type!,
     };
 
     // Ensure query is not null or empty before processing

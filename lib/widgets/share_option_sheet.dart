@@ -24,12 +24,12 @@ class ShareOptionSheet extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
       ),
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w, vertical: 24.0.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
@@ -46,9 +46,9 @@ class ShareOptionSheet extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             top: 16.h,
-            right: 16.w,
+            end: 16.w,
             child: SmartImage(
               path: AppImages.icCross,
               height: 24.w,

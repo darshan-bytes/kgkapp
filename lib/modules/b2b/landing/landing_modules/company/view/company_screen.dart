@@ -28,7 +28,7 @@ class CompanyScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14.0.w, horizontal: 14.0.w),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 14.0.w, horizontal: 14.0.w),
                     child: SmartText(
                       APPStrings.selectACompany.tr,
                       style: style.titleStyle,
@@ -42,7 +42,7 @@ class CompanyScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
         child: SmartButton(
           title: APPStrings.viewDashboard.tr,
           onTap: () {
@@ -59,7 +59,7 @@ class CompanyScreen extends StatelessWidget {
         itemCount: bloc.companyList.length,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 16.h, bottom: 8.h),
+        padding: EdgeInsetsDirectional.only(top: 16.h, bottom: 8.h),
         primary: false,
         itemBuilder: (context, index) {
           final CscDetails companyListData = bloc.companyList[index];
@@ -73,7 +73,7 @@ class CompanyScreen extends StatelessWidget {
                       bloc.add(SelectCompanyListEvent(index));
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 16.w),
+                      padding: EdgeInsetsDirectional.symmetric(vertical: 12.0.h, horizontal: 16.w),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [

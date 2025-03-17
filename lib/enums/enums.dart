@@ -102,7 +102,7 @@ enum CalenderEventType {
 }
 
 /// DIY Progress Bar Chevron Widget Enums
-enum Edge { top, right, bottom, left }
+enum Edge { top, end, bottom, start }
 
 enum Clipper { start, center, end }
 

@@ -12,7 +12,7 @@ class ConceptItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.0.r),
           border: Border.all(
@@ -39,9 +39,25 @@ class ConceptItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Expanded(flex: 2,child: SmartText(conceptListModel.id, style: style.titleStyle,)),
-                Expanded(flex: 4,child: SmartText(conceptListModel.name, style: style.titleStyle,textAlign: TextAlign.center,)),
-                Expanded(flex: 2,child: SmartText(conceptListModel.designId, style: style.titleStyle,)),
+                Expanded(
+                    flex: 2,
+                    child: SmartText(
+                      conceptListModel.id,
+                      style: style.titleStyle,
+                    )),
+                Expanded(
+                    flex: 4,
+                    child: SmartText(
+                      conceptListModel.name,
+                      style: style.titleStyle,
+                      textAlign: TextAlign.center,
+                    )),
+                Expanded(
+                    flex: 2,
+                    child: SmartText(
+                      conceptListModel.designId,
+                      style: style.titleStyle,
+                    )),
               ],
             ),
             SizedBox(
@@ -50,11 +66,17 @@ class ConceptItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SmartText(conceptListModel.origin, style: style.titleStyle,),
+                SmartText(
+                  conceptListModel.origin,
+                  style: style.titleStyle,
+                ),
                 SmartStatusBadge(
                   currentStatus: conceptListModel.status ?? ProjectStatus.wip,
                 ),
-                SmartText(conceptListModel.date, style: style.titleStyle,),
+                SmartText(
+                  conceptListModel.date,
+                  style: style.titleStyle,
+                ),
               ],
             )
           ],

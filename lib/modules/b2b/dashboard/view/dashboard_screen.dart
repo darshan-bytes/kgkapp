@@ -19,7 +19,7 @@ class DashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(16.w),
+                    padding: EdgeInsetsDirectional.all(16.w),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -70,7 +70,7 @@ class DashboardScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final DashboardStatisticsDataModel item = dashboardBloc.statisticsList[index];
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -33,7 +33,7 @@ class SearchResultScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 17.w),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -120,7 +120,7 @@ class SearchResultScreen extends StatelessWidget {
                       unselectedButtonIconColor: diamondListingStyle.listIconColor,
                       unselectedButtonColor: diamondListingStyle.listBackgroundColor,
                       unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                       onTap: () {
                         searchResultBloc.add(const SearchResultChangeListingTypeEvent());
                       },
@@ -205,7 +205,7 @@ class SearchResultScreen extends StatelessWidget {
 
   Widget _buildNeedHelpSection(SearchResultScreenStyle style) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       decoration: BoxDecoration(color: style.needHelpColor, borderRadius: BorderRadius.circular(8.r)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -226,8 +226,8 @@ class SearchResultScreen extends StatelessWidget {
       title: APPStrings.shopDiamondsByShape.tr,
       crossAxisAlignment: CrossAxisAlignment.center,
       titleStyle: style.shopDiamondsByShapeTitleStyle,
-      titleOptionalPadding: EdgeInsets.symmetric(vertical: 16.h),
-      listPadding: EdgeInsets.only(bottom: 16.h),
+      titleOptionalPadding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
+      listPadding: EdgeInsetsDirectional.only(bottom: 16.h),
       itemBetweenSpace: 17.w,
       itemBuilder: (context, index) {
         AuctionListModel item = bloc.shopDiamondsByShapeList[index];
@@ -235,7 +235,7 @@ class SearchResultScreen extends StatelessWidget {
           width: 72.w,
           title: item.name ?? '',
           imageBetweenSpacing: 8.h,
-          imagePadding: EdgeInsets.all(12.w),
+          imagePadding: EdgeInsetsDirectional.all(12.w),
           titleMaxLines: 1,
           fit: BoxFit.contain,
           imageUrl: item.imageUrl ?? '',
@@ -250,7 +250,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildNewlyLaunchedItems(SearchResultBloc bloc, SearchResultScreenStyle style, BuildContext context) {
     return Container(
       color: style.newlyLaunchedBackgroundColor,
-      padding: EdgeInsets.symmetric(
+      padding: EdgeInsetsDirectional.symmetric(
         vertical: 40.h,
         horizontal: 16.w,
       ),
@@ -290,7 +290,7 @@ class SearchResultScreen extends StatelessWidget {
   Widget _buildExploreDigitalCatalogue(SearchResultScreenStyle style, BuildContext context) {
     return Container(
       color: style.exploreDigitalCatalogBackgroundColor,
-      padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 40.h, horizontal: 16.w),
       child: Column(
         children: [
           SmartText(APPStrings.exploreOurDigitalJewelleryCatalog.tr, style: style.titleStyle, textAlign: TextAlign.center),

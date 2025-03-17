@@ -11,7 +11,7 @@ class ProductCustomiseDescriptionWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         decoration: BoxDecoration(
           color: style.customiseBoxColor,
           border: Border.all(color: style.customiseBoxBorderColor),

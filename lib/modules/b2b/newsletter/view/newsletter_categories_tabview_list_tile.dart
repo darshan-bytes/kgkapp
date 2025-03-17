@@ -16,7 +16,7 @@ class NewsletterCategoriesTabView extends StatelessWidget {
         children: [
           SmartTextField.search(
             height: 48.w,
-            padding: EdgeInsets.symmetric(vertical: 24.w),
+            padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
             hintText: APPStrings.searchCategory.tr,
             controller: bloc.categorySearchController,
           ),
@@ -47,7 +47,7 @@ class NewsletterCategoriesTabView extends StatelessWidget {
                                   listingItemModel: item,
                                   onTapMenuButton: () {},
                                   onTap: () {},
-                                  margin: EdgeInsets.only(
+                                  margin: EdgeInsetsDirectional.only(
                                       bottom: (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1) ? 0 : 16.h)),
                               if (state is NewsletterLoadingMoreState && index == bloc.categoryList.length - 1)
                                 const SmartCircularProgressIndicator(),
@@ -71,7 +71,7 @@ class NewsletterCategoriesTabView extends StatelessWidget {
     required B2BCustomListingDataModel listingItemModel,
     Function()? onTap,
     Function()? onTapMenuButton,
-    EdgeInsets? margin,
+    EdgeInsetsGeometry? margin,
   }) {
     final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
 
@@ -81,7 +81,7 @@ class NewsletterCategoriesTabView extends StatelessWidget {
         children: [
           Container(
             margin: margin,
-            padding: EdgeInsets.all(16.0.w),
+            padding: EdgeInsetsDirectional.all(16.0.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0.r),
               border: Border.all(color: style.borderColor),
@@ -114,13 +114,13 @@ class NewsletterCategoriesTabView extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             top: 14.h,
-            right: 14.w,
+            end: 14.w,
             child: SmartImage(
               path: AppImages.icMoreHorizontal,
               onTap: onTapMenuButton,
-              padding: EdgeInsets.all(4.w),
+              padding: EdgeInsetsDirectional.all(4.w),
               inkwellBorderRadius: BorderRadius.circular(4.0.r),
             ),
           ),

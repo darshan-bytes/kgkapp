@@ -25,7 +25,7 @@ class WishlistScreen extends StatelessWidget {
                   bloc.add(WishlistPullToRefreshEvent(context));
                 },
                 controller: bloc.paginationScrollController.scrollController,
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -73,7 +73,7 @@ class WishlistScreen extends StatelessWidget {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: 20.h),
+              padding: EdgeInsetsDirectional.only(bottom: 20.h),
               child: SmartGridView(
                   items: bloc.productList.map((ProductDetailsModel productDetails) {
                 return ProductGridItem(

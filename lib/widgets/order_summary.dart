@@ -32,7 +32,7 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderSummaryStyle style = AppTheme.of(context).orderSummaryStyle;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       color: style.backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class OrderSummary extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = items[index];
               return Padding(
-                padding: EdgeInsets.only(bottom: 6.0),
+                padding: EdgeInsetsDirectional.only(bottom: 6.0),
                 child: _buildOrderSummaryItem(item, style),
               );
             },
@@ -71,7 +71,7 @@ class OrderSummary extends StatelessWidget {
 
   Widget _buildOrderSummaryItem(OrderSummaryItem item, OrderSummaryStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 6.h),
       child: Row(
         children: [
           Expanded(child: SmartText(item.title, style: style.orderSummaryItemStyle)),
@@ -91,7 +91,7 @@ class OrderSummary extends StatelessWidget {
         onApplyPromoCode?.call();
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: promoCode != null ? 10.h : 12.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: promoCode != null ? 10.h : 12.h),
         child: Row(
           children: [
             Expanded(
@@ -144,6 +144,7 @@ class OrderSummary extends StatelessWidget {
 
 class OrderSummaryItem {
   const OrderSummaryItem({required this.title, required this.value});
+
   final String title;
   final String value;
 }

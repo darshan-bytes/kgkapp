@@ -15,7 +15,7 @@ class StonesFAQSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       color: style.designYourOwnStoneBgColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class StonesFAQSection extends StatelessWidget {
               return SmartExpansionTile(
                 title: SmartText(
                   faq.question,
-                  optionalPadding: EdgeInsets.symmetric(vertical: 8.h),
+                  optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                   style: style.designOwnEarringTextStyle,
                 ),
                 onExpansionChanged: (value) {
@@ -40,7 +40,7 @@ class StonesFAQSection extends StatelessWidget {
                 children: [
                   SmartText(
                     faq.answer,
-                    optionalPadding: EdgeInsets.only(bottom: 17.h),
+                    optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h),
                     style: style.originSectionSubTitleStyle,
                     textAlign: TextAlign.start,
                   ),

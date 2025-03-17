@@ -13,7 +13,7 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
           return Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsetsDirectional.all(16.w),
                 child: Row(
                   children: [
                     Expanded(
@@ -53,7 +53,7 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
           return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
         }
         return ListView.separated(
-          padding: EdgeInsets.only(top: 8.w, left: 16.w, right: 16.w),
+          padding: EdgeInsetsDirectional.only(top: 8.w, start: 16.w, end: 16.w),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: bloc.exhibitionOrdersList.length,

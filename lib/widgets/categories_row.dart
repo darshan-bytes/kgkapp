@@ -47,7 +47,7 @@ class DummyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8.0.w),
+      margin: EdgeInsetsDirectional.all(8.0.w),
       color: Colors.transparent, // Or any other placeholder style
     );
   }

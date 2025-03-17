@@ -116,7 +116,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
             data: IconThemeData(color: _iconColor?.evaluate(_easeInAnimation!)),
             child: ListTile(
               onTap: toggle,
-              contentPadding: EdgeInsets.zero,
+              contentPadding: EdgeInsetsDirectional.zero,
               leading: widget.leading,
               title: DefaultTextStyle(
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: titleColor),
@@ -127,7 +127,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
           ),
           ClipRect(
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: AlignmentDirectional.centerStart,
               heightFactor: _easeInAnimation?.value,
               child: child,
             ),

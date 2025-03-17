@@ -26,8 +26,8 @@ class CadLibraryListItem extends StatelessWidget {
     this.imageWidth,
     this.onTap,
     this.fit = BoxFit.cover,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     required this.designModel,
   }) : _viewType = _ListViewType.cadListLibrary;
 
@@ -39,8 +39,8 @@ class CadLibraryListItem extends StatelessWidget {
     this.imageWidth,
     this.onTap,
     this.fit = BoxFit.cover,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     required this.designModel,
   }) : _viewType = _ListViewType.designListItem;
 
@@ -74,7 +74,7 @@ class CadLibraryListItem extends StatelessWidget {
         Container(
           height: boxHeight ?? 144.w,
           width: boxWidth ?? 144.w,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           color: style.cadBackgroundColor,
           child: SmartImage(
             path: _viewType == _ListViewType.cadListLibrary
@@ -138,7 +138,7 @@ class CadLibraryListItem extends StatelessWidget {
                 SizedBox(height: 10.h),
                 SmartStatusBadge(
                   borderRadius: 4.0.r,
-                  padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
                   currentStatus: status,
                 )
               ],

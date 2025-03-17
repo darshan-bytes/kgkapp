@@ -21,7 +21,7 @@ class SavedAddressScreen extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 25.h),
           child: bloc.addressList.isEmpty
               ? Column(
                   children: [

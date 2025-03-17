@@ -7,7 +7,7 @@ class ChevronProgress extends StatelessWidget {
     required this.child,
     required this.clipper,
     this.color = Colors.blue,
-    this.edge = Edge.right,
+    this.edge = Edge.end,
   });
 
   ///The widget that is going to be clipped as chevron shape
@@ -35,11 +35,11 @@ class ChevronProgress extends StatelessWidget {
           width: containerWidth,
           decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.only(
-                bottomLeft: startRadius,
-                topLeft: startRadius,
-                topRight: radiusValue,
-                bottomRight: radiusValue,
+              borderRadius: BorderRadiusDirectional.only(
+                bottomStart: startRadius,
+                topStart: startRadius,
+                topEnd: radiusValue,
+                bottomEnd: radiusValue,
               )),
           child: child,
         ),
@@ -50,11 +50,11 @@ class ChevronProgress extends StatelessWidget {
   CustomClipper<Path> getClipperPainter(clipper) {
     switch (clipper) {
       case Clipper.start:
-        return PointClipper(Edge.right);
+        return PointClipper(Edge.end);
       case Clipper.center:
-        return ChevronClipper(Edge.right);
+        return ChevronClipper(Edge.end);
       case Clipper.end:
-        return LabelClipper(Edge.left);
+        return LabelClipper(Edge.start);
       default:
         return ChevronClipper(edge);
     }
@@ -99,13 +99,13 @@ class PointClipper extends CustomClipper<Path> {
     switch (edge) {
       case Edge.top:
         return _getTopPath(size);
-      case Edge.right:
+      case Edge.end:
         return _getRightPath(size);
       case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.left:
+      case Edge.start:
         return _getLeftPath(size);
-      }
+    }
   }
 
   Path _getTopPath(Size size) {
@@ -172,13 +172,13 @@ class ChevronClipper extends CustomClipper<Path> {
     switch (edge) {
       case Edge.top:
         return _getTopPath(size);
-      case Edge.right:
+      case Edge.end:
         return _getRightPath(size);
       case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.left:
+      case Edge.start:
         return _getLeftPath(size);
-      }
+    }
   }
 
   Path _getTopPath(Size size) {
@@ -248,13 +248,13 @@ class LabelClipper extends CustomClipper<Path> {
     switch (edge) {
       case Edge.top:
         return _getTopPath(size);
-      case Edge.right:
+      case Edge.end:
         return _getRightPath(size);
       case Edge.bottom:
         return _getBottomPath(size);
-      case Edge.left:
+      case Edge.start:
         return _getLeftPath(size);
-      }
+    }
   }
 
   Path _getTopPath(Size size) {

@@ -87,7 +87,7 @@ class ProductListScreen extends StatelessWidget {
             }
             return SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                 child: Column(
                   children: [
                     SizedBox(height: 8.h),
@@ -96,7 +96,7 @@ class ProductListScreen extends StatelessWidget {
                     Expanded(
                       child: SmartSingleChildScrollView(
                         controller: bloc.paginationScrollController.controller,
-                        padding: EdgeInsets.only(bottom: 60.h),
+                        padding: EdgeInsetsDirectional.only(bottom: 60.h),
                         onRefresh: () async {
                           bloc.add(ProductListPullToRefreshEvent(context));
                         },
@@ -154,7 +154,7 @@ class ProductListScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                       onTap: () {
                         bloc.add(const ProductChangeListingTypeEvent(isGrid: false));
                       },
@@ -240,7 +240,7 @@ class ProductListScreen extends StatelessWidget {
             //   SmartImage(
             //     path: "https://i.ibb.co/PN51B9q/Banner.png",
             //     fit: BoxFit.fitWidth,
-            //     padding: EdgeInsets.symmetric(vertical: 32.h),
+            //     padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
             //   ),
             if (index == bloc.productList.length - 1 && state is ProductListLoadingMoreState) const SmartCircularProgressIndicator(),
           ],

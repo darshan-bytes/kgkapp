@@ -17,7 +17,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isBack;
   final bool isBorder;
   final double? optionalEndSpacing;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? padding;
   final bool isSearchBar;
   final VoidCallback? onTapSuffixIconWithSearchBar;
   final VoidCallback? onTapSuffixIconWithImageSearch;
@@ -64,7 +64,7 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       title: _buildTitle(style, context),
       actions: _buildActions(context),
-      shape: isBorder ? Border(bottom: BorderSide(color: isSearchBar ? style.transparentColor : style.borderColor)) : null,
+      shape: isBorder ? BorderDirectional(bottom: BorderSide(color: isSearchBar ? style.transparentColor : style.borderColor)) : null,
     );
   }
 

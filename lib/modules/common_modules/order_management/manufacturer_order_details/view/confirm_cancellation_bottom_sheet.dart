@@ -8,7 +8,7 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
     final ConfirmCancelPopupStyle style = AppTheme.of(context).confirmCancelPopupStyle;
     final ManufacturerOrderDetailsBloc bloc = BlocProvider.of<ManufacturerOrderDetailsBloc>(context);
     return Container(
-      padding: EdgeInsets.only(top: 16.h, left: 17.w, right: 17.w, bottom: 12.h),
+      padding: EdgeInsetsDirectional.only(top: 16.h, start: 17.w, end: 17.w, bottom: 12.h),
       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
       child: SafeArea(
         child: Column(
@@ -60,7 +60,7 @@ class ConfirmCancellationBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
         color: style.detailBgColor,
       ),
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

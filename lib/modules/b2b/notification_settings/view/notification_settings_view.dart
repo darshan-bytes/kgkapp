@@ -11,7 +11,7 @@ class NotificationSettingsView extends StatelessWidget {
         title: APPStrings.notificationSettings.tr,
       ),
       body: SmartSingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 14.h),
         child: BlocBuilder<NotificationSettingsBloc, NotificationSettingsState>(
           buildWhen: (previous, current) =>
               current is NotificationAnnouncementToggledState ||

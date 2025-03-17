@@ -10,7 +10,7 @@ class SmartCheckbox extends StatelessWidget {
   final Color? activeColor;
   final Color? checkColor;
   final Color? borderColor;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? padding;
   final MainAxisSize? mainAxisSize;
   final double? spaceBetweenLabelAndCheckbox;
   final bool isRadio;
@@ -60,7 +60,7 @@ class SmartCheckbox extends StatelessWidget {
         onChanged(!value);
       },
       child: Padding(
-        padding: padding ?? EdgeInsets.zero,
+        padding: padding ?? EdgeInsetsDirectional.zero,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,

@@ -9,7 +9,7 @@ class SmartRadioButton<T> extends StatelessWidget {
   final Color? activeColor;
   final Color? checkColor;
   final Color? borderColor;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? padding;
   final Widget? textLabel;
   final bool isToggle;
   final FocusNode? focusNode;
@@ -43,7 +43,7 @@ class SmartRadioButton<T> extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
+        padding: padding ?? EdgeInsetsDirectional.symmetric(vertical: 12.h),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

@@ -45,8 +45,8 @@ class ProductGridItem extends StatelessWidget {
     this.onAddToBagTap,
     this.onEyeTap,
     this.onCancelTap,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.isStoneWithPrice = false,
     this.isCustomisable = false,
     this.isOutOfStock = false,
@@ -97,7 +97,7 @@ class ProductGridItem extends StatelessWidget {
         Container(
           height: boxHeight ?? 172.h,
           width: width,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
           child: SmartImage(
             path: productDetails.imageUrl ?? '',
@@ -108,31 +108,31 @@ class ProductGridItem extends StatelessWidget {
           ),
         ),
         if (productDetails.isForAuction)
-          Positioned(
+          PositionedDirectional(
               top: 0.h,
-              left: -4.w,
+              start: -4.w,
               child: CustomPaint(
                 painter: SvgShapePainter(APPStrings.mobAuction.tr),
                 size: Size(200, 28), // Give it enough width
               )),
         if (isOutOfStock)
-          Positioned(
+          PositionedDirectional(
             top: 8.h,
-            left: 8.w,
+            start: 8.w,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
               child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
             ),
           ),
-        Positioned(
+        PositionedDirectional(
           top: 8.h,
-          right: 8.w,
+          end: 8.w,
           child: _buildTopPositionView(style),
         ),
-        Positioned(
+        PositionedDirectional(
           bottom: 8.h,
-          right: 8.w,
+          end: 8.w,
           child: Row(
             children: [
               if (onEyeTap != null)
@@ -207,7 +207,7 @@ class ProductGridItem extends StatelessWidget {
               border: Border.all(color: borderColor ?? style.transparentColor)),
           height: 30.w,
           width: 30.w,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           child: SmartImage(
             path: path,
             height: 20.w,
@@ -224,7 +224,7 @@ class ProductGridItem extends StatelessWidget {
       child: Container(
         width: width,
         color: style.backgroundColor,
-        padding: EdgeInsets.all(12.w),
+        padding: EdgeInsetsDirectional.all(12.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +249,7 @@ class ProductGridItem extends StatelessWidget {
                 style: style.priceTextStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                optionalPadding: EdgeInsets.only(top: 8.h),
+                optionalPadding: EdgeInsetsDirectional.only(top: 8.h),
               ),
             if (productDetails.businessCategoryName.isNotNullNorEmpty || isFromWatchlist)
               SmartText(
@@ -270,7 +270,7 @@ class ProductGridItem extends StatelessWidget {
                       SmartText(
                         productDetails.finalPrice.isNotNullNorEmpty ? "${productDetails.finalPrice}\n" : productDetails.originalPrice,
                         style: style.priceTextStyle,
-                        optionalPadding: EdgeInsets.only(right: 8.w),
+                        optionalPadding: EdgeInsetsDirectional.only(end: 8.w),
                         maxLines: 1,
                       ),
                       if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
@@ -317,8 +317,8 @@ class ProductGridItem extends StatelessWidget {
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
-                margin: EdgeInsets.only(top: 8.h),
-                padding: EdgeInsets.symmetric(vertical: 8.h),
+                margin: EdgeInsetsDirectional.only(top: 8.h),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
                   if (buttonText.isNullOrEmpty) {
@@ -349,7 +349,7 @@ class ProductGridItem extends StatelessWidget {
       return SizedBox(height: 24.h);
     }
     return Padding(
-      padding: EdgeInsets.only(top: 4.0.h),
+      padding: EdgeInsetsDirectional.only(top: 4.0.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

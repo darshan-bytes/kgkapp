@@ -26,7 +26,7 @@ class AddressSelectionWidget extends StatelessWidget {
       children: [
         if (onTap != null) ...[
           SmartRadioButton<AddressDetails>(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsetsDirectional.zero,
             groupValue: groupValue,
             value: address,
             onChanged: (value) {
@@ -47,7 +47,7 @@ class AddressSelectionWidget extends StatelessWidget {
               if (isDefault) ...[
                 SizedBox(height: 8.h),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
                     color: style.defaultTagColor,
                     borderRadius: BorderRadius.circular(12.r),
@@ -64,7 +64,7 @@ class AddressSelectionWidget extends StatelessWidget {
             path: AppImages.icEditPrimary,
             height: 30.w,
             width: 30.w,
-            padding: EdgeInsets.all(4.w),
+            padding: EdgeInsetsDirectional.all(4.w),
             inkwellBorderRadius: BorderRadius.circular(24.r),
             onTap: onEdit,
           ),
@@ -75,7 +75,7 @@ class AddressSelectionWidget extends StatelessWidget {
             path: AppImages.icCross,
             height: 30.w,
             width: 30.w,
-            padding: EdgeInsets.all(4.w),
+            padding: EdgeInsetsDirectional.all(4.w),
             inkwellBorderRadius: BorderRadius.circular(24.r),
             onTap: onDelete,
           ),

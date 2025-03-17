@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
           builder: (context, state) {
             return SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 18.w, right: 18.w, bottom: 18.h),
+                padding: EdgeInsetsDirectional.only(start: 18.w, end: 18.w, bottom: 18.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -339,7 +339,7 @@ class SignUpScreen extends StatelessWidget {
               child: SmartText(
                 APPStrings.emailAlreadyUsed.tr,
                 color: style.errorTextColor,
-                optionalPadding: EdgeInsets.only(top: 6.h),
+                optionalPadding: EdgeInsetsDirectional.only(top: 6.h),
               ),
             )
           ],
@@ -399,12 +399,12 @@ class SignUpScreen extends StatelessWidget {
                             child: SizedBox(
                               width: 95.w,
                               child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.all(12.w),
-                                margin: EdgeInsets.only(right: 12.w),
+                                alignment: AlignmentDirectional.center,
+                                padding: EdgeInsetsDirectional.all(12.w),
+                                margin: EdgeInsetsDirectional.only(end: 12.w),
                                 decoration: BoxDecoration(
-                                  border: Border(
-                                    right: BorderSide(
+                                  border: BorderDirectional(
+                                    end: BorderSide(
                                       color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
                                     ),
                                   ),
@@ -452,7 +452,7 @@ class SignUpScreen extends StatelessWidget {
                   return SmartText(
                     state.errorMessage ?? APPStrings.phoneNumberAlreadyUsed.tr,
                     color: style.errorTextColor,
-                    optionalPadding: EdgeInsets.only(top: 6.h),
+                    optionalPadding: EdgeInsetsDirectional.only(top: 6.h),
                   );
                 } else {
                   return const SizedBox.shrink();
@@ -606,7 +606,8 @@ class SignUpScreen extends StatelessWidget {
                   buildWhen: (previous, current) => current is SignUpBusinessTypeChangedState,
                   builder: (context, state) {
                     return SmartCheckbox.radio(
-                      padding: index != signUpBloc.businessTypes.length - 1 ? EdgeInsets.only(right: 20.w) : EdgeInsets.zero,
+                      padding:
+                          index != signUpBloc.businessTypes.length - 1 ? EdgeInsetsDirectional.only(end: 20.w) : EdgeInsetsDirectional.zero,
                       value: businessType.isSelected,
                       onChanged: (val) {
                         if (val == null) {
@@ -628,7 +629,7 @@ class SignUpScreen extends StatelessWidget {
                 child: SmartText(
                   signUpBloc.businessTypeError,
                   color: style.errorTextColor,
-                  optionalPadding: EdgeInsets.only(top: 6.h),
+                  optionalPadding: EdgeInsetsDirectional.only(top: 6.h),
                 ),
               )
           ],
@@ -662,7 +663,7 @@ class SignUpScreen extends StatelessWidget {
               },
               child: Container(
                 height: 48.w,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: countryPickerStyle.inputBorderColor,

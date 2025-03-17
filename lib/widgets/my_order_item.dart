@@ -13,7 +13,7 @@ class MyOrderItem extends StatelessWidget {
     this.onTap,
     this.onTapMenuButton,
     this.padding,
-    this.margin = EdgeInsets.zero,
+    this.margin = EdgeInsetsDirectional.zero,
   });
 
   @override
@@ -25,7 +25,7 @@ class MyOrderItem extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            padding: padding ?? EdgeInsets.all(16.0.w),
+            padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
             margin: margin,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
@@ -83,7 +83,7 @@ class MyOrderItem extends StatelessWidget {
 
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style, {bool isOrderStatus = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

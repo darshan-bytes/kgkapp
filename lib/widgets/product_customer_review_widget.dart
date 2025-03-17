@@ -69,7 +69,7 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                         type: MaterialType.card,
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(20.w),
+                            padding: EdgeInsetsDirectional.all(20.w),
                             child: Stack(
                               children: [
                                 SmartImage(

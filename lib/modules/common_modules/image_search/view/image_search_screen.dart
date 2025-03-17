@@ -38,7 +38,7 @@ class ImageSearchScreen extends StatelessWidget {
                         title: bloc.isCameraSelected ? "Captured image" : "Upload a photo",
                         height: 48.h,
                         titleStyle: style.buttonTextStyle,
-                        margin: EdgeInsets.symmetric(horizontal: 24.w),
+                        margin: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
                       );
                     },
                   ),
@@ -58,11 +58,11 @@ class ImageSearchScreen extends StatelessWidget {
                           bloc.add(const ImageSelectionToggleEvent(isCameraSelected: true));
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 8.w),
+                          padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
                           decoration: bloc.isCameraSelected
                               ? BoxDecoration(
                                   color: Colors.transparent,
-                                  border: Border(
+                                  border: BorderDirectional(
                                     top: BorderSide(
                                       color: style.selectedColor,
                                       width: 6.0.w,
@@ -93,21 +93,21 @@ class ImageSearchScreen extends StatelessWidget {
                           bloc.add(const ImageSelectionToggleEvent(isCameraSelected: false));
                         },
                         child: Container(
-                          alignment: Alignment.center,
+                          alignment: AlignmentDirectional.center,
                           decoration: bloc.isCameraSelected
                               ? const BoxDecoration(
                                   color: Colors.transparent,
                                 )
                               : BoxDecoration(
                                   color: Colors.transparent,
-                                  border: Border(
+                                  border: BorderDirectional(
                                     top: BorderSide(
                                       color: style.selectedColor,
                                       width: 6.0.w,
                                     ),
                                   ),
                                 ),
-                          padding: EdgeInsets.symmetric(vertical: 8.w),
+                          padding: EdgeInsetsDirectional.symmetric(vertical: 8.w),
                           child: Column(
                             children: [
                               Icon(

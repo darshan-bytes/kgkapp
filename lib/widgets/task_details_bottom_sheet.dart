@@ -12,9 +12,9 @@ class TaskDetailsBottomSheet extends StatelessWidget {
       width: context.width,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12.r),
-          topRight: Radius.circular(12.r),
+        borderRadius: BorderRadiusDirectional.only(
+          topStart: Radius.circular(12.r),
+          topEnd: Radius.circular(12.r),
         ),
         color: style.whiteColor,
       ),
@@ -37,7 +37,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
   Widget _buildHeader(BuildContext context, TaskDetailsStyle style) {
     return Container(
       color: style.headerBgColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 16.h),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -137,7 +137,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(28.r)),
         color: color,
       ),
-      margin: EdgeInsets.symmetric(horizontal: 2.51.w),
+      margin: EdgeInsetsDirectional.symmetric(horizontal: 2.51.w),
     );
   }
 
@@ -148,7 +148,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
 
   Widget _buildDetails(TaskDetailsStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -238,7 +238,7 @@ class TaskDetailsBottomSheet extends StatelessWidget {
         ...assignToDetails.map((details) {
           final hasProfilePic = details.profilePicUrl.isNotNullNorEmpty;
           return Padding(
-            padding: EdgeInsets.only(bottom: 8.h),
+            padding: EdgeInsetsDirectional.only(bottom: 8.h),
             child: Row(
               children: [
                 if (hasProfilePic) ...[

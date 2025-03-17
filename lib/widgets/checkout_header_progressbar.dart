@@ -9,8 +9,8 @@ class CheckoutHeaderProgressbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final AddAddressScreenStyle style = AppTheme.of(context).addAddressScreenStyle;
     return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: style.borderColor))),
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
+      decoration: BoxDecoration(border: BorderDirectional(bottom: BorderSide(color: style.borderColor))),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 14.h),
       child: Row(
         children: [
           Container(
@@ -26,7 +26,7 @@ class CheckoutHeaderProgressbar extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
             child: DotIndicator(
               dotColor: isShippingAndBillingAddressFilled ? style.fillLineColor : style.dotColor,
             ),

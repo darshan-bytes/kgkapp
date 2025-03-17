@@ -14,7 +14,7 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final CategoryTileStyle categoryTileStyle = AppTheme.of(context).categoryTileStyle;
     return Container(
-      margin: EdgeInsets.only(top: 6.0.h, bottom: 6.0.h, right: 6.0.w, left: 6.0.w),
+      margin: EdgeInsetsDirectional.only(top: 6.0.h, bottom: 6.0.h, end: 6.0.w, start: 6.0.w),
       decoration: BoxDecoration(
         color: categoryTileStyle.whiteColor,
       ),
@@ -28,7 +28,7 @@ class CategoryTile extends StatelessWidget {
             border: isSelected ? Border.all(color: categoryTileStyle.primaryColor, width: 2.w) : null,
           ),
           Container(
-            margin: EdgeInsets.all(8.0.w),
+            margin: EdgeInsetsDirectional.all(8.0.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

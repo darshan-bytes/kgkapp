@@ -31,7 +31,7 @@ class ConfirmationDialog extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsetsDirectional.all(16.w),
           child: Stack(
             children: [
               Column(
@@ -46,8 +46,7 @@ class ConfirmationDialog extends StatelessWidget {
                     children: [
                       Expanded(child: SmartButton.white(onTap: onDenied, title: onDeniedText)),
                       SizedBox(width: 16.w),
-                      Expanded(
-                          child: SmartButton(onTap: onApproved, title: onApprovedText)),
+                      Expanded(child: SmartButton(onTap: onApproved, title: onApprovedText)),
                     ],
                   ),
                   SizedBox(height: 16.h),

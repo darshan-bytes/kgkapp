@@ -54,7 +54,7 @@ class CompleteProductScreen extends StatelessWidget {
           return const SizedBox();
         }
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 14.h, horizontal: 17.w),
           decoration: BoxDecoration(
             color: style.whiteColor,
             boxShadow: [
@@ -106,7 +106,7 @@ class CompleteProductScreen extends StatelessWidget {
 
   Widget _productDetail(CompleteProductStyle style, CompleteProductBloc bloc, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -169,7 +169,7 @@ class CompleteProductScreen extends StatelessWidget {
                 title: APPStrings.askForQuotation.tr,
                 width: 170.w,
                 height: 40.h,
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
                 onTap: () {
                   Utils.showSmartModalBottomSheet(
                     context: context,

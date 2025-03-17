@@ -41,7 +41,7 @@ class PaymentScreen extends StatelessWidget {
                   _buildOrderSummary(style),
                   Container(
                     height: 80.h,
-                    margin: EdgeInsets.symmetric(horizontal: 14.w),
+                    margin: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
                     child: Row(
                       children: [
                         SmartText(
@@ -87,7 +87,7 @@ class PaymentScreen extends StatelessWidget {
           onTap: onTap,
           child: Container(
             height: 48.h,
-            margin: EdgeInsets.symmetric(horizontal: 17.w, vertical: 10.h),
+            margin: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 10.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

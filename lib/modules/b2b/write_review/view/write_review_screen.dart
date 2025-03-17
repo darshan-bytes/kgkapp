@@ -14,7 +14,7 @@ class WriteReviewScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           child: SmartSingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,9 +148,9 @@ class WriteReviewScreen extends StatelessWidget {
             width: 96.w,
             imageBorderRadius: BorderRadius.circular(4.r),
           ),
-          Positioned(
+          PositionedDirectional(
             top: 8.w,
-            right: 8.w,
+            end: 8.w,
             child: GestureDetector(
               onTap: () {
                 bloc.add(RemoveSelectedImageEvent(selectedImage: index));
@@ -162,7 +162,7 @@ class WriteReviewScreen extends StatelessWidget {
                 ),
                 height: 24.w,
                 width: 24.w,
-                alignment: Alignment.center,
+                alignment: AlignmentDirectional.center,
                 child: const SmartImage(
                   path: AppImages.icCancel,
                 ),
@@ -195,7 +195,7 @@ class WriteReviewScreen extends StatelessWidget {
   Widget _buildBottomNavigationBar(BuildContext context, WriteReviewBloc bloc) {
     return SafeArea(
       child: SmartButton(
-        margin: EdgeInsets.all(17.w),
+        margin: EdgeInsetsDirectional.all(17.w),
         onTap: () {
           bloc.add(WriteReviewSubmitEvent(context));
         },

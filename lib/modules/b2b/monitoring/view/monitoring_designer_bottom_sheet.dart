@@ -9,15 +9,15 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     MonitoringScreenStyle style = AppTheme.of(context).monitoringScreenStyle;
     return SmartSingleChildScrollView(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           height: context.height * 0.8,
           width: context.width,
           decoration: BoxDecoration(
             color: style.whiteColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12.r),
-              topRight: Radius.circular(12.r),
+            borderRadius: BorderRadiusDirectional.only(
+              topStart: Radius.circular(12.r),
+              topEnd: Radius.circular(12.r),
             ),
           ),
           child: Column(
@@ -30,7 +30,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
               _buildDesignersSearchBar(context, monitoringBloc),
               SizedBox(height: 24.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
                 child: SmartText(
                   APPStrings.selectDesigner.tr,
                   style: style.subTitleStyle,
@@ -48,7 +48,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
 
   Widget _buildDesignersSearchBar(BuildContext context, MonitoringBloc bloc) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.5.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w),
       child: SmartTextField(
           controller: bloc.searchDesignersController,
           labelText: APPStrings.enterDesignerName.tr,
@@ -56,7 +56,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
           onTapOutside: (p) {},
           suffixIcon: SmartImage(
             path: AppImages.icSearchThin,
-            padding: EdgeInsets.all(14.w),
+            padding: EdgeInsetsDirectional.all(14.w),
           ),
           focusNode: bloc.searchDesignersFocusNode,
           textInputAction: TextInputAction.done),
@@ -65,7 +65,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
 
   Widget _buildAppBar(MonitoringScreenStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.5.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -101,7 +101,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
             child: ListView.separated(
           itemCount: bloc.designerList.length,
           controller: bloc.designerScrollController.scrollController,
-          padding: EdgeInsets.symmetric(horizontal: 17.5.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w),
           physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -113,7 +113,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
                     bloc.add(MonitoringSelectedDesignerEvent(designer: bloc.designerList[index]));
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.w),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 12.w),
                     child: Row(
                       children: [
                         SmartImage(
@@ -151,7 +151,7 @@ class MonitoringDesignerBottomSheet extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(MonitoringBloc bloc, BuildContext context, MonitoringScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.5.w, vertical: 24.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.5.w, vertical: 24.h),
       child: Row(
         children: [
           Expanded(

@@ -24,7 +24,7 @@ class SharePresentationScreen extends StatelessWidget {
               constraints: BoxConstraints(maxHeight: 775.h),
               decoration: BoxDecoration(
                 color: style.backgroundColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
+                borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
               ),
               child: SafeArea(
                 child: Stack(
@@ -37,9 +37,9 @@ class SharePresentationScreen extends StatelessWidget {
                         _buildBottomStaticSection(bloc, style, context)
                       ],
                     ),
-                    Positioned(
+                    PositionedDirectional(
                       top: 16.h,
-                      right: 16.w,
+                      end: 16.w,
                       child: SmartImage(
                         path: AppImages.icCross,
                         height: 24.w,
@@ -70,7 +70,7 @@ class SharePresentationScreen extends StatelessWidget {
           return SmartText(
             state.title,
             style: style.titleStyle,
-            optionalPadding: EdgeInsets.only(top: 24.h, left: 17.w, right: 17.w, bottom: 17.h),
+            optionalPadding: EdgeInsetsDirectional.only(top: 24.h, start: 17.w, end: 17.w, bottom: 17.h),
           );
         }
         return const SizedBox.shrink();
@@ -82,7 +82,7 @@ class SharePresentationScreen extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class SharePresentationScreen extends StatelessWidget {
 
   Widget _buildBottomStaticSection(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: EdgeInsetsDirectional.symmetric(
         horizontal: 17.w,
       ),
       child: Column(
@@ -253,7 +253,7 @@ class SharePresentationScreen extends StatelessWidget {
 
   Widget _buildBottomNavbar(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 24.h),
       child: Row(
         children: [
           Expanded(
@@ -285,10 +285,10 @@ class SharePresentationScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ChangeUserAccessTypeState,
       builder: (context, state) {
         return SmartDropDown<UserAccessType>(
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsetsDirectional.zero,
           isIcArrowDropDown: user.role!.isModifiable,
           isExpanded: false,
-          border: const Border(top: BorderSide.none),
+          border: const BorderDirectional(top: BorderSide.none),
           items: bloc.arrPeopleAccessType.map((UserAccessType type) {
             return SmartDropDownItem<UserAccessType>(
               value: type,
@@ -313,8 +313,8 @@ class SharePresentationScreen extends StatelessWidget {
         return SmartDropDown<UserAccessType>(
           isIcArrowDropDown: true,
           isExpanded: false,
-          contentPadding: EdgeInsets.zero,
-          border: const Border(top: BorderSide.none),
+          contentPadding: EdgeInsetsDirectional.zero,
+          border: const BorderDirectional(top: BorderSide.none),
           items: bloc.arrGeneralAccessType.map((UserAccessType type) {
             return SmartDropDownItem<UserAccessType>(
               value: type,

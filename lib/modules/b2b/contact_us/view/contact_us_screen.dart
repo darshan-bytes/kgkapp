@@ -20,7 +20,7 @@ class ContactUsScreen extends StatelessWidget {
           },
         ),
         body: SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 18.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 18.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

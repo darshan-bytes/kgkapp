@@ -11,7 +11,7 @@ class OrderTimelineScreen extends StatelessWidget {
       backgroundColor: style.whiteColor,
       appBar: SmartAppBar(title: APPStrings.orderTimeline.tr),
       body: Container(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         child: BlocBuilder<OrderTimelineBloc, OrderTimelineState>(
           buildWhen: (previous, current) => current is OrderTimelineLoadedState,
           builder: (context, state) {
@@ -26,7 +26,7 @@ class OrderTimelineScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                            padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 4.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(22.r),
                               border: Border.all(color: style.dateTagBorderColor),
@@ -57,7 +57,7 @@ class OrderTimeLineWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderTimelineStyle style = AppTheme.of(context).orderTimelineStyle;
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.circular(6.r),

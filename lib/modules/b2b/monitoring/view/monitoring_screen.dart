@@ -27,10 +27,10 @@ class MonitoringScreen extends StatelessWidget {
                   // Here TabController is initialized
                   bloc.tabController = tabController;
                 },
-                padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
                 isScrollable: true,
                 tabAlignment: TabAlignment.center,
-                labelPadding: EdgeInsets.symmetric(horizontal: 13.5.w),
+                labelPadding: EdgeInsetsDirectional.symmetric(horizontal: 13.5.w),
                 onTapTab: (int index) => bloc.add(MonitoringOnTabChangedEvent(index: index)),
                 tabs: bloc.tabs,
                 tabBarView: _buildTabBarView(bloc),

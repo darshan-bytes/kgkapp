@@ -39,7 +39,7 @@ class AdvanceFilterScreen extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsetsDirectional.all(16.w),
                 color: style.backgroundColor,
                 child: BlocBuilder<AdvanceSortFilterBloc, AdvanceSortFilterState>(
                   buildWhen: (previous, current) => current is AdvanceFilterDataSelectedState,
@@ -70,10 +70,10 @@ class AdvanceFilterScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
           decoration: BoxDecoration(
             color: style.backgroundColor,
-            border: Border(
+            border: BorderDirectional(
               top: BorderSide(color: style.itemBorderColor),
             ),
           ),
@@ -126,10 +126,10 @@ class AdvanceFilterScreen extends StatelessWidget {
                   filterBloc.add(SelectAdvanceFilterDataEvent(filterData: filterData, context: context));
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: isSelected ? style.selectedBackgroundColor : null,
-                    border: Border(
+                    border: BorderDirectional(
                       bottom: BorderSide(
                         color: style.itemBorderColor,
                       ),
@@ -189,9 +189,9 @@ class AdvanceFilterScreen extends StatelessWidget {
                 handleOnChange(filterBloc, secondaryFilterData);
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.h),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 12.w, horizontal: 16.h),
                 decoration: BoxDecoration(
-                  border: Border(
+                  border: BorderDirectional(
                     bottom: BorderSide(color: style.itemBorderColor),
                   ),
                 ),
@@ -236,7 +236,7 @@ class AdvanceFilterScreen extends StatelessWidget {
           child: SmartTextField(
             suffixIcon: Icon(Icons.calendar_month),
             isEnabled: false,
-            contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+            contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
             hintText: "${APPStrings.createdOn.tr} - ",
             disabledBorderColor: style.itemBorderColor,
             controller: TextEditingController(

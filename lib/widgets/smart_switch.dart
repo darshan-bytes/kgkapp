@@ -1,4 +1,3 @@
-
 import 'package:kgk/kgk.dart';
 
 class SmartSwitch extends StatelessWidget {
@@ -21,7 +20,7 @@ class SmartSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).switchStyle;
     return Container(
-      alignment: Alignment.center,
+      alignment: AlignmentDirectional.center,
       height: height,
       width: width,
       child: FittedBox(
@@ -36,5 +35,4 @@ class SmartSwitch extends StatelessWidget {
       ),
     );
   }
-
 }

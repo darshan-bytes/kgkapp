@@ -14,7 +14,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
     Widget child = Container(
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        border: Border(top: BorderSide(color: style.borderColor, width: 1.w)),
+        border: BorderDirectional(top: BorderSide(color: style.borderColor, width: 1.w)),
         boxShadow: [
           BoxShadow(
             color: style.boxShadowColor,
@@ -103,7 +103,7 @@ class SmartBottomNavigationBar extends StatelessWidget {
         int notificationCount = model.notificationCount ?? 0;
         if (notificationCount > 0) {
           item = Badge(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
             label: SmartText(
               notificationCount > 9 ? '9+' : notificationCount.toString(),
               color: style.backgroundColor,

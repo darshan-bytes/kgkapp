@@ -17,7 +17,7 @@ class FaqScreen extends StatelessWidget {
                 ? SmartCircularProgressIndicator()
                 : SmartSingleChildScrollView(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -28,7 +28,7 @@ class FaqScreen extends StatelessWidget {
                           /*SizedBox(height: 24.h),
                           SmartTextField(
                             controller: faqBloc.searchController,
-                            suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(14.w)),
+                            suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(14.w)),
                           ),*/
                           SizedBox(height: 16.h),
                           BlocBuilder<FaqBloc, FaqState>(
@@ -75,13 +75,13 @@ class FaqScreen extends StatelessWidget {
               title: SmartText(
                 faq.question,
                 style: style.questionStyle,
-                optionalPadding: EdgeInsets.symmetric(vertical: 8.h),
+                optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
               ),
               children: [
                 SmartText(
                   faq.answer,
                   style: style.answerStyle,
-                  optionalPadding: EdgeInsets.only(bottom: 17.h),
+                  optionalPadding: EdgeInsetsDirectional.only(bottom: 17.h),
                 ),
               ],
             );

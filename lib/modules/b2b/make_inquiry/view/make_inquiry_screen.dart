@@ -14,7 +14,7 @@ class MakeInquiryScreen extends StatelessWidget {
       backgroundColor: style.whiteColor,
       body: SafeArea(
         child: SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 14.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -114,7 +114,7 @@ class MakeInquiryScreen extends StatelessWidget {
           },
           optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<ProductModel> onSelected, Iterable<ProductModel> options) {
             return Align(
-              alignment: Alignment.topLeft,
+              alignment: AlignmentDirectional.topStart,
               child: Material(
                 elevation: 4.0,
                 child: Container(
@@ -127,14 +127,14 @@ class MakeInquiryScreen extends StatelessWidget {
                     controller: bloc.productScrollController,
                     child: ListView.builder(
                       controller: bloc.productScrollController,
-                      padding: EdgeInsets.all(8.w),
+                      padding: EdgeInsetsDirectional.all(8.w),
                       shrinkWrap: true,
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
                         final ProductModel option = options.elementAt(index);
                         return SmartText(
                           option.name,
-                          optionalPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+                          optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 12.h),
                           onTap: () {
                             onSelected(option);
                           },

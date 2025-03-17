@@ -26,7 +26,7 @@ class ProductVideoWidget extends StatelessWidget {
     // Initialize the controller in the build method and handle the future
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
         child: FutureBuilder(
           // Initialize the video player controller and start playing the video
           future: controller.initialize().then((_) async {

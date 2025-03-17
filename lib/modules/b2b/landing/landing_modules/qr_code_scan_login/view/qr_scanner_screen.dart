@@ -25,7 +25,7 @@ class QrScannerScreen extends StatelessWidget {
             SmartText(
               APPStrings.toLogInToSiteWithQr.tr,
               style: style.titleStyle,
-              optionalPadding: EdgeInsets.all(16.w),
+              optionalPadding: EdgeInsetsDirectional.all(16.w),
             ),
             Expanded(
               child: MobileScanner(
@@ -62,10 +62,10 @@ class QrScannerScreen extends StatelessWidget {
                   onDetect: (barcode) {
                     qrCodeScanLoginBloc.add(QrCodeScanLoginStopEvent(barcode: barcode, context: context));
                   },
-                  errorBuilder: (context, error, child) {
+                  errorBuilder: (context, error) {
                     return Container(
-                      padding: EdgeInsets.all(16.w),
-                      alignment: Alignment.center,
+                      padding: EdgeInsetsDirectional.all(16.w),
+                      alignment: AlignmentDirectional.center,
                       child: SmartText(error.toString()),
                     );
                   }),

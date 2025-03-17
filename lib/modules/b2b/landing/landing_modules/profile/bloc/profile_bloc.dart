@@ -554,7 +554,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             Utils.showSmartModalBottomSheet(
               context: context,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+                borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
               ),
               builder: (context) => const ChangePasswordBottomSheet(),
             );
@@ -640,7 +640,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             Utils.showSmartModalBottomSheet(
               context: context,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+                borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
               ),
               builder: (context) => const ChangePasswordBottomSheet(),
             );
@@ -839,12 +839,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
       ),
       builder: (context) => LayoutBuilder(
         builder: (context, _) {
           return AnimatedPadding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             duration: const Duration(milliseconds: 50),
             curve: Curves.easeOut,
             child: Container(

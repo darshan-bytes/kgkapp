@@ -9,8 +9,8 @@ class SmartStyleDesignListing extends StatelessWidget {
   Widget build(BuildContext context) {
     StyleDesignListStyle style = AppTheme.of(context).styleDesignListStyle;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
+      margin: EdgeInsetsDirectional.only(bottom: 16.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0.r),
         border: Border.all(

@@ -21,7 +21,7 @@ class OtpVerificationScreen extends StatelessWidget {
           ),
           body: SafeArea(
             child: SmartSingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -80,7 +80,7 @@ class OtpVerificationScreen extends StatelessWidget {
             bloc.add(OtpVerificationResendCodeEvent(context));
           },
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: AlignmentDirectional.centerEnd,
             child: SmartText(
               bloc.displayDuration ?? APPStrings.resendCode.tr,
               style: style.forgotPasswordStyle,

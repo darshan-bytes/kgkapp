@@ -36,7 +36,7 @@ class SmartRichText extends StatelessWidget {
     }).toList();
 
     return Padding(
-      padding: padding ?? EdgeInsets.zero,
+      padding: padding ?? EdgeInsetsDirectional.zero,
       child: RichText(
         text: TextSpan(
           style: style.textStyle,

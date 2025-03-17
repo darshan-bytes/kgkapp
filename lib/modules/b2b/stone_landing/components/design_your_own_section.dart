@@ -48,11 +48,11 @@ class DesignYourOwnStoneSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: style.designYourOwnStoneBgColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(
         children: [
           // StonesBannerView(
-          //   padding: EdgeInsets.zero,
+          //   padding: EdgeInsetsDirectional.zero,
           //   foregroundImagePath: mainBannerForegroundImagePath,
           //   spaceBetweenImageAndTitle: 16.h,
           //   bannerTitleText: mainBannerTitle,
@@ -70,7 +70,7 @@ class DesignYourOwnStoneSection extends StatelessWidget {
           // ),
           // SizedBox(height: 24.h),
           StonesBannerView(
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             backgroundImagePath: firstBannerBackgroundImagePath,
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
@@ -84,7 +84,7 @@ class DesignYourOwnStoneSection extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           StonesBannerView(
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             backgroundImagePath: secondBannerBackgroundImagePath,
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,

@@ -138,9 +138,9 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
         return Container(
           height: 20.w,
           width: 20.w,
-          margin: EdgeInsets.all(2.w),
+          margin: EdgeInsetsDirectional.all(2.w),
           decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: getColor(), width: 1.w)),
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           child: Container(
             height: 12.w,
             width: 12.w,
@@ -151,7 +151,7 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
       return Container(
         height: 24.w,
         width: 24.w,
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         child: Container(
           height: 12.w,
           width: 12.w,
@@ -169,7 +169,7 @@ class _SmartTileLineStepperState extends State<SmartTileLineStepper> {
   Widget _buildDivider(SmartTileLineStepperStyle style) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 6.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 6.h),
         child: CustomPaint(
           painter: DashedLinePainter(color: style.completedIndicatorColor),
         ),

@@ -29,13 +29,13 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                 }
                 return ListView.separated(
                   shrinkWrap: true,
-                  padding: EdgeInsets.all(16.w),
+                  padding: EdgeInsetsDirectional.all(16.w),
                   itemCount: (bloc.commentsAddedResponseModel?.comments ?? []).length,
                   itemBuilder: (context, index) {
                     Comments commentModel = (bloc.commentsAddedResponseModel?.comments?[index] ?? Comments());
                     return ListTile(
                       tileColor: AppTheme.of(context).previewCatalogueStyle.stepBorderColor,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                      contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                       title: SmartText(commentModel.message),
                     );
                   },
@@ -56,7 +56,7 @@ class CatalogueCommentListingScreen extends StatelessWidget {
       color: AppTheme.of(context).previewCatalogueStyle.whiteColor,
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(17.0.w),
+          padding: EdgeInsetsDirectional.all(17.0.w),
           child: SmartButton(
             title: APPStrings.addAComment.tr,
             onTap: () {
@@ -92,10 +92,10 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: style.whiteColor,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24.r), topRight: Radius.circular(24.r)),
+                    borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(24.r), topEnd: Radius.circular(24.r)),
                     boxShadow: [style.boxShadow],
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
                   child: Stack(
                     children: [
                       SmartTextField(
@@ -107,8 +107,8 @@ class CatalogueCommentListingScreen extends StatelessWidget {
                         textInputAction: TextInputAction.newline,
                         onTapOutside: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                       ),
-                      Positioned(
-                        right: 14.w,
+                      PositionedDirectional(
+                        end: 14.w,
                         top: 86.w,
                         child: SmartImage(
                           onTap: () {

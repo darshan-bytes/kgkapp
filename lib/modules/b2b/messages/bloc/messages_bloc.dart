@@ -328,7 +328,7 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
             child: ListView.separated(
               itemCount: currentList.length,
               controller: currentController.scrollController,
-              padding: EdgeInsets.only(bottom: 24.h),
+              padding: EdgeInsetsDirectional.only(bottom: 24.h),
               physics: const ClampingScrollPhysics(),
               itemBuilder: (context, index) {
                 return BlocBuilder<MessagesBloc, MessagesState>(
@@ -412,7 +412,7 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
                         add(MessagesFavouriteToggleEvent(id: model.id ?? "", index: index));
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(top: 6.h),
+                        padding: EdgeInsetsDirectional.only(top: 6.h),
                         child: Icon(
                           model.isFavorite ? Icons.star : Icons.star_border,
                           color: model.isFavorite ? style.primaryColor : style.color8C8C8C,

@@ -26,7 +26,7 @@ class ProductSmartGridView extends StatelessWidget {
         double totalWidth = constraints.maxWidth;
         double itemWidth = (totalWidth - (columns - 1) * (spacing ?? 12.w)) / columns;
         return Align(
-          alignment: Alignment.topLeft,
+          alignment: AlignmentDirectional.topStart,
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,
             alignment: WrapAlignment.start,

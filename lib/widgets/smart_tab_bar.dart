@@ -88,7 +88,7 @@ class _SmartTabBarState extends State<SmartTabBar> with SingleTickerProviderStat
       children: [
         Container(
           color: widget.tabBarColor,
-          padding: widget.padding ?? EdgeInsets.zero,
+          padding: widget.padding ?? EdgeInsetsDirectional.zero,
           child: TabBar(
             physics: widget.physics,
             isScrollable: widget.isScrollable,

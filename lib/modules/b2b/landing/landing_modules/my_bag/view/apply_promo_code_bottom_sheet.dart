@@ -15,11 +15,11 @@ class ApplyPromoCodeBottomSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SmartSingleChildScrollView(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Stack(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,8 +42,8 @@ class ApplyPromoCodeBottomSheet extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned(
-                right: 16.w,
+              PositionedDirectional(
+                end: 16.w,
                 top: 16.w,
                 child: SmartImage(path: AppImages.icCross, width: 24.w, height: 24.h, onTap: () => context.pop()),
               ),

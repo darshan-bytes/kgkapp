@@ -18,7 +18,7 @@ class PreferencesScreen extends StatelessWidget {
             child: state is PreferencesLoadingState
                 ? const SmartCircularProgressIndicator()
                 : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 20.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

@@ -47,8 +47,8 @@ class CartProductItem extends StatelessWidget {
     this.onMoveToWishListTap,
     this.onDeleteTap,
     this.isFavourite = false,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.selectedQuantity,
     this.selectedQuality,
     required this.qualityOptionsList,
@@ -144,7 +144,7 @@ class CartProductItem extends StatelessWidget {
         Container(
           height: boxHeight ?? 96.w,
           width: boxWidth ?? 96.w,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           color: style.productBackgroundColor,
           child: SmartImage(
             path: productDetails.imageUrl ?? '',
@@ -154,9 +154,9 @@ class CartProductItem extends StatelessWidget {
           ),
         ),
         if (isCheckboxShow)
-          Positioned(
+          PositionedDirectional(
               top: 8.h,
-              left: 8.w,
+              start: 8.w,
               child: SmartCheckbox(
                 height: 24.w,
                 width: 24.w,
@@ -186,7 +186,7 @@ class CartProductItem extends StatelessWidget {
         ),
         height: 24.w,
         width: 24.w,
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         child: SmartImage(
           path: path,
           height: 16.w,
@@ -221,7 +221,7 @@ class CartProductItem extends StatelessWidget {
                   GestureDetector(
                     onTap: onDeleteTap,
                     child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                        margin: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 2.h),
                         child: SmartImage(path: AppImages.icDelete, height: 18.w, width: 18.w)),
                   ),
               ],
@@ -248,9 +248,9 @@ class CartProductItem extends StatelessWidget {
             // SizedBox(height: 8.h),
             // SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
             // SizedBox(height: 12.h),
-            //padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
+            //padding: EdgeInsetsDirectional.only(top: 16.h, bottom: 24.h),
             Padding(
-              padding: EdgeInsets.only(top: 8.h),
+              padding: EdgeInsetsDirectional.only(top: 8.h),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

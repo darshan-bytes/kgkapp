@@ -16,7 +16,7 @@ class NewsletterSubscriberTabView extends StatelessWidget {
         children: [
           SmartTextField.search(
             height: 48.w,
-            padding: EdgeInsets.symmetric(vertical: 24.w),
+            padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
             hintText: APPStrings.searchSubscribers.tr,
             controller: bloc.subscribersSearchController,
           ),
@@ -48,7 +48,7 @@ class NewsletterSubscriberTabView extends StatelessWidget {
                                   type: B2BListingType.newsletterSubscribersType,
                                   onTapMenuButton: () {},
                                   onTap: () {},
-                                  margin: EdgeInsets.only(
+                                  margin: EdgeInsetsDirectional.only(
                                       bottom:
                                           (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1) ? 0 : 16.h)),
                               if (state is NewsletterLoadingMoreState && index == bloc.subscribersList.length - 1)

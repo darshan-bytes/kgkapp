@@ -85,7 +85,7 @@ class SmartDropDown<T> extends StatelessWidget {
               context: context,
               // isScrollControlled: scrollDirection == Axis.horizontal,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16.0.r)),
+                borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.0.r)),
               ),
 
               builder: (context) {
@@ -95,7 +95,7 @@ class SmartDropDown<T> extends StatelessWidget {
           },
           child: Container(
             height: !isExpanded ? null : buttonHeight ?? 48.w,
-            padding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: contentPadding ?? EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: borderRadius ?? BorderRadius.circular(4.r),
@@ -185,18 +185,18 @@ class SmartDropDownView<T> extends StatelessWidget {
     SmartDropDownStyle style = AppTheme.of(context).smartDropDownStyle;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      padding: EdgeInsetsDirectional.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: Container(
         constraints:
             BoxConstraints(maxHeight: context.height * 0.75, minHeight: (context.height * 0.75) - MediaQuery.viewInsetsOf(context).bottom),
         decoration: BoxDecoration(
           color: style.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(6.r),
-            topRight: Radius.circular(6.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(6.r),
+            topEnd: Radius.circular(6.r),
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 24.h),
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -256,7 +256,7 @@ class SmartDropDownView<T> extends StatelessWidget {
             }
           },
           child: Container(
-            alignment: Alignment.center,
+            alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
               border: Border.all(
@@ -264,7 +264,7 @@ class SmartDropDownView<T> extends StatelessWidget {
                 width: 1.w,
               ),
             ),
-            padding: EdgeInsets.all(12.w),
+            padding: EdgeInsetsDirectional.all(12.w),
             child: Row(
               children: [
                 Expanded(child: SmartText(item.title, style: style.titleTextStyle)),
@@ -298,14 +298,14 @@ class SmartDropDownView<T> extends StatelessWidget {
       scrollbarOrientation: scrollDirection == Axis.horizontal ? ScrollbarOrientation.bottom : ScrollbarOrientation.right,
       child: scrollDirection == Axis.horizontal
           ? Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
+              padding: EdgeInsetsDirectional.only(bottom: 16.h),
               child: SizedBox(
                 height: 50.w,
                 child: child,
               ),
             )
           : Padding(
-              padding: EdgeInsets.only(right: 10.w),
+              padding: EdgeInsetsDirectional.only(end: 10.w),
               child: child,
             ),
     );

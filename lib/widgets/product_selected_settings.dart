@@ -40,7 +40,7 @@ class ProductSelectedSettings extends StatelessWidget {
                 title: APPStrings.change.tr,
                 width: 100.w,
                 height: 40.h,
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
                 onTap: () {
                   onTap();
                 },

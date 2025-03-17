@@ -74,7 +74,7 @@ class ProductDetailsComponentsView extends StatelessWidget {
   Widget _settingWidget(String type, String value, BuildContext context) {
     final style = AppTheme.of(context).settingDetailScreenStyle;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

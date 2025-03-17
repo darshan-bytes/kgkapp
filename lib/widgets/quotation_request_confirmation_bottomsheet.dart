@@ -19,7 +19,7 @@ class QuotationRequestConfirmation extends StatelessWidget {
           Stack(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,9 +43,9 @@ class QuotationRequestConfirmation extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned(
+              PositionedDirectional(
                 top: 16.w,
-                right: 16.w,
+                end: 16.w,
                 child: InkWell(
                   onTap: () {
                     context.pop();

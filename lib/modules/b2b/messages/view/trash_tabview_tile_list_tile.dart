@@ -13,7 +13,7 @@ class TrashTabviewTileListTile extends StatelessWidget {
         onTap: messagesBloc.currentController.scrollToTop,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
         child: Column(
           children: [
             SizedBox(height: 24.h),

@@ -51,7 +51,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
           }
           return ListView.builder(
             itemCount: bloc.orderList.length,
-            padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -71,8 +71,8 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.all(16.0.w),
-        margin: EdgeInsets.only(bottom: 16.h),
+        padding: EdgeInsetsDirectional.all(16.0.w),
+        margin: EdgeInsetsDirectional.only(bottom: 16.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.r),
           color: style.backgroundColor,
@@ -131,7 +131,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                     bloc.add(ManufacturerOrderDetailsShowMoreEvent(index));
                   },
                   child: Container(
-                    alignment: Alignment.center,
+                    alignment: AlignmentDirectional.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -211,7 +211,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildManufacturerDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -227,7 +227,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
                   width: 56.w,
                   child: SmartTextField(
                     height: 32.h,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                    contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                     isEnabled: false,
                     cursorHeight: 16.h,
                     controller: TextEditingController(text: value),
@@ -251,7 +251,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
 
   Widget _buildSearchTextField(ManufacturerOrderDetailsBloc bloc) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Row(
         children: [
           Expanded(
@@ -280,7 +280,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildManufacturerOrderDetailsInfoCard(ManufacturerOrderDetailsBloc bloc, BuildContext context, OrderDetailScreenStyle style) {
     return Container(
       color: style.detailsTileColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 24.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w, vertical: 24.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -331,7 +331,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildManufacturerOrderCreatorDetailsInfoCard(
       ManufacturerOrderDetailsBloc bloc, BuildContext context, OrderDetailScreenStyle style) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -353,7 +353,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildDetailColumn(String title, String? value, OrderDetailScreenStyle style,
       {bool isStatus = false, bool totalAmount = false, CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start}) {
     return Padding(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: crossAxisAlignment,
         children: [
@@ -397,11 +397,11 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
             children: [
               if (iconImage != null)
                 Padding(
-                  padding: EdgeInsets.only(right: 4.w),
+                  padding: EdgeInsetsDirectional.only(end: 4.w),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50.r),
                     child: Container(
-                      alignment: Alignment.center,
+                      alignment: AlignmentDirectional.center,
                       child: SmartImage(
                         path: iconImage,
                         fit: BoxFit.fill,
@@ -431,15 +431,15 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
       context: context,
       enableDrag: false,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
             color: orderPopupStyle.whiteColor,
           ),
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsetsDirectional.all(16.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -465,7 +465,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => BlocProvider<ManufacturerOrderDetailsBloc>(
         create: (context) => ManufacturerOrderDetailsBloc()..add(ManufacturerOrderDetailsInitialEvent(context: context)),
@@ -479,7 +479,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
         return BlocProvider<ManufacturerOrderDetailsBloc>(
@@ -500,14 +500,14 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildPopupOption(BuildContext context,
-      {required String text, required TextStyle style, EdgeInsets? padding, required VoidCallback onTap}) {
+      {required String text, required TextStyle style, EdgeInsetsGeometry? padding, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
         height: 56.h,
         width: context.width,
-        alignment: Alignment.centerLeft,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
+        alignment: AlignmentDirectional.centerStart,
+        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 20.w),
         child: SmartText(text, style: style),
       ),
     );
@@ -516,7 +516,7 @@ class ManufacturerOrderDetailsScreen extends StatelessWidget {
   Widget _buildOrderTotalDiamondItemsDetails(ManufacturerOrderDetailsBloc bloc, BuildContext context) {
     MyBagScreenStyle style = AppTheme.of(context).myBagScreenStyle;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
