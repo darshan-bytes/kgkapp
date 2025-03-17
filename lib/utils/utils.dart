@@ -30,11 +30,11 @@ class Utils {
         autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 3),
         backgroundColor: AppThemes().appColor.primary,
         borderRadius: BorderRadius.circular(10.r),
-        margin: EdgeInsets.all(10.w),
+        margin: EdgeInsetsDirectional.all(10.w),
         closeButton: ToastCloseButton(showType: CloseButtonShowType.none),
         showIcon: false,
         showProgressBar: false,
-        alignment: Alignment.topCenter,
+        alignment: AlignmentDirectional.topCenter,
         callbacks: ToastificationCallbacks(
           onDismissed: (ToastificationItem item) {
             _toast = null;
@@ -62,10 +62,7 @@ class Utils {
         flagSize: 25.w,
         backgroundColor: countryPickerStyle.backgroundColor,
         bottomSheetHeight: (context.height * 0.8).h,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10.0.r),
-          topRight: Radius.circular(10.0.r),
-        ),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r), topRight: Radius.circular(10.r)),
         inputDecoration: InputDecoration(
           labelText: APPStrings.search.tr,
           hintText: APPStrings.startTypingToSearch.tr,
@@ -110,7 +107,7 @@ class Utils {
           actions: [
             if (cancelButtonText != null)
               TextButton(
-                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
                   onPressed: () {
                     context.pop();
                     if (onCancelPressed != null) {
@@ -123,7 +120,7 @@ class Utils {
                   )),
             if (okButtonText != null)
               TextButton(
-                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                  style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsetsDirectional.zero)),
                   onPressed: () {
                     context.pop();
                     if (onOkPressed != null) {
@@ -135,9 +132,9 @@ class Utils {
                     style: style.okButtonStyle,
                   )),
           ],
-          buttonPadding: EdgeInsets.zero,
-          actionsPadding: EdgeInsets.only(bottom: 8.w, right: 16.w, left: 8.w, top: 0.w),
-          contentPadding: EdgeInsets.only(bottom: 0.w, right: 20.w, left: 20.w, top: 16.w),
+          buttonPadding: EdgeInsetsDirectional.zero,
+          actionsPadding: EdgeInsetsDirectional.only(bottom: 8.w, end: 16.w, start: 8.w, top: 0.w),
+          contentPadding: EdgeInsetsDirectional.only(bottom: 0.w, end: 20.w, start: 20.w, top: 16.w),
         );
       },
     );
@@ -194,7 +191,7 @@ class Utils {
       elevation: elevation,
       shape: shape ??
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(6.r), topRight: Radius.circular(6.r)),
+            borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(6.r), topEnd: Radius.circular(6.r)),
           ),
       clipBehavior: clipBehavior,
       constraints: constraints,
@@ -225,12 +222,12 @@ class Utils {
           title: SmartText(APPStrings.permissionDenied.tr),
           content: SmartText(APPStrings.pleaseEnableLocation.tr),
           actions: [
-            SmartText(APPStrings.ok.tr, optionalPadding: EdgeInsets.all(10.w), onTap: () {
+            SmartText(APPStrings.ok.tr, optionalPadding: EdgeInsetsDirectional.all(10.w), onTap: () {
               onOkPressed(context);
             }),
             SmartText(
               APPStrings.cancel.tr,
-              optionalPadding: EdgeInsets.all(10.w),
+              optionalPadding: EdgeInsetsDirectional.all(10.w),
               onTap: () {
                 onCancelPressed(context);
               },
@@ -429,7 +426,7 @@ class Utils {
     await Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) => ConfirmationDialog(
         title: APPStrings.loginRequired.tr,

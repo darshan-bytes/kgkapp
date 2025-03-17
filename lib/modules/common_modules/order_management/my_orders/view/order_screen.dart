@@ -11,7 +11,7 @@ class OrderScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(ordersBloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
           child: Column(
             children: [
               SizedBox(height: 17.0.h),

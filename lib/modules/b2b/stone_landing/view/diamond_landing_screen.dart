@@ -113,16 +113,16 @@ class DiamondLandingScreen extends StatelessWidget {
       title: APPStrings.originOfDiamonds.tr,
       widgetBetweenTitleAndItems: SmartText(
         "Billions of years ago, carbon atoms formed in Earth's mantle under intense heat and pressure, later surfacing through volcanic activity for mining.",
-        optionalPadding: EdgeInsets.only(left: 17.w, top: 12.h, right: 17.w, bottom: 16.h),
+        optionalPadding: EdgeInsetsDirectional.only(start: 17.w, top: 12.h, end: 17.w, bottom: 16.h),
         style: style.originSectionSubTitleStyle,
       ),
       titleStyle: style.sectionLabelStyle,
       backgroundColor: style.originSectionBgColor,
       itemCount: bloc.originOfDiamondsList.length,
       itemBetweenSpace: 17.w,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = bloc.originOfDiamondsList[index];
         return SmartImageTitleColumn(
@@ -130,9 +130,9 @@ class DiamondLandingScreen extends StatelessWidget {
           width: 88.w,
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == bloc.originOfDiamondsList.length - 1 ? 17.w : 0,
           ),
           titleMaxLines: 1,
           fit: BoxFit.fill,

@@ -53,7 +53,7 @@ class B2BListingItem extends StatelessWidget {
     this.onTap,
     this.onTapMenuButton,
     this.padding,
-    this.margin = EdgeInsets.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.gridSpacing,
     this.gridRunSpacing,
     this.columns = 2,
@@ -70,7 +70,7 @@ class B2BListingItem extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            padding: padding ?? EdgeInsets.all(16.0.w),
+            padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
             margin: margin,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0.r),
@@ -97,13 +97,13 @@ class B2BListingItem extends StatelessWidget {
             ),
           ),
           if (onTapMenuButton != null)
-            Positioned(
+            PositionedDirectional(
               top: 14.h,
-              right: 14.w,
+              end: 14.w,
               child: SmartImage(
                 path: AppImages.icMoreHorizontal,
                 onTap: onTapMenuButton,
-                padding: EdgeInsets.all(4.w),
+                padding: EdgeInsetsDirectional.all(4.w),
                 inkwellBorderRadius: BorderRadius.circular(4.0.r),
               ),
             ),
@@ -175,7 +175,7 @@ class B2BColumnDetailItem extends StatelessWidget {
     final PddListingItemStyle style = AppTheme.of(context).pddListingItemStyle;
     final auctionListItemStyle = AppTheme.of(context).auctionListItemStyle;
     return Container(
-      margin: EdgeInsets.only(right: gridSpacing ?? 16.w),
+      margin: EdgeInsetsDirectional.only(end: gridSpacing ?? 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -215,7 +215,7 @@ class B2BColumnDetailItem extends StatelessWidget {
       children: [
         if (field.imageUrl != null)
           Padding(
-            padding: EdgeInsets.only(right: 8.w),
+            padding: EdgeInsetsDirectional.only(end: 8.w),
             child: SmartImage(
               path: field.imageUrl!,
               height: field.imageSize ?? 24.w,
@@ -239,7 +239,7 @@ class B2BColumnDetailItem extends StatelessWidget {
         child: Container(
           width: 24.w,
           height: 24.w,
-          alignment: Alignment.center,
+          alignment: AlignmentDirectional.center,
           decoration: BoxDecoration(
             border: Border.all(color: style.borderColor, width: 1.5.w),
             shape: BoxShape.circle,

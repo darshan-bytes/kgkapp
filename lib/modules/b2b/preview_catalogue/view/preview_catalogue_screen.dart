@@ -55,7 +55,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
         color: style.backgroundColor,
         borderRadius: BorderRadius.circular(8.w),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Row(
         children: [
           Expanded(
@@ -77,7 +77,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
 
   Widget _buildCustomCatalogueView(PreviewCatalogueBloc bloc, PreviewCatalogueStyle style, BuildContext context) {
     return SmartSingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 27.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 27.h),
       child: Column(
         children: [
           SmartText(bloc.digitalCatalogueListingModel?.name ?? '', style: style.titleStyle),

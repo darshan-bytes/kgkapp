@@ -27,7 +27,7 @@ class SignInScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SmartSingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -92,7 +92,7 @@ class SignInScreen extends StatelessWidget {
         context.pushNamed(AppRoutes.forgotPasswordPage).then((value) => context.read<ForgotPasswordBloc>().clearData());
       },
       child: Align(
-        alignment: Alignment.centerRight,
+        alignment: AlignmentDirectional.centerEnd,
         child: SmartText(
           APPStrings.forgotPassword.tr.interpolate(['?']),
           style: style.forgotPasswordStyle,
@@ -103,7 +103,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildLoginButton(BuildContext context, SignInBloc bloc) {
     return SmartButton(
-      margin: EdgeInsets.symmetric(horizontal: 17.w),
+      margin: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       onTap: () {
         bloc.add(SignInButtonPressedEvent(context: context));
       },
@@ -114,11 +114,11 @@ class SignInScreen extends StatelessWidget {
   // ignore: unused_element
   Widget _buildDivider(SignInScreenStyle style) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: AlignmentDirectional.center,
       children: [
         const Divider(),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
           color: style.backgroundColor,
           child: SmartText(
             APPStrings.orLoginWith.tr,

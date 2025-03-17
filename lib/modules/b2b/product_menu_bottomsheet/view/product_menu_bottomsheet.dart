@@ -24,9 +24,9 @@ class ProductMenuBottomSheet extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(6.r),
-          topRight: Radius.circular(6.r),
+        borderRadius: BorderRadiusDirectional.only(
+          topStart: Radius.circular(6.r),
+          topEnd: Radius.circular(6.r),
         ),
       ),
       child: Column(
@@ -38,7 +38,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
           Flexible(
             child: SmartSingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                 child: ValueListenableBuilder(
                   valueListenable: showMoreDetails,
                   builder: (context, value, child) {

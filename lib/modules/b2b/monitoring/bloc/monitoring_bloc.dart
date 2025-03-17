@@ -492,7 +492,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
                           },
                           type: currentListingType,
                           listingItemModel: currentList[index],
-                          margin: index == currentList.length - 1 ? EdgeInsets.only(bottom: 20.h) : EdgeInsets.zero,
+                          margin: index == currentList.length - 1 ? EdgeInsetsDirectional.only(bottom: 20.h) : EdgeInsetsDirectional.zero,
                         ),
                         if (state is MonitoringLoadingMoreState && index == currentList.length - 1) const SmartCircularProgressIndicator(),
                       ],
@@ -512,7 +512,7 @@ class MonitoringBloc extends Bloc<MonitoringEvent, MonitoringState> {
     Utils.showSmartModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(12.r), topEnd: Radius.circular(12.r)),
       ),
       builder: (context) => MonitoringDesignerBottomSheet(monitoringBloc: this),
     );

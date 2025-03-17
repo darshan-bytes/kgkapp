@@ -16,7 +16,7 @@ class ProjectListingScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<ProjectListingBloc, ProjectListingState>(
             buildWhen: (previous, current) => current is ProjectListingLoadedState,
             builder: (context, state) {
@@ -42,8 +42,8 @@ class ProjectListingScreen extends StatelessWidget {
     return SmartTextField(
       hintText: APPStrings.searchProjects.tr,
       controller: projectListingBloc.projectSearchController,
-      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-      padding: EdgeInsets.symmetric(vertical: 24.w),
+      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
       onTapOutside: (event) {},
     );
   }

@@ -21,7 +21,7 @@ class PresentationScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<PresentationBloc, PresentationState>(
             buildWhen: (previous, current) => current is PresentationLoadedState,
             builder: (context, state) {
@@ -33,7 +33,7 @@ class PresentationScreen extends StatelessWidget {
                     SmartTextField(
                       hintText: APPStrings.searchPresentation.tr,
                       controller: bloc.presentationSearchController,
-                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
+                      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
                       onTapOutside: (val) {},
                       textInputAction: TextInputAction.search,
                     ),
@@ -64,7 +64,7 @@ class PresentationScreen extends StatelessWidget {
             },
             child: ListView.separated(
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(vertical: 24.w),
+              padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
               controller: bloc.paginationScrollController.scrollController,
               itemCount: bloc.presentationList.length,
               itemBuilder: (context, index) {

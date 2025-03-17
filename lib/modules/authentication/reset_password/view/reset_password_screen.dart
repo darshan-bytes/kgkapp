@@ -24,7 +24,7 @@ class ResetPasswordScreen extends StatelessWidget {
               builder: (context, state) {
                 return SmartButton(
                   isEnabled: resetPasswordBloc.isFormFilled,
-                  margin: EdgeInsets.symmetric(horizontal: 17.w),
+                  margin: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                   onTap: () {
                     context.popUntil((route) => route.settings.name == AppRoutes.signInPage);
                   },
@@ -42,7 +42,7 @@ class ResetPasswordScreen extends StatelessWidget {
             Expanded(
               child: SmartSingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

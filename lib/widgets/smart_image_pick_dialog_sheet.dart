@@ -12,9 +12,9 @@ class SmartImagePickDialogSheet extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8.r),
-          topRight: Radius.circular(8.r),
+        borderRadius: BorderRadiusDirectional.only(
+          topStart: Radius.circular(8.r),
+          topEnd: Radius.circular(8.r),
         ),
       ),
       child: SafeArea(
@@ -26,7 +26,7 @@ class SmartImagePickDialogSheet extends StatelessWidget {
             Flexible(
               child: SmartSingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
                       Row(
@@ -70,7 +70,7 @@ class SmartImagePickDialogSheet extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.r),
               ),
-              alignment: Alignment.center,
+              alignment: AlignmentDirectional.center,
               child: SmartImage(
                 path: icon,
               )),

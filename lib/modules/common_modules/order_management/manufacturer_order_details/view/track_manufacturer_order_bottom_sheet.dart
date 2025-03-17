@@ -13,15 +13,15 @@ class TrackManufacturerOrderBottomSheet extends StatelessWidget {
       constraints: BoxConstraints(minHeight: 580.h),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(16.r),
+            topEnd: Radius.circular(16.r),
           ),
           color: style.backgroundColor,
         ),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class TrackManufacturerOrderBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
         color: style.orderInfoBackgroundColor,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,7 +76,7 @@ class TrackManufacturerOrderBottomSheet extends StatelessWidget {
           SizedBox(height: 8.h),
           Material(
             child: ListTile(
-                contentPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsetsDirectional.zero,
                 isThreeLine: true,
                 leading: SmartImage(
                   path: "https://i.ibb.co/8xM4BxQ/image-7.png",

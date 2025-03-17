@@ -74,22 +74,22 @@ class JewelleryLandingScreen extends StatelessWidget {
       isScrollbarVisible: true,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = bloc.shopByMetalList[index];
         return SmartImageTitleColumn(
           onTap: () {},
           imageWidth: 80.w,
-          imagePadding: EdgeInsets.symmetric(horizontal: 20.w),
+          imagePadding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
           title: item.name ?? '',
           titleStyle: style.sparkleSubTitleStyle,
-          titleOptionalPadding: EdgeInsets.symmetric(horizontal: 4.w),
+          titleOptionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 4.w),
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(
-            left: index == 0 ? 17.w : 0,
-            right: index == bloc.shopByMetalList.length - 1 ? 17.w : 0,
+          margin: EdgeInsetsDirectional.only(
+            start: index == 0 ? 17.w : 0,
+            end: index == bloc.shopByMetalList.length - 1 ? 17.w : 0,
             bottom: 10.h,
           ),
           titleMaxLines: 1,
@@ -101,7 +101,7 @@ class JewelleryLandingScreen extends StatelessWidget {
 
   Widget _buildJewelleryBannerSection({required StonesLandingScreenStyle style}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: Column(
         children: [
           StonesBannerView(
@@ -110,7 +110,7 @@ class JewelleryLandingScreen extends StatelessWidget {
             bannerSubTitleText: "Select your setting and diamonds to get exactly what you're looking for.",
             bannerTitleStyle: style.designOwnEarringTextStyle,
             bannerSubTitleStyle: style.sparkleSubTitleStyle,
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
             buttonList: [
@@ -124,7 +124,7 @@ class JewelleryLandingScreen extends StatelessWidget {
             bannerSubTitleText: "Customize a solitaire necklace with a setting and gemstone that suit your style.",
             bannerTitleStyle: style.designOwnEarringTextStyle,
             bannerSubTitleStyle: style.sparkleSubTitleStyle,
-            padding: EdgeInsets.all(16.w),
+            padding: EdgeInsetsDirectional.all(16.w),
             backgroundImageHeight: 200.h,
             spaceBetweenTitleAndSubTitle: 4.h,
             buttonList: [
@@ -139,7 +139,7 @@ class JewelleryLandingScreen extends StatelessWidget {
   Widget _buildJewelleryCreateOwnSection({required StonesLandingScreenStyle style}) {
     return Container(
       color: style.designYourOwnStoneBgColor,
-      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 32.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 32.h),
       child: StonesBannerView(
         crossAxisAlignment: CrossAxisAlignment.center,
         titleTextAlign: TextAlign.center,
@@ -149,14 +149,14 @@ class JewelleryLandingScreen extends StatelessWidget {
         bannerSubTitleText: "Unleash your creativity and design your own exquisite jewelry piece that truly reflects your unique style.",
         bannerTitleStyle: style.sectionLabelStyle,
         bannerSubTitleStyle: style.jewelleryCreateOwnSubTitleStyle,
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsetsDirectional.all(16.w),
         backgroundImageHeight: 448.h,
         spaceBetweenTitleAndSubTitle: 4.h,
         buttonList: [
           SmartButton(onTap: () {}, title: APPStrings.startWithSetting.tr),
           SmartText(
             APPStrings.or.tr,
-            optionalPadding: EdgeInsets.symmetric(vertical: 4.h),
+            optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
           ),
           SmartButton(onTap: () {}, title: APPStrings.startWithDiamond.tr)
         ],

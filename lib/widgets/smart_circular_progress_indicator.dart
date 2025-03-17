@@ -14,10 +14,10 @@ class SmartCircularProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget child = const CircularProgressIndicator();
     return Container(
-      alignment: Alignment.center,
+      alignment: AlignmentDirectional.center,
       width: size,
       height: size,
-      padding: padding ?? EdgeInsets.all(16.w),
+      padding: padding ?? EdgeInsetsDirectional.all(16.w),
       child: child,
     );
   }

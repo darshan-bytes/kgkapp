@@ -42,7 +42,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       final result = await Utils.showSmartModalBottomSheet(
         context: event.context,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+          borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(16.r)),
         ),
         builder: (context) => ConfirmationDialog(
           title: APPStrings.differentCommoditiesSelected.tr,

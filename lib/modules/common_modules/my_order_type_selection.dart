@@ -9,8 +9,8 @@ class MyOrderTypeSelection extends StatelessWidget {
       appBar: SmartAppBar(),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20.w),
-          alignment: Alignment.center,
+          padding: EdgeInsetsDirectional.all(20.w),
+          alignment: AlignmentDirectional.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

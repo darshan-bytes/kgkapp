@@ -7,7 +7,8 @@ class AuctionListItem extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final String? stoneTypeImage;
 
-  const AuctionListItem({super.key, this.auctionListModel, this.onTap, this.padding, this.margin = EdgeInsets.zero, this.stoneTypeImage});
+  const AuctionListItem(
+      {super.key, this.auctionListModel, this.onTap, this.padding, this.margin = EdgeInsetsDirectional.zero, this.stoneTypeImage});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class AuctionListItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: padding ?? EdgeInsets.all(16.0.w),
+        padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
         margin: margin,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.r),
@@ -79,7 +80,7 @@ class AuctionListItem extends StatelessWidget {
                   if (stoneTypeImage != null)
                     Flexible(
                         child: Padding(
-                      padding: EdgeInsets.only(right: 4.w),
+                      padding: EdgeInsetsDirectional.only(end: 4.w),
                       child: SmartImage(
                         path: stoneTypeImage,
                         height: 24.w,

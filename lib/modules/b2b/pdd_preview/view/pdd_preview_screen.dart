@@ -13,7 +13,7 @@ class PddPreviewScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(16.0.w),
+              padding: EdgeInsetsDirectional.all(16.0.w),
               child: _previewOptions(pddPreviewBloc, context),
             ),
             const Divider(),

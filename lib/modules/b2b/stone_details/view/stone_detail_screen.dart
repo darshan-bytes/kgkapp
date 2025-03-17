@@ -33,7 +33,7 @@ class StoneDetailScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 17.w),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 14.h, horizontal: 17.w),
         decoration: BoxDecoration(
           color: style.colorWhite,
           boxShadow: [
@@ -65,7 +65,7 @@ class StoneDetailScreen extends StatelessWidget {
                   onTap: () {
                     bloc.add(StoneDetailSelectStoneForDIYEvent(context: context));
                   },
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsetsDirectional.zero,
                   title: APPStrings.selectDiamond.tr,
                   height: 55.h,
                 ),
@@ -80,7 +80,7 @@ class StoneDetailScreen extends StatelessWidget {
   Widget _productDetail(BuildContext context, StoneDetailBloc bloc) {
     final style = AppTheme.of(context).diamondDetailScreenStyle;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

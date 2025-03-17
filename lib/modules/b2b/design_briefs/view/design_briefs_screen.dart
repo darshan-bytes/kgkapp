@@ -10,7 +10,7 @@ class DesignBriefsScreen extends StatelessWidget {
       appBar: SmartAppBar(title: APPStrings.designBriefs.tr),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<DesignBriefsBloc, DesignBriefsState>(
             buildWhen: (previous, current) => current is DesignBriefsLoadedState,
             builder: (context, state) {
@@ -24,7 +24,7 @@ class DesignBriefsScreen extends StatelessWidget {
                       controller: designBriefsBloc.designBriefsSearchController,
                       suffixIcon: SmartImage(
                         path: AppImages.icSearchThin,
-                        padding: EdgeInsets.all(16.w),
+                        padding: EdgeInsetsDirectional.all(16.w),
                       ),
                     ),
                     SizedBox(height: 24.h),

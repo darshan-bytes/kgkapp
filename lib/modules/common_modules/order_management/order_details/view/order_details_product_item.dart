@@ -15,7 +15,7 @@ class OrderDetailsProductItem extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            padding: EdgeInsets.all(16.0.w),
+            padding: EdgeInsetsDirectional.all(16.0.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0.r),
               border: Border.all(color: style.borderColor),
@@ -67,15 +67,15 @@ class OrderDetailsProductItem extends StatelessWidget {
             ),
           ),
           if (onTapMenuButton != null)
-            Positioned(
+            PositionedDirectional(
               top: 14.h,
-              right: 14.w,
+              end: 14.w,
               child: SmartImage(
                 path: AppImages.icDelete,
                 onTap: onTapMenuButton,
                 height: 18.w,
                 width: 18.w,
-                padding: EdgeInsets.zero,
+                padding: EdgeInsetsDirectional.zero,
                 inkwellBorderRadius: BorderRadius.circular(4.0.r),
               ),
             ),

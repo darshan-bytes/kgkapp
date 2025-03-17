@@ -27,7 +27,7 @@ class OrderConfirmationScreen extends StatelessWidget {
           child: Center(
         child: SmartSingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(17.w),
+            padding: EdgeInsetsDirectional.all(17.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

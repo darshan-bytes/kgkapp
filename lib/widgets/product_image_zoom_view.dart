@@ -29,9 +29,9 @@ class ProductPhotoViewGallery extends StatelessWidget {
 
   /// Builds the app bar with a back button and title.
   Widget _buildAppBar(BuildContext context, int currentPage, {required ProductPhotoViewGalleryStyle style}) {
-    return Positioned(
+    return PositionedDirectional(
       top: 10.w,
-      left: 10.w,
+      start: 10.w,
       child: IconButton(
         onPressed: () {
           context.pop();
@@ -66,14 +66,14 @@ class ProductPhotoViewGallery extends StatelessWidget {
 
   /// Builds the image index indicator.
   Widget _buildImageIndicator(ValueNotifier<int> currentPage, {required ProductPhotoViewGalleryStyle style}) {
-    return Positioned(
+    return PositionedDirectional(
       top: 20.w,
-      right: 20.w,
+      end: 20.w,
       child: ValueListenableBuilder<int>(
         valueListenable: currentPage,
         builder: (context, index, child) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 5.h),
             decoration: BoxDecoration(
               color: style.blackColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(15.r),
@@ -90,10 +90,10 @@ class ProductPhotoViewGallery extends StatelessWidget {
 
   /// Builds the thumbnail list at the bottom of the screen.
   Widget _buildThumbnailList(PageController controller, ValueNotifier<int> currentPage, {required ProductPhotoViewGalleryStyle style}) {
-    return Positioned(
+    return PositionedDirectional(
       bottom: 20.w,
-      left: 0,
-      right: 0,
+      start: 0,
+      end: 0,
       child: SizedBox(
         height: 80.h,
         child: ValueListenableBuilder<int>(
@@ -122,7 +122,7 @@ class ProductPhotoViewGallery extends StatelessWidget {
   /// Builds a single thumbnail item with hover and selection effects.
   Widget _buildThumbnailItem(String imageUrl, bool isSelected, int index, {required ProductPhotoViewGalleryStyle style}) {
     return Container(
-      margin: EdgeInsets.only(left: index == 0 ? 10.w : 0.w),
+      margin: EdgeInsetsDirectional.only(start: index == 0 ? 10.w : 0.w),
       width: 80.w,
       height: 80.w,
       decoration: BoxDecoration(

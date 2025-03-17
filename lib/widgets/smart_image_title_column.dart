@@ -10,7 +10,7 @@ class SmartImageTitleColumn extends StatelessWidget {
   final double? height;
   final TextStyle? titleStyle;
   final TextStyle? subTitleStyle;
-  final EdgeInsets? imagePadding;
+  final EdgeInsetsGeometry? imagePadding;
   final double? imageBetweenSpacing;
   final double? subTitleTopSpacing;
   final double? imageWidth;
@@ -29,12 +29,12 @@ class SmartImageTitleColumn extends StatelessWidget {
   final BoxBorder? imageBorder;
   final TextAlign titleTextAlign;
   final TextAlign subTitleTextAlign;
-  final EdgeInsets titleOptionalPadding;
+  final EdgeInsetsGeometry titleOptionalPadding;
 
   const SmartImageTitleColumn({
     super.key,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = EdgeInsetsDirectional.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.borderRadius,
     this.backgroundColor,
     this.imageUrl,
@@ -61,7 +61,7 @@ class SmartImageTitleColumn extends StatelessWidget {
     this.subTitleTopSpacing,
     this.titleTextAlign = TextAlign.center,
     this.subTitleTextAlign = TextAlign.center,
-    this.titleOptionalPadding = EdgeInsets.zero,
+    this.titleOptionalPadding = EdgeInsetsDirectional.zero,
   });
 
   @override
@@ -86,13 +86,13 @@ class SmartImageTitleColumn extends StatelessWidget {
             if (title.isNotNullNorEmpty) SizedBox(height: imageBetweenSpacing ?? 8.h),
             if (title.isNotNullNorEmpty)
               SmartText(
-              title,
-              style: style.titleStyle.merge(titleStyle),
-              maxLines: titleMaxLines ?? 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: titleTextAlign,
-              optionalPadding: titleOptionalPadding,
-            ),
+                title,
+                style: style.titleStyle.merge(titleStyle),
+                maxLines: titleMaxLines ?? 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: titleTextAlign,
+                optionalPadding: titleOptionalPadding,
+              ),
             if (subTitle.isNotNullNorEmpty) ...[
               SizedBox(height: subTitleTopSpacing ?? 8.h),
               SmartText(

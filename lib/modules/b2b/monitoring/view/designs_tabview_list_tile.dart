@@ -9,7 +9,7 @@ class DesignsTabviewListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.0.w),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.0.w),
         child: Column(
           children: [
             SizedBox(height: 24.h),
@@ -20,7 +20,7 @@ class DesignsTabviewListTile extends StatelessWidget {
               onTapOutside: (p) {},
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
-                padding: EdgeInsets.all(14.w),
+                padding: EdgeInsetsDirectional.all(14.w),
               ),
             ),
             SizedBox(height: 24.h),

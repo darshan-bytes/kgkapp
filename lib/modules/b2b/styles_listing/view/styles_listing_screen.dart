@@ -21,7 +21,7 @@ class StylesListingScreen extends StatelessWidget {
       floatingActionButton: _buildFloatingActionButton(bloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<StylesListingBloc, StylesListingState>(
             buildWhen: (previous, current) => current is StylesListingLoadedState,
             builder: (context, state) {
@@ -47,8 +47,8 @@ class StylesListingScreen extends StatelessWidget {
     return SmartTextField(
       hintText: APPStrings.searchX.tr.interpolate([APPStrings.styles.tr.toLowerCase()]),
       controller: stylesListingBloc.searchController,
-      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-      padding: EdgeInsets.symmetric(vertical: 24.w),
+      suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
       onTapOutside: (event) {},
     );
   }
@@ -62,7 +62,7 @@ class StylesListingScreen extends StatelessWidget {
         }
         return RefreshIndicator.adaptive(
           child: ListView.separated(
-            padding: EdgeInsets.only(bottom: 24.h),
+            padding: EdgeInsetsDirectional.only(bottom: 24.h),
             controller: stylesListingBloc.paginationScrollController.scrollController,
             shrinkWrap: true,
             itemCount: stylesListingBloc.stylesList.length,

@@ -76,6 +76,7 @@ class ProductDetailsModel {
   double? originalTotalPrice;
   double? originalFinalPrice;
   String? jewelleryType;
+  String? video;
 
   ProductDetailsModel({
     this.productId,
@@ -153,6 +154,7 @@ class ProductDetailsModel {
     this.originalTotalPrice,
     this.originalFinalPrice,
     this.jewelleryType,
+    this.video,
   });
 
   @override

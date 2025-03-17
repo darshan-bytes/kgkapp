@@ -37,7 +37,7 @@ class SmartDropdownButtonFormField<T> extends StatelessWidget {
         icon: icon ?? const Icon(Icons.keyboard_arrow_down_sharp),
         dropdownColor: style.dropDownBackgroundColor,
         decoration: InputDecoration(
-          contentPadding: contentPadding ?? EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
+          contentPadding: contentPadding ?? EdgeInsetsDirectional.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0.r),
             borderSide: BorderSide(

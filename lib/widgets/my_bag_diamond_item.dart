@@ -16,7 +16,7 @@ class MyBagDiamondItem extends StatelessWidget {
     this.onTapMenuButton,
     this.onShowMorePress,
     this.padding,
-    this.margin = EdgeInsets.zero,
+    this.margin = EdgeInsetsDirectional.zero,
     this.showMoreDetails = false,
   });
 
@@ -28,7 +28,7 @@ class MyBagDiamondItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: padding ?? EdgeInsets.all(16.0.w),
+        padding: padding ?? EdgeInsetsDirectional.all(16.0.w),
         margin: margin,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.r),
@@ -89,7 +89,7 @@ class MyBagDiamondItem extends StatelessWidget {
             InkWell(
               onTap: onShowMorePress,
               child: Container(
-                alignment: Alignment.center,
+                alignment: AlignmentDirectional.center,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -168,7 +168,7 @@ class MyBagDiamondItem extends StatelessWidget {
   Widget _buildDetailColumn(String title, String? value, MyBagDiamondItemStyle style,
       {bool isTextFormField = false, bool isDiscount = false}) {
     return Padding(
-      padding: EdgeInsets.only(right: 6.w),
+      padding: EdgeInsetsDirectional.only(end: 6.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -185,7 +185,7 @@ class MyBagDiamondItem extends StatelessWidget {
                   child: SmartTextField(
                     height: 32.h,
                     cursorHeight: 16.h,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                    contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                     isEnabled: true,
                     controller: TextEditingController(text: value),
                     disabledBorderColor: style.borderColor,

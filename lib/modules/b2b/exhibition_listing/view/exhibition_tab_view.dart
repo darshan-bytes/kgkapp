@@ -46,7 +46,7 @@ class ExhibitionTabView extends StatelessWidget {
                       hintText: APPStrings.searchX.tr.interpolate([APPStrings.exhibition.tr.toLowerCase()]),
                       prefixIcon: SmartImage(
                         path: AppImages.icSearchThin,
-                        padding: EdgeInsets.all(17.w),
+                        padding: EdgeInsetsDirectional.all(17.w),
                       ),
                       onTapOutside: (value) => FocusScope.of(context).unfocus(),
                       onValueChanges: (value) {
@@ -82,7 +82,7 @@ class ExhibitionTabView extends StatelessWidget {
         SizedBox(height: 16.h),
         SmartImage(path: 'https://i.ibb.co/RQj8JGk/Rectangle-651.png', width: 390.w, height: 283.h),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
           decoration: BoxDecoration(color: style.textBackgroundColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class ExhibitionTabView extends StatelessWidget {
   Widget _buildExhibitionCatalogueListItem(
       {required BuildContext context, required ExhibitionListingModel item, required ExhibitionListingItemStyle style}) {
     return Container(
-      margin: EdgeInsets.only(bottom: 32.0.h),
+      margin: EdgeInsetsDirectional.only(bottom: 32.0.h),
       decoration: BoxDecoration(
         border: Border.all(
           color: style.borderColor,
@@ -128,15 +128,15 @@ class ExhibitionTabView extends StatelessWidget {
                   width: context.width,
                 ),
                 if (item.status != null)
-                  Positioned(
+                  PositionedDirectional(
                     top: 16.h,
-                    left: 16.w,
+                    start: 16.w,
                     child: _buildStatusBadge(style, item.status!),
                   ),
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(16.0.w),
+              padding: EdgeInsetsDirectional.all(16.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -214,7 +214,7 @@ class ExhibitionTabView extends StatelessWidget {
       itemBuilder: (context, index) {
         final ExhibitionListingModel item = bloc.exhibitionNameListing[index];
         return Container(
-          margin: EdgeInsets.only(bottom: 24.0.h),
+          margin: EdgeInsetsDirectional.only(bottom: 24.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -231,7 +231,7 @@ class ExhibitionTabView extends StatelessWidget {
                 itemBuilder: (context, subIndex) {
                   ExhibitionSubListingModel item = bloc.exhibitionNameListing[index].exhibitionSubList![subIndex];
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -261,7 +261,7 @@ class ExhibitionTabView extends StatelessWidget {
 
   Widget _buildStatusBadge(ExhibitionListingItemStyle style, String status) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: style.backgroundColor,
         border: Border.all(color: style.borderColor, width: 1.w),

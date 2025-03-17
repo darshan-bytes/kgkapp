@@ -3,14 +3,14 @@ import 'package:kgk/kgk.dart';
 class SmartHorizontalItemBuilder extends StatelessWidget {
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
-  final EdgeInsets listPadding;
-  final EdgeInsets padding;
+  final EdgeInsetsGeometry listPadding;
+  final EdgeInsetsGeometry padding;
   final double? itemBetweenSpace;
   final CrossAxisAlignment crossAxisAlignment;
   final CrossAxisAlignment mainAxisAlignment;
   final String? title;
   final TextStyle? titleStyle;
-  final EdgeInsets titleOptionalPadding;
+  final EdgeInsetsGeometry titleOptionalPadding;
   final double spacingBetweenTitleAndItems;
   final Color? backgroundColor;
   final ScrollController? scrollController;
@@ -19,7 +19,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
 
   const SmartHorizontalItemBuilder(
       {super.key,
-      this.listPadding = EdgeInsets.zero,
+      this.listPadding = EdgeInsetsDirectional.zero,
       this.itemBetweenSpace,
       this.crossAxisAlignment = CrossAxisAlignment.start,
       this.mainAxisAlignment = CrossAxisAlignment.start,
@@ -28,9 +28,9 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
       this.title,
       this.titleStyle,
       this.spacingBetweenTitleAndItems = 0,
-      this.padding = EdgeInsets.zero,
+      this.padding = EdgeInsetsDirectional.zero,
       this.backgroundColor,
-      this.titleOptionalPadding = EdgeInsets.zero,
+      this.titleOptionalPadding = EdgeInsetsDirectional.zero,
       this.scrollController,
       this.widgetBetweenTitleAndItems,
       this.isScrollbarVisible = false});
@@ -48,7 +48,7 @@ class SmartHorizontalItemBuilder extends StatelessWidget {
             itemCount,
             (index) {
               return Padding(
-                padding: EdgeInsets.only(right: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
+                padding: EdgeInsetsDirectional.only(end: index == itemCount - 1 ? 0 : (itemBetweenSpace ?? 16.w)),
                 child: itemBuilder(context, index),
               );
             },

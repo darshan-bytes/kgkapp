@@ -24,18 +24,18 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SmartTextField(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
                     controller: bloc.promoCodeController,
                     hintText: APPStrings.hintPromoCode.tr,
                     textInputAction: TextInputAction.done,
                     suffixIcon: SmartText(APPStrings.apply.tr, onTap: () {
                       if (bloc.promoCodeController.text.isNullOrEmpty) return;
                       bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
-                    }, textAlign: TextAlign.center, optionalPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h)),
+                    }, textAlign: TextAlign.center, optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h)),
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
                       color: style.backgroundColor,
                       child: SingleChildScrollView(
                         child: Column(
@@ -88,7 +88,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
     bool isApplied = false,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: style.whiteColor,
         borderRadius: BorderRadius.circular(16.w),
@@ -103,7 +103,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8.w),
+                      padding: EdgeInsetsDirectional.all(8.w),
                       decoration: BoxDecoration(color: style.orangeColor.withValues(alpha: 0.2), shape: BoxShape.circle),
                       child: Icon(Icons.local_offer_rounded, color: style.orangeColor, size: 18.w),
                     ),
@@ -156,7 +156,7 @@ class ApplyPromoCodeScreen extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size(60.w, 36.h),
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 2.h),
         backgroundColor: style.orangeColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
         elevation: 0,

@@ -59,11 +59,11 @@ class SettingListingScreen extends StatelessWidget {
               onRefresh: () async {
                 await settingListingBloc.pullToRefresh(context);
               },
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               child: Column(
                 children: [
                   SizedBox(height: 16.h),
-                  const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 2),
+                  const DiyProgressWidget(padding: EdgeInsetsDirectional.zero, selectedStep: 2),
                   SizedBox(height: 24.h),
                   _buildProductFilterCount(style, settingListingBloc),
                   SizedBox(height: 24.h),
@@ -119,7 +119,7 @@ class SettingListingScreen extends StatelessWidget {
                       unselectedButtonIconColor: style.listIconColor,
                       unselectedButtonColor: style.listBackgroundColor,
                       unselectedButtonBorderColor: style.listBorderColor,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                      borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                       onTap: () {
                         settingListingBloc.add(const SettingChangeListingTypeEvent());
                       },

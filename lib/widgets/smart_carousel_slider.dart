@@ -56,7 +56,7 @@ class SmartCarouselSlider extends StatelessWidget {
             ),
             if (on360Tap != null || onVideoTap != null)
               Align(
-                alignment: Alignment.topLeft,
+                alignment: AlignmentDirectional.topStart,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -100,7 +100,7 @@ class SmartCarouselSlider extends StatelessWidget {
                       valueListenable: currentPage,
                       builder: (context, value, child) {
                         return Container(
-                          margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
+                          margin: EdgeInsetsDirectional.symmetric(vertical: 8.0.h, horizontal: 4.0.w),
                           child: Center(
                             child: SmartImage(
                               path: imgList[index],

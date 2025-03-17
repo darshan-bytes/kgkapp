@@ -30,7 +30,7 @@ class AllBidsBottomSheet extends StatelessWidget {
               child: Scrollbar(
                 thumbVisibility: true,
                 child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return _buildResetBidsItem(
@@ -54,7 +54,7 @@ class AllBidsBottomSheet extends StatelessWidget {
 
   Widget _buildAppBar(AuctionScreenStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -95,7 +95,7 @@ class AllBidsBottomSheet extends StatelessWidget {
                   if (isMyBid)
                     Container(
                         decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
                         child: SmartText(
                           APPStrings.myBid.tr,
                           style: style.myBidTextStyle,

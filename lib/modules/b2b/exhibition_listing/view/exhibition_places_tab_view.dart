@@ -57,7 +57,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
           height: 283.h,
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
+          padding: EdgeInsetsDirectional.symmetric(vertical: 32.0.h, horizontal: 17.0.w),
           decoration: BoxDecoration(
             color: style.textBackgroundColor,
           ),
@@ -103,7 +103,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
       itemBuilder: (context, index) {
         final ExhibitionListingModel item = bloc.exhibitionNameListing[index];
         return Container(
-          margin: EdgeInsets.only(bottom: 24.0.h),
+          margin: EdgeInsetsDirectional.only(bottom: 24.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -120,7 +120,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
                 itemBuilder: (context, subIndex) {
                   ExhibitionSubListingModel item = bloc.exhibitionNameListing[index].exhibitionSubList![subIndex];
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -150,7 +150,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
 
   Widget _buildStatusBadge(ExhibitionListingItemStyle style, String status) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: style.backgroundColor,
         border: Border.all(color: style.borderColor, width: 1.w),

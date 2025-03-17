@@ -84,7 +84,7 @@ class ExpandablePageView extends StatefulWidget {
   final bool animateFirstPage;
 
   /// Determines the alignment of the content when animating. Useful when building centered or bottom-aligned PageViews.
-  final Alignment alignment;
+  final AlignmentGeometry alignment;
 
   /// The estimated size of displayed pages.
   ///
@@ -143,7 +143,7 @@ class ExpandablePageView extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.animateFirstPage = false,
     this.estimatedPageSize = 0.0,
-    this.alignment = Alignment.topCenter,
+    this.alignment = AlignmentDirectional.topCenter,
     this.scrollBehavior,
     this.scrollDirection = Axis.horizontal,
     this.padEnds = true,
@@ -168,7 +168,7 @@ class ExpandablePageView extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.animateFirstPage = false,
     this.estimatedPageSize = 0.0,
-    this.alignment = Alignment.topCenter,
+    this.alignment = AlignmentDirectional.topCenter,
     this.scrollBehavior,
     this.scrollDirection = Axis.horizontal,
     this.padEnds = true,
@@ -364,7 +364,7 @@ class ExpandablePageViewState extends State<ExpandablePageView> {
 class OverflowPage extends StatelessWidget {
   final ValueChanged<Size> onSizeChange;
   final Widget child;
-  final Alignment alignment;
+  final AlignmentGeometry alignment;
   final Axis scrollDirection;
 
   const OverflowPage({

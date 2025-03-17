@@ -5,7 +5,7 @@ class SmartTextField extends StatefulWidget {
   final TextStyle? style;
   final String? hintText;
   final TextStyle? hintStyle;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? padding;
   final String? labelText;
   final TextStyle? labelStyle;
   final String? errorText;
@@ -177,7 +177,7 @@ class SmartTextFieldState extends State<SmartTextField> {
   Widget build(BuildContext context) {
     final style = AppTheme.of(context).textFieldStyle;
     return Padding(
-      padding: widget.padding ?? EdgeInsets.zero,
+      padding: widget.padding ?? EdgeInsetsDirectional.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +222,7 @@ class SmartTextFieldState extends State<SmartTextField> {
                   filled: true,
                   errorStyle: style.errorStyle.merge(widget.errorStyle),
                   fillColor: widget.color ?? style.textFillColor,
-                  contentPadding: widget.contentPadding ?? EdgeInsets.all(widget.isSearch ? 10.w : 16.w),
+                  contentPadding: widget.contentPadding ?? EdgeInsetsDirectional.all(widget.isSearch ? 10.w : 16.w),
                   disabledBorder: widget.customDisabledBorder ??
                       OutlineInputBorder(
                         borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(4.r)),
@@ -257,8 +257,8 @@ class SmartTextFieldState extends State<SmartTextField> {
                   prefixIcon: widget.isSearch
                       ? FittedBox(
                           child: Container(
-                            margin: EdgeInsets.only(left: 4.w, top: 8.w, bottom: 8.w, right: 0.w),
-                            padding: EdgeInsets.zero,
+                            margin: EdgeInsetsDirectional.only(start: 4.w, top: 8.w, bottom: 8.w, end: 0.w),
+                            padding: EdgeInsetsDirectional.zero,
                             child: SmartImage(
                               path: AppImages.icSearchThin,
                               height: widget.prefixIconSize ?? 12.w,

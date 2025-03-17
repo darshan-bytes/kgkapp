@@ -13,7 +13,7 @@ class PddListingScreen extends StatelessWidget {
       floatingActionButton: _buildFloatingActionButton(pddListingBloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<PddListingBloc, PddListingState>(
             buildWhen: (previous, current) => current is PddListingLoadedState || current is PddListingChangeListingTypeState,
             builder: (context, state) {
@@ -53,7 +53,7 @@ class PddListingScreen extends StatelessWidget {
             onFieldSubmitted: (value) => pddListingBloc.add(PddListSearchEvent(context)),
             suffixIcon: SmartImage(
               path: AppImages.icSearchThin,
-              padding: EdgeInsets.all(14.w),
+              padding: EdgeInsetsDirectional.all(14.w),
             ),
             onTapOutside: (value) => FocusScope.of(context).unfocus(),
           ),
@@ -87,7 +87,7 @@ class PddListingScreen extends StatelessWidget {
               unselectedButtonIconColor: diamondListingStyle.listIconColor,
               unselectedButtonColor: diamondListingStyle.listBackgroundColor,
               unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+              borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
               onTap: () {
                 pddListingBloc.add(const PresentationChangeListingTypeEvent(isGrid: false));
               },
@@ -141,14 +141,14 @@ class PddListingScreen extends StatelessWidget {
                   children: [
                     bloc.isGrid
                         ? PresentationGridItem(
-                            margin: EdgeInsets.only(
+                            margin: EdgeInsetsDirectional.only(
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTap: () {
                               bloc.add(NavigateToPddPreviewEvent(index: index, context: context));
                             },
                             b2bCustomListingDataModel: bloc.presentationList[index])
                         : B2BListingItem(
-                            margin: EdgeInsets.only(
+                            margin: EdgeInsetsDirectional.only(
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
                             onTapMenuButton: () {},
                             type: B2BListingType.presentationListingType,

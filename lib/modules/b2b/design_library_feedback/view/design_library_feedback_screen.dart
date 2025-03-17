@@ -12,11 +12,11 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
         title: bloc.appBarTitle,
       ),
       body: SmartSingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w),
         child: _buildBody(context, style, bloc),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: BlocBuilder<DesignLibraryFeedbackBloc, DesignLibraryFeedbackState>(
           buildWhen: (previous, current) => current is DesignLibraryShowAddCommentState,
           builder: (context, state) {
@@ -25,7 +25,7 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
                     bottom: bloc.showAddComment,
                     child: Container(
                       color: style.whiteColor,
-                      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 16.h),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,8 +39,8 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
                                 maxLines: 3,
                                 textInputAction: TextInputAction.newline,
                               ),
-                              Positioned(
-                                right: 14.w,
+                              PositionedDirectional(
+                                end: 14.w,
                                 top: 86.w,
                                 child: SmartImage(
                                   height: 24.w,
@@ -82,7 +82,7 @@ class DesignLibraryFeedbackScreen extends StatelessWidget {
               return ListView.separated(
                 itemCount: bloc.feedbackList.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => _buildListItem(context, style, bloc.feedbackList[index]),
                 separatorBuilder: (context, index) => Divider(

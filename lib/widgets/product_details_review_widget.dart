@@ -36,11 +36,11 @@ class ProductReviewsDetails extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                alignment: Alignment.center,
+                alignment: AlignmentDirectional.center,
                 decoration: BoxDecoration(
-                  border: Border(right: BorderSide(color: style.customiseBoxBorderColor)),
+                  border: BorderDirectional(end: BorderSide(color: style.customiseBoxBorderColor)),
                 ),
-                padding: EdgeInsets.fromLTRB(0, 42.w, 24.h, 42.w),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 42.w, 24.h, 42.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -65,14 +65,14 @@ class ProductReviewsDetails extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                padding: EdgeInsets.only(left: 24.w),
+                padding: EdgeInsetsDirectional.only(start: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: ratingCounts.entries.map((entry) {
                     final rating = entry.key;
                     final count = entry.value;
                     return Padding(
-                      padding: EdgeInsets.only(bottom: 4.h),
+                      padding: EdgeInsetsDirectional.only(bottom: 4.h),
                       child: Row(
                         children: [
                           SmartText('$rating'.tr),

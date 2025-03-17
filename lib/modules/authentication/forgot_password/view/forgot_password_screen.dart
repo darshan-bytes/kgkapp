@@ -19,7 +19,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SmartButton(
-              margin: EdgeInsets.symmetric(horizontal: 17.w),
+              margin: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
               onTap: () {
                 bloc.add(ForgotPasswordSubmitEvent(context: context));
               },
@@ -37,7 +37,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 Expanded(
                   child: SmartSingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 17.w),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [

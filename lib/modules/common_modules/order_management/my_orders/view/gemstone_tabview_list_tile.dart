@@ -106,11 +106,11 @@ class GemstoneTabView extends StatelessWidget {
 //       return SizedBox(
 //         width: 120.w,
 //         child: SmartDropDown<OrderStoneTypeModel>(
-//           border: Border(
-//               right: BorderSide(color: style.dividerColor),
+//           border: BorderDirectional(
+//               end: BorderSide(color: style.dividerColor),
 //               top: BorderSide(color: style.dividerColor),
 //               bottom: BorderSide(color: style.dividerColor)),
-//           borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+//           borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
 //           items: ordersBloc.arrStoneType.map((OrderStoneTypeModel type) {
 //             return SmartDropDownItem<OrderStoneTypeModel>(
 //               value: type,

@@ -13,7 +13,7 @@ class DesignListingScreen extends StatelessWidget {
       floatingActionButton: _buildFloatingActionButton(bloc),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
           child: BlocBuilder<DesignListingBloc, DesignListingState>(
             buildWhen: (previous, current) => current is DesignListingLoadedState,
             builder: (context, state) {
@@ -62,8 +62,8 @@ class DesignListingScreen extends StatelessWidget {
               child: SmartTextField(
                 hintText: APPStrings.searchDesign.tr,
                 controller: bloc.designSearchController,
-                suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsets.all(16.w)),
-                padding: EdgeInsets.symmetric(vertical: 24.w),
+                suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 24.w),
                 onTapOutside: (val) {},
                 textInputAction: TextInputAction.search,
               ),
@@ -96,7 +96,7 @@ class DesignListingScreen extends StatelessWidget {
                   unselectedButtonIconColor: diamondListingStyle.listIconColor,
                   unselectedButtonColor: diamondListingStyle.listBackgroundColor,
                   unselectedButtonBorderColor: diamondListingStyle.listBorderColor,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                  borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                   onTap: () {
                     bloc.add(const DesignChangeListingTypeEvent(isGrid: false));
                   },

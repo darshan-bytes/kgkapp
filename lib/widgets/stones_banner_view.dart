@@ -67,7 +67,9 @@ class StonesBannerView extends StatelessWidget {
               height: backgroundImageHeight,
               width: backgroundImageWidth ?? double.infinity,
             ),
-          Padding(padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h), child: _buildBannerForegroundView(style)),
+          Padding(
+              padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
+              child: _buildBannerForegroundView(style)),
         ],
       ),
     );

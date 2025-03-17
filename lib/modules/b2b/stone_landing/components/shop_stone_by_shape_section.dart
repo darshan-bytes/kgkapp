@@ -31,9 +31,9 @@ class ShopStoneByShapeSection extends StatelessWidget {
       itemCount: itemList.length,
       itemBetweenSpace: 17.w,
       spacingBetweenTitleAndItems: 12.h,
-      titleOptionalPadding: EdgeInsets.only(left: 17.w),
-      listPadding: EdgeInsets.only(right: 17.w),
-      padding: EdgeInsets.symmetric(vertical: 32.h),
+      titleOptionalPadding: EdgeInsetsDirectional.only(start: 17.w),
+      listPadding: EdgeInsetsDirectional.only(end: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 32.h),
       itemBuilder: (context, index) {
         final AuctionListModel item = itemList[index];
         return SmartImageTitleColumn(
@@ -42,8 +42,8 @@ class ShopStoneByShapeSection extends StatelessWidget {
           title: item.name ?? '',
           titleStyle: homeScreenStyle.shopGemstoneTitleStyle,
           imageBetweenSpacing: 8.h,
-          margin: EdgeInsets.only(left: index == 0 ? 17.w : 0, right: index == itemList.length - 1 ? 17.w : 0, bottom: 10.h),
-          imagePadding: EdgeInsets.all(12.w),
+          margin: EdgeInsetsDirectional.only(start: index == 0 ? 17.w : 0, end: index == itemList.length - 1 ? 17.w : 0, bottom: 10.h),
+          imagePadding: EdgeInsetsDirectional.all(12.w),
           titleMaxLines: 1,
           imageUrl: item.imageUrl ?? '',
         );

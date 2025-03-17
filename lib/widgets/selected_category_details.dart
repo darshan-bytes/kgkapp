@@ -22,16 +22,16 @@ class SelectedCategoryDetails extends StatelessWidget {
       children: <Widget>[
         Align(
           alignment: arrowPosition == ArrowPosition.rightTop
-              ? Alignment.centerRight
+              ? AlignmentDirectional.centerEnd
               : arrowPosition == ArrowPosition.centerTop
-                  ? Alignment.center
-                  : Alignment.centerLeft,
+                  ? AlignmentDirectional.center
+                  : AlignmentDirectional.centerStart,
           child: Container(
             margin: arrowPosition == ArrowPosition.rightTop
-                ? EdgeInsets.only(right: context.width * 0.15)
+                ? EdgeInsetsDirectional.only(end: context.width * 0.15)
                 : arrowPosition == ArrowPosition.centerTop
-                    ? EdgeInsets.zero
-                    : EdgeInsets.only(left: context.width * 0.15),
+                    ? EdgeInsetsDirectional.zero
+                    : EdgeInsetsDirectional.only(start: context.width * 0.15),
             child: ClipPath(
               clipper: TriangleClipper(arrowPosition: arrowPosition),
               child: Container(
@@ -44,7 +44,7 @@ class SelectedCategoryDetails extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
+          margin: EdgeInsetsDirectional.only(start: 10.w, end: 10.w, bottom: 10.w),
           constraints: BoxConstraints(maxHeight: 320.w),
           color: categoryTileStyle.colorD5E7F1,
           child: Scrollbar(
@@ -59,7 +59,7 @@ class SelectedCategoryDetails extends StatelessWidget {
                   return InkWell(
                     onTap: () => onProductSelected(productsDetailsList[index]),
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12.w),
+                      margin: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class SelectedCategoryDetails extends StatelessWidget {
                                 width: 34.w,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 18.h, bottom: 18.h, left: 10.w),
+                                padding: EdgeInsetsDirectional.only(top: 18.h, bottom: 18.h, start: 10.w),
                                 child: SmartText(
                                   productsDetailsList[index].name,
                                   style: categoryTileStyle.detailStyle,

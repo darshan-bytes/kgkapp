@@ -39,13 +39,13 @@ class StoneListingScreen extends StatelessWidget {
               if (state is StoneProductLoadedState) {
                 return SafeArea(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
                       if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
-                        const DiyProgressWidget(padding: EdgeInsets.zero, selectedStep: 1),
+                        const DiyProgressWidget(padding: EdgeInsetsDirectional.zero, selectedStep: 1),
                       if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 6.h),
                       if (bloc.displaySelection) ...[
                         SizedBox(height: 10.h),
@@ -122,7 +122,7 @@ class StoneListingScreen extends StatelessWidget {
               child: SelectionButton(
                 isSelected: !diamondListingBloc.isInitialToggle,
                 title: diamondListingBloc.tabTwoTitle,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                 onTap: () {
                   if (state is! StoneListLoadingState) {
                     diamondListingBloc.add(StoneChangeTypeEvent(false, context));
@@ -182,7 +182,7 @@ class StoneListingScreen extends StatelessWidget {
                     unselectedButtonIconColor: style.listIconColor,
                     unselectedButtonColor: style.listBackgroundColor,
                     unselectedButtonBorderColor: style.listBorderColor,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                    borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                     onTap: () {
                       bloc.add(StoneChangeListingTypeEvent(false));
                     },
@@ -294,7 +294,11 @@ class StoneListingScreen extends StatelessWidget {
                         : ProductInfoItem(
                             isFromBag: false,
                             productFeaturesList: attributes,
-                            onTap360View: () => printWrapped("onTap360View"),
+                            onTap360View: product.video.isNotNullNorEmpty
+                                ? () {
+                                    Utils.launchUrlFromString(product.video!);
+                                  }
+                                : null,
                             onTapDNA: product.openDnaUrl != null
                                 ? () {
                                     Utils.launchUrlFromString(product.openDnaUrl!);

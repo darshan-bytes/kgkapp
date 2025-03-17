@@ -61,7 +61,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _buildBottomActionView(ProductDetailsBloc bloc, ProductDetailsStyle style, BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,7 +219,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: style.ratingGlowColor,
-                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 12.h, horizontal: 24.w),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                 ),
                 child: Row(
@@ -230,7 +230,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     Container(
                       height: 24.w,
                       width: 24.w,
-                      alignment: Alignment.center,
+                      alignment: AlignmentDirectional.center,
                       decoration: BoxDecoration(
                         color: style.compareCountBGColor,
                         borderRadius: BorderRadius.circular(4.r),
@@ -283,7 +283,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                             if (!bloc.isCustomisation)
                               Padding(
-                                padding: EdgeInsets.all(12.w),
+                                padding: EdgeInsetsDirectional.all(12.w),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -295,7 +295,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                         return SelectionButton(
                                           height: 42.w,
                                           width: 42.w,
-                                          padding: EdgeInsets.all(6.w),
+                                          padding: EdgeInsetsDirectional.all(6.w),
                                           isSelected: false,
                                           onTap: () {
                                             if (bloc.productDetails != null) {
@@ -316,7 +316,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     SelectionButton(
                                       height: 42.w,
                                       width: 42.w,
-                                      padding: EdgeInsets.all(6.w),
+                                      padding: EdgeInsetsDirectional.all(6.w),
                                       isSelected: false,
                                       onTap: () {
                                         Utils.showSmartModalBottomSheet(
@@ -362,7 +362,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _productDetail(ProductDetailsStyle style, ProductDetailsBloc bloc, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -447,7 +447,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 context.pushNamed(AppRoutes.diamondInfoPopupPage, arguments: {RoutesData.diamondInfo: bloc.diamondData});
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 24.h),
+                padding: EdgeInsetsDirectional.symmetric(vertical: 24.h),
                 child: Row(
                   children: [
                     Expanded(
@@ -602,7 +602,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 children: [
                   SmartText(APPStrings.wantToSeeProductPhysically.tr, style: style.productCodeStyle),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w),
                     child: SmartText(APPStrings.orderSample.tr, style: style.orderSampleStyle),
                   ),
                 ],
@@ -656,7 +656,7 @@ class ProductDetailsScreen extends StatelessWidget {
           isPaddingNeeded: false,
           scrollController: bloc.youMayLikeScrollController,
           isCrtAndGramVisible: false,
-          margin: EdgeInsets.zero,
+          margin: EdgeInsetsDirectional.zero,
         );
       },
     );
@@ -705,7 +705,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget getErrorWidget(ProductDetailsBloc bloc, BuildContext context) {
     final NoDataFoundStyle style = AppTheme.of(context).noDataFoundStyle;
     return Padding(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsetsDirectional.all(16.w),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -735,11 +735,11 @@ class ProductDetailsScreen extends StatelessWidget {
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeOutBack,
             child: Stack(
-              alignment: Alignment.topRight,
+              alignment: AlignmentDirectional.topEnd,
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: EdgeInsets.all(24.w),
+                  padding: EdgeInsetsDirectional.all(24.w),
                   decoration: BoxDecoration(
                     color: style.whiteColor,
                     boxShadow: [
@@ -821,7 +821,7 @@ class ProductDetailsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: style.borderColor),
       ),
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsetsDirectional.all(12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -847,7 +847,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildRecentBidHeader(ProductDetailsBloc bloc, AuctionScreenStyle style, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.h),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 2.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -873,7 +873,7 @@ class ProductDetailsScreen extends StatelessWidget {
           Container(
             height: 24.w,
             width: 24.w,
-            alignment: Alignment.center,
+            alignment: AlignmentDirectional.center,
             child: const SmartImage(path: AppImages.icArrowRight),
           ),
         ],
@@ -884,7 +884,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _buildRecentBidsList(ProductDetailsBloc bloc, AuctionScreenStyle style) {
     return ListView.separated(
       shrinkWrap: true,
-      padding: EdgeInsets.zero,
+      padding: EdgeInsetsDirectional.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: bloc.recentBidList.length > 5 ? 5 : bloc.recentBidList.length,
       itemBuilder: (context, index) {
@@ -944,7 +944,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget _buildMyBidTag(AuctionScreenStyle style) {
     return Container(
       decoration: BoxDecoration(color: style.myBidBackgroundColor, borderRadius: BorderRadius.circular(23.r)),
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
       child: SmartText(APPStrings.myBid.tr, style: style.myBidTextStyle),
     );
   }
@@ -957,7 +957,7 @@ class ProductDetailsScreen extends StatelessWidget {
         return SafeArea(
           minimum: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 8.h),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -969,7 +969,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: SmartTextField(
                         height: 42.h,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                        contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
                         controller: bloc.bidAmountController,
                         keyboardType: TextInputType.number,
                         textCapitalization: TextCapitalization.words,
@@ -985,7 +985,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           width: 134.w,
                           height: 42.h,
                           title: APPStrings.placeBid.tr,
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
+                          borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(4.r), bottomEnd: Radius.circular(4.r)),
                           onTap: () {
                             bloc.add(ProductDetailsAuctionPlaceBidEvent(context, bloc.bidAmountController.text));
                           },

@@ -12,7 +12,7 @@ class FindStoreScreen extends StatelessWidget {
         title: APPStrings.findStore.tr,
       ),
       body: SmartSingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 24.h),
         child: Column(
           children: [
             SmartText(
@@ -32,7 +32,7 @@ class FindStoreScreen extends StatelessWidget {
               },
               suffixIcon: SmartImage(
                 path: AppImages.icSearchThin,
-                padding: EdgeInsets.all(14.w),
+                padding: EdgeInsetsDirectional.all(14.w),
               ),
             ),
             SizedBox(
@@ -117,12 +117,12 @@ class FindStoreScreen extends StatelessWidget {
                                     : SmartImage(
                                         path: AppImages.icPlus,
                                         color: style.primaryColor,
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                        padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                                       ),
                                 trailingCollapsedIconVisible: false,
                                 backgroundColor: style.addressBgColor,
                                 title: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                                  padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 10.h),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +139,7 @@ class FindStoreScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     color: style.addressBgColor,
-                                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                    padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                                     child: Column(
                                       children: [
                                         const Divider(),

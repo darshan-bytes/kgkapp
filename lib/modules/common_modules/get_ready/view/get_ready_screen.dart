@@ -20,7 +20,7 @@ class GetReadyScreen extends StatelessWidget {
               ),
               SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

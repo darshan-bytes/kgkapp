@@ -47,7 +47,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                             productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                           },
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                            padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -68,7 +68,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                     case ProductCustomizationType.metalKaratage:
                     case ProductCustomizationType.ringSize:
                       return Padding(
-                        padding: EdgeInsets.only(right: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14.w : 0),
+                        padding: EdgeInsetsDirectional.only(end: childIndex != (productCustomization.values?.length ?? 0) - 1 ? 14.w : 0),
                         child: InkWell(
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
@@ -86,8 +86,8 @@ class ProductDetailsCustomizations extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8.r),
                                   border: isSelected ? Border.all(color: style.selectedSettingBorderColor, width: 1.w) : null,
                                 ),
-                                padding: EdgeInsets.all(8.w),
-                                alignment: Alignment.center,
+                                padding: EdgeInsetsDirectional.all(8.w),
+                                alignment: AlignmentDirectional.center,
                                 child: SmartText(
                                   value.value,
                                   style: isSelected ? style.settingSelectionTitleStyle : style.productTypeStyle,
@@ -107,7 +107,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
                           productDetailsBloc.add(ProductCustomizationChangeEvent(index: index, childIndex: childIndex));
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          padding: EdgeInsetsDirectional.symmetric(horizontal: 6.w),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -159,7 +159,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
         return Container(
           height: 34.w,
           width: 34.w,
-          padding: EdgeInsets.all(4.w),
+          padding: EdgeInsetsDirectional.all(4.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
@@ -174,7 +174,7 @@ class ProductDetailsCustomizations extends StatelessWidget {
         return Container(
           height: 50.w,
           width: 50.w,
-          padding: EdgeInsets.all(8.w),
+          padding: EdgeInsetsDirectional.all(8.w),
           decoration: BoxDecoration(
             border: isSelected ? Border.all(color: style.selectedSettingBorderColor) : null,
             shape: BoxShape.circle,

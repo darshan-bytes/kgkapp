@@ -79,7 +79,7 @@ class ProductListItem extends StatelessWidget {
           Container(
             height: boxHeight ?? 144.w,
             width: boxWidth ?? 144.w,
-            alignment: Alignment.topCenter,
+            alignment: AlignmentDirectional.topCenter,
             color: style.whiteColor,
             child: SmartImage(
               path: productDetails.imageUrl ?? '',
@@ -89,27 +89,27 @@ class ProductListItem extends StatelessWidget {
             ),
           ),
           if (isOutOfStock)
-            Positioned(
+            PositionedDirectional(
               top: 8.h,
-              left: 8.w,
+              start: 8.w,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(color: style.outOfStockBackgroundColor, borderRadius: BorderRadius.circular(4.r)),
                 child: SmartText(APPStrings.outOfStock.tr, style: style.outOfStockStyle),
               ),
             ),
-          Positioned(
+          PositionedDirectional(
             top: 8.h,
-            right: 8.w,
+            end: 8.w,
             child: Row(
               children: [
                 if (isCustomisable) buildIcon(path: AppImages.icCustomisable, style: style, borderColor: style.borderColor),
               ],
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             bottom: 8.w,
-            right: 8.w,
+            end: 8.w,
             child: Row(
               children: [
                 if (onEyeTap != null)
@@ -153,7 +153,7 @@ class ProductListItem extends StatelessWidget {
             )),
         height: 30.w,
         width: 30.w,
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         child: SmartImage(
           path: path,
           height: 20.w,
@@ -167,7 +167,7 @@ class ProductListItem extends StatelessWidget {
   Widget productDetailsSection(ProductItemStyle style, BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.h),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
         color: style.backgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +189,7 @@ class ProductListItem extends StatelessWidget {
                   SmartText(
                     "|",
                     style: style.diamondTextStyle,
-                    optionalPadding: EdgeInsets.symmetric(
+                    optionalPadding: EdgeInsetsDirectional.symmetric(
                       horizontal: 8.w,
                     ),
                   ),
@@ -224,14 +224,14 @@ class ProductListItem extends StatelessWidget {
                       style: style.priceTextStyle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      optionalPadding: EdgeInsets.only(top: 8.h),
+                      optionalPadding: EdgeInsetsDirectional.only(top: 8.h),
                     ),
                   ),
                 if (productDetails.businessCategoryName.isNotNullNorEmpty) ...[
                   SmartText(
                     "|",
                     style: style.priceTextStyle,
-                    optionalPadding: EdgeInsets.symmetric(
+                    optionalPadding: EdgeInsetsDirectional.symmetric(
                       horizontal: 8.w,
                     ),
                   ),
@@ -254,8 +254,10 @@ class ProductListItem extends StatelessWidget {
             if (onAddToBagTap != null)
               SmartButton(
                 height: 32.w,
-                margin: productDetails.discountPercentageString.isNullOrEmpty ? EdgeInsets.only(top: 8.h) : EdgeInsets.zero,
-                padding: EdgeInsets.symmetric(vertical: 8.h),
+                margin: productDetails.discountPercentageString.isNullOrEmpty
+                    ? EdgeInsetsDirectional.only(top: 8.h)
+                    : EdgeInsetsDirectional.zero,
+                padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
                 titleStyle: style.buttonTextStyle,
                 onTap: () {
                   if (productDetails.isAddedToCart) {

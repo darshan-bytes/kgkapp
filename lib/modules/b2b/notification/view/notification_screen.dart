@@ -13,7 +13,7 @@ class NotificationScreen extends StatelessWidget {
       body: SmartSingleChildScrollView(
         onRefresh: () async {},
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 14.h),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 14.h),
         child: Column(
           children: [
             SmartTextField.search(
@@ -21,10 +21,10 @@ class NotificationScreen extends StatelessWidget {
               hintStyle: style.searchHintStyle,
               maxLines: 1,
               height: 48.w,
-              contentPadding: EdgeInsets.only(top: 4.h, left: 1.w, right: 1.w),
+              contentPadding: EdgeInsetsDirectional.only(top: 4.h, start: 1.w, end: 1.w),
             ),
             Container(
-              alignment: Alignment.centerRight,
+              alignment: AlignmentDirectional.centerEnd,
               height: 52.h,
               child: IntrinsicWidth(
                 child: InkWell(
@@ -76,7 +76,7 @@ class NotificationScreen extends StatelessWidget {
               Container(
                 height: 8.w,
                 width: 8.w,
-                padding: EdgeInsets.all(8.w),
+                padding: EdgeInsetsDirectional.all(8.w),
                 decoration: BoxDecoration(color: style.dotColor, shape: BoxShape.circle),
               ),
             ],
