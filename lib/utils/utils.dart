@@ -371,7 +371,9 @@ class Utils {
       await StorageManager().setBagId(r.bagId!);
     }
     if (r.userIdDetails?.userTypeEnum != null) {
+      await AppCrashlytics.instance.setUserId(r.userIdDetails?.userAccountId ?? "----");
       await StorageManager.instance.setIsSkipLogin(false);
+
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(r.userIdDetails!.userTypeEnum));
       await mergeCart(context);
       BlocProvider.of<LandingBloc>(context).add(LandingLogoutEvent());

@@ -68,6 +68,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     UserIdDetails? userIdDetails = StorageManager().getUserData();
     if (authToken != null && userIdDetails != null) {
       BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(userIdDetails.userTypeEnum));
+      await AppCrashlytics.instance.setUserId(userIdDetails.userAccountId ?? "----");
     }
 
     // Wait for the video to finish playing
