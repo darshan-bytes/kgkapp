@@ -74,7 +74,6 @@ class SmartAppBar extends StatelessWidget implements PreferredSizeWidget {
         path: leadingImage!,
         height: 40.w,
         width: 40.w,
-        matchTextDirection: true,
       );
     } else if (isBack) {
       return GestureDetector(

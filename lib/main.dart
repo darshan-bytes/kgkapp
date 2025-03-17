@@ -2,9 +2,20 @@ import 'package:kgk/kgk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = MyHttpOverrides();
+
+  /// Initializing Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  /// Initializing Hive database
   await StorageManager().init();
 
+  /// Initializing HttpOverrides
+  HttpOverrides.global = MyHttpOverrides();
+
+  /// Initializing Crashlytics
+  await AppCrashlytics.instance.initialize();
+
+  /// Initializing app
   runApp(const MyApp());
 }
 
@@ -75,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "12-March",
+        message: "17-March",
         location: BannerLocation.topEnd,
       ),
     );
