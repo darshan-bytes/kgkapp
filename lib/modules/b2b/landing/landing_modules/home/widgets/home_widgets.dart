@@ -353,9 +353,9 @@ class HomeWidgets {
     );
   }
 
-  static Widget buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style) {
+  static Widget buildShopDiamondSection(HomeBloc homeBloc, HomeScreenStyle style, String title) {
     return SmartHorizontalItemBuilder(
-      title: APPStrings.shopDiamonds.tr,
+      title: title.isNotNullNorEmpty ? title : APPStrings.shopDiamonds.tr,
       scrollController: homeBloc.shopDiamondsScrollController,
       isScrollbarVisible: false,
       titleStyle: style.bannerTitleStyle,
@@ -497,7 +497,8 @@ class HomeWidgets {
                           context: context,
                           redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
                           redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
-                          redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? ''),
+                          redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
+                              redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
                         );
                       },
                     ))
@@ -524,13 +525,12 @@ class HomeWidgets {
             fit: BoxFit.fitWidth,
             isMemCacheEnabled: false,
             onTap: () {
-              // context.pushNamed(AppRoutes.collectionPage);
               homeBloc.handleRedirection(
                 context: context,
                 redirectTo: getRedirectionToFromString(redirectTo),
                 redirectionType: getRedirectionTypeFromString(redirectionType),
-                redirectionData:
-                    getQueryParamFromUrlForFilter(redirectionUrl ?? '', redirectionType: getRedirectionTypeFromString(redirectionType)),
+                redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? '',
+                    redirectionType: getRedirectionTypeFromString(redirectionType ?? "")),
               );
             },
           ),
@@ -540,11 +540,6 @@ class HomeWidgets {
             end: 0.w,
             child: GestureDetector(
               onTap: () {
-                // context.pushNamed(AppRoutes.collectionPage);
-                // homeBloc.handleRedirection(
-                //     context: context,
-                //     redirectTo: getRedirectionToFromString(redirectTo),
-                //     redirectionType: getRedirectionTypeFromString(redirectionType));
                 homeBloc.handleRedirection(
                   context: context,
                   redirectTo: getRedirectionToFromString(redirectTo),
@@ -1045,13 +1040,14 @@ class HomeWidgets {
       required HomeScreenStyle style,
       required ScreenIdentifier screenIdentifier,
       required BuildContext context,
+      String? title,
       required List<ProductDetailsModel> arrProductList,
       bool isCrtAndGramVisible = true}) {
     return Padding(
       padding: EdgeInsetsDirectional.only(top: 32.h, bottom: 20.h),
       child: SmartSuggestionProductList(
         isCrtAndGramVisible: isCrtAndGramVisible,
-        title: homeBloc.getTitleForDealOfTheDay(screenIdentifier),
+        title: title ?? homeBloc.getTitleForDealOfTheDay(screenIdentifier),
         onViewAllTap: arrProductList.length > 5
             ? () {
                 if (screenIdentifier == ScreenIdentifier.productForRing) {
