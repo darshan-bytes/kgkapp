@@ -908,10 +908,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return Container();
 
       case HomeSlug.mobileShopDiamonds:
-        return HomeWidgets.buildShopDiamondSection(homeBloc, style);
+        final title = homeStrapiList[index].info?.title ?? '';
+        return HomeWidgets.buildShopDiamondSection(homeBloc, style, title);
 
       case HomeSlug.mobileShopGemstone:
-        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: APPStrings.shopGemstones.tr);
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: homeStrapiList[index].info?.title ?? APPStrings.shopGemstones.tr);
 
       case HomeSlug.mobileKGKCouture:
         return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, homeStrapiList[index].info?.title, context: context);
@@ -938,6 +939,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
               homeBloc: homeBloc,
               style: style,
+              title: homeStrapiList[index].info?.title ?? '',
               screenIdentifier: ScreenIdentifier.productForDiamonds,
               arrProductList: homeBloc.dealOfTheDayDiamondList,
               context: context,
@@ -946,6 +948,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
             homeBloc: homeBloc,
             style: style,
+            title: homeStrapiList[index].info?.title ?? '',
             screenIdentifier: ScreenIdentifier.productForGemstones,
             arrProductList: homeBloc.dealOfTheDayGemstoneList,
             context: context,
@@ -955,6 +958,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
             homeBloc: homeBloc,
             style: style,
+            title: homeStrapiList[index].info?.title ?? '',
             screenIdentifier: ScreenIdentifier.productForRing,
             arrProductList: homeBloc.dealOfTheDayJewelleryList,
             context: context,
