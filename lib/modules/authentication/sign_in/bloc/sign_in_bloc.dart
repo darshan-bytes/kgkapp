@@ -13,6 +13,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (kDebugMode) {
       //B2C
       emailController.text = "ankita7@yopmail.com";
+      emailController.text = "chudasama985@yopmail.com";
       // emailController.text = "user.email+16@yopmail.com";
 
       // Client's User B2C

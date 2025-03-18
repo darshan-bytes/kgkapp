@@ -254,7 +254,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   void _setupCustomizations({required BuildContext context}) {
-    isCustomisation = context.routesData?[RoutesData.isCustomisationPage] ?? false;
+    isCustomisation = context.mounted ? (context.routesData?[RoutesData.isCustomisationPage] ?? false) : false;
     if (isCustomisation) {
       productCustomizations.insert(
         0,
@@ -650,7 +650,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             isAddedToCart: e.isAddedToCart,
           );
         }).toList();
-        add(const ProductDetailsReviewsLoadedEvent());
+        if (!isClosed) {
+          add(const ProductDetailsReviewsLoadedEvent());
+        }
       },
     );
   }
@@ -854,8 +856,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   // Initialize the WishlistUpdaterService
   void _initWishlistUpdaterServiceBloc(BuildContext context) {
-    final wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
-    wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen(_handleWishlistUpdate);
+    try {
+      final wishlistUpdaterServiceBloc = BlocProvider.of<WishlistUpdaterServiceBloc>(context);
+      wishlistUpdaterServiceStream = wishlistUpdaterServiceBloc.stream.listen(_handleWishlistUpdate);
+    } catch (e) {
+      debugPrint('Error in _initWishlistUpdaterServiceBloc: $e');
+    }
   }
 
 // Handle wishlist update events
