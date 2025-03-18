@@ -1040,7 +1040,7 @@ class HomeWidgets {
       required HomeScreenStyle style,
       required ScreenIdentifier screenIdentifier,
       required BuildContext context,
-      String? title,
+        String? title,
       required List<ProductDetailsModel> arrProductList,
       bool isCrtAndGramVisible = true}) {
     return Padding(
