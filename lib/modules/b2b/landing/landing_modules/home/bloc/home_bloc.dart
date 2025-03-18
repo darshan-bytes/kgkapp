@@ -939,7 +939,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
               homeBloc: homeBloc,
               style: style,
-              title: homeStrapiList[index].info?.title ?? '',
+              title: homeStrapiList[index].info?.title,
               screenIdentifier: ScreenIdentifier.productForDiamonds,
               arrProductList: homeBloc.dealOfTheDayDiamondList,
               context: context,
@@ -948,7 +948,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
             homeBloc: homeBloc,
             style: style,
-            title: homeStrapiList[index].info?.title ?? '',
+            title: homeStrapiList[index].info?.title,
             screenIdentifier: ScreenIdentifier.productForGemstones,
             arrProductList: homeBloc.dealOfTheDayGemstoneList,
             context: context,
@@ -958,7 +958,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           return HomeWidgets.buildDealOfTheDaySection(
             homeBloc: homeBloc,
             style: style,
-            title: homeStrapiList[index].info?.title ?? '',
+            title: homeStrapiList[index].info?.title,
             screenIdentifier: ScreenIdentifier.productForRing,
             arrProductList: homeBloc.dealOfTheDayJewelleryList,
             context: context,
