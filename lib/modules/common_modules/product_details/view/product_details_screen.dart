@@ -78,7 +78,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 Expanded(
                   flex: 6,
                   child: SizedBox(
-                    height: 60.h,
+                    height: 66.h,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -105,12 +105,16 @@ class ProductDetailsScreen extends StatelessWidget {
                                     Flexible(
                                         child: SmartText(
                                       bloc.productDetails?.originalPrice,
-                                      style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 14.sp),
+                                      style: style.originalPriceStyle.copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     )),
                                     SizedBox(width: 2.w),
-                                    SmartText(bloc.productDetails?.discountPercentageString, style: style.discountStyle),
+                                    SmartText(
+                                      bloc.productDetails?.discountPercentageString,
+                                      style: style.discountStyle,
+                                      maxLines: 1,
+                                    ),
                                   ],
                                 )
                             ],
