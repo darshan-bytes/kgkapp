@@ -155,6 +155,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           gms: element.displayCommodity == Commodity.jewellery ? element.productData?.gms : null,
           colorsCode: _buildColorsCode(element: element),
           isAddedToCart: element.isAddedToCart,
+          isForAuction: element.productData?.isAuction ?? false,
         );
         productList.add(product);
       }
