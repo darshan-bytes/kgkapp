@@ -529,8 +529,8 @@ class HomeWidgets {
                 context: context,
                 redirectTo: getRedirectionToFromString(redirectTo),
                 redirectionType: getRedirectionTypeFromString(redirectionType),
-                redirectionData: getQueryParamFromUrlForFilter(redirectionUrl ?? '',
-                    redirectionType: getRedirectionTypeFromString(redirectionType ?? "")),
+                redirectionData:
+                    getQueryParamFromUrlForFilter(redirectionUrl ?? '', redirectionType: getRedirectionTypeFromString(redirectionType)),
               );
             },
           ),
@@ -1040,7 +1040,7 @@ class HomeWidgets {
       required HomeScreenStyle style,
       required ScreenIdentifier screenIdentifier,
       required BuildContext context,
-        String? title,
+      String? title,
       required List<ProductDetailsModel> arrProductList,
       bool isCrtAndGramVisible = true}) {
     return Padding(

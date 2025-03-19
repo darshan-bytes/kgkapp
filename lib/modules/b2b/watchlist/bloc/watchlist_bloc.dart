@@ -264,11 +264,17 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
       isLoadMore: false,
       isFullList: true,
     );
+    if (allWatchlistFull.isCompleted) {
+      allWatchlistFull = Completer<List<WatchlistData>>();
+    }
     response?.fold(
       (l) {
         Utils.showMessage(l.message);
       },
       (r) {
+        if (allWatchlistFull.isCompleted) {
+          allWatchlistFull = Completer<List<WatchlistData>>();
+        }
         allWatchlistFull.complete((r.dataList ?? []));
       },
     );

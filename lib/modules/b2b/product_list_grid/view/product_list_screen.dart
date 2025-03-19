@@ -191,6 +191,7 @@ class ProductListScreen extends StatelessWidget {
         SmartGridView(
           items: bloc.productList.map((productDetails) {
             return ProductGridItem(
+              key: ValueKey(productDetails.suid),
               productDetails: productDetails,
               isCustomisable: _isCustomisable(bloc, productDetails),
               isOutOfStock: productDetails.isOutOfStock,
