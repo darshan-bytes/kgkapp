@@ -47,8 +47,9 @@ class AppCrashlytics {
   }
 
   /// Check whether Crashlytics is enabled
-  // bool get isCrashlyticsEnabled => kReleaseMode;
-  bool get isCrashlyticsEnabled => true;
+  bool get isCrashlyticsEnabled => kReleaseMode;
+
+  // bool get isCrashlyticsEnabled => true;
 
   /// Logs the current app mode (Debug, Profile, or Release)
   void logAppMode() {
