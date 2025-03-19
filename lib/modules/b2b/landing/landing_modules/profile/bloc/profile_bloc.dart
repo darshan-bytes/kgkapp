@@ -351,7 +351,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         selectedProfilePickedImage = null;
         await StorageManager().setUserData(userData);
         userIdDetails = userData;
-        event.context.pop();
+
+        (event.context.mounted ? event.context : getNavigatorKeyContext).pop();
         Utils.showMessage(r.message);
         BlocProvider.of<LandingBloc>(getNavigatorKeyContext)
             .add(LandingProfilePictureUpdateEvent(profilePicture: userData.profilePicUrl?.setMediaUrl, isForce: true));
