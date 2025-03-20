@@ -11,7 +11,7 @@ class AppConst {
   static const int pageLimit10 = 10;
   static const int pageLimit50 = 50;
   static const int page1 = 1;
-  static const double zoomPosition = 14.4746;
+    static const double zoomPosition = 8.4746;
   static const double defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
   static const String strapiApiToken = "209f75da6d6df7f6e575d7b80779e6ad6fa47720601d5a5f10b3e13616e0c164579ac11c65d0e51d2102db8bdb14d64a0cdc6c922e12c32e73194a7ce816822676c5c8db2da64eb3cda85f23b589b6536c88c937f4e11da29996b3dc216967d61428b25317654d4b061fba344fa0a3970dcfe9df18ee7dba9658ce1cf1a8edc1";
   // static const String strapiDevApiToken = "1803904f25958ca5095ba35907a66391b6ab0c890e0d5b0a0f73d350100696267b9da56a03980d89e1d086ef5c3901d7de559e3926d4ab77c2663c58ac88300aa474f478b39736adf8e3a793ff6aa9c44c5019a81af15d79ffe68ab3e9fdbbbe1bd7a90ec1f09055ea0d351cd1c0d27d7bfde695620536f62de761dad1b108bd";
@@ -76,4 +76,6 @@ class AppConst {
   static const String coutureCollection = "COUTURE_COLLECTION";
 
   static const String orderContext = "order";
+
+  static const String googleMapsKey = "AIzaSyCdyWZPs--H-SZqdUBpHeGakkBbimsDFek";
 }

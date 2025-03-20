@@ -15,6 +15,7 @@ final class FindReloadState extends FindStoreState {
 }
 
 final class FindStoreAddressLoadedState extends FindStoreState {
+  const FindStoreAddressLoadedState();
   @override
   List<Object> get props => [];
 }
@@ -28,4 +29,9 @@ final class FindStoreShowFullAddressState extends FindStoreState {
 
   @override
   List<Object> get props => [index, oldIndex, isExpanded];
+}
+
+final class FindStoreChangeTypeState extends FindStoreState {
+  @override
+  List<Object> get props => [];
 }
