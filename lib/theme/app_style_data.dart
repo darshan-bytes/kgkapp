@@ -1034,6 +1034,8 @@ class LightModeTheme extends AppTheme {
         cadNameStyle: interRegularTextStyle,
         cadBackgroundColor: colors.colorFAFAFA,
         cadNumberStyle: interRegularTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C),
+        borderColor: colors.colorD3DAE0,
+        primaryColor: colors.primary,
       );
 
   @override

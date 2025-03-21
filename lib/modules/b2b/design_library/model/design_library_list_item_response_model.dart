@@ -161,8 +161,8 @@ class DesignLibraryListItemDataModel {
     suidCustomerCode = json['suid_customer_code'];
     updatedAt = json['updated_at'];
     updatedDateTime = json['updated_date_time'];
-    diamondWeight = json['diamond_weight']?.toDouble();
-    metalWeight = json['metal_weight']?.toDouble();
+    diamondWeight = json['diamond_weight']?.toString().toDouble;
+    metalWeight = json['metal_weight']?.toString().toDouble;
     businessCategory = json['business_category'];
     contractNoSkuNo = json['contract_no_sku_no'];
     crt = json['crt']?.toString();

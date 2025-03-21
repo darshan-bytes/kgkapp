@@ -50,19 +50,29 @@ class CadLibraryListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        elevation: 0.8,
+        color: style.backgroundColor,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: style.borderColor, strokeAlign: 0.5),
+          borderRadius: BorderRadius.circular(8.r),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            cadImageSection(style),
-            SizedBox(width: 16.w),
-            cadDetailsSection(style, context),
-          ],
+        shadowColor: style.primaryColor,
+        child: Container(
+          padding: padding,
+          margin: margin,
+          decoration: BoxDecoration(
+            color: style.backgroundColor,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              cadImageSection(style),
+              SizedBox(width: 16.w),
+              cadDetailsSection(style, context),
+            ],
+          ),
         ),
       ),
     );

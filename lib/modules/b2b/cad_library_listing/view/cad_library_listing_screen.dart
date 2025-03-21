@@ -68,14 +68,15 @@ class CadLibraryListingScreen extends StatelessWidget {
   Widget _buildCadFilterCount(CadLibraryListingBloc bloc, BuildContext context) {
     final diamondListingStyle = AppTheme.of(context).diamondListingStyle;
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
-      buildWhen: (previous, current) => current is CadChangeListingTypeState,
+      buildWhen: (previous, current) => current is CadChangeListingTypeState || current is CadListLoadedMoreState,
       builder: (context, state) {
         return SizedBox(
           height: 48.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.cadList.length]),
+                  style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -123,8 +124,15 @@ class CadLibraryListingScreen extends StatelessWidget {
   Widget _buildCadList(CadLibraryListingBloc bloc) {
     return BlocBuilder<CadLibraryListingBloc, CadLibraryListingState>(
       buildWhen: (previous, current) =>
-          current is CadChangeListingTypeState || current is CadListLoadedMoreState || current is CadListLoadingMoreState,
+          current is CadChangeListingTypeState ||
+          current is CadListLoadedMoreState ||
+          current is CadListLoadingMoreState ||
+          current is CadListingLoadingState ||
+          current is CadListingLoadedState,
       builder: (context, state) {
+        if (state is CadListingLoadingState) {
+          return const SmartCircularProgressIndicator();
+        }
         if (bloc.cadList.isEmpty) {
           return _buildEmptyState();
         }
@@ -162,7 +170,7 @@ class CadLibraryListingScreen extends StatelessWidget {
       onRefresh: () async {
         await bloc.pullToRefresh(context: context);
       },
-      child: ListView.builder(
+      child: ListView.separated(
         shrinkWrap: true,
         key: bloc.gridPaginationScrollController.listKey,
         controller: bloc.gridPaginationScrollController.controller,
@@ -171,7 +179,7 @@ class CadLibraryListingScreen extends StatelessWidget {
           return Column(
             children: [
               CadLibraryListItem(
-                margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.cadList[index],
                 onTap: () {},
               ),
@@ -179,6 +187,7 @@ class CadLibraryListingScreen extends StatelessWidget {
             ],
           );
         },
+        separatorBuilder: (context, index) => SizedBox(height: 10.h),
       ),
     );
   }
@@ -191,10 +200,15 @@ class CadLibraryListingScreen extends StatelessWidget {
           return FilterBottomActionBar(
             controller: bloc.gridPaginationScrollController.controller,
             onFilterTap: () async {
+              BlocProvider.of<SortFilterBloc>(context).add(AddSortFilterDataEvent(filterOptionList: bloc.filterData, context: context));
               await Utils.showSmartModalBottomSheet(
                 context: context,
                 builder: (context) => FilterScreen(
-                  onApply: () {},
+                  onApply: (value) {
+                    if (value != null && value is List<FilterData>) {
+                      bloc.add(CadLibraryFilterEvent(context: context, filterData: value));
+                    }
+                  },
                 ),
               );
             },

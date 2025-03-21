@@ -107,7 +107,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
         } else if (element.filterType == FilterType.boolean &&
             (element.secondaryFilterData ?? []).isNotEmpty &&
             element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query[element.code ?? ''] = 'YES';
+          query[element.code ?? ''] = AppConst.filterBoolYesValue;
         } else {
           query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
         }

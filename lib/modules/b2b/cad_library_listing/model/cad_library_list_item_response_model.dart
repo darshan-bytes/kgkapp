@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class CadLibraryListItemDataModel {
   String? sId;
   double? approximateModelWeight;
@@ -67,80 +69,83 @@ class CadLibraryListItemDataModel {
   String? contractNoSkuNo;
   String? productDescription;
   String? brand;
+  List<MultipleFinishedViewImage>? multipleFinishedViewImage;
 
-  CadLibraryListItemDataModel(
-      {this.sId,
-      this.approximateModelWeight,
-      this.businessCategoryCode,
-      this.cancelHoldStatus,
-      this.customerCode,
-      this.customerCodeRefSuid,
-      this.customerCodeSuid,
-      this.customerCollection,
-      this.customerCollectionSuid,
-      this.customerStyleReferenceNumber,
-      this.designCreatedDt,
-      this.designNumber,
-      this.designerName,
-      this.imageSketch,
-      this.isExclusive,
-      this.isFindingRequired,
-      this.isHighend,
-      this.isModelApproved,
-      this.isStoneCardLocked,
-      this.isVariation,
-      this.jewelleryGroup,
-      this.jewelleryGroupRefSuid,
-      this.jewelleryGroupSuid,
-      this.jewelleryType,
-      this.kgkCollectionRefSuid,
-      this.kgkCollectionSuid,
-      this.linksCount,
-      this.msrp,
-      this.market,
-      this.marketRefSuid,
-      this.marketSuid,
-      this.miraclePlate,
-      this.modelPartsCount,
-      this.receivedDateTime,
-      this.refSuid,
-      this.refSuidStyleNumber,
-      this.salesPrice,
-      this.software,
-      this.styleCreatedDate,
-      this.subareaCode,
-      this.subareaId,
-      this.suid,
-      this.suidStyleNumber,
-      this.uom,
-      this.updatedDateTime,
-      this.referenceId,
-      this.createdAt,
-      this.updatedAt,
-      this.findingDetails,
-      this.imageCadRender,
-      this.stoneCardDetails,
-      this.imageCad,
-      this.businessCategory,
-      this.kgkCollectionName,
-      this.crt,
-      this.gms,
-      this.businessCategoryName,
-      this.jewelleryTypeName,
-      this.kgkCollection,
-      this.images,
-      this.isAddedToCart,
-      this.autoDescription,
-      this.styleNumber,
-      this.diamondWeight,
-      this.metalWeight,
-      this.contractNoSkuNo,
-      this.productDescription,
-      this.brand});
+  CadLibraryListItemDataModel({
+    this.sId,
+    this.approximateModelWeight,
+    this.businessCategoryCode,
+    this.cancelHoldStatus,
+    this.customerCode,
+    this.customerCodeRefSuid,
+    this.customerCodeSuid,
+    this.customerCollection,
+    this.customerCollectionSuid,
+    this.customerStyleReferenceNumber,
+    this.designCreatedDt,
+    this.designNumber,
+    this.designerName,
+    this.imageSketch,
+    this.isExclusive,
+    this.isFindingRequired,
+    this.isHighend,
+    this.isModelApproved,
+    this.isStoneCardLocked,
+    this.isVariation,
+    this.jewelleryGroup,
+    this.jewelleryGroupRefSuid,
+    this.jewelleryGroupSuid,
+    this.jewelleryType,
+    this.kgkCollectionRefSuid,
+    this.kgkCollectionSuid,
+    this.linksCount,
+    this.msrp,
+    this.market,
+    this.marketRefSuid,
+    this.marketSuid,
+    this.miraclePlate,
+    this.modelPartsCount,
+    this.receivedDateTime,
+    this.refSuid,
+    this.refSuidStyleNumber,
+    this.salesPrice,
+    this.software,
+    this.styleCreatedDate,
+    this.subareaCode,
+    this.subareaId,
+    this.suid,
+    this.suidStyleNumber,
+    this.uom,
+    this.updatedDateTime,
+    this.referenceId,
+    this.createdAt,
+    this.updatedAt,
+    this.findingDetails,
+    this.imageCadRender,
+    this.stoneCardDetails,
+    this.imageCad,
+    this.businessCategory,
+    this.kgkCollectionName,
+    this.crt,
+    this.gms,
+    this.businessCategoryName,
+    this.jewelleryTypeName,
+    this.kgkCollection,
+    this.images,
+    this.isAddedToCart,
+    this.autoDescription,
+    this.styleNumber,
+    this.diamondWeight,
+    this.metalWeight,
+    this.contractNoSkuNo,
+    this.productDescription,
+    this.brand,
+    this.multipleFinishedViewImage,
+  });
 
   CadLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    approximateModelWeight = json['approximate_model_weight']?.toDouble();
+    approximateModelWeight = json['approximate_model_weight']?.toString().toDouble;
     businessCategoryCode = json['business_category_code'];
     cancelHoldStatus = json['cancel_hold_status'];
     customerCode = json['customer_code'];
@@ -212,11 +217,14 @@ class CadLibraryListItemDataModel {
     isAddedToCart = json['isAddedToCart'];
     autoDescription = json['auto_description'];
     styleNumber = json['style_number'];
-    diamondWeight = json['diamond_weight']?.toDouble();
-    metalWeight = json['metal_weight']?.toDouble();
+    diamondWeight = json['diamond_weight']?.toString().toDouble;
+    metalWeight = json['metal_weight']?.toString().toDouble;
     contractNoSkuNo = json['contract_no_sku_no'];
     productDescription = json['product_description'];
     brand = json['brand'];
+    multipleFinishedViewImage = json["multiple_finished_view_image"] == null
+        ? []
+        : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
   }
 
   Map<String, dynamic> toJson() {
@@ -432,10 +440,10 @@ class PreviewCatalogueComponentDetails {
     cut = json['cut'];
     sieve = json['Sieve'];
     mMSize = json['MMSize'];
-    pPWt = json['PPWt']?.toDouble();
+    pPWt = json['PPWt']?.toString().toDouble;
     pcs = json['Pcs'];
-    minWt = json['MinWt']?.toDouble();
-    maxWt = json['MaxWt']?.toDouble();
+    minWt = json['MinWt']?.toString().toDouble;
+    maxWt = json['MaxWt']?.toString().toDouble;
     settingType = json['SettingType'];
     method = json['Method'];
     centerStone = json['CenterStone'];
