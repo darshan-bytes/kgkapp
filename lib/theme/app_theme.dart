@@ -1976,11 +1976,16 @@ class CadLibraryListingItemStyle {
   final TextStyle cadNameStyle;
   final TextStyle cadNumberStyle;
 
+  final Color borderColor;
+  final Color primaryColor;
+
   CadLibraryListingItemStyle({
     required this.backgroundColor,
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+    required this.borderColor,
+    required this.primaryColor,
   });
 }
 

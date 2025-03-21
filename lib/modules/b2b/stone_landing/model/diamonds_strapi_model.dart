@@ -11,17 +11,15 @@ class DiamondsStrapiModel {
 
   factory DiamondsStrapiModel.fromJson(Map<String, dynamic> json) {
     return DiamondsStrapiModel(
-      data: (json["data"] as List<dynamic>?)
-          ?.map((x) => DiamondsStrapiModelDatum.fromJson(x as Map<String, dynamic>))
-          .toList() ?? [],
+      data: (json["data"] as List<dynamic>?)?.map((x) => DiamondsStrapiModelDatum.fromJson(x as Map<String, dynamic>)).toList() ?? [],
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "data": data.map((x) => x.toJson()).toList(),
-    "meta": meta?.toJson(),
-  };
+        "data": data.map((x) => x.toJson()).toList(),
+        "meta": meta?.toJson(),
+      };
 
   @override
   String toString() {
@@ -261,15 +259,13 @@ class AboutImage {
 
     // If it's already a list, process it normally
     return AboutImage(
-      data: (jsonData as List<dynamic>)
-          .map((x) => PurpleDatum.fromJson(x as Map<String, dynamic>))
-          .toList(),
+      data: (jsonData as List<dynamic>).map((x) => PurpleDatum.fromJson(x as Map<String, dynamic>)).toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "data": data.map((x) => x.toJson()).toList(),
-  };
+        "data": data.map((x) => x.toJson()).toList(),
+      };
 
   @override
   String toString() {
@@ -496,7 +492,7 @@ class BackgroundImage {
   final AboutImage? mobileImage;
   final AboutImage? image;
 
-  factory BackgroundImage.fromJson(Map<String, dynamic> json){
+  factory BackgroundImage.fromJson(Map<String, dynamic> json) {
     return BackgroundImage(
       id: json["id"],
       title: json["title"],
@@ -507,13 +503,12 @@ class BackgroundImage {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "url": url,
-    "mobile_image": mobileImage?.toJson(),
-    "image": image?.toJson(),
-  };
-
+        "id": id,
+        "title": title,
+        "url": url,
+        "mobile_image": mobileImage?.toJson(),
+        "image": image?.toJson(),
+      };
 }
 
 class ButtonElement {
@@ -533,7 +528,7 @@ class ButtonElement {
   final String? redirectTo;
   final String? redirectionType;
 
-  factory ButtonElement.fromJson(Map<String, dynamic> json){
+  factory ButtonElement.fromJson(Map<String, dynamic> json) {
     return ButtonElement(
       id: json["id"],
       label: json["label"],
@@ -545,14 +540,13 @@ class ButtonElement {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "label": label,
-    "url": url,
-    "target": target,
-    "redirectTo": redirectTo,
-    "redirectionType": redirectionType,
-  };
-
+        "id": id,
+        "label": label,
+        "url": url,
+        "target": target,
+        "redirectTo": redirectTo,
+        "redirectionType": redirectionType,
+      };
 }
 
 class Banner {
@@ -1001,7 +995,7 @@ class TentacledAttributes {
       hash: json["hash"],
       ext: json["ext"],
       mime: json["mime"],
-      size: json["size"].toDouble(),
+      size: json["size"]?.toString().toDouble,
       url: json["url"],
       previewUrl: json["previewUrl"],
       provider: json["provider"],
@@ -1218,7 +1212,7 @@ class Info {
   final dynamic tagline;
   final dynamic sectionTitle;
 
-  factory Info.fromJson(Map<String, dynamic> json){
+  factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
       id: json["id"],
       title: json["title"],
@@ -1229,13 +1223,12 @@ class Info {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "headline": headline,
-    "tagline": tagline,
-    "section_title": sectionTitle,
-  };
-
+        "id": id,
+        "title": title,
+        "headline": headline,
+        "tagline": tagline,
+        "section_title": sectionTitle,
+      };
 }
 
 class Slug {

@@ -34,6 +34,9 @@ class SmartImage extends StatelessWidget {
   });
 
   @override
+  Key get key => ValueKey(path);
+
+  @override
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isError = ValueNotifier<bool>(false);
     // get placeholder image from box

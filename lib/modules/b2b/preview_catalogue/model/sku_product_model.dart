@@ -8,8 +8,8 @@ class SkuProductModel {
   double? productPriceIntCurrency;
   String? businessCategoryCode;
   String? suid;
-  int? crt;
-  int? gms;
+  String? crt;
+  String? gms;
   String? metalColor1HexCode;
   String? businessCategoryName;
   String? jewelleryTypeName;

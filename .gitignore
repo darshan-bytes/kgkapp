@@ -172,3 +172,5 @@ app.*.map.json
 /android/app/.cxx/Debug/5z1z1e3p/x86_64/symbol_folder_index.txt
 /android/app/.cxx/Debug/5z1z1e3p/hash_key.txt
 /android/app/.cxx/
+/.scannerwork/.sonar_lock
+/.scannerwork/report-task.txt

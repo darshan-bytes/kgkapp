@@ -274,7 +274,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         } else if (element.filterType == FilterType.boolean &&
             (element.secondaryFilterData ?? []).isNotEmpty &&
             element.secondaryFilterData!.any((e) => e.isSelected)) {
-          query[element.code ?? ''] = 'YES';
+          query[element.code ?? ''] = AppConst.filterBoolYesValue;
         } else {
           query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
         }
@@ -592,9 +592,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         if (!filterOption.fromCommon) {
           filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
         } else if (filterOption.filterType == FilterType.boolean) {
-          filter.secondaryFilterData = [SecondaryFilterData(name: filterOption.name)];
-        }
-        if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
+          if (filterOption.data.isNotEmpty && filterOption.data.any((element) => element?.toString().toLowerCase() == 'yes')) {
+            filter.secondaryFilterData = [SecondaryFilterData(name: filterOption.name)];
+          } else {
+            continue;
+          }
+        } else if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
           if (filterOption.data.isNotEmpty) {
             filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
           } else {

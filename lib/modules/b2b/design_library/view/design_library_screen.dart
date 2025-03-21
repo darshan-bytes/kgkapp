@@ -157,7 +157,7 @@ class DesignLibraryScreen extends StatelessWidget {
 
   Widget _buildListView(DesignLibraryBloc bloc, DesignLibraryState state, BuildContext context) {
     return RefreshIndicator.adaptive(
-      child: ListView.builder(
+      child: ListView.separated(
         key: bloc.paginationScrollController.listKey,
         shrinkWrap: true,
         controller: bloc.paginationScrollController.controller,
@@ -166,7 +166,7 @@ class DesignLibraryScreen extends StatelessWidget {
           return Column(
             children: [
               CadLibraryListItem.designListItem(
-                margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.designLibraryList[index],
                 onTap: () {
                   context.pushNamed(AppRoutes.designLibraryFeedbackPage);
@@ -177,6 +177,7 @@ class DesignLibraryScreen extends StatelessWidget {
             ],
           );
         },
+        separatorBuilder: (context, index) => SizedBox(height: 10.h),
       ),
       onRefresh: () async {
         bloc.add(DesignLibraryPullToRefreshEvent(context: context));
