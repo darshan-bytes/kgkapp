@@ -147,7 +147,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
     return B2BCustomListingDataModel(
       id: sourceModel.sId,
       strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
-      strDesignNumber: sourceModel.contractNoSkuNo,
+      strDesignNumber: sourceModel.contractNoSkuNo ?? "",
       strDbfNumber: sourceModel.designDescription,
     );
   }

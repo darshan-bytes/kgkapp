@@ -18,6 +18,7 @@ class SkuProductModel {
   String? discountPrice;
   double? originalPrice;
   List<String>? images;
+  bool? isCommented;
 
   SkuProductModel(
       {this.sId,
@@ -36,6 +37,7 @@ class SkuProductModel {
       this.finalPrice,
       this.discountPrice,
       this.originalPrice,
+      this.isCommented = false,
       this.images});
 
   SkuProductModel.fromJson(Map<String, dynamic> json) {
@@ -51,8 +53,8 @@ class SkuProductModel {
     productPriceIntCurrency = json['product_price_int_currency'];
     businessCategoryCode = json['business_category_code'];
     suid = json['suid'];
-    crt = json['crt'];
-    gms = json['gms'];
+    crt = json['crt']?.toString();
+    gms = json['gms']?.toString();
     metalColor1HexCode = json['metal_color_1_hex_code'];
     businessCategoryName = json['business_category_name'];
     jewelleryTypeName = json['jewellery_type_name'];
@@ -61,6 +63,7 @@ class SkuProductModel {
     discountPrice = json['discount_price'];
     originalPrice = json['original_price'];
     images = json['images']?.cast<String>();
+    isCommented = json['is_commented'] ?? false;
   }
 
   Map<String, dynamic> toJson() {

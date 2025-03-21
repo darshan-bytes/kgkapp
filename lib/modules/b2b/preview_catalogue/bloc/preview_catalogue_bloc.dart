@@ -64,9 +64,11 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
       if (error.message.isNotNullNorEmpty) {
         Utils.showMessage(error.message);
       }
-    }, (previewCatalogueDataModel) {
-      previewCatalogueDataModel = previewCatalogueDataModel;
-      _generateProductList(previewCatalogueDataModel);
+    }, (PreviewCatalogueDataModel data) {
+      previewCatalogueDataModel = data;
+      if (previewCatalogueDataModel != null) {
+        _generateProductList(previewCatalogueDataModel!);
+      }
     });
   }
 
@@ -102,12 +104,15 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       diamondDataList.length,
       (index) => ProductDetailsModel(
-        productId: diamondDataList[index].id,
+        productId: diamondDataList[index].suid,
         imageUrl: (diamondDataList[index].image.isNotNullNorEmpty) ? diamondDataList[index].image.first.url : '',
         title: diamondDataList[index].lotCode,
         subTitle: diamondDataList[index].rmDescription,
-        originalPrice: diamondDataList[index].discountPrice,
-        isCommentVisible: true,
+        originalPrice: diamondDataList[index].finalPrice?.setCurrency,
+        offerPrice: diamondDataList[index].finalPrice?.setCurrency,
+        finalPrice: diamondDataList[index].discountPrice?.setCurrency,
+        isCommentVisible: diamondDataList[index].isCommented,
+        commodity: Commodity.diamond,
       ),
     );
   }
@@ -117,7 +122,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       jewelleryDataList.length,
       (index) => ProductDetailsModel(
-        productId: jewelleryDataList[index].id,
+        productId: jewelleryDataList[index].suid,
         imageUrl: (jewelleryDataList[index].multipleFinishedViewImage.isNotNullNorEmpty)
             ? jewelleryDataList[index].multipleFinishedViewImage.first.imageUrl
             : '',
@@ -125,7 +130,9 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: jewelleryDataList[index].productDescription,
         kgkCollectionName: jewelleryDataList[index].kgkCollection ?? "\n",
         businessCategoryName: jewelleryDataList[index].businessCategoryName ?? "\n",
-        originalPrice: jewelleryDataList[index].discountPrice,
+        originalPrice: jewelleryDataList[index].finalPrice?.setCurrency,
+        offerPrice: jewelleryDataList[index].finalPrice?.setCurrency,
+        finalPrice: jewelleryDataList[index].discountPrice?.setCurrency,
         cts: jewelleryDataList[index].crt,
         gms: jewelleryDataList[index].gms,
         colorsCode: [
@@ -133,7 +140,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
           jewelleryDataList[index].metalColor2HexCode ?? "",
           jewelleryDataList[index].metalColor3HexCode ?? "",
         ],
-        isCommentVisible: true,
+        isCommentVisible: jewelleryDataList[index].isCommented,
+        commodity: Commodity.jewellery,
       ),
     );
   }
@@ -143,12 +151,15 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       gemstoneDataList.length,
       (index) => ProductDetailsModel(
-        productId: gemstoneDataList[index].id,
+        productId: gemstoneDataList[index].suid,
         imageUrl: (gemstoneDataList[index].image.isNotNullNorEmpty) ? gemstoneDataList[index].image.first.url : '',
         title: gemstoneDataList[index].lotCode,
         subTitle: gemstoneDataList[index].rmDescription,
-        originalPrice: (gemstoneDataList[index].discountPrice ?? 0).toString(),
-        isCommentVisible: true,
+        originalPrice: gemstoneDataList[index].finalPrice?.setCurrency,
+        offerPrice: gemstoneDataList[index].finalPrice?.setCurrency,
+        finalPrice: gemstoneDataList[index].discountPrice?.setCurrency,
+        isCommentVisible: gemstoneDataList[index].isCommented,
+        commodity: Commodity.gemstone,
       ),
     );
   }
@@ -158,14 +169,15 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       cadLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
-        productId: cadLibraryListItemDataList[index].sId,
+        productId: cadLibraryListItemDataList[index].suid,
         imageUrl:
             (cadLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false) ? cadLibraryListItemDataList[index].images?.first : '',
         title: cadLibraryListItemDataList[index].contractNoSkuNo,
         subTitle: cadLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: cadLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: cadLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: true,
+        isCommentVisible: cadLibraryListItemDataList[index].isCommented ?? false,
+        commodity: Commodity.cadLibrary,
       ),
     );
   }
@@ -175,7 +187,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       designLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
-        productId: designLibraryListItemDataList[index].sId,
+        productId: designLibraryListItemDataList[index].suid,
         imageUrl: (designLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
             ? designLibraryListItemDataList[index].images?.first
             : '',
@@ -183,7 +195,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: designLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: designLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: true,
+        isCommentVisible: designLibraryListItemDataList[index].isCommented ?? false,
+        commodity: Commodity.designLibrary,
       ),
     );
   }
@@ -193,7 +206,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       styleLibraryListItemDataList.length,
       (index) => ProductDetailsModel(
-        productId: styleLibraryListItemDataList[index].sId,
+        productId: styleLibraryListItemDataList[index].suid,
         imageUrl: (styleLibraryListItemDataList[index].images?.isNotNullNorEmpty ?? false)
             ? styleLibraryListItemDataList[index].images?.first
             : '',
@@ -201,7 +214,8 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: styleLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: true,
+        isCommentVisible: styleLibraryListItemDataList[index].isCommented ?? false,
+        commodity: Commodity.styleLibrary,
       ),
     );
   }
@@ -211,7 +225,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
     productList = List.generate(
       skuProductList.length,
       (index) => ProductDetailsModel(
-        productId: skuProductList[index].sId,
+        productId: skuProductList[index].suid,
         imageUrl: (skuProductList[index].multipleFinishedViewImage?.isNotNullNorEmpty ?? false)
             ? skuProductList[index].multipleFinishedViewImage?.first.imageUrl
             : '',
@@ -219,8 +233,11 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: skuProductList[index].productDescription ?? '',
         kgkCollectionName: skuProductList[index].kgkCollection ?? "\n",
         businessCategoryName: skuProductList[index].businessCategoryName ?? "\n",
-        originalPrice: skuProductList[index].discountPrice,
-        isCommentVisible: true,
+        originalPrice: skuProductList[index].finalPrice?.setCurrency,
+        offerPrice: skuProductList[index].finalPrice?.setCurrency,
+        finalPrice: skuProductList[index].discountPrice?.setCurrency,
+        isCommentVisible: skuProductList[index].isCommented ?? false,
+        commodity: Commodity.skuLibrary,
       ),
     );
   }

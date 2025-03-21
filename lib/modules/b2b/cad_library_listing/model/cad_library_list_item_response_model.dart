@@ -70,6 +70,7 @@ class CadLibraryListItemDataModel {
   String? productDescription;
   String? brand;
   List<MultipleFinishedViewImage>? multipleFinishedViewImage;
+  bool? isCommented;
 
   CadLibraryListItemDataModel({
     this.sId,
@@ -141,9 +142,11 @@ class CadLibraryListItemDataModel {
     this.productDescription,
     this.brand,
     this.multipleFinishedViewImage,
+    this.isCommented = false,
   });
 
   CadLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
+    isCommented = json['is_commented'] ?? false;
     sId = json['_id'];
     approximateModelWeight = json['approximate_model_weight']?.toString().toDouble;
     businessCategoryCode = json['business_category_code'];

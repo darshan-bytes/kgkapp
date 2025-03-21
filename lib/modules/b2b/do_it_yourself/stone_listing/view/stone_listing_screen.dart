@@ -315,20 +315,22 @@ class StoneListingScreen extends StatelessWidget {
                                   }
                                 : null,
                             onTapUSA: () => printWrapped("onTapUSA"),
-                            onTapMenuButton: () {
-                              Utils.showSmartModalBottomSheet(
-                                context: context,
-                                builder: (_) => ProductMenuBottomSheet(
-                                  productDetails: product,
-                                  onAddToBag: () {
-                                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
+                            onTapMenuButton: product.isForAuction
+                                ? null
+                                : () {
+                                    Utils.showSmartModalBottomSheet(
+                                      context: context,
+                                      builder: (_) => ProductMenuBottomSheet(
+                                        productDetails: product,
+                                        onAddToBag: () {
+                                          BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
+                                        },
+                                        onBuyNow: () {
+                                          BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
+                                        },
+                                      ),
+                                    );
                                   },
-                                  onBuyNow: () {
-                                    BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
-                                  },
-                                ),
-                              );
-                            },
                             isSelectedBackground: (index % 2 != 0),
                             onTap: () {
                               if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
