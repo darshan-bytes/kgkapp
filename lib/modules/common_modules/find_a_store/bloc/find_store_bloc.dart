@@ -10,6 +10,10 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
   List<AddressModel> addressList = [];
 
+  /// Controller for managing pagination
+  int? totalNumberOfPages;
+  SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
+
   final Completer<GoogleMapController> mapController = Completer<GoogleMapController>();
 
   CameraPosition? myCameraPosition;
@@ -21,8 +25,11 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
   bool isInitialToggle = true;
 
   /// Tab title
-  String tabOneTitle = 'Store List';
-  String tabTwoTitle = 'Store Map';
+  String tabOneTitle = APPStrings.listView.tr;
+  String tabTwoTitle = APPStrings.mapView.tr;
+
+  double userLat = 0.0;
+  double userLong = 0.0;
 
   FindStoreBloc() : super(FindStoreInitial()) {
     on<FindStoreInitialEvent>(_findStoreInitialEvent);
@@ -31,6 +38,7 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     on<GetDirectionEvent>(_getDirectionEvent);
     on<SortAddressByLatLongEvent>(_sortAddressByLatLongEvent);
     on<FindStoreChangeTypeEvent>(_findStoreChangeTypeEvent);
+    on<FindStoreLoadMoreEvent>(_findStoreLoadMoreEvent);
   }
 
   Future<void> _getStoreListingEvent(FindRetailStoreEvent event, Emitter<FindStoreState> emit) async {
@@ -40,21 +48,22 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
     if (position == null) return;
 
-    List<RetailStoreModel> dataList = await findRetailStore(event.context, position, useCurrentLocation: event.useCurrentLocation);
-    addressList = dataList.map((e) {
+    List<RetailStoreModel> dataList =
+        await findRetailStore(event.context, position.latitude, position.longitude, useCurrentLocation: event.useCurrentLocation);
+    addressList.addAll(dataList.map((e) {
       double distanceInKm = geoloc.Geolocator.distanceBetween(
               position.latitude, position.longitude, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) /
           1000;
       _addMarker(e.latitude, e.longitude, e.name);
       return AddressModel(
           storeName: e.name,
-          storeDistance: distanceInKm.toStringAsFixed(2),
+          storeDistance: e.distance?.toStringAsFixed(2),
           storeAddress: "${e.address2 != null && e.address2!.isNotEmpty ? '${e.address2}, ' : ''}${e.address1 ?? ''}",
           isExpanded: false,
           addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
           latitude: e.latitude,
           longitude: e.longitude);
-    }).toList();
+    }).toList());
     if (event.useCurrentLocation) {
       myCameraPosition = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -90,7 +99,12 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     emit(FindReloadState());
     event.context.setAppLoading(true);
 
+    _initializePagination(event.context, emit);
+
     geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
+
+    userLat = position?.latitude ?? 0.0;
+    userLong = position?.longitude ?? 0.0;
 
     add(FindRetailStoreEvent(context: event.context, useCurrentLocation: true));
 
@@ -104,23 +118,34 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     emit(FindStoreAddressLoadedState());
   }
 
-  //_findStoreChangeTypeEvent
+  /// Initializes pagination behavior
+  void _initializePagination(BuildContext context, Emitter<FindStoreState> emit) {
+    paginationScrollController.init(
+      loadAction: (int currentPage) async {
+        add(FindStoreLoadMoreEvent(currentPage, context));
+      },
+    );
+    emit(FindStorePaginationInitializedState());
+  }
+
   void _findStoreChangeTypeEvent(FindStoreChangeTypeEvent event, Emitter<FindStoreState> emit) {
     emit(FindReloadState());
     isInitialToggle = event.isInitialToggle;
     emit(FindStoreChangeTypeState());
   }
 
-  Future<List<RetailStoreModel>> findRetailStore(BuildContext context, geoloc.Position position,
+  Future<List<RetailStoreModel>> findRetailStore(BuildContext context, double latitude, double longitude,
       {bool useCurrentLocation = false, bool isShowLoader = true, bool isForceFetch = false}) async {
     List<RetailStoreModel> dataList = [];
     try {
       final Map<String, dynamic> body = {
         ApiKey.filters: {
-          ApiKey.dynamicObject: {}
+          ApiKey.dynamicObject: {
+            ApiKey.latLong: [latitude, longitude]
+          }
         },
         ApiKey.search: "",
-        ApiKey.pagination: {ApiKey.limit: AppConst.pageLimit50, ApiKey.page: AppConst.page1},
+        ApiKey.pagination: {ApiKey.limit: AppConst.pageLimit50, ApiKey.page: paginationScrollController.currentPage.toString()},
         ApiKey.sort: {ApiKey.field: ApiKey.id, ApiKey.dir: AppConst.sortValueAsc.toUpperCase()}
       };
       Either<ErrorResponse, PaginationData<RetailStoreModel>>? response = await AppRepository(context).getRetailStore(body: body);
@@ -128,17 +153,9 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
         dataList = [];
         Utils.showMessage(l.message);
       }, (success) {
-        /// Sort data based on my currunt location
-        if (useCurrentLocation) {
-          success.dataList?.sort((a, b) {
-            double distanceA = geoloc.Geolocator.distanceBetween(
-                position.latitude, position.longitude, a.latitude.toDouble ?? 0.0, a.longitude.toDouble ?? 0.0);
-            double distanceB = geoloc.Geolocator.distanceBetween(
-                position.latitude, position.longitude, b.latitude.toDouble ?? 0.0, b.longitude.toDouble ?? 0.0);
-            return distanceA.compareTo(distanceB);
-          });
-        }
         dataList = success.dataList as List<RetailStoreModel>;
+        totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit50);
+        paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       });
     } catch (e) {
       printWrapped(e.toString());
@@ -169,64 +186,92 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
 
   void _sortAddressByLatLongEvent(SortAddressByLatLongEvent event, Emitter<FindStoreState> emit) async {
     emit(FindReloadState());
-    List<AddressModel> sortedList = [];
+    userLat = event.latitude;
+    userLong = event.longitude;
+    paginationScrollController.currentPage = 1;
+    addressList.clear();
+
+    double latitude, longitude;
+
     if (event.isCurrentLocation) {
       event.context.setAppLoading(true);
       addressSearchController.clear();
-      geoloc.Position? position = await locationManager.getCurrentLocation(event.context);
-      if (position == null) return;
-      sortedList = await sortAddressesByLocation(position.latitude, position.longitude, emit);
-      event.context.setAppLoading(false);
+
+      final position = await locationManager.getCurrentLocation(event.context);
+      if (position == null) {
+        event.context.setAppLoading(false);
+        return;
+      }
+
+      latitude = position.latitude;
+      longitude = position.longitude;
     } else {
-      sortedList = await sortAddressesByLocation(event.latitude, event.longitude, emit);
+      latitude = event.latitude;
+      longitude = event.longitude;
     }
-    addressList = sortedList;
+
+    // Fetch store data and populate address list
+    await _populateAddressList(event.context, latitude, longitude);
+
+    // Update camera position
     myCameraPosition = CameraPosition(
-      target: LatLng(event.latitude, event.longitude),
+      target: LatLng(latitude, longitude),
       zoom: AppConst.zoomPosition,
     );
+
+    if (event.isCurrentLocation) {
+      event.context.setAppLoading(false);
+    }
+
     emit(const FindStoreAddressLoadedState());
-    final GoogleMapController controller = await mapController.future;
+
+    // Animate camera to new position
+    final controller = await mapController.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(myCameraPosition!));
   }
 
-  // Function to sort addresses based on distance from given lat/long
-  Future<List<AddressModel>> sortAddressesByLocation(double userLat, double userLong, Emitter<FindStoreState> emit) async {
-    List<AddressModel> dummyList = addressList.map((e) {
-      double distanceInKm =
-          geoloc.Geolocator.distanceBetween(userLat, userLong, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) / 1000;
-      _addMarker(e.latitude, e.longitude, e.storeName);
-      return AddressModel(
-          storeName: e.storeName,
-          storeDistance: distanceInKm.toStringAsFixed(2),
-          storeAddress: e.storeAddress,
+// Extract common functionality into a separate method
+  Future<void> _populateAddressList(BuildContext context, double latitude, double longitude) async {
+    final dataList = await findRetailStore(context, latitude, longitude);
+
+    for (final store in dataList) {
+      _addMarker(store.latitude, store.longitude, store.name);
+
+      addressList.add(AddressModel(
+          storeName: store.name,
+          storeDistance: store.distance?.toStringAsFixed(2),
+          storeAddress: _formatAddress(store.address1, store.address2),
           isExpanded: false,
           addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
-          latitude: e.latitude,
-          longitude: e.longitude);
-    }).toList();
+          latitude: store.latitude,
+          longitude: store.longitude
+      ));
+    }
+  }
 
-    // Create a copy of the list to avoid modifying the original
-    List<AddressModel> sortedList = List.from(dummyList);
+// Helper method to format address
+  String _formatAddress(String? address1, String? address2) {
+    final hasAddress2 = address2 != null && address2.isNotEmpty;
+    return hasAddress2 ? '${address2}, ${address1 ?? ''}' : address1 ?? '';
+  }
 
-    // Simple distance calculation (Euclidean distance)
-    sortedList.sort((a, b) {
-      // Convert string coordinates to double, use 0.0 if null
-      double latA = double.tryParse(a.latitude ?? "0.0") ?? 0.0;
-      double longA = double.tryParse(a.longitude ?? "0.0") ?? 0.0;
-      double latB = double.tryParse(b.latitude ?? "0.0") ?? 0.0;
-      double longB = double.tryParse(b.longitude ?? "0.0") ?? 0.0;
+  //_findStoreLoadMoreEvent
+  void _findStoreLoadMoreEvent(FindStoreLoadMoreEvent event, Emitter<FindStoreState> emit) async {
+    await _handleLoadMore(event.context, emit, event.currentPage);
+  }
 
-      // Calculate distance from user location to each store
-      double distanceA = ((latA - userLat) * (latA - userLat)) + ((longA - userLong) * (longA - userLong));
-      double distanceB = ((latB - userLat) * (latB - userLat)) + ((longB - userLong) * (longB - userLong));
+  /// Load more products
+  Future<void> _handleLoadMore(BuildContext context, Emitter<FindStoreState> emit, int currentPage) async {
+    if (currentPage <= totalNumberOfPages!) {
+      emit(FindStoreLoadingMoreState());
+      await findRetailStore(context, userLat, userLong);
+      emit(FindStoreLoadedMoreState(currentPage));
+    }
+  }
 
-      return distanceA.compareTo(distanceB);
-    });
-
-    searchFocusNode.unfocus();
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    return sortedList;
+  @override
+  Future<void> close() {
+    paginationScrollController.dispose();
+    return super.close();
   }
 }

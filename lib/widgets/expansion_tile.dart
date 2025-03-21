@@ -115,7 +115,7 @@ class SmartExpansionTileState extends State<SmartExpansionTile> with SingleTicke
           IconTheme.merge(
             data: IconThemeData(color: _iconColor?.evaluate(_easeInAnimation!)),
             child: ListTile(
-              onTap: toggle,
+              onTap: widget.onExpansionChanged == null ? null : toggle,
               contentPadding: EdgeInsetsDirectional.zero,
               leading: widget.leading,
               title: DefaultTextStyle(

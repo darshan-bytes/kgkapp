@@ -811,5 +811,7 @@
   "mob_no_internet_connection_or_server_not_reachable": "لا يمكن الوصول إلى اتصال الإنترنت أو الخادم",
   "mob_auction": "مزاد",
   "mob_crt": "CRT",
-  "mob_grms": "GRMS"
+  "mob_grms": "GRMS",
+  "mob_list_view": " عرض القائمة",
+  "mob_map_view": "عرض الخريطة"
 }

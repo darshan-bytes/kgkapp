@@ -64,3 +64,13 @@ class FindStoreChangeTypeEvent extends FindStoreEvent {
   @override
   List<Object> get props => [isInitialToggle];
 }
+
+final class FindStoreLoadMoreEvent extends FindStoreEvent {
+  final int currentPage;
+  final BuildContext context;
+
+  const FindStoreLoadMoreEvent(this.currentPage, this.context);
+
+  @override
+  List<Object> get props => [currentPage, context];
+}
