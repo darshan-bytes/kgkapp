@@ -30,6 +30,7 @@ class ProductGridItem extends StatelessWidget {
   final bool isFromWatchlist;
   final bool isKGKCouture;
   final bool isHomeView;
+  final bool isHidePriceView;
 
   const ProductGridItem({
     super.key,
@@ -62,6 +63,7 @@ class ProductGridItem extends StatelessWidget {
     this.isFromWatchlist = false,
     this.isKGKCouture = false,
     this.isHomeView = false,
+    this.isHidePriceView = false,
   });
 
   @override
@@ -213,6 +215,7 @@ class ProductGridItem extends StatelessWidget {
             height: 20.w,
             width: 20.w,
             fit: BoxFit.contain,
+            color: iconColor,
           ),
         ),
       ),
@@ -259,46 +262,47 @@ class ProductGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),*/
             SizedBox(height: 8.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SmartText(
-                        productDetails.finalPrice.isNotNullNorEmpty ? "${productDetails.finalPrice}\n" : productDetails.originalPrice,
-                        style: style.priceTextStyle,
-                        optionalPadding: EdgeInsetsDirectional.only(end: 8.w),
-                        maxLines: 1,
-                      ),
-                      if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
+            if (!isHidePriceView)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         SmartText(
-                          productDetails.originalPrice,
+                          productDetails.finalPrice.isNotNullNorEmpty ? "${productDetails.finalPrice}\n" : productDetails.originalPrice,
+                          style: style.priceTextStyle,
+                          optionalPadding: EdgeInsetsDirectional.only(end: 8.w),
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: style.checkedPriceStyle,
                         ),
-                      ] else ...[
-                        if (!isKGKCouture) SmartText("")
-                      ]
-                    ],
+                        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
+                          SmartText(
+                            productDetails.originalPrice,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: style.checkedPriceStyle,
+                          ),
+                        ] else ...[
+                          if (!isKGKCouture) SmartText("")
+                        ]
+                      ],
+                    ),
                   ),
-                ),
-                if ((isStoneWithPrice && productDetails.ctsOrGms != null))
-                  SmartImage(
-                    path: productDetails.ctsOrGms! > 0.1
-                        ? AppImages.icOneRing
-                        : productDetails.ctsOrGms! > 0.2
-                            ? AppImages.icTwoRing
-                            : AppImages.icThreeRing,
-                    height: 20.w,
-                    width: 20.w,
-                    fit: BoxFit.fill,
-                  )
-              ],
-            ),
+                  if ((isStoneWithPrice && productDetails.ctsOrGms != null))
+                    SmartImage(
+                      path: productDetails.ctsOrGms! > 0.1
+                          ? AppImages.icOneRing
+                          : productDetails.ctsOrGms! > 0.2
+                              ? AppImages.icTwoRing
+                              : AppImages.icThreeRing,
+                      height: 20.w,
+                      width: 20.w,
+                      fit: BoxFit.fill,
+                    )
+                ],
+              ),
             // if (productDetails.discountPercentageString.isNotNullNorEmpty) ...[
             //   SizedBox(height: 4.h),
             //   SmartText(

@@ -4,6 +4,8 @@ part 'digital_catalogue_event.dart';
 
 part 'digital_catalogue_state.dart';
 
+enum PopupMenuOption { share, remove }
+
 class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueState> {
   /// This controller is used to control the search
   final TextEditingController searchController = TextEditingController();
@@ -32,6 +34,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     on<DigitalCataloguePullToRefreshEvent>(_onDigitalCataloguePullToRefreshEvent);
     on<DigitalCatalogueSearchEvent>(_onDigitalCatalogueSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
     on<DigitalCatalogueFilterEvent>(_onDigitalCatalogueFilterEvent);
+    on<DeleteDigitalCatalogueEvent>(_onDeleteDigitalCatalogueEvent);
   }
 
   @override
@@ -54,6 +57,10 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
 
   Future<void> _onDigitalCatalogueFilterEvent(DigitalCatalogueFilterEvent event, Emitter<DigitalCatalogueState> emit) async {
     await _handleApplyFilter(event.context, emit, event.filterData);
+  }
+
+  Future<void> _onDeleteDigitalCatalogueEvent(DeleteDigitalCatalogueEvent event, Emitter<DigitalCatalogueState> emit) async {
+    await _handleDeleteDigitalCatalogue(event, emit);
   }
 
   /// Initialization Logic
@@ -206,6 +213,22 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
     emit(DigitalCatalogueLoadedState());
   }
 
+  /// Handle delete digital catalogue
+  Future<void> _handleDeleteDigitalCatalogue(DeleteDigitalCatalogueEvent event, Emitter<DigitalCatalogueState> emit) async {
+    emit(DigitalCatalogueLoadingState());
+    Either<ErrorResponse, CommonResponse>? response =
+        await AppRepository(event.context).deleteDigitalCatalogue(catalogueId: event.catalogueId);
+    await response?.fold((error) async {
+      Utils.showMessage(error.message);
+    }, (success) {
+      if (success.message.isNotNullNorEmpty) {
+        Utils.showMessage(success.message);
+      }
+      digitalCatalogueList.removeWhere((element) => element.id == event.catalogueId);
+    });
+    emit(DigitalCatalogueLoadedState());
+  }
+
   /// Populate digital catalogue list
   List<DigitalCatalogueListingModel> _populateDigitalCatalogueList(List<DigitalCatalogueDetails> dataList) {
     return dataList.map((data) {
@@ -215,7 +238,7 @@ class DigitalCatalogueBloc extends Bloc<DigitalCatalogueEvent, DigitalCatalogueS
         description: data.cscCode,
         image: data.catalogueCoverImage?.setMediaUrl,
         productCount: data.products.length.toString(),
-        date: data.updatedAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        date: data.updatedAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA2),
         isWebView: false,
         webUrl: null,
       );

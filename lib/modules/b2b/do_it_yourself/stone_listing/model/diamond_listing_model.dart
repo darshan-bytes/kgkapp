@@ -215,6 +215,7 @@ class DiamondDataModel {
     this.isAuction = false,
     required this.components,
     this.isAddedToCart = false,
+    this.isCommented = false,
   });
 
   String? id;
@@ -395,6 +396,7 @@ class DiamondDataModel {
   bool isAuction;
   List<StoneElement> components;
   bool isAddedToCart;
+  bool isCommented;
 
   factory DiamondDataModel.fromJson(Map<String, dynamic> json) {
     return DiamondDataModel(
@@ -576,6 +578,7 @@ class DiamondDataModel {
       isAuction: json["is_auction"] ?? false,
       components: json["components"] == null ? [] : List<StoneElement>.from(json["components"]!.map((x) => StoneElement.fromJson(x))),
       isAddedToCart: json["isAddedToCart"] ?? false,
+      isCommented: json["is_commented"] ?? false,
     );
   }
 

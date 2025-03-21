@@ -1,3 +1,5 @@
+import '../../../../kgk.dart';
+
 class CommentsAddedResponseModel {
   String? sId;
   String? catalogueId;
@@ -45,8 +47,9 @@ class Comments {
   String? createdAt;
   int? commentedBy;
   String? sId;
+  UserIdDetails? updatedIdDetails;
 
-  Comments({this.message, this.isEdited, this.createdAt, this.commentedBy, this.sId});
+  Comments({this.message, this.isEdited, this.createdAt, this.commentedBy, this.sId, this.updatedIdDetails});
 
   Comments.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -54,6 +57,7 @@ class Comments {
     createdAt = json['created_at'];
     commentedBy = json['commented_by'];
     sId = json['_id'];
+    updatedIdDetails = json["user"] == null ? null : UserIdDetails.fromJson(json["user"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +67,7 @@ class Comments {
     data['created_at'] = createdAt;
     data['commented_by'] = commentedBy;
     data['_id'] = sId;
+    data['user'] = updatedIdDetails?.toJson();
     return data;
   }
 }

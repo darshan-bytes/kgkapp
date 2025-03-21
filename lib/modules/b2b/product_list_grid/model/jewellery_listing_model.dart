@@ -187,6 +187,7 @@ class JewelleryDataModel {
     this.customerScopeRefSuid,
     this.customerScope,
     this.kgkCoutureImage,
+    this.isCommented = false,
   });
 
   dynamic metalColor3RefSuid;
@@ -339,6 +340,7 @@ class JewelleryDataModel {
   dynamic customerScopeRefSuid;
   dynamic customerScope;
   String? kgkCoutureImage;
+  bool isCommented;
 
   factory JewelleryDataModel.fromJson(Map<String, dynamic> json) {
     return JewelleryDataModel(
@@ -500,6 +502,7 @@ class JewelleryDataModel {
       subareaName: json["subarea_name"],
       customerScopeRefSuid: json["customer_scope_ref_suid"],
       customerScope: json["customer_scope"],
+      isCommented: json["is_commented"] ?? false,
     );
   }
 

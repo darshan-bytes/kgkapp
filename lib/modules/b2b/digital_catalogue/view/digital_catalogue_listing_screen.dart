@@ -41,36 +41,33 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
         },
       ),
       body: SafeArea(
-        child: BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
-          buildWhen: (previous, current) => current is DigitalCatalogueLoadedState || current is DigitalCatalogueLoadingState,
-          builder: (context, state) {
-            if (state is DigitalCatalogueLoadingState) {
-              return const SmartCircularProgressIndicator();
-            }
-            if (state is DigitalCatalogueLoadedState) {
-              return Column(
-                children: [
-                  SmartTextField(
-                    focusNode: digitalCatalogueBloc.focusNode,
-                    controller: digitalCatalogueBloc.searchController,
-                    hintText: APPStrings.searchCatalogue.tr,
-                    suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
-                    padding: EdgeInsetsDirectional.symmetric(vertical: 24.w, horizontal: 16.w),
-                    onTapOutside: (value) => FocusScope.of(context).unfocus(),
-                    onValueChanges: (value) {
-                      digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
-                    },
-                    onFieldSubmitted: (value) {
-                      digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
-                    },
-                  ),
-                  _digitalCatalogueList(digitalCatalogueBloc, context),
-                ],
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
+        child: Column(
+          children: [
+            SmartTextField(
+              focusNode: digitalCatalogueBloc.focusNode,
+              controller: digitalCatalogueBloc.searchController,
+              hintText: APPStrings.searchCatalogue.tr,
+              suffixIcon: SmartImage(path: AppImages.icSearchThin, padding: EdgeInsetsDirectional.all(16.w)),
+              padding: EdgeInsetsDirectional.symmetric(vertical: 24.w, horizontal: 16.w),
+              onTapOutside: (value) => FocusScope.of(context).unfocus(),
+              onValueChanges: (value) {
+                digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
+              },
+              onFieldSubmitted: (value) {
+                digitalCatalogueBloc.add(DigitalCatalogueSearchEvent(context: context));
+              },
+            ),
+            BlocBuilder<DigitalCatalogueBloc, DigitalCatalogueState>(
+              buildWhen: (previous, current) => current is DigitalCatalogueLoadedState || current is DigitalCatalogueLoadingState,
+              builder: (context, state) {
+                if (state is DigitalCatalogueLoadingState) return Expanded(child: Center(child: const SmartCircularProgressIndicator()));
+                if (state is DigitalCatalogueLoadedState) {
+                  return _digitalCatalogueList(digitalCatalogueBloc, context);
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -118,16 +115,42 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                   path: item.image ?? "",
                                   height: 200.h,
                                   width: context.width,
+                                  fit: BoxFit.fill,
                                 ),
-                                Container(
-                                  padding: EdgeInsetsDirectional.all(16.w),
-                                  alignment: AlignmentDirectional.topEnd,
-                                  child: SmartImage(
-                                    path: AppImages.icMoreVerticalCircle,
-                                    imageBorderRadius: BorderRadius.circular(4.0.r),
-                                    width: 32.w,
-                                    height: 32.w,
-                                    onTap: () {},
+                                PositionedDirectional(
+                                  top: 10.w,
+                                  end: 10.w,
+                                  child: PopupMenuButton<PopupMenuOption>(
+                                    initialValue: null,
+                                    color: style.whiteColor,
+                                    style: ButtonStyle(
+                                      shadowColor: WidgetStateProperty.all(style.borderColor),
+                                      backgroundColor: WidgetStateProperty.all(style.whiteColor),
+                                    ),
+                                    icon: SmartImage(path: AppImages.icMoreVertical, height: 24.w, width: 24.w),
+                                    shadowColor: style.borderColor,
+                                    position: PopupMenuPosition.under,
+                                    onSelected: (PopupMenuOption option) {
+                                      switch (option) {
+                                        case PopupMenuOption.share:
+                                          digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context));
+                                          break;
+                                        case PopupMenuOption.remove:
+                                          digitalCatalogueBloc
+                                              .add(DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""));
+                                          break;
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) => [
+                                      PopupMenuItem(
+                                        value: PopupMenuOption.share,
+                                        child: SmartText(APPStrings.share.tr),
+                                      ),
+                                      PopupMenuItem(
+                                        value: PopupMenuOption.remove,
+                                        child: SmartText(APPStrings.remove.tr),
+                                      ),
+                                    ],
                                   ),
                                 )
                               ],
@@ -142,16 +165,14 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                     style: style.titleStyle,
                                   ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       SmartText(
                                         APPStrings.xProducts.tr.interpolate([item.productCount]),
                                         style: style.subTitleStyle,
                                       ),
-                                      const Spacer(),
-                                      SmartText(
-                                        item.date,
-                                        style: style.subTitleStyle,
-                                      )
+                                      SizedBox(width: 16.w),
+                                      Flexible(child: SmartText(item.date, style: style.subTitleStyle, maxLines: 2))
                                     ],
                                   )
                                 ],

@@ -49,7 +49,6 @@ class BlocGenerator {
       BlocProvider<PresentationBloc>(create: (_) => PresentationBloc()),
       BlocProvider<NewsletterBloc>(create: (_) => NewsletterBloc()),
       BlocProvider<WishlistUpdaterServiceBloc>(create: (_) => WishlistUpdaterServiceBloc(), lazy: false),
-      BlocProvider<CommentListingBloc>(create: (_) => CommentListingBloc()),
       BlocProvider<AdvanceSortFilterBloc>(create: (_) => AdvanceSortFilterBloc()),
     ];
   }

@@ -4,6 +4,8 @@ part 'comment_listing_event.dart';
 
 part 'comment_listing_state.dart';
 
+enum CommentListingPopupMenuOption { edit, remove }
+
 class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> {
   /// Response model for comments added.
   CommentsAddedResponseModel? commentsAddedResponseModel;
@@ -12,25 +14,23 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
   String catalogueId = '';
   String productId = '';
 
+  String? _currentEditingCommentId;
+
   /// Controller for comment input field.
   final TextEditingController commentController = TextEditingController();
 
   /// Focus node for the comment input field to manage focus.
   final FocusNode commentFocusNode = FocusNode();
 
-  /// Flag to ensure initialization happens only once.
-  bool _isInitialized = false;
-
   CommentListingBloc() : super(CommentListingInitial()) {
     on<InitialCommentListingEvent>(_onInitialCommentListingEvent);
     on<CommentAddedApiCallEvent>(_onCommentAddedApiCallEvent);
+    on<CommentDeletedApiCallEvent>(_onCommentDeletedApiCallEvent);
   }
 
   /// Handles the initial event to fetch comments for a product.
   Future<void> _onInitialCommentListingEvent(InitialCommentListingEvent event, Emitter<CommentListingState> emit) async {
-    if (_isInitialized) return;
-    _isInitialized = true;
-    emit(CommentListingReloadState());
+    emit(CommentLoadingState());
     _getRouteData(context: event.context);
     await _callPreviewCatalogueCommentApi(context: event.context);
     emit(CommentListingLoadedState());
@@ -51,15 +51,24 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
     };
 
     /// API request to fetch comments.
-    Either<ErrorResponse, CommentsAddedResponseModel>? response = await AppRepository(context).getPreviewCatalogueCommentList(params);
+    Either<ErrorResponse, CommentsAddedResponseModel?>? response = await AppRepository(context).getPreviewCatalogueCommentList(params);
 
     response?.fold((error) {
       if (error.message.isNotNullNorEmpty) {
         Utils.showMessage(error.message);
       }
     }, (commentsAddedResponse) {
-      commentsAddedResponseModel = commentsAddedResponse;
+      if (commentsAddedResponse != null) {
+        commentsAddedResponseModel = commentsAddedResponse;
+      }
     });
+  }
+
+  /// Call this method before showing the input field
+  void setEditingComment(String? commentId, String message) {
+    _currentEditingCommentId = commentId;
+    commentController.text = message;
+    commentFocusNode.requestFocus();
   }
 
   /// Handles adding a new comment via API call.
@@ -73,8 +82,41 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
     };
 
     /// API request to add a new comment.
-    Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>? response =
-        await AppRepository(event.context).digitalCatalogueAddComment(params);
+    Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>? response;
+
+    if (_currentEditingCommentId != null) {
+      response = await AppRepository(event.context).editDigitalCatalogueComments(
+        commentId: _currentEditingCommentId!,
+        body: params,
+      );
+    } else {
+      response = await AppRepository(event.context).digitalCatalogueAddComment(params);
+    }
+
+    await response?.fold(
+      (error) async {
+        if (error.message.isNotNullNorEmpty) {
+          await Utils.showMessage(error.message);
+        }
+
+        emit(CommentListingLoadedState());
+      },
+      (success) async {
+        await _callPreviewCatalogueCommentApi(context: event.context);
+        if (success.message.isNotNullNorEmpty) {
+          await Utils.showMessage(success.message);
+          emit(CommentListingLoadedState());
+        }
+      },
+    );
+    event.context.pop();
+    reset();
+  }
+
+  Future<void> _onCommentDeletedApiCallEvent(CommentDeletedApiCallEvent event, Emitter<CommentListingState> emit) async {
+    emit(CommentLoadingState());
+    Either<ErrorResponse, CommonResponse>? response =
+        await AppRepository(event.context).deleteDigitalCatalogueComments(commentId: event.commentId);
 
     await response?.fold(
       (error) async {
@@ -83,23 +125,19 @@ class CommentListingBloc extends Bloc<CommentListingEvent, CommentListingState> 
         }
       },
       (success) async {
-        await _callPreviewCatalogueCommentApi(context: event.context);
         if (success.message.isNotNullNorEmpty) {
           await Utils.showMessage(success.message);
-          commentController.clear();
-          commentFocusNode.unfocus();
-          emit(CommentListingLoadedState());
-          event.context.pop();
         }
+        await _callPreviewCatalogueCommentApi(context: event.context);
       },
     );
+    emit(CommentListingLoadedState());
   }
 
   /// Resets the bloc state for a new session.
   void reset() {
-    commentsAddedResponseModel = null;
     commentController.clear();
     commentFocusNode.unfocus();
-    _isInitialized = false;
+    _currentEditingCommentId = null;
   }
 }

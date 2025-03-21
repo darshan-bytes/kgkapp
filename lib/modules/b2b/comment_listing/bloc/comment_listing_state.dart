@@ -16,3 +16,5 @@ final class CommentListingReloadState extends CommentListingState {}
 final class CatalogueCommentState extends CommentListingState {}
 
 final class CommentAddedSuccessState extends CommentListingState {}
+
+final class CommentLoadingState extends CommentListingState {}
