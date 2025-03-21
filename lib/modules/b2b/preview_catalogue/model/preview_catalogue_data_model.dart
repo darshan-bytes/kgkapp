@@ -27,30 +27,35 @@ class PreviewCatalogueDataModel {
   String? catalogueCoverImage;
   CatalogueTemplate? catalogueTemplate;
   bool? priceAccess;
+  String? title;
+  String? description;
 
-  PreviewCatalogueDataModel(
-      {this.sId,
-      this.name,
-      this.catalogueType,
-      this.cscCode,
-      this.validFrom,
-      this.validTo,
-      this.isPublic,
-      this.createdBy,
-      this.updatedBy,
-      this.status,
-      this.templateId,
-      this.diamondDataList,
-      this.gemstoneDataList,
-      this.jewelleryDataList,
-      this.deleted,
-      this.createdAt,
-      this.updatedAt,
-      this.sharedWith,
-      this.iV,
-      this.catalogueCoverImage,
-      this.catalogueTemplate,
-      this.priceAccess});
+  PreviewCatalogueDataModel({
+    this.sId,
+    this.name,
+    this.catalogueType,
+    this.cscCode,
+    this.validFrom,
+    this.validTo,
+    this.isPublic,
+    this.createdBy,
+    this.updatedBy,
+    this.status,
+    this.templateId,
+    this.diamondDataList,
+    this.gemstoneDataList,
+    this.jewelleryDataList,
+    this.deleted,
+    this.createdAt,
+    this.updatedAt,
+    this.sharedWith,
+    this.iV,
+    this.catalogueCoverImage,
+    this.catalogueTemplate,
+    this.priceAccess,
+    this.title,
+    this.description,
+  });
 
   /// Parse the product list based on catalogue type and populate the respective typed list.
   void _populateProductList(String catalogueType, List<dynamic>? jsonList) {
@@ -105,6 +110,8 @@ class PreviewCatalogueDataModel {
     catalogueCoverImage = json['catalogue_cover_image'];
     catalogueTemplate = json['catalogue_template'] != null ? CatalogueTemplate.fromJson(json['catalogue_template']) : null;
     priceAccess = json['price_access'];
+    title = json['title'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -137,6 +144,8 @@ class PreviewCatalogueDataModel {
       data['catalogue_template'] = catalogueTemplate!.toJson();
     }
     data['price_access'] = priceAccess;
+    data['title'] = title;
+    data['description'] = description;
     return data;
   }
 }

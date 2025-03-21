@@ -50,3 +50,22 @@ final class DigitalCatalogueFilterEvent extends DigitalCatalogueEvent {
   @override
   List<Object> get props => [context, filterData];
 }
+
+final class DigitalCatalogueShareEvent extends DigitalCatalogueEvent {
+  final BuildContext context;
+
+  const DigitalCatalogueShareEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class DeleteDigitalCatalogueEvent extends DigitalCatalogueEvent {
+  final BuildContext context;
+  final String catalogueId;
+
+  const DeleteDigitalCatalogueEvent({required this.context, required this.catalogueId});
+
+  @override
+  List<Object> get props => [context, catalogueId];
+}

@@ -80,28 +80,41 @@ class PreviewCatalogueScreen extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 27.h),
       child: Column(
         children: [
-          SmartText(bloc.digitalCatalogueListingModel?.name ?? '', style: style.titleStyle),
+          SmartText(bloc.previewCatalogueDataModel?.title ?? '', style: style.titleStyle),
           SizedBox(height: 12.h),
-          SmartText(bloc.digitalCatalogueListingModel?.description ?? '', style: style.subTitleStyle, textAlign: TextAlign.center),
+          SmartText(bloc.previewCatalogueDataModel?.description ?? '', style: style.subTitleStyle, textAlign: TextAlign.center),
           SizedBox(height: 32.h),
           SmartGridView(
             items: List.generate(
               bloc.productList.length,
-              (index) => ProductGridItem(
-                forPreviewCatalogue: true,
-                productDetails: bloc.productList[index],
-                isBadgeVisible: false,
-                onCommentTap: () {
-                  context.pushNamed(AppRoutes.commentListingPage, arguments: {
-                    RoutesData.catalogueId: bloc.digitalCatalogueListingModel?.id ?? "",
-                    RoutesData.productId: bloc.productList[index].productId ?? "",
-                  });
-                },
-              ),
+              (index) {
+                return ProductGridItem(
+                  productDetails: bloc.productList[index],
+                  isBadgeVisible: false,
+                  isCrtAndGramVisible: bloc.productList[index].commodity == Commodity.jewellery ? true : false,
+                  isHidePriceView: _isHidePriceView(bloc.productList[index].commodity!),
+                  isCommentSelected: bloc.productList[index].isCommentVisible,
+                  onCommentTap: () {
+                    context.pushNamed(AppRoutes.commentListingPage, arguments: {
+                      RoutesData.catalogueId: bloc.digitalCatalogueListingModel?.id ?? "",
+                      RoutesData.productId: bloc.productList[index].productId ?? "",
+                    });
+                  },
+                );
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  bool _isHidePriceView(Commodity commodity) {
+    return ![
+      Commodity.jewellery,
+      Commodity.gemstone,
+      Commodity.diamond,
+      Commodity.skuLibrary,
+    ].contains(commodity);
   }
 }

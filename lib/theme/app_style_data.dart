@@ -996,6 +996,7 @@ class LightModeTheme extends AppTheme {
         titleStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 20.sp, color: colors.color303538),
         subTitleStyle: interRegularTextStyle.copyWith(fontSize: 14.sp, color: colors.color8C8C8C),
         borderColor: colors.colorD3DAE0,
+        whiteColor: colors.white,
       );
 
   @override
@@ -1331,5 +1332,15 @@ class LightModeTheme extends AppTheme {
         blackColor: colors.black,
         blueAccentColor: Colors.blueAccent,
         transparentColor: colors.transparent,
+      );
+
+  @override
+  CommentListingStyle get commentListingStyle => CommentListingStyle(
+        whiteColor: colors.white,
+        primaryColor: colors.primary,
+        titleStyle: interRegularTextStyle.copyWith(color: colors.color8C8C8C),
+        subtitleStyle: interRegularTextStyle,
+        iconColor: colors.color8C8C8C,
+        headerStyle: interMediumBoldTextStyle,
       );
 }

@@ -214,6 +214,10 @@ class ApiClient {
   static String diyStyleDetails(String id) => '$apiBaseUrl/diy/style/$id/view';
 
   static const String getUserProfile = '$apiBaseUrl/customer/profile';
+
+  static String digitalCatalogueCommentsById(String commentId) => '$apiBaseUrl/digital-catalogue/comments/$commentId';
+
+  static String deleteDigitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

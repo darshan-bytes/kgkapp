@@ -44,8 +44,6 @@ class DesignLibraryListItemDataModel {
   String? suidCustomerCode;
   String? updatedAt;
   String? updatedDateTime;
-  double? diamondWeight;
-  double? metalWeight;
   String? businessCategory;
   String? contractNoSkuNo;
   String? crt;
@@ -55,6 +53,7 @@ class DesignLibraryListItemDataModel {
   List<String>? images;
   String? productDescription;
   bool? isAddedToCart;
+  bool? isCommented;
 
   DesignLibraryListItemDataModel(
       {this.sId,
@@ -100,8 +99,6 @@ class DesignLibraryListItemDataModel {
       this.suidCustomerCode,
       this.updatedAt,
       this.updatedDateTime,
-      this.diamondWeight,
-      this.metalWeight,
       this.businessCategory,
       this.contractNoSkuNo,
       this.crt,
@@ -110,6 +107,7 @@ class DesignLibraryListItemDataModel {
       this.jewelleryTypeName,
       this.images,
       this.productDescription,
+      this.isCommented = false,
       this.isAddedToCart});
 
   DesignLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
@@ -161,8 +159,6 @@ class DesignLibraryListItemDataModel {
     suidCustomerCode = json['suid_customer_code'];
     updatedAt = json['updated_at'];
     updatedDateTime = json['updated_date_time'];
-    diamondWeight = json['diamond_weight']?.toString().toDouble;
-    metalWeight = json['metal_weight']?.toString().toDouble;
     businessCategory = json['business_category'];
     contractNoSkuNo = json['contract_no_sku_no'];
     crt = json['crt']?.toString();
@@ -181,6 +177,7 @@ class DesignLibraryListItemDataModel {
     }
     productDescription = json['product_description'];
     isAddedToCart = json['isAddedToCart'];
+    isCommented = json['is_commented'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -230,8 +227,7 @@ class DesignLibraryListItemDataModel {
     data['suid_customer_code'] = suidCustomerCode;
     data['updated_at'] = updatedAt;
     data['updated_date_time'] = updatedDateTime;
-    data['diamond_weight'] = diamondWeight;
-    data['metal_weight'] = metalWeight;
+
     data['business_category'] = businessCategory;
     data['contract_no_sku_no'] = contractNoSkuNo;
     data['crt'] = crt;
