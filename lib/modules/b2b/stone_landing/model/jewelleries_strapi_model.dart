@@ -489,7 +489,7 @@ class Large {
       mime: json["mime"],
       name: json["name"],
       path: json["path"],
-      size: json["size"].toDouble(),
+      size: json["size"]?.toString().toDouble,
       width: json["width"],
       height: json["height"],
       sizeInBytes: json["sizeInBytes"],

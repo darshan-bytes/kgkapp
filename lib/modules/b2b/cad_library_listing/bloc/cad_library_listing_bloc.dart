@@ -20,20 +20,24 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   List<SortOptions> sortOptions = [];
 
+  /// This filterData is used to store the filter data
+  List<FilterData> filterData = [];
+
   CadLibraryListingBloc() : super(CadListingInitial()) {
     on<InitialCadListingEvent>(_onInitialCadLibraryListEvent);
     on<CadListLoadMoreEvent>(_onCadListLoadMoreEvent);
     on<CadChangeListingTypeEvent>(_onCadChangeListingTypeEvent);
     on<CadListPullToRefreshEvent>(_onCadListPullToRefresh);
     on<CadSortEvent>(_onCadSortEvent);
+    on<CadLibraryFilterEvent>(_onCadLibraryFilterEvent);
   }
 
   Future<void> _onInitialCadLibraryListEvent(InitialCadListingEvent event, Emitter<CadLibraryListingState> emit) async {
-    emit(CadListingReloadState());
+    emit(const CadListingReloadState());
     clearData();
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     getRouteData(event.context);
-    emit(CadAppBarTitleChangedState());
+    emit(const CadAppBarTitleChangedState());
     await _initializeSortOptions(event.context);
     gridPaginationScrollController.init(
       isSecondaryView: true,
@@ -41,12 +45,15 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
         add(CadListLoadMoreEvent(event.context, currentPage));
       },
     );
+    if (filterData.isEmpty) {
+      await _setupFilters(event.context);
+    }
     if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
       await _callStyleLibraryListingApi(context: event.context, isLoadMore: false);
     } else {
       await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     }
-    emit(CadListingLoadedState());
+    emit(const CadListingLoadedState());
   }
 
   void getRouteData(BuildContext context) async {
@@ -73,12 +80,22 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   }
 
   Future<void> _callCadLibraryListingApi({required BuildContext context, bool isLoadMore = false}) async {
-    final Map<String, dynamic> params = {
-      ApiKey.limit: AppConst.pageLimit,
-      ApiKey.page: gridPaginationScrollController.currentPage,
+    final Map<String, String> params = {
+      ApiKey.limit: AppConst.pageLimit.toString(),
+      ApiKey.page: gridPaginationScrollController.currentPage.toString(),
       ApiKey.sortValue: sortValue,
       ApiKey.sortKey: sortKey
     };
+
+    /// Build the query based on filters
+    buildFilterQuery(params, filterData).forEach(
+      (key, value) {
+        if (params.containsKey(key) == false) {
+          params[key] = value;
+        }
+      },
+    );
+
     Either<ErrorResponse, PaginationData<CadLibraryListItemDataModel>>? response =
         await AppRepository(context).getCadLibraryList(query: params, isLoadMore: isLoadMore);
 
@@ -119,7 +136,10 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required CadLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
       id: sourceModel.sId,
-      strCADLibraryImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
+      strCADLibraryImageUrl: ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
+              sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
+          ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
+          : (sourceModel.imageCad ?? sourceModel.imageSketch),
       strCADLibraryNumber: sourceModel.designCreatedDt,
       strCADLibraryProductName: sourceModel.autoDescription,
     );
@@ -128,37 +148,96 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
   Future<void> _onCadListLoadMoreEvent(CadListLoadMoreEvent event, Emitter<CadLibraryListingState> emit) async {
     emit(const CadListLoadingMoreState());
     await _callCadLibraryListingApi(context: event.context);
-    emit(CadListLoadedMoreState());
+    emit(const CadListLoadedMoreState());
   }
 
   void _onCadChangeListingTypeEvent(CadChangeListingTypeEvent event, Emitter<CadLibraryListingState> emit) {
-    emit(CadListingReloadState());
+    emit(const CadListingReloadState());
     isGrid = event.isGrid;
     emit(const CadChangeListingTypeState());
   }
 
   Future<void> _onCadListPullToRefresh(CadListPullToRefreshEvent event, Emitter<CadLibraryListingState> emit) async {
-    emit(CadListingReloadState());
+    emit(const CadListingReloadState());
     emit(CadPullToRefreshState());
     gridPaginationScrollController.pullToRefresh();
     cadList.clear();
     await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
     refreshCompleter.complete(true);
-    emit(CadListingLoadedState());
+    emit(const CadListingLoadedState());
   }
 
   // _onCadSortEvent
   Future<void> _onCadSortEvent(CadSortEvent event, Emitter<CadLibraryListingState> emit) async {
-    emit(CadListingReloadState());
+    emit(const CadListingLoadingState());
+
     sortKey = event.sortData.sortKey ?? "";
     sortValue = event.sortData.sortValue ?? "";
-    await pullToRefresh(context: event.context);
+    gridPaginationScrollController.pullToRefresh();
+    if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
+      await _callStyleLibraryListingApi(context: event.context, isLoadMore: false);
+    } else {
+      await _callCadLibraryListingApi(context: event.context, isLoadMore: false);
+    }
+    emit(const CadListingLoadedState());
   }
 
   Future<bool> pullToRefresh({required BuildContext context}) async {
     refreshCompleter = Completer<bool>();
     add(CadListPullToRefreshEvent(context: context));
     return refreshCompleter.future;
+  }
+
+  Future<void> _setupFilters(BuildContext context) async {
+    final String filterKey = screenIdentifier == ScreenIdentifier.productForLibraryStyle ? AppConst.styleLibrary : AppConst.cadLibrary;
+
+    final List<FilterOptionModel> tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey);
+    filterData.clear();
+    for (FilterOptionModel filterOption in tempFilterData) {
+      if (filterOption.data.isNotEmpty) {
+        FilterData filter = FilterData(
+          name: filterOption.name,
+          code: filterOption.slug,
+          inputType: filterOption.inputType,
+          filterType: filterOption.filterType,
+          subFilterCodes: filterOption.data.map((e) => e.toString()).join(','),
+          secondaryFilterData: [],
+        );
+        if (!filterOption.fromCommon) {
+          filter.secondaryFilterData = filterOption.data.map((e) => SecondaryFilterData(name: e.toString(), code: e.toString())).toList();
+        } else if (filterOption.filterType == FilterType.boolean) {
+          if (filterOption.data.isNotEmpty && filterOption.data.any((element) => element?.toString().toLowerCase() == 'yes')) {
+            filter.secondaryFilterData = [SecondaryFilterData(name: filterOption.name)];
+          } else {
+            continue;
+          }
+        } else if (filter.filterType == FilterType.range && filterOption.data.isNotEmpty) {
+          filter.minMaxValues = SfRangeValues(0, filterOption.data.lastOrNull?.toString().toDouble ?? 0);
+        }
+        filterData.add(filter);
+      }
+    }
+  }
+
+  Map<String, String> buildFilterQuery(Map<String, String> query, List<FilterData> filterData) {
+    filterData.where((element) {
+      return (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
+          (element.filterType == FilterType.range && element.rangeValues != null);
+    }).forEach(
+      (element) {
+        if (element.filterType == FilterType.range) {
+          query['${element.code}[min]'] = element.rangeValues?.start.toString() ?? '';
+          query['${element.code}[max]'] = element.rangeValues?.end.toString() ?? '';
+        } else if (element.filterType == FilterType.boolean &&
+            (element.secondaryFilterData ?? []).isNotEmpty &&
+            element.secondaryFilterData!.any((e) => e.isSelected)) {
+          query[element.code ?? ''] = AppConst.filterBoolYesValue;
+        } else {
+          query[element.code ?? ''] = element.secondaryFilterData?.where((e) => e.isSelected == true).map((e) => e.code).join(',') ?? '';
+        }
+      },
+    );
+    return query;
   }
 
   void clearData() {
@@ -171,5 +250,29 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
     cadLibrarySearchController.dispose();
     gridPaginationScrollController.dispose();
     return super.close();
+  }
+
+  Future<void> _onCadLibraryFilterEvent(CadLibraryFilterEvent event, Emitter<CadLibraryListingState> emit) async {
+    await _handleApplyFilter(context: event.context, emit: emit, appliedFilterData: event.filterData);
+  }
+
+  _handleApplyFilter({
+    required BuildContext context,
+    required Emitter<CadLibraryListingState> emit,
+    required List<FilterData> appliedFilterData,
+  }) async {
+    try {
+      emit(const CadListingLoadingState());
+      filterData = appliedFilterData;
+      gridPaginationScrollController.pullToRefresh();
+      if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
+        await _callStyleLibraryListingApi(context: context, isLoadMore: false);
+      } else {
+        await _callCadLibraryListingApi(context: context, isLoadMore: false);
+      }
+      emit(const CadListingLoadedState());
+    } catch (e) {
+      print("Error in _handleApplyFilter: $e");
+    }
   }
 }
