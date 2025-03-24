@@ -18,6 +18,7 @@ class RetailStoreModel {
     required this.stateName,
     required this.createdByDetails,
     required this.updatedByDetails,
+    required this.distance,
   });
 
   final String? id;
@@ -38,6 +39,7 @@ class RetailStoreModel {
   final String? stateName;
   final AtedByDetails? createdByDetails;
   final AtedByDetails? updatedByDetails;
+  final double? distance;
 
   factory RetailStoreModel.fromJson(Map<String, dynamic> json) {
     return RetailStoreModel(
@@ -59,6 +61,7 @@ class RetailStoreModel {
       stateName: json["state_name"],
       createdByDetails: json["created_by_details"] == null ? null : AtedByDetails.fromJson(json["created_by_details"]),
       updatedByDetails: json["updated_by_details"] == null ? null : AtedByDetails.fromJson(json["updated_by_details"]),
+      distance: json["distance"],
     );
   }
 
@@ -81,6 +84,7 @@ class RetailStoreModel {
         "state_name": stateName,
         "created_by_details": createdByDetails?.toJson(),
         "updated_by_details": updatedByDetails?.toJson(),
+        "distance": distance,
       };
 }
 

@@ -130,4 +130,5 @@ class ApiKey {
   static const String quote = 'quote';
   static const String profilePic = 'profile_pic';
   static const String userId = 'userId';
+  static const String latLong = 'lat_long';
 }

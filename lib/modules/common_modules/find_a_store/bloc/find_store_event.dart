@@ -43,3 +43,34 @@ class GetDirectionEvent extends FindStoreEvent {
   @override
   List<Object> get props => [latitude, longitude];
 }
+
+class SortAddressByLatLongEvent extends FindStoreEvent {
+  final BuildContext context;
+  final double latitude;
+  final double longitude;
+  final bool isCurrentLocation;
+
+  const SortAddressByLatLongEvent({required this.context,required this.latitude, required this.longitude, this.isCurrentLocation = false});
+
+  @override
+  List<Object> get props => [context, latitude, longitude, isCurrentLocation];
+}
+
+class FindStoreChangeTypeEvent extends FindStoreEvent {
+  final bool isInitialToggle;
+
+  const FindStoreChangeTypeEvent({required this.isInitialToggle});
+
+  @override
+  List<Object> get props => [isInitialToggle];
+}
+
+final class FindStoreLoadMoreEvent extends FindStoreEvent {
+  final int currentPage;
+  final BuildContext context;
+
+  const FindStoreLoadMoreEvent(this.currentPage, this.context);
+
+  @override
+  List<Object> get props => [currentPage, context];
+}
