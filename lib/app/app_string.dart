@@ -1009,4 +1009,6 @@ class APPStrings {
 
   static const String listView = 'mob_list_view';
   static const String mapView = 'mob_map_view';
+  static const String removeCatalogue = "mob_remove_catalogue";
+  static const String removeCatalogueMsg = "mob_remove_catalogue_msg";
 }

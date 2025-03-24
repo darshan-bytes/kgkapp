@@ -814,5 +814,7 @@
   "mob_grms": "ग्राम",
   "mob_compare_product_minimum": "कृपया तुलना करने के लिए कम से कम दो प्रोडक्ट्स चुनें",
   "mob_list_view": "सूची देखें",
-  "mob_map_view": "मानचित्र देखें"
+  "mob_map_view": "मानचित्र देखें",
+  "mob_remove_catalogue": "कैटलॉग हटाएं",
+  "mob_remove_catalogue_msg": "चयनित कैटलॉग सूची से हटा दिया जाएगा"
 }

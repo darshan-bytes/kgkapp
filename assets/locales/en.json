@@ -814,5 +814,7 @@
   "mob_grms": "grms",
   "mob_compare_product_minimum": "Please select at least two products to compare",
   "mob_list_view": "List View",
-  "mob_map_view": "Map View"
+  "mob_map_view": "Map View",
+  "mob_remove_catalogue": "Remove Catalogue",
+  "mob_remove_catalogue_msg": "Selected catalogue will be removed from the list"
 }

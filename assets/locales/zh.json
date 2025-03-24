@@ -814,5 +814,7 @@
   "mob_grms": "總平均數",
   "mob_compare_product_minimum": "请选择至少两种产品进行比较",
   "mob_list_view": "列表视图",
-  "mob_map_view": "地图视图"
+  "mob_map_view": "地图视图",
+  "mob_remove_catalogue": "移除目录",
+  "mob_remove_catalogue_msg": "所选目录将从列表中移除"
 }
