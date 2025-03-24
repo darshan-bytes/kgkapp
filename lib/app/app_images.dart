@@ -186,4 +186,5 @@ class AppImages {
   static const String icAuctionLabel = 'assets/images/ic_auction_label.svg';
   static const String icBadge = 'assets/images/ic_badge.svg';
   static const String icProfilePic = 'assets/images/ic_profile_pic.svg';
+  static const String icTurnRight = 'assets/images/ic_turn_right.svg';
 }

@@ -812,5 +812,7 @@
   "mob_auction": "Auction",
   "mob_crt": "crt",
   "mob_grms": "grms",
-  "mob_compare_product_minimum": "Please select at least two products to compare"
+  "mob_compare_product_minimum": "Please select at least two products to compare",
+  "mob_list_view": "List View",
+  "mob_map_view": "Map View"
 }

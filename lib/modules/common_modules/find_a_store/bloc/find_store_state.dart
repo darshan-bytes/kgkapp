@@ -14,7 +14,15 @@ final class FindReloadState extends FindStoreState {
   List<Object> get props => [];
 }
 
+final class FindStorePaginationInitializedState extends FindStoreState {
+  const FindStorePaginationInitializedState();
+  @override
+  List<Object> get props => [];
+}
+
 final class FindStoreAddressLoadedState extends FindStoreState {
+  const FindStoreAddressLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -28,4 +36,23 @@ final class FindStoreShowFullAddressState extends FindStoreState {
 
   @override
   List<Object> get props => [index, oldIndex, isExpanded];
+}
+
+final class FindStoreChangeTypeState extends FindStoreState {
+  @override
+  List<Object> get props => [];
+}
+
+final class FindStoreLoadingMoreState extends FindStoreState {
+  @override
+  List<Object> get props => [];
+}
+
+final class FindStoreLoadedMoreState extends FindStoreState {
+  final int currentPage;
+
+  const FindStoreLoadedMoreState(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
 }

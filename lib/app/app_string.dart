@@ -1006,4 +1006,7 @@ class APPStrings {
   static const String crt = 'mob_crt';
   static const String grms = 'mob_grms';
   static const String compareProductMinimum = 'mob_compare_product_minimum';
+
+  static const String listView = 'mob_list_view';
+  static const String mapView = 'mob_map_view';
 }
