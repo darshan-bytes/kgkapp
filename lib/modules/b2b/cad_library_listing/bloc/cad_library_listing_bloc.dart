@@ -272,7 +272,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
       }
       emit(const CadListingLoadedState());
     } catch (e) {
-      print("Error in _handleApplyFilter: $e");
+      debugPrint("Error in _handleApplyFilter: $e");
     }
   }
 }

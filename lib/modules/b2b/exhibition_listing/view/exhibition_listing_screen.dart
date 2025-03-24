@@ -6,7 +6,6 @@ class ExhibitionListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ExhibitionListingBloc exhibitionListingBloc = BlocProvider.of<ExhibitionListingBloc>(context);
-    final ExhibitionListingItemStyle style = AppTheme.of(context).exhibitionListingItemStyle;
     return Scaffold(
       appBar: _buildAppBar(context),
       bottomNavigationBar: _buildBottomNavigationBar(exhibitionListingBloc, context),

@@ -26,7 +26,6 @@ class NoDataFoundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NoDataFoundStyle style = AppTheme.of(context).noDataFoundStyle;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

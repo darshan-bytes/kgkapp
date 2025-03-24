@@ -95,7 +95,6 @@ class SmartBottomNavigationBar extends StatelessWidget {
     return BlocBuilder<LandingBloc, LandingState>(
       buildWhen: (previous, current) => current is LandingChangeMyBagCountState,
       builder: (context, state) {
-        final bloc = BlocProvider.of<LandingBloc>(context);
         Widget item = SmartImage(
           path: isActiveIcon ? model.activeIcon : model.icon,
           matchTextDirection: true,
