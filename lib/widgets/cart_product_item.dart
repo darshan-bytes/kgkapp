@@ -198,7 +198,6 @@ class CartProductItem extends StatelessWidget {
   }
 
   Widget productDetailsSection(ProductItemStyle style, BuildContext context) {
-    final textFieldStyle = AppTheme.of(context).textFieldStyle;
     return Expanded(
       child: Container(
         color: style.backgroundColor,
