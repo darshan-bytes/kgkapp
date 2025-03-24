@@ -66,6 +66,8 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   AddressDetails? address;
 
+  bool isShippingAddress = true;
+
   AddAddressBloc() : super(const AddAddressInitial()) {
     on<AddAddressInitialEvent>(_onInitAddAddressEvent);
     on<AddAddressAddressChangeEvent>(_onChangeShippingAndBillingAddress);
@@ -75,6 +77,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     on<SaveAddressEvent>(_onSaveAddressEvent);
     on<AddAddressChangeCountryCodeEvent>(_onAddAddressChangeCountryCodeEvent);
     on<AddAddressFieldChangeEvent>(_onAddAddressFieldChangeEvent);
+    on<AddAddressChangeAddressTypeEvent>(_onChangeAddressType);
   }
 
   void getScreenIdentifier(BuildContext context) {
@@ -82,6 +85,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     address = data?[RoutesData.addressDetails];
     isEditAddress = address != null;
     isFromCheckout = data?[RoutesData.isFromCheckout] ?? false;
+    isShippingAddress = data?[RoutesData.isShippingAddress] ?? true;
   }
 
   Future<void> _onInitAddAddressEvent(AddAddressInitialEvent event, Emitter<AddAddressState> emit) async {
@@ -337,7 +341,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   Future<CommonResponse<AddressDetails>?> saveAddressAPI(BuildContext context) async {
     try {
-      bool isFirstAddress = addressList.isEmpty;
+      bool isFirstAddress = false;
       final Map<String, dynamic> body = {
         ApiKey.firstName_: firstNameController.text.trim(),
         ApiKey.lastName_: lastNameController.text.trim(),
@@ -353,7 +357,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
             ApiKey.phoneNumber: phoneController.text.trim(),
           }
         ],
-
+        ApiKey.type: isShippingAddress ? AppConst.addressTypeIsShipping : AppConst.addressTypeIsBilling,
         //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
         ApiKey.isDefaultShipping: isFirstAddress,
         ApiKey.isDefaultBilling: isFirstAddress,
@@ -389,6 +393,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
             ApiKey.phoneNumber: phoneController.text.trim(),
           }
         ],
+        ApiKey.type: isShippingAddress ? AppConst.addressTypeIsShipping : AppConst.addressTypeIsBilling,
       };
 
       final response = await AppRepository(context).updateAddress(addressId, body: body);
@@ -419,5 +424,12 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       Utils.showMessage(e.toString());
     }
     return null;
+  }
+
+  void _onChangeAddressType(AddAddressChangeAddressTypeEvent event, Emitter<AddAddressState> emit) {
+    if (isShippingAddress == event.isShippingAddress) return;
+    emit(AddAddressReloadState());
+    isShippingAddress = event.isShippingAddress;
+    emit(AddAddressChangeAddressTypeState(isShippingAddress));
   }
 }

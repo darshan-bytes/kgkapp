@@ -13,7 +13,8 @@ final class SavedAddressInitialEvent extends SavedAddressEvent {
   List<Object> get props => [context];
 }
 
-final class SavedAddressChangeBillingAddressSameEvent extends SavedAddressEvent {
+//TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+/*final class SavedAddressChangeBillingAddressSameEvent extends SavedAddressEvent {
   final bool value;
   final BuildContext context;
 
@@ -27,7 +28,7 @@ final class SavedAddressChangeBillingAddressSameEvent extends SavedAddressEvent 
         context,
         value,
       ];
-}
+}*/
 
 final class SavedAddressChangeShippingAddressEvent extends SavedAddressEvent {
   final bool isShipping;

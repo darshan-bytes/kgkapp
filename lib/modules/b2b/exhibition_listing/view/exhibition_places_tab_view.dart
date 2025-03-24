@@ -7,7 +7,6 @@ class ExhibitionPlacesTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).filterBottomActionBarStyle;
     ExhibitionListingItemStyle listingItemStyle = AppTheme.of(context).exhibitionListingItemStyle;
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(

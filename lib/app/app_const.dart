@@ -11,7 +11,7 @@ class AppConst {
   static const int pageLimit10 = 10;
   static const int pageLimit50 = 50;
   static const int page1 = 1;
-    static const double zoomPosition = 8.4746;
+  static const double zoomPosition = 8.4746;
   static const double defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
   static const String strapiApiToken =
       "209f75da6d6df7f6e575d7b80779e6ad6fa47720601d5a5f10b3e13616e0c164579ac11c65d0e51d2102db8bdb14d64a0cdc6c922e12c32e73194a7ce816822676c5c8db2da64eb3cda85f23b589b6536c88c937f4e11da29996b3dc216967d61428b25317654d4b061fba344fa0a3970dcfe9df18ee7dba9658ce1cf1a8edc1";
@@ -81,4 +81,8 @@ class AppConst {
   static const String orderContext = "order";
 
   static const String googleMapsKey = "AIzaSyCdyWZPs--H-SZqdUBpHeGakkBbimsDFek";
+
+  /// Address type keys for address type
+  static const String addressTypeIsShipping = "is_shipping";
+  static const String addressTypeIsBilling = "is_billing";
 }
