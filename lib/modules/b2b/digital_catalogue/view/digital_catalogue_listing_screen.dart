@@ -136,8 +136,16 @@ class DigitalCatalogueListingScreen extends StatelessWidget {
                                           digitalCatalogueBloc.add(DigitalCatalogueShareEvent(context: context));
                                           break;
                                         case PopupMenuOption.remove:
-                                          digitalCatalogueBloc
-                                              .add(DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""));
+                                          Utils.showDoubleActionDialog(
+                                            title: APPStrings.removeCatalogue.tr,
+                                            content: APPStrings.removeCatalogueMsg.tr,
+                                            okButtonText: APPStrings.remove.tr,
+                                            cancelButtonText: APPStrings.cancel.tr,
+                                            onOkPressed: () {
+                                              digitalCatalogueBloc
+                                                  .add(DeleteDigitalCatalogueEvent(context: context, catalogueId: item.id ?? ""));
+                                            },
+                                          );
                                           break;
                                       }
                                     },

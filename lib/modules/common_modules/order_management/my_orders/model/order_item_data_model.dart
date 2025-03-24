@@ -12,7 +12,7 @@ class OrderItem {
   String? phone;
   int? uniqueId;
   int? items;
-  int? totalQuantity;
+  double? totalQuantity;
   UserIdDetails? createdByDetails;
 
   OrderItem(
@@ -42,7 +42,7 @@ class OrderItem {
     phone = json['phone'];
     uniqueId = json['unique_id'];
     items = json['items'];
-    totalQuantity = json['total_quantity'];
+    totalQuantity = json['total_quantity']?.toString().toDouble;
     createdByDetails = json['created_by_details'] != null ? UserIdDetails.fromJson(json['created_by_details']) : null;
   }
 
