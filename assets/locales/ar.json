@@ -813,5 +813,7 @@
   "mob_crt": "CRT",
   "mob_grms": "GRMS",
   "mob_list_view": " عرض القائمة",
-  "mob_map_view": "عرض الخريطة"
+  "mob_map_view": "عرض الخريطة",
+  "mob_remove_catalogue": "إزالة الكتالوج",
+  "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة"
 }

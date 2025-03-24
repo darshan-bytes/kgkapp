@@ -814,5 +814,7 @@
   "mob_grms": "กรัม",
   "mob_compare_product_minimum": "โปรดเลือกผลิตภัณฑ์อย่างน้อยสองรายการเพื่อเปรียบเทียบ",
   "mob_list_view": "มุมมองรายการ",
-  "mob_map_view": "มุมมองแผนที่"
+  "mob_map_view": "มุมมองแผนที่",
+  "mob_remove_catalogue": "ลบแคตตาล็อก",
+  "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ"
 }
