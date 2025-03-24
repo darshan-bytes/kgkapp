@@ -33,7 +33,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     } else {
       selectedMonth = calendarController.displayDate ?? DateTime.now();
     }
-    final CalendarStyle style = AppTheme.of(event.context).calendarStyle;
     calendarEventTypeList = _generateCalendarEventTypeList();
     selectedCalendarEventType = calendarEventTypeList.first;
     await getCalendarData(event.context);

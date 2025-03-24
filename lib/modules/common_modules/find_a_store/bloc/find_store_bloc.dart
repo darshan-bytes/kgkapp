@@ -51,9 +51,6 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
     List<RetailStoreModel> dataList =
         await findRetailStore(event.context, position.latitude, position.longitude, useCurrentLocation: event.useCurrentLocation);
     addressList.addAll(dataList.map((e) {
-      double distanceInKm = geoloc.Geolocator.distanceBetween(
-              position.latitude, position.longitude, e.latitude.toDouble ?? 0.0, e.longitude.toDouble ?? 0.0) /
-          1000;
       _addMarker(e.latitude, e.longitude, e.name);
       return AddressModel(
           storeName: e.name,
@@ -244,15 +241,14 @@ class FindStoreBloc extends Bloc<FindStoreEvent, FindStoreState> {
           isExpanded: false,
           addressDetailsKey: GlobalKey<SmartExpansionTileState>(),
           latitude: store.latitude,
-          longitude: store.longitude
-      ));
+          longitude: store.longitude));
     }
   }
 
 // Helper method to format address
   String _formatAddress(String? address1, String? address2) {
     final hasAddress2 = address2 != null && address2.isNotEmpty;
-    return hasAddress2 ? '${address2}, ${address1 ?? ''}' : address1 ?? '';
+    return hasAddress2 ? '$address2, ${address1 ?? ''}' : address1 ?? '';
   }
 
   //_findStoreLoadMoreEvent

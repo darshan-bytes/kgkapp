@@ -14,6 +14,7 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
   double maximumXAxis = 0.0;
 
   String getCurrencySymbol = "";
+
   /// Defines the minimum and maximum values for the price range slider.
   ///
   /// This constant is used to set the initial and maximum selectable range for the price slider in the UI.
@@ -157,7 +158,6 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
 
   Future<void> fetchDiamondList(BuildContext context, Emitter<OrionState> emit,
       {bool isLoadMore = false, Map<String, String>? query}) async {
-    final String type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     Either<ErrorResponse, DiamondListingModel>? response;
     query ??= {};
     response = await AppRepository(context).fetchDiamondList(
@@ -265,10 +265,6 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       clearData();
       final list = success.dataList ?? [];
       if (list.isEmpty) return;
-
-      ClarityModel? clarityModel;
-      ColorModel? colorModel;
-      CutModel? cutModel;
 
       final validItems = list.where((item) => item.size != null && item.discountPrice != null);
 
