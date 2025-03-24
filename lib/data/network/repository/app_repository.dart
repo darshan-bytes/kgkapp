@@ -137,6 +137,7 @@ class AppRepository extends ApiService {
   }
 
   Future<void> fetchStrapiDataFroAboutUs(String? attribute) async {
+    // ignore: unused_local_variable
     String url = await buildUrl(endpoint: StrapiEndPoints.aboutUsPage, attribute: attribute ?? '');
 
     /// TODO :: Implement this letter

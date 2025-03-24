@@ -13,7 +13,8 @@
   "mob_check_internet": "تحقق من اتصال الإنترنت الخاص بك وحاول مرة أخرى",
   "mob_failed_fetch_data": "فشل جلب البيانات",
   "mob_enter_your_account_details": "أدخل تفاصيل حسابك وابدأ",
-  "mob_forgot_password": "نسيت كلمة المرور {#}",
+  "mob_forgot_password": "نسيت كلمة المرور",
+  "mob_forgot_password_with_question": "هل نسيت كلمة السر؟",
   "mob_or_login_with": "أو تسجيل الدخول مع",
   "mob_dont_have_account": "ليس لديك حساب؟",
   "mob_submit": "يُقدِّم",
@@ -815,5 +816,6 @@
   "mob_list_view": " عرض القائمة",
   "mob_map_view": "عرض الخريطة",
   "mob_remove_catalogue": "إزالة الكتالوج",
-  "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة"
+  "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة",
+  "mob_address_type": "نوع العنوان"
 }

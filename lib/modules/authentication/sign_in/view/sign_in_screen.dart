@@ -94,7 +94,7 @@ class SignInScreen extends StatelessWidget {
       child: Align(
         alignment: AlignmentDirectional.centerEnd,
         child: SmartText(
-          APPStrings.forgotPassword.tr.interpolate(['?']),
+          APPStrings.forgotPasswordWithQuestion.tr,
           style: style.forgotPasswordStyle,
         ),
       ),

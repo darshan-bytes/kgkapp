@@ -76,3 +76,12 @@ final class AddAddressFieldErrorState extends AddAddressState {
   @override
   List<Object?> get props => [fieldType, message];
 }
+
+final class AddAddressChangeAddressTypeState extends AddAddressState {
+  final bool isShippingAddress;
+
+  const AddAddressChangeAddressTypeState(this.isShippingAddress);
+
+  @override
+  List<Object> get props => [isShippingAddress];
+}
