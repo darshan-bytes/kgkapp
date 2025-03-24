@@ -27,7 +27,7 @@ class ForgotEmailSentScreen extends StatelessWidget {
                   Container(
                     alignment: AlignmentDirectional.topStart,
                     child: SmartText(
-                      APPStrings.forgotPassword.tr.interpolate(['']),
+                      APPStrings.forgotPassword.tr,
                       style: signInStyle.titleTextStyle,
                     ),
                   ),

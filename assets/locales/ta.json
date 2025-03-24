@@ -13,7 +13,8 @@
   "mob_check_internet": "உங்கள் இணைய இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்",
   "mob_failed_fetch_data": "தரவைப் பெறுவதில் தோல்வி",
   "mob_enter_your_account_details": "உங்கள் கணக்கு விவரங்களை உள்ளிட்டு தொடங்கவும்",
-  "mob_forgot_password": "கடவுச்சொல்லை மறந்துவிட்டேன் {#}",
+  "mob_forgot_password": "கடவுச்சொல்லை மறந்துவிட்டேன் ",
+  "mob_forgot_password_with_question": "கடவுச்சொல்லை மறந்துவிட்டேன் ?",
   "mob_or_login_with": "அல்லது உள்நுழைக",
   "mob_dont_have_account": "கணக்கு இல்லையா?",
   "mob_submit": "சமர்ப்பிக்கவும்",
@@ -816,5 +817,6 @@
   "mob_list_view": "பட்டியல் காண்க",
   "mob_map_view": "வரைபட காண்க",
   "mob_remove_catalogue": "கேட்டலாகை நீக்கு",
-  "mob_remove_catalogue_msg": "தேர்ந்தெடுக்கப்பட்ட கேட்டலாக் பட்டியலில் இருந்து நீக்கப்படும்"
+  "mob_remove_catalogue_msg": "தேர்ந்தெடுக்கப்பட்ட கேட்டலாக் பட்டியலில் இருந்து நீக்கப்படும்",
+  "mob_address_type": "முகவரி வகை"
 }

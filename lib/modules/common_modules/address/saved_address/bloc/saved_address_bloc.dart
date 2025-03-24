@@ -7,42 +7,49 @@ part 'saved_address_state.dart';
 class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
   bool _isInitialised = false;
   late AppBloc appBloc;
-  List<AddressDetails> addressList = [];
+  List<AddressDetails> _addressList = [];
+
+  List<AddressDetails> get shippingAddressList => _addressList.where((e) => e.type == AppConst.addressTypeIsShipping).toList();
+
+  List<AddressDetails> get billingAddressList => _addressList.where((e) => e.type == AppConst.addressTypeIsBilling).toList();
 
   SavedAddressBloc() : super(const SavedAddressInitial()) {
     on<SavedAddressInitialEvent>(_onSavedAddressInitialEvent);
-    on<SavedAddressChangeBillingAddressSameEvent>(_onSavedAddressChangeBillingAddressSameEvent);
+    //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+    // on<SavedAddressChangeBillingAddressSameEvent>(_onSavedAddressChangeBillingAddressSameEvent);
     on<SavedAddressChangeShippingAddressEvent>(_onSavedAddressChangeShippingAddressEvent);
     on<SavedAddressAddNewAddressEvent>(_onSavedAddressAddNewAddressEvent);
   }
 
   AddressDetails? get defaultShippingAddress =>
-      addressList.firstWhereOrNull((element) => element.isDefaultShipping == true) ?? addressList.firstOrNull;
+      shippingAddressList.firstWhereOrNull((element) => element.isDefaultShipping == true) ?? shippingAddressList.firstOrNull;
 
   AddressDetails? get defaultBillingAddress =>
-      addressList.firstWhereOrNull((element) => element.isDefaultBilling == true) ?? addressList.firstOrNull;
+      billingAddressList.firstWhereOrNull((element) => element.isDefaultBilling == true) ?? billingAddressList.firstOrNull;
 
-  bool get isBillingAddressSameAsShippingAddress => defaultBillingAddress == defaultShippingAddress;
+//TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+  // bool get isBillingAddressSameAsShippingAddress => defaultBillingAddress == defaultShippingAddress;
 
   Future<void> _onSavedAddressInitialEvent(SavedAddressInitialEvent event, Emitter<SavedAddressState> emit) async {
     if (_isInitialised) return;
     appBloc = BlocProvider.of<AppBloc>(event.context);
-    addressList = await appBloc.fetchAddressList(event.context, isForceFetch: true);
+    _addressList = await appBloc.fetchAddressList(event.context, isForceFetch: true);
 
     emit(const SavedAddressLoadedState());
     _isInitialised = true;
   }
 
-  Future<void> _onSavedAddressChangeBillingAddressSameEvent(
-      SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) async {
-    //TODO: Handle on change billing address same as shipping address
-    /// Api call to set billing address same as shipping address
-
-    // emit(const SavedAddressReloadState());
-    await onSameAsShippingClickAPI(event.context);
-    _isInitialised = false;
-    add(SavedAddressInitialEvent(event.context));
-  }
+//TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+  // Future<void> _onSavedAddressChangeBillingAddressSameEvent(
+  //     SavedAddressChangeBillingAddressSameEvent event, Emitter<SavedAddressState> emit) async {
+  //   //TODO: Handle on change billing address same as shipping address
+  //   /// Api call to set billing address same as shipping address
+  //
+  //   // emit(const SavedAddressReloadState());
+  //   await onSameAsShippingClickAPI(event.context);
+  //   _isInitialised = false;
+  //   add(SavedAddressInitialEvent(event.context));
+  // }
 
   Future<void> _onSavedAddressChangeShippingAddressEvent(
       SavedAddressChangeShippingAddressEvent event, Emitter<SavedAddressState> emit) async {
@@ -51,10 +58,11 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     if (result != null) {
       AddressDetails? address = result[RoutesData.addressDetails] as AddressDetails?;
       if (address != null) {
-        int index = addressList.indexWhere((element) => element.id == address.id);
+        int index = _addressList.indexWhere((element) => element.id == address.id);
         if (index != -1) {
-          addressList[index] =
-              event.isShipping ? addressList[index].copyWith(isShippingDefault: true) : addressList[index].copyWith(isBillingDefault: true);
+          _addressList[index] = event.isShipping
+              ? _addressList[index].copyWith(isShippingDefault: true)
+              : _addressList[index].copyWith(isBillingDefault: true);
           _isInitialised = false;
           add(SavedAddressInitialEvent(event.context));
         }
@@ -67,7 +75,7 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
       await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping}).then(
         (value) {
           if (value != null && value[RoutesData.addressDetails] is AddressDetails) {
-            addressList.add(value[RoutesData.addressDetails]);
+            _addressList.add(value[RoutesData.addressDetails]);
             emit(const SavedAddressLoadedState());
           }
         },

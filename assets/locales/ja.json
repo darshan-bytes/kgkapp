@@ -13,7 +13,8 @@
   "mob_check_internet": "インターネット接続を確認して、再試行してください",
   "mob_failed_fetch_data": "データの取得に失敗しました",
   "mob_enter_your_account_details": "アカウントの詳細を入力して開始します",
-  "mob_forgot_password": "パスワードを忘れた{#}",
+  "mob_forgot_password": "パスワードを忘れた",
+  "mob_forgot_password_with_question": "パスワードを忘れた?",
   "mob_or_login_with": "またはでログインします",
   "mob_dont_have_account": "アカウントを持っていませんか？",
   "mob_submit": "提出する",
@@ -816,5 +817,6 @@
   "mob_list_view": "リストビュー",
   "mob_map_view": "マップビュー",
   "mob_remove_catalogue": "カタログを削除",
-  "mob_remove_catalogue_msg": "選択したカタログはリストから削除されます"
+  "mob_remove_catalogue_msg": "選択したカタログはリストから削除されます",
+  "mob_address_type": "アドレスの種類"
 }

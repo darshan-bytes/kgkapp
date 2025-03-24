@@ -42,7 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           SmartText(
-                            APPStrings.forgotPassword.tr.interpolate(['']),
+                            APPStrings.forgotPassword.tr,
                             style: style.titleTextStyle,
                           ),
                           SmartText(

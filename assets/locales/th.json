@@ -13,7 +13,8 @@
   "mob_check_internet": "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณและลองอีกครั้ง",
   "mob_failed_fetch_data": "ไม่สามารถดึงข้อมูลได้",
   "mob_enter_your_account_details": "ป้อนรายละเอียดบัญชีของคุณและเริ่มต้น",
-  "mob_forgot_password": "ลืมรหัสผ่าน {#}",
+  "mob_forgot_password": "ลืมรหัสผ่าน ",
+  "mob_forgot_password_with_question": "ลืมรหัสผ่าน ?",
   "mob_or_login_with": "หรือเข้าสู่ระบบด้วย",
   "mob_dont_have_account": "ไม่มีบัญชี?",
   "mob_submit": "ส่ง",
@@ -816,5 +817,6 @@
   "mob_list_view": "มุมมองรายการ",
   "mob_map_view": "มุมมองแผนที่",
   "mob_remove_catalogue": "ลบแคตตาล็อก",
-  "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ"
+  "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ",
+  "mob_address_type": "ประเภทที่อยู่"
 }
