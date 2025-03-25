@@ -14,6 +14,7 @@ class OrderItem {
   int? items;
   double? totalQuantity;
   UserIdDetails? createdByDetails;
+  String? commodity;
 
   OrderItem(
       {this.sId,
@@ -28,7 +29,8 @@ class OrderItem {
       this.uniqueId,
       this.items,
       this.totalQuantity,
-      this.createdByDetails});
+      this.createdByDetails,
+      this.commodity});
 
   OrderItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -44,6 +46,7 @@ class OrderItem {
     items = json['items'];
     totalQuantity = json['total_quantity']?.toString().toDouble;
     createdByDetails = json['created_by_details'] != null ? UserIdDetails.fromJson(json['created_by_details']) : null;
+    commodity = json['commodity'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +66,7 @@ class OrderItem {
     if (createdByDetails != null) {
       data['created_by_details'] = createdByDetails!.toJson();
     }
+    data['commodity'] = commodity;
     return data;
   }
 }

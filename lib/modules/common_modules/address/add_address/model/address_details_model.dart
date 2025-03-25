@@ -186,9 +186,15 @@ class AddressDetails {
 }
 
 extension AddressDetailsExtension on AddressDetails {
-  String get fullName => "$firstName $lastName";
+  /// Returns the full name combining first and last names.
+  String get fullName => [firstName, lastName].where((e) => e?.isNotEmpty ?? false).join(" ");
 
-  String get fullAddress => "$apartment, $streetAddress, $city, $state, $country, $zipCode";
+  /// Returns the full formatted address, handling null values gracefully.
+  String get fullAddress {
+    final addressParts = [apartment, streetAddress, city, state, country, zipCode].where((e) => e?.isNotEmpty ?? false).join(", ");
+
+    return addressParts;
+  }
 
   String? get contactNumber => phone.isNotEmpty ? "${phone.first.phoneCode} ${phone.first.phoneNumber}" : null;
 
