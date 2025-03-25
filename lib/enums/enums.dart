@@ -39,7 +39,7 @@ enum ProjectStatus {
   pending('pending'),
   completed('completed'),
   cancelled('cancelled'),
-  ;
+  delay('delay');
 
   final String value;
 

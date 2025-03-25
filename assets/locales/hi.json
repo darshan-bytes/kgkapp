@@ -818,5 +818,6 @@
   "mob_map_view": "मानचित्र देखें",
   "mob_remove_catalogue": "कैटलॉग हटाएं",
   "mob_remove_catalogue_msg": "चयनित कैटलॉग सूची से हटा दिया जाएगा",
-  "mob_address_type": "एड्रेस टाइप"
+  "mob_address_type": "एड्रेस टाइप",
+  "delay": "अवधि"
 }

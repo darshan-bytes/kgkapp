@@ -818,5 +818,6 @@
   "mob_map_view": "มุมมองแผนที่",
   "mob_remove_catalogue": "ลบแคตตาล็อก",
   "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ",
-  "mob_address_type": "ประเภทที่อยู่"
+  "mob_address_type": "ประเภทที่อยู่",
+  "delay": "ช่วงเวลา"
 }

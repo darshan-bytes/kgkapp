@@ -818,5 +818,6 @@
   "mob_map_view": "வரைபட காண்க",
   "mob_remove_catalogue": "கேட்டலாகை நீக்கு",
   "mob_remove_catalogue_msg": "தேர்ந்தெடுக்கப்பட்ட கேட்டலாக் பட்டியலில் இருந்து நீக்கப்படும்",
-  "mob_address_type": "முகவரி வகை"
+  "mob_address_type": "முகவரி வகை",
+  "delay": "தேர்ந்தெடுக்கம்"
 }

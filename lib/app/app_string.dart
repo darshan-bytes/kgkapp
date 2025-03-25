@@ -692,6 +692,7 @@ class APPStrings {
   static const String rate = 'mob_rate';
   static const String discountPercentage = 'mob_discount_percentage';
   static const String amt = 'mob_amt';
+  static const String delay = 'mob_delay';
 
   static const String hintEmail = 'mob_hint_email';
   static const String hintFirstName = 'mob_hint_first_name';

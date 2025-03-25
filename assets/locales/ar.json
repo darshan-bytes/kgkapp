@@ -817,5 +817,6 @@
   "mob_map_view": "عرض الخريطة",
   "mob_remove_catalogue": "إزالة الكتالوج",
   "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة",
-  "mob_address_type": "نوع العنوان"
+  "mob_address_type": "نوع العنوان",
+  "delay": "تأخير"
 }
