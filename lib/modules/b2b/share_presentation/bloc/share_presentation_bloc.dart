@@ -13,6 +13,8 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
 
   UserAccessType? selectedGeneralAccessType;
 
+  String? webUrl;
+
   SharePresentationBloc() : super(SharePresentationInitial()) {
     on<SharePresentationInitialEvent>(_onSharePresentationInitialEvent);
     on<ChangeUserAccessTypeEvent>(_onChangeUserAccessTypeEvent);
@@ -36,6 +38,7 @@ class SharePresentationBloc extends Bloc<SharePresentationEvent, SharePresentati
 
   Future<void> _onSharePresentationInitialEvent(SharePresentationInitialEvent event, Emitter<SharePresentationState> emit) async {
     isPresentation = event.isPresentation;
+    webUrl = event.webUrl;
     appBarTitle = isPresentation ? APPStrings.sharePresentation.tr : APPStrings.shareCatalogue.tr;
     userList.clear();
     emailController.clear();

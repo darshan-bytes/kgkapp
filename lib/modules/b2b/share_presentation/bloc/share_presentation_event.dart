@@ -7,8 +7,9 @@ sealed class SharePresentationEvent extends Equatable {
 final class SharePresentationInitialEvent extends SharePresentationEvent {
   ///[isPresentation] is a boolean variable that is used to determine whether the screen is for sharing a presentation or a catalogue.
   final bool isPresentation;
+  final String? webUrl;
 
-  const SharePresentationInitialEvent({this.isPresentation = true});
+  const SharePresentationInitialEvent({this.isPresentation = true, this.webUrl});
 
   @override
   List<Object> get props => [isPresentation];

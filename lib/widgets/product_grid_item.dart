@@ -316,7 +316,7 @@ class ProductGridItem extends StatelessWidget {
             if (!isHomeView && (isCrtAndGramVisible || isFromWatchlist)) diamondAndGramSection(style),
             if (isForAuction)
               SizedBox(
-                height: 32.w,
+                height: 40.w,
               ),
             if (onAddToBagTap != null)
               SmartButton(

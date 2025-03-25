@@ -145,7 +145,7 @@ class DesignLibraryBloc extends Bloc<DesignLibraryEvent, DesignLibraryState> {
   /// Converts API response data to the custom listing data model.
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required DesignLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
-      id: sourceModel.sId,
+      id: sourceModel.suid,
       strDesignListingImageUrl: (sourceModel.images).isNotNullNorEmpty ? sourceModel.images?.first : '',
       strDesignNumber: sourceModel.contractNoSkuNo ?? "",
       strDbfNumber: sourceModel.designDescription,

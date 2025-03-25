@@ -184,12 +184,14 @@ class ProductMenuBottomSheet extends StatelessWidget {
                 ((productDetails.isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr)).toLowerCase().capitalizeFirst,
             prefixImage: AppImages.icShoppingBag),
         SizedBox(height: 8.h),
-        SmartButton(
-            onTap: () {
-              onBuyNow?.call();
-              context.pop();
-            },
-            title: APPStrings.buyNow.tr.toLowerCase().capitalizeFirst),
+
+        /// For now Buy Now is removed from the app. It will be used in future for B2B implementation.
+        // SmartButton(
+        //     onTap: () {
+        //       onBuyNow?.call();
+        //       context.pop();
+        //     },
+        //     title: APPStrings.buyNow.tr.toLowerCase().capitalizeFirst),
       ],
     );
   }

@@ -488,7 +488,7 @@ class HomeWidgets {
             runSpacing: 12.h,
             items: dataList
                 .map((AuctionListModel field) => SmartImage(
-                      height: 132.w,
+                      imageBorderRadius: BorderRadius.circular(12.r),
                       path: field.imageUrl ?? '',
                       fit: BoxFit.contain,
                       isMemCacheEnabled: false,

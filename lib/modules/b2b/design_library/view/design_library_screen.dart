@@ -146,7 +146,10 @@ class DesignLibraryScreen extends StatelessWidget {
           (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.designLibraryList[index],
             onTap: () {
-              context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
+                RoutesData.productId: bloc.designLibraryList[index].id,
+              });
             },
           ),
         ),
