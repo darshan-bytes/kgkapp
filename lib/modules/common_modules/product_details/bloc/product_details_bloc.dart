@@ -161,6 +161,17 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       screenIdentifier == ScreenIdentifier.productForDiamonds ||
       screenIdentifier == ScreenIdentifier.productForGemstones;
 
+  bool get canAddToWishlist =>
+      screenIdentifier == ScreenIdentifier.productForRing ||
+      screenIdentifier == ScreenIdentifier.productForDiamonds ||
+      screenIdentifier == ScreenIdentifier.productForGemstones;
+
+  bool get hasComponents =>
+      screenIdentifier == ScreenIdentifier.productForRing ||
+      screenIdentifier == ScreenIdentifier.productForGemstones ||
+      screenIdentifier == ScreenIdentifier.productForLibraryDesign ||
+      screenIdentifier == ScreenIdentifier.productForLibraryCAD;
+
   @override
   Future<void> close() async {
     wishlistUpdaterServiceStream?.cancel();
@@ -208,6 +219,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       case ScreenIdentifier.productForLibraryDesign:
         await _handleDesignLibraryProduct(event, emit);
         break;
+      case ScreenIdentifier.productForLibraryCAD:
+        await _handleCadLibraryProduct(event, emit);
+        break;
       default:
         break;
     }
@@ -254,6 +268,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> _handleDesignLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     emit(ProductDetailsLoadingState());
     await getDesignLibraryDetails(event.context, productId);
+
+    _emitLoadedStateIfAvailable(event, emit);
+  }
+
+  Future<void> _handleCadLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    emit(ProductDetailsLoadingState());
+    await getCadLibraryDetails(event.context, productId);
 
     _emitLoadedStateIfAvailable(event, emit);
   }
@@ -596,6 +617,46 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }
         },
         (DesignLibraryListItemDataModel designLibraryData) {
+          isErrorInLoadingData = false;
+          isAddedToCart = designLibraryData.isAddedToCart;
+          productName = designLibraryData.productDescription ?? '';
+
+          imgList = [];
+          for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
+            if (element.imageUrl.isNotNullNorEmpty) {
+              imgList.add(element.imageUrl ?? '');
+            }
+          }
+          productDetails = ProductDetailsModel(
+            productId: designLibraryData.suid,
+            suid: designLibraryData.suid,
+            name: productName,
+            jewelleryType: designLibraryData.jewelleryType,
+            productSku: designLibraryData.contractNoSkuNo,
+            imageUrl: designLibraryData.multipleFinishedViewImage.isNullOrEmpty
+                ? ''
+                : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
+            commodity: Commodity.jewellery,
+            components: designLibraryData.components,
+          );
+        },
+      );
+    } catch (e) {
+      print("Error in getDesignLibraryDetails: $e");
+    }
+  }
+
+  Future<void> getCadLibraryDetails(BuildContext context, String productId) async {
+    try {
+      Either<ErrorResponse, CadLibraryListItemDataModel>? response = await AppRepository(context).cadLibraryDetails(id: productId);
+      response?.fold(
+        (error) {
+          isErrorInLoadingData = true;
+          if (error.message.isNotNullNorEmpty) {
+            Utils.showMessage(error.message);
+          }
+        },
+        (CadLibraryListItemDataModel designLibraryData) {
           isErrorInLoadingData = false;
           isAddedToCart = designLibraryData.isAddedToCart;
           productName = designLibraryData.productDescription ?? '';

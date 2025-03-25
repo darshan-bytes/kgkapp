@@ -172,7 +172,10 @@ class DesignLibraryScreen extends StatelessWidget {
                 margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.designLibraryList[index],
                 onTap: () {
-                  context.pushNamed(AppRoutes.designLibraryFeedbackPage);
+                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                    RoutesData.isPageFor: ScreenIdentifier.productForLibraryDesign,
+                    RoutesData.productId: bloc.designLibraryList[index].id,
+                  });
                 },
               ),
               if (state is DesignLibraryLoadingMoreState && index == bloc.designLibraryList.length - 1)

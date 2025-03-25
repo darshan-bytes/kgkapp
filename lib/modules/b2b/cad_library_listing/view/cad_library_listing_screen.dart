@@ -159,7 +159,17 @@ class CadLibraryListingScreen extends StatelessWidget {
         await bloc.pullToRefresh(context: context);
       },
       child: SmartGridView(
-        items: bloc.cadList.map((item) => DesignListingGridItem.cadLibrary(designModel: item)).toList(),
+        items: bloc.cadList
+            .map((item) => DesignListingGridItem.cadLibrary(
+                  designModel: item,
+                  onTap: () {
+                    context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                      RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD,
+                      RoutesData.productId: item.id,
+                    });
+                  },
+                ))
+            .toList(),
         isLoadingMore: state is CadListLoadingMoreState,
       ),
     );
@@ -181,7 +191,12 @@ class CadLibraryListingScreen extends StatelessWidget {
               CadLibraryListItem(
                 margin: EdgeInsetsDirectional.symmetric(vertical: 10.h),
                 designModel: bloc.cadList[index],
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                    RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD,
+                    RoutesData.productId: bloc.cadList[index].id,
+                  });
+                },
               ),
               if (state is CadListLoadingMoreState && index == bloc.cadList.length - 1) const SmartCircularProgressIndicator(),
             ],
