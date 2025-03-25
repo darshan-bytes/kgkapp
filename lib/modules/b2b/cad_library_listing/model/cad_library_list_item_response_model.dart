@@ -61,7 +61,6 @@ class CadLibraryListItemDataModel {
   String? jewelleryTypeName;
   String? kgkCollection;
   List<String>? images;
-  bool? isAddedToCart;
   String? autoDescription;
   String? styleNumber;
   double? diamondWeight;
@@ -70,7 +69,9 @@ class CadLibraryListItemDataModel {
   String? productDescription;
   String? brand;
   List<MultipleFinishedViewImage>? multipleFinishedViewImage;
-  bool? isCommented;
+  List<Component>? components;
+  bool isAddedToCart = false;
+  bool isCommented = false;
 
   CadLibraryListItemDataModel({
     this.sId,
@@ -133,7 +134,6 @@ class CadLibraryListItemDataModel {
     this.jewelleryTypeName,
     this.kgkCollection,
     this.images,
-    this.isAddedToCart,
     this.autoDescription,
     this.styleNumber,
     this.diamondWeight,
@@ -142,6 +142,8 @@ class CadLibraryListItemDataModel {
     this.productDescription,
     this.brand,
     this.multipleFinishedViewImage,
+    this.components,
+    this.isAddedToCart = false,
     this.isCommented = false,
   });
 
@@ -217,7 +219,6 @@ class CadLibraryListItemDataModel {
     jewelleryTypeName = json['jewellery_type_name'];
     kgkCollection = json['kgk_collection'];
     images = json['images']?.cast<String>();
-    isAddedToCart = json['isAddedToCart'];
     autoDescription = json['auto_description'];
     styleNumber = json['style_number'];
     diamondWeight = json['diamond_weight']?.toString().toDouble;
@@ -225,9 +226,14 @@ class CadLibraryListItemDataModel {
     contractNoSkuNo = json['contract_no_sku_no'];
     productDescription = json['product_description'];
     brand = json['brand'];
+    isAddedToCart = json['isAddedToCart'] ?? false;
+    isCommented = json['is_commented'] ?? false;
     multipleFinishedViewImage = json["multiple_finished_view_image"] == null
         ? []
         : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
+    if (json["components"] != null) {
+      components = List<Component>.from(json["components"]!.map((x) => Component.fromJson(x)));
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -295,6 +301,9 @@ class CadLibraryListItemDataModel {
     data['kgk_collection'] = kgkCollection;
     data['images'] = images;
     data['isAddedToCart'] = isAddedToCart;
+    data['is_commented'] = isCommented;
+    data["multiple_finished_view_image"] = multipleFinishedViewImage?.map((x) => x.toJson()).toList();
+    data['components'] = components?.map((x) => x.toJson()).toList();
     return data;
   }
 }

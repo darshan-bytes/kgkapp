@@ -183,6 +183,8 @@ class CommonResponse<T> {
         return PaginationData<HomeGemstonesModel>.fromJson(json);
       case const (DesignLibraryListItemDataModel):
         return DesignLibraryListItemDataModel.fromJson(json);
+      case const (CadLibraryListItemDataModel):
+        return CadLibraryListItemDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):

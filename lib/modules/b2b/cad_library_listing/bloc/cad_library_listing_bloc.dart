@@ -135,7 +135,7 @@ class CadLibraryListingBloc extends Bloc<CadLibraryListingEvent, CadLibraryListi
 
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required CadLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
-      id: sourceModel.sId,
+      id: sourceModel.suid,
       strCADLibraryImageUrl: ((sourceModel.multipleFinishedViewImage).isNotNullNorEmpty &&
               sourceModel.multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes')
           ? sourceModel.multipleFinishedViewImage?.firstOrNull?.imageUrl
