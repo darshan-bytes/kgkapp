@@ -674,7 +674,7 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartText(
-                        signUpBloc.selectedCountry.name,
+                        signUpBloc.selectedCountry.getTranslatedName(context) ?? signUpBloc.selectedCountry.name,
                         style: countryPickerStyle.inputTextStyle,
                       ),
                     ),

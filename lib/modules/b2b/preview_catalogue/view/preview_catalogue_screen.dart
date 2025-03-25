@@ -64,7 +64,7 @@ class PreviewCatalogueScreen extends StatelessWidget {
                 Utils.showSmartModalBottomSheet(
                   context: context,
                   enableDrag: false,
-                  builder: (context) => const SharePresentationScreen(isPresentation: false),
+                  builder: (context) => SharePresentationScreen(isPresentation: false, webUrl: bloc.digitalCatalogueListingModel?.webUrl),
                 );
               },
               title: APPStrings.share.tr,

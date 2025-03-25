@@ -195,7 +195,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: designLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: designLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: designLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: designLibraryListItemDataList[index].isCommented ?? false,
+        isCommentVisible: designLibraryListItemDataList[index].isCommented,
         commodity: Commodity.designLibrary,
       ),
     );

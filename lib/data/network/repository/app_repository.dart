@@ -1243,6 +1243,13 @@ class AppRepository extends ApiService {
     var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteDigitalCatalogueById(catalogueId), withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, DesignLibraryListItemDataModel>?> designLibraryDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DesignLibraryListItemDataModel>(ApiClient.designLibraryDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS

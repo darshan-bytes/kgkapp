@@ -218,6 +218,8 @@ class ApiClient {
   static String digitalCatalogueCommentsById(String commentId) => '$apiBaseUrl/digital-catalogue/comments/$commentId';
 
   static String deleteDigitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
+
+  static String designLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/design/$id';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
