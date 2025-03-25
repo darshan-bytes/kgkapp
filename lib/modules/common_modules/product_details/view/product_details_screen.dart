@@ -291,31 +291,33 @@ class ProductDetailsScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(width: 8.w),
-                                    BlocBuilder<AppBloc, AppState>(
-                                      buildWhen: (previous, current) =>
-                                          current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
-                                      builder: (context, state) {
-                                        return SelectionButton(
-                                          height: 42.w,
-                                          width: 42.w,
-                                          padding: EdgeInsetsDirectional.all(6.w),
-                                          isSelected: false,
-                                          onTap: () {
-                                            if (bloc.productDetails != null) {
-                                              BlocProvider.of<AppBloc>(context).onTapFavorite(
-                                                context,
-                                                productDetails: bloc.productDetails!,
-                                              );
-                                            }
-                                          },
-                                          imageWidth: 20.w,
-                                          imageHeight: 20.w,
-                                          fit: BoxFit.contain,
-                                          image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
-                                        );
-                                      },
-                                    ),
+                                    if (bloc.canAddToWishlist) ...[
+                                      SizedBox(width: 8.w),
+                                      BlocBuilder<AppBloc, AppState>(
+                                        buildWhen: (previous, current) =>
+                                            current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                                        builder: (context, state) {
+                                          return SelectionButton(
+                                            height: 42.w,
+                                            width: 42.w,
+                                            padding: EdgeInsetsDirectional.all(6.w),
+                                            isSelected: false,
+                                            onTap: () {
+                                              if (bloc.productDetails != null) {
+                                                BlocProvider.of<AppBloc>(context).onTapFavorite(
+                                                  context,
+                                                  productDetails: bloc.productDetails!,
+                                                );
+                                              }
+                                            },
+                                            imageWidth: 20.w,
+                                            imageHeight: 20.w,
+                                            fit: BoxFit.contain,
+                                            image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
+                                          );
+                                        },
+                                      ),
+                                    ],
                                     SizedBox(width: 8.w),
                                     SelectionButton(
                                       height: 42.w,
@@ -438,9 +440,7 @@ class ProductDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              bloc.screenIdentifier == ScreenIdentifier.productForGemstones ||
-              bloc.screenIdentifier == ScreenIdentifier.productForLibraryDesign) ...[
+          if (bloc.hasComponents) ...[
             SizedBox(height: 24.h),
             const Divider(),
             ProductDetailsComponentsView(
