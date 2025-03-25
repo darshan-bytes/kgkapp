@@ -53,6 +53,7 @@ class ConceptInfoPopupScreen extends StatelessWidget {
                               path: imageList[index],
                               height: 64.h,
                               width: 102.w,
+                              fit: BoxFit.fill,
                               imageBorderRadius: BorderRadius.circular(4.r),
                             );
                           }),

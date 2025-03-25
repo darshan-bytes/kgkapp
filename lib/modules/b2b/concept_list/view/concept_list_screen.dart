@@ -40,7 +40,7 @@ class ConceptListScreen extends StatelessWidget {
                           return RefreshIndicator.adaptive(
                             child: ListView.separated(
                               physics: const ClampingScrollPhysics(),
-                              padding: EdgeInsetsDirectional.only(bottom: 24.h),
+                              padding: EdgeInsetsDirectional.only(bottom: 34.h),
                               controller: conceptListBloc.paginationScrollController.scrollController,
                               shrinkWrap: true,
                               itemCount: conceptListBloc.conceptList.length,
@@ -51,11 +51,17 @@ class ConceptListScreen extends StatelessWidget {
                                   builder: (context, state) {
                                     return Column(
                                       children: [
-                                        ConceptItem(
-                                          conceptListModel: conceptListBloc.conceptList[index],
+                                        B2BListingItem(
                                           onTap: () {
-                                            showConceptDetailBottomSheet(context: context, concept: conceptListBloc.conceptList[index]);
+                                            showConceptDetailBottomSheet(
+                                                context: context, concept: conceptListBloc.conceptList[index]);
                                           },
+                                          onTapCircleWithText: () {
+                                            context.pushNamed(AppRoutes.presentationPage,
+                                                arguments: {RoutesData.presentationList: conceptListBloc.conceptList[index].presentationList});
+                                          },
+                                          type: B2BListingType.conceptListingType,
+                                          listingItemModel: conceptListBloc.conceptList[index],
                                         ),
                                         if (state is ConceptListLoadingMoreState && index == conceptListBloc.conceptList.length - 1)
                                           const SmartCircularProgressIndicator(),
@@ -67,7 +73,7 @@ class ConceptListScreen extends StatelessWidget {
                               separatorBuilder: (context, index) => SizedBox(height: 16.h),
                             ),
                             onRefresh: () async {
-                              await conceptListBloc.pullToRefresh();
+                              conceptListBloc.add(ConceptListPullToRefreshEvent(context: context));
                             },
                           );
                         },
@@ -78,7 +84,7 @@ class ConceptListScreen extends StatelessWidget {
               ),
             );
           } else {
-            return const SmartCircularProgressIndicator();
+            return SizedBox.shrink();
           }
         },
       ),
@@ -86,23 +92,26 @@ class ConceptListScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is ConceptListLoadedState,
         builder: (context, state) {
           if (state is ConceptListLoadedState) {
-            return SafeArea(
-              child: FilterBottomActionBar(
-                controller: conceptListBloc.paginationScrollController.controller,
-                onFilterTap: () {
-                  Utils.showSmartModalBottomSheet(
-                    context: context,
-                    builder: (context) => FilterScreen(
-                      onApply: () {},
-                    ),
-                  );
-                },
-              ),
+            return FilterBottomActionBar(
+              controller: conceptListBloc.paginationScrollController.controller,
+              onFilterTap: () {
+                Utils.showSmartModalBottomSheet(
+                  context: context,
+                  builder: (_) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        conceptListBloc.add(ConceptListFilterEvent(filterData: value, context: context));
+                      }
+                    },
+                  ),
+                );
+              },
             );
           }
           return const SizedBox.shrink();
         },
       ),
+
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: conceptListBloc.paginationScrollController.canScrollToTop,
         onTap: conceptListBloc.paginationScrollController.scrollToTop,
@@ -110,22 +119,21 @@ class ConceptListScreen extends StatelessWidget {
     );
   }
 
-  void showConceptDetailBottomSheet({required BuildContext context, required ConceptListModel concept}) {
+  void showConceptDetailBottomSheet({required BuildContext context, required B2BCustomListingDataModel concept}) {
+    List<String> dummy = [];
+    if(concept.descriptionImageList.isNotNullNorEmpty){
+      for (int i = 0; i < concept.descriptionImageList!.length; i++) {
+        dummy.add(concept.descriptionImageList![i]);
+      }
+    }
+
     Utils.showSmartModalBottomSheet(
         context: context,
         builder: (context) {
           return ConceptInfoPopupScreen(
-            imageList: const [
-              "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
-              "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
-              "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
-              "https://i.ibb.co/Bq1jYmy/Rectangle-1862.png",
-              "https://i.ibb.co/MV2wMVZ/Rectangle-1863.png",
-              "https://i.ibb.co/Z8KQJqp/Rectangle-1864.png",
-            ],
-            conceptNo: concept.id ?? '',
-            conceptDesc:
-                'A jewellery collection inspired by the moon\'s allure. Rings, necklaces, and earrings that capture its luminous beauty.',
+            imageList: dummy,
+            conceptNo: concept.strConceptNumber ?? '',
+            conceptDesc: concept.strDescription ?? '',
           );
         });
   }

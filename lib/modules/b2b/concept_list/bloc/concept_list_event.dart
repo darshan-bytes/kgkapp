@@ -5,10 +5,12 @@ sealed class ConceptListEvent extends Equatable {
 }
 
 final class ConceptListInitialEvent extends ConceptListEvent {
-  const ConceptListInitialEvent();
+  final BuildContext context;
+
+  const ConceptListInitialEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 final class ConceptListSearchEvent extends ConceptListEvent {
@@ -19,17 +21,30 @@ final class ConceptListSearchEvent extends ConceptListEvent {
 }
 
 final class ConceptListLoadMoreEvent extends ConceptListEvent {
+  final BuildContext context;
   final int currentPage;
 
-  const ConceptListLoadMoreEvent(this.currentPage);
+  const ConceptListLoadMoreEvent(this.context,this.currentPage);
 
   @override
-  List<Object> get props => [currentPage];
+  List<Object> get props => [context,currentPage];
 }
 
 final class ConceptListPullToRefreshEvent extends ConceptListEvent {
-  const ConceptListPullToRefreshEvent();
+  final BuildContext context;
+
+  const ConceptListPullToRefreshEvent({required this.context});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
+}
+
+final class ConceptListFilterEvent extends ConceptListEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const ConceptListFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
 }

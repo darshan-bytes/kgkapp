@@ -208,25 +208,66 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     });
   }
 
+  ProjectStatus getOrderStatus({required String orderStatus}) {
+    switch (orderStatus) {
+      case "approved":
+        return ProjectStatus.approval;
+      case "pending":
+        return ProjectStatus.pending;
+      case "completed":
+        return ProjectStatus.completed;
+      case "cancelled":
+        return ProjectStatus.cancelled;
+      case "in_progress":
+        return ProjectStatus.orangeInProgress;
+      default:
+        return ProjectStatus.pending;
+    }
+  }
+
   /// Populate digital catalogue list
   List<B2BCustomListingDataModel> _populateDigitalCatalogueList(List<PddDataModel> dataList) {
     return dataList.map((data) {
+      String formatName(Map<String, dynamic>? details) {
+        if (details == null) return '-';
+        final firstName = details['firstname']?.toString().trim() ?? '';
+        final lastName = details['lastname']?.toString().trim() ?? '';
+        return (firstName.isNotEmpty || lastName.isNotEmpty) ? '$firstName $lastName'.trim() : '-';
+      }
+
       return B2BCustomListingDataModel(
-        id: data.sId ?? '',
+        id: data.id ?? '',
         strPresentationNumber: data.presentationNumber ?? '',
-        strProject: data.totalProjects.toString(),
+        strProject: data.totalProjects?.toString() ?? '0',
         strConceptName: data.conceptName ?? '',
-        status: data.projectStatus,
-        strCreatedBy: data.createdByDetails?.fullName ?? '',
-        strCreatedByImageUrl: data.createdByDetails?.profilePicUrl?.setMediaUrl ?? '',
-        strCreatedOn: data.createdAt?.changeDateFormat(
-            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
-        strAssignTo: data.assignedToDetails?.first.fullName,
-        strAssignToImageUrl: data.assignedToDetails?.first.profilePicUrl?.setMediaUrl ?? '',
-        strApprovedBy: data.approvedByDetails?.fullName ?? '',
-        strApprovedByImageUrl: data.approvedByDetails?.profilePicUrl?.setMediaUrl ?? '',
-        strConceptNumber: data.conceptNumber ?? "",
-        strPresentationImageUrl: data.image,
+        status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
+        strCreatedBy: formatName(data.createdByDetails),
+        strCreatedByImageUrl: data.createdByDetails['profile_pic'],
+        strCreatedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strApprovedBy: formatName(data.approvedByDetails),
+        strApprovedByImageUrl: data.approvedByDetails['profile_pic'],
+        strConceptNumber: data.conceptNumber ?? '',
+        strPresentationImageUrl: '',
+        fields: generateB2BItemFields(data.assignedToDetails),
+      );
+    }).toList();
+  }
+
+  List<B2BItemField> generateB2BItemFields(List<Map<String, String>>? assignedToDetails) {
+    if (assignedToDetails == null || assignedToDetails.isEmpty) {
+      return [];
+    }
+
+    return assignedToDetails.map((detail) {
+      String firstname = detail['firstname'] ?? '';
+      String lastname = detail['lastname'] ?? '';
+      String fullName = '$firstname $lastname'.trim();
+      String imageUrl = detail['profile_pic'] ?? '';
+
+      return B2BItemField(
+        label: APPStrings.assignTo.tr,
+        value: fullName,
+        imageUrl: imageUrl,
       );
     }).toList();
   }

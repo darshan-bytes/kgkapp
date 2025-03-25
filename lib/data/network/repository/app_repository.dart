@@ -845,6 +845,25 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // For Get Concept List
+  Future<Either<ErrorResponse, PaginationData<ConceptModel>>?> getConceptList(
+      {Map<String, dynamic>? body, bool isShowLoader = false}) async {
+    if (isShowLoader) {
+      context.setAppLoading(true);
+    }
+    var response = await postMethod<PaginationData<ConceptModel>>(ApiClient.conceptList, body, withCurrencyHeader: true);
+    if (isShowLoader) {
+      context.setAppLoading(false);
+    }
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //getConceptFilterList use getMethod
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> getConceptFilterList() async {
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.filterConceptList);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
     var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches,
         query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});
