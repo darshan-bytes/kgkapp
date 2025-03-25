@@ -14,6 +14,7 @@ class APPStrings {
   static const String percentage = '%';
 
   static const String forgotPassword = 'mob_forgot_password';
+  static const String forgotPasswordWithQuestion = 'mob_forgot_password_with_question';
   static const String signIn = 'mob_sign_in';
   static const String error = 'mob_error';
   static const String email = 'mob_email';
@@ -691,6 +692,7 @@ class APPStrings {
   static const String rate = 'mob_rate';
   static const String discountPercentage = 'mob_discount_percentage';
   static const String amt = 'mob_amt';
+  static const String delay = 'mob_delay';
 
   static const String hintEmail = 'mob_hint_email';
   static const String hintFirstName = 'mob_hint_first_name';
@@ -1006,7 +1008,9 @@ class APPStrings {
   static const String crt = 'mob_crt';
   static const String grms = 'mob_grms';
   static const String compareProductMinimum = 'mob_compare_product_minimum';
-
   static const String listView = 'mob_list_view';
   static const String mapView = 'mob_map_view';
+  static const String removeCatalogue = 'mob_remove_catalogue';
+  static const String removeCatalogueMsg = 'mob_remove_catalogue_msg';
+  static const String addressType = 'mob_address_type';
 }

@@ -13,7 +13,8 @@
   "mob_check_internet": "Check your internet connection and try again",
   "mob_failed_fetch_data": "Failed to fetch data",
   "mob_enter_your_account_details": "Enter your account details and get started",
-  "mob_forgot_password": "Forgot password{#}",
+  "mob_forgot_password": "Forgot password",
+  "mob_forgot_password_with_question": "Forgot password?",
   "mob_or_login_with": "Or login with",
   "mob_dont_have_account": "Don’t have an account?",
   "mob_submit": "Submit",
@@ -814,5 +815,9 @@
   "mob_grms": "grms",
   "mob_compare_product_minimum": "Please select at least two products to compare",
   "mob_list_view": "List View",
-  "mob_map_view": "Map View"
+  "mob_map_view": "Map View",
+  "mob_remove_catalogue": "Remove Catalogue",
+  "mob_remove_catalogue_msg": "Selected catalogue will be removed from the list",
+  "mob_address_type": "Address Type",
+  "delay": "Delay"
 }

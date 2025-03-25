@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class AddressDetails {
   AddressDetails({
     this.customerOrgId,
@@ -14,6 +16,7 @@ class AddressDetails {
     this.isDefaultShipping = false,
     this.isDefaultBilling = false,
     this.id,
+    this.type,
     this.isDeleted,
     this.deletedAt,
     this.createdAt,
@@ -35,8 +38,9 @@ class AddressDetails {
   final bool isDefaultShipping;
   final bool isDefaultBilling;
   final String? id;
+  final String? type;
   final bool? isDeleted;
-  final dynamic deletedAt;
+  final DateTime? deletedAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -56,6 +60,7 @@ class AddressDetails {
     bool? isShippingDefault,
     bool? isBillingDefault,
     String? id,
+    String? type,
     bool? isDeleted,
     DateTime? deletedAt,
     DateTime? createdAt,
@@ -77,6 +82,7 @@ class AddressDetails {
       isDefaultShipping: isShippingDefault ?? isDefaultShipping,
       isDefaultBilling: isBillingDefault ?? isDefaultBilling,
       id: id ?? this.id,
+      type: type ?? this.type,
       isDeleted: isDeleted ?? this.isDeleted,
       deletedAt: deletedAt ?? this.deletedAt,
       createdAt: createdAt ?? this.createdAt,
@@ -101,6 +107,7 @@ class AddressDetails {
       isDefaultShipping: json["is_shipping_default"],
       isDefaultBilling: json["is_billing_default"],
       id: json["_id"],
+      type: json["type"],
       isDeleted: json["isDeleted"],
       deletedAt: DateTime.tryParse(json["deletedAt"] ?? ""),
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
@@ -124,6 +131,7 @@ class AddressDetails {
         "is_shipping_default": isDefaultShipping,
         "is_billing_default": isDefaultBilling,
         "_id": id,
+        "type": type,
         "isDeleted": isDeleted,
         "deletedAt": deletedAt?.toIso8601String(),
         "createdAt": createdAt?.toIso8601String(),
@@ -148,6 +156,7 @@ class AddressDetails {
           phone == other.phone &&
           createdBy == other.createdBy &&
           id == other.id &&
+          type == other.type &&
           isDeleted == other.isDeleted &&
           deletedAt == other.deletedAt &&
           createdAt == other.createdAt &&
@@ -168,6 +177,7 @@ class AddressDetails {
       phone.hashCode ^
       createdBy.hashCode ^
       id.hashCode ^
+      type.hashCode ^
       isDeleted.hashCode ^
       deletedAt.hashCode ^
       createdAt.hashCode ^
@@ -176,11 +186,21 @@ class AddressDetails {
 }
 
 extension AddressDetailsExtension on AddressDetails {
-  String get fullName => "$firstName $lastName";
+  /// Returns the full name combining first and last names.
+  String get fullName => [firstName, lastName].where((e) => e?.isNotEmpty ?? false).join(" ");
 
-  String get fullAddress => "$apartment, $streetAddress, $city, $state, $country, $zipCode";
+  /// Returns the full formatted address, handling null values gracefully.
+  String get fullAddress {
+    final addressParts = [apartment, streetAddress, city, state, country, zipCode].where((e) => e?.isNotEmpty ?? false).join(", ");
+
+    return addressParts;
+  }
 
   String? get contactNumber => phone.isNotEmpty ? "${phone.first.phoneCode} ${phone.first.phoneNumber}" : null;
+
+  bool get isShippingAddress => type == AppConst.addressTypeIsShipping;
+
+  bool get isBillingAddress => type == AppConst.addressTypeIsBilling;
 }
 
 class CustomerPhoneNumber {

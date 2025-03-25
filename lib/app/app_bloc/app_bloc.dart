@@ -1,4 +1,4 @@
-import 'package:kgk/kgk.dart';
+import '../../kgk.dart';
 
 part 'app_event.dart';
 

@@ -13,7 +13,8 @@
   "mob_check_internet": "अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें",
   "mob_failed_fetch_data": "डेटा लाने में विफल",
   "mob_enter_your_account_details": "अपना खाता विवरण दर्ज करें और आरंभ करें",
-  "mob_forgot_password": "पासवर्ड भूल गए{#}",
+  "mob_forgot_password": "पासवर्ड भूल गए",
+  "mob_forgot_password_with_question": "पासवर्ड भूल गए?",
   "mob_or_login_with": "या फिर लॉगिन करें",
   "mob_dont_have_account": "कोई खाता नहीं है?",
   "mob_submit": "जमा करना",
@@ -814,5 +815,9 @@
   "mob_grms": "ग्राम",
   "mob_compare_product_minimum": "कृपया तुलना करने के लिए कम से कम दो प्रोडक्ट्स चुनें",
   "mob_list_view": "सूची देखें",
-  "mob_map_view": "मानचित्र देखें"
+  "mob_map_view": "मानचित्र देखें",
+  "mob_remove_catalogue": "कैटलॉग हटाएं",
+  "mob_remove_catalogue_msg": "चयनित कैटलॉग सूची से हटा दिया जाएगा",
+  "mob_address_type": "एड्रेस टाइप",
+  "delay": "अवधि"
 }

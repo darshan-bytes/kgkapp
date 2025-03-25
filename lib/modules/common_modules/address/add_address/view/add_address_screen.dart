@@ -35,9 +35,10 @@ class AddAddressScreen extends StatelessWidget {
                   children: [
                     if (bloc.isFromCheckout) ...[
                       const CheckoutHeaderProgressbar(),
-                      _buildIsBillingAddressSameAsSelected(bloc, style),
+                      //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
+                      // _buildIsBillingAddressSameAsSelected(bloc, style),
                     ],
-                    generateAddressForm(bloc, countryPickerStyle, context),
+                    generateAddressForm(bloc, countryPickerStyle, context, style),
                   ],
                 ),
               );
@@ -69,7 +70,8 @@ class AddAddressScreen extends StatelessWidget {
     );
   }
 
-  Widget generateAddressForm(AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context) {
+  Widget generateAddressForm(
+      AddAddressBloc bloc, CountryPickerStyle countryPickerStyle, BuildContext context, AddAddressScreenStyle style) {
     return Padding(
         padding: bloc.isFromCheckout
             ? EdgeInsetsDirectional.symmetric(horizontal: 17.w)
@@ -92,6 +94,10 @@ class AddAddressScreen extends StatelessWidget {
           _buildZipCodeField(bloc),
           SizedBox(height: 24.h),
           _buildPhoneField(bloc, context, countryPickerStyle),
+          if (!bloc.isEditAddress) ...[
+            SizedBox(height: 24.h),
+            _buildAddressTypeRadio(bloc, style),
+          ],
           SizedBox(height: 24.h),
           SmartButton(
             onTap: () {
@@ -387,6 +393,48 @@ class AddAddressScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget _buildAddressTypeRadio(AddAddressBloc bloc, AddAddressScreenStyle style) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SmartText(
+          APPStrings.addressType.tr,
+          style: style.isSameAddressStyle,
+        ),
+        BlocBuilder<AddAddressBloc, AddAddressState>(
+          buildWhen: (previous, current) => current is AddAddressChangeAddressTypeState,
+          builder: (context, state) {
+            return Row(
+              children: [
+                SmartRadioButton<bool>(
+                  value: true,
+                  onChanged: (value) {
+                    if (value != null) {
+                      bloc.add(AddAddressChangeAddressTypeEvent(value));
+                    }
+                  },
+                  label: APPStrings.shippingAddress.tr,
+                  groupValue: bloc.isShippingAddress,
+                ),
+                SizedBox(width: 24.w),
+                SmartRadioButton<bool>(
+                  value: false,
+                  onChanged: (value) {
+                    if (value != null) {
+                      bloc.add(AddAddressChangeAddressTypeEvent(value));
+                    }
+                  },
+                  label: APPStrings.billingAddress.tr,
+                  groupValue: bloc.isShippingAddress,
+                ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

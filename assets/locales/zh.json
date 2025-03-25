@@ -13,7 +13,8 @@
   "mob_check_internet": "检查您的互联网连接，然后重试",
   "mob_failed_fetch_data": "无法获取数据",
   "mob_enter_your_account_details": "输入您的帐户详细信息并开始",
-  "mob_forgot_password": "忘记密码{#}",
+  "mob_forgot_password": "忘记密码",
+  "mob_forgot_password_with_question": "忘记密码？",
   "mob_or_login_with": "或登录",
   "mob_dont_have_account": "没有帐户？",
   "mob_submit": "提交",
@@ -814,5 +815,9 @@
   "mob_grms": "總平均數",
   "mob_compare_product_minimum": "请选择至少两种产品进行比较",
   "mob_list_view": "列表视图",
-  "mob_map_view": "地图视图"
+  "mob_map_view": "地图视图",
+  "mob_remove_catalogue": "移除目录",
+  "mob_remove_catalogue_msg": "所选目录将从列表中移除",
+  "mob_address_type": "地址类型",
+  "delay": "延迟"
 }

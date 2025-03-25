@@ -214,6 +214,7 @@ class GemstoneDatum {
     required this.wishlistID,
     required this.components,
     this.isAddedToCart = false,
+    this.isCommented = false,
   });
 
   String? id;
@@ -393,6 +394,7 @@ class GemstoneDatum {
   String? wishlistID;
   List<StoneElement> components;
   bool isAddedToCart;
+  bool isCommented;
 
   factory GemstoneDatum.fromJson(Map<String, dynamic> json) {
     return GemstoneDatum(
@@ -573,6 +575,7 @@ class GemstoneDatum {
       wishlistID: json["is_favorite"],
       components: json["components"] == null ? [] : List<StoneElement>.from(json["components"]!.map((x) => StoneElement.fromJson(x))),
       isAddedToCart: json["isAddedToCart"] ?? false,
+      isCommented: json["is_commented"] ?? false,
     );
   }
 

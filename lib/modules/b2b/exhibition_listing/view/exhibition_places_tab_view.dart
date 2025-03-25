@@ -7,12 +7,7 @@ class ExhibitionPlacesTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTheme.of(context).filterBottomActionBarStyle;
     ExhibitionListingItemStyle listingItemStyle = AppTheme.of(context).exhibitionListingItemStyle;
-    final outlineInputBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: style.dividerColor),
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
-    );
     return Scaffold(
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: exhibitionListingBloc.paginationScrollController.canScrollToTop,

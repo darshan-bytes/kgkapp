@@ -291,31 +291,33 @@ class ProductDetailsScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(width: 8.w),
-                                    BlocBuilder<AppBloc, AppState>(
-                                      buildWhen: (previous, current) =>
-                                          current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
-                                      builder: (context, state) {
-                                        return SelectionButton(
-                                          height: 42.w,
-                                          width: 42.w,
-                                          padding: EdgeInsetsDirectional.all(6.w),
-                                          isSelected: false,
-                                          onTap: () {
-                                            if (bloc.productDetails != null) {
-                                              BlocProvider.of<AppBloc>(context).onTapFavorite(
-                                                context,
-                                                productDetails: bloc.productDetails!,
-                                              );
-                                            }
-                                          },
-                                          imageWidth: 20.w,
-                                          imageHeight: 20.w,
-                                          fit: BoxFit.contain,
-                                          image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
-                                        );
-                                      },
-                                    ),
+                                    if (bloc.canAddToWishlist) ...[
+                                      SizedBox(width: 8.w),
+                                      BlocBuilder<AppBloc, AppState>(
+                                        buildWhen: (previous, current) =>
+                                            current is ProductAddToFavoriteState || current is ProductRemoveFromFavoriteState,
+                                        builder: (context, state) {
+                                          return SelectionButton(
+                                            height: 42.w,
+                                            width: 42.w,
+                                            padding: EdgeInsetsDirectional.all(6.w),
+                                            isSelected: false,
+                                            onTap: () {
+                                              if (bloc.productDetails != null) {
+                                                BlocProvider.of<AppBloc>(context).onTapFavorite(
+                                                  context,
+                                                  productDetails: bloc.productDetails!,
+                                                );
+                                              }
+                                            },
+                                            imageWidth: 20.w,
+                                            imageHeight: 20.w,
+                                            fit: BoxFit.contain,
+                                            image: (bloc.productDetails?.isFavourite ?? false) ? AppImages.icHeartFill : AppImages.icHeart,
+                                          );
+                                        },
+                                      ),
+                                    ],
                                     SizedBox(width: 8.w),
                                     SelectionButton(
                                       height: 42.w,
@@ -373,10 +375,14 @@ class ProductDetailsScreen extends StatelessWidget {
           _productTypeAndCode(style, bloc),
           SizedBox(height: 8.h),
           SmartText(bloc.productName, style: style.productNameStyle),
-          SizedBox(height: 8.h),
-          _buildRatingBarAndReviews(style, bloc.productDetails),
-          SizedBox(height: 32.h),
-          _compareWidget(bloc, style),
+          if (bloc.productDetails?.reviewCount != null) ...[
+            SizedBox(height: 8.h),
+            _buildRatingBarAndReviews(style, bloc.productDetails),
+          ],
+          if (bloc.canCompare) ...[
+            SizedBox(height: 32.h),
+            _compareWidget(bloc, style),
+          ],
           SizedBox(height: 16.h),
 
           /// AUCTION FLOW FOR DIAMOND
@@ -434,8 +440,7 @@ class ProductDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-          if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
+          if (bloc.hasComponents) ...[
             SizedBox(height: 24.h),
             const Divider(),
             ProductDetailsComponentsView(
@@ -509,7 +514,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),
-              SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
+              SmartText(APPStrings.viewAllXReviews.tr.interpolate([bloc.reviewList.length]), style: style.viewAllReviewStyle, onTap: () {
                 context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
               }),
             ],

@@ -44,8 +44,6 @@ class DesignLibraryListItemDataModel {
   String? suidCustomerCode;
   String? updatedAt;
   String? updatedDateTime;
-  double? diamondWeight;
-  double? metalWeight;
   String? businessCategory;
   String? contractNoSkuNo;
   String? crt;
@@ -54,63 +52,68 @@ class DesignLibraryListItemDataModel {
   String? jewelleryTypeName;
   List<String>? images;
   String? productDescription;
-  bool? isAddedToCart;
+  bool isAddedToCart = false;
+  bool isCommented = false;
+  List<Component>? components;
+  List<MultipleFinishedViewImage>? multipleFinishedViewImage;
 
-  DesignLibraryListItemDataModel(
-      {this.sId,
-      this.approximateModelWeight,
-      this.bestSeller,
-      this.businessCategoryCode,
-      this.concept,
-      this.conceptNo,
-      this.conceptRefSuid,
-      this.conceptSuid,
-      this.createdAt,
-      this.customerCode,
-      this.defaultDiamondQuality,
-      this.designBriefFormNumber,
-      this.designComplexity,
-      this.designCreatedDate,
-      this.designDescription,
-      this.designNumber,
-      this.designerId,
-      this.designerName,
-      this.exclusiveCustomer,
-      this.imageSketch,
-      this.importedFrom,
-      this.isCadCreated,
-      this.isDesignUsed,
-      this.isExclusive,
-      this.jewelleryGroup,
-      this.jewelleryGroupRefSuid,
-      this.jewelleryGroupSuid,
-      this.jewelleryType,
-      this.kgkCollection,
-      this.market,
-      this.newArrival,
-      this.receivedDateTime,
-      this.refSuid,
-      this.refSuidCustomerCode,
-      this.referenceId,
-      this.stoneCardDetails,
-      this.subareaCode,
-      this.subareaId,
-      this.subareaName,
-      this.suid,
-      this.suidCustomerCode,
-      this.updatedAt,
-      this.updatedDateTime,
-      this.diamondWeight,
-      this.metalWeight,
-      this.businessCategory,
-      this.contractNoSkuNo,
-      this.crt,
-      this.gms,
-      this.businessCategoryName,
-      this.jewelleryTypeName,
-      this.images,
-      this.productDescription,
-      this.isAddedToCart});
+  DesignLibraryListItemDataModel({
+    this.sId,
+    this.approximateModelWeight,
+    this.bestSeller,
+    this.businessCategoryCode,
+    this.concept,
+    this.conceptNo,
+    this.conceptRefSuid,
+    this.conceptSuid,
+    this.createdAt,
+    this.customerCode,
+    this.defaultDiamondQuality,
+    this.designBriefFormNumber,
+    this.designComplexity,
+    this.designCreatedDate,
+    this.designDescription,
+    this.designNumber,
+    this.designerId,
+    this.designerName,
+    this.exclusiveCustomer,
+    this.imageSketch,
+    this.importedFrom,
+    this.isCadCreated,
+    this.isDesignUsed,
+    this.isExclusive,
+    this.jewelleryGroup,
+    this.jewelleryGroupRefSuid,
+    this.jewelleryGroupSuid,
+    this.jewelleryType,
+    this.kgkCollection,
+    this.market,
+    this.newArrival,
+    this.receivedDateTime,
+    this.refSuid,
+    this.refSuidCustomerCode,
+    this.referenceId,
+    this.stoneCardDetails,
+    this.subareaCode,
+    this.subareaId,
+    this.subareaName,
+    this.suid,
+    this.suidCustomerCode,
+    this.updatedAt,
+    this.updatedDateTime,
+    this.businessCategory,
+    this.contractNoSkuNo,
+    this.crt,
+    this.gms,
+    this.businessCategoryName,
+    this.jewelleryTypeName,
+    this.images,
+    this.productDescription,
+    this.isCommented = false,
+    this.isAddedToCart = false,
+    this.components,
+    this.multipleFinishedViewImage,
+  });
 
   DesignLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -161,8 +164,6 @@ class DesignLibraryListItemDataModel {
     suidCustomerCode = json['suid_customer_code'];
     updatedAt = json['updated_at'];
     updatedDateTime = json['updated_date_time'];
-    diamondWeight = json['diamond_weight']?.toDouble();
-    metalWeight = json['metal_weight']?.toDouble();
     businessCategory = json['business_category'];
     contractNoSkuNo = json['contract_no_sku_no'];
     crt = json['crt']?.toString();
@@ -180,7 +181,15 @@ class DesignLibraryListItemDataModel {
       images = null;
     }
     productDescription = json['product_description'];
-    isAddedToCart = json['isAddedToCart'];
+    isAddedToCart = json['isAddedToCart'] ?? false;
+    isCommented = json['is_commented'] ?? false;
+    if (json["components"] != null) {
+      components = List<Component>.from(json["components"]!.map((x) => Component.fromJson(x)));
+    }
+    if (json["multiple_finished_view_image"] != null) {
+      multipleFinishedViewImage =
+          List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x)));
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -230,8 +239,7 @@ class DesignLibraryListItemDataModel {
     data['suid_customer_code'] = suidCustomerCode;
     data['updated_at'] = updatedAt;
     data['updated_date_time'] = updatedDateTime;
-    data['diamond_weight'] = diamondWeight;
-    data['metal_weight'] = metalWeight;
+
     data['business_category'] = businessCategory;
     data['contract_no_sku_no'] = contractNoSkuNo;
     data['crt'] = crt;
@@ -241,6 +249,9 @@ class DesignLibraryListItemDataModel {
     data['images'] = images;
     data['product_description'] = productDescription;
     data['isAddedToCart'] = isAddedToCart;
+    data['is_commented'] = isCommented;
+    data['components'] = components?.map((x) => x.toJson()).toList();
+    data['multiple_finished_view_image'] = multipleFinishedViewImage?.map((x) => x.toJson()).toList();
     return data;
   }
 }

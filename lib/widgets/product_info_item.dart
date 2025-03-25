@@ -111,16 +111,17 @@ class ProductInfoItem extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8.w),
-        SmartImage(
-          path: AppImages.icMoreHorizontal,
-          onTap: () {
-            if (onTapMenuButton != null) {
-              onTapMenuButton!();
-            }
-          },
-          height: 24.w,
-          width: 24.w,
-        )
+        if (onTapMenuButton != null)
+          SmartImage(
+            path: AppImages.icMoreHorizontal,
+            onTap: () {
+              if (onTapMenuButton != null) {
+                onTapMenuButton!();
+              }
+            },
+            height: 24.w,
+            width: 24.w,
+          )
       ],
     );
   }

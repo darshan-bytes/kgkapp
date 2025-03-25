@@ -78,3 +78,12 @@ final class AddAddressFieldChangeEvent extends AddAddressEvent {
   @override
   List<Object> get props => [fieldType];
 }
+
+final class AddAddressChangeAddressTypeEvent extends AddAddressEvent {
+  final bool isShippingAddress;
+
+  const AddAddressChangeAddressTypeEvent(this.isShippingAddress);
+
+  @override
+  List<Object> get props => [isShippingAddress];
+}

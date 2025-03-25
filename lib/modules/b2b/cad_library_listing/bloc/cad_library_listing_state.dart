@@ -10,6 +10,8 @@ final class CadListingInitial extends CadLibraryListingState {
 }
 
 final class CadListingLoadedState extends CadLibraryListingState {
+  const CadListingLoadedState();
+
   @override
   List<Object> get props => [];
 }
@@ -22,6 +24,15 @@ final class CadListLoadingMoreState extends CadLibraryListingState {
 }
 
 final class CadListingReloadState extends CadLibraryListingState {
+  const CadListingReloadState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class CadListingLoadingState extends CadLibraryListingState {
+  const CadListingLoadingState();
+
   @override
   List<Object> get props => [];
 }

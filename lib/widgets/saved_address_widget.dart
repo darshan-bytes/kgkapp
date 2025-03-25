@@ -2,7 +2,7 @@ import 'package:kgk/kgk.dart';
 
 class SavedAddressWidget extends StatelessWidget {
   final bool isShippingAddress;
-  final AddressDetails addressDetails;
+  final AddressDetails? addressDetails;
 
   final VoidCallback onChange;
   final VoidCallback onAddNew;
@@ -45,7 +45,7 @@ class SavedAddressWidget extends StatelessWidget {
                         style: style.titleStyle,
                       ),
                     ),
-                    if (!isShippingAddress)
+                    if (!isShippingAddress && onShippingAddressChange != null)
                       Flexible(
                         child: SmartCheckbox(
                           value: isSameAsShippingAddress,
@@ -56,29 +56,35 @@ class SavedAddressWidget extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 16.h),
-                SmartText(addressDetails.fullName, style: style.addressNameStyle),
-                SizedBox(height: 8.h),
-                SmartText(addressDetails.fullAddress, style: style.addressLineStyle),
-                SizedBox(height: 4.h),
-                SmartText(addressDetails.contactNumber, style: style.addressLineStyle),
+                if (addressDetails != null) ...[
+                  SmartText(addressDetails?.fullName, style: style.addressNameStyle),
+                  SizedBox(height: 8.h),
+                  SmartText(addressDetails?.fullAddress, style: style.addressLineStyle),
+                  SizedBox(height: 4.h),
+                  SmartText(addressDetails?.contactNumber, style: style.addressLineStyle),
+                ] else ...[
+                  NoDataFoundWidget(text: APPStrings.noSavedAddressFound.tr),
+                ],
               ],
             ),
           ),
           Divider(color: style.borderColor),
           Row(
             children: [
-              Expanded(
-                child: SmartButton(
-                  onTap: onChange,
-                  title: APPStrings.change.tr,
-                  prefixImage: AppImages.icEditPrimary,
-                  imageSize: 24.w,
-                  activeBackgroundColor: style.whiteColor,
-                  titleStyle: style.addressNameStyle,
-                  activeImageColor: style.primaryColor,
+              if (addressDetails != null) ...[
+                Expanded(
+                  child: SmartButton(
+                    onTap: onChange,
+                    title: APPStrings.change.tr,
+                    prefixImage: AppImages.icEditPrimary,
+                    imageSize: 24.w,
+                    activeBackgroundColor: style.whiteColor,
+                    titleStyle: style.addressNameStyle,
+                    activeImageColor: style.primaryColor,
+                  ),
                 ),
-              ),
-              Container(height: 48.w, width: 1.w, color: style.borderColor),
+                Container(height: 48.w, width: 1.w, color: style.borderColor),
+              ],
               Expanded(
                 child: SmartButton(
                   onTap: onAddNew,

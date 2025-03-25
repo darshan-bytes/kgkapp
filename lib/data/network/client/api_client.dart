@@ -217,6 +217,14 @@ class ApiClient {
 
   static const String getUserProfile = '$apiBaseUrl/customer/profile';
 
+  static String digitalCatalogueCommentsById(String commentId) => '$apiBaseUrl/digital-catalogue/comments/$commentId';
+
+  static String deleteDigitalCatalogueById(String id) => '$apiBaseUrl/digital-catalogue/$id';
+
+  static String designLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/design/$id';
+
+  static String cadLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/CAD/$id';
+
   static const String conceptList = '$apiBaseUrl/concepts/filters';
 }
 

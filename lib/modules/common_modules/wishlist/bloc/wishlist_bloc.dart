@@ -104,7 +104,6 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     response?.fold((error) {
       Utils.showMessage(error.message);
     }, (success) {
-      WishlistModel wishlistModel = success;
       totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
       productList.addAll(populateProductList(success.data));
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
@@ -155,6 +154,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           gms: element.displayCommodity == Commodity.jewellery ? element.productData?.gms : null,
           colorsCode: _buildColorsCode(element: element),
           isAddedToCart: element.isAddedToCart,
+          isForAuction: element.productData?.isAuction ?? false,
         );
         productList.add(product);
       }

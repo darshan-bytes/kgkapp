@@ -27,6 +27,7 @@ class ProductDetailsComponentsView extends StatelessWidget {
       return const SizedBox();
     }
     return SmartExpansionTile(
+      onExpansionChanged: (value) {},
       title: SmartText(commodity == Commodity.diamond ? APPStrings.diamondDetails : APPStrings.gemstoneDetails,
           style: style.settingSelectionTitleStyle),
       children: _buildStoneElementWidgets(stoneElements ?? [], context),
@@ -46,6 +47,7 @@ class ProductDetailsComponentsView extends StatelessWidget {
       itemBuilder: (context, index) {
         final component = components![index];
         return SmartExpansionTile(
+          onExpansionChanged: (value) {},
           title: SmartText(component.title, style: style.settingSelectionTitleStyle),
           children: _buildSubComponentWidgets(component.values, context),
         );

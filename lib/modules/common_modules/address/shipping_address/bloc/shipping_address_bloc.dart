@@ -29,7 +29,8 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
     appBloc = BlocProvider.of<AppBloc>(event.context);
     isShipping = event.context.routesData?[RoutesData.isShippingAddress] ?? false;
     title = (isShipping ? APPStrings.shippingAddress : APPStrings.billingAddress).tr;
-    addressList = await appBloc.fetchAddressList(event.context);
+    addressList =
+        (await appBloc.fetchAddressList(event.context)).where((e) => isShipping ? e.isShippingAddress : e.isBillingAddress).toList();
     selectedAddress = addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling)) ??
         addressList.firstOrNull;
     emit(const ShippingAddressLoadedState());

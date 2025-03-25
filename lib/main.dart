@@ -14,7 +14,6 @@ void main() async {
 
   /// Initializing Crashlytics
   await AppCrashlytics.instance.initialize();
-  String storageLocation = (await getApplicationDocumentsDirectory()).path;
 
   /// Initializing app
   runApp(const MyApp());
@@ -87,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "17-March",
+        message: "25-March",
         location: BannerLocation.topEnd,
       ),
     );

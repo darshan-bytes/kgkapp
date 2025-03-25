@@ -257,6 +257,8 @@ abstract class AppTheme {
   ApplyPromoCodeStyle get applyPromoCodeStyle;
 
   ProductPhotoViewGalleryStyle get productPhotoViewGalleryStyle;
+
+  CommentListingStyle get commentListingStyle;
 }
 
 class PrimaryButtonStyle {
@@ -1908,11 +1910,13 @@ class DigitalCatalogueStyle {
   final TextStyle titleStyle;
   final TextStyle subTitleStyle;
   final Color borderColor;
+  final Color whiteColor;
 
   DigitalCatalogueStyle({
     required this.titleStyle,
     required this.subTitleStyle,
     required this.borderColor,
+    required this.whiteColor,
   });
 }
 
@@ -1976,11 +1980,16 @@ class CadLibraryListingItemStyle {
   final TextStyle cadNameStyle;
   final TextStyle cadNumberStyle;
 
+  final Color borderColor;
+  final Color primaryColor;
+
   CadLibraryListingItemStyle({
     required this.backgroundColor,
     required this.cadBackgroundColor,
     required this.cadNameStyle,
     required this.cadNumberStyle,
+    required this.borderColor,
+    required this.primaryColor,
   });
 }
 
@@ -2495,5 +2504,23 @@ class ProductPhotoViewGalleryStyle {
     required this.blackColor,
     required this.blueAccentColor,
     required this.transparentColor,
+  });
+}
+
+class CommentListingStyle {
+  final Color whiteColor;
+  final Color primaryColor;
+  final Color iconColor;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle headerStyle;
+
+  CommentListingStyle({
+    required this.whiteColor,
+    required this.primaryColor,
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.iconColor,
+    required this.headerStyle,
   });
 }

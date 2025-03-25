@@ -3,8 +3,9 @@ import 'package:kgk/kgk.dart';
 class SharePresentationScreen extends StatelessWidget {
   ///[isPresentation] is a boolean variable that is used to determine whether the screen is for sharing a presentation or a catalogue.
   final bool isPresentation;
+  final String? webUrl;
 
-  const SharePresentationScreen({super.key, this.isPresentation = true});
+  const SharePresentationScreen({super.key, this.isPresentation = true, this.webUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class SharePresentationScreen extends StatelessWidget {
     final SharePresentationStyle style = AppTheme.of(context).sharePresentationStyle;
     return BlocProvider(
       create: (context) {
-        bloc = SharePresentationBloc()..add(SharePresentationInitialEvent(isPresentation: isPresentation));
+        bloc = SharePresentationBloc()..add(SharePresentationInitialEvent(isPresentation: isPresentation, webUrl: webUrl));
         return bloc;
       },
       child: BlocBuilder<SharePresentationBloc, SharePresentationState>(
@@ -21,6 +22,7 @@ class SharePresentationScreen extends StatelessWidget {
           if (state is SharePresentationTitleLoadedState) {
             bloc = BlocProvider.of<SharePresentationBloc>(context);
             return Container(
+              padding: EdgeInsetsDirectional.only(bottom: 24.h),
               constraints: BoxConstraints(maxHeight: 775.h),
               decoration: BoxDecoration(
                 color: style.backgroundColor,
@@ -30,11 +32,14 @@ class SharePresentationScreen extends StatelessWidget {
                 child: Stack(
                   children: [
                     Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _buildSharePresentationTitleSection(style),
                         _buildScrollableWidgetList(bloc, style, context),
-                        _buildBottomStaticSection(bloc, style, context)
+
+                        /// Below code is commented because it is not used in the app for now. It will be used in future for B2B implementation.
+                        // _buildBottomStaticSection(bloc, style, context)
                       ],
                     ),
                     PositionedDirectional(
@@ -79,21 +84,23 @@ class SharePresentationScreen extends StatelessWidget {
   }
 
   Widget _buildScrollableWidgetList(SharePresentationBloc bloc, SharePresentationStyle style, BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildShareButtonsRow(bloc, style),
-              SizedBox(height: 24.h),
-              _buildEmailTextField(bloc, context),
-              SizedBox(height: 24.h),
-              ..._buildPeopleWithAccess(bloc, style),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildShareButtonsRow(bloc, style),
+
+            /// Below code is commented because it is not used in the app for now. It will be used in future for B2B implementation.
+            // ...[
+            //   SizedBox(height: 24.h),
+            //   _buildEmailTextField(bloc, context),
+            //   SizedBox(height: 24.h),
+            //   ..._buildPeopleWithAccess(bloc, style),
+            // ],
+          ],
         ),
       ),
     );
@@ -122,14 +129,25 @@ class SharePresentationScreen extends StatelessWidget {
         _buildShareButtons(style.iconButtonTextStyle, AppImages.icQrCode, APPStrings.qrCode.tr, () {
           //TODO: Implement QR Code
         }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icWhatsapp, APPStrings.whatsapp.tr, () {
+        _buildShareButtons(style.iconButtonTextStyle, AppImages.icWhatsapp, APPStrings.whatsapp.tr, () async {
           //TODO: Implement WhatsApp Share
+          if (bloc.webUrl.isNotNullNorEmpty) {
+            await Clipboard.setData(ClipboardData(text: bloc.webUrl!));
+            await Share.shareUri(Uri.parse(bloc.webUrl!));
+          }
         }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icFaceBook, APPStrings.facebook.tr, () {
+        _buildShareButtons(style.iconButtonTextStyle, AppImages.icFaceBook, APPStrings.facebook.tr, () async {
           //TODO: Implement Facebook Share
+          if (bloc.webUrl.isNotNullNorEmpty) {
+            await Clipboard.setData(ClipboardData(text: bloc.webUrl!));
+            await Share.shareUri(Uri.parse(bloc.webUrl!));
+          }
         }),
-        _buildShareButtons(style.iconButtonTextStyle, AppImages.icCopy, APPStrings.copyLink.tr, () {
+        _buildShareButtons(style.iconButtonTextStyle, AppImages.icCopy, APPStrings.copyLink.tr, () async {
           //TODO: Implement Copy Link Share
+          if (bloc.webUrl.isNotNullNorEmpty) {
+            await Clipboard.setData(ClipboardData(text: bloc.webUrl!));
+          }
         }),
       ],
     );

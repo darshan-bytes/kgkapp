@@ -183,7 +183,6 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   Future<void> placeB2BUserOrderAPI(BuildContext context) async {
     List<PlaceOrderProductRequest> placeOrderProductRequestList = myBagBloc.placeOrderProductRequestList;
     BagListDataModel? bagListDataModel = myBagBloc.bagListDataModel;
-    BagOrderSummaryDataModel? bagOrderSummaryData = myBagBloc.bagOrderSummaryData;
     CurrencyListModel? currency = StorageManager().getSelectedCurrency();
     final Map<String, dynamic> body = {
       ApiKey.commodity: myBagBloc.commodity?.value,

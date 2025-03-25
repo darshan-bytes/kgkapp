@@ -51,3 +51,13 @@ final class CadSortEvent extends CadLibraryListingEvent {
   @override
   List<Object> get props => [context, sortData];
 }
+
+final class CadLibraryFilterEvent extends CadLibraryListingEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const CadLibraryFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}

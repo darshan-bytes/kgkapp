@@ -103,6 +103,8 @@ class UserIdDetails {
     required this.organisationName,
     this.customerAliasName,
     this.customerCode,
+    this.companyName,
+    this.companySlug,
   });
 
   String? firstname;
@@ -118,6 +120,8 @@ class UserIdDetails {
   String? organisationName;
   String? customerAliasName;
   String? customerCode;
+  String? companyName;
+  String? companySlug;
 
   factory UserIdDetails.fromJson(Map<String, dynamic> json) {
     return UserIdDetails(
@@ -134,6 +138,8 @@ class UserIdDetails {
       accountType: json["account_type"],
       customerAliasName: json["customer_alias_name"],
       customerCode: json["customer_code"],
+      companyName: json["company_name"],
+      companySlug: json["company_slug"],
     );
   }
 
@@ -151,6 +157,8 @@ class UserIdDetails {
         "account_type": accountType,
         "customer_alias_name": customerAliasName,
         "customer_code": customerCode,
+        "company_name": companyName,
+        "company_slug": companySlug,
       };
 
   @override

@@ -137,6 +137,7 @@ class AppRepository extends ApiService {
   }
 
   Future<void> fetchStrapiDataFroAboutUs(String? attribute) async {
+    // ignore: unused_local_variable
     String url = await buildUrl(endpoint: StrapiEndPoints.aboutUsPage, attribute: attribute ?? '');
 
     /// TODO :: Implement this letter
@@ -825,11 +826,8 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<ErrorResponse, CommentsAddedResponseModel>?> getPreviewCatalogueCommentList(Map<String, dynamic> body) async {
-    context.setAppLoading(true);
+  Future<Either<ErrorResponse, CommentsAddedResponseModel?>?> getPreviewCatalogueCommentList(Map<String, dynamic> body) async {
     var response = await getMethod<CommentsAddedResponseModel>(ApiClient.previewCatalogueCommentsList, query: body);
-    context.setAppLoading(false);
-
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -1242,6 +1240,39 @@ class AppRepository extends ApiService {
 
     var response = await getMethod<DiyFinalDetailsModel>(ApiClient.diyStyleDetails(settingId), query: query, withCurrencyHeader: true);
 
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<CommentsAddedResponseModel>>?> editDigitalCatalogueComments(
+      {required Map<String, dynamic> body, required String commentId}) async {
+    context.setAppLoading(true);
+    var response =
+        await updateMethod<CommentsAddedResponseModel>(ApiClient.digitalCatalogueCommentsById(commentId), body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> deleteDigitalCatalogueComments({required String commentId}) async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.digitalCatalogueCommentsById(commentId), withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> deleteDigitalCatalogue({required String catalogueId}) async {
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.deleteDigitalCatalogueById(catalogueId), withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, DesignLibraryListItemDataModel>?> designLibraryDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<DesignLibraryListItemDataModel>(ApiClient.designLibraryDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CadLibraryListItemDataModel>?> cadLibraryDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CadLibraryListItemDataModel>(ApiClient.cadLibraryDetails(id), withCurrencyHeader: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

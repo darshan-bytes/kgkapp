@@ -80,7 +80,8 @@ class WishlistScreen extends StatelessWidget {
                   productDetails: productDetails,
                   isOutOfStock: productDetails.isOutOfStock,
                   isFavourite: true,
-                  onAddToBagTap: () {},
+                  onAddToBagTap: productDetails.isForAuction ? null : () {},
+                  isForAuction: productDetails.isForAuction,
                   prefixImage: AppImages.icShoppingBag,
                   imageSize: 16.w,
                   onFavTap: () {

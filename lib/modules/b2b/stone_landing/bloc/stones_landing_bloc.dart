@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:kgk/modules/b2b/stone_landing/model/gemstone_strapi_model.dart';
 import 'package:kgk/modules/b2b/stone_landing/model/jewelleries_strapi_model.dart';
 import 'package:kgk/kgk.dart';

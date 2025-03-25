@@ -85,7 +85,7 @@ class SkuLibraryListItemDataModel {
   final String? metalCommodity;
   final String? metalKt;
   final List<dynamic> multipleCadViewImage;
-  final List<SkuMultipleFinishedViewImage> multipleFinishedViewImage;
+  final List<MultipleFinishedViewImage> multipleFinishedViewImage;
   final String? newArrival;
   final String? productDescription;
   final double? productPriceIntCurrency;
@@ -162,8 +162,7 @@ class SkuLibraryListItemDataModel {
           json["multiple_cad_view_image"] == null ? [] : List<dynamic>.from(json["multiple_cad_view_image"]!.map((x) => x)),
       multipleFinishedViewImage: json["multiple_finished_view_image"] == null
           ? []
-          : List<SkuMultipleFinishedViewImage>.from(
-              json["multiple_finished_view_image"]!.map((x) => SkuMultipleFinishedViewImage.fromJson(x))),
+          : List<MultipleFinishedViewImage>.from(json["multiple_finished_view_image"]!.map((x) => MultipleFinishedViewImage.fromJson(x))),
       newArrival: json["new_arrival"],
       productDescription: json["product_description"],
       productPriceIntCurrency: json["product_price_int_currency"]?.toString().toDouble,
@@ -368,68 +367,5 @@ class SkuComponentDetail {
   @override
   String toString() {
     return "$lotCode, $rmName, $commodityName, $shape, $color, $cut, $clarity, $internationalQuality, $sieveSize, $mmSize, $consumedQty1, $consumedQty2, $totalQty1, $totalQty2, $uom1, $uom2, $localCurrencyRate, $localCurrencyAmount, $intCurrencyRate, $intCurrencyAmount, $certificateFile, ";
-  }
-}
-
-class SkuMultipleFinishedViewImage {
-  SkuMultipleFinishedViewImage({
-    required this.contId,
-    required this.contractNo,
-    required this.contractImage,
-    required this.styleImage,
-    required this.imageAvailable,
-    required this.imageAvailableMa,
-    required this.imageUrl,
-    required this.highRes1,
-    required this.highRes2,
-    required this.highRes3,
-    required this.highRes4,
-  });
-
-  final int? contId;
-  final String? contractNo;
-  final String? contractImage;
-  final String? styleImage;
-  final String? imageAvailable;
-  final String? imageAvailableMa;
-  final String? imageUrl;
-  final dynamic highRes1;
-  final dynamic highRes2;
-  final dynamic highRes3;
-  final dynamic highRes4;
-
-  factory SkuMultipleFinishedViewImage.fromJson(Map<String, dynamic> json) {
-    return SkuMultipleFinishedViewImage(
-      contId: json["cont_id"],
-      contractNo: json["ContractNo"],
-      contractImage: json["ContractImage"],
-      styleImage: json["StyleImage"],
-      imageAvailable: json["IMAGE_AVAILABLE"],
-      imageAvailableMa: json["IMAGE_AVAILABLE_MA"],
-      imageUrl: json["IMAGE_URL"],
-      highRes1: json["high_res1"],
-      highRes2: json["high_res2"],
-      highRes3: json["high_res3"],
-      highRes4: json["high_res4"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "cont_id": contId,
-        "ContractNo": contractNo,
-        "ContractImage": contractImage,
-        "StyleImage": styleImage,
-        "IMAGE_AVAILABLE": imageAvailable,
-        "IMAGE_AVAILABLE_MA": imageAvailableMa,
-        "IMAGE_URL": imageUrl,
-        "high_res1": highRes1,
-        "high_res2": highRes2,
-        "high_res3": highRes3,
-        "high_res4": highRes4,
-      };
-
-  @override
-  String toString() {
-    return "$contId, $contractNo, $contractImage, $styleImage, $imageAvailable, $imageAvailableMa, $imageUrl, $highRes1, $highRes2, $highRes3, $highRes4, ";
   }
 }
