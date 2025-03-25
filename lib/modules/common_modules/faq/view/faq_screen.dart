@@ -72,6 +72,7 @@ class FaqScreen extends StatelessWidget {
             }
             final FAQ faq = faqBloc.faq[index].faqs![faqIndex];
             return SmartExpansionTile(
+              onExpansionChanged: (value) {},
               title: SmartText(
                 faq.question,
                 style: style.questionStyle,

@@ -373,10 +373,14 @@ class ProductDetailsScreen extends StatelessWidget {
           _productTypeAndCode(style, bloc),
           SizedBox(height: 8.h),
           SmartText(bloc.productName, style: style.productNameStyle),
-          SizedBox(height: 8.h),
-          _buildRatingBarAndReviews(style, bloc.productDetails),
-          SizedBox(height: 32.h),
-          _compareWidget(bloc, style),
+          if (bloc.productDetails?.reviewCount != null) ...[
+            SizedBox(height: 8.h),
+            _buildRatingBarAndReviews(style, bloc.productDetails),
+          ],
+          if (bloc.canCompare) ...[
+            SizedBox(height: 32.h),
+            _compareWidget(bloc, style),
+          ],
           SizedBox(height: 16.h),
 
           /// AUCTION FLOW FOR DIAMOND
@@ -435,7 +439,8 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
           ),
           if (bloc.screenIdentifier == ScreenIdentifier.productForRing ||
-              bloc.screenIdentifier == ScreenIdentifier.productForGemstones) ...[
+              bloc.screenIdentifier == ScreenIdentifier.productForGemstones ||
+              bloc.screenIdentifier == ScreenIdentifier.productForLibraryDesign) ...[
             SizedBox(height: 24.h),
             const Divider(),
             ProductDetailsComponentsView(
@@ -509,7 +514,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             if (bloc.reviewList.length > 5) ...[
               SizedBox(height: 16.h),
-              SmartText(APPStrings.viewAllXReviews.tr.interpolate([25]), style: style.viewAllReviewStyle, onTap: () {
+              SmartText(APPStrings.viewAllXReviews.tr.interpolate([bloc.reviewList.length]), style: style.viewAllReviewStyle, onTap: () {
                 context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
               }),
             ],

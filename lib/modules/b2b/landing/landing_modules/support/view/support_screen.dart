@@ -93,9 +93,7 @@ class SupportScreen extends StatelessWidget {
             style: style.questionStyle,
             optionalPadding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
           ),
-          onExpansionChanged: (value) {
-            // Handle expansion change if necessary
-          },
+          onExpansionChanged: (value) {},
           children: [
             SmartText(
               faq.answer,

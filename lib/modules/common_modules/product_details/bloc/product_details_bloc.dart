@@ -156,6 +156,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDetailsPlaceBidFieldChangeEvent>(_onProductDetailsPlaceBidFieldChangeEvent);
   }
 
+  bool get canCompare =>
+      screenIdentifier == ScreenIdentifier.productForRing ||
+      screenIdentifier == ScreenIdentifier.productForDiamonds ||
+      screenIdentifier == ScreenIdentifier.productForGemstones;
+
   @override
   Future<void> close() async {
     wishlistUpdaterServiceStream?.cancel();
@@ -185,9 +190,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
     /// initializing wishlist updater service
     _initWishlistUpdaterServiceBloc(event.context);
-
-    /// initializing wishlist updater service
-    _initWishlistUpdaterServiceBloc(event.context);
   }
 
   Future<void> _loadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
@@ -202,6 +204,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         break;
       case ScreenIdentifier.productForRing:
         await _handleRingProduct(event, emit);
+        break;
+      case ScreenIdentifier.productForLibraryDesign:
+        await _handleDesignLibraryProduct(event, emit);
         break;
       default:
         break;
@@ -244,6 +249,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     await productReviewsFilter(event.context, productId, emit);
     await getProductYouMayLike(event.context, productId);
     await getProductRecentlyViewed(event.context, productId);
+  }
+
+  Future<void> _handleDesignLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    emit(ProductDetailsLoadingState());
+    await getDesignLibraryDetails(event.context, productId);
+
+    _emitLoadedStateIfAvailable(event, emit);
   }
 
   void _emitLoadedStateIfAvailable(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) {
@@ -571,6 +583,46 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         );
       },
     );
+  }
+
+  Future<void> getDesignLibraryDetails(BuildContext context, String productId) async {
+    try {
+      Either<ErrorResponse, DesignLibraryListItemDataModel>? response = await AppRepository(context).designLibraryDetails(id: productId);
+      response?.fold(
+        (error) {
+          isErrorInLoadingData = true;
+          if (error.message.isNotNullNorEmpty) {
+            Utils.showMessage(error.message);
+          }
+        },
+        (DesignLibraryListItemDataModel designLibraryData) {
+          isErrorInLoadingData = false;
+          isAddedToCart = designLibraryData.isAddedToCart;
+          productName = designLibraryData.productDescription ?? '';
+
+          imgList = [];
+          for (MultipleFinishedViewImage element in (designLibraryData.multipleFinishedViewImage ?? [])) {
+            if (element.imageUrl.isNotNullNorEmpty) {
+              imgList.add(element.imageUrl ?? '');
+            }
+          }
+          productDetails = ProductDetailsModel(
+            productId: designLibraryData.suid,
+            suid: designLibraryData.suid,
+            name: productName,
+            jewelleryType: designLibraryData.jewelleryType,
+            productSku: designLibraryData.contractNoSkuNo,
+            imageUrl: designLibraryData.multipleFinishedViewImage.isNullOrEmpty
+                ? ''
+                : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
+            commodity: Commodity.jewellery,
+            components: designLibraryData.components,
+          );
+        },
+      );
+    } catch (e) {
+      print("Error in getDesignLibraryDetails: $e");
+    }
   }
 
   Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit) async {
