@@ -818,5 +818,6 @@
   "mob_map_view": "地图视图",
   "mob_remove_catalogue": "移除目录",
   "mob_remove_catalogue_msg": "所选目录将从列表中移除",
-  "mob_address_type": "地址类型"
+  "mob_address_type": "地址类型",
+  "delay": "延迟"
 }

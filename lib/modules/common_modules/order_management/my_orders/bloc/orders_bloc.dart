@@ -257,7 +257,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     required List<FilterData> filterData,
     required int currentPage,
     required int pageLimit,
-    required String commodity,
+    String? commodity,
     required String searchQuery,
   }) {
     Map<String, dynamic> query = {};
@@ -266,7 +266,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       ApiKey.search: searchQuery,
       ApiKey.page: currentPage,
       ApiKey.limit: pageLimit,
-      ApiKey.commodity: commodity,
+      ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
+      if (tabController.index != 2) ApiKey.commodity: commodity,
     });
     return query;
   }
@@ -304,24 +305,37 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Populates the order list from the API data
   List<MyOrderDetailsModel> _populateOrderList(List<OrderItem> dataList) {
-    return dataList.map<MyOrderDetailsModel>((OrderItem data) {
+    return dataList.where((data) {
+      /// Tab Index 0: Diamond Orders Only
+      if (tabController.index == 0) {
+        return data.commodity == Commodity.diamond.value;
+      }
+
+      /// Tab Index 1: Gemstone Orders Only
+      else if (tabController.index == 1) {
+        return data.commodity == Commodity.gemstone.value;
+      }
+
+      /// Tab Index 2: All other commodities (excluding Diamond & Gemstone)
+      else if (tabController.index == 2) {
+        return data.commodity != Commodity.diamond.value && data.commodity != Commodity.gemstone.value;
+      }
+      return false;
+    }).map<MyOrderDetailsModel>((OrderItem data) {
       return MyOrderDetailsModel(
         id: data.uniqueId?.toString(),
         orderId: data.uniqueId?.toString(),
-
-        /// need to discuss for show order status base on color
-        orderStatus: ProjectStatus.orangeInProgress,
+        orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
         orderDate: data.createdAt?.changeDateFormat(
             inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY),
-        orderTotal: data.totalPrice,
+        orderTotal: data.totalPrice?.setCurrency,
         orderItems: data.items?.toString(),
         orderQuantity: data.totalQuantity?.toString(),
 
-        /// need to discuss for delivery date
-        deliveryDate: "deliveryDate",
-
-        /// need to discuss for Image
+        /// Need to discuss for Image
         orderImages: [data.createdByDetails?.profilePic ?? ''],
+        orderedBy: data.createdByDetails?.organisationName ?? '',
+        commodity: data.commodity ?? '',
       );
     }).toList();
   }
@@ -395,6 +409,23 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         return AppConst.jewellery;
       default:
         return AppConst.diamond;
+    }
+  }
+
+  ProjectStatus getOrderStatus({required String orderStatus}) {
+    switch (orderStatus) {
+      case "delay":
+        return ProjectStatus.delay;
+      case "pending":
+        return ProjectStatus.pending;
+      case "completed":
+        return ProjectStatus.completed;
+      case "cancelled":
+        return ProjectStatus.cancelled;
+      case "in_progress":
+        return ProjectStatus.orangeInProgress;
+      default:
+        return ProjectStatus.pending;
     }
   }
 }

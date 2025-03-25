@@ -99,8 +99,6 @@ class _OrderDetailBody extends StatelessWidget {
                 isDropDownEnable: false,
                 isCheckboxShow: false,
                 isEnableAddToWishList: false,
-                selectedQuality: product.productQuality,
-                selectedQuantity: product.productQuantity,
                 onRemoveTap: () {
                   bloc.add(OrderDetailRemoveProductEvent(index: index));
                 },
@@ -284,7 +282,7 @@ class _OrderDetailsInfoCard extends StatelessWidget {
             children: [
               _DetailColumn(
                 title: APPStrings.status.tr,
-                value: placeOrderResponse!.getOrderStatus?.value,
+                value: placeOrderResponse?.getOrderStatus?.value,
                 style: style,
                 isOrderStatus: true,
               ),
@@ -300,7 +298,7 @@ class _OrderDetailsInfoCard extends StatelessWidget {
               ),
               _DetailColumn(
                 title: APPStrings.totalAmount.tr,
-                value: placeOrderResponse?.totalPrice,
+                value: placeOrderResponse?.totalPrice?.setCurrency,
                 style: style,
                 totalAmount: true,
               ),

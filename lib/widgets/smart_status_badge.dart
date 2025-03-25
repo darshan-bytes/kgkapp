@@ -80,6 +80,8 @@ class SmartStatusBadge extends StatelessWidget {
         return ProjectStatus.completed.value;
       case ProjectStatus.cancelled:
         return ProjectStatus.cancelled.value;
+      case ProjectStatus.delay:
+        return ProjectStatus.delay.value;
     }
   }
 
@@ -121,6 +123,8 @@ class SmartStatusBadge extends StatelessWidget {
         return style.activeBackgroundColor;
       case ProjectStatus.cancelled:
         return style.lostBackgroundColor;
+      case ProjectStatus.delay:
+        return style.yellowBgColor;
     }
   }
 
@@ -162,6 +166,8 @@ class SmartStatusBadge extends StatelessWidget {
         return style.activeTextColor;
       case ProjectStatus.cancelled:
         return style.lostTextColor;
+      case ProjectStatus.delay:
+        return style.yellowTextColor;
     }
   }
 }
