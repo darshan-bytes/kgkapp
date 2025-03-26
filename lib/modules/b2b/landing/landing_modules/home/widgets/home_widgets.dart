@@ -505,13 +505,11 @@ class HomeWidgets {
                             );
                           },
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.only(bottom: 8.h),
-                          child: SmartText(
-                            field.name ?? '',
-                            textAlign: TextAlign.center,
-                            style: style.topSellingCategoryTitleStyle,
-                          ),
+                        SmartText(
+                          optionalPadding: EdgeInsetsDirectional.only(bottom: 8.h),
+                          field.name ?? '',
+                          textAlign: TextAlign.center,
+                          style: style.topSellingCategoryTitleStyle,
                         ),
                       ],
                     ))

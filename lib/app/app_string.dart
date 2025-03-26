@@ -1016,4 +1016,6 @@ class APPStrings {
   static const String addressType = 'mob_address_type';
   static const String presentationDialogTitle = 'mob_presentation_dialog_title';
   static const String presentationDialogMsg = 'mob_presentation_dialog_msg';
+  static const String conceptBy = 'mob_concept_by';
+  static const String receivedOn = 'mob_received_on';
 }

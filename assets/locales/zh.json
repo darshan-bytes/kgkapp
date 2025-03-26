@@ -822,5 +822,7 @@
   "mob_address_type": "地址类型",
   "mob_delay": "延迟",
   "mob_presentation_dialog_title": "演示审查",
-  "mob_presentation_dialog_msg": "是否提交演示审查?"
+  "mob_presentation_dialog_msg": "是否提交演示审查?",
+  "mob_concept_by": "概念：",
+  "mob_received_on": "接收于"
 }

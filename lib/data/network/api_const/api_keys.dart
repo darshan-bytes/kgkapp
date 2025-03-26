@@ -133,4 +133,5 @@ class ApiKey {
   static const String latLong = 'lat_long';
   static const String createdAt = 'createdAt';
   static const String presentationNumber = 'presentation_number';
+  static const String approved = 'approved';
 }

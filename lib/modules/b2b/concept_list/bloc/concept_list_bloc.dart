@@ -197,8 +197,8 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
             strConceptName: concept.conceptName,
             status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
             fields: generateB2BItemFields(concept.assignedToDetails),
-            strCreatedBy: '${concept.createdByDetails?['firstname'] ?? ''} ${concept.createdByDetails?['lastname'] ?? ''}',
-            strCreatedByImageUrl: concept.createdByDetails?['profile_pic'],
+            strCreatedBy: concept.createdByDetails?.fullName,
+            strCreatedByImageUrl: concept.createdByDetails?.profilePic,
             strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
             strPresentationNumber: concept.presentationCount.toString(),
             strConceptBy: concept.conceptCustomerIdDetails?.userType,
@@ -228,16 +228,14 @@ class ConceptListBloc extends Bloc<ConceptListEvent, ConceptListState> {
     }
   }
 
-  List<B2BItemField> generateB2BItemFields(List<Map<String, String>>? assignedToDetails) {
+  List<B2BItemField> generateB2BItemFields(List<UserIdDetails>? assignedToDetails) {
     if (assignedToDetails == null || assignedToDetails.isEmpty) {
       return [];
     }
 
     return assignedToDetails.map((detail) {
-      String firstname = detail['firstname'] ?? '';
-      String lastname = detail['lastname'] ?? '';
-      String fullName = '$firstname $lastname'.trim();
-      String imageUrl = detail['profile_pic'] ?? '';
+      String fullName = detail.fullName;
+      String imageUrl = detail.profilePic ?? '';
 
       return B2BItemField(
         label: APPStrings.assignTo.tr,

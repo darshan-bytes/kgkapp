@@ -821,5 +821,7 @@
   "mob_address_type": "نوع العنوان",
   "mob_delay": "تأخير",
   "mob_presentation_dialog_title": "تقديم المعاينة",
-  "mob_presentation_dialog_msg": "هل تريد تقديم المعاينة؟"
+  "mob_presentation_dialog_msg": "هل تريد تقديم المعاينة؟",
+  "mob_concept_by": "بواسطة",
+  "mob_received_on": "تم استلامه في"
 }

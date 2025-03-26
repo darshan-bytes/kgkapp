@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class ConceptModel {
   ConceptModel({
     required this.id,
@@ -56,10 +58,10 @@ class ConceptModel {
   final List<Presentation> presentation;
   final int? presentationCount;
   final int? conceptNumberNumeric;
-  final ConceptCustomerIdDetails? conceptCustomerIdDetails;
-  final List<Map<String, String>>? assignedToDetails;
-  final Map<String, String>? createdByDetails;
-  final Map<String, String>? updatedByDetails;
+  final UserIdDetails? conceptCustomerIdDetails;
+  final List<UserIdDetails>? assignedToDetails;
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
 
   factory ConceptModel.fromJson(Map<String, dynamic> json) {
     return ConceptModel(
@@ -89,30 +91,12 @@ class ConceptModel {
       presentationCount: json["presentation_count"],
       conceptNumberNumeric: json["concept_number_numeric"],
       conceptCustomerIdDetails:
-          json["concept_customer_id_details"] == null ? null : ConceptCustomerIdDetails.fromJson(json["concept_customer_id_details"]),
+          json["concept_customer_id_details"] == null ? null : UserIdDetails.fromJson(json["concept_customer_id_details"]),
       assignedToDetails: json["assigned_to_details"] == null
           ? []
-          : List<Map<String, String>>.from(
-              json["assigned_to_details"]!.map(
-                (x) => Map.from(x).map(
-                  (k, v) => MapEntry<String, String>(k, v?.toString() ?? ''),
-                ),
-              ),
-            ),
-      createdByDetails: json["created_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["created_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
-      updatedByDetails: json["updated_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["updated_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
+          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
     );
   }
 
@@ -143,97 +127,14 @@ class ConceptModel {
         "presentation_count": presentationCount,
         "concept_number_numeric": conceptNumberNumeric,
         "concept_customer_id_details": conceptCustomerIdDetails?.toJson(),
-        "assigned_to_details": assignedToDetails?.map((x) => Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v))).toList(),
-        "created_by_details": Map.from(createdByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "updated_by_details": Map.from(updatedByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
+        "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList(),
+        "created_by_details": createdByDetails?.toJson(),
+        "updated_by_details": updatedByDetails?.toJson(),
       };
 
   @override
   String toString() {
     return "$id, $conceptNumber, $conceptName, $conceptBy, $collectionName, $businessCategory, $country, $conceptById, $cscCode, $receivedAt, $importedFrom, $status, $assignedTo, $description, $isPrivate, $createdBy, $updatedBy, $deleted, $createdAt, $updatedAt, $files, $v, $presentation, $presentationCount, $conceptNumberNumeric, $conceptCustomerIdDetails, $assignedToDetails, $createdByDetails, $updatedByDetails, ";
-  }
-}
-
-class ConceptCustomerIdDetails {
-  ConceptCustomerIdDetails({
-    required this.firstname,
-    required this.lastname,
-    required this.userProfile,
-    required this.userAccountId,
-    required this.email,
-    required this.accountType,
-    required this.customerCode,
-    required this.customerAliasName,
-    required this.companyName,
-    required this.companySlug,
-    required this.customerId,
-    required this.phoneCode,
-    required this.phone,
-    required this.userType,
-    required this.profilePicUrl,
-  });
-
-  final String? firstname;
-  final String? lastname;
-  final dynamic userProfile;
-  final String? userAccountId;
-  final String? email;
-  final String? accountType;
-  final String? customerCode;
-  final String? customerAliasName;
-  final String? companyName;
-  final String? companySlug;
-  final String? customerId;
-  final String? phoneCode;
-  final String? phone;
-  final String? userType;
-  final String? profilePicUrl;
-
-  factory ConceptCustomerIdDetails.fromJson(Map<String, dynamic> json) {
-    return ConceptCustomerIdDetails(
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-      userProfile: json["user_profile"],
-      userAccountId: json["user_account_id"],
-      email: json["email"],
-      accountType: json["account_type"],
-      customerCode: json["customer_code"],
-      customerAliasName: json["customer_alias_name"],
-      companyName: json["company_name"],
-      companySlug: json["company_slug"],
-      customerId: json["customer_id"],
-      phoneCode: json["phone_code"],
-      phone: json["phone"],
-      userType: json["user_type"],
-      profilePicUrl: json["profile_pic_url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "user_profile": userProfile,
-        "user_account_id": userAccountId,
-        "email": email,
-        "account_type": accountType,
-        "customer_code": customerCode,
-        "customer_alias_name": customerAliasName,
-        "company_name": companyName,
-        "company_slug": companySlug,
-        "customer_id": customerId,
-        "phone_code": phoneCode,
-        "phone": phone,
-        "user_type": userType,
-        "profile_pic_url": profilePicUrl,
-      };
-
-  @override
-  String toString() {
-    return "$firstname, $lastname, $userProfile, $userAccountId, $email, $accountType, $customerCode, $customerAliasName, $companyName, $companySlug, $customerId, $phoneCode, $phone, $userType, $profilePicUrl, ";
   }
 }
 
@@ -287,10 +188,10 @@ class Presentation {
   final int? v;
   final int? updatedBy;
   final String? conceptName;
-  final Map<String, String>? createdByDetails;
-  final Map<String, String>? updatedByDetails;
-  final Map<String, String>? approvedByDetails;
-  final List<Map<String, String>>? assignedToDetails;
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
+  final UserIdDetails? approvedByDetails;
+  final List<UserIdDetails>? assignedToDetails;
 
   factory Presentation.fromJson(Map<String, dynamic> json) {
     return Presentation(
@@ -315,34 +216,12 @@ class Presentation {
       v: json["__v"],
       updatedBy: json["updated_by"],
       conceptName: json["concept_name"],
-      createdByDetails: json["created_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["created_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
-      updatedByDetails: json["updated_by_details"] == null
-          ? {}
-          : Map<String, String>.from(json["updated_by_details"].map(
-              (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-            )),
-      approvedByDetails: json["approved_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["approved_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
+      approvedByDetails: json["approved_by_details"] == null ? null : UserIdDetails.fromJson(json["approved_by_details"]),
       assignedToDetails: json["assigned_to_details"] == null
           ? []
-          : List<Map<String, String>>.from(
-              json["assigned_to_details"]!.map(
-                (x) => Map.from(x).map(
-                  (k, v) => MapEntry<String, String>(k, v?.toString() ?? ''),
-                ),
-              ),
-            ),
+          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
     );
   }
 
@@ -368,16 +247,10 @@ class Presentation {
         "__v": v,
         "updated_by": updatedBy,
         "concept_name": conceptName,
-        "created_by_details": Map.from(createdByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "updated_by_details": Map.from(updatedByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "approved_by_details": Map.from(approvedByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "assigned_to_details": assignedToDetails?.map((x) => Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v))).toList(),
+        "created_by_details": createdByDetails?.toJson(),
+        "updated_by_details": updatedByDetails?.toJson(),
+        "approved_by_details": approvedByDetails?.toJson(),
+        "assigned_to_details": assignedToDetails?.map((x) => x.toJson()).toList()
       };
 
   @override

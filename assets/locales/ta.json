@@ -822,5 +822,7 @@
   "mob_address_type": "முகவரி வகை",
   "mob_delay": "தேர்ந்தெடுக்கம்",
   "mob_presentation_dialog_title": "மதிப்பு பரிசியம்",
-  "mob_presentation_dialog_msg": "தேர்ந்தெடுக்கப்படும் மதிப்பு பரிசியம் செய்ய விரும்புகிறீர்கள்?"
+  "mob_presentation_dialog_msg": "தேர்ந்தெடுக்கப்படும் மதிப்பு பரிசியம் செய்ய விரும்புகிறீர்கள்?",
+  "mob_concept_by": "கோப்பு",
+  "mob_received_on": "பெற்றது"
 }

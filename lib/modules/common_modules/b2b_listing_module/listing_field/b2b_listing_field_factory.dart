@@ -12,13 +12,13 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.presentation.tr, value: model.strPresentation, isCircleWithValue: true),
           B2BItemField(label: APPStrings.conceptName.tr, value: model.strConceptName),
           B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
-          B2BItemField(label: 'Concept By', value: model.strConceptBy),
+          B2BItemField(label: APPStrings.conceptBy.tr, value: model.strConceptBy),
           B2BItemField(label: APPStrings.name.tr, value: model.strName),
-          B2BItemField(label: 'Received on', value: model.strRevisedDate),
+          B2BItemField(label: APPStrings.receivedOn.tr, value: model.strRevisedDate),
           //B2BItemField(label: APPStrings.market.tr, value: model.strMarket, imageUrl: model.strMarketFlagImageUrl, isCircleImage: false),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignedTo.tr,subFields: model.fields ),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
         ];
 
       case B2BListingType.presentationType:
@@ -29,7 +29,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.conceptName.tr, value: model.strConceptName),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignedTo.tr,subFields: model.fields ),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
           B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy, imageUrl: model.strApprovedByImageUrl),
           B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
         ];
@@ -42,7 +42,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignedTo.tr,subFields: model.fields ),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
           B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy, imageUrl: model.strApprovedByImageUrl),
         ];
 
@@ -66,7 +66,7 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.subJewelleryType.tr, value: model.strSubJewelleryType),
           B2BItemField(label: APPStrings.createdBy.tr, value: model.strCreatedBy, imageUrl: model.strCreatedByImageUrl),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignedTo.tr,subFields: model.fields ),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
           B2BItemField(label: APPStrings.approvedBy.tr, value: model.strApprovedBy),
         ];
 

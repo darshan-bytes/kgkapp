@@ -822,5 +822,7 @@
   "mob_address_type": "Address Type",
   "mob_delay": "Delay",
   "mob_presentation_dialog_title": "Presentation Review",
-  "mob_presentation_dialog_msg": "Review and approve or reject the presentation."
+  "mob_presentation_dialog_msg": "Review and approve or reject the presentation.",
+  "mob_concept_by": "Concept By",
+  "mob_received_on": "Received on"
 }

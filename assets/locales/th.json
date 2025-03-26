@@ -822,5 +822,7 @@
   "mob_address_type": "ประเภทที่อยู่",
   "mob_delay": "ช่วงเวลา",
   "mob_presentation_dialog_title": "การรีวิวและอนุมัติ",
-  "mob_presentation_dialog_msg": "คุณต้องการดำเนินการต่อหรือไม่?"
+  "mob_presentation_dialog_msg": "คุณต้องการดำเนินการต่อหรือไม่?",
+  "mob_concept_by": "แนวคิดโดย",
+  "mob_received_on": "ได้รับเมื่อ"
 }

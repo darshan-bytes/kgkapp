@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class PddDataModel {
   PddDataModel({
     required this.id,
@@ -39,9 +41,9 @@ class PddDataModel {
   final List<String> assignedTo;
   final int? conceptById;
   final String? conceptBy;
-  final Map<String, String> createdByDetails;
-  final Map<String, String> approvedByDetails;
-  final List<Map<String, String>> assignedToDetails;
+  final UserIdDetails createdByDetails;
+  final UserIdDetails approvedByDetails;
+  final List<UserIdDetails> assignedToDetails;
 
   factory PddDataModel.fromJson(Map<String, dynamic> json) {
     return PddDataModel(
@@ -62,29 +64,11 @@ class PddDataModel {
       assignedTo: json["assigned_to"] == null ? [] : List<String>.from(json["assigned_to"]!.map((x) => x)),
       conceptById: json["concept_by_id"],
       conceptBy: json["concept_by"],
-      createdByDetails: json["created_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["created_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
-      approvedByDetails: json["approved_by_details"] == null
-          ? {}
-          : Map<String, String>.from(
-              json["approved_by_details"].map(
-                (k, v) => MapEntry<String, String>(k ?? '', v?.toString() ?? ''),
-              ),
-            ),
+      createdByDetails: UserIdDetails.fromJson(json["created_by_details"]),
+      approvedByDetails: UserIdDetails.fromJson(json["approved_by_details"]),
       assignedToDetails: json["assigned_to_details"] == null
           ? []
-          : List<Map<String, String>>.from(
-              json["assigned_to_details"]!.map(
-                (x) => Map.from(x).map(
-                  (k, v) => MapEntry<String, String>(k, v?.toString() ?? ''),
-                ),
-              ),
-            ),
+          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
     );
   }
 
@@ -106,13 +90,8 @@ class PddDataModel {
         "assigned_to": assignedTo.map((x) => x).toList(),
         "concept_by_id": conceptById,
         "concept_by": conceptBy,
-        "created_by_details": Map.from(createdByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "approved_by_details": Map.from(approvedByDetails ?? {}).map(
-          (k, v) => MapEntry<String, dynamic>(k, v),
-        ),
-        "assigned_to_details": assignedToDetails.map((x) => Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v))).toList(),
+        "created_by_details": createdByDetails.toJson(),
+        "approved_by_details": approvedByDetails.toJson(),
       };
 
   @override

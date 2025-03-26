@@ -132,8 +132,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
             strConceptName: concept.conceptName,
             status: concept.status != null ? getOrderStatus(orderStatus: concept.status!) : null,
             fields: generateB2BItemFields(concept.assignedToDetails),
-            strCreatedBy: '${concept.createdByDetails?['firstname'] ?? ''} ${concept.createdByDetails?['lastname'] ?? ''}',
-            strCreatedByImageUrl: concept.createdByDetails?['profile_pic'],
+            strCreatedBy: concept.createdByDetails?.fullName,
+            strCreatedByImageUrl: concept.createdByDetails?.profilePic ?? '',
             strCreatedOn: concept.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
             strPresentationNumber: "-",
             strConceptBy: "-",
@@ -163,8 +163,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
 
   Future<void> apiCallForPresentationStatus(
       {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
-    String status = isApproved ? "approved" : "rejected";
-    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: "approved"};
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
     await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
           if (l.code == 403) {
             Utils.showMessage(l.message);
@@ -196,21 +195,18 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
         strProject: "1",
         strConceptNumber: presentationList[index].conceptNumber,
         strConceptName: presentationList[index].conceptName,
-        strCreatedBy:
-            '${presentationList[index].createdByDetails?['firstname'] ?? ''} ${presentationList[index].createdByDetails?['lastname'] ?? ''}',
-        strCreatedByImageUrl: presentationList[index].createdByDetails?['profile_pic_url'].toString().setMediaUrl,
+        strCreatedBy: presentationList[index].createdByDetails?.fullName,
+        strCreatedByImageUrl: presentationList[index].createdByDetails?.profilePic.toString().setMediaUrl,
         strCreatedOn: presentationList[index].createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         fields: generateB2BItemFields(presentationList[index].assignedToDetails),
-        strApprovedBy:
-            '${presentationList[index].approvedByDetails?['firstname'] ?? ''} ${presentationList[index].approvedByDetails?['lastname'] ?? ''}',
-        strApprovedByImageUrl: presentationList[index].approvedByDetails?['profile_pic'] ?? '',
+        strApprovedBy: presentationList[index].approvedByDetails?.fullName ?? '',
+        strApprovedByImageUrl: presentationList[index].approvedByDetails?.profilePic ?? '',
         status: presentationList[index].status != null ? getOrderStatus(orderStatus: presentationList[index].status!) : null,
       );
     });
   }
 
   static ProjectStatus getOrderStatus({required String orderStatus}) {
-    print("Order Status: $orderStatus");
     switch (orderStatus) {
       case "approved":
         return ProjectStatus.approval;
@@ -227,16 +223,14 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     }
   }
 
-  static List<B2BItemField> generateB2BItemFields(List<Map<String, String>>? assignedToDetails) {
+  static List<B2BItemField> generateB2BItemFields(List<UserIdDetails>? assignedToDetails) {
     if (assignedToDetails == null || assignedToDetails.isEmpty) {
       return [];
     }
 
     return assignedToDetails.map((detail) {
-      String firstname = detail['firstname'] ?? '';
-      String lastname = detail['lastname'] ?? '';
-      String fullName = '$firstname $lastname'.trim();
-      String imageUrl = detail['profile_pic'] ?? '';
+      String fullName = detail.fullName;
+      String imageUrl = detail.profilePic ?? '';
 
       return B2BItemField(
         label: APPStrings.assignTo.tr,

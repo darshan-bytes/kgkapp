@@ -78,13 +78,13 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
 
   Future<void> apiCallForPresentationStatus(
       {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
-    String status = isApproved ? "approved" : "rejected";
-    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: "approved"};
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
     await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
       if (l.code == 403) {
         Utils.showMessage(l.message);
       }
     }, (r) {
+      /// Todo : Integration pending here
       Presentation presentation = Presentation.fromJson(r.responseData);
       // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
       // emit(PddListingReloadState());
@@ -254,10 +254,10 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Populate digital catalogue list
   List<B2BCustomListingDataModel> _populateDigitalCatalogueList(List<PddDataModel> dataList) {
     return dataList.map((data) {
-      String formatName(Map<String, dynamic>? details) {
+      String formatName(UserIdDetails? details) {
         if (details == null) return '-';
-        final firstName = details['firstname']?.toString().trim() ?? '';
-        final lastName = details['lastname']?.toString().trim() ?? '';
+        final firstName = details.firstname ?? '';
+        final lastName = details.lastname ?? '';
         return (firstName.isNotEmpty || lastName.isNotEmpty) ? '$firstName $lastName'.trim() : '-';
       }
 
@@ -268,10 +268,10 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
         strConceptName: data.conceptName ?? '',
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         strCreatedBy: formatName(data.createdByDetails),
-        strCreatedByImageUrl: data.createdByDetails['profile_pic'],
+        strCreatedByImageUrl: data.createdByDetails.profilePic ?? '',
         strCreatedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
         strApprovedBy: formatName(data.approvedByDetails),
-        strApprovedByImageUrl: data.approvedByDetails['profile_pic'],
+        strApprovedByImageUrl: data.approvedByDetails.profilePic ?? '',
         strConceptNumber: data.conceptNumber ?? '',
         strPresentationImageUrl: '',
         fields: generateB2BItemFields(data.assignedToDetails),
@@ -279,16 +279,14 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     }).toList();
   }
 
-  List<B2BItemField> generateB2BItemFields(List<Map<String, String>>? assignedToDetails) {
+  List<B2BItemField> generateB2BItemFields(List<UserIdDetails>? assignedToDetails) {
     if (assignedToDetails == null || assignedToDetails.isEmpty) {
       return [];
     }
 
     return assignedToDetails.map((detail) {
-      String firstname = detail['firstname'] ?? '';
-      String lastname = detail['lastname'] ?? '';
-      String fullName = '$firstname $lastname'.trim();
-      String imageUrl = detail['profile_pic'] ?? '';
+      String fullName = detail.fullName;
+      String imageUrl = detail.profilePic ?? '';
 
       return B2BItemField(
         label: APPStrings.assignTo.tr,

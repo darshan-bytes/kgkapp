@@ -822,5 +822,7 @@
   "mob_address_type": "アドレスの種類",
   "mob_delay": "遅延",
   "mob_presentation_dialog_title": "プレゼンテーションのレビュー",
-  "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。"
+  "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。",
+  "mob_concept_by": "コンセプト：",
+  "mob_received_on": "受信日："
 }

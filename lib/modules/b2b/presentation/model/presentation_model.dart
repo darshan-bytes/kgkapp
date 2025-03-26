@@ -96,7 +96,7 @@ class PresentationModel {
     "__v": v,
     "concept_name": conceptName,
     "created_by_details": createdByDetails?.toJson(),
-    "assigned_to_details": assignedToDetails.map((x) => x?.toJson()).toList(),
+    "assigned_to_details": assignedToDetails.map((x) => x.toJson()).toList(),
   };
 
   @override
