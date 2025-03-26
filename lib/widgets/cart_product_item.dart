@@ -248,40 +248,41 @@ class CartProductItem extends StatelessWidget {
             // SmartText("${APPStrings.qty.tr} : ${selectedQuantity?.name ?? ''}", style: style.productNameStyle),
             // SizedBox(height: 12.h),
             //padding: EdgeInsetsDirectional.only(top: 16.h, bottom: 24.h),
-            Padding(
-              padding: EdgeInsetsDirectional.only(top: 8.h),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Expanded(
-                  //   flex: 2,
-                  //   child: SmartDropDown<CartProductQuality>(
-                  //     selectedItem: selectedQuality,
-                  //     items: qualityOptionsList.map((e) => SmartDropDownItem<CartProductQuality>(value: e, title: e.name ?? '')).toList(),
-                  //     hintText: APPStrings.selectQuality.tr,
-                  //     onChanged: (newValue) => onQualityChanged?.call(newValue!),
-                  //   ),
-                  // ),
-                  // SizedBox(width: 8.w),
-                  DropdownButton<CartProductQuantity>(
-                    isDense: true,
-                    value: selectedQuantity,
-                    onChanged: (newValue) => onQuantityChanged?.call(newValue!),
-                    selectedItemBuilder: (context) {
-                      return quantityOptionsList.map((e) {
-                        return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
-                      }).toList();
-                    },
-                    items: quantityOptionsList
-                        .map((e) => DropdownMenuItem<CartProductQuantity>(
-                              value: e,
-                              child: SmartText(e.name ?? ''),
-                            ))
-                        .toList(),
-                  ),
-                ],
+            if (isDropDownEnable)
+              Padding(
+                padding: EdgeInsetsDirectional.only(top: 8.h),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Expanded(
+                    //   flex: 2,
+                    //   child: SmartDropDown<CartProductQuality>(
+                    //     selectedItem: selectedQuality,
+                    //     items: qualityOptionsList.map((e) => SmartDropDownItem<CartProductQuality>(value: e, title: e.name ?? '')).toList(),
+                    //     hintText: APPStrings.selectQuality.tr,
+                    //     onChanged: (newValue) => onQualityChanged?.call(newValue!),
+                    //   ),
+                    // ),
+                    // SizedBox(width: 8.w),
+                    DropdownButton<CartProductQuantity>(
+                      isDense: true,
+                      value: selectedQuantity,
+                      onChanged: (newValue) => onQuantityChanged?.call(newValue!),
+                      selectedItemBuilder: (context) {
+                        return quantityOptionsList.map((e) {
+                          return SmartText(APPStrings.qtyX.tr.interpolate([e.name]));
+                        }).toList();
+                      },
+                      items: quantityOptionsList
+                          .map((e) => DropdownMenuItem<CartProductQuantity>(
+                                value: e,
+                                child: SmartText(e.name ?? ''),
+                              ))
+                          .toList(),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

@@ -1145,6 +1145,20 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderCancelApiCall(
+      {required String id, Map<String, dynamic>? body}) async {
+    var response =
+        await updateMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), body, withCurrencyHeader: true, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> cancelProductFromOrderDetailsApiCall(
+      {required String id, Map<String, dynamic>? body}) async {
+    var response = await deleteMethod<PlaceOrderResponse>(ApiClient.cancelProductFromOrder(id),
+        query: body, withCurrencyHeader: true, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<DiyStyleListModel>>?> diyStyleFilters({
     required String limit,
     required String page,

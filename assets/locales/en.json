@@ -819,5 +819,6 @@
   "mob_remove_catalogue": "Remove Catalogue",
   "mob_remove_catalogue_msg": "Selected catalogue will be removed from the list",
   "mob_address_type": "Address Type",
-  "delay": "Delay"
+  "delay": "Delay",
+  "mob_comment_is_required": "Comment is required"
 }

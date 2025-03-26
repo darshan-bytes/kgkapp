@@ -818,5 +818,6 @@
   "mob_remove_catalogue": "إزالة الكتالوج",
   "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة",
   "mob_address_type": "نوع العنوان",
-  "delay": "تأخير"
+  "delay": "تأخير",
+  "mob_comment_is_required": "مطلوب التعليق"
 }

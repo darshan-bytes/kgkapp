@@ -36,9 +36,9 @@ class ExhibitionTabView extends StatelessWidget {
                     pinned: true,
                     floating: false,
                     toolbarHeight: 80.h,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.white,
-                    surfaceTintColor: Colors.white,
+                    foregroundColor: listingItemStyle.backgroundColor,
+                    backgroundColor: listingItemStyle.backgroundColor,
+                    surfaceTintColor: listingItemStyle.backgroundColor,
                     automaticallyImplyLeading: false,
                     titleSpacing: 0,
                     title: SmartTextField(
@@ -140,61 +140,35 @@ class ExhibitionTabView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SmartText(
-                    item.name,
-                    style: style.listTitleStyle,
-                  ),
+                  SmartText(item.name, style: style.listTitleStyle),
                   SizedBox(height: 2.h),
-                  SmartText(
-                    item.author,
-                    style: style.listAuthorStyle,
-                  ),
+                  SmartText(item.author, style: style.listAuthorStyle),
                   SizedBox(height: 12.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SmartImage(
-                        path: AppImages.icCalendar,
-                        height: 16.h,
-                        width: 16.w,
+                      Flexible(
+                        child: Row(children: [
+                          SmartImage(path: AppImages.icCalendar, height: 16.h, width: 16.w),
+                          SizedBox(width: 2.w),
+                          SmartText(item.date, style: style.listSubTitleStyle),
+                        ]),
                       ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      SmartText(
-                        item.date,
-                        style: style.listSubTitleStyle,
-                      ),
-                      const Spacer(),
-                      SmartImage(
-                        path: AppImages.icClock,
-                        height: 16.h,
-                        width: 16.w,
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      SmartText(
-                        item.time,
-                        style: style.listSubTitleStyle,
+                      Flexible(
+                        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                          SmartImage(path: AppImages.icClock, height: 16.h, width: 16.w),
+                          SizedBox(width: 2.w),
+                          SmartText(item.time, style: style.listSubTitleStyle),
+                        ]),
                       ),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      SmartImage(
-                        path: AppImages.icMapPin,
-                        height: 16.h,
-                        width: 16.w,
-                        color: style.iconColor,
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      SmartText(
-                        item.location,
-                        style: style.listSubTitleStyle,
-                      ),
+                      SmartImage(path: AppImages.icMapPin, height: 16.h, width: 16.w, color: style.iconColor),
+                      SizedBox(width: 2.w),
+                      SmartText(item.location, style: style.listSubTitleStyle),
                     ],
                   ),
                 ],

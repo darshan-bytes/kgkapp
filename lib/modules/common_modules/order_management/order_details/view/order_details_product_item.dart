@@ -3,9 +3,9 @@ import 'package:kgk/kgk.dart';
 class OrderDetailsProductItem extends StatelessWidget {
   final OrderDetailsProductModel productDetails;
   final GestureTapCallback? onTap;
-  final GestureTapCallback? onTapMenuButton;
+  final GestureTapCallback? onTapRemoveButton;
 
-  const OrderDetailsProductItem({super.key, required this.productDetails, this.onTap, this.onTapMenuButton});
+  const OrderDetailsProductItem({super.key, required this.productDetails, this.onTap, this.onTapRemoveButton});
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +66,13 @@ class OrderDetailsProductItem extends StatelessWidget {
               ],
             ),
           ),
-          if (onTapMenuButton != null)
+          if (onTapRemoveButton != null)
             PositionedDirectional(
               top: 14.h,
               end: 14.w,
               child: SmartImage(
                 path: AppImages.icDelete,
-                onTap: onTapMenuButton,
+                onTap: onTapRemoveButton,
                 height: 18.w,
                 width: 18.w,
                 padding: EdgeInsetsDirectional.zero,

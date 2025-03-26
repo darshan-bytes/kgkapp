@@ -819,5 +819,6 @@
   "mob_remove_catalogue": "カタログを削除",
   "mob_remove_catalogue_msg": "選択したカタログはリストから削除されます",
   "mob_address_type": "アドレスの種類",
-  "delay": "遅延"
+  "delay": "遅延",
+  "mob_comment_is_required": "コメントが必要です"
 }

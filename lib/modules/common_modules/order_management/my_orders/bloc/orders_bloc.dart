@@ -219,9 +219,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   /// Handles the navigate to order details event
   Future<void> _handleNavigateToOrderDetails(NavigateToOrderDetailsEvent event, Emitter<OrdersState> emit) async {
-    event.context.pushNamed(AppRoutes.orderDetailsPage, arguments: {
-      RoutesData.orderNumber: event.uniqueId,
-    });
+    event.context.pushNamed(AppRoutes.orderDetailsPage, arguments: {RoutesData.orderNumber: event.uniqueId, RoutesData.bloc: this});
   }
 
   /// Builds the filters dynamically based on the filter data
@@ -266,7 +264,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       ApiKey.search: searchQuery,
       ApiKey.page: currentPage,
       ApiKey.limit: pageLimit,
-      ApiKey.dir: AppConst.sortValueDesc.toUpperCase(),
+      ApiKey.dir: AppConst.sortValueDesc,
+      ApiKey.field: AppConst.uniqueId,
       if (tabController.index != 2) ApiKey.commodity: commodity,
     });
     return query;
@@ -293,7 +292,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       Utils.showMessage(error.message);
       emit(OrdersListLoadedState());
     }, (success) {
-      totalNumberOfPages = Utils.calculateTotalPages(success.filteredRecords, AppConst.pageLimit);
+      totalNumberOfPages = Utils.calculateTotalPages(success.totalRecords, AppConst.pageLimit);
       originalOrderList.addAll(_populateOrderList((success.dataList as List<OrderItem>)));
       filteredOrderList = List.from(originalOrderList);
       if (!orderPaginationScrollController.isPageLoaded.isCompleted) {
@@ -327,7 +326,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         orderId: data.uniqueId?.toString(),
         orderStatus: getOrderStatus(orderStatus: data.orderStatus ?? ''),
         orderDate: data.createdAt?.changeDateFormat(
-            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMYYYY),
+            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
         orderTotal: data.totalPrice?.setCurrency,
         orderItems: data.items?.toString(),
         orderQuantity: data.totalQuantity?.toString(),

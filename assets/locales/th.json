@@ -819,5 +819,6 @@
   "mob_remove_catalogue": "ลบแคตตาล็อก",
   "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ",
   "mob_address_type": "ประเภทที่อยู่",
-  "delay": "ช่วงเวลา"
+  "delay": "ช่วงเวลา",
+  "mob_comment_is_required": "ความคิดเห็นจําเป็น"
 }
