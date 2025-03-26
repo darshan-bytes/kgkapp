@@ -9,6 +9,8 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   final TextEditingController presentationSearchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
 
+  UserType userType = UserType.b2cUser;
+
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
 
@@ -30,6 +32,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     on<NavigateToPddPreviewEvent>(_navigateToPreview);
     on<PddListLoadMoreEvent>(_onPddListLoadMoreEvent);
     on<PddListPullToRefreshEvent>(_onPddListPullToRefresh);
+    on<PddListReviewStateEvent>(_onPddListReviewStateEvent);
     on<PddListSearchEvent>(_onPddListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
   }
 
@@ -40,6 +43,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<PddListingState> emit) async {
     emit(PddListLoadingState());
+    userType = BlocProvider.of<AppBloc>(context).userType;
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || gridPaginationScrollController.currentPage <= totalNumberOfPages!) {
@@ -64,6 +68,28 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     await fetchPresentationList(event.context, emit, isLoadMore: false, searchString: presentationSearchController.text);
     if (presentationSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(PddListingLoadedState());
+  }
+
+  Future<void> _onPddListReviewStateEvent (PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
+    emit(PddListingReloadState());
+    await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    emit(PddListingLoadedState());
+  }
+
+  Future<void> apiCallForPresentationStatus(
+      {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+    String status = isApproved ? "approved" : "rejected";
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: "approved"};
+    await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
+      if (l.code == 403) {
+        Utils.showMessage(l.message);
+      }
+    }, (r) {
+      Presentation presentation = Presentation.fromJson(r.responseData);
+      // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
+      // emit(PddListingReloadState());
+    }));
+    context.pop();
   }
 
   void _fetchFilterData(BuildContext context, Emitter<PddListingState> emit) async {

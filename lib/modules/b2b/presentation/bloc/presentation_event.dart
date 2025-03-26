@@ -6,6 +6,7 @@ sealed class PresentationEvent extends Equatable {
 
 final class InitialPresentationEvent extends PresentationEvent {
   final BuildContext context;
+
   const InitialPresentationEvent(this.context);
 
   @override
@@ -26,4 +27,15 @@ final class PresentationPullToRefreshEvent extends PresentationEvent {
 
   @override
   List<Object> get props => [];
+}
+
+final class PresentationReviewStateEvent extends PresentationEvent {
+  final bool isApproved;
+  final String presentationNumber;
+  final BuildContext context;
+
+  const PresentationReviewStateEvent({required this.context, required this.isApproved, required this.presentationNumber});
+
+  @override
+  List<Object> get props => [context, isApproved, presentationNumber];
 }

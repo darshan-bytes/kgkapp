@@ -862,6 +862,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  //apiCallForPresentationStatus
+  Future<Either<ErrorResponse, CommonResponse>?> apiCallForPresentationStatus({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.presentationStatus, body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<HomeNewLanuchesDatum>>?> homePageNewlyLaunches({bool isLoadMore = false}) async {
     var response = await getMethod<PaginationData<HomeNewLanuchesDatum>>(ApiClient.homePageNewlyLaunches,
         query: {ApiKey.limit: AppConst.pageLimit10, ApiKey.page: AppConst.page1});

@@ -1,5 +1,7 @@
 import 'package:kgk/kgk.dart';
 import 'package:kgk/modules/b2b/landing/landing_modules/home/mode/home_strapi_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:image/image.dart' as img;
 
 part 'home_event.dart';
 
@@ -912,7 +914,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return HomeWidgets.buildShopDiamondSection(homeBloc, style, title);
 
       case HomeSlug.mobileShopGemstone:
-        return HomeWidgets.buildShopGemstoneSection(homeBloc, style, title: homeStrapiList[index].info?.title ?? APPStrings.shopGemstones.tr);
+        return HomeWidgets.buildShopGemstoneSection(homeBloc, style,
+            title: homeStrapiList[index].info?.title ?? APPStrings.shopGemstones.tr);
 
       case HomeSlug.mobileKGKCouture:
         return HomeWidgets.buildKGKCoutureTabBarSection(homeBloc, style, homeStrapiList[index].info?.title, context: context);
@@ -1175,6 +1178,56 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       default:
         return '';
     }
+  }
+
+  Map<String, Color> imageColors = {};
+
+  // Async function to load colors for all images
+  Future<void> loadColors(List<AuctionListModel> dataList) async {
+    for (var field in dataList) {
+      final url = field.imageUrl ?? '';
+      if (!imageColors.containsKey(url)) {
+        final color = await loadImageFromUrl(url);
+        imageColors[url] = color;
+      }
+    }
+  }
+
+  Future<Color> loadImageFromUrl(String imageUrl) async {
+    Color textColor = Colors.black;
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+
+      if (response.statusCode == 200) {
+        final img.Image image = img.decodeImage(response.bodyBytes)!;
+
+        int totalBrightness = 0;
+        int pixelCount = 0;
+
+        // Sample every 10th pixel for efficiency
+        for (int y = 0; y < image.height; y += 10) {
+          for (int x = 0; x < image.width; x += 10) {
+            final pixel = image.getPixel(x, y);
+
+            // Access RGB values from the Pixel object
+            final r = pixel.r;
+            final g = pixel.g;
+            final b = pixel.b;
+
+            final brightness = (r * 0.299 + g * 0.587 + b * 0.114).round();
+            totalBrightness += brightness;
+            pixelCount++;
+          }
+        }
+
+        final avgBrightness = totalBrightness ~/ pixelCount;
+
+        textColor = avgBrightness > 128 ? Colors.black : Colors.white;
+      }
+    } catch (e) {
+      printWrapped('Failed to load image: $e');
+    }
+    return textColor;
   }
 }
 

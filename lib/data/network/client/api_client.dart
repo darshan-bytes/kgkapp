@@ -75,6 +75,8 @@ class ApiClient {
 
   static const String filterConceptList = '$apiBaseUrl/concepts/filter-list';
 
+  static const String presentationStatus = '$apiBaseUrl/presentations/status';
+
   static String filterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
   static String secondaryFilterOptions(String slug, String codes) => '$apiBaseUrl/common-modules/$slug?codes=$codes';

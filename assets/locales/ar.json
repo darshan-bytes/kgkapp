@@ -527,6 +527,7 @@
   "mob_share": "يشارك",
   "mob_share_catalogue": "مشاركة الكتالوج",
   "mob_approved": "موافقة",
+    "mob_reject": "مرفوض",
   "mob_released": "مطلق سراحه",
   "mob_approval": "موافقة",
   "mob_style_created": "الأسلوب الذي تم إنشاؤه",
@@ -818,5 +819,7 @@
   "mob_remove_catalogue": "إزالة الكتالوج",
   "mob_remove_catalogue_msg": "سيتم إزالة الكتالوج المحدد من القائمة",
   "mob_address_type": "نوع العنوان",
-  "delay": "تأخير"
+  "mob_delay": "تأخير",
+  "mob_presentation_dialog_title": "تقديم المعاينة",
+  "mob_presentation_dialog_msg": "هل تريد تقديم المعاينة؟"
 }

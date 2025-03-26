@@ -67,3 +67,14 @@ final class PddListSearchEvent extends PddListingEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class PddListReviewStateEvent extends PddListingEvent {
+  final bool isApproved;
+  final String presentationNumber;
+  final BuildContext context;
+
+  const PddListReviewStateEvent({required this.context, required this.isApproved, required this.presentationNumber});
+
+  @override
+  List<Object> get props => [context, isApproved, presentationNumber];
+}

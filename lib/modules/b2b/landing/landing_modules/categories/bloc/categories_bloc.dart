@@ -142,7 +142,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     userType = BlocProvider.of<AppBloc>(event.context).userType;
     selectedRowIndex = null;
     categories.clear();
-    if (userType == UserType.b2bUser) {
+    if (userType == UserType.b2bUser || userType == UserType.internal) {
       categories.addAll([
         CategoriesModel(name: 'PDD', image: 'https://i.ibb.co/HgjT1rt/Image.png', productsDetailsList: pddSubOptionsList),
         CategoriesModel(

@@ -967,6 +967,7 @@ class LightModeTheme extends AppTheme {
         topSellingElegance2Color: colors.colorF2F2F6,
         topSellingElegance3Color: colors.colorECECEA,
         getInspiredSectionColor: colors.colorF2E6E0,
+        topSellingCategoryTitleStyle: eBGaramondMediumTextStyle.copyWith(fontSize: 18.sp),
       );
 
   @override

@@ -9,6 +9,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   final TextEditingController presentationSearchController = TextEditingController();
   List<Presentation>? presentationDataList;
 
+  UserType userType = UserType.b2cUser;
+
   /// This totalNumberOfPages is used to store the total number of pages
   int? totalNumberOfPages;
 
@@ -27,6 +29,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     on<InitialPresentationEvent>(_onInitialPresentationEvent);
     on<PresentationLoadMoreEvent>(_onPresentationLoadMoreEvent);
     on<PresentationPullToRefreshEvent>(_onPresentationPullToRefreshEvent);
+    on<PresentationReviewStateEvent>(_onPresentationReviewStateEvent);
   }
 
   bool hasRouteData(BuildContext context) {
@@ -41,7 +44,9 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   Future<void> _onInitialPresentationEvent(InitialPresentationEvent event, Emitter<PresentationState> emit) async {
     emit(PresentationListReloadState());
 
-    bool hasData = hasRouteData(event.context);
+    userType = BlocProvider.of<AppBloc>(event.context).userType;
+
+    hasRouteData(event.context);
     presentationList = _generatePresentationList(presentationDataList);
 
     if (refreshCompleter.isCompleted) {
@@ -147,6 +152,27 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     presentationList.addAll(_generatePresentationList([]));
     paginationScrollController.isPageLoaded.complete(event.currentPage == 5);
     emit(PresentationListLoadedMoreState(event.currentPage + 1));
+  }
+
+  // Event for approval
+  Future<void> _onPresentationReviewStateEvent(PresentationReviewStateEvent event, Emitter<PresentationState> emit) async {
+    emit(PresentationListReloadState());
+    await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    emit(PresentationLoadedState());
+  }
+
+  Future<void> apiCallForPresentationStatus(
+      {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+    String status = isApproved ? "approved" : "rejected";
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: "approved"};
+    await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
+          if (l.code == 403) {
+            Utils.showMessage(l.message);
+          }
+        }, (r) {
+          return null;
+        }));
+    context.pop();
   }
 
   void clearData() {
