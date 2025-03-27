@@ -40,11 +40,18 @@ class _OrderDetailBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _OrderDetailsInfoCard(style: style, placeOrderResponse: bloc.placeOrderResponse),
+            _OrderDetailsInfoCard(
+                style: style,
+                placeOrderResponse: bloc.placeOrderResponse,
+                onTapMenu: () {
+                  _showOrderDetailPopup(bloc, context);
+                }),
             _OrderCreatorDetailsCard(style: style, bloc: bloc, placeOrderResponse: bloc.placeOrderResponse),
-            SizedBox(height: 24.h),
-            _buildSearchTextField(bloc),
-            SizedBox(height: 24.h),
+
+            /// TODO: The search field is not available on the web, so it is currently hidden.
+            // SizedBox(height: 24.h),
+            // _buildSearchTextField(bloc),
+            // SizedBox(height: 12.h),
             _buildOrderList(bloc, style)
           ],
         ),
@@ -100,7 +107,7 @@ class _OrderDetailBody extends StatelessWidget {
                 isCheckboxShow: false,
                 isEnableAddToWishList: false,
                 onRemoveTap: () {
-                  bloc.add(OrderDetailRemoveProductEvent(index: index));
+                  /// TODO :: To be implemented
                 },
                 onMoveToWishListTap: null,
                 productDetails: product,
@@ -113,7 +120,9 @@ class _OrderDetailBody extends StatelessWidget {
               return OrderDetailsProductItem(
                 productDetails: productDetails,
                 onTap: () {},
-                onTapMenuButton: () {},
+                onTapRemoveButton: () {
+                  /// TODO :: To be implemented
+                },
               );
             }
           },
@@ -131,6 +140,7 @@ class _OrderDetailBody extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
+      backgroundColor: orderPopupStyle.whiteColor,
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
@@ -156,9 +166,18 @@ class _OrderDetailBody extends StatelessWidget {
                   context.popAndPushNamed(AppRoutes.orderTimelinePage);
                 }),
               },
-              _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
-                _showOrderCancelBottomSheet(bloc, context);
-              }),
+              if (bloc.placeOrderResponse?.orderStatus != AppConst.cancelled)
+                _buildPopupOption(context, text: APPStrings.cancelOrder.tr, style: orderPopupStyle.cancelTextStyle, onTap: () {
+                  context.pop();
+                  Widget view = OrderCancelBottomSheet(orderDetailBloc: bloc..add(OrderDetailsCancelInitialEvent()));
+                  Utils.showSmartModalBottomSheet(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+                    ),
+                    builder: (context) => view,
+                  );
+                }),
             ],
           ),
         );
@@ -204,10 +223,7 @@ class _OrderDetailBody extends StatelessWidget {
         borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
       ),
       builder: (context) {
-        return BlocProvider<OrderDetailBloc>(
-          create: (context) => OrderDetailBloc()..add(InitialOrderDetailEvent(context)),
-          child: const OrderCancelBottomSheet(),
-        );
+        return OrderCancelBottomSheet(orderDetailBloc: bloc);
       },
     );
   }
@@ -235,8 +251,9 @@ class _OrderDetailBody extends StatelessWidget {
 class _OrderDetailsInfoCard extends StatelessWidget {
   final OrderDetailScreenStyle style;
   final PlaceOrderResponse? placeOrderResponse;
+  final VoidCallback onTapMenu;
 
-  const _OrderDetailsInfoCard({required this.style, this.placeOrderResponse});
+  const _OrderDetailsInfoCard({required this.style, this.placeOrderResponse, required this.onTapMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -272,37 +289,44 @@ class _OrderDetailsInfoCard extends StatelessWidget {
               SmartImage(
                 path: AppImages.icMenu,
                 onTap: () {
-                  // Handle menu tap
+                  onTapMenu.call();
                 },
               ),
             ],
           ),
           SizedBox(height: 14.h),
-          Row(
-            children: [
-              _DetailColumn(
-                title: APPStrings.status.tr,
-                value: placeOrderResponse?.getOrderStatus?.value,
-                style: style,
-                isOrderStatus: true,
-              ),
-              _DetailColumn(
-                title: APPStrings.items.tr,
-                value: placeOrderResponse?.items?.toString(),
-                style: style,
-              ),
-              _DetailColumn(
-                title: APPStrings.qty.tr,
-                value: placeOrderResponse?.totalQuantity?.toString(),
-                style: style,
-              ),
-              _DetailColumn(
-                title: APPStrings.totalAmount.tr,
-                value: placeOrderResponse?.totalPrice?.setCurrency,
-                style: style,
-                totalAmount: true,
-              ),
-            ],
+          BlocBuilder<OrderDetailBloc, OrderDetailState>(
+            buildWhen: (previous, current) => current is OrderDetailsLoadedState && previous != current,
+            builder: (context, state) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DetailColumn(
+                    title: APPStrings.status.tr,
+                    value: placeOrderResponse?.getOrderStatus?.value,
+                    style: style,
+                    isOrderStatus: true,
+                  ),
+                  DetailColumn(
+                    title: APPStrings.items.tr,
+                    value: placeOrderResponse?.items?.toString(),
+                    style: style,
+                  ),
+                  DetailColumn(
+                    title: APPStrings.qty.tr,
+                    value: placeOrderResponse?.totalQuantity?.toString(),
+                    style: style,
+                  ),
+                  DetailColumn(
+                    title: APPStrings.totalAmount.tr,
+                    value: placeOrderResponse?.totalPrice?.setCurrency,
+                    style: style,
+                    totalAmount: true,
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -327,21 +351,21 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
           /// Development pending form backend
           _CreatorDetailItem(
             title: APPStrings.createdBy.tr,
-            iconImage: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-            value: "Michael Lee",
+            iconImage: placeOrderResponse?.createdByDetails?.profilePic ?? AppImages.icPlaceholder,
+            value: placeOrderResponse?.createdByDetails?.organisationName ?? APPStrings.dash.tr,
             style: style,
           ),
           SizedBox(height: 24.h),
           _CreatorDetailItem(
             title: APPStrings.contactInfo.tr,
             iconImage: AppImages.icMail,
-            value: "business@domain.com",
+            value: placeOrderResponse?.createdByDetails?.email ?? APPStrings.dash.tr,
             style: style,
           ),
           SizedBox(height: 12.h),
           _CreatorDetailItem(
             iconImage: AppImages.icPhone,
-            value: "(406) 555-0120",
+            value: placeOrderResponse?.createdByDetails?.phoneNumber ?? APPStrings.dash.tr,
             style: style,
           ),
           SizedBox(height: 24.h),
@@ -365,50 +389,49 @@ class _OrderCreatorDetailsCard extends StatelessWidget {
   }
 }
 
-class _DetailColumn extends StatelessWidget {
+class DetailColumn extends StatelessWidget {
   final String title;
   final String? value;
   final OrderDetailScreenStyle style;
   final bool isOrderStatus;
   final bool totalAmount;
+  final bool isExpanded;
 
-  const _DetailColumn({
+  const DetailColumn({
+    super.key,
     required this.title,
     this.value,
     required this.style,
     this.isOrderStatus = false,
     this.totalAmount = false,
+    this.isExpanded = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(end: 6.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SmartText(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: style.orderItemLabelStyle,
-            ),
-            SizedBox(height: 4.h),
-            isOrderStatus
-                ? SmartStatusBadge(
-                    currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value),
-                  )
-                : SmartText(
-                    value.isNullOrEmpty ? APPStrings.dash.tr : value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
-                  ),
-          ],
+    Widget widget = Column(
+      children: [
+        SmartText(
+          title,
+          style: style.orderItemLabelStyle,
         ),
-      ),
+        SizedBox(height: 4.h),
+        isOrderStatus
+            ? SmartStatusBadge(
+                currentStatus: ProjectStatus.values.firstWhere((orderStatus) => orderStatus.value == value),
+              )
+            : SmartText(
+                value.isNullOrEmpty ? APPStrings.dash.tr : value,
+                style: totalAmount ? style.orderTotalStyle : style.orderItemValueStyle,
+              ),
+      ],
     );
+    if (isExpanded) {
+      return Flexible(
+        child: widget,
+      );
+    }
+    return widget;
   }
 }
 

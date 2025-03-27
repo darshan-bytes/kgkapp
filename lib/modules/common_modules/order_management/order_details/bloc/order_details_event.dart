@@ -30,3 +30,32 @@ class OrderCancellationReasonsEvent extends OrderDetailEvent {
   @override
   List<Object> get props => [cancellationReasonModel];
 }
+
+final class OrderCancellationEvent extends OrderDetailEvent {
+  final BuildContext context;
+  final PlaceOrderResponse placeOrderResponse;
+  final String productSuid;
+  final bool isFromFullOrder;
+
+  const OrderCancellationEvent(
+      {required this.context, required this.placeOrderResponse, this.productSuid = "", this.isFromFullOrder = false});
+
+  @override
+  List<Object> get props => [context, placeOrderResponse, productSuid, isFromFullOrder];
+}
+
+final class CancelOrderCommentChangeEvent extends OrderDetailEvent {
+  final FieldTypeValidationEnum fieldType;
+
+  const CancelOrderCommentChangeEvent({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}
+
+final class OrderDetailsCancelInitialEvent extends OrderDetailEvent {
+  const OrderDetailsCancelInitialEvent();
+
+  @override
+  List<Object> get props => [];
+}

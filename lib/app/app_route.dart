@@ -816,6 +816,7 @@ enum RoutesData {
   settingId,
   isFromLoginRequired,
   filterData,
+  bloc
 }
 
 enum ScreenIdentifier {
