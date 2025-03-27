@@ -827,5 +827,7 @@
   "mob_select_status": "حدد الحالة",
   "mob_new": "جديد",
   "mob_open": "فتح",
-  "mob_progress": "تقدم"
+  "mob_progress": "تقدم",
+  "mob_error_select_status": "يرجى تحديد حالة",
+  "mob_error_enter_comment": "يرجى ادخال التعليق"
 }

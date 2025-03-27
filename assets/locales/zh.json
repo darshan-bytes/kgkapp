@@ -828,5 +828,7 @@
   "mob_select_status": "选择状态",
   "mob_new": "新的",
   "mob_open": "开放",
-  "mob_progress": "进展"
+  "mob_progress": "进展",
+  "mob_error_select_status": "请选择状态",
+  "mob_error_enter_comment": "请输入评论"
 }

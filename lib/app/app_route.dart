@@ -315,7 +315,7 @@ class AppRoutes {
 
       case makeInquiryPage:
         builder = (context) {
-          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent());
+          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent(context: context));
           return const MakeInquiryScreen();
         };
         break;

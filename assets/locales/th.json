@@ -828,5 +828,7 @@
   "mob_select_status": "เลือกสถานะ",
   "mob_new": "ใหม่",
   "mob_open": "เปิด",
-  "mob_progress": "ความคืบหน้า"
+  "mob_progress": "ความคืบหน้า",
+  "mob_error_select_status": "กรุณาเลือกสถานะ",
+  "mob_error_enter_comment": "กรุณากรอกรายละเอียด"
 }

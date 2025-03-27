@@ -828,5 +828,7 @@
   "mob_select_status": "Select Status",
   "mob_new": "New",
   "mob_open": "Open",
-  "mob_progress": "Progress"
+  "mob_progress": "Progress",
+  "mob_error_select_status": "Please select an inquiry type",
+  "mob_error_enter_comment": "Please enter your comment"
 }

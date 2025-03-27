@@ -19,6 +19,30 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   ProductModel? selectedProduct;
   InquiryTypeModel? selectedInquiryType;
 
+  bool isIndividual = true;
+ // List<TextEditingController> contactNumberControllers = [TextEditingController()];
+
+  TextEditingController contactNumberController = TextEditingController();
+
+  // List<String?> contactNumberErrors = [null];
+  // List<FocusNode> contactNumberFocusNodes = [FocusNode()];
+  FocusNode contactNumberFocusNode = FocusNode();
+  Country selectedCountry =
+    Country.from(json: {
+      "e164_cc": "91",
+      "iso2_cc": "IN",
+      "e164_sc": 0,
+      "geographic": true,
+      "level": 1,
+      "name": "India",
+      "example": "9123456789",
+      "display_name": "India (IN) [+91]",
+      "full_example_with_plus_sign": "+919123456789",
+      "display_name_no_e164_cc": "India (IN)",
+      "e164_key": "91-IN-0",
+    })
+  ;
+
   List<ProductModel> productList = [
     const ProductModel(id: 1, name: 'SKUC097973'),
     const ProductModel(id: 2, name: 'SKUC097944'),
@@ -30,6 +54,14 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     on<ContactUsChangeInquiryTypeEvent>(_onChangeInquiryTypeEvent);
     on<ContactUsChangeSelectProductEvent>(_onChangeSelectProductEvent);
     on<ContactUsSubmitEvent>(_onSubmitEvent);
+    on<ContactUsChangeCountryCodeEvent>(_onChangeCountryCodeEvent);
+  }
+
+  void _onChangeCountryCodeEvent(ContactUsChangeCountryCodeEvent event, Emitter<ContactUsState> emit) {
+    emit(ContactUsReloadState());
+    selectedCountry = event.country;
+    emit(ContactUsFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
+    emit(ContactUsChangeCountryCodeState(country: selectedCountry, index: event.index));
   }
 
   Future<void> _onContactUsInitialEvent(ContactUsInitialEvent event, Emitter<ContactUsState> emit) async {
@@ -73,10 +105,11 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   }
 
   Future<void> submitContactUs(context, Emitter<ContactUsState> emit) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     Map<String, dynamic> params = {
       ApiKey.fullName: fullNameController.text,
       ApiKey.email: emailController.text,
-      ApiKey.phone: "",
+      ApiKey.phone: "${selectedCountry.countryCode}${contactNumberController.text}",
       ApiKey.subject: "",
       ApiKey.message: commentController.text,
       ApiKey.inquiryType: selectedInquiryType?.name,
@@ -99,6 +132,10 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     }
     if (emailController.text.isEmpty) {
       Utils.showMessage(APPStrings.emailRequired.tr);
+      return false;
+    }
+    if (contactNumberController.text.isEmpty) {
+      Utils.showMessage(APPStrings.errorContactNumberRequired.tr);
       return false;
     }
     if (selectedInquiryType == null) {

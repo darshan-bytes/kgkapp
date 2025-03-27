@@ -1022,4 +1022,7 @@ class APPStrings {
   static const String strNew = 'mob_new';
   static const String open = 'mob_open';
   static const String progress = 'mob_progress';
+
+  static const String errorSelectStatus = 'mob_error_select_status';
+  static const String errorEnterComment = 'mob_error_enter_comment';
 }

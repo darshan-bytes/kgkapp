@@ -5,8 +5,12 @@ sealed class MakeInquiryEvent extends Equatable {
 }
 
 class MakeInquiryInitialEvent extends MakeInquiryEvent {
+  final BuildContext context;
+
+  const MakeInquiryInitialEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class MakeInquiryReloadEvent extends MakeInquiryEvent {
@@ -42,6 +46,11 @@ class ChangeSelectProductEvent extends MakeInquiryEvent {
 }
 
 class MakeInquirySubmitEvent extends MakeInquiryEvent {
+
+  final BuildContext context;
+
+  const MakeInquirySubmitEvent({required this.context});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }

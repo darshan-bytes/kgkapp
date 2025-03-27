@@ -38,8 +38,7 @@ class MakeInquiryScreen extends StatelessWidget {
               SizedBox(height: 18.h),
               SmartButton(
                   onTap: () {
-                    bloc.add(MakeInquirySubmitEvent());
-                    context.pop();
+                    bloc.add(MakeInquirySubmitEvent(context: context));
                   },
                   title: APPStrings.submit.tr)
             ],

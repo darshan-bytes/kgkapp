@@ -34,9 +34,10 @@ class ContactUsScreen extends StatelessWidget {
               SizedBox(height: 14.h),
               _buildEmailField(bloc),
               SizedBox(height: 14.h),
+              _buildContactNumberField(bloc, context, style),
+              SizedBox(height: 14.h),
               _buildInquiryTypeDropdown(bloc),
               // Right now hide this section ones confirmation comes from client totally remove this
-              // SizedBox(height: 14.h),
               // _buildProductDropdown(bloc),
               SizedBox(height: 14.h),
               _buildCommentField(bloc),
@@ -53,6 +54,103 @@ class ContactUsScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildContactNumberField(ContactUsBloc contactUsBloc, BuildContext context, ContactUsStyle style) {
+    final CountryPickerStyle countryPickerStyle = AppTheme.of(context).countryPickerStyle;
+    return BlocBuilder<ContactUsBloc, ContactUsState>(
+      buildWhen: (previous, current) => current is ContactUsAddRemoveContactState,
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: false,
+              itemCount: 1,
+              itemBuilder: (_, index) {
+                return BlocBuilder<ContactUsBloc, ContactUsState>(
+                  buildWhen: (previous, current) =>
+                      current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+                  builder: (context, state) {
+                    return SmartTextField(
+                      labelText: index == 0 ? APPStrings.contactNumber.tr : null,
+                      hintText: APPStrings.hintContactNumber.tr,
+                      controller: contactUsBloc.contactNumberController,
+                      focusNode: contactUsBloc.contactNumberFocusNode,
+                      keyboardType: TextInputType.phone,
+                      textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                      onValueChanges: (value) {},
+                      prefixIcon: BlocBuilder<ContactUsBloc, ContactUsState>(
+                        buildWhen: (previous, current) => current is ContactUsChangeCountryCodeState,
+                        builder: (context, state) {
+                          return InkWell(
+                            onTap: () {
+                              Utils.showCountryPickerModel(
+                                context: context,
+                                countryPickerStyle: countryPickerStyle,
+                                showPhoneCode: true,
+                                onSelect: (Country country) {
+                                  contactUsBloc.add(ContactUsChangeCountryCodeEvent(country: country, index: index));
+                                },
+                              );
+                            },
+                            child: SizedBox(
+                              width: 95.w,
+                              child: Container(
+                                alignment: AlignmentDirectional.center,
+                                padding: EdgeInsetsDirectional.all(12.w),
+                                margin: EdgeInsetsDirectional.only(end: 12.w),
+                                decoration: BoxDecoration(
+                                  border: BorderDirectional(
+                                    end: BorderSide(
+                                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SmartText(
+                                      '+${contactUsBloc.selectedCountry.phoneCode}',
+                                      style: AppTheme.of(context).textFieldStyle.textStyle,
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    const SmartImage(path: AppImages.icArrowDropDown),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (_, __) {
+                return SizedBox(height: 8.h);
+              },
+            ),
+            BlocBuilder<ContactUsBloc, ContactUsState>(
+              buildWhen: (previous, current) => current is ContactUsPhoneNumberValidationState,
+              builder: (context, state) {
+                if (state is ContactUsPhoneNumberValidationState && state.isError) {
+                  return SmartText(
+                    state.errorMessage ?? APPStrings.phoneNumberAlreadyUsed.tr,
+                    color: style.errorTextColor,
+                    optionalPadding: EdgeInsetsDirectional.only(top: 6.h),
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

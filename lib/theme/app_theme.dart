@@ -1742,6 +1742,7 @@ class ContactUsStyle {
   final TextStyle subMessageStyle;
   final TextStyle subMessageDescriptionStyle;
   final TextStyle contactDetailsStyle;
+  final Color errorTextColor;
 
   ContactUsStyle({
     required this.headerTitleStyle,
@@ -1751,6 +1752,7 @@ class ContactUsStyle {
     required this.subMessageStyle,
     required this.subMessageDescriptionStyle,
     required this.contactDetailsStyle,
+    required this.errorTextColor,
   });
 }
 
