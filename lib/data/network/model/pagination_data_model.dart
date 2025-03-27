@@ -98,6 +98,8 @@ class PaginationData<T> {
         return HomeGemstonesModel.fromJson(json);
       case const (ConceptModel):
         return ConceptModel.fromJson(json);
+      case const (UserMasterListingModelClass):
+        return UserMasterListingModelClass.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

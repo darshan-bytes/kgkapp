@@ -642,8 +642,10 @@ class AppRoutes {
 
       case userMasterListingPage:
         builder = (context) {
-          BlocProvider.of<UserMasterListingBloc>(context).add(const InitialUserMasterListingEvent());
-          return const UserMasterListingScreen();
+          return BlocProvider<UserMasterListingBloc>(
+            create: (context) => UserMasterListingBloc()..add(InitialUserMasterListingEvent(context: context)),
+            child: const UserMasterListingScreen(),
+          );
         };
         break;
 
