@@ -15,6 +15,7 @@ class B2BItemField {
   final bool isOnlyImageView;
   final double? gridSpacing;
   final bool isValueNotifier;
+  final List<B2BItemField>? subFields;
 
   B2BItemField({
     this.label,
@@ -27,6 +28,7 @@ class B2BItemField {
     this.isOnlyImageView = false,
     this.gridSpacing,
     this.isValueNotifier = false,
+    this.subFields,
   });
 }
 
@@ -94,6 +96,7 @@ class B2BListingItem extends StatelessWidget {
               columns: columns,
               spacing: 0.0.w,
               runSpacing: gridRunSpacing ?? 16.0.h,
+              isLastFullWidthRequired: type == B2BListingType.conceptListingType,
             ),
           ),
           if (onTapMenuButton != null)
@@ -209,6 +212,36 @@ class B2BColumnDetailItem extends StatelessWidget {
   }
 
   Widget _buildValue(B2BItemField field, AuctionListItemStyle auctionListItemStyle, PddListingItemStyle style) {
+    if (field.subFields.isNotNullNorEmpty) {
+      return SmartGridView(
+          isLastFullWidthRequired: true,
+          items: List.generate(
+            field.subFields!.length,
+            (index) {
+              B2BItemField subField = field.subFields![index];
+              return Row(
+                children: [
+                  if (subField.imageUrl != null)
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(end: 8.w),
+                      child: SmartImage(
+                        path: subField.imageUrl!,
+                        height: subField.imageSize ?? 24.w,
+                        width: subField.imageSize ?? 24.w,
+                        fit: BoxFit.contain,
+                        imageBorderRadius: subField.isCircleImage ? BorderRadius.circular(((subField.imageSize ?? 24.w) / 2).r) : null,
+                      ),
+                    ),
+                  Flexible(
+                    child: subField.isCircleWithValue
+                        ? _buildCircleWithValue(subField, auctionListItemStyle, style)
+                        : _buildTextValue(subField, auctionListItemStyle),
+                  ),
+                ],
+              );
+            },
+          ));
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

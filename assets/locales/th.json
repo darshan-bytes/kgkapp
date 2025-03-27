@@ -527,6 +527,7 @@
   "mob_share": "แบ่งปัน",
   "mob_share_catalogue": "แชร์แคตตาล็อก",
   "mob_approved": "ที่ได้รับการอนุมัติ",
+    "mob_reject": "ถูกปฏิเสธ",
   "mob_released": "ปล่อยแล้ว",
   "mob_approval": "การอนุมัติ",
   "mob_style_created": "สไตล์ที่สร้างขึ้น",
@@ -819,5 +820,9 @@
   "mob_remove_catalogue": "ลบแคตตาล็อก",
   "mob_remove_catalogue_msg": "แคตตาล็อกที่เลือกจะถูกลบออกจากรายการ",
   "mob_address_type": "ประเภทที่อยู่",
-  "delay": "ช่วงเวลา"
+  "mob_delay": "ช่วงเวลา",
+  "mob_presentation_dialog_title": "การรีวิวและอนุมัติ",
+  "mob_presentation_dialog_msg": "คุณต้องการดำเนินการต่อหรือไม่?",
+  "mob_concept_by": "แนวคิดโดย",
+  "mob_received_on": "ได้รับเมื่อ"
 }

@@ -527,6 +527,7 @@
   "mob_share": "பங்கு",
   "mob_share_catalogue": "பகிர்வு பட்டியல்",
   "mob_approved": "அங்கீகரிக்கப்பட்டது",
+    "mob_reject": "நிராகரிக்கப்பட்டது",
   "mob_released": "வெளியிடப்பட்டது",
   "mob_approval": "ஒப்புதல்",
   "mob_style_created": "பாணி உருவாக்கப்பட்டது",
@@ -819,5 +820,9 @@
   "mob_remove_catalogue": "கேட்டலாகை நீக்கு",
   "mob_remove_catalogue_msg": "தேர்ந்தெடுக்கப்பட்ட கேட்டலாக் பட்டியலில் இருந்து நீக்கப்படும்",
   "mob_address_type": "முகவரி வகை",
-  "delay": "தேர்ந்தெடுக்கம்"
+  "mob_delay": "தேர்ந்தெடுக்கம்",
+  "mob_presentation_dialog_title": "மதிப்பு பரிசியம்",
+  "mob_presentation_dialog_msg": "தேர்ந்தெடுக்கப்படும் மதிப்பு பரிசியம் செய்ய விரும்புகிறீர்கள்?",
+  "mob_concept_by": "கோப்பு",
+  "mob_received_on": "பெற்றது"
 }

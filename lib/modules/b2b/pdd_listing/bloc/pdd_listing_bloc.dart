@@ -9,6 +9,8 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   final TextEditingController presentationSearchController = TextEditingController();
   List<B2BCustomListingDataModel> presentationList = [];
 
+  UserType userType = UserType.b2cUser;
+
   //Pagination controller
   SmartPaginationScrollController gridPaginationScrollController = SmartPaginationScrollController();
 
@@ -30,6 +32,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     on<NavigateToPddPreviewEvent>(_navigateToPreview);
     on<PddListLoadMoreEvent>(_onPddListLoadMoreEvent);
     on<PddListPullToRefreshEvent>(_onPddListPullToRefresh);
+    on<PddListReviewStateEvent>(_onPddListReviewStateEvent);
     on<PddListSearchEvent>(_onPddListSearchEvent, transformer: BlocEventDeBouncer.debounceTransformer());
   }
 
@@ -40,6 +43,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
   /// Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<PddListingState> emit) async {
     emit(PddListLoadingState());
+    userType = BlocProvider.of<AppBloc>(context).userType;
     _initializePagination(context);
     _fetchFilterData(context, emit);
     if (totalNumberOfPages == null || gridPaginationScrollController.currentPage <= totalNumberOfPages!) {
@@ -64,6 +68,28 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     await fetchPresentationList(event.context, emit, isLoadMore: false, searchString: presentationSearchController.text);
     if (presentationSearchController.text.isNotNullNorEmpty) focusNode.requestFocus();
     emit(PddListingLoadedState());
+  }
+
+  Future<void> _onPddListReviewStateEvent (PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
+    emit(PddListingReloadState());
+    await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
+    emit(PddListingLoadedState());
+  }
+
+  Future<void> apiCallForPresentationStatus(
+      {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
+    Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
+    await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
+      if (l.code == 403) {
+        Utils.showMessage(l.message);
+      }
+    }, (r) {
+      /// Todo : Integration pending here
+      Presentation presentation = Presentation.fromJson(r.responseData);
+      // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
+      // emit(PddListingReloadState());
+    }));
+    context.pop();
   }
 
   void _fetchFilterData(BuildContext context, Emitter<PddListingState> emit) async {
@@ -208,25 +234,64 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     });
   }
 
+  ProjectStatus getOrderStatus({required String orderStatus}) {
+    switch (orderStatus) {
+      case "approved":
+        return ProjectStatus.approval;
+      case "pending":
+        return ProjectStatus.pending;
+      case "completed":
+        return ProjectStatus.completed;
+      case "cancelled":
+        return ProjectStatus.cancelled;
+      case "in_progress":
+        return ProjectStatus.orangeInProgress;
+      default:
+        return ProjectStatus.pending;
+    }
+  }
+
   /// Populate digital catalogue list
   List<B2BCustomListingDataModel> _populateDigitalCatalogueList(List<PddDataModel> dataList) {
     return dataList.map((data) {
+      String formatName(UserIdDetails? details) {
+        if (details == null) return '-';
+        final firstName = details.firstname ?? '';
+        final lastName = details.lastname ?? '';
+        return (firstName.isNotEmpty || lastName.isNotEmpty) ? '$firstName $lastName'.trim() : '-';
+      }
+
       return B2BCustomListingDataModel(
-        id: data.sId ?? '',
+        id: data.id ?? '',
         strPresentationNumber: data.presentationNumber ?? '',
-        strProject: data.totalProjects.toString(),
+        strProject: data.totalProjects?.toString() ?? '0',
         strConceptName: data.conceptName ?? '',
-        status: data.projectStatus,
-        strCreatedBy: data.createdByDetails?.fullName ?? '',
-        strCreatedByImageUrl: data.createdByDetails?.profilePicUrl?.setMediaUrl ?? '',
-        strCreatedOn: data.createdAt?.changeDateFormat(
-            inputDateFormat: DateFormatter.dateFormatYYYYMMDDTHHMMSSMMMZ, outputDateFormat: DateFormatter.dateFormatDDMMMYYYY),
-        strAssignTo: data.assignedToDetails?.first.fullName,
-        strAssignToImageUrl: data.assignedToDetails?.first.profilePicUrl?.setMediaUrl ?? '',
-        strApprovedBy: data.approvedByDetails?.fullName ?? '',
-        strApprovedByImageUrl: data.approvedByDetails?.profilePicUrl?.setMediaUrl ?? '',
-        strConceptNumber: data.conceptNumber ?? "",
-        strPresentationImageUrl: data.image,
+        status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
+        strCreatedBy: formatName(data.createdByDetails),
+        strCreatedByImageUrl: data.createdByDetails.profilePic ?? '',
+        strCreatedOn: data.createdAt?.dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMYYYYHHMMA),
+        strApprovedBy: formatName(data.approvedByDetails),
+        strApprovedByImageUrl: data.approvedByDetails.profilePic ?? '',
+        strConceptNumber: data.conceptNumber ?? '',
+        strPresentationImageUrl: '',
+        fields: generateB2BItemFields(data.assignedToDetails),
+      );
+    }).toList();
+  }
+
+  List<B2BItemField> generateB2BItemFields(List<UserIdDetails>? assignedToDetails) {
+    if (assignedToDetails == null || assignedToDetails.isEmpty) {
+      return [];
+    }
+
+    return assignedToDetails.map((detail) {
+      String fullName = detail.fullName;
+      String imageUrl = detail.profilePic ?? '';
+
+      return B2BItemField(
+        label: APPStrings.assignTo.tr,
+        value: fullName,
+        imageUrl: imageUrl,
       );
     }).toList();
   }

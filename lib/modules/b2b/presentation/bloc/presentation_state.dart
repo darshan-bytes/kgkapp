@@ -19,6 +19,11 @@ final class PresentationLoadedState extends PresentationState {
   List<Object> get props => [];
 }
 
+final class PaginationControllerLoadedState extends PresentationState {
+  @override
+  List<Object> get props => [];
+}
+
 final class PresentationListLoadingMoreState extends PresentationState {
   const PresentationListLoadingMoreState();
 

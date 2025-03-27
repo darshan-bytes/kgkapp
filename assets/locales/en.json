@@ -527,6 +527,7 @@
   "mob_share": "Share",
   "mob_share_catalogue": "Share catalogue",
   "mob_approved": "Approved",
+  "mob_reject": "Reject",
   "mob_released": "Released",
   "mob_approval": "Approval",
   "mob_style_created": "Style created",
@@ -819,5 +820,9 @@
   "mob_remove_catalogue": "Remove Catalogue",
   "mob_remove_catalogue_msg": "Selected catalogue will be removed from the list",
   "mob_address_type": "Address Type",
-  "delay": "Delay"
+  "mob_delay": "Delay",
+  "mob_presentation_dialog_title": "Presentation Review",
+  "mob_presentation_dialog_msg": "Review and approve or reject the presentation.",
+  "mob_concept_by": "Concept By",
+  "mob_received_on": "Received on"
 }

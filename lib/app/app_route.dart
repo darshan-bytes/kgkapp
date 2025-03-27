@@ -411,7 +411,7 @@ class AppRoutes {
       case conceptListPage:
         builder = (context) {
           return BlocProvider<ConceptListBloc>(
-            create: (context) => ConceptListBloc()..add(const ConceptListInitialEvent()),
+            create: (context) => ConceptListBloc()..add(ConceptListInitialEvent(context: context)),
             child: const ConceptListScreen(),
           );
         };
@@ -795,6 +795,7 @@ enum RoutesData {
   watchlistId,
   messageModel,
   conceptId,
+  presentationList,
   diamondInfo,
   isWatchlistCreated,
   isWatchlistUpdated,

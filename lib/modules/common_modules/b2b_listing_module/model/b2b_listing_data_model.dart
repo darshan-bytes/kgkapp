@@ -5,9 +5,8 @@ class B2BCustomListingDataModel {
   String? strConceptNumber;
   String? strPresentation;
   String? strConceptName;
+  String? strConceptBy;
   ProjectStatus? status;
-  String? strAssignTo;
-  String? strAssignToImageUrl;
   String? strApprovedBy;
   String? strApprovedByImageUrl;
   String? strMarket;
@@ -41,6 +40,7 @@ class B2BCustomListingDataModel {
   ProjectStatus? dbfApprovalStatus;
   String? strRevisedDate;
   String? strName;
+  String? strDescription;
   String? strNameImageUrl;
   String? strFrom;
   String? strTo;
@@ -83,15 +83,17 @@ class B2BCustomListingDataModel {
   String? strCountry;
   String? strCountryImageUrl;
   String? strValidity;
+  List<B2BItemField>? fields;
+  List<String>? descriptionImageList;
+  List<Presentation>? presentationList;
 
   B2BCustomListingDataModel({
     this.id,
     this.strConceptNumber,
     this.strPresentation,
     this.strConceptName,
+    this.strConceptBy,
     this.status,
-    this.strAssignTo,
-    this.strAssignToImageUrl,
     this.strApprovedBy,
     this.strApprovedByImageUrl,
     this.strMarket,
@@ -124,6 +126,7 @@ class B2BCustomListingDataModel {
     this.dbfApprovalStatus,
     this.strRevisedDate,
     this.strName,
+    this.strDescription,
     this.strNameImageUrl,
     this.strFrom,
     this.strTo,
@@ -167,5 +170,8 @@ class B2BCustomListingDataModel {
     this.strCountry,
     this.strCountryImageUrl,
     this.strValidity,
+    this.fields,
+    this.descriptionImageList,
+    this.presentationList,
   });
 }

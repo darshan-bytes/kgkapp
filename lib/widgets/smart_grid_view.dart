@@ -8,6 +8,7 @@ class SmartGridView extends StatelessWidget {
   final double? height;
   final bool isLoadingMore;
   final List<({int index, Widget child})>? additionalWidgets;
+  final bool isLastFullWidthRequired;
 
   const SmartGridView({
     super.key,
@@ -18,6 +19,7 @@ class SmartGridView extends StatelessWidget {
     this.height,
     this.isLoadingMore = false,
     this.additionalWidgets,
+    this.isLastFullWidthRequired = false,
   });
 
   @override
@@ -36,13 +38,16 @@ class SmartGridView extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   spacing: spacing ?? 12.w,
                   runSpacing: runSpacing ?? 12.h,
-                  children: items.map((item) {
-                    return SizedBox(
-                      height: height,
-                      width: itemWidth,
-                      child: item,
-                    );
-                  }).toList(),
+                  children: List.generate(
+                    items.length,
+                    (index) {
+                      return SizedBox(
+                        height: height,
+                        width: isLastFullWidthRequired ? index == items.length - 1 ? totalWidth : itemWidth : itemWidth,
+                        child: items[index],
+                      );
+                    },
+                  ).toList(),
                 ),
               ),
               if (isLoadingMore) const SmartCircularProgressIndicator(),

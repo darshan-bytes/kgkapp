@@ -1,110 +1,101 @@
 import 'package:kgk/kgk.dart';
 
 class PddDataModel {
-  String? sId;
-  String? image;
-  String? presentationNumber;
-  int? createdBy;
-  int? approvedBy;
-  String? approvedAt;
-  String? status;
-  String? createdAt;
-  String? updatedAt;
-  int? totalProjects;
-  String? conceptNumber;
-  String? conceptName;
-  String? collection;
-  String? businessCategory;
-  List<String>? assignedTo;
-  UserIdDetails? createdByDetails;
-  UserIdDetails? approvedByDetails;
-  List<UserIdDetails>? assignedToDetails;
+  PddDataModel({
+    required this.id,
+    required this.presentationNumber,
+    required this.createdBy,
+    required this.approvedBy,
+    required this.approvedAt,
+    required this.status,
+    required this.coverImage,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.totalProjects,
+    required this.conceptNumber,
+    required this.conceptName,
+    required this.collection,
+    required this.businessCategory,
+    required this.assignedTo,
+    required this.conceptById,
+    required this.conceptBy,
+    required this.createdByDetails,
+    required this.approvedByDetails,
+    required this.assignedToDetails,
+  });
 
-  PddDataModel(
-      {this.sId,
-      this.image,
-      this.presentationNumber,
-      this.createdBy,
-      this.approvedBy,
-      this.approvedAt,
-      this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.totalProjects,
-      this.conceptNumber,
-      this.conceptName,
-      this.collection,
-      this.businessCategory,
-      this.assignedTo,
-      this.createdByDetails,
-      this.approvedByDetails,
-      this.assignedToDetails});
+  final String? id;
+  final String? presentationNumber;
+  final int? createdBy;
+  final int? approvedBy;
+  final DateTime? approvedAt;
+  final String? status;
+  final dynamic coverImage;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? totalProjects;
+  final String? conceptNumber;
+  final String? conceptName;
+  final String? collection;
+  final String? businessCategory;
+  final List<String> assignedTo;
+  final int? conceptById;
+  final String? conceptBy;
+  final UserIdDetails createdByDetails;
+  final UserIdDetails approvedByDetails;
+  final List<UserIdDetails> assignedToDetails;
 
-  PddDataModel.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    image = json['image'];
-    presentationNumber = json['presentation_number'];
-    createdBy = json['created_by'];
-    approvedBy = json['approved_by'];
-    approvedAt = json['approved_at'];
-    status = json['status'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    totalProjects = json['totalProjects'];
-    conceptNumber = json['concept_number'];
-    conceptName = json['concept_name'];
-    collection = json['collection'];
-    businessCategory = json['business_category'];
-    assignedTo = json['assigned_to'].cast<String>();
-    createdByDetails = json['created_by_details'] != null ? UserIdDetails.fromJson(json['created_by_details']) : null;
-    approvedByDetails = json['approved_by_details'] != null ? UserIdDetails.fromJson(json['approved_by_details']) : null;
-    if (json['assigned_to_details'] != null) {
-      assignedToDetails = <UserIdDetails>[];
-      json['assigned_to_details'].forEach((v) {
-        assignedToDetails!.add(UserIdDetails.fromJson(v));
-      });
-    }
+  factory PddDataModel.fromJson(Map<String, dynamic> json) {
+    return PddDataModel(
+      id: json["_id"],
+      presentationNumber: json["presentation_number"],
+      createdBy: json["created_by"],
+      approvedBy: json["approved_by"],
+      approvedAt: DateTime.tryParse(json["approved_at"] ?? ""),
+      status: json["status"],
+      coverImage: json["cover_image"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      totalProjects: json["totalProjects"],
+      conceptNumber: json["concept_number"],
+      conceptName: json["concept_name"],
+      collection: json["collection"],
+      businessCategory: json["business_category"],
+      assignedTo: json["assigned_to"] == null ? [] : List<String>.from(json["assigned_to"]!.map((x) => x)),
+      conceptById: json["concept_by_id"],
+      conceptBy: json["concept_by"],
+      createdByDetails: UserIdDetails.fromJson(json["created_by_details"]),
+      approvedByDetails: UserIdDetails.fromJson(json["approved_by_details"]),
+      assignedToDetails: json["assigned_to_details"] == null
+          ? []
+          : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['image'] = image;
-    data['presentation_number'] = presentationNumber;
-    data['created_by'] = createdBy;
-    data['approved_by'] = approvedBy;
-    data['approved_at'] = approvedAt;
-    data['status'] = status;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['totalProjects'] = totalProjects;
-    data['concept_number'] = conceptNumber;
-    data['concept_name'] = conceptName;
-    data['collection'] = collection;
-    data['business_category'] = businessCategory;
-    data['assigned_to'] = assignedTo;
-    if (createdByDetails != null) {
-      data['created_by_details'] = createdByDetails!.toJson();
-    }
-    if (approvedByDetails != null) {
-      data['approved_by_details'] = approvedByDetails!.toJson();
-    }
-    if (assignedToDetails != null) {
-      data['assigned_to_details'] = assignedToDetails!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "presentation_number": presentationNumber,
+        "created_by": createdBy,
+        "approved_by": approvedBy,
+        "approved_at": approvedAt?.toIso8601String(),
+        "status": status,
+        "cover_image": coverImage,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "totalProjects": totalProjects,
+        "concept_number": conceptNumber,
+        "concept_name": conceptName,
+        "collection": collection,
+        "business_category": businessCategory,
+        "assigned_to": assignedTo.map((x) => x).toList(),
+        "concept_by_id": conceptById,
+        "concept_by": conceptBy,
+        "created_by_details": createdByDetails.toJson(),
+        "approved_by_details": approvedByDetails.toJson(),
+      };
 
-extension ProjectStatusExtension on PddDataModel {
-  ProjectStatus? get projectStatus {
-    switch (status) {
-      case "approved":
-        return ProjectStatus.approved;
-      case "pending":
-        return ProjectStatus.pending;
-      default:
-        return null;
-    }
+  @override
+  String toString() {
+    return "$id, $presentationNumber, $createdBy, $approvedBy, $approvedAt, $status, $coverImage, $createdAt, $updatedAt, $totalProjects, $conceptNumber, $conceptName, $collection, $businessCategory, $assignedTo, $conceptById, $conceptBy, $createdByDetails, $approvedByDetails, $assignedToDetails, ";
   }
 }

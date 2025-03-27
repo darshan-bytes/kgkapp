@@ -6,13 +6,11 @@ class ApiService implements ApiProvider {
   // Common method to get headers
   Map<String, String> _getCommonHeaders({Map<String, String>? additionalHeaders, required bool withCurrencyHeader}) {
     String? token = StorageManager().getAuthToken();
+    // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ5NjgiLCJpc19hZG1pbiI6ZmFsc2UsInVzZXJfdHlwZSI6ImludGVybmFsIiwiY291bnRyeV9jb2RlIjoiSU4iLCJyb2xlIjoic3VwZXItYWRtaW4yIiwiZGVmYXVsdF9jc2NfY29kZSI6bnVsbCwiaWF0IjoxNzQyOTYxNDgyLCJleHAiOjE3NDI5ODMwODJ9.0NhDOwNWhFuPAxv4Arw8Ro58UfaXY8AJAPpUutkG1kc';
     // Ankita User Token
-    // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM4OTIiLCJpc19hZG1pbiI6dHJ1ZSwidXNlcl90eXBlIjoiY3VzdG9tZXIiLCJjb3VudHJ5X2NvZGUiOiJJTiIsInJvbGUiOiJpbmRpdmlkdWFsLXJvbGUiLCJjdXN0b21lcl9vcmdhbml6YXRpb25faWQiOiIzMTcxOCIsImlhdCI6MTczMzkyNjEyOSwiZXhwIjoxNzM0NTMwOTI5fQ.SbFMhmBCEjFE1D2uoTlGxXMAmHx0c3r0BfCDaEEx4Yg';
     String? apiKey = AppConst.apiKey;
     String? acceptLanguage = StorageManager().getLocale();
     String? currency = StorageManager().getSelectedCurrency()?.code;
-
-    printWrapped("Token ::::: $token");
 
     Map<String, String> headers = {
       if (token.isNotNullNorEmpty) HttpHeaders.authorizationHeader: 'Bearer $token',
@@ -20,6 +18,13 @@ class ApiService implements ApiProvider {
       ApiKey.xApiKey: apiKey,
       ApiKey.acceptLanguage: acceptLanguage ?? 'en',
     };
+
+    if (StorageManager().getUserData()?.userTypeEnum == UserType.internal) {
+      String? cscCode = StorageManager().getSelectedCsc()?.cscCode;
+      if (cscCode.isNotNullNorEmpty) {
+        headers[ApiKey.cscCode] = cscCode!;
+      }
+    }
 
     if (withCurrencyHeader) {
       headers[ApiKey.currency] = currency ?? 'INR';
