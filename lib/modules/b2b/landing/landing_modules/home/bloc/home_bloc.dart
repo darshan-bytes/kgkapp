@@ -1019,8 +1019,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       case RedirectionTo.collection:
         if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
-        routeName = (redirectionType == RedirectionType.listing) ? AppRoutes.productListGridPage : AppRoutes.collectionPage;
-        arguments = (redirectionType == RedirectionType.listing)
+        routeName = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
+            ? AppRoutes.productListGridPage
+            : AppRoutes.collectionPage;
+        arguments = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
             ? {
                 RoutesData.isPageFor: ScreenIdentifier.productForRing,
                 RoutesData.filterData: redirectionData,
@@ -1264,6 +1266,7 @@ enum RedirectionTo {
 enum RedirectionType {
   listing,
   details,
+  collection,
   unknown,
 }
 
@@ -1308,7 +1311,7 @@ RedirectionType getRedirectionTypeFromString(String value) {
     case 'product details':
       return RedirectionType.details;
     case 'collection':
-      return RedirectionType.details;
+      return RedirectionType.collection;
     default:
       return RedirectionType.unknown;
   }

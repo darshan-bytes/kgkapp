@@ -18,20 +18,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
       // Client's User B2C
       // emailController.text = "ramesh.kumar@sparklesoft.co.in";
-      emailController.text = "bhati.rmb+1@gmail.com";
+      emailController.text = "bhati.rmb+3@gmail.com";
       // emailController.text = "darshan.vachhani+112@bytestechnolab.com";
       // emailController.text = "ankitachudasama99@yopmail.com";
 
       //B2B
       // emailController.text = "joseph.murphy@yopmail.com";
       // emailController.text = "customer48008@kgkmail.com";
-       emailController.text = "kachinbali@yopmail.com";
+      // emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond
       // emailController.text = "parash2@yopmail.com"; // Jewellery
 
       passwordController.text = "Asdf@1234";
-      passwordController.text = "Test@123";
+      //passwordController.text = "Test@123";
       //  passwordController.text = "Admin@123";
     }
     on<SignInButtonPressedEvent>(signInApiCall);
