@@ -824,5 +824,9 @@
   "mob_presentation_dialog_title": "การรีวิวและอนุมัติ",
   "mob_presentation_dialog_msg": "คุณต้องการดำเนินการต่อหรือไม่?",
   "mob_concept_by": "แนวคิดโดย",
-  "mob_received_on": "ได้รับเมื่อ"
+  "mob_received_on": "ได้รับเมื่อ",
+  "mob_select_status": "เลือกสถานะ",
+  "mob_new": "ใหม่",
+  "mob_open": "เปิด",
+  "mob_progress": "ความคืบหน้า"
 }

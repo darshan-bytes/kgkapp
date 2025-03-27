@@ -23,6 +23,15 @@ class ChangeInquiryTypeEvent extends MakeInquiryEvent {
   List<Object> get props => [inquiryTypeModel];
 }
 
+class ChangeSelectTypeEvent extends MakeInquiryEvent {
+  final StatusModel statusModel;
+
+  const ChangeSelectTypeEvent({required this.statusModel});
+
+  @override
+  List<Object> get props => [statusModel];
+}
+
 class ChangeSelectProductEvent extends MakeInquiryEvent {
   final ProductModel productModel;
 
@@ -30,4 +39,9 @@ class ChangeSelectProductEvent extends MakeInquiryEvent {
 
   @override
   List<Object> get props => [productModel];
+}
+
+class MakeInquirySubmitEvent extends MakeInquiryEvent {
+  @override
+  List<Object> get props => [];
 }

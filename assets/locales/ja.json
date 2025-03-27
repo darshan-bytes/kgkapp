@@ -824,5 +824,9 @@
   "mob_presentation_dialog_title": "プレゼンテーションのレビュー",
   "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。",
   "mob_concept_by": "コンセプト：",
-  "mob_received_on": "受信日："
+  "mob_received_on": "受信日：",
+  "mob_select_status": "ステータスを選択",
+  "mob_new": "新しい",
+  "mob_open": "開く",
+  "mob_progress": "進行"
 }

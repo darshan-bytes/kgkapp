@@ -16,6 +16,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   FocusNode productFocusNode = FocusNode();
   final GlobalKey targetKey = GlobalKey();
   InquiryTypeModel? selectedInquiryType;
+  StatusModel? selectedStatus;
 
   ScrollController productScrollController = ScrollController();
 
@@ -23,6 +24,13 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     const InquiryTypeModel(id: 1, name: 'Bulk Order Discount'),
     const InquiryTypeModel(id: 2, name: 'Complaint'),
     const InquiryTypeModel(id: 3, name: 'Suggestion'),
+  ];
+
+  List<StatusModel> statusList = [
+    const StatusModel(id: 1, name: 'New'),
+    const StatusModel(id: 2, name: 'Open'),
+    const StatusModel(id: 2, name: 'Progress'),
+    const StatusModel(id: 2, name: 'Close'),
   ];
 
   ProductModel? selectedProduct;
@@ -39,7 +47,9 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   MakeInquiryBloc() : super(MakeInquiryInitial()) {
     on<MakeInquiryInitialEvent>(_onMakeInquiryInitialEvent);
     on<ChangeInquiryTypeEvent>(_onChangeInquiryTypeEvent);
+    on<ChangeSelectTypeEvent>(_onChangeSelectTypeEvent);
     on<ChangeSelectProductEvent>(_onChangeSelectProductEvent);
+    on<MakeInquirySubmitEvent>(_onMakeInquirySubmitEvent);
   }
 
   void _onMakeInquiryInitialEvent(MakeInquiryInitialEvent event, Emitter<MakeInquiryState> emit) {
@@ -52,11 +62,64 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     emit(const ToggleMakeInquiryState());
   }
 
+  void _onChangeSelectTypeEvent(ChangeSelectTypeEvent event, Emitter<MakeInquiryState> emit) {
+    emit(MakeInquiryReloadState());
+    selectedStatus = event.statusModel;
+    emit(const ToggleMakeInquiryState());
+  }
+
   void _onChangeSelectProductEvent(ChangeSelectProductEvent event, Emitter<MakeInquiryState> emit) {
     emit(MakeInquiryReloadState());
     selectedProduct = event.productModel;
     emit(const ToggleProductState());
   }
+
+  Future<void> _onMakeInquirySubmitEvent(MakeInquirySubmitEvent event, Emitter<MakeInquiryState> emit) async {
+    emit(MakeInquiryReloadState());
+    bool areAllFieldsValid = isAllFieldValid();
+    if(areAllFieldsValid) {
+      await apiCallForMakeInquirySubmission();
+    }
+    emit(const ToggleMakeInquiryState());
+  }
+
+  Future<void> apiCallForMakeInquirySubmission() async{
+    
+  }
+
+  /// Validate all fields before submitting the form
+  bool isAllFieldValid() {
+    // Text field validations
+    final Map<String, String> textFields = {
+      'full name': fullNameController.text,
+      'email': emailController.text,
+      'comment': commentController.text,
+    };
+
+    for (var entry in textFields.entries) {
+      if (entry.value.isEmpty) {
+        Utils.showMessage('Please enter your ${entry.key}');
+        return false;
+      }
+    }
+
+    // Dropdown/select validations
+    final Map<String, dynamic> selectFields = {
+      'inquiry type': selectedInquiryType,
+      'status': selectedStatus,
+      'product': selectedProduct,
+    };
+
+    for (var entry in selectFields.entries) {
+      if (entry.value == null) {
+        Utils.showMessage('Please select ${entry.key}');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
 
   void scrollToKey() {
     RenderBox? renderBox = targetKey.currentContext?.findRenderObject() as RenderBox?;

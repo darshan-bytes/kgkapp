@@ -1018,4 +1018,8 @@ class APPStrings {
   static const String presentationDialogMsg = 'mob_presentation_dialog_msg';
   static const String conceptBy = 'mob_concept_by';
   static const String receivedOn = 'mob_received_on';
+  static const String selectStatus = 'mob_select_status';
+  static const String strNew = 'mob_new';
+  static const String open = 'mob_open';
+  static const String progress = 'mob_progress';
 }

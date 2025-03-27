@@ -824,5 +824,9 @@
   "mob_presentation_dialog_title": "Presentation Review",
   "mob_presentation_dialog_msg": "Review and approve or reject the presentation.",
   "mob_concept_by": "Concept By",
-  "mob_received_on": "Received on"
+  "mob_received_on": "Received on",
+  "mob_select_status": "Select Status",
+  "mob_new": "New",
+  "mob_open": "Open",
+  "mob_progress": "Progress"
 }

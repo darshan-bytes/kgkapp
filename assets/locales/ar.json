@@ -823,5 +823,9 @@
   "mob_presentation_dialog_title": "تقديم المعاينة",
   "mob_presentation_dialog_msg": "هل تريد تقديم المعاينة؟",
   "mob_concept_by": "بواسطة",
-  "mob_received_on": "تم استلامه في"
+  "mob_received_on": "تم استلامه في",
+  "mob_select_status": "حدد الحالة",
+  "mob_new": "جديد",
+  "mob_open": "فتح",
+  "mob_progress": "تقدم"
 }
