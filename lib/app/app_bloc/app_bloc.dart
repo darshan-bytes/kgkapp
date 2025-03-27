@@ -113,15 +113,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _onLanguageChangedEvent(LanguageChangedEvent event, Emitter<AppState> emit) async {
-    if (event.languageCode != null) {
-      await StorageManager().setLocale(event.languageCode!);
-      await _languageLabelApiCall(event.context);
+    try {
+      if (event.languageCode != null) {
+        await StorageManager().setLocale(event.languageCode!);
+        await _languageLabelApiCall(event.context);
+      }
+      await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
+      locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
+      await sortOptionListApiCall(event.context);
+      emit(LanguageState(locale));
+      event.callback?.call();
+    } catch (e) {
+      debugPrint("Error in _onLanguageChangedEvent: $e");
     }
-    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
-    locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
-    await sortOptionListApiCall(event.context);
-    emit(LanguageState(locale));
-    event.callback?.call();
   }
 
   void _onSetLoadingEvent(SetAppLoadingEvent event, Emitter<AppState> emit) {
