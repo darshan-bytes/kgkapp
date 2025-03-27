@@ -872,6 +872,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             product: productDetails!,
           ));
         } else {
+          isCompare = !isCompare;
           BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductRemoveProductEvent(
             context: event.context!,
             productId: productDetails?.suid ?? '',
