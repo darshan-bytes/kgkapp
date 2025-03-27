@@ -530,3 +530,4 @@ export 'package:google_places_flutter/google_places_flutter.dart';
 export 'package:google_places_flutter/model/place_type.dart';
 export 'package:google_places_flutter/model/prediction.dart';
 export 'package:kgk/modules/b2b/concept_list/model/concept_model.dart';
+export 'package:kgk/modules/b2b/user_master/model/user_master_model_class.dart';
