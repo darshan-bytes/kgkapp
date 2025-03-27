@@ -642,7 +642,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         },
       );
     } catch (e) {
-      printWrapped("Error in getDesignLibraryDetails: $e");
+      debugPrint("Error in getDesignLibraryDetails: $e");
     }
   }
 
@@ -682,7 +682,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         },
       );
     } catch (e) {
-      printWrapped("Error in getDesignLibraryDetails: $e");
+      debugPrint("Error in getDesignLibraryDetails: $e");
     }
   }
 
@@ -1016,7 +1016,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
 // Update product details based on wishlist status
   void _updateProductDetails(String productId, String wishlistId) {
-    if (productId == productDetails?.productId) {
+    if (productId == productDetails?.suid) {
       productDetails?.isFavourite = wishlistId.isNotEmpty;
       productDetails?.wishlistId = wishlistId;
     }
@@ -1258,7 +1258,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     } else if (productDetails?.commodity == Commodity.diamond) {
       context.pushNamed(
         AppRoutes.cmsWebViewPage,
-        arguments: {RoutesData.cmsPageData: CmsWebViewDataModel(url: videoUrl)},
+        arguments: {RoutesData.cmsPageData: CmsWebViewDataModel(url: videoUrl, showLoader: true)},
       );
     }
   }

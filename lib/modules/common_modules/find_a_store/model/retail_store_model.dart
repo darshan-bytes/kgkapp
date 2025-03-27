@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class RetailStoreModel {
   RetailStoreModel({
     required this.id,
@@ -37,8 +39,8 @@ class RetailStoreModel {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? stateName;
-  final AtedByDetails? createdByDetails;
-  final AtedByDetails? updatedByDetails;
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
   final double? distance;
 
   factory RetailStoreModel.fromJson(Map<String, dynamic> json) {
@@ -59,8 +61,8 @@ class RetailStoreModel {
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
       stateName: json["state_name"],
-      createdByDetails: json["created_by_details"] == null ? null : AtedByDetails.fromJson(json["created_by_details"]),
-      updatedByDetails: json["updated_by_details"] == null ? null : AtedByDetails.fromJson(json["updated_by_details"]),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
       distance: json["distance"],
     );
   }
@@ -85,71 +87,5 @@ class RetailStoreModel {
         "created_by_details": createdByDetails?.toJson(),
         "updated_by_details": updatedByDetails?.toJson(),
         "distance": distance,
-      };
-}
-
-class AtedByDetails {
-  AtedByDetails({
-    required this.firstname,
-    required this.lastname,
-    required this.profilePic,
-    required this.userAccountId,
-    required this.email,
-    required this.userType,
-    required this.accountType,
-    required this.phoneCode,
-    required this.phone,
-    required this.orgName,
-    required this.customerAliasName,
-    required this.customerCode,
-    required this.profilePicUrl,
-  });
-
-  final String? firstname;
-  final String? lastname;
-  final String? profilePic;
-  final String? userAccountId;
-  final String? email;
-  final String? userType;
-  final String? accountType;
-  final String? phoneCode;
-  final String? phone;
-  final String? orgName;
-  final String? customerAliasName;
-  final String? customerCode;
-  final String? profilePicUrl;
-
-  factory AtedByDetails.fromJson(Map<String, dynamic> json) {
-    return AtedByDetails(
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-      profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
-      email: json["email"],
-      userType: json["user_type"],
-      accountType: json["account_type"],
-      phoneCode: json["phone_code"],
-      phone: json["phone"],
-      orgName: json["org_name"],
-      customerAliasName: json["customer_alias_name"],
-      customerCode: json["customer_code"],
-      profilePicUrl: json["profile_pic_url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "profile_pic": profilePic,
-        "user_account_id": userAccountId,
-        "email": email,
-        "user_type": userType,
-        "account_type": accountType,
-        "phone_code": phoneCode,
-        "phone": phone,
-        "org_name": orgName,
-        "customer_alias_name": customerAliasName,
-        "customer_code": customerCode,
-        "profile_pic_url": profilePicUrl,
       };
 }
