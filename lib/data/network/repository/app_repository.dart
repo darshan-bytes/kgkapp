@@ -1342,7 +1342,7 @@ Future<String> getPopulatedUrl() async {
 
 /// This function builds the URL for the Strapi CMS
 Future<String> buildUrl({required String endpoint, required String attribute}) async {
-  String acceptLanguage = StorageManager().getLocale() ?? 'en';
+  String acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
   String populateQuery = await getPopulatedUrl();
   return "$endpoint?populate[$attribute][populate]=$populateQuery&locale=$acceptLanguage";
 }

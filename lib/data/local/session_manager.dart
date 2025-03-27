@@ -84,12 +84,17 @@ class StorageManager {
   }
 
   /// Set locale after login-signup
-  Future<void> setLocale(String locale) async {
-    await _box.put(_locale, locale);
+  Future<void> setLocale(LanguageDatum locale) async {
+    await _box.put(_locale, locale.toString());
   }
 
-  String? getLocale() {
-    return _box.get(_locale);
+  LanguageDatum? getLocale() {
+    String? locale = _box.get(_locale);
+    if (locale.isNotNullNorEmpty) {
+      return LanguageDatum.fromJson(jsonDecode(locale!));
+    } else {
+      return null;
+    }
   }
 
   /// Set selected currency
@@ -190,7 +195,7 @@ class StorageManager {
 
   /// Clear all data stored except _locale
   Future<void> clearSession() async {
-    String? locale = getLocale();
+    LanguageDatum? locale = getLocale();
     List<CurrencyListModel>? currencyList = getCurrencyList();
     bool isSkipLogin = getIsSkipLogin();
     String guestBagId = getBagId() ?? '';
