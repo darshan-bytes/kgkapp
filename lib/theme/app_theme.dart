@@ -1840,6 +1840,7 @@ class HomeScreenStyle {
   final TextStyle stepValueStyle;
   final TextStyle getInspiredTitleStyle;
   final TextStyle dropDownTextStyle;
+  final TextStyle topSellingCategoryTitleStyle;
 
   HomeScreenStyle({
     required this.primaryColor,
@@ -1861,6 +1862,7 @@ class HomeScreenStyle {
     required this.topSellingElegance2Color,
     required this.topSellingElegance3Color,
     required this.getInspiredSectionColor,
+    required this.topSellingCategoryTitleStyle,
   });
 }
 

@@ -650,6 +650,7 @@ class APPStrings {
 
   // Presentation Preview
   static const String approve = 'mob_approve';
+  static const String reject = 'mob_reject';
 
   //Styles Listing
   static const String noStylesFound = 'mob_no_styles_found';
@@ -1014,4 +1015,8 @@ class APPStrings {
   static const String removeCatalogueMsg = 'mob_remove_catalogue_msg';
   static const String addressType = 'mob_address_type';
   static const String commentIsRequired = 'mob_comment_is_required';
+  static const String presentationDialogTitle = 'mob_presentation_dialog_title';
+  static const String presentationDialogMsg = 'mob_presentation_dialog_msg';
+  static const String conceptBy = 'mob_concept_by';
+  static const String receivedOn = 'mob_received_on';
 }

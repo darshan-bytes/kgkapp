@@ -4,7 +4,7 @@ class ApiClient {
 
   static const String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
   static const String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
-  static const String apiBaseUrl = qaApiBase;
+  static const String apiBaseUrl = devApiBase;
   static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
@@ -72,6 +72,10 @@ class ApiClient {
   static const String deleteBag = '$apiBaseUrl/bag';
 
   static const String mergeBag = '$apiBaseUrl/bag/merge-bag';
+
+  static const String filterConceptList = '$apiBaseUrl/concepts/filter-list';
+
+  static const String presentationStatus = '$apiBaseUrl/presentations/status';
 
   static String filterOptions(String type) => '$apiBaseUrl/filter-options/$type';
 
@@ -224,6 +228,8 @@ class ApiClient {
   static String cadLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/CAD/$id';
 
   static String cancelProductFromOrder(String id) => '$apiBaseUrl/orders/$id/product';
+
+  static const String conceptList = '$apiBaseUrl/concepts/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS

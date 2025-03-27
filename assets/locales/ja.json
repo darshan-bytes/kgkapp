@@ -527,6 +527,7 @@
   "mob_share": "共有",
   "mob_share_catalogue": "カタログを共有します",
   "mob_approved": "承認された",
+    "mob_reject": "拒否されました",
   "mob_released": "リリース",
   "mob_approval": "承認",
   "mob_style_created": "作成されたスタイル",
@@ -820,5 +821,10 @@
   "mob_remove_catalogue_msg": "選択したカタログはリストから削除されます",
   "mob_address_type": "アドレスの種類",
   "delay": "遅延",
-  "mob_comment_is_required": "コメントが必要です"
+  "mob_comment_is_required": "コメントが必要です",
+  "mob_delay": "遅延",
+  "mob_presentation_dialog_title": "プレゼンテーションのレビュー",
+  "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。",
+  "mob_concept_by": "コンセプト：",
+  "mob_received_on": "受信日："
 }

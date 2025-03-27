@@ -28,6 +28,13 @@ final class ConceptListLoadingMoreState extends ConceptListState {
   List<Object> get props => [];
 }
 
+final class ConceptListLoadingState extends ConceptListState {
+  const ConceptListLoadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
 final class ConceptListLoadedMoreState extends ConceptListState {
   final int currentPage;
 

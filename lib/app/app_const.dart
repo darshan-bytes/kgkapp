@@ -67,6 +67,7 @@ class AppConst {
   static const String designLibrary = "design_library";
   static const String styleLibrary = "style_library";
   static const String skuLibrary = "sku_library";
+  static const String concepts = "concepts";
 
   static const int noOfMonths = 12;
 

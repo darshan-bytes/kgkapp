@@ -11,8 +11,11 @@ class PresentationScreen extends StatelessWidget {
       appBar: SmartAppBar(title: APPStrings.presentations.tr.toUpperCamelCase),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       floatingActionButton: BlocBuilder<PresentationBloc, PresentationState>(
-        buildWhen: (previous, current) => current is PresentationLoadedState,
+        buildWhen: (previous, current) => current is PresentationLoadedState || current is PaginationControllerLoadedState,
         builder: (context, state) {
+          if (!bloc.paginationScrollController.isInitialised) {
+            return SizedBox.shrink();
+          }
           return ScrollToTopFAB(
             canScrollToTop: bloc.paginationScrollController.canScrollToTop,
             onTap: bloc.paginationScrollController.scrollToTop,
@@ -55,6 +58,9 @@ class PresentationScreen extends StatelessWidget {
       child: BlocBuilder<PresentationBloc, PresentationState>(
         buildWhen: (previous, current) => current is PresentationListLoadedMoreState || current is PresentationListLoadingMoreState,
         builder: (context, state) {
+          if (!bloc.paginationScrollController.isInitialised) {
+            return SizedBox.shrink();
+          }
           if (bloc.presentationList.isEmpty) {
             return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
           }
@@ -78,7 +84,9 @@ class PresentationScreen extends StatelessWidget {
                         B2BListingItem(
                           type: B2BListingType.presentationType,
                           listingItemModel: presentationItem,
-                          onTapMenuButton: () {},
+                          onTapMenuButton: bloc.userType == UserType.internal ? () {
+                            handleMenuButtonTap(context, bloc, presentationItem.strPresentationNumber ?? '');
+                          } : null,
                           onTap: () {},
                         ),
                         if (index == bloc.presentationList.length - 1 && state is PresentationListLoadingMoreState)
@@ -96,7 +104,28 @@ class PresentationScreen extends StatelessWidget {
     );
   }
 
+  void handleMenuButtonTap(BuildContext mainContext, PresentationBloc bloc, strPresentationNumber) {
+    Utils.showSmartModalBottomSheet(
+      context: mainContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.presentationDialogTitle.tr,
+        message: APPStrings.presentationDialogMsg.tr,
+        onApproved: () {
+          bloc.add(PresentationReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
+        },
+        onApprovedText: APPStrings.approve.tr,
+        onDeniedText: APPStrings.reject.tr,
+      ),
+    );
+  }
+
   Widget _buildBottomNavigationBar(PresentationBloc bloc, BuildContext context) {
+    if (!bloc.paginationScrollController.isInitialised) {
+      return SizedBox.shrink();
+    }
     return SafeArea(
         child: FilterBottomActionBar(
       controller: bloc.paginationScrollController.controller,

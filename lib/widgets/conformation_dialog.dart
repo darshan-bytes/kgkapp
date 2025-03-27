@@ -8,7 +8,7 @@ class ConfirmationDialog extends StatelessWidget {
   final double? topPosition;
   final String onDeniedText;
   final String onApprovedText;
-  final VoidCallback onDenied;
+  final VoidCallback? onDenied;
   final VoidCallback onApproved;
 
   const ConfirmationDialog(
@@ -20,7 +20,7 @@ class ConfirmationDialog extends StatelessWidget {
       this.topPosition,
       required this.onDeniedText,
       required this.onApprovedText,
-      required this.onDenied,
+      this.onDenied,
       required this.onApproved});
 
   @override
@@ -44,8 +44,10 @@ class ConfirmationDialog extends StatelessWidget {
                   SizedBox(height: 20.h),
                   Row(
                     children: [
-                      Expanded(child: SmartButton.white(onTap: onDenied, title: onDeniedText)),
-                      SizedBox(width: 16.w),
+                      if (onDenied != null) ...[
+                        Expanded(child: SmartButton.white(onTap: onDenied!, title: onDeniedText)),
+                        SizedBox(width: 16.w),
+                      ],
                       Expanded(child: SmartButton(onTap: onApproved, title: onApprovedText)),
                     ],
                   ),
