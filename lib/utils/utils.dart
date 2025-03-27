@@ -573,5 +573,5 @@ class Utils {
   }
 
   /// Make getter for is rtl
-  static bool get isRtl => StorageManager.instance.getLocale() == 'ar';
+  static bool get isRtl => StorageManager.instance.getLocale()?.mobileSymbol == 'ar';
 }

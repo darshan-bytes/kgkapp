@@ -1,3 +1,5 @@
+import 'package:kgk/kgk.dart';
+
 class LanguageListModel {
   LanguageListModel({
     required this.filteredRecords,
@@ -85,44 +87,8 @@ class LanguageDatum {
   final DateTime? updatedAt;
   final String? id;
   final String? flagIcon;
-  final LanguageAtedByDetails? createdByDetails;
-  final LanguageAtedByDetails? updatedByDetails;
-
-  LanguageDatum copyWith({
-    String? name,
-    String? slug,
-    String? code,
-    String? textDirection,
-    String? dateFormat,
-    String? createdBy,
-    String? updatedBy,
-    bool? status,
-    bool? isDefault,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? id,
-    String? flagIcon,
-    LanguageAtedByDetails? createdByDetails,
-    LanguageAtedByDetails? updatedByDetails,
-  }) {
-    return LanguageDatum(
-      name: name ?? this.name,
-      slug: slug ?? this.slug,
-      code: code ?? this.code,
-      textDirection: textDirection ?? this.textDirection,
-      dateFormat: dateFormat ?? this.dateFormat,
-      createdBy: createdBy ?? this.createdBy,
-      updatedBy: updatedBy ?? this.updatedBy,
-      status: status ?? this.status,
-      isDefault: isDefault ?? this.isDefault,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      id: id ?? this.id,
-      flagIcon: flagIcon ?? this.flagIcon,
-      createdByDetails: createdByDetails ?? this.createdByDetails,
-      updatedByDetails: updatedByDetails ?? this.updatedByDetails,
-    );
-  }
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
 
   factory LanguageDatum.fromJson(Map<String, dynamic> json) {
     return LanguageDatum(
@@ -139,8 +105,8 @@ class LanguageDatum {
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
       id: json["id"],
       flagIcon: json["flag_icon"],
-      createdByDetails: json["created_by_details"] == null ? null : LanguageAtedByDetails.fromJson(json["created_by_details"]),
-      updatedByDetails: json["updated_by_details"] == null ? null : LanguageAtedByDetails.fromJson(json["updated_by_details"]),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
     );
   }
 
@@ -164,91 +130,27 @@ class LanguageDatum {
 
   @override
   String toString() {
-    return "$name, $slug, $code, $textDirection, $dateFormat, $createdBy, $updatedBy, $status, $isDefault, $createdAt, $updatedAt, $id, $flagIcon, $createdByDetails, $updatedByDetails, ";
+    return jsonEncode(toJson);
   }
-}
-
-class LanguageAtedByDetails {
-  LanguageAtedByDetails({
-    required this.firstname,
-    required this.lastname,
-    required this.profilePic,
-    required this.userAccountId,
-    required this.email,
-    required this.userType,
-    required this.accountType,
-    required this.phoneCode,
-    required this.phone,
-    required this.profilePicUrl,
-  });
-
-  final String? firstname;
-  final String? lastname;
-  final String? profilePic;
-  final String? userAccountId;
-  final String? email;
-  final String? userType;
-  final String? accountType;
-  final String? phoneCode;
-  final String? phone;
-  final String? profilePicUrl;
-
-  LanguageAtedByDetails copyWith({
-    String? firstname,
-    String? lastname,
-    String? profilePic,
-    String? userAccountId,
-    String? email,
-    String? userType,
-    String? accountType,
-    String? phoneCode,
-    String? phone,
-    String? profilePicUrl,
-  }) {
-    return LanguageAtedByDetails(
-      firstname: firstname ?? this.firstname,
-      lastname: lastname ?? this.lastname,
-      profilePic: profilePic ?? this.profilePic,
-      userAccountId: userAccountId ?? this.userAccountId,
-      email: email ?? this.email,
-      userType: userType ?? this.userType,
-      accountType: accountType ?? this.accountType,
-      phoneCode: phoneCode ?? this.phoneCode,
-      phone: phone ?? this.phone,
-      profilePicUrl: profilePicUrl ?? this.profilePicUrl,
-    );
-  }
-
-  factory LanguageAtedByDetails.fromJson(Map<String, dynamic> json) {
-    return LanguageAtedByDetails(
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-      profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
-      email: json["email"],
-      userType: json["user_type"],
-      accountType: json["account_type"],
-      phoneCode: json["phone_code"],
-      phone: json["phone"],
-      profilePicUrl: json["profile_pic_url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "profile_pic": profilePic,
-        "user_account_id": userAccountId,
-        "email": email,
-        "user_type": userType,
-        "account_type": accountType,
-        "phone_code": phoneCode,
-        "phone": phone,
-        "profile_pic_url": profilePicUrl,
-      };
 
   @override
-  String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $accountType, $phoneCode, $phone, $profilePicUrl, ";
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is LanguageDatum &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          slug == other.slug &&
+          code == other.code &&
+          textDirection == other.textDirection &&
+          dateFormat == other.dateFormat &&
+          status == other.status &&
+          id == other.id;
+
+  @override
+  int get hashCode =>
+      name.hashCode ^ slug.hashCode ^ code.hashCode ^ textDirection.hashCode ^ dateFormat.hashCode ^ status.hashCode ^ id.hashCode;
+
+  String get mobileSymbol {
+    return code.isNotNullNorEmpty ? (code!.toLowerCase().contains('zh') ? code! : code!.split('-').firstOrNull ?? 'en') : 'en';
   }
 }

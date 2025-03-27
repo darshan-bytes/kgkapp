@@ -12,6 +12,15 @@ class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupS
   ProductInfoModel productInfoModel = ProductInfoModel();
   DiamondDataModel? diamondDatum;
 
+  ProductDetailsModel get productDetailsModel => ProductDetailsModel(
+        suid: diamondDatum?.suid,
+        commodity: Commodity.diamond,
+        productId: diamondDatum?.suid,
+        wishlistId: diamondDatum?.wishlistID,
+        isFavourite: diamondDatum?.wishlistID.isNotNullNorEmpty == true,
+        isAddedToCart: productInfoModel.isAddedToCart,
+      );
+
   DiamondInfoPopupBloc() : super(const DiamondInfoPopupInitial()) {
     on<DiamondInfoPopupInitialEvent>(_onDiamondInfoPopupInitial);
   }
