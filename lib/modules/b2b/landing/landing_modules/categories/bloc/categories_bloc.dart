@@ -73,9 +73,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<ProductDetailModel> pddSubOptionsList = [
     ProductDetailModel(name: 'Concept Listing', image: ''),
     ProductDetailModel(name: 'Presentation Listing', image: ''),
-    // ProductDetailModel(name: 'Project Listing', image: ''),
-    // ProductDetailModel(name: 'Design Listing', image: ''),
-    // ProductDetailModel(name: 'Styles Listing', image: ''),
     ProductDetailModel(name: 'Monitoring', image: ''),
   ];
 
