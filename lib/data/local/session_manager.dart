@@ -85,7 +85,7 @@ class StorageManager {
 
   /// Set locale after login-signup
   Future<void> setLocale(LanguageDatum locale) async {
-    await _box.put(_locale, locale.toString());
+    await _box.put(_locale, jsonEncode(locale.toJson()));
   }
 
   LanguageDatum? getLocale() {

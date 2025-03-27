@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "25-March",
+        message: "27-March+2",
         location: BannerLocation.topEnd,
       ),
     );
