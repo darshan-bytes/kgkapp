@@ -16,7 +16,7 @@ extension DateTimeExt on DateTime {
   }
 
   String dateToStringFormat({required String outputDateFormat}) {
-    DateFormat dateFormat = DateFormat(outputDateFormat, StorageManager().getLocale());
+    DateFormat dateFormat = DateFormat(outputDateFormat, StorageManager().getLocale()?.mobileSymbol);
     return dateFormat.format(this);
   }
 

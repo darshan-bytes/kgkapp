@@ -69,6 +69,11 @@ class SmartSfRangeSlider extends StatelessWidget {
               values: values,
               min: minMaxValues?.start ?? 0.0,
               max: minMaxValues?.end ?? 100.0,
+              divisions: showDividers == true
+                  ? ((minMaxValues?.end ?? 100.0).toInt() > 1
+                      ? ((minMaxValues?.end ?? 100.0).toInt() - 1)
+                      : ((minMaxValues?.end ?? 100.0).toInt()))
+                  : null,
               labels: RangeLabels(values.start.toStringAsFixed(2), values.end.toStringAsFixed(2)),
               activeColor: rangeSliderTrackColor,
               onChanged: onChanged,

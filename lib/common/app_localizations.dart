@@ -57,7 +57,7 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   Future<void> changeLocale() async {
-    locale = Locale(StorageManager().getLocale() ?? APPStrings.languageEn);
+    locale = Locale(StorageManager().getLocale()?.mobileSymbol ?? APPStrings.languageEn);
     await load();
   }
 }
@@ -88,7 +88,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   @override
   Future<AppLocalizations> load(Locale locale) async {
     /// AppLocalizations class is where the JSON loading actually runs
-    Locale locale = Locale(StorageManager().getLocale() ?? APPStrings.languageEn);
+    Locale locale = Locale(StorageManager().getLocale()?.mobileSymbol ?? APPStrings.languageEn);
     AppLocalizations localizations = AppLocalizations(locale);
     await localizations.load();
     return localizations;
