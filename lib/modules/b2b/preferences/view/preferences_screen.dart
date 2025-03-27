@@ -56,9 +56,9 @@ class PreferencesScreen extends StatelessWidget {
                         BlocBuilder<PreferencesBloc, PreferencesState>(
                           buildWhen: (previous, current) => current is PreferencesChangeLanguageState,
                           builder: (context, state) {
-                            return SmartDropDown<LanguageModel>(
+                            return SmartDropDown<LanguageDatum>(
                               selectedItem: bloc.selectedLanguage,
-                              items: bloc.languageList.map((e) => SmartDropDownItem<LanguageModel>(value: e, title: e.name)).toList(),
+                              items: bloc.languageList.map((e) => SmartDropDownItem<LanguageDatum>(value: e, title: e.name ?? '')).toList(),
                               hintText: APPStrings.language.tr,
                               onChanged: (newValue) {
                                 if (newValue == null) return;

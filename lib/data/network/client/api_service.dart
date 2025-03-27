@@ -9,7 +9,7 @@ class ApiService implements ApiProvider {
     // String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ5NjgiLCJpc19hZG1pbiI6ZmFsc2UsInVzZXJfdHlwZSI6ImludGVybmFsIiwiY291bnRyeV9jb2RlIjoiSU4iLCJyb2xlIjoic3VwZXItYWRtaW4yIiwiZGVmYXVsdF9jc2NfY29kZSI6bnVsbCwiaWF0IjoxNzQyOTYxNDgyLCJleHAiOjE3NDI5ODMwODJ9.0NhDOwNWhFuPAxv4Arw8Ro58UfaXY8AJAPpUutkG1kc';
     // Ankita User Token
     String? apiKey = AppConst.apiKey;
-    String? acceptLanguage = StorageManager().getLocale();
+    String? acceptLanguage = StorageManager().getLocale()?.code;
     String? currency = StorageManager().getSelectedCurrency()?.code;
 
     Map<String, String> headers = {

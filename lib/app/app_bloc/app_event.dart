@@ -33,7 +33,7 @@ class ConnectivityChangedEvent extends AppEvent {
 }
 
 class LanguageChangedEvent extends AppEvent {
-  final String languageCode;
+  final LanguageDatum? languageCode;
   final BuildContext context;
   final VoidCallback? callback;
 

@@ -79,7 +79,7 @@ class SmartCarouselSlider extends StatelessWidget {
                         icon: Icon(
                           Icons.video_file_outlined,
                           color: imageCarouselStyle.selectedDotColor,
-                          size: 36.w,
+                          size: 40.w,
                         ),
                       ),
                   ],

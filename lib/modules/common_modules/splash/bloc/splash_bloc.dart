@@ -14,7 +14,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> navigateToGetReadyScreen(LoadSplashEvent event, Emitter<SplashState> emit) async {
     // Trigger a language change event
-    BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent('', context: event.context));
+    BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(null, context: event.context));
 
     // Initialize and play the splash screen video
     playerController = VideoPlayerController.asset(AppConst.splashScreenVideoUrl);
@@ -53,14 +53,14 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> _languageLabelApiCall(BuildContext context, Emitter<SplashState> emit) async {
     // Fetch language labels from the user repository
-    final value = await UserRepository(context).getLanguageLabels(language: StorageManager().getLocale() ?? APPStrings.languageEn);
+    final value = await UserRepository(context).getLanguageLabels(language: StorageManager().getLocale()?.code ?? APPStrings.languageEn);
 
     await value?.fold((l) {
       // Show error message if API call fails
     }, (r) async {
       // Store language labels in local storage if API call succeeds
       await StorageManager().setLanguageLabels(r.responseData);
-      BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent('', context: context));
+      BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent(null, context: context));
     });
 
     // Determine the next route based on the presence of an auth token
