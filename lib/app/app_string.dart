@@ -1014,6 +1014,7 @@ class APPStrings {
   static const String removeCatalogue = 'mob_remove_catalogue';
   static const String removeCatalogueMsg = 'mob_remove_catalogue_msg';
   static const String addressType = 'mob_address_type';
+  static const String commentIsRequired = 'mob_comment_is_required';
   static const String presentationDialogTitle = 'mob_presentation_dialog_title';
   static const String presentationDialogMsg = 'mob_presentation_dialog_msg';
   static const String conceptBy = 'mob_concept_by';

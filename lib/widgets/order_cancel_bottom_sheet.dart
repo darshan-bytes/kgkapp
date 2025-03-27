@@ -1,12 +1,14 @@
 import 'package:kgk/kgk.dart';
 
 class OrderCancelBottomSheet extends StatelessWidget {
-  const OrderCancelBottomSheet({super.key});
+  final OrderDetailBloc orderDetailBloc;
+
+  const OrderCancelBottomSheet({super.key, required this.orderDetailBloc});
 
   @override
   Widget build(BuildContext context) {
     OrderCancelPopupStyle style = AppTheme.of(context).orderCancelPopupStyle;
-    final OrderDetailBloc orderDetailBloc = BlocProvider.of<OrderDetailBloc>(context);
+
     return Container(
       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
       child: SafeArea(
@@ -22,126 +24,152 @@ class OrderCancelBottomSheet extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(color: style.whiteColor, borderRadius: BorderRadius.all(Radius.circular(16.r))),
                       padding: EdgeInsetsDirectional.all(18.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SmartText(
-                            APPStrings.areYouSure.tr,
-                            style: style.headerTitleStyle,
-                          ),
-                          SizedBox(
-                            height: 4.h,
-                          ),
-                          SmartText(
-                            APPStrings.orderWillBeCancelledX.tr.interpolate(['14567']),
-                            style: style.subTitleStyle,
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Container(
-                            height: 148.w,
-                            width: context.width,
-                            padding: EdgeInsetsDirectional.all(14.w),
-                            decoration: BoxDecoration(color: style.refundBgColor, borderRadius: BorderRadius.all(Radius.circular(6.r))),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SmartText(
-                                  APPStrings.refundAmount.tr,
-                                  style: style.refundTitleStyle,
-                                ),
-                                SizedBox(
-                                  height: 6.w,
-                                ),
-                                SmartText(
-                                  "\$1,12,500.00",
-                                  style: style.amountTitleStyle,
-                                ),
-                                SizedBox(
-                                  height: 10.w,
-                                ),
-                                SmartText(
-                                  APPStrings.refundTo.tr,
-                                  style: style.refundTitleStyle,
-                                ),
-                                SizedBox(
-                                  height: 6.w,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                      child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                        bloc: orderDetailBloc,
+                        buildWhen: (previous, current) =>
+                            current is CancellationFieldErrorState && current.fieldType == FieldTypeValidationEnum.firstName,
+                        builder: (context, state) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SmartText(
+                                APPStrings.areYouSure.tr,
+                                style: style.headerTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 4.h,
+                              ),
+                              SmartText(
+                                APPStrings.orderWillBeCancelledX.tr.interpolate([orderDetailBloc.placeOrderResponse?.uniqueId]),
+                                style: style.subTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Container(
+                                width: context.width,
+                                padding: EdgeInsetsDirectional.all(14.w),
+                                decoration: BoxDecoration(color: style.refundBgColor, borderRadius: BorderRadius.all(Radius.circular(6.r))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SmartImage(path: AppImages.icVisa, height: 24.w, width: 38.w),
+                                    SmartText(
+                                      APPStrings.refundAmount.tr,
+                                      style: style.refundTitleStyle,
+                                    ),
                                     SizedBox(
-                                      width: 10.w,
+                                      height: 6.w,
                                     ),
                                     SmartText(
-                                      "**** **** **** 1234",
+                                      orderDetailBloc.placeOrderResponse?.totalPrice?.setCurrency ?? '',
                                       style: style.amountTitleStyle,
                                     ),
+
+                                    /// TODO : temporarily unused
+                                    // SizedBox(
+                                    //   height: 10.w,
+                                    // ),
+                                    // SmartText(
+                                    //   APPStrings.refundTo.tr,
+                                    //   style: style.refundTitleStyle,
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 6.w,
+                                    // ),
+                                    // Row(
+                                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                                    //   children: [
+                                    //     SmartImage(path: AppImages.icVisa, height: 24.w, width: 38.w),
+                                    //     SizedBox(
+                                    //       width: 10.w,
+                                    //     ),
+                                    //     SmartText(
+                                    //       "**** **** **** 1234",
+                                    //       style: style.amountTitleStyle,
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          SmartText(
-                            APPStrings.cancellationReason.tr,
-                            style: style.cancelReasonTitleStyle,
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                            buildWhen: (previous, current) =>
-                                current is OrderCancellationReasonsChangeState || current is OrderDetailsLoadedState,
-                            builder: (context, state) {
-                              return SmartDropDown<CancellationReasonModel>(
-                                selectedItem: orderDetailBloc.selectedReason,
-                                items: orderDetailBloc.cancellationReasonsList
-                                    .map((e) => SmartDropDownItem<CancellationReasonModel>(value: e, title: e.name ?? ''))
-                                    .toList(),
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              SmartText(
+                                APPStrings.cancellationReason.tr,
+                                style: style.cancelReasonTitleStyle,
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              SmartTextField(
+                                controller: orderDetailBloc.cancellationOrderController,
+                                errorText: orderDetailBloc.cancelOrderError,
                                 hintText: APPStrings.cancellationReason.tr,
-                                onChanged: (newValue) {
-                                  if (newValue == null) return;
-                                  orderDetailBloc.add(OrderCancellationReasonsEvent(newValue));
+                                onTapOutside: (value) => FocusScope.of(context).unfocus(),
+                                onValueChanges: (value) {
+                                  if (value.isNotNullNorEmpty) {
+                                    orderDetailBloc.add(CancelOrderCommentChangeEvent(fieldType: FieldTypeValidationEnum.firstName));
+                                  }
                                 },
-                              );
-                            },
-                          ),
-                          BlocBuilder<OrderDetailBloc, OrderDetailState>(
-                            buildWhen: (previous, current) => current is OrderCancellationReasonsChangeState,
-                            builder: (context, state) {
-                              return state is OrderCancellationReasonsChangeState && state.cancellationReasonModel.id == 2
-                                  ? Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        SmartTextField(
-                                          hintText: APPStrings.addReason.tr,
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.done,
-                                        ),
-                                      ],
-                                    )
-                                  : const SizedBox.shrink();
-                            },
-                          ),
-                          SizedBox(
-                            height: 40.h,
-                          ),
-                          SmartButton(
-                              onTap: () {
-                                context.pop();
-                              },
-                              title: APPStrings.submit.tr)
-                        ],
+                              ),
+
+                              SizedBox(
+                                height: 10.h,
+                              ),
+
+                              /// TODO : temporarily unused
+                              // BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                              //   buildWhen: (previous, current) =>
+                              //       current is OrderCancellationReasonsChangeState || current is OrderDetailsLoadedState,
+                              //   builder: (context, state) {
+                              //     return SmartDropDown<CancellationReasonModel>(
+                              //       selectedItem: orderDetailBloc.selectedReason,
+                              //       items: orderDetailBloc.cancellationReasonsList
+                              //           .map((e) => SmartDropDownItem<CancellationReasonModel>(value: e, title: e.name ?? ''))
+                              //           .toList(),
+                              //       hintText: APPStrings.cancellationReason.tr,
+                              //       onChanged: (newValue) {
+                              //         if (newValue == null) return;
+                              //         orderDetailBloc.add(OrderCancellationReasonsEvent(newValue));
+                              //       },
+                              //     );
+                              //   },
+                              // ),
+                              // BlocBuilder<OrderDetailBloc, OrderDetailState>(
+                              //   buildWhen: (previous, current) => current is OrderCancellationReasonsChangeState,
+                              //   builder: (context, state) {
+                              //     return state is OrderCancellationReasonsChangeState && state.cancellationReasonModel.id == 2
+                              //         ? Column(
+                              //             children: [
+                              //               SizedBox(
+                              //                 height: 10.h,
+                              //               ),
+                              //               SmartTextField(
+                              //                 hintText: APPStrings.addReason.tr,
+                              //                 keyboardType: TextInputType.text,
+                              //                 textInputAction: TextInputAction.done,
+                              //               ),
+                              //             ],
+                              //           )
+                              //         : const SizedBox.shrink();
+                              //   },
+                              // ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              SmartButton(
+                                  onTap: () {
+                                    orderDetailBloc.add(OrderCancellationEvent(
+                                        context: context, placeOrderResponse: orderDetailBloc.placeOrderResponse!, isFromFullOrder: true));
+                                  },
+                                  title: APPStrings.submit.tr)
+                            ],
+                          );
+                        },
                       ),
                     ),
                     PositionedDirectional(
