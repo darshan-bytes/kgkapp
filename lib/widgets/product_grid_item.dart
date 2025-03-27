@@ -112,7 +112,7 @@ class ProductGridItem extends StatelessWidget {
         if (productDetails.isForAuction)
           PositionedDirectional(
               top: 0.h,
-              start: -4.w,
+              start: Utils.isRtl ? -12.w : -4.w,
               child: CustomPaint(
                 painter: SvgShapePainter(APPStrings.mobAuction.tr),
                 size: Size(200, 28), // Give it enough width

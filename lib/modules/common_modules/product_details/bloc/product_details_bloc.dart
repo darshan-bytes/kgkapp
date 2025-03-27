@@ -642,7 +642,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         },
       );
     } catch (e) {
-      print("Error in getDesignLibraryDetails: $e");
+      printWrapped("Error in getDesignLibraryDetails: $e");
     }
   }
 
@@ -682,7 +682,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         },
       );
     } catch (e) {
-      print("Error in getDesignLibraryDetails: $e");
+      printWrapped("Error in getDesignLibraryDetails: $e");
     }
   }
 

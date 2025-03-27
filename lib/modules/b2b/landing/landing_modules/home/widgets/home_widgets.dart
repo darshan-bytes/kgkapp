@@ -487,20 +487,31 @@ class HomeWidgets {
             spacing: 12.w,
             runSpacing: 12.h,
             items: dataList
-                .map((AuctionListModel field) => SmartImage(
-                      imageBorderRadius: BorderRadius.circular(12.r),
-                      path: field.imageUrl ?? '',
-                      fit: BoxFit.contain,
-                      isMemCacheEnabled: false,
-                      onTap: () {
-                        homeBloc.handleRedirection(
-                          context: context,
-                          redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
-                          redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
-                          redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
-                              redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
-                        );
-                      },
+                .map((AuctionListModel field) => Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        SmartImage(
+                          imageBorderRadius: BorderRadius.circular(12.r),
+                          path: field.imageUrl ?? '',
+                          fit: BoxFit.contain,
+                          isMemCacheEnabled: false,
+                          onTap: () {
+                            homeBloc.handleRedirection(
+                              context: context,
+                              redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
+                              redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
+                              redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
+                                  redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
+                            );
+                          },
+                        ),
+                        SmartText(
+                          optionalPadding: EdgeInsetsDirectional.only(bottom: 8.h),
+                          field.name ?? '',
+                          textAlign: TextAlign.center,
+                          style: style.topSellingCategoryTitleStyle,
+                        ),
+                      ],
                     ))
                 .toList())
       ]),

@@ -150,7 +150,11 @@ class PddListingScreen extends StatelessWidget {
                         : B2BListingItem(
                             margin: EdgeInsetsDirectional.only(
                                 bottom: state is PddListLoadingMoreState && index == bloc.presentationList.length - 1 ? 0.h : 24.h),
-                            onTapMenuButton: () {},
+                            onTapMenuButton: bloc.userType == UserType.internal
+                                ? () {
+                                    handleMenuButtonTap(context, bloc, bloc.presentationList[index].strPresentationNumber ?? '');
+                                  }
+                                : null,
                             type: B2BListingType.presentationListingType,
                             listingItemModel: bloc.presentationList[index],
                             onTap: () {
@@ -165,6 +169,24 @@ class PddListingScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  void handleMenuButtonTap(BuildContext mainContext, PddListingBloc bloc, strPresentationNumber) {
+    Utils.showSmartModalBottomSheet(
+      context: mainContext,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusDirectional.only(topStart: Radius.circular(16.r), topEnd: Radius.circular(16.r)),
+      ),
+      builder: (context) => ConfirmationDialog(
+        title: APPStrings.presentationDialogTitle.tr,
+        message: APPStrings.presentationDialogMsg.tr,
+        onApproved: () {
+          bloc.add(PddListReviewStateEvent(context: mainContext, isApproved: true, presentationNumber: strPresentationNumber));
+        },
+        onApprovedText: APPStrings.approve.tr,
+        onDeniedText: APPStrings.reject.tr,
       ),
     );
   }

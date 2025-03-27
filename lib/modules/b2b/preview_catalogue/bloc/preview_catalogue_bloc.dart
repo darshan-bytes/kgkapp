@@ -176,7 +176,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: cadLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: cadLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: cadLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: cadLibraryListItemDataList[index].isCommented ?? false,
+        isCommentVisible: cadLibraryListItemDataList[index].isCommented,
         commodity: Commodity.cadLibrary,
       ),
     );
@@ -214,7 +214,7 @@ class PreviewCatalogueBloc extends Bloc<PreviewCatalogueEvent, PreviewCatalogueS
         subTitle: styleLibraryListItemDataList[index].productDescription ?? '',
         kgkCollectionName: styleLibraryListItemDataList[index].kgkCollection ?? "\n",
         businessCategoryName: styleLibraryListItemDataList[index].businessCategoryName ?? "\n",
-        isCommentVisible: styleLibraryListItemDataList[index].isCommented ?? false,
+        isCommentVisible: styleLibraryListItemDataList[index].isCommented,
         commodity: Commodity.styleLibrary,
       ),
     );

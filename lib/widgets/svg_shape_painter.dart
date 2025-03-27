@@ -5,17 +5,17 @@ class SvgShapePainter extends CustomPainter {
   final TextStyle? textStyle; // Make nullable
 
   SvgShapePainter(
-      this.text, {
-        this.textStyle, // Remove the default value here
-      });
+    this.text, {
+    this.textStyle, // Remove the default value here
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     // Use a non-null text style by providing a default if null
     final effectiveTextStyle = textStyle ??
-        const TextStyle(
+        TextStyle(
           color: Colors.white,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.bold,
         );
 
@@ -29,16 +29,16 @@ class SvgShapePainter extends CustomPainter {
     final textWidth = textPainter.width;
     final textHeight = textPainter.height;
 
-    double paddingLeft = 20.0; // Left padding
-    double paddingRight = 30.0; // Right padding
+    double paddingLeft = 20.0.w; // Left padding
+    double paddingRight = 30.0.w; // Right padding
 
     // Minimum width to preserve the original shape
-    double minWidth = 70.0;
+    double minWidth = 70.0.w;
     // Total width needed based on text and different paddings
     double requiredWidth = max(minWidth, textPainter.width + paddingLeft + paddingRight);
 
     // Fixed height
-    final height = 28.0;
+    final height = 28.h;
 
     // Draw the shape
     final Paint paint = Paint()
