@@ -825,5 +825,21 @@
   "mob_presentation_dialog_title": "演示审查",
   "mob_presentation_dialog_msg": "是否提交演示审查?",
   "mob_concept_by": "概念：",
-  "mob_received_on": "接收于"
+  "mob_received_on": "接收于",
+  "mob_no_3d_view_available": "3D视图不可用",
+  "mob_no_image_available": "图片不可用",
+  "mob_no_dna_available": "DNA不可用",
+  "mob_no_certificate_available": "证书不可用",
+  "mob_best_selling": "最畅销",
+  "mob_seasonal_offers": "季节性优惠",
+  "mob_occasion_offer": "特殊优惠",
+  "mob_deals": "优惠",
+  "mob_do_it_yourself": "自己做",
+  "mob_pdd": "PDD",
+  "mob_libraries": "图书馆",
+  "mob_digital_catalogue": "数字目录",
+  "mob_project_listing": "项目清单",
+  "mob_presentation_listing": "演示列表",
+  "mob_concept_listing": "概念清单",
+  "mob_landing_listing": "降落"
 }
