@@ -33,9 +33,13 @@ class CategoryTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SmartText(
-                  category.name ?? '',
-                  style: categoryTileStyle.labelStyle,
+                Flexible(
+                  child: SmartText(
+                    Utils.getCategoryDisplayName(category.name ?? ''),
+                    style: categoryTileStyle.labelStyle,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 SizedBox(
                   width: 4.w,

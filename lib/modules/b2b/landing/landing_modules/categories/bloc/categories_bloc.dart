@@ -20,53 +20,27 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   //B2C subCategory List
   List<ProductDetailModel> naturalDiamondSubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> labGrownDiamondSubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> gemstonesSubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> jewellerySubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Jewellery', image: ''),
-    // ProductDetailModel(name: 'Best Selling', image: ''),
-    // ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    // ProductDetailModel(name: 'Occasion Offer', image: ''),
-    // ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Gemstone', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> aboutUsSubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> educationSubOptionsB2CList = [
     ProductDetailModel(name: 'Diamonds', image: ''),
-    ProductDetailModel(name: 'Lab created diamonds', image: ''),
     ProductDetailModel(name: 'Gemstone', image: ''),
-    ProductDetailModel(name: 'Metals', image: ''),
-    ProductDetailModel(name: 'Ring sizer', image: ''),
   ];
 
   //B2B subCategory List
@@ -79,55 +53,31 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   List<ProductDetailModel> jewellerySubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
     ProductDetailModel(name: 'Landing', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
   ];
   List<ProductDetailModel> diamondSubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> gemstoneSubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
 
   List<ProductDetailModel> librarySubOptionsList = [
-    ProductDetailModel(name: 'Product Library - Grey', image: ''),
-    ProductDetailModel(name: 'Product Library MF - Platinum', image: ''),
     ProductDetailModel(name: 'Design Library', image: ''),
-    ProductDetailModel(name: 'SKU Library', image: ''),
-    ProductDetailModel(name: 'CAD Library', image: ''),
     ProductDetailModel(name: 'Style Library', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: '')
+    ProductDetailModel(name: 'CAD Library', image: ''),
+    ProductDetailModel(name: 'SKU Library', image: ''),
   ];
 
   List<ProductDetailModel> digitalCatalogueSubOptionsB2BList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
+
   List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
     ProductDetailModel(name: 'Diamond', image: ''),
     ProductDetailModel(name: 'Gemstone', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
   List<ProductDetailModel> orionSubCategoryList = [
     ProductDetailModel(name: 'Collection', image: ''),
-    ProductDetailModel(name: 'Best Selling', image: ''),
-    ProductDetailModel(name: 'Seasonal Offers', image: ''),
-    ProductDetailModel(name: 'Occasion Offer', image: ''),
-    ProductDetailModel(name: 'Deals', image: ''),
   ];
 
   CategoriesBloc() : super(CategoriesInitial()) {
