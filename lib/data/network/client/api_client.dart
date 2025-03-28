@@ -230,6 +230,8 @@ class ApiClient {
   static String cancelProductFromOrder(String id) => '$apiBaseUrl/orders/$id/product';
 
   static const String conceptList = '$apiBaseUrl/concepts/filters';
+
+  static const String staffUserFilters = '$apiBaseUrl/users/staff-user/filters';
 }
 
 /// All api endpoints are defined here for the Strapi CMS
