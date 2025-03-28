@@ -49,3 +49,12 @@ final class OrderDetailsLoadingState extends OrderDetailState {
   @override
   List<Object> get props => [];
 }
+
+final class CancellationFieldErrorState extends OrderDetailState {
+  final FieldTypeValidationEnum fieldType;
+
+  const CancellationFieldErrorState({required this.fieldType});
+
+  @override
+  List<Object> get props => [fieldType];
+}

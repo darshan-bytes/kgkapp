@@ -31,7 +31,6 @@ class MakeInquiryScreen extends StatelessWidget {
               SizedBox(height: 14.h),
               _buildInquiryTypeDropdown(bloc),
               SizedBox(height: 14.h),
-              // _buildProductSkuField(bloc),
               _buildSelectStatusDropdown(bloc),
               SizedBox(height: 14.h),
               _buildCommentField(bloc),

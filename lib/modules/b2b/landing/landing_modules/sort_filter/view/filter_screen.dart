@@ -182,6 +182,7 @@ class FilterScreen extends StatelessWidget {
       buildWhen: (previous, current) => previous != current && current is SortAndFilterPriceRangeChangedState,
       builder: (context, state) {
         return SmartSfRangeSlider(
+          showDividers: true,
           title: APPStrings.preferredPriceRange.tr.interpolate([bloc.selectedFilterData?.name ?? '']),
           titleStyle: style.selectionTitleStyle,
           values: RangeValues(

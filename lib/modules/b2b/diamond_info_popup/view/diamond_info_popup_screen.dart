@@ -13,7 +13,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
         final ProductInfoModel productInfoModel = bloc.productInfoModel;
         return Scaffold(
           appBar: SmartAppBar(title: APPStrings.diamonds.tr),
-          bottomNavigationBar: _buildBottomNavigationBar(context, productInfoModel),
+          bottomNavigationBar: _buildBottomNavigationBar(context, productInfoModel, bloc),
           body: Padding(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
             child: SmartSingleChildScrollView(
@@ -303,7 +303,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context, ProductInfoModel productInfo) {
+  Widget _buildBottomNavigationBar(BuildContext context, ProductInfoModel productInfo, DiamondInfoPopupBloc bloc) {
     return Padding(
       padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 8.h),
       child: SafeArea(
@@ -330,15 +330,23 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 },
               ),
             ),
-            /*  SizedBox(width: 8.w),
+            SizedBox(width: 8.w),
             SelectionButton(
               height: 42.w,
               width: 42.w,
               padding: EdgeInsetsDirectional.all(6.w),
-              isSelected: false,
-              onTap: () {},
+              isSelected: bloc.productDetailsModel.isFavourite,
+              onTap: () {
+                // Add/Remove from wishlist
+                if (!bloc.productDetailsModel.isFavourite) {
+                  BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(bloc.productDetailsModel, context));
+                  bloc.productDetailsModel.isFavourite = true;
+                } else {
+                  BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(bloc.productDetailsModel, context));
+                }
+              },
               image: AppImages.icHeart,
-            ),*/
+            ),
           ],
         ),
       ),

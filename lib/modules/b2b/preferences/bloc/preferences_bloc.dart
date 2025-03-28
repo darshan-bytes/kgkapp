@@ -7,11 +7,11 @@ part 'preferences_state.dart';
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   bool isIntialized = false;
   List<CountryModel> countryList = [];
-  List<LanguageModel> languageList = [];
+  List<LanguageDatum> languageList = [];
   List<CurrencyListModel> currencyList = [];
 
   CountryModel? selectedCountry;
-  LanguageModel? selectedLanguage;
+  LanguageDatum? selectedLanguage;
   CurrencyListModel? selectedCurrency;
 
   PreferencesBloc() : super(PreferencesInitialState()) {
@@ -39,7 +39,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     currencyList = StorageManager().getCurrencyList();
 
     selectedCountry = countryList.first;
-    selectedLanguage = languageList.firstWhereOrNull((element) => element.symbol == (StorageManager().getLocale() ?? 'en'));
+    selectedLanguage = languageList.firstWhereOrNull((element) => element == StorageManager().getLocale());
     selectedCurrency =
         currencyList.firstWhereOrNull((element) => element.id == StorageManager().getSelectedCurrency()?.id) ?? currencyList.firstOrNull;
 
@@ -63,10 +63,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       response?.fold((l) {
         Utils.showMessage(l.message);
       }, (data) {
-        languageList.clear();
-        for (var element in data.languageData) {
-          languageList.add(LanguageModel(name: element.name ?? '', symbol: element.code?.split('-').firstOrNull ?? ''));
-        }
+        languageList = data.languageData;
       });
     });
   }
@@ -97,7 +94,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     }
     BlocProvider.of<AppBloc>(event.context).add(
       LanguageChangedEvent(
-        selectedLanguage?.symbol.split('-').firstOrNull ?? 'en',
+        selectedLanguage,
         context: event.context,
         callback: () {
           event.context.pop();

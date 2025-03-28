@@ -233,7 +233,6 @@ export 'package:kgk/modules/b2b/pdd_preview/view/pdd_version_history_screen.dart
 export 'package:kgk/modules/b2b/preferences/bloc/preferences_bloc.dart';
 export 'package:kgk/modules/b2b/preferences/model/country_model.dart';
 export 'package:kgk/modules/b2b/preferences/model/language_list_model.dart';
-export 'package:kgk/modules/b2b/preferences/model/language_model.dart';
 export 'package:kgk/modules/b2b/preferences/view/preferences_screen.dart';
 export 'package:kgk/modules/b2b/presentation/bloc/presentation_bloc.dart';
 export 'package:kgk/modules/b2b/presentation/view/presentation_screen.dart';
@@ -531,4 +530,5 @@ export 'package:google_places_flutter/google_places_flutter.dart';
 export 'package:google_places_flutter/model/place_type.dart';
 export 'package:google_places_flutter/model/prediction.dart';
 export 'package:kgk/modules/b2b/concept_list/model/concept_model.dart';
+export 'package:kgk/modules/b2b/user_master/model/user_master_model_class.dart';
 export 'package:kgk/model/status_model.dart';

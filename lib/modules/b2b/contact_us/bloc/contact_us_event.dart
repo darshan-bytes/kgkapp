@@ -41,16 +41,14 @@ class ContactUsSubmitEvent extends ContactUsEvent {
 }
 
 final class ContactUsChangeCountryCodeEvent extends ContactUsEvent {
-  final int index;
   final Country country;
 
   const ContactUsChangeCountryCodeEvent({
-    required this.index,
     required this.country,
   });
 
   @override
-  List<Object> get props => [index, country];
+  List<Object> get props => [country];
 }
 
 final class ContactUsRemoveContactEvent extends ContactUsEvent {

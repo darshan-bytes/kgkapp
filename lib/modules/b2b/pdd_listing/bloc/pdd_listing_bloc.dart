@@ -70,7 +70,7 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
     emit(PddListingLoadedState());
   }
 
-  Future<void> _onPddListReviewStateEvent (PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
+  Future<void> _onPddListReviewStateEvent(PddListReviewStateEvent event, Emitter<PddListingState> emit) async {
     emit(PddListingReloadState());
     await apiCallForPresentationStatus(context: event.context, presentationNumber: event.presentationNumber, isApproved: event.isApproved);
     emit(PddListingLoadedState());
@@ -80,15 +80,16 @@ class PddListingBloc extends Bloc<PddListingEvent, PddListingState> {
       {required BuildContext context, required String presentationNumber, required bool isApproved}) async {
     Map<String, dynamic> body = {ApiKey.presentationNumber: presentationNumber, ApiKey.status: ApiKey.approved};
     await AppRepository(context).apiCallForPresentationStatus(body: body).then((value) => value?.fold((l) {
-      if (l.code == 403) {
-        Utils.showMessage(l.message);
-      }
-    }, (r) {
-      /// Todo : Integration pending here
-      Presentation presentation = Presentation.fromJson(r.responseData);
-      // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
-      // emit(PddListingReloadState());
-    }));
+          if (l.code == 403) {
+            Utils.showMessage(l.message);
+          }
+        }, (r) {
+          /// Todo : Integration pending here
+          // ignore: unused_local_variable
+          Presentation presentation = Presentation.fromJson(r.responseData);
+          // presentationList[presentationList.indexWhere((element) => element.presentationNumber == presentation.presentationNumber)] = presentation;
+          // emit(PddListingReloadState());
+        }));
     context.pop();
   }
 
