@@ -321,6 +321,7 @@ class StoneListingScreen extends StatelessWidget {
                                     Utils.showSmartModalBottomSheet(
                                       context: context,
                                       builder: (_) => ProductMenuBottomSheet(
+                                        mainContext: context,
                                         productDetails: product,
                                         onAddToBag: () {
                                           BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
@@ -329,7 +330,15 @@ class StoneListingScreen extends StatelessWidget {
                                           BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context, isBuyNow: true));
                                         },
                                       ),
-                                    );
+                                    ).then((value) {
+                                      if (value != null && value is Map<RoutesData, dynamic> && value[RoutesData.isGoToBag] == true) {
+                                        if (context.mounted) {
+                                          BlocProvider.of<LandingBloc>(context)
+                                              .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                                          context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                                        }
+                                      }
+                                    });
                                   },
                             isSelectedBackground: (index % 2 != 0),
                             onTap: () {
@@ -356,6 +365,7 @@ class StoneListingScreen extends StatelessWidget {
                             productDetails: ProductDetailsModel(
                               suid: product.suid,
                               productInfoClarityChat: ProductInfoClarityChat(
+                                perCts: product.offerPrice?.setCurrency,
                                 carat: "36.09",
                                 commodity: "Sapphire",
                                 origin: "Sri Lanka",

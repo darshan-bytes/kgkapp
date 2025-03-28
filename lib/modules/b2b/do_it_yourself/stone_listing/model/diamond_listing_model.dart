@@ -273,7 +273,7 @@ class DiamondDataModel {
   String? cutSuid;
   String? depth;
   String? diamondAssetUrl;
-  dynamic discountPercentage;
+  double? discountPercentage;
   dynamic dtcBand;
   dynamic fancyColor;
   dynamic fancyColorRefSuid;
@@ -455,7 +455,7 @@ class DiamondDataModel {
       cutSuid: json["cut_suid"],
       depth: json["depth"],
       diamondAssetUrl: json["diamond_asset_url"],
-      discountPercentage: json["discount_percentage"],
+      discountPercentage: json["discount_percentage"]?.toString().toDouble,
       dtcBand: json["dtc_band"],
       fancyColor: json["fancy_color"],
       fancyColorRefSuid: json["fancy_color_ref_suid"],

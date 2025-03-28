@@ -194,10 +194,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
     }
     emit(AppReloadState());
-    Map<String, dynamic> body = {
-      ApiKey.productId_: event.productDetails.productId,
-      ApiKey.commodity: event.productDetails.commodity?.value
-    };
+    Map<String, dynamic> body = {ApiKey.productId_: event.productDetails.suid, ApiKey.commodity: event.productDetails.commodity?.value};
     await AppRepository(event.context).createWishList(body: body).then(
       (response) {
         response?.fold(
@@ -208,7 +205,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
             BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
+                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model.id ?? ''));
             // if (event.context.mounted) {
             // }
             event.onFavTap?.call();
@@ -233,7 +230,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = "";
             BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
+                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: ''));
             // if (event.context.mounted) {}
             event.onFavTap?.call();
             emit(const ProductRemoveFromFavoriteState());

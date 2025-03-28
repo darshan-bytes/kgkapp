@@ -5,6 +5,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
   final VoidCallback? onAddToBag;
   final VoidCallback? onBuyNow;
   final String? buttonText;
+  final BuildContext mainContext;
 
   ProductMenuBottomSheet({
     super.key,
@@ -12,6 +13,7 @@ class ProductMenuBottomSheet extends StatelessWidget {
     this.onAddToBag,
     this.onBuyNow,
     this.buttonText,
+    required this.mainContext,
   });
 
   final ValueNotifier<bool> showMoreDetails = ValueNotifier<bool>(false);
@@ -170,8 +172,9 @@ class ProductMenuBottomSheet extends StatelessWidget {
             onTap: () {
               if (buttonText.isNullOrEmpty) {
                 if (productDetails.isAddedToCart) {
-                  BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
-                  context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                  context.pop(arguments: {RoutesData.isGoToBag: true});
+                  // BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                  // context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
                 } else {
                   BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
                 }

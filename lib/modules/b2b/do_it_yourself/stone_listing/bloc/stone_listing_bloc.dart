@@ -420,6 +420,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       subTitle: diamond.rmDescription ?? "",
       isForAuction: diamond.isAuction,
       isAddedToCart: diamond.isAddedToCart,
+      discountPercentageString: "${diamond.discountPercentage ?? 0} %",
     );
   }
 

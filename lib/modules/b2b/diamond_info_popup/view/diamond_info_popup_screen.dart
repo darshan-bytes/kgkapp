@@ -330,7 +330,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(width: 8.w),
+            /*SizedBox(width: 8.w),
             SelectionButton(
               height: 42.w,
               width: 42.w,
@@ -346,7 +346,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 }
               },
               image: AppImages.icHeart,
-            ),
+            ),*/
           ],
         ),
       ),

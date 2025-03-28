@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  /// Create main app view builder
+  /// Create  app view builder
   AnnotatedRegion<SystemUiOverlayStyle> buildMaterialBuilder(AppBloc appBloc, Widget? widget, AppState appState) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "27-March+2",
+        message: "28-March",
         location: BannerLocation.topEnd,
       ),
     );

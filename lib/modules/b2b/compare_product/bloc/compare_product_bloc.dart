@@ -172,7 +172,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
     } else if (commodity == Commodity.diamond) {
       DiamondDataModel diamondData = DiamondDataModel.fromJson(sourceModel);
       bool isDiscounted =
-          diamondData.discountPercentage != null && (diamondData.discountPercentage is num) && diamondData.discountPercentage > 0;
+          diamondData.discountPercentage != null && (diamondData.discountPercentage is num) && diamondData.discountPercentage! > 0;
       productDetails = ProductDetailsModel(
         productId: diamondData.suid,
         suid: diamondData.suid,
@@ -230,6 +230,8 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
 
   void setInitialized(bool bool) {
     _isInitialized = bool;
+    compareResult.clear();
+    productList.clear();
   }
 
   void handleBagButtonClick(BuildContext context, int index) {

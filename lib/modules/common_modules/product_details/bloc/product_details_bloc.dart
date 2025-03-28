@@ -327,7 +327,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           // the3DFile = diamondData?.image.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
           videoUrl = diamondData?.video;
           bool isDiscounted =
-              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
+              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage! > 0;
           isAddedToCart = diamondData!.isAddedToCart;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();

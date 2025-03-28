@@ -30,7 +30,7 @@ class DiamondInfoPopupBloc extends Bloc<DiamondInfoPopupEvent, DiamondInfoPopupS
     diamondDatum = (event.context.routesData?[RoutesData.diamondInfo]) ?? DiamondDataModel.fromJson({});
     if (diamondDatum != null) {
       bool isDiscount =
-          diamondDatum!.discountPercentage != null && (diamondDatum!.discountPercentage is num) && diamondDatum!.discountPercentage > 0;
+          diamondDatum!.discountPercentage != null && (diamondDatum!.discountPercentage is num) && diamondDatum!.discountPercentage! > 0;
       imgList = diamondDatum!.image.map((e) => e.url ?? '').toList();
       productInfoModel = ProductInfoModel(
         productId: diamondDatum!.suid,

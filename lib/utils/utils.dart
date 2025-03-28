@@ -484,7 +484,7 @@ class Utils {
       offerPrice: item.discountPrice?.toString().setCurrency,
       finalPrice: item.discountPrice?.toString().setCurrency,
       discountPercentageString: item.discountEXT,
-      productId: item.id ?? "",
+      productId: item.suid ?? "",
       commodity: Commodity.jewellery,
       isFavourite: item.isFavorite,
       wishlistId: item.wishlistID,
@@ -508,7 +508,7 @@ class Utils {
   static ProductDetailsModel convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
     return ProductDetailsModel(
       suid: diamond.suid,
-      productId: diamond.id,
+      productId: diamond.suid,
       imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
       name: diamond.rmDescription ?? "",
       ctsOrGms: diamond.ctsOrGms,
@@ -543,7 +543,7 @@ class Utils {
   static ProductDetailsModel convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
     return ProductDetailsModel(
       suid: gemstone.suid,
-      productId: gemstone.id,
+      productId: gemstone.suid,
       imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
       name: gemstone.rmDescription ?? "",
       ctsOrGms: gemstone.ctsOrGms,

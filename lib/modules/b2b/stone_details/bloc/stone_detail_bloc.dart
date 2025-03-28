@@ -66,7 +66,7 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
         diamondData = data;
         if (diamondData != null) {
           bool isDiscounted =
-              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage > 0;
+              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage! > 0;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
