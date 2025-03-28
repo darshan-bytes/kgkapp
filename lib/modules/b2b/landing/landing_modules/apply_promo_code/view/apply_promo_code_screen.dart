@@ -10,71 +10,78 @@ class ApplyPromoCodeScreen extends StatelessWidget {
     return Scaffold(
       appBar: SmartAppBar(title: APPStrings.coupons.tr),
       body: SafeArea(
-        child: BlocBuilder<ApplyPromoCodeBloc, ApplyPromoCodeState>(
-          buildWhen: (previous, current) => current is ApplyPromoCodeLoadedState || current is ApplyPromoCodeLoadingState,
-          builder: (context, state) {
-            if (state is ApplyPromoCodeLoadingState) {
-              return const SmartCircularProgressIndicator();
-            }
-            if (state is ApplyPromoCodeLoadedState) {
-              if (bloc.applyPromoCodeList.isNullOrEmpty) {
-                return const NoDataFoundWidget();
-              }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SmartTextField(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
-                    controller: bloc.promoCodeController,
-                    hintText: APPStrings.hintPromoCode.tr,
-                    textInputAction: TextInputAction.done,
-                    suffixIcon: SmartText(APPStrings.apply.tr, onTap: () {
-                      if (bloc.promoCodeController.text.isNullOrEmpty) return;
-                      bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
-                    }, textAlign: TextAlign.center, optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h)),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
-                      color: style.backgroundColor,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (bloc.appliedPromoCode != null) ...[
-                              SmartText(APPStrings.appliedPromoCode.tr, style: style.titleStyle),
-                              SizedBox(height: 12.h),
-                              _buildApplyPromoCodeItem(
-                                model: bloc.appliedPromoCode!,
-                                style: style,
-                                context: context,
-                                bloc: bloc,
-                                isApplied: true,
+        child: Column(
+          children: [
+            SmartTextField(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
+              controller: bloc.promoCodeController,
+              hintText: APPStrings.hintPromoCode.tr,
+              textInputAction: TextInputAction.done,
+              onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+              suffixIcon: SmartText(APPStrings.apply.tr, onTap: () {
+                if (bloc.promoCodeController.text.isNullOrEmpty) return;
+                bloc.add(OnTapApplyPromoCodeEvent(context: context, promoCode: bloc.promoCodeController.text));
+              }, textAlign: TextAlign.center, optionalPadding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h)),
+            ),
+            Expanded(
+              child: BlocBuilder<ApplyPromoCodeBloc, ApplyPromoCodeState>(
+                buildWhen: (previous, current) => current is ApplyPromoCodeLoadedState || current is ApplyPromoCodeLoadingState,
+                builder: (context, state) {
+                  if (state is ApplyPromoCodeLoadingState) {
+                    return const SmartCircularProgressIndicator();
+                  }
+                  if (state is ApplyPromoCodeLoadedState) {
+                    if (bloc.applyPromoCodeList.isNullOrEmpty) {
+                      return const NoDataFoundWidget();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 16.h),
+                            color: style.backgroundColor,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (bloc.appliedPromoCode != null) ...[
+                                    SmartText(APPStrings.appliedPromoCode.tr, style: style.titleStyle),
+                                    SizedBox(height: 12.h),
+                                    _buildApplyPromoCodeItem(
+                                      model: bloc.appliedPromoCode!,
+                                      style: style,
+                                      context: context,
+                                      bloc: bloc,
+                                      isApplied: true,
+                                    ),
+                                    SizedBox(height: 20.h),
+                                  ],
+                                  SmartText(APPStrings.moreOffers.tr, style: style.titleStyle),
+                                  ListView.separated(
+                                    itemCount: bloc.applyPromoCodeList.length,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                                    itemBuilder: (builderContext, index) {
+                                      if (bloc.applyPromoCodeList[index] == bloc.appliedPromoCode) return SizedBox.shrink();
+                                      return _buildApplyPromoCodeItem(
+                                          model: bloc.applyPromoCodeList[index], style: style, context: context, bloc: bloc);
+                                    },
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 20.h),
-                            ],
-                            SmartText(APPStrings.moreOffers.tr, style: style.titleStyle),
-                            ListView.separated(
-                              itemCount: bloc.applyPromoCodeList.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                              itemBuilder: (builderContext, index) {
-                                if (bloc.applyPromoCodeList[index] == bloc.appliedPromoCode) return SizedBox.shrink();
-                                return _buildApplyPromoCodeItem(
-                                    model: bloc.applyPromoCodeList[index], style: style, context: context, bloc: bloc);
-                              },
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }
-            return SizedBox.shrink();
-          },
+                          ),
+                        )
+                      ],
+                    );
+                  }
+                  return SizedBox.shrink();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

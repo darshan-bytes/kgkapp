@@ -825,5 +825,21 @@
   "mob_presentation_dialog_title": "プレゼンテーションのレビュー",
   "mob_presentation_dialog_msg": "プレゼンテーションをレビューし、承認または拒否します。",
   "mob_concept_by": "コンセプト：",
-  "mob_received_on": "受信日："
+  "mob_received_on": "受信日：",
+  "mob_no_3d_view_available": "3Dビューは利用できません",
+  "mob_no_image_available": "画像は利用できません",
+  "mob_no_dna_available": "DNAは利用できません",
+  "mob_no_certificate_available": "証明書は利用できません",
+  "mob_best_selling": "ベストセラー",
+  "mob_seasonal_offers": "シーソナルオファー",
+  "mob_occasion_offer": "特別オファー",
+  "mob_deals": "ディール",
+  "mob_do_it_yourself": "自分でやる",
+  "mob_pdd": "PDD",
+  "mob_libraries": "ライブラリ",
+  "mob_digital_catalogue": "デジタルカタログ",
+  "mob_project_listing": "プロジェクトリスト",
+  "mob_presentation_listing": "プレゼンテーションリスト",
+  "mob_concept_listing": "コンセプトリスト",
+  "mob_landing_listing": "ランドリスト"
 }
