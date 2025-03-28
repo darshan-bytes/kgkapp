@@ -1024,21 +1024,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             ? {
                 RoutesData.isPageFor: ScreenIdentifier.productForRing,
                 RoutesData.filterData: redirectionData,
+                RoutesData.appBarTitle: APPStrings.collection.tr,
               }
             : {};
         break;
-      // case RedirectionTo.collection:
-      //   if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
-      //   routeName = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
-      //       ? AppRoutes.productListGridPage
-      //       : AppRoutes.collectionPage;
-      //   arguments = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
-      //       ? {
-      //           RoutesData.isPageFor: ScreenIdentifier.productForRing,
-      //           RoutesData.filterData: redirectionData,
-      //         }
-      //       : {};
-      //   break;
 
       case RedirectionTo.unknown:
         printWrapped('Unknown redirection');

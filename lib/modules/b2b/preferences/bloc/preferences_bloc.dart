@@ -23,7 +23,6 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   }
 
   void _onInitialEvent(PreferencesInitialEvent event, Emitter<PreferencesState> emit) async {
-    print("_onInitialEvent");
     countryList.clear();
     currencyList.clear();
 
@@ -40,7 +39,6 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     currencyList = StorageManager().getCurrencyList();
 
     selectedCountry = countryList.first;
-    print("StorageManager().getLocale(): ${StorageManager().getLocale()}");
     selectedLanguage = languageList.firstWhereOrNull((element) => element == StorageManager().getLocale());
     selectedCurrency =
         currencyList.firstWhereOrNull((element) => element.id == StorageManager().getSelectedCurrency()?.id) ?? currencyList.firstOrNull;

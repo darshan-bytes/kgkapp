@@ -26,8 +26,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
       //B2B
       // emailController.text = "joseph.murphy@yopmail.com";
+
       // emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
+
+      // emailController.text = "customer48008@kgkmail.com";
+      //  emailController.text = "kachinbali@yopmail.com";
+
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond
       // emailController.text = "parash2@yopmail.com"; // Jewellery

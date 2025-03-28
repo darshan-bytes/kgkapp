@@ -173,8 +173,6 @@ class ProductMenuBottomSheet extends StatelessWidget {
               if (buttonText.isNullOrEmpty) {
                 if (productDetails.isAddedToCart) {
                   context.pop(arguments: {RoutesData.isGoToBag: true});
-                  // BlocProvider.of<LandingBloc>(context).add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
-                  // context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
                 } else {
                   BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(productDetails, context));
                 }

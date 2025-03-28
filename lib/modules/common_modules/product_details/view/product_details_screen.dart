@@ -519,7 +519,6 @@ class ProductDetailsScreen extends StatelessWidget {
               }),
             ],
           ],
-          // if (bloc.suggestedProductList.isNotEmpty) SizedBox(height: 32.h),
           _buildSuggestedProductList(bloc, style, context),
           _buildRecentlyViewedProductList(bloc, style, context),
         ],

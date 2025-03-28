@@ -451,15 +451,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         },
       ),
       ProfileListModel(
-        image: AppImages.icMasters,
-        title: APPStrings.masters,
-        subTitle: APPStrings.masterDataOfUserAndNewsLetter,
-        trailingIcon: AppImages.icArrowRight,
-        onTap: (context) {
-          context.pushNamed(AppRoutes.userMasterListingPage);
-        },
-      ),
-      ProfileListModel(
         image: AppImages.icStore,
         title: APPStrings.dashboard,
         subTitle: APPStrings.listOfDashboard,
@@ -530,6 +521,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           onTap: (context) {
             context.pushNamed(AppRoutes.newsletterPage);
           }),
+      ProfileListModel(
+        image: AppImages.icMasters,
+        title: APPStrings.masters,
+        subTitle: APPStrings.masterDataOfUserAndNewsLetter,
+        trailingIcon: AppImages.icArrowRight,
+        onTap: (context) {
+          context.pushNamed(AppRoutes.userMasterListingPage);
+        },
+      ),
       ProfileListModel(
           image: AppImages.icStore,
           title: APPStrings.findAStore,

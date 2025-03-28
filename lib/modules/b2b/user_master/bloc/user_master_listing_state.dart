@@ -46,3 +46,10 @@ class UserMasterChangeLocationTypeState extends UserMasterListingState {
   @override
   List<Object> get props => [selectedUserLocationType];
 }
+
+final class UserMasterLoadingState extends UserMasterListingState {
+  const UserMasterLoadingState();
+
+  @override
+  List<Object> get props => [];
+}

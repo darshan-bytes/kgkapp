@@ -13,7 +13,9 @@ class UserMasterListingScreen extends StatelessWidget {
         onFavorite: () => context.pushNamed(AppRoutes.wishListPage),
         onNotification: () => context.pushNamed(AppRoutes.notificationPage),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
+
+      ///TODO : bottomNavigationBar is not used so we have commented it as discussed with JD
+      // bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       floatingActionButton: ScrollToTopFAB(
         canScrollToTop: bloc.paginationScrollController.canScrollToTop,
         onTap: bloc.paginationScrollController.scrollToTop,
@@ -21,19 +23,27 @@ class UserMasterListingScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 16.0.w),
-          child: BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
-            buildWhen: (previous, current) => current is UserMasterListingLoadedState,
-            builder: (context, state) {
-              if (state is UserMasterListingLoadedState) {
-                return Column(
-                  children: [
-                    _buildSearchTextField(bloc, context),
-                    _buildUserMasterList(bloc),
-                  ],
-                );
-              }
-              return const SmartCircularProgressIndicator();
-            },
+          child: Column(
+            children: [
+              _buildSearchTextField(bloc, context),
+              Expanded(
+                child: BlocBuilder<UserMasterListingBloc, UserMasterListingState>(
+                  buildWhen: (previous, current) =>
+                      current is UserMasterListingLoadedState ||
+                      current is UserMasterLoadingState ||
+                      current is UserMasterListLoadedMoreState ||
+                      current is UserMasterListLoadingMoreState,
+                  builder: (context, state) {
+                    if (state is UserMasterLoadingState) {
+                      return Center(child: const SmartCircularProgressIndicator());
+                    } else if (state is UserMasterListingLoadedState) {
+                      return _buildUserMasterList(bloc);
+                    }
+                    return SizedBox.shrink();
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -61,6 +71,13 @@ class UserMasterListingScreen extends StatelessWidget {
             customDisabledBorder: outlineInputBorder,
             customErrorBorder: outlineInputBorder,
             customFocusedErrorBorder: outlineInputBorder,
+            onTapOutside: (value) => FocusScope.of(context).unfocus(),
+            onValueChanges: (value) {
+              bloc.add(UserMasterListingSearchEvent(context: context));
+            },
+            onFieldSubmitted: (value) {
+              bloc.add(UserMasterListingSearchEvent(context: context));
+            },
           ),
         ),
         _buildOrderDropDownField(bloc, style),
@@ -81,7 +98,7 @@ class UserMasterListingScreen extends StatelessWidget {
           }
           return RefreshIndicator.adaptive(
             onRefresh: () async {
-              await bloc.pullToRefresh();
+              bloc.add(UserMasterListingPullToRefreshEvent(context: context));
             },
             child: ListView.builder(
                 shrinkWrap: true,

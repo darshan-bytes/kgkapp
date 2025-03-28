@@ -187,6 +187,8 @@ class CommonResponse<T> {
         return CadLibraryListItemDataModel.fromJson(json);
       case const (PaginationData<ConceptModel>):
         return PaginationData<ConceptModel>.fromJson(json);
+      case const (PaginationData<UserMasterListingModelClass>):
+        return PaginationData<UserMasterListingModelClass>.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):
