@@ -1180,6 +1180,20 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderCancelApiCall(
+      {required String id, Map<String, dynamic>? body}) async {
+    var response =
+        await updateMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), body, withCurrencyHeader: true, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> cancelProductFromOrderDetailsApiCall(
+      {required String id, Map<String, dynamic>? body}) async {
+    var response = await deleteMethod<PlaceOrderResponse>(ApiClient.cancelProductFromOrder(id),
+        query: body, withCurrencyHeader: true, withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<DiyStyleListModel>>?> diyStyleFilters({
     required String limit,
     required String page,
@@ -1292,6 +1306,15 @@ class AppRepository extends ApiService {
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
+
+  Future<Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>?> staffUserMasterListApiCall(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response =
+        await postMethod<PaginationData<UserMasterListingModelClass>>(ApiClient.staffUserFilters, body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
 }
 
 /// This function builds the populate query for the Strapi CMS
@@ -1350,7 +1373,7 @@ Future<String> getPopulatedUrl() async {
 
 /// This function builds the URL for the Strapi CMS
 Future<String> buildUrl({required String endpoint, required String attribute}) async {
-  String acceptLanguage = StorageManager().getLocale() ?? 'en';
+  String acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
   String populateQuery = await getPopulatedUrl();
   return "$endpoint?populate[$attribute][populate]=$populateQuery&locale=$acceptLanguage";
 }

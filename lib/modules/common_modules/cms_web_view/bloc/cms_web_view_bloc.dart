@@ -28,6 +28,12 @@ class CmsWebViewBloc extends Bloc<CmsWebViewEvent, CmsWebViewState> {
       webViewController = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..setNavigationDelegate(NavigationDelegate(
+          onPageStarted: (url) {
+            event.context.setAppLoading(true);
+          },
+          onPageFinished: (url) {
+            event.context.setAppLoading(false);
+          },
           onNavigationRequest: (request) {
             return NavigationDecision.navigate;
           },

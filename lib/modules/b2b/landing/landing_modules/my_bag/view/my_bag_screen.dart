@@ -30,117 +30,6 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  Widget? buildBottomNavBar(MyBagBloc bloc, MyBagScreenStyle style, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Container(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 24.h),
-        decoration: BoxDecoration(
-          color: style.backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              color: style.bottomNavBarShadowColor,
-              offset: const Offset(0, -8),
-              blurRadius: 24.r,
-            ),
-          ],
-        ),
-        child: BlocBuilder<MyBagBloc, MyBagState>(
-          buildWhen: (_, current) => current is MyBagToggleReadMoreDetailsState,
-          builder: (context, state) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AnimatedSize(
-                  duration: const Duration(milliseconds: 200),
-                  child: bloc.isReadMoreDetailsOpen
-                      ? Column(
-                          children: [
-                            BlocBuilder<MyBagBloc, MyBagState>(
-                              buildWhen: (_, current) => current is MyBagPaymentConditionChangedState,
-                              builder: (context, state) {
-                                return SmartDropDown(
-                                  focusNode: bloc.paymentConditionFocusNode,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      bloc.variationFocusNode.requestFocus();
-                                      bloc.add(MyBagPaymentConditionChangedEvent(paymentCondition: value));
-                                    }
-                                  },
-                                  items: bloc.paymentConditionList.map((e) => SmartDropDownItem(title: e.name ?? '', value: e)).toList(),
-                                  selectedItem: bloc.selectedPaymentCondition,
-                                  hintText: APPStrings.paymentCondition.tr,
-                                  labelText: APPStrings.paymentCondition.tr,
-                                );
-                              },
-                            ),
-                            SizedBox(height: 24.h),
-                            SmartTextField(
-                              suffixText: APPStrings.percentage,
-                              labelText: APPStrings.plusMinus,
-                              hintText: APPStrings.plusMinus,
-                              controller: bloc.variationController,
-                              focusNode: bloc.variationFocusNode,
-                              nextFocus: bloc.noteFocusNode,
-                              textInputFormatter: [DoubleInputFormatter()],
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                            ),
-                            SizedBox(height: 24.h),
-                            SmartTextField(
-                              labelText: APPStrings.commentQuestion.tr,
-                              hintText: APPStrings.commentQuestion.tr,
-                              controller: bloc.noteController,
-                              focusNode: bloc.noteFocusNode,
-                              maxLines: 3,
-                              textInputAction: TextInputAction.newline,
-                            ),
-                            SizedBox(height: 24.h),
-                            const Divider(),
-                            SizedBox(height: 24.h),
-                          ],
-                        )
-                      : const SizedBox(),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          text: APPStrings.total.tr,
-                          style: style.bottomBarTotalTextStyle,
-                          children: [
-                            WidgetSpan(child: SizedBox(width: 8.w)),
-                            TextSpan(
-                              text: '\$35,700.00',
-                              style: style.bottomBarTotalAmountTextStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SmartText(
-                      onTap: () {
-                        bloc.add(const MyBagToggleReadMoreDetailsEvent());
-                      },
-                      bloc.isReadMoreDetailsOpen ? APPStrings.readLess.tr : APPStrings.moreDetails.tr,
-                      style: style.bottomBarMoreLessTextStyle,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.h),
-                buildCheckoutButton(context, style, bloc),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
   Widget _getBody(MyBagBloc bloc, MyBagScreenStyle style) {
     return SafeArea(
       child: BlocBuilder<MyBagBloc, MyBagState>(
@@ -197,17 +86,9 @@ class MyBagScreen extends StatelessWidget {
                   style: style.productsTitleStyle,
                 ),
               ),
-              SelectionButton(
+              SmartImage(
                 key: key,
-                width: 42.w,
-                height: 42.w,
-                imageHeight: 24.5.w,
-                imageWidth: 24.5.w,
-                isSelected: true,
-                selectedButtonColor: style.backgroundColor,
-                selectedButtonBorderColor: style.menuBorderColor,
-                selectedButtonIconColor: style.menuIconColor,
-                image: AppImages.icMenu,
+                path: AppImages.icMenu,
                 onTap: () {
                   final RenderBox renderBox = key.currentContext!.findRenderObject() as RenderBox;
                   Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -329,7 +210,7 @@ class MyBagScreen extends StatelessWidget {
                       },
                       isSelectedBackground: false,
                       onTap: () {
-                        _onProductTap(context, product);
+                        _onProductTap(context, product, bloc);
                       },
                       onYourDiscountChange: (value) {
                         FocusScope.of(context).unfocus();
@@ -407,7 +288,7 @@ class MyBagScreen extends StatelessWidget {
                       },
                       isSelectedBackground: false,
                       onTap: () {
-                        _onProductTap(context, product);
+                        _onProductTap(context, product, bloc);
                       },
                       productDetails: ProductDetailsModel(
                         productInfoClarityChat: ProductInfoClarityChat(
@@ -453,7 +334,7 @@ class MyBagScreen extends StatelessWidget {
                 return CartProductItem(
                   isOutOfStock: (product.stockQty ?? 0) < (product.quantity ?? 0),
                   onTap: () {
-                    _onProductTap(context, product);
+                    _onProductTap(context, product, bloc);
                   },
                   productDetails: product,
                   onChangedCheckbox: (value) {
@@ -786,13 +667,19 @@ class MyBagScreen extends StatelessWidget {
     );
   }
 
-  void _onProductTap(BuildContext context, ProductDetailsModel productDetails) {
+  void _onProductTap(BuildContext context, ProductDetailsModel productDetails, MyBagBloc bloc) {
     if (productDetails.commodity == null) {
       return;
     }
     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
       RoutesData.productId: productDetails.suid ?? '',
       RoutesData.isPageFor: Utils.getScreenIdentifierFromCommodity(productDetails.commodity!)
-    });
+    }).then(
+      (value) {
+        if (!bloc.isClosed) {
+          bloc.add(InitialMyBagEvent(context: context));
+        }
+      },
+    );
   }
 }

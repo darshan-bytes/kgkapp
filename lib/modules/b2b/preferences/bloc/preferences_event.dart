@@ -28,7 +28,7 @@ class PreferencesChangeCountryEvent extends PreferencesEvent {
 }
 
 class PreferencesChangeLanguageEvent extends PreferencesEvent {
-  final LanguageModel language;
+  final LanguageDatum language;
 
   const PreferencesChangeLanguageEvent(this.language);
 

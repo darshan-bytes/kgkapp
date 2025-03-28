@@ -32,11 +32,21 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   /// Selected cancellation reason.
   CancellationReasonModel? selectedReason;
 
+  /// Controller for searching orders.
+  final TextEditingController cancellationOrderController = TextEditingController();
+
+  String? cancelOrderError;
+
+  late OrdersBloc orderListBloc;
+
   /// Constructor initializing the Bloc with event handlers.
   OrderDetailBloc() : super(const OrderDetailInitial()) {
     on<InitialOrderDetailEvent>(_initializeOrderDetails);
     on<OrderDetailRemoveProductEvent>(_removeProduct);
     on<OrderCancellationReasonsEvent>(_updateCancellationReason);
+    on<OrderCancellationEvent>(_cancelOrderEvent);
+    on<CancelOrderCommentChangeEvent>(_cancelOrderCommentChangeEvent);
+    on<OrderDetailsCancelInitialEvent>(_onOrderDetailsCancelInitialEvent);
   }
 
   /// Initialize order details based on context and load necessary data.
@@ -50,7 +60,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     _getRouteData(event.context);
 
     /// Generate cancellation reasons.
-    cancellationReasonsList = _generateCancellationReasonsList();
+    cancellationReasonsList = [];
 
     /// Order details api call.
     await fetchOrderDetailsData(context: event.context, emit: emit, orderNumber: orderNumber);
@@ -62,6 +72,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   /// Extract order number from route data.
   void _getRouteData(BuildContext context) {
     String? routeOrderNumber = context.routesData?[RoutesData.orderNumber];
+    orderListBloc = context.routesData?[RoutesData.bloc];
     if (routeOrderNumber.isNotNullNorEmpty) {
       orderNumber = routeOrderNumber ?? "";
     }
@@ -87,6 +98,7 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   /// Fetches the order list data from the API
   Future<void> fetchOrderDetailsData(
       {required BuildContext context, required Emitter<OrderDetailState> emit, required String orderNumber}) async {
+    emit(const OrderDetailReloadState());
     Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response = await AppRepository(context).orderDetailsApiCall(id: orderNumber);
     response?.fold((error) {
       Utils.showMessage(error.message);
@@ -110,25 +122,20 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     return List.generate(
       orderProductList.length,
       (index) {
-        final product = orderProductList[index];
+        final OrderProduct product = orderProductList[index];
         return ProductDetailsModel(
           productId: product.productProductId,
           imageUrl: product.image,
           name: product.productDescription,
-          originalPrice: product.originalAmount,
-          productQuality: CartProductQuality(name: product.discPercentage?.toString()),
-          productQuantity: CartProductQuantity(name: product.quantity?.toString()),
-          cartProductQuality: [
-            const CartProductQuality(name: "18K Gold"),
-            const CartProductQuality(name: "10K Gold"),
-            const CartProductQuality(name: "14K Gold"),
-            const CartProductQuality(name: "22K Gold"),
-            const CartProductQuality(name: "28K Gold"),
-            const CartProductQuality(name: "20K Gold"),
-            const CartProductQuality(name: "24K Gold"),
-            const CartProductQuality(name: "32K Gold"),
-          ],
-          cartProductQuantity: List.generate(99, (i) => CartProductQuantity(name: "$i")),
+          productSku: product.productProductId,
+          quantity: product.quantity,
+          ctsOrGms: product.ctsOrGms,
+          yourRate: product.yourRate,
+          yourAmount: product.yourAmount,
+          finalPrice: product.yourAmount?.setCurrency,
+          originalPrice: product.yourAmount?.setCurrency,
+          cts: product.ctsOrGms?.toString(),
+          suid: product.suid,
         );
       },
     );
@@ -148,21 +155,76 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
           quantity: product.quantity?.toString(),
           sku: product.productProductId,
           status: ProjectStatus.orangeInProgress.value,
-          brand: product.productId,
-          deliveryDate: "deliveryDate",
+          suid: product.suid,
         );
       },
     );
   }
 
-  /// Generate a list of cancellation reasons.
-  List<CancellationReasonModel> _generateCancellationReasonsList() {
-    return List.generate(
-      3,
-      (index) => CancellationReasonModel(
-        id: index,
-        name: index == 2 ? "Other" : "Reason ${index + 1}",
-      ),
+  Future<void> _cancelOrderEvent(OrderCancellationEvent event, Emitter<OrderDetailState> emit) async {
+    event.context.pop();
+    emit(const OrderDetailsLoadingState());
+    Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response;
+    if (event.isFromFullOrder) {
+      if (_validateCancelOrder(emit)) {
+        response = await AppRepository(event.context).orderCancelApiCall(
+          id: placeOrderResponse?.uniqueId ?? "-",
+          body: {
+            ApiKey.comment: cancellationOrderController.text.trim(),
+            ApiKey.status: AppConst.cancelled,
+          },
+        );
+      }
+    } else {
+      response = await AppRepository(event.context).cancelProductFromOrderDetailsApiCall(
+        id: placeOrderResponse?.uniqueId ?? "-",
+        body: {ApiKey.suid: event.productSuid},
+      );
+    }
+
+    await response?.fold(
+      (error) => Utils.showMessage(error.message),
+      (success) async {
+        /// Order details api call.
+        await fetchOrderDetailsData(context: event.context, emit: emit, orderNumber: orderNumber);
+
+        /// here we have refresh order list
+        orderListBloc.add(OrdersListPullToRefreshEvent(context: event.context));
+      },
     );
+    emit(const OrderDetailsLoadedState());
+  }
+
+  bool _validateCancelOrder(Emitter<OrderDetailState> emit) {
+    bool isValidate = true;
+
+    if (cancellationOrderController.text.trim().isEmpty) {
+      cancelOrderError = APPStrings.commentIsRequired.tr;
+      emit(CancellationFieldErrorState(fieldType: FieldTypeValidationEnum.firstName));
+      isValidate = false;
+    }
+    return isValidate;
+  }
+
+  void _cancelOrderCommentChangeEvent(CancelOrderCommentChangeEvent event, Emitter<OrderDetailState> emit) {
+    switch (event.fieldType) {
+      case FieldTypeValidationEnum.firstName:
+        cancelOrderError = null;
+        break;
+      default:
+        break;
+    }
+    emit(CancellationFieldErrorState(fieldType: event.fieldType));
+  }
+
+  void clearCancelForm() {
+    selectedReason = null;
+    cancellationOrderController.clear();
+    cancelOrderError = null;
+  }
+
+  void _onOrderDetailsCancelInitialEvent(OrderDetailsCancelInitialEvent event, Emitter<OrderDetailState> emit) {
+    emit(const OrderDetailReloadState());
+    clearCancelForm();
   }
 }

@@ -113,15 +113,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _onLanguageChangedEvent(LanguageChangedEvent event, Emitter<AppState> emit) async {
-    if (event.languageCode.isNotEmpty) {
-      await StorageManager().setLocale(event.languageCode);
-      await _languageLabelApiCall(event.context);
+    try {
+      if (event.languageCode != null) {
+        await StorageManager().setLocale(event.languageCode!);
+        await _languageLabelApiCall(event.context);
+      }
+      await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
+      locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
+      await sortOptionListApiCall(event.context);
+      emit(LanguageState(locale));
+      event.callback?.call();
+    } catch (e) {
+      debugPrint("Error in _onLanguageChangedEvent: $e");
     }
-    await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
-    locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
-    await sortOptionListApiCall(event.context);
-    emit(LanguageState(locale));
-    event.callback?.call();
   }
 
   void _onSetLoadingEvent(SetAppLoadingEvent event, Emitter<AppState> emit) {
@@ -136,7 +140,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<void> _languageLabelApiCall(BuildContext context) async {
     await UserRepository(context)
-        .getLanguageLabels(showLoader: true, language: StorageManager().getLocale() ?? APPStrings.languageEn)
+        .getLanguageLabels(showLoader: true, language: StorageManager().getLocale()?.code ?? APPStrings.languageEn)
         .then((value) async {
       await value?.fold((l) {
         Utils.showMessage(l.message);
@@ -203,10 +207,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             WishlistResponseModel model = data.responseData.first as WishlistResponseModel;
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
-            if (event.context.mounted) {
-              BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
-                  .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
-            }
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
+            // if (event.context.mounted) {
+            // }
             event.onFavTap?.call();
             emit(const ProductAddToFavoriteState());
           },
@@ -228,10 +232,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             Utils.showMessage(data.message);
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = "";
-            if (event.context.mounted) {
-              BlocProvider.of<WishlistUpdaterServiceBloc>(event.context)
-                  .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
-            }
+            BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
+                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
+            // if (event.context.mounted) {}
             event.onFavTap?.call();
             emit(const ProductRemoveFromFavoriteState());
           },

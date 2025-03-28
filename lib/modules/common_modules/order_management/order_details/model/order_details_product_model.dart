@@ -10,6 +10,7 @@ class OrderDetailsProductModel {
   String? status;
   String? brand;
   String? deliveryDate;
+  String? suid;
 
   OrderDetailsProductModel({
     this.id,
@@ -21,6 +22,7 @@ class OrderDetailsProductModel {
     this.status,
     this.brand,
     this.deliveryDate,
+    this.suid,
   });
 
   @override
@@ -36,7 +38,8 @@ class OrderDetailsProductModel {
         other.sku == sku &&
         other.status == status &&
         other.brand == brand &&
-        other.deliveryDate == deliveryDate;
+        other.deliveryDate == deliveryDate &&
+        other.suid == suid;
   }
 
   @override
@@ -49,7 +52,8 @@ class OrderDetailsProductModel {
         sku.hashCode ^
         status.hashCode ^
         brand.hashCode ^
-        deliveryDate.hashCode;
+        deliveryDate.hashCode ^
+        suid.hashCode;
   }
 }
 

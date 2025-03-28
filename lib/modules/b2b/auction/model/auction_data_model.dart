@@ -46,8 +46,8 @@ class AuctionDataModel {
   final bool? showPlaceBid;
   final String? myBidValue;
   final int? totalBid;
-  final CreatedByDetails? createdByDetails;
-  final UpdatedByDetails? updatedByDetails;
+  final UserIdDetails? createdByDetails;
+  final UserIdDetails? updatedByDetails;
 
   AuctionDataModel copyWith({
     String? businessType,
@@ -70,8 +70,8 @@ class AuctionDataModel {
     bool? showPlaceBid,
     String? myBidValue,
     int? totalBid,
-    CreatedByDetails? createdByDetails,
-    UpdatedByDetails? updatedByDetails,
+    UserIdDetails? createdByDetails,
+    UserIdDetails? updatedByDetails,
   }) {
     return AuctionDataModel(
       businessType: businessType ?? this.businessType,
@@ -121,8 +121,8 @@ class AuctionDataModel {
       showPlaceBid: json["show_place_bid"],
       myBidValue: json["my_bid_value"],
       totalBid: json["total_bid"],
-      createdByDetails: json["created_by_details"] == null ? null : CreatedByDetails.fromJson(json["created_by_details"]),
-      updatedByDetails: json["updated_by_details"] == null ? null : UpdatedByDetails.fromJson(json["updated_by_details"]),
+      createdByDetails: json["created_by_details"] == null ? null : UserIdDetails.fromJson(json["created_by_details"]),
+      updatedByDetails: json["updated_by_details"] == null ? null : UserIdDetails.fromJson(json["updated_by_details"]),
     );
   }
 
@@ -223,133 +223,5 @@ class Bid {
   @override
   String toString() {
     return "$auctionId, $bidAmount, $country, $id, $isWinner, $createdAt, $isMyBid, ";
-  }
-}
-
-class CreatedByDetails {
-  CreatedByDetails({
-    required this.firstname,
-    required this.lastname,
-    required this.profilePic,
-    required this.userAccountId,
-    required this.email,
-    required this.userType,
-    required this.accountType,
-    required this.phoneCode,
-    required this.phone,
-    required this.profilePicUrl,
-  });
-
-  final String? firstname;
-  final String? lastname;
-  final dynamic profilePic;
-  final String? userAccountId;
-  final String? email;
-  final String? userType;
-  final String? accountType;
-  final dynamic phoneCode;
-  final dynamic phone;
-  final String? profilePicUrl;
-
-  CreatedByDetails copyWith({
-    String? firstname,
-    String? lastname,
-    dynamic profilePic,
-    String? userAccountId,
-    String? email,
-    String? userType,
-    String? accountType,
-    dynamic phoneCode,
-    dynamic phone,
-    String? profilePicUrl,
-  }) {
-    return CreatedByDetails(
-      firstname: firstname ?? this.firstname,
-      lastname: lastname ?? this.lastname,
-      profilePic: profilePic ?? this.profilePic,
-      userAccountId: userAccountId ?? this.userAccountId,
-      email: email ?? this.email,
-      userType: userType ?? this.userType,
-      accountType: accountType ?? this.accountType,
-      phoneCode: phoneCode ?? this.phoneCode,
-      phone: phone ?? this.phone,
-      profilePicUrl: profilePicUrl ?? this.profilePicUrl,
-    );
-  }
-
-  factory CreatedByDetails.fromJson(Map<String, dynamic> json) {
-    return CreatedByDetails(
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-      profilePic: json["profile_pic"],
-      userAccountId: json["user_account_id"],
-      email: json["email"],
-      userType: json["user_type"],
-      accountType: json["account_type"],
-      phoneCode: json["phone_code"],
-      phone: json["phone"],
-      profilePicUrl: json["profile_pic_url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-        "profile_pic": profilePic,
-        "user_account_id": userAccountId,
-        "email": email,
-        "user_type": userType,
-        "account_type": accountType,
-        "phone_code": phoneCode,
-        "phone": phone,
-        "profile_pic_url": profilePicUrl,
-      };
-
-  @override
-  String toString() {
-    return "$firstname, $lastname, $profilePic, $userAccountId, $email, $userType, $accountType, $phoneCode, $phone, $profilePicUrl, ";
-  }
-}
-
-class UpdatedByDetails {
-  UpdatedByDetails({
-    required this.profilePicUrl,
-    required this.firstname,
-    required this.lastname,
-  });
-
-  final dynamic profilePicUrl;
-  final dynamic firstname;
-  final dynamic lastname;
-
-  UpdatedByDetails copyWith({
-    dynamic profilePicUrl,
-    dynamic firstname,
-    dynamic lastname,
-  }) {
-    return UpdatedByDetails(
-      profilePicUrl: profilePicUrl ?? this.profilePicUrl,
-      firstname: firstname ?? this.firstname,
-      lastname: lastname ?? this.lastname,
-    );
-  }
-
-  factory UpdatedByDetails.fromJson(Map<String, dynamic> json) {
-    return UpdatedByDetails(
-      profilePicUrl: json["profile_pic_url"],
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "profile_pic_url": profilePicUrl,
-        "firstname": firstname,
-        "lastname": lastname,
-      };
-
-  @override
-  String toString() {
-    return "$profilePicUrl, $firstname, $lastname, ";
   }
 }
