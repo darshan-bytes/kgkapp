@@ -25,10 +25,10 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   List<InquiryTypeModel> inquiryTypeList = [];
 
   List<StatusModel> statusList = [
-    const StatusModel(id: 1, name: 'New'),
-    const StatusModel(id: 2, name: 'Open'),
-    const StatusModel(id: 2, name: 'Progress'),
-    const StatusModel(id: 2, name: 'Close'),
+    StatusModel(id: 1, name: APPStrings.strNew.tr),
+    StatusModel(id: 2, name: APPStrings.open.tr),
+    StatusModel(id: 2, name: APPStrings.progress.tr),
+    StatusModel(id: 2, name: APPStrings.close.tr),
   ];
 
   ProductModel? selectedProduct;
@@ -125,7 +125,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     });
   }
 
-  clearData(){
+  clearData() {
     selectedInquiryType = null;
     selectedStatus = null;
     selectedProduct = null;

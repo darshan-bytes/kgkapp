@@ -487,7 +487,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           subTitle: APPStrings.yourSubmittedInquiries,
           trailingIcon: AppImages.icArrowRight,
           onTap: (context) {
-            context.pushNamed(AppRoutes.makeInquiryPage);
+            context.pushNamed(AppRoutes.myInquiryScreen);
           }),
       ProfileListModel(
           image: AppImages.icWatchlist,

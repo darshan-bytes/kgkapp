@@ -4,7 +4,7 @@ class ApiClient {
 
   static const String devApiBase = 'https://api.kgk.magnetoinfotech.com/v1';
   static const String qaApiBase = 'https://qa-api.kgk.magnetoinfotech.com/v1';
-  static const String apiBaseUrl = qaApiBase;
+  static const String apiBaseUrl = devApiBase;
   static const String assetsBaseUrl = '$apiBaseUrl/assets/';
 
   static const String loginUser = '$apiBaseUrl/auth/front-sign-in';
@@ -201,11 +201,15 @@ class ApiClient {
 
   static const String pddFilterOptions = '$apiBaseUrl/presentations/filter-list';
 
+  static const String myInquiryFilterOptions = '$apiBaseUrl/customer-inquiry/filter-list';
+
   static const String watchListFilterOptions = '$apiBaseUrl/watchlist/filter-list';
 
   static const String inquiryType = '$apiBaseUrl/customer-inquiry/types';
 
   static const String submitMakeInquiry = '$apiBaseUrl/customer-inquiry';
+
+  static const String myInquiries = '$apiBaseUrl/customer-inquiry/filters';
 
   static const String submitContactUs = '$apiBaseUrl/contact_us';
 

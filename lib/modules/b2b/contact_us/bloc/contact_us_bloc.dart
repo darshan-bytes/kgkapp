@@ -20,12 +20,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   InquiryTypeModel? selectedInquiryType;
 
   bool isIndividual = true;
- // List<TextEditingController> contactNumberControllers = [TextEditingController()];
-
   TextEditingController contactNumberController = TextEditingController();
-
-  // List<String?> contactNumberErrors = [null];
-  // List<FocusNode> contactNumberFocusNodes = [FocusNode()];
   FocusNode contactNumberFocusNode = FocusNode();
   Country selectedCountry =
     Country.from(json: {

@@ -674,6 +674,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  //fetchMyInquiries
+  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries({required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await postMethod<PaginationData<MyInquiriesModel>>(ApiClient.myInquiries, body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // For Gemstone Filter Option
   Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList({required String listType, String? type}) async {
     var response = await getMethod<FilterOptionModel>(
@@ -1270,6 +1278,14 @@ class AppRepository extends ApiService {
 
     var response = await getMethod<DiyFinalDetailsModel>(ApiClient.diyStyleDetails(settingId), query: query, withCurrencyHeader: true);
 
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For My Inquiry Filter Option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchMyInquiryFilterOptionList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.myInquiryFilterOptions);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

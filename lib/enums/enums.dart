@@ -88,6 +88,7 @@ enum B2BListingType {
   userListingType,
   newsletterSubscribersType,
   manufacturerOrderListingType,
+  myInquiryType,
 }
 
 enum CalenderEventType {
