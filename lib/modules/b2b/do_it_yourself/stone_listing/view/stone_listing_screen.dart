@@ -294,26 +294,34 @@ class StoneListingScreen extends StatelessWidget {
                         : ProductInfoItem(
                             isFromBag: false,
                             productFeaturesList: attributes,
-                            onTap360View: product.video.isNotNullNorEmpty
-                                ? () {
-                                    Utils.launchUrlFromString(product.video!);
-                                  }
-                                : null,
-                            onTapDNA: product.openDnaUrl != null
-                                ? () {
-                                    Utils.launchUrlFromString(product.openDnaUrl!);
-                                  }
-                                : null,
-                            onTapCertificate: product.certificateFile != null
-                                ? () {
-                                    Utils.launchUrlFromString(product.certificateFile!);
-                                  }
-                                : null,
-                            onTapImageViewer: product.shapeImage != null
-                                ? () {
-                                    Utils.launchUrlFromString(product.shapeImage!);
-                                  }
-                                : null,
+                            onTap360View: () {
+                              if (product.video.isNotNullNorEmpty) {
+                                Utils.launchUrlFromString(product.video!);
+                              } else {
+                                Utils.showMessage(APPStrings.no3DViewAvailable.tr);
+                              }
+                            },
+                            onTapDNA: () {
+                              if (product.openDnaUrl != null) {
+                                Utils.launchUrlFromString(product.openDnaUrl!);
+                              } else {
+                                Utils.showMessage(APPStrings.noDnaAvailable.tr);
+                              }
+                            },
+                            onTapCertificate: () {
+                              if (product.certificateFile != null) {
+                                Utils.launchUrlFromString(product.certificateFile!);
+                              } else {
+                                Utils.showMessage(APPStrings.noCertificateAvailable.tr);
+                              }
+                            },
+                            onTapImageViewer: () {
+                              if (product.shapeImage != null) {
+                                Utils.launchUrlFromString(product.shapeImage!);
+                              } else {
+                                Utils.showMessage(APPStrings.noImageAvailable.tr);
+                              }
+                            },
                             onTapUSA: () => printWrapped("onTapUSA"),
                             onTapMenuButton: product.isForAuction
                                 ? null

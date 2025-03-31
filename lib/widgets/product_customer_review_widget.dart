@@ -62,37 +62,10 @@ class ProductCustomerReviewWidget extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (context) {
-                      return Material(
-                        color: Colors.transparent,
-                        clipBehavior: Clip.antiAlias,
-                        type: MaterialType.card,
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.all(20.w),
-                            child: Stack(
-                              children: [
-                                SmartImage(
-                                  path: reviewDataModel.images![index],
-                                ),
-                                PositionedDirectional(
-                                  top: 24.h,
-                                  end: 24.w,
-                                  child: Container(
-                                    color: AppTheme.of(context).colors.white,
-                                    child: SmartImage(
-                                      path: AppImages.icCross,
-                                      width: 24.w,
-                                      height: 24.w,
-                                      color: AppTheme.of(context).colors.black,
-                                      onTap: () => context.pop(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    builder: (BuildContext context) {
+                      return Dialog.fullscreen(
+                        backgroundColor: Colors.transparent,
+                        child: ProductPhotoViewGallery(imageUrls: reviewDataModel.images ?? [], initialIndex: index),
                       );
                     },
                   );

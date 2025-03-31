@@ -30,7 +30,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
 
-      emailController.text = "customer48008@kgkmail.com";
+      // emailController.text = "customer48008@kgkmail.com";
       //  emailController.text = "kachinbali@yopmail.com";
 
       // emailController.text = "mohammadhusain@yopmail.com";
