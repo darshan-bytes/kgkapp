@@ -243,16 +243,16 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     _emitLoadedStateIfAvailable(event, emit);
     await _getDiamondAuctionDetails(event.context, emit);
     getTimerText(state);
-    await getDiamondYouMayLike(event.context, productId);
     await getDiamondsRecentlyViewed(event.context, productId);
+    await getDiamondYouMayLike(event.context, productId);
   }
 
   Future<void> _handleGemstoneProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     await StorageManager().setRecentlyViewedGemstones(productId);
     await getGemstoneDetails(event.context, productId);
     _emitLoadedStateIfAvailable(event, emit);
-    await getGemstoneYouMayLike(event.context, productId);
     await getGemstoneRecentlyViewed(event.context, productId);
+    await getGemstoneYouMayLike(event.context, productId);
   }
 
   Future<void> _handleRingProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
@@ -261,8 +261,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     await getProductDetails(event.context, productId);
     _emitLoadedStateIfAvailable(event, emit);
     await productReviewsFilter(event.context, productId, emit);
-    await getProductYouMayLike(event.context, productId);
     await getProductRecentlyViewed(event.context, productId);
+    await getProductYouMayLike(event.context, productId);
   }
 
   Future<void> _handleDesignLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
@@ -867,17 +867,23 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       if (productDetails == null) return;
       if (event.context != null) {
         if (!isCompare) {
-          BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductAddProductEvent(
-            context: event.context!,
-            product: productDetails!,
-          ));
+          isCompare = true;
+          BlocProvider.of<CompareProductBloc>(event.context!).add(
+            CompareProductAddProductEvent(
+              context: event.context!,
+              product: productDetails!,
+            ),
+          );
         } else {
-          isCompare = !isCompare;
-          BlocProvider.of<CompareProductBloc>(event.context!).add(CompareProductRemoveProductEvent(
-            context: event.context!,
-            productId: productDetails?.suid ?? '',
-          ));
+          isCompare = false;
+          BlocProvider.of<CompareProductBloc>(event.context!).add(
+            CompareProductRemoveProductEvent(
+              context: event.context!,
+              productId: productDetails?.suid ?? '',
+            ),
+          );
         }
+        emit(ProductCompareToggleState(isCompare));
       } else if (event.isCompare != null) {
         isCompare = event.isCompare!;
         emit(ProductCompareToggleState(isCompare));

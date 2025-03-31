@@ -1167,6 +1167,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // submitMakeInquiry
+  Future<Either<ErrorResponse, CommonResponse>?> submitMakeInquiry({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await postMethod<Map<String, dynamic>>(ApiClient.submitMakeInquiry, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderDetailsApiCall({required String id}) async {
     var response = await getMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), withCurrencyHeader: true, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));

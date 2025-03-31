@@ -39,3 +39,23 @@ class ContactUsSubmitEvent extends ContactUsEvent {
   @override
   List<Object> get props => [context];
 }
+
+final class ContactUsChangeCountryCodeEvent extends ContactUsEvent {
+  final Country country;
+
+  const ContactUsChangeCountryCodeEvent({
+    required this.country,
+  });
+
+  @override
+  List<Object> get props => [country];
+}
+
+final class ContactUsRemoveContactEvent extends ContactUsEvent {
+  final int index;
+
+  const ContactUsRemoveContactEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}

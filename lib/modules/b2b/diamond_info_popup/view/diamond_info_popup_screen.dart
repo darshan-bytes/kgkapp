@@ -82,7 +82,7 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                   // SizedBox(height: 16.h),
                   const Divider(),
                   SizedBox(height: 24.h),
-                  _buildInquirySection(context),
+                  _buildInquirySection(context, bloc),
                   //Below code is commented as discussed with JD and changed the navigation flow of diamond info popup and diamond details page
                   // SizedBox(height: 24.h),
                   // InkWell(
@@ -259,23 +259,32 @@ class DiamondInfoPopupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInquirySection(BuildContext context) {
+  Widget _buildInquirySection(BuildContext context, DiamondInfoPopupBloc bloc) {
     final MyBagScreenStyle myBagScreenStyle = AppTheme.of(context).myBagScreenStyle;
     return Column(
       children: [
-        Row(
-          children: [
-            SmartImage(
-              path: AppImages.icCertificate,
-              height: 24.w,
-              width: 24.w,
-            ),
-            SizedBox(width: 16.w),
-            SmartText(
-              APPStrings.certificate.tr,
-              style: myBagScreenStyle.diamondPurityStyle,
-            )
-          ],
+        GestureDetector(
+          onTap: () {
+            if ((bloc.diamondDatum?.certificateFile).isNotNullNorEmpty) {
+              Utils.launchUrlFromString(bloc.diamondDatum?.certificateFile ?? "");
+            } else {
+              Utils.showMessage(APPStrings.noCertificateAvailable.tr);
+            }
+          },
+          child: Row(
+            children: [
+              SmartImage(
+                path: AppImages.icCertificate,
+                height: 24.w,
+                width: 24.w,
+              ),
+              SizedBox(width: 16.w),
+              SmartText(
+                APPStrings.certificate.tr,
+                style: myBagScreenStyle.diamondPurityStyle,
+              )
+            ],
+          ),
         ),
         SizedBox(height: 16.h),
         Row(
@@ -330,23 +339,23 @@ class DiamondInfoPopupScreen extends StatelessWidget {
                 },
               ),
             ),
-            /*SizedBox(width: 8.w),
-            SelectionButton(
-              height: 42.w,
-              width: 42.w,
-              padding: EdgeInsetsDirectional.all(6.w),
-              isSelected: bloc.productDetailsModel.isFavourite,
-              onTap: () {
-                // Add/Remove from wishlist
-                if (!bloc.productDetailsModel.isFavourite) {
-                  BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(bloc.productDetailsModel, context));
-                  bloc.productDetailsModel.isFavourite = true;
-                } else {
-                  BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(bloc.productDetailsModel, context));
-                }
-              },
-              image: AppImages.icHeart,
-            ),*/
+            // SizedBox(width: 8.w),
+            // SelectionButton(
+            //   height: 42.w,
+            //   width: 42.w,
+            //   padding: EdgeInsetsDirectional.all(6.w),
+            //   isSelected: bloc.productDetailsModel.isFavourite,
+            //   onTap: () {
+            //     // Add/Remove from wishlist
+            //     if (!bloc.productDetailsModel.isFavourite) {
+            //       BlocProvider.of<AppBloc>(context).add(ProductAddToFavoriteEvent(bloc.productDetailsModel, context));
+            //       bloc.productDetailsModel.isFavourite = true;
+            //     } else {
+            //       BlocProvider.of<AppBloc>(context).add(ProductRemoveFromFavoriteEvent(bloc.productDetailsModel, context));
+            //     }
+            //   },
+            //   image: AppImages.icHeart,
+            // ),
           ],
         ),
       ),

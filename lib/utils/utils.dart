@@ -574,4 +574,70 @@ class Utils {
 
   /// Make getter for is rtl
   static bool get isRtl => StorageManager.instance.getLocale()?.mobileSymbol == 'ar';
+
+  /// This is used to get category display name in category tabs
+  static String getCategoryDisplayName(String? categoryName) {
+    switch (categoryName) {
+      case 'Natural \nDiamonds':
+        return APPStrings.naturalDiamond.tr;
+      case 'Lab-grown \nDiamonds':
+        return APPStrings.labCreatedDiamonds.tr;
+      case 'Gemstone':
+        return APPStrings.gemstone.tr;
+      case 'Jewellery':
+        return APPStrings.jewellery.tr;
+      case 'Do It \nYourself':
+        return APPStrings.doItYourself.tr;
+      case 'About Us':
+        return APPStrings.aboutUs.tr;
+      case 'Education':
+        return APPStrings.education.tr;
+      case 'Orion':
+        return APPStrings.orion.tr;
+      case 'PDD':
+        return APPStrings.pdd.tr;
+      case 'Diamond':
+        return APPStrings.diamond.tr;
+      case 'Libraries':
+        return APPStrings.libraries.tr;
+      case 'Digital \nCatalogue':
+        return APPStrings.digitalCatalogue.tr;
+      case 'Exhibition':
+        return APPStrings.exhibition.tr;
+      case 'Diamonds':
+        return APPStrings.diamonds.tr;
+      case 'Lab created diamonds':
+        return APPStrings.labCreatedDiamonds.tr;
+      case 'Metals':
+        return APPStrings.metals.tr;
+      case 'Ring sizer':
+        return APPStrings.ringSizer.tr;
+      case 'Monitoring':
+        return APPStrings.monitoring.tr;
+      case 'Styles Listing':
+        return APPStrings.styleLibrary.tr;
+      case 'Design Listing':
+        return APPStrings.designLibrary.tr;
+      case 'Project Listing':
+        return APPStrings.projectListing.tr;
+      case 'Presentation Listing':
+        return APPStrings.presentationListing.tr;
+      case 'Concept Listing':
+        return APPStrings.conceptListing.tr;
+      case 'Collection':
+        return APPStrings.collection.tr;
+      case 'Landing':
+        return APPStrings.landingListing.tr;
+      case 'CAD Library':
+        return APPStrings.cadLibrary.tr;
+      case 'Style Library':
+        return APPStrings.styleLibrary.tr;
+      case 'Design Library':
+        return APPStrings.designLibrary.tr;
+      case 'SKU Library':
+        return APPStrings.skuLibrary.tr;
+      default:
+        return categoryName ?? "Unknown";
+    }
+  }
 }

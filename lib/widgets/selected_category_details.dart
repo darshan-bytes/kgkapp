@@ -74,7 +74,7 @@ class SelectedCategoryDetails extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsetsDirectional.only(top: 18.h, bottom: 18.h, start: 10.w),
                                 child: SmartText(
-                                  productsDetailsList[index].name,
+                                  Utils.getCategoryDisplayName(productsDetailsList[index].name ?? ''),
                                   style: categoryTileStyle.detailStyle,
                                 ),
                               ),
