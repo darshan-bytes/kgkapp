@@ -449,7 +449,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (data) {
         recentlyViewedJewelleryList = data.data.map((e) {
           return ProductDetailsModel(
-              productId: e.id,
+              productId: e.suid,
               name: e.productDescription ?? '',
               imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
               originalPrice: e.finalPrice?.toString().setCurrency,
@@ -505,7 +505,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ProductDetailsModel _convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
     return ProductDetailsModel(
       suid: diamond.suid,
-      productId: diamond.id,
+      productId: diamond.suid,
       imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
       name: diamond.rmDescription ?? "",
       ctsOrGms: diamond.ctsOrGms,
@@ -554,7 +554,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewGemstoneList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage! > 0;
+          bool isDiscounted = e.discountPercentage != null && e.discountPercentage! > 0;
           return ProductDetailsModel(
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
@@ -1014,16 +1014,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           RoutesData.filterData: redirectionData,
         };
         break;
-
       case RedirectionTo.collection:
-        if (redirectionData == null || redirectionData.isEmpty || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
-        routeName = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
-            ? AppRoutes.productListGridPage
-            : AppRoutes.collectionPage;
+        if (redirectionData == null || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
+        routeName =
+            (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection) && redirectionData.isNotEmpty
+                ? AppRoutes.productListGridPage
+                : AppRoutes.collectionPage;
         arguments = (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection)
             ? {
                 RoutesData.isPageFor: ScreenIdentifier.productForRing,
                 RoutesData.filterData: redirectionData,
+                RoutesData.appBarTitle: APPStrings.collection.tr,
               }
             : {};
         break;

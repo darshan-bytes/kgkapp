@@ -82,8 +82,9 @@ class CompareProductScreen extends StatelessWidget {
                                                 onTap: () {
                                                   bloc.handleBagButtonClick(context, index);
                                                 },
-                                                title:
-                                                    bloc.productList[index].isAddedToCart ? APPStrings.goToBag.tr : APPStrings.addToBag.tr,
+                                                title: (bloc.compareResult[index]['isAddedToCart'] ?? false)
+                                                    ? APPStrings.goToBag.tr
+                                                    : APPStrings.addToBag.tr,
                                                 width: 114.w,
                                                 height: 48.w,
                                               ),
@@ -138,11 +139,10 @@ class CompareProductScreen extends StatelessWidget {
         children: [
           SmartImage(
             path: bloc.commodity == Commodity.jewellery
-                ? (bloc.compareResult[index]['multiple_finished_view_image'] as List?)?.firstOrNull['IMAGE_URL'] ?? ''
+                ? (((bloc.compareResult[index]['multiple_finished_view_image'] as List?)?.firstOrNull)?['IMAGE_URL'] ?? '')
                 : (bloc.compareResult[index]['image'] as List?)?.firstOrNull['URL'] ?? '',
             width: 114.w,
             height: 114.w,
-            color: style.blackColor,
             onTap: () {
               if (bloc.commodity != null) {
                 context.pushNamed(
@@ -209,7 +209,7 @@ class CompareProductScreen extends StatelessWidget {
               ),
               SizedBox(height: 6.h),
               SmartText(
-                APPStrings.reviewsX.tr.interpolate([productDetail.reviewCount?.toString()]),
+                APPStrings.reviewsX.tr.interpolate([productDetail.reviewCount?.toString() ?? '0']),
                 style: style.productReviewStyle,
               ),
               SizedBox(height: 14.h),

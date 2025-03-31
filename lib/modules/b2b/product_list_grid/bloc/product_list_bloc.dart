@@ -166,6 +166,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         filterDataMap ??= {};
         filterDataMap?[ApiKey.kgkCollection] = collectionName;
       }
+
+      String? title = data[RoutesData.appBarTitle];
+      if (title != null) {
+        appbarTitle = title;
+      }
     }
 
     /// Here we set the appbar title
@@ -612,7 +617,9 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   void _getProductListName() {
     /// Determine the scenario for fetching data
     FetchScenario scenario = determineFetchScenario();
-    appbarTitle = APPStrings.jewellery.tr;
+    if (appbarTitle != APPStrings.jewellery.tr) {
+      return;
+    }
     switch (scenario) {
       case FetchScenario.productId:
         appbarTitle = APPStrings.youMayAlsoLike.tr;
@@ -628,7 +635,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
         appbarTitle = APPStrings.recentlyViewed.tr;
         break;
       case FetchScenario.coutureCollection:
-        appbarTitle = APPStrings.jewellery.tr;
+        appbarTitle = APPStrings.collection.tr;
         break;
     }
   }

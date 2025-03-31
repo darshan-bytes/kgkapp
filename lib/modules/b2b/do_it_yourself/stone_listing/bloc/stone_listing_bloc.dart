@@ -420,6 +420,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       subTitle: diamond.rmDescription ?? "",
       isForAuction: diamond.isAuction,
       isAddedToCart: diamond.isAddedToCart,
+      discountPercentageString: "${diamond.discountPercentage ?? 0} %",
     );
   }
 
@@ -542,7 +543,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     if (filterKey.isEmpty) {
       return;
     }
-    final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(context, filterKey, type: type);
+    final tempFilterData = await BlocProvider.of<AppBloc>(context).getFilterOptionList(
+      context,
+      filterKey,
+      type: screenIdentifier != ScreenIdentifier.productForGemstones ? type : null,
+      subTypeCode: screenIdentifier == ScreenIdentifier.productForGemstones ? type : null,
+    );
+
     filterData.clear();
     for (FilterOptionModel filterOption in tempFilterData) {
       if (filterDataMap?.containsKey(filterOption.slug) == true) {
