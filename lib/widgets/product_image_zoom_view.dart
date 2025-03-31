@@ -32,11 +32,17 @@ class ProductPhotoViewGallery extends StatelessWidget {
     return PositionedDirectional(
       top: 10.w,
       start: 10.w,
-      child: IconButton(
-        onPressed: () {
-          context.pop();
-        },
-        icon: Icon(Icons.arrow_back, color: style.whiteColor),
+      child: Container(
+        decoration: BoxDecoration(
+          color: style.blackColor.withValues(alpha: 0.5),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: Icon(Icons.arrow_back, color: style.whiteColor),
+        ),
       ),
     );
   }
