@@ -831,5 +831,9 @@
   "mob_open": "खुला",
   "mob_progress": "प्रगति",
   "mob_error_select_status": "कृपया स्थिति चुनें",
-  "mob_error_enter_comment": "कृपया टिप्पण दर्ज करें"
+  "mob_error_enter_comment": "कृपया टिप्पण दर्ज करें",
+  "mob_inquiry_id": "अनुरोध ID",
+  "mob_product": "उत्पाद",
+  "mob_edit_inquiry": "अनुरोध संपादित करें",
+  "mob_remove_inquiry": "अनुरोध हटाएं"
 }

@@ -96,7 +96,7 @@ class B2BListingItem extends StatelessWidget {
               columns: columns,
               spacing: 0.0.w,
               runSpacing: gridRunSpacing ?? 16.0.h,
-              isLastFullWidthRequired: type == B2BListingType.conceptListingType,
+              isLastFullWidthRequired: type == B2BListingType.conceptListingType || type == B2BListingType.myInquiryType,
             ),
           ),
           if (onTapMenuButton != null)

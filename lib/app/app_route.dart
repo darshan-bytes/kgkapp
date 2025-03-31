@@ -323,8 +323,10 @@ class AppRoutes {
 
       case myInquiryScreen:
         builder = (context) {
-          BlocProvider.of<MyInquiryBloc>(context).add(MyInquiryInitialEvent(context: context));
-          return const MyInquiryScreen();
+          return BlocProvider<MyInquiryBloc>(
+            create: (context) => MyInquiryBloc()..add(MyInquiryInitialEvent(context: context)),
+            child: const MyInquiryScreen(),
+          );
         };
         break;
 

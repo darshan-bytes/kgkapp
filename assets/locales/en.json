@@ -831,5 +831,9 @@
   "mob_open": "Open",
   "mob_progress": "Progress",
   "mob_error_select_status": "Please select an inquiry type",
-  "mob_error_enter_comment": "Please enter your comment"
+  "mob_error_enter_comment": "Please enter your comment",
+  "mob_inquiry_id": "Inquiry ID",
+  "mob_product": "Product",
+  "mob_edit_inquiry": "Edit Inquiry",
+  "mob_remove_inquiry": "Remove Inquiry"
 }

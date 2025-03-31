@@ -22,6 +22,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     on<MyInquiryInitialEvent>(_onMyInquiryInitialEvent);
   }
 
+  /// This function is used to handle the initial event of the bloc
   Future<void> _onMyInquiryInitialEvent(MyInquiryInitialEvent event, Emitter<MyInquiryState> emit) async {
     if (isInitialized) return;
     emit(MyInquiryReloadState());
@@ -43,6 +44,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     );
   }
 
+  /// Fetch filter data
   void _fetchFilterData(BuildContext context, Emitter<MyInquiryState> emit) async {
     if (filterData.isEmpty) {
       await _setupFilters(context);
@@ -52,6 +54,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     }
   }
 
+  /// Setup filters
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
     // ToDo : Get My Inquiery Filter Api Call
@@ -87,6 +90,9 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     return tempSecondaryData;
   }
 
+  /// Fetch my inquiries from server and populate the list
+  /// [isLoadMore] is used to check if the list is to be loaded more or not
+  /// [query] is used to pass the query parameters to the server
   Future<void> fetchMyInquiries(BuildContext context, Emitter<MyInquiryState> emit,
       {bool isLoadMore = false, Map<String, dynamic>? query, String searchString = ''}) async {
     /// Build the query dynamically
@@ -124,6 +130,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     }).toList();
   }
 
+  /// Get order status
   ProjectStatus getOrderStatus({required String orderStatus}) {
     switch (orderStatus) {
       case "approved":
@@ -141,6 +148,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     }
   }
 
+  /// Generate B2B item fields
   List<B2BItemField> generateB2BItemFields(List<UserIdDetails>? assignedToDetails) {
     if (assignedToDetails == null || assignedToDetails.isEmpty) {
       return [];

@@ -234,12 +234,12 @@ class B2BListingFieldFactory {
         ];
       case B2BListingType.myInquiryType:
         return [
-          B2BItemField(label: 'Inquiry ID', value: model.strInquiryId),
-          B2BItemField(label: 'Type', value: model.strType),
-          B2BItemField(label: 'Product', value: model.strProduct),
+          B2BItemField(label: APPStrings.inquiryId.tr, value: model.strInquiryId),
+          B2BItemField(label: APPStrings.type.tr, value: model.strType),
+          B2BItemField(label: APPStrings.product.tr, value: model.strProduct),
           B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
-          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
           B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
         ];
     }
   }
