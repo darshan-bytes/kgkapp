@@ -841,5 +841,11 @@
   "mob_project_listing": "รายชื่อโครงการ",
   "mob_presentation_listing": "รายชื่อการประชุม",
   "mob_concept_listing": "รายชื่อแนวคิด",
-  "mob_landing_listing": "รายชื่อเริ่มต้น"
+  "mob_landing_listing": "รายชื่อเริ่มต้น",
+  "mob_select_status": "เลือกสถานะ",
+  "mob_new": "ใหม่",
+  "mob_open": "เปิด",
+  "mob_progress": "ความคืบหน้า",
+  "mob_error_select_status": "กรุณาเลือกสถานะ",
+  "mob_error_enter_comment": "กรุณากรอกรายละเอียด"
 }

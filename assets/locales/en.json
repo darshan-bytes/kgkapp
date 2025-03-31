@@ -841,5 +841,11 @@
   "mob_project_listing":"Project Listing",
   "mob_presentation_listing":"Presentation Listing",
   "mob_concept_listing":"Concept Listing",
-  "mob_landing_listing":"Landing"
+  "mob_landing_listing":"Landing",
+  "mob_select_status": "Select Status",
+  "mob_new": "New",
+  "mob_open": "Open",
+  "mob_progress": "Progress",
+  "mob_error_select_status": "Please select an inquiry type",
+  "mob_error_enter_comment": "Please enter your comment"
 }
