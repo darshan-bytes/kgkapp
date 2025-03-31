@@ -336,21 +336,19 @@ class AddAddressScreen extends StatelessWidget {
           keyboardType: TextInputType.phone,
           textInputAction: TextInputAction.done,
           prefixIcon: InkWell(
-            onTap: bloc.isEditAddress
-                ? null
-                : () {
-                    Utils.showCountryPickerModel(
-                      context: context,
-                      countryPickerStyle: countryPickerStyle,
-                      showPhoneCode: true,
-                      onSelect: (Country country) {
-                        bloc.add(AddAddressChangeCountryCodeEvent(country));
-                        if (bloc.phoneError.isNotNullNorEmpty) {
-                          bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.contactNumber));
-                        }
-                      },
-                    );
-                  },
+            onTap: () {
+              Utils.showCountryPickerModel(
+                context: context,
+                countryPickerStyle: countryPickerStyle,
+                showPhoneCode: true,
+                onSelect: (Country country) {
+                  bloc.add(AddAddressChangeCountryCodeEvent(country));
+                  if (bloc.phoneError.isNotNullNorEmpty) {
+                    bloc.add(AddAddressFieldChangeEvent(FieldTypeValidationEnum.contactNumber));
+                  }
+                },
+              );
+            },
             child: SizedBox(
               width: 95.w,
               child: Container(

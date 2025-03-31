@@ -1319,12 +1319,12 @@ class LightModeTheme extends AppTheme {
   @override
   ApplyPromoCodeStyle get applyPromoCodeStyle => ApplyPromoCodeStyle(
         backgroundColor: colors.colorF7F9FA,
-        titleStyle: eBGaramondBoldTextStyle.copyWith(fontSize: 18.sp, fontWeight: FontWeight.bold, color: Colors.black87),
-        codeStyle: eBGaramondRegularTextStyle.copyWith(fontWeight: FontWeight.w600, fontSize: 14.sp, color: colors.color8C8C8C),
+        titleStyle: interBoldTextStyle.copyWith(fontSize: 16.sp, color: Colors.black87),
+        codeStyle: interMediumBoldTextStyle.copyWith(fontWeight: FontWeight.w600, fontSize: 14.sp, color: colors.color8C8C8C),
         activeApplyTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, fontWeight: FontWeight.bold, color: Colors.white),
         inActiveApplyTextStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp, color: colors.color8C8C8C, fontWeight: FontWeight.bold),
         whiteColor: colors.white,
-        descriptionStyle: eBGaramondRegularTextStyle.copyWith(fontWeight: FontWeight.w600, fontSize: 16.sp),
+        descriptionStyle: interMediumBoldTextStyle.copyWith(fontSize: 12.sp),
         orangeColor: colors.primary,
       );
 

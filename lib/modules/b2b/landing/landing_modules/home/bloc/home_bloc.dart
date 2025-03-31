@@ -983,6 +983,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required RedirectionTo redirectTo,
     required RedirectionType redirectionType,
     Map<dynamic, dynamic>? redirectionData,
+    String? redirectionTitle,
   }) {
     Map<RoutesData, dynamic>? arguments;
     String routeName;
@@ -1036,6 +1037,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     if (redirectionType == RedirectionType.details) {
       arguments[RoutesData.productId] = redirectionData[RoutesData.productId];
+    }
+
+    if (redirectionTitle.isNotNullNorEmpty) {
+      arguments[RoutesData.appBarTitle] = redirectionTitle;
     }
 
     context.pushNamed(routeName, arguments: arguments);
