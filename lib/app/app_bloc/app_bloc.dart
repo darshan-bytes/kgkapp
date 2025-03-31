@@ -194,10 +194,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
     }
     emit(AppReloadState());
-    Map<String, dynamic> body = {
-      ApiKey.productId_: event.productDetails.productId,
-      ApiKey.commodity: event.productDetails.commodity?.value
-    };
+    Map<String, dynamic> body = {ApiKey.productId_: event.productDetails.suid, ApiKey.commodity: event.productDetails.commodity?.value};
     await AppRepository(event.context).createWishList(body: body).then(
       (response) {
         response?.fold(
@@ -208,9 +205,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             event.productDetails.wishlistId = model.id;
             event.productDetails.isFavourite = true;
             BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: model.id ?? ''));
-            // if (event.context.mounted) {
-            // }
+                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: model.id ?? ''));
+
             event.onFavTap?.call();
             emit(const ProductAddToFavoriteState());
           },
@@ -233,8 +229,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             event.productDetails.isFavourite = false;
             event.productDetails.wishlistId = "";
             BlocProvider.of<WishlistUpdaterServiceBloc>(event.context.mounted ? event.context : getNavigatorKeyContext)
-                .add(WishListUpdateProductEvent(event.productDetails.productId ?? '', wishlistId: ''));
-            // if (event.context.mounted) {}
+                .add(WishListUpdateProductEvent(event.productDetails.suid ?? '', wishlistId: ''));
             event.onFavTap?.call();
             emit(const ProductRemoveFromFavoriteState());
           },
@@ -359,10 +354,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   // Get gemstone filter option list
-  Future<List<FilterOptionModel>> getFilterOptionList(BuildContext context, String listType, {String? type}) async {
+  Future<List<FilterOptionModel>> getFilterOptionList(BuildContext context, String listType, {String? type, String? subTypeCode}) async {
     List<FilterOptionModel> filterList = [];
     Either<ErrorResponse, List<FilterOptionModel>>? response;
-    response = await AppRepository(context).fetchFilterOptionList(listType: listType, type: type);
+    response = await AppRepository(context).fetchFilterOptionList(listType: listType, type: type, subTypeCode: subTypeCode);
     response?.fold((l) {
       Utils.showMessage(l.message);
     }, (r) {

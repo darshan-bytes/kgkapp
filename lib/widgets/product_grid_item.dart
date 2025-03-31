@@ -67,6 +67,9 @@ class ProductGridItem extends StatelessWidget {
   });
 
   @override
+  Key get key => ValueKey(productDetails.suid ?? productDetails.productId);
+
+  @override
   Widget build(BuildContext context) {
     final ProductItemStyle style = AppTheme.of(context).productItemStyle;
     final double productItemWidth = (context.width - 46.w) / 2;

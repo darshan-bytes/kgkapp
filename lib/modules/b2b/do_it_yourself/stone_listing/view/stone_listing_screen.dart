@@ -316,8 +316,16 @@ class StoneListingScreen extends StatelessWidget {
                               }
                             },
                             onTapImageViewer: () {
-                              if (product.shapeImage != null) {
-                                Utils.launchUrlFromString(product.shapeImage!);
+                              if (product.imageUrl != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog.fullscreen(
+                                      backgroundColor: Colors.transparent,
+                                      child: ProductPhotoViewGallery(imageUrls: [product.imageUrl ?? '']),
+                                    );
+                                  },
+                                );
                               } else {
                                 Utils.showMessage(APPStrings.noImageAvailable.tr);
                               }
@@ -325,10 +333,11 @@ class StoneListingScreen extends StatelessWidget {
                             onTapUSA: () => printWrapped("onTapUSA"),
                             onTapMenuButton: product.isForAuction
                                 ? null
-                                : () {
-                                    Utils.showSmartModalBottomSheet(
+                                : () async {
+                                    final value = await Utils.showSmartModalBottomSheet(
                                       context: context,
                                       builder: (_) => ProductMenuBottomSheet(
+                                        mainContext: context,
                                         productDetails: product,
                                         onAddToBag: () {
                                           BlocProvider.of<AppBloc>(context).add(ProductAddToBagEvent(product, context));
@@ -338,6 +347,13 @@ class StoneListingScreen extends StatelessWidget {
                                         },
                                       ),
                                     );
+                                    if (value != null && value is Map<RoutesData, dynamic> && value[RoutesData.isGoToBag] == true) {
+                                      if (context.mounted) {
+                                        BlocProvider.of<LandingBloc>(context)
+                                            .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: context));
+                                        context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+                                      }
+                                    }
                                   },
                             isSelectedBackground: (index % 2 != 0),
                             onTap: () {
@@ -364,6 +380,7 @@ class StoneListingScreen extends StatelessWidget {
                             productDetails: ProductDetailsModel(
                               suid: product.suid,
                               productInfoClarityChat: ProductInfoClarityChat(
+                                perCts: product.offerPrice?.setCurrency,
                                 carat: "36.09",
                                 commodity: "Sapphire",
                                 origin: "Sri Lanka",

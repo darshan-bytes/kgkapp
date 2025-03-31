@@ -518,7 +518,6 @@ class ProductDetailsScreen extends StatelessWidget {
                 context.pushNamed(AppRoutes.allReviewPage, arguments: {RoutesData.productId: bloc.productDetails?.productId});
               }),
             ],
-            if (bloc.suggestedProductList.isNotNullNorEmpty) SizedBox(height: 32.h),
           ],
           _buildSuggestedProductList(bloc, style, context),
           _buildRecentlyViewedProductList(bloc, style, context),
@@ -646,26 +645,32 @@ class ProductDetailsScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is ProductDetailsSuggestedLoadedState,
       builder: (context, state) {
         if (bloc.suggestedProductList.isEmpty) return const SizedBox.shrink();
-        return SmartSuggestionProductList(
-          onAddToBagTap: () {},
-          title: APPStrings.youMayAlsoLike.tr,
-          onViewAllTap: bloc.suggestedProductList.length > 5
-              ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
-                  productNavigation: AppConst.youMayLike, productId: bloc.productId)
-              : null,
-          suggestedProductList: bloc.suggestedProductList,
-          onProductTap: (product) {
-            context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-              RoutesData.productId: product.suid,
-              RoutesData.isPageFor: bloc.screenIdentifier,
-            });
-          },
-          onEyeTap: () {},
-          onFavTap: () {},
-          isPaddingNeeded: false,
-          scrollController: bloc.youMayLikeScrollController,
-          isCrtAndGramVisible: false,
-          margin: EdgeInsetsDirectional.zero,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 32.h),
+            SmartSuggestionProductList(
+              onAddToBagTap: () {},
+              title: APPStrings.youMayAlsoLike.tr,
+              onViewAllTap: bloc.suggestedProductList.length > 5
+                  ? () => bloc.navigateBasedOnScreenIdentifierForViewAllSuggestedProducts(context,
+                      productNavigation: AppConst.youMayLike, productId: bloc.productId)
+                  : null,
+              suggestedProductList: bloc.suggestedProductList,
+              onProductTap: (product) {
+                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                  RoutesData.productId: product.suid,
+                  RoutesData.isPageFor: bloc.screenIdentifier,
+                });
+              },
+              onEyeTap: () {},
+              onFavTap: () {},
+              isPaddingNeeded: false,
+              scrollController: bloc.youMayLikeScrollController,
+              isCrtAndGramVisible: false,
+              margin: EdgeInsetsDirectional.zero,
+            ),
+          ],
         );
       },
     );

@@ -151,6 +151,6 @@ class LanguageDatum {
       name.hashCode ^ slug.hashCode ^ code.hashCode ^ textDirection.hashCode ^ dateFormat.hashCode ^ status.hashCode ^ id.hashCode;
 
   String get mobileSymbol {
-    return code.isNotNullNorEmpty ? (code!.toLowerCase().contains('zh') ? code! : code!.split('-').firstOrNull ?? 'en') : 'en';
+    return code.isNotNullNorEmpty ? (/*code!.toLowerCase().contains('zh') ? code! :*/ code!.split('-').firstOrNull ?? 'en') : 'en';
   }
 }
