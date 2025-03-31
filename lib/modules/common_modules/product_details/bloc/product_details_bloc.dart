@@ -326,8 +326,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           /// Below line is commented because the3DFile is not available in the response.
           // the3DFile = diamondData?.image.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
           videoUrl = diamondData?.video;
-          bool isDiscounted =
-              diamondData!.discountPercentage != null && (diamondData!.discountPercentage is num) && diamondData!.discountPercentage! > 0;
+          bool isDiscounted = diamondData!.discountPercentage != null && diamondData!.discountPercentage! > 0;
           isAddedToCart = diamondData!.isAddedToCart;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
@@ -370,9 +369,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
-          bool isDiscounted = gemstoneData!.discountPercentage != null &&
-              (gemstoneData?.discountPercentage is num) &&
-              (gemstoneData?.discountPercentage ?? 0) > 0;
+          bool isDiscounted = gemstoneData!.discountPercentage != null && (gemstoneData?.discountPercentage ?? 0) > 0;
           isAddedToCart = gemstoneData!.isAddedToCart;
           productName = gemstoneData?.rmDescription ?? '';
           if (gemstoneData?.image.isNotEmpty ?? false) {
@@ -474,7 +471,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         if (data.data.isEmpty) return;
         gemstoneDatumListAPI = data.data;
         suggestedProductList = data.data.map((e) {
-          final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && (e.discountPercentage ?? 0) > 0;
+          final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage ?? 0) > 0;
 
           return ProductDetailsModel(
             suid: e.suid ?? '',

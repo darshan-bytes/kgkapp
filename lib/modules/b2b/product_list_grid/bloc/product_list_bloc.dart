@@ -170,7 +170,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       String? title = data[RoutesData.appBarTitle];
       if (title != null) {
         appbarTitle = title;
-        print("appbarTitle:  $appbarTitle");
       }
     }
 
@@ -618,7 +617,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   void _getProductListName() {
     /// Determine the scenario for fetching data
     FetchScenario scenario = determineFetchScenario();
-    // appbarTitle = APPStrings.jewellery.tr;
     if (appbarTitle != APPStrings.jewellery.tr) {
       return;
     }

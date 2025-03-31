@@ -171,8 +171,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       );
     } else if (commodity == Commodity.diamond) {
       DiamondDataModel diamondData = DiamondDataModel.fromJson(sourceModel);
-      bool isDiscounted =
-          diamondData.discountPercentage != null && (diamondData.discountPercentage is num) && diamondData.discountPercentage! > 0;
+      bool isDiscounted = diamondData.discountPercentage != null && diamondData.discountPercentage! > 0;
       productDetails = ProductDetailsModel(
         productId: diamondData.suid,
         suid: diamondData.suid,
@@ -196,8 +195,7 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
       );
     } else if (commodity == Commodity.gemstone) {
       GemstoneDatum gemstoneData = GemstoneDatum.fromJson(sourceModel);
-      bool isDiscounted =
-          gemstoneData.discountPercentage != null && (gemstoneData.discountPercentage is num) && (gemstoneData.discountPercentage ?? 0) > 0;
+      bool isDiscounted = gemstoneData.discountPercentage != null && (gemstoneData.discountPercentage ?? 0) > 0;
 
       productDetails = ProductDetailsModel(
         productId: gemstoneData.suid,

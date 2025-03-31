@@ -554,7 +554,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewGemstoneList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && (e.discountPercentage is num) && e.discountPercentage! > 0;
+          bool isDiscounted = e.discountPercentage != null && e.discountPercentage! > 0;
           return ProductDetailsModel(
             productId: e.suid ?? '',
             name: e.rmDescription ?? '',
