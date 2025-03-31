@@ -640,4 +640,26 @@ class Utils {
         return categoryName ?? "Unknown";
     }
   }
+
+  /// Converts a country code to its corresponding emoji flag.
+  /// The country code should be a two-letter ISO 3166-1 alpha-2 code.
+  /// Each letter is converted to a regional indicator symbol.
+  /// Example:
+  /// ```dart
+  /// String emoji = countryCodeToEmoji("US"); // 🇺🇸
+  /// ```
+  static String countryCodeToEmoji(String countryCode) {
+    if (countryCode.length != 2) {
+      return countryCode;
+    }
+    // 0x41 is Letter A
+    // 0x1F1E6 is Regional Indicator Symbol Letter A
+    // Example :
+    // firstLetter U => 20 + 0x1F1E6
+    // secondLetter S => 18 + 0x1F1E6
+    // See: https://en.wikipedia.org/wiki/Regional_Indicator_Symbol
+    final int firstLetter = countryCode.codeUnitAt(0) - 0x41 + 0x1F1E6;
+    final int secondLetter = countryCode.codeUnitAt(1) - 0x41 + 0x1F1E6;
+    return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
+  }
 }
