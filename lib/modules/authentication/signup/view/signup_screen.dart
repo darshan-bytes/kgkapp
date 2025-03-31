@@ -377,6 +377,10 @@ class SignUpScreen extends StatelessWidget {
                           : signUpBloc.contactNumberFocusNodes[index + 1],
                       keyboardType: TextInputType.phone,
                       textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                      onValueChanges: (value) {
+                        signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
+                        signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.contactNumber, index: index));
+                      },
                       prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(
                         buildWhen: (previous, current) => current is SignUpChangeCountryCodeState,
                         builder: (context, state) {

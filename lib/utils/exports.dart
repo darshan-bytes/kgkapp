@@ -532,6 +532,7 @@ export 'package:google_places_flutter/model/prediction.dart';
 export 'package:kgk/modules/b2b/concept_list/model/concept_model.dart';
 export 'package:kgk/modules/b2b/user_master/model/user_master_model_class.dart';
 export 'package:kgk/model/status_model.dart';
+export 'package:kgk/model/status_model.dart';
 export 'package:kgk/modules/b2b/my_inquiry/bloc/my_inquiry_bloc.dart';
 export 'package:kgk/modules/b2b/my_inquiry/view/my_inquiry_screen.dart';
 export 'package:kgk/modules/b2b/my_inquiry/model/my_inquiries_model.dart';

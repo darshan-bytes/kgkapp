@@ -12,7 +12,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInInitial()) {
     if (kDebugMode) {
       //B2C
-     // emailController.text = "ankita7@yopmail.com";
+       emailController.text = "ankita7@yopmail.com";
       // emailController.text = "chudasama985@yopmail.com";
       // emailController.text = "user.email+16@yopmail.com";
 
@@ -30,7 +30,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
        emailController.text = "customer48008@kgkmail.com";
       // emailController.text = "kachinbali@yopmail.com";
 
-      //emailController.text = "customer48008@kgkmail.com";
+      // emailController.text = "customer48008@kgkmail.com";
       //  emailController.text = "kachinbali@yopmail.com";
       // emailController.text = "mohammadhusain@yopmail.com";
       // emailController.text = "jainamm.diamonds@yopmail.com"; //Diamond

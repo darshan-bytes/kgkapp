@@ -65,73 +65,62 @@ class ContactUsScreen extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              primary: false,
-              itemCount: 1,
-              itemBuilder: (_, index) {
-                return BlocBuilder<ContactUsBloc, ContactUsState>(
-                  buildWhen: (previous, current) =>
-                      current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
-                  builder: (context, state) {
-                    return SmartTextField(
-                      labelText: index == 0 ? APPStrings.contactNumber.tr : null,
-                      hintText: APPStrings.hintContactNumber.tr,
-                      controller: contactUsBloc.contactNumberController,
-                      focusNode: contactUsBloc.contactNumberFocusNode,
-                      keyboardType: TextInputType.phone,
-                      textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
-                      onValueChanges: (value) {},
-                      prefixIcon: BlocBuilder<ContactUsBloc, ContactUsState>(
-                        buildWhen: (previous, current) => current is ContactUsChangeCountryCodeState,
-                        builder: (context, state) {
-                          return InkWell(
-                            onTap: () {
-                              Utils.showCountryPickerModel(
-                                context: context,
-                                countryPickerStyle: countryPickerStyle,
-                                showPhoneCode: true,
-                                onSelect: (Country country) {
-                                  contactUsBloc.add(ContactUsChangeCountryCodeEvent(country: country, index: index));
-                                },
-                              );
+            BlocBuilder<ContactUsBloc, ContactUsState>(
+              buildWhen: (previous, current) =>
+              current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+              builder: (context, state) {
+                return SmartTextField(
+                  labelText: APPStrings.contactNumber.tr,
+                  hintText: APPStrings.hintContactNumber.tr,
+                  controller: contactUsBloc.contactNumberController,
+                  focusNode: contactUsBloc.contactNumberFocusNode,
+                  keyboardType: TextInputType.phone,
+                  textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                  onValueChanges: (value) {},
+                  prefixIcon: BlocBuilder<ContactUsBloc, ContactUsState>(
+                    buildWhen: (previous, current) => current is ContactUsChangeCountryCodeState,
+                    builder: (context, state) {
+                      return InkWell(
+                        onTap: () {
+                          Utils.showCountryPickerModel(
+                            context: context,
+                            countryPickerStyle: countryPickerStyle,
+                            showPhoneCode: true,
+                            onSelect: (Country country) {
+                              contactUsBloc.add(ContactUsChangeCountryCodeEvent(country: country));
                             },
-                            child: SizedBox(
-                              width: 95.w,
-                              child: Container(
-                                alignment: AlignmentDirectional.center,
-                                padding: EdgeInsetsDirectional.all(12.w),
-                                margin: EdgeInsetsDirectional.only(end: 12.w),
-                                decoration: BoxDecoration(
-                                  border: BorderDirectional(
-                                    end: BorderSide(
-                                      color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
-                                    ),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SmartText(
-                                      '+${contactUsBloc.selectedCountry.phoneCode}',
-                                      style: AppTheme.of(context).textFieldStyle.textStyle,
-                                    ),
-                                    SizedBox(width: 4.w),
-                                    const SmartImage(path: AppImages.icArrowDropDown),
-                                  ],
+                          );
+                        },
+                        child: SizedBox(
+                          width: 95.w,
+                          child: Container(
+                            alignment: AlignmentDirectional.center,
+                            padding: EdgeInsetsDirectional.all(12.w),
+                            margin: EdgeInsetsDirectional.only(end: 12.w),
+                            decoration: BoxDecoration(
+                              border: BorderDirectional(
+                                end: BorderSide(
+                                  color: AppTheme.of(context).textFieldStyle.enabledTextFieldBorderColor,
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    );
-                  },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SmartText(
+                                  '+${contactUsBloc.selectedCountry.phoneCode}',
+                                  style: AppTheme.of(context).textFieldStyle.textStyle,
+                                ),
+                                SizedBox(width: 4.w),
+                                const SmartImage(path: AppImages.icArrowDropDown),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 );
-              },
-              separatorBuilder: (_, __) {
-                return SizedBox(height: 8.h);
               },
             ),
             BlocBuilder<ContactUsBloc, ContactUsState>(

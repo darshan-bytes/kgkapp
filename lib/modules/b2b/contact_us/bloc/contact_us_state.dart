@@ -63,12 +63,11 @@ final class ContactUsAddRemoveContactState extends ContactUsState {
 
 final class ContactUsChangeCountryCodeState extends ContactUsState {
   final Country country;
-  final int index;
 
-  const ContactUsChangeCountryCodeState({required this.country, required this.index});
+  const ContactUsChangeCountryCodeState({required this.country});
 
   @override
-  List<Object> get props => [country, index];
+  List<Object> get props => [country];
 }
 
 final class ContactUsPhoneNumberValidationState extends ContactUsState {

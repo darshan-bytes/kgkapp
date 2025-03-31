@@ -20,7 +20,9 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   InquiryTypeModel? selectedInquiryType;
 
   bool isIndividual = true;
+
   TextEditingController contactNumberController = TextEditingController();
+
   FocusNode contactNumberFocusNode = FocusNode();
   Country selectedCountry =
     Country.from(json: {
@@ -56,7 +58,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     emit(ContactUsReloadState());
     selectedCountry = event.country;
     emit(ContactUsFieldValidationState(fieldType: FieldTypeValidationEnum.contactNumber));
-    emit(ContactUsChangeCountryCodeState(country: selectedCountry, index: event.index));
+    emit(ContactUsChangeCountryCodeState(country: selectedCountry));
   }
 
   Future<void> _onContactUsInitialEvent(ContactUsInitialEvent event, Emitter<ContactUsState> emit) async {
