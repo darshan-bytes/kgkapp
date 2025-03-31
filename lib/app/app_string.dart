@@ -1035,4 +1035,11 @@ class APPStrings {
   static const String presentationListing = 'mob_presentation_listing';
   static const String conceptListing = 'mob_concept_listing';
   static const String landingListing = 'mob_landing_listing';
+  static const String selectStatus = 'mob_select_status';
+  static const String strNew = 'mob_new';
+  static const String open = 'mob_open';
+  static const String progress = 'mob_progress';
+
+  static const String errorSelectStatus = 'mob_error_select_status';
+  static const String errorEnterComment = 'mob_error_enter_comment';
 }

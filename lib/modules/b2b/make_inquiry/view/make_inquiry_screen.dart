@@ -31,13 +31,13 @@ class MakeInquiryScreen extends StatelessWidget {
               SizedBox(height: 14.h),
               _buildInquiryTypeDropdown(bloc),
               SizedBox(height: 14.h),
-              _buildProductSkuField(bloc),
+              _buildSelectStatusDropdown(bloc),
               SizedBox(height: 14.h),
               _buildCommentField(bloc),
               SizedBox(height: 18.h),
               SmartButton(
                   onTap: () {
-                    context.pop();
+                    bloc.add(MakeInquirySubmitEvent(context: context));
                   },
                   title: APPStrings.submit.tr)
             ],
@@ -163,6 +163,24 @@ class MakeInquiryScreen extends StatelessWidget {
           onChanged: (newValue) {
             if (newValue == null) return;
             bloc.add(ChangeInquiryTypeEvent(inquiryTypeModel: newValue));
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildSelectStatusDropdown(MakeInquiryBloc bloc) {
+    return BlocBuilder<MakeInquiryBloc, MakeInquiryState>(
+      buildWhen: (previous, current) => current is ToggleMakeInquiryState || current is MakeInquiryReloadState,
+      builder: (context, state) {
+        return SmartDropDown<StatusModel>(
+          selectedItem: bloc.selectedStatus,
+          items: bloc.statusList.map((e) => SmartDropDownItem<StatusModel>(value: e, title: e.name)).toList(),
+          hintText: APPStrings.selectStatus.tr,
+          labelText: APPStrings.selectStatus.tr,
+          onChanged: (newValue) {
+            if (newValue == null) return;
+            bloc.add(ChangeSelectTypeEvent(statusModel: newValue));
           },
         );
       },

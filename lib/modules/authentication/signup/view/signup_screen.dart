@@ -379,7 +379,6 @@ class SignUpScreen extends StatelessWidget {
                       textInputFormatter: [FilteringTextInputFormatter.digitsOnly],
                       onValueChanges: (value) {
                         signUpBloc.add(SignUpPhoneNumberValidationEvent(context: context, phoneNumber: value));
-
                         signUpBloc.add(SignUpFieldChangeEvent(FieldTypeValidationEnum.contactNumber, index: index));
                       },
                       prefixIcon: BlocBuilder<SignUpBloc, SignUpState>(

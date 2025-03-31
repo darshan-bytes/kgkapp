@@ -205,6 +205,8 @@ class ApiClient {
 
   static const String inquiryType = '$apiBaseUrl/customer-inquiry/types';
 
+  static const String submitMakeInquiry = '$apiBaseUrl/customer-inquiry';
+
   static const String submitContactUs = '$apiBaseUrl/contact_us';
 
   static const String verifyEmailOtp = '$apiBaseUrl/auth/verify-email-otp';

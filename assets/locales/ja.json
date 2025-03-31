@@ -841,5 +841,11 @@
   "mob_project_listing": "プロジェクトリスト",
   "mob_presentation_listing": "プレゼンテーションリスト",
   "mob_concept_listing": "コンセプトリスト",
-  "mob_landing_listing": "ランドリスト"
+  "mob_landing_listing": "ランドリスト",
+  "mob_select_status": "ステータスを選択",
+  "mob_new": "新しい",
+  "mob_open": "開く",
+  "mob_progress": "進行",
+  "mob_error_select_status": "ステータスを選択してください",
+  "mob_error_enter_comment": "コメントを入力してください"
 }

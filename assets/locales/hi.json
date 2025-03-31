@@ -841,5 +841,11 @@
   "mob_project_listing": " ्रोजेक्ट सूची",
   "mob_presentation_listing":"प्रस्तुति सूची",
   "mob_concept_listing":"कन्सेप्ट सूची",
-  "mob_landing_listing":"लैंडिंग सूची"
+  "mob_landing_listing":"लैंडिंग सूची",
+  "mob_select_status": "स्थिति चुनें",
+  "mob_new": "नया",
+  "mob_open": "खुला",
+  "mob_progress": "प्रगति",
+  "mob_error_select_status": "कृपया स्थिति चुनें",
+  "mob_error_enter_comment": "कृपया टिप्पण दर्ज करें"
 }

@@ -901,6 +901,7 @@ class LightModeTheme extends AppTheme {
         subMessageStyle: eBGaramondRegularTextStyle.copyWith(fontSize: 24.sp),
         subMessageDescriptionStyle: interRegularTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
         contactDetailsStyle: interMediumBoldTextStyle.copyWith(color: colors.color303538, fontSize: 16.sp),
+        errorTextColor: colors.colorFF0000,
       );
 
   @override

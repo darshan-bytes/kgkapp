@@ -841,5 +841,11 @@
   "mob_project_listing": "திட்டப் பட்டியல்",
   "mob_presentation_listing": "மதிப்பு பட்டியல்",
   "mob_concept_listing": "கோப்பு பட்டியல்",
-  "mob_landing_listing": "வரைபட பட்டியல்"
+  "mob_landing_listing": "வரைபட பட்டியல்",
+  "mob_select_status": "பதில் தேர்ந்தெடுக்கவும்",
+  "mob_new": "புதியது",
+  "mob_open": "திறக்கப்படும்",
+  "mob_progress": "செயல்",
+  "mob_error_select_status": "பதில் தேர்ந்தெடுக்கவும்",
+  "mob_error_enter_comment": "பின்வரும் கருத்து உள்ளிடவும்"
 }
