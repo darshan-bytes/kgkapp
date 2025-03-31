@@ -135,6 +135,10 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     productId = data?[RoutesData.productId] ?? "";
     productNavigation = data?[RoutesData.productNavigation] ?? "";
     filterDataMap = data?[RoutesData.filterData];
+    String? title = data?[RoutesData.appBarTitle];
+    if (title != null) {
+      appbarTitle = title;
+    }
 
     /// Here we set the appbar title
     _getStoneListName();
@@ -421,6 +425,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       isForAuction: diamond.isAuction,
       isAddedToCart: diamond.isAddedToCart,
       discountPercentageString: "${diamond.discountPercentage ?? 0} %",
+      location: diamond.location,
     );
   }
 
@@ -454,6 +459,8 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       title: gemstone.lotCode ?? "",
       subTitle: gemstone.rmDescription ?? "",
       isAddedToCart: gemstone.isAddedToCart,
+      discountPercentageString: "${gemstone.discountPercentage ?? 0} %",
+      location: gemstone.location,
     );
   }
 
@@ -607,6 +614,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   }
 
   void _getStoneListName() {
+    if (appbarTitle.isNotNullNorEmpty) {
+      return;
+    }
     appbarTitle = APPStrings.diamonds.tr;
     if (productNavigation == AppConst.youMayLike && productId.isNotEmpty) {
       appbarTitle = APPStrings.youMayAlsoLike.tr;

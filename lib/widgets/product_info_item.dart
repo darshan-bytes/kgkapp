@@ -267,7 +267,7 @@ class ProductInfoItem extends StatelessWidget {
         ],
         const Divider(),
         SizedBox(height: 16.h),
-        _buildActionGrid(style),
+        _buildActionGrid(style, chart),
       ],
     );
   }
@@ -368,20 +368,27 @@ class ProductInfoItem extends StatelessWidget {
     );
   }
 
-  Widget _buildActionGrid(MyBagDiamondItemStyle style) {
+  Widget _buildActionGrid(MyBagDiamondItemStyle style, ProductInfoClarityChat chart) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildActionItem(imagePath: AppImages.icRotate3D, onTap: onTap360View, style: style),
         _buildActionItem(imagePath: AppImages.icProductCertificate, onTap: onTapCertificate, style: style),
-        _buildActionItem(imagePath: AppImages.icFlagUSA, onTap: onTapUSA, style: style),
+        if (chart.stock.isNotNullNorEmpty)
+          _buildActionItem(
+              imagePath: '', onTap: onTapUSA, style: style, isFlag: chart.stock.isNotNullNorEmpty, countryCode: chart.stock ?? ''),
         _buildActionItem(imagePath: AppImages.icImageThin, onTap: onTapImageViewer, style: style),
         _buildActionItem(imagePath: AppImages.icDNA, onTap: onTapDNA, style: style),
       ],
     );
   }
 
-  Widget _buildActionItem({required String imagePath, VoidCallback? onTap, required MyBagDiamondItemStyle style}) {
+  Widget _buildActionItem(
+      {required String imagePath,
+      VoidCallback? onTap,
+      required MyBagDiamondItemStyle style,
+      bool isFlag = false,
+      String countryCode = ''}) {
     return Flexible(
       child: InkWell(
         onTap: () {
@@ -400,10 +407,15 @@ class ProductInfoItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(4.r),
           ),
           alignment: AlignmentDirectional.center,
-          child: SmartImage(
-            path: imagePath,
-            fit: BoxFit.contain,
-          ),
+          child: isFlag
+              ? SmartText(
+                  Utils.countryCodeToEmoji(countryCode),
+                  style: TextStyle(fontSize: 24.sp),
+                )
+              : SmartImage(
+                  path: imagePath,
+                  fit: BoxFit.contain,
+                ),
         ),
       ),
     );
