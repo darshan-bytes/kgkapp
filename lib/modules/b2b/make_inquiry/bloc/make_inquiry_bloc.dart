@@ -87,15 +87,9 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     fullNameController.text = inquiryData.strName ?? '';
     emailController.text = inquiryData.strEmail ?? '';
 
-    selectedInquiryType = inquiryTypeList.cast<InquiryTypeModel?>().firstWhere(
-          (type) => type?.name == inquiryData.strType,
-          orElse: () => null,
-        );
+    selectedInquiryType = inquiryTypeList.firstWhereOrNull((type) => type.name == inquiryData.strType);
 
-    StatusModel? selectedStatus = statusList.cast<StatusModel?>().firstWhere(
-          (status) => status?.name.toLowerCase() == inquiryData.status?.value,
-          orElse: () => null,
-        );
+    StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status?.name.toLowerCase() == inquiryData.status?.value);
 
     if (selectedStatus != null) {
       this.selectedStatus = selectedStatus;
@@ -158,7 +152,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
       if (!isUpdateInquiry) ApiKey.comments: commentController.text, // Remove conditionally
     };
 
-    if(inquiryContextId != null && contextId != null && commodity != null) {
+    if (inquiryContextId != null && contextId != null && commodity != null) {
       params[ApiKey.inquiryContextId] = inquiryContextId;
       params[ApiKey.contextId] = contextId;
       params[ApiKey.commodity] = commodity;

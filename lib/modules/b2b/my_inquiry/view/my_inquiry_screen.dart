@@ -11,26 +11,24 @@ class MyInquiryScreen extends StatelessWidget {
         title: APPStrings.myInquiries.tr,
       ),
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
-      body: Padding(
-        padding: EdgeInsetsDirectional.all(17.w),
-        child: BlocBuilder<MyInquiryBloc, MyInquiryState>(
-          buildWhen: (previous, current) => current is MyInquiryLoadedState,
-          builder: (context, state) {
-            return ListView.builder(
-                itemCount: bloc.myInquiryList.length,
-                itemBuilder: (listContext, index) {
-                  return B2BListingItem(
-                    margin: EdgeInsetsDirectional.only(bottom: 24.h),
-                    onTapMenuButton: () {
-                      handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
-                    },
-                    type: B2BListingType.myInquiryType,
-                    listingItemModel: bloc.myInquiryList[index],
-                    onTap: () {},
-                  );
-                });
-          },
-        ),
+      body: BlocBuilder<MyInquiryBloc, MyInquiryState>(
+        buildWhen: (previous, current) => current is MyInquiryLoadedState,
+        builder: (context, state) {
+          return ListView.builder(
+              padding: EdgeInsetsDirectional.all(17.w),
+              itemCount: bloc.myInquiryList.length,
+              itemBuilder: (listContext, index) {
+                return B2BListingItem(
+                  margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                  onTapMenuButton: () {
+                    handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
+                  },
+                  type: B2BListingType.myInquiryType,
+                  listingItemModel: bloc.myInquiryList[index],
+                  onTap: () {},
+                );
+              });
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

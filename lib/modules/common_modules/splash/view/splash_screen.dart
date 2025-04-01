@@ -17,11 +17,7 @@ class SplashScreen extends StatelessWidget {
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  GestureDetector(onTap: (){
-                    String? authToken = StorageManager().getAuthToken();
-                    String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
-                    context.pushNamedAndRemoveUntil(route, (route) => false);
-                  },child: VideoPlayer(bloc.playerController)),
+                  VideoPlayer(bloc.playerController),
                   SizedBox(
                     height: context.height,
                     width: context.width,

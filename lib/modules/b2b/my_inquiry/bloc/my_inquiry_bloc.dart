@@ -224,7 +224,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     smartPaginationScrollController.pullToRefresh();
     await fetchMyInquiries(event.context, emit);
     emit(MyInquiryLoadedState());
-    // smartPaginationScrollController.currentPage = 1;
     smartPaginationScrollController.isPageLoaded.complete(false);
   }
 
@@ -267,8 +266,8 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   /// Clear data
   clearData() {
     myInquiryList.clear();
-    smartPaginationScrollController.currentPage = 1;
-    smartPaginationScrollController.isPageLoaded.complete(false);
+    smartPaginationScrollController.pullToRefresh();
+    // smartPaginationScrollController.isPageLoaded.complete(false);
   }
 
   Future<void> removeInquiry(BuildContext context, int index, List<B2BCustomListingDataModel> myInquiryList,
@@ -290,7 +289,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         },
       );
     } catch (e) {
-      Utils.showMessage('An error occurred: $e');
+      debugPrint('An error occurred: $e');
     }
   }
 }

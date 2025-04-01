@@ -26,13 +26,13 @@ class MyInquiriesModel {
   final String? email;
   final String? assignTo;
   final String? inquiryType;
-  final dynamic commodity;
+  final String? commodity;
   final dynamic inquiryContextId;
   final dynamic contextId;
   final String? createdBy;
   final String? status;
   final List<UserIdDetails> assignedToDetails;
-  final AssignToDetails? assignToDetails;
+  final UserIdDetails? assignToDetails;
   final UserIdDetails createdByDetails;
 
   factory MyInquiriesModel.fromJson(Map<String, dynamic> json) {
@@ -44,7 +44,7 @@ class MyInquiriesModel {
       email: json["email"],
       assignTo: json["assign_to"],
       inquiryType: json["inquiry_type"],
-      commodity: json["commodity"],
+      commodity: json["commodity"]?.toString(),
       inquiryContextId: json["inquiry_context_id"],
       contextId: json["context_id"],
       createdBy: json["created_by"],
@@ -52,7 +52,7 @@ class MyInquiriesModel {
       assignedToDetails: json["assigned_to_details"] == null
           ? []
           : List<UserIdDetails>.from(json["assigned_to_details"]!.map((x) => UserIdDetails.fromJson(x))),
-      assignToDetails: json["assign_to_details"] == null ? null : AssignToDetails.fromJson(json["assign_to_details"]),
+      assignToDetails: json["assign_to_details"] == null ? null : UserIdDetails.fromJson(json["assign_to_details"]),
       createdByDetails: UserIdDetails.fromJson(json["created_by_details"]),
     );
   }
@@ -81,33 +81,3 @@ class MyInquiriesModel {
   }
 }
 
-class AssignToDetails {
-  AssignToDetails({
-    required this.profilePicUrl,
-    required this.firstname,
-    required this.lastname,
-  });
-
-  final String? profilePicUrl;
-  final dynamic firstname;
-  final dynamic lastname;
-
-  factory AssignToDetails.fromJson(Map<String, dynamic> json) {
-    return AssignToDetails(
-      profilePicUrl: json["profile_pic_url"],
-      firstname: json["firstname"],
-      lastname: json["lastname"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "profile_pic_url": profilePicUrl,
-        "firstname": firstname,
-        "lastname": lastname,
-      };
-
-  @override
-  String toString() {
-    return "$profilePicUrl, $firstname, $lastname, ";
-  }
-}
