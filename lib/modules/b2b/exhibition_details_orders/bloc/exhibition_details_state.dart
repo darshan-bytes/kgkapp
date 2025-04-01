@@ -54,3 +54,10 @@ final class ExhibitionListingLoadedMoreState extends ExhibitionDetailsState {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class ExhibitionDetailsLoadingState extends ExhibitionDetailsState {
+  const ExhibitionDetailsLoadingState();
+
+  @override
+  List<Object> get props => [];
+}

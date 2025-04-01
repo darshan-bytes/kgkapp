@@ -847,5 +847,6 @@
   "mob_open": "開く",
   "mob_progress": "進行",
   "mob_error_select_status": "ステータスを選択してください",
-  "mob_error_enter_comment": "コメントを入力してください"
+  "mob_error_enter_comment": "コメントを入力してください",
+  "mob_total_quantity": "合計数量"
 }

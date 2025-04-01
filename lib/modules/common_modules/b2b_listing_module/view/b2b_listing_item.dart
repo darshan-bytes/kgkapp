@@ -47,6 +47,7 @@ class B2BListingItem extends StatelessWidget {
   final double? gridRunSpacing;
   final int columns;
   final bool isListingView;
+  final bool isLastFullWidthRequired;
 
   const B2BListingItem({
     super.key,
@@ -61,6 +62,7 @@ class B2BListingItem extends StatelessWidget {
     this.columns = 2,
     this.isListingView = false,
     this.onTapCircleWithText,
+    this.isLastFullWidthRequired = false,
   });
 
   @override
@@ -96,7 +98,7 @@ class B2BListingItem extends StatelessWidget {
               columns: columns,
               spacing: 0.0.w,
               runSpacing: gridRunSpacing ?? 16.0.h,
-              isLastFullWidthRequired: type == B2BListingType.conceptListingType,
+              isLastFullWidthRequired: (type == B2BListingType.conceptListingType || isLastFullWidthRequired),
             ),
           ),
           if (onTapMenuButton != null)

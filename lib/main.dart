@@ -13,7 +13,9 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   /// Initializing Crashlytics
-  await AppCrashlytics.instance.initialize();
+  if (!kDebugMode) {
+    await AppCrashlytics.instance.initialize();
+  }
 
   /// Initializing app
   runApp(const MyApp());

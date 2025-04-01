@@ -847,5 +847,6 @@
   "mob_open": "เปิด",
   "mob_progress": "ความคืบหน้า",
   "mob_error_select_status": "กรุณาเลือกสถานะ",
-  "mob_error_enter_comment": "กรุณากรอกรายละเอียด"
+  "mob_error_enter_comment": "กรุณากรอกรายละเอียด",
+  "mob_total_quantity": "ปริมาณทั้งหมด"
 }

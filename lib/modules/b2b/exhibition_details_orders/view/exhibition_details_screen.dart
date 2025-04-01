@@ -11,9 +11,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(bloc, context),
       floatingActionButton: _buildFloatingActionButton(bloc),
-
-      /// TODO: We have currently hide bottom navigation bar as it is not required
-      // bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
+      bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: SafeArea(
         child: BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
           buildWhen: (previous, current) =>
@@ -29,6 +27,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
                     _buildImageAndText(bloc, style),
                     SizedBox(height: 24.h),
                     SmartTabBar(
+                      key: bloc.tabTargetKey,
                       isExpanded: false,
                       padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
                       length: bloc.tabs.length,
@@ -62,7 +61,7 @@ class ExhibitionDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SmartImage(path: bloc.exhibitionDetails.fileUrl?.setMediaUrl ?? '', width: 356.w, height: 200.h),
+                SmartImage(path: bloc.exhibitionDetails.fileUrl?.setMediaUrl ?? ''),
                 SizedBox(height: 24.h),
                 SmartText(bloc.exhibitionDetails.name ?? '', style: style.titleStyle),
                 SizedBox(height: 16.h),
@@ -128,33 +127,29 @@ class ExhibitionDetailsScreen extends StatelessWidget {
   /// Here we are building the bottom navigation bar
   Widget _buildBottomNavigationBar(ExhibitionDetailsBloc bloc, BuildContext context) {
     return BlocBuilder<ExhibitionDetailsBloc, ExhibitionDetailsState>(
-      buildWhen: (previous, current) =>
-          current is ExhibitionDetailsLoadedState || current is ExhibitionChangeListingTypeState || current is ExhibitionChangeTabsState,
+      buildWhen: (previous, current) => current is ExhibitionDetailsLoadedState || current is ExhibitionChangeTabsState,
       builder: (context, state) {
-        if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState || state is ExhibitionChangeListingTypeState) {
-          if (bloc.currentTab == 0) {
-            return FilterBottomActionBar(
+        if (bloc.currentTab != 1) return const SizedBox.shrink();
+        if (state is ExhibitionDetailsLoadedState || state is ExhibitionChangeTabsState) {
+          return SafeArea(
+            child: FilterBottomActionBar(
               controller: bloc.paginationScrollController.controller,
               onFilterTap: () {
                 Utils.showSmartModalBottomSheet(
                   context: context,
-                  builder: (context) => FilterScreen(
-                    onApply: () {},
+                  builder: (context) => AdvanceFilterScreen(
+                    onApply: (value) {
+                      if (value != null && value is List<FilterData>) {
+                        bloc.add(ExhibitionOrdersListFilterEvent(filterData: value, context: context));
+                      }
+                    },
                   ),
                 );
               },
-              onSortTap: () {
-                /// TODO: Fetch this from local and pass here as sortData based on commodity type
-                Utils.showSmartModalBottomSheet(
-                  context: context,
-                  builder: (context) => SortScreen(sortData: []),
-                );
-              },
-            );
-          }
-          return SizedBox.shrink();
+            ),
+          );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
