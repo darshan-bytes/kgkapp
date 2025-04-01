@@ -235,6 +235,15 @@ class B2BListingFieldFactory {
           B2BItemField(label: APPStrings.orderedOn.tr, value: model.strOrderOn),
           B2BItemField(label: APPStrings.purchaseOrder.tr, orderStatus: model.purchaseOrderStatus),
         ];
+      case B2BListingType.myInquiryType:
+        return [
+          B2BItemField(label: APPStrings.inquiryId.tr, value: model.strInquiryId),
+          B2BItemField(label: APPStrings.type.tr, value: model.strType),
+          B2BItemField(label: APPStrings.product.tr, value: model.strProduct),
+          B2BItemField(label: APPStrings.createdOn.tr, value: model.strCreatedOn),
+          B2BItemField(label: APPStrings.status.tr, orderStatus: model.status),
+          B2BItemField(label: APPStrings.assignedTo.tr, subFields: model.fields),
+        ];
     }
   }
 }

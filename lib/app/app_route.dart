@@ -80,6 +80,7 @@ class AppRoutes {
   static const imageSearchPage = '/imageSearchPage';
   static const commentListingPage = '/commentListingPage';
   static const applyPromoCodeScreen = '/applyPromoCodeScreen';
+  static const myInquiryScreen = '/myInquiryScreen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     printWrapped('\x1B[32m${'Navigating to ----> ${settings.name}'}\x1B[0m');
@@ -315,8 +316,19 @@ class AppRoutes {
 
       case makeInquiryPage:
         builder = (context) {
-          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent(context: context));
-          return const MakeInquiryScreen();
+          return BlocProvider<MakeInquiryBloc>(
+            create: (context) => MakeInquiryBloc()..add(MakeInquiryInitialEvent(context: context)),
+            child: const MakeInquiryScreen(),
+          );
+        };
+        break;
+
+      case myInquiryScreen:
+        builder = (context) {
+          return BlocProvider<MyInquiryBloc>(
+            create: (context) => MyInquiryBloc()..add(MyInquiryInitialEvent(context: context)),
+            child: const MyInquiryScreen(),
+          );
         };
         break;
 
@@ -820,7 +832,11 @@ enum RoutesData {
   filterData,
   bloc,
   isGoToBag,
-  appBarTitle
+  appBarTitle,
+  inquiryData,
+  isInquiryUpdated,
+  inquiryContextId,
+  contextId
 }
 
 enum ScreenIdentifier {

@@ -82,6 +82,14 @@ class SmartStatusBadge extends StatelessWidget {
         return ProjectStatus.cancelled.value;
       case ProjectStatus.delay:
         return ProjectStatus.delay.value;
+      case ProjectStatus.open:
+        return ProjectStatus.open.value;
+      case ProjectStatus.close:
+        return ProjectStatus.close.value;
+      case ProjectStatus.progress:
+        return ProjectStatus.progress.value;
+      case ProjectStatus.newStatus:
+        return ProjectStatus.newStatus.value;
     }
   }
 
@@ -125,6 +133,14 @@ class SmartStatusBadge extends StatelessWidget {
         return style.lostBackgroundColor;
       case ProjectStatus.delay:
         return style.yellowBgColor;
+      case ProjectStatus.open:
+        return style.orangeInProgressBackgroundColor;
+      case ProjectStatus.close:
+        return style.activeBackgroundColor;
+      case ProjectStatus.progress:
+        return style.yellowBgColor;
+      case ProjectStatus.newStatus:
+        return style.yellowBgColor;
     }
   }
 
@@ -167,6 +183,14 @@ class SmartStatusBadge extends StatelessWidget {
       case ProjectStatus.cancelled:
         return style.lostTextColor;
       case ProjectStatus.delay:
+        return style.yellowTextColor;
+      case ProjectStatus.open:
+        return style.orangeInProgressTextColor;
+      case ProjectStatus.close:
+        return style.activeTextColor;
+      case ProjectStatus.progress:
+        return style.yellowTextColor;
+      case ProjectStatus.newStatus:
         return style.yellowTextColor;
     }
   }

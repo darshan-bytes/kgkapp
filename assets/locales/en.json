@@ -847,6 +847,11 @@
   "mob_open": "Open",
   "mob_progress": "Progress",
   "mob_error_select_status": "Please select an inquiry type",
+  "mob_total_quantity": "Total Quantity",
   "mob_error_enter_comment": "Please enter your comment",
-  "mob_total_quantity": "Total Quantity"
+  "mob_inquiry_id": "Inquiry ID",
+  "mob_product": "Product",
+  "mob_edit_inquiry": "Edit Inquiry",
+  "mob_remove_inquiry": "Remove Inquiry",
+  "mob_remove_inquiry_msg": "Are you sure you want to remove this inquiry?"
 }

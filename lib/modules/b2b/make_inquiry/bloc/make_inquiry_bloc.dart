@@ -19,16 +19,23 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
   final GlobalKey targetKey = GlobalKey();
   InquiryTypeModel? selectedInquiryType;
   StatusModel? selectedStatus;
+  String? inquiryId;
+
+  String? inquiryContextId;
+  String? contextId;
+  String? commodity;
 
   ScrollController productScrollController = ScrollController();
 
   List<InquiryTypeModel> inquiryTypeList = [];
 
+  bool isUpdateInquiry = false;
+
   List<StatusModel> statusList = [
-    const StatusModel(id: 1, name: 'New'),
-    const StatusModel(id: 2, name: 'Open'),
-    const StatusModel(id: 2, name: 'Progress'),
-    const StatusModel(id: 2, name: 'Close'),
+    StatusModel(id: 1, name: APPStrings.strNew.tr),
+    StatusModel(id: 2, name: APPStrings.open.tr),
+    StatusModel(id: 2, name: APPStrings.progress.tr),
+    StatusModel(id: 2, name: APPStrings.close.tr),
   ];
 
   ProductModel? selectedProduct;
@@ -56,7 +63,37 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     isInitialized = true;
     setupInitialData();
     await fetchInquiryType(event.context);
+    getArgumentsData(event.context);
     emit(const ToggleMakeInquiryState());
+  }
+
+  getArgumentsData(BuildContext context) {
+    final routesData = context.routesData;
+    B2BCustomListingDataModel? inquiryData = routesData?[RoutesData.inquiryData] as B2BCustomListingDataModel?;
+
+    if (routesData?[RoutesData.inquiryContextId] != null &&
+        routesData?[RoutesData.contextId] != null &&
+        routesData?[RoutesData.commodity] != null) {
+      inquiryContextId = routesData?[RoutesData.inquiryContextId] as String?;
+      contextId = routesData?[RoutesData.contextId] as String?;
+      commodity = routesData?[RoutesData.commodity] as String?;
+    }
+
+    if (inquiryData == null) {
+      return;
+    }
+    isUpdateInquiry = true;
+    inquiryId = inquiryData.strInquiryId;
+    fullNameController.text = inquiryData.strName ?? '';
+    emailController.text = inquiryData.strEmail ?? '';
+
+    selectedInquiryType = inquiryTypeList.firstWhereOrNull((type) => type.name == inquiryData.strType);
+
+    StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status?.name.toLowerCase() == inquiryData.status?.value);
+
+    if (selectedStatus != null) {
+      this.selectedStatus = selectedStatus;
+    }
   }
 
   setupInitialData() {
@@ -100,32 +137,45 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     emit(MakeInquiryReloadState());
     bool areAllFieldsValid = isAllFieldValid();
     if (areAllFieldsValid) {
-      await apiCallForMakeInquirySubmission(event.context);
+      await apiCallForMakeInquirySubmission(event.context, event.inquiryId);
     }
     emit(const ToggleMakeInquiryState());
   }
 
-  Future<void> apiCallForMakeInquirySubmission(BuildContext context) async {
-    Map<String, dynamic> params = {
+  /// API call for make inquiry submission & update
+  Future<void> apiCallForMakeInquirySubmission(BuildContext context, String? inquiryId) async {
+    final params = {
       ApiKey.name: fullNameController.text,
       ApiKey.email: emailController.text,
       ApiKey.inquiryType: selectedInquiryType?.name,
       ApiKey.status: selectedStatus?.name.toUpperCase(),
-      ApiKey.comments: commentController.text,
+      if (!isUpdateInquiry) ApiKey.comments: commentController.text, // Remove conditionally
     };
 
-    await AppRepository(context).submitMakeInquiry(body: params).then((value) {
-      value?.fold((l) {
-        Utils.showMessage(l.message);
-      }, (r) {
-        context.pop();
+    if (inquiryContextId != null && contextId != null && commodity != null) {
+      params[ApiKey.inquiryContextId] = inquiryContextId;
+      params[ApiKey.contextId] = contextId;
+      params[ApiKey.commodity] = commodity;
+      params[ApiKey.comments] = commentController.text;
+    }
+
+    final repository = AppRepository(context);
+
+    final response = isUpdateInquiry && inquiryId.isNotNullNorEmpty
+        ? await repository.editMakeInquiry(body: params, inquiryId: inquiryId!)
+        : await repository.submitMakeInquiry(body: params);
+
+    response?.fold(
+      (l) => Utils.showMessage(l.message),
+      (r) {
         clearData();
+        context.pop(arguments: {RoutesData.isInquiryUpdated: true});
         Utils.showMessage(r.message);
-      });
-    });
+      },
+    );
   }
 
-  clearData(){
+  clearData() {
     selectedInquiryType = null;
     selectedStatus = null;
     selectedProduct = null;
@@ -151,7 +201,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
     } else if (selectedStatus == null) {
       Utils.showMessage(APPStrings.errorSelectStatus.tr);
       return false;
-    } else if (commentController.text.trim().isEmpty) {
+    } else if (commentController.text.trim().isEmpty && !isUpdateInquiry) {
       Utils.showMessage(APPStrings.errorEnterComment.tr);
       return false;
     }
