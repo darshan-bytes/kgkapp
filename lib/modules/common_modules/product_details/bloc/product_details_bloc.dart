@@ -154,6 +154,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     on<ProductDetailsAuctionTimerCompletedEvent>(_onAuctionTimerCompletedEvent);
     on<ProductDetailsAuctionPlaceBidEvent>(_onPlaceBidEvent);
     on<ProductDetailsPlaceBidFieldChangeEvent>(_onProductDetailsPlaceBidFieldChangeEvent);
+    on<ProductDetailsAddInquiryEvent>(_onProductDetailsAddInquiryEvent);
   }
 
   bool get canCompare =>
@@ -349,7 +350,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             wishlistId: diamondData?.wishlistID,
             stoneElements: diamondData?.components,
             auctionId: diamondData?.auctionId,
-            isAddedToCart: diamondData?.isAddedToCart ?? false,
+            isAddedToCart: diamondData?.isAddedToCart ?? false
           );
         }
       },
@@ -598,6 +599,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           isFavourite: jewelleryData.isFavorite,
           wishlistId: jewelleryData.wishlistID,
           components: jewelleryData.components,
+          contractNoSkuNo: jewelleryData.contractNoSkuNo
         );
       },
     );
@@ -1235,6 +1237,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
     emit(BidAmountFieldErrorState(fieldType: event.fieldType));
   }
+
+  //_onProductDetailsAddInquiryEvent
+  Future<void> _onProductDetailsAddInquiryEvent(ProductDetailsAddInquiryEvent event, Emitter<ProductDetailsState> emit) async {}
 
   void getTimerText(ProductDetailsState state) {
     if (auctionDataModel != null && auctionDataModel!.status == "NOT_STARTED") {

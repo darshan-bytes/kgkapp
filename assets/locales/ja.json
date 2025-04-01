@@ -848,5 +848,10 @@
   "mob_progress": "進行",
   "mob_error_select_status": "ステータスを選択してください",
   "mob_error_enter_comment": "コメントを入力してください",
-  "mob_total_quantity": "合計数量"
+  "mob_total_quantity": "合計数量",
+  "mob_inquiry_id": "問合せID",
+  "mob_product": "製品",
+  "mob_edit_inquiry": "編集",
+  "mob_remove_inquiry": "削除",
+  "mob_remove_inquiry_msg": "この問い合わせを削除しますか？"
 }

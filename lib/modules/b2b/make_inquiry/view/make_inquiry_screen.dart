@@ -32,12 +32,14 @@ class MakeInquiryScreen extends StatelessWidget {
               _buildInquiryTypeDropdown(bloc),
               SizedBox(height: 14.h),
               _buildSelectStatusDropdown(bloc),
-              SizedBox(height: 14.h),
-              _buildCommentField(bloc),
+              if(!bloc.isUpdateInquiry) ...[
+                SizedBox(height: 14.h),
+                _buildCommentField(bloc),
+              ],
               SizedBox(height: 18.h),
               SmartButton(
                   onTap: () {
-                    bloc.add(MakeInquirySubmitEvent(context: context));
+                    bloc.add(MakeInquirySubmitEvent(context: context, inquiryId: bloc.inquiryId ?? ''));
                   },
                   title: APPStrings.submit.tr)
             ],

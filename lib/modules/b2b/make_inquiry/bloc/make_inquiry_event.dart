@@ -46,11 +46,11 @@ class ChangeSelectProductEvent extends MakeInquiryEvent {
 }
 
 class MakeInquirySubmitEvent extends MakeInquiryEvent {
-
   final BuildContext context;
+  final String inquiryId;
 
-  const MakeInquirySubmitEvent({required this.context});
+  const MakeInquirySubmitEvent({required this.context, this.inquiryId = ''});
 
   @override
-  List<Object> get props => [context];
+  List<Object> get props => [context, inquiryId];
 }

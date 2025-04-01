@@ -77,6 +77,7 @@ class ProductDetailsModel {
   double? originalFinalPrice;
   String? jewelleryType;
   String? video;
+  String? contractNoSkuNo;
 
   ProductDetailsModel({
     this.productId,
@@ -155,6 +156,7 @@ class ProductDetailsModel {
     this.originalFinalPrice,
     this.jewelleryType,
     this.video,
+    this.contractNoSkuNo,
   });
 
   @override
@@ -220,6 +222,7 @@ class ProductDetailsModel {
           certificateNumber == other.certificateNumber &&
           table == other.table &&
           depth == other.depth &&
+          contractNoSkuNo == other.contractNoSkuNo &&
           jewelleryType == other.jewelleryType;
 
   @override
@@ -283,6 +286,7 @@ class ProductDetailsModel {
       certificateNumber.hashCode ^
       table.hashCode ^
       depth.hashCode ^
+      contractNoSkuNo.hashCode ^
       jewelleryType.hashCode;
 }
 

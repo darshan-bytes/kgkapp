@@ -126,3 +126,12 @@ final class ProductDetailsPlaceBidFieldChangeEvent extends ProductDetailsEvent {
   @override
   List<Object> get props => [fieldType];
 }
+
+final class ProductDetailsAddInquiryEvent extends ProductDetailsEvent {
+  final BuildContext context;
+
+  const ProductDetailsAddInquiryEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}

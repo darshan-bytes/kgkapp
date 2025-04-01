@@ -674,6 +674,22 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  //fetchMyInquiries
+  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries({required Map<String, dynamic> body, bool isLoadMore = false}) async {
+    if (isLoadMore) context.setAppLoading(true);
+    var response = await postMethod<PaginationData<MyInquiriesModel>>(ApiClient.myInquiries, body, withCurrencyHeader: true);
+    if (isLoadMore) context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  //removeMyInquiry
+  Future<Either<ErrorResponse, CommonResponse>?> removeMyInquiry({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removeMyInquiry, withFullResponse: true, body: body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // For Gemstone Filter Option
   Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList(
       {required String listType, String? type, String? subTypeCode}) async {
@@ -1184,6 +1200,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // edit Make Inquiry
+  Future<Either<ErrorResponse, CommonResponse>?> editMakeInquiry({required Map<String, dynamic> body, required String inquiryId}) async {
+    context.setAppLoading(true);
+    var response = await updateMethod<Map<String, dynamic>>(ApiClient.editMakeInquiry(inquiryId), body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>?> orderDetailsApiCall({required String id}) async {
     var response = await getMethod<PlaceOrderResponse>(ApiClient.orderDetails(id), withCurrencyHeader: true, withFullResponse: true);
     return response?.fold((l) => Left(l), (r) => Right(r));
@@ -1279,6 +1303,14 @@ class AppRepository extends ApiService {
 
     var response = await getMethod<DiyFinalDetailsModel>(ApiClient.diyStyleDetails(settingId), query: query, withCurrencyHeader: true);
 
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  /// For My Inquiry Filter Option
+  Future<Either<ErrorResponse, AdvanceFilterOptionModel>?> fetchMyInquiryFilterOptionList() async {
+    context.setAppLoading(true);
+    var response = await getMethod<AdvanceFilterOptionModel>(ApiClient.myInquiryFilterOptions);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

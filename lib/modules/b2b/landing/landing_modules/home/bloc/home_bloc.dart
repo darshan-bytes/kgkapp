@@ -1016,7 +1016,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         };
         break;
       case RedirectionTo.collection:
-        if (redirectionData == null || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
+        if (redirectionData == null  || redirectTo.name.isEmpty || redirectionType.name.isEmpty) return;
         routeName =
             (redirectionType == RedirectionType.listing || redirectionType == RedirectionType.collection) && redirectionData.isNotEmpty
                 ? AppRoutes.productListGridPage
