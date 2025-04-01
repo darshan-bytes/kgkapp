@@ -111,11 +111,15 @@ class ExhibitionTabView extends StatelessWidget {
           width: 1.w,
         ),
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
-          context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
-            RoutesData.exhibitionId: item.id,
-          });
+          /// If user is internal user then navigate to exhibition details page otherwise not navigate
+          UserType userType = BlocProvider.of<AppBloc>(context).userType;
+          if (userType == UserType.internal) {
+            context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
+              RoutesData.exhibitionId: item.id,
+            });
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -124,8 +128,8 @@ class ExhibitionTabView extends StatelessWidget {
               children: [
                 SmartImage(
                   path: item.image ?? "",
-                  height: 200.h,
                   width: context.width,
+                  fit: BoxFit.scaleDown,
                 ),
                 if (item.status != null)
                   PositionedDirectional(

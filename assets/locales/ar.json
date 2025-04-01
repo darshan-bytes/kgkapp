@@ -846,5 +846,6 @@
   "mob_open": "فتح",
   "mob_progress": "تقدم",
   "mob_error_select_status": "يرجى تحديد حالة",
-  "mob_error_enter_comment": "يرجى ادخال التعليق"
+  "mob_error_enter_comment": "يرجى ادخال التعليق",
+  "mob_total_quantity": "إجمالي الكمية"
 }

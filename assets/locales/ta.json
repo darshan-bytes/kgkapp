@@ -847,5 +847,6 @@
   "mob_open": "திறக்கப்படும்",
   "mob_progress": "செயல்",
   "mob_error_select_status": "பதில் தேர்ந்தெடுக்கவும்",
-  "mob_error_enter_comment": "பின்வரும் கருத்து உள்ளிடவும்"
+  "mob_error_enter_comment": "பின்வரும் கருத்து உள்ளிடவும்",
+  "mob_total_quantity": "மொத்த அளவு"
 }

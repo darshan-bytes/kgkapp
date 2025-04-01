@@ -1042,4 +1042,5 @@ class APPStrings {
 
   static const String errorSelectStatus = 'mob_error_select_status';
   static const String errorEnterComment = 'mob_error_enter_comment';
+  static const String totalQuantity = 'mob_total_quantity';
 }

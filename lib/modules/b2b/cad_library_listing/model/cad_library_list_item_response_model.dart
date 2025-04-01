@@ -308,6 +308,15 @@ class CadLibraryListItemDataModel {
   }
 }
 
+extension CadLibraryListItemResponseModelExt on CadLibraryListItemDataModel {
+  String get strCADLibraryImageUrl {
+    if (multipleFinishedViewImage.isNotNullNorEmpty && multipleFinishedViewImage?.firstOrNull?.imageAvailable?.toLowerCase() == 'yes') {
+      return multipleFinishedViewImage?.firstOrNull?.imageUrl ?? '';
+    }
+    return imageCad ?? imageSketch ?? '';
+  }
+}
+
 class FindingDetails {
   String? findingName;
   String? findingDescription;
