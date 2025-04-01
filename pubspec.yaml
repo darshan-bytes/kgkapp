@@ -2,7 +2,7 @@ name: kgk
 description: "A new Flutter project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+70
+version: 1.0.0+74
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -63,6 +63,7 @@ dependencies:
     git:
       url: https://gitlab.bytestechnolab.com/flutter/flutter_country_picker.git
       ref: main
+    # path: ../country_picker
 
   # For Carousel image Slider
   carousel_slider: ^5.0.0
@@ -116,7 +117,7 @@ dependencies:
   flutter_bounceable: ^1.2.0
 
   #For Video Player
-  video_player: ^2.9.3
+  video_player: ^2.9.5
 
   html: ^0.15.5
 
@@ -135,7 +136,6 @@ dependencies:
   flutter_branch_sdk: ^8.4.1
 
   country_phone_validator: ^1.0.1
-
 
   # For Photo View
   photo_view: ^0.15.0

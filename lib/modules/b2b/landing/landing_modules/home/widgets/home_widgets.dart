@@ -52,6 +52,7 @@ class HomeWidgets {
                             redirectionType: getRedirectionTypeFromString(e.redirectionType ?? ""),
                             redirectionData: getQueryParamFromUrlForFilter(e.redirectionUrl ?? '',
                                 redirectionType: getRedirectionTypeFromString(e.redirectionType ?? "")),
+                            redirectionTitle: e.name ?? '',
                           );
                         },
                         child: SmartImage(
@@ -376,6 +377,7 @@ class HomeWidgets {
                     ? "HEART"
                     : homeBloc.shopDiamondsShapeMasterList[index].shapeName,
               },
+              RoutesData.appBarTitle: item.name ?? '',
             });
           },
           width: 72.w,
@@ -415,7 +417,8 @@ class HomeWidgets {
           onTap: () {
             context.pushNamed(AppRoutes.stoneListingPage, arguments: {
               RoutesData.isPageFor: ScreenIdentifier.productForGemstones,
-              RoutesData.filterData: {ApiKey.commodityName: item.name, ApiKey.subTypeCode: item.subTypeCode}
+              RoutesData.filterData: {ApiKey.commodityName: item.name, ApiKey.subTypeCode: item.subTypeCode},
+              RoutesData.appBarTitle: item.name ?? '',
             });
           },
           title: item.name ?? '',
@@ -502,6 +505,7 @@ class HomeWidgets {
                               redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
                               redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
                                   redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
+                              redirectionTitle: field.name ?? '',
                             );
                           },
                         ),
@@ -1027,7 +1031,8 @@ class HomeWidgets {
           onTap: () {
             context.pushNamed(AppRoutes.productListGridPage, arguments: {
               RoutesData.isPageFor: ScreenIdentifier.productForRing,
-              RoutesData.filterData: getQueryParamFromUrlForFilter(item.redirectionUrl ?? '')
+              RoutesData.filterData: getQueryParamFromUrlForFilter(item.redirectionUrl ?? ''),
+              RoutesData.appBarTitle: item.name ?? '',
             });
           },
           imageUrl: item.imageUrl ?? '',

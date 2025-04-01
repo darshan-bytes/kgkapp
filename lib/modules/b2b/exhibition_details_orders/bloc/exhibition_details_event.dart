@@ -41,3 +41,22 @@ final class ExhibitionListingLoadMoreEvent extends ExhibitionDetailsEvent {
   @override
   List<Object> get props => [currentPage, context];
 }
+
+final class ExhibitionOrdersListFilterEvent extends ExhibitionDetailsEvent {
+  final BuildContext context;
+  final List<FilterData> filterData;
+
+  const ExhibitionOrdersListFilterEvent({required this.context, required this.filterData});
+
+  @override
+  List<Object> get props => [context, filterData];
+}
+
+final class ExhibitionOrdersListSearchEvent extends ExhibitionDetailsEvent {
+  final BuildContext context;
+
+  const ExhibitionOrdersListSearchEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}

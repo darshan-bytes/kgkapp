@@ -847,6 +847,8 @@
   "mob_progress": "تقدم",
   "mob_error_select_status": "يرجى تحديد حالة",
   "mob_error_enter_comment": "يرجى ادخال التعليق",
+  "mob_total_quantity": "إجمالي الكمية",
+  "mob_error_enter_comment": "يرجى ادخال التعليق",
   "mob_inquiry_id": "معرف الاستفسار",
   "mob_product": "منتج",
   "mob_edit_inquiry": "تحرير الاستفسار",

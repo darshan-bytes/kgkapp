@@ -13,7 +13,9 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   /// Initializing Crashlytics
-  await AppCrashlytics.instance.initialize();
+  if (!kDebugMode) {
+    await AppCrashlytics.instance.initialize();
+  }
 
   /// Initializing app
   runApp(const MyApp());
@@ -66,7 +68,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  /// Create main app view builder
+  /// Create  app view builder
   AnnotatedRegion<SystemUiOverlayStyle> buildMaterialBuilder(AppBloc appBloc, Widget? widget, AppState appState) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
@@ -86,7 +88,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "27-March+2",
+        message: "31-March+2",
         location: BannerLocation.topEnd,
       ),
     );

@@ -848,6 +848,8 @@
   "mob_progress": "进展",
   "mob_error_select_status": "请选择状态",
   "mob_error_enter_comment": "请输入评论",
+  "mob_total_quantity": "总数量",
+  "mob_error_enter_comment": "请输入评论",
   "mob_inquiry_id": "询价ID",
   "mob_product": "产品",
   "mob_edit_inquiry": "编辑询价",

@@ -198,7 +198,7 @@ class UserMasterListingBloc extends Bloc<UserMasterListingEvent, UserMasterListi
 
           ///TODO: Need to discuss with backend team
           // strBusinessTypeImageUrl: AppImages.icDiamond,
-          strCompanyRepresentative: "Pristine Gems Co.",
+          strCompanyRepresentative: staffUser.customerUser?.customerOrg?.name,
           strMarket: "New York, USA",
 
           ///TODO: Need to discuss with backend team

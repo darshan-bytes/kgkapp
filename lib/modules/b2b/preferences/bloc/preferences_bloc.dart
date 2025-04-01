@@ -39,7 +39,9 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     currencyList = StorageManager().getCurrencyList();
 
     selectedCountry = countryList.first;
-    selectedLanguage = languageList.firstWhereOrNull((element) => element == StorageManager().getLocale());
+    selectedLanguage = languageList.firstWhereOrNull((element) => element == StorageManager().getLocale()) ??
+        languageList.firstWhereOrNull((e) => e.isDefault == true) ??
+        languageList.firstWhereOrNull((e) => e.code == APPStrings.languageEn);
     selectedCurrency =
         currencyList.firstWhereOrNull((element) => element.id == StorageManager().getSelectedCurrency()?.id) ?? currencyList.firstOrNull;
 

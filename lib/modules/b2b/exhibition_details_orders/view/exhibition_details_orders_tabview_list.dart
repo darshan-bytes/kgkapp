@@ -18,21 +18,38 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartTextField.search(
-                        height: 48.h,
-                        onValueChanges: (value) => {},
-                        onFieldSubmitted: (value) => {},
+                        height: 48.w,
                         hintText: APPStrings.searchOrder.tr,
+                        controller: bloc.searchOrderController,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(4.r), bottomLeft: Radius.circular(4.r)),
+                        focusNode: bloc.focusNode,
+                        onTap: () {
+                          Scrollable.ensureVisible(
+                            bloc.tabTargetKey.currentContext!,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.fastOutSlowIn,
+                          );
+                        },
+                        onTapOutside: (value) => FocusScope.of(context).unfocus(),
+                        onValueChanges: (value) {
+                          bloc.add(ExhibitionOrdersListSearchEvent(context: context));
+                        },
+                        onFieldSubmitted: (value) {
+                          bloc.add(ExhibitionOrdersListSearchEvent(context: context));
+                        },
                       ),
                     ),
-                    SizedBox(width: 16.0.w),
-                    SelectionButton(
-                      width: 48.w,
-                      imageHeight: 24.5.w,
-                      imageWidth: 24.5.w,
-                      isSelected: false,
-                      image: AppImages.icMenu,
-                      onTap: () {},
-                    ),
+
+                    /// TODO :: Not in use
+                    // SizedBox(width: 16.0.w),
+                    // SelectionButton(
+                    //   width: 48.w,
+                    //   imageHeight: 24.5.w,
+                    //   imageWidth: 24.5.w,
+                    //   isSelected: false,
+                    //   image: AppImages.icMenu,
+                    //   onTap: () {},
+                    // ),
                   ],
                 ),
               ),
@@ -47,13 +64,13 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is ExhibitionListingLoadedMoreState ||
           current is ExhibitionListingLoadingMoreState ||
-          current is ExhibitionDetailsLoadedState,
+          current is ExhibitionDetailsLoadedState ||
+          current is ExhibitionDetailsLoadingState,
       builder: (context, state) {
-        if (bloc.exhibitionOrdersList.isEmpty) {
-          return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
-        }
-        return ListView.separated(
-          padding: EdgeInsetsDirectional.only(top: 8.w, start: 16.w, end: 16.w),
+        if (state is ExhibitionDetailsLoadingState) return SmartCircularProgressIndicator();
+        if (bloc.exhibitionOrdersList.isEmpty) return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
+        return ListView.builder(
+          padding: EdgeInsetsDirectional.only(top: 8.w, start: 16.w, end: 16.w, bottom: 48.h),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: bloc.exhibitionOrdersList.length,
@@ -65,13 +82,14 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
                   listingItemModel: item,
                   type: B2BListingType.exhibitionDetailPageOrdersType,
                   onTapMenuButton: () {},
+                  isLastFullWidthRequired: true,
+                  margin: EdgeInsetsDirectional.only(bottom: 16.w),
                 ),
                 if (state is ExhibitionListingLoadingMoreState && index == bloc.exhibitionOrdersList.length - 1)
                   const SmartCircularProgressIndicator(),
               ],
             );
           },
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
         );
       },
     );

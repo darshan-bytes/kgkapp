@@ -484,7 +484,7 @@ class Utils {
       offerPrice: item.discountPrice?.toString().setCurrency,
       finalPrice: item.discountPrice?.toString().setCurrency,
       discountPercentageString: item.discountEXT,
-      productId: item.id ?? "",
+      productId: item.suid ?? "",
       commodity: Commodity.jewellery,
       isFavourite: item.isFavorite,
       wishlistId: item.wishlistID,
@@ -508,7 +508,7 @@ class Utils {
   static ProductDetailsModel convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
     return ProductDetailsModel(
       suid: diamond.suid,
-      productId: diamond.id,
+      productId: diamond.suid,
       imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
       name: diamond.rmDescription ?? "",
       ctsOrGms: diamond.ctsOrGms,
@@ -543,7 +543,7 @@ class Utils {
   static ProductDetailsModel convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
     return ProductDetailsModel(
       suid: gemstone.suid,
-      productId: gemstone.id,
+      productId: gemstone.suid,
       imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
       name: gemstone.rmDescription ?? "",
       ctsOrGms: gemstone.ctsOrGms,
@@ -639,5 +639,27 @@ class Utils {
       default:
         return categoryName ?? "Unknown";
     }
+  }
+
+  /// Converts a country code to its corresponding emoji flag.
+  /// The country code should be a two-letter ISO 3166-1 alpha-2 code.
+  /// Each letter is converted to a regional indicator symbol.
+  /// Example:
+  /// ```dart
+  /// String emoji = countryCodeToEmoji("US"); // 🇺🇸
+  /// ```
+  static String countryCodeToEmoji(String countryCode) {
+    if (countryCode.length != 2) {
+      return countryCode;
+    }
+    // 0x41 is Letter A
+    // 0x1F1E6 is Regional Indicator Symbol Letter A
+    // Example :
+    // firstLetter U => 20 + 0x1F1E6
+    // secondLetter S => 18 + 0x1F1E6
+    // See: https://en.wikipedia.org/wiki/Regional_Indicator_Symbol
+    final int firstLetter = countryCode.codeUnitAt(0) - 0x41 + 0x1F1E6;
+    final int secondLetter = countryCode.codeUnitAt(1) - 0x41 + 0x1F1E6;
+    return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
   }
 }

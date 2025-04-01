@@ -174,6 +174,20 @@ class ProductListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
+            if (productDetails.title != null)
+              SmartText(
+                productDetails.title,
+                style: style.diamondTextStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            if (productDetails.subTitle != null)
+              SmartText(
+                "${productDetails.subTitle}\n\n",
+                style: style.productNameStyle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
