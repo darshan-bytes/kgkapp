@@ -138,4 +138,7 @@ class ApiKey {
   static const String createdAt = 'createdAt';
   static const String presentationNumber = 'presentation_number';
   static const String approved = 'approved';
+  static const String ids = 'ids';
+  static const String inquiryContextId = 'inquiry_context_id';
+  static const String contextId = 'context_id';
 }

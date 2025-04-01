@@ -682,6 +682,14 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  //removeMyInquiry
+  Future<Either<ErrorResponse, CommonResponse>?> removeMyInquiry({required Map<String, dynamic> body}) async {
+    context.setAppLoading(true);
+    var response = await deleteMethod<Map<String, dynamic>>(ApiClient.removeMyInquiry, withFullResponse: true, body: body);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // For Gemstone Filter Option
   Future<Either<ErrorResponse, List<FilterOptionModel>>?> fetchFilterOptionList(
       {required String listType, String? type, String? subTypeCode}) async {
@@ -1188,6 +1196,14 @@ class AppRepository extends ApiService {
   Future<Either<ErrorResponse, CommonResponse>?> submitMakeInquiry({required Map<String, dynamic> body}) async {
     context.setAppLoading(true);
     var response = await postMethod<Map<String, dynamic>>(ApiClient.submitMakeInquiry, body, withFullResponse: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  // edit Make Inquiry
+  Future<Either<ErrorResponse, CommonResponse>?> editMakeInquiry({required Map<String, dynamic> body, required String inquiryId}) async {
+    context.setAppLoading(true);
+    var response = await updateMethod<Map<String, dynamic>>(ApiClient.editMakeInquiry(inquiryId), body, withFullResponse: true);
     context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }

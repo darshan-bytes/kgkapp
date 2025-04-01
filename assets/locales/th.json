@@ -849,9 +849,9 @@
   "mob_error_select_status": "กรุณาเลือกสถานะ",
   "mob_error_enter_comment": "กรุณากรอกรายละเอียด",
   "mob_total_quantity": "ปริมาณทั้งหมด",
-  "mob_error_enter_comment": "กรุณากรอกรายละเอียด",
   "mob_inquiry_id": "รหัสการสอบถาม",
   "mob_product": "ผลิตภัณฑ์",
   "mob_edit_inquiry": "แก้ไขการสอบถาม",
-  "mob_remove_inquiry": "ลบการสอบถาม"
+  "mob_remove_inquiry": "ลบการสอบถาม",
+  "mob_remove_inquiry_msg": "การสอบถามที่เลือกจะถูกลบออกจากรายการ",
 }

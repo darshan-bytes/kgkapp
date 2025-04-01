@@ -849,9 +849,9 @@
   "mob_error_select_status": "பதில் தேர்ந்தெடுக்கவும்",
   "mob_error_enter_comment": "பின்வரும் கருத்து உள்ளிடவும்",
   "mob_total_quantity": "மொத்த அளவு",
-  "mob_error_enter_comment": "பின்வரும் கருத்து உள்ளிடவும்",
   "mob_inquiry_id": "கோப்பு எண்",
   "mob_product": "தயாரிப்பு",
   "mob_edit_inquiry": "கோப்பை மாற்று",
-  "mob_remove_inquiry": "கோப்பை நீக்கு"
+  "mob_remove_inquiry": "கோப்பை நீக்கு",
+  "mob_remove_inquiry_msg": "Are you sure you want to remove this inquiry?"
 }

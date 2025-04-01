@@ -20,6 +20,8 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
 
   MyInquiryBloc() : super(MyInquiryInitial()) {
     on<MyInquiryInitialEvent>(_onMyInquiryInitialEvent);
+    on<MyInquiryUpdateEvent>(_onMyInquiryUpdateEvent);
+    on<MyInquiryRemoveEvent>(_onMyInquiryRemoveEvent);
   }
 
   /// This function is used to handle the initial event of the bloc
@@ -27,6 +29,7 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     if (isInitialized) return;
     emit(MyInquiryReloadState());
     isInitialized = true;
+
     _initializePagination(event.context);
     _fetchFilterData(event.context, emit);
     if (totalNumberOfPages == null || smartPaginationScrollController.currentPage <= totalNumberOfPages!) {
@@ -57,7 +60,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
   /// Setup filters
   Future<void> _setupFilters(BuildContext context) async {
     Either<ErrorResponse, AdvanceFilterOptionModel>? response;
-    // ToDo : Get My Inquiery Filter Api Call
     response = await AppRepository(context).fetchMyInquiryFilterOptionList();
     response?.fold((l) {
       Utils.showMessage(l.message);
@@ -74,8 +76,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
           );
           filterData.add(filter);
         }
-
-        print('Filter Data : ${filterData.length}');
       }
     });
   }
@@ -112,7 +112,6 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
       List<MyInquiriesModel> dataList = success.dataList ?? [];
       myInquiryList.addAll(_populateMyInquiryList(dataList));
       smartPaginationScrollController.isPageLoaded.complete(smartPaginationScrollController.currentPage == totalNumberOfPages);
-      emit(MyInquiryLoadedState());
     });
   }
 
@@ -123,6 +122,8 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
         strInquiryId: data.id ?? '',
         strType: data.inquiryType ?? '',
         strProduct: data.commodity ?? '',
+        strName: data.name ?? '',
+        strEmail: data.email ?? '',
         strCreatedOn: data.createdAt?.toLocal().dateToStringFormat(outputDateFormat: DateFormatter.dateFormatDDMMMYYYYHHMMA) ?? '',
         status: data.status != null ? getOrderStatus(orderStatus: data.status!) : null,
         fields: generateB2BItemFields(data.assignedToDetails),
@@ -132,17 +133,15 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
 
   /// Get order status
   ProjectStatus getOrderStatus({required String orderStatus}) {
-    switch (orderStatus) {
-      case "approved":
-        return ProjectStatus.approval;
-      case "pending":
-        return ProjectStatus.pending;
-      case "completed":
-        return ProjectStatus.completed;
-      case "cancelled":
-        return ProjectStatus.cancelled;
-      case "in_progress":
-        return ProjectStatus.orangeInProgress;
+    switch (orderStatus.toLowerCase()) {
+      case "new":
+        return ProjectStatus.newStatus;
+      case "open":
+        return ProjectStatus.open;
+      case "progress":
+        return ProjectStatus.progress;
+      case "close":
+        return ProjectStatus.close;
       default:
         return ProjectStatus.pending;
     }
@@ -216,5 +215,82 @@ class MyInquiryBloc extends Bloc<MyInquiryEvent, MyInquiryState> {
     }
 
     return filters;
+  }
+
+  //_onMyInquiryUpdateEvent
+  Future<void> _onMyInquiryUpdateEvent(MyInquiryUpdateEvent event, Emitter<MyInquiryState> emit) async {
+    emit(MyInquiryReloadState());
+    myInquiryList.clear();
+    smartPaginationScrollController.pullToRefresh();
+    await fetchMyInquiries(event.context, emit);
+    emit(MyInquiryLoadedState());
+    // smartPaginationScrollController.currentPage = 1;
+    smartPaginationScrollController.isPageLoaded.complete(false);
+  }
+
+  //_onMyInquiryRemoveEvent
+  Future<void> _onMyInquiryRemoveEvent(MyInquiryRemoveEvent event, Emitter<MyInquiryState> emit) async {
+    emit(MyInquiryReloadState());
+
+    /// Show confirmation dialog
+    await showConfirmationDialog(
+        context: event.context, title: APPStrings.makeAnInquiry.tr, message: APPStrings.removeInquiryMsg.tr, index: event.index);
+    emit(MyInquiryLoadedState());
+  }
+
+  /// showConfirmationDialog
+  Future<void> showConfirmationDialog({
+    required BuildContext context,
+    required String title,
+    required String message,
+    required int index,
+  }) async {
+    await Utils.showSmartModalBottomSheet(
+      context: context,
+      builder: (mainContext) {
+        return ConfirmationDialog(
+          title: title,
+          message: message,
+          onDeniedText: APPStrings.cancel.tr,
+          onApprovedText: APPStrings.remove.tr,
+          onDenied: () {
+            mainContext.pop();
+          },
+          onApproved: () async {
+            await removeInquiry(context, index, myInquiryList, smartPaginationScrollController);
+          },
+        );
+      },
+    );
+  }
+
+  /// Clear data
+  clearData() {
+    myInquiryList.clear();
+    smartPaginationScrollController.currentPage = 1;
+    smartPaginationScrollController.isPageLoaded.complete(false);
+  }
+
+  Future<void> removeInquiry(BuildContext context, int index, List<B2BCustomListingDataModel> myInquiryList,
+      SmartPaginationScrollController smartPaginationScrollController) async {
+    if (myInquiryList.isEmpty) return;
+
+    context.pop();
+
+    final ids = [myInquiryList[index].strInquiryId ?? ''];
+    final params = {ApiKey.ids: ids};
+
+    try {
+      final response = await AppRepository(context).removeMyInquiry(body: params);
+      response?.fold(
+        (error) => Utils.showMessage(error.message),
+        (success) {
+          Utils.showMessage(success.message);
+          add(MyInquiryUpdateEvent(context));
+        },
+      );
+    } catch (e) {
+      Utils.showMessage('An error occurred: $e');
+    }
   }
 }

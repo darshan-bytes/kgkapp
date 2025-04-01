@@ -32,3 +32,32 @@ final class MyInquiryLoadMoreEvent extends MyInquiryEvent {
   @override
   List<Object> get props => [currentPage];
 }
+
+final class MyInquiryEditEvent extends MyInquiryEvent {
+  final String inquiryId;
+  final BuildContext context;
+
+  const MyInquiryEditEvent(this.inquiryId, this.context);
+
+  @override
+  List<Object> get props => [inquiryId, context];
+}
+
+final class MyInquiryUpdateEvent extends MyInquiryEvent {
+  final BuildContext context;
+
+  const MyInquiryUpdateEvent(this.context);
+
+  @override
+  List<Object> get props => [context];
+}
+
+final class MyInquiryRemoveEvent extends MyInquiryEvent {
+  final int index;
+  final BuildContext context;
+
+  const MyInquiryRemoveEvent(this.index, this.context);
+
+  @override
+  List<Object> get props => [index, context];
+}

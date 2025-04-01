@@ -1045,4 +1045,7 @@ class APPStrings {
   static const String totalQuantity = 'mob_total_quantity';
   static const String inquiryId = 'mob_inquiry_id';
   static const String product = 'mob_product';
+  static const String editInquiry = 'mob_edit_inquiry';
+  static const String removeInquiry = 'mob_remove_inquiry';
+  static const String removeInquiryMsg = 'mob_remove_inquiry_msg';
 }

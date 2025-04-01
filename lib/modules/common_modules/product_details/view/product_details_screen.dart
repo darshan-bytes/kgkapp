@@ -380,7 +380,7 @@ class ProductDetailsScreen extends StatelessWidget {
             _buildRatingBarAndReviews(style, bloc.productDetails),
           ],
           if (bloc.canCompare) ...[
-            SizedBox(height: 32.h),
+            SizedBox(height: 12.h),
             _compareWidget(bloc, style),
           ],
           SizedBox(height: 16.h),
@@ -574,13 +574,36 @@ class ProductDetailsScreen extends StatelessWidget {
     return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
       buildWhen: (previous, current) => current is ProductCompareToggleState,
       builder: (context, state) {
-        return SmartCheckbox(
-          value: bloc.isCompare,
-          onChanged: (value) {
-            bloc.add(ToggleCompareProductEvent(context: context));
-          },
-          label: APPStrings.compareProduct.tr,
-          labelStyle: style.compareProductStyle,
+        return Row(
+          children: [
+            Expanded(
+              child: SmartCheckbox(
+                value: bloc.isCompare,
+                onChanged: (value) {
+                  bloc.add(ToggleCompareProductEvent(context: context));
+                },
+                label: APPStrings.compareProduct.tr,
+                labelStyle: style.compareProductStyle,
+              ),
+            ),
+            SelectionButton(
+              height: 42.w,
+              width: 42.w,
+              padding: EdgeInsetsDirectional.all(6.w),
+              isSelected: false,
+              onTap: () {
+                context.pushNamed(AppRoutes.makeInquiryPage, arguments: {
+                  RoutesData.inquiryContextId: bloc.productDetails?.suid,
+                  RoutesData.contextId: bloc.productDetails?.contractNoSkuNo,
+                  RoutesData.commodity: bloc.productDetails?.commodity?.value,
+                });
+              },
+              imageWidth: 20.w,
+              imageHeight: 20.w,
+              fit: BoxFit.contain,
+              image: AppImages.icInquiries,
+            )
+          ],
         );
       },
     );

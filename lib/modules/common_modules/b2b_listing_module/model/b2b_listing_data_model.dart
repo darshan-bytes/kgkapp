@@ -87,6 +87,7 @@ class B2BCustomListingDataModel {
   String? strInquiryId;
   String? strType;
   String? strProduct;
+  String? strComment;
   List<B2BItemField>? fields;
   List<String>? descriptionImageList;
   List<Presentation>? presentationList;
@@ -177,6 +178,7 @@ class B2BCustomListingDataModel {
     this.strInquiryId,
     this.strType,
     this.strProduct,
+    this.strComment,
     this.fields,
     this.descriptionImageList,
     this.presentationList,

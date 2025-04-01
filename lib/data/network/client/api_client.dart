@@ -209,7 +209,11 @@ class ApiClient {
 
   static const String submitMakeInquiry = '$apiBaseUrl/customer-inquiry';
 
+  static String editMakeInquiry(String id) => '$apiBaseUrl/customer-inquiry/$id';
+
   static const String myInquiries = '$apiBaseUrl/customer-inquiry/filters';
+
+  static const String removeMyInquiry = '$apiBaseUrl/customer-inquiry';
 
   static const String submitContactUs = '$apiBaseUrl/contact_us';
 

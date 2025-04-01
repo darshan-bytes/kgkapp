@@ -316,8 +316,10 @@ class AppRoutes {
 
       case makeInquiryPage:
         builder = (context) {
-          BlocProvider.of<MakeInquiryBloc>(context).add(MakeInquiryInitialEvent(context: context));
-          return const MakeInquiryScreen();
+          return BlocProvider<MakeInquiryBloc>(
+            create: (context) => MakeInquiryBloc()..add(MakeInquiryInitialEvent(context: context)),
+            child: const MakeInquiryScreen(),
+          );
         };
         break;
 
@@ -830,7 +832,11 @@ enum RoutesData {
   filterData,
   bloc,
   isGoToBag,
-  appBarTitle
+  appBarTitle,
+  inquiryData,
+  isInquiryUpdated,
+  inquiryContextId,
+  contextId
 }
 
 enum ScreenIdentifier {

@@ -13,19 +13,24 @@ class MyInquiryScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomNavigationBar(bloc, context),
       body: Padding(
         padding: EdgeInsetsDirectional.all(17.w),
-        child: ListView.builder(
-            itemCount: bloc.myInquiryList.length,
-            itemBuilder: (listContext, index) {
-              return B2BListingItem(
-                margin: EdgeInsetsDirectional.only(bottom: 24.h),
-                onTapMenuButton: () {
-                  handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
-                },
-                type: B2BListingType.myInquiryType,
-                listingItemModel: bloc.myInquiryList[index],
-                onTap: () {},
-              );
-            }),
+        child: BlocBuilder<MyInquiryBloc, MyInquiryState>(
+          buildWhen: (previous, current) => current is MyInquiryLoadedState,
+          builder: (context, state) {
+            return ListView.builder(
+                itemCount: bloc.myInquiryList.length,
+                itemBuilder: (listContext, index) {
+                  return B2BListingItem(
+                    margin: EdgeInsetsDirectional.only(bottom: 24.h),
+                    onTapMenuButton: () {
+                      handleMenuButtonTap(context, index, bloc, bloc.myInquiryList[index].strInquiryId ?? '');
+                    },
+                    type: B2BListingType.myInquiryType,
+                    listingItemModel: bloc.myInquiryList[index],
+                    onTap: () {},
+                  );
+                });
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -38,11 +43,11 @@ class MyInquiryScreen extends StatelessWidget {
 
   void handleMenuButtonTap(BuildContext mainContext, int index, MyInquiryBloc bloc, String strInquiryId) {
     Utils.showSmartModalBottomSheet(
-        context: mainContext,
-        //backgroundColor: style.backgroundColor,
-        builder: (BuildContext context) {
-          return buildDiamondMenuPopUp(context, index, bloc, mainContext);
-        });
+      context: mainContext,
+      builder: (BuildContext context) {
+        return buildDiamondMenuPopUp(context, index, bloc, mainContext);
+      },
+    );
   }
 
   Widget buildDiamondMenuPopUp(BuildContext context, int index, MyInquiryBloc bloc, BuildContext mainContext) {
@@ -53,24 +58,33 @@ class MyInquiryScreen extends StatelessWidget {
         children: [
           buildRowButton(
             style,
-            () {
-              // implemented add to watchlist instead of add to wishlist
-              // context.pop();
-              // if (bloc.myBagProductList[index].productId != null) {
-              //   bloc.add(MyBagMoveToWishListEvent(index: index, context: mainContext));
-              // }
+            () async {
+              context.pop();
+              Map<RoutesData, bool>? data = await mainContext.pushNamed(
+                AppRoutes.makeInquiryPage,
+                arguments: {
+                  RoutesData.inquiryData: bloc.myInquiryList[index],
+                },
+              ).then((onValue) {
+                if (onValue != null) {
+                  if (onValue[RoutesData.isInquiryUpdated]!) {
+                    bloc.add(MyInquiryUpdateEvent(mainContext));
+                  }
+                }
+                return null;
+              });
             },
-            "Edit Inquiry",
+            APPStrings.editInquiry.tr,
             AppImages.icEditPrimary,
           ),
           Divider(indent: 16.w, endIndent: 16.w),
           buildRowButton(
             style,
             () {
-              // context.pop();
-              // bloc.add(MyBagRemoveProductEvent(index: index, context: mainContext));
+               context.pop();
+               bloc.add(MyInquiryRemoveEvent(index, mainContext));
             },
-            "Remove Inquiry",
+            APPStrings.removeInquiry.tr,
             AppImages.icRemove,
           ),
         ],
