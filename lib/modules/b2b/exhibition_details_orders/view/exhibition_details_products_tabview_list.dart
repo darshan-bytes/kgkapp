@@ -15,8 +15,10 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
         children: [
           SizedBox(height: 24.h),
           _buildProductDisplay(bloc, style),
-          SizedBox(height: 24.h),
-          SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]), style: style.listStatusStyle),
+
+          ///TODO :: showing list length but currently not showing as per requirement
+          // SizedBox(height: 24.h),
+          // SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.productList.length]), style: style.listStatusStyle),
           SizedBox(height: 24.h),
           _buildExhibitionFilterCount(bloc, context),
           SizedBox(height: 24.h),
@@ -49,7 +51,8 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmartText(APPStrings.showingListLengthX.tr.interpolate([100]), style: diamondListingStyle.filterProductCountTextStyle),
+              SmartText(APPStrings.showingListLengthX.tr.interpolate([bloc.totalFilteredRecords]),
+                  style: diamondListingStyle.filterProductCountTextStyle),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -121,20 +124,13 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
     return SmartGridView(
       items: bloc.productList.map((ProductDetailsModel productDetails) {
         return ProductGridItem(
+          key: ValueKey(productDetails.suid),
           productDetails: productDetails,
           isOutOfStock: false,
-          onEyeTap: () {
-            Utils.showSmartModalBottomSheet(
-              context: context,
-              enableDrag: false,
-              useRootNavigator: true,
-              builder: (context) {
-                return const AddWatchlistScreen();
-              },
-            );
-          },
-          onFavTap: () {},
-          onTap: () {},
+          isBadgeVisible: false,
+          isCrtAndGramVisible: false,
+          isHidePriceView: _isHidePriceView(productDetails.commodity!),
+          isCommentSelected: productDetails.isCommentVisible,
         );
       }).toList(),
       isLoadingMore: state is ExhibitionListingLoadingMoreState,
@@ -151,8 +147,6 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
         return Column(
           children: [
             ProductListItem(
-              onEyeTap: () {},
-              onFavTap: () {},
               onTap: () {},
               productDetails: bloc.productList[index],
             ),
@@ -162,5 +156,14 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
       },
       separatorBuilder: (context, index) => SizedBox(height: 17.h),
     );
+  }
+
+  bool _isHidePriceView(Commodity commodity) {
+    return ![
+      Commodity.jewellery,
+      Commodity.gemstone,
+      Commodity.diamond,
+      Commodity.skuLibrary,
+    ].contains(commodity);
   }
 }

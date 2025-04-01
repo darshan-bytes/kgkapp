@@ -60,10 +60,10 @@ dependencies:
   # For Country Code Picker
   #  country_picker: ^2.0.27
   country_picker:
-    #    git:
-    #      url: https://gitlab.bytestechnolab.com/flutter/flutter_country_picker.git
-    #      ref: main
-    path: ../country_picker
+    git:
+      url: https://gitlab.bytestechnolab.com/flutter/flutter_country_picker.git
+      ref: main
+    # path: ../country_picker
 
   # For Carousel image Slider
   carousel_slider: ^5.0.0
@@ -136,7 +136,6 @@ dependencies:
   flutter_branch_sdk: ^8.4.1
 
   country_phone_validator: ^1.0.1
-
 
   # For Photo View
   photo_view: ^0.15.0
