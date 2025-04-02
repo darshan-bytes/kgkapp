@@ -164,7 +164,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                   designModel: item,
                   onTap: () {
                     context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                      RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD,
+                      RoutesData.isPageFor: bloc.screenIdentifier,
                       RoutesData.productId: item.id,
                     });
                   },
@@ -193,7 +193,7 @@ class CadLibraryListingScreen extends StatelessWidget {
                 designModel: bloc.cadList[index],
                 onTap: () {
                   context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                    RoutesData.isPageFor: ScreenIdentifier.productForLibraryCAD,
+                    RoutesData.isPageFor: bloc.screenIdentifier,
                     RoutesData.productId: bloc.cadList[index].id,
                   });
                 },
