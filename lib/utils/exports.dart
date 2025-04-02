@@ -533,3 +533,6 @@ export 'package:kgk/model/status_model.dart';
 export 'package:kgk/modules/b2b/my_inquiry/bloc/my_inquiry_bloc.dart';
 export 'package:kgk/modules/b2b/my_inquiry/view/my_inquiry_screen.dart';
 export 'package:kgk/modules/b2b/my_inquiry/model/my_inquiries_model.dart';
+export 'package:flutter_langdetect/flutter_langdetect.dart';
+export 'package:kgk/utils/language_helper.dart';
+

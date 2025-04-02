@@ -1,8 +1,8 @@
 import 'package:kgk/kgk.dart';
 
 class SmartText extends StatelessWidget {
-  final String? _text;
-  final TextStyle? _style;
+  final String? text;
+  final TextStyle? style;
   final Color? color;
   final FontWeight? fontWeight;
   final EdgeInsetsGeometry? optionalPadding;
@@ -14,56 +14,73 @@ class SmartText extends StatelessWidget {
   final bool isAutoSizeText;
 
   const SmartText(
-    String? text, {
-    super.key,
-    this.color,
-    TextStyle? style,
-    this.fontWeight,
-    this.optionalPadding,
-    this.overflow,
-    this.textAlign,
-    this.decoration,
-    this.maxLines,
-    this.isAutoSizeText = false,
-    this.onTap,
-  })  : _text = text,
-        _style = style;
+      this.text, {
+        super.key,
+        this.color,
+        this.style,
+        this.fontWeight,
+        this.optionalPadding,
+        this.overflow,
+        this.textAlign,
+        this.decoration,
+        this.maxLines,
+        this.isAutoSizeText = false,
+        this.onTap,
+      });
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? style = _style ?? TextStyle(fontSize: 14.0.sp, fontWeight: FontWeight.w400, color: Colors.black);
-    Widget child;
-    if (isAutoSizeText) {
-      child = AutoSizeText(
-        _text?.tr ?? _text ?? '',
-        style: ((color != null || fontWeight != null || decoration != null))
-            ? style.merge(TextStyle(color: color, fontWeight: fontWeight, decoration: decoration))
-            : style,
-        overflow: overflow,
-        textAlign: textAlign,
-        maxLines: maxLines,
-      );
-    } else {
-      child = Text(
-        _text?.tr ?? _text ?? '',
-        style: ((color != null || fontWeight != null || decoration != null))
-            ? style.merge(TextStyle(color: color, fontWeight: fontWeight, decoration: decoration))
-            : style,
-        overflow: overflow,
-        textAlign: textAlign,
-        maxLines: maxLines,
-      );
-    }
+    // Detect language
+    final String languageCode = LanguageHelper.detectLanguage(text);
 
-    if (_text != null && _text.isNotEmpty && optionalPadding != null) {
+    // Calculate base font size
+    final double baseFontSize = style?.fontSize ?? 14.0.sp;
+
+    // Apply font size adjustments
+    final double adjustedFontSize = LanguageHelper.adjustFontSize(baseFontSize, languageCode);
+
+    // Create final style with all properties
+    final TextStyle finalStyle = (style ?? TextStyle(
+      fontSize: adjustedFontSize,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
+    )).copyWith(
+      fontSize: adjustedFontSize,
+      fontWeight: fontWeight ?? style?.fontWeight,
+      color: color ?? style?.color,
+      decoration: decoration ?? style?.decoration,
+    );
+
+    // Display text with translation if available
+    final String displayText = text?.tr ?? text ?? '';
+
+    // Create appropriate text widget
+    Widget child = isAutoSizeText
+        ? AutoSizeText(
+      displayText,
+      style: finalStyle,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+    )
+        : Text(
+      displayText,
+      style: finalStyle,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+    );
+
+    // Add padding if needed
+    if (text != null && text!.isNotEmpty && optionalPadding != null) {
       child = Padding(padding: optionalPadding!, child: child);
     }
+
+    // Add tap gesture if needed
     if (onTap != null) {
-      child = GestureDetector(
-        onTap: onTap,
-        child: child,
-      );
+      child = GestureDetector(onTap: onTap, child: child);
     }
+
     return child;
   }
 }

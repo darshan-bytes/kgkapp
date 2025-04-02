@@ -9,6 +9,8 @@ void main() async {
   /// Initializing Hive database
   await StorageManager().init();
 
+  await initLangDetect();
+
   /// Initializing HttpOverrides
   HttpOverrides.global = MyHttpOverrides();
 
