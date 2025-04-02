@@ -12,6 +12,9 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
 
   bool isShipping = false;
 
+  bool canPop = false;
+  bool isEdit = false;
+
   AddressDetails? get defaultAddress =>
       addressList.firstWhereOrNull((element) => (isShipping ? element.isDefaultShipping : element.isDefaultBilling));
 
@@ -52,6 +55,7 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
             selectedAddress = value[RoutesData.addressDetails];
             if (selectedAddress != null) {
               addressList[event.index] = selectedAddress!;
+              isEdit = true;
             }
             emit(const ShippingAddressLoadedState());
           } catch (e) {
@@ -111,5 +115,10 @@ class ShippingAddressBloc extends Bloc<ShippingAddressEvent, ShippingAddressStat
       }
     }
     return result;
+  }
+
+  void popWithData(BuildContext context) {
+    canPop = true;
+    context.pop(arguments: {RoutesData.isEdited: isEdit});
   }
 }

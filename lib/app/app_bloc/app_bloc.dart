@@ -121,6 +121,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       await AppLocalizations.of(getNavigatorKeyContext)?.changeLocale();
       locale = AppLocalizations.of(getNavigatorKeyContext)?.locale ?? const Locale(APPStrings.languageEn);
       await sortOptionListApiCall(event.context);
+      countryList.clear();
+      countryStateMap.clear();
       emit(LanguageState(locale));
       event.callback?.call();
     } catch (e) {

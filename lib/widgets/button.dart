@@ -129,12 +129,16 @@ class SmartButton extends StatelessWidget {
                             ),
                             SizedBox(width: 8.w),
                           ],
-                          SmartText(
-                            title,
-                            textAlign: TextAlign.center,
-                            style: isEnabled
-                                ? (isWhite ? style.titleWhiteStyle : style.titleStyle).merge(titleStyle)
-                                : style.disableTitleStyle.merge(disableTitleStyle),
+                          Flexible(
+                            child: SmartText(
+                              title,
+                              textAlign: TextAlign.center,
+                              isAutoSizeText: true,
+                              maxLines: 1,
+                              style: isEnabled
+                                  ? (isWhite ? style.titleWhiteStyle : style.titleStyle).merge(titleStyle)
+                                  : style.disableTitleStyle.merge(disableTitleStyle),
+                            ),
                           ),
                           if (suffixImage.isNotNullNorEmpty) ...[
                             SizedBox(width: 8.w),

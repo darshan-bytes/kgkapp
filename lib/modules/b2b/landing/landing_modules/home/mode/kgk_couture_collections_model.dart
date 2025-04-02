@@ -94,8 +94,8 @@ class KgkCoutureDetails {
   final String? guestUser;
   final dynamic customerScope;
   final List<ComponentDetailShopByMetal> componentDetails;
-  final double? finalPrice;
-  final double? discountPrice;
+  final String? finalPrice;
+  final String? discountPrice;
 
   KgkCoutureDetails copyWith({
     String? id,
@@ -142,8 +142,8 @@ class KgkCoutureDetails {
     String? guestUser,
     dynamic customerScope,
     List<ComponentDetailShopByMetal>? componentDetails,
-    double? finalPrice,
-    double? discountPrice,
+    String? finalPrice,
+    String? discountPrice,
   }) {
     return KgkCoutureDetails(
       id: id ?? this.id,
@@ -243,8 +243,8 @@ class KgkCoutureDetails {
       componentDetails: json["component_details"] == null
           ? []
           : List<ComponentDetailShopByMetal>.from(json["component_details"]!.map((x) => ComponentDetailShopByMetal.fromJson(x))),
-      finalPrice: json["final_price"]?.toString().toDouble,
-      discountPrice: json["discount_price"]?.toString().toDouble,
+      finalPrice: json["final_price"]?.toString(),
+      discountPrice: json["discount_price"]?.toString(),
     );
   }
 

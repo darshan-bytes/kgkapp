@@ -85,9 +85,7 @@ class ProductInfoItem extends StatelessWidget {
             PositionedDirectional(
               start: -3.w,
               child: SmartImage(
-                path: AppImages.icAuctionLabel,
-                height: 32.w,
-                width: 92.w,
+                path: AppImages.icAuctionLabel(AppLocalizations.of(context)?.locale?.languageCode ?? 'en'),
                 fit: BoxFit.fill,
               ),
             ),
