@@ -475,13 +475,6 @@ class AppRoutes {
         };
         break;
 
-      case stylesListingPage:
-        builder = (context) {
-          BlocProvider.of<StylesListingBloc>(context).add(const StylesListingInitialEvent());
-          return const StylesListingScreen();
-        };
-        break;
-
       case digitalCataloguePage:
         builder = (context) {
           return BlocProvider<DigitalCatalogueBloc>(

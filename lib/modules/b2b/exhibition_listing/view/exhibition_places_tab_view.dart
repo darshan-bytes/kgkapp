@@ -114,24 +114,35 @@ class ExhibitionPlacesTabView extends StatelessWidget {
                 primary: false,
                 itemBuilder: (context, subIndex) {
                   ExhibitionSubListingModel item = bloc.exhibitionNameListing[index].exhibitionSubList![subIndex];
-                  return Padding(
-                    padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SmartText(
-                          item.name ?? '',
-                          maxLines: 2,
-                          style: style.listTitleStyle,
-                        ),
-                        SizedBox(height: 8.h),
-                        SmartText(
-                          item.author,
-                          style: style.listAuthorStyle,
-                        ),
-                        SizedBox(height: 12.h),
-                        if (item.status != null) _buildStatusBadge(style, item.status!),
-                      ],
+                  return GestureDetector(
+                    onTap: () {
+                      /// If user is internal user then navigate to exhibition details page otherwise not navigate
+                      UserType userType = BlocProvider.of<AppBloc>(context).userType;
+                      if (userType == UserType.internal) {
+                        context.pushNamed(AppRoutes.exhibitionDetailsPage, arguments: {
+                          RoutesData.exhibitionId: item.id,
+                        });
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.symmetric(vertical: 16.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SmartText(
+                            item.name ?? '',
+                            maxLines: 2,
+                            style: style.listTitleStyle,
+                          ),
+                          SizedBox(height: 8.h),
+                          SmartText(
+                            item.author,
+                            style: style.listAuthorStyle,
+                          ),
+                          SizedBox(height: 12.h),
+                          if (item.status != null) _buildStatusBadge(style, item.status!),
+                        ],
+                      ),
                     ),
                   );
                 },

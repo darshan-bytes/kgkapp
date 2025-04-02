@@ -39,17 +39,6 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
                         },
                       ),
                     ),
-
-                    /// TODO :: Not in use
-                    // SizedBox(width: 16.0.w),
-                    // SelectionButton(
-                    //   width: 48.w,
-                    //   imageHeight: 24.5.w,
-                    //   imageWidth: 24.5.w,
-                    //   isSelected: false,
-                    //   image: AppImages.icMenu,
-                    //   onTap: () {},
-                    // ),
                   ],
                 ),
               ),
@@ -68,7 +57,12 @@ class ExhibitionDetailsOrdersScreen extends StatelessWidget {
           current is ExhibitionDetailsLoadingState,
       builder: (context, state) {
         if (state is ExhibitionDetailsLoadingState) return SmartCircularProgressIndicator();
-        if (bloc.exhibitionOrdersList.isEmpty) return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
+        if (bloc.exhibitionOrdersList.isEmpty) {
+          return NoDataFoundWidget(
+            text: APPStrings.noDataFound.tr,
+            height: context.height * 0.5,
+          );
+        }
         return ListView.builder(
           padding: EdgeInsetsDirectional.only(top: 8.w, start: 16.w, end: 16.w, bottom: 48.h),
           physics: const NeverScrollableScrollPhysics(),

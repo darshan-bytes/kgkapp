@@ -267,8 +267,6 @@ export 'package:kgk/modules/b2b/stone_landing/view/diamond_landing_screen.dart';
 export 'package:kgk/modules/b2b/stone_landing/view/gemstone_landing_screen.dart';
 export 'package:kgk/modules/b2b/stone_landing/view/jewellery_landing_screen.dart';
 export 'package:kgk/modules/b2b/stone_landing/view/stones_landing_screen.dart';
-export 'package:kgk/modules/b2b/styles_listing/bloc/styles_listing_bloc.dart';
-export 'package:kgk/modules/b2b/styles_listing/view/styles_listing_screen.dart';
 export 'package:kgk/modules/b2b/user_master/bloc/user_master_listing_bloc.dart';
 export 'package:kgk/modules/b2b/user_master/model/user_location_model.dart';
 export 'package:kgk/modules/b2b/user_master/view/user_master_listing_screen.dart';
