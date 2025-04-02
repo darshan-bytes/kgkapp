@@ -67,6 +67,14 @@ class ProductInfoClarityChat {
 extension ProductInfoClarityChatExtension on ProductInfoClarityChat {
   bool get isDisplayClarityAndCut => clarity.isNotNullNorEmpty || cut.isNotNullNorEmpty;
 
-  String get displayClarityAndCut =>
-      '${(clarity ?? '').length > 2 ? clarity?.substring(0, 2) : clarity}${(clarity.isNotNullNorEmpty) && (cut.isNotNullNorEmpty) ? '/' : ''}${(cut ?? '').length > 2 ? cut?.substring(0, 2) : cut}';
+  String get displayClarityAndCut {
+    String result = '';
+    if (clarity.isNotNullNorEmpty) {
+      result = ((clarity ?? '').length > 2 ? clarity?.substring(0, 2) : clarity) ?? '-';
+    }
+    if (cut.isNotNullNorEmpty) {
+      result += (result.isNotEmpty ? '/' : '') + (((cut ?? '').length > 2 ? cut?.substring(0, 2) : cut) ?? '');
+    }
+    return result;
+  }
 }

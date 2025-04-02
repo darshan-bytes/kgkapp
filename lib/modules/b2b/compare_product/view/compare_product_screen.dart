@@ -176,7 +176,13 @@ class CompareProductScreen extends StatelessWidget {
           ...(List.generate(bloc.filterList.length, (filterIndex) {
             FilterOptionModel filter = bloc.filterList[filterIndex];
             Map<String, dynamic> productDetail = bloc.compareResult[index];
-            return _buildProductDetailWidgets(index, filter.name ?? '', productDetail[filter.slug]?.toString() ?? '-', style);
+            String? value;
+            if (productDetail[filter.slug] is List) {
+              value = (productDetail[filter.slug] as List).where((e) => e != null).map((e) => e.toString()).join(', ');
+            } else {
+              value = productDetail[filter.slug]?.toString();
+            }
+            return _buildProductDetailWidgets(index, filter.name ?? '', value ?? '-', style);
           })),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

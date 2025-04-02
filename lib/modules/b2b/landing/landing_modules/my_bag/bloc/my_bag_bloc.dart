@@ -168,6 +168,7 @@ class MyBagBloc extends Bloc<MyBagEvent, MyBagState> {
               originalFinalPrice: item.originalFinalPrice,
               finalPrice: item.finalPrice?.setCurrency,
               originalPrice: item.totalPrice?.setCurrency,
+              video: item.video,
             );
           });
         } else {

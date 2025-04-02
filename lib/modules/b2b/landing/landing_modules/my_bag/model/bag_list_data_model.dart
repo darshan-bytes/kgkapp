@@ -128,6 +128,7 @@ class MyBagResult {
     required this.certificate,
     required this.crt,
     required this.gms,
+    required this.video,
   });
 
   final String? suid;
@@ -172,96 +173,7 @@ class MyBagResult {
   final String? certificate;
   final String? crt;
   final String? gms;
-
-  MyBagResult copyWith({
-    String? suid,
-    int? quantity,
-    String? totalPrice,
-    String? rate,
-    String? jewelleryName,
-    String? productId,
-    String? image,
-    String? commodity,
-    double? discountPrice,
-    double? discountPercentage,
-    String? lotCode,
-    String? shape,
-    String? labs,
-    String? cut,
-    String? color,
-    String? clarity,
-    double? ctsOrGms,
-    String? polish,
-    String? symmetry,
-    String? depth,
-    String? table,
-    String? measurements,
-    String? rappaportPrice,
-    String? location,
-    String? status,
-    String? finalPrice,
-    String? shapeImage,
-    String? certificateFile,
-    String? openDnaUrl,
-    String? fluorescence,
-    int? stockQty,
-    double? yourDiscount,
-    String? yourRate,
-    String? yourAmount,
-    double? originalYourRate,
-    double? originalYourAmount,
-    double? originalTotalPrice,
-    String? cscCode,
-    double? originalFinalPrice,
-    String? certificate,
-    String? crt,
-    String? gms,
-  }) {
-    return MyBagResult(
-      suid: suid ?? this.suid,
-      quantity: quantity ?? this.quantity,
-      totalPrice: totalPrice ?? this.totalPrice,
-      rate: rate ?? this.rate,
-      jewelleryName: jewelleryName ?? this.jewelleryName,
-      productId: productId ?? this.productId,
-      image: image ?? this.image,
-      commodity: commodity ?? this.commodity,
-      discountPrice: discountPrice ?? this.discountPrice,
-      discountPercentage: discountPercentage ?? this.discountPercentage,
-      lotCode: lotCode ?? this.lotCode,
-      shape: shape ?? this.shape,
-      labs: labs ?? this.labs,
-      cut: cut ?? this.cut,
-      color: color ?? this.color,
-      clarity: clarity ?? this.clarity,
-      ctsOrGms: ctsOrGms ?? this.ctsOrGms,
-      polish: polish ?? this.polish,
-      symmetry: symmetry ?? this.symmetry,
-      depth: depth ?? this.depth,
-      table: table ?? this.table,
-      measurements: measurements ?? this.measurements,
-      rappaportPrice: rappaportPrice ?? this.rappaportPrice,
-      location: location ?? this.location,
-      status: status ?? this.status,
-      finalPrice: finalPrice ?? this.finalPrice,
-      shapeImage: shapeImage ?? this.shapeImage,
-      certificateFile: certificateFile ?? this.certificateFile,
-      openDnaUrl: openDnaUrl ?? this.openDnaUrl,
-      fluorescence: fluorescence ?? this.fluorescence,
-      stockQty: stockQty ?? this.stockQty,
-      yourAmount: yourAmount ?? this.yourAmount,
-      yourDiscount: yourDiscount ?? this.yourDiscount,
-      yourRate: yourRate ?? this.yourRate,
-      originalYourRate: originalYourRate ?? this.originalYourRate,
-      originalYourAmount: originalYourAmount ?? this.originalYourAmount,
-      originalTotalPrice: originalTotalPrice ?? this.originalTotalPrice,
-      certificate: certificate ?? this.certificate,
-      cscCode: cscCode ?? this.cscCode,
-      originalFinalPrice: originalFinalPrice ?? this.originalFinalPrice,
-      crt: crt ?? this.crt,
-      gms: gms ?? this.gms,
-    );
-  }
+  final String? video;
 
   factory MyBagResult.fromJson(Map<String, dynamic> json) {
     return MyBagResult(
@@ -307,6 +219,7 @@ class MyBagResult {
       certificate: json["certificate"],
       crt: json["crt"]?.toString(),
       gms: json["gms"]?.toString(),
+      video: json["video"]?.toString(),
     );
   }
 
@@ -353,6 +266,7 @@ class MyBagResult {
         "location": location,
         "crt": crt,
         "gms": gms,
+        "video": video,
       };
 
   @override
@@ -399,7 +313,8 @@ class MyBagResult {
           originalTotalPrice == other.originalTotalPrice &&
           cscCode == other.cscCode &&
           originalFinalPrice == other.originalFinalPrice &&
-          certificate == other.certificate;
+          certificate == other.certificate &&
+          video == other.video;
 
   @override
   int get hashCode =>
@@ -442,11 +357,12 @@ class MyBagResult {
       originalTotalPrice.hashCode ^
       cscCode.hashCode ^
       originalFinalPrice.hashCode ^
-      certificate.hashCode;
+      certificate.hashCode ^
+      video.hashCode;
 
   @override
   String toString() {
-    return 'MyBagResult{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount, originalYourRate: $originalYourRate, originalYourAmount: $originalYourAmount, originalTotalPrice: $originalTotalPrice, cscCode: $cscCode, originalFinalPrice: $originalFinalPrice, certificate: $certificate}';
+    return 'MyBagResult{suid: $suid, quantity: $quantity, totalPrice: $totalPrice, rate: $rate, jewelleryName: $jewelleryName, productId: $productId, image: $image, commodity: $commodity, discountPrice: $discountPrice, discountPercentage: $discountPercentage, lotCode: $lotCode, shape: $shape, labs: $labs, cut: $cut, color: $color, clarity: $clarity, ctsOrGms: $ctsOrGms, polish: $polish, symmetry: $symmetry, depth: $depth, table: $table, measurements: $measurements, rappaportPrice: $rappaportPrice, location: $location, status: $status, finalPrice: $finalPrice, shapeImage: $shapeImage, certificateFile: $certificateFile, openDnaUrl: $openDnaUrl, fluorescence: $fluorescence, stockQty: $stockQty, yourDiscount: $yourDiscount, yourRate: $yourRate, yourAmount: $yourAmount, originalYourRate: $originalYourRate, originalYourAmount: $originalYourAmount, originalTotalPrice: $originalTotalPrice, cscCode: $cscCode, originalFinalPrice: $originalFinalPrice, certificate: $certificate, video: $video}';
   }
 
   Commodity get displayCommodity => Commodity.values.firstWhereOrNull((element) => element.value == commodity) ?? Commodity.diamond;

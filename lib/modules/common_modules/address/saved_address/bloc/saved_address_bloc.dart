@@ -56,6 +56,7 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
     Map<RoutesData, dynamic>? result =
         await event.context.pushNamed(AppRoutes.shippingAddressPage, arguments: {RoutesData.isShippingAddress: event.isShipping});
     if (result != null) {
+      bool isEdited = result[RoutesData.isEdited] ?? false;
       AddressDetails? address = result[RoutesData.addressDetails] as AddressDetails?;
       if (address != null) {
         int index = _addressList.indexWhere((element) => element.id == address.id);
@@ -66,6 +67,9 @@ class SavedAddressBloc extends Bloc<SavedAddressEvent, SavedAddressState> {
           _isInitialised = false;
           add(SavedAddressInitialEvent(event.context));
         }
+      } else if (isEdited) {
+        _isInitialised = false;
+        add(SavedAddressInitialEvent(event.context));
       }
     }
   }

@@ -16,7 +16,7 @@ class SecondaryFilterModel {
   factory SecondaryFilterModel.fromJson(Map<String, dynamic> json) {
     return SecondaryFilterModel(
       value: json["value"]?.toString(),
-      label: json["label"],
+      label: json["label"] ?? json["value"],
       imgReferenceId: json["img_reference_id"],
       stoneType: json["stone_type"],
       imgPath: json["img_path"],

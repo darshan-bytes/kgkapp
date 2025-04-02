@@ -125,7 +125,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }
     emit(const StoneProductReloadState());
     emit(const StoneProductLoadedState());
-    _initWishlistUpdaterServiceBloc(context);
+    if (!isClosed) {
+      _initWishlistUpdaterServiceBloc(context);
+    }
   }
 
   /// Get screen identifier
