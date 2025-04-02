@@ -171,7 +171,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       screenIdentifier == ScreenIdentifier.productForRing ||
       screenIdentifier == ScreenIdentifier.productForGemstones ||
       screenIdentifier == ScreenIdentifier.productForLibraryDesign ||
-      screenIdentifier == ScreenIdentifier.productForLibraryCAD;
+      screenIdentifier == ScreenIdentifier.productForLibraryCAD ||
+      screenIdentifier == ScreenIdentifier.productForLibraryStyle;
 
   @override
   Future<void> close() async {
@@ -221,6 +222,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         await _handleDesignLibraryProduct(event, emit);
         break;
       case ScreenIdentifier.productForLibraryCAD:
+      case ScreenIdentifier.productForLibraryStyle:
         await _handleCadLibraryProduct(event, emit);
         break;
       default:

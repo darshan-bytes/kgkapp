@@ -105,15 +105,11 @@ class ExhibitionDetailsProductsTabViewList extends StatelessWidget {
           current is ExhibitionListingLoadingMoreState,
       builder: (context, state) {
         if (bloc.productList.isEmpty) {
-          return _buildEmptyState();
+          return NoDataFoundWidget(text: APPStrings.noDataFound.tr, height: context.height * 0.5);
         }
         return _buildListOrGridView(bloc, state, context);
       },
     );
-  }
-
-  Widget _buildEmptyState() {
-    return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
   }
 
   Widget _buildListOrGridView(ExhibitionDetailsBloc bloc, ExhibitionDetailsState state, BuildContext context) {

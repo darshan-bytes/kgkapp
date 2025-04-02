@@ -66,6 +66,7 @@ class ExhibitionTabView extends StatelessWidget {
                       },
                     ),
                   ),
+                  SliverToBoxAdapter(child: SizedBox(height: 48.h)),
                 ],
               ),
             );
@@ -104,7 +105,7 @@ class ExhibitionTabView extends StatelessWidget {
   Widget _buildExhibitionCatalogueListItem(
       {required BuildContext context, required ExhibitionListingModel item, required ExhibitionListingItemStyle style}) {
     return Container(
-      margin: EdgeInsetsDirectional.only(bottom: 32.0.h),
+      margin: EdgeInsetsDirectional.only(bottom: 16.0.h),
       decoration: BoxDecoration(
         border: Border.all(
           color: style.borderColor,

@@ -10,6 +10,7 @@ class NoDataFoundWidget extends StatelessWidget {
   final double? imageHeight;
   final VoidCallback? onRetry;
   final String? retryText;
+  final double? height;
 
   const NoDataFoundWidget({
     super.key,
@@ -22,42 +23,46 @@ class NoDataFoundWidget extends StatelessWidget {
     this.imageHeight,
     this.onRetry,
     this.retryText,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (imagePath != null) ...[
-            SmartImage(
-              path: imagePath!,
-              width: imageWidth ?? 200.w,
-              height: imageHeight ?? 200.w,
-            ),
-            SizedBox(height: 16.h),
-          ],
-          SmartText(
-            text ?? APPStrings.noDataFound.tr,
-            style: textStyle,
-            textAlign: TextAlign.center,
-          ),
-          if (subText != null) ...[
-            SizedBox(height: 8.h),
+    return SizedBox(
+      height: height,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (imagePath != null) ...[
+              SmartImage(
+                path: imagePath!,
+                width: imageWidth ?? 200.w,
+                height: imageHeight ?? 200.w,
+              ),
+              SizedBox(height: 16.h),
+            ],
             SmartText(
-              subText!,
-              style: subTextStyle,
+              text ?? APPStrings.noDataFound.tr,
+              style: textStyle,
+              textAlign: TextAlign.center,
             ),
+            if (subText != null) ...[
+              SizedBox(height: 8.h),
+              SmartText(
+                subText!,
+                style: subTextStyle,
+              ),
+            ],
+            if (onRetry != null) ...[
+              SizedBox(height: 16.h),
+              SmartButton(
+                title: retryText ?? APPStrings.retry.tr,
+                onTap: () => onRetry?.call(),
+              ),
+            ],
           ],
-          if (onRetry != null) ...[
-            SizedBox(height: 16.h),
-            SmartButton(
-              title: retryText ?? APPStrings.retry.tr,
-              onTap: () => onRetry?.call(),
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }
