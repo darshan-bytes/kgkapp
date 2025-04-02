@@ -6,10 +6,19 @@ class ShippingAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ShippingAddressBloc shippingAddressBloc = BlocProvider.of<ShippingAddressBloc>(context);
-    return Scaffold(
-      appBar: _buildAppBar(shippingAddressBloc, context),
-      body: _buildBody(shippingAddressBloc),
-      bottomNavigationBar: _buildBottomNavigationBar(shippingAddressBloc, context),
+    return PopScope(
+      canPop: shippingAddressBloc.canPop,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        shippingAddressBloc.popWithData(context);
+      },
+      child: Scaffold(
+        appBar: _buildAppBar(shippingAddressBloc, context),
+        body: _buildBody(shippingAddressBloc),
+        bottomNavigationBar: _buildBottomNavigationBar(shippingAddressBloc, context),
+      ),
     );
   }
 
@@ -20,7 +29,12 @@ class ShippingAddressScreen extends StatelessWidget {
         buildWhen: (previous, current) => current is ShippingAddressLoadedState,
         builder: (context, state) {
           if (state is ShippingAddressLoadedState) {
-            return SmartAppBar(title: shippingAddressBloc.title);
+            return SmartAppBar(
+              title: shippingAddressBloc.title,
+              onBack: () {
+                shippingAddressBloc.popWithData(context);
+              },
+            );
           } else {
             return SmartAppBar(title: '');
           }

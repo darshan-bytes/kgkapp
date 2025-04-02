@@ -102,7 +102,10 @@ class AppRoutes {
 
       case signUpPage:
         builder = (context) {
-          return BlocProvider<SignUpBloc>(create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)), child: const SignUpScreen());
+          return BlocProvider<SignUpBloc>(
+            create: (_) => SignUpBloc()..add(SignUpInitialEvent(context)),
+            child: const SignUpScreen(),
+          );
         };
         break;
       case otpVerificationPage:
@@ -829,7 +832,8 @@ enum RoutesData {
   inquiryData,
   isInquiryUpdated,
   inquiryContextId,
-  contextId
+  contextId,
+  isEdited,
 }
 
 enum ScreenIdentifier {

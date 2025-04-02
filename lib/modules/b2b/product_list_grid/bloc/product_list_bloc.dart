@@ -409,13 +409,13 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
     return ProductDetailsModel(
       suid: item.suid ?? "",
+      productId: item.suid ?? "",
       imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
       name: item.productDescription ?? "",
       originalPrice: item.finalPrice?.toString().setCurrency,
       offerPrice: item.discountPrice?.toString().setCurrency,
       finalPrice: item.discountPrice?.toString().setCurrency,
       discountPercentageString: item.discountEXT,
-      productId: item.id ?? "",
       commodity: Commodity.jewellery,
       isFavourite: item.isFavorite,
       wishlistId: item.wishlistID,

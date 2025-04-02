@@ -518,7 +518,6 @@ export 'package:flutter_cache_manager/flutter_cache_manager.dart';
 export 'package:kgk/widgets/product_video_widget.dart';
 export 'package:model_viewer_plus/model_viewer_plus.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/metal_shape_model.dart';
-export 'package:kgk/widgets/svg_shape_painter.dart';
 export 'package:kgk/modules/b2b/stone_landing/model/home_gemstone_model.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:kgk/firebase_options.dart';

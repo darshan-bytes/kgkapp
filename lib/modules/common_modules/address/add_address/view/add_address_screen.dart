@@ -285,7 +285,7 @@ class AddAddressScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SmartText(
-                        bloc.selectedCountry?.name,
+                        bloc.selectedCountry?.getTranslatedName(context) ?? bloc.selectedCountry?.name,
                         style: countryPickerStyle.inputTextStyle,
                       ),
                     ),
