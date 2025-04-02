@@ -1,5 +1,4 @@
 import 'package:kgk/kgk.dart';
-import 'package:flutter_langdetect/flutter_langdetect.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
