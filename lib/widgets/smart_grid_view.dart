@@ -1,4 +1,4 @@
-import 'package:kgk/kgk.dart';
+import 'package:flutter/material.dart';
 
 class SmartGridView extends StatelessWidget {
   final List<Widget> items;
@@ -28,7 +28,8 @@ class SmartGridView extends StatelessWidget {
       return LayoutBuilder(
         builder: (context, constraints) {
           double totalWidth = constraints.maxWidth;
-          double itemWidth = (totalWidth - (columns - 1) * (spacing ?? 12.w)) / columns;
+          double itemWidth = (totalWidth - (columns - 1) * (spacing ?? 12)) / columns;
+
           return Column(
             children: [
               Align(
@@ -36,21 +37,21 @@ class SmartGridView extends StatelessWidget {
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.start,
                   alignment: WrapAlignment.start,
-                  spacing: spacing ?? 12.w,
-                  runSpacing: runSpacing ?? 12.h,
-                  children: List.generate(
-                    items.length,
-                    (index) {
-                      return SizedBox(
-                        height: height,
-                        width: isLastFullWidthRequired ? index == items.length - 1 ? totalWidth : itemWidth : itemWidth,
-                        child: items[index],
-                      );
-                    },
-                  ).toList(),
+                  spacing: spacing ?? 12,
+                  runSpacing: runSpacing ?? 12,
+                  children: items.map((widget) {
+                    int index = items.indexOf(widget);
+                    return SizedBox(
+                      height: height,
+                      width: isLastFullWidthRequired && index == items.length - 1
+                          ? totalWidth
+                          : itemWidth,
+                      child: widget,
+                    );
+                  }).toList(),
                 ),
               ),
-              if (isLoadingMore) const SmartCircularProgressIndicator(),
+              if (isLoadingMore) const CircularProgressIndicator(),
             ],
           );
         },
@@ -64,29 +65,25 @@ class SmartGridView extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: additionalWidgets?.length ?? 0,
             itemBuilder: (context, index) {
-              int previousAdditionalIndex = index == 0 ? 0 : additionalWidgets?[index - 1].index ?? 0;
-              int additionalIndex = additionalWidgets?[index].index ?? 0;
-              if (previousAdditionalIndex.isOdd) {
-                previousAdditionalIndex += 1;
-              }
-              bool isLast = index == additionalWidgets!.length - 1;
-              if (additionalIndex.isOdd && items.length > (additionalIndex)) {
-                additionalIndex += 1;
-              }
-              List<Widget> subItems = items.sublist(previousAdditionalIndex, additionalIndex);
+              int prevIndex = index == 0 ? 0 : additionalWidgets![index - 1].index;
+              int currIndex = additionalWidgets![index].index;
+
+              if (prevIndex.isOdd) prevIndex++;
+              if (currIndex.isOdd && items.length > currIndex) currIndex++;
+
               return Column(
                 children: [
                   SmartGridView(
-                    items: subItems,
+                    items: items.skip(prevIndex).take(currIndex - prevIndex).toList(),
                     height: height,
                     columns: columns,
                     runSpacing: runSpacing,
                     spacing: spacing,
                   ),
                   additionalWidgets![index].child,
-                  if (isLast)
+                  if (index == additionalWidgets!.length - 1)
                     SmartGridView(
-                      items: items.sublist(additionalIndex, items.length),
+                      items: items.skip(currIndex).toList(),
                       isLoadingMore: isLoadingMore,
                       height: height,
                       columns: columns,

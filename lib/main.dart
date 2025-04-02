@@ -1,4 +1,5 @@
 import 'package:kgk/kgk.dart';
+import 'package:flutter_langdetect/flutter_langdetect.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,6 +9,8 @@ void main() async {
 
   /// Initializing Hive database
   await StorageManager().init();
+
+  await initLangDetect();
 
   /// Initializing HttpOverrides
   HttpOverrides.global = MyHttpOverrides();
