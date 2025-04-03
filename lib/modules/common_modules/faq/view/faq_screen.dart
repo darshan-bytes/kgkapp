@@ -45,7 +45,7 @@ class FaqScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 32.h),
-                          _buildStillNeedSection(context, style),
+                          _buildStillNeedSection(context, style, faqBloc),
                         ],
                       ),
                     ),
@@ -94,33 +94,32 @@ class FaqScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStillNeedSection(BuildContext context, FAQStyle style) {
+  Widget _buildStillNeedHelpList(List<Support> supportList, FAQStyle style) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: supportList.length,
+      itemBuilder: (context, index) {
+        return _buildStillNeedHelpItems(
+          style,
+          supportList[index].title ?? '',
+          supportList[index].description ?? '',
+          supportList[index].action ?? '',
+          onTap: () {
+            /// Todo :: Implement the action
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildStillNeedSection(BuildContext context, FAQStyle style, FaqBloc bloc) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SmartText(APPStrings.stillNeedHelp.tr, style: style.titleStyle),
+        SmartText(bloc.stillNeedHelp, style: style.titleStyle),
         SizedBox(height: 10.h),
-        _buildStillNeedHelpItems(style, APPStrings.byPhone.tr, "Monday – Friday 9 AM – 5 PM", "+91 98765 43210", onTap: () async {
-          await Utils.launchUrlFromString("tel:+919876543210");
-        }),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.byEmail.tr,
-          APPStrings.questionOrQueriesGetInTouch.tr,
-          "support@kgk.com",
-          onTap: () async {
-            await Utils.launchUrlFromString("mailto:support@kgk.com");
-          },
-        ),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.findAStore.tr,
-          APPStrings.findYourNearestXStore.tr.interpolate(['KGK']),
-          APPStrings.storeDirectory.tr,
-          onTap: () {
-            context.pushNamed(AppRoutes.findStorePage);
-          },
-        ),
+        _buildStillNeedHelpList(bloc.support, style),
       ],
     );
   }
