@@ -88,6 +88,7 @@ class AppConst {
   /// Address type keys for address type
   static const String addressTypeIsShipping = "is_shipping";
   static const String addressTypeIsBilling = "is_billing";
+  static const String both = "both";
 
   static const String uniqueId = "unique_id";
   static const String cancelled = "cancelled";

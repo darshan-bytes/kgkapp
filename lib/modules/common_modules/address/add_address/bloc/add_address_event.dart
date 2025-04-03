@@ -80,7 +80,7 @@ final class AddAddressFieldChangeEvent extends AddAddressEvent {
 }
 
 final class AddAddressChangeAddressTypeEvent extends AddAddressEvent {
-  final bool isShippingAddress;
+  final AddressTypeEnum isShippingAddress;
 
   const AddAddressChangeAddressTypeEvent(this.isShippingAddress);
 

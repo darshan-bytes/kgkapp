@@ -406,29 +406,19 @@ class AddAddressScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is AddAddressChangeAddressTypeState,
           builder: (context, state) {
             return Row(
-              children: [
-                SmartRadioButton<bool>(
-                  value: true,
-                  onChanged: (value) {
-                    if (value != null) {
-                      bloc.add(AddAddressChangeAddressTypeEvent(value));
-                    }
-                  },
-                  label: APPStrings.shippingAddress.tr,
-                  groupValue: bloc.isShippingAddress,
-                ),
-                SizedBox(width: 24.w),
-                SmartRadioButton<bool>(
-                  value: false,
-                  onChanged: (value) {
-                    if (value != null) {
-                      bloc.add(AddAddressChangeAddressTypeEvent(value));
-                    }
-                  },
-                  label: APPStrings.billingAddress.tr,
-                  groupValue: bloc.isShippingAddress,
-                ),
-              ],
+              spacing: 24.w,
+              children: AddressTypeEnum.values
+                  .map((e) => SmartRadioButton<AddressTypeEnum>(
+                        value: e,
+                        onChanged: (value) {
+                          if (value != null) {
+                            bloc.add(AddAddressChangeAddressTypeEvent(value));
+                          }
+                        },
+                        label: APPStrings.shippingAddress.tr,
+                        groupValue: bloc.isShippingAddress,
+                      ))
+                  .toList(),
             );
           },
         ),

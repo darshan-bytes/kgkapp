@@ -58,7 +58,7 @@ class MyInquiryScreen extends StatelessWidget {
             style,
             () async {
               context.pop();
-              Map<RoutesData, bool>? data = await mainContext.pushNamed(
+              await mainContext.pushNamed(
                 AppRoutes.makeInquiryPage,
                 arguments: {
                   RoutesData.inquiryData: bloc.myInquiryList[index],
@@ -69,7 +69,7 @@ class MyInquiryScreen extends StatelessWidget {
                     bloc.add(MyInquiryUpdateEvent(mainContext));
                   }
                 }
-                return null;
+                return;
               });
             },
             APPStrings.editInquiry.tr,
@@ -79,8 +79,8 @@ class MyInquiryScreen extends StatelessWidget {
           buildRowButton(
             style,
             () {
-               context.pop();
-               bloc.add(MyInquiryRemoveEvent(index, mainContext));
+              context.pop();
+              bloc.add(MyInquiryRemoveEvent(index, mainContext));
             },
             APPStrings.removeInquiry.tr,
             AppImages.icRemove,

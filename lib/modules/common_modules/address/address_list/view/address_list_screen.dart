@@ -148,7 +148,7 @@ class AddressListScreen extends StatelessWidget {
                   address: address,
                   isDefault: address.isDefaultShipping,
                   onTap: () {
-                    addressListBloc.add(ChangeSelectedAddressEvent(index));
+                    addressListBloc.add(ChangeSelectedAddressEvent(index, context: context));
                   },
                   groupValue: addressListBloc.selectedShippingAddress,
                   onEdit: () {
@@ -202,7 +202,7 @@ class AddressListScreen extends StatelessWidget {
                   address: address,
                   isDefault: address.isDefaultBilling,
                   onTap: () {
-                    addressListBloc.add(ChangeSelectedAddressEvent(index, isBilling: true));
+                    addressListBloc.add(ChangeSelectedAddressEvent(index, isBilling: true, context: context));
                   },
                   groupValue: addressListBloc.selectedBillingAddress,
                   onEdit: () {

@@ -853,5 +853,6 @@
   "mob_product": "产品",
   "mob_edit_inquiry": "编辑询价",
   "mob_remove_inquiry": "移除询价",
-  "mob_remove_inquiry_msg": "所选询价将从列表中移除"
+  "mob_remove_inquiry_msg": "所选询价将从列表中移除",
+  "mob_shipping_and_billing_both": "运输和计费两者"
 }

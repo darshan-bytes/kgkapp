@@ -155,8 +155,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
         offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
         finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
-        // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
-        // originalPrice: jewelleryData.finalPrice?.setCurrency,
         discountPercentageString:
             isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
         productSku: jewelleryData.contractNoSkuNo,
@@ -179,8 +177,6 @@ class CompareProductBloc extends Bloc<CompareProductEvent, CompareProductState> 
         originalPrice: diamondData.finalPrice?.toString().setCurrency,
         offerPrice: diamondData.discountPrice?.toString().setCurrency,
         finalPrice: diamondData.discountPrice?.toString().setCurrency,
-        // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-        // originalPrice: diamondData!.finalPrice?.setCurrency,
         discountPercentageString:
             isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData.discountPercentage]) : null,
         productSku: diamondData.lotCode,

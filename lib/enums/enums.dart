@@ -1,3 +1,5 @@
+import '../kgk.dart';
+
 enum ImageType {
   asset,
   network,
@@ -239,4 +241,16 @@ enum FieldTypeValidationEnum {
   country,
   currentPassword,
   bidAmount,
+}
+
+enum AddressTypeEnum {
+  isShipping('is_shipping', APPStrings.shippingAddress),
+  isBilling('is_billing', APPStrings.billingAddress),
+  both('both', APPStrings.shippingAndBillingBoth),
+  ;
+
+  const AddressTypeEnum(this.value, this.label);
+
+  final String value;
+  final String label;
 }
