@@ -207,7 +207,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> _loadProductDetails(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     _clearProductData();
-
+    if (isClosed) return;
     switch (screenIdentifier) {
       case ScreenIdentifier.productForDiamonds:
         await _handleDiamondProduct(event, emit);
@@ -228,6 +228,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       default:
         break;
     }
+    if (isClosed) return;
 
     /// set up customizations
     _setupCustomizations(context: event.context);
@@ -252,6 +253,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> _handleGemstoneProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     await StorageManager().setRecentlyViewedGemstones(productId);
+    if (isClosed) return;
     await getGemstoneDetails(event.context, productId);
     _emitLoadedStateIfAvailable(event, emit);
     await getGemstoneRecentlyViewed(event.context, productId);
@@ -260,8 +262,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> _handleRingProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     emit(ProductDetailsLoadingState());
+    if (isClosed) return;
     await StorageManager().setRecentlyViewedJewellery(productId);
+    if (isClosed) return;
     await getProductDetails(event.context, productId);
+    if (isClosed) return;
     _emitLoadedStateIfAvailable(event, emit);
     await productReviewsFilter(event.context, productId, emit);
     await getProductRecentlyViewed(event.context, productId);
@@ -270,12 +275,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> _handleDesignLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     emit(ProductDetailsLoadingState());
+    if (isClosed) return;
     await getDesignLibraryDetails(event.context, productId);
-
+    if (isClosed) return;
     _emitLoadedStateIfAvailable(event, emit);
   }
 
   Future<void> _handleCadLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    if (isClosed) return;
     emit(ProductDetailsLoadingState());
     await getCadLibraryDetails(event.context, productId);
 
@@ -313,6 +320,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondsDetails(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, DiamondDataModel>? response = await AppRepository(context).getDiamondDetailById(productId);
     response?.fold(
       (error) {
@@ -334,32 +342,32 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
           productDetails = ProductDetailsModel(
-            productId: diamondData!.suid,
-            suid: diamondData!.suid,
-            name: productName,
-            originalPrice: diamondData?.finalPrice?.toString().setCurrency,
-            offerPrice: diamondData?.discountPrice?.toString().setCurrency,
-            finalPrice: diamondData?.discountPrice?.toString().setCurrency,
-            // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-            // originalPrice: diamondData!.finalPrice?.setCurrency,
-            discountPercentageString:
-                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
-            productSku: diamondData!.lotCode,
-            reviewCount: diamondData!.reviewCount,
-            rating: diamondData!.rating,
-            commodity: Commodity.diamond,
-            isFavourite: diamondData?.isFavorite ?? false,
-            wishlistId: diamondData?.wishlistID,
-            stoneElements: diamondData?.components,
-            auctionId: diamondData?.auctionId,
-            isAddedToCart: diamondData?.isAddedToCart ?? false
-          );
+              productId: diamondData!.suid,
+              suid: diamondData!.suid,
+              name: productName,
+              originalPrice: diamondData?.finalPrice?.toString().setCurrency,
+              offerPrice: diamondData?.discountPrice?.toString().setCurrency,
+              finalPrice: diamondData?.discountPrice?.toString().setCurrency,
+              // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
+              // originalPrice: diamondData!.finalPrice?.setCurrency,
+              discountPercentageString:
+                  isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
+              productSku: diamondData!.lotCode,
+              reviewCount: diamondData!.reviewCount,
+              rating: diamondData!.rating,
+              commodity: Commodity.diamond,
+              isFavourite: diamondData?.isFavorite ?? false,
+              wishlistId: diamondData?.wishlistID,
+              stoneElements: diamondData?.components,
+              auctionId: diamondData?.auctionId,
+              isAddedToCart: diamondData?.isAddedToCart ?? false);
         }
       },
     );
   }
 
   Future<void> getGemstoneDetails(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, GemstoneDatum>? response = await AppRepository(context).getGemstoneDetailById(productId);
     response?.fold(
       (error) {
@@ -369,6 +377,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        if (isClosed) return;
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
@@ -408,6 +417,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondYouMayLike(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
         .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString(), isShowLoader: false);
     response?.fold(
@@ -461,6 +471,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getGemstoneYouMayLike(BuildContext context, String productId) async {
+    if (isClosed) return;
     final Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
         .getGemstoneYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
 
@@ -502,6 +513,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getProductYouMayLike(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, JewelleryListingModel>? response = await AppRepository(context)
         .getJewelleryYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
@@ -511,6 +523,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        if (isClosed) return;
         jewelleryDatumListAPI = data.data;
         suggestedProductList = data.data.map((item) {
           bool isDiscounted = item.discountPercentage != null && (item.discountPercentage! > 0);
@@ -552,6 +565,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getProductDetails(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, JewelleryDataModel>? response = await AppRepository(context).getProductDetailById(productId, isLoadingShow: true);
     response?.fold(
       (error) {
@@ -581,34 +595,34 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         videoUrl = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.videoUrl.isNotNullNorEmpty)?.videoUrl;
 
         productDetails = ProductDetailsModel(
-          productId: jewelleryData.suid,
-          suid: jewelleryData.suid,
-          name: productName,
-          jewelleryType: jewelleryData.jewelleryType,
-          originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
-          offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
-          finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
-          // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
-          // originalPrice: jewelleryData.finalPrice?.setCurrency,
-          discountPercentageString:
-              isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
-          productSku: jewelleryData.contractNoSkuNo,
-          reviewCount: jewelleryData.reviewCount,
-          rating: jewelleryData.rating?.toDouble(),
-          brandName: jewelleryData.brandName,
-          imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
-          commodity: Commodity.jewellery,
-          isFavourite: jewelleryData.isFavorite,
-          wishlistId: jewelleryData.wishlistID,
-          components: jewelleryData.components,
-          contractNoSkuNo: jewelleryData.contractNoSkuNo
-        );
+            productId: jewelleryData.suid,
+            suid: jewelleryData.suid,
+            name: productName,
+            jewelleryType: jewelleryData.jewelleryType,
+            originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
+            offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
+            finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
+            // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
+            // originalPrice: jewelleryData.finalPrice?.setCurrency,
+            discountPercentageString:
+                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
+            productSku: jewelleryData.contractNoSkuNo,
+            reviewCount: jewelleryData.reviewCount,
+            rating: jewelleryData.rating?.toDouble(),
+            brandName: jewelleryData.brandName,
+            imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
+            commodity: Commodity.jewellery,
+            isFavourite: jewelleryData.isFavorite,
+            wishlistId: jewelleryData.wishlistID,
+            components: jewelleryData.components,
+            contractNoSkuNo: jewelleryData.contractNoSkuNo);
       },
     );
   }
 
   Future<void> getDesignLibraryDetails(BuildContext context, String productId) async {
     try {
+      if (isClosed) return;
       Either<ErrorResponse, DesignLibraryListItemDataModel>? response = await AppRepository(context).designLibraryDetails(id: productId);
       response?.fold(
         (error) {
@@ -618,6 +632,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }
         },
         (DesignLibraryListItemDataModel designLibraryData) {
+          if (isClosed) return;
           isErrorInLoadingData = false;
           isAddedToCart = designLibraryData.isAddedToCart;
           productName = designLibraryData.productDescription ?? '';
@@ -649,6 +664,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
   Future<void> getCadLibraryDetails(BuildContext context, String productId) async {
     try {
+      if (isClosed) return;
       Either<ErrorResponse, CadLibraryListItemDataModel>? response = await AppRepository(context).cadLibraryDetails(id: productId);
       response?.fold(
         (error) {
@@ -658,6 +674,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           }
         },
         (CadLibraryListItemDataModel designLibraryData) {
+          if (isClosed) return;
           isErrorInLoadingData = false;
           isAddedToCart = designLibraryData.isAddedToCart;
           productName = designLibraryData.productDescription ?? '';
@@ -688,6 +705,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> productReviewsFilter(BuildContext context, String productId, Emitter<ProductDetailsState> emit) async {
+    if (isClosed) return;
     emit(const ReloadProductDetailsState());
 
     // Here requested 6 reviews only for the first page. if the list's length is less than 6, then it will show the available reviews. or if the length is greater than 5, then it will show the view all reviews button.
@@ -700,6 +718,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        if (isClosed) return;
         userReviewSubmitted = data.userReviewSubmitted;
         reviewList = (data.dataList)?.map((e) {
               return ReviewDataModel(
@@ -724,6 +743,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getProductRecentlyViewed(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, JewelleryListingModel>? response =
         await AppRepository(context).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
@@ -733,6 +753,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         }
       },
       (data) {
+        if (isClosed) return;
         recentlyViewedProductList = data.data.map((e) {
           return ProductDetailsModel(
             suid: e.suid ?? '',
@@ -772,6 +793,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getDiamondsRecentlyViewed(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, DiamondListingModel>? response = await AppRepository(context)
         .getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
@@ -820,6 +842,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> getGemstoneRecentlyViewed(BuildContext context, String productId) async {
+    if (isClosed) return;
     Either<ErrorResponse, GemstoneListingModel>? response = await AppRepository(context)
         .getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
@@ -1136,6 +1159,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   }
 
   Future<void> _getDiamondAuctionDetails(BuildContext context, Emitter<ProductDetailsState> emit) async {
+    if (isClosed) return;
     if (productDetails != null && (productDetails?.auctionId).isNotNullNorEmpty) {
       emit(ProductDetailsAuctionLoadingState());
       Either<ErrorResponse, AuctionDataModel>? response = await AppRepository(context).getAuctionDetails(id: productDetails!.auctionId!);

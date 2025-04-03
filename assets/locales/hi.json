@@ -839,9 +839,9 @@
   "mob_libraries": "लाइब्रेरी",
   "mob_digital_catalogue": "डिजिटल कैटलॉग",
   "mob_project_listing": " ्रोजेक्ट सूची",
-  "mob_presentation_listing":"प्रस्तुति सूची",
-  "mob_concept_listing":"कन्सेप्ट सूची",
-  "mob_landing_listing":"लैंडिंग सूची",
+  "mob_presentation_listing": "प्रस्तुति सूची",
+  "mob_concept_listing": "कन्सेप्ट सूची",
+  "mob_landing_listing": "लैंडिंग सूची",
   "mob_select_status": "स्थिति चुनें",
   "mob_new": "नया",
   "mob_open": "खुला",
@@ -853,5 +853,6 @@
   "mob_product": "उत्पाद",
   "mob_edit_inquiry": "अनुरोध संपादित करें",
   "mob_remove_inquiry": "अनुरोध हटाएं",
-  "mob_remove_inquiry_msg": "क्या आप वाकई इस अनुरोध को हटाना चाहते हैं?"
+  "mob_remove_inquiry_msg": "क्या आप वाकई इस अनुरोध को हटाना चाहते हैं?",
+  "mob_shipping_and_billing_both": "शिपिंग और बिलिंग दोनों"
 }

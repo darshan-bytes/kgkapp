@@ -853,5 +853,6 @@
   "mob_product": "ผลิตภัณฑ์",
   "mob_edit_inquiry": "แก้ไขการสอบถาม",
   "mob_remove_inquiry": "ลบการสอบถาม",
-  "mob_remove_inquiry_msg": "การสอบถามที่เลือกจะถูกลบออกจากรายการ"
+  "mob_remove_inquiry_msg": "การสอบถามที่เลือกจะถูกลบออกจากรายการ",
+  "mob_shipping_and_billing_both": "จัดส่งและเรียกเก็บเงินทั้งคู่"
 }

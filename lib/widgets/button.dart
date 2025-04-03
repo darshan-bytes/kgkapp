@@ -111,7 +111,7 @@ class SmartButton extends StatelessWidget {
                     : null,
               ),
               height: height ?? 42.w,
-              width: width ?? double.infinity,
+              width: width /*?? double.infinity*/,
               padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 12.w),
               child: prefixImage.isNotNullNorEmpty || suffixImage.isNotNullNorEmpty
                   ? Center(

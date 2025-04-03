@@ -42,17 +42,15 @@ class SupportScreen extends StatelessWidget {
                       SizedBox(height: 16.h),
                     ],
                     Center(
-                      child: IntrinsicWidth(
-                        child: SmartButton(
-                          title: APPStrings.moreFaq.tr,
-                          height: 40.h,
-                          suffixImage: AppImages.icRight,
-                          imageSize: 20.w,
-                          padding: EdgeInsetsDirectional.only(start: 12.w),
-                          onTap: () {
-                            context.pushNamed(AppRoutes.faqPage);
-                          },
-                        ),
+                      child: SmartButton(
+                        title: APPStrings.moreFaq.tr,
+                        height: 40.h,
+                        suffixImage: AppImages.icRight,
+                        imageSize: 20.w,
+                        padding: EdgeInsetsDirectional.only(start: 12.w),
+                        onTap: () {
+                          context.pushNamed(AppRoutes.faqPage);
+                        },
                       ),
                     ),
                     SizedBox(height: 16.h),

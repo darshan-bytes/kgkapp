@@ -852,5 +852,6 @@
   "mob_product": "منتج",
   "mob_edit_inquiry": "تحرير الاستفسار",
   "mob_remove_inquiry": "إزالة الاستفسار",
-  "mob_remove_inquiry_msg": "هل أنت متأكد أنك تريد إزالة هذا الاستفسار؟"
+  "mob_remove_inquiry_msg": "هل أنت متأكد أنك تريد إزالة هذا الاستفسار؟",
+  "mob_shipping_and_billing_both": "الشحن والفواتير على حد سواء"
 }

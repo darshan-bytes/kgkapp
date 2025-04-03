@@ -1298,7 +1298,7 @@ class StonesLandingBloc extends Bloc<StonesLandingEvent, StonesLandingState> {
         return AuctionListModel(
           id: item.id?.toString() ?? '',
           name: item.shapeName,
-          imageUrl: item.imgPath?.setMediaUrl ?? '',
+          imageUrl: item.image ?? '',
           redirectTo: RedirectionTo.diamond.toString(),
         );
       });

@@ -514,6 +514,16 @@ class HomeWidgets {
                           field.name ?? '',
                           textAlign: TextAlign.center,
                           style: style.topSellingCategoryTitleStyle,
+                          onTap: () {
+                            homeBloc.handleRedirection(
+                              context: context,
+                              redirectTo: getRedirectionToFromString(field.redirectTo ?? ''),
+                              redirectionType: getRedirectionTypeFromString(field.redirectionType ?? ""),
+                              redirectionData: getQueryParamFromUrlForFilter(field.redirectionUrl ?? '',
+                                  redirectionType: getRedirectionTypeFromString(field.redirectionType ?? "")),
+                              redirectionTitle: field.name ?? '',
+                            );
+                          },
                         ),
                       ],
                     ))
@@ -667,20 +677,22 @@ class HomeWidgets {
                   ),
             if (homeBloc.luminousProductViewList.length > 8) ...[
               SizedBox(height: 16.h),
-              SelectionButton(
-                height: 40.h,
-                width: 120.w,
-                unselectedButtonBorderColor: style.primaryColor,
-                borderRadius: BorderRadius.circular(10.r),
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
-                isSelected: false,
-                onTap: () {
-                  context.pushNamed(AppRoutes.productListGridPage, arguments: {
-                    RoutesData.isPageFor: ScreenIdentifier.productForRing,
-                    RoutesData.productNavigation: AppConst.coutureCollection
-                  });
-                },
-                title: APPStrings.viewAll.tr,
+              FittedBox(
+                child: SelectionButton(
+                  height: 40.h,
+                  // width: 120.w,
+                  unselectedButtonBorderColor: style.primaryColor,
+                  borderRadius: BorderRadius.circular(10.r),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),
+                  isSelected: false,
+                  onTap: () {
+                    context.pushNamed(AppRoutes.productListGridPage, arguments: {
+                      RoutesData.isPageFor: ScreenIdentifier.productForRing,
+                      RoutesData.productNavigation: AppConst.coutureCollection
+                    });
+                  },
+                  title: APPStrings.viewAll.tr,
+                ),
               ),
             ],
           ],

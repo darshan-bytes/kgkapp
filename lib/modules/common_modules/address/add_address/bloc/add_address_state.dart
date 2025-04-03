@@ -78,7 +78,7 @@ final class AddAddressFieldErrorState extends AddAddressState {
 }
 
 final class AddAddressChangeAddressTypeState extends AddAddressState {
-  final bool isShippingAddress;
+  final AddressTypeEnum isShippingAddress;
 
   const AddAddressChangeAddressTypeState(this.isShippingAddress);
 

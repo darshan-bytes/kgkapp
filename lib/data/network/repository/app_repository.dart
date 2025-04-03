@@ -675,7 +675,8 @@ class AppRepository extends ApiService {
   }
 
   //fetchMyInquiries
-  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries({required Map<String, dynamic> body, bool isLoadMore = false}) async {
+  Future<Either<ErrorResponse, PaginationData<MyInquiriesModel>>?> fetchMyInquiries(
+      {required Map<String, dynamic> body, bool isLoadMore = false}) async {
     if (isLoadMore) context.setAppLoading(true);
     var response = await postMethod<PaginationData<MyInquiriesModel>>(ApiClient.myInquiries, body, withCurrencyHeader: true);
     if (isLoadMore) context.setAppLoading(false);
@@ -861,7 +862,7 @@ class AppRepository extends ApiService {
     if (isShowLoader) {
       context.setAppLoading(true);
     }
-    var response = await postMethod<PaginationData<ShapeMasterDetails>>(ApiClient.shapeMasterFilters, body);
+    var response = await getMethod<PaginationData<ShapeMasterDetails>>(ApiClient.shapeMasterFilters);
     if (isShowLoader) {
       context.setAppLoading(false);
     }

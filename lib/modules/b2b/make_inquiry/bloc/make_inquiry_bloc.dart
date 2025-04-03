@@ -89,7 +89,7 @@ class MakeInquiryBloc extends Bloc<MakeInquiryEvent, MakeInquiryState> {
 
     selectedInquiryType = inquiryTypeList.firstWhereOrNull((type) => type.name == inquiryData.strType);
 
-    StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status?.name.toLowerCase() == inquiryData.status?.value);
+    StatusModel? selectedStatus = statusList.firstWhereOrNull((status) => status.name.toLowerCase() == inquiryData.status?.value);
 
     if (selectedStatus != null) {
       this.selectedStatus = selectedStatus;
