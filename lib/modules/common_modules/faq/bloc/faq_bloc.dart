@@ -7,7 +7,9 @@ part 'faq_state.dart';
 class FaqBloc extends Bloc<FaqEvent, FaqState> {
   final TextEditingController searchController = TextEditingController();
   List<FaqWrapper> faq = [];
+  List<Support> support = [];
   bool isLoading = true;
+  String stillNeedHelp = '';
 
   FaqBloc() : super(FaqInitial()) {
     on<FaqInitialEvent>(_onInitialFaqListEvent);
@@ -25,9 +27,13 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
       value.fold((l) {
         Utils.showMessage(l.message);
       }, (r) {
-        List<FaqData> faqStrapiList = r;
+        FaqAttributes? faqStrapiModel = r;
+        if(faqStrapiModel == null) return;
+        List<FaqData> faqStrapiList = faqStrapiModel.faqs;
         List<Map<String, dynamic>> faqData = faqStrapiList.map((e) => e.toJson()).toList();
         List<FaqWrapper> faqWrappers = parseFaqs(faqData);
+        support = faqStrapiModel.support;
+        stillNeedHelp = faqStrapiModel.supportTitle.toString() ?? '';
         faq.addAll(faqWrappers);
       });
     });

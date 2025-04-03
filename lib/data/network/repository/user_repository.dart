@@ -56,6 +56,14 @@ class UserRepository extends ApiService {
     return response?.fold((error) => Left(error), (languageLabels) => Right(languageLabels as CommonResponse));
   }
 
+  //getFrontendLinks
+  Future<Either<ErrorResponse, Map<String, dynamic>>?> getFrontendLinks() async {
+    var response = await getMethod<Map<String, dynamic>>(ApiClient.frontendLinks);
+    return response?.fold((error) => Left(error), (frontendLinks) {
+      return Right(frontendLinks);
+    });
+  }
+
   // For User SignUp
   Future<Either<ErrorResponse, CommonResponse>?> signUpCustomer(Map<String, dynamic> params) async {
     context.setAppLoading(true);
