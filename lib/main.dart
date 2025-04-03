@@ -1,4 +1,9 @@
 import 'package:kgk/kgk.dart';
+import 'dart:developer' as dev;
+
+void logMemoryUsage() {
+  dev.log('Memory Usage: ${ProcessInfo.currentRss} bytes');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +23,9 @@ void main() async {
   if (!kDebugMode) {
     await AppCrashlytics.instance.initialize();
   }
+  Timer.periodic(Duration(seconds: 1), (timer) {
+    logMemoryUsage();
+  });
 
   /// Initializing app
   runApp(const MyApp());
@@ -90,7 +98,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "2 April",
+        message: "3 April",
         location: BannerLocation.topEnd,
       ),
     );

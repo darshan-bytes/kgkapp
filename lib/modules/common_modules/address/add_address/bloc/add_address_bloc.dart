@@ -66,7 +66,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
 
   AddressDetails? address;
 
-  bool isShippingAddress = true;
+  AddressTypeEnum isShippingAddress = AddressTypeEnum.values.first;
 
   AddAddressBloc() : super(const AddAddressInitial()) {
     on<AddAddressInitialEvent>(_onInitAddAddressEvent);
@@ -85,7 +85,6 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
     address = data?[RoutesData.addressDetails];
     isEditAddress = address != null;
     isFromCheckout = data?[RoutesData.isFromCheckout] ?? false;
-    isShippingAddress = data?[RoutesData.isShippingAddress] ?? true;
   }
 
   Future<void> _onInitAddAddressEvent(AddAddressInitialEvent event, Emitter<AddAddressState> emit) async {
@@ -133,7 +132,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       zipCodeController.text = address!.zipCode ?? "";
       if (address!.phone.isNotEmpty) {
         phoneController.text = address!.phone.first.phoneNumber ?? "";
-        selectedCountryCodes = Country.tryParse(address!.phone.first.phoneCode ?? '') ?? selectedCountryCodes;
+        selectedCountryCodes = CountryParser.tryParsePhoneCode(address!.phone.first.phoneCode ?? '') ?? selectedCountryCodes;
       }
       CountryStateModel? countryStateModel =
           countryList.firstWhereOrNull((element) => element.name == address!.country || element.code == address!.country);
@@ -357,7 +356,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
             ApiKey.phoneNumber: phoneController.text.trim(),
           }
         ],
-        ApiKey.type: isShippingAddress ? AppConst.addressTypeIsShipping : AppConst.addressTypeIsBilling,
+        ApiKey.type: isShippingAddress.value,
         //TODO: Need to modify the below data in future with the UI changes for allowing user to select the default address for shipping and billing
         ApiKey.isDefaultShipping: isFirstAddress,
         ApiKey.isDefaultBilling: isFirstAddress,
@@ -393,7 +392,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
             ApiKey.phoneNumber: phoneController.text.trim(),
           }
         ],
-        ApiKey.type: isShippingAddress ? AppConst.addressTypeIsShipping : AppConst.addressTypeIsBilling,
+        ApiKey.type: isShippingAddress.value,
       };
 
       final response = await AppRepository(context).updateAddress(addressId, body: body);

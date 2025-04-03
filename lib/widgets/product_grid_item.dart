@@ -106,10 +106,10 @@ class ProductGridItem extends StatelessWidget {
           color: style.productBackgroundColor,
           child: SmartImage(
             path: productDetails.imageUrl ?? '',
-            height: imageHeight,
+            height: imageHeight ?? 172.h,
             width: imageWidth,
             fit: fit,
-            isMemCacheEnabled: false,
+            isMemCacheEnabled: true,
           ),
         ),
         if (productDetails.isForAuction)

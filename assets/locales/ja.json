@@ -607,7 +607,7 @@
   "mob_no_design_library_found": "設計ライブラリは見つかりません",
   "mob_no_of_products": "製品はありません",
   "mob_edit": "編集",
-  "mob_more_faq": "その他のFAQ",
+  "mob_more_faq": "その他のよくある質問",
   "mob_view_dashboard": "ダッシュボードを表示します",
   "mob_most_purchased_diamonds": "ほとんどの購入ダイヤモンド",
   "mob_shop_by_brands": "ブランドごとに買い物をします",
@@ -853,5 +853,6 @@
   "mob_product": "製品",
   "mob_edit_inquiry": "編集",
   "mob_remove_inquiry": "削除",
-  "mob_remove_inquiry_msg": "この問い合わせを削除しますか？"
+  "mob_remove_inquiry_msg": "この問い合わせを削除しますか？",
+  "mob_shipping_and_billing_both": "配送と請求の両方"
 }

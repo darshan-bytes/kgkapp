@@ -45,9 +45,13 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     isBillingAndShippingSame = selectedShippingAddress == selectedBillingAddress;
     bagOrderSummaryData = BlocProvider.of<MyBagBloc>(event.context).bagOrderSummaryData;
     emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+    if (selectedShippingAddress != null) {
+      await updateSelectedAddressAPI(event.context);
+      myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
+    }
   }
 
-  void _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) {
+  Future<void> _onChangeSelectedAddressEvent(ChangeSelectedAddressEvent event, Emitter<AddressListState> emit) async {
     AddressDetails? selectedAddress = event.isBilling ? selectedBillingAddress : selectedShippingAddress;
     int oldIndex = addressList.indexOf(selectedAddress ?? AddressDetails());
     if (event.isBilling) {
@@ -59,6 +63,10 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       }
     }
     emit(ChangeSelectedAddressState(event.index, oldIndex, isBilling: event.isBilling));
+    if (selectedShippingAddress != null) {
+      await updateSelectedAddressAPI(event.context);
+      myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
+    }
   }
 
   Future<void> _onDeleteAddressEvent(DeleteAddressEvent event, Emitter<AddressListState> emit) async {
@@ -88,7 +96,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   Future<void> _onEditAddressEvent(EditAddressEvent event, Emitter<AddressListState> emit) async {
     await event.context.pushNamed(AppRoutes.addAddressPage, arguments: {RoutesData.addressDetails: addressList[event.index]}).then(
-      (value) {
+      (value) async {
         if (value != null) {
           try {
             AddressDetails? addressDetails = value[RoutesData.addressDetails];
@@ -101,6 +109,10 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
               selectedBillingAddress = addressList[event.index];
             }
             emit(AddressListLoadedState(addressList, selectedShippingAddress, selectedBillingAddress, isBillingAndShippingSame));
+            if (selectedShippingAddress != null) {
+              await updateSelectedAddressAPI(event.context);
+              myBagBloc.add(FetchOrderSummaryDataEvent(event.context));
+            }
           } catch (e) {
             printWrapped('Error in updating address: $e');
           }
@@ -140,12 +152,7 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
 
   Future<void> _onContinueToPayment(ContinueToPaymentEvent event, Emitter<AddressListState> emit) async {
     try {
-      final Map<String, dynamic> body = {
-        ApiKey.isShippingAddress: selectedShippingAddress?.id,
-        ApiKey.isBillingAddress: selectedBillingAddress?.id,
-      };
-
-      final response = await AppRepository(event.context).bagUserAddress(body);
+      final response = await updateSelectedAddressAPI(event.context);
 
       await response?.fold(
         (l) {
@@ -165,6 +172,17 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
     } catch (e) {
       Utils.showMessage(e.toString());
     }
+  }
+
+  Future<Either<ErrorResponse, CommonResponse>?> updateSelectedAddressAPI(BuildContext context) async {
+    final Map<String, dynamic> body = {
+      ApiKey.isShippingAddress: selectedShippingAddress?.id,
+      ApiKey.isBillingAddress: selectedBillingAddress?.id,
+    };
+
+    final response = await AppRepository(context).bagUserAddress(body);
+
+    return response;
   }
 
   Future<void> placeIndividualOrderAPI(BuildContext context) async {
