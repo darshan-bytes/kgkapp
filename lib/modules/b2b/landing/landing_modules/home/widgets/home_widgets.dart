@@ -680,7 +680,6 @@ class HomeWidgets {
               FittedBox(
                 child: SelectionButton(
                   height: 40.h,
-                  // width: 120.w,
                   unselectedButtonBorderColor: style.primaryColor,
                   borderRadius: BorderRadius.circular(10.r),
                   padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w),

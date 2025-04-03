@@ -348,8 +348,6 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
               originalPrice: diamondData?.finalPrice?.toString().setCurrency,
               offerPrice: diamondData?.discountPrice?.toString().setCurrency,
               finalPrice: diamondData?.discountPrice?.toString().setCurrency,
-              // offerPrice: isDiscounted ? diamondData!.discountPrice?.setCurrency : null,
-              // originalPrice: diamondData!.finalPrice?.setCurrency,
               discountPercentageString:
                   isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
               productSku: diamondData!.lotCode,

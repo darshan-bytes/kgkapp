@@ -24,8 +24,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await CachedNetworkImageProvider.defaultCacheManager.emptyCache();
 
     // Perform API calls for currency and language labels
+    await _frontendLinkApiCall(event.context);
     await _currencyApiCall(event.context, emit);
-    await _languageLabelApiCall(event.context, emit);
+    await _languageLabelApiCall(event.context, emit); // This is mainly use for get CMS Pages
     await BlocProvider.of<AppBloc>(event.context).sortOptionListApiCall(event.context);
   }
 
@@ -77,6 +78,20 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
     String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
     context.pushNamedAndRemoveUntil(route, (route) => false);
+  }
+
+  //_frontendLinkApiCall
+  Future<void> _frontendLinkApiCall(BuildContext context) async {
+    await UserRepository(context).getFrontendLinks().then((value) async {
+      await value?.fold((l) {
+        // Show error message if API call fails
+      }, (r) async {
+        // Store language labels in local storage if API call succeeds
+        if(r.containsKey(AppConst.link) && AppConst.frontendLink != r[AppConst.link]) {
+          AppConst.frontendLink = r[AppConst.link];
+        }
+      });
+    });
   }
 
   Future<void> _setPlaceholderImage() async {
