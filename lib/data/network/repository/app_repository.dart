@@ -35,14 +35,14 @@ class AppRepository extends ApiService {
   }
 
   /// Fetches the diamond data from the Strapi CMS
-  Future<Either<ErrorResponse, List<FaqData>>> fetchStrapiFaqData() async {
-    String url = await buildUrl(endpoint: StrapiEndPoints.faqPage, attribute: Attributes.faqPage);
+  Future<Either<ErrorResponse, FaqAttributes?>> fetchStrapiFaqData() async {
+    String acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
+    String url = '${StrapiEndPoints.faqPage}$acceptLanguage';
     try {
       final response = await http.get(Uri.parse(url), headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
       if (response.statusCode == 200) {
         final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
-        List<FaqData> faqStrapiList = faqStrapiModel.data.first.attributes?.faqs ?? [];
-        return Right(faqStrapiList);
+        return Right(faqStrapiModel.data.first.attributes);
       } else {
         return Left(
           ErrorResponse(

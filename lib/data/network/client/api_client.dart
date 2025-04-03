@@ -21,6 +21,7 @@ class ApiClient {
   static const String forgotPassword = '$apiBaseUrl/auth/forgot-password';
   static const String currencies = '$apiBaseUrl/currency';
   static const String languageLabels = '$apiBaseUrl/language/labels';
+  static const String frontendLinks = '$apiBaseUrl/strapi-pages/frontend/link';
 
   static const String diamondListing = '$apiBaseUrl/commodity/diamond/filters';
   static const String gemstoneListing = '$apiBaseUrl/commodity/color-stone/filters';
@@ -268,7 +269,7 @@ class StrapiEndPoints {
 
   static String get educationRingSizerPage => '$baseUrl/education-ring-sizers';
 
-  static String get faqPage => '$baseUrl/faqs';
+  static String get faqPage => '$baseUrl/faqs?populate=*&locale=';
 
   static String get gemstonePage => '$baseUrl/gemstones';
 
