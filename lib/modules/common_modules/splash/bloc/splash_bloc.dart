@@ -5,7 +5,6 @@ part 'splash_event.dart';
 part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
-  late BuildContext context;
   late VideoPlayerController playerController;
 
   SplashBloc() : super(SplashInitial()) {
@@ -17,9 +16,13 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     BlocProvider.of<AppBloc>(event.context).add(LanguageChangedEvent(null, context: event.context));
 
     // Initialize and play the splash screen video
-    playerController = VideoPlayerController.asset(AppConst.splashScreenVideoUrl);
-    await playerController.initialize();
-    await playerController.play();
+    try {
+      playerController = VideoPlayerController.asset(AppConst.splashScreenVideoUrl);
+      await playerController.initialize();
+      await playerController.play();
+    } catch (e) {
+      debugPrint("Error initializing video player: $e");
+    }
 
     await CachedNetworkImageProvider.defaultCacheManager.emptyCache();
 
@@ -28,6 +31,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await _currencyApiCall(event.context, emit);
     await _languageLabelApiCall(event.context, emit); // This is mainly use for get CMS Pages
     await BlocProvider.of<AppBloc>(event.context).sortOptionListApiCall(event.context);
+    await navigateToNextScreen(event.context);
   }
 
   Future<void> _currencyApiCall(BuildContext context, Emitter<SplashState> emit) async {
@@ -63,21 +67,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       await StorageManager().setLanguageLabels(r.responseData);
       BlocProvider.of<AppBloc>(context).add(LanguageChangedEvent(null, context: context));
     });
-
-    // Determine the next route based on the presence of an auth token
-    String? authToken = StorageManager().getAuthToken();
-    UserIdDetails? userIdDetails = StorageManager().getUserData();
-    if (authToken != null && userIdDetails != null) {
-      BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(userIdDetails.userTypeEnum));
-      await AppCrashlytics.instance.setUserId(userIdDetails.userAccountId ?? "----");
-    }
-
-    // Wait for the video to finish playing
-    final Duration duration = playerController.value.duration;
-    await Future.delayed(duration);
-
-    String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
-    context.pushNamedAndRemoveUntil(route, (route) => false);
   }
 
   //_frontendLinkApiCall
@@ -87,7 +76,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         // Show error message if API call fails
       }, (r) async {
         // Store language labels in local storage if API call succeeds
-        if(r.containsKey(AppConst.link) && AppConst.frontendLink != r[AppConst.link]) {
+        if (r.containsKey(AppConst.link) && AppConst.frontendLink != r[AppConst.link]) {
           AppConst.frontendLink = r[AppConst.link];
         }
       });
@@ -108,6 +97,23 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> _updatePlaceholderImage(String companyNameStr, String imageUrl) async {
     await StorageManager().setPlaceHolderImage(imageUrl);
+  }
+
+  Future<void> navigateToNextScreen(BuildContext context) async {
+    // Determine the next route based on the presence of an auth token
+    String? authToken = StorageManager().getAuthToken();
+    UserIdDetails? userIdDetails = StorageManager().getUserData();
+    if (authToken != null && userIdDetails != null) {
+      BlocProvider.of<AppBloc>(context).add(SetUserTypeEvent(userIdDetails.userTypeEnum));
+      await AppCrashlytics.instance.setUserId(userIdDetails.userAccountId ?? "----");
+    }
+
+    // Wait for the video to finish playing
+    final Duration duration = playerController.value.duration;
+    await Future.delayed(duration);
+
+    String route = (authToken != null) ? AppRoutes.landingPage : AppRoutes.signInPage;
+    context.pushNamedAndRemoveUntil(route, (route) => false);
   }
 
   @override

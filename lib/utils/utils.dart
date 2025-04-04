@@ -689,7 +689,7 @@ class Utils {
     } else if (url.contains("find-a-store")) {
       context.pushNamed(AppRoutes.findStorePage);
     } else if (url.startsWith("mailto:")) {
-      await Utils.launchUrlFromString(value);
+      await Utils.launchUrlFromString(url);
     }
   }
 }
