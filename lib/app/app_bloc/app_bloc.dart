@@ -43,6 +43,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   /// [diamondDataForDIY] is used to store selected diamondData for DIY and will be used in the next steps
   DiamondDataModel? diamondDataForDIY;
+  DiyStyleListModel? diyStyleForDIY;
 
   AppBloc() : super(AppInitial()) {
     on<LoadAppEvent>(_onLoadAppEvent);

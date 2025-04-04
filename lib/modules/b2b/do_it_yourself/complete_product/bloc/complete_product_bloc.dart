@@ -7,23 +7,24 @@ part 'complete_product_state.dart';
 class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductState> {
   late AppBloc appBloc;
   DiamondDataModel? diamondDataForDIY;
+  DiyStyleListModel? diyStyleForDIY;
   final CarouselSliderController controller = CarouselSliderController();
   final List<String> imgList = [];
 
-  bool isCompare = false;
-
   ProductDetailsModel? productDetails;
   ProductDetailsModel? diamondDetails;
+  DiyFinalDetailsModel? diyFinalDetailsModel;
   String displaySpecification = '';
   String productName = '';
   String? settingId;
   String? diamondId;
 
   DIYPrice? dIYPrice;
+  ScreenIdentifier? screenIdentifier;
 
   CompleteProductBloc() : super(CompleteProductInitial()) {
     on<CompleteProductInitialEvent>(_onCompleteProductInitialEvent);
-    on<CompleteProductCompareToggle>(_onCompleteProductCompareToggle);
+    on<CompleteProductAddToBagEvent>(_onCompleteProductAddToBagEvent);
   }
 
   Future<void> _onCompleteProductInitialEvent(CompleteProductInitialEvent event, Emitter<CompleteProductState> emit) async {
@@ -33,19 +34,16 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
     emit(const CompleteProductLoadedState());
   }
 
-  void _onCompleteProductCompareToggle(CompleteProductCompareToggle event, Emitter<CompleteProductState> emit) {
-    isCompare = event.isCompare;
-    emit(CompleteProductCompareToggleState(isCompare));
-  }
-
   void getScreenIdentifier(BuildContext context) {
     appBloc = BlocProvider.of<AppBloc>(context);
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
-      settingId = data[RoutesData.settingId];
+      screenIdentifier = data[RoutesData.isPageFor];
     }
 
     diamondDataForDIY = appBloc.diamondDataForDIY;
+    diyStyleForDIY = appBloc.diyStyleForDIY;
+    settingId = diyStyleForDIY?.suid;
   }
 
   Future<void> getSettingDetails(BuildContext context, String? settingId) async {
@@ -59,6 +57,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         Utils.showMessage(l.message);
       },
       (r) {
+        diyFinalDetailsModel = r;
         if (r.product != null) {
           DiyStyleListModel item = r.product!;
           if (item.imageSketch.isNotNullNorEmpty) {
@@ -68,8 +67,8 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
           productName = item.longDescription ?? '';
 
           productDetails = ProductDetailsModel(
-            suid: item.suid,
-            productId: item.suid,
+            suid: r.sku,
+            productId: r.sku,
             imageUrl: item.imageSketch,
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,
@@ -80,6 +79,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
             colorsCode: [item.metalColor1HexCode ?? ""],
             components: item.components,
             productSku: r.sku,
+            isAddedToCart: item.isAddedToCart,
           );
         }
         if (r.diamondDetailed != null) {
@@ -99,6 +99,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
             clarity: diamondData.clarity,
             color: diamondData.color,
             ctsOrGms: diamondData.ctsOrGms,
+            isAddedToCart: diamondData.isAddedToCart,
           );
 
           if (diamondData.cut.isNotNullNorEmpty) {
@@ -120,5 +121,17 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         dIYPrice = r.dIYPrice;
       },
     );
+  }
+
+  Future<void> _onCompleteProductAddToBagEvent(CompleteProductAddToBagEvent event, Emitter<CompleteProductState> emit) async {
+    if (productDetails != null) {
+      if (productDetails!.isAddedToCart) {
+        BlocProvider.of<LandingBloc>(event.context)
+            .add(LandingChangeTabEvent(LandingBloc.myBagIndex, context: event.context, isForce: true));
+        event.context.popUntil((route) => route.settings.name == AppRoutes.landingPage);
+      } else {
+        appBloc.add(ProductAddToBagEvent(productDetails!, event.context));
+      }
+    }
   }
 }

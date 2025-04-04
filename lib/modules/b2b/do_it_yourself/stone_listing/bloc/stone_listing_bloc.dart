@@ -5,6 +5,7 @@ part 'stone_listing_event.dart';
 part 'stone_listing_state.dart';
 
 class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
+  late AppBloc appBloc;
   /// This variable is used to check whether the toggle is Precious tab or Semi Precious tab
   bool isInitialToggle = true;
 
@@ -30,6 +31,9 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
 
   /// Variables for managing pagination and filtering
   String productId = "";
+  String? settingId;
+  DiyStyleListModel? diyStyleListModel;
+
   String productNavigation = "";
   Map<dynamic, String?>? filterDataMap;
 
@@ -117,6 +121,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   ///Initialization Logic
   Future<void> _initializeBloc(BuildContext context, Emitter<StoneListingState> emit) async {
     emit(StoneListLoadingState(isFirst: true));
+    appBloc = BlocProvider.of<AppBloc>(context);
     getRouteData(context);
     _initializePagination(context);
     await _initializeSortOptions(context);
@@ -138,6 +143,13 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     productNavigation = data?[RoutesData.productNavigation] ?? "";
     filterDataMap = data?[RoutesData.filterData];
     String? title = data?[RoutesData.appBarTitle];
+
+    if(screenIdentifier == ScreenIdentifier.jewelleryForDIY){
+      settingId = data?[RoutesData.settingId];
+      diyStyleListModel = appBloc.diyStyleForDIY;
+      filterDataMap ??={};
+      filterDataMap![ApiKey.shapeCode] = diyStyleListModel?.applicableDiamondShape.map((e)=> e.shapeCode).join(',');
+    }
     if (title != null) {
       appbarTitle = title;
     }
@@ -165,6 +177,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     /// Determine screen-specific settings
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
+      case ScreenIdentifier.jewelleryForDIY:
         await fetchDiamondList(context, emit);
         if (filterData.isEmpty) {
           await _setupFilters(context, ScreenIdentifier.diamondForDIY);
@@ -252,7 +265,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       };
       queryParam.addAll(query);
       response = await AppRepository(context).getDiamondDealOfTheDayProductList(query: queryParam, isLoadMore: isLoadMore);
-    } else if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+    } else if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       response = await AppRepository(context).diyFilters(
         page: paginationScrollController.currentPage.toString(),
         isLoadMore: isLoadMore,
@@ -417,7 +430,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _handleLoadMore(BuildContext context, Emitter<StoneListingState> emit, int currentPage) async {
     if (currentPage <= totalNumberOfPages!) {
       emit(StoneListLoadingMoreState());
-      if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
         await fetchDiamondList(context, emit, isLoadMore: false);
       } else if (screenIdentifier == ScreenIdentifier.productForGemstones) {
         await fetchGemstoneList(context, emit, isLoadMore: false);
@@ -466,7 +479,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
   Future<void> _setupFilters(BuildContext context, ScreenIdentifier screenIdentifier) async {
     String filterKey = "";
     String type = "";
-    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY || screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       filterKey = AppConst.diamondForDIYFilter;
       type = isInitialToggle ? AppConst.diamondSinglestone : AppConst.diamondNormal;
     } else if (screenIdentifier == ScreenIdentifier.diamondForDefault) {
@@ -556,6 +569,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
     }
     switch (screenIdentifier) {
       case ScreenIdentifier.diamondForDIY:
+      case ScreenIdentifier.jewelleryForDIY:
         _setupTitles(APPStrings.diy.tr, APPStrings.naturalDiamond.tr, APPStrings.looseDiamond.tr);
         break;
       case ScreenIdentifier.productForDiamonds:

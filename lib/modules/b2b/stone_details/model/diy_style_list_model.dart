@@ -78,6 +78,7 @@ class DiyStyleListModel {
     required this.finalPrice,
     required this.discountPrice,
     required this.components,
+    this.isAddedToCart = false,
   });
 
   final DateTime? receivedDateTime;
@@ -156,6 +157,7 @@ class DiyStyleListModel {
   final double? finalPrice;
   final double? discountPrice;
   final List<Component> components;
+  final bool isAddedToCart;
 
   factory DiyStyleListModel.fromJson(Map<String, dynamic> json) {
     return DiyStyleListModel(
@@ -237,6 +239,7 @@ class DiyStyleListModel {
       finalPrice: json["final_price"]?.toString().toDouble,
       discountPrice: json["discount_price"]?.toString().toDouble,
       components: json["components"] == null ? [] : List<Component>.from(json["components"].map((x) => Component.fromJson(x))),
+        isAddedToCart: json["isAddedToCart"] ?? false,
     );
   }
 
@@ -316,7 +319,7 @@ class DiyStyleListModel {
         "metal_color_1_hex_code": metalColor1HexCode,
         "final_price": finalPrice,
         "discount_price": discountPrice,
-        "components": List<Component>.from(components.map((x) => x.toJson())),
+        "components": components.map((x) => x.toJson()).toList(),
       };
 }
 

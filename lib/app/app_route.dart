@@ -838,6 +838,7 @@ enum RoutesData {
 
 enum ScreenIdentifier {
   diamondForDIY,
+  jewelleryForDIY,
   diamondForDefault,
   productForGemstones,
   productForDiamonds,
