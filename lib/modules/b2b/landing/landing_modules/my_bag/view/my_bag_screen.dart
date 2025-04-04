@@ -183,6 +183,7 @@ class MyBagScreen extends StatelessWidget {
                 return Column(
                   children: [
                     ProductInfoItem(
+                      isOutOfStock: (product.stockQty ?? 0) < (product.quantity ?? 0),
                       onTap360View: () {
                         if (product.video.isNotNullNorEmpty) {
                           Utils.launchUrlFromString(product.video!);
@@ -281,6 +282,7 @@ class MyBagScreen extends StatelessWidget {
                 return Column(
                   children: [
                     ProductInfoItem(
+                      isOutOfStock: (product.stockQty ?? 0) < (product.quantity ?? 0),
                       onTap360View: () {
                         if (product.video.isNotNullNorEmpty) {
                           Utils.launchUrlFromString(product.video!);

@@ -20,6 +20,7 @@ class ProductInfoItem extends StatelessWidget {
   final void Function(String?)? onYourDiscountChange;
   final bool isFromBag;
   final TextEditingController yourDiscountController = TextEditingController();
+  final bool isOutOfStock;
 
   ProductInfoItem({
     super.key,
@@ -41,6 +42,7 @@ class ProductInfoItem extends StatelessWidget {
     this.isDiamond = false,
     this.onYourDiscountChange,
     this.isFromBag = true,
+    this.isOutOfStock = false,
   }) {
     if (productDetails.productInfoClarityChat?.your?.isNotNullNorEmpty == true) {
       yourDiscountController.text = productDetails.productInfoClarityChat?.your ?? '0';
@@ -51,6 +53,7 @@ class ProductInfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     ValueNotifier<bool> showMoreDetails = ValueNotifier<bool>(false);
     final style = AppTheme.of(context).myBagDiamondItemStyle;
+    final productItemStyle = AppTheme.of(context).productItemStyle;
     final productInfoItemStyle = AppTheme.of(context).productInfoItemStyle;
     ProductInfoClarityChat chart = productDetails.productInfoClarityChat ?? ProductInfoClarityChat();
     return GestureDetector(
@@ -68,6 +71,16 @@ class ProductInfoItem extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (isOutOfStock) ...[
+                  Row(
+                    children: [
+                      Icon(Icons.warning_amber_outlined, color: productItemStyle.errorColor, size: 16.w),
+                      SizedBox(width: 8.w),
+                      SmartText(APPStrings.thisProductIsCurrentlyNotInStock.tr, style: productItemStyle.outOfStockTextStyle),
+                    ],
+                  ),
+                  SizedBox(height: 8.h),
+                ],
                 if (productDetails.isForAuction) SizedBox(height: 30.h),
                 _buildProductNameView(chart, style),
                 _buildSlotFirstWidget(chart, style, productInfoItemStyle),

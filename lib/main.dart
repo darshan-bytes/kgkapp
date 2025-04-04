@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
     return Align(
       alignment: AlignmentDirectional.topEnd,
       child: const Banner(
-        message: "3 April",
+        message: "4 April",
         location: BannerLocation.topEnd,
       ),
     );
