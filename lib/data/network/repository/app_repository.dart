@@ -1349,6 +1349,20 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  Future<Either<ErrorResponse, CadLibraryListItemDataModel>?> styleLibraryDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<CadLibraryListItemDataModel>(ApiClient.styleLibraryDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<ErrorResponse, SkuLibraryListItemDataModel>?> skuLibraryDetails({required String id}) async {
+    context.setAppLoading(true);
+    var response = await getMethod<SkuLibraryListItemDataModel>(ApiClient.skuLibraryDetails(id), withCurrencyHeader: true);
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   Future<Either<ErrorResponse, PaginationData<UserMasterListingModelClass>>?> staffUserMasterListApiCall(
       {required Map<String, dynamic> body, bool isLoadMore = false}) async {
     if (isLoadMore) context.setAppLoading(true);

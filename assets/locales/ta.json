@@ -854,5 +854,6 @@
   "mob_edit_inquiry": "கோப்பை மாற்று",
   "mob_remove_inquiry": "கோப்பை நீக்கு",
   "mob_remove_inquiry_msg": "இந்த விசாரணையை நிச்சயமாக அகற்ற விரும்புகிறீர்களா?",
-  "mob_shipping_and_billing_both": "ஷிப்பிங் & பில்லிங் இரண்டும்"
+  "mob_shipping_and_billing_both": "ஷிப்பிங் & பில்லிங் இரண்டும்",
+  "mob_product_no": "தயாரிப்பு எண்"
 }

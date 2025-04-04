@@ -857,6 +857,7 @@ enum ScreenIdentifier {
   cancelOrderForRetailer,
   cancelOrderForManufacturer,
   productForLibraryDesign,
+  productForLibrarySKU
 }
 
 extension RoutesDataExtension on BuildContext {

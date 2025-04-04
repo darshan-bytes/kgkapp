@@ -191,6 +191,8 @@ class CommonResponse<T> {
         return PaginationData<UserMasterListingModelClass>.fromJson(json);
       case const (PaginationData<MyInquiriesModel>):
         return PaginationData<MyInquiriesModel>.fromJson(json);
+      case const (SkuLibraryListItemDataModel):
+        return SkuLibraryListItemDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       case const (String):
