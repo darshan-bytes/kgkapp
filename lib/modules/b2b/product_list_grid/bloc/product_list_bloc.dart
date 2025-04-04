@@ -376,7 +376,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
     /// Show the total number of records in the UI side
     jewelleryDatumList.addAll(localList);
-    productList.addAll(localList.map((item) => mapToProductDetailsModel(item)));
+    productList.addAll(localList.map((item) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: item)));
 
     /// Below Code is commented as of now to avoid the precache of images.
     // printWrapped("precacheImageList-start-time: ${DateTime.now()}");
@@ -403,37 +403,6 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       paginationScrollController.isPageLoaded = Completer<bool>();
     }
     paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
-  }
-
-  /// Helper function to map the product data into ProductDetailsModel
-  ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
-    return ProductDetailsModel(
-      suid: item.suid ?? "",
-      productId: item.suid ?? "",
-      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
-      name: item.productDescription ?? "",
-      originalPrice: item.finalPrice?.toString().setCurrency,
-      offerPrice: item.discountPrice?.toString().setCurrency,
-      finalPrice: item.discountPrice?.toString().setCurrency,
-      discountPercentageString: item.discountEXT,
-      commodity: Commodity.jewellery,
-      isFavourite: item.isFavorite,
-      wishlistId: item.wishlistID,
-      productSku: item.contractNoSkuNo,
-      title: item.contractNoSkuNo ?? '',
-      subTitle: item.productDescription ?? '',
-      kgkCollectionName: item.kgkCollection ?? "\n",
-      businessCategoryName: item.businessCategoryName ?? "\n",
-      cts: item.crtEXT,
-      gms: item.gms,
-      brandName: item.brandName,
-      isAddedToCart: item.isAddedToCart,
-      colorsCode: [
-        item.metalColor1HexCode ?? "",
-        item.metalColor2HexCode ?? "",
-        item.metalColor3HexCode ?? "",
-      ],
-    );
   }
 
   /// Fetch products by productId

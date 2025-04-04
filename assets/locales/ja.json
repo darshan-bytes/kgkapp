@@ -855,5 +855,6 @@
   "mob_remove_inquiry": "削除",
   "mob_remove_inquiry_msg": "この問い合わせを削除しますか？",
   "mob_shipping_and_billing_both": "配送と請求の両方",
-  "mob_product_no": "製品番号"
+  "mob_product_no": "製品番号",
+  "mob_select_contact": "連絡先を選択"
 }
