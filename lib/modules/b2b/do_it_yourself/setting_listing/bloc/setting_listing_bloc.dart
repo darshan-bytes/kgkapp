@@ -31,6 +31,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
 
   Future<void> _onSettingListingInitialEvent(SettingListingInitialEvent event, Emitter<SettingListingState> emit) async {
     appBloc = BlocProvider.of<AppBloc>(event.context);
+    getRouteData(event.context);
     diamondDataForDIY = appBloc.diamondDataForDIY;
     if (paginationScrollController.isInitialised) {
       paginationScrollController.dispose();
@@ -49,6 +50,17 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       refreshCompleter.complete(true);
     }
     emit(const SettingLoadedState());
+  }
+
+  ScreenIdentifier? screenIdentifier;
+
+  /// Get screen identifier
+  void getRouteData(BuildContext context) {
+    Map<RoutesData, dynamic>? data = context.routesData;
+    screenIdentifier = data?[RoutesData.isPageFor];
+    if(screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+      diamondDataForDIY = null;
+    }
   }
 
   void _onChangeListingTypeEvent(SettingChangeListingTypeEvent event, Emitter<SettingListingState> emit) {

@@ -63,7 +63,10 @@ class SettingListingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 16.h),
-                  const DiyProgressWidget(padding: EdgeInsetsDirectional.zero, selectedStep: 2),
+                  DiyProgressWidget(
+                      padding: EdgeInsetsDirectional.zero,
+                      selectedStep: settingListingBloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
+                      screenIdentifier: settingListingBloc.screenIdentifier),
                   SizedBox(height: 24.h),
                   _buildProductFilterCount(style, settingListingBloc),
                   SizedBox(height: 24.h),
@@ -162,6 +165,7 @@ class SettingListingScreen extends StatelessWidget {
                                 onTap: () {
                                   context.pushNamed(AppRoutes.settingDetailPage, arguments: {
                                     RoutesData.settingId: productDetails.suid,
+                                    RoutesData.isPageFor: settingListingBloc.screenIdentifier,
                                   });
                                 },
                               );

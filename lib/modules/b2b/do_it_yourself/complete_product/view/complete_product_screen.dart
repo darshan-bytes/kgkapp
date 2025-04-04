@@ -28,7 +28,7 @@ class CompleteProductScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const DiyProgressWidget(selectedStep: 3),
+                    DiyProgressWidget(selectedStep: 3, screenIdentifier: bloc.screenIdentifier),
                     SmartCarouselSlider(
                       imgList: bloc.imgList,
                       controller: bloc.controller,
@@ -91,8 +91,10 @@ class CompleteProductScreen extends StatelessWidget {
                   flex: 5,
                   child: SmartButton(
                     prefixImage: AppImages.icShoppingBag,
-                    onTap: () {},
-                    title: APPStrings.addToBag.tr,
+                    onTap: () {
+                      bloc.add(CompleteProductAddToBagEvent(context));
+                    },
+                    title: bloc.productDetails?.isAddedToCart == true?APPStrings.goToBag.tr:APPStrings.addToBag.tr,
                     height: 55.h,
                   ),
                 ),

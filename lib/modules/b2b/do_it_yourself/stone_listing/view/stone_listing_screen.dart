@@ -43,10 +43,19 @@ class StoneListingScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 16.h),
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY)
-                        const DiyProgressWidget(padding: EdgeInsetsDirectional.zero, selectedStep: 1),
-                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) SizedBox(height: 6.h),
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                        SizedBox(height: 16.h),
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                        DiyProgressWidget(
+                          padding: EdgeInsetsDirectional.zero,
+                          selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
+                          screenIdentifier: bloc.screenIdentifier,
+                        ),
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                        SizedBox(height: 6.h),
                       if (bloc.displaySelection) ...[
                         SizedBox(height: 10.h),
                         _buildSelectionDiamond(bloc),
@@ -210,7 +219,7 @@ class StoneListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(DiamondListingStyle style, StoneListingBloc diamondListingBloc) {
+  Widget _buildProductList(DiamondListingStyle style, StoneListingBloc bloc) {
     return BlocBuilder<StoneListingBloc, StoneListingState>(
       buildWhen: (previous, current) =>
           current is StoneDiamondListLoadedState ||
@@ -219,26 +228,25 @@ class StoneListingScreen extends StatelessWidget {
           current is StoneListLoadingMoreState ||
           current is StoneListLoadedMoreState,
       builder: (context, state) {
-        if (diamondListingBloc.productList.isEmpty &&
+        if (bloc.productList.isEmpty &&
             (state is StoneDiamondListLoadedState || state is StoneProductLoadedState || state is StoneChangeListingTypeState)) {
           return NoDataFoundWidget(text: APPStrings.noDataFound.tr);
         } else {
-          if (diamondListingBloc.isGrid) {
+          if (bloc.isGrid) {
             return Column(
               children: [
                 SmartGridView(
-                    items: diamondListingBloc.productList.map((ProductDetailsModel productDetails) {
+                    items: bloc.productList.map((ProductDetailsModel productDetails) {
                   return ProductGridItem(
                     productDetails: productDetails,
                     isCrtAndGramVisible: false,
                     isForAuction: productDetails.isForAuction,
                     onTap: () {
-                      if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
-                        context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
-                          RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
-                          RoutesData.productId: productDetails.productId
-                        });
-                      } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                      if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                          bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                        context.pushNamed(AppRoutes.stoneDetailPage,
+                            arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId});
+                      } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
                         context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                           RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
                           RoutesData.productId: productDetails.productId
@@ -247,16 +255,18 @@ class StoneListingScreen extends StatelessWidget {
                         // context.pushNamed(AppRoutes.diamondInfoPopupPage,
                         //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                       } else {
-                        context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                          RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
-                          RoutesData.productId: productDetails.productId
-                        });
+                        context.pushNamed(AppRoutes.productDetailsPage,
+                            arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: productDetails.productId});
                       }
                     },
                     onEyeTap: () {},
                     isFavourite: productDetails.isFavourite,
                     onFavTap: () {},
-                    onAddToBagTap: productDetails.isForAuction ? null : () {},
+                    onAddToBagTap: (productDetails.isForAuction ||
+                            (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY))
+                        ? null
+                        : () {},
                   );
                 }).toList()),
                 if (state is StoneListLoadingMoreState) const SmartCircularProgressIndicator(),
@@ -268,11 +278,11 @@ class StoneListingScreen extends StatelessWidget {
               children: [
                 //Merged
                 ListView.separated(
-                  itemCount: diamondListingBloc.productList.length,
+                  itemCount: bloc.productList.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final product = diamondListingBloc.productList[index];
+                    final product = bloc.productList[index];
 
                     /// Attributes list for stone info
                     List<String> attributes = [
@@ -281,14 +291,18 @@ class StoneListingScreen extends StatelessWidget {
                       product.cut,
                     ].where((attr) => attr != null).map((attr) => attr!).toList();
 
-                    return diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY
+                    return bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                            bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY
                         ? ProductListItem(
                             onTap: () {
-                              context.pushNamed(AppRoutes.stoneDetailPage,
-                                  arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
+                              if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                  bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                                context.pushNamed(AppRoutes.stoneDetailPage,
+                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
+                              }
                             },
-                            onEyeTap: () {},
-                            onFavTap: () {},
+                            // onEyeTap: () {},
+                            // onFavTap: () {},
                             productDetails: product,
                           )
                         : ProductInfoItem(
@@ -357,12 +371,11 @@ class StoneListingScreen extends StatelessWidget {
                                   },
                             isSelectedBackground: (index % 2 != 0),
                             onTap: () {
-                              if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDIY) {
-                                context.pushNamed(AppRoutes.stoneDetailPage, arguments: {
-                                  RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
-                                  RoutesData.productId: product.productId
-                                });
-                              } else if (diamondListingBloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
+                              if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ||
+                                  bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+                                context.pushNamed(AppRoutes.stoneDetailPage,
+                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
+                              } else if (bloc.screenIdentifier == ScreenIdentifier.diamondForDefault) {
                                 context.pushNamed(AppRoutes.productDetailsPage, arguments: {
                                   RoutesData.isPageFor: ScreenIdentifier.productForDiamonds,
                                   RoutesData.productId: product.productId
@@ -371,10 +384,8 @@ class StoneListingScreen extends StatelessWidget {
                                 // context.pushNamed(AppRoutes.diamondInfoPopupPage,
                                 //     arguments: {RoutesData.isPageFor: diamondListingBloc.screenIdentifier});
                               } else {
-                                context.pushNamed(AppRoutes.productDetailsPage, arguments: {
-                                  RoutesData.isPageFor: diamondListingBloc.screenIdentifier,
-                                  RoutesData.productId: product.productId
-                                });
+                                context.pushNamed(AppRoutes.productDetailsPage,
+                                    arguments: {RoutesData.isPageFor: bloc.screenIdentifier, RoutesData.productId: product.productId});
                               }
                             },
                             productDetails: ProductDetailsModel(
@@ -409,7 +420,7 @@ class StoneListingScreen extends StatelessWidget {
                               isForAuction: product.isForAuction,
                             ),
                             isAutoSizeText: false,
-                            isDiamond: diamondListingBloc.screenIdentifier != ScreenIdentifier.productForGemstones,
+                            isDiamond: bloc.screenIdentifier != ScreenIdentifier.productForGemstones,
                           );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 17.h),
