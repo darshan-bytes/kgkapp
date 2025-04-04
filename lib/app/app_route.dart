@@ -402,8 +402,10 @@ class AppRoutes {
 
       case contactUsPage:
         builder = (context) {
-          BlocProvider.of<ContactUsBloc>(context).add(ContactUsInitialEvent(context: context));
-          return const ContactUsScreen();
+          return BlocProvider<ContactUsBloc>(
+            create: (_) => ContactUsBloc()..add(ContactUsInitialEvent(context: context)),
+            child: const ContactUsScreen(),
+          );
         };
         break;
 

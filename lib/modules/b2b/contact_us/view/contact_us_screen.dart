@@ -19,39 +19,46 @@ class ContactUsScreen extends StatelessWidget {
             context.pop();
           },
         ),
-        body: SmartSingleChildScrollView(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 18.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SmartText(APPStrings.getInTouchWithUs.tr, style: style.headerTitleStyle),
-              SizedBox(height: 8.h),
-              SmartText(APPStrings.dropUsANote.tr, style: style.messageStyle),
-              SizedBox(height: 18.h),
-              SmartImage(path: "https://i.ibb.co/mbJ92Mj/image-383.png", height: 356.h),
-              SizedBox(height: 20.h),
-              _buildFullNameField(bloc),
-              SizedBox(height: 14.h),
-              _buildEmailField(bloc),
-              SizedBox(height: 14.h),
-              _buildContactNumberField(bloc, context, style),
-              SizedBox(height: 14.h),
-              _buildInquiryTypeDropdown(bloc),
-              // Right now hide this section ones confirmation comes from client totally remove this
-              // _buildProductDropdown(bloc),
-              SizedBox(height: 14.h),
-              _buildCommentField(bloc),
-              SizedBox(height: 22.h),
-              SmartButton(
-                onTap: () {
-                  bloc.add(ContactUsSubmitEvent(context: context));
-                },
-                title: APPStrings.submit.tr,
-              ),
-              SizedBox(height: 18.h),
-              _buildStillNeedSection(style),
-            ],
-          ),
+        body: BlocBuilder<ContactUsBloc, ContactUsState>(
+          buildWhen: (previous, current) => current is ContactUsChangeInquiryTypeState,
+          builder: (context, state) {
+            return bloc.isLoading
+                ? SmartCircularProgressIndicator()
+                : SmartSingleChildScrollView(
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 18.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SmartText(bloc.title, style: style.headerTitleStyle),
+                        SizedBox(height: 8.h),
+                        SmartText(bloc.description, style: style.messageStyle),
+                        SizedBox(height: 18.h),
+                        SmartImage(path: bloc.imageUrl, height: 356.h),
+                        SizedBox(height: 20.h),
+                        _buildFullNameField(bloc),
+                        SizedBox(height: 14.h),
+                        _buildEmailField(bloc),
+                        SizedBox(height: 14.h),
+                        _buildContactNumberField(bloc, context, style),
+                        SizedBox(height: 14.h),
+                        _buildInquiryTypeDropdown(bloc),
+                        // Right now hide this section ones confirmation comes from client totally remove this
+                        // _buildProductDropdown(bloc),
+                        SizedBox(height: 14.h),
+                        _buildCommentField(bloc),
+                        SizedBox(height: 22.h),
+                        SmartButton(
+                          onTap: () {
+                            bloc.add(ContactUsSubmitEvent(context: context));
+                          },
+                          title: APPStrings.submit.tr,
+                        ),
+                        SizedBox(height: 18.h),
+                        _buildStillNeedSection(bloc, style),
+                      ],
+                    ),
+                  );
+          },
         ),
       ),
     );
@@ -67,7 +74,7 @@ class ContactUsScreen extends StatelessWidget {
           children: [
             BlocBuilder<ContactUsBloc, ContactUsState>(
               buildWhen: (previous, current) =>
-              current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
+                  current is ContactUsFieldValidationState && current.fieldType == FieldTypeValidationEnum.contactNumber,
               builder: (context, state) {
                 return SmartTextField(
                   labelText: APPStrings.contactNumber.tr,
@@ -179,35 +186,90 @@ class ContactUsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStillNeedSection(ContactUsStyle style) {
+  Widget _buildStillNeedSection(ContactUsBloc bloc, ContactUsStyle style) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SmartText(APPStrings.stillNeedHelp.tr, style: style.subHeaderTitleStyle),
+        SmartText(bloc.stillNeedHelp, style: style.subHeaderTitleStyle),
         SizedBox(height: 24.h),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.byPhone.tr,
-          "Monday – Friday 9 AM – 5 PM",
-          "+91 98765 43210",
-        ),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.byEmail.tr,
-          APPStrings.questionOrQueriesGetInTouch.tr,
-          "support@kgk.com",
-        ),
-        _buildStillNeedHelpItems(
-          style,
-          APPStrings.findAStore.tr,
-          APPStrings.findYourNearestXStore.tr.interpolate(['KGK']),
-          APPStrings.storeDirectory.tr,
-          onTap: () {
-            //TODO: Navigate to Store Directory
-          },
-        ),
+        _buildStillNeedHelpList(bloc.support, style),
       ],
     );
+  }
+
+  Widget _buildStillNeedHelpList(List<ContactUsSupport> supportList, ContactUsStyle style) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: supportList.length,
+      itemBuilder: (context, index) {
+        return _buildStillNeedHelpItems(
+          style,
+          supportList[index].title ?? '',
+          supportList[index].description?.replaceAll('\n', '') ?? '',
+          supportList[index].action ?? '',
+          onTap: () {
+            if (supportList[index].action?.contains(',') ?? false) {
+              showListOfNumbers(context, supportList[index].action ?? '', supportList[index].url ?? '');
+              return;
+            }
+            Utils.handleContactAction(context, supportList[index].action ?? '', supportList[index].url ?? '');
+          },
+        );
+      },
+    );
+  }
+
+  void showListOfNumbers(BuildContext context, String value, String url) {
+    final currentContext = context.mounted ? context : getNavigatorKeyContext;
+    final options = value.split(',').map((e) => e.trim()).toList();
+
+    if (options.length > 1) {
+      Utils.showSmartModalBottomSheet(
+        context: currentContext,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.r),
+            topRight: Radius.circular(16.r),
+          ),
+        ),
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 24.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: SmartText(
+                  APPStrings.selectContact.tr,
+                  style: AppTheme.of(context).faqStyle.titleStyle,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: options.length,
+                separatorBuilder: (_, __) => Divider(height: 1),
+                itemBuilder: (context, index) {
+                  final option = options[index];
+                  return ListTile(
+                    title: Text(option),
+                    onTap: () {
+                      context.pop();
+                      Utils.handleContactAction(currentContext, option, url);
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 24.h),
+            ],
+          );
+        },
+      );
+    } else {
+      Utils.handleContactAction(currentContext, value.trim(), url);
+    }
   }
 
   Widget _buildStillNeedHelpItems(ContactUsStyle style, String title, String desc, String value, {VoidCallback? onTap}) {

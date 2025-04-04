@@ -174,7 +174,7 @@ class ProductListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            if (productDetails.title != null)
+            /*   if (productDetails.title != null)
               SmartText(
                 productDetails.title,
                 style: style.diamondTextStyle,
@@ -187,28 +187,14 @@ class ProductListItem extends StatelessWidget {
                 style: style.productNameStyle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-              ),
+              ),*/
             Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SmartText(
-                  productDetails.brandName,
-                  style: style.diamondTextStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (productDetails.brandName.isNotNullNorEmpty)
-                  SmartText(
-                    "|",
-                    style: style.diamondTextStyle,
-                    optionalPadding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 8.w,
-                    ),
-                  ),
-                SmartText(
-                  productDetails.productSku,
+                  productDetails.productSku ?? productDetails.title ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: style.diamondTextStyle,
@@ -216,7 +202,7 @@ class ProductListItem extends StatelessWidget {
               ],
             ),
             SmartText(
-              productDetails.name,
+              productDetails.name ?? productDetails.subTitle ?? '',
               style: style.productNameStyle,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

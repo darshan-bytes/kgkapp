@@ -682,4 +682,14 @@ class Utils {
     final int secondLetter = countryCode.codeUnitAt(1) - 0x41 + 0x1F1E6;
     return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
   }
+
+  static void handleContactAction(BuildContext context, String value, String url) async {
+    if (url.startsWith("tel:")) {
+      await Utils.launchUrlFromString("tel:$value");
+    } else if (url.contains("find-a-store")) {
+      context.pushNamed(AppRoutes.findStorePage);
+    } else if (url.startsWith("mailto:")) {
+      await Utils.launchUrlFromString(value);
+    }
+  }
 }

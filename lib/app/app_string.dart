@@ -1050,4 +1050,5 @@ class APPStrings {
   static const String removeInquiryMsg = 'mob_remove_inquiry_msg';
   static const String shippingAndBillingBoth = 'mob_shipping_and_billing_both';
   static const String productNo = 'mob_product_no';
+  static const String selectContact = 'mob_select_contact';
 }

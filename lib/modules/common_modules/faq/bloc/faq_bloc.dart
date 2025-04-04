@@ -33,7 +33,7 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
         List<Map<String, dynamic>> faqData = faqStrapiList.map((e) => e.toJson()).toList();
         List<FaqWrapper> faqWrappers = parseFaqs(faqData);
         support = faqStrapiModel.support;
-        stillNeedHelp = faqStrapiModel.supportTitle.toString();
+        stillNeedHelp = faqStrapiModel.supportTitle?.toString() ?? '';
         faq.addAll(faqWrappers);
       });
     });

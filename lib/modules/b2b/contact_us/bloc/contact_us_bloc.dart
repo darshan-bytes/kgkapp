@@ -10,6 +10,14 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   TextEditingController commentController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
+  String title = "";
+  String description = "";
+  String imageUrl = "";
+  String stillNeedHelp = "";
+  List<ContactUsSupport> support = [];
+
+  bool isLoading = true;
+
   FocusNode fullNameFocusNode = FocusNode();
   FocusNode commentFocusNode = FocusNode();
   FocusNode emailFocusNode = FocusNode();
@@ -24,21 +32,19 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
   TextEditingController contactNumberController = TextEditingController();
 
   FocusNode contactNumberFocusNode = FocusNode();
-  Country selectedCountry =
-    Country.from(json: {
-      "e164_cc": "91",
-      "iso2_cc": "IN",
-      "e164_sc": 0,
-      "geographic": true,
-      "level": 1,
-      "name": "India",
-      "example": "9123456789",
-      "display_name": "India (IN) [+91]",
-      "full_example_with_plus_sign": "+919123456789",
-      "display_name_no_e164_cc": "India (IN)",
-      "e164_key": "91-IN-0",
-    })
-  ;
+  Country selectedCountry = Country.from(json: {
+    "e164_cc": "91",
+    "iso2_cc": "IN",
+    "e164_sc": 0,
+    "geographic": true,
+    "level": 1,
+    "name": "India",
+    "example": "9123456789",
+    "display_name": "India (IN) [+91]",
+    "full_example_with_plus_sign": "+919123456789",
+    "display_name_no_e164_cc": "India (IN)",
+    "e164_key": "91-IN-0",
+  });
 
   List<ProductModel> productList = [
     const ProductModel(id: 1, name: 'SKUC097973'),
@@ -65,9 +71,25 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     if (isInitialized) return;
     emit(const ContactUsReloadState());
     isInitialized = true;
+    isLoading = true;
     await fetchInquiryType(event.context, emit);
+    await fetchContactUsStrapiData(event.context, emit);
+    isLoading = false;
     emit(const ContactUsChangeInquiryTypeState());
     emit(const ContactUsChangeSelectProductState());
+  }
+
+  Future<void> fetchContactUsStrapiData(context, Emitter<ContactUsState> emit) async {
+    Either<ErrorResponse, List<ContactUs>?> response = await AppRepository(context).fetchStrapiContactUsData();
+    response.fold((l) {
+      Utils.showMessage(l.message);
+    }, (r) {
+      title = r?.first.card?.title ?? "";
+      description = Utils.parseHtmlString(r?.first.card?.description ?? "");
+      imageUrl = "${AppConst.strapiQaEnvImgBaseUrl}${r?.first.card?.image?.data.first.attributes?.url ?? ""}";
+      stillNeedHelp = r?.first.supportTitle ?? "";
+      support = r?.first.support ?? [];
+    });
   }
 
   Future<void> fetchInquiryType(context, Emitter<ContactUsState> emit) async {
