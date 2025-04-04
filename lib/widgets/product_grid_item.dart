@@ -236,13 +236,13 @@ class ProductGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SmartText(
-              productDetails.title,
+              productDetails.title ?? productDetails.productSku ?? productDetails.contractNoSkuNo,
               style: style.diamondTextStyle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             SmartText(
-              "${productDetails.subTitle}\n\n",
+              "${productDetails.subTitle ?? productDetails.name ?? ''}\n\n",
               style: style.productNameStyle,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
