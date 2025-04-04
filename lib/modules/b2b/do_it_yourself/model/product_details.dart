@@ -78,6 +78,7 @@ class ProductDetailsModel {
   String? jewelleryType;
   String? video;
   String? contractNoSkuNo;
+  List<DiyBagItemProductDetailsModel>? diyBagItemProductDetailsList;
 
   ProductDetailsModel({
     this.productId,
@@ -157,6 +158,7 @@ class ProductDetailsModel {
     this.jewelleryType,
     this.video,
     this.contractNoSkuNo,
+    this.diyBagItemProductDetailsList,
   });
 
   @override
@@ -223,7 +225,11 @@ class ProductDetailsModel {
           table == other.table &&
           depth == other.depth &&
           contractNoSkuNo == other.contractNoSkuNo &&
-          jewelleryType == other.jewelleryType;
+          jewelleryType == other.jewelleryType &&
+          video == other.video &&
+          stoneElements == other.stoneElements &&
+          diamondClarityChart == other.diamondClarityChart &&
+          diyBagItemProductDetailsList == other.diyBagItemProductDetailsList;
 
   @override
   int get hashCode =>
@@ -287,7 +293,8 @@ class ProductDetailsModel {
       table.hashCode ^
       depth.hashCode ^
       contractNoSkuNo.hashCode ^
-      jewelleryType.hashCode;
+      jewelleryType.hashCode ^
+      diyBagItemProductDetailsList.hashCode;
 }
 
 extension ProductDetailsExtension on ProductDetailsModel {
