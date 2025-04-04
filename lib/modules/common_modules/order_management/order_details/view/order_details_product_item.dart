@@ -23,11 +23,11 @@ class OrderDetailsProductItem extends StatelessWidget {
             child: Column(
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildDetailsColumn(style, APPStrings.sku.tr, productDetails.sku, isExpanded: true),
+                    buildDetailsColumn(style, APPStrings.productNo.tr, productDetails.sku, isExpanded: true),
                     SizedBox(width: 24.w),
-                    buildDetailsColumn(style, APPStrings.status.tr, '-',
-                        isStatus: true, status: productDetails.orderStatus, isExpanded: true),
+                    buildDetailsColumn(style, APPStrings.sku.tr, productDetails.suid, isExpanded: true),
                   ],
                 ),
                 SizedBox(height: 16.h),
@@ -55,9 +55,11 @@ class OrderDetailsProductItem extends StatelessWidget {
                   items: [
                     buildDetailsColumn(style, APPStrings.qty.tr, productDetails.quantity),
                     buildDetailsColumn(style, APPStrings.amount.tr, productDetails.price),
-                    buildDetailsColumn(style, APPStrings.brand.tr, productDetails.brand),
-                    //Delivery Date
-                    buildDetailsColumn(style, APPStrings.deliveryDate.tr, productDetails.deliveryDate),
+
+                    /// TODO :: we have hide for now if client want to show then uncomment below line
+                    // buildDetailsColumn(style, APPStrings.brand.tr, productDetails.brand),
+                    // //Delivery Date
+                    // buildDetailsColumn(style, APPStrings.deliveryDate.tr, productDetails.deliveryDate),
                   ],
                   columns: 2,
                   spacing: 24.w,
@@ -66,19 +68,21 @@ class OrderDetailsProductItem extends StatelessWidget {
               ],
             ),
           ),
-          if (onTapRemoveButton != null)
-            PositionedDirectional(
-              top: 14.h,
-              end: 14.w,
-              child: SmartImage(
-                path: AppImages.icDelete,
-                onTap: onTapRemoveButton,
-                height: 18.w,
-                width: 18.w,
-                padding: EdgeInsetsDirectional.zero,
-                inkwellBorderRadius: BorderRadius.circular(4.0.r),
-              ),
-            ),
+
+          /// TODO :: Currently remove button as discuss with client
+          // if (onTapRemoveButton != null)
+          //   PositionedDirectional(
+          //     top: 14.h,
+          //     end: 14.w,
+          //     child: SmartImage(
+          //       path: AppImages.icDelete,
+          //       onTap: onTapRemoveButton,
+          //       height: 18.w,
+          //       width: 18.w,
+          //       padding: EdgeInsetsDirectional.zero,
+          //       inkwellBorderRadius: BorderRadius.circular(4.0.r),
+          //     ),
+          //   ),
         ],
       ),
     );

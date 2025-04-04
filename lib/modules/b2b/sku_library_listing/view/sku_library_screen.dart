@@ -142,8 +142,10 @@ class SkuLibraryScreen extends StatelessWidget {
           (index) => DesignListingGridItem.designGridItem(
             designModel: bloc.skuLibraryList[index],
             onTap: () {
-              /// TODO: Navigate to the design detail page.
-              // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
+              context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
+                RoutesData.productId: bloc.skuLibraryList[index].id,
+              });
             },
           ),
         ),
@@ -166,8 +168,10 @@ class SkuLibraryScreen extends StatelessWidget {
                 margin: EdgeInsetsDirectional.only(bottom: 24.h),
                 designModel: bloc.skuLibraryList[index],
                 onTap: () {
-                  /// TODO: Navigate to the design detail page.
-                  // context.pushNamed(AppRoutes.skuLibraryFeedbackPage);
+                  context.pushNamed(AppRoutes.productDetailsPage, arguments: {
+                    RoutesData.isPageFor: ScreenIdentifier.productForLibrarySKU,
+                    RoutesData.productId: bloc.skuLibraryList[index].id,
+                  });
                 },
               ),
               if (state is SkuLibraryLoadingMoreState && index == bloc.skuLibraryList.length - 1) const SmartCircularProgressIndicator(),

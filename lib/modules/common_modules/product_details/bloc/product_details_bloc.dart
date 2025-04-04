@@ -172,7 +172,8 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       screenIdentifier == ScreenIdentifier.productForGemstones ||
       screenIdentifier == ScreenIdentifier.productForLibraryDesign ||
       screenIdentifier == ScreenIdentifier.productForLibraryCAD ||
-      screenIdentifier == ScreenIdentifier.productForLibraryStyle;
+      screenIdentifier == ScreenIdentifier.productForLibraryStyle ||
+      screenIdentifier == ScreenIdentifier.productForLibrarySKU;
 
   @override
   Future<void> close() async {
@@ -224,6 +225,9 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       case ScreenIdentifier.productForLibraryCAD:
       case ScreenIdentifier.productForLibraryStyle:
         await _handleCadLibraryProduct(event, emit);
+        break;
+      case ScreenIdentifier.productForLibrarySKU:
+        await _handleSkuLibraryProduct(event, emit);
         break;
       default:
         break;
@@ -284,8 +288,13 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
   Future<void> _handleCadLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
     if (isClosed) return;
     emit(ProductDetailsLoadingState());
-    await getCadLibraryDetails(event.context, productId);
+    await getCadOrStyleLibraryDetails(event.context, productId);
+    _emitLoadedStateIfAvailable(event, emit);
+  }
 
+  Future<void> _handleSkuLibraryProduct(LoadProductDetailsEvent event, Emitter<ProductDetailsState> emit) async {
+    emit(ProductDetailsLoadingState());
+    await getSkuLibraryDetails(event.context, productId);
     _emitLoadedStateIfAvailable(event, emit);
   }
 
@@ -337,28 +346,10 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
           /// Below line is commented because the3DFile is not available in the response.
           // the3DFile = diamondData?.image.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
           videoUrl = diamondData?.video;
-          bool isDiscounted = diamondData!.discountPercentage != null && diamondData!.discountPercentage! > 0;
           isAddedToCart = diamondData!.isAddedToCart;
           productName = diamondData!.rmDescription ?? '';
           imgList = diamondData!.image.map((e) => e.url ?? '').toList();
-          productDetails = ProductDetailsModel(
-              productId: diamondData!.suid,
-              suid: diamondData!.suid,
-              name: productName,
-              originalPrice: diamondData?.finalPrice?.toString().setCurrency,
-              offerPrice: diamondData?.discountPrice?.toString().setCurrency,
-              finalPrice: diamondData?.discountPrice?.toString().setCurrency,
-              discountPercentageString:
-                  isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamondData!.discountPercentage]) : null,
-              productSku: diamondData!.lotCode,
-              reviewCount: diamondData!.reviewCount,
-              rating: diamondData!.rating,
-              commodity: Commodity.diamond,
-              isFavourite: diamondData?.isFavorite ?? false,
-              wishlistId: diamondData?.wishlistID,
-              stoneElements: diamondData?.components,
-              auctionId: diamondData?.auctionId,
-              isAddedToCart: diamondData?.isAddedToCart ?? false);
+          productDetails = Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamondData!);
         }
       },
     );
@@ -379,36 +370,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         gemstoneData = data;
         if (gemstoneData != null) {
           isErrorInLoadingData = false;
-          bool isDiscounted = gemstoneData!.discountPercentage != null && (gemstoneData?.discountPercentage ?? 0) > 0;
           isAddedToCart = gemstoneData!.isAddedToCart;
           productName = gemstoneData?.rmDescription ?? '';
           if (gemstoneData?.image.isNotEmpty ?? false) {
             imgList = gemstoneData!.image.map((e) => e.url ?? '').toList();
           }
-          productDetails = ProductDetailsModel(
-            productId: gemstoneData!.suid,
-            suid: gemstoneData!.suid,
-            name: productName,
-            originalPrice: gemstoneData?.finalPrice?.toString().setCurrency,
-            offerPrice: gemstoneData?.discountPrice?.toString().setCurrency,
-            finalPrice: gemstoneData?.discountPrice?.toString().setCurrency,
-            // offerPrice: isDiscounted ? (gemstoneData!.discountPrice ?? 0).toString().setCurrency : null,
-            // originalPrice: gemstoneData!.finalPrice?.setCurrency,
-            discountPercentageString:
-                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstoneData?.discountPercentage]) : null,
-            productSku: gemstoneData?.lotCode,
-            reviewCount: gemstoneData?.reviewCount,
-            rating: gemstoneData?.rating?.toDouble(),
-            shape: gemstoneData?.shape,
-            productQuality: CartProductQuality(name: gemstoneData?.quality),
-            color: gemstoneData?.color,
-            clarity: gemstoneData?.clarity,
-            commodity: Commodity.gemstone,
-            isFavourite: gemstoneData?.isFavorite ?? false,
-            wishlistId: gemstoneData?.wishlistID,
-            stoneElements: gemstoneData?.components,
-            isAddedToCart: gemstoneData?.isAddedToCart ?? false,
-          );
+          productDetails = Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstoneData!);
         }
       },
     );
@@ -420,49 +387,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         .getDiamondYouMayLike(productId, limit: AppConst.pageLimit10.toString(), page: AppConst.page1.toString(), isShowLoader: false);
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
       (data) {
         if (data.data.isNotEmpty) {
           diamondDatumListAPI = data.data;
-          suggestedProductList = diamondDatumListAPI.map((diamond) {
-            return ProductDetailsModel(
-              suid: diamond.suid,
-              productId: diamond.id,
-              imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
-              name: diamond.rmDescription ?? "",
-              ctsOrGms: diamond.ctsOrGms,
-              rappaportPrice: diamond.rappaportPrice,
-              priceCts: diamond.priceCts,
-              originalPrice: diamond.finalPrice?.toString().setCurrency,
-              offerPrice: diamond.finalPrice?.toString().setCurrency,
-              finalPrice: diamond.discountPrice?.toString().setCurrency,
-              lotCode: diamond.lotCode,
-              productSku: diamond.lotCode,
-              shape: diamond.shape,
-              fluorescence: diamond.fluorescence,
-              labs: diamond.labs,
-              lsp: diamond.lsp,
-              color: diamond.color,
-              clarity: diamond.clarity,
-              cut: diamond.cut,
-              certificateFile: diamond.certificateFile,
-              openDnaUrl: diamond.openDnaUrl,
-              commodity: Commodity.diamond,
-              company: diamond.id,
-              isFavourite: diamond.isFavorite,
-              wishlistId: diamond.wishlistID,
-              title: diamond.lotCode ?? "",
-              subTitle: diamond.rmDescription ?? "",
-              isForAuction: diamond.isAuction,
-              isAddedToCart: diamond.isAddedToCart,
-            );
-          }).toList();
-          if (!isClosed) {
-            add(const ProductDetailsSuggestedLoadedEvent());
-          }
+          suggestedProductList =
+              diamondDatumListAPI.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList();
+          if (!isClosed) add(const ProductDetailsSuggestedLoadedEvent());
         }
       },
     );
@@ -475,36 +407,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
 
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message!);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message!);
       },
       (data) {
         if (data.data.isEmpty) return;
         gemstoneDatumListAPI = data.data;
-        suggestedProductList = data.data.map((e) {
-          final bool isDiscounted = e.discountPercentage != null && (e.discountPercentage ?? 0) > 0;
-
-          return ProductDetailsModel(
-            suid: e.suid ?? '',
-            productId: e.suid ?? '',
-            name: e.rmDescription ?? '',
-            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
-            originalPrice: e.finalPrice?.setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-            productSku: e.lotCode,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            commodity: Commodity.gemstone,
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            title: e.lotCode,
-            subTitle: e.rmDescription,
-            isAddedToCart: e.isAddedToCart,
-          );
-        }).toList();
-
+        suggestedProductList = data.data.map((gemstone) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList();
         add(const ProductDetailsSuggestedLoadedEvent());
       },
     );
@@ -516,48 +424,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         .getJewelleryYouMayLike(productId, page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
       (data) {
         if (isClosed) return;
         jewelleryDatumListAPI = data.data;
-        suggestedProductList = data.data.map((item) {
-          bool isDiscounted = item.discountPercentage != null && (item.discountPercentage! > 0);
-          return ProductDetailsModel(
-            suid: item.suid ?? "",
-            imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : "",
-            name: item.productDescription ?? "",
-            originalPrice: item.finalPrice?.toString().setCurrency,
-            offerPrice: item.discountPrice?.toString().setCurrency,
-            finalPrice: item.discountPrice?.toString().setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([item.discountPercentage]) : null,
-            productId: item.suid ?? "",
-            commodity: Commodity.jewellery,
-            isFavourite: item.isFavorite,
-            wishlistId: item.wishlistID,
-            productSku: item.contractNoSkuNo,
-            title: item.contractNoSkuNo ?? '',
-            subTitle: item.productDescription ?? '',
-            kgkCollectionName: item.kgkCollection ?? "\n",
-            businessCategoryName: item.businessCategoryName ?? "\n",
-            cts: item.crt,
-            gms: item.gms,
-            brandName: item.brandName,
-            reviewCount: item.reviewCount,
-            rating: item.rating?.toDouble(),
-            colorsCode: [
-              item.metalColor1HexCode ?? "",
-              item.metalColor2HexCode ?? "",
-              item.metalColor3HexCode ?? "",
-            ],
-            isAddedToCart: item.isAddedToCart,
-          );
-        }).toList();
-        if (!isClosed) {
-          add(const ProductDetailsSuggestedLoadedEvent());
-        }
+        suggestedProductList =
+            data.data.map((jewellery) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewellery)).toList();
+        if (!isClosed) add(const ProductDetailsSuggestedLoadedEvent());
       },
     );
   }
@@ -576,44 +450,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         isErrorInLoadingData = false;
         isAddedToCart = jewelleryData.isAddedToCart;
         productName = jewelleryData.productDescription ?? '';
-        bool isDiscounted = jewelleryData.discountPercentage != null && (jewelleryData.discountPercentage! > 0);
-
         imgList = [];
-        for (var element in jewelleryData.multipleFinishedViewImage) {
-          for (var e in element.multiAngleUrl) {
-            if (element.imageAvailable?.toLowerCase() == ApiKey.yes) {
-              if (e.url.isNotNullNorEmpty) {
-                imgList.add(e.url!);
-              }
-            }
-          }
-        }
-
+        // This image value logic is handled in extension methods.
+        imgList = jewelleryData.imageListEXT;
         the3DFile = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.the3DFile.isNotNullNorEmpty)?.the3DFile;
         videoUrl = jewelleryData.multipleFinishedViewImage.firstWhereOrNull((element) => element.videoUrl.isNotNullNorEmpty)?.videoUrl;
-
-        productDetails = ProductDetailsModel(
-            productId: jewelleryData.suid,
-            suid: jewelleryData.suid,
-            name: productName,
-            jewelleryType: jewelleryData.jewelleryType,
-            originalPrice: jewelleryData.finalPrice?.toString().setCurrency,
-            offerPrice: jewelleryData.discountPrice?.toString().setCurrency,
-            finalPrice: jewelleryData.discountPrice?.toString().setCurrency,
-            // offerPrice: isDiscounted ? jewelleryData.discountPrice?.setCurrency : null,
-            // originalPrice: jewelleryData.finalPrice?.setCurrency,
-            discountPercentageString:
-                isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([jewelleryData.discountPercentage]) : null,
-            productSku: jewelleryData.contractNoSkuNo,
-            reviewCount: jewelleryData.reviewCount,
-            rating: jewelleryData.rating?.toDouble(),
-            brandName: jewelleryData.brandName,
-            imageUrl: jewelleryData.multipleFinishedViewImage.isEmpty ? '' : jewelleryData.multipleFinishedViewImage[0].imageUrl ?? '',
-            commodity: Commodity.jewellery,
-            isFavourite: jewelleryData.isFavorite,
-            wishlistId: jewelleryData.wishlistID,
-            components: jewelleryData.components,
-            contractNoSkuNo: jewelleryData.contractNoSkuNo);
+        productDetails = Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewelleryData);
       },
     );
   }
@@ -660,10 +502,15 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     }
   }
 
-  Future<void> getCadLibraryDetails(BuildContext context, String productId) async {
+  Future<void> getCadOrStyleLibraryDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, CadLibraryListItemDataModel>? response;
     try {
-      if (isClosed) return;
-      Either<ErrorResponse, CadLibraryListItemDataModel>? response = await AppRepository(context).cadLibraryDetails(id: productId);
+      if (screenIdentifier == ScreenIdentifier.productForLibraryCAD) {
+        response = await AppRepository(context).cadLibraryDetails(id: productId);
+      } else if (screenIdentifier == ScreenIdentifier.productForLibraryStyle) {
+        response = await AppRepository(context).styleLibraryDetails(id: productId);
+      }
+
       response?.fold(
         (error) {
           isErrorInLoadingData = true;
@@ -692,8 +539,46 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
             imageUrl: designLibraryData.multipleFinishedViewImage.isNullOrEmpty
                 ? ''
                 : designLibraryData.multipleFinishedViewImage?[0].imageUrl ?? '',
-            commodity: Commodity.jewellery,
             components: designLibraryData.components,
+          );
+        },
+      );
+    } catch (e) {
+      debugPrint("Error in getDesignLibraryDetails: $e");
+    }
+  }
+
+  Future<void> getSkuLibraryDetails(BuildContext context, String productId) async {
+    Either<ErrorResponse, SkuLibraryListItemDataModel>? response;
+    try {
+      response = await AppRepository(context).skuLibraryDetails(id: productId);
+
+      response?.fold(
+        (error) {
+          isErrorInLoadingData = true;
+          if (error.message.isNotNullNorEmpty) {
+            Utils.showMessage(error.message);
+          }
+        },
+        (SkuLibraryListItemDataModel skuLibraryData) {
+          isErrorInLoadingData = false;
+          isAddedToCart = skuLibraryData.isAddedToCart ?? false;
+          productName = skuLibraryData.productDescription ?? '';
+          imgList = [];
+          for (MultipleFinishedViewImage element in (skuLibraryData.multipleFinishedViewImage)) {
+            if (element.imageUrl.isNotNullNorEmpty) {
+              imgList.add(element.imageUrl ?? '');
+            }
+          }
+          productDetails = ProductDetailsModel(
+            productId: skuLibraryData.suid,
+            suid: skuLibraryData.suid,
+            name: productName,
+            jewelleryType: skuLibraryData.jewelleryType,
+            productSku: skuLibraryData.skuNo,
+            imageUrl:
+                skuLibraryData.multipleFinishedViewImage.isNullOrEmpty ? '' : skuLibraryData.multipleFinishedViewImage[0].imageUrl ?? '',
+            components: skuLibraryData.components,
           );
         },
       );
@@ -746,46 +631,14 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         await AppRepository(context).getRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
-      (data) {
+      (JewelleryListingModel jewelleryListingModel) {
         if (isClosed) return;
-        recentlyViewedProductList = data.data.map((e) {
-          return ProductDetailsModel(
-            suid: e.suid ?? '',
-            productId: e.id,
-            name: e.productDescription ?? '',
-            imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-            originalPrice: e.finalPrice?.toString().setCurrency,
-            offerPrice: e.discountPrice?.toString().setCurrency,
-            finalPrice: e.discountPrice?.toString().setCurrency,
-            discountPercentageString: e.discountEXT,
-            productSku: e.contractNoSkuNo,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            commodity: Commodity.jewellery,
-            subTitle: e.productDescription ?? '',
-            title: e.contractNoSkuNo ?? '',
-            kgkCollectionName: e.kgkCollection ?? "\n",
-            businessCategoryName: e.businessCategoryName ?? "\n",
-            cts: e.crtEXT,
-            gms: e.gms,
-            brandName: e.brandName,
-            colorsCode: [
-              e.metalColor1HexCode ?? "",
-              e.metalColor2HexCode ?? "",
-              e.metalColor3HexCode ?? "",
-            ],
-            isAddedToCart: e.isAddedToCart,
-          );
-        }).toList();
-        if (!isClosed) {
-          add(const ProductDetailsReviewsLoadedEvent());
-        }
+        recentlyViewedProductList = jewelleryListingModel.data
+            .map((jewellery) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: jewellery))
+            .toList();
+        if (!isClosed) add(const ProductDetailsReviewsLoadedEvent());
       },
     );
   }
@@ -796,44 +649,11 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         .getDiamondRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
-      (data) {
-        recentlyViewedProductList = data.data.map((diamond) {
-          return ProductDetailsModel(
-            suid: diamond.suid,
-            productId: diamond.id,
-            imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.firstOrNull?.url : null,
-            name: diamond.rmDescription ?? "",
-            ctsOrGms: diamond.ctsOrGms,
-            rappaportPrice: diamond.rappaportPrice,
-            priceCts: diamond.priceCts,
-            originalPrice: diamond.finalPrice?.toString().setCurrency,
-            offerPrice: diamond.finalPrice?.toString().setCurrency,
-            finalPrice: diamond.discountPrice?.toString().setCurrency,
-            lotCode: diamond.lotCode,
-            productSku: diamond.lotCode,
-            shape: diamond.shape,
-            fluorescence: diamond.fluorescence,
-            labs: diamond.labs,
-            lsp: diamond.lsp,
-            color: diamond.color,
-            clarity: diamond.clarity,
-            cut: diamond.cut,
-            certificateFile: diamond.certificateFile,
-            openDnaUrl: diamond.openDnaUrl,
-            commodity: Commodity.diamond,
-            company: diamond.id,
-            isFavourite: diamond.isFavorite,
-            wishlistId: diamond.wishlistID,
-            title: diamond.lotCode ?? "",
-            subTitle: diamond.rmDescription ?? "",
-            isForAuction: diamond.isAuction,
-            isAddedToCart: diamond.isAddedToCart,
-          );
-        }).toList();
+      (DiamondListingModel diamondDataModel) {
+        recentlyViewedProductList =
+            diamondDataModel.data.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList();
         if (!isClosed) add(const ProductDetailsReviewsLoadedEvent());
       },
     );
@@ -845,35 +665,12 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
         .getGemstoneRecentlyViewedProductList(page: AppConst.page1.toString(), limit: AppConst.pageLimit10.toString());
     response?.fold(
       (error) {
-        if (error.message.isNotNullNorEmpty) {
-          Utils.showMessage(error.message);
-        }
+        if (error.message.isNotNullNorEmpty) Utils.showMessage(error.message);
       },
-      (data) {
-        recentlyViewedProductList = data.data.map((e) {
-          return ProductDetailsModel(
-            productId: e.suid ?? '',
-            suid: e.suid ?? '',
-            name: e.rmDescription ?? '',
-            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            originalPrice: e.finalPrice?.toString().setCurrency,
-            offerPrice: e.discountPrice?.toString().setCurrency,
-            finalPrice: e.discountPrice?.toString().setCurrency,
-            discountPercentageString: e.discountEXT,
-            productSku: e.lotCode,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            commodity: Commodity.gemstone,
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            title: e.lotCode,
-            subTitle: e.rmDescription,
-            isAddedToCart: e.isAddedToCart,
-          );
-        }).toList();
-        if (!isClosed) {
-          add(const ProductDetailsReviewsLoadedEvent());
-        }
+      (GemstoneListingModel gemstoneDataModel) {
+        recentlyViewedProductList =
+            gemstoneDataModel.data.map((gemstone) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList();
+        if (!isClosed) add(const ProductDetailsReviewsLoadedEvent());
       },
     );
   }
