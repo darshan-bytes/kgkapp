@@ -1,5 +1,6 @@
-import 'package:kgk/kgk.dart';
 import 'dart:developer' as dev;
+
+import 'package:kgk/kgk.dart';
 
 void logMemoryUsage() {
   dev.log('Memory Usage: ${ProcessInfo.currentRss} bytes');
@@ -24,7 +25,7 @@ void main() async {
     await AppCrashlytics.instance.initialize();
   }
   Timer.periodic(Duration(seconds: 1), (timer) {
-    logMemoryUsage();
+    //logMemoryUsage();
   });
 
   /// Initializing app

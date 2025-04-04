@@ -7,7 +7,6 @@ part 'stone_detail_state.dart';
 class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   late AppBloc appBloc;
 
-  // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
   List<String> imgList = [];
@@ -51,7 +50,11 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
 
   Future<void> _onStoneDetailSelectStoneForDIYEvent(StoneDetailSelectStoneForDIYEvent event, Emitter<StoneDetailState> emit) async {
     appBloc.diamondDataForDIY = diamondData;
-    await event.context.pushNamed(AppRoutes.settingListingPage);
+    final route = screenIdentifier == ScreenIdentifier.diamondForDIY
+        ? AppRoutes.settingListingPage
+        :  AppRoutes.completeProductPage;
+
+    await event.context.pushNamed(route);
   }
 
   Future<void> getDIYDetails(BuildContext context, String productId) async {

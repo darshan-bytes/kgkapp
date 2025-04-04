@@ -534,4 +534,5 @@ export 'package:kgk/modules/b2b/my_inquiry/view/my_inquiry_screen.dart';
 export 'package:kgk/modules/b2b/my_inquiry/model/my_inquiries_model.dart';
 export 'package:flutter_langdetect/flutter_langdetect.dart';
 export 'package:kgk/utils/language_helper.dart';
+export 'package:kgk/modules/b2b/do_it_yourself/components/diy_bag_item.dart';
 export 'package:kgk/modules/b2b/contact_us/model/contact_us_model.dart';

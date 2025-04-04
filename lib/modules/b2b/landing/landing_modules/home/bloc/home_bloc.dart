@@ -1132,7 +1132,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       },
       (data) {
-        dealOfTheDayJewelleryList = data.data.map((e) => Utils.mapToProductDetailsModel(e)).toList();
+        dealOfTheDayJewelleryList = data.data.map((e) => Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: e)).toList();
       },
     );
   }

@@ -840,6 +840,7 @@ enum RoutesData {
 
 enum ScreenIdentifier {
   diamondForDIY,
+  jewelleryForDIY,
   diamondForDefault,
   productForGemstones,
   productForDiamonds,
@@ -858,6 +859,7 @@ enum ScreenIdentifier {
   cancelOrderForRetailer,
   cancelOrderForManufacturer,
   productForLibraryDesign,
+  productForLibrarySKU
 }
 
 extension RoutesDataExtension on BuildContext {

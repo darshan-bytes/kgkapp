@@ -23,7 +23,11 @@ class StoneDetailScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY) const DiyProgressWidget(selectedStep: 1),
+                if (bloc.screenIdentifier == ScreenIdentifier.diamondForDIY || bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY)
+                  DiyProgressWidget(
+                    selectedStep: bloc.screenIdentifier == ScreenIdentifier.diamondForDIY ? 1 : 2,
+                    screenIdentifier: bloc.screenIdentifier,
+                  ),
                 SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                 SizedBox(height: 40.h),
                 _productDetail(context, bloc)
