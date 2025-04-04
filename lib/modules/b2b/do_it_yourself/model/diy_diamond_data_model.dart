@@ -547,3 +547,19 @@ class DiyDiamondDataModel {
         "price_cts": priceCts,
       };
 }
+
+class DiyBagItemProductDetailsModel {
+  final String? icon;
+  final String? productNameTitle;
+  final String? skuNo;
+  final String? finalPrice;
+  final String? discountPrice;
+
+  DiyBagItemProductDetailsModel({
+    this.icon,
+    this.productNameTitle,
+    this.skuNo,
+    this.finalPrice,
+    this.discountPrice,
+  });
+}
