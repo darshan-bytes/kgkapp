@@ -287,7 +287,7 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       totalFilteredRecords = success.filteredRecords;
       diamondDatumList.addAll(diamondList);
       productList.addAll(
-        diamondList.map((diamond) => _convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
+        diamondList.map((diamond) => Utils.convertDiamondDataModelToProductDetailsModel(diamond: diamond)).toList(),
       );
 
       /// Here sometime the pagination is not completed and called multiple times so we have managed it
@@ -386,84 +386,11 @@ class StoneListingBloc extends Bloc<StoneListingEvent, StoneListingState> {
       totalFilteredRecords = success.filteredRecords;
       gemstoneDatumList.addAll(gemstoneList);
       productList.addAll(
-        gemstoneList.map((gemstone) => _convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
+        gemstoneList.map((gemstone) => Utils.convertGemstoneDatumToProductDetailsModel(gemstone: gemstone)).toList(),
       );
       paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       emit(const StoneDiamondListLoadedState());
     });
-  }
-
-  /// Helper Function: Convert Gemstone Data to ProductDetailsModel
-  ProductDetailsModel _convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
-    return ProductDetailsModel(
-      suid: diamond.suid,
-      productId: diamond.id,
-      video: diamond.video,
-      imageUrl: diamond.image.isNotNullNorEmpty ? diamond.image.first.url : null,
-      name: diamond.rmDescription ?? "",
-      ctsOrGms: diamond.ctsOrGms,
-      rappaportPrice: diamond.rappaportPrice,
-      priceCts: diamond.priceCts,
-      originalPrice: diamond.finalPrice?.toString().setCurrency,
-      offerPrice: diamond.finalPrice?.toString().setCurrency,
-      finalPrice: diamond.discountPrice?.toString().setCurrency,
-      lotCode: diamond.lotCode,
-      productSku: diamond.lotCode,
-      shape: diamond.shape,
-      fluorescence: diamond.fluorescence,
-      labs: diamond.labs,
-      lsp: diamond.lsp,
-      color: diamond.color,
-      clarity: diamond.clarity,
-      cut: diamond.cut,
-      certificateFile: diamond.certificateFile,
-      openDnaUrl: diamond.openDnaUrl,
-      commodity: Commodity.diamond,
-      company: diamond.id,
-      isFavourite: diamond.isFavorite,
-      wishlistId: diamond.wishlistID,
-      title: diamond.lotCode ?? "",
-      subTitle: diamond.rmDescription ?? "",
-      isForAuction: diamond.isAuction,
-      isAddedToCart: diamond.isAddedToCart,
-      discountPercentageString: "${diamond.discountPercentage ?? 0} %",
-      location: diamond.location,
-    );
-  }
-
-  /// Helper Function: Convert Gemstone Data to ProductDetailsModel
-  ProductDetailsModel _convertGemstoneDatumToProductDetailsModel({required GemstoneDatum gemstone}) {
-    return ProductDetailsModel(
-      suid: gemstone.suid,
-      productId: gemstone.id,
-      imageUrl: gemstone.image.isNotNullNorEmpty ? gemstone.image.first.url : null,
-      name: gemstone.rmDescription ?? "",
-      ctsOrGms: gemstone.ctsOrGms,
-      rappaportPrice: gemstone.rappaportPrice,
-      priceCts: gemstone.priceCts,
-      originalPrice: gemstone.finalPrice?.toString().setCurrency,
-      offerPrice: gemstone.finalPrice?.toString().setCurrency,
-      finalPrice: gemstone.discountPrice?.toString().setCurrency,
-      lotCode: gemstone.lotCode,
-      shape: gemstone.shape,
-      fluorescence: gemstone.fluorescence,
-      labs: gemstone.labs,
-      lsp: gemstone.lsp?.toString(),
-      color: gemstone.color,
-      clarity: gemstone.clarity,
-      cut: gemstone.cut,
-      certificateFile: gemstone.certificateFile,
-      openDnaUrl: gemstone.openDnaUrl,
-      commodity: Commodity.gemstone,
-      isFavourite: gemstone.isFavorite,
-      wishlistId: gemstone.wishlistID,
-      isForAuction: false,
-      title: gemstone.lotCode ?? "",
-      subTitle: gemstone.rmDescription ?? "",
-      isAddedToCart: gemstone.isAddedToCart,
-      discountPercentageString: "${gemstone.discountPercentage ?? 0} %",
-      location: gemstone.location,
-    );
   }
 
   /// Stone Change Type

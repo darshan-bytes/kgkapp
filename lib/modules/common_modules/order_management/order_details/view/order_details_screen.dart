@@ -158,9 +158,10 @@ class _OrderDetailBody extends StatelessWidget {
                 _showTrackOrderBottomSheet(bloc, context, APPStrings.manufacturingStatus.tr);
               }),
               if (bloc.userType == UserType.b2bUser) ...{
-                _buildPopupOption(context, text: APPStrings.returnProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
-                  _showReturnProductBottomSheet(bloc, context);
-                }),
+                /// TODO :: Currently individual order product return functionality is not needed for B2B user so we are hiding it.
+                // _buildPopupOption(context, text: APPStrings.returnProduct.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
+                //   _showReturnProductBottomSheet(bloc, context);
+                // }),
               } else ...{
                 _buildPopupOption(context, text: APPStrings.viewTimeline.tr, style: orderPopupStyle.optionTextStyle, onTap: () {
                   context.popAndPushNamed(AppRoutes.orderTimelinePage);

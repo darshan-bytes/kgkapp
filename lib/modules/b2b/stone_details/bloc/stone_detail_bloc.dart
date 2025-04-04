@@ -7,7 +7,6 @@ part 'stone_detail_state.dart';
 class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
   late AppBloc appBloc;
 
-  // Identifies the source of the user: B2B or B2C.
   UserType userType = UserType.b2cUser;
 
   List<String> imgList = [];

@@ -673,6 +673,20 @@ extension JewelleryListingModelExtension on JewelleryDataModel {
     final crtValue = double.tryParse(crt ?? '0') ?? 0.0;
     return crtValue > 0 ? crt : null;
   }
+
+  List<String> get imageListEXT {
+    final list = <String>[];
+    for (var element in multipleFinishedViewImage) {
+      for (var e in element.multiAngleUrl) {
+        if (element.imageAvailable?.toLowerCase() == ApiKey.yes) {
+          if (e.url.isNotNullNorEmpty) {
+            list.add(e.url!);
+          }
+        }
+      }
+    }
+    return list;
+  }
 }
 
 class MultipleFinishedViewImage {

@@ -154,7 +154,6 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
           price: product.originalAmount?.setCurrency,
           quantity: product.quantity?.toString(),
           sku: product.productProductId,
-          status: ProjectStatus.orangeInProgress.value,
           suid: product.suid,
         );
       },
@@ -162,12 +161,16 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
   }
 
   Future<void> _cancelOrderEvent(OrderCancellationEvent event, Emitter<OrderDetailState> emit) async {
-    event.context.pop();
     emit(const OrderDetailsLoadingState());
     Either<ErrorResponse, CommonResponse<PlaceOrderResponse>>? response;
     if (event.isFromFullOrder) {
       if (_validateCancelOrder(emit)) {
-        response = await AppRepository(event.context).orderCancelApiCall(
+        event.context.pop();
+        BuildContext bottomSheetContext = event.context;
+        if (!bottomSheetContext.mounted) {
+          bottomSheetContext = getNavigatorKeyContext;
+        }
+        response = await AppRepository(bottomSheetContext).orderCancelApiCall(
           id: placeOrderResponse?.uniqueId ?? "-",
           body: {
             ApiKey.comment: cancellationOrderController.text.trim(),
