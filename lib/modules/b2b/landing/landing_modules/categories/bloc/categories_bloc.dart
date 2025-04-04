@@ -33,7 +33,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ];
   List<ProductDetailModel> doItYourselfSubOptionsB2CList = [
     ProductDetailModel(name: 'Diamond', image: ''),
-    ProductDetailModel(name: 'Gemstone', image: ''),
+    ProductDetailModel(name: 'Jewellery', image: ''),
   ];
   List<ProductDetailModel> aboutUsSubOptionsB2CList = [
     ProductDetailModel(name: 'Collection', image: ''),
@@ -74,7 +74,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   List<ProductDetailModel> doItYourselfSubOptionsB2BList = [
     ProductDetailModel(name: 'Diamond', image: ''),
-    ProductDetailModel(name: 'Gemstone', image: ''),
+    ProductDetailModel(name: 'Jewellery', image: ''),
   ];
   List<ProductDetailModel> orionSubCategoryList = [
     ProductDetailModel(name: 'Collection', image: ''),
@@ -385,6 +385,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       case 'Diamond':
         return AppRoutes.stoneListingPage;
 
+      case 'Jewellery':
+        return AppRoutes.settingListingPage;
+
       default:
         return defaultAction();
     }
@@ -392,8 +395,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
   Map<RoutesData, dynamic>? _getDoItYourselfRouteArgumentsForB2C(String? categorySubName) {
     switch (categorySubName) {
-      case 'Collection':
+      case 'Diamond':
         return {RoutesData.isPageFor: ScreenIdentifier.diamondForDIY};
+
+      case 'Jewellery':
+        return {RoutesData.isPageFor: ScreenIdentifier.jewelleryForDIY};
 
       default:
         return defaultAction();

@@ -24,7 +24,7 @@ void main() async {
     await AppCrashlytics.instance.initialize();
   }
   Timer.periodic(Duration(seconds: 1), (timer) {
-    logMemoryUsage();
+    //logMemoryUsage();
   });
 
   /// Initializing app

@@ -15,12 +15,3 @@ final class CompleteProductLoadedState extends CompleteProductState {
   @override
   List<Object> get props => [];
 }
-
-final class CompleteProductCompareToggleState extends CompleteProductState {
-  final bool isCompare;
-
-  const CompleteProductCompareToggleState(this.isCompare);
-
-  @override
-  List<Object> get props => [isCompare];
-}

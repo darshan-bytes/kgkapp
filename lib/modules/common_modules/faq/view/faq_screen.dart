@@ -124,6 +124,28 @@ class FaqScreen extends StatelessWidget {
     );
   }
 
+/*  _buildStillNeedHelpItems(style, APPStrings.byPhone.tr, "Monday – Friday 9 AM – 5 PM", "+91 98765 43210", onTap: () async {
+  await Utils.launchUrlFromString("tel:+919876543210");
+  }),
+  _buildStillNeedHelpItems(
+  style,
+  APPStrings.byEmail.tr,
+  APPStrings.questionOrQueriesGetInTouch.tr,
+  "support@kgk.com",
+  onTap: () async {
+  await Utils.launchUrlFromString("mailto:support@kgk.com");
+  },
+  ),
+  _buildStillNeedHelpItems(
+  style,
+  APPStrings.findAStore.tr,
+  APPStrings.findYourNearestXStore.tr.interpolate(['KGK']),
+  APPStrings.storeDirectory.tr,
+  onTap: () {
+  context.pushNamed(AppRoutes.findStorePage);
+  },
+  ),*/
+
   Widget _buildStillNeedHelpItems(FAQStyle style, String title, String desc, String value, {VoidCallback? onTap}) {
     return Column(
       children: [
