@@ -13,11 +13,11 @@ final class CompleteProductInitialEvent extends CompleteProductEvent {
   List<Object> get props => [context];
 }
 
-final class CompleteProductCompareToggle extends CompleteProductEvent {
-  final bool isCompare;
+final class CompleteProductAddToBagEvent extends CompleteProductEvent {
+  final BuildContext context;
 
-  const CompleteProductCompareToggle(this.isCompare);
+  const CompleteProductAddToBagEvent(this.context);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }

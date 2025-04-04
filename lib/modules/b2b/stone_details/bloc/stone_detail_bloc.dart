@@ -50,7 +50,11 @@ class StoneDetailBloc extends Bloc<StoneDetailEvent, StoneDetailState> {
 
   Future<void> _onStoneDetailSelectStoneForDIYEvent(StoneDetailSelectStoneForDIYEvent event, Emitter<StoneDetailState> emit) async {
     appBloc.diamondDataForDIY = diamondData;
-    await event.context.pushNamed(AppRoutes.settingListingPage);
+    final route = screenIdentifier == ScreenIdentifier.diamondForDIY
+        ? AppRoutes.settingListingPage
+        :  AppRoutes.completeProductPage;
+
+    await event.context.pushNamed(route);
   }
 
   Future<void> getDIYDetails(BuildContext context, String productId) async {

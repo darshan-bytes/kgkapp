@@ -22,7 +22,9 @@ class SettingDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const DiyProgressWidget(selectedStep: 2),
+                DiyProgressWidget(
+                    selectedStep: bloc.screenIdentifier == ScreenIdentifier.jewelleryForDIY ? 1 : 2,
+                    screenIdentifier: bloc.screenIdentifier),
                 SmartCarouselSlider(imgList: bloc.imgList, controller: bloc.controller),
                 SizedBox(height: 40.h),
                 _productDetail(context, bloc)
@@ -67,9 +69,7 @@ class SettingDetailScreen extends StatelessWidget {
                     flex: 5,
                     child: SmartButton(
                       onTap: () {
-                        context.pushNamed(AppRoutes.completeProductPage, arguments: {
-                          RoutesData.settingId: bloc.settingId,
-                        });
+                        bloc.handleSelectSetting(context);
                       },
                       title: APPStrings.selectSetting.tr,
                       height: 55.h,

@@ -5,40 +5,62 @@ class DiyProgressWidget extends StatelessWidget {
     super.key,
     required this.selectedStep,
     this.padding,
+    this.screenIdentifier,
   });
 
   final int selectedStep;
   final EdgeInsetsGeometry? padding;
+  final ScreenIdentifier? screenIdentifier;
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsetsGeometry resolvedPadding =
+        padding ?? EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h);
+
+    final List<String> subTitles = screenIdentifier == null
+        ? ['Diamond', 'Setting', 'Ring']
+        : ['Setting', 'Diamond', 'Ring'];
+
+    final List<AlignmentDirectional> alignments = [
+      AlignmentDirectional.centerStart,
+      AlignmentDirectional.center,
+      AlignmentDirectional.centerEnd,
+    ];
+
     return Container(
-        padding: padding ?? EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h),
-        width: context.width,
-        child: Stack(
-          children: [
-            Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: _commonChevron(context,
-                    isSelected: selectedStep == 1, title: 'Choose a', index: 1, subTitle: 'Diamond', padding: 20.w)),
-            Align(
-                alignment: AlignmentDirectional.center,
-                child: _commonChevron(context, isSelected: selectedStep == 2, title: 'Choose a', index: 2, subTitle: 'Setting')),
-            Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: _commonChevron(context, isSelected: selectedStep == 3, title: 'Choose a', index: 3, subTitle: 'Ring')),
-          ],
-        ));
+      padding: resolvedPadding,
+      width: context.width,
+      child: Stack(
+        children: List.generate(3, (index) {
+          return Align(
+            alignment: alignments[index],
+            child: _commonChevron(
+              context,
+              isSelected: selectedStep == index + 1,
+              title: 'Choose a',
+              index: index + 1,
+              subTitle: subTitles[index],
+              padding: index == 0 ? 20.w : null,
+            ),
+          );
+        }),
+      ),
+    );
   }
 
-  Widget _commonChevron(BuildContext context,
-      {required bool isSelected, required String title, required int index, required String subTitle, double? padding}) {
+  Widget _commonChevron(
+      BuildContext context, {
+        required bool isSelected,
+        required String title,
+        required int index,
+        required String subTitle,
+        double? padding,
+      }) {
     final style = AppTheme.of(context).diyProgressViewStyle;
 
     Color backgroundColor = style.unselectedBorderColor.withValues(alpha: 0.5);
     TextStyle textStyle = style.selectedIndexStyle.copyWith(color: Colors.black);
 
-    /// Set Style and Color According to Indexes
     if (index <= selectedStep) {
       backgroundColor = style.backgroundChevronColor;
       textStyle = style.selectedIndexStyle;
@@ -47,8 +69,7 @@ class DiyProgressWidget extends StatelessWidget {
       textStyle = style.selectedIndexStyle;
     }
 
-    /// Get Clipper According to Index of List
-    Clipper getClipperAtIndex(index) {
+    Clipper getClipperAtIndex(int index) {
       switch (index) {
         case 1:
           return Clipper.start;
@@ -62,24 +83,37 @@ class DiyProgressWidget extends StatelessWidget {
     }
 
     return ChevronProgress(
-        clipper: getClipperAtIndex(index),
-        color: backgroundColor,
-        child: SmartText(
-          '$title \n$subTitle',
-          maxLines: 2,
-          style: textStyle,
-          optionalPadding: EdgeInsetsDirectional.only(start: padding ?? 40.w, top: 10.h, bottom: 10.h),
-        ));
+      clipper: getClipperAtIndex(index),
+      color: backgroundColor,
+      child: SmartText(
+        '$title \n$subTitle',
+        maxLines: 2,
+        style: textStyle,
+        optionalPadding: EdgeInsetsDirectional.only(
+          start: padding ?? 40.w,
+          top: 10.h,
+          bottom: 10.h,
+        ),
+      ),
+    );
   }
 
-  /// This Widget is not used Currently but we can use this in Future
-  Widget _commonSelector(BuildContext context, bool isSelected, String title, int index, String subTitle) {
+  Widget _commonSelector(
+      BuildContext context,
+      bool isSelected,
+      String title,
+      int index,
+      String subTitle,
+      ) {
     final style = AppTheme.of(context).diyProgressViewStyle;
     return Expanded(
       child: Container(
         alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(
-          border: Border.all(color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor, width: 1),
+          border: Border.all(
+            color: isSelected ? style.selectedBorderColor : style.unselectedBorderColor,
+            width: 1,
+          ),
         ),
         padding: EdgeInsetsDirectional.all(12.w),
         height: 70.h,
@@ -88,16 +122,15 @@ class DiyProgressWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             SmartText('$index', style: style.indexStyle),
-            SizedBox(
-              width: 8.w,
-            ),
+            SizedBox(width: 8.w),
             Expanded(
-                child: SmartRichText(
-              spans: [
-                SmartTextSpan(text: title, style: style.titleStyle),
-                SmartTextSpan(text: '\n$subTitle', style: style.subTitleStyle),
-              ],
-            )),
+              child: SmartRichText(
+                spans: [
+                  SmartTextSpan(text: title, style: style.titleStyle),
+                  SmartTextSpan(text: '\n$subTitle', style: style.subTitleStyle),
+                ],
+              ),
+            ),
           ],
         ),
       ),

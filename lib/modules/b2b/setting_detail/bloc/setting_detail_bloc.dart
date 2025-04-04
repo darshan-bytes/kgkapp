@@ -5,10 +5,10 @@ part 'setting_detail_event.dart';
 part 'setting_detail_state.dart';
 
 class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
+  late AppBloc appBloc;
   UserType userType = UserType.b2cUser;
-
   ProductDetailsModel? productDetails;
-
+  DiyStyleListModel? diyStyleListModel;
   final CarouselSliderController controller = CarouselSliderController();
 
   final List<String> imgList = [];
@@ -16,15 +16,18 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
   String productName = '';
   String? settingId;
 
+  ScreenIdentifier? screenIdentifier;
+
   SettingDetailBloc() : super(SettingDetailInitial()) {
     on<SettingDetailInitialEvent>(_onSettingDetailInitialEvent);
   }
 
   Future<void> _onSettingDetailInitialEvent(SettingDetailInitialEvent event, Emitter<SettingDetailState> emit) async {
     getScreenIdentifier(event.context);
+    appBloc = BlocProvider.of<AppBloc>(event.context);
 
     /// assigning current userType
-    userType = BlocProvider.of<AppBloc>(event.context).userType;
+    userType = appBloc.userType;
     imgList.clear();
     await getSettingDetails(event.context, settingId);
     emit(const SettingDetailLoadedState());
@@ -34,6 +37,7 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
     Map<RoutesData, dynamic>? data = context.routesData;
     if (data != null) {
       settingId = data[RoutesData.settingId];
+      screenIdentifier = data[RoutesData.isPageFor];
     }
   }
 
@@ -45,29 +49,44 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
       },
       (r) {
         if (r.product != null) {
-          DiyStyleListModel item = r.product!;
-          if (item.imageSketch.isNotNullNorEmpty) {
-            imgList.clear();
-            imgList.add(item.imageSketch ?? '');
-          }
-          productName = item.longDescription ?? '';
+          diyStyleListModel = r.product!;
+          if (diyStyleListModel != null) {
+            if (diyStyleListModel!.imageSketch.isNotNullNorEmpty) {
+              imgList.clear();
+              imgList.add(diyStyleListModel!.imageSketch ?? '');
+            }
+            productName = diyStyleListModel!.longDescription ?? '';
 
-          productDetails = ProductDetailsModel(
-            suid: item.suid,
-            productId: item.suid,
-            imageUrl: item.imageSketch,
-            subTitle: item.autoDescription,
-            originalPrice: item.finalPrice?.toString().setCurrency,
-            offerPrice: item.discountPrice?.toString().setCurrency,
-            finalPrice: item.discountPrice?.toString().setCurrency,
-            commodity: Commodity.diy,
-            businessCategoryName: item.businessCategoryName ?? "",
-            colorsCode: [item.metalColor1HexCode ?? ""],
-            components: item.components,
-            productSku: item.styleNumber,
-          );
+            productDetails = ProductDetailsModel(
+              suid: diyStyleListModel!.suid,
+              productId: diyStyleListModel!.suid,
+              imageUrl: diyStyleListModel!.imageSketch,
+              subTitle: diyStyleListModel!.autoDescription,
+              originalPrice: diyStyleListModel!.finalPrice?.toString().setCurrency,
+              offerPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
+              finalPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
+              commodity: Commodity.diy,
+              businessCategoryName: diyStyleListModel!.businessCategoryName ?? "",
+              colorsCode: [diyStyleListModel!.metalColor1HexCode ?? ""],
+              components: diyStyleListModel!.components,
+              productSku: diyStyleListModel!.styleNumber,
+            );
+          }
         }
       },
     );
+  }
+
+  void handleSelectSetting(BuildContext context) {
+    if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+      appBloc.diyStyleForDIY = diyStyleListModel;
+    }
+    final String route = screenIdentifier == ScreenIdentifier.jewelleryForDIY ? AppRoutes.stoneListingPage : AppRoutes.completeProductPage;
+    final Map<RoutesData, dynamic> arguments = {
+      RoutesData.settingId: settingId,
+      RoutesData.isPageFor:
+          screenIdentifier == ScreenIdentifier.jewelleryForDIY ? ScreenIdentifier.jewelleryForDIY : ScreenIdentifier.diamondForDIY,
+    };
+    context.pushNamed(route, arguments: arguments);
   }
 }
