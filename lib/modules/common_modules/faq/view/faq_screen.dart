@@ -106,11 +106,67 @@ class FaqScreen extends StatelessWidget {
           supportList[index].description ?? '',
           supportList[index].action ?? '',
           onTap: () {
-            /// Todo :: Implement the action
+            if (supportList[index].action?.contains(',') ?? false) {
+              showListOfNumbers(context, supportList[index].action ?? '', supportList[index].url ?? '');
+              return;
+            }
+            Utils.handleContactAction(context, supportList[index].url ?? '', supportList[index].url ?? '');
           },
         );
       },
     );
+  }
+
+  void showListOfNumbers(BuildContext context, String value, String url) {
+    final currentContext = context.mounted ? context : getNavigatorKeyContext;
+    final options = value.split(',').map((e) => e.trim()).toList();
+
+    if (options.length > 1) {
+      Utils.showSmartModalBottomSheet(
+        context: currentContext,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.r),
+            topRight: Radius.circular(16.r),
+          ),
+        ),
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 24.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: SmartText(
+                  APPStrings.selectContact.tr,
+                  style: AppTheme.of(context).faqStyle.titleStyle,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: options.length,
+                separatorBuilder: (_, __) => Divider(height: 1),
+                itemBuilder: (context, index) {
+                  final option = options[index];
+                  return ListTile(
+                    title: Text(option),
+                    onTap: () {
+                      context.pop();
+                      Utils.handleContactAction(currentContext, option, url);
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 24.h),
+            ],
+          );
+        },
+      );
+    } else {
+      Utils.handleContactAction(currentContext, value.trim(), url);
+    }
   }
 
   Widget _buildStillNeedSection(BuildContext context, FAQStyle style, FaqBloc bloc) {

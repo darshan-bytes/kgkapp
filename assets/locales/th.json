@@ -854,5 +854,6 @@
   "mob_edit_inquiry": "แก้ไขการสอบถาม",
   "mob_remove_inquiry": "ลบการสอบถาม",
   "mob_remove_inquiry_msg": "การสอบถามที่เลือกจะถูกลบออกจากรายการ",
-  "mob_shipping_and_billing_both": "จัดส่งและเรียกเก็บเงินทั้งคู่"
+  "mob_shipping_and_billing_both": "จัดส่งและเรียกเก็บเงินทั้งคู่",
+  "mob_select_contact": "เลือกติดต่อ"
 }

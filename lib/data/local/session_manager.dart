@@ -30,7 +30,6 @@ class StorageManager {
   final String _recentlyViewedDiamonds = 'recentlyViewedDiamonds';
   final String _recentlyViewedGemstones = 'recentlyViewedGemstones';
   final String _placeHolderImage = 'placeHolderImage';
-  final String _frontendLinks = 'frontendLinks';
 
   Future<void> init() async {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();

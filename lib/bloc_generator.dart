@@ -26,7 +26,6 @@ class BlocGenerator {
       BlocProvider<FaqBloc>(create: (_) => FaqBloc()),
       BlocProvider<PreferencesBloc>(create: (_) => PreferencesBloc()),
       BlocProvider<MakeInquiryBloc>(create: (_) => MakeInquiryBloc()),
-      BlocProvider<ContactUsBloc>(create: (_) => ContactUsBloc()),
       BlocProvider<DashboardBloc>(create: (_) => DashboardBloc()),
       BlocProvider<PddListingBloc>(create: (_) => PddListingBloc()),
       BlocProvider<ConceptListBloc>(create: (_) => ConceptListBloc()),

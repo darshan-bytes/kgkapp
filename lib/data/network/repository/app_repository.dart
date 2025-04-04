@@ -34,12 +34,36 @@ class AppRepository extends ApiService {
     }
   }
 
+  /// Fetches Data For Contact Us
+  Future<Either<ErrorResponse, List<ContactUs>?>> fetchStrapiContactUsData() async {
+    String url = await buildUrl(endpoint: StrapiEndPoints.contactUsPage, attribute: Attributes.contactUsPage);
+    try {
+      final response =
+          await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'});
+      if (response.statusCode == 200) {
+        final contactUsStrapiModel = ContactUsModel.fromJson(jsonDecode(response.body));
+        return Right(contactUsStrapiModel.data.first.attributes?.contactUs);
+      } else {
+        return Left(ErrorResponse(
+          code: response.statusCode,
+          message: response.reasonPhrase ?? APPStrings.unknownError.tr,
+        ));
+      }
+    } catch (e) {
+      return Left(ErrorResponse(
+        code: 500,
+        message: APPStrings.errorOccurred.tr,
+      ));
+    }
+  }
+
   /// Fetches the diamond data from the Strapi CMS
   Future<Either<ErrorResponse, FaqAttributes?>> fetchStrapiFaqData() async {
     String acceptLanguage = StorageManager().getLocale()?.code ?? 'en';
     String url = '${StrapiEndPoints.faqPage}$acceptLanguage';
     try {
-      final response = await http.get(Uri.parse(url), headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'});
+      final response =
+          await http.get(Uri.parse(url), headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'});
       if (response.statusCode == 200) {
         final faqStrapiModel = FaqStrapiModel.fromJson(jsonDecode(response.body));
         return Right(faqStrapiModel.data.first.attributes);
@@ -1187,9 +1211,7 @@ class AppRepository extends ApiService {
 
   // fetchInquiryType
   Future<Either<ErrorResponse, List<String>>?> fetchInquiryType() async {
-    context.setAppLoading(true);
     var response = await getMethod<String>(ApiClient.inquiryType);
-    context.setAppLoading(false);
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
@@ -1391,7 +1413,7 @@ Future<String> getPopulatedUrl() async {
   try {
     final response = await http.get(
       Uri.parse(StrapiEndPoints.builder),
-      headers: {'Authorization': 'Bearer ${AppConst.strapiApiToken}'},
+      headers: {HttpHeaders.authorizationHeader.capitalizeFirst: 'Bearer ${AppConst.strapiApiToken}'},
     );
 
     if (response.statusCode == 200) {
