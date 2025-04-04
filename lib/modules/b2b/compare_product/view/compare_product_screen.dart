@@ -184,7 +184,9 @@ class CompareProductScreen extends StatelessWidget {
             }
             return _buildProductDetailWidgets(index, filter.name ?? '', value ?? '-', style);
           })),
-          Column(
+
+          /// Below code is commented as it is not used in the current implementation also got the approval from the Client(Shivraj)
+          /*Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
@@ -220,7 +222,7 @@ class CompareProductScreen extends StatelessWidget {
               ),
               SizedBox(height: 14.h),
             ],
-          )
+          )*/
         ],
       ),
     );
