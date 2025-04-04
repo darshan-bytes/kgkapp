@@ -60,6 +60,7 @@ class SkuLibraryListItemDataModel {
     required this.images,
     required this.isAddedToCart,
     required this.productSize,
+    this.components,
   });
 
   final String? id;
@@ -120,6 +121,7 @@ class SkuLibraryListItemDataModel {
   final List<String> images;
   final bool? isAddedToCart;
   final String? productSize;
+  List<Component>? components;
 
   factory SkuLibraryListItemDataModel.fromJson(Map<String, dynamic> json) {
     List<String>? images;
@@ -197,6 +199,7 @@ class SkuLibraryListItemDataModel {
       images: images ?? [],
       isAddedToCart: json["isAddedToCart"],
       productSize: json["product_size"],
+      components: json["components"] != null ? List<Component>.from(json["components"]!.map((x) => Component.fromJson(x))) : [],
     );
   }
 
@@ -290,6 +293,8 @@ class SkuComponentDetail {
     required this.intCurrencyRate,
     required this.intCurrencyAmount,
     required this.certificateFile,
+    required this.commodity,
+    required this.rmGroup,
   });
 
   final String? lotCode;
@@ -313,31 +318,34 @@ class SkuComponentDetail {
   final double? intCurrencyRate;
   final double? intCurrencyAmount;
   final List<dynamic> certificateFile;
+  final String? commodity;
+  final String? rmGroup;
 
   factory SkuComponentDetail.fromJson(Map<String, dynamic> json) {
     return SkuComponentDetail(
-      lotCode: json["LotCode"],
-      rmName: json["RMName"],
-      commodityName: json["CommodityName"],
-      shape: json["Shape"],
-      color: json["Color"],
-      cut: json["Cut"],
-      clarity: json["Clarity"],
-      internationalQuality: json["InternationalQuality"],
-      sieveSize: json["SieveSize"],
-      mmSize: json["MMSize"],
-      consumedQty1: json["ConsumedQty1"]?.toString().toDouble,
-      consumedQty2: json["ConsumedQty2"],
-      totalQty1: json["TotalQty1"]?.toString().toDouble,
-      totalQty2: json["TotalQty2"],
-      uom1: json["UOM1"],
-      uom2: json["UOM2"],
-      localCurrencyRate: json["LocalCurrencyRate"]?.toString().toDouble,
-      localCurrencyAmount: json["LocalCurrencyAmount"]?.toString().toDouble,
-      intCurrencyRate: json["IntCurrencyRate"]?.toString().toDouble,
-      intCurrencyAmount: json["IntCurrencyAmount"]?.toString().toDouble,
-      certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
-    );
+        lotCode: json["LotCode"],
+        rmName: json["RMName"],
+        commodityName: json["CommodityName"],
+        shape: json["Shape"],
+        color: json["Color"],
+        cut: json["Cut"],
+        clarity: json["Clarity"],
+        internationalQuality: json["InternationalQuality"],
+        sieveSize: json["SieveSize"],
+        mmSize: json["MMSize"],
+        consumedQty1: json["ConsumedQty1"]?.toString().toDouble,
+        consumedQty2: json["ConsumedQty2"],
+        totalQty1: json["TotalQty1"]?.toString().toDouble,
+        totalQty2: json["TotalQty2"],
+        uom1: json["UOM1"],
+        uom2: json["UOM2"],
+        localCurrencyRate: json["LocalCurrencyRate"]?.toString().toDouble,
+        localCurrencyAmount: json["LocalCurrencyAmount"]?.toString().toDouble,
+        intCurrencyRate: json["IntCurrencyRate"]?.toString().toDouble,
+        intCurrencyAmount: json["IntCurrencyAmount"]?.toString().toDouble,
+        certificateFile: json["CertificateFile"] == null ? [] : List<dynamic>.from(json["CertificateFile"]!.map((x) => x)),
+        commodity: json["Commodity"],
+        rmGroup: json["RmGroup"]);
   }
 
   Map<String, dynamic> toJson() => {

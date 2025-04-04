@@ -238,6 +238,10 @@ class ApiClient {
 
   static String cadLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/CAD/$id';
 
+  static String styleLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/style/$id';
+
+  static String skuLibraryDetails(String id) => '$apiBaseUrl/jewelleries/library/sku/$id';
+
   static String cancelProductFromOrder(String id) => '$apiBaseUrl/orders/$id/product';
 
   static const String conceptList = '$apiBaseUrl/concepts/filters';

@@ -475,37 +475,42 @@ class Utils {
     return parts.join(" : ");
   }
 
-  static ProductDetailsModel mapToProductDetailsModel(JewelleryDataModel item) {
+  static ProductDetailsModel convertJewelleryDataModelToProductDetailsModel({required JewelleryDataModel jewellery}) {
     return ProductDetailsModel(
-      suid: item.suid ?? "",
-      imageUrl: item.multipleFinishedViewImage.isNotNullNorEmpty ? item.multipleFinishedViewImage[0].imageUrl : item.kgkCoutureImage,
-      name: item.productDescription ?? "",
-      originalPrice: item.finalPrice?.toString().setCurrency,
-      offerPrice: item.discountPrice?.toString().setCurrency,
-      finalPrice: item.discountPrice?.toString().setCurrency,
-      discountPercentageString: item.discountEXT,
-      productId: item.suid ?? "",
+      suid: jewellery.suid ?? "",
+      imageUrl: jewellery.multipleFinishedViewImage.isNotNullNorEmpty
+          ? jewellery.multipleFinishedViewImage[0].imageUrl
+          : jewellery.kgkCoutureImage,
+      name: jewellery.productDescription ?? "",
+      originalPrice: jewellery.finalPrice?.toString().setCurrency,
+      offerPrice: jewellery.discountPrice?.toString().setCurrency,
+      finalPrice: jewellery.discountPrice?.toString().setCurrency,
+      discountPercentageString: jewellery.discountEXT,
+      productId: jewellery.suid ?? "",
       commodity: Commodity.jewellery,
-      isFavourite: item.isFavorite,
-      wishlistId: item.wishlistID,
-      productSku: item.contractNoSkuNo,
-      title: item.contractNoSkuNo ?? '',
-      subTitle: item.productDescription ?? '',
-      kgkCollectionName: item.kgkCollection ?? "\n",
-      businessCategoryName: item.businessCategoryName ?? "\n",
-      cts: item.crtEXT,
-      gms: item.gms,
-      brandName: item.brandName,
-      isAddedToCart: item.isAddedToCart,
+      isFavourite: jewellery.isFavorite,
+      wishlistId: jewellery.wishlistID,
+      productSku: jewellery.contractNoSkuNo,
+      title: jewellery.contractNoSkuNo ?? '',
+      subTitle: jewellery.productDescription ?? '',
+      kgkCollectionName: jewellery.kgkCollection ?? "\n",
+      businessCategoryName: jewellery.businessCategoryName ?? "\n",
+      cts: jewellery.crtEXT,
+      gms: jewellery.gms,
+      brandName: jewellery.brandName,
+      isAddedToCart: jewellery.isAddedToCart,
       colorsCode: [
-        item.metalColor1HexCode ?? "",
-        item.metalColor2HexCode ?? "",
-        item.metalColor3HexCode ?? "",
+        jewellery.metalColor1HexCode ?? "",
+        jewellery.metalColor2HexCode ?? "",
+        jewellery.metalColor3HexCode ?? "",
       ],
+      reviewCount: jewellery.reviewCount,
+      rating: jewellery.rating?.toDouble(),
     );
   }
 
   static ProductDetailsModel convertDiamondDataModelToProductDetailsModel({required DiamondDataModel diamond}) {
+    bool isDiscounted = diamond.discountPercentage != null && diamond.discountPercentage! > 0;
     return ProductDetailsModel(
       suid: diamond.suid,
       productId: diamond.suid,
@@ -536,6 +541,13 @@ class Utils {
       subTitle: diamond.rmDescription ?? "",
       isForAuction: diamond.isAuction,
       isAddedToCart: diamond.isAddedToCart,
+      rating: diamond.rating,
+      reviewCount: diamond.reviewCount,
+      discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([diamond.discountPercentage]) : null,
+      stoneElements: diamond.components,
+      auctionId: diamond.auctionId,
+      video: diamond.video,
+      location: diamond.location,
     );
   }
 
@@ -569,6 +581,14 @@ class Utils {
       title: gemstone.lotCode ?? "",
       subTitle: gemstone.rmDescription ?? "",
       isAddedToCart: gemstone.isAddedToCart,
+      rating: gemstone.rating,
+      reviewCount: gemstone.reviewCount,
+      discountPercentageString: (gemstone.discountPercentage != null && gemstone.discountPercentage! > 0)
+          ? APPStrings.percentageOffInterpolating.tr.interpolate([gemstone.discountPercentage])
+          : null,
+      stoneElements: gemstone.components,
+      productQuality: CartProductQuality(name: gemstone.quality),
+      location: gemstone.location,
     );
   }
 

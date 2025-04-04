@@ -137,7 +137,7 @@ class SkuLibraryBloc extends Bloc<SkuLibraryEvent, SkuLibraryState> {
   /// Converts API response data to the custom listing data model.
   B2BCustomListingDataModel convertToB2BCustomListingDataModel({required SkuLibraryListItemDataModel sourceModel}) {
     return B2BCustomListingDataModel(
-      id: sourceModel.id,
+      id: sourceModel.suid,
       strDesignListingImageUrl:
           (sourceModel.multipleFinishedViewImage).isNotNullNorEmpty ? sourceModel.multipleFinishedViewImage.firstOrNull?.imageUrl : '',
       strDesignNumber: sourceModel.contractNumber,

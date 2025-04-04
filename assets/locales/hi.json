@@ -854,5 +854,6 @@
   "mob_edit_inquiry": "अनुरोध संपादित करें",
   "mob_remove_inquiry": "अनुरोध हटाएं",
   "mob_remove_inquiry_msg": "क्या आप वाकई इस अनुरोध को हटाना चाहते हैं?",
-  "mob_shipping_and_billing_both": "शिपिंग और बिलिंग दोनों"
+  "mob_shipping_and_billing_both": "शिपिंग और बिलिंग दोनों",
+  "mob_product_no": "उत्पाद संख्या"
 }

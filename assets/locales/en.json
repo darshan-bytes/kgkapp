@@ -854,5 +854,6 @@
   "mob_edit_inquiry": "Edit Inquiry",
   "mob_remove_inquiry": "Remove Inquiry",
   "mob_remove_inquiry_msg": "Are you sure you want to remove this inquiry?",
-  "mob_shipping_and_billing_both": "Shipping & Billing both"
+  "mob_shipping_and_billing_both": "Shipping & Billing both",
+  "mob_product_no": "Product No"
 }
