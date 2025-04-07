@@ -324,27 +324,32 @@ class ProductDetailsScreen extends StatelessWidget {
                                       width: 42.w,
                                       padding: EdgeInsetsDirectional.all(6.w),
                                       isSelected: false,
-                                      onTap: () {
-                                        Utils.showSmartModalBottomSheet(
-                                          context: context,
-                                          enableDrag: false,
-                                          builder: (context) => ShareOptionSheet(
-                                            title: APPStrings.share.tr,
-                                            onTapQrCode: () {
-                                              context.pop();
-                                              _showQrCodeDialog(context: context, data: "https://dev.kgk.magnetoinfotech.com");
-                                            },
-                                            onTapCopy: () async {
-                                              if (bloc.productDetails != null) {
-                                                await BlocProvider.of<AppBloc>(context)
-                                                    .handleShareProduct(context: context, productDetails: bloc.productDetails!);
-                                              }
-                                            },
-                                            onTapOther: () async {
-                                              bloc.onTapShareLink(context: context);
-                                            },
-                                          ),
-                                        );
+                                      onTap: () async {
+                                        if (bloc.productDetails != null) {
+                                          String? link = await BlocProvider.of<AppBloc>(context).handleShareProduct(
+                                              context: context, productDetails: bloc.productDetails!, isShowLoading: true);
+                                          if (link != null) {
+                                            Utils.showSmartModalBottomSheet(
+                                              context: context,
+                                              enableDrag: false,
+                                              builder: (sheetContext) => ShareOptionSheet(
+                                                title: APPStrings.share.tr,
+                                                onTapQrCode: () async {
+                                                  sheetContext.pop();
+                                                  _showQrCodeDialog(context: context, data: link);
+                                                },
+                                                onTapCopy: () async {
+                                                  await Clipboard.setData(ClipboardData(text: link));
+                                                },
+                                                onTapOther: () async {
+                                                  bloc.onTapShareLink(context: sheetContext, link: link);
+                                                },
+                                              ),
+                                            );
+                                          } else {
+                                            Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
+                                          }
+                                        }
                                       },
                                       image: AppImages.icShare,
                                     ),
