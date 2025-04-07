@@ -472,7 +472,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     return commodityMasterDetails;
   }
 
-  Future<String?> handleShareProduct({required BuildContext context, required ProductDetailsModel productDetails}) async {
+  Future<String?> handleShareProduct(
+      {required BuildContext context, required ProductDetailsModel productDetails, bool isShowLoading = false}) async {
+    if (isShowLoading) {
+      context.setAppLoading(true);
+    }
     final String title = productDetails.name ?? '';
     // FOr now description and destination are empty. It will be updated later
     final String description = productDetails.kgkCollectionName ?? '';
@@ -491,9 +495,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       extraData: branchLinkDataModel,
       imageUrl: productDetails.imageUrl ?? productDetails.shapeImage ?? '',
     );
+    if (isShowLoading) {
+      context.setAppLoading(false);
+    }
     if (response.success) {
       final String deepLink = response.result;
-      await Clipboard.setData(ClipboardData(text: deepLink));
       return deepLink;
     } else {
       Utils.showMessage(APPStrings.failedToCreateSharingLink.tr);
