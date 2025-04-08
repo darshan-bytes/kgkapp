@@ -1,14 +1,15 @@
-import 'dart:ui';
+import 'package:kgk/kgk.dart';
 
 class ChartDataModel {
-  ChartDataModel(this.x, this.y, {required this.cutModel, required this.clarityModel, required this.colorModel});
+  ChartDataModel(this.x, this.y, {this.cutModel, this.clarityModel, this.colorModel, this.orionDataModel});
 
   final double x; // This should be non-nullable
   final double? y;
   Offset? offset;
-  CutModel cutModel;
-  ClarityModel clarityModel;
-  ColorModel colorModel;
+  CutModel? cutModel;
+  ClarityModel? clarityModel;
+  ColorModel? colorModel;
+  OrionDataModel? orionDataModel;
 
   @override
   bool operator ==(Object other) {
@@ -20,12 +21,19 @@ class ChartDataModel {
         other.offset == offset &&
         other.cutModel == cutModel &&
         other.clarityModel == clarityModel &&
-        other.colorModel == colorModel;
+        other.colorModel == colorModel &&
+        other.orionDataModel == orionDataModel;
   }
 
   @override
   int get hashCode {
-    return x.hashCode ^ y.hashCode ^ offset.hashCode ^ cutModel.hashCode ^ clarityModel.hashCode ^ colorModel.hashCode;
+    return x.hashCode ^
+        y.hashCode ^
+        offset.hashCode ^
+        cutModel.hashCode ^
+        clarityModel.hashCode ^
+        colorModel.hashCode ^
+        orionDataModel.hashCode;
   }
 }
 

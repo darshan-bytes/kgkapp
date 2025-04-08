@@ -78,12 +78,13 @@ final class OrionDiamondCalculateDotPositionsEvent extends OrionEvent {
 }
 
 final class OrionDiamondChangePointIndexEvent extends OrionEvent {
+  final BuildContext context;
   final int index;
 
-  const OrionDiamondChangePointIndexEvent({required this.index});
+  const OrionDiamondChangePointIndexEvent({required this.context,required this.index});
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [context,index];
 }
 
 final class OrionDiamondChartTouchInteractionUpEvent extends OrionEvent {
@@ -116,12 +117,13 @@ final class OrionDiamondChartTouchInteractionMoveEvent extends OrionEvent {
 }
 
 final class OrionDiamondUpdatePinPositionEvent extends OrionEvent {
+  final BuildContext context;
   final DragUpdateDetails dragUpdateDetails;
 
-  const OrionDiamondUpdatePinPositionEvent({required this.dragUpdateDetails});
+  const OrionDiamondUpdatePinPositionEvent({required this.context,required this.dragUpdateDetails});
 
   @override
-  List<Object> get props => [dragUpdateDetails];
+  List<Object> get props => [context, dragUpdateDetails];
 }
 
 final class OrionDiamondSnapNearestPoint extends OrionEvent {

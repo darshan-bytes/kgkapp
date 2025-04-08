@@ -427,6 +427,7 @@ class OrionScreen extends StatelessWidget {
                       maximum: bloc.maximumXAxis,
                       interval: 1,
                       axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        print("details.value ::: ${details.value}");
                         return ChartAxisLabel(
                           '${details.value.toInt()} ct',
                           const TextStyle(color: Colors.black),
@@ -451,22 +452,27 @@ class OrionScreen extends StatelessWidget {
                       majorGridLines: const MajorGridLines(width: 0),
                     ),
                     onChartTouchInteractionMove: (tapArgs) {
+                      print(">>>>>>>>>> onChartTouchInteractionMove");
                       bloc.add(OrionDiamondChartTouchInteractionMoveEvent(tapArgs: tapArgs));
                     },
                     onChartTouchInteractionDown: (tapArgs) {
+                      print(">>>>>>>>>> onChartTouchInteractionDown");
                       bloc.add(OrionDiamondChartTouchInteractionDownEvent(context: context, tapArgs: tapArgs));
                     },
                     onChartTouchInteractionUp: (tapArgs) {
+                      print(">>>>>>>>>> onChartTouchInteractionUp");
                       bloc.add(OrionDiamondChartTouchInteractionUpEvent(context: context, tapArgs: tapArgs));
                     },
                     series: <CartesianSeries<ChartDataModel, num>>[
                       ScatterSeries<ChartDataModel, num>(
                         markerSettings: const MarkerSettings(isVisible: true),
                         onPointTap: (value) {
+                          print(">>>>>>>>>> value");
                           bloc.add(OrionDiamondOnPointTapEvent(context: context, index: value.pointIndex ?? 0, pointDetails: value));
                         },
                         onPointLongPress: (pointInteractionDetails) {
-                          bloc.add(OrionDiamondChangePointIndexEvent(index: pointInteractionDetails.pointIndex ?? 0));
+                          print(">>>>>>>>>> pointInteractionDetails");
+                          bloc.add(OrionDiamondChangePointIndexEvent(context: context,index: pointInteractionDetails.pointIndex ?? 0));
                         },
                         dataSource: bloc.chartData,
                         onRendererCreated: (ChartSeriesController controller) {
@@ -490,9 +496,11 @@ class OrionScreen extends StatelessWidget {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onPanUpdate: (value) {
-                          bloc.add(OrionDiamondUpdatePinPositionEvent(dragUpdateDetails: value));
+                          print(">>>>>>>>>> OrionDiamondUpdatePinPositionEvent");
+                          bloc.add(OrionDiamondUpdatePinPositionEvent(context: context, dragUpdateDetails: value));
                         },
                         onPanEnd: (details) {
+                          print(">>>>>>>>>> OrionDiamondSnapNearestPoint");
                           bloc.add(OrionDiamondSnapNearestPoint(context: context));
                         },
                         child: SmartImage(
@@ -554,22 +562,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.cutModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final CutModel properties = bloc.cutModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedCutModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.cutModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final CutModel properties = bloc.cutModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedCutModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );
@@ -597,22 +607,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.clarityModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final ClarityModel properties = bloc.clarityModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedClarityModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.clarityModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final ClarityModel properties = bloc.clarityModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedClarityModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );
@@ -640,22 +652,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.colorModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final ColorModel properties = bloc.colorModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedColorModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.colorModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final ColorModel properties = bloc.colorModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedColorModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );

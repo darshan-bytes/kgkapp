@@ -611,8 +611,10 @@ class AppRoutes {
 
       case orionPage:
         builder = (context) {
-          BlocProvider.of<OrionBloc>(context).add(OrionInitialEvent(context));
-          return const OrionScreen();
+          return BlocProvider<OrionBloc>(
+            create: (context) => OrionBloc()..add(OrionInitialEvent(context)),
+            child: const OrionScreen(),
+          );
         };
         break;
 

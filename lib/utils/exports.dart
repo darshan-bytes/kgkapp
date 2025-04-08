@@ -536,3 +536,6 @@ export 'package:flutter_langdetect/flutter_langdetect.dart';
 export 'package:kgk/utils/language_helper.dart';
 export 'package:kgk/modules/b2b/do_it_yourself/components/diy_bag_item.dart';
 export 'package:kgk/modules/b2b/contact_us/model/contact_us_model.dart';
+export 'package:kgk/modules/b2b/orion/model/orion_data_model.dart';
+export 'package:kgk/modules/b2b/orion/model/orion_detail_model.dart';
+

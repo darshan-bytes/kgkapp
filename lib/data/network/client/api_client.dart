@@ -14,6 +14,9 @@ class ApiClient {
   static String checkDuplicationPhoneNumber(String code, String phoneNumber) =>
       '$apiBaseUrl/users/phone-code/$code/phone/$phoneNumber/lookup';
 
+  //orionDetails
+  static String orionDetails(String discountPrice, String caratWeight) => '$apiBaseUrl/commodity/diamond/orion/detail?discount_price=$discountPrice&carat_weight=$caratWeight';
+
   static const String businessTypes = '$apiBaseUrl/business-types';
   static const String officeLocations = '$apiBaseUrl/subarea-masters';
   static const String signUpCustomer = '$apiBaseUrl/customer/signup';
