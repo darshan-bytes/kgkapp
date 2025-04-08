@@ -7,31 +7,34 @@ class WriteReviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final WriteReviewScreenStyle style = AppTheme.of(context).writeReviewScreenStyle;
     final WriteReviewBloc bloc = BlocProvider.of<WriteReviewBloc>(context);
-    return Scaffold(
-      appBar: SmartAppBar(
-        title: APPStrings.writeAReview.tr,
-      ),
-      bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
-          child: SmartSingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 24.h),
-                ...buildStarsView(style, bloc),
-                SizedBox(height: 24.h),
-                _buildTitleField(bloc),
-                SizedBox(height: 24.h),
-                _buildReviewField(bloc, style, context),
-                SizedBox(height: 24.h),
-                _buildPickImageSection(bloc, style),
-              ],
+    return BlocBuilder<WriteReviewBloc, WriteReviewState>(
+      buildWhen: (previous, current) => current is WriteReviewLoadedState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: SmartAppBar(
+            title: bloc.isEdit ? APPStrings.editReview.tr : APPStrings.writeAReview.tr,
+          ),
+          bottomNavigationBar: _buildBottomNavigationBar(context, bloc),
+          body: SafeArea(
+            child: SmartSingleChildScrollView(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 17.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 24.h),
+                  ...buildStarsView(style, bloc),
+                  SizedBox(height: 24.h),
+                  _buildTitleField(bloc),
+                  SizedBox(height: 24.h),
+                  _buildReviewField(bloc, style, context),
+                  SizedBox(height: 24.h),
+                  if (!bloc.isEdit) _buildPickImageSection(bloc, style),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -40,7 +43,7 @@ class WriteReviewScreen extends StatelessWidget {
       SmartText(APPStrings.rateUs.tr, style: style.labelStyle),
       SizedBox(height: 8.h),
       SmartRatingBar(
-        initialRating: 0,
+        initialRating: bloc.selectedRating.toDouble(),
         itemSize: 32.w,
         onRatingUpdate: (value) {
           bloc.selectedRating = value.toInt();

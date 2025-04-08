@@ -5,11 +5,13 @@ class BranchLinkDataModel {
     required this.branchLinkType,
     required this.id,
     required this.commodity,
+    this.webPath,
   });
 
   final BranchLinkTypeType? branchLinkType;
   final String? id;
   final String? commodity;
+  final String? webPath;
 
   factory BranchLinkDataModel.fromJson(Map<String, dynamic> json) {
     return BranchLinkDataModel(

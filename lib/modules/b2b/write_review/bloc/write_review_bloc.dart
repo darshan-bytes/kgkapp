@@ -21,6 +21,9 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   FocusNode titleFocusNode = FocusNode();
   FocusNode reviewFocusNode = FocusNode();
 
+  bool get isEdit => myReview != null;
+  ProductReviewModel? myReview;
+
   WriteReviewBloc() : super(const WriteReviewInitial()) {
     on<WriteReviewInitialEvent>(_onInitEvent);
     on<PickImageEvent>(_onMultiImagePicked);
@@ -32,7 +35,15 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   void _onInitEvent(WriteReviewInitialEvent event, Emitter<WriteReviewState> emit) {
     productId = (event.context.routesData?[RoutesData.productId] as String?) ?? '';
     commodity = event.context.routesData?[RoutesData.commodity] as Commodity?;
-    add(const WriteReviewResetEvent());
+    myReview = event.context.routesData?[RoutesData.myReview];
+    if (myReview != null) {
+      titleController.text = myReview?.title ?? '';
+      reviewController.text = myReview?.description ?? '';
+      selectedRating = myReview?.rating ?? 0;
+      emit(const WriteReviewLoadedState());
+    } else {
+      add(const WriteReviewResetEvent());
+    }
   }
 
   Future<void> _onMultiImagePicked(PickImageEvent event, Emitter<WriteReviewState> emit) async {
@@ -134,8 +145,12 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
       ApiKey.businessType: commodity?.value ?? '',
       ApiKey.rating: selectedRating.toString(),
     };
-    Either<ErrorResponse, CommonResponse<ProductReviewModel>>? response =
-        await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
+    Either<ErrorResponse, CommonResponse<ProductReviewModel>>? response;
+    if (isEdit) {
+      response = await AppRepository(event.context).editProductReview(productId, body, images: imageFileList.map((e) => e.path).toList());
+    } else {
+      response = await AppRepository(event.context).addProductReview(body, images: imageFileList.map((e) => e.path).toList());
+    }
     await response?.fold((error) {
       Utils.showMessage(error.message);
     }, (data) async {
