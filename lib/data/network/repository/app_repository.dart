@@ -534,13 +534,23 @@ class AppRepository extends ApiService {
     return response?.fold((l) => Left(l), (r) => Right(r));
   }
 
+  // Edit Review productReviewsById ProductReviewModel patch
+  Future<Either<ErrorResponse, CommonResponse<ProductReviewModel>>?> editProductReview(String id, Map<String, dynamic> body,
+      {required List<String> images}) async {
+    context.setAppLoading(true);
+    var response = await patchMultipartMethod<ProductReviewModel>(ApiClient.productReviewsById(id), body,
+        withFullResponse: true, files: images.map((e) => ModelMultiPartFile(filePath: e, apiKey: ApiKey.files)).toList());
+    context.setAppLoading(false);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   // For Get Product Reviews
-  Future<Either<ErrorResponse, ProductReviewWrapperModel>?> productReviewsFilter(String productId,
+  Future<Either<ErrorResponse, ProductReviewWrapperModel>?> productReviewsFilter(
       {Map<String, dynamic>? query, bool isLoadMore = true}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<ProductReviewWrapperModel>(ApiClient.productReviewsFilter(productId), query: query);
+    var response = await getMethod<ProductReviewWrapperModel>(ApiClient.productReviewsFilter, query: query);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

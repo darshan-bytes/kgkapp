@@ -6,6 +6,7 @@ class ProductReviewsDetails extends StatelessWidget {
   final VoidCallback onTap;
   final List<int> ratings;
   final bool isShowWriteReviewButton;
+  final bool isShowEditReview;
 
   const ProductReviewsDetails({
     super.key,
@@ -14,6 +15,7 @@ class ProductReviewsDetails extends StatelessWidget {
     required this.reviewCount,
     required this.ratings,
     this.isShowWriteReviewButton = false,
+    this.isShowEditReview = false,
   });
 
   @override
@@ -94,13 +96,13 @@ class ProductReviewsDetails extends StatelessWidget {
           ],
         ),
         // Write a Review Button
-        if (isShowWriteReviewButton) ...[
+        if (isShowWriteReviewButton || isShowEditReview) ...[
           SizedBox(height: 16.h),
           SmartButton(
             onTap: () {
               onTap();
             },
-            title: APPStrings.writeAReview.tr,
+            title: isShowEditReview ? APPStrings.editReview.tr : APPStrings.writeAReview.tr,
             prefixImage: AppImages.icEdit,
           ),
         ],

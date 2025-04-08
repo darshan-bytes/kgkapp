@@ -22,3 +22,10 @@ final class PickImageState extends WriteReviewState {
 final class RemoveSelectedImageState extends WriteReviewState {
   const RemoveSelectedImageState();
 }
+
+final class WriteReviewLoadedState extends WriteReviewState {
+  const WriteReviewLoadedState();
+
+  @override
+  List<Object> get props => [];
+}
