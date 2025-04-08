@@ -41,10 +41,11 @@ class AllReviewBloc extends Bloc<AllReviewEvent, AllReviewState> {
 
   Future<void> productReviewsFilter(BuildContext context, String productId) async {
     Map<String, dynamic> query = {
+      ApiKey.productId_: productId,
       ApiKey.limit: AppConst.pageLimit,
       ApiKey.page: paginationScrollController.currentPage,
     };
-    Either<ErrorResponse, ProductReviewWrapperModel>? response = await AppRepository(context).productReviewsFilter(productId, query: query);
+    Either<ErrorResponse, ProductReviewWrapperModel>? response = await AppRepository(context).productReviewsFilter(query: query);
     response?.fold(
       (error) {
         if (error.message.isNotNullNorEmpty) {

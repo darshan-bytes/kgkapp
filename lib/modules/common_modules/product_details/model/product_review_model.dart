@@ -9,6 +9,7 @@ class ProductReviewWrapperModel {
   String? page;
   String? limit;
   Map<String, int>? starCounts;
+  ProductReviewModel? myReview;
 
   ProductReviewWrapperModel({
     this.filteredRecords,
@@ -19,6 +20,7 @@ class ProductReviewWrapperModel {
     this.limit,
     this.userReviewSubmitted = false,
     this.starCounts,
+    this.myReview,
   });
 
   ProductReviewWrapperModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class ProductReviewWrapperModel {
     page = json['page'];
     limit = json['limit'];
     userReviewSubmitted = json['userReviewSubmited'] ?? false;
+    myReview = json['myReview'] != null ? ProductReviewModel.fromJson(json['myReview']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,9 @@ class ProductReviewWrapperModel {
     data['page'] = page;
     data['limit'] = limit;
     data['userReviewSubmited'] = userReviewSubmitted;
+    if (myReview != null) {
+      data['myReview'] = myReview!.toJson();
+    }
     return data;
   }
 }
@@ -94,7 +100,7 @@ class ProductReviewModel {
     title = json['title'];
     description = json['description'];
     businessType = json['business_type'];
-    rating = json['rating']?.toInt();
+    rating = json['rating']?.toString().toInt;
     images = json['images'];
     id = json['id'];
     createdAt = json['created_at'];

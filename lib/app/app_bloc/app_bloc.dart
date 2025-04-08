@@ -486,6 +486,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       branchLinkType: BranchLinkTypeType.productShare,
       id: productDetails.suid,
       commodity: productDetails.commodity?.value,
+      webPath: productDetails.commodity?.webPath,
     );
 
     final BranchResponse response = await BranchService().createDeepLink(

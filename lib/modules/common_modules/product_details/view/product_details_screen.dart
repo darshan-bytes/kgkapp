@@ -492,6 +492,7 @@ class ProductDetailsScreen extends StatelessWidget {
               buildWhen: (previous, current) => current is ProductDetailsLoadedState || current is ProductDetailsRecentlyViewedLoadedState,
               builder: (context, state) {
                 return ProductReviewsDetails(
+                  isShowEditReview: bloc.isShowEditReview,
                   isShowWriteReviewButton: !bloc.userReviewSubmitted,
                   ratings: List.generate(bloc.reviewList.length, (index) => (bloc.reviewList[index].rating ?? 0)).toList(),
                   averageRating: bloc.productDetails?.rating ?? 0,
