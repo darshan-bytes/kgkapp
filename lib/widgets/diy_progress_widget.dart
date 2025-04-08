@@ -14,18 +14,21 @@ class DiyProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EdgeInsetsGeometry resolvedPadding =
-        padding ?? EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h);
-
-    final List<String> subTitles = screenIdentifier == null
-        ? ['Diamond', 'Setting', 'Ring']
-        : ['Setting', 'Diamond', 'Ring'];
+    final EdgeInsetsGeometry resolvedPadding = padding ?? EdgeInsetsDirectional.symmetric(horizontal: 17.w, vertical: 12.h);
 
     final List<AlignmentDirectional> alignments = [
       AlignmentDirectional.centerStart,
       AlignmentDirectional.center,
       AlignmentDirectional.centerEnd,
     ];
+    List<String> titleList = [];
+    if (screenIdentifier == ScreenIdentifier.diamondForDIY) {
+      titleList = [APPStrings.diamond.tr, APPStrings.ring.tr, APPStrings.ring.tr];
+    } else if (screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+      titleList = [APPStrings.ring.tr, APPStrings.diamond.tr, APPStrings.ring.tr];
+    } else {
+      titleList = [APPStrings.diamond.tr, APPStrings.ring.tr, APPStrings.ring.tr];
+    }
 
     return Container(
       padding: resolvedPadding,
@@ -37,9 +40,9 @@ class DiyProgressWidget extends StatelessWidget {
             child: _commonChevron(
               context,
               isSelected: selectedStep == index + 1,
-              title: 'Choose a',
+              title: titleList.length == index + 1 ? APPStrings.complete.tr : APPStrings.choose.tr,
               index: index + 1,
-              subTitle: subTitles[index],
+              subTitle: titleList[index],
               padding: index == 0 ? 20.w : null,
             ),
           );
@@ -49,13 +52,13 @@ class DiyProgressWidget extends StatelessWidget {
   }
 
   Widget _commonChevron(
-      BuildContext context, {
-        required bool isSelected,
-        required String title,
-        required int index,
-        required String subTitle,
-        double? padding,
-      }) {
+    BuildContext context, {
+    required bool isSelected,
+    required String title,
+    required int index,
+    required String subTitle,
+    double? padding,
+  }) {
     final style = AppTheme.of(context).diyProgressViewStyle;
 
     Color backgroundColor = style.unselectedBorderColor.withValues(alpha: 0.5);
@@ -99,12 +102,12 @@ class DiyProgressWidget extends StatelessWidget {
   }
 
   Widget _commonSelector(
-      BuildContext context,
-      bool isSelected,
-      String title,
-      int index,
-      String subTitle,
-      ) {
+    BuildContext context,
+    bool isSelected,
+    String title,
+    int index,
+    String subTitle,
+  ) {
     final style = AppTheme.of(context).diyProgressViewStyle;
     return Expanded(
       child: Container(

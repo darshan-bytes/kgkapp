@@ -60,10 +60,7 @@ class CompleteProductBloc extends Bloc<CompleteProductEvent, CompleteProductStat
         diyFinalDetailsModel = r;
         if (r.product != null) {
           DiyStyleListModel item = r.product!;
-          if (item.imageSketch.isNotNullNorEmpty) {
-            imgList.clear();
-            imgList.add(item.imageSketch ?? '');
-          }
+          imgList.add(item.multipleFinishedViewImage.firstOrNull?.imageUrl ?? "");
           productName = item.longDescription ?? '';
 
           productDetails = ProductDetailsModel(

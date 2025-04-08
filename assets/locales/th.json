@@ -856,5 +856,7 @@
   "mob_remove_inquiry_msg": "การสอบถามที่เลือกจะถูกลบออกจากรายการ",
   "mob_shipping_and_billing_both": "จัดส่งและเรียกเก็บเงินทั้งคู่",
   "mob_product_no": "หมายเลขสินค้า",
-  "mob_select_contact": "เลือกติดต่อ"
+  "mob_select_contact": "เลือกติดต่อ",
+  "mob_complete": "เสร็จสิ้น",
+  "mob_choose" : "เลือก"
 }

@@ -5,21 +5,44 @@ part 'setting_listing_event.dart';
 part 'setting_listing_state.dart';
 
 class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> {
+  /// Hold the current [AppBloc]
   late AppBloc appBloc;
+
+  /// Current screen identifier
+  ScreenIdentifier? screenIdentifier;
+
+  /// Holds selected diamond data for the DIY feature
   DiamondDataModel? diamondDataForDIY;
+
+  /// Indicates if the toggle is in its initial state
   bool isInitialToggle = true;
+
+  /// Determines if the product view is in grid mode
   bool isGrid = true;
+
+  /// Current sorting key used for listing
   String sortKey = AppConst.sortKeySuid;
+
+  /// Current sorting order (ascending/descending)
   String sortValue = AppConst.sortValueAsc;
+
+  /// List of applied filter data
   List<FilterData> filterData = [];
+
+  /// List to store loaded product details
   final List<ProductDetailsModel> productList = [];
+
+  /// List to store available DIY styles
   final List<DiyStyleListModel> diyStyleList = [];
+
+  /// Total number of pages available in pagination
   int? totalNumberOfPages;
-  String settingListingAppbarTitle = "DIY";
 
+  /// Title of the AppBar in the DIY listing screen
+  String settingListingAppbarTitle = APPStrings.doItYourself;
+
+  /// Pagination controller
   SmartPaginationScrollController paginationScrollController = SmartPaginationScrollController();
-
-  Completer<bool> refreshCompleter = Completer<bool>();
 
   SettingListingBloc() : super(const SettingListingInitial()) {
     on<SettingListingInitialEvent>(_onSettingListingInitialEvent);
@@ -30,37 +53,36 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   }
 
   Future<void> _onSettingListingInitialEvent(SettingListingInitialEvent event, Emitter<SettingListingState> emit) async {
-    appBloc = BlocProvider.of<AppBloc>(event.context);
-    getRouteData(event.context);
-    diamondDataForDIY = appBloc.diamondDataForDIY;
-    if (paginationScrollController.isInitialised) {
-      paginationScrollController.dispose();
-      paginationScrollController = SmartPaginationScrollController();
-    }
-    paginationScrollController.init(
-      loadAction: (int currentPage) async {
-        add(LoadMoreSettingProductListEvent(context: event.context, currentPage: currentPage));
-      },
-    );
-    productList.clear();
-    diyStyleList.clear();
-    await _fetchSettingProductList(event.context, emit, false);
-
-    if (!refreshCompleter.isCompleted) {
-      refreshCompleter.complete(true);
-    }
-    emit(const SettingLoadedState());
+    await _initializeBloc(event.context, emit);
   }
 
-  ScreenIdentifier? screenIdentifier;
+  Future<void> _initializeBloc(BuildContext context, Emitter<SettingListingState> emit) async {
+    appBloc = BlocProvider.of<AppBloc>(context);
+    getRouteData(context);
+    _initializePagination(context);
+    productList.clear();
+    diyStyleList.clear();
+    await _fetchSettingProductList(context, emit, false);
+    emit(const SettingLoadedState());
+  }
 
   /// Get screen identifier
   void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor];
-    if(screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+    if (screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       diamondDataForDIY = null;
     }
+  }
+
+  /// Initialize pagination
+  _initializePagination(BuildContext context) {
+    paginationScrollController.init(
+      isSecondaryView: true,
+      loadAction: (int currentPage) async {
+        add(LoadMoreSettingProductListEvent(context: context, currentPage: currentPage));
+      },
+    );
   }
 
   void _onChangeListingTypeEvent(SettingChangeListingTypeEvent event, Emitter<SettingListingState> emit) {
@@ -70,17 +92,18 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   }
 
   Future<void> _onLoadMoreSettingProductListEvent(LoadMoreSettingProductListEvent event, Emitter<SettingListingState> emit) async {
-    emit(const SettingLoadingMoreState());
-    await _fetchSettingProductList(event.context, emit, true);
-
-    emit(SettingProductLoadedMoreState(event.currentPage + 1));
+    if (event.currentPage <= totalNumberOfPages!) {
+      emit(const SettingLoadingMoreState());
+      await _fetchSettingProductList(event.context, emit, true);
+      emit(SettingProductLoadedMoreState(event.currentPage));
+    }
   }
 
   Future<void> _onSettingListPullToRefresh(SettingListPullToRefreshEvent event, Emitter<SettingListingState> emit) async {
+    emit(const SettingProductReloadState());
     paginationScrollController.pullToRefresh();
+    productList.clear();
     await _fetchSettingProductList(event.context, emit, false);
-
-    refreshCompleter.complete(true);
     emit(const SettingLoadedState());
   }
 
@@ -88,25 +111,10 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     emit(const SettingLoadedState());
   }
 
-  Future<bool> pullToRefresh(BuildContext context) async {
-    if (!refreshCompleter.isCompleted) {
-      return false;
-    }
-    refreshCompleter = Completer<bool>();
-    add(SettingListPullToRefreshEvent(context: context));
-    bool result = await refreshCompleter.future;
-    return result;
-  }
-
-  Future<void> _fetchSettingProductList(
-    BuildContext context,
-    Emitter<SettingListingState> emit,
-    bool isLoadMore,
-  ) async {
+  Future<void> _fetchSettingProductList(BuildContext context, Emitter<SettingListingState> emit, bool isLoadMore) async {
     Either<ErrorResponse, PaginationData<DiyStyleListModel>>? response;
 
     Map<String, String>? query = {};
-
     filterData
         .where((element) =>
             (element.secondaryFilterData?.any((e) => e.isSelected == true) ?? false) ||
@@ -130,7 +138,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
       query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
     }
     //TODO: Need to pass Jewellery Type name. Get it from routes data
-    query[ApiKey.jewelleryTypeName] = 'Ring';
+    // query[ApiKey.jewelleryTypeName] = 'undefined';
 
     response = await AppRepository(context).diyStyleFilters(
       page: paginationScrollController.currentPage.toString(),
@@ -161,6 +169,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             colorsCode: [item.metalColor1HexCode ?? ""],
           );
         }).toList());
+        if (paginationScrollController.isPageLoaded.isCompleted) {
+          paginationScrollController.isPageLoaded = Completer<bool>();
+        }
         paginationScrollController.isPageLoaded.complete(paginationScrollController.currentPage == totalNumberOfPages);
       },
     );
