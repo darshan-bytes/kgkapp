@@ -282,13 +282,13 @@ class ProductListItem extends StatelessWidget {
       children: [
         Flexible(
           child: SmartText(
-            productDetails.offerPrice.isNotNullNorEmpty ? productDetails.offerPrice : productDetails.originalPrice,
+            productDetails.finalPrice.isNotNullNorEmpty ? productDetails.finalPrice : productDetails.originalPrice,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: style.priceTextStyle,
           ),
         ),
-        if (productDetails.offerPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
+        if (productDetails.finalPrice.isNotNullNorEmpty && productDetails.isShowDiscountPrice) ...[
           SizedBox(width: 10.w),
           Flexible(
             child: SmartText(

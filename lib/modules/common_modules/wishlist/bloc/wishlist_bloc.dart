@@ -146,7 +146,6 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           title: _buildTitleOfProduct(element: element),
           subTitle: _buildSubTitleOfProduct(element: element),
           originalPrice: element.productData?.finalPrice?.setCurrency,
-          offerPrice: element.productData?.finalPrice?.toString().setCurrency,
           finalPrice: element.productData?.discountPrice?.toString().setCurrency,
           commodity: element.displayCommodity,
           isFavourite: element.productData?.isFavorite ?? true,

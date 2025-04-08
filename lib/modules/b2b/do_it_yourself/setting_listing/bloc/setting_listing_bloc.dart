@@ -58,7 +58,7 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
   void getRouteData(BuildContext context) {
     Map<RoutesData, dynamic>? data = context.routesData;
     screenIdentifier = data?[RoutesData.isPageFor];
-    if(screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
+    if (screenIdentifier != null && screenIdentifier == ScreenIdentifier.jewelleryForDIY) {
       diamondDataForDIY = null;
     }
   }
@@ -153,7 +153,6 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             imageUrl: item.imageSketch,
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,
-            offerPrice: item.discountPrice?.toString().setCurrency,
             finalPrice: item.discountPrice?.toString().setCurrency,
             productId: item.suid ?? "",
             commodity: Commodity.jewellery,

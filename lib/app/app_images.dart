@@ -184,8 +184,11 @@ class AppImages {
   static const String icThreeRing = 'assets/images/ic_three_ring.svg';
   static const String icDelete = 'assets/images/ic_delete.png';
 
-  static String icAuctionLabel(String languageCode) => 'assets/images/ic_auction_label_$languageCode.svg';
   static const String icBadge = 'assets/images/ic_badge.svg';
   static const String icProfilePic = 'assets/images/ic_profile_pic.svg';
   static const String icTurnRight = 'assets/images/ic_turn_right.svg';
+
+  static String icAuctionLabel(String languageCode) => 'assets/images/ic_auction_label_$languageCode.svg';
+
+  static String icNewArrivalLabel(String languageCode) => 'assets/images/ic_new_arrival_label_$languageCode.svg';
 }

@@ -106,6 +106,9 @@ class CollectionScreen extends StatelessWidget {
                                 collectionDataModel.name ?? '',
                                 style: style.collectionListTitleStyle,
                                 textAlign: TextAlign.center,
+                                onTap: () {
+                                  bloc.navigateToJewelleryListingScreen(context: context, collectionName: collectionDataModel.name ?? "");
+                                },
                               ),
                               SizedBox(height: 16.h),
                             ],

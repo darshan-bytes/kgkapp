@@ -205,7 +205,6 @@ class OrionBloc extends Bloc<OrionEvent, OrionState> {
       rappaportPrice: diamond.rappaportPrice,
       priceCts: diamond.priceCts,
       originalPrice: diamond.finalPrice?.toString().setCurrency,
-      offerPrice: diamond.finalPrice?.toString().setCurrency,
       finalPrice: diamond.discountPrice?.toString().setCurrency,
       lotCode: diamond.lotCode,
       productSku: diamond.lotCode,
