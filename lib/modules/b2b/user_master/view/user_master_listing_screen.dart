@@ -80,7 +80,9 @@ class UserMasterListingScreen extends StatelessWidget {
             },
           ),
         ),
-        _buildOrderDropDownField(bloc, style),
+
+        ///TODO : currently Location filter is not required so we have commented it as discussed with Shiva bhai
+        // _buildOrderDropDownField(bloc, style),
       ],
     );
   }
