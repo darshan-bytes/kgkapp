@@ -859,5 +859,6 @@
   "mob_select_contact": "連絡先を選択",
   "mob_edit_review": "レビューを編集します",
   "mob_complete": "完了",
-  "mob_choose" : "選択"
+  "mob_choose" : "選択",
+  "mob_price": "価格"
 }
