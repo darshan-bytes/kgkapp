@@ -424,7 +424,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         name: "Diamond Vine Ring in 18k Rose Gold",
         originalPrice: '\$5,000.00',
         discountPercentageString: isOfferAvailable ? APPStrings.youHaveSavedX.tr.interpolate(["10%"]) : null,
-        offerPrice: isOfferAvailable ? '\$4,000.00' : null,
+        finalPrice: isOfferAvailable ? '\$4,000.00' : null,
       ),
     );
   }
@@ -448,32 +448,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewedJewelleryList = data.data.map((e) {
-          return ProductDetailsModel(
-              productId: e.suid,
-              name: e.productDescription ?? '',
-              imageUrl: e.multipleFinishedViewImage.isNotEmpty ? (e.multipleFinishedViewImage.first.imageUrl ?? '') : '',
-              originalPrice: e.finalPrice?.toString().setCurrency,
-              offerPrice: e.discountPrice?.toString().setCurrency,
-              finalPrice: e.discountPrice?.toString().setCurrency,
-              discountPercentageString: e.discountEXT,
-              productSku: e.contractNoSkuNo,
-              reviewCount: e.reviewCount,
-              rating: e.rating?.toDouble(),
-              isFavourite: e.isFavorite,
-              wishlistId: e.wishlistID,
-              commodity: Commodity.jewellery,
-              subTitle: e.productDescription ?? '',
-              title: e.contractNoSkuNo ?? '',
-              kgkCollectionName: e.kgkCollection ?? "\n",
-              businessCategoryName: e.businessCategoryName ?? "\n",
-              cts: e.crtEXT,
-              gms: e.gms,
-              brandName: e.brandName,
-              colorsCode: [
-                e.metalColor1HexCode ?? "",
-                e.metalColor2HexCode ?? "",
-                e.metalColor3HexCode ?? "",
-              ]);
+          return Utils.convertJewelleryDataModelToProductDetailsModel(jewellery: e);
         }).toList();
       },
     );
@@ -496,7 +471,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewDiamondList = data.data.map((e) {
-          return _convertDiamondDataModelToProductDetailsModel(diamond: e);
+          return Utils.convertDiamondDataModelToProductDetailsModel(diamond: e);
         }).toList();
       },
     );
@@ -512,7 +487,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       rappaportPrice: diamond.rappaportPrice,
       priceCts: diamond.priceCts,
       originalPrice: diamond.finalPrice?.toString().setCurrency,
-      offerPrice: diamond.finalPrice?.toString().setCurrency,
       finalPrice: diamond.discountPrice?.toString().setCurrency,
       lotCode: diamond.lotCode,
       productSku: diamond.lotCode,
@@ -554,23 +528,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (data) {
         recentlyViewGemstoneList = data.data.map((e) {
-          bool isDiscounted = e.discountPercentage != null && e.discountPercentage! > 0;
-          return ProductDetailsModel(
-            productId: e.suid ?? '',
-            name: e.rmDescription ?? '',
-            imageUrl: e.image.isNotEmpty ? (e.image.first.url ?? '') : '',
-            offerPrice: isDiscounted ? (e.discountPrice ?? 0).toString().setCurrency : null,
-            originalPrice: e.finalPrice?.setCurrency,
-            discountPercentageString: isDiscounted ? APPStrings.percentageOffInterpolating.tr.interpolate([e.discountPercentage]) : null,
-            productSku: e.lotCode,
-            reviewCount: e.reviewCount,
-            rating: e.rating?.toDouble(),
-            commodity: Commodity.gemstone,
-            isFavourite: e.isFavorite,
-            wishlistId: e.wishlistID,
-            title: e.lotCode,
-            subTitle: e.rmDescription,
-          );
+          return Utils.convertGemstoneDatumToProductDetailsModel(gemstone: e);
         }).toList();
       },
     );
@@ -593,26 +551,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  // //For Get Inspired
-  // static List<AuctionListModel> _generateGetInspireList() {
-  //   List<String> titleList = ["Diamonds rings", "Diamonds necklace", "Diamonds earrings", "Diamonds bracelet"];
-  //   List<String> imageList = [
-  //     "https://i.ibb.co/30MXHMT/Image5.png",
-  //     "https://i.ibb.co/yRy2w21/Image1.png",
-  //     "https://i.ibb.co/dmtHjL6/Image2.png",
-  //     "https://i.ibb.co/VN2fDKh/Image4.png"
-  //   ];
-  //   return List.generate(
-  //     imageList.length,
-  //         (index) => AuctionListModel(
-  //       id: index.toString(),
-  //       name: titleList[index],
-  //       imageUrl: imageList[index],
-  //     ),
-  //   );
-  // }
-
-  //For Shop by Style
   static List<AuctionListModel> _generateShopByStyleList() {
     List<String> titleList = ["Moissanite rings", "Aquamarine rings", "Morganite rings", "Gemstone jewelry"];
     List<String> imageList = [
@@ -1071,7 +1009,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 title: item.jewelleryTypeName ?? '',
                 subTitle: item.productDescription ?? '',
                 originalPrice: item.finalPrice?.toString().setCurrency ?? '-',
-                offerPrice: item.discountPrice?.toString().setCurrency ?? '',
+                finalPrice: item.discountPrice?.toString().setCurrency ?? '',
               );
             },
           );

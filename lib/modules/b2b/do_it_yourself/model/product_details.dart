@@ -5,7 +5,6 @@ class ProductDetailsModel {
   String? suid;
   int? quantity;
   String? name;
-  String? offerPrice;
   String? originalPrice;
   String? imageUrl;
   String? discountPercentageString;
@@ -85,7 +84,6 @@ class ProductDetailsModel {
     this.suid,
     this.quantity,
     this.name,
-    this.offerPrice,
     this.originalPrice,
     this.imageUrl,
     this.discountPercentageString,
@@ -169,7 +167,6 @@ class ProductDetailsModel {
           productId == other.productId &&
           quantity == other.quantity &&
           name == other.name &&
-          offerPrice == other.offerPrice &&
           originalPrice == other.originalPrice &&
           imageUrl == other.imageUrl &&
           discountPercentageString == other.discountPercentageString &&
@@ -237,7 +234,6 @@ class ProductDetailsModel {
       name.hashCode ^
       quantity.hashCode ^
       suid.hashCode ^
-      offerPrice.hashCode ^
       originalPrice.hashCode ^
       imageUrl.hashCode ^
       discountPercentageString.hashCode ^

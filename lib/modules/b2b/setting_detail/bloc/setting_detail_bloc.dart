@@ -63,7 +63,6 @@ class SettingDetailBloc extends Bloc<SettingDetailEvent, SettingDetailState> {
               imageUrl: diyStyleListModel!.imageSketch,
               subTitle: diyStyleListModel!.autoDescription,
               originalPrice: diyStyleListModel!.finalPrice?.toString().setCurrency,
-              offerPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
               finalPrice: diyStyleListModel!.discountPrice?.toString().setCurrency,
               commodity: Commodity.diy,
               businessCategoryName: diyStyleListModel!.businessCategoryName ?? "",

@@ -77,7 +77,8 @@ class StoneDetailScreen extends StatelessWidget {
                               style: style.priceStyle,
                               maxLines: 1,
                               isAutoSizeText: true),
-                          if (bloc.productDetails?.offerPrice.isNotNullNorEmpty == true)
+                          if (bloc.productDetails?.finalPrice.isNotNullNorEmpty == true &&
+                              (bloc.productDetails?.finalPrice != bloc.productDetails?.originalPrice))
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,

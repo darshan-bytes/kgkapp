@@ -162,7 +162,6 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
             imageUrl: item.imageSketch,
             subTitle: item.autoDescription,
             originalPrice: item.finalPrice?.toString().setCurrency,
-            offerPrice: item.discountPrice?.toString().setCurrency,
             finalPrice: item.discountPrice?.toString().setCurrency,
             productId: item.suid ?? "",
             commodity: Commodity.jewellery,

@@ -77,10 +77,7 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
                     : "",
                 name: product.jewelleryData?.productDescription,
                 originalPrice: product.jewelleryData?.finalPrice?.toString().setCurrency,
-                offerPrice: product.jewelleryData?.discountPrice?.toString().setCurrency,
                 finalPrice: product.jewelleryData?.discountPrice?.toString().setCurrency,
-                // discountPrice: product.jewelleryData?.discountPrice?.setCurrency,
-                // originalPrice: product.jewelleryData?.finalPrice?.setCurrency,
                 discountPercentageString: (product.jewelleryData?.discountPercentage ?? 0) > 0
                     ? APPStrings.percentageOffInterpolating.tr.interpolate([product.jewelleryData?.discountPercentage])
                     : null,
@@ -111,7 +108,6 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               rappaportPrice: product.gemstoneData?.rappaportPrice,
               priceCts: product.gemstoneData?.priceCts,
               originalPrice: product.gemstoneData?.finalPrice?.toString().setCurrency,
-              offerPrice: product.gemstoneData?.finalPrice?.toString().setCurrency,
               finalPrice: product.gemstoneData?.discountPrice?.toString().setCurrency,
               lotCode: product.gemstoneData?.lotCode,
               shape: product.gemstoneData?.shape,
@@ -141,7 +137,6 @@ class WatchlistDetailsBloc extends Bloc<WatchlistDetailsEvent, WatchlistDetailsS
               rappaportPrice: product.diamondData?.rappaportPrice,
               priceCts: product.diamondData?.priceCts,
               originalPrice: product.diamondData?.finalPrice?.toString().setCurrency,
-              offerPrice: product.diamondData?.finalPrice?.toString().setCurrency,
               finalPrice: product.diamondData?.discountPrice?.toString().setCurrency,
               lotCode: product.diamondData?.lotCode,
               productSku: product.diamondData?.lotCode,
