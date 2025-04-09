@@ -126,25 +126,43 @@ class OrionScreen extends StatelessWidget {
 
                       return ProductInfoItem(
                         isFromBag: false,
-                        onTap360View: () => printWrapped("onTap360View"),
                         productFeaturesList: attributes,
+                        onTap360View: () {
+                          if (product.video.isNotNullNorEmpty) {
+                            Utils.launchUrlFromString(product.video!);
+                          } else {
+                            Utils.showMessage(APPStrings.no3DViewAvailable.tr);
+                          }
+                        },
                         onTapDNA: () {
-                          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                            RoutesData.cmsPageData: CmsWebViewDataModel(
-                              url: product.openDnaUrl,
-                              title: APPStrings.dna.tr,
-                            )
-                          });
+                          if (product.openDnaUrl != null) {
+                            Utils.launchUrlFromString(product.openDnaUrl!);
+                          } else {
+                            Utils.showMessage(APPStrings.noDnaAvailable.tr);
+                          }
                         },
                         onTapCertificate: () {
-                          context.pushNamed(AppRoutes.cmsWebViewPage, arguments: {
-                            RoutesData.cmsPageData: CmsWebViewDataModel(
-                              url: product.certificateFile,
-                              title: APPStrings.certificate.tr,
-                            )
-                          });
+                          if (product.certificateFile != null) {
+                            Utils.launchUrlFromString(product.certificateFile!);
+                          } else {
+                            Utils.showMessage(APPStrings.noCertificateAvailable.tr);
+                          }
                         },
-                        onTapImageViewer: () => printWrapped("onTapImageViewer"),
+                        onTapImageViewer: () {
+                          if (product.imageUrl != null) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog.fullscreen(
+                                  backgroundColor: Colors.transparent,
+                                  child: ProductPhotoViewGallery(imageUrls: [product.imageUrl ?? '']),
+                                );
+                              },
+                            );
+                          } else {
+                            Utils.showMessage(APPStrings.noImageAvailable.tr);
+                          }
+                        },
                         onTapUSA: () => printWrapped("onTapUSA"),
                         onTapMenuButton: () {
                           Utils.showSmartModalBottomSheet(
@@ -326,7 +344,7 @@ class OrionScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SmartText(APPStrings.preferredPriceRange.tr, style: style.selectionTitleStyle),
+          SmartText(APPStrings.preferredPriceRange.tr.interpolate([APPStrings.price.tr]), style: style.selectionTitleStyle),
           SizedBox(height: 16.h),
           BlocBuilder<OrionBloc, OrionState>(
             buildWhen: (previous, current) => previous != current && current is OrionPriceRangeChangedState,
@@ -437,8 +455,15 @@ class OrionScreen extends StatelessWidget {
                     ),
                     primaryYAxis: NumericAxis(
                       axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        // String formattedPrice = NumberFormat.compact().format(details.value); // Output: 1.2M
+                        AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+                        String formattedCurrency = NumberFormat.compactCurrency(
+                          locale: appLocalizations.locale?.languageCode, // For Indian locale
+                          decimalDigits: 2,
+                          symbol: ''.setCurrency, // Indian Rupee symbol
+                        ).format(details.value);
                         // Format the label to display as price
-                        return ChartAxisLabel('\$${details.value.toStringAsFixed(2).padRight(0)}', const TextStyle(color: Colors.black));
+                        return ChartAxisLabel(formattedCurrency.padRight(0), const TextStyle(color: Colors.black));
                       },
                       onRendererCreated: (NumericAxisController controller) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -466,7 +491,7 @@ class OrionScreen extends StatelessWidget {
                           bloc.add(OrionDiamondOnPointTapEvent(context: context, index: value.pointIndex ?? 0, pointDetails: value));
                         },
                         onPointLongPress: (pointInteractionDetails) {
-                          bloc.add(OrionDiamondChangePointIndexEvent(index: pointInteractionDetails.pointIndex ?? 0));
+                          bloc.add(OrionDiamondChangePointIndexEvent(context: context, index: pointInteractionDetails.pointIndex ?? 0));
                         },
                         dataSource: bloc.chartData,
                         onRendererCreated: (ChartSeriesController controller) {
@@ -490,7 +515,7 @@ class OrionScreen extends StatelessWidget {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onPanUpdate: (value) {
-                          bloc.add(OrionDiamondUpdatePinPositionEvent(dragUpdateDetails: value));
+                          bloc.add(OrionDiamondUpdatePinPositionEvent(context: context, dragUpdateDetails: value));
                         },
                         onPanEnd: (details) {
                           bloc.add(OrionDiamondSnapNearestPoint(context: context));
@@ -518,11 +543,11 @@ class OrionScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SmartText(
-                    "Price: \$${bloc.currentPrice.toStringAsFixed(2)}",
+                    "${APPStrings.price.tr}: ${bloc.currentPrice.toStringAsFixed(2).setCurrency}",
                     style: style.selectionTitleStyle,
                   ),
                   SmartText(
-                    "Carat: ${bloc.currentCarat.toStringAsFixed(2)} ct",
+                    "${APPStrings.carat.tr}: ${bloc.currentCarat.toStringAsFixed(2)} ct",
                     style: style.selectionTitleStyle,
                   ),
                 ],
@@ -554,22 +579,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.cutModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final CutModel properties = bloc.cutModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedCutModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.cutModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final CutModel properties = bloc.cutModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedCutModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );
@@ -597,22 +624,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.clarityModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final ClarityModel properties = bloc.clarityModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedClarityModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.clarityModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final ClarityModel properties = bloc.clarityModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedClarityModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );
@@ -640,22 +669,24 @@ class OrionScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.h),
-              SmartHorizontalItemBuilder(
-                itemCount: bloc.colorModelList.length,
-                itemBetweenSpace: 20.w,
-                itemBuilder: (context, propertiesIndex) {
-                  final ColorModel properties = bloc.colorModelList[propertiesIndex];
-                  final bool isSelected = bloc.selectedColorModel == properties;
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: SmartText(
-                      properties.name,
-                      style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
-                    ),
-                  );
-                },
-              ),
+              Divider(),
+              SizedBox(height: 8.h),
+              // SmartHorizontalItemBuilder(
+              //   itemCount: bloc.colorModelList.length,
+              //   itemBetweenSpace: 20.w,
+              //   itemBuilder: (context, propertiesIndex) {
+              //     final ColorModel properties = bloc.colorModelList[propertiesIndex];
+              //     final bool isSelected = bloc.selectedColorModel == properties;
+              //     return Container(
+              //       color: Colors.transparent,
+              //       padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+              //       child: SmartText(
+              //         properties.name,
+              //         style: isSelected ? style.selectedPropertyStyle : style.propertyStyle,
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );

@@ -1055,4 +1055,5 @@ class APPStrings {
 
   static const String complete = 'mob_complete';
   static const String choose = 'mob_choose';
+  static const String price = 'mob_price';
 }

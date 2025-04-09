@@ -102,6 +102,8 @@ class PaginationData<T> {
         return UserMasterListingModelClass.fromJson(json);
       case const (MyInquiriesModel):
         return MyInquiriesModel.fromJson(json);
+      case const (OrionDataModel):
+        return OrionDataModel.fromJson(json);
       case const (Map<String, dynamic>):
         return json;
       default:

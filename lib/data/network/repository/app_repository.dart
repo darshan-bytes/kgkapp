@@ -167,6 +167,12 @@ class AppRepository extends ApiService {
     /// TODO :: Implement this letter
   }
 
+  //fetchOrionDetails
+  Future<Either<ErrorResponse, CommonResponse<OrionDetailModel>>?> fetchOrionDetails({required String discountPrice,required String caratWeight}) async {
+    var response = await getMethod<OrionDetailModel>(ApiClient.orionDetails(discountPrice, caratWeight), withFullResponse: true);
+    return response?.fold((l) => Left(l), (r) => Right(r));
+  }
+
   /// Fetches diamond list
   Future<Either<ErrorResponse, DiamondListingModel>?> fetchDiamondList(
       {required String limit,
@@ -696,12 +702,12 @@ class AppRepository extends ApiService {
   }
 
   //fetchOrionList
-  Future<Either<ErrorResponse, PaginationData<DiamondDataModel>>?> fetchOrionList(bool isLoadMore,
+  Future<Either<ErrorResponse, PaginationData<OrionDataModel>>?> fetchOrionList(bool isLoadMore,
       {required Map<String, dynamic> body}) async {
     if (isLoadMore) {
       context.setAppLoading(true);
     }
-    var response = await getMethod<PaginationData<DiamondDataModel>>(ApiClient.orionList, query: body, withCurrencyHeader: true);
+    var response = await getMethod<PaginationData<OrionDataModel>>(ApiClient.orionList, query: body, withCurrencyHeader: true);
     if (isLoadMore) {
       context.setAppLoading(false);
     }

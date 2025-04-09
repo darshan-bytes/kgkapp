@@ -10,6 +10,7 @@ class AppConst {
   static const int pageLimit = 10;
   static const int pageLimit10 = 10;
   static const int pageLimit50 = 50;
+  static const int pageLimit10000 = 10000;
   static const int page1 = 1;
   static const double zoomPosition = 8.4746;
   static const double defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
