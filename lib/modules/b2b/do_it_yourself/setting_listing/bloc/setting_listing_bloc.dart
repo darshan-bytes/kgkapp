@@ -137,8 +137,9 @@ class SettingListingBloc extends Bloc<SettingListingEvent, SettingListingState> 
     if (diamondDataForDIY?.shapeCode != null) {
       query[ApiKey.shapeCode] = diamondDataForDIY?.shapeCode ?? '';
     }
-    //TODO: Need to pass Jewellery Type name. Get it from routes data
-    // query[ApiKey.jewelleryTypeName] = 'undefined';
+
+    ///TODO : need to remove this temporarily
+    query[ApiKey.jewelleryTypeName] = 'Ring';
 
     response = await AppRepository(context).diyStyleFilters(
       page: paginationScrollController.currentPage.toString(),
